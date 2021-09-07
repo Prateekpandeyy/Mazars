@@ -1,0 +1,70 @@
+.main_table{
+	padding: 0;
+}
+
+.content_header{
+	padding: 3px;
+}
+
+.content_header table{
+  	color: white;
+	  
+}
+
+
+.main_table tr{
+	display: flex;
+	justify-content: space-around;
+}
+
+.main_table thead th, .main_table td, .main_table th{
+	border-bottom: 0px;
+	border-top: 0px;
+}
+
+.left_side{
+	width: 180px;
+	padding-left: 0px
+}
+
+
+.query_thead{
+	background-color:#3d4975; 
+}
+
+.second.table-striped tbody tr,
+.third.table-striped tbody tr,
+.forth.table-striped tbody tr{
+	background-color:rgba(88, 103, 155, 0.8);
+}
+
+
+
+.proposal_thead{
+	background-color:#704b62;
+}
+
+.sixth.table-striped tbody tr{
+	background-color:rgba(172, 132, 159, 1);
+}
+
+
+
+.assignment_thead{
+	background-color:rgba(67 , 131, 117, 1);
+}
+
+
+.tenth.table-striped tbody tr{
+	background-color:rgba(67, 131, 117, 0.8);
+}
+
+
+
+
+.payment_thead{
+	background-color:rgba(69, 126, 143, 1);
+}
+.payment_thead2{
+	background-color:rgba(69, 126, 143, 0.8);
+}

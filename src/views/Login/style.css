@@ -1,0 +1,126 @@
+.StartPage{
+    display: flex;
+    width:100%;
+    justify-content: center;
+    align-items: flex-start;
+    height: 600px;
+  
+    
+}
+.loading{
+    display: flex;
+ z-index: 99999;
+    flex-direction: column;
+    width:100%;
+    height:100%;
+    justify-content: center;
+    align-items: center;
+}
+.mainContent{
+    display: flex;
+    width:1000px;
+    border-radius: 10px;
+    max-height: 400px;
+    height:100%;
+    /* box-shadow: 0 10px 5px 5px rgba(0,0,0, 0.1), 0 -10px 5px 5px rgba(0,0,0,0.1); */
+    background-color: #fff;
+}
+.signIn{
+    display: flex;
+    width: 50%;
+ 
+   opacity: 0.9;
+background-image:url("https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1050&q=80");  
+   
+    background-size:cover;
+    background-repeat: no-repeat;
+}
+.signIn .signBtn{
+    display: flex;
+   width: 100%;
+   height:100%;
+    
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color:#000;
+    position: relative;
+}
+.boxOverlay{
+    position: absolute;
+    top:0;
+    left:0;
+    bottom:0;
+    right:0;
+    background-color: rgba(0,0,0,0.4);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.signBtn h4{
+    color:#000;
+}
+
+.signMendatary{
+    position: absolute;
+    bottom: 15px;
+    left: 50px;
+   
+}
+
+.customForm{
+    display: flex;
+    width: 90%;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    min-height: 320px;
+    height:100%;
+}
+
+.signInForm{
+  display: flex;
+  flex-direction: column;
+    width: 80%;
+    padding: 10px 28px;
+}
+.passForm{
+    line-height: 10px;
+    margin-bottom: 0px !important;
+}
+.signUp{
+    display: flex;
+    flex-direction: column;
+    padding: 10px 0px;
+    width:50%;
+    font-weight: 600;
+    height:300px;
+}
+.password-icon-login{
+    position: relative;
+    left: 285px;
+    top:-26px;
+    cursor: pointer;
+}
+.SignUpLink{
+   color:#fff !important;
+}
+.signUp button{
+    display: flex;
+   
+    margin: auto;
+
+}
+.signUp p{
+    font-size: 20px;
+    font-weight: 800;
+    color:#000;
+    text-align: center;
+}
+.signUp .declinedmsg{
+    color:red !important;
+    font-weight: 400;
+    text-align: left;
+    font-size: 15px
+}

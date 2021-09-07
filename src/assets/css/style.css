@@ -1,0 +1,150 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 14px 20px 4px;
+  background: #2b345f;
+}
+
+.heading {
+  padding-bottom: 2%;
+}
+
+.form {
+  width: 60%;
+  margin: auto;
+  margin-top: 5%;
+  margin-bottom: 10%;
+  background: white;
+  padding: 25px;
+  box-shadow: 6px 6px 10px 2px #00000075;
+  border-radius: 15px;
+}
+
+.form-label {
+  font-weight: bold;
+}
+
+.logo {
+  width: 25%;
+  background: white;
+  padding: 10px;
+  height: auto;
+}
+
+.menu {
+  list-style: none;
+  display: flex;
+}
+
+.menu li {
+  padding-right: 15px;
+  padding: 4px 15px;
+  border-radius: 25px;
+  margin-right: 15px;
+  background: #2b345f;
+  border: 2px solid #ffffff;
+  font-size: 14px;
+}
+
+.menu li:hover {
+  box-shadow: 4px 6px 10px 1px #000000;
+  transition: 0.5s ease;
+  cursor: pointer;
+}
+
+.menu li a {
+  color: #ffffff !important;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+footer {
+  background: #bfbfbf;
+  padding: 15px;
+  position: fixed;
+  width: 100%;
+  top: auto;
+  bottom: 0px;
+  left: 0;
+  right: auto;
+  box-shadow: 0px -3px 10px #00000029;
+}
+
+.content_register {
+  width: 50%;
+  margin: auto;
+  text-align: center;
+  padding: 25px;
+  margin-top: 15%;
+  margin-bottom: 15%;
+}
+
+.otp {
+  width: 50%;
+  margin: auto;
+  margin-top: 5%;
+  margin-bottom: 5%;
+  background: white;
+  padding: 25px;
+  padding: 3em 2em 3em;
+  box-shadow: 6px 6px 10px 2px #00000075;
+  border-radius: 15px;
+}
+
+.error {
+  color: red;
+  font-weight: bold;
+}
+
+.question_query {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.question_query_field {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar {
+  padding: 0 !important;
+}
+
+.manage_file{
+  -webkit-user-modify: read-write
+}
+
+.password-icon{
+  position: absolute;
+  right:35px;
+  top:38px;
+  cursor: pointer;
+}
+
+
+.inprogress{
+color: #597EAA
+}
+
+.completed{
+  color:green;
+  }
+
+.declined{
+  color: red;
+}
+
+
+
+.send{
+  background-color:#00804b40;
+  }
+
+.received{
+  background-color:#e4544633;
+}
