@@ -9,3 +9,6 @@
 .indirCla{
     color : blue;
 }
+.modal-dialog .table tbody{
+    word-break: break-all;
+} 

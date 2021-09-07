@@ -17,7 +17,7 @@ import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import BootstrapTable from "react-bootstrap-table-next";
 import "react-modal-video/scss/modal-video.scss";
-import ReactHlsPlayer from 'react-hls-player'
+import RecordingFilter from "../../../components/Search-Filter/RecordingFilter";
 // import '../../../../node_modules/react-modal-video/scss/modal-video.scss';
 
 
@@ -27,7 +27,7 @@ function Recording() {
     const [feedbackData, setFeedBackData] = useState([]);
     const [isOpen, setIsOpen] = useState(false);
     const [videoid, setVideoId] = useState(null);
-
+    const [records, setRecords] = useState([]);
     const openModal = (videoContent) => {
         setIsOpen(true);
         setVideoId(videoContent);
@@ -39,11 +39,12 @@ function Recording() {
 
     const getRecording = () => {
         axios
-            .get(`${baseUrl}/tl/callRecordingPostlist?assign_id=Q-23-71`)
+            .get(`${baseUrl}/tl/callRecordingPostlist?uid=${JSON.parse(userid)}`)
             .then((res) => {
                 console.log(res);
                 if (res.data.code === 1) {
                     setFeedBackData(res.data.result);
+                    setRecords(res.data.result.length)
                 }
             });
     };
@@ -160,6 +161,13 @@ const canBtn = {
                        </Row>
                    </CardHeader>
                    <CardBody>
+                   <RecordingFilter
+                       setData={setFeedBackData}
+                    //    getData={getInCompleteAssingment}
+                       SearchQuery="SearchQuery"
+                      setRecords={setRecords}
+                       records={records} 
+                    /> 
                        <BootstrapTable
                            bootstrap4
                            keyField="id"

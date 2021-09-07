@@ -803,6 +803,7 @@ import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import "./canvas.css";
 import "../../../assets/fonts/css/icons.css";
+import { useHistory } from "react-router";
 import {
   Modal,
   ModalTitle,
@@ -1317,7 +1318,7 @@ sleep(ms) {
  async GetRecordingStatus(json){
     console.log("GetRecordingStatus",json)
 
-    await this.sleep(3000); 
+    await this.sleep(4000); 
     var resourceId = json.data.resourceId;
     var sid = json.data.sid;
 
@@ -1541,7 +1542,10 @@ const recordingBtnOff = (
     }
     title="Record Off"
   >
-            <FiberManualRecordIcon style={{ color: red[500] }}/>
+             {
+      this.state.showButton == JSON.parse(this.teamKey) ?
+      <FiberManualRecordIcon style={{ color: red[500] }}/> : ""
+    }
   </span>
 );
 

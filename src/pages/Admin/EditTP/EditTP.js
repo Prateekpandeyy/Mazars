@@ -23,6 +23,8 @@ import {
 import { Form, Input, Button } from "antd";
 import Select from "react-select";
 import Alerts from "../../../common/Alerts";
+import { Spinner } from "reactstrap";
+import Swal from "sweetalert2";
 const Schema = yup.object().shape({
   p_name: yup.string().required("required name"),
   p_email: yup.string().email("invalid email").required("required email"),
@@ -74,6 +76,7 @@ function EditTP() {
   const [post1, setPost1] = useState([])
   const [show, setShow] = useState([])
   const [post_na, setPost_na] = useState()
+  const [loading, setLoading] = useState(false);
   const selectInputRef = useRef();
   const { handleSubmit, register, reset, errors } = useForm({
     resolver: yupResolver(Schema),
@@ -218,8 +221,7 @@ function EditTP() {
 
     else {
       setDisplay(true)
-      console.log("kkData", kk.length)
-      console.log("parentCategoryName", parentCategoryName)
+     setLoading(true)
       let formData = new FormData();
       formData.append("personal_email", value.email);
       formData.append("name", value.name);
@@ -260,11 +262,29 @@ function EditTP() {
         .then(function (response) {
           console.log("res-", response);
           if (response.data.code === 1) {
-
-            var variable = "Team Leader details updated successfully."
-            Alerts.SuccessNormal(variable)
+           setLoading(false)
+            // var variable = "Team Leader details updated successfully."
+            // Alerts.SuccessNormal(variable)
+           
+            Swal.fire({
+              "title": "Success",
+              "html": "Team Leader details updated successfully",
+              "icon": "success"
+            })
             history.goBack();
           }
+          else if (response.data.code === 0) {
+            setLoading(false)
+            response.data.message.map((i) => {
+              Swal.fire({
+                "title": "Error",
+                "html": "Something went wrong, please try again.",
+                "icon": "error"
+              })
+            })
+            history.goBack();
+          }
+       
         })
         .catch((error) => {
           console.log("erroror - ", error);
@@ -724,11 +744,15 @@ function EditTP() {
                   <div class="row">
                     <div class="col-md-6">
                       <div class="form-group">
+                      {
+                loading ?
+                  <Spinner color="primary" />
+                  :
                         <Form.Item>
                           <Button type="primary" htmlType="submit">
                             Update
                           </Button>
-                        </Form.Item>
+                        </Form.Item>  }
                       </div>
                     </div>
                   </div>

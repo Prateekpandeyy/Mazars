@@ -20,6 +20,7 @@ import ReactHlsPlayer from 'react-hls-player'
 import { VideoLibraryRounded } from "@material-ui/icons";
 import ReactPlayer from "react-player";
 import { padEnd } from "lodash";
+import RecordingFilter from "../../../components/Search-Filter/RecordingFilter";
 // import '../../../../node_modules/react-modal-video/scss/modal-video.scss';
 
 
@@ -29,7 +30,7 @@ function Recording() {
     const [feedbackData, setFeedBackData] = useState([]);
     const [isOpen, setIsOpen] = useState(false);
     const [videoid, setVideoId] = useState(null);
-
+    const [records, setRecords] = useState([]);
     const openModal = (videoContent) => {
       
         setIsOpen(true);
@@ -47,6 +48,7 @@ function Recording() {
                 console.log(res);
                 if (res.data.code === 1) {
                     setFeedBackData(res.data.result);
+                    setRecords(res.data.result.length)
                 }
             });
     };
@@ -164,6 +166,13 @@ const canBtn = {
                     </Row>
                 </CardHeader>
                 <CardBody>
+                <RecordingFilter
+                       setData={setFeedBackData}
+                    //    getData={getInCompleteAssingment}
+                       SearchQuery="SearchQuery"
+                      setRecords={setRecords}
+                       records={records} 
+                    /> 
                     <BootstrapTable
                         bootstrap4
                         keyField="id"
@@ -181,7 +190,7 @@ const canBtn = {
           
                  
                  <div style={modalBox}>
-                 <span style={canBtn} onClick= {() => setIsOpen(false)}> <CloseIcon /> </span>
+                 <span style={canBtn} onClick= {() => setIsOpen(false)}> <CloseIcon color="red" /> </span>
                 {/* <ReactHlsPlayer
             src={videoid}    autoPlay={false}
             controls={true}

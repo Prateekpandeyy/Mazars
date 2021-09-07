@@ -46,19 +46,25 @@ function TaxProfessionalsTab() {
   const toggle = (key) => {
     console.log("key", key);
     setModal(!modal);
-
-    fetch(`${baseUrl}/admin/userhistory?id=${key}`, {
-      method: "GET",
-      headers: new Headers({
-        Accept: "application/vnd.github.cloak-preview",
-      }),
-    })
-      .then((res) => res.json())
-      .then((response) => {
-        console.log(response);
-        setHistory(response.result);
+    if(typeof(key) == "object") {
+      console.log("cancle")
+    }
+    else{
+      fetch(`${baseUrl}/admin/userhistory?id=${key}`, {
+        method: "GET",
+        headers: new Headers({
+          Accept: "application/vnd.github.cloak-preview",
+        }),
       })
-      .catch((error) => console.log(error));
+        .then((res) => res.json())
+        .then((response) => {
+          console.log(response);
+          setHistory(response.result);
+        })
+        .catch((error) => console.log(error));
+    }
+    
+   
   };
 
 

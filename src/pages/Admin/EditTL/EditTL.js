@@ -23,6 +23,7 @@ import Reset from "./Reset";
 import { Form, Input, Button } from "antd";
 import Select from "react-select";
 import Alerts from "../../../common/Alerts";
+import { Spinner } from "reactstrap";
 const Schema = yup.object().shape({
   p_name: yup.string().required("required name"),
   p_email: yup.string().email("invalid email").required("required email"),
@@ -69,6 +70,7 @@ function EditTL() {
   const [error, setError] = useState()
   const [error2, setError2] = useState();
   const [custCate2, setCustcate2] = useState([])
+  const [loading, setLoading] = useState(false);
   const { handleSubmit, register, reset, errors } = useForm({
     resolver: yupResolver(Schema),
   });
@@ -183,6 +185,7 @@ console.log(data2)
       setDisplay(false)
     }
     else {
+      setLoading(true)
       setDisplay(true)
       let formData = new FormData();
       formData.append("personal_email", value.email);
@@ -209,6 +212,7 @@ console.log(data2)
         .then(function (response) {
           console.log("res-", response);
           if (response.data.code === 1) {
+            setLoading(false)
             Swal.fire({
               "title": "Success",
               "html": "Team Leader Updated Successfully",
@@ -218,6 +222,18 @@ console.log(data2)
          
            
           }
+          else if (response.data.code === 0) {
+            setLoading(false)
+            response.data.message.map((i) => {
+              Swal.fire({
+                "title": "Error",
+                "html": "Something went wrong, please try again.",
+                "icon": "error"
+              })
+            })
+            history.goBack();
+          }
+       
         })
         .catch((error) => {
           console.log("erroror - ", error);
@@ -665,11 +681,15 @@ if(data5 != undefined){
                   <div class="row">
                     <div class="col-md-6">
                       <div class="form-group">
+                      {
+                loading ?
+                  <Spinner color="primary" />
+                  :
                         <Form.Item>
                           <Button type="primary" htmlType="submit">
                             Update
                           </Button>
-                        </Form.Item>
+                        </Form.Item>  }
                       </div>
                     </div>
                   </div>

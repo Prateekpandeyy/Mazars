@@ -109,13 +109,17 @@ export default class YourComponent extends React.Component {
             return <div>Loading...</div>
         }
         return (
+            <>
+           
             <div className="inputs">
-                  <tr style={{display : "flex", width : "100%", justifyContent : "space-around"}}>
-                    <td>Payment</td>
-                    <td>Due Dates</td>
-                </tr>
-                {fieldsArray}
-            </div>
+                {this.props.installment > 0 ?
+            <tr style={{display : "flex", width : "100%", justifyContent : "space-around"}}>
+              <td>Payment</td>
+              <td>Due Dates</td>
+          </tr> : ""}
+          {fieldsArray}
+      </div>
+      </>
         );
     }
 }

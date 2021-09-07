@@ -1,3 +1,4 @@
+import { values } from "lodash";
 import React from "react";
 import { Spinner } from 'reactstrap';
 
@@ -67,13 +68,17 @@ export default class Payment extends React.Component {
         }
 
         return (
+            <>
+           
             <div className="inputs">
+                {this.props.installment > 0 ?
             <tr style={{display : "flex", width : "100%", justifyContent : "space-around"}}>
               <td>Payment</td>
               <td>Due Dates</td>
-          </tr>
+          </tr> : ""}
           {fieldsArray}
       </div>
+      </>
         );
     }
 }

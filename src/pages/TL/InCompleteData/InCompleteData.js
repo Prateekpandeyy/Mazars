@@ -128,39 +128,39 @@ function InCompleteData({ CountIncomplete }) {
         return oldDate.toString().split("-").reverse().join("-");
       },
     },
-    // {
-    //   text: "Status",
-    //   headerStyle: () => {
-    //     return { fontSize: "12px" };
-    //   },
-    //   formatter: function nameFormatter(cell, row) {
-    //     return (
-    //       <>
-    //         <div>
-    //           {row.status}{row.statusdescription && "/"}
-    //           {
-    //             row.status == "Inprogress Query" ?
-    //               <p className="inprogress">
-    //                 {row.statusdescription}
-    //               </p>
-    //               :
-    //               row.status == "Declined Query" ?
-    //                 <p className="declined">
+    {
+      text: "Status",
+      headerStyle: () => {
+        return { fontSize: "12px" };
+      },
+      formatter: function nameFormatter(cell, row) {
+        return (
+          <>
+            <div>
+              {row.status}{row.statusdescription && "/"}
+              {
+                row.status == "Inprogress Query" ?
+                  <p className="inprogress">
+                    {row.statusdescription}
+                  </p>
+                  :
+                  row.status == "Declined Query" ?
+                    <p className="declined">
 
-    //                   {row.statusdescription}
-    //                 </p> :
-    //                 row.status == "Completed Query" ?
-    //                   <p className="completed">
+                      {row.statusdescription}
+                    </p> :
+                    row.status == "Completed Query" ?
+                      <p className="completed">
 
-    //                     {row.statusdescription}
-    //                   </p> :
-    //                   null
-    //           }
-    //         </div>
-    //       </>
-    //     );
-    //   },
-    // },
+                        {row.statusdescription}
+                      </p> :
+                      null
+              }
+            </div>
+          </>
+        );
+      },
+    },
     {
       text: "Action",
       dataField: "",

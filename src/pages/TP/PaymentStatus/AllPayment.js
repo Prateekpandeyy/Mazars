@@ -23,7 +23,7 @@ import TaxProfessionalFilter from "../../../components/Search-Filter/tpfilter";
 import PaymentIcon from '@material-ui/icons/Payment';
 import AssessmentIcon from '@material-ui/icons/Assessment';
 import RejectedModal from "./RejectedModal";
-// import DiscardReport from "../AssignmentTab/DiscardReport";
+import DiscardReport from "../AssignmentTab/DiscardReport";
 
 
 
@@ -50,10 +50,10 @@ function AllPayment() {
     };
 
     const [ViewDiscussion, setViewDiscussion] = useState(false);
-    // const ViewDiscussionToggel = (key) => {
-    //     setViewDiscussion(!ViewDiscussion);
-    //     setAssignNo(key)
-    // }
+    const ViewDiscussionToggel = (key) => {
+        setViewDiscussion(!ViewDiscussion);
+        setAssignNo(key)
+    }
 
     useEffect(() => {
         getPaymentStatus();
@@ -327,7 +327,7 @@ function AllPayment() {
                                         cursor: "pointer",
                                         color: "orange"
                                     }}
-                                    // onClick={() => ViewDiscussionToggel(row.assign_no)}
+                                    onClick={() => ViewDiscussionToggel(row.assign_no)}
                                 ></i>
                             </div>
 
@@ -369,12 +369,12 @@ function AllPayment() {
                         getPaymentStatus={getPaymentStatus}
                     />
 
-                    {/* <DiscardReport
+                    <DiscardReport
                         ViewDiscussionToggel={ViewDiscussionToggel}
                         ViewDiscussion={ViewDiscussion}
                         report={assignNo}
                         getData={getPaymentStatus}
-                    /> */}
+                    />
                     <Modal isOpen={modal} fade={false} toggle={toggle}>
                         <ModalHeader toggle={toggle}>History</ModalHeader>
                         <ModalBody>

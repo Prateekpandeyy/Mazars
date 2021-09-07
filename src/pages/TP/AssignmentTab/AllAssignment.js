@@ -325,9 +325,12 @@ function AssignmentTab() {
               title="Add Assignment stages"
               style={{ cursor: "pointer", textAlign: "center" }}
             >
+                {
+           row.paid_status == "2" ? null :
               <Link to={`/taxprofessional/addassingment/${row.q_id}`}>
                 <i class="fa fa-tasks"></i>
               </Link>
+      }
             </div>
           </>
         );
@@ -341,8 +344,7 @@ function AssignmentTab() {
       formatter: function (cell, row) {
         return (
           <>
-         {
-           row.paid_status == "2" ? null : 
+        
            <div
            style={{
              display: "flex",
@@ -432,7 +434,7 @@ function AssignmentTab() {
            </div>
 
          </div>
-         }
+         
           </>
         );
       },

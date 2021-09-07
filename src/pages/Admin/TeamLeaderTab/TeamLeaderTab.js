@@ -18,6 +18,7 @@ import BootstrapTable from "react-bootstrap-table-next";
 import Swal from "sweetalert2";
 import { TurnedIn } from "@material-ui/icons";
 import History from './History.js';
+import { InputAdornment } from "@material-ui/core";
 function TeamLeaderTab() {
   const alert = useAlert();
   const [data, setData] = useState([]);
@@ -34,21 +35,29 @@ function TeamLeaderTab() {
   const toggle = (key) => {
     console.log("key", key);
     setModal(!modal);
-
-    fetch(`${baseUrl}/admin/userhistory?id=${key}`, {
-      method: "GET",
-      headers: new Headers({
-        Accept: "application/vnd.github.cloak-preview",
-      }),
-    })
-      .then((res) => res.json())
-      .then((response) => {
-        console.log(response);
-        setHistory(response.result);
+console.log("key", typeof(key))
+   if(typeof(key) == "object") {
+     console.log("cancle")
+   }
+   else{
+    {
+      fetch(`${baseUrl}/admin/userhistory?id=${key}`, {
+        method: "GET",
+        headers: new Headers({
+          Accept: "application/vnd.github.cloak-preview",
+        }),
       })
-      .catch((error) => console.log(error));
-  };
-
+        .then((res) => res.json())
+        .then((response) => {
+          console.log(response);
+          setHistory(response.result);
+        })
+        .catch((error) => console.log(error));
+    };
+   }
+   
+   
+  }
   const columns = [
     {
       dataField: "",

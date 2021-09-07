@@ -56,7 +56,7 @@ function Schedule() {
             </Tab>
            
             <Tab style={tabIndex == 1 ? myStyle2 : myStyle1}>
-             Recording
+           Meeting Records
             </Tab>
           </TabList>
 

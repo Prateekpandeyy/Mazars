@@ -183,7 +183,8 @@ function ViewReport({
                     <td>
                     <p>  {p.stages_type == 2 && "Draft Report" || p.stages_type == 3 && "Final Report"}</p>
                  <br></br> 
-                 Reviewed Report  </td>
+                 {p.customer_files === null ?  "" : <p>   Reviewed Report </p> }
+                </td>
                     {
                       p.stages_type == "2" ?
                         <td>

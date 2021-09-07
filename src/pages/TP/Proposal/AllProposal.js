@@ -8,7 +8,7 @@ import "antd/dist/antd.css";
 import BootstrapTable from "react-bootstrap-table-next";
 import TaxProfessionalFilter from "../../../components/Search-Filter/tpfilter";
 import ChatHistory from "./ChatHistory";
-// import DiscardReport from "../AssignmentTab/DiscardReport";
+ import DiscardReport from "../AssignmentTab/DiscardReport";
 
 
 
@@ -32,6 +32,7 @@ function AllProposal() {
     const [assignNo, setAssignNo] = useState('');
     const [ViewDiscussion, setViewDiscussion] = useState(false);
     const ViewDiscussionToggel = (key) => {
+      
         setViewDiscussion(!ViewDiscussion);
         setAssignNo(key)
     }
@@ -316,7 +317,7 @@ function AllProposal() {
                                 }
                             </div>
 
-                            <div title="View Discussion Message">
+                            {/* <div title="View Discussion Message">
                                 <i
                                     class="fa fa-comments-o"
                                     style={{
@@ -324,9 +325,9 @@ function AllProposal() {
                                         cursor: "pointer",
                                         color: "orange"
                                     }}
-                                    // onClick={() => ViewDiscussionToggel(row.assign_no)}
+                                    onClick={() => ViewDiscussionToggel(row.assign_no)}
                                 ></i>
-                            </div>
+                            </div> */}
                         </div>
                     </>
                 );
@@ -461,12 +462,12 @@ function AllProposal() {
                         addPaymentModal={addPaymentModal}
                         qno={id}
                     />
-                    {/* <DiscardReport
+                    <DiscardReport
                         ViewDiscussionToggel={ViewDiscussionToggel}
                         ViewDiscussion={ViewDiscussion}
                         report={assignNo}
                         getData={getProposalList}
-                    /> */}
+                    />
                 </CardBody>
             </Card>
         </>

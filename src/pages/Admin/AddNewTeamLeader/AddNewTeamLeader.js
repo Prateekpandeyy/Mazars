@@ -12,7 +12,7 @@ import { Card, CardHeader } from "reactstrap";
 import { useHistory } from "react-router-dom";
 import classNames from "classnames";
 import Mandatory from "../../../components/Common/Mandatory";
-
+import { Spinner } from "reactstrap";
 const Schema = yup.object().shape({
   p_name: yup.string().required("required name"),
   p_email: yup.string().email("invalid email").required("required email"),
@@ -59,6 +59,7 @@ function AddNew() {
   const [invalidPost, setInvalidPost] = useState(null)
   const [wEmail, setWemail] = useState();
   const [wEmailPost, setWemailPost] = useState();
+  const [loading, setLoading] = useState(false);
 
   const [display, setDisplay] = useState(false);
   const [dd, setDd] = useState({
@@ -127,6 +128,7 @@ function AddNew() {
   // OnSubmit Function
 
   const onSubmit = (value) => {
+   
     console.log((JSON.stringify(dd)))
     var categeryList = []
     var categeryName = []
@@ -157,7 +159,8 @@ function AddNew() {
 
     else {
       setDisplay(true)
-      console.log("ddd", dd)
+      setLoading(true)
+    
       let formData = new FormData();
 
       formData.append("personal_email", value.p_email);
@@ -182,6 +185,7 @@ function AddNew() {
         .then(function (response) {
 
           if (response.data.code === 1) {
+            setLoading(false)
             Swal.fire({
               "title": "Success",
               "html": "Team Leader created successfully.",
@@ -191,9 +195,15 @@ function AddNew() {
             history.goBack();
           }
           if (response.data.code === 0) {
+            setLoading(false)
             response.data.message.map((i) => {
-
+              Swal.fire({
+                "title": "Error",
+                "html": "Something went wrong, please try again.",
+                "icon": "error"
+              })
             })
+            history.goBack();
           }
 
         })
@@ -661,10 +671,13 @@ function AddNew() {
                     </div>
                   </div>
                 </div>
-
+                {
+                loading ?
+                  <Spinner color="primary" />
+                  :
                 <button type="submit" className="btn btn-primary">
                   Submit
-                </button>
+                </button> }
               </form>
             </div>
             <div class="col-lg-2 col-xl-2 col-md-12">

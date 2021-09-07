@@ -12,7 +12,7 @@ import { Card, CardHeader } from "reactstrap";
 import { useHistory } from "react-router-dom";
 import classNames from "classnames";
 import Mandatory from "../../../components/Common/Mandatory";
-
+import { Spinner } from "reactstrap";
 
 const Schema = yup.object().shape({
   p_name: yup.string().required("required name"),
@@ -62,6 +62,7 @@ function AddNew() {
   const [post1, setPost1] = useState([])
   const [post_na, setPost_na] = useState()
   const [tpEmail, setTpEmail] = useState('')
+  const [loading, setLoading] = useState(false);
   var kk = []
   var vv = []
   var post_name;
@@ -150,7 +151,8 @@ function AddNew() {
 
     else {
       console.log("value :", value);
-
+      setLoading(true)
+    
       let formData = new FormData();
       formData.append("personal_email", value.personal_email)
       formData.append("name", value.p_name);
@@ -173,7 +175,8 @@ function AddNew() {
         .then(function (response) {
           console.log("res-", response);
           if (response.data.code === 1) {
-
+            setLoading(false)
+    
             var variable = "Tax Professional Created Successfully"
 
             Swal.fire({
@@ -181,7 +184,19 @@ function AddNew() {
               "html": "Tax Professional Created Successfully",
               "icon": "success"
             })
-
+ 
+            history.goBack();
+            
+          }
+          else if (response.data.code === 0) {
+            setLoading(false)
+            response.data.message.map((i) => {
+              Swal.fire({
+                "title": "Error",
+                "html": "Something went wrong, please try again.",
+                "icon": "error"
+              })
+            })
             history.goBack();
           }
         })
@@ -641,9 +656,13 @@ function AddNew() {
                     </div>
                   </div>
                 </div>
+                {
+                loading ?
+                  <Spinner color="primary" />
+                  :
                 <button type="submit" className="btn btn-primary">
                   Submit
-                </button>
+                </button> }
               </form>
             </div>
             <div class="col-lg-2 col-xl-2 col-md-12">

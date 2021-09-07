@@ -124,7 +124,7 @@ const viewStyle = {
                   
                   <br>
                   </br> 
-                  Reviewed Report</td>
+                  {p.customer_files === null ?  "" : <p>   Reviewed Report </p> }</td>
                     <td>
                       {
                         p.stages_type == "2" ?

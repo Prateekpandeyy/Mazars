@@ -42,10 +42,10 @@ function Chatting(props) {
   const [item, setItem] = useState("");
   const [data, setData] = useState({})
   const { message_type, query_id, query_No, routes } = data
-
+const [showTl, setShowTl] = useState(false)
 
   useEffect(() => {
-    console.log("useEffect", props)
+   
     const dataItem = props.location.obj
 
     if (dataItem) {
@@ -58,7 +58,21 @@ function Chatting(props) {
     setItem(data2.message_type)
   }, []);
 
+  useEffect(() => {
+    checkAssigned();
+  }, [item]);
 
+  const checkAssigned = () => {
+    axios
+    .get(`${baseUrl}/tl/TlCheckIfAssigned?assignno=${query_No}`).then((res) => {
+           if(res.data.code === 0){
+                setShowTl(false)
+           }
+           else{
+             setShowTl(true)
+           }
+         })
+  };
 
 
   const onSubmit = (value) => {
@@ -169,8 +183,11 @@ function Chatting(props) {
                         >
                           <option value="">--select--</option>
                           <option value="customer">Customer</option>
+                          {showTl === true ?
+                          <>
                           <option value="tp">Tax Professional</option>
-                          <option value="both">Both</option>
+                          <option value="both">Both</option> 
+                          </>: ""}
                         </select>
                         {errors.p_to && (
                           <div className="invalid-feedback">

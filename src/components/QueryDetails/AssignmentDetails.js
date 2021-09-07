@@ -26,7 +26,7 @@ function AssignmentDetails({ p, diaplayAssignment, diaplayProposal, reports, ass
     // var difference = date2.getTime() - date1.getTime();
     // return difference;
   };
-
+console.log("reports", reports)
   console.log("reports", reports)
   return (
     <>
@@ -125,7 +125,7 @@ function AssignmentDetails({ p, diaplayAssignment, diaplayProposal, reports, ass
                           </a>
                         </td>
                         <td style={{ marginLeft: "15px", color: "green" }}>
-                          {p.stages_type == 2 && "Draft Report" || p.stages_type == 3 && "Final Report"}
+                          {p.stages_type == 2 && p.revise_report == null && "Draft Report" || p.stages_type == 3 && p.revise_report == null && "Final Report" || p.revise_report != null && "Reviewed Report"}
                         </td>
                         <td>
                           {p.status == "3"

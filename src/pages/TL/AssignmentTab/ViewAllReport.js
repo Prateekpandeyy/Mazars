@@ -170,7 +170,7 @@ function ViewReport({
                     <p>  {p.stages_type == 2 && "Draft Report" || p.stages_type == 3 && "Final Report"}</p>
                  <br>
                  </br> 
-                 Review report  </td>
+                 {p.customer_files === null ?  "" : <p>   Reviewed Report </p> } </td>
                     <td>
                       {
                         p.stages_type == "2" ?

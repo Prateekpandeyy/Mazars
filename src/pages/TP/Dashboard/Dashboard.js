@@ -75,7 +75,7 @@ function Dashboard() {
 
     const getAllQueries = () => {
       axios
-        .get(`${baseUrl}/admin/totalComplete?tp_id=${JSON.parse(userid)}`)
+        .get(`${baseUrl}/tp/totalComplete?tp_id=${JSON.parse(userid)}`)
         .then((response) => {
           console.log("code---", response);
           if (response.data.code === 1) {

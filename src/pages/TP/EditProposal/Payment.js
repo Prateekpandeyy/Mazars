@@ -79,8 +79,8 @@ export default class YourComponent extends React.Component {
         for (var i = 0; i < this.props.installment; i++) {
             fieldsArray.push(
                 <div className="row">
-                    <div class="col-md-6">
-                        <label>Amount</label>
+                    <div class="col-md-6 my-2">
+
                         <input
                             type="text"
                             className="form-control"
@@ -90,8 +90,8 @@ export default class YourComponent extends React.Component {
                         />
                     </div>
 
-                    <div class="col-md-6">
-                        <label>Due Dates</label>
+                    <div class="col-md-6 my-2">
+                      
                         <input
                             type="date"
                             className="form-control"
@@ -108,9 +108,17 @@ export default class YourComponent extends React.Component {
             return <div>Loading...</div>
         }
         return (
+            <>
+           
             <div className="inputs">
-                {fieldsArray}
-            </div>
+                {this.props.installment > 0 ?
+            <tr style={{display : "flex", width : "100%", justifyContent : "space-around"}}>
+              <td>Payment</td>
+              <td>Due Dates</td>
+          </tr> : ""}
+          {fieldsArray}
+      </div>
+      </>
         );
     }
 }
