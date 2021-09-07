@@ -16,7 +16,8 @@ import { baseUrl } from "../../config/config";
 import BootstrapTable from "react-bootstrap-table-next";
 import "react-modal-video/scss/modal-video.scss";
 import ReactHlsPlayer from 'react-hls-player'
-import ReactPlayer from 'react-player'
+import ReactPlayer from 'react-player';
+import CloseIcon from '@material-ui/icons/Close';
 // import '../../../../node_modules/react-modal-video/scss/modal-video.scss';
 
 
@@ -36,7 +37,25 @@ function QueryRecording(assingNo) {
 
         getRecording();
     }, []);
-   
+    const modalBox = {
+        display : "flex",
+        position : "absolute",
+        top : "10%",
+        left : "0%",
+        botttom: "0%", 
+        right: "0%",
+       
+        width : "100%", 
+        height: "auto"
+    }
+const canBtn = {
+    position: "absolute",
+    top: "0",
+    right: "10px",
+    left: "90%",
+    padding: "20px",
+    cursor : "pointer"
+}
 console.log("assignNo", assingNo.assingNo)
     const getRecording = () => {
         axios
@@ -153,13 +172,42 @@ console.log("assignNo", assingNo.assingNo)
                     />
                 </CardBody>
             </Card>
-            <ReactHlsPlayer
+            {isOpen === true ?
+          
+                 
+          <div style={modalBox}>
+          <span style={canBtn} onClick= {() => setIsOpen(false)}> <CloseIcon color="red" /> </span>
+         {/* <ReactHlsPlayer
+     src={videoid}    autoPlay={false}
+     controls={true}
+     width="100%"
+     height="100%"
+     hlsConfig={{
+         maxLoadingDelay: 4,
+         minAutoBitrate: 0,
+         lowLatencyMode: true,
+       }}
+   /> */}
+
+   <div style={{margin: "50px 0 0 0"}}>
+   <ReactPlayer
+     url={videoid}
+     controls={true}
+     playing={false}
+     width='100%'
+     height='100%'
+    />
+       </div>
+     
+    </div>
+  : ""}
+            {/* <ReactHlsPlayer
     src={videoid}   
      autoPlay={false}
     controls={true}
     width="100%"
     height="auto"
-  />
+  /> */}
             {/* <ReactHlsPlayer
     src={videoid}
     hlsConfig={{

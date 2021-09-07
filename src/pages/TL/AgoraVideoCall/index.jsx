@@ -79,6 +79,7 @@ class AgoraCanvas extends React.Component {
       recordDisplay: false,
       data: {},
       item:{},
+      showRecBtn : false,
       showButton : ''
     };
 
@@ -395,35 +396,41 @@ schdrularName;
     });
   };
 
-  handleExit = (e) => {
-    if (e.currentTarget.classList.contains("disabled")) {
-      return;
-    }
-    try {
-      this.client && this.client.unpublish(this.localStream);
-      this.localStream && this.localStream.close();
-      if (this.state.stateSharing) {
-        this.shareClient && this.shareClient.unpublish(this.shareStream);
-        this.shareStream && this.shareStream.close();
-      }
-      this.client &&
-        this.client.leave(
-          () => {
-            console.log("Client succeed to leave.");
-          },
-          () => {
-            console.log("Client failed to leave.");
-          }
-        );
-    } finally {
-      this.setState({ readyState: false });
-      this.client = null;
-      this.localStream = null;
-      // redirect to index
-      window.location.hash = "/teamleader/schedule";
-    }
-  };
+  // handleExit = (e) => {
+  //   if (e.currentTarget.classList.contains("disabled")) {
+  //     return;
+  //   }
+  //   try {
+  //     this.client && this.client.unpublish(this.localStream);
+  //     this.localStream && this.localStream.close();
+  //     if (this.state.stateSharing) {
+  //       this.shareClient && this.shareClient.unpublish(this.shareStream);
+  //       this.shareStream && this.shareStream.close();
+  //     }
+  //     this.client &&
+  //       this.client.leave(
+  //         () => {
+  //           console.log("Client succeed to leave.");
+  //         },
+  //         () => {
+  //           console.log("Client failed to leave.");
+  //         }
+  //       );
+  //   } finally {
+  //     this.setState({ readyState: false });
+  //     this.client = null;
+  //     this.localStream = null;
+  //     this.setState({showRecBtn : true})
+  //     // // redirect to index
+  //     window.location.hash = "/teamleader/schedule";
+  //   }
+  // };
 
+
+  handleExit = () => {
+    this.stop();
+    this.setState({showRecBtn : true})
+  }
   sharingScreen = (e) => {
     if (this.state.stateSharing) {
       this.shareClient && this.shareClient.unpublish(this.shareStream);
@@ -712,8 +719,8 @@ async startRecording(key){
 
     const exitBtn = (
       <span
-        onClick={this.handleExit}
-        className={
+      onClick={this.stopRecording}
+             className={
           this.state.readyState ? "ag-btn exitBtn" : "ag-btn exitBtn disabled"
         }
         title="Exit"
@@ -721,25 +728,32 @@ async startRecording(key){
         <i className="ag-icon ag-icon-leave"></i>
       </span>
     );
-
+const recStart = () => {
+  this.accuire();
+  this.setState({ showRecBtn: false  });
+}
 //recording btn on
-    // const recordingBtn = (
-    //   <span
-    //     onClick={this.accuire}
-    //     className={
-    //       this.state.readyState ? "ag-btn exitBtn" : "ag-btn exitBtn disabled"
-    //     }
-    //     title="Record On"
-    //   >
-    //     <FiberManualRecordIcon style={{ color: green[500] }}/>
-    //   </span>
-    // );
+    const recordingBtn = (
+      <span
+        onClick={this.recStart}
+        className={
+          this.state.readyState ? "ag-btn exitBtn" : "ag-btn exitBtn disabled"
+        }
+        title="Record On"
+      >{
+        this.state.showRecBtn === true ?
+      
+        <FiberManualRecordIcon style={{ color: green[500] }}/> : ""}
+      </span>
+    );
 
 
 //recording btn off
 const recordingBtnOff = (
   <span
-    onClick={this.stopRecording}
+  onClick={this.handleExit}
+
+    
     className={
       this.state.readyState ? "ag-btn exitBtn" : "ag-btn exitBtn disabled"
     }

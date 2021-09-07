@@ -32,7 +32,7 @@ function QueryDetails({
   feedback,
   reports
 }) {
-  console.log("p", p);
+  console.log("p", customerQuery);
 
   // const history = useHistory();
 
@@ -86,13 +86,14 @@ function QueryDetails({
               Feedback
             </NavLink>
           </NavItem>
+          {customerQuery === "customerQuery" ? null :
           <NavItem>
             <NavLink
             className = {classnames({ active : activeTab === '5'})}
             onClick = {() => { toggle('5');}} >
               Recording
             </NavLink>
-          </NavItem>
+          </NavItem> }
           {/* <NavItem>
             <NavLink
               className={classnames({ active: activeTab === '5' })}
