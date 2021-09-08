@@ -21,7 +21,7 @@ import Records from "../../../components/Records/Records";
 import ViewAllReportModal from "./ViewAllReport";
 import DescriptionOutlinedIcon from '@material-ui/icons/DescriptionOutlined';
 import DiscardReport from "../AssignmentTab/DiscardReport";
-
+import moment from "moment";
 
 function AssignmentComponent() {
   const userid = window.localStorage.getItem("adminkey");
@@ -40,10 +40,9 @@ function AssignmentComponent() {
   const [report, setReport] = useState();
 
   var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
-  console.log("current_date :", current_date);
+  
   const [item] = useState(current_date);
-
-
+   var rowStyle2 = {}
   const [reportModal, setReportModal] = useState(false);
   const ViewReport = (key) => {
     console.log("key - ", key);
@@ -152,7 +151,7 @@ function AssignmentComponent() {
         return { fontSize: "12px" };
       },
       formatter: function dateFormat(cell, row) {
-        console.log("dt", row.date_of_query);
+     
         var oldDate = row.date_of_query;
         if (oldDate == null) {
           return null;
@@ -250,7 +249,8 @@ function AssignmentComponent() {
         return { fontSize: "12px" };
       },
       formatter: function dateFormat(cell, row) {
-        console.log("dt", row.Exp_Delivery_Date);
+        
+      
         var oldDate = row.Exp_Delivery_Date;
         if (oldDate == null) {
           return null;
@@ -362,7 +362,20 @@ function AssignmentComponent() {
       },
     },
   ];
+  rowStyle2 = (row, index) => {
+    const style = {}
+    var warningDate = moment(row.Exp_Delivery_Date).subtract(2, 'day').toDate();
+    // var warnformat = warningDate.format("YYYY-MM-DD");
+    var aa = moment().toDate();
+   
 
+    if(row.paid_status != "2" && warningDate < aa)  {
+      style.backgroundColor = "#c1d8f2";
+      style.color = "#000111"
+    }
+  
+    return style;
+  }
   const onSubmit = (data) => {
     console.log("data :", data);
     console.log("selectedData :", selectedData);
@@ -553,6 +566,7 @@ function AssignmentComponent() {
             keyField="id"
             data={assignmentDisplay}
             columns={columns}
+            rowStyle={ rowStyle2 }
             rowIndex
           />
 

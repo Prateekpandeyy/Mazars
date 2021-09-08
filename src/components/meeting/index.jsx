@@ -4,7 +4,7 @@ import * as Cookies from "js-cookie";
 import "./meeting.css";
 import AgoraVideoCall from "../AgoraVideoCall/index";
 import { AGORA_APP_ID } from "../../agora.config";
-
+import ReactPlayer from "react-player";
 
 class Meeting extends React.Component {
   constructor(props) {
@@ -20,12 +20,19 @@ class Meeting extends React.Component {
       return alert("Get App ID first!");
     }
     this.uid = undefined;
+    this.state = {
+      showmeetingScreen : false
+    }
   }
 
   render() {
     return (
+      
       <div className="wrapper meeting">
-        <div
+                 
+         {this.state.showmeetingScreen === true ?
+       <div>
+          <div
           className="ag-header"
           style={{ color: "green", fontWeight: "bold" }}
         >
@@ -46,9 +53,19 @@ class Meeting extends React.Component {
               baseMode={this.baseMode}
               appId={this.appId}
               uid={this.uid}
+              id={this.props.id}
             />
           </div>
         </div>
+         </div> : 
+         <ReactPlayer
+         url="https://www.youtube.com/watch?v=F7mKD2Un65I"
+         controls={true}
+         playing={true}
+         onEnded={() => this.setState({showmeetingScreen : true})}
+         width='100%'
+         height='600px'
+        />}
       </div>
     );
   }

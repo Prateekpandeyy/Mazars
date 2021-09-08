@@ -205,7 +205,14 @@ function Sidebar({ adminDashboard, custDashboard, TLDashboard, TPDashboard }) {
                   </span>
                 </NavLink>
               </li>
-
+               <li class ="nav-item">
+                 <NavLink to={"/admin/customers"}>
+                   <i class="fa fa-users"></i>
+                   <span class="menu-title" data-i18n="">
+                   customers
+                  </span>
+                 </NavLink>
+               </li>
               <li class="nav-item">
                 <NavLink to={"/admin/feedback"}>
                   <i class="fa fa-file-text"></i>

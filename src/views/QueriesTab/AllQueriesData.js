@@ -200,13 +200,12 @@ function AllQueriesData() {
                 return { fontSize: "12px", textAlign: "center", width: "130px" };
             },
             formatter: function (cell, row) {
-                var dateMnsFive = moment(row.exp_delivery_date).add(15, 'day');  
-                 var date = dateMnsFive.format("YYYY-MM-DD");
-                 if(moment().diff(date) > 0){
+                var dateMnsFive = moment(row.exp_delivery_date).add(15, 'day').toDate();  
+                var curDate = moment().toDate();
+                 if(dateMnsFive > curDate){
                      setfeedback(true)
                  }
-                 console.log(moment().diff(date))
-                //  { moment().diff(date) > 0 ? setfeedback(true): ""}
+                
                 return (
                     <>
                         {

@@ -188,17 +188,7 @@ const canBtn = {
                  
                  <div style={modalBox}>
                  <span style={canBtn} onClick= {() => setIsOpen(false)}> <CloseIcon color="red" /> </span>
-                {/* <ReactHlsPlayer
-            src={videoid}    autoPlay={false}
-            controls={true}
-            width="100%"
-            height="100%"
-            hlsConfig={{
-                maxLoadingDelay: 4,
-                minAutoBitrate: 0,
-                lowLatencyMode: true,
-              }}
-          /> */}
+                
        
           <div style={{margin: "50px 0 0 0"}}>
           <ReactPlayer

@@ -68,7 +68,8 @@ const canBtn = {
     right: "10px",
     left: "90%",
     padding: "20px",
-    cursor : "pointer"
+    cursor : "pointer", 
+    color : "red"
 }
     const columns = [
         {

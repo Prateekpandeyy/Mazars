@@ -253,3 +253,8 @@ const assessment_year = [
     year: "2027-28",
   },
 ];
+style.backgroundColor = "#7eb5a6";
+style.color = "white"
+
+style.backgroundColor = "#f3f0d7";
+style.color = "#000000"

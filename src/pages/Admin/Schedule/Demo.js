@@ -642,17 +642,16 @@ function Demo() {
     <div onDoubleClick={() => B(data.owner)}>
       <Appointments.Appointment {...restProps}>
         <div style={{ display: "flex" }}>
-          {
-            console.log("data", data)
-          }
+        <i
+            class="fa fa-video-camera"
+            onClick={() => handleJoin(data)}
+            style={{ fontSize: "18px", padding: "5px" , color: "#fff" }}
+          ></i>
           <div>{children}</div>
           
           <div
-            onClick={() => handleJoin(data)}
-          ><i
-            class="fa fa-video-camera"
-            style={{ fontSize: "12px", color: "#fff" }}
-          ></i>
+          
+          >
           </div>
         </div>
       </Appointments.Appointment>

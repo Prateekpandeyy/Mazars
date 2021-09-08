@@ -352,7 +352,7 @@ function AssignmentTab() {
            
            
               {
-              row.client_discussion == "completed" && row.draft_report == "inprogress" ?
+              row.client_discussion == "completed" && row.draft_report == "inprogress" && row.paid_status !=2 ?
               <div title="upload Pdf">
               <p
                 style={{ cursor: "pointer", color: "green" }}
