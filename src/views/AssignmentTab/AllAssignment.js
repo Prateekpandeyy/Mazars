@@ -200,7 +200,7 @@ function AllAssignment() {
           <>
 
             {
-              row.status == "Payment decliend" ? null :
+              row.status == "Payment decliend" || row.paid_status == "2" ? null :
                 <div>
                   {row.assignment_draft_report || row.final_report ?
                     <div title="View All Report"
@@ -234,44 +234,45 @@ function AllAssignment() {
       formatter: function (cell, row) {
         return (
           <>
+            {row.paid_status === "2" ? null :
             <div style={{ display: "flex", justifyContent: "space-between" }}>
 
-              <div title="Send Message">
-                <Link
-                  to={{
-                    pathname: `/customer/chatting/${row.id}`,
-                    obj: {
-                      message_type: "4",
-                      query_No: row.assign_no,
-                      query_id: row.id,
-                      routes: `/customer/assignment`
-                    }
-                  }}
-                >
-                  <i
-                    class="fa fa-comments-o"
-                    style={{
-                      fontSize: 16,
-                      cursor: "pointer",
-                      color: "blue"
-                    }}
-                  ></i>
-                </Link>
-              </div>
-
-              <div title="View Discussion Message">
+            <div title="Send Message">
+              <Link
+                to={{
+                  pathname: `/customer/chatting/${row.id}`,
+                  obj: {
+                    message_type: "4",
+                    query_No: row.assign_no,
+                    query_id: row.id,
+                    routes: `/customer/assignment`
+                  }
+                }}
+              >
                 <i
                   class="fa fa-comments-o"
                   style={{
                     fontSize: 16,
                     cursor: "pointer",
-                    color: "orange"
+                    color: "blue"
                   }}
-                  onClick={() => ViewDiscussionToggel(row.assign_no)}
                 ></i>
-              </div>
-
+              </Link>
             </div>
+
+            <div title="View Discussion Message">
+              <i
+                class="fa fa-comments-o"
+                style={{
+                  fontSize: 16,
+                  cursor: "pointer",
+                  color: "orange"
+                }}
+                onClick={() => ViewDiscussionToggel(row.assign_no)}
+              ></i>
+            </div>
+
+          </div>}
           </>
         );
       },

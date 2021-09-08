@@ -83,7 +83,12 @@ const [showTl, setShowTl] = useState(false)
     formData.append("assign_id", query_id);
     formData.append("message_type", value.msg_type);
     formData.append("message", value.p_message);
-    formData.append("to", value.p_to);
+
+    {
+      value.p_to != undefined ?
+    
+    formData.append("to", value.p_to)
+  : formData.append("to", "customer") }
     axios({
       method: "POST",
       url: `${baseUrl}/tl/messageSent`,
@@ -171,6 +176,7 @@ const [showTl, setShowTl] = useState(false)
                         )}
 
                       </div>
+                      {showTl === true ?
                       <div class="form-group">
                         <label>To<span className="declined">*</span></label>
                         <select
@@ -183,11 +189,11 @@ const [showTl, setShowTl] = useState(false)
                         >
                           <option value="">--select--</option>
                           <option value="customer">Customer</option>
-                          {showTl === true ?
+                        
                           <>
                           <option value="tp">Tax Professional</option>
                           <option value="both">Both</option> 
-                          </>: ""}
+                          </>
                         </select>
                         {errors.p_to && (
                           <div className="invalid-feedback">
@@ -195,7 +201,23 @@ const [showTl, setShowTl] = useState(false)
                           </div>
                         )}
                       </div>
+: 
+<div class="form-group">
 
+<input 
+type="text"
+  className={classNames("form-control", {
+    "is-invalid": errors.p_to,
+  })}
+  disabled
+  hidden
+  value="customer"
+  name="pcustomer_to"
+  ref={register}
+  style={{ height: "33px" }}/>
+  
+
+</div> }
                       <div class="form-group">
                         <label>Message<span className="declined">*</span></label>
                         <textarea

@@ -30,7 +30,8 @@ function QueryDetails({
   paymentDetails,
   year,
   feedback,
-  reports
+  reports, 
+  submitData
 }) {
   console.log("p", customerQuery);
 
@@ -147,6 +148,8 @@ function QueryDetails({
                     diaplayProposal={diaplayProposal}
                     reports={reports}
                     assingNo={assingNo}
+                    submitData = {submitData}
+                    customerQuery = {customerQuery}
                   />
                 </Card>
               </Col>

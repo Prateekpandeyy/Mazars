@@ -69,7 +69,8 @@ const canBtn = {
     right: "10px",
     left: "90%",
     padding: "20px",
-    cursor : "pointer"
+    cursor : "pointer", 
+    color : "red"
 }
 
     const columns = [
@@ -80,7 +81,7 @@ const canBtn = {
                 return rowIndex + 1;
             },
             headerStyle: () => {
-                return { fontSize: "12px", width: "8px" };
+                return { fontSize: "12px", width: "8px", padding : "9px 5px" };
             },
         },
         {
@@ -88,14 +89,14 @@ const canBtn = {
             sort: true,
             dataField: "created_date",
             headerStyle: () => {
-                return { fontSize: "12px", width: "40px" };
+                return { fontSize: "12px", width: "30px" };
             },
         },
         {
             text: "Query No",
             dataField: "assign_id",
             headerStyle: () => {
-                return { fontSize: "12px", width: "30px" };
+                return { fontSize: "12px", width: "20px" };
             },
         },
         
@@ -107,13 +108,7 @@ const canBtn = {
                 return { fontSize: "12px", width: "40px" };
             },
         },
-        {
-            text: "Discussion Type",
-            dataField: "type",
-            headerStyle: () => {
-                return { fontSize: "12px", width: "40px" };
-            },
-        },
+       
         {
             text: "Summary of Discussion",
             dataField: "message",
@@ -172,6 +167,8 @@ const canBtn = {
                        SearchQuery="SearchQuery"
                       setRecords={setRecords}
                        records={records} 
+                       userid = {userid}
+                       getRecording = {getRecording}
                     /> 
                     <BootstrapTable
                         bootstrap4
@@ -207,7 +204,7 @@ const canBtn = {
           <ReactPlayer
             url={videoid}
             controls={true}
-            playing={false}
+            playing={true}
             width='100%'
             height='100%'
            />

@@ -169,7 +169,7 @@ function ProposalComponent(props) {
                     if (response.data.code === 1) {
                       setLoading(false)
                       Alerts.SuccessNormal("Proposal sent successfully.")
-                      history.push("/taxprofessional/dashboard");
+                      history.push("/taxprofessional/proposal");
                     } else if (response.data.code === 0) {
                       setLoading(false)
                     }
@@ -194,7 +194,7 @@ function ProposalComponent(props) {
               setLoading(false)
               var variable = "Proposal sent successfully. "
               Alerts.SuccessNormal(variable)
-              history.push("/taxprofessional/dashboard");
+              history.push("/taxprofessional/proposal");
             } else if (response.data.code === 0) {
               setLoading(false)
             }

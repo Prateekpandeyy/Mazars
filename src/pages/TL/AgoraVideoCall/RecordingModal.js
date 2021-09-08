@@ -11,7 +11,8 @@ function RecordingModal({
     isOpen,
     toggle,
     data,
-    item
+    item, 
+    allrecording
 }) {
     const history = useHistory();
     const { handleSubmit, register, errors } = useForm();
@@ -26,7 +27,7 @@ function RecordingModal({
     //submit
     const onSubmit = (value) => {
         console.log("value :", value);
-
+console.log("myrecordingdata", allrecording)
         var serverResponse = data.serverResponse
 
 
@@ -35,7 +36,7 @@ function RecordingModal({
 
         let formData = new FormData();
         formData.append("uid", JSON.parse(userId));
-        formData.append("fileList", fileList);
+        formData.append("fileList", allrecording);
         formData.append("message_type", value.msg_type);
         formData.append("message", value.p_message);
         formData.append("assign_id", assign_no);

@@ -78,22 +78,22 @@ const canBtn = {
                 return rowIndex + 1;
             },
             headerStyle: () => {
-                return { fontSize: "12px", width: "8px" };
+                return { fontSize: "12px", width: "8px", padding : "9px 5px" };
             },
         },
         {
             text: "Date",
-            sort : true,
+            sort: true,
             dataField: "created_date",
             headerStyle: () => {
-                return { fontSize: "12px", width: "40px" };
+                return { fontSize: "12px", width: "30px" };
             },
         },
         {
             text: "Query No",
             dataField: "assign_id",
             headerStyle: () => {
-                return { fontSize: "12px", width: "30px" };
+                return { fontSize: "12px", width: "20px" };
             },
         },
         
@@ -105,13 +105,7 @@ const canBtn = {
                 return { fontSize: "12px", width: "40px" };
             },
         },
-        {
-            text: "Discussion Type",
-            dataField: "type",
-            headerStyle: () => {
-                return { fontSize: "12px", width: "40px" };
-            },
-        },
+       
         {
             text: "Summary of Discussion",
             dataField: "message",
@@ -177,6 +171,8 @@ const canBtn = {
                        SearchQuery="SearchQuery"
                       setRecords={setRecords}
                        records={records} 
+                       userid = {userid}
+                       getRecording = {getRecording}
                     /> 
 
 
@@ -214,7 +210,7 @@ const canBtn = {
              <ReactPlayer
                url={videoid}
                controls={true}
-               playing={false}
+               playing={true}
                width='100%'
                height='100%'
               />

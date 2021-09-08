@@ -272,6 +272,7 @@ function InprogressAssignment() {
       formatter: function (cell, row) {
         return (
           <>
+          {row.paid_status === "2" ? null :
             <div style={{ display: "flex", justifyContent: "space-between" }}>
 
               <div title="Send Message">
@@ -309,7 +310,7 @@ function InprogressAssignment() {
                 ></i>
               </div>
 
-            </div>
+            </div> }
           </>
         );
       },

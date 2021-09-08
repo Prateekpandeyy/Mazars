@@ -2,7 +2,7 @@ import React from "react";
 import CommonServices from "../../common/common";
 import { ReportUrl } from "../../config/config";
 
-function AssignmentDetails({ p, diaplayAssignment, diaplayProposal, reports, assingNo }) {
+function AssignmentDetails({ p, submitData, customerQuery , diaplayAssignment, diaplayProposal, reports, assingNo }) {
 
   const {
     assignment_number,
@@ -113,7 +113,9 @@ console.log("reports", reports)
               <td>
                 {
                   reports.map((p, i) => (
+                    
                     <div>
+                      {customerQuery == "customerQuery" && submitData[0].paid_status == "2" ? null :
                       <tr>
                         <td>{i + 1}</td>
                         <td>
@@ -133,7 +135,7 @@ console.log("reports", reports)
                             <p className="declined">Discarded</p>
                             : null}
                         </td>
-                      </tr>
+                      </tr> }
                     </div>
                   ))
                 }

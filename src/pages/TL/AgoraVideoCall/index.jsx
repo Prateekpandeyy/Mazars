@@ -79,6 +79,8 @@ class AgoraCanvas extends React.Component {
       recordDisplay: false,
       data: {},
       item:{},
+      articleId : [],
+      articleId2 : [],
       showRecBtn : false,
       showButton : ''
     };
@@ -88,16 +90,17 @@ class AgoraCanvas extends React.Component {
   }
 
   // userId = window.localStorage.getItem("tlkey");
+  allrecording = [];
   teamKey = window.localStorage.getItem("tlkey");
   uid = Math.floor((Math.random() * 10000) + 1);
   channelName = this.props.channel
-
+  tempArray = []
  vendor = 1
  region = 14;
  bucket = "vride-multitvm";
  accessKey = "AKIASTLI4S4OJH3WGMFM";
  secretKey = "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";
-
+allrecording;
 
   componentWillMount() {
     let $ = this.props;
@@ -427,9 +430,35 @@ schdrularName;
   // };
 
 
-  handleExit = () => {
-    this.stop();
-    this.setState({showRecBtn : true})
+  handleExit = async() => {
+   
+
+    var resourceId = localStorage.getItem("resourceId");
+    var sid = localStorage.getItem("sid");
+  
+    var data = JSON.stringify({
+      "cname":this.channelName,
+      "uid":JSON.stringify(this.uid),
+      "clientRequest":{ }});
+    axios({
+      method: "POST",
+      headers: {
+        "content-type": "application/json;charset=utf-8",
+        "authorization": "Basic "+this.encodedString,
+        "cache-control": "no-cache",
+      },
+      url: `https://api.agora.io/v1/apps/${this.props.appId}/cloud_recording/resourceid/${resourceId}/sid/${sid}/mode/mix/stop`,
+      data: data,
+    })
+    .then(response => {
+      
+      this.tempArray.push(response.data.serverResponse.fileList)
+      this.setState({showRecBtn : true})
+    })
+        .catch((error) => {
+        console.log("error - ", error);
+      });
+    
   }
   sharingScreen = (e) => {
     if (this.state.stateSharing) {
@@ -605,8 +634,11 @@ async startRecording(key){
         console.log("error - ", error);
       });
   };
-
-
+// Start recording button
+  recStart = () => {
+    this.accuire();
+    this.setState({ showRecBtn: false  });
+  }
 
   //toggelStop
   toggleModal = (key) =>{
@@ -728,11 +760,9 @@ async startRecording(key){
         <i className="ag-icon ag-icon-leave"></i>
       </span>
     );
-const recStart = () => {
-  this.accuire();
-  this.setState({ showRecBtn: false  });
-}
+
 //recording btn on
+console.log(this.state.showRecBtn)
     const recordingBtn = (
       <span
         onClick={this.recStart}
@@ -766,7 +796,7 @@ const recordingBtnOff = (
             
   </span>
 );
-
+console.log(this.state.showRecBtn)
     return (
       <>
       <div id="ag-canvas" style={style}>   
@@ -777,6 +807,7 @@ const recordingBtnOff = (
          toggle={this.toggleModal}
          data={this.state.data}
          item={this.state.item}
+         allrecording = {this.tempArray}
          />
                 
           {exitBtn}
@@ -794,12 +825,12 @@ const recordingBtnOff = (
           {switchDisplayBtn}
           {hideRemoteBtn}
 
-          {/* {
-            this.state.recordDisplay || this.state.showButton == JSON.parse(this.teamKey) ? recordingBtn : null
-          } */}
+          {
+             this.state.showRecBtn === true ? recordingBtn : null
+          }
 
           {
-            this.state.recordDisplay ? recordingBtnOff : null
+             this.state.showRecBtn === false ? recordingBtnOff : null
           }
         </div>
       </div>

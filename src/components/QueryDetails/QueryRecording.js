@@ -54,7 +54,8 @@ const canBtn = {
     right: "10px",
     left: "90%",
     padding: "20px",
-    cursor : "pointer"
+    cursor : "pointer",
+    color : "red"
 }
 console.log("assignNo", assingNo.assingNo)
     const getRecording = () => {
@@ -79,24 +80,25 @@ console.log("assignNo", assingNo.assingNo)
                 return rowIndex + 1;
             },
             headerStyle: () => {
-                return { fontSize: "12px", width: "8px" };
+                return { fontSize: "12px", width: "8px", padding : "9px 5px" };
+            },
+        },
+        {
+            text: "Date",
+            sort: true,
+            dataField: "created_date",
+            headerStyle: () => {
+                return { fontSize: "12px", width: "30px" };
             },
         },
         {
             text: "Query No",
             dataField: "assign_id",
             headerStyle: () => {
-                return { fontSize: "12px", width: "30px" };
+                return { fontSize: "12px", width: "20px" };
             },
         },
-        {
-            text: "Date",
-            dataField: "created_date",
-            headerStyle: () => {
-                return { fontSize: "12px", width: "40px" };
-            },
-        },
-
+        
         {
             text: "Participants",
             dataField: "participants",
@@ -104,13 +106,7 @@ console.log("assignNo", assingNo.assingNo)
                 return { fontSize: "12px", width: "40px" };
             },
         },
-        {
-            text: "Discussion Type",
-            dataField: "type",
-            headerStyle: () => {
-                return { fontSize: "12px", width: "40px" };
-            },
-        },
+       
         {
             text: "Summary of Discussion",
             dataField: "message",
@@ -193,7 +189,7 @@ console.log("assignNo", assingNo.assingNo)
    <ReactPlayer
      url={videoid}
      controls={true}
-     playing={false}
+     playing={true}
      width='100%'
      height='100%'
     />

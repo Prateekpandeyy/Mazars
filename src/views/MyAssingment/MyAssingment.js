@@ -188,6 +188,7 @@ function MyAssingment() {
                 paymentDetails={paymentDetails}
                 feedback={feedback}
                 reports={reports}
+                submitData = {submitData}
 
               />
             ))}

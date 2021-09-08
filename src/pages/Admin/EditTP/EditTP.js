@@ -268,7 +268,7 @@ function EditTP() {
            
             Swal.fire({
               "title": "Success",
-              "html": "Team Leader details updated successfully",
+              "html": "Tax Professional details updated successfully",
               "icon": "success"
             })
             history.goBack();

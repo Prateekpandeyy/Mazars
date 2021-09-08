@@ -356,15 +356,17 @@ const hist = useHistory();
       text: `do you want to assign ${assign_number} to taxprofessional`,
       type: "warning",
       showCancelButton: true,
+      showCloseButton : true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, assign it!",
     }).then((result) => {
-      if (result.value) {
+      console.log("resultValue", result.value)
+      if (result.value === true) {
         console.log(result.value)
        hist.push(`/teamleader/queryassing/${id}`)
       }
-      else{
+      else if(result.value === false) {
         console.log("no");
         axios.get(`${baseUrl}/tl/workby?uid=${JSON.parse(userid)}&qid=${id}`).then((res) => {
           if(res.data.code === 1){

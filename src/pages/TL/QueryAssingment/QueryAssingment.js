@@ -21,6 +21,7 @@ import * as yup from "yup";
 import classNames from "classnames";
 import Mandatory from "../../../components/Common/Mandatory";
 import Loader from "../../../components/Loader/Loader";
+import CommonServices from "../../../common/common"
 
 
 const Schema = yup.object().shape({
@@ -92,7 +93,7 @@ function QueryAssingment() {
           queryNo: res.data.result[0].assign_no,
           timelines: res.data.result[0].Timelines,
           custId: res.data.result[0].customer_id,
-          expect_dd: res.data.result[0].Exp_Delivery_Date,
+          expect_dd: CommonServices.changeFormateDate(res.data.result[0].Exp_Delivery_Date),
         });
       }
     });
@@ -163,8 +164,10 @@ function QueryAssingment() {
           setLoading(false)
           var variable = "Query assigned successfully."
           Alerts.SuccessNormal(variable)
+         
           getQuery();
           reset();
+          history.push('/teamleader/queriestab')
         } if (response.data.code === 0) {
           setLoading(false)
         }

@@ -12,13 +12,13 @@ function RecordingFilter(props) {
     records,
     setRecords,
     setData,
-    getData,
+    getRecording,
     SearchQuery,
-   
-    InprogressQuery,
+   userid,
+  
  
   } = props;
-  const userid = window.localStorage.getItem("tpkey");
+  // const userid = window.localStorage.getItem("tpkey");
 
   const [selectedData, setSelectedData] = useState([]);
   const [tax2, setTax2] = useState([]);
@@ -37,12 +37,12 @@ function RecordingFilter(props) {
 
   //reset date
   const resetData = () => {
-    console.log("resetData ..");
+  
     reset();
     setSelectedData([]);
     setStore2([]);
     setStatus1(1)
-    getData();
+   getRecording();
   };
 
   const onSubmit = (data) => {
@@ -53,7 +53,7 @@ if(SearchQuery == "SearchQuery") {
         .get(
           `${baseUrl}/tl/callRecordingPostlist?uid=${JSON.parse(userid)}&assign_id=${data.queryNo}`)
         .then((res) => {
-          console.log(res);
+         
           if (res.data.code === 1) {
             if (res.data.result) {
               setData(res.data.result);
