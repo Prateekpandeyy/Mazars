@@ -19,7 +19,7 @@ import CommonServices from "../../common/common";
 
 
 function Message(props) {
-    console.log("props", props.location.obj)
+    
 
     const userId = window.localStorage.getItem("userid");
     const [query, setQuery] = useState([]);
@@ -27,7 +27,7 @@ function Message(props) {
 
     const [addPaymentModal, setPaymentModal] = useState(false);
     const paymentHandler = (key) => {
-        console.log("key", key);
+      
         setPaymentModal(!addPaymentModal);
     };
 
@@ -46,7 +46,7 @@ function Message(props) {
                 &type_list=all`
             )
             .then((res) => {
-                console.log(res);
+
                 if (res.data.code === 1) {
                     setQuery(res.data.result);
                 }
@@ -70,16 +70,23 @@ function Message(props) {
         
  {
     text: "Date",
-    dataField: "setdate",
+    dataField: "",
     sort: true,
     headerStyle: () => {
         return { fontSize: "12px", width: "60px" };
     },
-    formatter: function dateFormat(cell, row) {
-        console.log("dt", row.setDate);
-       
-        return row.setDate.toString().split("-").reverse().join("-");
-    },
+    formatter : function dateFormatter(cell, row) {
+        console.log("row", )
+        return(
+            <>
+         {row.setdate.toString().split("-").join("-").split(" ")[0].toString()
+        .split("-").reverse().join("-")} &nbsp; &nbsp;
+        {
+           row.setdate.toString().split("-").join("-").split(" ")[1]
+        }
+            </>
+        )
+    }
 },
         {
             text: "Query No",
@@ -88,7 +95,7 @@ function Message(props) {
                 return { fontSize: "12px", width: "30px" };
             },
             formatter: function nameFormatter(cell, row) {
-                console.log(row);
+               
                 return (
                     <>
                         {row.assign_no}
@@ -103,7 +110,7 @@ function Message(props) {
                 return { fontSize: "12px", width: "180px" };
             },
             formatter: function nameFormatter(cell, row) {
-                console.log(row);
+               
                 return (
                     <>
                         <Link to={`/customer/view-notification/${row.id}`}>
@@ -148,14 +155,14 @@ function Message(props) {
     // readnotification
     const readNotification = (id) => {
 
-        console.log("call", id)
+
         axios
             .get(`${baseUrl}/customers/markReadNotification?id=${id}`)
             .then(function (response) {
-                console.log("delete-", response);
+               
             })
             .catch((error) => {
-                console.log("erroror - ", error);
+                
             });
     };
 
