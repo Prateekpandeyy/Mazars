@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-// import "./style.css";
 import Layout from "../../../components/Layout/Layout";
 import {
   Card,
@@ -15,7 +14,7 @@ import { baseUrl } from "../../../config/config";
 import { Link } from "react-router-dom";
 import { useAlert } from "react-alert";
 import Swal from "sweetalert2";
-
+import CustomerListFilter from "../../../components/Search-Filter/CustomerListFilter";
 import BootstrapTable from "react-bootstrap-table-next";
 import TaxProffesionalService from "../../../config/services/TaxProffesional";
 
@@ -220,7 +219,7 @@ function Customer() {
       <Card>
         <CardHeader>
           <Row>
-            <Col md="12">
+            <Col md="6">
               <CardTitle tag="h4">Customer ({tpCount})</CardTitle>
             </Col>
            

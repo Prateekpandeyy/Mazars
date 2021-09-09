@@ -161,15 +161,13 @@ function Demo() {
       <Appointments.Appointment {...restProps}>
         <div style={{ display: "flex" }}>
         <i
+         onClick={() => handleJoin(data)}
             class="fa fa-video-camera"
             style={{ fontSize: "18px", padding: "5px" , color: "#fff" }}
           ></i>
           <div>{children}</div>
           
-          <div
-            onClick={() => handleJoin(data)}
-          >
-          </div>
+         
         </div>
       </Appointments.Appointment>
     </div>
