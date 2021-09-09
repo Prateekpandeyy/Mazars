@@ -50,7 +50,11 @@ function Recording() {
                 }
             });
     };
-
+    const videoIcon = {
+        display : "flex", 
+        justifyContent : "space-around", 
+        alignItems : "center"
+    }
     const modalBox = {
         display : "flex",
         position : "absolute",
@@ -118,23 +122,38 @@ const canBtn = {
             text: "Action",
             headerStyle: () => {
                 return { fontSize: "12px", width: "20px" };
+                
             },
             formatter: function nameFormatter(cell, row) {
-                console.log(row);
+             
+                var recording = row.file.split(",");
+                let a = 1;
                 return (
                     <>
                         <div>
-                            <i
-                                className="material-icons"
-                                style={{
-                                    cursor: "pointer",
-                                    color: "red",
-                                    fontSize: "25px",
-                                }}
-                                onClick={() => openModal(row.file)}
-                            >
-                                play_circle_outline
-                            </i>
+                            {
+                                recording.map((record) => {
+                                   return(
+                                <>
+                                <p style={videoIcon}>
+                                <span>{a++}</span>   <i
+                                    className="material-icons"
+                                    style={{
+                                        cursor: "pointer",
+                                        color: "red",
+                                        fontSize: "25px",
+                                    }}
+                                    onClick={() => openModal(record)}
+                                >
+                                    play_circle_outline
+                                 
+                                </i>
+                                </p>
+                                </>
+                                   )
+                                })
+                            }
+                           
                         </div>
                     </>
                 );
@@ -147,13 +166,7 @@ const canBtn = {
     return (
         <>
               <div style={{position:"relative", height : "100vh", overflow : "scroll"}}>
-              {/* <TaxProfessionalFilter
-                        setData={setInCompleteData}
-                        getData={getInCompleteAssingment}
-                        AllQuery="AllQuery"
-                        setRecords={setRecords}
-                        records={records}
-                    /> */}
+             
                 
                    <Card>
                    <CardHeader>

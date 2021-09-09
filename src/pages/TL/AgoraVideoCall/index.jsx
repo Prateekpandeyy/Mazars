@@ -757,7 +757,11 @@ async startRecording(key){
         }
         title="Exit"
       >
-        <i className="ag-icon ag-icon-leave"></i>
+        {
+           this.state.showRecBtn === false ?
+           <i className="ag-icon ag-icon-leave"></i> : ""
+        }
+     
       </span>
     );
 

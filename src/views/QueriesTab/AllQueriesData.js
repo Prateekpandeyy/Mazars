@@ -80,19 +80,12 @@ function AllQueriesData() {
         },
         {
             text: "Date",
-            dataField: "created",
+            dataField: "setData",
             sort: true,
             headerStyle: () => {
                 return { fontSize: "12px" };
             },
-            formatter: function dateFormat(cell, row) {
-                console.log("dt", row.created);
-                var oldDate = row.created;
-                if (oldDate == null) {
-                    return null;
-                }
-                return oldDate.toString().split("-").reverse().join("-");
-            },
+           
         },
         {
             text: "Query No",

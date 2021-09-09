@@ -154,16 +154,7 @@ function Customer() {
       formatter: function (cell, row) {
         return (
           <>
-            <Link to={`/admin/edittp/${row.id}`}>
-              <i
-                className="fa fa-edit"
-                style={{
-                  fontSize: 18,
-                  cursor: "pointer",
-                  marginLeft: "8px",
-                }}
-              ></i>
-            </Link>
+           
             <i
               className="fa fa-trash"
               style={{ fontSize: 20, cursor: "pointer", marginLeft: "8px" }}
@@ -222,10 +213,18 @@ function Customer() {
             <Col md="6">
               <CardTitle tag="h4">Customer ({tpCount})</CardTitle>
             </Col>
+           <Col md="6">
            
+           </Col>
           </Row>
         </CardHeader>
         <CardBody>
+        <CustomerListFilter
+        setData={setData}
+        searchQuery = "SearchQuery"
+        setRecords={setTpCount}
+         records={tpCount} 
+         getCustomer = {getCustomer} />
           <BootstrapTable
             bootstrap4
             keyField="id"

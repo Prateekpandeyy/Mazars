@@ -22,7 +22,7 @@ function CustomerNotification({ tokenKey, name }) {
                 console.log(res);
                 if (res.data.code === 1) {
                     setNotification(res.data.result);
-                    setCountNotification(res.data.result.length);
+                    setCountNotification(res.data.result[0].total);
                 }
             });
     };

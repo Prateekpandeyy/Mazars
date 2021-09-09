@@ -75,6 +75,11 @@ function Message(props) {
     headerStyle: () => {
         return { fontSize: "12px", width: "60px" };
     },
+    formatter: function dateFormat(cell, row) {
+        console.log("dt", row.setDate);
+       
+        return row.setDate.toString().split("-").reverse().join("-");
+    },
 },
         {
             text: "Query No",

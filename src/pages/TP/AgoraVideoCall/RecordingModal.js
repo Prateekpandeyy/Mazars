@@ -5,14 +5,17 @@ import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import CommonServices from "../../../common/common";
 import Alerts from "../../../common/Alerts";
-
+import { useHistory } from "react-router";
 
 function RecordingModal({
-    isOpen,
+     isOpen,
     toggle,
     data,
-    item
+    item, 
+    allrecording
 }) {
+   
+    const history = useHistory();
     const { handleSubmit, register, errors } = useForm();
     const userId = window.localStorage.getItem("tpkey");
 
@@ -20,21 +23,24 @@ function RecordingModal({
 
     const { assign_no, id, username, start } = item
     console.log("assign_no", assign_no)
-
-
     //submit
     const onSubmit = (value) => {
-        console.log("value :", value);
-
-        var serverResponse = data.serverResponse
-
-
-        const { fileList } = serverResponse
-        console.log("fileList +++ ", fileList);
-
+        var serverResponse = data.serverResponse.fileList
+        var completeRecording;
+        if(allrecording === undefined || allrecording.length === 0){
+            completeRecording =  serverResponse;
+        }
+        else if(allrecording != undefined || allrecording.length > 0){
+            completeRecording = allrecording + "," + serverResponse;
+        }
+        else{
+            completeRecording = serverResponse;
+        }
+                const { fileList } = serverResponse
+             
         let formData = new FormData();
         formData.append("uid", JSON.parse(userId));
-        formData.append("fileList", fileList);
+        formData.append("fileList", completeRecording);
         formData.append("message_type", value.msg_type);
         formData.append("message", value.p_message);
         formData.append("assign_id", assign_no);
@@ -50,12 +56,9 @@ function RecordingModal({
             .then(function (response) {
                 console.log("res-", response);
                 if (response.data.code === 1) {
-                    toggle()
-                    // reset();
-                    // setLoading(false)
-                    // var variable = "Message sent successfully."
-                    // Alerts.SuccessNormal(variable)
-                    // props.history.push(routes);
+                    toggle();
+                    history.push('/taxprofessional/schedule');
+                   
                 }
             })
             .catch((error) => {

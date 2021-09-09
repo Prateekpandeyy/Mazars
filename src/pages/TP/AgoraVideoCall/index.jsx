@@ -7,6 +7,7 @@
 // import { baseUrl } from "../../../config/config";
 // import "./canvas.css";
 // import "../../../assets/fonts/css/icons.css";
+// import { useHistory } from "react-router";
 // import {
 //   Modal,
 //   ModalTitle,
@@ -155,7 +156,7 @@
 //     console.log("getSchedulerData--",this.props.id)
 
 //     axios
-//             .get(`${baseUrl}/tl/videoScheduler?id=${this.props.id}`)
+//     .get(`${baseUrl}/tl/videoScheduler?id=${this.props.id}`)
 //             .then((res) => {
 //                 console.log(res);
            
@@ -521,7 +522,7 @@
 //  async GetRecordingStatus(json){
 //     console.log("GetRecordingStatus",json)
 
-//     await this.sleep(1000); 
+//     await this.sleep(4000); 
 //     var resourceId = json.data.resourceId;
 //     var sid = json.data.sid;
 
@@ -721,22 +722,19 @@
 //         <i className="ag-icon ag-icon-leave"></i>
 //       </span>
 //     );
-//     // if(this.state.showButton == JSON.parse(this.teamKey)){
-     
-//     // }
 
-// // //recording btn on
-// //     const recordingBtn = (
-// //       <span
-// //         onClick={this.accuire}
-// //         className={
-// //           this.state.readyState ? "ag-btn exitBtn" : "ag-btn exitBtn disabled"
-// //         }
-// //         title="Record On"
-// //       >
-// //         <FiberManualRecordIcon style={{ color: green[500] }}/>
-// //       </span>
-// //     );
+// //recording btn on
+//     // const recordingBtn = (
+//     //   <span
+//     //     onClick={this.accuire}
+//     //     className={
+//     //       this.state.readyState ? "ag-btn exitBtn" : "ag-btn exitBtn disabled"
+//     //     }
+//     //     title="Record On"
+//     //   >
+//     //     <FiberManualRecordIcon style={{ color: green[500] }}/>
+//     //   </span>
+//     // );
 
 
 // //recording btn off
@@ -748,7 +746,10 @@
 //     }
 //     title="Record Off"
 //   >
-//             <FiberManualRecordIcon style={{ color: red[500] }}/>
+//              {
+//       this.state.showButton == JSON.parse(this.teamKey) ?
+//       <FiberManualRecordIcon style={{ color: red[500] }}/> : ""
+//     }
 //   </span>
 // );
 
@@ -778,14 +779,14 @@
 //           }
 //           {switchDisplayBtn}
 //           {hideRemoteBtn}
-// {/* 
-//           {
+
+//           {/* {
 //             this.state.recordDisplay || this.state.showButton == JSON.parse(this.teamKey) ? recordingBtn : null
-//           }
-// */}
+//           } */}
+
 //           {
 //             this.state.recordDisplay ? recordingBtnOff : null
-//           } 
+//           }
 //         </div>
 //       </div>
 //         </>
@@ -803,7 +804,6 @@ import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import "./canvas.css";
 import "../../../assets/fonts/css/icons.css";
-import { useHistory } from "react-router";
 import {
   Modal,
   ModalTitle,
@@ -876,6 +876,9 @@ class AgoraCanvas extends React.Component {
       recordDisplay: false,
       data: {},
       item:{},
+      articleId : [],
+      articleId2 : [],
+      showRecBtn : false,
       showButton : ''
     };
 
@@ -884,16 +887,17 @@ class AgoraCanvas extends React.Component {
   }
 
   // userId = window.localStorage.getItem("tlkey");
+  allrecording = [];
   teamKey = window.localStorage.getItem("tpkey");
   uid = Math.floor((Math.random() * 10000) + 1);
   channelName = this.props.channel
-
+  tempArray = []
  vendor = 1
  region = 14;
  bucket = "vride-multitvm";
  accessKey = "AKIASTLI4S4OJH3WGMFM";
  secretKey = "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";
-
+allrecording;
 
   componentWillMount() {
     let $ = this.props;
@@ -1192,35 +1196,39 @@ schdrularName;
     });
   };
 
-  handleExit = (e) => {
-    if (e.currentTarget.classList.contains("disabled")) {
-      return;
-    }
-    try {
-      this.client && this.client.unpublish(this.localStream);
-      this.localStream && this.localStream.close();
-      if (this.state.stateSharing) {
-        this.shareClient && this.shareClient.unpublish(this.shareStream);
-        this.shareStream && this.shareStream.close();
-      }
-      this.client &&
-        this.client.leave(
-          () => {
-            console.log("Client succeed to leave.");
-          },
-          () => {
-            console.log("Client failed to leave.");
-          }
-        );
-    } finally {
-      this.setState({ readyState: false });
-      this.client = null;
-      this.localStream = null;
-      // redirect to index
-      window.location.hash = "/taxprofessional/schedule";
-    }
-  };
+  
 
+
+  handleExit = async() => {
+   
+
+    var resourceId = localStorage.getItem("resourceId");
+    var sid = localStorage.getItem("sid");
+  
+    var data = JSON.stringify({
+      "cname":this.channelName,
+      "uid":JSON.stringify(this.uid),
+      "clientRequest":{ }});
+    axios({
+      method: "POST",
+      headers: {
+        "content-type": "application/json;charset=utf-8",
+        "authorization": "Basic "+this.encodedString,
+        "cache-control": "no-cache",
+      },
+      url: `https://api.agora.io/v1/apps/${this.props.appId}/cloud_recording/resourceid/${resourceId}/sid/${sid}/mode/mix/stop`,
+      data: data,
+    })
+    .then(response => {
+      
+      this.tempArray.push(response.data.serverResponse.fileList)
+      this.setState({showRecBtn : true})
+    })
+        .catch((error) => {
+        console.log("error - ", error);
+      });
+    
+  }
   sharingScreen = (e) => {
     if (this.state.stateSharing) {
       this.shareClient && this.shareClient.unpublish(this.shareStream);
@@ -1318,7 +1326,7 @@ sleep(ms) {
  async GetRecordingStatus(json){
     console.log("GetRecordingStatus",json)
 
-    await this.sleep(4000); 
+    await this.sleep(3000); 
     var resourceId = json.data.resourceId;
     var sid = json.data.sid;
 
@@ -1395,8 +1403,11 @@ async startRecording(key){
         console.log("error - ", error);
       });
   };
-
-
+// Start recording button
+  recStart = () => {
+    this.accuire();
+    this.setState({ showRecBtn: false  });
+  }
 
   //toggelStop
   toggleModal = (key) =>{
@@ -1509,46 +1520,56 @@ async startRecording(key){
 
     const exitBtn = (
       <span
-        onClick={this.handleExit}
-        className={
+      onClick={this.stopRecording}
+             className={
           this.state.readyState ? "ag-btn exitBtn" : "ag-btn exitBtn disabled"
         }
         title="Exit"
       >
-        <i className="ag-icon ag-icon-leave"></i>
+        {
+           this.state.showRecBtn === false ?
+           <i className="ag-icon ag-icon-leave"></i> : ""
+        }
+     
       </span>
     );
 
 //recording btn on
-    // const recordingBtn = (
-    //   <span
-    //     onClick={this.accuire}
-    //     className={
-    //       this.state.readyState ? "ag-btn exitBtn" : "ag-btn exitBtn disabled"
-    //     }
-    //     title="Record On"
-    //   >
-    //     <FiberManualRecordIcon style={{ color: green[500] }}/>
-    //   </span>
-    // );
+console.log(this.state.showRecBtn)
+    const recordingBtn = (
+      <span
+        onClick={this.recStart}
+        className={
+          this.state.readyState ? "ag-btn exitBtn" : "ag-btn exitBtn disabled"
+        }
+        title="Record On"
+      >{
+        this.state.showRecBtn === true ?
+      
+        <FiberManualRecordIcon style={{ color: green[500] }}/> : ""}
+      </span>
+    );
 
 
 //recording btn off
 const recordingBtnOff = (
   <span
-    onClick={this.stopRecording}
+  onClick={this.handleExit}
+
+    
     className={
       this.state.readyState ? "ag-btn exitBtn" : "ag-btn exitBtn disabled"
     }
     title="Record Off"
   >
-             {
+     {
       this.state.showButton == JSON.parse(this.teamKey) ?
       <FiberManualRecordIcon style={{ color: red[500] }}/> : ""
     }
+            
   </span>
 );
-
+console.log(this.state.showRecBtn)
     return (
       <>
       <div id="ag-canvas" style={style}>   
@@ -1559,6 +1580,7 @@ const recordingBtnOff = (
          toggle={this.toggleModal}
          data={this.state.data}
          item={this.state.item}
+         allrecording = {this.tempArray}
          />
                 
           {exitBtn}
@@ -1576,12 +1598,12 @@ const recordingBtnOff = (
           {switchDisplayBtn}
           {hideRemoteBtn}
 
-          {/* {
-            this.state.recordDisplay || this.state.showButton == JSON.parse(this.teamKey) ? recordingBtn : null
-          } */}
+          {
+             this.state.showRecBtn === true ? recordingBtn : null
+          }
 
           {
-            this.state.recordDisplay ? recordingBtnOff : null
+             this.state.showRecBtn === false ? recordingBtnOff : null
           }
         </div>
       </div>

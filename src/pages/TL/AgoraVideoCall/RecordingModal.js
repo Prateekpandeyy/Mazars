@@ -26,17 +26,25 @@ function RecordingModal({
 
     //submit
     const onSubmit = (value) => {
-        console.log("value :", value);
-console.log("myrecordingdata", allrecording)
-        var serverResponse = data.serverResponse
+      
 
-
+var serverResponse = data.serverResponse.fileList
+var completeRecording;
+if(allrecording === undefined || allrecording.length === 0){
+    completeRecording =  serverResponse;
+}
+else if(allrecording != undefined || allrecording.length > 0){
+    completeRecording = allrecording + "," + serverResponse;
+}
+else{
+    completeRecording = serverResponse;
+}
         const { fileList } = serverResponse
         console.log("fileList +++ ", fileList);
 
         let formData = new FormData();
         formData.append("uid", JSON.parse(userId));
-        formData.append("fileList", allrecording);
+        formData.append("fileList", completeRecording);
         formData.append("message_type", value.msg_type);
         formData.append("message", value.p_message);
         formData.append("assign_id", assign_no);

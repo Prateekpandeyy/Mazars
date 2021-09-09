@@ -350,32 +350,60 @@ const hist = useHistory();
 
 
   const  assignConfirm = (id, assign_number) => {
-   console.log("id", id)
-    Swal.fire({
-      title: "Are you sure?",
-      text: `do you want to assign ${assign_number} to taxprofessional`,
-      type: "warning",
-      showCancelButton: true,
-      showCloseButton : true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, assign it!",
-    }).then((result) => {
-      console.log("resultValue", result.value)
-      if (result.value === true) {
-        console.log(result.value)
-       hist.push(`/teamleader/queryassing/${id}`)
-      }
-      else if(result.value === false) {
-        console.log("no");
-        axios.get(`${baseUrl}/tl/workby?uid=${JSON.parse(userid)}&qid=${id}`).then((res) => {
-          if(res.data.code === 1){
-            hist.push(`/teamleader/proposal`)
+ 
+    // Swal.fire({
+    //   title: "Are you sure?",
+    //   text: `do you want to assign ${assign_number} to taxprofessional`,
+    
+    //   showCancelButton: true,
+    //   showConfirmButton: true,
+    //   showCloseButton:false,
+
+    //   confirmButtonColor: "#3085d6",
+    //   cancelButtonColor: "#d33",
+    //   confirmButtonText: "Yes, assign it!",
+    //   cancelButtonText : "NO"
+    // }).then((result) => {
+    //   console.log("resultValue", result.value)
+    //   if (result.value === true) {
+       
+    //    hist.push(`/teamleader/queryassing/${id}`)
+    //   }
+    //   else if(result.value === false) {
+       
+    //     axios.get(`${baseUrl}/tl/workby?uid=${JSON.parse(userid)}&qid=${id}`).then((res) => {
+    //       if(res.data.code === 1){
+    //         hist.push(`/teamleader/proposal`)
            
-          }
-        })
-      }
+    //       }
+    //     })
+    //   }
+    // });
+Swal.fire({
+  title: "Are you sure?",
+   text: `do you want to assign ${assign_number} to taxprofessional`,
+        type: 'warning',
+        showCloseButton:true,
+        showCancelButton: true,
+        confirmButtonColor: '"#3085d6"',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, assign it!',
+        cancelButtonText: 'No'
+    }).then(function(result){
+        if(result.value){
+          hist.push(`/teamleader/queryassing/${id}`)
+        }else if(result.dismiss == 'cancel'){
+           console.log(result.dismiss);
+           axios.get(`${baseUrl}/tl/workby?uid=${JSON.parse(userid)}&qid=${id}`).then((res) => {
+                   if(res.data.code === 1){
+                     hist.push(`/teamleader/proposal`)
+                   
+                   }
+                 })
+        }
+
     });
+
   };
 
   return (

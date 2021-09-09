@@ -36,7 +36,11 @@ function Recording() {
     useEffect(() => {
         getRecording();
     }, []);
-
+const videoIcon = {
+    display : "flex", 
+    justifyContent : "space-around", 
+    alignItems : "center"
+}
     const getRecording = () => {
         axios
             .get(`${baseUrl}/tl/callRecordingPostlist?uid=${JSON.parse(userid)}`)
@@ -114,23 +118,38 @@ const canBtn = {
             text: "Action",
             headerStyle: () => {
                 return { fontSize: "12px", width: "20px" };
+                
             },
             formatter: function nameFormatter(cell, row) {
-                console.log(row);
+             
+                var recording = row.file.split(",");
+                let a = 1;
                 return (
                     <>
                         <div>
-                            <i
-                                className="material-icons"
-                                style={{
-                                    cursor: "pointer",
-                                    color: "red",
-                                    fontSize: "25px",
-                                }}
-                                onClick={() => openModal(row.file)}
-                            >
-                                play_circle_outline
-                            </i>
+                            {
+                                recording.map((record) => {
+                                   return(
+                                <>
+                                <p style={videoIcon}>
+                                <span>{a++}</span>   <i
+                                    className="material-icons"
+                                    style={{
+                                        cursor: "pointer",
+                                        color: "red",
+                                        fontSize: "25px",
+                                    }}
+                                    onClick={() => openModal(record)}
+                                >
+                                    play_circle_outline
+                                 
+                                </i>
+                                </p>
+                                </>
+                                   )
+                                })
+                            }
+                           
                         </div>
                     </>
                 );
@@ -157,7 +176,7 @@ const canBtn = {
                    <CardBody>
                    <RecordingFilter
                        setData={setFeedBackData}
-                    //    getData={getInCompleteAssingment}
+               
                        SearchQuery="SearchQuery"
                       setRecords={setRecords}
                        records={records} 
