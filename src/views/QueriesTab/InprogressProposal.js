@@ -17,21 +17,24 @@ import CustomerFilter from "../../components/Search-Filter/CustomerFilter";
 import BootstrapTable from "react-bootstrap-table-next";
 import Records from "../../components/Records/Records";
 import CommonServices from "../../common/common";
-
-
-
+import moment from "moment";
+import FeedbackIcon from '@material-ui/icons/Feedback';
 function InprogressProposal() {
   const alert = useAlert();
   const userId = window.localStorage.getItem("userid");
   const [query, setQuery] = useState([]);
   const [queriesCount, setCountQueries] = useState(null);
   const [records, setRecords] = useState([]);
-
+  const [assignNo, setAssignNo] = useState('');
 
   useEffect(() => {
     getQueriesData();
   }, []);
-
+  const [ViewDiscussion, setViewDiscussion] = useState(false);
+  const ViewDiscussionToggel = (key) => {
+    setViewDiscussion(!ViewDiscussion);
+    setAssignNo(key)
+  }
 
   const getQueriesData = () => {
     axios
@@ -162,8 +165,68 @@ function InprogressProposal() {
       text: "Action",
       headerStyle: () => {
         return { fontSize: "12px", textAlign: "center", width: "130px" };
-      }
-    }
+      },
+      formatter: function (cell, row) {
+        var dateMnsFive = moment(row.exp_delivery_date).add(15, 'day').format("YYYY-MM-DD");
+              
+               
+        var curDate = moment().format("YYYY-MM-DD")
+     
+        return (
+          <>
+            {
+              row.status == "Declined Query" ?
+                null
+                :
+                <div>
+                 
+
+                                {
+                                    row.status_code == "4" || 8 < parseInt(row.status_code) || row.status_code == "2" ?
+                                      
+                                      <div style={{ display: "flex", justifyContent: "space-around" }}>
+
+                                            {dateMnsFive > curDate === true ?
+                                            <div title="Send Feedback"
+                                            style={{
+                                                cursor: "pointer",
+                                            }}>
+                                            <Link
+                                                to={{
+                                                    pathname: `/customer/feedback/${row.assign_no}`,
+                                                    obj: {
+                                                        routes: `/customer/queries`
+                                                    }
+                                                }}
+                                            >
+                                                <FeedbackIcon />
+                                            </Link>
+                                        </div> : ""}
+                                      
+                    
+                    
+                    {/* <div title="View Discussion Message">
+                      <i
+                        class="fa fa-comments-o"
+                        style={{
+                          fontSize: 16,
+                          cursor: "pointer",
+                          color: "orange"
+                        }}
+                        onClick={() => ViewDiscussionToggel(row.assign_no)}
+                      ></i>
+                    </div> */}
+                  </div>
+                  :
+                  null
+              }
+            </div>
+
+        }
+      </>
+    );
+  },
+},
   ];
 
   return (
