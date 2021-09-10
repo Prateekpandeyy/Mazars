@@ -72,6 +72,7 @@ function CategorySelect({ addfreshbtn, startbtn }, props) {
 
   useEffect(() => {
     const getSubCategory = () => {
+     if(store.length != -1){
       axios.get(`${baseUrl}/customers/getCategory?pid=${store}`).then((res) => {
         console.log(res);
         if (res.data.code === 1) {
@@ -79,6 +80,7 @@ function CategorySelect({ addfreshbtn, startbtn }, props) {
         }
       });
     };
+     }
     getSubCategory();
   }, [store]);
 

@@ -7,7 +7,6 @@ import { baseUrl } from "../../../config/config";
 import PendingForAcceptence from "../PendingForAcceptence/PendingForAcceptence";
 import InCompleteData from "../InCompleteData/InCompleteData";
 import CompleteData from "../CompleteData/CompleteData";
-import DeclinedQuery from "../DeclinedQuery/DeclinedQuery";
 import AllQuery from "./AllQuery";
 
 
@@ -142,9 +141,7 @@ function QueriesTab(props) {
             <Tab style={tabIndex == 3 ? myStyle2 : myStyle1}>
             Pending for assignment ({complete})
             </Tab>
-            {/* <Tab style={tabIndex == 4 ? myStyle2 : myStyle1}>
-              Declined; Queries ({declined})
-            </Tab> */}
+            
           </TabList>
 
 
@@ -166,10 +163,7 @@ function QueriesTab(props) {
             <CompleteData
             />
           </TabPanel>
-          <TabPanel>
-            <DeclinedQuery
-            />
-          </TabPanel>
+         
         </Tabs>
       </div>
     </Layout>

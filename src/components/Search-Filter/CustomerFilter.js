@@ -36,14 +36,16 @@ function CustomerFilter(props) {
 
   useEffect(() => {
     const getSubCategory = () => {
+     if(selectedData != undefined){
       axios
-        .get(`${baseUrl}/customers/getCategory?pid=${selectedData}`)
-        .then((res) => {
-          console.log(res);
-          if (res.data.code === 1) {
-            setTax2(res.data.result);
-          }
-        });
+      .get(`${baseUrl}/customers/getCategory?pid=${selectedData}`)
+      .then((res) => {
+        console.log(res);
+        if (res.data.code === 1) {
+          setTax2(res.data.result);
+        }
+      });
+     }
     };
     getSubCategory();
   }, [selectedData]);

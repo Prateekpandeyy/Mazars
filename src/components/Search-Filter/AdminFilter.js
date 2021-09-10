@@ -39,7 +39,7 @@ function AdminFilter(props) {
   //get category
   useEffect(() => {
     const getSubCategory = () => {
-      if(selectedData.length > 0){
+      if(selectedData != undefined){
         axios
         .get(`${baseUrl}/customers/getCategory?pid=${selectedData}`)
         .then((res) => {

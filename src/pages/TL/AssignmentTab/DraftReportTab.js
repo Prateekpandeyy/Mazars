@@ -66,7 +66,8 @@ function AssignmentTab() {
     //get category
     useEffect(() => {
         const getSubCategory = () => {
-            axios
+            if(selectedData != undefined){
+                axios
                 .get(`${baseUrl}/customers/getCategory?pid=${selectedData}`)
                 .then((res) => {
                     console.log(res);
@@ -74,6 +75,7 @@ function AssignmentTab() {
                         setTax2(res.data.result);
                     }
                 });
+            }
         };
         getSubCategory();
     }, [selectedData]);

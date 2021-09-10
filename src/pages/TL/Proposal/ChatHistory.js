@@ -12,21 +12,23 @@ function ChatHistory({ chatHandler, addPaymentModal, qno }) {
   }, [qno]);
 
   const getNotification = () => {
+   if(qno != null){
     axios
-      .get(
-        `${baseUrl}/customers/getNotification?id=${JSON.parse(
-          userId
-        )}&type=2&q_no=${qno}`
-      )
-      .then((res) => {
-        console.log(res);
-        if (res.data.code === 1) {
-          setNotification(res.data.result);
-        }
-      });
+    .get(
+      `${baseUrl}/customers/getNotification?id=${JSON.parse(
+        userId
+      )}&type=2&q_no=${qno}`
+    )
+    .then((res) => {
+     
+      if (res.data.code === 1) {
+        setNotification(res.data.result);
+      }
+    });
+   }
   };
 
-  console.log("notification", notification);
+  
 
   return (
     <div>

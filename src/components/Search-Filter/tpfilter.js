@@ -393,7 +393,8 @@ function TaxProfessionalFilter(props) {
 
   useEffect(() => {
     const getSubCategory = () => {
-      axios
+      if(selectedData != undefined){
+        axios
         .get(`${baseUrl}/customers/getCategory?pid=${selectedData}`)
         .then((res) => {
           console.log(res);
@@ -401,6 +402,7 @@ function TaxProfessionalFilter(props) {
             setTax2(res.data.result);
           }
         });
+      }
     };
     getSubCategory();
   }, [selectedData]);

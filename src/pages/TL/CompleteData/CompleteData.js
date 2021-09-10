@@ -27,7 +27,7 @@ const hist = useHistory();
   const [ViewDiscussion, setViewDiscussion] = useState(false);
   const [history, setHistory] = useState([]);
   const [modal, setModal] = useState(false);
-  // const [records, setRecords] = useState([]);
+
   const ViewDiscussionToggel = (key) => {
       setViewDiscussion(!ViewDiscussion);
       setAssignNo(key)
@@ -39,9 +39,9 @@ const hist = useHistory();
     getInCompleteAssingment();
   }, []);
   const toggle = (key) => {
-    console.log("key", key);
+  
     setModal(!modal);
-  console.log("userid", userid)
+
     fetch(`${baseUrl}/customers/getQueryHistory?q_id=${key}&uid=${JSON.parse(userid)}`, {
       method: "GET",
       headers: new Headers({
@@ -50,7 +50,7 @@ const hist = useHistory();
     })
       .then((res) => res.json())
       .then((response) => {
-        console.log(response);
+     
         setHistory(response.result);
       })
       .catch((error) => console.log(error));
@@ -59,7 +59,7 @@ const hist = useHistory();
     axios
       .get(`${baseUrl}/tl/pendingAllocation?uid=${JSON.parse(userid)}`)
       .then((res) => {
-        console.log(res);
+
         if (res.data.code === 1) {
           setInCompleteData(res.data.result);
           setRecords(res.data.result.length);
@@ -94,7 +94,7 @@ const hist = useHistory();
         return { fontSize: "12px" };
       },
       formatter: function nameFormatter(cell, row) {
-        console.log(row);
+
         return (
           <>
             <Link
@@ -142,7 +142,7 @@ const hist = useHistory();
         return { fontSize: "12px" };
       },
       formatter: function dateFormat(cell, row) {
-        console.log("dt", row.Exp_Delivery_Date);
+       
         var oldDate = row.Exp_Delivery_Date;
         if (oldDate == null) {
           return null;
@@ -186,80 +186,7 @@ const hist = useHistory();
           );
       },
   },
-  //   {
-  //     text: "Action",
-  //     dataField: "",
-  //     headerStyle: () => {
-  //         return { fontSize: "12px" };
-  //     },
-  //     formatter: function (cell, row) {
-  //         console.log("StatusCode", row)
-  //         return (
-  //             <>
-  //                 <div
-  //                     style={{
-  //                         display: "flex",
-  //                         justifyContent: "space-evenly",
-  //                         color: "green",
-  //                     }}
-  //                 >
-  //                     <Link to={`/teamleader/queryassing/${row.id}`}>
-  //                         {row.statuscode == "1" ? (
-  //                             <div title="Assigned">
-  //                                 <i class="fa fa-share" style={{ color: "green" }}></i>
-  //                             </div>
-  //                         ) :
-  //                             row.statuscode == "2" ?
-  //                                 (
-  //                                     <div title="Assign to">
-  //                                         <i class="fa fa-share"></i>
-  //                                     </div>
-  //                                 )
-  //                                 :
-  //                                 ""
-  //                         }
-  //                     </Link>
-
-  //                     <div title="Send Message">
-  //                         <Link
-  //                             to={{
-  //                                 pathname: `/teamleader/chatting/${row.id}`,
-  //                                 obj: {
-  //                                     message_type: "2",
-  //                                     query_No: row.assign_no,
-  //                                     query_id: row.id,
-  //                                     routes: `/teamleader/proposal`
-  //                                 }
-  //                             }}
-  //                         >
-  //                             <i
-  //                                 class="fa fa-comments-o"
-  //                                 style={{
-  //                                     fontSize: 16,
-  //                                     cursor: "pointer",
-  //                                     marginLeft: "8px",
-  //                                     color: "blue"
-  //                                 }}
-  //                             ></i>
-  //                         </Link>
-  //                     </div>
-
-  //                     <div title="View Discussion Message">
-  //                         <i
-  //                             class="fa fa-comments-o"
-  //                             style={{
-  //                                 fontSize: 16,
-  //                                 cursor: "pointer",
-  //                                 color: "orange"
-  //                             }}
-  //                             onClick={() => ViewDiscussionToggel(row.assign_no)}
-  //                         ></i>
-  //                     </div>
-  //                 </div>
-  //             </>
-  //         );
-  //     },
-  // },
+  
   {
     text: "Action",
     dataField: "",
@@ -351,34 +278,7 @@ const hist = useHistory();
 
   const  assignConfirm = (id, assign_number) => {
  
-    // Swal.fire({
-    //   title: "Are you sure?",
-    //   text: `do you want to assign ${assign_number} to taxprofessional`,
-    
-    //   showCancelButton: true,
-    //   showConfirmButton: true,
-    //   showCloseButton:false,
-
-    //   confirmButtonColor: "#3085d6",
-    //   cancelButtonColor: "#d33",
-    //   confirmButtonText: "Yes, assign it!",
-    //   cancelButtonText : "NO"
-    // }).then((result) => {
-    //   console.log("resultValue", result.value)
-    //   if (result.value === true) {
-       
-    //    hist.push(`/teamleader/queryassing/${id}`)
-    //   }
-    //   else if(result.value === false) {
-       
-    //     axios.get(`${baseUrl}/tl/workby?uid=${JSON.parse(userid)}&qid=${id}`).then((res) => {
-    //       if(res.data.code === 1){
-    //         hist.push(`/teamleader/proposal`)
-           
-    //       }
-    //     })
-    //   }
-    // });
+   
 Swal.fire({
   title: "Are you sure?",
    text: `do you want to assign ${assign_number} to taxprofessional`,
@@ -393,7 +293,7 @@ Swal.fire({
         if(result.value){
           hist.push(`/teamleader/queryassing/${id}`)
         }else if(result.dismiss == 'cancel'){
-           console.log(result.dismiss);
+          
            axios.get(`${baseUrl}/tl/workby?uid=${JSON.parse(userid)}&qid=${id}`).then((res) => {
                    if(res.data.code === 1){
                      hist.push(`/teamleader/proposal`)

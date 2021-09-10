@@ -35,39 +35,42 @@ function TeamFilter(props) {
 
 
   var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
-  console.log("current_date :", current_date);
+ 
   const [item] = useState(current_date);
 
   useEffect(() => {
     const getSubCategory = () => {
+     if(selectedData.length != 0){
+      
       axios
-        .get(`${baseUrl}/customers/getCategory?pid=${selectedData}`)
-        .then((res) => {
-          console.log(res);
-          if (res.data.code === 1) {
-            setTax2(res.data.result);
-          }
-        });
+      .get(`${baseUrl}/customers/getCategory?pid=${selectedData}`)
+      .then((res) => {
+       
+        if (res.data.code === 1) {
+          setTax2(res.data.result);
+        }
+      });
+     }
     };
     getSubCategory();
   }, [selectedData]);
 
   //handleCategory
   const handleCategory = (value) => {
-    console.log(`selected ${value}`);
+   
     setSelectedData(value);
     setStore2([]);
   };
 
   //handleSubCategory
   const handleSubCategory = (value) => {
-    console.log(`selected ${value}`);
+  
     setStore2(value);
   };
 
   //reset category
   const resetCategory = () => {
-    console.log("resetCategory ..");
+   
     setSelectedData([]);
     setStore2([]);
     setTax2([])
@@ -76,7 +79,7 @@ function TeamFilter(props) {
 
   //reset date
   const resetData = () => {
-    console.log("resetData ..");
+  
     reset();
     setSelectedData([]);
     setStore2([]);
@@ -85,8 +88,7 @@ function TeamFilter(props) {
   };
 
   const onSubmit = (data) => {
-    console.log("data :", data);
-    console.log("store2 :", store2);
+
 
     if (AllQuery == "AllQuery") {
       axios
@@ -94,7 +96,8 @@ function TeamFilter(props) {
           `${baseUrl}/tl/getIncompleteQues?id=${JSON.parse(userid)}&status=${data.p_status}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&pcat_id=${selectedData}`
         )
         .then((res) => {
-          console.log(res);
+         
+
           if (res.data.code === 1) {
             if (res.data.result) {
               setData(res.data.result);
@@ -114,7 +117,7 @@ function TeamFilter(props) {
           )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&pcat_id=${selectedData}`
         )
         .then((res) => {
-          console.log(res);
+        
           if (res.data.code === 1) {
             if (res.data.result) {
               setData(res.data.result);
@@ -127,13 +130,13 @@ function TeamFilter(props) {
 
     if (InprogressQuery == "InprogressQuery") {
 
-      console.log("status1", status1)
+     
       axios
         .get(
           `${baseUrl}/tl/getIncompleteQues?id=${JSON.parse(userid)}&status=${status1}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&pcat_id=${selectedData}`
         )
         .then((res) => {
-          console.log(res);
+        
           if (res.data.code === 1) {
             if (res.data.result) {
               setData(res.data.result);
@@ -149,7 +152,7 @@ function TeamFilter(props) {
           `${baseUrl}/tl/declinedQueries?id=${JSON.parse(userid)}&status=${data.p_status}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&pcat_id=${selectedData}`
         )
         .then((res) => {
-          console.log(res);
+
           if (res.data.code === 1) {
             if (res.data.result) {
               setData(res.data.result);
@@ -167,7 +170,7 @@ function TeamFilter(props) {
           )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&pcat_id=${selectedData}`
         )
         .then((res) => {
-          console.log(res);
+
           if (res.data.code === 1) {
             if (res.data.result) {
               setData(res.data.result);
@@ -187,7 +190,7 @@ function TeamFilter(props) {
           }&status=${data.p_status}&pcat_id=${selectedData}`
         )
         .then((res) => {
-          console.log(res);
+
           if (res.data.code === 1) {
             if (res.data.result) {
               setData(res.data.result);
@@ -206,7 +209,7 @@ function TeamFilter(props) {
           }&status=${data.p_status}&pcat_id=${selectedData}`
         )
         .then((res) => {
-          console.log(res);
+         
           if (res.data.code === 1) {
             if (res.data.result) {
               setData(res.data.result);
@@ -225,7 +228,7 @@ function TeamFilter(props) {
           )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=${data.p_status}&pcat_id=${selectedData}`
         )
         .then((res) => {
-          console.log(res);
+
           if (res.data.code === 1) {
             if (res.data.result) {
               setData(res.data.result);
@@ -243,7 +246,7 @@ function TeamFilter(props) {
           )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=1&pcat_id=${selectedData}`
         )
         .then((res) => {
-          console.log(res);
+         
           if (res.data.code === 1) {
             if (res.data.result) {
               setData(res.data.result);
@@ -261,7 +264,7 @@ function TeamFilter(props) {
           )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=2&pcat_id=${selectedData}`
         )
         .then((res) => {
-          console.log(res);
+
           if (res.data.code === 1) {
             if (res.data.result) {
               setData(res.data.result);

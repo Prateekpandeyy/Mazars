@@ -19,17 +19,17 @@ function DiscardReport({
   useEffect(() => {
     getHistory();
   }, [report]);
-  // mazarapi/v1/tl/getMessage?id=128&q_no=Q-24-72
+  
 
   const getHistory = () => {
-    if(report != undefined){
+   
       axios.get(`${baseUrl}/tl/getMessage?id=${JSON.parse(userId)}&q_no=${report}`).then((res) => {
-        console.log(res);
+        
         if (res.data.code === 1) {
           setData(res.data.result);
         }
       });
-    }
+   
   };
 
 

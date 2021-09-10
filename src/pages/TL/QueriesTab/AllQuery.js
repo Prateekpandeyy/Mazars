@@ -40,7 +40,7 @@ function AllQuery() {
         axios
             .get(`${baseUrl}/tl/getIncompleteQues?id=${JSON.parse(userid)}`)
             .then((res) => {
-                console.log(res);
+
                 if (res.data.code === 1) {
                     setInCompleteData(res.data.result);
                     setRecords(res.data.result.length);
@@ -74,7 +74,7 @@ function AllQuery() {
                 return { fontSize: "12px" };
             },
             formatter: function nameFormatter(cell, row) {
-                console.log(row);
+
                 return (
                     <>
                         {/* <Link to={`/teamleader/queries/${row.id}`}>{row.assign_no}</Link> */}
@@ -123,7 +123,7 @@ function AllQuery() {
                 return { fontSize: "12px" };
             },
             formatter: function dateFormat(cell, row) {
-                console.log("dt", row.Exp_Delivery_Date);
+                
                 var oldDate = row.Exp_Delivery_Date;
                 if (oldDate == null) {
                     return null;
@@ -172,7 +172,7 @@ function AllQuery() {
                 return { fontSize: "12px" };
             },
             formatter: function (cell, row) {
-                console.log("StatusCode", row)
+              
                 return (
                     <>
                         <div
@@ -182,22 +182,7 @@ function AllQuery() {
                                 color: "green",
                             }}
                         >
-                            {/* <Link to={`/teamleader/queryassing/${row.id}`}>
-                                {row.tp_status == "1" ? (
-                                    <div title="Assigned">
-                                        <i class="fa fa-share" style={{ color: "green" }}></i>
-                                    </div>
-                                ) :
-                                    row.status_code == "2" ?
-                                        (
-                                            <div title="Assign to">
-                                                <i class="fa fa-share"></i>
-                                            </div>
-                                        )
-                                        :
-                                        ""
-                                }
-                            </Link> */}
+                           
 
                             <div title="Send Message">
                                 <Link

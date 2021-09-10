@@ -28,7 +28,7 @@ function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
 
   const [addPaymentModal, setPaymentModal] = useState(false);
   const rejectHandler = (key) => {
-    console.log("key", key);
+
     setPaymentModal(!addPaymentModal);
     setPay({
       id: key.id,
@@ -44,11 +44,11 @@ function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
     axios
       .get(`${baseUrl}/tl/pendingQues?id=${JSON.parse(userid)}`)
       .then((res) => {
-        console.log(res);
+        
         if (res.data.code === 1) {
           setPendingData(res.data.result);
           setRecords(res.data.result.length);
-          // CountPendingForAcceptence(res.data.result.length);
+         
         }
       });
   };
@@ -72,7 +72,7 @@ function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
         return { fontSize: "12px" };
       },
       formatter: function dateFormat(cell, row) {
-        console.log("dt", row.query_created);
+      
         var oldDate = row.query_created;
         if (oldDate == null) {
           return null;
@@ -87,7 +87,7 @@ function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
         return { fontSize: "12px" };
       },
       formatter: function nameFormatter(cell, row) {
-        console.log(row);
+       
         return (
           <>
             <Link
@@ -135,7 +135,7 @@ function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
         return { fontSize: "12px" };
       },
       formatter: function dateFormat(cell, row) {
-        console.log("dt", row.Exp_Delivery_Date);
+      
         var oldDate = row.Exp_Delivery_Date;
         if (oldDate == null) {
           return null;
@@ -190,7 +190,7 @@ function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
   ];
 
   const acceptHandler = (key) => {
-    console.log("acceptHandler", key);
+  
     setLoading(true)
 
     let formData = new FormData();
@@ -205,7 +205,7 @@ function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
       data: formData,
     })
       .then(function (response) {
-        console.log("response-", response);
+      
         if (response.data.code === 1) {
           setLoading(false)
           Alerts.SuccessNormal("Query accepted successfully.")
@@ -216,7 +216,7 @@ function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
         }
       })
       .catch((error) => {
-        console.log("erroror - ", error);
+
       });
   };
 
