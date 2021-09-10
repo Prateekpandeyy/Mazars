@@ -161,7 +161,7 @@ schdrularName;
     axios
             .get(`${baseUrl}/tl/videoScheduler?id=${this.props.id}`)
             .then((res) => {
-                console.log(res);
+                console.log("myResult", res);
            
                
                 if (res.data.code === 1) {
@@ -652,32 +652,37 @@ async startRecording(key){
 
  //stop recording 
  stopRecording = () => {
-  console.log("stopRecording - ");
-
-  var resourceId = localStorage.getItem("resourceId");
-  var sid = localStorage.getItem("sid");
-
-  var data = JSON.stringify({
-    "cname":this.channelName,
-    "uid":JSON.stringify(this.uid),
-    "clientRequest":{ }});
-  axios({
-    method: "POST",
-    headers: {
-      "content-type": "application/json;charset=utf-8",
-      "authorization": "Basic "+this.encodedString,
-      "cache-control": "no-cache",
-    },
-    url: `https://api.agora.io/v1/apps/${this.props.appId}/cloud_recording/resourceid/${resourceId}/sid/${sid}/mode/mix/stop`,
-    data: data,
-  })
-  .then(json => 
-    this.toggleModal(json)) 
-    .catch((error) => {
-      console.log("error - ", error);
-    });
-};
-
+ 
+  if(this.state.showButton == JSON.parse(this.teamKey)){
+    var resourceId = localStorage.getItem("resourceId");
+    var sid = localStorage.getItem("sid");
+  
+    var data = JSON.stringify({
+      "cname":this.channelName,
+      "uid":JSON.stringify(this.uid),
+      "clientRequest":{ }});
+    axios({
+      method: "POST",
+      headers: {
+        "content-type": "application/json;charset=utf-8",
+        "authorization": "Basic "+this.encodedString,
+        "cache-control": "no-cache",
+      },
+      url: `https://api.agora.io/v1/apps/${this.props.appId}/cloud_recording/resourceid/${resourceId}/sid/${sid}/mode/mix/stop`,
+      data: data,
+    })
+    .then(json => 
+      this.toggleModal(json)) 
+      .catch((error) => {
+        console.log("error - ", error);
+      });
+  }
+  else{
+    console.log("exit");
+    window.location.hash = "/teamleader/schedule";
+  }
+    
+  };
 
   render() {
 

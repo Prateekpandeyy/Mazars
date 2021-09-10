@@ -80,7 +80,7 @@ function AllQueriesData() {
         },
         {
             text: "Date",
-            dataField: "setData",
+            dataField: "created",
             sort: true,
             headerStyle: () => {
                 return { fontSize: "12px" };

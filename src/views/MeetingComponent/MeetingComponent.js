@@ -6,9 +6,9 @@ function MeetingComponent(props) {
   const userId = window.localStorage.getItem("userid");
 
   return (
-    <Layout custDashboard="custDashboard" custUserId={userId}>
+    
       <Meeting />
-    </Layout>
+   
   );
 }
 

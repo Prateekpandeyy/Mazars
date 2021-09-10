@@ -18,8 +18,7 @@ import {
 import RecordingModal from "./RecordingModal";
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import { green ,red} from '@material-ui/core/colors';
-
-
+import { Redirect } from "react-router";
 const tile_canvas = {
   "1": ["span 12/span 24"],
   "2": ["span 12/span 12/13/25", "span 12/span 12/13/13"],
@@ -652,8 +651,8 @@ async startRecording(key){
 
  //stop recording 
  stopRecording = () => {
-  console.log("stopRecording - ");
-
+  
+  if(this.state.showButton == JSON.parse(this.teamKey)){
   var resourceId = localStorage.getItem("resourceId");
   var sid = localStorage.getItem("sid");
 
@@ -676,6 +675,12 @@ async startRecording(key){
     .catch((error) => {
       console.log("error - ", error);
     });
+}
+else{
+  console.log("exit");
+  window.location.hash = "/admin/schedule";
+}
+  
 };
 
 

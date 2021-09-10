@@ -49,6 +49,7 @@ function Message(props) {
 
                 if (res.data.code === 1) {
                     setQuery(res.data.result);
+                   
                 }
             });
     };
@@ -70,20 +71,19 @@ function Message(props) {
         
  {
     text: "Date",
-    dataField: "",
+    dataField: "dateFormat1",
     sort: true,
     headerStyle: () => {
         return { fontSize: "12px", width: "60px" };
     },
     formatter : function dateFormatter(cell, row) {
-        console.log("row", )
+        console.log("row",   row.setdate.toString().split(" ")[0].toString().split("-").reverse().join("-"))
         return(
             <>
-         {row.setdate.toString().split("-").join("-").split(" ")[0].toString()
-        .split("-").reverse().join("-")} &nbsp; &nbsp;
-        {
+         {row.setdate.toString().split(" ")[0].toString().split("-").reverse().join("-")} &nbsp; &nbsp;
+        {/* {
            row.setdate.toString().split("-").join("-").split(" ")[1]
-        }
+        } */}
             </>
         )
     }
