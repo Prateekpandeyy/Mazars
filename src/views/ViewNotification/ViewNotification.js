@@ -77,7 +77,7 @@ function ViewNotification() {
                 <td>{data.assign_no}</td>
               </tr>
               <tr>
-                <th scope="row"> System Generated</th>
+                <th scope="row"> Sender</th>
                 <td>{data.name}</td>
               </tr>
               <tr>
@@ -93,13 +93,7 @@ function ViewNotification() {
               <tr>
                 <th scope="row">Type</th>
                 <td>
-                  {data.type == "1"
-                    ? "info"
-                    : data.type == "2"
-                      ? "Proposal Discuss"
-                      : data.type == "3"
-                        ? "Draft Discuss"
-                        : null}
+                  {data.type}
                 </td>
               </tr>
             </tbody>

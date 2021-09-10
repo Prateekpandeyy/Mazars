@@ -22,7 +22,9 @@ function CustomerNotification({ tokenKey, name }) {
                 console.log(res);
                 if (res.data.code === 1) {
                     setNotification(res.data.result);
+                   if(res.data.result[0] != undefined){
                     setCountNotification(res.data.result[0].total);
+                   }
                 }
             });
     };
@@ -61,9 +63,4 @@ function CustomerNotification({ tokenKey, name }) {
 
 export default CustomerNotification;
 
-
-
-// {
-//   /* <i class="ft-book"></i> */
-// }
 

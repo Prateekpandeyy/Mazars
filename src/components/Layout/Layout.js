@@ -9,7 +9,8 @@ function Layout(props) {
   const {
     custDashboard, adminDashboard, TLDashboard,
     TPDashboard,
-    custUserId, adminUserId, TLuserId, TPuserId } = props
+    custUserId, adminUserId, TLuserId, TPuserId, feedbackNumber } = props
+    
   return (
     <>
       <Header
@@ -17,6 +18,7 @@ function Layout(props) {
         adminUserId={adminUserId}
         TLuserId={TLuserId}
         TPuserId={TPuserId}
+        feedbackNumber = {feedbackNumber}
       />
 
       <Sidebar
@@ -24,6 +26,7 @@ function Layout(props) {
         adminDashboard={adminDashboard}
         TLDashboard={TLDashboard}
         TPDashboard={TPDashboard}
+        feedbackNumber = {feedbackNumber}
       />
 
       <div class="app-content content" style={{ marginTop: "100px" }}>

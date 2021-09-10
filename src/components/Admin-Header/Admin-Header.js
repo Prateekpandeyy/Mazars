@@ -4,7 +4,7 @@ import { Link, useHistory } from "react-router-dom";
 import NavWrapper from "./NavWrapper";
 
 
-function AdminHeader({ custUserId, adminUserId, TLuserId, TPuserId }) {
+function AdminHeader({ custUserId, adminUserId, TLuserId, TPuserId , feedbackNumber}) {
   let history = useHistory();
 
   const custLogout = () => {
@@ -53,7 +53,9 @@ function AdminHeader({ custUserId, adminUserId, TLuserId, TPuserId }) {
         sty
       >
         {custUserId && (
-          <NavWrapper color="#5E96AE" logout={custLogout}
+          <NavWrapper 
+          feedbackNumber = {feedbackNumber}
+          color="#5E96AE" logout={custLogout}
             name="customer" email={CustEmail}
           />
         )}

@@ -2,14 +2,23 @@ import { NavLink } from "react-router-dom";
 import React, { useState } from "react";
 import { Badge } from "reactstrap";
 
-function Sidebar({ adminDashboard, custDashboard, TLDashboard, TPDashboard }) {
+function Sidebar({ adminDashboard, custDashboard, TLDashboard, TPDashboard , feedbackNumber}) {
   const [toggleState, setToggleState] = useState(false);
-
+  
   const toggleTab = (index) => {
     console.log(index);
     setToggleState(index);
   };
+const feedNumber = {
+  fontSize : "20px", 
 
+  height: "15px",
+  
+  color : "green",
+  display: "inline-block",
+  margin: "0 0 20px 20px",
+  padding : "10xp 5px 10px 5px"
+}
   return (
     <>
       <div
@@ -209,7 +218,7 @@ function Sidebar({ adminDashboard, custDashboard, TLDashboard, TPDashboard }) {
                  <NavLink to={"/admin/customers"}>
                    <i class="fa fa-users"></i>
                    <span class="menu-title" data-i18n="">
-                   customers
+                   Customers
                   </span>
                  </NavLink>
                </li>
@@ -217,7 +226,8 @@ function Sidebar({ adminDashboard, custDashboard, TLDashboard, TPDashboard }) {
                 <NavLink to={"/admin/feedback"}>
                   <i class="fa fa-file-text"></i>
                   <span class="menu-title" data-i18n="">
-                    Feedback
+                 Feedback <sup style={feedNumber}>{feedbackNumber}</sup> 
+                   
                   </span>
                 </NavLink>
               </li>

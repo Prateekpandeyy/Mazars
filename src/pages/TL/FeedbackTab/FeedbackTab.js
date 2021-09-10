@@ -48,21 +48,22 @@ function FeedbackTab() {
     },
     {
       text: "Date",
+      dataField: "created",
       sort: true,
       headerStyle: () => {
         return { fontSize: "12px", width: "60px" };
       },
-      formatter: function nameFormatter(cell, row) {
-        console.log(row);
-        return (
-          <>
-            <div style={{ display: "flex" }}>
-              <p>{CommonServices.removeTime(row.created)}</p>
-              <p style={{ marginLeft: "15px" }}>{CommonServices.removeDate(row.created)}</p>
-            </div>
-          </>
-        );
-      },
+      // formatter: function nameFormatter(cell, row) {
+      //   console.log(row);
+      //   return (
+      //     <>
+      //       <div style={{ display: "flex" }}>
+      //         <p>{CommonServices.removeTime(row.created)}</p>
+      //         <p style={{ marginLeft: "15px" }}>{CommonServices.removeDate(row.created)}</p>
+      //       </div>
+      //     </>
+      //   );
+      // },
     },
     {
       text: "Query No",

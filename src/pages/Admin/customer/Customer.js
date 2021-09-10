@@ -80,7 +80,7 @@ function Customer() {
     },
     {
       dataField: "name",
-      text: "Customer Name",
+      text: "Name",
       sort: true,
       headerStyle: () => {
         return { fontSize: "12px" };
@@ -89,6 +89,22 @@ function Customer() {
     {
         dataField: "email",
         text: "Email",
+        sort: true,
+        headerStyle: () => {
+          return { fontSize: "12px" };
+        },
+      },
+      {
+        dataField: "phone",
+        text: "Mobile No",
+        sort: true,
+        headerStyle: () => {
+          return { fontSize: "12px" };
+        },
+      },
+      {
+        dataField: "occupation",
+        text: "Occupation",
         sort: true,
         headerStyle: () => {
           return { fontSize: "12px" };
@@ -119,30 +135,16 @@ function Customer() {
        return { fontSize: "12px" };
       },
     },
+   
     {
-      dataField: "phone",
-      text: "Phone",
+      dataField: "created",
+      text: "Date",
       sort: true,
       headerStyle: () => {
         return { fontSize: "12px" };
       },
     },
-    {
-      dataField: "pincode",
-      text: "Pincode",
-      sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
-    },
-    {
-      dataField: "occupation",
-      text: "Occupation",
-      sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
-    },
+    
   
    
     {

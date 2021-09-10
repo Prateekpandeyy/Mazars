@@ -117,6 +117,7 @@ import TpChatting from './pages/TP/Chatting/Chatting'
 import TpAddAssingmentStages from './pages/TP/AddAssingmentStages/AddAssingmentStages'
 import TpFeedbackTab from './pages/TP/FeedbackTab/FeedbackTab'
 import TpMeetingComponent from './pages/TP/MeetingComponent/MeetingComponent'
+import TpViewNotification from './pages/TP/ViewNotification/ViewNotification'
 //private routes
 import PrivateRouteUser from './Service/PrivateRouteUser'
 import PrivateRouteAdmin from './Service/PrivateRouteAdmin'
@@ -252,6 +253,7 @@ function App() {
             <PrivateRouteTP exact path="/taxprofessional/message" component={TpMessage} />
             <PrivateRouteTP exact path="/taxprofessional/feedback" component={TpFeedbackTab} />
             <PrivateRouteTP exact path="/taxprofessional/meeting/:id" component={TpMeetingComponent} />
+            <PrivateRouteTP exact path="/taxprofessional/view-notification/:id" component={TpViewNotification} />
             <Route exact path="/*" component={PageNotFound} />
 
           </Switch>
