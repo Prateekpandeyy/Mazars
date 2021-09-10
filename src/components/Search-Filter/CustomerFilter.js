@@ -82,10 +82,10 @@ function CustomerFilter(props) {
   };
 
   const onSubmit = (data) => {
-    console.log("data :", data);
-    console.log("store2 :", store2);
+  
 
     if (query == "query") {
+
       axios
         .get(
           `${baseUrl}/customers/incompleteAssignments?user=${JSON.parse(
@@ -94,7 +94,7 @@ function CustomerFilter(props) {
           }&status=${data.p_status}&pcat_id=${selectedData}`
         )
         .then((res) => {
-          console.log(res);
+          console.log("myResult", res.data.result);
           if (res.data.code === 1) {
             if (res.data.result) {
               setData(res.data.result);
@@ -113,7 +113,7 @@ function CustomerFilter(props) {
           }&status=${data.p_status}&pcat_id=${selectedData}`
         )
         .then((res) => {
-          console.log(res);
+          console.log("myResult", res.data.result);
           if (res.data.code === 1) {
             if (res.data.result) {
               setData(res.data.result);
@@ -130,7 +130,7 @@ function CustomerFilter(props) {
           }&pcat_id=${selectedData}`
         )
         .then((res) => {
-          console.log(res);
+          console.log("myResult", res.data.result);
           if (res.data.code === 1) {
             if (res.data.result) {
               setData(res.data.result);
@@ -150,7 +150,7 @@ function CustomerFilter(props) {
           }&pcat_id=${selectedData}&status=${data.p_status}`
         )
         .then((res) => {
-          console.log(res);
+          console.log("myResult", res.data.result);
           if (res.data.code === 1) {
             if (res.data.result) {
               setData(res.data.result);

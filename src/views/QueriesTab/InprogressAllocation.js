@@ -22,7 +22,7 @@ import AdditionalQueryModal from "./AdditionalQueryModal";
 import Swal from "sweetalert2";
 import CommonServices from "../../common/common";
 import DiscardReport from "../AssignmentTab/DiscardReport";
-
+import moment from "moment";
 
 function InprogressAllocation() {
 
@@ -206,6 +206,11 @@ function InprogressAllocation() {
         return { fontSize: "12px", textAlign: "center", width: "130px" };
       },
       formatter: function (cell, row) {
+        var dateMnsFive = moment(row.exp_delivery_date).add(15, 'day').format("YYYY-MM-DD");
+              
+               
+        var curDate = moment().format("YYYY-MM-DD")
+     
         return (
           <>
             {
@@ -267,25 +272,28 @@ function InprogressAllocation() {
                       null
                   }
 
-                  {
-                    row.status_code == "4" || row.status_code == "9" || row.status_code == "2" ?
-                      <div style={{ display: "flex", justifyContent: "space-around" }}>
+                                    {
+                                        row.status_code == "4" || 8 < parseInt(row.status_code) || row.status_code == "2" ?
+                                          
+                                          <div style={{ display: "flex", justifyContent: "space-around" }}>
 
-                        <div title="Send Feedback"
-                          style={{
-                            cursor: "pointer",
-                          }}>
-                          <Link
-                            to={{
-                              pathname: `/customer/feedback/${row.assign_no}`,
-                              obj: {
-                                routes: `/customer/queries`
-                              }
-                            }}
-                          >
-                            <FeedbackIcon />
-                          </Link>
-                        </div>
+                                                {dateMnsFive > curDate === true ?
+                                                <div title="Send Feedback"
+                                                style={{
+                                                    cursor: "pointer",
+                                                }}>
+                                                <Link
+                                                    to={{
+                                                        pathname: `/customer/feedback/${row.assign_no}`,
+                                                        obj: {
+                                                            routes: `/customer/queries`
+                                                        }
+                                                    }}
+                                                >
+                                                    <FeedbackIcon />
+                                                </Link>
+                                            </div> : ""}
+                                          
                         {
                           row.delivery_report == "completed" ? null :
                             <div title="Upload Additional Documents"

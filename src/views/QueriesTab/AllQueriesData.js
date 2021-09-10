@@ -28,12 +28,13 @@ import { date } from "yup";
 function AllQueriesData() {
     const userId = window.localStorage.getItem("userid");
     const [query, setQuery] = useState([]);
+   
     const [queriesCount, setCountQueries] = useState(null);
     const [records, setRecords] = useState([]);
     const [loading, setLoading] = useState(false);
     
     const [additionalQuery, setAdditionalQuery] = useState(false);
-    const [feedback2, setfeedback] = useState(false)
+ 
     const additionalHandler = (key) => {
         setAdditionalQuery(!additionalQuery);
         setAssignNo(key)
@@ -57,7 +58,7 @@ function AllQueriesData() {
                 `${baseUrl}/customers/incompleteAssignments?user=${JSON.parse(userId)}`
             )
             .then((res) => {
-               
+               console.log("myResult", res.data.result)
                 if (res.data.code === 1) {
                     setQuery(res.data.result);
                     setCountQueries(res.data.result.length);
@@ -192,15 +193,18 @@ function AllQueriesData() {
                 return { fontSize: "12px", textAlign: "center", width: "130px" };
             },
             formatter: function (cell, row) {
-                var dateMnsFive = moment(row.exp_delivery_date).add(15, 'day').toDate();  
-                var curDate = moment().toDate();
-                 if(dateMnsFive > curDate){
-                     setfeedback(true)
-                 }
-                console.log("myFeedback", feedback2)
+                var dateMnsFive = moment(row.exp_delivery_date).add(15, 'day').format("YYYY-MM-DD");
+              
+               
+                var curDate = moment().format("YYYY-MM-DD")
+             
+               
+              
+                
+             
                 return (
                     <>
-                        {
+                        {   
                             row.status == "Declined Query" ?
                                 null
                                 :
@@ -264,7 +268,7 @@ function AllQueriesData() {
                                           
                                           <div style={{ display: "flex", justifyContent: "space-around" }}>
 
-                                                {feedback2 === false ?
+                                                {dateMnsFive > curDate === true ?
                                                 <div title="Send Feedback"
                                                 style={{
                                                     cursor: "pointer",

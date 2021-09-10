@@ -367,8 +367,9 @@ function AssignmentComponent() {
     var warningDate = moment(row.Exp_Delivery_Date).subtract(2, 'day').toDate();
     // var warnformat = warningDate.format("YYYY-MM-DD");
     var aa = moment().toDate();
-   
-
+   console.log("warningDate", warningDate)
+   console.log("currentDate", aa)
+console.log(warningDate < aa)
     if(row.paid_status != "2" && warningDate < aa)  {
       style.backgroundColor = "#c1d8f2";
       style.color = "#000111"
