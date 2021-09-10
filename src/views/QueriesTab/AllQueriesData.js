@@ -57,7 +57,7 @@ function AllQueriesData() {
                 `${baseUrl}/customers/incompleteAssignments?user=${JSON.parse(userId)}`
             )
             .then((res) => {
-                console.log(res);
+               
                 if (res.data.code === 1) {
                     setQuery(res.data.result);
                     setCountQueries(res.data.result.length);
@@ -94,7 +94,7 @@ function AllQueriesData() {
                 return { fontSize: "12px" };
             },
             formatter: function nameFormatter(cell, row) {
-                console.log(row);
+              
                 return (
                     <>
                         <Link
@@ -168,8 +168,7 @@ function AllQueriesData() {
                 return { fontSize: "12px" };
             },
             formatter: function dateFormat(cell, row) {
-                console.log("dt", row.exp_delivery_date);
-                console.log("userStatueCode", row.status_code)
+               
            
                 return (
                   
@@ -198,7 +197,7 @@ function AllQueriesData() {
                  if(dateMnsFive > curDate){
                      setfeedback(true)
                  }
-                
+                console.log("myFeedback", feedback2)
                 return (
                     <>
                         {
@@ -343,7 +342,7 @@ function AllQueriesData() {
 
     //check
     const del = (id) => {
-        console.log("del", id);
+ 
 
         Swal.fire({
             title: "Are you sure?",
@@ -373,7 +372,7 @@ function AllQueriesData() {
             data: formData,
         })
             .then(function (response) {
-                console.log("res-", response);
+              
                 if (response.data.code === 1) {
                     setLoading(false)
                     Swal.fire("", "Query deleted successfully.", "success");

@@ -235,6 +235,12 @@ function Paid() {
         fontSize: "11px",
         color: "#21a3ce",
       },
+      sortFunc: (a, b, order, dataField) => {
+        if (order === 'asc') {
+          return b - a;
+        }
+        return a - b; // desc
+      },
       headerStyle: () => {
         return { fontSize: "11px", color: "#21a3ce" };
       },
@@ -247,6 +253,12 @@ function Paid() {
         fontSize: "11px",
         color: "#064606",
       },
+      sortFunc: (a, b, order, dataField) => {
+        if (order === 'asc') {
+          return b - a;
+        }
+        return a - b; // desc
+      },
       headerStyle: () => {
         return { fontSize: "11px", color: "#064606" };
       },
@@ -254,22 +266,28 @@ function Paid() {
 
     {
       text: "Amount Outstanding",
-      dataField: "",
+      dataField: "amount_outstanding",
       sort: true,
       style: {
         fontSize: "11px",
         color: "darkred",
       },
+      sortFunc: (a, b, order, dataField) => {
+        if (order === 'asc') {
+          return b - a;
+        }
+        return a - b; // desc
+      },
       headerStyle: () => {
         return { fontSize: "11px", color: "darkred" };
       },
-      formatter: function amountOutstading(cell, row) {
-       
-        var p = row.paid_amount;
-        var a = row.accepted_amount;
-        var c = a - p
-        return parseInt(c);
-      },
+      // formatter: function amountOutstading(cell, row) {
+      //   console.log("dt", row.paid_amount);
+      //   console.log("dt", row.accepted_amount);
+      //   var p = row.paid_amount;
+      //   var a = row.accepted_amount;
+      //   return a - p;
+      // },
     },
     {
       text: "Date of Payment",
@@ -376,7 +394,10 @@ function Paid() {
     },
   ];
 
-
+  const defaultSorted = [{
+    dataField: 'accepted_amount',
+    order: 'desc'
+  }];
 
 
   return (
@@ -400,10 +421,11 @@ function Paid() {
             <Records records={records} />
             <BootstrapTable
               bootstrap4
-              keyField="id"
+              keyField="accepted_amount"
               data={payment}
               columns={columns}
               classes="table-responsive"
+              defaultSortDirection="asc"
             />
 
             <PaymentComponent

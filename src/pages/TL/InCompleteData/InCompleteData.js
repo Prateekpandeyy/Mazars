@@ -113,7 +113,7 @@ function InCompleteData({ CountIncomplete }) {
       },
     },
     {
-      text: "	Exp. Delivery Date",
+      text: "	Exp. Delivery Date / Acutal Delivery Date",
       dataField: "Exp_Delivery_Date",
       sort: true,
       headerStyle: () => {

@@ -24,7 +24,7 @@ import * as Cookies from "js-cookie";
 import DescriptionOutlinedIcon from '@material-ui/icons/DescriptionOutlined';
 import ViewAllReportModal from "./ViewAllReport";
 import DiscardReport from "../AssignmentTab/DiscardReport";
-
+import moment from "moment";
 
 
 function AssignmentTab() {
@@ -58,6 +58,8 @@ function AssignmentTab() {
 
   const [report, setReport] = useState();
   const [reportModal, setReportModal] = useState(false);
+  const [assignNo, setAssignNo] = useState('');
+  var rowStyle2 = {}
   const ViewReport = (key) => {
     console.log("key - ", key);
     setReportModal(!reportModal);
@@ -65,7 +67,8 @@ function AssignmentTab() {
     setDataItem(key)
   };
 
-  const [assignNo, setAssignNo] = useState('');
+  
+  
   const [ViewDiscussion, setViewDiscussion] = useState(false);
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
@@ -442,7 +445,20 @@ function AssignmentTab() {
     },
   ];
 
+  rowStyle2 = (row, index) => {
+    const style = {}
+    var warningDate = moment(row.Exp_Delivery_Date).subtract(2, 'day').toDate();
+    // var warnformat = warningDate.format("YYYY-MM-DD");
+    var aa = moment().toDate();
+   
 
+    if(row.paid_status != "2" && warningDate < aa)  {
+      style.backgroundColor = "#c1d8f2";
+      style.color = "#000111"
+    }
+  
+    return style;
+  }
 
   // draft modal
   const [draftModal, setDraftModal] = useState(false);
@@ -658,6 +674,7 @@ function AssignmentTab() {
             keyField="id"
             data={assignment}
             columns={columns}
+            rowStyle={ rowStyle2 }
             rowIndex
           />
 

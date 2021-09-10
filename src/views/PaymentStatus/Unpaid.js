@@ -123,16 +123,16 @@ function Paid() {
     {
       dataField: "",
       text: "S.No",
-      formatter: (row, rowIndex) => {
-        return rowIndex + 1;
+      formatter: (cellContent, row, rowIndex) => {
+          return rowIndex + 1;
       },
       style: {
-        fontSize: "11px",
+          fontSize: "11px",
       },
       headerStyle: () => {
-        return { fontSize: "11px" };
+          return { fontSize: "11px" };
       },
-    },
+  },
     {
       dataField: "query_created_date",
       text: "Date",
@@ -236,6 +236,12 @@ function Paid() {
         fontSize: "11px",
         color: "#21a3ce",
       },
+      sortFunc: (a, b, order, dataField) => {
+        if (order === 'asc') {
+          return b - a;
+        }
+        return a - b; // desc
+      },
       headerStyle: () => {
         return { fontSize: "11px", color: "#21a3ce" };
       },
@@ -248,6 +254,12 @@ function Paid() {
         fontSize: "11px",
         color: "#064606",
       },
+      sortFunc: (a, b, order, dataField) => {
+        if (order === 'asc') {
+          return b - a;
+        }
+        return a - b; // desc
+      },
       headerStyle: () => {
         return { fontSize: "11px", color: "#064606" };
       },
@@ -255,22 +267,22 @@ function Paid() {
 
     {
       text: "Amount Outstanding",
-      dataField: "",
+      dataField: "amount_outstanding",
       sort: true,
       style: {
         fontSize: "11px",
         color: "darkred",
       },
+      sortFunc: (a, b, order, dataField) => {
+        if (order === 'asc') {
+          return b - a;
+        }
+        return a - b; // desc
+      },
       headerStyle: () => {
         return { fontSize: "11px", color: "darkred" };
       },
-      formatter: function amountOutstading(cell, row) {
-        console.log("dt", row.paid_amount);
-        console.log("dt", row.accepted_amount);
-        var p = row.paid_amount;
-        var a = row.accepted_amount;
-        return a - p;
-      },
+    
     },
     {
       text: "Date of Payment",
