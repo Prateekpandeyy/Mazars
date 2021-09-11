@@ -281,13 +281,7 @@ function Paid() {
       headerStyle: () => {
         return { fontSize: "11px", color: "darkred" };
       },
-      // formatter: function amountOutstading(cell, row) {
-      //   console.log("dt", row.paid_amount);
-      //   console.log("dt", row.accepted_amount);
-      //   var p = row.paid_amount;
-      //   var a = row.accepted_amount;
-      //   return a - p;
-      // },
+   
     },
     {
       text: "Date of Payment",

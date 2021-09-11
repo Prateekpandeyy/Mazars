@@ -11,71 +11,76 @@ function CustomerListFilter(props) {
 
   const [selectedData, setSelectedData] = useState([]);
 
-  const { setData, searchQuery, setRecord, records, getCustomer  } = props;
-
+  const { setData, searchQuery, setRecords, records, getCustomer  } = props;
+  var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
  
-  //reset date
+  const [item] = useState(current_date);
+  
   const resetData = () => {
     console.log("resetData ..");
     reset();
    getCustomer();
   };
 
-
+  
 
   
   const onSubmit = (data) => {
-   
-if(searchQuery == "SearchQuery"){
-    let formData = new FormData();
-    formData.append("country", data.country);
-    formData.append("state", data.state);
-    formData.append("city", data.city);
-    formData.append("email", data.email);
-    formData.append("from", data.p_dateFrom)
-    formData.append("to", data.p_dateTo)
-    axios({
-        method :"POST", 
-        url :  `${baseUrl}/admin/getAllList`, 
-        data : formData
-    })
-    
-    .then((res) => {
-     
-      if (res.data.code === 1) {
-          console.log(res.data.result)
-        if (res.data.result) {
-          setData(res.data.result);
-        }
-      }
-    });
 
-}
-     
-
-    };
+if(searchQuery == "SearchQuery")
+axios
+.get(
+  `${baseUrl}/admin/getAllList?&name=${data.name}&country=${data.country}&state=${data.state}&city=${data.city2
+  }&email=${data.email}&phone=${data.phone}&from=${data.p_dateFrom}&to=${data.p_dateTo}`
+)
+.then((res) => {
+  console.log("myResult", res.data.result);
+  if (res.data.code === 1) {
+    if (res.data.result) {
+      setData(res.data.result);
+    setRecords(res.data.result.length)
+    }
+  }
+});     
+};
 
   return (
-    <div>
-          <div class="row">
-            
-         <div className="col-sm-12 d-flex">
-        
-         
-         
-            <form class="form-inline" onSubmit={handleSubmit(onSubmit)}>
-            <div className="row my-3">
+    <>
+    <div className="row">
+      <div className="col-sm-12 d-flex">
+        <div>
+          <form onSubmit={handleSubmit(onSubmit)}>
+          <div className="row my-3">
         <div class="col-sm-3">
             
           <input 
-          placeholder="Country"
+          placeholder="Name"
           type="text"
-          name="country"
+          name="name"
           className="form-control"
           ref={register}
           />
       </div>
-
+      <div class="col-sm-3">
+            
+            <input 
+            placeholder="Country"
+            type="country"
+            name="country"
+            className="form-control"
+            ref={register}
+            />
+        </div>
+        <div class="col-sm-3">
+            
+            <input 
+            placeholder="City"
+            type="text"
+            name="city2"
+            className="form-control"
+            ref={register}
+            />
+        </div>
               <div class="col-sm-3">
                   
                   <input 
@@ -85,70 +90,92 @@ if(searchQuery == "SearchQuery"){
                   className="form-control"
                   ref={register}/>
               </div>
-              <div class="col-sm-3">
-                
-                  <input 
-                  placeholder="City"
-                  type="text"
-                  name="city"
-                  className="form-control"
-                  ref={register}/>
-              </div>
-              <div class="col-sm-3">
-                
-                  <input 
-                  placeholder="Email"
-                  type="text"
-                  name="email"
-                  className="form-control"
-                  ref={register}/>
-              </div>
+             
+              
           
           </div>
-     
-              <div class="form-group mx-sm-3 mb-2">
-                <label className="form-select form-control">From</label>
-              </div>
-              <div class="form-group mx-sm-3 mb-2">
-                <input
-                  type="date"
-                  name="p_dateFrom"
-                  className="form-select form-control"
-                  ref={register}
-                />
-              </div>
+          <div class="row my-3">
+          <div class="col-sm-3">
+                
+                <input 
+                placeholder="Email"
+                type="text"
+                name="email"
+                className="form-control"
+                ref={register}/>
+            </div>
+            <div class="col-sm-3">
+              
+              <input 
+              placeholder="Moblile Number"
+              type="text"
+              name="phone"
+              className="form-control"
+              ref={register}/>
+          </div>
+          <div class="form-inline">
+             
 
-              <div class="form-group mx-sm-3 mb-2">
-                <label className="form-select form-control">To</label>
-              </div>
-              <div class="form-group mx-sm-3 mb-2">
-                <input
-                  type="date"
-                  name="p_dateTo"
-                  className="form-select form-control"
-                  ref={register}
-                />
-              </div>
-              <button type="submit" class="btn btn-primary mb-2">
+             <div class="form-group mx-sm-1  mb-2">
+               <label className="form-select form-control">From</label>
+             </div>
+
+             <div class="form-group mx-sm-1  mb-2">
+               <input
+                 type="date"
+                 name="p_dateFrom"
+                 className="form-select form-control"
+                 ref={register}
+                 max={item}
+               />
+             </div>
+
+             <div class="form-group mx-sm-1  mb-2">
+               <label className="form-select form-control">To</label>
+             </div>
+
+             <div class="form-group mx-sm-1  mb-2">
+               <input
+                 type="date"
+                 name="p_dateTo"
+                 className="form-select form-control"
+                 ref={register}
+                 defaultValue={item}
+                 max={item}
+               />
+             </div>
+</div>
+          </div>
+             
+              <div class="row my-3">
+             
+             <div class="col-sm-6">
+             <button type="submit" class="btn btn-primary mx-sm-1 mb-2">
                 Search
               </button>
               <button
-              type="button"
-              class="btn btn-primary mb-2 ml-3"
-              onClick={resetData}
-            >
-              Reset
-            </button>
-            </form>
-          </div>
+          type="submit"
+          class="btn btn-primary mx-sm-1 mb-2"
+          onClick={() => resetData()}
+        >
+          Reset
+        </button>
+        <div class="form-group d-inline-block">
+                  <label className="form-select form-control"
+                  >Total Records : {records}</label>
+                </div>
+             </div>
+              
+              </div>
+ 
+           
 
-        
-        
-    </div> 
-            </div>
-      
-       
-
+           
+          </form>
+        </div>
+      </div>
+    </div>
+  </>
   );
 }
 

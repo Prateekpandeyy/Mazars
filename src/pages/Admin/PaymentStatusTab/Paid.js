@@ -182,11 +182,17 @@ function Paid() {
             text: "Accepted Amount ",
             sort: true,
             style: {
-                fontSize: "11px",
-                color: "#21a3ce",
+              fontSize: "11px",
+              color: "#21a3ce",
+            },
+            sortFunc: (a, b, order, dataField) => {
+              if (order === 'asc') {
+                return b - a;
+              }
+              return a - b; // desc
             },
             headerStyle: () => {
-                return { fontSize: "11px", color: "#21a3ce" };
+              return { fontSize: "11px", color: "#21a3ce" };
             },
         },
         {
@@ -194,31 +200,36 @@ function Paid() {
             dataField: "paid_amount",
             sort: true,
             style: {
-                fontSize: "11px",
-                color: "#064606",
+              fontSize: "11px",
+              color: "#064606",
+            },
+            sortFunc: (a, b, order, dataField) => {
+              if (order === 'asc') {
+                return b - a;
+              }
+              return a - b; // desc
             },
             headerStyle: () => {
-                return { fontSize: "11px", color: "#064606" };
+              return { fontSize: "11px", color: "#064606" };
             },
         },
 
         {
-            text: "Amount Outstanding",
-            dataField: "",
+            text : "Outstanding Amount",
+            dataField: "amount_outstanding",
             sort: true,
             style: {
-                fontSize: "11px",
-                color: "darkred",
+              fontSize: "11px",
+              color: "darkred",
+            },
+            sortFunc: (a, b, order, dataField) => {
+              if (order === 'asc') {
+                return b - a;
+              }
+              return a - b; // desc
             },
             headerStyle: () => {
-                return { fontSize: "11px", color: "darkred" };
-            },
-            formatter: function amountOutstading(cell, row) {
-                console.log("dt", row.paid_amount);
-                console.log("dt", row.accepted_amount);
-                var p = row.paid_amount;
-                var a = row.accepted_amount;
-                return a - p;
+              return { fontSize: "11px", color: "darkred" };
             },
         },
         {
