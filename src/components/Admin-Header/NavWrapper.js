@@ -60,9 +60,7 @@ console.log("porps", email, feedbackNumber)
               <li>
                 <h4 class="brand-text text-white">{CommonServices.capitalizeFirstLetter(name)}: {JSON.parse(email)} </h4>
               </li>
-              <li>
-                <h4 class="brand-text text-white">feedbackNumber : {props.feedbackNumber} </h4>
-              </li>
+             
             </ul>
 
             <ul class="nav navbar-nav float-right">
