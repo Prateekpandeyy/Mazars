@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
 import { Link, useHistory } from "react-router-dom";
+import { components } from "react-select";
 
 
 function CustomerNotification({ tokenKey, name }) {
@@ -10,11 +11,13 @@ function CustomerNotification({ tokenKey, name }) {
 
     const [notification, setNotification] = useState([]);
     const [countNotification, setCountNotification] = useState("");
+   
 
     useEffect(() => {
         getNotification();
+       
     }, [tokenKey]);
-
+   
     const getNotification = () => {
         axios
             .get(`${baseUrl}/customers/getNotification?id=${JSON.parse(tokenKey)}&type_list=uread`)
@@ -46,10 +49,10 @@ function CustomerNotification({ tokenKey, name }) {
                                 <a href="#" class="notification">
                                 <Link to ={`/${name}/message`} style={{color : "white"}}>Inbox</Link>
                                     <span class="badge">{countNotification}</span>
-                                   
+                                    
                                 </a>
                             </a>
-
+                         
                            
                                 
                         </div>
@@ -62,5 +65,3 @@ function CustomerNotification({ tokenKey, name }) {
 
 
 export default CustomerNotification;
-
-

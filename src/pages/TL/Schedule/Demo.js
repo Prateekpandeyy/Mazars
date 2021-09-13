@@ -111,7 +111,7 @@ function Demo() {
           text,
           ...rest,
         }));
-        console.log("dt--", newOwners);
+        console.log("dt---", newOwners);
         setOwner(newOwners);
       }
     });
@@ -158,6 +158,7 @@ function Demo() {
     ...restProps
   }) => (
     <div onDoubleClick={() => B(data.owner)}>
+      {console.log("dataOwner", data.owner)}
       <Appointments.Appointment {...restProps}>
         <div style={{ display: "flex" }}>
         <i

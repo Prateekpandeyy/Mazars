@@ -32,13 +32,11 @@ function AdminHeader({ custUserId, adminUserId, TLuserId, TPuserId , feedbackNum
   };
 
   const nm = window.localStorage.getItem("name");
-  console.log(name);
+ 
   var name = JSON.parse(nm);
-  // const nm = name.split("")[1].toUpperCase();
-  // var a = res[1].toUpperCase()
-  // console.log(nm)
+  
 
-
+console.log("adminHeader", custUserId)
 
   const CustEmail = window.localStorage.getItem("custEmail");
   const adminEmail = window.localStorage.getItem("adminEmail");
@@ -54,7 +52,7 @@ function AdminHeader({ custUserId, adminUserId, TLuserId, TPuserId , feedbackNum
       >
         {custUserId && (
           <NavWrapper 
-          feedbackNumber = {feedbackNumber}
+         
           color="#5E96AE" logout={custLogout}
             name="customer" email={CustEmail}
           />
@@ -63,6 +61,7 @@ function AdminHeader({ custUserId, adminUserId, TLuserId, TPuserId , feedbackNum
         {adminUserId && (
           <NavWrapper color="#262d47" logout={adminLogout}
             name="admin" email={adminEmail}
+            feedbackNumber= {feedbackNumber}
           />
         )}
 

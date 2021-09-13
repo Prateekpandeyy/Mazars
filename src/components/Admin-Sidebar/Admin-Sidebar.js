@@ -1,10 +1,11 @@
 import { NavLink } from "react-router-dom";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Badge } from "reactstrap";
-
+import axios from "axios";
+import { baseUrl } from "../../config/config";
 function Sidebar({ adminDashboard, custDashboard, TLDashboard, TPDashboard , feedbackNumber}) {
   const [toggleState, setToggleState] = useState(false);
-  
+  const [feedbackNumber2, setfeedbackNumber2] = useState();
   const toggleTab = (index) => {
     console.log(index);
     setToggleState(index);
@@ -19,6 +20,21 @@ const feedNumber = {
   margin: "0 0 20px 20px",
   padding : "10xp 5px 10px 5px"
 }
+useEffect(() => {
+  getFeedback2();
+}, [adminDashboard])
+const getFeedback2 = () => {
+  axios.get(`${baseUrl}/customers/getFeedback`).then((res) => {
+    console.log(res);
+    if (res.data.code === 1) {
+      // setFeedBackData(res.data.result);
+     if(res.data.result != undefined){
+       setfeedbackNumber2(res.data.result.length)
+     
+     }
+    }
+  });
+};
   return (
     <>
       <div
@@ -226,9 +242,10 @@ const feedNumber = {
                 <NavLink to={"/admin/feedback"}>
                   <i class="fa fa-file-text"></i>
                   <span class="menu-title" data-i18n="">
-                 Feedback <sup style={feedNumber}>{feedbackNumber}</sup> 
-                   
+                 Feedback <sup style={feedNumber}>{feedbackNumber2}</sup> 
+          
                   </span>
+                  {/* Feedback  <span class="badge">{feedbackNumber2}</span> */}
                 </NavLink>
               </li>
             </ul>
