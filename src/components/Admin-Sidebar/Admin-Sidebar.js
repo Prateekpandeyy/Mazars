@@ -15,14 +15,14 @@ function Sidebar({ adminDashboard, custDashboard, TLDashboard, TPDashboard , fee
     setToggleState(index);
   };
 const feedNumber = {
-  fontSize : "20px", 
-
+  fontSize: "20px",
   height: "15px",
-  
-  color : "green",
+  backgroundColor: "green",
+  color: "white",
   display: "inline-block",
-  margin: "0 0 20px 20px",
-  padding : "10xp 5px 10px 5px"
+  margin: "0px 0px 20px 20px",
+  padding: "13px 8px",
+  borderRadius: "50%"
 }
 
 useEffect(() => {
