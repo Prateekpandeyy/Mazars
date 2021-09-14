@@ -20,6 +20,7 @@
 .main_table thead th, .main_table td, .main_table th{
 	border-bottom: 0px;
 	border-top: 0px;
+	padding: 7px !important;
 }
 
 .left_side{
