@@ -76,7 +76,7 @@ function FeedbackTab() {
     {
       text: "Feedback",
       dataField: "feedback",
-      sort: true,
+   
       headerStyle: () => {
         return { fontSize: "12px", width: "150px" };
       },
@@ -92,10 +92,10 @@ function FeedbackTab() {
                       cursor: "pointer",
                       display: "flex", justifyContent: "space-between"
                     }}
-                    onClick={() => readNotification(row.id)}
+                   
                     title="unread"
                   >
-                    <p>{row.feedback}  - By {row.name}</p>
+                    <p  onClick={() => readNotification(row.id)}>{row.feedback}  - By {row.name}</p>
                     <i class="fa fa-bullseye" style={{ color: "red" }}></i>
                   </div>
                   :
@@ -167,17 +167,3 @@ function FeedbackTab() {
 }
 
 export default FeedbackTab;
-
-
-
-
- // const getFeedback = () => {
-  //   FeedbackService.getAll()
-  //     .then((response) => {
-  //       setFeedBackData(response.data.result);
-  //       console.log(response.data);
-  //     })
-  //     .catch((e) => {
-  //       console.log(e);
-  //     });
-  // };

@@ -310,22 +310,6 @@ function InprogressProposal() {
                                 }
                             </div>
 
-                            {row.status_code > "3" ?
-                                <div style={{ cursor: "pointer", marginLeft: "8px" }} title="View Proposal">
-
-                                    <a
-                                        href={`${baseUrl}/customers/dounloadpdf?id=${row.id}&viewpdf=1`}
-                                        target="_blank"
-                                    >
-                                        <i
-                                            class="fa fa-eye"
-                                            style={{ color: "green", fontSize: "16px" }}
-                                        />
-                                    </a>
-                                </div>
-                                :
-                                null
-                            }
                         </div>
                     </>
                 );
