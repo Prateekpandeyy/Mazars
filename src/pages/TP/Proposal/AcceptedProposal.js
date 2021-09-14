@@ -252,7 +252,7 @@ function AcceptedProposal() {
                                 ) : null}
                             </div>
 
-                            {row.status_code > "3" ?
+                           
                                 <div style={{ cursor: "pointer", marginLeft: "8px" }} title="View Proposal">
 
                                     <a
@@ -265,9 +265,7 @@ function AcceptedProposal() {
                                         />
                                     </a>
                                 </div>
-                                :
-                                null
-                            }
+                               
 
 
                             <div>

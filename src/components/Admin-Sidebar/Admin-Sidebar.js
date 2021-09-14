@@ -6,35 +6,77 @@ import { baseUrl } from "../../config/config";
 function Sidebar({ adminDashboard, custDashboard, TLDashboard, TPDashboard , feedbackNumber}) {
   const [toggleState, setToggleState] = useState(false);
   const [feedbackNumber2, setfeedbackNumber2] = useState();
+  const [feedbackNumbertl, setfeedbackNumbertl] = useState();
+  const [feedbackNumbertp, setfeedbackNumbertp] = useState();
+  const tlkey= window.localStorage.getItem("tlkey");
+  const tpkey = window.localStorage.getItem("tpkey");
+  const adminkey = window.localStorage.getItem("adminkey")
   const toggleTab = (index) => {
     console.log(index);
     setToggleState(index);
   };
 const feedNumber = {
-  fontSize : "20px", 
-
+  fontSize: "10.5px",
   height: "15px",
-  
-  color : "green",
+  backgroundColor: "green",
+  color: "white",
   display: "inline-block",
-  margin: "0 0 20px 20px",
-  padding : "10xp 5px 10px 5px"
+  margin: "0px 0px 20px 20px",
+  padding: "9px 10px",
+    borderRadius: "50%"
 }
+
 useEffect(() => {
   getFeedback2();
 }, [adminDashboard])
 const getFeedback2 = () => {
-  axios.get(`${baseUrl}/customers/getFeedback`).then((res) => {
+  if(adminDashboard != undefined){
+    axios.get(`${baseUrl}/customers/getFeedback?id=${JSON.parse(adminkey)}&&type=total`).then((res) => {
+      console.log(res);
+      if (res.data.code === 1) {
+        // setFeedBackData(res.data.result);
+       if(res.data.result != undefined){
+         setfeedbackNumber2(res.data.result[0].total)
+       
+       }
+      }
+    });
+  }
+};
+const getFeedbacktl = () => {
+ if(TLDashboard != undefined){
+  axios
+  .get(`${baseUrl}/customers/getFeedback?tl_id=${JSON.parse(tlkey)}&&type=total`)
+  .then((res) => {
     console.log(res);
-    if (res.data.code === 1) {
-      // setFeedBackData(res.data.result);
-     if(res.data.result != undefined){
-       setfeedbackNumber2(res.data.result.length)
-     
-     }
+    if(res.data.result != undefined){
+      setfeedbackNumbertl(res.data.result[0].total)
+    
     }
   });
+ }
 };
+useState(() => {
+  getFeedbacktl();
+}, [TLDashboard])
+
+const getFeedbacktp = () => {
+  if(TPDashboard != undefined){
+    axios
+    .get(`${baseUrl}/customers/getFeedback?tp_id=${JSON.parse(tpkey)}&&type=total`)
+    .then((res) => {
+      console.log(res);
+      if(res.data.result != undefined){
+        setfeedbackNumbertp(res.data.result[0].total)
+      
+      }
+    });
+  }
+};
+useState(() => {
+  getFeedbacktp();
+}, [TPDashboard])
+
   return (
     <>
       <div
@@ -123,14 +165,6 @@ const getFeedback2 = () => {
                 </NavLink>
               </li>
 
-              {/* <li class="nav-item">
-                <NavLink to={"/customer/message"}>
-                  <i class="fa fa-envelope"></i>
-                  <span class="menu-title" data-i18n="">
-                    Message
-                  </span>
-                </NavLink>
-              </li> */}
 
               <li class="nav-item">
                 <NavLink to={"/customer/feedback-data"}>
@@ -204,14 +238,7 @@ const getFeedback2 = () => {
                 </NavLink>
               </li>
 
-              {/* <li class="nav-item">
-                <NavLink to={"/admin/message"}>
-                  <i class="fa fa-envelope"></i>
-                  <span class="menu-title" data-i18n="">
-                    Message
-                  </span>
-                </NavLink>
-              </li> */}
+            
 
               <li class="nav-item">
                 <NavLink to={"/admin/teamleaders"}>
@@ -306,19 +333,12 @@ const getFeedback2 = () => {
                 <NavLink to={"/teamleader/schedule"}>
                   <i class="fa fa-rss-square"></i>
                   <span class="menu-title" data-i18n="">
-                    schedule
+               Schedule 
                   </span>
                 </NavLink>
               </li>
 
-              {/* <li class="nav-item">
-                <NavLink to={"/teamleader/message"}>
-                  <i class="fa fa-envelope"></i>
-                  <span class="menu-title" data-i18n="">
-                    Message
-                  </span>
-                </NavLink>
-              </li> */}
+              
 
               <li class="nav-item">
                 <NavLink to={"/teamleader/addteamprof"}>
@@ -333,18 +353,11 @@ const getFeedback2 = () => {
                 <NavLink to={"/teamleader/feedback"}>
                   <i class="fa fa-file-text"></i>
                   <span class="menu-title" data-i18n="">
-                    Feedback
+                  Feedback <sup style={feedNumber}>{feedbackNumbertl}</sup>
                   </span>
                 </NavLink>
               </li>
-              {/* <li class="active nav-item">
-                <NavLink to={"/teamleader/recording"}>
-                  <i class="fa fa-home"></i>
-                  <span class="menu-title" data-i18n="">
-                    Recording
-                  </span>
-                </NavLink>
-              </li> */}
+              
              
             </ul>
           )}
@@ -409,19 +422,12 @@ const getFeedback2 = () => {
                 </NavLink>
               </li>
 
-              {/* <li class="nav-item">
-                <NavLink to={"/taxprofessional/message"}>
-                  <i class="fa fa-envelope"></i>
-                  <span class="menu-title" data-i18n="">
-                    Message
-                  </span>
-                </NavLink>
-              </li> */}
+             
               <li class="nav-item">
                 <NavLink to={"/taxprofessional/feedback"}>
                   <i class="fa fa-file-text"></i>
                   <span class="menu-title" data-i18n="">
-                    Feedback
+                  Feedback <sup style={feedNumber}>{feedbackNumbertp}</sup> 
                   </span>
                 </NavLink>
               </li>

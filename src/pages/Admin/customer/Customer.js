@@ -17,14 +17,17 @@ import Swal from "sweetalert2";
 import CustomerListFilter from "../../../components/Search-Filter/CustomerListFilter";
 import BootstrapTable from "react-bootstrap-table-next";
 import TaxProffesionalService from "../../../config/services/TaxProffesional";
+import History from "./CustHistory";
 
 function Customer() {
   const alert = useAlert();
   const [data, setData] = useState([]);
   const [tpCount, setTpCount] = useState("");
-  const [history, setHistory] = useState([]);
   const userid = window.localStorage.getItem("adminkey");
   const [myPurpose, setPurpose] = useState([])
+  const [history, setHistory] = useState([]);
+  const [modal, setModal] = useState(false);
+
   var digit2 = [];
   useEffect(() => {
     getCustomer();
@@ -40,7 +43,7 @@ function Customer() {
     });
   };
 
-  const [modal, setModal] = useState(false);
+ 
 
   const toggle = (key) => {
     console.log("key", key);
@@ -87,12 +90,17 @@ function Customer() {
       },
     },
     {
-        dataField: "email",
+        dataField: "",
         text: "Email",
         sort: true,
         headerStyle: () => {
-          return { fontSize: "12px" };
+          return { fontSize: "12px", cursor: "pointer" };
         },
+        formatter : function(cell, row) {
+          return(
+            <a   onClick={() => show(row.id)}>{row.email}</a>
+          )
+        }
       },
       {
         dataField: "phone",
@@ -147,44 +155,53 @@ function Customer() {
     
   
    
-    {
-      dataField: "",
-      text: "Action",
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
-      formatter: function (cell, row) {
-        return (
-          <>
+    // {
+    //   dataField: "",
+    //   text: "Action",
+    //   headerStyle: () => {
+    //     return { fontSize: "12px" };
+    //   },
+    //   formatter: function (cell, row) {
+    //     return (
+    //       <>
            
-            <i
-              className="fa fa-trash"
-              style={{ fontSize: 20, cursor: "pointer", marginLeft: "8px" }}
-              onClick={() => del(row.id)}
-            ></i>
-          </>
-        );
-      },
-    },
+    //         <i
+    //           className="fa fa-eye"
+    //           style={{ fontSize: 20, cursor: "pointer", marginLeft: "8px" , color : "green"}}
+    //           onClick={() => show(row.id)}
+    //         ></i>
+    //       </>
+    //     );
+    //   },
+    // },
    
   ];
 
   //check
-  const del = (id) => {
-    console.log("del", id);
-    Swal.fire({
-      title: "Are you sure?",
-      text: "It will permanently deleted !",
-      type: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
-    }).then((result) => {
-      if (result.value) {
-        deleteCliente(id);
-      }
-    });
+  const show = (key) => {
+  console.log("showId", key)
+    setModal(!modal);
+
+   if(typeof(key) == "object") {
+     console.log("cancle")
+   }
+   else{
+    {
+      axios.
+      get(`${baseUrl}/customers/totalComplete?uid=${key}`)
+        
+        .then((response) => {
+         
+         if(response.data.code === 1){
+          console.log("response", response.data.result)
+           setHistory(response.data.result)
+         }
+        })
+        .catch((error) => console.log(error));
+    };
+   }
+   
+  
   };
 
   // delete data
@@ -236,7 +253,7 @@ function Customer() {
           />
         </CardBody>
       </Card>
-     
+      <History history={history} toggle={toggle} modal={modal} />
     </Layout>
   );
 }

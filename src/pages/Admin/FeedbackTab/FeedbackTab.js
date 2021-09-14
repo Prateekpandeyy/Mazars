@@ -15,11 +15,11 @@ import BootstrapTable from "react-bootstrap-table-next";
 // import FeedbackService from "../../../config/services/QueryDetails";
 import CommonServices from "../../../common/common";
 import { useAlert } from "react-alert";
-
+import { useHistory } from "react-router";
 
 function FeedbackTab() {
   const alert = useAlert();
-
+  const history = useHistory();
   const userid = window.localStorage.getItem("adminkey");
   const [feedbackData, setFeedBackData] = useState([]);
   const [feedbackNumber, setfeedbackNumber] = useState();
@@ -76,7 +76,7 @@ function FeedbackTab() {
     {
       text: "Feedback",
       dataField: "feedback",
-      sort: true,
+   
       headerStyle: () => {
         return { fontSize: "12px", width: "150px" };
       },
@@ -92,10 +92,10 @@ function FeedbackTab() {
                       cursor: "pointer",
                       display: "flex", justifyContent: "space-between"
                     }}
-                    onClick={() => readNotification(row.id)}
+                   
                     title="unread"
                   >
-                    <p>{row.feedback}  - By {row.name}</p>
+                    <p  onClick={() => readNotification(row.id)}>{row.feedback}  - By {row.name}</p>
                     <i class="fa fa-bullseye" style={{ color: "red" }}></i>
                   </div>
                   :
@@ -131,8 +131,11 @@ function FeedbackTab() {
       .then(function (response) {
         console.log("res-", response)
         if (response.data.code === 1) {
-          getFeedback()
+       
+          getFeedback();
+          history.push("/admin/feedback")
         }
+    
       })
       .catch((error) => {
         console.log("erroror - ", error);
@@ -167,17 +170,3 @@ function FeedbackTab() {
 }
 
 export default FeedbackTab;
-
-
-
-
- // const getFeedback = () => {
-  //   FeedbackService.getAll()
-  //     .then((response) => {
-  //       setFeedBackData(response.data.result);
-  //       console.log(response.data);
-  //     })
-  //     .catch((e) => {
-  //       console.log(e);
-  //     });
-  // };

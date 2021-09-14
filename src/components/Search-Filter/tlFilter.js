@@ -14,13 +14,14 @@ function TeamFilter(props) {
     setData,
     getData,
     AllQuery,
-    pendingForAcceptence,
+   
     InprogressQuery,
     DeclinedQuery,
-
+    pendingForAcceptence,
     completeAssignment,
     AllProposal,
     InprogressProposal,
+    proposal,
     assignment,
     AllPayment,
     Unpaid,
@@ -89,7 +90,7 @@ function TeamFilter(props) {
 
   const onSubmit = (data) => {
 
-
+console.log("search", pendingForAcceptence)
     if (AllQuery == "AllQuery") {
       axios
         .get(
@@ -110,6 +111,7 @@ function TeamFilter(props) {
 
 
     if (pendingForAcceptence == "pendingForAcceptence") {
+      console.log("pending for acceptance")
       axios
         .get(
           `${baseUrl}/tl/pendingQues?id=${JSON.parse(
@@ -219,6 +221,23 @@ function TeamFilter(props) {
         });
     }
 
+    if(proposal == "proposal"){
+      axios
+      .get(
+        `${baseUrl}/tl/getUploadedProposals?uid=${JSON.parse(
+          userid
+        )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=2&pcat_id=${selectedData}`
+      )
+      .then((res) => {
+
+        if (res.data.code === 1) {
+          if (res.data.result) {
+            setData(res.data.result);
+            setRecords(res.data.result.length);
+          }
+        }
+      });
+    }
 
     if (AllPayment == "AllPayment") {
       axios

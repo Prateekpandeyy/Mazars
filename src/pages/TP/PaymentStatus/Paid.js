@@ -55,7 +55,7 @@ function AllPayment() {
     }, []);
 
     const getPaymentStatus = () => {
-        axios.get(`${baseUrl}/taxprofessional/getUploadedProposals?uid=${JSON.parse(userid)}&status=2`).then((res) => {
+        axios.get(`${baseUrl}/tl/getUploadedProposals?tp_id=${JSON.parse(userid)}&status=2`).then((res) => {
             console.log(res);
             if (res.data.code === 1) {
                 setPayment(res.data.result);

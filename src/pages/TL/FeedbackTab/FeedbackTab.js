@@ -14,10 +14,10 @@ import {
 import CommonServices from "../../../common/common";
 import BootstrapTable from "react-bootstrap-table-next";
 import { useAlert } from "react-alert";
-
+import { useHistory } from "react-router";
 function FeedbackTab() {
   const alert = useAlert();
-
+const history = useHistory();
   const userid = window.localStorage.getItem("tlkey");
   const [feedbackData, setFeedBackData] = useState([]);
 
@@ -131,6 +131,7 @@ function FeedbackTab() {
         if (response.data.code === 1) {
           // alert.success("successfully read!");
           getFeedback()
+          history.push("/teamleader/feedback")
         }
       })
       .catch((error) => {

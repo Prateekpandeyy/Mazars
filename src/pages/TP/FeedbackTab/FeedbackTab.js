@@ -14,10 +14,10 @@ import {
 import CommonServices from "../../../common/common";
 import BootstrapTable from "react-bootstrap-table-next";
 import { useAlert } from "react-alert";
-
+import { useHistory } from "react-router";
 function FeedbackTab() {
   const alert = useAlert();
-
+const history = useHistory();
   const userid = window.localStorage.getItem("tpkey");
   const [feedbackData, setFeedBackData] = useState([]);
 
@@ -83,7 +83,7 @@ function FeedbackTab() {
           <>
             <div>
               {
-                row.tl_read == "0" ?
+                row.tp_read == "0" ?
                   <div
                     style={{
                       cursor: "pointer",
@@ -119,7 +119,7 @@ function FeedbackTab() {
     console.log("call", id)
     let formData = new FormData();
     formData.append("id", id);
-    formData.append("type", "tl");
+    formData.append("type", "tp");
 
     axios({
       method: "POST",
@@ -131,6 +131,7 @@ function FeedbackTab() {
         if (response.data.code === 1) {
           // alert.success("successfully read!");
           getFeedback()
+          history.push("/taxprofessional/feedback")
         }
       })
       .catch((error) => {

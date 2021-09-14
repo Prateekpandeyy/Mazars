@@ -372,6 +372,7 @@ function TaxProfessionalFilter(props) {
     DeclinedQuery,
 
     completeAssignment,
+    proposal,
     AllProposal,
     InprogressProposal,
     assignment,
@@ -571,7 +572,24 @@ function TaxProfessionalFilter(props) {
         });
     }
 
+    if(proposal == "proposal"){
+      axios
+      .get(
+        `${baseUrl}/tl/getProposalTl?tp_id=${JSON.parse(
+          userid
+        )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
+        }&status=2&pcat_id=${selectedData}`
+      )
+      .then((res) => {
 
+        if (res.data.code === 1) {
+          if (res.data.result) {
+            setData(res.data.result);
+            setRecords(res.data.result.length);
+          }
+        }
+      });
+    }
     if (AllPayment == "AllPayment") {
       axios
         .get(

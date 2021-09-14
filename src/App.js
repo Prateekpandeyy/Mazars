@@ -33,6 +33,7 @@ import ProposalView from './views/ProposalView/ProposalView'
 import Feedback from './views/Feedback/Feedback'
 import FeedbackData from './views/FeedbackData/FeedbackData'
 import PaymentStatus from './views/PaymentStatus/PaymentStatus'
+import PaymentGateway from "./views/PaymentGateway.js/PaymentGateway";
 
 
 
@@ -170,7 +171,7 @@ function App() {
             <PrivateRouteUser exact path="/customer/feedback/:id" component={Feedback} />
             <PrivateRouteUser exact path="/customer/feedback-data" component={FeedbackData} />
             <PrivateRouteUser exact path="/customer/paymentstatus" component={PaymentStatus} />
-
+            <PrivateRouteUser exact path="/customer/payment" component={PaymentGateway} />
 
             <PublicRouteAdmin exact path="/admin/start" component={AdminStart} />
             <PublicRouteAdmin exact path="/admin/login" component={AdminLogin} />
