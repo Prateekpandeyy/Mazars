@@ -22,17 +22,18 @@ import BootstrapTable from "react-bootstrap-table-next";
 import AdminFilter from "../../../components/Search-Filter/AdminFilter";
 import CommonServices from "../../../common/common";
 import Records from "../../../components/Records/Records";
-
+import DiscardReport from "../AssignmentTab/DiscardReport";
 
 
 function Paid() {
 
     const [payment, setPayment] = useState([]);
-
+    const [modal, setModal] = useState(false);
     const [paymentcount, setPaymentCount] = useState("");
     const [pay, setPay] = useState([]);
     const [records, setRecords] = useState([]);
-
+    const [assignNo, setAssignNo] = useState('');
+    const [ViewDiscussion, setViewDiscussion] = useState(false);
     useEffect(() => {
         getPaymentStatus();
     }, []);
@@ -49,7 +50,7 @@ function Paid() {
         });
     };
 
-    const [modal, setModal] = useState(false);
+    
     const toggle = (key) => {
         console.log("key", key);
         setModal(!modal);
@@ -68,6 +69,10 @@ function Paid() {
             .catch((error) => console.log(error));
     };
 
+    const ViewDiscussionToggel = (key) => {
+        setViewDiscussion(!ViewDiscussion);
+        setAssignNo(key)
+    }
     const columns = [
         {
             dataField: "",
@@ -273,16 +278,30 @@ function Paid() {
             formatter: function (cell, row) {
                 return (
                     <>
-                        <div style={{ display: "flex" }}>
+                        <div style={{ display: "flex", justifyContent: "space-between", width: "40px" }}>
 
 
-                            <div style={{ cursor: "pointer" }} title="Payment History">
-                                <i
-                                    class="fa fa-credit-card"
-                                    style={{ color: "green", fontSize: "16px" }}
-                                    onClick={() => toggle(row.assign_id)}
-                                ></i>
-                            </div>
+<div style={{ cursor: "pointer" }} title="Payment History">
+    <i
+        class="fa fa-credit-card"
+        style={{ color: "green", fontSize: "16px" }}
+        onClick={() => toggle(row.assign_id)}
+    ></i>
+</div>
+
+
+<div title="View Discussion Message">
+    <i
+        class="fa fa-comments-o"
+        style={{
+            fontSize: 16,
+            cursor: "pointer",
+            color: "orange"
+        }}
+        onClick={() => ViewDiscussionToggel(row.assign_no)}
+    ></i>
+</div>
+
 
                             {/* <div title="Send Message">
                 <Link
@@ -370,6 +389,13 @@ function Paid() {
                             </Button>
                         </ModalFooter>
                     </Modal>
+                    <DiscardReport
+                        ViewDiscussionToggel={ViewDiscussionToggel}
+                        ViewDiscussion={ViewDiscussion}
+                        report={assignNo}
+                        getData={getPaymentStatus}
+                    />
+
                 </CardBody>
             </Card>
         </div>
