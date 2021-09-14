@@ -10,19 +10,20 @@ function Sidebar({ adminDashboard, custDashboard, TLDashboard, TPDashboard , fee
   const [feedbackNumbertp, setfeedbackNumbertp] = useState();
   const tlkey= window.localStorage.getItem("tlkey");
   const tpkey = window.localStorage.getItem("tpkey");
+  const adminkey = window.localStorage.getItem("adminkey")
   const toggleTab = (index) => {
     console.log(index);
     setToggleState(index);
   };
 const feedNumber = {
-  fontSize: "20px",
+  fontSize: "10.5px",
   height: "15px",
   backgroundColor: "green",
   color: "white",
   display: "inline-block",
   margin: "0px 0px 20px 20px",
-  padding: "13px 8px",
-  borderRadius: "50%"
+  padding: "9px 10px",
+    borderRadius: "50%"
 }
 
 useEffect(() => {
@@ -30,12 +31,12 @@ useEffect(() => {
 }, [adminDashboard])
 const getFeedback2 = () => {
   if(adminDashboard != undefined){
-    axios.get(`${baseUrl}/customers/getFeedback`).then((res) => {
+    axios.get(`${baseUrl}/customers/getFeedback?id=${JSON.parse(adminkey)}&&type=total`).then((res) => {
       console.log(res);
       if (res.data.code === 1) {
         // setFeedBackData(res.data.result);
        if(res.data.result != undefined){
-         setfeedbackNumber2(res.data.result.length)
+         setfeedbackNumber2(res.data.result[0].total)
        
        }
       }

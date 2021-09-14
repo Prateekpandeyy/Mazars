@@ -90,12 +90,17 @@ function Customer() {
       },
     },
     {
-        dataField: "email",
+        dataField: "",
         text: "Email",
         sort: true,
         headerStyle: () => {
-          return { fontSize: "12px" };
+          return { fontSize: "12px", cursor: "pointer" };
         },
+        formatter : function(cell, row) {
+          return(
+            <a   onClick={() => show(row.id)}>{row.email}</a>
+          )
+        }
       },
       {
         dataField: "phone",
@@ -150,25 +155,25 @@ function Customer() {
     
   
    
-    {
-      dataField: "",
-      text: "Action",
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
-      formatter: function (cell, row) {
-        return (
-          <>
+    // {
+    //   dataField: "",
+    //   text: "Action",
+    //   headerStyle: () => {
+    //     return { fontSize: "12px" };
+    //   },
+    //   formatter: function (cell, row) {
+    //     return (
+    //       <>
            
-            <i
-              className="fa fa-eye"
-              style={{ fontSize: 20, cursor: "pointer", marginLeft: "8px" , color : "green"}}
-              onClick={() => show(row)}
-            ></i>
-          </>
-        );
-      },
-    },
+    //         <i
+    //           className="fa fa-eye"
+    //           style={{ fontSize: 20, cursor: "pointer", marginLeft: "8px" , color : "green"}}
+    //           onClick={() => show(row.id)}
+    //         ></i>
+    //       </>
+    //     );
+    //   },
+    // },
    
   ];
 
@@ -182,15 +187,13 @@ function Customer() {
    }
    else{
     {
-      fetch(`${baseUrl}/customers/totalComplete?uid${key}`, {
-        method: "GET",
-        headers: new Headers({
-          Accept: "application/vnd.github.cloak-preview",
-        }),
-      })
+      axios.
+      get(`${baseUrl}/customers/totalComplete?uid=${key}`)
         
         .then((response) => {
+         
          if(response.data.code === 1){
+          console.log("response", response.data.result)
            setHistory(response.data.result)
          }
         })

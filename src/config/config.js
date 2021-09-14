@@ -21,7 +21,7 @@ export const ReportUrl = "http://13.232.121.233/mazarsapi/assets/upload/report";
   // export const baseUrl2 = "http://13.232.121.233";
 
 // for server 
-  export const baseUrl2 = "https://mazarsapi.multitvsolution.com"
+ export const baseUrl2 = "https://mazarsapi.multitvsolution.com"
 
 
 

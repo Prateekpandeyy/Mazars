@@ -15,11 +15,11 @@ import BootstrapTable from "react-bootstrap-table-next";
 // import FeedbackService from "../../../config/services/QueryDetails";
 import CommonServices from "../../../common/common";
 import { useAlert } from "react-alert";
-
+import { useHistory } from "react-router";
 
 function FeedbackTab() {
   const alert = useAlert();
-
+  const history = useHistory();
   const userid = window.localStorage.getItem("adminkey");
   const [feedbackData, setFeedBackData] = useState([]);
   const [feedbackNumber, setfeedbackNumber] = useState();
@@ -131,8 +131,11 @@ function FeedbackTab() {
       .then(function (response) {
         console.log("res-", response)
         if (response.data.code === 1) {
-          getFeedback()
+       
+          getFeedback();
+          history.push("/admin/feedback")
         }
+    
       })
       .catch((error) => {
         console.log("erroror - ", error);

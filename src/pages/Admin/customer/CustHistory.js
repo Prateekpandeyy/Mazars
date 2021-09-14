@@ -23,33 +23,36 @@ function CustHistory({ history, toggle,modal }) {
     }
     return oldDate.toString().split("-").reverse().join("-");
   }
+console.log("history", history)
   return (
     <div>
-      <Modal isOpen={modal} fade={false} toggle={toggle}>
+       <Modal isOpen={modal} fade={false} toggle={toggle}>
         <ModalHeader toggle={toggle}>History</ModalHeader>
         <ModalBody>
           <table class="table table-bordered">
             <thead>
               <tr>
+               
                 <th scope="row">Query Raised</th>
+                <th scope="row">Query Completed</th>
+                
                 <th scope="row">Query Inprogress</th>
-                <th scope="row">Query Incompleted</th>
                 <th scope="row">Query Declined</th>
               </tr>
             </thead>
 
-            {history.length > 0
-              ? history.map((p, i) => (
+            {history != undefined 
+              ? 
                   <tbody>
-                    <tr>
-                      <td>{i + 1}</td>
-                      <td>{p.from_date}</td>
-                      <td>{p.to_date}</td>
-                      <td>{p.name}</td>
+                      <tr>
                      
+                      <td>{history.total}</td>
+                     <td>{history.inprogress_queries}</td>
+                     <td>{history.complete_query}</td>
+                     <td>{history.declined_queries}</td>
                     </tr>
                   </tbody>
-                ))
+                
               : null}
           </table>
         </ModalBody>
