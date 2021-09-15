@@ -19,8 +19,8 @@ import BootstrapTable from "react-bootstrap-table-next";
 import AdminFilter from "../../../components/Search-Filter/AdminFilter";
 import Records from "../../../components/Records/Records";
 import DiscardReport from "../AssignmentTab/DiscardReport";
-import DescriptionOutlinedIcon from '@material-ui/icons/DescriptionOutlined';
-import ViewAllReportModal from "./ViewAllReport";
+
+
 function FinalReport() {
   const userid = window.localStorage.getItem("adminkey");
 
@@ -34,10 +34,11 @@ function FinalReport() {
   const [status, setStatus] = useState([]);
   const [tax2, setTax2] = useState([]);
   const [store2, setStore2] = useState([]);
-  const [reportModal, setReportModal] = useState(false);
+
   var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
+  console.log("current_date :", current_date);
   const [item] = useState(current_date);
-  const [report, setReport] = useState();
+
 
   const [assignNo, setAssignNo] = useState('');
   const [ViewDiscussion, setViewDiscussion] = useState(false);
@@ -113,13 +114,7 @@ function FinalReport() {
     console.log(`selected ${value}`);
     setStatus(value);
   };
- // View Report 
- 
-  const ViewReport = (key) => {
-  
-    setReportModal(!reportModal);
-    setReport(key);
-  };
+
   const columns = [
     {
       text: "S.No",
@@ -291,35 +286,6 @@ function FinalReport() {
     //     );
     //   },
     // },
-    {
-      text: "Deliverable",
-      dataField: "",
-      sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
-      formatter: function (cell, row) {
-        return (
-          <>
-            {
-              row.paid_status == "2" ? null :
-                <div>
-                  {row.assignement_draft_report || row.final_report ?
-                    <div title="View All Report"
-                      style={{ cursor: "pointer" }}
-                      onClick={() => ViewReport(row.assign_no)}
-                    >
-                      <DescriptionOutlinedIcon color="secondary" />
-                    </div>
-                    :
-                    null
-                  }
-                </div>
-            }
-          </>
-        );
-      },
-    },
     {
       text: "TL name",
       dataField: "tl_name",
@@ -509,12 +475,7 @@ function FinalReport() {
             columns={columns}
             rowIndex
           />
-  <ViewAllReportModal
-            ViewReport={ViewReport}
-            reportModal={reportModal}
-            report={report}
-            getPendingforAcceptance={getAssignmentData}
-          />
+
           <DiscardReport
             ViewDiscussionToggel={ViewDiscussionToggel}
             ViewDiscussion={ViewDiscussion}

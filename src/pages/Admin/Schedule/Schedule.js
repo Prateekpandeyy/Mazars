@@ -41,9 +41,8 @@ import {
   Row,
   Col,
 } from "reactstrap";
-import "../AdminStyle/style.css"
 import Demo from "./Demo";
-
+import "../AdminStyle/style.css";
 function Schedule() {
     const userid = window.localStorage.getItem("adminkey");
     const [tabIndex, setTabIndex] = useState(0);
@@ -69,13 +68,9 @@ function Schedule() {
     return (
       <Layout adminDashboard="adminDashboard" adminUserId={userid}>
       <Card className="scheduleContainer">
+     
         <CardHeader>
-        <Row>
-            <Col md="7">
-              <CardTitle tag="h4">Schedule </CardTitle>
-            </Col>
-            <Col md="5"></Col>
-          </Row>
+      
         <Tabs selectedIndex={tabIndex} onSelect={(index) => setTabIndex(index)}>
           <TabList
             style={{
@@ -89,7 +84,7 @@ function Schedule() {
             </Tab>
            
             <Tab style={tabIndex == 1 ? myStyle2 : myStyle1}>
-           Meeting Records
+             Meeting Records
             </Tab>
           </TabList>
 

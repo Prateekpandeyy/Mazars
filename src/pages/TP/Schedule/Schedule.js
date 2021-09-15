@@ -10,7 +10,7 @@ import {
   Col,
 } from "reactstrap";
 import Demo from "./Demo";
-import "../../Admin/AdminStyle/style.css";
+
 function Schedule() {
     const userid = window.localStorage.getItem("tpkey");
     const [tabIndex, setTabIndex] = useState(0);
@@ -35,7 +35,7 @@ function Schedule() {
   
     return (
       <Layout TPDashboard="TPDashboard" TPuserId={userid}>
-      <Card className="scheduleContainer">
+      <Card>
         <CardHeader>
         <Row>
             <Col md="7">

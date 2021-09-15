@@ -27,10 +27,10 @@ console.log("history", history)
   return (
     <div>
        <Modal isOpen={modal} fade={false} toggle={toggle}>
-        <ModalHeader toggle={toggle}>Customer Details</ModalHeader>
+        <ModalHeader toggle={toggle}>History</ModalHeader>
         <ModalBody>
           <table class="table table-bordered">
-            {/* <thead>
+            <thead>
               <tr>
                
                 <th scope="row">Query Raised</th>
@@ -39,25 +39,16 @@ console.log("history", history)
                 <th scope="row">Query Inprogress</th>
                 <th scope="row">Query Declined</th>
               </tr>
-            </thead> */}
+            </thead>
 
             {history != undefined 
               ? 
                   <tbody>
                       <tr>
-                      <th scope="row">Query Raised</th>
+                     
                       <td>{history.total}</td>
-                      </tr>
-                      <tr>
-                      <th scope="row">Query Completed</th>
                      <td>{history.inprogress_queries}</td>
-                     </tr>
-                     <tr>
-                     <th scope="row">Query Inprogress</th>
                      <td>{history.complete_query}</td>
-                     </tr>
-                     <tr>
-                     <th scope="row">Query Declined</th>
                      <td>{history.declined_queries}</td>
                     </tr>
                   </tbody>

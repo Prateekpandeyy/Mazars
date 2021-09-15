@@ -185,21 +185,21 @@ function CustomerDeclinedPayment() {
                 return (
                     <>
 
-{
-  row.status == "Payment decliend" || row.paid_status == "2" ? null :
-    <div>
-      {row.assignment_draft_report || row.final_report ?
-        <div title="View All Report"
-          style={{ cursor: "pointer", textAlign: "center" }}
-          onClick={() => ViewReport(row)}
-        >
-          <DescriptionOutlinedIcon color="secondary" />
-        </div>
-        :
-        null
-      }
-    </div>
-}
+                        {
+                            row.status == "Payment decliend" ? null :
+                                <div>
+                                    {row.assignment_draft_report || row.final_report ?
+                                        <div title="View All Report"
+                                            style={{ cursor: "pointer", textAlign: "center" }}
+                                            onClick={() => ViewReport(row)}
+                                        >
+                                            <DescriptionOutlinedIcon color="secondary" />
+                                        </div>
+                                        :
+                                        null
+                                    }
+                                </div>
+                        }
                     </>
                 );
             },

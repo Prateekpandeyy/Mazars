@@ -205,7 +205,7 @@ console.log("search", pendingForAcceptence)
     if (InprogressProposal == "InprogressProposal") {
       axios
         .get(
-          `${baseUrl}/tl/getProposalTl?id=${JSON.parse(
+          `${baseUrl}/tl/getProposalTl?uid=${JSON.parse(
             userid
           )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
           }&status=${data.p_status}&pcat_id=${selectedData}`
@@ -224,9 +224,9 @@ console.log("search", pendingForAcceptence)
     if(proposal == "proposal"){
       axios
       .get(
-        `${baseUrl}/tl/getProposalTl?id=${JSON.parse(
+        `${baseUrl}/tl/getUploadedProposals?uid=${JSON.parse(
           userid
-        )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=3&pcat_id=${selectedData}`
+        )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=2&pcat_id=${selectedData}`
       )
       .then((res) => {
 
@@ -278,7 +278,7 @@ console.log("search", pendingForAcceptence)
     if (Paid == "Paid") {
       axios
         .get(
-          `${baseUrl}/tl/getUploadedProposals?uid=${JSON.parse(
+          `${baseUrl}/tl/getUploadedProposals?id=${JSON.parse(
             userid
           )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=2&pcat_id=${selectedData}`
         )

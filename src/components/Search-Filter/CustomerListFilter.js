@@ -31,7 +31,7 @@ if(searchQuery == "SearchQuery")
 axios
 .get(
   `${baseUrl}/admin/getAllList?&name=${data.name}&country=${data.country}&state=${data.state}&city=${data.city2
-  }&email=${data.email}&occupation=${data.occupation}&from=${data.p_dateFrom}&to=${data.p_dateTo}`
+  }&email=${data.email}&phone=${data.phone}&from=${data.p_dateFrom}&to=${data.p_dateTo}`
 )
 .then((res) => {
   console.log("myResult", res.data.result);
@@ -107,9 +107,9 @@ axios
             <div class="col-sm-3">
               
               <input 
-              placeholder="Occupation"
+              placeholder="Moblile Number"
               type="text"
-              name="occupation"
+              name="phone"
               className="form-control"
               ref={register}/>
           </div>

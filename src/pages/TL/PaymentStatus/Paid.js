@@ -23,8 +23,8 @@ import TeamFilter from "../../../components/Search-Filter/tlFilter";
 import ChangeHistoryIcon from '@material-ui/icons/ChangeHistory';
 import PaymentIcon from '@material-ui/icons/Payment';
 import RejectedModal from "./RejectedModal";
-import AssessmentIcon from '@material-ui/icons/Assessment';
-import DiscardReport from "../AssignmentTab/DiscardReport";
+
+
 
 
 function AllPayment() {
@@ -41,7 +41,7 @@ function AllPayment() {
 
     const [assignNo, setAssignNo] = useState("");
 
-    const [ViewDiscussion, setViewDiscussion] = useState(false);
+
     const [addPaymentModal, setPaymentModal] = useState(false);
     const rejectHandler = (key) => {
         console.log("key", key);
@@ -65,11 +65,7 @@ function AllPayment() {
             }
         });
     };
-  
-    const ViewDiscussionToggel = (key) => {
-        setViewDiscussion(!ViewDiscussion);
-        setAssignNo(key)
-    }
+
 
     const toggle = (key) => {
         console.log("key", key);
@@ -277,79 +273,6 @@ function AllPayment() {
                 return oldDate.slice(0, 10).toString().split("-").reverse().join("-");
             },
         },
-        {
-            text: "Action",
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
-            formatter: function (cell, row) {
-                return (
-                    <>
-
-                        <div style={{ display: "flex", justifyContent: "space-between", width: "90px" }}>
-
-                            <div title="Payment History"
-                                onClick={() => toggle(row.assign_id)}
-                                style={{ color: "green", fontSize: "16px", cursor: "pointer" }}
-                            >
-                                <AssessmentIcon />
-                            </div>
-                            <div title="Send Message">
-                                <Link
-                                    to={{
-                                        pathname: `/teamleader/chatting/${row.assign_id}`,
-                                        obj: {
-                                            message_type: "2",
-                                            query_No: row.assign_no,
-                                            query_id: row.assign_id,
-                                            routes: `/teamleader/proposal`
-                                        }
-                                    }}
-                                >
-                                    <i
-                                        class="fa fa-comments-o"
-                                        style={{
-                                            fontSize: 18,
-                                            cursor: "pointer",
-                                            color: "blue"
-                                        }}
-                                    ></i>
-                                </Link>
-                            </div>
-                            <div>
-                                {
-                                    row.paid_status == "0" ?
-                                        <div title="Payment decline"
-                                            onClick={() => rejectHandler(row)}
-                                            style={{ color: "red", fontSize: "16px", cursor: "pointer" }}
-                                        >
-                                            <PaymentIcon />
-                                        </div>
-                                        : null
-                                }
-                            </div>
-
-
-                            <div title="View Discussion Message">
-                                <i
-                                    class="fa fa-comments-o"
-                                    style={{
-                                        fontSize: 16,
-                                        cursor: "pointer",
-                                        color: "orange"
-                                    }}
-                                    onClick={() => ViewDiscussionToggel(row.assign_no)}
-                                ></i>
-                            </div>
-
-                        </div>
-                    </>
-                );
-            },
-        },
         // {
         //     text: "Action",
         //     style: {
@@ -438,12 +361,7 @@ function AllPayment() {
                         classes="table-responsive"
                     />
 
-<DiscardReport
-                        ViewDiscussionToggel={ViewDiscussionToggel}
-                        ViewDiscussion={ViewDiscussion}
-                        report={assignNo}
-                        getData={getPaymentStatus}
-                    />
+
                     <RejectedModal
                         rejectHandler={rejectHandler}
                         addPaymentModal={addPaymentModal}
