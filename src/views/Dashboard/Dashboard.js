@@ -120,7 +120,7 @@ function Dashboard() {
 
       <div className="row">
         <div className="col-md-3 content_header">
-          <table className="table table-striped first main_table">
+          <table className="table table-striped first main_table mb-1">
             <thead className="query_thead">
               <tr>
                 <th className="left_side"> All Queries</th>
@@ -128,7 +128,7 @@ function Dashboard() {
               </tr>
             </thead>
           </table>
-          <table className="table table-striped second main_table">
+          <table className="table table-striped second main_table mb-1">
             <thead className="query_thead">
               <tr>
                 <th className="left_side">Inprogress; Queries</th>
@@ -153,7 +153,7 @@ function Dashboard() {
           </table>
 
           {inprogress_queries !== 0 ? <>
-            <table className="table table-striped third main_table">
+            <table className="table table-striped third main_table mb-1">
               <thead className="query_thead">
                 <tr>
                   <th className="left_side">Completed; Queries</th>
@@ -169,7 +169,7 @@ function Dashboard() {
             </table>
             {complete_query !== 0 ? <>
 
-              <table className="table table-striped forth main_table">
+              <table className="table table-striped forth main_table mb-1">
                 <thead className="query_thead">
                   <tr>
                     <th className="left_side">Declined; Queries</th>
@@ -200,7 +200,7 @@ function Dashboard() {
         {allproposal !== 0 ? <>
           <div className="col-md-3 content_header">
 
-            <table className="table table-striped fifth main_table">
+            <table className="table table-striped fifth main_table mb-1">
               <thead className="proposal_thead">
                 <tr>
                   <th className="left_side">All Proposals</th>
@@ -210,7 +210,7 @@ function Dashboard() {
               </thead>
             </table>
 
-            <table className="table table-striped sixth main_table">
+            <table className="table table-striped sixth main_table mb-1">
               <thead className="proposal_thead">
                 <tr>
                   <th className="left_side">Inprogress; Proposals</th>
@@ -229,7 +229,7 @@ function Dashboard() {
               </tbody>
             </table>
 
-            <table className="table table-striped seventh main_table">
+            <table className="table table-striped seventh main_table mb-1">
               <thead className="proposal_thead">
                 <tr>
                   <th className="left_side">Accepted; Proposals </th>
@@ -238,7 +238,7 @@ function Dashboard() {
               </thead>
             </table>
 
-            <table className="table table-striped eight main_table">
+            <table className="table table-striped eight main_table mb-1">
               <thead className="proposal_thead">
                 <tr>
                   <th className="left_side">Customer Declined; Proposals</th>
@@ -249,7 +249,7 @@ function Dashboard() {
           </div>
           {allassignment !== 0 ? <>
             <div className="col-md-3 content_header">
-              <table className="table table-striped ninth main_table">
+              <table className="table table-striped ninth main_table mb-1">
                 <thead className="assignment_thead">
                   <tr>
                     <th className="left_side">All Assignments</th>
@@ -258,7 +258,7 @@ function Dashboard() {
                 </thead>
               </table>
 
-              <table className="table table-striped tenth main_table">
+              <table className="table table-striped tenth main_table mb-1">
                 <thead className="assignment_thead">
 
                   <tr>
@@ -268,7 +268,7 @@ function Dashboard() {
                 </thead>
               </table>
 
-              <table className="table table-striped tenth main_table">
+              <table className="table table-striped tenth main_table mb-1">
                 <thead className="assignment_thead">
 
                   <tr>
@@ -278,7 +278,7 @@ function Dashboard() {
                 </thead>
               </table>
 
-              <table className="table table-striped tenth main_table">
+              <table className="table table-striped tenth main_table mb-1">
                 <thead className="assignment_thead">
 
                   <tr>
@@ -292,7 +292,7 @@ function Dashboard() {
 
               <div className="col-md-3 content_header">
 
-                <table className="table table-striped twelvth main_table">
+                <table className="table table-striped twelvth main_table mb-1">
                   <thead className="payment_thead">
                     <tr>
                       <th className="left_side">All Payments</th>
@@ -300,7 +300,7 @@ function Dashboard() {
                     </tr>
                   </thead>
                 </table>
-                <table className="table table-striped thirteen main_table">
+                <table className="table table-striped thirteen main_table mb-1">
                   <thead className="payment_thead2">
                     <tr>
                       <th className="left_side">Paid</th>
@@ -309,7 +309,7 @@ function Dashboard() {
                   </thead>
                 </table>
 
-                <table className="table table-striped thirteen main_table">
+                <table className="table table-striped thirteen main_table mb-1">
                   <thead className="payment_thead2">
                     <tr>
                       <th className="left_side">Unpaid</th>
