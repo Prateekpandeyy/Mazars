@@ -240,6 +240,7 @@ function Customer() {
         <CardBody>
         <CustomerListFilter
         setData={setData}
+        listData={data}
         searchQuery = "SearchQuery"
         setRecords={setTpCount}
          records={tpCount} 
