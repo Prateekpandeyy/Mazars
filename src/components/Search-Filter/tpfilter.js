@@ -578,7 +578,7 @@ function TaxProfessionalFilter(props) {
         `${baseUrl}/tl/getProposalTl?tp_id=${JSON.parse(
           userid
         )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
-        }&status=2&pcat_id=${selectedData}`
+        }&status=3&pcat_id=${selectedData}`
       )
       .then((res) => {
 

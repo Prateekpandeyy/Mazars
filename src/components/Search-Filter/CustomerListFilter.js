@@ -49,7 +49,7 @@ if(searchQuery == "SearchQuery")
 axios
 .get(
   `${baseUrl}/admin/getAllList?&name=${data.name}&country=${data.country}&state=${data.state}&city=${data.city2
-  }&email=${data.email}&phone=${data.phone}&from=${data.p_dateFrom}&to=${data.p_dateTo}`
+  }&email=${data.email}&occupation=${data.occupation}&from=${data.p_dateFrom}&to=${data.p_dateTo}`
 )
 .then((res) => {
   console.log("myResult", res.data.result);
@@ -200,9 +200,9 @@ const exportToExcel = async () => {
             <div class="col-sm-3">
               
               <input 
-              placeholder="Moblile Number"
+              placeholder="Occupation"
               type="text"
-              name="phone"
+              name="occupation"
               className="form-control"
               ref={register}/>
           </div>

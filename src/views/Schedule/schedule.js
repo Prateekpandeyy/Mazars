@@ -21,15 +21,18 @@ function Schedule() {
     <Layout custDashboard="custDashboard" custUserId={userId}>
       <Card className="scheduleContainer">
         <CardHeader>
-          <Row>
+        <Row>
             <Col md="7">
               <CardTitle tag="h4">Schedule </CardTitle>
             </Col>
             <Col md="5"></Col>
           </Row>
+      
+         
         </CardHeader>
-        <Demo />
-        <CardBody></CardBody>
+    
+      <Demo />
+      
       </Card>
     </Layout>
   );

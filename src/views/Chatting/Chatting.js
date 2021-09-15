@@ -20,7 +20,6 @@ import Alerts from "../../common/Alerts";
 import classNames from "classnames";
 import Mandatory from "../../components/Common/Mandatory";
 import Loader from "../../components/Loader/Loader";
-import { getErrorMessage } from '../../../src/constants';
 
 
 
@@ -76,7 +75,7 @@ console.log(query_id)
 
     axios({
       method: "POST",
-      url: `${baseUrl}/customers/messageSent1`,
+      url: `${baseUrl}/customers/messageSent`,
       data: formData,
     })
       .then(function (response) {
@@ -91,9 +90,7 @@ console.log(query_id)
         }
       })
       .catch((error) => {
-        getErrorMessage();
-        props.history.push(routes);
-        // console.log("erroror - ", error);
+        console.log("erroror - ", error);
       });
   };
 

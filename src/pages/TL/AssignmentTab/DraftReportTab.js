@@ -12,7 +12,7 @@ import "antd/dist/antd.css";
 import { Select } from "antd";
 import BootstrapTable from "react-bootstrap-table-next";
 import DiscardReport from "../AssignmentTab/DiscardReport";
-
+import DraftReportModal from "./DraftReportUpload";
 
 
 
@@ -42,6 +42,12 @@ function AssignmentTab() {
 
     const [assignNo, setAssignNo] = useState('');
     const [ViewDiscussion, setViewDiscussion] = useState(false);
+    const [draftModal, setDraftModal] = useState(false);
+    const uploadDraftReport = (id) => {
+      console.log(id);
+      setDraftModal(!draftModal);
+      setId(id);
+    };
     const ViewDiscussionToggel = (key) => {
         setViewDiscussion(!ViewDiscussion);
         setAssignNo(key)
@@ -257,60 +263,88 @@ function AssignmentTab() {
         {
             text: "Action",
             headerStyle: () => {
-                return { fontSize: "12px" };
+              return { fontSize: "12px", width: "90px" };
             },
             formatter: function (cell, row) {
-                return (
-                    <>
-                        <div
-                            style={{
-                                display: "flex",
-                                justifyContent: "space-between",
-                                width: "60px"
-                            }}
-                        >
-
-                            <div title="View Discussion Message">
-                                <i
-                                    class="fa fa-comments-o"
-                                    style={{
-                                        fontSize: 16,
-                                        cursor: "pointer",
-                                        color: "orange"
-                                    }}
-                                    onClick={() => ViewDiscussionToggel(row.assign_no)}
-                                ></i>
-                            </div>
-
-                            <div title="Send Message">
-                                <Link
-                                    to={{
-                                        pathname: `/teamleader/chatting/${row.q_id}`,
-                                        obj: {
-                                            message_type: "3",
-                                            query_No: row.assign_no,
-                                            query_id: row.q_id,
-                                            routes: `/teamleader/assignment`
-                                        }
-                                    }}
-                                >
-                                    <i
-                                        class="fa fa-comments-o"
-                                        style={{
-                                            fontSize: 16,
-                                            cursor: "pointer",
-                                            marginLeft: "8px",
-                                            color: "blue"
-                                        }}
-                                    ></i>
-                                </Link>
-                            </div>
-
-                        </div>
-                    </>
-                );
+              return (
+                <>
+               {
+                 row.paid_status == "2" ? null : 
+                 <div
+                 style={{
+                   display: "flex",
+                   justifyContent: "space-between",
+                 }}
+               >
+                 
+                 
+                    {
+                    row.client_discussion == "completed" && row.draft_report == "inprogress" && row.paid_status !=2 ?
+                    <div title="upload Pdf">
+                    <p
+                      style={{ cursor: "pointer", color: "green" }}
+                      onClick={() => uploadDraftReport(row.id)}
+                    >
+                      <i class="fa fa-upload" style={{ fontSize: "16px" }}></i>
+                      draft
+                    </p>
+                  </div> : null
+                 }
+                  {
+                    row.client_discussion == "completed" && row.draft_report == "completed" && row.final_discussion == "inprogress" ?
+                    <div title="upload Pdf">
+                    <p
+                      style={{ cursor: "pointer", color: "green" }}
+                      onClick={() => uploadDraftReport(row.id)}
+                    >
+                      <i class="fa fa-upload" style={{ fontSize: "16px" }}></i>
+                      draft
+                    </p>
+                  </div> : null
+                 }
+                
+      
+                 <div title="View Discussion Message">
+                   <i
+                     class="fa fa-comments-o"
+                     style={{
+                       fontSize: 16,
+                       cursor: "pointer",
+                       color: "orange"
+                     }}
+                     onClick={() => ViewDiscussionToggel(row.assign_no)}
+                   ></i>
+                 </div>
+                 <div title="Send Message">
+                   <Link
+                     to={{
+                       pathname: `/teamleader/chatting/${row.q_id}`,
+                       obj: {
+                         message_type: "3",
+                         query_No: row.assign_no,
+                         query_id: row.q_id,
+                         routes: `/teamleader/assignment`
+                       }
+                     }}
+                   >
+                     <i
+                       class="fa fa-comments-o"
+                       style={{
+                         fontSize: 16,
+                         cursor: "pointer",
+                         marginLeft: "8px",
+                         color: "blue"
+                       }}
+                     ></i>
+                   </Link>
+                 </div>
+      
+               </div>
+               }
+                </>
+              );
             },
-        },
+          },
     ];
 
 

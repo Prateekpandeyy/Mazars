@@ -34,7 +34,7 @@ function InprogressAssignment() {
   const [assignmentCount, setAssignmentQueries] = useState("");
   const [records, setRecords] = useState([]);
 
-
+  const [dataItem, setDataItem] = useState({});
   const [rejectedItem, setRejectedItem] = useState({});
   const [report, setReport] = useState();
 
@@ -48,9 +48,9 @@ function InprogressAssignment() {
 
   const [reportModal, setReportModal] = useState(false);
   const ViewReport = (key) => {
-    console.log("key - ", key);
     setReportModal(!reportModal);
-    setReport(key);
+    setReport(key.assign_no);
+    setDataItem(key)
   };
 
 
@@ -191,7 +191,7 @@ function InprogressAssignment() {
         return (
           <>
 
-            {
+            {/* {
               row.status == "Payment decliend" ? null :
                 <div>
                   {row.assignment_draft_report || row.final_report ?
@@ -251,7 +251,24 @@ function InprogressAssignment() {
                 </div>
             }
 
+ */}
 
+
+{
+  row.status == "Payment decliend" || row.paid_status == "2" ? null :
+    <div>
+      {row.assignment_draft_report || row.final_report ?
+        <div title="View All Report"
+          style={{ cursor: "pointer", textAlign: "center" }}
+          onClick={() => ViewReport(row)}
+        >
+          <DescriptionOutlinedIcon color="secondary" />
+        </div>
+        :
+        null
+      }
+    </div>
+}
           </>
         );
       },
