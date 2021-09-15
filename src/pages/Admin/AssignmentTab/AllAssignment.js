@@ -45,7 +45,7 @@ function AssignmentComponent() {
    var rowStyle2 = {}
   const [reportModal, setReportModal] = useState(false);
   const ViewReport = (key) => {
-    console.log("key - ", key);
+  
     setReportModal(!reportModal);
     setReport(key);
   };

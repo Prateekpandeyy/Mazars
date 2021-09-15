@@ -120,189 +120,199 @@ function Paid() {
 
   const columns = [
     {
-      dataField: "",
-      text: "S.No",
-      formatter: (cellContent, row, rowIndex) => {
-        return rowIndex + 1;
-      },
-      style: {
-        fontSize: "11px",
-      },
-      headerStyle: () => {
-        return { fontSize: "11px" };
-      },
+        dataField: "",
+        text: "S.No",
+        formatter: (cellContent, row, rowIndex) => {
+            return rowIndex + 1;
+        },
+        style: {
+            fontSize: "11px",
+        },
+        headerStyle: () => {
+            return { fontSize: "11px" };
+        },
     },
     {
-      dataField: "query_created_date",
-      text: "Date",
-      sort: true,
-      style: {
-        fontSize: "11px",
-      },
-      headerStyle: () => {
-        return { fontSize: "11px" };
-      },
-      formatter: function dateFormat(cell, row) {
-        console.log("dt", row.query_created_date);
-        var oldDate = row.query_created_date;
-        if (oldDate == null) {
-          return null;
-        }
-        return oldDate.slice(0, 10).toString().split("-").reverse().join("-");
-      },
+        dataField: "query_created_date",
+        text: "Date",
+        sort: true,
+        style: {
+            fontSize: "11px",
+        },
+        headerStyle: () => {
+            return { fontSize: "11px" };
+        },
+        formatter: function dateFormat(cell, row) {
+            console.log("dt", row.query_created_date);
+            var oldDate = row.query_created_date;
+            if (oldDate == null) {
+                return null;
+            }
+            return oldDate.slice(0, 10).toString().split("-").reverse().join("-");
+        },
     },
     {
-      dataField: "assign_no",
-      text: "Query No",
-      style: {
-        fontSize: "11px",
-      },
-      headerStyle: () => {
-        return { fontSize: "11px" };
-      },
-      formatter: function nameFormatter(cell, row) {
-        console.log(row);
-        return (
-          <>
-            <Link
-              to={{
-                pathname: `/customer/my-assingment/${row.assign_id}`,
-                routes: "paymentstatus",
-              }}
-            >
-              {row.assign_no}
-            </Link>
-          </>
-        );
-      },
+        dataField: "assign_no",
+        text: "Query No",
+        style: {
+            fontSize: "11px",
+        },
+        headerStyle: () => {
+            return { fontSize: "11px" };
+        },
+        formatter: function nameFormatter(cell, row) {
+            console.log(row);
+            return (
+                <>
+                    <Link
+                        to={{
+                            pathname: `/admin/queries/${row.assign_id}`,
+                            routes: "paymentstatus",
+                        }}
+                    >
+                        {row.assign_no}
+                    </Link>
+                </>
+            );
+        },
     },
     {
-      dataField: "parent_id",
-      text: "Category",
-      sort: true,
-      style: {
-        fontSize: "11px",
-      },
-      headerStyle: () => {
-        return { fontSize: "11px" };
-      },
+        dataField: "parent_id",
+        text: "Category",
+        sort: true,
+        style: {
+            fontSize: "11px",
+        },
+        headerStyle: () => {
+            return { fontSize: "11px" };
+        },
     },
     {
-      dataField: "cat_name",
-      text: "Sub Category",
-      sort: true,
-      style: {
-        fontSize: "11px",
-      },
-      headerStyle: () => {
-        return { fontSize: "11px" };
-      },
+        dataField: "cat_name",
+        text: "Sub Category",
+        sort: true,
+        style: {
+            fontSize: "11px",
+        },
+        headerStyle: () => {
+            return { fontSize: "11px" };
+        },
     },
     {
-      text: "Date of acceptance of Proposal",
-      dataField: "cust_accept_date",
-      sort: true,
-      style: {
-        fontSize: "11px",
-      },
-      headerStyle: () => {
-        return { fontSize: "11px" };
-      },
-      formatter: function dateFormat(cell, row) {
-        console.log("dt", row.cust_accept_date);
-        var oldDate = row.cust_accept_date;
-        if (oldDate == null) {
-          return null;
-        }
-        return oldDate.slice(0, 10).toString().split("-").reverse().join("-");
-      },
+        text: "Date of acceptance of Proposal",
+        dataField: "cust_accept_date",
+        sort: true,
+        style: {
+            fontSize: "11px",
+        },
+        headerStyle: () => {
+            return { fontSize: "11px" };
+        },
+        formatter: function dateFormat(cell, row) {
+            console.log("dt", row.cust_accept_date);
+            var oldDate = row.cust_accept_date;
+            if (oldDate == null) {
+                return null;
+            }
+            return oldDate.slice(0, 10).toString().split("-").reverse().join("-");
+        },
     },
     {
-      text: "Status",
-      dataField: "status",
-      style: {
-        fontSize: "11px",
-      },
-      headerStyle: () => {
-        return { fontSize: "11px" };
-      },
+        text: "Status",
+        dataField: "status",
+        style: {
+            fontSize: "11px",
+        },
+        headerStyle: () => {
+            return { fontSize: "11px" };
+        },
     },
     {
-      dataField: "accepted_amount",
-      text: "Accepted Amount ",
-      sort: true,
-      style: {
-        fontSize: "11px",
-        color: "#21a3ce",
-      },
-      sortFunc: (a, b, order, dataField) => {
-        if (order === 'asc') {
-          return b - a;
-        }
-        return a - b; // desc
-      },
-      headerStyle: () => {
-        return { fontSize: "11px", color: "#21a3ce" };
-      },
+        dataField: "accepted_amount",
+        text: "Accepted Amount ",
+        sort: true,
+        style: {
+          fontSize: "11px",
+          color: "#21a3ce",
+        },
+        sortFunc: (a, b, order, dataField) => {
+          if (order === 'asc') {
+            return b - a;
+          }
+          return a - b; // desc
+        },
+        headerStyle: () => {
+          return { fontSize: "11px", color: "#21a3ce" };
+        },
     },
     {
-      text: "Amount Paid",
-      dataField: "paid_amount",
-      sort: true,
-      style: {
-        fontSize: "11px",
-        color: "#064606",
-      },
-      sortFunc: (a, b, order, dataField) => {
-        if (order === 'asc') {
-          return b - a;
-        }
-        return a - b; // desc
-      },
-      headerStyle: () => {
-        return { fontSize: "11px", color: "#064606" };
-      },
+        text: "Amount Paid",
+        dataField: "paid_amount",
+        sort: true,
+        style: {
+          fontSize: "11px",
+          color: "#064606",
+        },
+        sortFunc: (a, b, order, dataField) => {
+          if (order === 'asc') {
+            return b - a;
+          }
+          return a - b; // desc
+        },
+        headerStyle: () => {
+          return { fontSize: "11px", color: "#064606" };
+        },
     },
 
     {
-      text: "Amount Outstanding",
-      dataField: "amount_outstanding",
-      sort: true,
-      style: {
-        fontSize: "11px",
-        color: "darkred",
-      },
-      sortFunc: (a, b, order, dataField) => {
-        if (order === 'asc') {
-          return b - a;
-        }
-        return a - b; // desc
-      },
-      headerStyle: () => {
-        return { fontSize: "11px", color: "darkred" };
-      },
-   
+        text : "Amount Outstanding",
+        dataField: "amount_outstanding",
+        sort: true,
+        style: {
+          fontSize: "11px",
+          color: "darkred",
+        },
+        sortFunc: (a, b, order, dataField) => {
+          if (order === 'asc') {
+            return b - a;
+          }
+          return a - b; // desc
+        },
+        headerStyle: () => {
+          return { fontSize: "11px", color: "darkred" };
+        },
     },
     {
-      text: "Date of Payment",
-      dataField: "cust_paid_date",
-      sort: true,
-      style: {
-        fontSize: "11px",
-      },
-      headerStyle: () => {
-        return { fontSize: "11px" };
-      },
-      formatter: function dateFormat(cell, row) {
-        console.log("dt", row.cust_paid_date);
-        var oldDate = row.cust_paid_date;
-        if (oldDate == null) {
-          return null;
-        }
-        return oldDate.slice(0, 10).toString().split("-").reverse().join("-");
-      },
+        text: "Date of Payment",
+        dataField: "cust_paid_date",
+        sort: true,
+        style: {
+            fontSize: "11px",
+        },
+        headerStyle: () => {
+            return { fontSize: "11px" };
+        },
+        formatter: function dateFormat(cell, row) {
+            console.log("dt", row.cust_paid_date);
+            var oldDate = row.cust_paid_date;
+            if (oldDate == null) {
+                return null;
+            }
+            return oldDate.slice(0, 10).toString().split("-").reverse().join("-");
+        },
     },
     {
+        dataField: "tl_name",
+        text: "TL name",
+        sort: true,
+        style: {
+            fontSize: "11px",
+        },
+        headerStyle: () => {
+            return { fontSize: "11px" };
+        },
+    },
+  {
       text: "Action",
       dataField: "",
       style: {

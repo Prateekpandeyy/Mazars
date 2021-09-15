@@ -9,7 +9,6 @@ import { Spinner } from "reactstrap";
 import Swal from "sweetalert2";
 import { purpose } from "./data";
 import Layout from "../../components/Layout/Layout";
-import { getErrorMessage } from '../../../src/constants';
 import {
   Card,
   CardHeader,
@@ -80,7 +79,7 @@ function AddFreshAssingment(props) {
 
   const onSubmit = (value) => {
     console.log(value)
-    debugger;
+
     const a = value.p_fact;
     const b = value.users;
     if (a == '') {
@@ -126,14 +125,13 @@ function AddFreshAssingment(props) {
       formData.append("assessment_year", JSON.stringify(selectedOption));
       formData.append("purpose", JSON.stringify(purposeOption));
       axios
-        .post(`${baseUrl}/customers/PostQuestion1`, formData, {
+        .post(`${baseUrl}/customers/PostQuestion`, formData, {
           headers: {
             "content-type": "multipart/form-data",
           },
         })
         .then(function (response) {
           console.log("res-", response);
-          
           if (response.data.code === 1) {
             reset();
             var message = response.data.message
@@ -168,9 +166,7 @@ function AddFreshAssingment(props) {
           }
         })
         .catch((error) => {
-          getErrorMessage();
-          props.history.push("/customer/select-category");
-         // console.log("erroror - ", error);
+          console.log("erroror - ", error);
         });
     }
   };

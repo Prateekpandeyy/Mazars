@@ -348,7 +348,8 @@ function AssignmentTab() {
       formatter: function (cell, row) {
         return (
           <>
-        
+         {
+           row.paid_status == "2" ? null : 
            <div
            style={{
              display: "flex",
@@ -356,8 +357,9 @@ function AssignmentTab() {
            }}
          >
            
-           {
-              row.client_discussion == "completed" && row.draft_report == "inprogress" && row.paid_status != "2" ?
+           
+              {
+              row.client_discussion == "completed" && row.draft_report == "inprogress" && row.paid_status !=2 ?
               <div title="upload Pdf">
               <p
                 style={{ cursor: "pointer", color: "green" }}
@@ -369,7 +371,7 @@ function AssignmentTab() {
             </div> : null
            }
             {
-              row.client_discussion == "completed" && row.draft_report == "completed" && row.final_discussion == "inprogress" && row.paid_status != "2" ?
+              row.client_discussion == "completed" && row.draft_report == "completed" && row.final_discussion == "inprogress" ?
               <div title="upload Pdf">
               <p
                 style={{ cursor: "pointer", color: "green" }}
@@ -438,7 +440,7 @@ function AssignmentTab() {
            </div>
 
          </div>
-         
+         }
           </>
         );
       },

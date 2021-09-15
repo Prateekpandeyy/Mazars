@@ -98,14 +98,14 @@ function Customer() {
         },
         formatter : function(cell, row) {
           return(
-            <a   onClick={() => show(row.id)}>{row.email}</a>
+            <a   onClick={() => show(row.id)} style={{color : "#0000EE"}}>{row.email}</a>
           )
         }
       },
       {
         dataField: "phone",
         text: "Mobile No",
-        sort: true,
+       
         headerStyle: () => {
           return { fontSize: "12px" };
         },
@@ -146,7 +146,7 @@ function Customer() {
    
     {
       dataField: "created",
-      text: "Date",
+      text: "Date of Registration",
       sort: true,
       headerStyle: () => {
         return { fontSize: "12px" };
