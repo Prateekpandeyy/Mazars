@@ -345,7 +345,7 @@ function Unpaid() {
                     <AdminFilter
                         setData={setPayment}
                         getData={getPaymentStatus}
-                        unpaid="unpaid"
+                        paid="paid"
                         setRecords={setRecords}
                         records={records}
                     />

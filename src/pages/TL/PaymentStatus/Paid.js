@@ -295,7 +295,10 @@ function AllPayment() {
                                 onClick={() => toggle(row.assign_id)}
                                 style={{ color: "green", fontSize: "16px", cursor: "pointer" }}
                             >
-                                <AssessmentIcon />
+                               <i
+                                class="fa fa-credit-card"
+                                style={{ color: "green", fontSize: "16px" }}
+                                onClick={() => toggle(row.assign_id)}></i>
                             </div>
                             <div title="Send Message">
                                 <Link

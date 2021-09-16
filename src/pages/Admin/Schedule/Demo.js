@@ -373,6 +373,10 @@ function Demo() {
             }
           });
         }
+        else{
+          setLoading(false);
+          history.push("/admin/schedule")
+        }
       });
     }
   };
@@ -418,7 +422,7 @@ function Demo() {
           :
           <>
             <Paper>
-              <Scheduler data={data} height={430}>
+              <Scheduler data={data} height={600}>
                 <ViewState
                   defaultCurrentDate={currentDate}
                   defaultCurrentViewName="Week"

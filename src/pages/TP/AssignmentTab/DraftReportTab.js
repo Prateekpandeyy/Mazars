@@ -12,6 +12,7 @@ import "antd/dist/antd.css";
 import { Select } from "antd";
 import BootstrapTable from "react-bootstrap-table-next";
 import DiscardReport from "../AssignmentTab/DiscardReport";
+import DraftReportModal from "./DraftReportUpload";
 
 
 
@@ -39,8 +40,13 @@ function AssignmentTab() {
     console.log("current_date :", current_date);
     const [item] = useState(current_date);
 
-
+    const [draftModal, setDraftModal] = useState(false);
     const [assignNo, setAssignNo] = useState('');
+    const uploadDraftReport = (id) => {
+        console.log(id);
+        setDraftModal(!draftModal);
+        setId(id);
+      };
     const [ViewDiscussion, setViewDiscussion] = useState(false);
     const ViewDiscussionToggel = (key) => {
         setViewDiscussion(!ViewDiscussion);
@@ -158,7 +164,7 @@ function AssignmentTab() {
                     <>
                         <Link
                             to={{
-                                pathname: `/teamleader/queries/${row.q_id}`,
+                                pathname: `/taxprofessional/queries/${row.q_id}`,
                                 routes: "assignment",
                             }}
                         >
@@ -262,52 +268,80 @@ function AssignmentTab() {
             formatter: function (cell, row) {
                 return (
                     <>
-                        <div
-                            style={{
-                                display: "flex",
-                                justifyContent: "space-between",
-                                width: "60px"
-                            }}
-                        >
-
-                            <div title="View Discussion Message">
-                                <i
-                                    class="fa fa-comments-o"
-                                    style={{
-                                        fontSize: 16,
-                                        cursor: "pointer",
-                                        color: "orange"
-                                    }}
-                                    onClick={() => ViewDiscussionToggel(row.assign_no)}
-                                ></i>
-                            </div>
-
-                            <div title="Send Message">
-                                <Link
-                                    to={{
-                                        pathname: `/teamleader/chatting/${row.q_id}`,
-                                        obj: {
-                                            message_type: "3",
-                                            query_No: row.assign_no,
-                                            query_id: row.q_id,
-                                            routes: `/teamleader/assignment`
-                                        }
-                                    }}
-                                >
-                                    <i
-                                        class="fa fa-comments-o"
-                                        style={{
-                                            fontSize: 16,
-                                            cursor: "pointer",
-                                            marginLeft: "8px",
-                                            color: "blue"
-                                        }}
-                                    ></i>
-                                </Link>
-                            </div>
-
-                        </div>
-                    </>
+               {
+                 row.paid_status == "2" ? null : 
+                 <div
+                 style={{
+                   display: "flex",
+                   justifyContent: "space-between",
+                 }}
+               >
+                 
+                 
+                    {
+                    row.client_discussion == "completed" && row.draft_report == "inprogress" && row.paid_status !=2 ?
+                    <div title="upload Pdf">
+                    <p
+                      style={{ cursor: "pointer", color: "green" }}
+                      onClick={() => uploadDraftReport(row.id)}
+                    >
+                      <i class="fa fa-upload" style={{ fontSize: "16px" }}></i>
+                      draft
+                    </p>
+                  </div> : null
+                 }
+                  {
+                    row.client_discussion == "completed" && row.draft_report == "completed" && row.final_discussion == "inprogress" ?
+                    <div title="upload Pdf">
+                    <p
+                      style={{ cursor: "pointer", color: "green" }}
+                      onClick={() => uploadDraftReport(row.id)}
+                    >
+                      <i class="fa fa-upload" style={{ fontSize: "16px" }}></i>
+                      draft
+                    </p>
+                  </div> : null
+                 }
+                
+      
+                 <div title="View Discussion Message">
+                   <i
+                     class="fa fa-comments-o"
+                     style={{
+                       fontSize: 16,
+                       cursor: "pointer",
+                       color: "orange"
+                     }}
+                     onClick={() => ViewDiscussionToggel(row.assign_no)}
+                   ></i>
+                 </div>
+                 <div title="Send Message">
+                   <Link
+                     to={{
+                       pathname: `/taxprofessional/chatting/${row.q_id}`,
+                       obj: {
+                         message_type: "3",
+                         query_No: row.assign_no,
+                         query_id: row.q_id,
+                         routes: `/taxprofessional/assignment`
+                       }
+                     }}
+                   >
+                     <i
+                       class="fa fa-comments-o"
+                       style={{
+                         fontSize: 16,
+                         cursor: "pointer",
+                         marginLeft: "8px",
+                         color: "blue"
+                       }}
+                     ></i>
+                   </Link>
+                 </div>
+      
+               </div>
+               }
+                </>
                 );
             },
         },
@@ -455,7 +489,12 @@ function AssignmentTab() {
                         rowIndex
                     />
 
-
+<DraftReportModal
+            draftModal={draftModal}
+            uploadDraftReport={uploadDraftReport}
+            getAssignmentList={getAssignmentList}
+            id={id}
+          />
                     <DiscardReport
                         ViewDiscussionToggel={ViewDiscussionToggel}
                         ViewDiscussion={ViewDiscussion}

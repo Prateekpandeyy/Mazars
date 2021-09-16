@@ -192,13 +192,22 @@ function AllPayment() {
         },
         {
             text: "Status",
-            dataField: "status",
+            dataField: "",
             style: {
                 fontSize: "11px",
             },
             headerStyle: () => {
                 return { fontSize: "11px" };
             },
+            formatter : function (cell, row) {
+                return(
+                    <>
+                    {row.paid_status == "2"  ?
+                    <p style={{color : "red"}}>{row.status} </p> : 
+                    <p>{row.status}</p>}
+                    </>
+                )
+            }
         },
         {
             dataField: "accepted_amount",
@@ -285,63 +294,67 @@ function AllPayment() {
                 return (
                     <>
 
+                        {row.paid_status === "2" ? "" : 
                         <div style={{ display: "flex", justifyContent: "space-between", width: "90px" }}>
 
-                            <div title="Payment History"
-                                onClick={() => toggle(row.assign_id)}
-                                style={{ color: "green", fontSize: "16px", cursor: "pointer" }}
+                        <div title="Payment History"
+
+                            style={{ color: "green", fontSize: "16px", cursor: "pointer" }}
+                        >
+                            <i
+                           class="fa fa-credit-card"
+                           onClick={() => toggle(row.assign_id)}
+                           style={{ color: "green", fontSize: "16px" }}></i>
+                        </div>
+                        <div title="Send Message">
+                            <Link
+                                to={{
+                                    pathname: `/taxprofessional/chatting/${row.assign_id}`,
+                                    obj: {
+                                        message_type: "2",
+                                        query_No: row.assign_no,
+                                        query_id: row.assign_id,
+                                        routes: `/taxprofessional/proposal`
+                                    }
+                                }}
                             >
-                                <AssessmentIcon />
-                            </div>
-                            <div title="Send Message">
-                                <Link
-                                    to={{
-                                        pathname: `/taxprofessional/chatting/${row.assign_id}`,
-                                        obj: {
-                                            message_type: "2",
-                                            query_No: row.assign_no,
-                                            query_id: row.assign_id,
-                                            routes: `/taxprofessional/proposal`
-                                        }
-                                    }}
-                                >
-                                    <i
-                                        class="fa fa-comments-o"
-                                        style={{
-                                            fontSize: 18,
-                                            cursor: "pointer",
-                                            color: "blue"
-                                        }}
-                                    ></i>
-                                </Link>
-                            </div>
-                            {/* <div>
-                                {
-                                    row.paid_status == "0" ?
-                                        <div title="Payment decline"
-                                            onClick={() => rejectHandler(row)}
-                                            style={{ color: "red", fontSize: "16px", cursor: "pointer" }}
-                                        >
-                                            <PaymentIcon />
-                                        </div>
-                                        : null
-                                }
-                            </div> */}
-
-
-                            <div title="View Discussion Message">
                                 <i
                                     class="fa fa-comments-o"
                                     style={{
-                                        fontSize: 16,
+                                        fontSize: 18,
                                         cursor: "pointer",
-                                        color: "orange"
+                                        color: "blue"
                                     }}
-                                    onClick={() => ViewDiscussionToggel(row.assign_no)}
                                 ></i>
-                            </div>
-
+                            </Link>
                         </div>
+                        {/* <div>
+                            {
+                                row.paid_status == "0" ?
+                                    <div title="Payment decline"
+                                        onClick={() => rejectHandler(row)}
+                                        style={{ color: "red", fontSize: "16px", cursor: "pointer" }}
+                                    >
+                                        <PaymentIcon />
+                                    </div>
+                                    : null
+                            }
+                        </div> */}
+
+
+                        <div title="View Discussion Message">
+                            <i
+                                class="fa fa-comments-o"
+                                style={{
+                                    fontSize: 16,
+                                    cursor: "pointer",
+                                    color: "orange"
+                                }}
+                                onClick={() => ViewDiscussionToggel(row.assign_no)}
+                            ></i>
+                        </div>
+
+                    </div>}
                     </>
                 );
             },

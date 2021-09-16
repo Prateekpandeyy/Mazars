@@ -272,69 +272,72 @@ function AllPayment() {
                 return oldDate.slice(0, 10).toString().split("-").reverse().join("-");
             },
         },
-        // {
-        //     text: "Action",
-        //     style: {
-        //         fontSize: "11px",
-        //     },
-        //     headerStyle: () => {
-        //         return { fontSize: "11px" };
-        //     },
-        //     formatter: function (cell, row) {
-        //         return (
-        //             <>
+        {
+            text: "Action",
+            style: {
+                fontSize: "11px",
+            },
+            headerStyle: () => {
+                return { fontSize: "11px" };
+            },
+            formatter: function (cell, row) {
+                return (
+                    <>
 
-        //                 <div style={{ display: "flex", justifyContent: "space-between", width: "60px" }}>
-        //                     {
-        //                         row.paid_status == "0" ? null :
-        //                             <div title="Payment History"
-        //                                 onClick={() => toggle(row.assign_id)}
-        //                                 style={{ color: "green", fontSize: "16px", cursor: "pointer" }}
-        //                             >
-        //                                 <ChangeHistoryIcon />
-        //                             </div>
-        //                     }
+                        <div style={{ display: "flex", justifyContent: "space-between", width: "60px" }}>
+                            {
+                                row.paid_status == "0" ? null :
+                                    <div title="Payment History"
+                                      
+                                        style={{ color: "green", fontSize: "16px", cursor: "pointer" }}
+                                    >
+                                        <i
+                           class="fa fa-credit-card"
+                           onClick={() => toggle(row.assign_id)}
+                           style={{ color: "green", fontSize: "16px" }}></i>
+                                    </div>
+                            }
 
-        //                     {
-        //                         (row.paid_status == "0") ?
-        //                             <div title="Payment decline"
-        //                                 onClick={() => rejectHandler(row)}
-        //                                 style={{ color: "red", fontSize: "16px", cursor: "pointer" }}
-        //                             >
-        //                                 <PaymentIcon />
-        //                             </div>
-        //                             :
-        //                             null
-        //                     }
+                            {
+                                (row.paid_status == "0") ?
+                                    <div title="Payment decline"
+                                        onClick={() => rejectHandler(row)}
+                                        style={{ color: "red", fontSize: "16px", cursor: "pointer" }}
+                                    >
+                                        <PaymentIcon />
+                                    </div>
+                                    :
+                                    null
+                            }
 
-        //                     <div title="Send Message">
-        //                         <Link
-        //                             to={{
-        //                                 pathname: `/teamleader/chatting/${row.assign_id}`,
-        //                                 obj: {
-        //                                     message_type: "2",
-        //                                     query_No: row.assign_no,
-        //                                     query_id: row.assign_id,
-        //                                     routes: `/teamleader/proposal`
-        //                                 }
-        //                             }}
-        //                         >
-        //                             <i
-        //                                 class="fa fa-comments-o"
-        //                                 style={{
-        //                                     fontSize: 16,
-        //                                     cursor: "pointer",
-        //                                     marginLeft: "8px",
-        //                                     color: "blue"
-        //                                 }}
-        //                             ></i>
-        //                         </Link>
-        //                     </div>
-        //                 </div>
-        //             </>
-        //         );
-        //     },
-        // },
+                            <div title="Send Message">
+                                <Link
+                                    to={{
+                                        pathname: `/teamleader/chatting/${row.assign_id}`,
+                                        obj: {
+                                            message_type: "2",
+                                            query_No: row.assign_no,
+                                            query_id: row.assign_id,
+                                            routes: `/teamleader/proposal`
+                                        }
+                                    }}
+                                >
+                                    <i
+                                        class="fa fa-comments-o"
+                                        style={{
+                                            fontSize: 16,
+                                            cursor: "pointer",
+                                            marginLeft: "8px",
+                                            color: "blue"
+                                        }}
+                                    ></i>
+                                </Link>
+                            </div>
+                        </div>
+                    </>
+                );
+            },
+        },
     ];
 
 

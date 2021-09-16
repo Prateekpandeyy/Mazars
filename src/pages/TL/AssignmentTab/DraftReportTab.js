@@ -488,7 +488,12 @@ function AssignmentTab() {
                         columns={columns}
                         rowIndex
                     />
-
+  <DraftReportModal
+            draftModal={draftModal}
+            uploadDraftReport={uploadDraftReport}
+            getAssignmentList={getAssignmentList}
+            id={id}
+          />
 
                     <DiscardReport
                         ViewDiscussionToggel={ViewDiscussionToggel}

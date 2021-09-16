@@ -21,7 +21,7 @@ const feedNumber = {
   backgroundColor: "green",
   color: "white",
   display: "inline-block",
-  margin: "0px 0px 20px 20px",
+  margin: "0px 0px 20px 0px",
   padding: "9px 10px",
     borderRadius: "50%"
 }
