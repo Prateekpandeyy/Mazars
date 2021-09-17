@@ -210,7 +210,7 @@ function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
           setLoading(false)
           Alerts.SuccessNormal("Query accepted successfully.")
           getPendingforAcceptance();
-          updateTab(1);
+          updateTab(3);
         } else if (response.data.code === 0) {
           setLoading(false)
         }

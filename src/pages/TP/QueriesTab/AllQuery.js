@@ -172,68 +172,57 @@ function AllQuery() {
                 return { fontSize: "12px" };
             },
             formatter: function (cell, row) {
+              
                 return (
                     <>
-                        <div
-                            style={{
-                                display: "flex",
-                                justifyContent: "space-evenly",
-                                color: "green",
-                            }}
-                        >
-                            {/* <Link to={`/taxprofessional/queryassing/${row.id}`}>
-                                {row.tp_status == "1" ? (
-                                    <div title="Assigned">
-                                        <i class="fa fa-share" style={{ color: "green" }}></i>
-                                    </div>
-                                ) :
-                                    row.status_code < "4" ?
-                                        (
-                                            <div title="Assign to">
-                                                <i class="fa fa-share"></i>
-                                            </div>
-                                        )
-                                        :
-                                        ""
-                                }
-                            </Link> */}
+                     {row.tp_status == "1" ? null : 
+                      
+                      <div
+                      style={{
+                          display: "flex",
+                          justifyContent: "space-evenly",
+                          color: "green",
+                      }}
+                  >
+                     
 
-                            <div title="Send Message">
-                                <Link
-                                    to={{
-                                        pathname: `/taxprofessional/chatting/${row.id}`,
-                                        obj: {
-                                            message_type: "2",
-                                            query_No: row.assign_no,
-                                            query_id: row.id,
-                                            routes: `/taxprofessional/proposal`
-                                        }
-                                    }}
-                                >
-                                    <i
-                                        class="fa fa-comments-o"
-                                        style={{
-                                            fontSize: 16,
-                                            cursor: "pointer",
-                                            marginLeft: "8px",
-                                            color: "blue"
-                                        }}
-                                    ></i>
-                                </Link>
-                            </div>
+                      {row.status == "Declined Query" ? null :
+                      <div title="Send Message">
+                      <Link
+                          to={{
+                              pathname: `/taxprofessional/chatting/${row.id}`,
+                              obj: {
+                                  message_type: "2",
+                                  query_No: row.assign_no,
+                                  query_id: row.id,
+                                  routes: `/taxprofessional/proposal`
+                              }
+                          }}
+                      >
+                          <i
+                              class="fa fa-comments-o"
+                              style={{
+                                  fontSize: 16,
+                                  cursor: "pointer",
+                                  marginLeft: "8px",
+                                  color: "blue"
+                              }}
+                          ></i>
+                      </Link>
+                  </div>}
 
-                            <div title="View Discussion Message">
-                                <i
-                                    class="fa fa-comments-o"
-                                    style={{
-                                        fontSize: 16,
-                                        cursor: "pointer",
-                                        color: "orange"
-                                    }}
-                                    onClick={() => ViewDiscussionToggel(row.assign_no)}
-                                ></i>
-                            </div>
-                        </div>
+                      <div title="View Discussion Message">
+                          <i
+                              class="fa fa-comments-o"
+                              style={{
+                                  fontSize: 16,
+                                  cursor: "pointer",
+                                  color: "orange"
+                              }}
+                              onClick={() => ViewDiscussionToggel(row.assign_no)}
+                          ></i>
+                      </div>
+                  </div>}
                     </>
                 );
             },

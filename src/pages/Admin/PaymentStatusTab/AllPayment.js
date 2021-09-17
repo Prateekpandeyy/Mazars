@@ -290,7 +290,7 @@ function AllPayment() {
             formatter: function (cell, row) {
                 return (
                     <>
-                        {row.paid_status == "2" ? "" :
+                       
                         <div style={{ display: "flex", justifyContent: "space-between", width: "40px" }}>
 
 
@@ -316,7 +316,7 @@ function AllPayment() {
                         </div>
 
 
-                        {/* <div title="Send Message">
+                        <div title="Send Message">
             <Link
               to={{
                 pathname: `/admin/chatting/${row.id}`,
@@ -338,9 +338,9 @@ function AllPayment() {
                 }}
               ></i>
             </Link>
-          </div> */}
+          </div>
 
-                    </div> }
+                    </div> 
                     </>
                 );
             },

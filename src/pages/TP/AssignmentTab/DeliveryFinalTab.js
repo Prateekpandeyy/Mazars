@@ -11,9 +11,9 @@ import { useForm } from "react-hook-form";
 import "antd/dist/antd.css";
 import { Select } from "antd";
 import BootstrapTable from "react-bootstrap-table-next";
-import DiscardReport from "../AssignmentTab/DiscardReport";
 import FinalReportUpload from "./FinalReportUpload";
-
+import DescriptionOutlinedIcon from '@material-ui/icons/DescriptionOutlined';
+import ViewAllReportModal from "./ViewAllReport";
 function AssignmentTab() {
 
     const history = useHistory();
@@ -39,6 +39,9 @@ function AssignmentTab() {
 
     const [assignNo, setAssignNo] = useState('');
     const [ViewDiscussion, setViewDiscussion] = useState(false);
+    const [report, setReport] = useState();
+    const [reportModal, setReportModal] = useState(false);
+    const [dataItem, setDataItem] = useState({});
     const ViewDiscussionToggel = (key) => {
         setViewDiscussion(!ViewDiscussion);
         setAssignNo(key)
@@ -116,7 +119,13 @@ function AssignmentTab() {
         console.log(`selected ${value}`);
         setStatus(value);
     };
-
+// view Report
+const ViewReport = (key) => {
+  
+    setReportModal(!reportModal);
+    setReport(key.assign_no);
+    setDataItem(key)
+  };
 
     //columns
     const columns = [
@@ -254,6 +263,58 @@ function AssignmentTab() {
                 return oldDate.slice(0, 10).toString().split("-").reverse().join("-");
             },
         },
+        {
+            text: "Deliverable",
+            dataField: "",
+            sort: true,
+            headerStyle: () => {
+              return { fontSize: "12px" };
+            },
+            formatter: function (cell, row) {
+              return (
+                <>
+                  {
+                    row.paid_status == "2" ? null :
+                      <div>
+                        {row.assignement_draft_report || row.final_report ?
+                          <div title="View All Report"
+                            style={{ cursor: "pointer" }}
+                            onClick={() => ViewReport(row)}
+                          >
+                            <DescriptionOutlinedIcon color="secondary" />
+                          </div>
+                          :
+                          null
+                        }
+                      </div>
+                  }
+                </>
+              );
+            },
+          },
+          {
+            text: "Assignment Stage",
+            headerStyle: () => {
+              return { fontSize: "12px" };
+            },
+            formatter: function (cell, row) {
+              return (
+                <>
+                  <div
+                    title="Add Assignment stages"
+                    style={{ cursor: "pointer", textAlign: "center" }}
+                  >
+                      {
+                 row.paid_status == "2" ? null :
+                    <Link to={`/taxprofessional/addassingment/${row.q_id}`}>
+                      <i class="fa fa-tasks"></i>
+                    </Link>
+            }
+                  </div>
+                </>
+              );
+            },
+          },
         {
             text: "Action",
             headerStyle: () => {
@@ -485,12 +546,13 @@ function AssignmentTab() {
             getAssignmentList={getAssignmentList}
             id={finalId}
           />
-                    <DiscardReport
-                        ViewDiscussionToggel={ViewDiscussionToggel}
-                        ViewDiscussion={ViewDiscussion}
-                        report={assignNo}
-                        getData={getAssignmentList}
-                    />
+          <ViewAllReportModal
+            ViewReport={ViewReport}
+            reportModal={reportModal}
+            report={report}
+            dataItem={dataItem}
+          />
+                    
                 </CardBody>
             </Card>
         </>

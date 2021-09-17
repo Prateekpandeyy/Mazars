@@ -252,7 +252,7 @@ function AcceptedProposal() {
                                 ) : null}
                             </div>
 
-                            {row.status_code > "3" ?
+                            {row.status_code > "3" || row.status_code == "10" ?
                                 <div style={{ cursor: "pointer", marginLeft: "8px" }} title="View Proposal">
 
                                     <a
@@ -271,10 +271,7 @@ function AcceptedProposal() {
 
 
                             <div>
-                                {
-                                    row.status == "Customer Declined; Proposal" ?
-                                        null
-                                        :
+                               
                                         <div title="Send Message">
                                             <Link
                                                 to={{
@@ -298,7 +295,7 @@ function AcceptedProposal() {
                                                 ></i>
                                             </Link>
                                         </div>
-                                }
+                                
                             </div>
 
                             <div title="View Discussion Message">

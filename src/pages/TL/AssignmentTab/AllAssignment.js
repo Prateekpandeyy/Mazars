@@ -61,7 +61,7 @@ function AssignmentTab() {
   const [assignNo, setAssignNo] = useState('');
   var rowStyle2 = {}
   const ViewReport = (key) => {
-    console.log("key - ", key);
+   
     setReportModal(!reportModal);
     setReport(key.assign_no);
     setDataItem(key)
@@ -347,7 +347,7 @@ function AssignmentTab() {
         return (
           <>
          {
-           row.paid_status == "2" ? null : 
+           row.paid_status == "2" ? "" : 
            <div
            style={{
              display: "flex",
@@ -455,6 +455,10 @@ function AssignmentTab() {
     if(row.paid_status != "2" && warningDate < aa)  {
       style.backgroundColor = "#c1d8f2";
       style.color = "#000111"
+    }
+    else if(row.paid_status != "2" && warningDate > aa){
+      style.backgroundColor = "#fff";
+      style.color = "#000"
     }
   
     return style;

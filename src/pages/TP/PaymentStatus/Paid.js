@@ -23,6 +23,7 @@ import TaxProfessionalFilter from "../../../components/Search-Filter/tpfilter";
 import ChangeHistoryIcon from '@material-ui/icons/ChangeHistory';
 import PaymentIcon from '@material-ui/icons/Payment';
 import RejectedModal from "./RejectedModal";
+import DiscardReport from "../AssignmentTab/DiscardReport";
 
 
 
@@ -53,7 +54,11 @@ function AllPayment() {
     useEffect(() => {
         getPaymentStatus();
     }, []);
-
+    const [ViewDiscussion, setViewDiscussion] = useState(false);
+    const ViewDiscussionToggel = (key) => {
+        setViewDiscussion(!ViewDiscussion);
+        setAssignNo(key)
+    }
     const getPaymentStatus = () => {
         axios.get(`${baseUrl}/tl/getUploadedProposals?tp_id=${JSON.parse(userid)}&status=2`).then((res) => {
             console.log(res);
@@ -333,6 +338,17 @@ function AllPayment() {
                                     ></i>
                                 </Link>
                             </div>
+                            <div title="View Discussion Message">
+                            <i
+                                class="fa fa-comments-o"
+                                style={{
+                                    fontSize: 16,
+                                    cursor: "pointer",
+                                    color: "orange"
+                                }}
+                                onClick={() => ViewDiscussionToggel(row.assign_no)}
+                            ></i>
+                        </div>
                         </div>
                     </>
                 );
@@ -370,7 +386,12 @@ function AllPayment() {
                         assignNo={assignNo}
                         getPaymentStatus={getPaymentStatus}
                     />
-
+ <DiscardReport
+                        ViewDiscussionToggel={ViewDiscussionToggel}
+                        ViewDiscussion={ViewDiscussion}
+                        report={assignNo}
+                        getData={getPaymentStatus}
+                    />
                     <Modal isOpen={modal} fade={false} toggle={toggle}>
                         <ModalHeader toggle={toggle}>History</ModalHeader>
                         <ModalBody>

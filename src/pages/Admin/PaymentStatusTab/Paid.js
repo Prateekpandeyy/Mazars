@@ -287,7 +287,57 @@ function Paid() {
             formatter: function (cell, row) {
                 return (
                     <>
-                        {row.paid_status == "2" ? "" :
+                        {row.paid_status == "2" ? 
+                         <div style={{ display: "flex", justifyContent: "space-between", width: "40px" }}>
+
+
+                         <div style={{ cursor: "pointer" }} title="Payment History">
+                             <i
+                                 class="fa fa-credit-card"
+                                 style={{ color: "green", fontSize: "16px" }}
+                                 onClick={() => toggle(row.assign_id)}
+                             ></i>
+                         </div>
+ 
+ 
+                         <div title="View Discussion Message">
+                             <i
+                                 class="fa fa-comments-o"
+                                 style={{
+                                     fontSize: 16,
+                                     cursor: "pointer",
+                                     color: "orange"
+                                 }}
+                                 onClick={() => ViewDiscussionToggel(row.assign_no)}
+                             ></i>
+                         </div>
+ 
+ 
+                         <div title="Send Message">
+             <Link
+               to={{
+                 pathname: `/admin/chatting/${row.id}`,
+                 obj: {
+                   message_type: "5",
+                   query_No: row.assign_no,
+                   query_id: row.id,
+                   routes: `/admin/paymentstatus`
+                 }
+               }}
+             >
+               <i
+                 class="fa fa-comments-o"
+                 style={{
+                   fontSize: 16,
+                   cursor: "pointer",
+                   marginLeft: "8px",
+                   color: "blue"
+                 }}
+               ></i>
+             </Link>
+           </div>
+ 
+                     </div> :
                         <div style={{ display: "flex", justifyContent: "space-between", width: "40px" }}>
 
 
@@ -313,7 +363,7 @@ function Paid() {
                         </div>
 
 
-                        {/* <div title="Send Message">
+                        <div title="Send Message">
             <Link
               to={{
                 pathname: `/admin/chatting/${row.id}`,
@@ -335,7 +385,7 @@ function Paid() {
                 }}
               ></i>
             </Link>
-          </div> */}
+          </div>
 
                     </div> }
                     </>

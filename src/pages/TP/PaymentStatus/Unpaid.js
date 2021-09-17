@@ -23,6 +23,7 @@ import TaxProfessionalFilter from "../../../components/Search-Filter/tpfilter";
 import ChangeHistoryIcon from '@material-ui/icons/ChangeHistory';
 import PaymentIcon from '@material-ui/icons/Payment';
 import RejectedModal from "./RejectedModal";
+import DiscardReport from "../AssignmentTab/DiscardReport";
 
 
 
@@ -65,7 +66,11 @@ function AllPayment() {
             }
         });
     };
-
+    const [ViewDiscussion, setViewDiscussion] = useState(false);
+    const ViewDiscussionToggel = (key) => {
+        setViewDiscussion(!ViewDiscussion);
+        setAssignNo(key)
+    }
 
     const toggle = (key) => {
         console.log("key", key);
@@ -273,69 +278,111 @@ function AllPayment() {
                 return oldDate.slice(0, 10).toString().split("-").reverse().join("-");
             },
         },
-        // {
-        //     text: "Action",
-        //     style: {
-        //         fontSize: "11px",
-        //     },
-        //     headerStyle: () => {
-        //         return { fontSize: "11px" };
-        //     },
-        //     formatter: function (cell, row) {
-        //         return (
-        //             <>
+        {
+            text: "Action",
+            style: {
+                fontSize: "11px",
+            },
+            headerStyle: () => {
+                return { fontSize: "11px" };
+            },
+            formatter: function (cell, row) {
+                return (
+                    <>
 
-        //                 <div style={{ display: "flex", justifyContent: "space-between", width: "60px" }}>
-        //                     {
-        //                         row.paid_status == "0" ? null :
-        //                             <div title="Payment History"
-        //                                 onClick={() => toggle(row.assign_id)}
-        //                                 style={{ color: "green", fontSize: "16px", cursor: "pointer" }}
-        //                             >
-        //                                 <ChangeHistoryIcon />
-        //                             </div>
-        //                     }
+                        {row.paid_status === "2" ? 
+                         <div style={{ display: "flex", justifyContent: "space-between", width: "90px" }}>
 
-        //                     {
-        //                         (row.paid_status == "0") ?
-        //                             <div title="Payment decline"
-        //                                 onClick={() => rejectHandler(row)}
-        //                                 style={{ color: "red", fontSize: "16px", cursor: "pointer" }}
-        //                             >
-        //                                 <PaymentIcon />
-        //                             </div>
-        //                             :
-        //                             null
-        //                     }
+                         <div title="Payment History"
+ 
+                             style={{ color: "green", fontSize: "16px", cursor: "pointer" }}
+                         >
+                             <i
+                            class="fa fa-credit-card"
+                            onClick={() => toggle(row.assign_id)}
+                            style={{ color: "green", fontSize: "16px" }}></i>
+                         </div>
+                        
+ 
+ 
+                         <div title="View Discussion Message">
+                             <i
+                                 class="fa fa-comments-o"
+                                 style={{
+                                     fontSize: 16,
+                                     cursor: "pointer",
+                                     color: "orange"
+                                 }}
+                                 onClick={() => ViewDiscussionToggel(row.assign_no)}
+                             ></i>
+                         </div>
+ 
+                     </div> : 
+                        <div style={{ display: "flex", justifyContent: "space-between", width: "90px" }}>
 
-        //                     <div title="Send Message">
-        //                         <Link
-        //                             to={{
-        //                                 pathname: `/teamleader/chatting/${row.assign_id}`,
-        //                                 obj: {
-        //                                     message_type: "2",
-        //                                     query_No: row.assign_no,
-        //                                     query_id: row.assign_id,
-        //                                     routes: `/teamleader/proposal`
-        //                                 }
-        //                             }}
-        //                         >
-        //                             <i
-        //                                 class="fa fa-comments-o"
-        //                                 style={{
-        //                                     fontSize: 16,
-        //                                     cursor: "pointer",
-        //                                     marginLeft: "8px",
-        //                                     color: "blue"
-        //                                 }}
-        //                             ></i>
-        //                         </Link>
-        //                     </div>
-        //                 </div>
-        //             </>
-        //         );
-        //     },
-        // },
+                        <div title="Payment History"
+
+                            style={{ color: "green", fontSize: "16px", cursor: "pointer" }}
+                        >
+                            <i
+                           class="fa fa-credit-card"
+                           onClick={() => toggle(row.assign_id)}
+                           style={{ color: "green", fontSize: "16px" }}></i>
+                        </div>
+                        <div title="Send Message">
+                            <Link
+                                to={{
+                                    pathname: `/taxprofessional/chatting/${row.assign_id}`,
+                                    obj: {
+                                        message_type: "2",
+                                        query_No: row.assign_no,
+                                        query_id: row.assign_id,
+                                        routes: `/taxprofessional/proposal`
+                                    }
+                                }}
+                            >
+                                <i
+                                    class="fa fa-comments-o"
+                                    style={{
+                                        fontSize: 18,
+                                        cursor: "pointer",
+                                        color: "blue"
+                                    }}
+                                ></i>
+                            </Link>
+                        </div>
+                        {/* <div>
+                            {
+                                row.paid_status == "0" ?
+                                    <div title="Payment decline"
+                                        onClick={() => rejectHandler(row)}
+                                        style={{ color: "red", fontSize: "16px", cursor: "pointer" }}
+                                    >
+                                        <PaymentIcon />
+                                    </div>
+                                    : null
+                            }
+                        </div> */}
+
+
+                        <div title="View Discussion Message">
+                            <i
+                                class="fa fa-comments-o"
+                                style={{
+                                    fontSize: 16,
+                                    cursor: "pointer",
+                                    color: "orange"
+                                }}
+                                onClick={() => ViewDiscussionToggel(row.assign_no)}
+                            ></i>
+                        </div>
+
+                    </div>}
+                    </>
+                );
+            },
+        },
+        
     ];
 
 
@@ -369,7 +416,12 @@ function AllPayment() {
                         assignNo={assignNo}
                         getPaymentStatus={getPaymentStatus}
                     />
-
+<DiscardReport
+                        ViewDiscussionToggel={ViewDiscussionToggel}
+                        ViewDiscussion={ViewDiscussion}
+                        report={assignNo}
+                        getData={getPaymentStatus}
+                    />
                     <Modal isOpen={modal} fade={false} toggle={toggle}>
                         <ModalHeader toggle={toggle}>History</ModalHeader>
                         <ModalBody>

@@ -266,17 +266,7 @@ function InprogressProposal() {
                                 ) : null}
                             </div>
 
-                            {/* <div style={{ cursor: "pointer", marginLeft: "8px" }} title="View Proposal">
-                                <a
-                                    href={`${baseUrl}/customers/dounloadpdf?id=${row.id}&viewpdf=1`}
-                                    target="_blank"
-                                >
-                                    <i
-                                        class="fa fa-eye"
-                                        style={{ color: "green", fontSize: "16px" }}
-                                    />
-                                </a>
-                            </div> */}
+                           
 
 
                             <div>
@@ -326,6 +316,17 @@ function InprogressProposal() {
                                 :
                                 null
                             }
+                            <div title="View Discussion Message">
+                                <i
+                                    class="fa fa-comments-o"
+                                    style={{
+                                        fontSize: 16,
+                                        cursor: "pointer",
+                                        color: "orange"
+                                    }}
+                                    onClick={() => ViewDiscussionToggel(row.assign_no)}
+                                ></i>
+                            </div>
                         </div>
                     </>
                 );

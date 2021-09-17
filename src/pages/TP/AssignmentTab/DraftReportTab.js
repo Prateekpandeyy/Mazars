@@ -13,7 +13,8 @@ import { Select } from "antd";
 import BootstrapTable from "react-bootstrap-table-next";
 import DiscardReport from "../AssignmentTab/DiscardReport";
 import DraftReportModal from "./DraftReportUpload";
-
+import ViewAllReportModal from "./ViewAllReport";
+import DescriptionOutlinedIcon from '@material-ui/icons/DescriptionOutlined';
 
 
 
@@ -36,12 +37,19 @@ function AssignmentTab() {
     const [store2, setStore2] = useState([]);
     const [hide, setHide] = useState();
 
-    var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
-    console.log("current_date :", current_date);
+    var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2);
     const [item] = useState(current_date);
-
+    const [dataItem, setDataItem] = useState({});
     const [draftModal, setDraftModal] = useState(false);
     const [assignNo, setAssignNo] = useState('');
+    const [report, setReport] = useState();
+  const [reportModal, setReportModal] = useState(false);
+    const ViewReport = (key) => {
+        console.log("key - ", key);
+        setReportModal(!reportModal);
+        setReport(key.assign_no);
+        setDataItem(key)
+      };
     const uploadDraftReport = (id) => {
         console.log(id);
         setDraftModal(!draftModal);
@@ -260,6 +268,58 @@ function AssignmentTab() {
                 return oldDate.slice(0, 10).toString().split("-").reverse().join("-");
             },
         },
+        {
+            text: "Deliverable",
+            dataField: "",
+            sort: true,
+            headerStyle: () => {
+              return { fontSize: "12px" };
+            },
+            formatter: function (cell, row) {
+              return (
+                <>
+                  {
+                    row.paid_status == "2" ? null :
+                      <div>
+                        {row.assignement_draft_report || row.final_report ?
+                          <div title="View All Report"
+                            style={{ cursor: "pointer" }}
+                            onClick={() => ViewReport(row)}
+                          >
+                            <DescriptionOutlinedIcon color="secondary" />
+                          </div>
+                          :
+                          null
+                        }
+                      </div>
+                  }
+                </>
+              );
+            },
+          },
+          {
+            text: "Assignment Stage",
+            headerStyle: () => {
+              return { fontSize: "12px" };
+            },
+            formatter: function (cell, row) {
+              return (
+                <>
+                  <div
+                    title="Add Assignment stages"
+                    style={{ cursor: "pointer", textAlign: "center" }}
+                  >
+                      {
+                 row.paid_status == "2" ? null :
+                    <Link to={`/taxprofessional/addassingment/${row.q_id}`}>
+                      <i class="fa fa-tasks"></i>
+                    </Link>
+            }
+                  </div>
+                </>
+              );
+            },
+          },
         {
             text: "Action",
             headerStyle: () => {
@@ -494,6 +554,12 @@ function AssignmentTab() {
             uploadDraftReport={uploadDraftReport}
             getAssignmentList={getAssignmentList}
             id={id}
+          />
+           <ViewAllReportModal
+            ViewReport={ViewReport}
+            reportModal={reportModal}
+            report={report}
+            dataItem={dataItem}
           />
                     <DiscardReport
                         ViewDiscussionToggel={ViewDiscussionToggel}

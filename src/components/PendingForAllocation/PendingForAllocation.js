@@ -207,7 +207,7 @@ function PendingAllocation({ CountPendingForAllocation }) {
                   </Link>
                 </div>
 
-                <div title="Send Message">
+                {/* <div title="Send Message">
                   <Link
                     to={{
                       pathname: `/admin/chatting/${row.id}`,
@@ -229,7 +229,7 @@ function PendingAllocation({ CountPendingForAllocation }) {
                       }}
                     ></i>
                   </Link>
-                </div>
+                </div> */}
 
               </div>
 

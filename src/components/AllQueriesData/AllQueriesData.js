@@ -165,44 +165,45 @@ function AllQueriesData() {
       formatter: function (cell, row) {
         return (
           <>
+           {row.status == "Declined Query"  ? null : 
             <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <div title="Send Message">
-                <Link
-                  to={{
-                    pathname: `/admin/chatting/${row.id}`,
-                    obj: {
-                      message_type: "4",
-                      query_No: row.assign_no,
-                      query_id: row.id,
-                      routes: `/admin/queriestab`
-                    }
-                  }}
-                >
-                  <i
-                    class="fa fa-comments-o"
-                    style={{
-                      fontSize: 16,
-                      cursor: "pointer",
-                      marginLeft: "8px",
-                      color: "blue"
-                    }}
-                  ></i>
-                </Link>
-              </div>
-
-              <div title="View Discussion Message">
+            <div title="Send Message">
+              <Link
+                to={{
+                  pathname: `/admin/chatting/${row.id}`,
+                  obj: {
+                    message_type: "4",
+                    query_No: row.assign_no,
+                    query_id: row.id,
+                    routes: `/admin/queriestab`
+                  }
+                }}
+              >
                 <i
                   class="fa fa-comments-o"
                   style={{
                     fontSize: 16,
                     cursor: "pointer",
-                    color: "orange"
+                    marginLeft: "8px",
+                    color: "blue"
                   }}
-                  onClick={() => ViewDiscussionToggel(row.assign_no)}
                 ></i>
-              </div>
+              </Link>
             </div>
 
+            <div title="View Discussion Message">
+              <i
+                class="fa fa-comments-o"
+                style={{
+                  fontSize: 16,
+                  cursor: "pointer",
+                  color: "orange"
+                }}
+                onClick={() => ViewDiscussionToggel(row.assign_no)}
+              ></i>
+            </div>
+          </div>
+}
           </>
         );
       },

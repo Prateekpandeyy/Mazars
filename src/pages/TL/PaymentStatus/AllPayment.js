@@ -295,7 +295,34 @@ function AllPayment() {
                 return (
                     <>
 
-                       {row.paid_status === "2" ? "" 
+                       {row.paid_status === "2" ? 
+                       <div style={{ display: "flex", justifyContent: "space-between", width: "90px" }}>
+
+                       <div title="Payment History"
+                         
+                           style={{ color: "green", fontSize: "16px", cursor: "pointer" }}
+                       >
+                           <i
+                           class="fa fa-credit-card"
+                           onClick={() => toggle(row.assign_id)}
+                           style={{ color: "green", fontSize: "16px" }}></i>
+                       </div>
+                       
+
+
+                       <div title="View Discussion Message">
+                           <i
+                               class="fa fa-comments-o"
+                               style={{
+                                   fontSize: 16,
+                                   cursor: "pointer",
+                                   color: "orange"
+                               }}
+                               onClick={() => ViewDiscussionToggel(row.assign_no)}
+                           ></i>
+                       </div>
+
+                   </div>
                        :  <div style={{ display: "flex", justifyContent: "space-between", width: "90px" }}>
 
                        <div title="Payment History"

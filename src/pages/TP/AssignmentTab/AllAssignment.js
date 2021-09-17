@@ -55,7 +55,6 @@ function AssignmentTab() {
   const [attendeeMode, SetAttendeeMode] = useState("video");
   const [videoProfile, SetVideoProfile] = useState("480p_4");
   const [dataItem, setDataItem] = useState({});
-
   const [report, setReport] = useState();
   const [reportModal, setReportModal] = useState(false);
   const [assignNo, setAssignNo] = useState('');

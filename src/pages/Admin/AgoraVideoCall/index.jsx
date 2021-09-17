@@ -19,6 +19,7 @@ import RecordingModal from "./RecordingModal";
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import { green ,red} from '@material-ui/core/colors';
 import { Redirect } from "react-router";
+import recImg from "../../../loader.gif";
 const tile_canvas = {
   "1": ["span 12/span 24"],
   "2": ["span 12/span 12/13/25", "span 12/span 12/13/13"],
@@ -800,7 +801,8 @@ const recordingBtnOff = (
   >
      {
       this.state.showButton == JSON.parse(this.teamKey) ?
-      <FiberManualRecordIcon style={{ color: red[500] }}/> : ""
+      // <FiberManualRecordIcon style={{ color: red[500] }}/> : ""
+     <img src = {recImg} style = {{width : "30px"}} /> : ""
     }
             
   </span>
