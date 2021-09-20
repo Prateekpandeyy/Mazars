@@ -801,7 +801,7 @@ const recordingBtnOff = (
      {
       this.state.showButton == JSON.parse(this.teamKey) ?
       // <FiberManualRecordIcon style={{ color: red[500] }}/> : ""
-      <img src = {recImg} style = {{width : "30px"}} /> : ""
+      <img src = {recImg} style = {{width : "20px"}} /> : ""
     }
             
   </span>
