@@ -395,7 +395,7 @@ function Demo() {
 
   //basic layout
   const BasicLayout = ({ onFieldChange, appointmentData, ...restProps }) => {
-    console.log("appointmentData", appointmentData);
+
     return (
       <AppointmentForm.BasicLayout
         appointmentData={appointmentData}

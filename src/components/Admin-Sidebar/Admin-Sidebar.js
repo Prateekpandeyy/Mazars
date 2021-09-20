@@ -8,6 +8,7 @@ function Sidebar({ adminDashboard, custDashboard, TLDashboard, TPDashboard , fee
   const [feedbackNumber2, setfeedbackNumber2] = useState();
   const [feedbackNumbertl, setfeedbackNumbertl] = useState();
   const [feedbackNumbertp, setfeedbackNumbertp] = useState();
+  const [open, setOpen] = useState(false)
   const tlkey= window.localStorage.getItem("tlkey");
   const tpkey = window.localStorage.getItem("tpkey");
   const adminkey = window.localStorage.getItem("adminkey")
@@ -76,7 +77,13 @@ const getFeedbacktp = () => {
 useState(() => {
   getFeedbacktp();
 }, [TPDashboard])
-
+const show = () => {
+  if(adminDashboard != undefined && open == false){
+    setOpen(true);
+    
+  }
+}
+console.log("open", open)
   return (
     <>
       <div
@@ -230,12 +237,31 @@ useState(() => {
               </li>
 
               <li class="nav-item">
-                <NavLink to={"/admin/schedule"}>
+                <NavLink to={"/admin/schedule"} onClick= {show()}>
                   <i class="fa fa-rss-square"></i>
                   <span class="menu-title" data-i18n="">
                     Schedule
                   </span>
-                </NavLink>
+                 
+                  <ul>
+                    <li>
+                    <NavLink to={"/admin/schedule"}>
+                    <i class="fa fa-rss-square"></i>
+                  <span class="menu-title" data-i18n="">
+                    Schedule
+                  </span>
+                  </NavLink>
+                    </li>
+                    <li>
+                    <NavLink to={"/admin/recording"}>
+                    <i class="fa fa-rss-square"></i>
+                  <span class="menu-title" data-i18n="">
+                  Recording
+                  </span>
+                  </NavLink>
+                    </li>
+                  </ul>
+                  </NavLink>
               </li>
 
             
@@ -335,6 +361,24 @@ useState(() => {
                   <span class="menu-title" data-i18n="">
                Schedule 
                   </span>
+                  <ul>
+                    <li>
+                    <NavLink to={"/teamleader/schedule"}>
+                    <i class="fa fa-rss-square"></i>
+                  <span class="menu-title" data-i18n="">
+                    Schedule
+                  </span>
+                  </NavLink>
+                    </li>
+                    <li>
+                    <NavLink to={"/teamleader/recording"}>
+                    <i class="fa fa-rss-square"></i>
+                  <span class="menu-title" data-i18n="">
+                  Recording
+                  </span>
+                  </NavLink>
+                    </li>
+                  </ul>
                 </NavLink>
               </li>
 
@@ -419,6 +463,24 @@ useState(() => {
                   <span class="menu-title" data-i18n="">
                     schedule
                   </span>
+                  <ul>
+                    <li>
+                    <NavLink to={"/taxprofessional/schedule"}>
+                    <i class="fa fa-rss-square"></i>
+                  <span class="menu-title" data-i18n="">
+                    Schedule
+                  </span>
+                  </NavLink>
+                    </li>
+                    <li>
+                    <NavLink to={"/taxprofessional/recording"}>
+                    <i class="fa fa-rss-square"></i>
+                  <span class="menu-title" data-i18n="">
+                  Recording
+                  </span>
+                  </NavLink>
+                    </li>
+                  </ul>
                 </NavLink>
               </li>
 
