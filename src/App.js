@@ -67,6 +67,7 @@ import AdminViewNotification from './pages/Admin/ViewNotification/ViewNotificati
 import AdminRecording from './pages/Admin/Recording/Recording'
 import adMeetingComponent from './pages/Admin/MeetingComponent/MeetingComponent'
 import Customer from "./pages/Admin/customer/Customer";
+import adminReport from "./pages/Admin/Report/Report";
 
 //TL routes
 import TlStart from './pages/TL/Start/Start'
@@ -203,6 +204,7 @@ function App() {
             <PrivateRouteAdmin exact path="/admin/recording" component={AdminRecording} />
             <PrivateRouteTL exact path="/admin/meeting/:id" component={adMeetingComponent} />
             <PrivateRouteTL exact path="/admin/customers" component={Customer} />
+            <PrivateRouteTL exact path="/admin/reports" component={adminReport} />
 
             <PublicRouteTL exact path="/teamleader/start" component={TlStart} />
             <PublicRouteTL exact path="/teamleader/login" component={TlLogin} />
