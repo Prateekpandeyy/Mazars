@@ -15,13 +15,13 @@ function PaymentGateway(){
       "status" : "1",
       "first_name" : "Nishant Rana",
       "last_name" : "",
-      "address_line_1" : "\tA-22, A Block",
+      "address_line_1" : "A-22, A Block",
       "address_line_2" : "Sector 109",
       "plan_name" : "TPIN_100Mbps_Combo"
     }
     const billdes = {
-      "HSN_SAC_code": "11040",
-        "Desc": "TPIN_100Mbps_Combo",
+      // "HSN_SAC_code": "11040",
+        "Desc": "Bill for Mazars",
         "Qty": "1",
         "UoM": "NA",
         "Rate": "11620.0",
@@ -42,7 +42,7 @@ function PaymentGateway(){
  console.log("onSubmit");
  
     let formData = new FormData()
-    formData.append("token", "52e4410d502b7bc93df562fb18918c7e");
+    formData.append("token", "ba58d28345a083d2630c67ed44c8d92f");
     formData.append("timestamp", "09-09-2021 13:52:02");
     formData.append("mobile", "9818685050");
     formData.append("type", "F");
@@ -52,11 +52,11 @@ function PaymentGateway(){
     formData.append("public_key", "791E14FF-6243-4A73-A6E1");
     formData.append("Bill_no", "1118997422");
     formData.append("Balance", "100");
-    formData.append("Bill_due_date",  "24-08-2020");
-    formData.append("user_id", "9911731173");
-    formData.append("merchant_id", "T10001");
+    formData.append("Bill_due_date",  "21-09-2021");
+    formData.append("user_id", "9818685050");
+    formData.append("merchant_id", "T10012");
     formData.append("agent_id", "8595923172");
-    formData.append("caf_number", "TP-EC-993444722");
+    formData.append("caf_number", "");
 
     axios({
       method : "POST", 

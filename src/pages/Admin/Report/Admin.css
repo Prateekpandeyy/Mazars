@@ -10,6 +10,17 @@
 .basicFeild span{
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    
+    align-items: center;
+    min-width: 100px;
+    justify-content: space-evenly;
 margin: 8px 8px;
+}
+.basicFeild span label{
+    margin-bottom: 0px;
+}
+.inputBox{
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

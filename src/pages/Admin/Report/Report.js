@@ -110,46 +110,287 @@ const Report = () => {
                <label htmlFor="sub_category">Sub Category</label>
                </span>
                <span>
-               <input type="checkbox" name="sub_category" id="sub_category" checked disabled></input>
-              <label htmlFor="case_name">Name of case</label>
-              </span>
-              <span>
-               <input type="checkbox" name="case_name" id="case_name"></input>
-               <label htmlFor="assess_year">Assessment Year(s)</label>
-            </span>
-            <span>
-               <input type="checkbox" name="assess_year" id="assess_year"></input>
-               <label htmlFor="purpose">Purpose for which Opinion is sought</label>
-            </span>
-             <span>
-                   <input type="checkbox" name="purpose" id="purpose"></input>
-               <label htmlFor="format_p">Format in which Opinion is required</label>
-               </span>
-            <span>
-                   <input type="checkbox" name="format_p" id="format_p"></input>
-               <label htmlFor="t_requested">Timeline Requested</label>
-               </span>
-             
-             <span>  <input type="checkbox" name="t_requested" id="t_requested"></input>
-               <label htmlFor="spc_que">Specific questions</label>
-               </span>
-             <span>  <input type="checkbox" name="spc_que" id="spc_que"></input>
-               <label htmlFor="doa">Date of Allocation of Query</label>
-               </span>
-              <span> <input type="checkbox" name="doa" id="doa"></input>
-               <label htmlFor="tl_name">Name of Team Leader</label>
-               <input type="checkbox" name="tl_name" id="tl_name" checked disabled></input>
-             </span>
-             <span>
-               <label htmlFor="tp_name">Name of Tax Professional</label>
-               <input type="checkbox" name="tp_name" id="tp_name" checked disabled></input>
-           </span>
+<input type="checkbox" name="case_name" id="case_name"></input>
+<label htmlFor="assess_year">Assessment Year(s)</label>
+</span>
+            </div>
+
+            <div className="basicFeild">
+            
+
+<span>
+<input type="checkbox" name="assess_year" id="assess_year"></input>
+<label htmlFor="purpose">Purpose for which Opinion is sought</label>
+</span>
+<span>
+    <input type="checkbox" name="purpose" id="purpose"></input>
+<label htmlFor="format_p">Format in which Opinion is required</label>
+</span>
+<span>
+    <input type="checkbox" name="format_p" id="format_p"></input>
+<label htmlFor="t_requested">Timeline Requested</label>
+</span>
+
+<span>  <input type="checkbox" name="t_requested" id="t_requested"></input>
+<label htmlFor="spc_que">Specific questions</label>
+</span>
+<span>  <input type="checkbox" name="spc_que" id="spc_que"></input>
+<label htmlFor="doa">Date of Allocation of Query</label>
+</span>
+<span> 
+<input type="checkbox" name="tl_name" id="tl_name" checked disabled></input>
+<label htmlFor="tl_name">Name of Team Leader</label>
+
+</span>
+<span>
+<input type="checkbox" name="tp_name" id="tp_name" checked disabled></input>
+<label htmlFor="tp_name">Name of Tax Professional</label>
+</span>             
             </div>
            </fieldset>
            </div>
    </div>
-  </form>
 
+
+   Proposal
+   <div className="row">
+       <div className="col-md-12">
+           <fieldset>
+           <legend syyle = {{display : "block"}}>Proposal</legend>
+            <div className="basicFeild">
+            <span>
+
+               <input type="checkbox" name="sno" id="sno" checked disabled></input>
+               <label htmlFor="Sno">S.No</label>
+               </span>
+               <span>
+
+               <input type="checkbox" name="qno" id="sno" checked disabled></input>
+               <label htmlFor="queryNo">Query No</label>
+               </span>
+               <span>
+               <input type="checkbox" name="queryNo" id="queryNo" checked disabled></input>
+               <label htmlFor="dataQuery">Data Query</label>
+               </span>
+               <span>
+               <input type="checkbox" name="dataQuery" id="dataQuery" checked disabled></input>
+               <label htmlFor="cust_id">Customer Id</label>
+            </span>
+            <span>
+               <input type="checkbox" name="cust_id" id="cust_id" checked disabled></input>
+               <label htmlFor="category">Category</label>
+             </span>
+             <span>
+               <input type="checkbox" name="category" id="category" checked disabled></input>
+               <label htmlFor="sub_category">Sub Category</label>
+               </span>
+               <span>
+<input type="checkbox" name="dateProposal" id="dateProposal"></input>
+<label htmlFor="dateProposal">Date of Proposal</label>
+</span>
+            </div>
+
+            <div className="basicFeild">
+            
+
+<span>
+<input type="checkbox" name="proposedAmount" id="proposedAmount"></input>
+<label htmlFor="proposedAmount">Proposed Amount</label>
+</span>
+<span>
+    <input type="checkbox" name="paymentTerms" id="paymentTerms"></input>
+<label htmlFor="paymentTerms">Payment Terms</label>
+</span>
+<span>
+    <input type="checkbox" name="proposal_status" id="proposal_status"></input>
+<label htmlFor="proposal_status">Proposal Status</label>
+</span>
+
+<span>  <input type="checkbox" name="acceptedAmount" id="acceptedAmount"></input>
+<label htmlFor="acceptedAmount">Accepted Amount </label>
+</span>
+<span>  <input type="checkbox" name="dateOfDeclined" id="dateOfDeclined"></input>
+<label htmlFor="dateOfDeclined">Date of Acceptance / Decline</label>
+</span>
+<span> 
+<input type="checkbox" name="tl_name" id="tl_name" checked disabled></input>
+<label htmlFor="tl_name">Name of Team Leader</label>
+
+</span>
+<span>
+<input type="checkbox" name="tp_name" id="tp_name" checked disabled></input>
+<label htmlFor="tp_name">Name of Tax Professional</label>
+</span>             
+            </div>
+
+            <div className="basicFeild">
+            
+
+<span>
+<input type="checkbox" name="amountReceived" id="amountReceived"></input>
+<label htmlFor="amountReceived">Total Amount Received</label>
+</span>
+<span>
+    <input type="checkbox" name="amountOutstanding" id="amountOutstanding"></input>
+<label htmlFor="amountOutstanding">Total Amount Outstanding</label>
+</span>
+<span>
+    <input type="checkbox" name="amount_overdue" id="amount_overdue"></input>
+<label htmlFor="amount_overdue">Total Amount Overdue</label>
+</span>
+
+<span>  <input type="checkbox" name="paymentDeclinedReason" id="paymentDeclinedReason"></input>
+<label htmlFor="paymentDeclinedReason">Payment decline reason </label>
+</span>
+<span>  <input type="checkbox" name="declinedDate" id="declinedDate"></input>
+<label htmlFor="declinedDate">Payment decline date</label>
+</span>             
+            </div>
+      
+           </fieldset>
+           </div>
+   </div>
+
+
+   {/* Assignment */}
+   <div className="row">
+       <div className="col-md-12">
+           <fieldset>
+           <legend syyle = {{display : "block"}}>Assessment</legend>
+            <div className="basicFeild">
+            <span>
+
+               <input type="checkbox" name="sno" id="sno" checked disabled></input>
+               <label htmlFor="Sno">S.No</label>
+               </span>
+               <span>
+
+               <input type="checkbox" name="qno" id="sno" checked disabled></input>
+               <label htmlFor="queryNo">Query No</label>
+               </span>
+               <span>
+               <input type="checkbox" name="queryNo" id="queryNo" checked disabled></input>
+               <label htmlFor="dataQuery">Data Query</label>
+               </span>
+               <span>
+               <input type="checkbox" name="dataQuery" id="dataQuery" checked disabled></input>
+               <label htmlFor="cust_id">Customer Id</label>
+            </span>
+            <span>
+               <input type="checkbox" name="cust_id" id="cust_id" checked disabled></input>
+               <label htmlFor="category">Category</label>
+             </span>
+             <span>
+               <input type="checkbox" name="category" id="category" checked disabled></input>
+               <label htmlFor="sub_category">Sub Category</label>
+               </span>
+               <span>
+<input type="checkbox" name="assignNumber" id="assignNumber"></input>
+<label htmlFor="assignNumber">Assignment Number</label>
+</span>
+            </div>
+
+            <div className="basicFeild">
+            
+
+<span>
+<input type="checkbox" name="assignDate" id="assignDate"></input>
+<label htmlFor="assignDate">Assignment Date</label>
+</span>
+<span>
+    <input type="checkbox" name="completionDate" id="completionDate"></input>
+<label htmlFor="completionDate">Proposed Date of Completion/ Expected Date of Delivery</label>
+</span>
+<span>
+    <input type="checkbox" name="assignStatus" id="assignStatus"></input>
+<label htmlFor="assignStatus">Assignment Status</label>
+</span>
+
+<span>  <input type="checkbox" name="completionQuery" id="completionQuery"></input>
+<label htmlFor="completionQuery">Date of Completion of Query </label>
+</span>
+<span>  <input type="checkbox" name="assignTime" id="assignTime"></input>
+<label htmlFor="assignTime">Time taken to complete the assignment</label>
+</span>
+<span> 
+<input type="checkbox" name="tl_name" id="tl_name" checked disabled></input>
+<label htmlFor="tl_name">Name of Team Leader</label>
+
+</span>
+<span>
+<input type="checkbox" name="tp_name" id="tp_name" checked disabled></input>
+<label htmlFor="tp_name">Name of Tax Professional</label>
+</span>             
+            </div>
+
+           
+           </fieldset>
+           </div>
+   </div>
+
+
+   {/* Payment Receipt */}
+
+   <div className="row">
+       <div className="col-md-12">
+           <fieldset>
+           <legend syyle = {{display : "block"}}>Assessment</legend>
+            <div className="basicFeild">
+            <span>
+
+               <input type="checkbox" name="sno" id="sno" checked disabled></input>
+               <label htmlFor="Sno">S.No</label>
+               </span>
+               <span>
+
+               <input type="checkbox" name="qno" id="sno" checked disabled></input>
+               <label htmlFor="queryNo">Query No</label>
+               </span>
+               <span>
+               <input type="checkbox" name="queryNo" id="queryNo" checked disabled></input>
+               <label htmlFor="dataQuery">Data Query</label>
+               </span>
+               <span>
+               <input type="checkbox" name="dataQuery" id="dataQuery" checked disabled></input>
+               <label htmlFor="cust_id">Customer Id</label>
+            </span>
+            <span>
+               <input type="checkbox" name="cust_id" id="cust_id" checked disabled></input>
+               <label htmlFor="category">Category</label>
+             </span>
+             <span>
+               <input type="checkbox" name="category" id="category" checked disabled></input>
+               <label htmlFor="sub_category">Sub Category</label>
+               </span>
+               <span>
+<input type="checkbox" name="receiptDate" id="receiptDate"></input>
+<label htmlFor="receiptDate">Date</label>
+</span>
+            </div>
+
+            <div className="basicFeild">
+            
+
+<span>
+<input type="checkbox" name="amountReceived" id="amountReceived"></input>
+<label htmlFor="amountReceived">Amount Received</label>
+</span>
+<span> 
+<input type="checkbox" name="tl_name" id="tl_name" checked disabled></input>
+<label htmlFor="tl_name">Name of Team Leader</label>
+
+</span>
+<span>
+<input type="checkbox" name="tp_name" id="tp_name" checked disabled></input>
+<label htmlFor="tp_name">Name of Tax Professional</label>
+</span>             
+            </div>
+
+           
+           </fieldset>
+           </div>
+   </div>
+  </form>
   </div>
             </Layout>
               </>
