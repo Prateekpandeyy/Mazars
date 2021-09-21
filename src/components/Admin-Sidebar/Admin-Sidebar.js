@@ -315,6 +315,14 @@ const handleClick = () => {
                   </span>
                  </NavLink>
                </li>
+               <li class ="nav-item">
+                 <NavLink to={"/admin/reports"}>
+                   <i class="fa fa-users"></i>
+                   <span class="menu-title" data-i18n="">
+                   Report
+                  </span>
+                 </NavLink>
+               </li>
               <li class="nav-item">
                 <NavLink to={"/admin/feedback"}>
                   <i class="fa fa-file-text"></i>
@@ -418,7 +426,14 @@ const handleClick = () => {
         </List>
       </Collapse>
               </li>
-
+              <li class="nav-item">
+                <NavLink to={"/teamleader/reports"}>
+                  <i class="fa fa-users"></i>
+                  <span class="menu-title" data-i18n="">
+                    Reports
+                  </span>
+                </NavLink>
+              </li>
               <li class="nav-item">
                 <NavLink to={"/teamleader/addteamprof"}>
                   <i class="fa fa-users"></i>
@@ -531,7 +546,14 @@ const handleClick = () => {
         </List>
       </Collapse>
               </li>
-
+              <li class="nav-item">
+                <NavLink to={"/taxprofessional/reports"}>
+                  <i class="fa fa-users"></i>
+                  <span class="menu-title" data-i18n="">
+                    Reports
+                  </span>
+                </NavLink>
+              </li>
               <li class="nav-item">
                 <NavLink to={"/taxprofessional/feedback"}>
                   <i class="fa fa-file-text"></i>
