@@ -6,6 +6,7 @@ import { baseUrl } from "../../../config/config";
 import './Admin.css';
 import Select from 'react-select';
 import Layout from "../../../components/Layout/Layout";
+import { Typography } from '@material-ui/core';
 const Report = () => {
     const userid = window.localStorage.getItem("adminkey");
     const { handleSubmit, register, errors, getValues } = useForm();
@@ -16,7 +17,7 @@ const Report = () => {
         <>
           <Layout adminDashboard="adminDashboard" adminUserId={userid}>
           <div className="adminForm">
-  
+          <Typography variant="h4">Admin Report</Typography>
   <form onSubmit={handleSubmit(onSubmit)} autocomplete="off">
     <div className="row">
       <div className="col-md-3">
@@ -80,8 +81,8 @@ const Report = () => {
    </div>
    <div className="row">
        <div className="col-md-12">
-           <fieldset>
-           <legend syyle = {{display : "block"}}>Basic Query Details</legend>
+           <fieldset className="my-fieldset">
+           <legend className="login-legend">Basic Query Details</legend>
             <div className="basicFeild">
             <span>
 
@@ -113,11 +114,7 @@ const Report = () => {
 <input type="checkbox" name="case_name" id="case_name"></input>
 <label htmlFor="assess_year">Assessment Year(s)</label>
 </span>
-            </div>
-
-            <div className="basicFeild">
-            
-
+           
 <span>
 <input type="checkbox" name="assess_year" id="assess_year"></input>
 <label htmlFor="purpose">Purpose for which Opinion is sought</label>
@@ -152,47 +149,16 @@ const Report = () => {
    </div>
 
 
-   Proposal
+   {/* Proposal */}
    <div className="row">
        <div className="col-md-12">
-           <fieldset>
-           <legend syyle = {{display : "block"}}>Proposal</legend>
+       <fieldset className="my-fieldset">
+           <legend className="login-legend">Proposal</legend>
             <div className="basicFeild">
-            <span>
-
-               <input type="checkbox" name="sno" id="sno" checked disabled></input>
-               <label htmlFor="Sno">S.No</label>
-               </span>
-               <span>
-
-               <input type="checkbox" name="qno" id="sno" checked disabled></input>
-               <label htmlFor="queryNo">Query No</label>
-               </span>
-               <span>
-               <input type="checkbox" name="queryNo" id="queryNo" checked disabled></input>
-               <label htmlFor="dataQuery">Data Query</label>
-               </span>
-               <span>
-               <input type="checkbox" name="dataQuery" id="dataQuery" checked disabled></input>
-               <label htmlFor="cust_id">Customer Id</label>
-            </span>
-            <span>
-               <input type="checkbox" name="cust_id" id="cust_id" checked disabled></input>
-               <label htmlFor="category">Category</label>
-             </span>
-             <span>
-               <input type="checkbox" name="category" id="category" checked disabled></input>
-               <label htmlFor="sub_category">Sub Category</label>
-               </span>
-               <span>
+<span>
 <input type="checkbox" name="dateProposal" id="dateProposal"></input>
 <label htmlFor="dateProposal">Date of Proposal</label>
 </span>
-            </div>
-
-            <div className="basicFeild">
-            
-
 <span>
 <input type="checkbox" name="proposedAmount" id="proposedAmount"></input>
 <label htmlFor="proposedAmount">Proposed Amount</label>
@@ -209,21 +175,13 @@ const Report = () => {
 <span>  <input type="checkbox" name="acceptedAmount" id="acceptedAmount"></input>
 <label htmlFor="acceptedAmount">Accepted Amount </label>
 </span>
+<span>  <input type="checkbox" name="paymentDeclinedReason" id="paymentDeclinedReason"></input>
+<label htmlFor="paymentDeclinedReason">Payment decline reason </label>
+</span>
 <span>  <input type="checkbox" name="dateOfDeclined" id="dateOfDeclined"></input>
 <label htmlFor="dateOfDeclined">Date of Acceptance / Decline</label>
 </span>
-<span> 
-<input type="checkbox" name="tl_name" id="tl_name" checked disabled></input>
-<label htmlFor="tl_name">Name of Team Leader</label>
-
-</span>
-<span>
-<input type="checkbox" name="tp_name" id="tp_name" checked disabled></input>
-<label htmlFor="tp_name">Name of Tax Professional</label>
-</span>             
-            </div>
-
-            <div className="basicFeild">
+            
             
 
 <span>
@@ -239,9 +197,7 @@ const Report = () => {
 <label htmlFor="amount_overdue">Total Amount Overdue</label>
 </span>
 
-<span>  <input type="checkbox" name="paymentDeclinedReason" id="paymentDeclinedReason"></input>
-<label htmlFor="paymentDeclinedReason">Payment decline reason </label>
-</span>
+
 <span>  <input type="checkbox" name="declinedDate" id="declinedDate"></input>
 <label htmlFor="declinedDate">Payment decline date</label>
 </span>             
@@ -255,44 +211,16 @@ const Report = () => {
    {/* Assignment */}
    <div className="row">
        <div className="col-md-12">
-           <fieldset>
-           <legend syyle = {{display : "block"}}>Assessment</legend>
-            <div className="basicFeild">
-            <span>
-
-               <input type="checkbox" name="sno" id="sno" checked disabled></input>
-               <label htmlFor="Sno">S.No</label>
-               </span>
-               <span>
-
-               <input type="checkbox" name="qno" id="sno" checked disabled></input>
-               <label htmlFor="queryNo">Query No</label>
-               </span>
-               <span>
-               <input type="checkbox" name="queryNo" id="queryNo" checked disabled></input>
-               <label htmlFor="dataQuery">Data Query</label>
-               </span>
-               <span>
-               <input type="checkbox" name="dataQuery" id="dataQuery" checked disabled></input>
-               <label htmlFor="cust_id">Customer Id</label>
-            </span>
-            <span>
-               <input type="checkbox" name="cust_id" id="cust_id" checked disabled></input>
-               <label htmlFor="category">Category</label>
-             </span>
-             <span>
-               <input type="checkbox" name="category" id="category" checked disabled></input>
-               <label htmlFor="sub_category">Sub Category</label>
-               </span>
-               <span>
-<input type="checkbox" name="assignNumber" id="assignNumber"></input>
-<label htmlFor="assignNumber">Assignment Number</label>
-</span>
-            </div>
+       <fieldset className="my-fieldset">
+           <legend className="login-legend">Assessment</legend>
+         
 
             <div className="basicFeild">
             
-
+            <span>
+<input type="checkbox" name="assignNumber" id="assignNumber"></input>
+<label htmlFor="assignNumber">Assignment Number</label>
+</span>
 <span>
 <input type="checkbox" name="assignDate" id="assignDate"></input>
 <label htmlFor="assignDate">Assignment Date</label>
@@ -312,15 +240,7 @@ const Report = () => {
 <span>  <input type="checkbox" name="assignTime" id="assignTime"></input>
 <label htmlFor="assignTime">Time taken to complete the assignment</label>
 </span>
-<span> 
-<input type="checkbox" name="tl_name" id="tl_name" checked disabled></input>
-<label htmlFor="tl_name">Name of Team Leader</label>
-
-</span>
-<span>
-<input type="checkbox" name="tp_name" id="tp_name" checked disabled></input>
-<label htmlFor="tp_name">Name of Tax Professional</label>
-</span>             
+           
             </div>
 
            
@@ -333,63 +253,27 @@ const Report = () => {
 
    <div className="row">
        <div className="col-md-12">
-           <fieldset>
-           <legend syyle = {{display : "block"}}>Assessment</legend>
+       <fieldset className="my-fieldset">
+           <legend className="login-legend">Payment Receipt</legend>
+            
             <div className="basicFeild">
             <span>
-
-               <input type="checkbox" name="sno" id="sno" checked disabled></input>
-               <label htmlFor="Sno">S.No</label>
-               </span>
-               <span>
-
-               <input type="checkbox" name="qno" id="sno" checked disabled></input>
-               <label htmlFor="queryNo">Query No</label>
-               </span>
-               <span>
-               <input type="checkbox" name="queryNo" id="queryNo" checked disabled></input>
-               <label htmlFor="dataQuery">Data Query</label>
-               </span>
-               <span>
-               <input type="checkbox" name="dataQuery" id="dataQuery" checked disabled></input>
-               <label htmlFor="cust_id">Customer Id</label>
-            </span>
-            <span>
-               <input type="checkbox" name="cust_id" id="cust_id" checked disabled></input>
-               <label htmlFor="category">Category</label>
-             </span>
-             <span>
-               <input type="checkbox" name="category" id="category" checked disabled></input>
-               <label htmlFor="sub_category">Sub Category</label>
-               </span>
-               <span>
 <input type="checkbox" name="receiptDate" id="receiptDate"></input>
 <label htmlFor="receiptDate">Date</label>
-</span>
-            </div>
-
-            <div className="basicFeild">
-            
+</span>   
 
 <span>
 <input type="checkbox" name="amountReceived" id="amountReceived"></input>
 <label htmlFor="amountReceived">Amount Received</label>
 </span>
-<span> 
-<input type="checkbox" name="tl_name" id="tl_name" checked disabled></input>
-<label htmlFor="tl_name">Name of Team Leader</label>
-
-</span>
-<span>
-<input type="checkbox" name="tp_name" id="tp_name" checked disabled></input>
-<label htmlFor="tp_name">Name of Tax Professional</label>
-</span>             
+       
             </div>
 
            
            </fieldset>
            </div>
    </div>
+   <button type="submit" class="btn btn-success btn-lg my-3">Generate Report</button>
   </form>
   </div>
             </Layout>
