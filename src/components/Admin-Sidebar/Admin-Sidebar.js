@@ -255,12 +255,12 @@ const handleClick = () => {
           <ScheduleIcon />
         </ListItemIcon>
         {/* <ListItemText primary="Inbox" /> */}
-        <NavLink to={"/admin/schedule"}>
+        {/* <NavLink to={"/admin/schedule"}> */}
                  
                 <span class="menu-title" data-i18n="">
                   Schedule
                 </span>
-                </NavLink>
+                {/* </NavLink> */}
         {open ? <ExpandLess /> : <ExpandMore />}
       </ListItemButton>
 
@@ -394,12 +394,12 @@ const handleClick = () => {
           <ScheduleIcon />
         </ListItemIcon>
         {/* <ListItemText primary="Inbox" /> */}
-        <NavLink to={"/teamleader/schedule"}>
+        {/* <NavLink to={"/teamleader/schedule"}> */}
                  
                 <span class="menu-title" data-i18n="">
                   Schedule
                 </span>
-                </NavLink>
+                {/* </NavLink> */}
         {open ? <ExpandLess /> : <ExpandMore />}
       </ListItemButton>
 
@@ -514,12 +514,12 @@ const handleClick = () => {
           <ScheduleIcon />
         </ListItemIcon>
         {/* <ListItemText primary="Inbox" /> */}
-        <NavLink to={"/taxprofessional/schedule"}>
+        {/* <NavLink to={"/taxprofessional/schedule"}> */}
                  
                 <span class="menu-title" data-i18n="">
                   Schedule
                 </span>
-                </NavLink>
+                {/* </NavLink> */}
         {open ? <ExpandLess /> : <ExpandMore />}
       </ListItemButton>
 
