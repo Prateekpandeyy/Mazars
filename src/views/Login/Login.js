@@ -50,7 +50,7 @@ function LoginForm() {
       function timer(remaining) {
         var s = remaining % 60;
         s = s < 10 ? '0' + s : s;
-        setTime(s)
+        setTime(remaining)
         remaining -= 1;
         if (remaining >= 0 && timerOn) {
           setTimeout(function () {
@@ -61,7 +61,7 @@ function LoginForm() {
         setDisabled(true)
         setLoad(false)
       }
-      timer(60);
+      timer(180);
     }
 
   }

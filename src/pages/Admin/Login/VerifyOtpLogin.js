@@ -36,7 +36,7 @@ function VerifyOtp({ email, uid, loading, setLoading }) {
     function timer(remaining) {
       var s = remaining % 60;
       s = s < 10 ? '0' + s : s;
-      setTime(s)
+      setTime(remaining)
       remaining -= 1;
       if (remaining >= 0 && timerOn) {
         setTimeout(function () {
@@ -47,7 +47,7 @@ function VerifyOtp({ email, uid, loading, setLoading }) {
       setDisabled(true)
 
     }
-    timer(60);
+    timer(180);
   }, [num]);
 
   useEffect(() => {
@@ -56,7 +56,7 @@ function VerifyOtp({ email, uid, loading, setLoading }) {
     function timer(remaining) {
       var s = remaining % 60;
       s = s < 10 ? '0' + s : s;
-      setTime(s)
+      setTime(remaining)
       remaining -= 1;
       if (remaining >= 0 && timerOn) {
         setTimeout(function () {
@@ -67,7 +67,7 @@ function VerifyOtp({ email, uid, loading, setLoading }) {
       setDisabled(true)
 
     }
-    timer(60);
+    timer(180);
   }, []);
 
   const validOtp = (e) => {

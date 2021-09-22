@@ -407,7 +407,7 @@ const handleClick = () => {
         <List component="div" disablePadding>
         <ul>
                   <li>
-                  <NavLink to={"/teadleader/schedule"}>
+                  <NavLink to={"/teamleader/schedule"}>
                   <i class="fa fa-rss-square"></i>
                 <span class="menu-title" data-i18n="">
                   Schedule
