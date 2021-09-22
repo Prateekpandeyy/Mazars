@@ -25,6 +25,8 @@
     "axios": "^0.21.1",
     "bulma": "^0.9.2",
     "classnames": "^2.3.0",
+    "exceljs": "^4.3.0",
+    "file-saver": "^2.0.5",
     "history": "^5.0.0",
     "js-cookie": "^2.2.1",
     "lodash": "^4.17.21",

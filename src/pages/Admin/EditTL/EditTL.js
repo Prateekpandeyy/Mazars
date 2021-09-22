@@ -9,6 +9,7 @@ import { useAlert } from "react-alert";
 import Swal from 'sweetalert2'
 import { useParams, useHistory } from "react-router-dom";
 import classNames from "classnames";
+import { getErrorMessage } from '../../../constants';
 import {
   Card,
   CardHeader,
@@ -206,7 +207,7 @@ console.log(data2)
 
       axios({
         method: "POST",
-        url: `${baseUrl}/tl/updateTeamLeader`,
+        url: `${baseUrl}/tl/updateTeamLeader1`,
         data: formData,
       })
         .then(function (response) {
@@ -236,7 +237,11 @@ console.log(data2)
        
         })
         .catch((error) => {
-          console.log("erroror - ", error);
+          //console.log("erroror - ", error);
+          getErrorMessage();
+          setTimeout(function(){
+          history.push(`/admin/edittl/${id}`);
+        },3000);
         });
     }
   };
@@ -419,8 +424,8 @@ const emailValidation = (key) => {
         }
       })
       .catch((error) => {
-        console.log("erroror - ", error);
-      });
+      console.log("erroror - ", error);
+      });  
   }
   else {
     setWemail("invalid email")
@@ -682,14 +687,18 @@ if(data5 != undefined){
                     <div class="col-md-6">
                       <div class="form-group">
                       {
-                loading ?
-                  <Spinner color="primary" />
-                  :
+            loading ?
+              // <Loader />
+              <span>
+                    <Spinner color="primary" />
+                  </span>
+              :
                         <Form.Item>
                           <Button type="primary" htmlType="submit">
                             Update
                           </Button>
-                        </Form.Item>  }
+                        </Form.Item>
+                          }
                       </div>
                     </div>
                   </div>
