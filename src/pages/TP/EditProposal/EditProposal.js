@@ -5,6 +5,7 @@ import { baseUrl } from "../../../config/config";
 import { useAlert } from "react-alert";
 import { useHistory, useParams } from "react-router-dom";
 import Layout from "../../../components/Layout/Layout";
+import { getErrorMessage } from '../../../constants';
 import {
   Card,
   CardHeader,
@@ -22,7 +23,7 @@ import Mandatory from "../../../components/Common/Mandatory";
 import { Spinner } from 'reactstrap';
 
 
-function EditComponent() {
+function EditComponent(props) {
 
   const alert = useAlert();
   const { register, handleSubmit, reset, errors } = useForm();
@@ -174,7 +175,7 @@ function EditComponent() {
                 setLoading(true)
                 axios({
                   method: "POST",
-                  url: `${baseUrl}/tp/updateProposal`,
+                  url: `${baseUrl}/tp/updateProposal1`,
                   data: formData,
                 })
                   .then(function (response) {
@@ -189,7 +190,11 @@ function EditComponent() {
                     }
                   })
                   .catch((error) => {
-                    console.log("erroror - ", error);
+                    //console.log("erroror - ", error);
+                    getErrorMessage();
+        setTimeout(function(){
+        props.history.push(`/taxprofessional/edit-proposal/${props.match.params.id}`);
+      },3000);
                   });
               }
             }
@@ -199,7 +204,7 @@ function EditComponent() {
         setLoading(true)
         axios({
           method: "POST",
-          url: `${baseUrl}/tp/updateProposal`,
+          url: `${baseUrl}/tp/updateProposal1`,
           data: formData,
         })
           .then(function (response) {
@@ -214,7 +219,11 @@ function EditComponent() {
             }
           })
           .catch((error) => {
-            console.log("erroror - ", error);
+           // console.log("erroror - ", error);
+            getErrorMessage();
+        setTimeout(function(){
+        props.history.push(`/taxprofessional/edit-proposal/${props.match.params.id}`);
+      },3000);
           });
       }
   };
@@ -409,10 +418,13 @@ function EditComponent() {
             </div>
 
             <div class="form-group col-md-6">
-              {
-                loading ?
-                  <Spinner color="primary" />
-                  :
+            {
+            loading ?
+              // <Loader />
+              <div class="col-md-12">
+                    <Spinner color="primary" />
+                  </div>
+              :
                   <button type="submit" class="btn btn-primary">
                     Submit
                   </button>

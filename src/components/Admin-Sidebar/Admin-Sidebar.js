@@ -229,11 +229,12 @@ useState(() => {
                 </NavLink>
               </li>
 
+
               <li class="nav-item">
                 <NavLink to={"/admin/schedule"}>
-                  <i class="fa fa-rss-square"></i>
+                  <i class="fa fa-file"></i>
                   <span class="menu-title" data-i18n="">
-                    Schedule
+                  Schedule
                   </span>
                 </NavLink>
               </li>
