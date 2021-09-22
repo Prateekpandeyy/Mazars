@@ -92,12 +92,21 @@ export default class YourComponent extends React.Component {
 
                     <div class="col-md-6 my-2">
                       
+                        {/* <input
+                            type="date"
+                            className="form-control"
+                            name={this.state.dates[i]}
+                            onChange={this.handleChange2.bind(this, i)}
+                            defaultValue={due_date[i]}
+                            min={this.props.item}
+                        /> */}
                         <input
                             type="date"
                             className="form-control"
                             name={this.state.dates[i]}
                             onChange={this.handleChange2.bind(this, i)}
                             defaultValue={due_date[i]}
+                            min={this.props.item}
                         />
                     </div>
                 </div>

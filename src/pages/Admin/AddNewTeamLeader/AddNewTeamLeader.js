@@ -328,35 +328,35 @@ function AddNew() {
     else {
       setIndNumError("")
 
-      let formData = new FormData();
-      formData.append("phone", phone);
-      formData.append("type", 2);
-      axios({
-        method: "POST",
-        url: `${baseUrl}/customers/validateregistration`,
-        data: formData,
-      })
-        .then(function (response) {
-          console.log("res-", response);
-          if (response.data.code === 1) {
+      // let formData = new FormData();
+      // formData.append("phone", phone);
+      // formData.append("type", 2);
+      // axios({
+      //   method: "POST",
+      //   url: `${baseUrl}/customers/validateregistration`,
+      //   data: formData,
+      // })
+      //   .then(function (response) {
+      //     console.log("res-", response);
+      //     if (response.data.code === 1) {
 
-            console.log(response.data.result)
-            setNumExist('')
-            setNumAvail(response.data.result);
+      //       console.log(response.data.result)
+      //       setNumExist('')
+      //       setNumAvail(response.data.result);
 
-          }
-          else if (response.data.code === 0) {
-            console.log(response.data.result)
-            setNumAvail('')
-            setNumExist(response.data.result)
+      //     }
+      //     else if (response.data.code === 0) {
+      //       console.log(response.data.result)
+      //       setNumAvail('')
+      //       setNumExist(response.data.result)
 
-            console.log("mobile" + setNumExist)
-          }
+      //       console.log("mobile" + setNumExist)
+      //     }
 
-        })
-        .catch((error) => {
-          // console.log("erroror - ", error);
-        });
+      //   })
+      //   .catch((error) => {
+      //     // console.log("erroror - ", error);
+      //   });
     }
   }
 
@@ -568,12 +568,12 @@ function AddNew() {
                       <input
                         type="text"
                         className={classNames("form-control", {
-                          "is-invalid": errors.p_phone || indNumError,
+                          "is-invalid": errors.p_phone ,
                         })}
                         name="p_phone"
                         ref={register}
                         onChange={(e) => phoneHandler(e)}
-                        onBlur={phoneValidation}
+                         onBlur={phoneValidation}
                       />
                       {indNumError ? <p className="declined">{indNumError}</p> : <>
                         {

@@ -17,9 +17,7 @@ const Schema = yup.object().shape({
 
 
 function VerifyOtp({ email, uid, loading, setLoading }) {
-  console.log("email :", email);
-  console.log("uid :", uid);
-
+  
 
   const { handleSubmit, register, errors, reset } = useForm({
     resolver: yupResolver(Schema),

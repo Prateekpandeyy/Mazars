@@ -266,7 +266,17 @@ function InprogressAllocation() {
                             ></i>
                           </Link>
                         </div>
-
+                        <div title="View Discussion Message">
+                                                    <i
+                                                        class="fa fa-comments-o"
+                                                        style={{
+                                                            fontSize: 16,
+                                                            cursor: "pointer",
+                                                            color: "orange"
+                                                        }}
+                                                        onClick={() => ViewDiscussionToggel(row.assign_no)}
+                                                    ></i>
+                                                </div>
 
                       </div> :
                       null

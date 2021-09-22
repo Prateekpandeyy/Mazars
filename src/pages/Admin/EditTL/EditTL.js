@@ -284,35 +284,35 @@ console.log(data2)
 
     else {
       setIndNumError("")
-      let formData = new FormData();
-      formData.append("phone", phone);
-      formData.append("type", 2);
-      axios({
-        method: "POST",
-        url: `${baseUrl}/customers/validateregistration`,
-        data: formData,
-      })
-        .then(function (response) {
-          console.log("res-", response);
-          if (response.data.code === 1) {
+      // let formData = new FormData();
+      // formData.append("phone", phone);
+      // formData.append("type", 2);
+      // axios({
+      //   method: "POST",
+      //   url: `${baseUrl}/customers/validateregistration`,
+      //   data: formData,
+      // })
+      //   .then(function (response) {
+      //     console.log("res-", response);
+      //     if (response.data.code === 1) {
           
           
-            setNumExist('')
-            setNumAvail(response.data.result);
+      //       setNumExist('')
+      //       setNumAvail(response.data.result);
 
-          }
-          else if (response.data.code === 0) {
+      //     }
+      //     else if (response.data.code === 0) {
           
-            setNumAvail('')
-            setNumExist(response.data.result)
+      //       setNumAvail('')
+      //       setNumExist(response.data.result)
 
-            console.log("mobile" + setNumExist)
-          }
+      //       console.log("mobile" + setNumExist)
+      //     }
 
-        })
-        .catch((error) => {
-          // console.log("erroror - ", error);
-        });
+      //   })
+      //   .catch((error) => {
+      //     // console.log("erroror - ", error);
+      //   });
     }
   }
   var allData1 = {}
@@ -570,7 +570,8 @@ if(data5 != undefined){
                             "is-invalid": errors.p_phone || indNumError || numExist,
                           })}
                             onChange={(e) => phoneHandler(e)}
-                            onBlur={phoneValidation} />
+                            onBlur={phoneValidation}
+                             />
                         </Form.Item>
                       </div>
                       {indNumError ? <p className="declined">{indNumError}</p> : <>
