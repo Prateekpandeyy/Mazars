@@ -86,7 +86,7 @@ export default class YourComponent extends React.Component {
                             className="form-control"
                             name={this.state.values[i]}
                             onChange={this.handleChange1.bind(this, i)}
-                            defaultValue={installment_amount[i]}
+                            defaultValue={installment_amount[i] == "0" ? "" : installment_amount[i]}
                         />
                     </div>
 

@@ -49,7 +49,7 @@ axios
     <div className="row">
       <div className="col-sm-12 d-flex">
         <div>
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
           <div className="row my-3">
         <div class="col-sm-3">
             
