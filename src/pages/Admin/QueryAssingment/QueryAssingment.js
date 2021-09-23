@@ -257,7 +257,7 @@ function QueryAssingment(props) {
                                   <option value="">-select-</option>
                                   {taxLeaderDisplay.map((p, index) => (
                                     <option key={index} value={p.id}>
-                                      {p.name}
+                                      {p.postname}
                                     </option>
                                   ))}
                                 </select>

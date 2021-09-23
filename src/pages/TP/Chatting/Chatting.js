@@ -142,6 +142,7 @@ function Chatting(props) {
                             name="msg_type"
                             ref={register}
                             style={{ height: "33px" }}
+                            defaultValue={item}
                           >
                             <option value="">--select--</option>
                             <option value="4">Query Discussion</option>

@@ -334,7 +334,7 @@ function AllPayment() {
                                 to={{
                                     pathname: `/taxprofessional/chatting/${row.assign_id}`,
                                     obj: {
-                                        message_type: "2",
+                                        message_type: "5",
                                         query_No: row.assign_no,
                                         query_id: row.assign_id,
                                         routes: `/taxprofessional/proposal`

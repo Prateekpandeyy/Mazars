@@ -203,7 +203,7 @@ const handleClick = () => {
               id="main-menu-navigation"
               data-menu="menu-navigation"
             >
-              <li class="active nav-item">
+              <li class="nav-item">
                 <NavLink to={"/admin/dashboard"}>
                   <i class="fa fa-home"></i>
                   <span class="menu-title" data-i18n="">
@@ -264,7 +264,7 @@ const handleClick = () => {
         {open ? <ExpandLess /> : <ExpandMore />}
       </ListItemButton>
 
-      <Collapse in={open} timeout="auto" unmountOnExit>
+      <Collapse in={open}  unmountOnExit>
         <List component="div" disablePadding>
         <ul>
                   <li>
@@ -403,7 +403,7 @@ const handleClick = () => {
         {open ? <ExpandLess /> : <ExpandMore />}
       </ListItemButton>
 
-      <Collapse in={open} timeout="auto" unmountOnExit>
+      <Collapse in={open}  unmountOnExit>
         <List component="div" disablePadding>
         <ul>
                   <li>
@@ -523,7 +523,7 @@ const handleClick = () => {
         {open ? <ExpandLess /> : <ExpandMore />}
       </ListItemButton>
 
-      <Collapse in={open} timeout="auto" unmountOnExit>
+      <Collapse in={open}  unmountOnExit>
         <List component="div" disablePadding>
         <ul>
                   <li>

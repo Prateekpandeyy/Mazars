@@ -234,7 +234,7 @@ function AcceptedProposal() {
                                         to={{
                                             pathname: `/customer/chatting/${row.q_id}&type=2`,
                                             obj: {
-                                                message_type: "2",
+                                                message_type: "3",
                                                 query_No: row.assign_no,
                                                 query_id: row.q_id,
                                                 routes: `/customer/proposal`
