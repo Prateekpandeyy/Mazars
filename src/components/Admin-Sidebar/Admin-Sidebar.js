@@ -248,9 +248,9 @@ const handleClick = () => {
                 </NavLink>
               </li>
 
-              <li class="nav-item">
+              <li>
                  
-               <ListItemButton onClick={handleClick}>
+               <ListItemButton onClick={() => handleClick()}>
         <ListItemIcon>
           <ScheduleIcon />
         </ListItemIcon>
