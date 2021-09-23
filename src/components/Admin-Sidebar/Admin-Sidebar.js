@@ -94,6 +94,7 @@ const show = () => {
     setOpen(true);
 }
 const handleClick = () => {
+  console.log("clicked")
   setOpen(!open);
 };
   return (
@@ -248,19 +249,18 @@ const handleClick = () => {
                 </NavLink>
               </li>
 
-              <li>
+              <li class="nav-item">
                  
                <ListItemButton onClick={() => handleClick()}>
         <ListItemIcon>
           <ScheduleIcon />
         </ListItemIcon>
-        {/* <ListItemText primary="Inbox" /> */}
-        {/* <NavLink to={"/admin/schedule"}> */}
+      
                  
                 <span class="menu-title" data-i18n="">
                   Schedule
                 </span>
-                {/* </NavLink> */}
+               
         {open ? <ExpandLess /> : <ExpandMore />}
       </ListItemButton>
 
@@ -269,7 +269,7 @@ const handleClick = () => {
         <ul>
                   <li>
                   <NavLink to={"/admin/schedule"}>
-                  <i class="fa fa-rss-square"></i>
+                  
                 <span class="menu-title" data-i18n="">
                   Schedule
                 </span>
@@ -277,7 +277,7 @@ const handleClick = () => {
                   </li>
                   <li>
                   <NavLink to={"/admin/recording"}>
-                  <i class="fa fa-rss-square"></i>
+                  
                 <span class="menu-title" data-i18n="">
                 Recording
                 </span>
