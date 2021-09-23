@@ -328,35 +328,6 @@ function AddNew() {
     else {
       setIndNumError("")
 
-      // let formData = new FormData();
-      // formData.append("phone", phone);
-      // formData.append("type", 2);
-      // axios({
-      //   method: "POST",
-      //   url: `${baseUrl}/customers/validateregistration`,
-      //   data: formData,
-      // })
-      //   .then(function (response) {
-      //     console.log("res-", response);
-      //     if (response.data.code === 1) {
-
-      //       console.log(response.data.result)
-      //       setNumExist('')
-      //       setNumAvail(response.data.result);
-
-      //     }
-      //     else if (response.data.code === 0) {
-      //       console.log(response.data.result)
-      //       setNumAvail('')
-      //       setNumExist(response.data.result)
-
-      //       console.log("mobile" + setNumExist)
-      //     }
-
-      //   })
-      //   .catch((error) => {
-      //     // console.log("erroror - ", error);
-      //   });
     }
   }
 
@@ -382,7 +353,7 @@ function AddNew() {
 
       axios({
         method: "POST",
-        url: `${baseUrl}/customers/validateregistration`,
+        url: `${baseUrl}/tl/validateregistration`,
         data: formData,
       })
         .then(function (response) {
@@ -471,26 +442,9 @@ function AddNew() {
           <div class="row mt-3">
             <div class="col-lg-2 col-xl-2 col-md-12"></div>
             <div class="col-lg-8 col-xl-8 col-md-12">
-              <form onSubmit={handleSubmit(onSubmit)}>
+              <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
                 <div class="row">
-                  {/* <div class="col-md-6">
-                    <div class="form-group">
-                      <label>Post Name</label>
-                      <input
-                        type="text"
-                        name="post_name"
-                      
-                        className={classNames("form-control", {
-                          "is-invalid": errors.post_name,
-                        })}
-                        ref={register}
-                        defaultValue={postValue.post}
-
-                      />
-
-                    </div>
-                  </div> */}
-                  <div class="col-md-6">
+                                    <div class="col-md-6">
                     <div class="form-group">
                     <label>Teamleader Post Name <span className="declined">*</span></label>
                       

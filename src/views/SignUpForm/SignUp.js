@@ -450,7 +450,7 @@ function SignUp(props) {
           </div>
           <>
             <div>
-              <form onSubmit={handleSubmit(onSubmit)} autocomplete="off">
+              <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
                 <div className="row">
                   <div className="col-md-6">
 

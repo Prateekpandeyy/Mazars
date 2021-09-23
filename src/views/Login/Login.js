@@ -87,7 +87,7 @@ function LoginForm() {
           setLoad(true)
           setUid(response.data.user_id)
         } else if (response.data.code === 0) {
-          Alerts.ErrorNormal("Invalid email or password.")
+          Alerts.ErrorNormal(response.data.result)
           setLoading(false)
         }
       })
@@ -145,7 +145,7 @@ function LoginForm() {
               </div>
                 :
                 <div className="customForm">
-                  <form onSubmit={handleSubmit(onSubmit)} className="signInForm">
+                  <form onSubmit={handleSubmit(onSubmit)} className="signInForm" autoComplete="off">
                     <div className="form-group">
                       <label className="form-label">Email <span className="declined">*</span></label>
                       <input

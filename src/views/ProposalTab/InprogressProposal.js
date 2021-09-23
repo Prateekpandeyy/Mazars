@@ -250,7 +250,7 @@ function InprogressProposal() {
                                 <div title="Send Message">
                                     <Link
                                         to={{
-                                            pathname: `/customer/chatting/${row.q_id}`,
+                                            pathname: `/customer/chatting/${row.q_id}&type=2`,
                                             obj: {
                                                 message_type: "2",
                                                 query_No: row.assign_no,
