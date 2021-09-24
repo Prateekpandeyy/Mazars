@@ -203,9 +203,9 @@ function App() {
             <PrivateRouteAdmin exact path="/admin/message" component={AdminMessage} />
             <PrivateRouteAdmin exact path="/admin/view-notification/:id" component={AdminViewNotification} />
             <PrivateRouteAdmin exact path="/admin/recording" component={AdminRecording} />
-            <PrivateRouteTL exact path="/admin/meeting/:id" component={adMeetingComponent} />
-            <PrivateRouteTL exact path="/admin/customers" component={Customer} />
-            <PrivateRouteTL exact path="/admin/reports" component={adminReport} />
+            <PrivateRouteAdmin exact path="/admin/meeting/:id" component={adMeetingComponent} />
+            <PrivateRouteAdmin exact path="/admin/customers" component={Customer} />
+            <PrivateRouteAdmin exact path="/admin/reports" component={adminReport} />
 
             <PublicRouteTL exact path="/teamleader/start" component={TlStart} />
             <PublicRouteTL exact path="/teamleader/login" component={TlLogin} />
