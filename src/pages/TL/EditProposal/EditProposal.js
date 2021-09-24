@@ -34,8 +34,7 @@ function EditComponent() {
   const [amount, setAmount] = useState();
   const [date, setDate] = useState();
   const [load, setLoad] = useState(true);
-
-
+  const [clearValue, setClearValue] = useState(false);
   const [payment, setPayment] = useState([]);
   const [installment, setInstallment] = useState([]);
   const [error, setError] = useState('');
@@ -65,7 +64,7 @@ function EditComponent() {
 
   const getQuery = () => {
     axios.get(`${baseUrl}/tl/getProposalDetail?id=${id}`).then((res) => {
-      console.log(res);
+
       if (res.data.code === 1) {
         setProposal({
           name: res.data.result.name,
@@ -89,7 +88,7 @@ function EditComponent() {
           value: no_of_installment,
         }
 
-        // console.log("data1", data1)
+
         setPayment(data1);
         setInstallment(data2);
       }
@@ -109,7 +108,6 @@ function EditComponent() {
 
 
   const onSubmit = (value) => {
-    console.log(value);
 
     var lumsum = value.p_inst_date
     if (payment.label == "lumpsum") {
@@ -139,8 +137,7 @@ function EditComponent() {
 
 
     if (payment.length < 1) {
-      console.log("please select payments terms --")
-      // setpaymentError("Please select at lease one")
+
     } else
       if (payment.value == "installment") {
         if (installment == "") {
@@ -149,7 +146,7 @@ function EditComponent() {
           if (!amount || !date) {
             Alerts.ErrorNormal(`Please enter all fields.`)
           } else if (amount && date) {
-            console.log("all deatils ** here --")
+            
             if (installment.value > 0) {
               var a = Number(installment.value)
               for (let i = 0; i < a; i++) {
@@ -169,9 +166,9 @@ function EditComponent() {
               }
               if (value.p_fixed != sum) {
                 Alerts.ErrorNormal(`Sum of all installments should be equal to ${value.p_fixed}.`)
-                console.log(`Sum of all installments should be equal to ${value.p_fixed}.`)
+               
               } else {
-                console.log("call else fine api for installment")
+               
                 setLoading(true)
                 axios({
                   method: "POST",
@@ -179,7 +176,7 @@ function EditComponent() {
                   data: formData,
                 })
                   .then(function (response) {
-                    console.log("res-", response);
+                
                     if (response.data.code === 1) {
                       setLoading(false)
                       var variable = "Proposal Updated Successfully "
@@ -190,13 +187,13 @@ function EditComponent() {
                     }
                   })
                   .catch((error) => {
-                    console.log("erroror - ", error);
+                    
                   });
               }
             }
           }
       } else if (payment.label == "lumpsum") {
-        console.log("call api for lumshum",)
+
         setLoading(true)
         axios({
           method: "POST",
@@ -204,7 +201,7 @@ function EditComponent() {
           data: formData,
         })
           .then(function (response) {
-            console.log("res-", response);
+
             if (response.data.code === 1) {
               setLoading(false)
               var variable = "Proposal Updated Successfully "
@@ -215,14 +212,14 @@ function EditComponent() {
             }
           })
           .catch((error) => {
-            console.log("erroror - ", error);
+
           });
       }
   };
 
 
   const handleChange = (e) => {
-    console.log("val-", e.target.value);
+    
     if (isNaN(e.target.value)) {
       setdiserror("Please enter digit only");
     }
@@ -233,17 +230,24 @@ function EditComponent() {
 
 
   const paymentAmount = (data) => {
-    console.log("paymentAmount", data)
 
     var array1 = []
     Object.entries(data).map(([key, value]) => {
       array1.push(value)
     });
-    setAmount(array1);
+    if(clearValue === true){
+      setAmount(array1);
+    }
+    else{
+      setAmount(() =>{
+        array1.slice(0, installment.value )
+      })
+    }
+   
   };
 
   const paymentDate = (data) => {
-    console.log("paymentDate", data)
+  
 
     var array2 = []
     Object.entries(data).map(([key, value]) => {
@@ -253,8 +257,9 @@ function EditComponent() {
   };
 
   const installmentHandler = (key) => {
-    console.log("key", key)
+    
     setInstallment(key)
+    setClearValue(true)
   }
 
 
@@ -405,6 +410,7 @@ function EditComponent() {
                       due_date={due_date}
                       getQuery={getQuery}
                       item={item}
+                      setClearValue={clearValue}
                     />
                 }
               </div>
@@ -457,93 +463,3 @@ const noInstallments = [
   },
 ];
 
-
-
-   // var lumsum = value.p_inst_date
-    // setDate(lumsum)
-
-    // let formData = new FormData();
-    // formData.append("assign_no", value.p_assingment);
-    // formData.append("name", value.p_name);
-    // formData.append("type", "tl");
-    // formData.append("id", JSON.parse(userid));
-    // formData.append("description", value.description);
-    // formData.append("customer_id", custId);
-    // formData.append("assign_id", id);
-    // formData.append("amount_type", "fixed");
-    // formData.append("amount", value.p_fixed);
-    // formData.append("installment_amount", amount);
-    // formData.append("payment_terms", payment.value);
-    // formData.append("no_of_installment", installment.value);
-
-    // payment.label == "lumpsum" ?
-    //   formData.append("due_date", lumsum) :
-    //   payment.label == "installment" ?
-    //     formData.append("due_date", date) :
-    //     formData.append("due_date", "")
-
-
-    // if (payment.value == "installment") {
-    //   if (amount) {
-    //     console.log("amount --", amount)
-
-    //     if (installment.value > 0) {
-    //       console.log("installment** --")
-    //       var a = Number(installment.value)
-    //       for (let i = 0; i < a; i++) {
-    //         if (amount[i] == "" || amount[i] == undefined || amount[i] <= 0) {
-    //           console.log("amount --1", amount[i])
-    //           Alerts.ErrorNormal(`please insert all fields.`)
-    //           return false
-    //         }
-    //       }
-    //     }
-    //   }
-    //   if (amount) {
-    //     var sum = amount.reduce(myFunction)
-    //     function myFunction(total, value) {
-    //       return Number(total) + Number(value);
-    //     }
-    //   }
-    //   if (value.p_fixed != sum) {
-    //     Alerts.ErrorNormal(`Sum of all installments should be equal to ${value.p_fixed}.`)
-    //   }
-    //   else {
-    //     axios({
-    //       method: "POST",
-    //       url: `${baseUrl}/tl/updateProposal`,
-    //       data: formData,
-    //     })
-    //       .then(function (response) {
-    //         console.log("res-", response);
-    //         if (response.data.code === 1) {
-    //           reset();
-    //           var variable = "Proposal Successfully Sent "
-    //           Alerts.SuccessNormal(variable)
-    //           history.push("/teamleader/proposal");
-    //         }
-    //       })
-    //       .catch((error) => {
-    //         console.log("erroror - ", error);
-    //       });
-    //   }
-
-    // }
-    // else {
-    //   axios({
-    //     method: "POST",
-    //     url: `${baseUrl}/tl/updateProposal`,
-    //     data: formData,
-    //   })
-    //     .then(function (response) {
-    //       console.log("res-", response);
-    // if (response.data.code === 1) {
-    //   var variable = "Proposal Updated Successfully "
-    //   Alerts.SuccessNormal(variable)
-    //   history.push("/teamleader/proposal");
-    // }
-    //     })
-    //     .catch((error) => {
-    //       console.log("erroror - ", error);
-    //     });
-    // }
