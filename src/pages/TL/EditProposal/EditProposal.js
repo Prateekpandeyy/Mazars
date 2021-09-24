@@ -281,7 +281,7 @@ function EditComponent() {
         </CardHeader>
 
         <CardBody>
-          <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
+          <form onSubmit={handleSubmit(onSubmit)}>
 
             <div style={{ display: "flex" }}>
               <div class="col-md-6">

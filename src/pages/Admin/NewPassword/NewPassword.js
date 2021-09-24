@@ -100,7 +100,7 @@ function NewPassword(props) {
       <div className="container">
         <div className="form">
 
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
             <div className="heading">
               <h2>Reset Password</h2>
             </div>

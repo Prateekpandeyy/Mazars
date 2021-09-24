@@ -51,7 +51,7 @@ export default class YourComponent extends React.Component {
 
     componentDidMount() {
         this.setState({ isLoading: false });
-
+        
         var amount = this.props.installment_amount
         var date = this.props.due_date
 

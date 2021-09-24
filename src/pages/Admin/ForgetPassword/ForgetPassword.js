@@ -84,7 +84,7 @@ function ForgetPassword(props) {
                 <Spinner color="primary" />
               </div>
               :
-              <form onSubmit={handleSubmit(onSubmit)}>
+              <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
 
                 <div className="mb-3">
                   <label className="form-label">Email</label>
