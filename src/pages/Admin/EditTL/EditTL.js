@@ -289,35 +289,7 @@ console.log(data2)
 
     else {
       setIndNumError("")
-      let formData = new FormData();
-      formData.append("phone", phone);
-      formData.append("type", 2);
-      axios({
-        method: "POST",
-        url: `${baseUrl}/customers/validateregistration`,
-        data: formData,
-      })
-        .then(function (response) {
-          console.log("res-", response);
-          if (response.data.code === 1) {
-          
-          
-            setNumExist('')
-            setNumAvail(response.data.result);
-
-          }
-          else if (response.data.code === 0) {
-          
-            setNumAvail('')
-            setNumExist(response.data.result)
-
-            console.log("mobile" + setNumExist)
-          }
-
-        })
-        .catch((error) => {
-          // console.log("erroror - ", error);
-        });
+      
     }
   }
   var allData1 = {}
@@ -410,7 +382,7 @@ const emailValidation = (key) => {
 
     axios({
       method: "POST",
-      url: `${baseUrl}/customers/validateregistration`,
+      url: `${baseUrl}/tl/validateregistration`,
       data: formData,
     })
       .then(function (response) {
@@ -508,6 +480,7 @@ if(data5 != undefined){
               <div class="col-lg-2 col-xl-2 col-md-12"></div>
               <div class="col-lg-8 col-xl-8 col-md-12">
                 <Form
+                autoComplete="off"
                   name="basic"
                   initialValues={{
                     name: `${data1}`,
@@ -575,7 +548,8 @@ if(data5 != undefined){
                             "is-invalid": errors.p_phone || indNumError || numExist,
                           })}
                             onChange={(e) => phoneHandler(e)}
-                            onBlur={phoneValidation} />
+                            onBlur={phoneValidation}
+                             />
                         </Form.Item>
                       </div>
                       {indNumError ? <p className="declined">{indNumError}</p> : <>
@@ -598,7 +572,7 @@ if(data5 != undefined){
                         <Form.Item name="email">
                           <Input
                           className={classNames("form-control", {
-                            "is-invalid": errors.p_email,
+                            "is-invalid": errors.email,
                           })}
                         //  onBlur={emailValidation} 
                          onChange={(e) => emailHandler(e)} />

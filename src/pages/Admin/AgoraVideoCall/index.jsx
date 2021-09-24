@@ -389,36 +389,6 @@ schdrularName;
     });
   };
 
-  // handleExit = (e) => {
-  //   if (e.currentTarget.classList.contains("disabled")) {
-  //     return;
-  //   }
-  //   try {
-  //     this.client && this.client.unpublish(this.localStream);
-  //     this.localStream && this.localStream.close();
-  //     if (this.state.stateSharing) {
-  //       this.shareClient && this.shareClient.unpublish(this.shareStream);
-  //       this.shareStream && this.shareStream.close();
-  //     }
-  //     this.client &&
-  //       this.client.leave(
-  //         () => {
-  //       
-  //         },
-  //         () => {
-  //         
-  //         }
-  //       );
-  //   } finally {
-  //     this.setState({ readyState: false });
-  //     this.client = null;
-  //     this.localStream = null;
-  //     this.setState({showRecBtn : true})
-  //     // // redirect to index
-  //     window.location.hash = "/teamleader/schedule";
-  //   }
-  // };
-
 
   handleExit = async() => {
    
@@ -641,10 +611,15 @@ async startRecording(key){
 
  //stop recording 
  stopRecording = () => {
+  if(this.state.showRecBtn === true){
+this.toggleModal("stop")
+  }
   
-  if(this.state.showButton == JSON.parse(this.teamKey)){
-  var resourceId = localStorage.getItem("resourceId");
-  var sid = localStorage.getItem("sid");
+  else if(this.state.showButton == JSON.parse(this.teamKey)){
+    if(resourceId === undefined){
+      var resourceId = localStorage.getItem("resourceId");
+    var sid = localStorage.getItem("sid");
+    }
 
   var data = JSON.stringify({
     "cname":this.channelName,
@@ -752,11 +727,11 @@ else{
         }
         title="Exit"
       >
-        {
+        {/* {
            this.state.showRecBtn === false ?
-           <i className="ag-icon ag-icon-leave"></i> : ""
-        }
-     
+           <i className="ag-icon ag-icon-leave"></i> :  ""
+        } */}
+     <i className="ag-icon ag-icon-leave"></i> 
       </span>
     );
 

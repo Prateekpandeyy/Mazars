@@ -13,6 +13,7 @@ import { useParams, Link } from "react-router-dom";
 import Alerts from "../../../common/Alerts";
 import ResendOtp from "./ResendOtp";
 import { Spinner } from "reactstrap";
+import { localeData } from "moment";
 
 
 
@@ -27,7 +28,7 @@ function NewPassword(props) {
 
   const [time, setTime] = useState('')
   const [disabled, setDisabled] = useState(false)
-
+  const [load, setLoad] = useState(true);
   const togglePasssword = () => {
     setPasswordShow(!isPasswordShow)
   };
@@ -39,7 +40,7 @@ function NewPassword(props) {
 
   useEffect(() => {
     getTime()
-  }, []);
+  }, [load]);
 
 
   const getTime = () => {
@@ -47,7 +48,7 @@ function NewPassword(props) {
     function timer(remaining) {
       var s = remaining % 60;
       s = s < 10 ? '0' + s : s;
-      setTime(s)
+      setTime(remaining)
       remaining -= 1;
       if (remaining >= 0 && timerOn) {
         setTimeout(function () {
@@ -57,7 +58,8 @@ function NewPassword(props) {
       }
       setDisabled(true)
     }
-    timer(60);
+    setLoad(false)
+    timer(180);
   }
 
 
@@ -255,7 +257,7 @@ function NewPassword(props) {
 
           {
             disabled ?
-              <ResendOtp id={id} setDisabled={setDisabled} getTime={getTime} setLoading={setLoading} />
+              <ResendOtp id={id}  setLoad={setLoad} setDisabled={setDisabled} getTime={getTime} setLoading={setLoading} />
               :
               null
           }
