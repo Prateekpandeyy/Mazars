@@ -5,6 +5,8 @@ import { baseUrl } from "../../../config/config";
 import { useAlert } from "react-alert";
 import { useHistory, useParams } from "react-router-dom";
 import Layout from "../../../components/Layout/Layout";
+import { getErrorMessage } from '../../../constants';
+import { Spinner } from "reactstrap"
 import {
   Card,
   CardHeader,
@@ -19,10 +21,10 @@ import Select from "react-select";
 import Alerts from "../../../common/Alerts";
 import classNames from "classnames";
 import Mandatory from "../../../components/Common/Mandatory";
-import { Spinner } from 'reactstrap';
 
 
-function EditComponent() {
+
+function EditComponent(props) {
 
   const alert = useAlert();
   const { register, handleSubmit, reset, errors } = useForm();
@@ -175,7 +177,7 @@ function EditComponent() {
                 setLoading(true)
                 axios({
                   method: "POST",
-                  url: `${baseUrl}/tl/updateProposal`,
+                  url: `${baseUrl}/tl/updateProposal1`,
                   data: formData,
                 })
                   .then(function (response) {
@@ -200,7 +202,7 @@ function EditComponent() {
         setLoading(true)
         axios({
           method: "POST",
-          url: `${baseUrl}/tl/updateProposal`,
+          url: `${baseUrl}/tl/updateProposal1`,
           data: formData,
         })
           .then(function (response) {

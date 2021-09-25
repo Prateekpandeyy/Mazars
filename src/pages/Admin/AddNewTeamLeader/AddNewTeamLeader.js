@@ -13,6 +13,7 @@ import { useHistory } from "react-router-dom";
 import classNames from "classnames";
 import Mandatory from "../../../components/Common/Mandatory";
 import { Spinner } from "reactstrap";
+import { getErrorMessage } from '../../../constants';
 const Schema = yup.object().shape({
   p_name: yup.string().required("required name"),
   p_email: yup.string().email("invalid email").required("required email"),
@@ -178,7 +179,7 @@ function AddNew() {
 
       axios({
         method: "POST",
-        url: `${baseUrl}/tl/AddTeamLead`,
+        url: `${baseUrl}/tl/AddTeamLead1`,
         data: formData,
       })
 
@@ -208,7 +209,10 @@ function AddNew() {
 
         })
         .catch((error) => {
-
+          getErrorMessage();
+       setTimeout(function(){
+       history.push('/admin/addnewtl');
+     },5000);
         });
     }
 
@@ -367,7 +371,7 @@ function AddNew() {
           }
         })
         .catch((error) => {
-          console.log("erroror - ", error);
+         // console.log("erroror - ", error);
         });
     }
     else {
@@ -410,7 +414,7 @@ function AddNew() {
           }
         })
         .catch((error) => {
-          console.log("erroror - ", error);
+          //console.log("erroror - ", error);
         });
     }
     else {
@@ -626,12 +630,16 @@ function AddNew() {
                   </div>
                 </div>
                 {
-                loading ?
-                  <Spinner color="primary" />
-                  :
+            loading ?
+              // <Loader />
+              <span>
+                    <Spinner color="primary" />
+                  </span>
+              :
                 <button type="submit" className="btn btn-primary">
                   Submit
-                </button> }
+                </button>
+                 }
               </form>
             </div>
             <div class="col-lg-2 col-xl-2 col-md-12">
