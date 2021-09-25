@@ -249,9 +249,7 @@ const handleClick = () => {
                 </NavLink>
               </li>
 
-
               <li class="nav-item">
-<<<<<<< HEAD
                  
                <ListItemButton onClick={() => handleClick()}>
         <ListItemIcon>
@@ -283,13 +281,6 @@ const handleClick = () => {
                 <span class="menu-title" data-i18n="">
                 Recording
                 </span>
-=======
-                <NavLink to={"/admin/schedule"}>
-                  <i class="fa fa-file"></i>
-                  <span class="menu-title" data-i18n="">
-                  Schedule
-                  </span>
->>>>>>> master
                 </NavLink>
                   </li>
                 </ul>

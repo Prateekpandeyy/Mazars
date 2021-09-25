@@ -189,15 +189,7 @@ function EditComponent(props) {
                     }
                   })
                   .catch((error) => {
-<<<<<<< HEAD
-                   // console.log("erroror - ", error);
-                   getErrorMessage();
-          setTimeout(function(){
-          props.history.push(`/teamleader/chatting/${props.match.params.id}`);
-        },3000);
-=======
                     
->>>>>>> b101d7f8e991286d806472f16a3861f18a4c6abb
                   });
               }
             }
@@ -222,15 +214,6 @@ function EditComponent(props) {
             }
           })
           .catch((error) => {
-<<<<<<< HEAD
-            //console.log("erroror - ", error);
-            getErrorMessage();
-          setTimeout(function(){
-          props.history.push(`/teamleader/chatting/${props.match.params.id}`);
-        },3000);
-=======
-
->>>>>>> b101d7f8e991286d806472f16a3861f18a4c6abb
           });
       }
   };
