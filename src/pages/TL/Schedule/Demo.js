@@ -223,12 +223,12 @@ function Demo() {
     }
   };
 
-  const commitChanges = ({ added, changed, deleted }) => {
+  const commitChanges = ({ added, changed, deleted, cancel }) => {
 
     if (added) {
       setLoading(true)
       console.log("added - ", added);
-
+console.log("cancle", cancel)
       var startDate = added.startDate;
       var endDate = added.endDate;
 
