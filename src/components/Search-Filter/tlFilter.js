@@ -100,7 +100,7 @@ console.log("search", pendingForAcceptence)
     if (AllQuery == "AllQuery") {
       axios
         .get(
-          `${baseUrl}/tl/getIncompleteQues1?id=${JSON.parse(userid)}&status=${data.p_status}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&pcat_id=${selectedData}`
+          `${baseUrl}/tl/getIncompleteQues?id=${JSON.parse(userid)}&status=${data.p_status}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&pcat_id=${selectedData}`
         )
         .then((res) => {
          
@@ -128,7 +128,7 @@ console.log("search", pendingForAcceptence)
       console.log("pending for acceptance")
       axios
         .get(
-          `${baseUrl}/tl/pendingQues1?id=${JSON.parse(
+          `${baseUrl}/tl/pendingQues?id=${JSON.parse(
             userid
           )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&pcat_id=${selectedData}`
         )
@@ -157,7 +157,7 @@ console.log("search", pendingForAcceptence)
      
       axios
         .get(
-          `${baseUrl}/tl/getIncompleteQues1?id=${JSON.parse(userid)}&status=${status1}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&pcat_id=${selectedData}`
+          `${baseUrl}/tl/getIncompleteQues?id=${JSON.parse(userid)}&status=${status1}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&pcat_id=${selectedData}`
         )
         .then((res) => {
         
@@ -181,7 +181,7 @@ console.log("search", pendingForAcceptence)
     if (DeclinedQuery == "DeclinedQuery") {
       axios
         .get(
-          `${baseUrl}/tl/declinedQueries1?id=${JSON.parse(userid)}&status=${data.p_status}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&pcat_id=${selectedData}`
+          `${baseUrl}/tl/declinedQueries?id=${JSON.parse(userid)}&status=${data.p_status}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&pcat_id=${selectedData}`
         )
         .then((res) => {
 
@@ -205,7 +205,7 @@ console.log("search", pendingForAcceptence)
     if (completeAssignment == "completeAssignment") {
       axios
         .get(
-          `${baseUrl}/tl/getCompleteQues1?id=${JSON.parse(
+          `${baseUrl}/tl/getCompleteQues?id=${JSON.parse(
             userid
           )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&pcat_id=${selectedData}`
         )
@@ -232,7 +232,7 @@ console.log("search", pendingForAcceptence)
     if (AllProposal == "AllProposal") {
       axios
         .get(
-          `${baseUrl}/tl/getProposalTl1?id=${JSON.parse(
+          `${baseUrl}/tl/getProposalTl?id=${JSON.parse(
             userid
           )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
           }&status=${data.p_status}&pcat_id=${selectedData}`
@@ -259,7 +259,7 @@ console.log("search", pendingForAcceptence)
     if (InprogressProposal == "InprogressProposal") {
       axios
         .get(
-          `${baseUrl}/tl/getProposalTl1?id=${JSON.parse(
+          `${baseUrl}/tl/getProposalTl?id=${JSON.parse(
             userid
           )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
           }&status=${data.p_status}&pcat_id=${selectedData}`
@@ -286,7 +286,7 @@ console.log("search", pendingForAcceptence)
     if(proposal == "proposal"){
       axios
       .get(
-        `${baseUrl}/tl/getProposalTl1?id=${JSON.parse(
+        `${baseUrl}/tl/getProposalTl?id=${JSON.parse(
           userid
         )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=3&pcat_id=${selectedData}`
       )
@@ -312,7 +312,7 @@ console.log("search", pendingForAcceptence)
     if (AllPayment == "AllPayment") {
       axios
         .get(
-          `${baseUrl}/tl/getUploadedProposals1?uid=${JSON.parse(
+          `${baseUrl}/tl/getUploadedProposals?uid=${JSON.parse(
             userid
           )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=${data.p_status}&pcat_id=${selectedData}`
         )
@@ -338,7 +338,7 @@ console.log("search", pendingForAcceptence)
     if (Unpaid == "Unpaid") {
       axios
         .get(
-          `${baseUrl}/tl/getUploadedProposals1?uid=${JSON.parse(
+          `${baseUrl}/tl/getUploadedProposals?uid=${JSON.parse(
             userid
           )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=1&pcat_id=${selectedData}`
         )
@@ -364,7 +364,7 @@ console.log("search", pendingForAcceptence)
     if (Paid == "Paid") {
       axios
         .get(
-          `${baseUrl}/tl/getUploadedProposals1?uid=${JSON.parse(
+          `${baseUrl}/tl/getUploadedProposals?uid=${JSON.parse(
             userid
           )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=2&pcat_id=${selectedData}`
         )

@@ -207,7 +207,7 @@ console.log(data2)
 
       axios({
         method: "POST",
-        url: `${baseUrl}/tl/updateTeamLeader1`,
+        url: `${baseUrl}/tl/updateTeamLeader`,
         data: formData,
       })
         .then(function (response) {

@@ -44,7 +44,7 @@ function CustomerFilter(props) {
     const getSubCategory = () => {
      if(selectedData != undefined){
       axios
-      .get(`${baseUrl}/customers/getCategory1?pid=${selectedData}`)
+      .get(`${baseUrl}/customers/getCategory?pid=${selectedData}`)
       .then((res) => {
         console.log(res);
         if (res.data.code === 1) {
@@ -96,7 +96,7 @@ function CustomerFilter(props) {
 
       axios
         .get(
-          `${baseUrl}/customers/incompleteAssignments1?user=${JSON.parse(
+          `${baseUrl}/customers/incompleteAssignments?user=${JSON.parse(
             id
           )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
           }&status=${data.p_status}&pcat_id=${selectedData}`
@@ -122,7 +122,7 @@ function CustomerFilter(props) {
     if (InprogressAllocation == "InprogressAllocation") {
       axios
         .get(
-          `${baseUrl}/customers/incompleteAssignments1?user=${JSON.parse(
+          `${baseUrl}/customers/incompleteAssignments?user=${JSON.parse(
             id
           )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
           }&status=${data.p_status}&pcat_id=${selectedData}`
@@ -149,7 +149,7 @@ function CustomerFilter(props) {
     if (InprogressQueryProposal == "InprogressQueryProposal") {
       axios
         .get(
-          `${baseUrl}/customers/incompleteAssignments1?uid=${JSON.parse(id)}&status=2&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
+          `${baseUrl}/customers/incompleteAssignments?uid=${JSON.parse(id)}&status=2&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
           }&pcat_id=${selectedData}`
         )
         .then((res) => {
@@ -174,7 +174,7 @@ function CustomerFilter(props) {
     if (DeclinedQuery == "DeclinedQuery") {
       axios
         .get(
-          `${baseUrl}/customers/declinedQueries1?uid=${JSON.parse(
+          `${baseUrl}/customers/declinedQueries?uid=${JSON.parse(
             id
           )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
           }&pcat_id=${selectedData}&status=${data.p_status}`
@@ -202,7 +202,7 @@ function CustomerFilter(props) {
     if (proposal == "proposal") {
       axios
         .get(
-          `${baseUrl}/customers/getProposals1?uid=${JSON.parse(
+          `${baseUrl}/customers/getProposals?uid=${JSON.parse(
             id
           )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
           }&status=${data.p_status}&pcat_id=${selectedData}`
@@ -230,7 +230,7 @@ function CustomerFilter(props) {
     if (inprogressProposal == "inprogressProposal") {
       axios
         .get(
-          `${baseUrl}/customers/getProposals1?uid=${JSON.parse(
+          `${baseUrl}/customers/getProposals?uid=${JSON.parse(
             id
           )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
           }&status=${data.p_status}&pcat_id=${selectedData}`
@@ -257,7 +257,7 @@ function CustomerFilter(props) {
     if (acceptedProposal == "acceptedProposal") {
       axios
         .get(
-          `${baseUrl}/customers/getProposals1?uid=${JSON.parse(
+          `${baseUrl}/customers/getProposals?uid=${JSON.parse(
             id
           )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
           }&status=2&pcat_id=${selectedData}`
@@ -285,7 +285,7 @@ function CustomerFilter(props) {
     if (declinedProposal == "declinedProposal") {
       axios
         .get(
-          `${baseUrl}/customers/getProposals1?uid=${JSON.parse(
+          `${baseUrl}/customers/getProposals?uid=${JSON.parse(
             id
           )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
           }&status=3pcat_id=${selectedData}`
@@ -314,7 +314,7 @@ function CustomerFilter(props) {
     if (assignment == "assignment") {
       axios
         .get(
-          `${baseUrl}/customers/completeAssignments1?user=${JSON.parse(
+          `${baseUrl}/customers/completeAssignments?user=${JSON.parse(
             id
           )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
           }&status=${data.p_status}&pcat_id=${selectedData}`
@@ -342,7 +342,7 @@ function CustomerFilter(props) {
     if (allPayment == "allPayment") {
       axios
         .get(
-          `${baseUrl}/tl/getUploadedProposals1?cid=${JSON.parse(id)}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=${data.p_status}&pcat_id=${selectedData}`
+          `${baseUrl}/tl/getUploadedProposals?cid=${JSON.parse(id)}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=${data.p_status}&pcat_id=${selectedData}`
         )
         .then((res) => {
           console.log(res);
@@ -366,7 +366,7 @@ function CustomerFilter(props) {
     if (unpaid == "unpaid") {
       axios
         .get(
-          `${baseUrl}/tl/getUploadedProposals1?cid=${JSON.parse(id)}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=1&pcat_id=${selectedData}`
+          `${baseUrl}/tl/getUploadedProposals?cid=${JSON.parse(id)}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=1&pcat_id=${selectedData}`
         )
         .then((res) => {
           console.log(res);
@@ -391,7 +391,7 @@ function CustomerFilter(props) {
     if (paid == "paid") {
       axios
         .get(
-          `${baseUrl}/tl/getUploadedProposals1?cid=${JSON.parse(id)}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=2&pcat_id=${selectedData}`
+          `${baseUrl}/tl/getUploadedProposals?cid=${JSON.parse(id)}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=2&pcat_id=${selectedData}`
         )
         .then((res) => {
           console.log(res);

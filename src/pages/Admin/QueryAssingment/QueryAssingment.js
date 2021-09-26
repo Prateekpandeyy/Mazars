@@ -156,7 +156,7 @@ function QueryAssingment(props) {
 
     axios({
       method: "POST",
-      url: `${baseUrl}/tl/AddQueryAssignment1`,
+      url: `${baseUrl}/tl/AddQueryAssignment`,
       data: formData,
     })
       .then(function (response) {

@@ -80,7 +80,7 @@ console.log(query_id)
 
     axios({
       method: "POST",
-      url: `${baseUrl}/customers/messageSent1`,
+      url: `${baseUrl}/customers/messageSent`,
       data: formData,
     })
       .then(function (response) {

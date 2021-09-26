@@ -104,7 +104,7 @@ function AdminFilter(props) {
     if (acceptedProposal == "acceptedProposal") {
       axios
         .get(
-          `${baseUrl}/admin/getProposals1?status1=2&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&pcat_id=${selectedData}`
+          `${baseUrl}/admin/getProposals?status1=2&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&pcat_id=${selectedData}`
         )
         .then((res) => {
           console.log(res);
@@ -128,7 +128,7 @@ function AdminFilter(props) {
     if (pendingAcceptedProposal == "pendingAcceptedProposal") {
       axios
         .get(
-          `${baseUrl}/admin/getProposals1?status1=${data.p_status}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&pcat_id=${selectedData}`
+          `${baseUrl}/admin/getProposals?status1=${data.p_status}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&pcat_id=${selectedData}`
         )
         .then((res) => {
           console.log(res);
@@ -152,7 +152,7 @@ function AdminFilter(props) {
     if (declinedProposal == "declinedProposal") {
       axios
         .get(
-          `${baseUrl}/admin/getProposals1?&status=6&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&pcat_id=${selectedData}`
+          `${baseUrl}/admin/getProposals?&status=6&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&pcat_id=${selectedData}`
         )
         .then((res) => {
           console.log(res);
@@ -176,7 +176,7 @@ function AdminFilter(props) {
     if (declinedQueries == "declinedQueries") {
       axios
         .get(
-          `${baseUrl}/admin/declinedQueries1?cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=${data.p_status}&pcat_id=${selectedData}`
+          `${baseUrl}/admin/declinedQueries?cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=${data.p_status}&pcat_id=${selectedData}`
         )
         .then((res) => {
           console.log(res);
@@ -200,7 +200,7 @@ function AdminFilter(props) {
     if (pendingForProposal == "pendingForProposal") {
       axios
         .get(
-          `${baseUrl}/admin/pendingProposal1?category=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=${data.p_status}&pcat_id=${selectedData}`
+          `${baseUrl}/admin/pendingProposal?category=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=${data.p_status}&pcat_id=${selectedData}`
         )
         .then((res) => {
           console.log(res);
@@ -224,7 +224,7 @@ function AdminFilter(props) {
     if (allQueries == "allQueries") {
       axios
         .get(
-          `${baseUrl}/admin/getAllQueries1?cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=${data.p_status}&pcat_id=${selectedData}`
+          `${baseUrl}/admin/getAllQueries?cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=${data.p_status}&pcat_id=${selectedData}`
         )
         .then((res) => {
           console.log(res);
@@ -248,7 +248,7 @@ function AdminFilter(props) {
     if (pendingAlloation == "pendingAlloation") {
       axios
         .get(
-          `${baseUrl}/admin/pendingAllocation1?category=${store2}&date1=${data.p_dateFrom}&date2=${data.p_dateTo}&pcat_id=${selectedData}`
+          `${baseUrl}/admin/pendingAllocation?category=${store2}&date1=${data.p_dateFrom}&date2=${data.p_dateTo}&pcat_id=${selectedData}`
         )
         .then((res) => {
           console.log(res);
@@ -272,7 +272,7 @@ function AdminFilter(props) {
     if (AllPayment == "AllPayment") {
       axios
         .get(
-          `${baseUrl}/tl/getUploadedProposals1?cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=${data.p_status}&pcat_id=${selectedData}`
+          `${baseUrl}/tl/getUploadedProposals?cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=${data.p_status}&pcat_id=${selectedData}`
         )
         .then((res) => {
           console.log(res);
@@ -296,7 +296,7 @@ function AdminFilter(props) {
     if (unpaid == "unpaid") {
       axios
         .get(
-          `${baseUrl}/tl/getUploadedProposals1?cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=1&pcat_id=${selectedData}`
+          `${baseUrl}/tl/getUploadedProposals?cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=1&pcat_id=${selectedData}`
         )
         .then((res) => {
           console.log(res);
@@ -320,7 +320,7 @@ function AdminFilter(props) {
     if (paid == "paid") {
       axios
         .get(
-          `${baseUrl}/tl/getUploadedProposals1?cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=2&pcat_id=${selectedData}`
+          `${baseUrl}/tl/getUploadedProposals?cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=2&pcat_id=${selectedData}`
         )
         .then((res) => {
           console.log(res);
@@ -344,7 +344,7 @@ function AdminFilter(props) {
     if (allProposal == "allProposal") {
       axios
         .get(
-          `${baseUrl}/admin/getProposals1?cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status1=${data.p_status}&pcat_id=${selectedData}`
+          `${baseUrl}/admin/getProposals?cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status1=${data.p_status}&pcat_id=${selectedData}`
         )
         .then((res) => {
           console.log(res);

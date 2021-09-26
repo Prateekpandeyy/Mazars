@@ -178,7 +178,7 @@ function EditComponent(props) {
                 setLoading(true)
                 axios({
                   method: "POST",
-                  url: `${baseUrl}/tp/updateProposal1`,
+                  url: `${baseUrl}/tp/updateProposal`,
                   data: formData,
                 })
                   .then(function (response) {
@@ -207,7 +207,7 @@ function EditComponent(props) {
         setLoading(true)
         axios({
           method: "POST",
-          url: `${baseUrl}/tp/updateProposal1`,
+          url: `${baseUrl}/tp/updateProposal`,
           data: formData,
         })
           .then(function (response) {

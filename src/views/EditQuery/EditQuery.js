@@ -159,7 +159,7 @@ function EditQuery(props) {
       formData.append("purpose", JSON.stringify(purposeOption));
 
       axios
-        .post(`${baseUrl}/customers/PostEditQuestion1`, formData, {
+        .post(`${baseUrl}/customers/PostEditQuestion`, formData, {
           headers: {
             "content-type": "multipart/form-data",
           },
