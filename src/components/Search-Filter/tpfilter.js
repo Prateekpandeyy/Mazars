@@ -356,12 +356,8 @@ import axios from "axios";
 import { baseUrl } from "../../config/config";
 import { useForm } from "react-hook-form";
 import { Select } from "antd";
-import { Spinner } from "reactstrap";
-import { getErrorMessage } from '../../constants';
-import { useHistory, useParams } from "react-router-dom";
 
 function TaxProfessionalFilter(props) {
-  const [loading, setLoading] = useState(false);
   const { Option } = Select;
   const { handleSubmit, register, errors, reset } = useForm();
 
@@ -390,8 +386,6 @@ function TaxProfessionalFilter(props) {
   const [tax2, setTax2] = useState([]);
   const [store2, setStore2] = useState([]);
   const [status1, setStatus1] = useState(1);
-  const [load, setLoad] = useState(false)
-  const history = useHistory();
 
 
   var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
@@ -447,7 +441,6 @@ function TaxProfessionalFilter(props) {
   };
 
   const onSubmit = (data) => {
-    setLoading(true)
     console.log("data :", data);
     console.log("store2 :", store2);
 
@@ -459,21 +452,13 @@ function TaxProfessionalFilter(props) {
         .then((res) => {
           console.log(res);
           if (res.data.code === 1) {
-            setLoading(false)
             if (res.data.result) {
               setData(res.data.result);
               setRecords(res.data.result.length);
 
             }
           }
-        })
-        .catch((error) => {
-          // console.log("erroror - ", error);
-           getErrorMessage();
-       setTimeout(function(){
-       history.push(`/taxprofessional/queriestab`);
-     },3000);
-         });
+        });
     }
 
 
@@ -487,21 +472,13 @@ function TaxProfessionalFilter(props) {
         .then((res) => {
           console.log(res);
           if (res.data.code === 1) {
-            setLoading(false)
             if (res.data.result) {
               setData(res.data.result);
               setRecords(res.data.result.length);
 
             }
           }
-        })
-        .catch((error) => {
-          // console.log("erroror - ", error);
-           getErrorMessage();
-       setTimeout(function(){
-       history.push(`/taxprofessional/queriestab`);
-     },3000);
-         });
+        });
     }
 
     if (InprogressQuery == "InprogressQuery") {
@@ -514,20 +491,12 @@ function TaxProfessionalFilter(props) {
         .then((res) => {
           console.log(res);
           if (res.data.code === 1) {
-            setLoading(false)
             if (res.data.result) {
               setData(res.data.result);
               setRecords(res.data.result.length);
             }
           }
-        })
-        .catch((error) => {
-          // console.log("erroror - ", error);
-           getErrorMessage();
-       setTimeout(function(){
-       history.push(`/taxprofessional/queriestab`);
-     },3000);
-         });
+        });
     }
 
     if (DeclinedQuery == "DeclinedQuery") {
@@ -538,20 +507,12 @@ function TaxProfessionalFilter(props) {
         .then((res) => {
           console.log(res);
           if (res.data.code === 1) {
-            setLoading(false)
             if (res.data.result) {
               setData(res.data.result);
               setRecords(res.data.result.length);
             }
           }
-        })
-        .catch((error) => {
-          // console.log("erroror - ", error);
-           getErrorMessage();
-       setTimeout(function(){
-       history.push(`/taxprofessional/queriestab`);
-     },3000);
-         });
+        });
     }
 
     if (completeAssignment == "completeAssignment") {
@@ -564,21 +525,13 @@ function TaxProfessionalFilter(props) {
         .then((res) => {
           console.log(res);
           if (res.data.code === 1) {
-            setLoading(false)
             if (res.data.result) {
               setData(res.data.result);
               setRecords(res.data.result.length);
 
             }
           }
-        })
-        .catch((error) => {
-          // console.log("erroror - ", error);
-           getErrorMessage();
-       setTimeout(function(){
-       history.push(`/taxprofessional/queriestab`);
-     },3000);
-         });
+        });
     }
 
     if (AllProposal == "AllProposal") {
@@ -592,20 +545,12 @@ function TaxProfessionalFilter(props) {
         .then((res) => {
           console.log(res);
           if (res.data.code === 1) {
-            setLoading(false)
             if (res.data.result) {
               setData(res.data.result);
               setRecords(res.data.result.length);
             }
           }
-        })
-        .catch((error) => {
-          // console.log("erroror - ", error);
-           getErrorMessage();
-       setTimeout(function(){
-       history.push(`/taxprofessional/queriestab`);
-     },3000);
-         });
+        });
     }
 
     if (InprogressProposal == "InprogressProposal") {
@@ -619,20 +564,12 @@ function TaxProfessionalFilter(props) {
         .then((res) => {
           console.log(res);
           if (res.data.code === 1) {
-            setLoading(false)
             if (res.data.result) {
               setData(res.data.result);
               setRecords(res.data.result.length);
             }
           }
-        })
-        .catch((error) => {
-          // console.log("erroror - ", error);
-           getErrorMessage();
-       setTimeout(function(){
-       history.push(`/taxprofessional/queriestab`);
-     },3000);
-         });
+        });
     }
 
     if(proposal == "proposal"){
@@ -646,20 +583,12 @@ function TaxProfessionalFilter(props) {
       .then((res) => {
 
         if (res.data.code === 1) {
-          setLoading(false)
           if (res.data.result) {
             setData(res.data.result);
             setRecords(res.data.result.length);
           }
         }
-      })
-      .catch((error) => {
-        // console.log("erroror - ", error);
-         getErrorMessage();
-     setTimeout(function(){
-     history.push(`/taxprofessional/queriestab`);
-   },3000);
-       });
+      });
     }
     if (AllPayment == "AllPayment") {
       axios
@@ -669,20 +598,12 @@ function TaxProfessionalFilter(props) {
         .then((res) => {
           console.log(res);
           if (res.data.code === 1) {
-            setLoading(false)
             if (res.data.result) {
               setData(res.data.result);
               setRecords(res.data.result.length);
             }
           }
-        })
-        .catch((error) => {
-          // console.log("erroror - ", error);
-           getErrorMessage();
-       setTimeout(function(){
-       history.push(`/taxprofessional/queriestab`);
-     },3000);
-         });
+        });
     }
 
     if (Unpaid == "Unpaid") {
@@ -693,20 +614,12 @@ function TaxProfessionalFilter(props) {
         .then((res) => {
           console.log(res);
           if (res.data.code === 1) {
-            setLoading(false)
             if (res.data.result) {
               setData(res.data.result);
               setRecords(res.data.result.length);
             }
           }
-        })
-        .catch((error) => {
-          // console.log("erroror - ", error);
-           getErrorMessage();
-       setTimeout(function(){
-       history.push(`/taxprofessional/queriestab`);
-     },3000);
-         });
+        });
     }
 
     if (Paid == "Paid") {
@@ -717,20 +630,12 @@ function TaxProfessionalFilter(props) {
         .then((res) => {
           console.log(res);
           if (res.data.code === 1) {
-            setLoading(false)
             if (res.data.result) {
               setData(res.data.result);
               setRecords(res.data.result.length);
             }
           }
-        })
-        .catch((error) => {
-          // console.log("erroror - ", error);
-           getErrorMessage();
-       setTimeout(function(){
-       history.push(`/taxprofessional/queriestab`);
-     },3000);
-         });
+        });
     }
   };
 
@@ -918,17 +823,10 @@ function TaxProfessionalFilter(props) {
                     </select>
                   )}
                 </div>
-                {
-            loading ?
-              // <Loader />
-              <span>
-                    <Spinner color="primary" />
-                  </span>
-              :
+
                 <button type="submit" class="btn btn-primary mx-sm-1 mb-2">
                   Search
                 </button>
-}
                 <Reset />
                 <div class="form-group mx-sm-1  mb-2">
                   <label className="form-select form-control"
