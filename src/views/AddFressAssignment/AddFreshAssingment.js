@@ -5,14 +5,13 @@ import { baseUrl } from "../../config/config";
 import { useAlert } from "react-alert";
 import Select from "react-select";
 import './style.css'
+import { Spinner } from "reactstrap";
 import Swal from "sweetalert2";
 import { purpose } from "./data";
 import Layout from "../../components/Layout/Layout";
-import { getErrorMessage } from '../../constants';
 import {
   Card,
   CardHeader,
-  Spinner,
   Row,
   Col,
 } from "reactstrap";
@@ -44,11 +43,6 @@ function AddFreshAssingment(props) {
   const [purposeOption, setPurposeOption] = useState([]);
   const [custError, setcustError] = useState([])
   const [assessmentYear, setAssessmentYear] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [time, setTime] = useState('')
-  //const [load, setLoad] = useState(false);
-  const [disabled, setDisabled] = useState(false)
-  const [show, setShow] = useState(false);
 
 
   const [load, setLoad] = useState(false);
@@ -131,7 +125,7 @@ function AddFreshAssingment(props) {
       formData.append("assessment_year", JSON.stringify(selectedOption));
       formData.append("purpose", JSON.stringify(purposeOption));
       axios
-        .post(`${baseUrl}/customers/PostQuestion1`, formData, {
+        .post(`${baseUrl}/customers/PostQuestion`, formData, {
           headers: {
             "content-type": "multipart/form-data",
           },
@@ -172,13 +166,9 @@ function AddFreshAssingment(props) {
           }
         })
         .catch((error) => {
-          //console.log("erroror - ", error);
-          getErrorMessage();
-          setTimeout(function(){
-          props.history.push('/customer/addFresh');
-        },3000);
+          console.log("erroror - ", error);
         });
-      }
+    }
   };
 
 
@@ -200,11 +190,9 @@ function AddFreshAssingment(props) {
             </Row>
 
           </CardHeader>
-          {/* {load ? (
-            <div class="col-md-12">
-            <Spinner color="primary" />
-          </div>
-          ) : ( */}
+          {load ? (
+            <Loader />
+          ) : (
             <div className="container">
               <div class="col-xl-8 col-lg-8 col-md-12 py-4">
 
@@ -392,23 +380,16 @@ function AddFreshAssingment(props) {
                       </div>
                     </div>
                   </div>
-                  {
-                    load ?
-                    // <Loader />
-                    <div class="col-md-12">
-                          <Spinner color="primary" />
-                        </div>
-                    :
+
                   <button type="submit" className="btn btn-primary">
                     Submit
                   </button>
-}
                 </form>
 
               </div>
               <Mandatory />
             </div>
-          {/* )} */}
+          )}
         </Card>
       </Layout>
     </>

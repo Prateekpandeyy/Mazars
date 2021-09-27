@@ -121,7 +121,7 @@ function QueriesTab(props) {
           </TabList>
 
           <TabPanel>
-            < AllQueriesData/>
+            <AllQueriesData />
           </TabPanel>
 
           <TabPanel>
