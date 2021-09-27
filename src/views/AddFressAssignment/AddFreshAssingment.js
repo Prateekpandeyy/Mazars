@@ -131,7 +131,7 @@ function AddFreshAssingment(props) {
       formData.append("assessment_year", JSON.stringify(selectedOption));
       formData.append("purpose", JSON.stringify(purposeOption));
       axios
-        .post(`${baseUrl}/customers/PostQuestion1`, formData, {
+        .post(`${baseUrl}/customers/PostQuestion`, formData, {
           headers: {
             "content-type": "multipart/form-data",
           },
