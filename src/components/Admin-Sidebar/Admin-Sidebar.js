@@ -1,7 +1,6 @@
 import { NavLink } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import { Badge } from "reactstrap";
-import './list.css';
 import axios from "axios";
 import { baseUrl } from "../../config/config";
 import List from '@mui/material/List';
@@ -15,8 +14,9 @@ import SendIcon from '@mui/icons-material/Send';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import StarBorder from '@mui/icons-material/StarBorder';
+import './list.css';
 import ScheduleIcon from '@material-ui/icons/Schedule';
-function Sidebar({ props, adminDashboard, custDashboard, TLDashboard, TPDashboard , feedbackNumber}) {
+function Sidebar({ adminDashboard, custDashboard, TLDashboard, TPDashboard , feedbackNumber}) {
   const [toggleState, setToggleState] = useState(false);
   const [feedbackNumber2, setfeedbackNumber2] = useState();
   const [feedbackNumbertl, setfeedbackNumbertl] = useState();
@@ -26,7 +26,7 @@ function Sidebar({ props, adminDashboard, custDashboard, TLDashboard, TPDashboar
   const tpkey = window.localStorage.getItem("tpkey");
   const adminkey = window.localStorage.getItem("adminkey")
   const toggleTab = (index) => {
-    
+    console.log(index);
     setToggleState(index);
   };
 const feedNumber = {
@@ -46,34 +46,34 @@ useEffect(() => {
 const getFeedback2 = () => {
   if(adminDashboard != undefined){
     axios.get(`${baseUrl}/customers/getFeedback?uid=${JSON.parse(adminkey)}&&type=total`).then((res) => {
-
+      console.log(res);
       if (res.data.code === 1) {
-       
+        // setFeedBackData(res.data.result);
        if(res.data.result != undefined){
          setfeedbackNumber2(res.data.result[0].total)
        
        }
       }
     });
-    if(window.location.hash.split("/").slice(-1) == "schedule" || window.location.hash.split("/").slice(-1) == "recording"){
-      setOpen(true)
-    }
   }
- 
+  if(window.location.hash.split("/").slice(-1) == "recording" || window.location.hash.split("/").slice(-1) == "schedule"){
+    setOpen(true)
+  }
+
 };
 const getFeedbacktl = () => {
  if(TLDashboard != undefined){
   axios
   .get(`${baseUrl}/customers/getFeedback?tl_id=${JSON.parse(tlkey)}&&type=total`)
   .then((res) => {
-  
+    console.log(res);
     if(res.data.result != undefined){
       setfeedbackNumbertl(res.data.result[0].total)
     
     }
   });
  }
- if(window.location.hash.split("/").slice(-1) == "schedule" || window.location.hash.split("/").slice(-1) == "recording"){
+ if(window.location.hash.split("/").slice(-1) == "recording" || window.location.hash.split("/").slice(-1) == "schedule"){
   setOpen(true)
 }
 };
@@ -86,26 +86,28 @@ const getFeedbacktp = () => {
     axios
     .get(`${baseUrl}/customers/getFeedback?tp_id=${JSON.parse(tpkey)}&&type=total`)
     .then((res) => {
-     
+      console.log(res);
       if(res.data.result != undefined){
         setfeedbackNumbertp(res.data.result[0].total)
       
       }
     });
   }
-  if(window.location.hash.split("/").slice(-1) == "schedule" || window.location.hash.split("/").slice(-1) == "recording"){
+  if(window.location.hash.split("/").slice(-1) == "recording" || window.location.hash.split("/").slice(-1) == "schedule"){
     setOpen(true)
   }
 };
 useState(() => {
   getFeedbacktp();
 }, [TPDashboard])
-
+const show = () => {
+  console.log("done")
+    setOpen(true);
+}
 const handleClick = () => {
- 
+  console.log("clicked")
   setOpen(!open);
 };
-console.log(window.location.hash.split("/").slice(-1))
   return (
     <>
       <div
@@ -260,19 +262,22 @@ console.log(window.location.hash.split("/").slice(-1))
 
               <li class="nav-item">
                  
-               <ListItemButton onClick={() => handleClick()}>
+              <ListItemButton onClick={() => handleClick()}>
+        
       <span className="listStyle">
       <ListItemIcon>
           <ScheduleIcon />
         </ListItemIcon>
-                 
+
+
                 <span class="menu-title" data-i18n="">
                   Schedule
                 </span>
                 {open ? <ExpandLess /> : <ExpandMore />}
                 </span>
-               
+
       
+       
       </ListItemButton>
 
       <Collapse in={open}  unmountOnExit>
@@ -400,26 +405,31 @@ console.log(window.location.hash.split("/").slice(-1))
 
               <li class="nav-item">
                  
-               <ListItemButton onClick={handleClick}>
-               <span className="listStyle">
-      <ListItemIcon>
-          <ScheduleIcon />
-        </ListItemIcon>
-                 
-                <span class="menu-title" data-i18n="">
-                  Schedule
-                </span>
-                {open ? <ExpandLess /> : <ExpandMore />}
-                </span>
-               
-      </ListItemButton>
+              <ListItemButton onClick={() => handleClick()}>
+        
+        <span className="listStyle">
+        <ListItemIcon>
+            <ScheduleIcon />
+          </ListItemIcon>
+  
+  
+                  <span class="menu-title" data-i18n="">
+                    Schedule
+                  </span>
+                  {open ? <ExpandLess /> : <ExpandMore />}
+                  </span>
+  
+        
+         
+        </ListItemButton>
+  
 
       <Collapse in={open}  unmountOnExit>
         <List component="div" disablePadding>
         <ul>
                   <li>
                   <NavLink to={"/teamleader/schedule"}>
-                  <i class="fa fa-rss-square"></i>
+                
                 <span class="menu-title" data-i18n="">
                   Schedule
                 </span>
@@ -427,7 +437,7 @@ console.log(window.location.hash.split("/").slice(-1))
                   </li>
                   <li>
                   <NavLink to={"/teamleader/recording"}>
-                  <i class="fa fa-rss-square"></i>
+                 
                 <span class="menu-title" data-i18n="">
                 Recording
                 </span>
@@ -520,26 +530,30 @@ console.log(window.location.hash.split("/").slice(-1))
 
               <li class="nav-item">
                  
-               <ListItemButton onClick={handleClick}>
-         <span className="listStyle">
-      <ListItemIcon>
-          <ScheduleIcon />
-        </ListItemIcon>
-                 
-                <span class="menu-title" data-i18n="">
-                  Schedule
-                </span>
-                {open ? <ExpandLess /> : <ExpandMore />}
-                </span>
-               
-      </ListItemButton>
-
+              <ListItemButton onClick={() => handleClick()}>
+        
+        <span className="listStyle">
+        <ListItemIcon>
+            <ScheduleIcon />
+          </ListItemIcon>
+  
+  
+                  <span class="menu-title" data-i18n="">
+                    Schedule
+                  </span>
+                  {open ? <ExpandLess /> : <ExpandMore />}
+                  </span>
+  
+        
+         
+        </ListItemButton>
+  
       <Collapse in={open}  unmountOnExit>
         <List component="div" disablePadding>
         <ul>
                   <li>
                   <NavLink to={"/taxprofessional/schedule"}>
-                  <i class="fa fa-rss-square"></i>
+                 
                 <span class="menu-title" data-i18n="">
                   Schedule
                 </span>
@@ -547,7 +561,7 @@ console.log(window.location.hash.split("/").slice(-1))
                   </li>
                   <li>
                   <NavLink to={"/taxprofessional/recording"}>
-                  <i class="fa fa-rss-square"></i>
+
                 <span class="menu-title" data-i18n="">
                 Recording
                 </span>

@@ -5,7 +5,6 @@ import { baseUrl } from "../../../config/config";
 import { useAlert } from "react-alert";
 import { useHistory, useParams } from "react-router-dom";
 import Layout from "../../../components/Layout/Layout";
-import { getErrorMessage } from '../../../constants';
 import {
   Card,
   CardHeader,
@@ -23,7 +22,7 @@ import Mandatory from "../../../components/Common/Mandatory";
 import { Spinner } from 'reactstrap';
 
 
-function EditComponent(props) {
+function EditComponent() {
 
   const alert = useAlert();
   const { register, handleSubmit, reset, errors } = useForm();
@@ -193,11 +192,7 @@ function EditComponent(props) {
                     }
                   })
                   .catch((error) => {
-                    //console.log("erroror - ", error);
-                    getErrorMessage();
-        setTimeout(function(){
-        props.history.push(`/taxprofessional/edit-proposal/${props.match.params.id}`);
-      },3000);
+                    console.log("erroror - ", error);
                   });
               }
             }
@@ -222,11 +217,7 @@ function EditComponent(props) {
             }
           })
           .catch((error) => {
-           // console.log("erroror - ", error);
-            getErrorMessage();
-        setTimeout(function(){
-        props.history.push(`/taxprofessional/edit-proposal/${props.match.params.id}`);
-      },3000);
+            console.log("erroror - ", error);
           });
       }
   };
@@ -423,13 +414,10 @@ function EditComponent(props) {
             </div>
 
             <div class="form-group col-md-6">
-            {
-            loading ?
-              // <Loader />
-              <div class="col-md-12">
-                    <Spinner color="primary" />
-                  </div>
-              :
+              {
+                loading ?
+                  <Spinner color="primary" />
+                  :
                   <button type="submit" class="btn btn-primary">
                     Submit
                   </button>

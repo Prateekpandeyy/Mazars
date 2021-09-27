@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useMemo } from "react";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
-import { getErrorMessage } from '../../constants';
-import { useHistory, useParams } from "react-router-dom";
 import {
     Card,
     CardHeader,
@@ -27,8 +25,7 @@ import { date } from "yup";
 
 
 
-function AllQueriesData(props) {
-    const history = useHistory();
+function AllQueriesData() {
     const userId = window.localStorage.getItem("userid");
     const [query, setQuery] = useState([]);
    
@@ -368,7 +365,6 @@ function AllQueriesData(props) {
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
-           
             confirmButtonText: "Yes, deleted it!",
         }).then((result) => {
             if (result.value) {
@@ -386,7 +382,7 @@ function AllQueriesData(props) {
 
         axios({
             method: "POST",
-            url: `${baseUrl}/customers/deleteQuery1`,
+            url: `${baseUrl}/customers/deleteQuery`,
             data: formData,
         })
             .then(function (response) {
@@ -401,14 +397,9 @@ function AllQueriesData(props) {
                 }
             })
             .catch((error) => {
-                //console.log("erroror - ", error);
-                getErrorMessage();
-                setTimeout(function(){
-        history.push('/customer/queries');
-            },3000);
-        });
-    }
-
+                console.log("erroror - ", error);
+            });
+    };
 
     return (
         <div>

@@ -3,9 +3,6 @@ import { useForm, useFieldArray } from "react-hook-form";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import { useHistory } from "react-router-dom";
-import { getErrorMessage } from '../../../constants';
-import { Spinner } from "reactstrap"
-
 import {
   Card,
   CardHeader,
@@ -21,7 +18,7 @@ import Payment from "./Payment";
 import Select from "react-select";
 import Alerts from "../../../common/Alerts";
 import Mandatory from "../../../components/Common/Mandatory";
-
+import { Spinner } from 'reactstrap';
 
 
 
@@ -29,7 +26,7 @@ function ProposalComponent(props) {
   const { id } = props;
   const history = useHistory();
   const { handleSubmit, register, errors } = useForm();
-  const [load, setLoad] = useState(false);
+
   const userid = window.localStorage.getItem("tlkey");
   const [loading, setLoading] = useState(false);
 
@@ -178,11 +175,7 @@ function ProposalComponent(props) {
                     }
                   })
                   .catch((error) => {
-                   // console.log("erroror - ", error);
-                   getErrorMessage();
-          setTimeout(function(){
-          props.history.push(`/teamleader/sendproposal/${props.match.params.id}`);
-        },3000);
+                    console.log("erroror - ", error);
                   });
               }
             }
@@ -207,11 +200,7 @@ function ProposalComponent(props) {
             }
           })
           .catch((error) => {
-           // console.log("erroror - ", error);
-           getErrorMessage();
-          setTimeout(function(){
-          history.push(`/teamleader/sendproposal/${id}`);
-        },3000);
+            console.log("erroror - ", error);
           });
       }
 
