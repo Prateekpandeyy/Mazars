@@ -250,6 +250,7 @@ function EditComponent() {
       array2.push(value)
     });
     setDate(array2.slice(0, installment.value));
+    console.log("array2", array2)
   };
 
   const installmentHandler = (key) => {

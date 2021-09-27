@@ -79,36 +79,56 @@ export default class YourComponent extends React.Component {
         for (var i = 0; i < this.props.installment; i++) {
             fieldsArray.push(
                 <div className="row">
-                    <div class="col-md-6 my-2">
-
-                        <input
-                            type="text"
-                            className="form-control"
-                            name={this.state.values[i]}
-                            onChange={this.handleChange1.bind(this, i)}
-                            defaultValue={installment_amount[i] == "0" ? "" : installment_amount[i]}
-                        />
-                    </div>
-
-                    <div class="col-md-6 my-2">
-                      
-                        {/* <input
-                            type="date"
-                            className="form-control"
-                            name={this.state.dates[i]}
-                            onChange={this.handleChange2.bind(this, i)}
-                            defaultValue={due_date[i]}
-                            min={this.props.item}
-                        /> */}
-                        <input
-                            type="date"
-                            className="form-control"
-                            name={this.state.dates[i]}
-                            onChange={this.handleChange2.bind(this, i)}
-                            defaultValue={due_date[i]}
-                            min={this.props.item}
-                        />
-                    </div>
+                    {this.props.clearValue == true ? 
+                   <div class="col-md-6 my-2">
+                       
+                   <input
+                       type="text"
+                       className="form-control"
+                       name={this.state.values[i]}
+                       onChange={this.handleChange1.bind(this, i)}
+                      defaultValue={installment_amount[i]}
+                   />
+               </div> :   ""
+}
+{this.props.clearValue == false ? 
+    <div class="col-md-6 my-2">
+                       
+                       <input
+                           type="text"
+                           className="form-control"
+                           name={this.state.values[i]}
+                           onChange={this.handleChange1.bind(this, i)}
+                           defaultValue=""
+                       />
+                   </div> : ""}
+          {this.props.clearValue == true ? 
+           <div class="col-md-6 my-2">
+                       
+           <input
+               type="date"
+               className="form-control"
+               required
+               name={this.state.dates[i]}
+               onChange={this.handleChange2.bind(this, i)}
+               defaultValue={due_date[i]}
+               min={this.props.item}
+           />
+       </div> : ""}  
+       {this.props.clearValue == false ? 
+           <div class="col-md-6 my-2">
+                       
+           <input
+               type="date"
+               className="form-control"
+               required
+               name={this.state.dates[i]}
+               onChange={this.handleChange2.bind(this, i)}
+               defaultValue= ""
+               min={this.props.item}
+           />
+       </div> : ""}         
+                   
                 </div>
             );
         }
