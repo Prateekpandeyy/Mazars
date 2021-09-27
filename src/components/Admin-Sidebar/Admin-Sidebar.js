@@ -1,18 +1,32 @@
 import { NavLink } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import { Badge } from "reactstrap";
+import './list.css';
 import axios from "axios";
 import { baseUrl } from "../../config/config";
-function Sidebar({ adminDashboard, custDashboard, TLDashboard, TPDashboard , feedbackNumber}) {
+import List from '@mui/material/List';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import Collapse from '@mui/material/Collapse';
+import InboxIcon from '@mui/icons-material/MoveToInbox';
+import DraftsIcon from '@mui/icons-material/Drafts';
+import SendIcon from '@mui/icons-material/Send';
+import ExpandLess from '@mui/icons-material/ExpandLess';
+import ExpandMore from '@mui/icons-material/ExpandMore';
+import StarBorder from '@mui/icons-material/StarBorder';
+import ScheduleIcon from '@material-ui/icons/Schedule';
+function Sidebar({ props, adminDashboard, custDashboard, TLDashboard, TPDashboard , feedbackNumber}) {
   const [toggleState, setToggleState] = useState(false);
   const [feedbackNumber2, setfeedbackNumber2] = useState();
   const [feedbackNumbertl, setfeedbackNumbertl] = useState();
   const [feedbackNumbertp, setfeedbackNumbertp] = useState();
+  const [open, setOpen] = useState(false)
   const tlkey= window.localStorage.getItem("tlkey");
   const tpkey = window.localStorage.getItem("tpkey");
   const adminkey = window.localStorage.getItem("adminkey")
   const toggleTab = (index) => {
-    console.log(index);
+    
     setToggleState(index);
   };
 const feedNumber = {
@@ -21,7 +35,7 @@ const feedNumber = {
   backgroundColor: "green",
   color: "white",
   display: "inline-block",
-  margin: "0px 0px 20px 20px",
+  margin: "0px 0px 20px 0px",
   padding: "9px 10px",
     borderRadius: "50%"
 }
@@ -32,29 +46,36 @@ useEffect(() => {
 const getFeedback2 = () => {
   if(adminDashboard != undefined){
     axios.get(`${baseUrl}/customers/getFeedback?uid=${JSON.parse(adminkey)}&&type=total`).then((res) => {
-      console.log(res);
+
       if (res.data.code === 1) {
-        // setFeedBackData(res.data.result);
+       
        if(res.data.result != undefined){
          setfeedbackNumber2(res.data.result[0].total)
        
        }
       }
     });
+    if(window.location.hash.split("/").slice(-1) == "schedule" || window.location.hash.split("/").slice(-1) == "recording"){
+      setOpen(true)
+    }
   }
+ 
 };
 const getFeedbacktl = () => {
  if(TLDashboard != undefined){
   axios
   .get(`${baseUrl}/customers/getFeedback?tl_id=${JSON.parse(tlkey)}&&type=total`)
   .then((res) => {
-    console.log(res);
+  
     if(res.data.result != undefined){
       setfeedbackNumbertl(res.data.result[0].total)
     
     }
   });
  }
+ if(window.location.hash.split("/").slice(-1) == "schedule" || window.location.hash.split("/").slice(-1) == "recording"){
+  setOpen(true)
+}
 };
 useState(() => {
   getFeedbacktl();
@@ -65,18 +86,26 @@ const getFeedbacktp = () => {
     axios
     .get(`${baseUrl}/customers/getFeedback?tp_id=${JSON.parse(tpkey)}&&type=total`)
     .then((res) => {
-      console.log(res);
+     
       if(res.data.result != undefined){
         setfeedbackNumbertp(res.data.result[0].total)
       
       }
     });
   }
+  if(window.location.hash.split("/").slice(-1) == "schedule" || window.location.hash.split("/").slice(-1) == "recording"){
+    setOpen(true)
+  }
 };
 useState(() => {
   getFeedbacktp();
 }, [TPDashboard])
 
+const handleClick = () => {
+ 
+  setOpen(!open);
+};
+console.log(window.location.hash.split("/").slice(-1))
   return (
     <>
       <div
@@ -184,7 +213,7 @@ useState(() => {
               id="main-menu-navigation"
               data-menu="menu-navigation"
             >
-              <li class="active nav-item">
+              <li class="nav-item">
                 <NavLink to={"/admin/dashboard"}>
                   <i class="fa fa-home"></i>
                   <span class="menu-title" data-i18n="">
@@ -229,14 +258,45 @@ useState(() => {
                 </NavLink>
               </li>
 
-
               <li class="nav-item">
-                <NavLink to={"/admin/schedule"}>
-                  <i class="fa fa-file"></i>
-                  <span class="menu-title" data-i18n="">
+                 
+               <ListItemButton onClick={() => handleClick()}>
+      <span className="listStyle">
+      <ListItemIcon>
+          <ScheduleIcon />
+        </ListItemIcon>
+                 
+                <span class="menu-title" data-i18n="">
                   Schedule
-                  </span>
+                </span>
+                {open ? <ExpandLess /> : <ExpandMore />}
+                </span>
+               
+      
+      </ListItemButton>
+
+      <Collapse in={open}  unmountOnExit>
+        <List component="div" disablePadding>
+        <ul>
+                  <li>
+                  <NavLink to={"/admin/schedule"}>
+                  
+                <span class="menu-title" data-i18n="">
+                  Schedule
+                </span>
                 </NavLink>
+                  </li>
+                  <li>
+                  <NavLink to={"/admin/recording"}>
+                  
+                <span class="menu-title" data-i18n="">
+                Recording
+                </span>
+                </NavLink>
+                  </li>
+                </ul>
+        </List>
+      </Collapse>
               </li>
 
             
@@ -263,6 +323,14 @@ useState(() => {
                    <i class="fa fa-users"></i>
                    <span class="menu-title" data-i18n="">
                    Customers
+                  </span>
+                 </NavLink>
+               </li>
+               <li class ="nav-item">
+                 <NavLink to={"/admin/reports"}>
+                   <i class="fa fa-users"></i>
+                   <span class="menu-title" data-i18n="">
+                   Report
                   </span>
                  </NavLink>
                </li>
@@ -331,16 +399,52 @@ useState(() => {
               </li>
 
               <li class="nav-item">
-                <NavLink to={"/teamleader/schedule"}>
+                 
+               <ListItemButton onClick={handleClick}>
+               <span className="listStyle">
+      <ListItemIcon>
+          <ScheduleIcon />
+        </ListItemIcon>
+                 
+                <span class="menu-title" data-i18n="">
+                  Schedule
+                </span>
+                {open ? <ExpandLess /> : <ExpandMore />}
+                </span>
+               
+      </ListItemButton>
+
+      <Collapse in={open}  unmountOnExit>
+        <List component="div" disablePadding>
+        <ul>
+                  <li>
+                  <NavLink to={"/teamleader/schedule"}>
                   <i class="fa fa-rss-square"></i>
+                <span class="menu-title" data-i18n="">
+                  Schedule
+                </span>
+                </NavLink>
+                  </li>
+                  <li>
+                  <NavLink to={"/teamleader/recording"}>
+                  <i class="fa fa-rss-square"></i>
+                <span class="menu-title" data-i18n="">
+                Recording
+                </span>
+                </NavLink>
+                  </li>
+                </ul>
+        </List>
+      </Collapse>
+              </li>
+              <li class="nav-item">
+                <NavLink to={"/teamleader/reports"}>
+                  <i class="fa fa-users"></i>
                   <span class="menu-title" data-i18n="">
-               Schedule 
+                    Reports
                   </span>
                 </NavLink>
               </li>
-
-              
-
               <li class="nav-item">
                 <NavLink to={"/teamleader/addteamprof"}>
                   <i class="fa fa-users"></i>
@@ -415,15 +519,52 @@ useState(() => {
               </li>
 
               <li class="nav-item">
-                <NavLink to={"/taxprofessional/schedule"}>
+                 
+               <ListItemButton onClick={handleClick}>
+         <span className="listStyle">
+      <ListItemIcon>
+          <ScheduleIcon />
+        </ListItemIcon>
+                 
+                <span class="menu-title" data-i18n="">
+                  Schedule
+                </span>
+                {open ? <ExpandLess /> : <ExpandMore />}
+                </span>
+               
+      </ListItemButton>
+
+      <Collapse in={open}  unmountOnExit>
+        <List component="div" disablePadding>
+        <ul>
+                  <li>
+                  <NavLink to={"/taxprofessional/schedule"}>
                   <i class="fa fa-rss-square"></i>
+                <span class="menu-title" data-i18n="">
+                  Schedule
+                </span>
+                </NavLink>
+                  </li>
+                  <li>
+                  <NavLink to={"/taxprofessional/recording"}>
+                  <i class="fa fa-rss-square"></i>
+                <span class="menu-title" data-i18n="">
+                Recording
+                </span>
+                </NavLink>
+                  </li>
+                </ul>
+        </List>
+      </Collapse>
+              </li>
+              <li class="nav-item">
+                <NavLink to={"/taxprofessional/reports"}>
+                  <i class="fa fa-users"></i>
                   <span class="menu-title" data-i18n="">
-                    schedule
+                    Reports
                   </span>
                 </NavLink>
               </li>
-
-             
               <li class="nav-item">
                 <NavLink to={"/taxprofessional/feedback"}>
                   <i class="fa fa-file-text"></i>

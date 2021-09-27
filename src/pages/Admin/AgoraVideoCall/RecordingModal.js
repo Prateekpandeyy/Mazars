@@ -21,7 +21,7 @@ function RecordingModal({
     console.log("item", item)
 
     const { assign_no, id, username, start } = item
-    console.log("assign_no", assign_no)
+    console.log("assign_no", username)
 
 
     //submit

@@ -88,7 +88,7 @@ function Chatting(props) {
 
     axios({
       method: "POST",
-      url: `${baseUrl}/admin/messageSent1`,
+      url: `${baseUrl}/admin/messageSent`,
       data: formData,
     })
       .then(function (response) {

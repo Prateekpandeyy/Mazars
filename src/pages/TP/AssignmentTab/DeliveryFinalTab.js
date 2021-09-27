@@ -11,9 +11,9 @@ import { useForm } from "react-hook-form";
 import "antd/dist/antd.css";
 import { Select } from "antd";
 import BootstrapTable from "react-bootstrap-table-next";
-import DiscardReport from "../AssignmentTab/DiscardReport";
-
-
+import FinalReportUpload from "./FinalReportUpload";
+import DescriptionOutlinedIcon from '@material-ui/icons/DescriptionOutlined';
+import ViewAllReportModal from "./ViewAllReport";
 function AssignmentTab() {
 
     const history = useHistory();
@@ -32,17 +32,25 @@ function AssignmentTab() {
     const [tax2, setTax2] = useState([]);
     const [store2, setStore2] = useState([]);
     const [hide, setHide] = useState();
-
+    const [fianlModal, setFianlModal] = useState(false);
     var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
     console.log("current_date :", current_date);
     const [item] = useState(current_date);
 
     const [assignNo, setAssignNo] = useState('');
     const [ViewDiscussion, setViewDiscussion] = useState(false);
+    const [report, setReport] = useState();
+    const [reportModal, setReportModal] = useState(false);
+    const [dataItem, setDataItem] = useState({});
     const ViewDiscussionToggel = (key) => {
         setViewDiscussion(!ViewDiscussion);
         setAssignNo(key)
     }
+    const uploadFinalReport = (id) => {
+       
+        setFianlModal(!fianlModal);
+        setFinalId(id);
+      };
     useEffect(() => {
         getAssignmentList();
     }, []);
@@ -111,7 +119,13 @@ function AssignmentTab() {
         console.log(`selected ${value}`);
         setStatus(value);
     };
-
+// view Report
+const ViewReport = (key) => {
+  
+    setReportModal(!reportModal);
+    setReport(key.assign_no);
+    setDataItem(key)
+  };
 
     //columns
     const columns = [
@@ -250,6 +264,58 @@ function AssignmentTab() {
             },
         },
         {
+            text: "Deliverable",
+            dataField: "",
+            sort: true,
+            headerStyle: () => {
+              return { fontSize: "12px" };
+            },
+            formatter: function (cell, row) {
+              return (
+                <>
+                  {
+                    row.paid_status == "2" ? null :
+                      <div>
+                        {row.assignement_draft_report || row.final_report ?
+                          <div title="View All Report"
+                            style={{ cursor: "pointer" }}
+                            onClick={() => ViewReport(row)}
+                          >
+                            <DescriptionOutlinedIcon color="secondary" />
+                          </div>
+                          :
+                          null
+                        }
+                      </div>
+                  }
+                </>
+              );
+            },
+          },
+          {
+            text: "Assignment Stage",
+            headerStyle: () => {
+              return { fontSize: "12px" };
+            },
+            formatter: function (cell, row) {
+              return (
+                <>
+                  <div
+                    title="Add Assignment stages"
+                    style={{ cursor: "pointer", textAlign: "center" }}
+                  >
+                      {
+                 row.paid_status == "2" ? null :
+                    <Link to={`/taxprofessional/addassingment/${row.q_id}`}>
+                      <i class="fa fa-tasks"></i>
+                    </Link>
+            }
+                  </div>
+                </>
+              );
+            },
+          },
+        {
             text: "Action",
             headerStyle: () => {
                 return { fontSize: "12px" };
@@ -257,52 +323,77 @@ function AssignmentTab() {
             formatter: function (cell, row) {
                 return (
                     <>
-                        <div
-                            style={{
-                                display: "flex",
-                                justifyContent: "space-between",
-                                width: "60px"
-                            }}
-                        >
-
-                            <div title="View Discussion Message">
-                                <i
-                                    class="fa fa-comments-o"
-                                    style={{
-                                        fontSize: 16,
-                                        cursor: "pointer",
-                                        color: "orange"
-                                    }}
-                                    onClick={() => ViewDiscussionToggel(row.assign_no)}
-                                ></i>
-                            </div>
-
-                            <div title="Send Message">
-                                <Link
-                                    to={{
-                                        pathname: `/taxprofessional/chatting/${row.q_id}`,
-                                        obj: {
-                                            message_type: "3",
-                                            query_No: row.assign_no,
-                                            query_id: row.q_id,
-                                            routes: `/taxprofessional/assignment`
-                                        }
-                                    }}
-                                >
-                                    <i
-                                        class="fa fa-comments-o"
-                                        style={{
-                                            fontSize: 16,
-                                            cursor: "pointer",
-                                            marginLeft: "8px",
-                                            color: "blue"
-                                        }}
-                                    ></i>
-                                </Link>
-                            </div>
-
-                        </div>
-                    </>
+               {
+                 row.paid_status == "2" ? null : 
+                 <div
+                 style={{
+                   display: "flex",
+                   justifyContent: "space-between",
+                 }}
+               >
+                 
+                 
+                    
+      {
+       row.client_discussion == "completed" && row.draft_report == "completed" && row.final_discussion == "completed" && row.delivery_report == "inprogress" ?
+      
+      <div title="upload Pdf">
+       <p
+         style={{ cursor: "pointer", color: "red" }}
+         onClick={() => uploadFinalReport(row)}
+       >
+       
+             <div>
+               <i
+                 class="fa fa-upload"
+                 style={{ fontSize: "16px" }}
+               ></i>
+               final
+             </div>
+          
+       </p>
+      </div> : null
+      }
+                
+      
+                 <div title="View Discussion Message">
+                   <i
+                     class="fa fa-comments-o"
+                     style={{
+                       fontSize: 16,
+                       cursor: "pointer",
+                       color: "orange"
+                     }}
+                     onClick={() => ViewDiscussionToggel(row.assign_no)}
+                   ></i>
+                 </div>
+                 <div title="Send Message">
+                   <Link
+                     to={{
+                       pathname: `/taxprofessional/chatting/${row.q_id}`,
+                       obj: {
+                         message_type: "3",
+                         query_No: row.assign_no,
+                         query_id: row.q_id,
+                         routes: `/taxprofessional/assignment`
+                       }
+                     }}
+                   >
+                     <i
+                       class="fa fa-comments-o"
+                       style={{
+                         fontSize: 16,
+                         cursor: "pointer",
+                         marginLeft: "8px",
+                         color: "blue"
+                       }}
+                     ></i>
+                   </Link>
+                 </div>
+      
+               </div>
+               }
+                </>
                 );
             },
         },
@@ -449,13 +540,19 @@ function AssignmentTab() {
                         columns={columns}
                         rowIndex
                     />
-
-                    <DiscardReport
-                        ViewDiscussionToggel={ViewDiscussionToggel}
-                        ViewDiscussion={ViewDiscussion}
-                        report={assignNo}
-                        getData={getAssignmentList}
-                    />
+  <FinalReportUpload
+            fianlModal={fianlModal}
+            uploadFinalReport={uploadFinalReport}
+            getAssignmentList={getAssignmentList}
+            id={finalId}
+          />
+          <ViewAllReportModal
+            ViewReport={ViewReport}
+            reportModal={reportModal}
+            report={report}
+            dataItem={dataItem}
+          />
+                    
                 </CardBody>
             </Card>
         </>

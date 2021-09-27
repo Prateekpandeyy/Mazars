@@ -16,11 +16,12 @@ import { Link } from "react-router-dom";
 import BootstrapTable from "react-bootstrap-table-next";
 import PaymentModal from "./PaymentModal";
 import CommonServices from "../../../common/common";
+import { useHistory } from "react-router";
 
 function Message(props) {
     console.log("props", props.location.obj)
     const alert = useAlert();
-
+const history = useHistory();
     const userId = window.localStorage.getItem("tlkey");
     const [query, setQuery] = useState([]);
     const [data, setData] = useState(null);
@@ -162,10 +163,19 @@ function Message(props) {
     return (
         <Layout TLDashboard="TLDashboard" TLuserId={userId}>
             <Card>
-                <CardHeader>
+            <CardHeader>
                     <Row>
                         <Col md="9">
                             <CardTitle tag="h4">Message</CardTitle>
+                        </Col>
+                        <Col md="3">
+                        <button
+                class="btn btn-success ml-auto" style={{float : "right"}}
+                onClick={() => history.goBack()}
+              >
+                <i class="fas fa-arrow-left mr-2"></i>
+                Go Back
+              </button>
                         </Col>
                     </Row>
                 </CardHeader>

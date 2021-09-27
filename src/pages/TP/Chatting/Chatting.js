@@ -75,7 +75,7 @@ function Chatting(props) {
     formData.append("sst", "tp")
     axios({
       method: "POST",
-      url: `${baseUrl}/tp/messageSent1`,
+      url: `${baseUrl}/tp/messageSent`,
       data: formData,
     })
       .then(function (response) {
@@ -144,6 +144,7 @@ function Chatting(props) {
                             name="msg_type"
                             ref={register}
                             style={{ height: "33px" }}
+                            defaultValue={item}
                           >
                             <option value="">--select--</option>
                             <option value="4">Query Discussion</option>

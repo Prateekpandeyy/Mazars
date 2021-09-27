@@ -75,7 +75,7 @@ function ForgetPassword(props) {
           <div className="heading">
             <h2>Forgot Password</h2>
           </div>
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
 
 
             <div className="mb-3">

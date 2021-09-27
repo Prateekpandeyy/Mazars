@@ -156,7 +156,7 @@ function QueryAssingment(props) {
 
     axios({
       method: "POST",
-      url: `${baseUrl}/tl/AddQueryAssignment1`,
+      url: `${baseUrl}/tl/AddQueryAssignment`,
       data: formData,
     })
       .then(function (response) {
@@ -268,7 +268,7 @@ function QueryAssingment(props) {
                                   <option value="">-select-</option>
                                   {taxLeaderDisplay.map((p, index) => (
                                     <option key={index} value={p.id}>
-                                      {p.name}
+                                      {p.postname}
                                     </option>
                                   ))}
                                 </select>

@@ -305,7 +305,7 @@ function Unpaid() {
 
 
 
-                            {/* <div title="Send Message">
+                            <div title="Send Message">
                 <Link
                   to={{
                     pathname: `/admin/chatting/${row.id}`,
@@ -327,7 +327,7 @@ function Unpaid() {
                     }}
                   ></i>
                 </Link>
-              </div> */}
+              </div>
 
                         </div>
                     </>
@@ -345,7 +345,7 @@ function Unpaid() {
                     <AdminFilter
                         setData={setPayment}
                         getData={getPaymentStatus}
-                        unpaid="unpaid"
+                        paid="paid"
                         setRecords={setRecords}
                         records={records}
                     />

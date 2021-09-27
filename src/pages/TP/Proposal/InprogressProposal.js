@@ -8,7 +8,7 @@ import "antd/dist/antd.css";
 import BootstrapTable from "react-bootstrap-table-next";
 import TaxProfessionalFilter from "../../../components/Search-Filter/tpfilter";
 import ChatHistory from "./ChatHistory";
-// import DiscardReport from "../AssignmentTab/DiscardReport";
+ import DiscardReport from "../AssignmentTab/DiscardReport";
 
 
 
@@ -26,12 +26,12 @@ function InprogressProposal() {
         setId(key.assign_no);
     };
 
-    // const [assignNo, setAssignNo] = useState('');
-    // const [ViewDiscussion, setViewDiscussion] = useState(false);
-    // const ViewDiscussionToggel = (key) => {
-    //     setViewDiscussion(!ViewDiscussion);
-    //     setAssignNo(key)
-    // }
+    const [assignNo, setAssignNo] = useState('');
+    const [ViewDiscussion, setViewDiscussion] = useState(false);
+    const ViewDiscussionToggel = (key) => {
+        setViewDiscussion(!ViewDiscussion);
+        setAssignNo(key)
+    }
 
     useEffect(() => {
         getProposalList();
@@ -243,7 +243,7 @@ function InprogressProposal() {
                         <div style={{ display: "flex", justifyContent: "space-between" }}>
                             <div>
                                 {row.status_code == "4" ? (
-                                    <Link to={`/taxprofessionall/edit-proposal/${row.id}`}>
+                                    <Link to={`/taxprofessional/edit-proposal/${row.id}`}>
                                         <i
                                             className="fa fa-edit"
                                             style={{
@@ -266,24 +266,26 @@ function InprogressProposal() {
                                 ) : null}
                             </div>
 
-                            <div style={{ cursor: "pointer", marginLeft: "8px" }} title="View Proposal">
-                                <a
-                                    href={`${baseUrl}/customers/dounloadpdf?id=${row.id}&viewpdf=1`}
-                                    target="_blank"
-                                >
-                                    <i
-                                        class="fa fa-eye"
-                                        style={{ color: "green", fontSize: "16px" }}
-                                    />
-                                </a>
-                            </div>
+                            {row.status_code > "3"  || row.status_code == "10" ?
+                                <div style={{ cursor: "pointer", marginLeft: "8px" }} title="View Proposal">
+
+                                    <a
+                                        href={`${baseUrl}/customers/dounloadpdf?id=${row.id}&viewpdf=1`}
+                                        target="_blank"
+                                    >
+                                        <i
+                                            class="fa fa-eye"
+                                            style={{ color: "green", fontSize: "16px" }}
+                                        />
+                                    </a>
+                                </div>
+                                :
+                                null
+                            }
 
 
                             <div>
-                                {
-                                    row.status == "Customer Declined; Proposal" ?
-                                        null
-                                        :
+                               
                                         <div title="Send Message">
                                             <Link
                                                 to={{
@@ -307,9 +309,20 @@ function InprogressProposal() {
                                                 ></i>
                                             </Link>
                                         </div>
-                                }
+                              
                             </div>
 
+                            <div title="View Discussion Message">
+                                <i
+                                    class="fa fa-comments-o"
+                                    style={{
+                                        fontSize: 16,
+                                        cursor: "pointer",
+                                        color: "orange"
+                                    }}
+                                    onClick={() => ViewDiscussionToggel(row.assign_no)}
+                                ></i>
+                            </div>
                         </div>
                     </>
                 );
@@ -344,12 +357,12 @@ function InprogressProposal() {
                         qno={id}
                     />
 
-                    {/* <DiscardReport
+                    <DiscardReport
                         ViewDiscussionToggel={ViewDiscussionToggel}
                         ViewDiscussion={ViewDiscussion}
                         report={assignNo}
                         getData={getProposalList}
-                    /> */}
+                    />
 
 
                 </CardBody>

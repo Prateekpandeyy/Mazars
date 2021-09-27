@@ -12,14 +12,14 @@ import {
   Table,
 } from "reactstrap";
 import Demo from "./demo";
-import '../CustomerStyle/style.css';
+
 
 function Schedule() {
   const userId = window.localStorage.getItem("userid");
 
   return (
     <Layout custDashboard="custDashboard" custUserId={userId}>
-      <Card className="scheduleContainer">
+      <Card>
         <CardHeader>
         <Row>
             <Col md="7">

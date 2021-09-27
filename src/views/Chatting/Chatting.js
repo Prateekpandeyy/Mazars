@@ -53,14 +53,15 @@ function Chatting(props) {
 
 
   useEffect(() => {
-    console.log("useEffect", props)
+    
     const dataItem = props.location.obj
-
+   console.log("dataItem", dataItem)
     if (dataItem) {
       localStorage.setItem("myDataCust", JSON.stringify(dataItem));
     }
     var myData = localStorage.getItem("myDataCust");
     var data2 = JSON.parse(myData)
+    console.log("data2", data2)
     setData(data2)
     setItem(data2.message_type)
   }, [item]);
@@ -79,7 +80,7 @@ console.log(query_id)
 
     axios({
       method: "POST",
-      url: `${baseUrl}/customers/messageSent1`,
+      url: `${baseUrl}/customers/messageSent`,
       data: formData,
     })
       .then(function (response) {

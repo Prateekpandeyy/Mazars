@@ -94,7 +94,7 @@ const [showTl, setShowTl] = useState(false)
   : formData.append("to", "customer") }
     axios({
       method: "POST",
-      url: `${baseUrl}/tl/messageSent1`,
+      url: `${baseUrl}/tl/messageSent`,
       data: formData,
     })
       .then(function (response) {
@@ -167,6 +167,7 @@ const [showTl, setShowTl] = useState(false)
                             name="msg_type"
                             ref={register}
                             style={{ height: "33px" }}
+                            defaultValue={item}
                           >
                             <option value="">--select--</option>
                             <option value="4">Query Discussion</option>

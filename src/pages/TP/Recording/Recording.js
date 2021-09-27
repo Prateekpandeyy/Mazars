@@ -165,76 +165,62 @@ const canBtn = {
 
     return (
         <>
-              <div style={{position:"relative", height : "100vh", overflow : "scroll"}}>
+     <Layout TPDashboard="TPDashboard" TPuserId={userid}>
+            <div style={{position:"relative", height : "100vh", overflow : "scroll"}}>
+                 <Card>
+                 <CardHeader>
+                     <Row>
+                         <Col md="7">
+                             <CardTitle tag="h4">Recording of Discussion</CardTitle>
+                         </Col>
+                         <Col md="5"></Col>
+                     </Row>
+                 </CardHeader>
+                 <CardBody>
+                 <RecordingFilter
+                        setData={setFeedBackData}
+                     //    getData={getInCompleteAssingment}
+                        SearchQuery="SearchQuery"
+                       setRecords={setRecords}
+                        records={records} 
+                        userid = {userid}
+                        getRecording = {getRecording}
+                     /> 
+                     <BootstrapTable
+                         bootstrap4
+                         keyField="id"
+                         data={feedbackData}
+                         columns={columns}
+                         rowIndex
+                     />
+                 </CardBody>
+ 
+             </Card>
+           
+            </div>
              
-                
-                   <Card>
-                   <CardHeader>
-                       <Row>
-                           <Col md="7">
-                               <CardTitle tag="h4">Recording of Discussion</CardTitle>
-                           </Col>
-                           <Col md="5"></Col>
-                       </Row>
-                   </CardHeader>
-
-                   <CardBody>
-                       <RecordingFilter
-                       setData={setFeedBackData}
-                    //    getData={getInCompleteAssingment}
-                       SearchQuery="SearchQuery"
-                      setRecords={setRecords}
-                       records={records} 
-                       userid = {userid}
-                       getRecording = {getRecording}
-                    /> 
-
-
-                          <BootstrapTable
-                           bootstrap4
-                           keyField="id"
-                           data={feedbackData}
-                           columns={columns}
-                           rowIndex
-                       />
-                   </CardBody>
-   
-               </Card>
+            {isOpen === true ?
+           
+                  
+                  <div style={modalBox}>
+                  <span style={canBtn} onClick= {() => setIsOpen(false)}> <CloseIcon color="red" /> </span>
+                 
+        
+           <div style={{margin: "50px 0 0 0"}}>
+           <ReactPlayer
+             url={videoid}
+             controls={true}
+             playing={true}
+             width='100%'
+             height='100%'
+            />
+               </div>
              
-              </div>
-               
-              {isOpen === true ?
-             
-                    
-                    <div style={modalBox}>
-                    <span style={canBtn} onClick= {() => setIsOpen(false)}> <CloseIcon /> </span>
-                   {/* <ReactHlsPlayer
-               src={videoid}    autoPlay={false}
-               controls={true}
-               width="100%"
-               height="100%"
-               hlsConfig={{
-                   maxLoadingDelay: 4,
-                   minAutoBitrate: 0,
-                   lowLatencyMode: true,
-                 }}
-             /> */}
-          
-             <div style={{margin: "50px 0 0 0"}}>
-             <ReactPlayer
-               url={videoid}
-               controls={true}
-               playing={true}
-               width='100%'
-               height='100%'
-              />
-                 </div>
-               
-              </div>
-            : ""}
-              </>
-   
-       );
-   }
-   
-   export default Recording;
+            </div>
+          : ""}
+          </Layout>
+            </>
+ 
+     );
+ }
+ export default Recording;

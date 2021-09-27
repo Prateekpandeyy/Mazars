@@ -164,7 +164,7 @@ function ProposalComponent(props) {
                 setLoading(true)
                 axios({
                   method: "POST",
-                  url: `${baseUrl}/tl/uploadProposal1`,
+                  url: `${baseUrl}/tl/uploadProposal`,
                   data: formData,
                 })
                   .then(function (response) {
@@ -192,7 +192,7 @@ function ProposalComponent(props) {
         setLoading(true)
         axios({
           method: "POST",
-          url: `${baseUrl}/tl/uploadProposal1`,
+          url: `${baseUrl}/tl/uploadProposal`,
           data: formData,
         })
           .then(function (response) {
@@ -281,7 +281,7 @@ function ProposalComponent(props) {
         </CardHeader>
 
         <CardBody>
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
             <p style={{ color: "red" }}>{error}</p>
             <div style={{ display: "flex" }}>
               <div class="col-md-6">
