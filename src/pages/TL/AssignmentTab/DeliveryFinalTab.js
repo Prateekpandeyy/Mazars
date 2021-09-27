@@ -15,6 +15,7 @@ import DiscardReport from "../AssignmentTab/DiscardReport";
 import FinalReportUpload from "./FinalReportUpload";
 import ViewAllReportModal from "./ViewAllReport";
 import DescriptionOutlinedIcon from '@material-ui/icons/DescriptionOutlined';
+import moment from "moment";
 function AssignmentTab() {
 
     const history = useHistory();
@@ -45,6 +46,7 @@ function AssignmentTab() {
 
     const [report, setReport] = useState();
     const [reportModal, setReportModal] = useState(false);
+    var rowStyle2 = {}
     const ViewDiscussionToggel = (key) => {
         setViewDiscussion(!ViewDiscussion);
         setAssignNo(key)
@@ -403,7 +405,25 @@ const ViewReport = (key) => {
     ];
 
 
-
+    rowStyle2 = (row, index) => {
+        const style = {}
+        var warningDate = moment(row.Exp_Delivery_Date).subtract(2, 'day').toDate();
+        // var warnformat = warningDate.format("YYYY-MM-DD");
+        var aa = moment().toDate();
+       
+    
+        if(row.paid_status != "2" && row.status != "Complete" && warningDate < aa)  {
+          style.backgroundColor = "#c1d8f2";
+          style.color = "#000111"
+        }
+        else if(row.paid_status != "2" && warningDate > aa){
+          style.backgroundColor = "#fff";
+          style.color = "#000"
+        }
+      
+        return style;
+      }
+    
     const onSubmit = (data) => {
         console.log("data :", data);
         console.log("selectedData :", selectedData);
@@ -541,6 +561,7 @@ const ViewReport = (key) => {
                         keyField="id"
                         data={assignment}
                         columns={columns}
+                        rowStyle={ rowStyle2 }
                         rowIndex
                     />
  <ViewAllReportModal

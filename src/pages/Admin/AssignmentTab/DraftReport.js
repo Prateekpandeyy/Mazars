@@ -21,6 +21,7 @@ import Records from "../../../components/Records/Records";
 import DiscardReport from "../AssignmentTab/DiscardReport";
 import DescriptionOutlinedIcon from '@material-ui/icons/DescriptionOutlined';
 import ViewAllReportModal from "./ViewAllReport";
+import moment from "moment";
 function DraftReport() {
   const userid = window.localStorage.getItem("adminkey");
 
@@ -41,6 +42,7 @@ function DraftReport() {
   const [ViewDiscussion, setViewDiscussion] = useState(false);
   const [reportModal, setReportModal] = useState(false);
   const [report, setReport] = useState();
+var rowStyle2 = {}
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key)
@@ -379,6 +381,24 @@ function DraftReport() {
     },
   ];
 
+  rowStyle2 = (row, index) => {
+    const style = {}
+    var warningDate = moment(row.Exp_Delivery_Date).subtract(2, 'day').toDate();
+    // var warnformat = warningDate.format("YYYY-MM-DD");
+    var aa = moment().toDate();
+   
+
+    if(row.paid_status != "2" && row.status != "Complete" && warningDate < aa)  {
+      style.backgroundColor = "#c1d8f2";
+      style.color = "#000111"
+    }
+    else if(row.paid_status != "2" && warningDate > aa){
+      style.backgroundColor = "#fff";
+      style.color = "#000"
+    }
+  
+    return style;
+  }
   const onSubmit = (data) => {
     console.log("data :", data);
     console.log("selectedData :", selectedData);
@@ -509,6 +529,7 @@ function DraftReport() {
             keyField="id"
             data={assignmentDisplay}
             columns={columns}
+            rowStyle={ rowStyle2 }
             rowIndex
           />
   <ViewAllReportModal

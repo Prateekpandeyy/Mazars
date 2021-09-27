@@ -15,7 +15,7 @@ import DiscardReport from "../AssignmentTab/DiscardReport";
 import DraftReportModal from "./DraftReportUpload";
 import DescriptionOutlinedIcon from '@material-ui/icons/DescriptionOutlined';
 import ViewAllReportModal from "./ViewAllReport";
-
+import moment from "moment";
 function AssignmentTab() {
 
     const history = useHistory();
@@ -44,6 +44,7 @@ function AssignmentTab() {
     const [dataItem, setDataItem] = useState({});
     const [report, setReport] = useState();
     const [reportModal, setReportModal] = useState(false);
+    var rowStyle2 = {}
     const uploadDraftReport = (id) => {
       console.log(id);
       setDraftModal(!draftModal);
@@ -130,6 +131,25 @@ const ViewReport = (key) => {
     setReport(key.assign_no);
     setDataItem(key)
   };
+// row Style 
+rowStyle2 = (row, index) => {
+    const style = {}
+    var warningDate = moment(row.Exp_Delivery_Date).subtract(2, 'day').toDate();
+    // var warnformat = warningDate.format("YYYY-MM-DD");
+    var aa = moment().toDate();
+   
+
+    if(row.paid_status != "2" && row.status != "Complete" && warningDate < aa)  {
+      style.backgroundColor = "#c1d8f2";
+      style.color = "#000111"
+    }
+    else if(row.paid_status != "2" && warningDate > aa){
+      style.backgroundColor = "#fff";
+      style.color = "#000"
+    }
+  
+    return style;
+  }
 
     //columns
     const columns = [
@@ -544,6 +564,7 @@ const ViewReport = (key) => {
                         keyField="id"
                         data={assignment}
                         columns={columns}
+                        rowStyle={ rowStyle2 }
                         rowIndex
                     />
   <DraftReportModal
