@@ -170,49 +170,50 @@ function InCompleteData({ CountIncomplete }) {
       formatter: function (cell, row) {
         return (
           <>
+            {row.status_code == "1" ? null :
             <div
-              style={{
-                display: "flex",
-                justifyContent: "space-evenly",
-                color: "green",
-              }}
-            >
-              <div title="Send Message">
-                <Link
-                  to={{
-                    pathname: `/teamleader/chatting/${row.id}`,
-                    obj: {
-                      message_type: "2",
-                      query_No: row.assign_no,
-                      query_id: row.id,
-                      routes: `/teamleader/proposal`
-                    }
-                  }}
-                >
-                  <i
-                    class="fa fa-comments-o"
-                    style={{
-                      fontSize: 16,
-                      cursor: "pointer",
-                      marginLeft: "8px",
-                      color: "blue"
-                    }}
-                  ></i>
-                </Link>
-              </div>
-
-              <div title="View Discussion Message">
+            style={{
+              display: "flex",
+              justifyContent: "space-evenly",
+              color: "green",
+            }}
+          >
+            <div title="Send Message">
+              <Link
+                to={{
+                  pathname: `/teamleader/chatting/${row.id}`,
+                  obj: {
+                    message_type: "4",
+                    query_No: row.assign_no,
+                    query_id: row.id,
+                    routes: `/teamleader/proposal`
+                  }
+                }}
+              >
                 <i
                   class="fa fa-comments-o"
                   style={{
                     fontSize: 16,
                     cursor: "pointer",
-                    color: "orange"
+                    marginLeft: "8px",
+                    color: "blue"
                   }}
-                  onClick={() => ViewDiscussionToggel(row.assign_no)}
                 ></i>
-              </div>
+              </Link>
             </div>
+
+            <div title="View Discussion Message">
+              <i
+                class="fa fa-comments-o"
+                style={{
+                  fontSize: 16,
+                  cursor: "pointer",
+                  color: "orange"
+                }}
+                onClick={() => ViewDiscussionToggel(row.assign_no)}
+              ></i>
+            </div>
+          </div>}
           </>
         );
       },

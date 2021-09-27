@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import "antd/dist/antd.css";
 import BootstrapTable from "react-bootstrap-table-next";
 import TaxProfessionalFilter from "../../../components/Search-Filter/tpfilter";
-// import DiscardReport from "../AssignmentTab/DiscardReport";
+ import DiscardReport from "../AssignmentTab/DiscardReport";
 
 
 
@@ -26,12 +26,12 @@ function DeclinedProposal() {
         setId(key.assign_no);
     };
 
-    // const [assignNo, setAssignNo] = useState('');
-    // const [ViewDiscussion, setViewDiscussion] = useState(false);
-    // const ViewDiscussionToggel = (key) => {
-    //     setViewDiscussion(!ViewDiscussion);
-    //     setAssignNo(key)
-    // }
+    const [assignNo, setAssignNo] = useState('');
+    const [ViewDiscussion, setViewDiscussion] = useState(false);
+    const ViewDiscussionToggel = (key) => {
+        setViewDiscussion(!ViewDiscussion);
+        setAssignNo(key)
+    }
     useEffect(() => {
         getProposalList();
     }, []);
@@ -301,7 +301,33 @@ function DeclinedProposal() {
                                         </div>
                                 }
                             </div>
-
+                            {
+                                    row.status == "Customer Declined; Proposal" ?
+                                        null :
+                            <div title="Send Message">
+                                            <Link
+                                                to={{
+                                                    pathname: `/taxprofessional/chatting/${row.id}`,
+                                                    obj: {
+                                                        message_type: "2",
+                                                        query_No: row.assign_no,
+                                                        query_id: row.id,
+                                                        routes: `/taxprofessional/proposal`
+                                                    }
+                                                }}
+                                            >
+                                                <i
+                                                    class="fa fa-comments-o"
+                                                    style={{
+                                                        fontSize: 16,
+                                                        cursor: "pointer",
+                                                        marginLeft: "8px",
+                                                        color: "blue"
+                                                    }}
+                                                ></i>
+                                            </Link>
+                                        </div>
+            }
                             <div title="View Discussion Message">
                                 <i
                                     class="fa fa-comments-o"
@@ -310,7 +336,7 @@ function DeclinedProposal() {
                                         cursor: "pointer",
                                         color: "orange"
                                     }}
-                                    // onClick={() => ViewDiscussionToggel(row.assign_no)}
+                                    onClick={() => ViewDiscussionToggel(row.assign_no)}
                                 ></i>
                             </div>
                         </div>
@@ -340,12 +366,12 @@ function DeclinedProposal() {
                         columns={columns}
                         rowIndex
                     />
-                    {/* <DiscardReport
+                    <DiscardReport
                         ViewDiscussionToggel={ViewDiscussionToggel}
                         ViewDiscussion={ViewDiscussion}
                         report={assignNo}
                         getData={getProposalList}
-                    /> */}
+                    />
                 </CardBody>
             </Card>
         </>

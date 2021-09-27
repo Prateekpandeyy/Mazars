@@ -62,7 +62,7 @@ function PendingAllocation({ CountPendingForAllocation }) {
 
   const getPendingForAllocation = () => {
     axios.get(`${baseUrl}/admin/pendingAllocation`).then((res) => {
-      console.log(res);
+      console.log("repforquery", res.data.result);
       if (res.data.code === 1) {
         // CountPendingForAllocation(res.data.result.length);
         setPendingData(res.data.result);
@@ -180,6 +180,7 @@ function PendingAllocation({ CountPendingForAllocation }) {
       },
       formatter: function (cell, row) {
         return (
+         
           <>
             {row.is_assigned === "1" ? (
               <p style={{ color: "green", fontSize: "10px" }}>
@@ -206,7 +207,7 @@ function PendingAllocation({ CountPendingForAllocation }) {
                   </Link>
                 </div>
 
-                <div title="Send Message">
+                {/* <div title="Send Message">
                   <Link
                     to={{
                       pathname: `/admin/chatting/${row.id}`,
@@ -228,7 +229,7 @@ function PendingAllocation({ CountPendingForAllocation }) {
                       }}
                     ></i>
                   </Link>
-                </div>
+                </div> */}
 
               </div>
 

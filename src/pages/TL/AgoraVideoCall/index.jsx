@@ -18,7 +18,7 @@ import {
 import RecordingModal from "./RecordingModal";
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import { green ,red} from '@material-ui/core/colors';
-
+import recImg from "../../../loader.gif";
 
 const tile_canvas = {
   "1": ["span 12/span 24"],
@@ -652,8 +652,11 @@ async startRecording(key){
 
  //stop recording 
  stopRecording = () => {
- 
-  if(this.state.showButton == JSON.parse(this.teamKey)){
+  
+    if(this.state.showRecBtn === true){
+  this.toggleModal("stop")
+    }
+ else if(this.state.showButton == JSON.parse(this.teamKey)){
     var resourceId = localStorage.getItem("resourceId");
     var sid = localStorage.getItem("sid");
   
@@ -762,11 +765,11 @@ async startRecording(key){
         }
         title="Exit"
       >
-        {
+        {/* {
            this.state.showRecBtn === false ?
            <i className="ag-icon ag-icon-leave"></i> : ""
-        }
-     
+        } */}
+                <i className="ag-icon ag-icon-leave"></i> 
       </span>
     );
 
@@ -800,7 +803,8 @@ const recordingBtnOff = (
   >
      {
       this.state.showButton == JSON.parse(this.teamKey) ?
-      <FiberManualRecordIcon style={{ color: red[500] }}/> : ""
+      // <FiberManualRecordIcon style={{ color: red[500] }}/> : ""
+      <img src = {recImg} style = {{width : "20px"}} /> : ""
     }
             
   </span>

@@ -13,8 +13,8 @@ import { Select } from "antd";
 import BootstrapTable from "react-bootstrap-table-next";
 import DiscardReport from "../AssignmentTab/DiscardReport";
 import DraftReportModal from "./DraftReportUpload";
-
-
+import DescriptionOutlinedIcon from '@material-ui/icons/DescriptionOutlined';
+import ViewAllReportModal from "./ViewAllReport";
 
 function AssignmentTab() {
 
@@ -38,11 +38,12 @@ function AssignmentTab() {
     var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
     console.log("current_date :", current_date);
     const [item] = useState(current_date);
-
-
     const [assignNo, setAssignNo] = useState('');
     const [ViewDiscussion, setViewDiscussion] = useState(false);
     const [draftModal, setDraftModal] = useState(false);
+    const [dataItem, setDataItem] = useState({});
+    const [report, setReport] = useState();
+    const [reportModal, setReportModal] = useState(false);
     const uploadDraftReport = (id) => {
       console.log(id);
       setDraftModal(!draftModal);
@@ -122,7 +123,13 @@ function AssignmentTab() {
         console.log(`selected ${value}`);
         setStatus(value);
     };
-
+// view report 
+const ViewReport = (key) => {
+   
+    setReportModal(!reportModal);
+    setReport(key.assign_no);
+    setDataItem(key)
+  };
 
     //columns
     const columns = [
@@ -261,6 +268,56 @@ function AssignmentTab() {
             },
         },
         {
+            text: "Deliverable",
+            dataField: "",
+            sort: true,
+            headerStyle: () => {
+              return { fontSize: "12px" };
+            },
+            formatter: function (cell, row) {
+              return (
+                <>
+                  {
+                    row.paid_status == "2" ? null :
+                      <div>
+                        {row.assignement_draft_report || row.final_report ?
+                          <div title="View All Report"
+                            style={{ cursor: "pointer" }}
+                            onClick={() => ViewReport(row)}
+                          >
+                            <DescriptionOutlinedIcon color="secondary" />
+                          </div>
+                          :
+                          null
+                        }
+                      </div>
+                  }
+                </>
+              );
+            },
+          },
+        {
+            text: "Assignment Stage",
+            headerStyle: () => {
+              return { fontSize: "12px" };
+            },
+            formatter: function (cell, row) {
+              return (
+                <>
+                  <div
+                    title="Add Assignment stages"
+                    style={{ cursor: "pointer", textAlign: "center" }}
+                  >
+                   {row.paid_status == "2" ? null : 
+                    <Link to={`/teamleader/addassingment/${row.q_id}`}>
+                    <i class="fa fa-tasks"></i>
+                  </Link> }
+                  </div>
+                </>
+              );
+            },
+          },
+        {
             text: "Action",
             headerStyle: () => {
               return { fontSize: "12px", width: "90px" };
@@ -269,7 +326,8 @@ function AssignmentTab() {
               return (
                 <>
                {
-                 row.paid_status == "2" ? null : 
+                 row.paid_status == "2" ? 
+                "" : 
                  <div
                  style={{
                    display: "flex",
@@ -488,7 +546,18 @@ function AssignmentTab() {
                         columns={columns}
                         rowIndex
                     />
-
+  <DraftReportModal
+            draftModal={draftModal}
+            uploadDraftReport={uploadDraftReport}
+            getAssignmentList={getAssignmentList}
+            id={id}
+          />
+ <ViewAllReportModal
+            ViewReport={ViewReport}
+            reportModal={reportModal}
+            report={report}
+            dataItem={dataItem}
+          />
 
                     <DiscardReport
                         ViewDiscussionToggel={ViewDiscussionToggel}

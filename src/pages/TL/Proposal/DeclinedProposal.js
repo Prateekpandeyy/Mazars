@@ -271,7 +271,7 @@ function DeclinedProposal() {
                             }
 
 
-                            <div>
+<div>
                                 {
                                     row.status == "Customer Declined; Proposal" ?
                                         null
@@ -301,6 +301,7 @@ function DeclinedProposal() {
                                         </div>
                                 }
                             </div>
+
 
                             <div title="View Discussion Message">
                                 <i

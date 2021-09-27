@@ -295,14 +295,17 @@ function AllPayment() {
                                 onClick={() => toggle(row.assign_id)}
                                 style={{ color: "green", fontSize: "16px", cursor: "pointer" }}
                             >
-                                <AssessmentIcon />
+                               <i
+                                class="fa fa-credit-card"
+                                style={{ color: "green", fontSize: "16px" }}
+                                onClick={() => toggle(row.assign_id)}></i>
                             </div>
                             <div title="Send Message">
                                 <Link
                                     to={{
                                         pathname: `/teamleader/chatting/${row.assign_id}`,
                                         obj: {
-                                            message_type: "2",
+                                            message_type: "5",
                                             query_No: row.assign_no,
                                             query_id: row.assign_id,
                                             routes: `/teamleader/proposal`

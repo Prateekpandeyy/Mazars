@@ -5,7 +5,6 @@ import { baseUrl } from "../../../config/config";
 import { useAlert } from "react-alert";
 import { useHistory, useParams } from "react-router-dom";
 import Layout from "../../../components/Layout/Layout";
-import { getErrorMessage } from '../../../constants';
 import {
   Card,
   CardHeader,
@@ -23,7 +22,7 @@ import Mandatory from "../../../components/Common/Mandatory";
 import { Spinner } from 'reactstrap';
 
 
-function EditComponent(props) {
+function EditComponent() {
 
   const alert = useAlert();
   const { register, handleSubmit, reset, errors } = useForm();
@@ -43,6 +42,9 @@ function EditComponent(props) {
   const [diserror, setdiserror] = useState("")
   const history = useHistory();
   const { id } = useParams();
+  
+  var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
+  const [item] = useState(current_date);
 
   const [proposal, setProposal] = useState({
     query: "",
@@ -175,7 +177,7 @@ function EditComponent(props) {
                 setLoading(true)
                 axios({
                   method: "POST",
-                  url: `${baseUrl}/tp/updateProposal1`,
+                  url: `${baseUrl}/tp/updateProposal`,
                   data: formData,
                 })
                   .then(function (response) {
@@ -190,11 +192,7 @@ function EditComponent(props) {
                     }
                   })
                   .catch((error) => {
-                    //console.log("erroror - ", error);
-                    getErrorMessage();
-        setTimeout(function(){
-        props.history.push(`/taxprofessional/edit-proposal/${props.match.params.id}`);
-      },3000);
+                    console.log("erroror - ", error);
                   });
               }
             }
@@ -204,7 +202,7 @@ function EditComponent(props) {
         setLoading(true)
         axios({
           method: "POST",
-          url: `${baseUrl}/tp/updateProposal1`,
+          url: `${baseUrl}/tp/updateProposal`,
           data: formData,
         })
           .then(function (response) {
@@ -219,11 +217,7 @@ function EditComponent(props) {
             }
           })
           .catch((error) => {
-           // console.log("erroror - ", error);
-            getErrorMessage();
-        setTimeout(function(){
-        props.history.push(`/taxprofessional/edit-proposal/${props.match.params.id}`);
-      },3000);
+            console.log("erroror - ", error);
           });
       }
   };
@@ -289,7 +283,7 @@ function EditComponent(props) {
         </CardHeader>
 
         <CardBody>
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
 
             <div style={{ display: "flex" }}>
               <div class="col-md-6">
@@ -383,6 +377,7 @@ function EditComponent(props) {
                       ref={register({ required: true })}
                       placeholder="Enter Hourly basis"
                       defaultValue={due_date}
+                      min={item}
                     />
                   </div>
                 ) :
@@ -412,19 +407,17 @@ function EditComponent(props) {
                       installment_amount={installment_amount}
                       due_date={due_date}
                       getQuery={getQuery}
+                      item={item}
                     />
                 }
               </div>
             </div>
 
             <div class="form-group col-md-6">
-            {
-            loading ?
-              // <Loader />
-              <div class="col-md-12">
-                    <Spinner color="primary" />
-                  </div>
-              :
+              {
+                loading ?
+                  <Spinner color="primary" />
+                  :
                   <button type="submit" class="btn btn-primary">
                     Submit
                   </button>

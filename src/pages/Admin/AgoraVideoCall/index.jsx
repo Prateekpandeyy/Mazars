@@ -19,6 +19,7 @@ import RecordingModal from "./RecordingModal";
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import { green ,red} from '@material-ui/core/colors';
 import { Redirect } from "react-router";
+import recImg from "../../../loader.gif";
 const tile_canvas = {
   "1": ["span 12/span 24"],
   "2": ["span 12/span 12/13/25", "span 12/span 12/13/13"],
@@ -106,13 +107,12 @@ allrecording;
     // init AgoraRTC local client
     this.client = AgoraRTC.createClient({ mode: $.transcode });
     this.client.init($.appId, () => {
-      console.log("AgoraRTC client initialized");
+     
       this.subscribeStreamEvents();
 
       this.client.join($.appId, $.channel, $.uid, (uid) => {
         this.state.uid = uid;
-        console.log("User " + uid + " join channel successfully");
-        console.log("At " + new Date().toLocaleTimeString());
+       
         // create local stream
         // It is not recommended to setState in function addStream
         this.localStream = this.streamInit(uid, $.attendeeMode, $.videoProfile);
@@ -121,13 +121,13 @@ allrecording;
             if ($.attendeeMode !== "audience") {
               this.addStream(this.localStream, true);
               this.client.publish(this.localStream, (err) => {
-                console.log("Publish local stream error: " + err);
+              
               });
             }
             this.setState({ readyState: true });
           },
           (err) => {
-            console.log("getUserMedia failed", err);
+           
             this.setState({ readyState: true });
           }
         );
@@ -155,12 +155,12 @@ allrecording;
 schdrularName;
 
   getSchedulerData =() =>{
-    console.log("getSchedulerData--",this.props.id)
+   
 
     axios
             .get(`${baseUrl}/tl/videoScheduler?id=${this.props.id}`)
             .then((res) => {
-                console.log(res);
+                console.log("myResponse", res.data.result.items[0]);
            
                
                 if (res.data.code === 1) {
@@ -239,10 +239,10 @@ schdrularName;
     this.client &&
       this.client.leave(
         () => {
-          console.log("Client succeed to leave.");
+         
         },
         () => {
-          console.log("Client failed to leave.");
+         
         }
       );
   }
@@ -277,35 +277,26 @@ schdrularName;
     let rt = this;
     rt.client.on("stream-added", function (evt) {
       let stream = evt.stream;
-      console.log("New stream added: " + stream.getId());
-      console.log("At " + new Date().toLocaleTimeString());
-      console.log("Subscribe ", stream);
+     
       rt.client.subscribe(stream, function (err) {
-        console.log("Subscribe stream failed", err);
+      
       });
     });
 
     rt.client.on("peer-leave", function (evt) {
-      console.log("Peer has left: " + evt.uid);
-      console.log(new Date().toLocaleTimeString());
-      console.log(evt);
+     
       rt.removeStream(evt.uid);
     });
 
     rt.client.on("stream-subscribed", function (evt) {
       let stream = evt.stream;
-      console.log("Got stream-subscribed event");
-      console.log(new Date().toLocaleTimeString());
-      console.log("Subscribe remote stream successfully: " + stream.getId());
-      console.log(evt);
+     
       rt.addStream(stream);
     });
 
     rt.client.on("stream-removed", function (evt) {
       let stream = evt.stream;
-      console.log("Stream removed: " + stream.getId());
-      console.log(new Date().toLocaleTimeString());
-      console.log(evt);
+     
       rt.removeStream(stream.getId());
     });
   };
@@ -398,36 +389,6 @@ schdrularName;
     });
   };
 
-  // handleExit = (e) => {
-  //   if (e.currentTarget.classList.contains("disabled")) {
-  //     return;
-  //   }
-  //   try {
-  //     this.client && this.client.unpublish(this.localStream);
-  //     this.localStream && this.localStream.close();
-  //     if (this.state.stateSharing) {
-  //       this.shareClient && this.shareClient.unpublish(this.shareStream);
-  //       this.shareStream && this.shareStream.close();
-  //     }
-  //     this.client &&
-  //       this.client.leave(
-  //         () => {
-  //           console.log("Client succeed to leave.");
-  //         },
-  //         () => {
-  //           console.log("Client failed to leave.");
-  //         }
-  //       );
-  //   } finally {
-  //     this.setState({ readyState: false });
-  //     this.client = null;
-  //     this.localStream = null;
-  //     this.setState({showRecBtn : true})
-  //     // // redirect to index
-  //     window.location.hash = "/teamleader/schedule";
-  //   }
-  // };
-
 
   handleExit = async() => {
    
@@ -455,7 +416,7 @@ schdrularName;
       this.setState({showRecBtn : true})
     })
         .catch((error) => {
-        console.log("error - ", error);
+       
       });
     
   }
@@ -471,13 +432,12 @@ schdrularName;
       this.shareClient = AgoraRTC.createClient({ mode: $.transcode });
 
       this.shareClient.init($.appId, () => {
-        console.log("AgoraRTC client initialized");
+      
 
         this.subscribeStreamEvents();
         this.shareClient.join($.appId, $.channel, $.uid, (uid) => {
           this.state.uid = uid;
-          console.log("User " + uid + " join channel successfully");
-          console.log("At " + new Date().toLocaleTimeString());
+         
           // create local stream
           // It is not recommended to setState in function addStream
           
@@ -491,13 +451,13 @@ schdrularName;
               if ($.attendeeMode !== "audience") {
                 this.addStream(this.shareStream, true);
                 this.shareClient.publish(this.shareStream, (err) => {
-                  console.log("Publish local stream error: " + err);
+                  
                 });
               }
               this.setState({ readyState: true });
             },
             (err) => {
-              console.log("getUserMedia failed", err);
+             
               this.setState({ readyState: true });
             }
           );
@@ -534,11 +494,11 @@ schdrularName;
 
 
   CreateS3Folder = (uid) =>{
-    console.log("CreateS3Folder",uid)
+   
     axios
             .get(`https://virtualapi.multitvsolution.com/s3/createMPObject.php?folder_id=${JSON.parse(uid)}`)
             .then((res) => {
-                console.log(res);    
+                 
             });
   }
 
@@ -554,7 +514,7 @@ sleep(ms) {
 
 //get recording status
  async GetRecordingStatus(json){
-    console.log("GetRecordingStatus",json)
+    
 
     await this.sleep(3000); 
     var resourceId = json.data.resourceId;
@@ -573,7 +533,7 @@ sleep(ms) {
   })
       .then((res) => res.json())
       .then((response) => {
-          console.log(response);
+         
           this.setState({
             data:response,
             recordDisplay:!this.state.recordDisplay
@@ -586,7 +546,7 @@ sleep(ms) {
 
 //start recording
 async startRecording(key){
-    console.log("startRecording - ",key);
+  
     var resourceId = key.data.resourceId 
     
     this.CreateS3Folder(JSON.stringify(this.uid));
@@ -606,14 +566,14 @@ async startRecording(key){
     })
     .then(json => this.GetRecordingStatus(json)) 
       .catch((error) => {
-        console.log("error - ", error);
+       
       });
   };
 
 
   //recording  acquire
    accuire = () =>{
-    console.log("accuire - ");
+   
     var data = "{\n  \"cname\": \"" + this.channelName + "\",\n  \"uid\": \"" + this.uid + "\",\n  \"clientRequest\":{\n  }\n}"
 
     axios({
@@ -630,7 +590,7 @@ async startRecording(key){
         this.startRecording(json)) 
         // console.log("accuire - ",json))
       .catch((error) => {
-        console.log("error - ", error);
+       
       });
   };
 // Start recording button
@@ -641,7 +601,7 @@ async startRecording(key){
 
   //toggelStop
   toggleModal = (key) =>{
-  console.log("key",key)
+  
   this.setState({
     showModal: !this.state.showModal,
     recordDisplay:false
@@ -651,10 +611,15 @@ async startRecording(key){
 
  //stop recording 
  stopRecording = () => {
+  if(this.state.showRecBtn === true){
+this.toggleModal("stop")
+  }
   
-  if(this.state.showButton == JSON.parse(this.teamKey)){
-  var resourceId = localStorage.getItem("resourceId");
-  var sid = localStorage.getItem("sid");
+  else if(this.state.showButton == JSON.parse(this.teamKey)){
+    if(resourceId === undefined){
+      var resourceId = localStorage.getItem("resourceId");
+    var sid = localStorage.getItem("sid");
+    }
 
   var data = JSON.stringify({
     "cname":this.channelName,
@@ -673,11 +638,11 @@ async startRecording(key){
   .then(json => 
     this.toggleModal(json)) 
     .catch((error) => {
-      console.log("error - ", error);
+      
     });
 }
 else{
-  console.log("exit");
+  
   window.location.hash = "/admin/schedule";
 }
   
@@ -762,16 +727,16 @@ else{
         }
         title="Exit"
       >
-        {
+        {/* {
            this.state.showRecBtn === false ?
-           <i className="ag-icon ag-icon-leave"></i> : ""
-        }
-     
+           <i className="ag-icon ag-icon-leave"></i> :  ""
+        } */}
+     <i className="ag-icon ag-icon-leave"></i> 
       </span>
     );
 
 //recording btn on
-console.log(this.state.showRecBtn)
+
     const recordingBtn = (
       <span
         onClick={this.recStart}
@@ -800,12 +765,13 @@ const recordingBtnOff = (
   >
      {
       this.state.showButton == JSON.parse(this.teamKey) ?
-      <FiberManualRecordIcon style={{ color: red[500] }}/> : ""
+      // <FiberManualRecordIcon style={{ color: red[500] }}/> : ""
+     <img src = {recImg} style = {{width : "20px"}} /> : ""
     }
             
   </span>
 );
-console.log(this.state.showRecBtn)
+
     return (
       <>
       <div id="ag-canvas" style={style}>   

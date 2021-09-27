@@ -90,17 +90,13 @@ function Customer() {
       },
     },
     {
-        dataField: "",
+        dataField: "email",
         text: "Email",
         sort: true,
         headerStyle: () => {
           return { fontSize: "12px", cursor: "pointer" };
         },
-        formatter : function(cell, row) {
-          return(
-            <a   onClick={() => show(row.id)} style={{color : "#0000EE"}}>{row.email}</a>
-          )
-        }
+        
       },
       {
         dataField: "phone",
@@ -155,25 +151,25 @@ function Customer() {
     
   
    
-    // {
-    //   dataField: "",
-    //   text: "Action",
-    //   headerStyle: () => {
-    //     return { fontSize: "12px" };
-    //   },
-    //   formatter: function (cell, row) {
-    //     return (
-    //       <>
+    {
+      dataField: "",
+      text: "Action",
+      headerStyle: () => {
+        return { fontSize: "12px" };
+      },
+      formatter: function (cell, row) {
+        return (
+          <>
            
-    //         <i
-    //           className="fa fa-eye"
-    //           style={{ fontSize: 20, cursor: "pointer", marginLeft: "8px" , color : "green"}}
-    //           onClick={() => show(row.id)}
-    //         ></i>
-    //       </>
-    //     );
-    //   },
-    // },
+            <i
+              className="fa fa-eye"
+              style={{ fontSize: 20, cursor: "pointer", marginLeft: "8px" , color : "green"}}
+              onClick={() => show(row.id)}
+            ></i>
+          </>
+        );
+      },
+    },
    
   ];
 
@@ -240,7 +236,6 @@ function Customer() {
         <CardBody>
         <CustomerListFilter
         setData={setData}
-        listData={data}
         searchQuery = "SearchQuery"
         setRecords={setTpCount}
          records={tpCount} 

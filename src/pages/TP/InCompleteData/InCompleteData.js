@@ -165,58 +165,64 @@ function InCompleteData({ CountIncomplete }) {
       text: "Action",
       dataField: "",
       headerStyle: () => {
-        return { fontSize: "12px" };
+          return { fontSize: "12px" };
       },
       formatter: function (cell, row) {
-        return (
-          <>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-evenly",
-                color: "green",
-              }}
+        
+          return (
+              <>
+               {row.tp_status == "1" ? null : 
+                
+                <div
+                style={{
+                    display: "flex",
+                    justifyContent: "space-evenly",
+                    color: "green",
+                }}
             >
-              <div title="Send Message">
-                <Link
-                  to={{
-                    pathname: `/taxprofessional/chatting/${row.id}`,
-                    obj: {
-                      message_type: "2",
-                      query_No: row.assign_no,
-                      query_id: row.id,
-                      routes: `/taxprofessional/proposal`
-                    }
-                  }}
-                >
-                  <i
-                    class="fa fa-comments-o"
-                    style={{
-                      fontSize: 16,
-                      cursor: "pointer",
-                      marginLeft: "8px",
-                      color: "blue"
-                    }}
-                  ></i>
-                </Link>
-              </div>
+               
 
-              <div title="View Discussion Message">
-                <i
-                  class="fa fa-comments-o"
-                  style={{
-                    fontSize: 16,
-                    cursor: "pointer",
-                    color: "orange"
-                  }}
-                  onClick={() => ViewDiscussionToggel(row.assign_no)}
-                ></i>
-              </div>
-            </div>
-          </>
-        );
+                {row.status == "Declined Query" ? null :
+                <div title="Send Message">
+                <Link
+                    to={{
+                        pathname: `/taxprofessional/chatting/${row.id}`,
+                        obj: {
+                            message_type: "4",
+                            query_No: row.assign_no,
+                            query_id: row.id,
+                            routes: `/taxprofessional/proposal`
+                        }
+                    }}
+                >
+                    <i
+                        class="fa fa-comments-o"
+                        style={{
+                            fontSize: 16,
+                            cursor: "pointer",
+                            marginLeft: "8px",
+                            color: "blue"
+                        }}
+                    ></i>
+                </Link>
+            </div>}
+
+                <div title="View Discussion Message">
+                    <i
+                        class="fa fa-comments-o"
+                        style={{
+                            fontSize: 16,
+                            cursor: "pointer",
+                            color: "orange"
+                        }}
+                        onClick={() => ViewDiscussionToggel(row.assign_no)}
+                    ></i>
+                </div>
+            </div>}
+              </>
+          );
       },
-    },
+  },
   ];
 
   return (
