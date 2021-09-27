@@ -35,7 +35,7 @@ function EditComponent() {
   const [date, setDate] = useState();
   const [load, setLoad] = useState(true);
 
-
+  const[clearValue, setClearValue] = useState(true)
   const [payment, setPayment] = useState([]);
   const [installment, setInstallment] = useState([]);
   const [error, setError] = useState('');
@@ -257,6 +257,7 @@ function EditComponent() {
   const installmentHandler = (key) => {
     console.log("key", key)
     setInstallment(key)
+    setClearValue(false)
   }
 
 
@@ -408,6 +409,7 @@ function EditComponent() {
                       due_date={due_date}
                       getQuery={getQuery}
                       item={item}
+                      clearValue={clearValue}
                     />
                 }
               </div>
