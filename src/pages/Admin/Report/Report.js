@@ -190,18 +190,10 @@ const Report = () => {
 <span>  <input type="checkbox" ref={register} name="doa" id="doa"></input>
 <label htmlFor="doa">Date of Allocation of Query</label>
 </span>
-<<<<<<< HEAD
-            
-            </div>
-           </fieldset>
-           </div>
-   </div>
-=======
 </div>
 </fieldset>
 </div>
 </div>
->>>>>>> 642b1df1e4334bd74011ab74db71eabe68c1b1ac
 
 
    {/* Proposal */}
@@ -260,11 +252,6 @@ const Report = () => {
        <div className="col-md-12">
        <fieldset className="my-fieldset">
            <legend className="login-legend">Assignment</legend>
-<<<<<<< HEAD
-         
-
-=======
->>>>>>> 642b1df1e4334bd74011ab74db71eabe68c1b1ac
             <div className="basicFeild">
             <span>
 <input type="checkbox" ref={register} name="assignNumber" id="assignNumber"></input>
