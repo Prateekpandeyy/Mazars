@@ -179,7 +179,7 @@ function AddNew() {
 
       axios({
         method: "POST",
-        url: `${baseUrl}/tl/AddTeamLead1`,
+        url: `${baseUrl}/tl/AddTeamLead`,
         data: formData,
       })
 
