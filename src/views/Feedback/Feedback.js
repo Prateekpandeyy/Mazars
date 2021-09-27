@@ -6,8 +6,6 @@ import Layout from "../../components/Layout/Layout";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
 import { useHistory, useParams } from "react-router-dom";
-import { Spinner } from 'reactstrap';
-
 import {
   Card,
   CardHeader,
@@ -20,7 +18,6 @@ import classNames from "classnames";
 import Alerts from "../../common/Alerts";
 import Mandatory from "../../components/Common/Mandatory";
 import Loader from "../../components/Loader/Loader";
-import { getErrorMessage } from '../../constants'
 
 
 const Schema = yup.object().shape({
@@ -39,11 +36,6 @@ function Feedback() {
   const { id } = useParams();
   const userId = window.localStorage.getItem("userid");
   const [loading, setLoading] = useState(false);
-  const [time, setTime] = useState('')
-  const [load, setLoad] = useState(false);
-  const [disabled, setDisabled] = useState(false)
-  const [show, setShow] = useState(false);
-  
 
 
   const onSubmit = (value) => {
@@ -56,7 +48,7 @@ function Feedback() {
 
     axios({
       method: "POST",
-      url: `${baseUrl}/customers/PostUserFeedback1`,
+      url: `${baseUrl}/customers/PostUserFeedback`,
       data: formData,
     })
       .then(function (response) {
@@ -74,13 +66,8 @@ function Feedback() {
         }
       })
       .catch((error) => {
-        //console.log("erroror - ", error);
-        getErrorMessage();
-        setTimeout(function(){
-       history.push(`/customer/feedback/${id}`);
-      },2000);
-    });
-  
+        console.log("erroror - ", error);
+      });
   };
 
 
@@ -105,7 +92,10 @@ function Feedback() {
         </CardHeader>
 
         <CardBody>
-          
+          {
+            loading ?
+              <Loader />
+              :
               <>
                 <form onSubmit={handleSubmit(onSubmit)}>
                   <div class="row" style={{ display: "flex", justifyContent: "center" }}>
@@ -140,24 +130,16 @@ function Feedback() {
                           </div>
                         )}
                       </div>
-                      {
-            loading ?
-              // <Loader />
-              <div class="col-md-12">
-                    <Spinner color="primary" />
-                  </div>
-              :
                       <button type="submit" className="btn btn-primary">
                         submit
                       </button>
-                      }
                     </div>
                   </div>
 
                 </form>
                 <Mandatory />
               </>
-          
+          }
         </CardBody>
       </Card>
     </Layout>

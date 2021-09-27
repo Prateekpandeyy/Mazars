@@ -3,11 +3,8 @@ import axios from "axios";
 import { baseUrl } from "../../config/config";
 import { useForm } from "react-hook-form";
 import { Select } from "antd";
-import { Spinner } from "reactstrap";
-import { getErrorMessage } from '../../constants';
-import { useHistory, useParams } from "react-router-dom";
+
 function CustomerFilter(props) {
-  const [loading, setLoading] = useState(false);
   const { Option } = Select;
   const { handleSubmit, register, errors, reset } = useForm();
 
@@ -25,15 +22,12 @@ function CustomerFilter(props) {
     allPayment,
     paid,
     unpaid,
-    assignment,loadingMethod } = props;
+    assignment } = props;
 
 
   const [selectedData, setSelectedData] = useState([]);
   const [tax2, setTax2] = useState([]);
   const [store2, setStore2] = useState([]);
-  const [load, setLoad] = useState(false)
-  const history = useHistory();
-  //const [loading, setLoading] = useState(false);
 
   var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
   console.log("current_date :", current_date);
@@ -44,7 +38,7 @@ function CustomerFilter(props) {
     const getSubCategory = () => {
      if(selectedData != undefined){
       axios
-      .get(`${baseUrl}/customers/getCategory1?pid=${selectedData}`)
+      .get(`${baseUrl}/customers/getCategory?pid=${selectedData}`)
       .then((res) => {
         console.log(res);
         if (res.data.code === 1) {
@@ -80,23 +74,21 @@ function CustomerFilter(props) {
 
   //reset date
   const resetData = () => {
-    //setLoading(true)
     console.log("resetData ..");
     reset();
     setSelectedData([]);
     setStore2([]);
     getData();
-   // setLoading(false)
   };
 
   const onSubmit = (data) => {
-    setLoading(true)
+  
 
     if (query == "query") {
 
       axios
         .get(
-          `${baseUrl}/customers/incompleteAssignments1?user=${JSON.parse(
+          `${baseUrl}/customers/incompleteAssignments?user=${JSON.parse(
             id
           )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
           }&status=${data.p_status}&pcat_id=${selectedData}`
@@ -104,25 +96,18 @@ function CustomerFilter(props) {
         .then((res) => {
           console.log("myResult", res.data.result);
           if (res.data.code === 1) {
-            setLoading(false)
             if (res.data.result) {
               setData(res.data.result);
               setRecords(res.data.result.length);
             }
           }
-        })
-        .catch((error) => {
-          // console.log("erroror - ", error);
-           getErrorMessage();
-       setTimeout(function(){
-       history.push(`/customer/queries`);
-     },3000);
-         });
+        });
     }
+
     if (InprogressAllocation == "InprogressAllocation") {
       axios
         .get(
-          `${baseUrl}/customers/incompleteAssignments1?user=${JSON.parse(
+          `${baseUrl}/customers/incompleteAssignments?user=${JSON.parse(
             id
           )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
           }&status=${data.p_status}&pcat_id=${selectedData}`
@@ -130,51 +115,36 @@ function CustomerFilter(props) {
         .then((res) => {
           console.log("myResult", res.data.result);
           if (res.data.code === 1) {
-            setLoading(false);
             if (res.data.result) {
               setData(res.data.result);
               setRecords(res.data.result.length);
             }
           }
-        })
-        .catch((error) => {
-          // console.log("erroror - ", error);
-           getErrorMessage();
-       setTimeout(function(){
-       history.push(`/customer/queries`);
-     },3000);
-         });
+        });
     }
 
     if (InprogressQueryProposal == "InprogressQueryProposal") {
       axios
         .get(
-          `${baseUrl}/customers/incompleteAssignments1?uid=${JSON.parse(id)}&status=2&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
+          `${baseUrl}/customers/incompleteAssignments?uid=${JSON.parse(id)}&status=2&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
           }&pcat_id=${selectedData}`
         )
         .then((res) => {
           console.log("myResult", res.data.result);
           if (res.data.code === 1) {
-            setLoading(false);
             if (res.data.result) {
               setData(res.data.result);
               setRecords(res.data.result.length);
             }
           }
-        })
-        .catch((error) => {
-          // console.log("erroror - ", error);
-           getErrorMessage();
-       setTimeout(function(){
-       history.push(`/customer/queries`);
-     },3000);
-         });
+        });
     }
+
 
     if (DeclinedQuery == "DeclinedQuery") {
       axios
         .get(
-          `${baseUrl}/customers/declinedQueries1?uid=${JSON.parse(
+          `${baseUrl}/customers/declinedQueries?uid=${JSON.parse(
             id
           )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
           }&pcat_id=${selectedData}&status=${data.p_status}`
@@ -182,27 +152,19 @@ function CustomerFilter(props) {
         .then((res) => {
           console.log("myResult", res.data.result);
           if (res.data.code === 1) {
-            setLoading(false);
             if (res.data.result) {
               setData(res.data.result);
               setRecords(res.data.result.length);
             }
           }
-        })
-        .catch((error) => {
-          // console.log("erroror - ", error);
-           getErrorMessage();
-       setTimeout(function(){
-       history.push(`/customer/queries`);
-     },3000);
-         });
+        });
     }
 
 
     if (proposal == "proposal") {
       axios
         .get(
-          `${baseUrl}/customers/getProposals1?uid=${JSON.parse(
+          `${baseUrl}/customers/getProposals?uid=${JSON.parse(
             id
           )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
           }&status=${data.p_status}&pcat_id=${selectedData}`
@@ -210,27 +172,19 @@ function CustomerFilter(props) {
         .then((res) => {
           console.log(res);
           if (res.data.code === 1) {
-            setLoading(false);
             if (res.data.result) {
               setData(res.data.result);
               setRecords(res.data.result.length);
 
             }
           }
-        })
-        .catch((error) => {
-          // console.log("erroror - ", error);
-           getErrorMessage();
-       setTimeout(function(){
-       history.push(`/customer/queries`);
-     },3000);
-         });
+        });
     }
 
     if (inprogressProposal == "inprogressProposal") {
       axios
         .get(
-          `${baseUrl}/customers/getProposals1?uid=${JSON.parse(
+          `${baseUrl}/customers/getProposals?uid=${JSON.parse(
             id
           )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
           }&status=${data.p_status}&pcat_id=${selectedData}`
@@ -238,26 +192,18 @@ function CustomerFilter(props) {
         .then((res) => {
           console.log(res);
           if (res.data.code === 1) {
-            setLoading(false);
             if (res.data.result) {
               setData(res.data.result);
               setRecords(res.data.result.length);
             }
           }
-        })
-        .catch((error) => {
-          // console.log("erroror - ", error);
-           getErrorMessage();
-       setTimeout(function(){
-       history.push(`/customer/queries`);
-     },3000);
-         });
+        });
     }
 
     if (acceptedProposal == "acceptedProposal") {
       axios
         .get(
-          `${baseUrl}/customers/getProposals1?uid=${JSON.parse(
+          `${baseUrl}/customers/getProposals?uid=${JSON.parse(
             id
           )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
           }&status=2&pcat_id=${selectedData}`
@@ -265,27 +211,18 @@ function CustomerFilter(props) {
         .then((res) => {
           console.log(res);
           if (res.data.code === 1) {
-            setLoading(false);
             if (res.data.result) {
               setData(res.data.result);
               setRecords(res.data.result.length);
             }
-            
           }
-        })
-        .catch((error) => {
-          // console.log("erroror - ", error);
-           getErrorMessage();
-       setTimeout(function(){
-       history.push(`/customer/queries`);
-     },3000);
-         });
+        });
     }
 
     if (declinedProposal == "declinedProposal") {
       axios
         .get(
-          `${baseUrl}/customers/getProposals1?uid=${JSON.parse(
+          `${baseUrl}/customers/getProposals?uid=${JSON.parse(
             id
           )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
           }&status=3pcat_id=${selectedData}`
@@ -293,28 +230,19 @@ function CustomerFilter(props) {
         .then((res) => {
           console.log(res);
           if (res.data.code === 1) {
-            setLoading(false);
             if (res.data.result) {
               setData(res.data.result);
               setRecords(res.data.result.length);
             }
-            
           }
-        })
-        .catch((error) => {
-          // console.log("erroror - ", error);
-           getErrorMessage();
-       setTimeout(function(){
-       history.push(`/customer/queries`);
-     },3000);
-         });
-    } 
+        });
+    }
 
 
     if (assignment == "assignment") {
       axios
         .get(
-          `${baseUrl}/customers/completeAssignments1?user=${JSON.parse(
+          `${baseUrl}/customers/completeAssignments?user=${JSON.parse(
             id
           )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
           }&status=${data.p_status}&pcat_id=${selectedData}`
@@ -322,98 +250,59 @@ function CustomerFilter(props) {
         .then((res) => {
           console.log(res);
           if (res.data.code === 1) {
-            setLoading(false);
             if (res.data.result) {
               setData(res.data.result);
               setRecords(res.data.result.length);
             }
-           
           }
-        })
-        .catch((error) => {
-          // console.log("erroror - ", error);
-           getErrorMessage();
-       setTimeout(function(){
-       history.push(`/customer/queries`);
-     },3000);
-         });
-    } 
+        });
+    }
 
     if (allPayment == "allPayment") {
       axios
         .get(
-          `${baseUrl}/tl/getUploadedProposals1?cid=${JSON.parse(id)}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=${data.p_status}&pcat_id=${selectedData}`
+          `${baseUrl}/tl/getUploadedProposals?cid=${JSON.parse(id)}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=${data.p_status}&pcat_id=${selectedData}`
         )
         .then((res) => {
           console.log(res);
           if (res.data.code === 1) {
-            setLoading(false);
             if (res.data.result) {
               setData(res.data.result);
               setRecords(res.data.result.length);
             }
-           
           }
-        })
-        .catch((error) => {
-          // console.log("erroror - ", error);
-           getErrorMessage();
-       setTimeout(function(){
-       history.push(`/customer/queries`);
-     },3000);
-         });
-    } 
+        });
+    }
     if (unpaid == "unpaid") {
       axios
         .get(
-          `${baseUrl}/tl/getUploadedProposals1?cid=${JSON.parse(id)}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=1&pcat_id=${selectedData}`
+          `${baseUrl}/tl/getUploadedProposals?cid=${JSON.parse(id)}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=1&pcat_id=${selectedData}`
         )
         .then((res) => {
           console.log(res);
           if (res.data.code === 1) {
-            setLoading(false);
             if (res.data.result) {
               setData(res.data.result);
               setRecords(res.data.result.length);
             }
-           
           }
-        })
-        .catch((error) => {
-          // console.log("erroror - ", error);
-           getErrorMessage();
-       setTimeout(function(){
-       history.push(`/customer/queries`);
-     },3000);
-         });
-        
-    } 
+        });
+    }
     if (paid == "paid") {
       axios
         .get(
-          `${baseUrl}/tl/getUploadedProposals1?cid=${JSON.parse(id)}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=2&pcat_id=${selectedData}`
+          `${baseUrl}/tl/getUploadedProposals?cid=${JSON.parse(id)}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=2&pcat_id=${selectedData}`
         )
         .then((res) => {
           console.log(res);
           if (res.data.code === 1) {
-            setLoading(false);
             if (res.data.result) {
               setData(res.data.result);
               setRecords(res.data.result.length);
             }
-            
           }
-        })
-        .catch((error) => {
-          // console.log("erroror - ", error);
-           getErrorMessage();
-       setTimeout(function(){
-       history.push(`/customer/queries`);
-     },3000);
-         });
-    } 
-      // setLoading(false);
-   
+        });
+    }
 
     
   };
@@ -421,7 +310,6 @@ function CustomerFilter(props) {
   const Reset = () => {
     return (
       <>
-      
         <button
           type="submit"
           class="btn btn-primary mx-sm-1 mb-2"
@@ -614,18 +502,10 @@ function CustomerFilter(props) {
                   )}
 
                 </div>
-                {
-            loading ?
-              // <Loader />
-              <span>
-                    <Spinner color="primary" />
-                  </span>
-              :
 
                 <button type="submit" class="btn btn-primary mx-sm-1 mb-2">
                   Search
                 </button>
-}
                 <Reset />
 
                 {/* <div class="form-group mx-sm-2 mb-2">

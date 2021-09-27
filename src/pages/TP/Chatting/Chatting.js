@@ -6,8 +6,6 @@ import Layout from "../../../components/Layout/Layout";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import { useAlert } from "react-alert";
-import { getErrorMessage } from '../../../constants';
-import { Spinner } from "reactstrap"
 import {
   Card,
   CardHeader,
@@ -75,7 +73,7 @@ function Chatting(props) {
     formData.append("sst", "tp")
     axios({
       method: "POST",
-      url: `${baseUrl}/tp/messageSent1`,
+      url: `${baseUrl}/tp/messageSent`,
       data: formData,
     })
       .then(function (response) {
@@ -89,11 +87,7 @@ function Chatting(props) {
         }
       })
       .catch((error) => {
-        //console.log("erroror - ", error);
-        getErrorMessage();
-        setTimeout(function(){
-        props.history.push(`/taxprofessional/chatting/${props.match.params.id}`);
-      },3000);
+        console.log("erroror - ", error);
       });
   };
 
@@ -117,6 +111,10 @@ function Chatting(props) {
           </Row>
         </CardHeader>
         <CardBody>
+          {
+            loading ?
+              <Loader />
+              :
               <>
                 <form onSubmit={handleSubmit(onSubmit)}>
                   <div class="row" style={{ display: "flex", justifyContent: "center" }}>
@@ -200,23 +198,15 @@ function Chatting(props) {
                           </div>
                         )}
                       </div>
-                      {
-            loading ?
-              // <Loader />
-              <div class="col-md-12">
-                    <Spinner color="primary" />
-                  </div>
-              :
                       <button type="submit" className="btn btn-primary">
                         Send
                       </button>
-}
                     </div>
                   </div>
                 </form>
                 <Mandatory />
               </>
-          
+          }
         </CardBody>
 
       </Card>

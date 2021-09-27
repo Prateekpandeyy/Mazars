@@ -7,7 +7,6 @@ import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import { useAlert } from "react-alert";
 import { useHistory } from "react-router-dom";
-import { getErrorMessage } from '../../../constants';
 import {
   Card,
   CardHeader,
@@ -17,7 +16,6 @@ import {
   Col,
   Table,
   Tooltip,
-  Spinner
 } from "reactstrap";
 import Alerts from "../../../common/Alerts";
 import classNames from "classnames";
@@ -45,18 +43,11 @@ function Chatting(props) {
   });
 
   const userId = window.localStorage.getItem("adminkey");
-  
+  const [loading, setLoading] = useState(false);
 
   const [item, setItem] = useState("");
   const [data, setData] = useState({})
   const { query_id, query_No, routes } = data
-  const [loading, setLoading] = useState(false);
-  const [time, setTime] = useState('')
-  const [load, setLoad] = useState(false);
-  const [disabled, setDisabled] = useState(false)
-  const [show, setShow] = useState(false);
- 
-
 
 
 
@@ -88,7 +79,7 @@ function Chatting(props) {
 
     axios({
       method: "POST",
-      url: `${baseUrl}/admin/messageSent1`,
+      url: `${baseUrl}/admin/messageSent`,
       data: formData,
     })
       .then(function (response) {
@@ -104,11 +95,7 @@ function Chatting(props) {
         }
       })
       .catch((error) => {
-       // console.log("erroror - ", error);
-       getErrorMessage();
-        setTimeout(function(){
-        props.history.push(`/Admin/Chatting/Chatting${props.match.params.id}`);
-      },3000);
+        console.log("erroror - ", error);
       });
   };
 
@@ -132,7 +119,10 @@ function Chatting(props) {
           </Row>
         </CardHeader>
         <CardBody>
-          
+          {
+            loading ?
+              <Loader />
+              :
               <>
                 <form onSubmit={handleSubmit(onSubmit)}>
                   <div class="row" style={{ display: "flex", justifyContent: "center" }}>
@@ -216,24 +206,16 @@ function Chatting(props) {
                           </div>
                         )}
                       </div>
-                      {
-            loading ?
-              // <Loader />
-              <div class="col-md-12">
-                    <Spinner color="primary" />
-                  </div>
-              :
                       <button type="submit" className="btn btn-primary">
                         Send
                       </button>
-}
                     </div>
                   </div>
 
                 </form>
                 <Mandatory />
               </>
-        
+          }
         </CardBody>
 
       </Card>
