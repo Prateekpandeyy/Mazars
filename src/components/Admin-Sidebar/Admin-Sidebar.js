@@ -14,7 +14,6 @@ import SendIcon from '@mui/icons-material/Send';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import StarBorder from '@mui/icons-material/StarBorder';
-import './list.css';
 import ScheduleIcon from '@material-ui/icons/Schedule';
 function Sidebar({ adminDashboard, custDashboard, TLDashboard, TPDashboard , feedbackNumber}) {
   const [toggleState, setToggleState] = useState(false);
@@ -56,10 +55,6 @@ const getFeedback2 = () => {
       }
     });
   }
-  if(window.location.hash.split("/").slice(-1) == "recording" || window.location.hash.split("/").slice(-1) == "schedule"){
-    setOpen(true)
-  }
-
 };
 const getFeedbacktl = () => {
  if(TLDashboard != undefined){
@@ -73,9 +68,6 @@ const getFeedbacktl = () => {
     }
   });
  }
- if(window.location.hash.split("/").slice(-1) == "recording" || window.location.hash.split("/").slice(-1) == "schedule"){
-  setOpen(true)
-}
 };
 useState(() => {
   getFeedbacktl();
@@ -93,9 +85,6 @@ const getFeedbacktp = () => {
       }
     });
   }
-  if(window.location.hash.split("/").slice(-1) == "recording" || window.location.hash.split("/").slice(-1) == "schedule"){
-    setOpen(true)
-  }
 };
 useState(() => {
   getFeedbacktp();
@@ -105,7 +94,6 @@ const show = () => {
     setOpen(true);
 }
 const handleClick = () => {
-  console.log("clicked")
   setOpen(!open);
 };
   return (
@@ -215,7 +203,7 @@ const handleClick = () => {
               id="main-menu-navigation"
               data-menu="menu-navigation"
             >
-              <li class="nav-item">
+              <li class="active nav-item">
                 <NavLink to={"/admin/dashboard"}>
                   <i class="fa fa-home"></i>
                   <span class="menu-title" data-i18n="">
@@ -260,32 +248,30 @@ const handleClick = () => {
                 </NavLink>
               </li>
 
+
               <li class="nav-item">
+<<<<<<< HEAD
                  
-              <ListItemButton onClick={() => handleClick()}>
-        
-      <span className="listStyle">
-      <ListItemIcon>
+               <ListItemButton onClick={handleClick}>
+        <ListItemIcon>
           <ScheduleIcon />
         </ListItemIcon>
-
-
+        {/* <ListItemText primary="Inbox" /> */}
+        <NavLink to={"/admin/schedule"}>
+                 
                 <span class="menu-title" data-i18n="">
                   Schedule
                 </span>
-                {open ? <ExpandLess /> : <ExpandMore />}
-                </span>
-
-      
-       
+                </NavLink>
+        {open ? <ExpandLess /> : <ExpandMore />}
       </ListItemButton>
 
-      <Collapse in={open}  unmountOnExit>
+      <Collapse in={open} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
         <ul>
                   <li>
                   <NavLink to={"/admin/schedule"}>
-                  
+                  <i class="fa fa-rss-square"></i>
                 <span class="menu-title" data-i18n="">
                   Schedule
                 </span>
@@ -293,10 +279,17 @@ const handleClick = () => {
                   </li>
                   <li>
                   <NavLink to={"/admin/recording"}>
-                  
+                  <i class="fa fa-rss-square"></i>
                 <span class="menu-title" data-i18n="">
                 Recording
                 </span>
+=======
+                <NavLink to={"/admin/schedule"}>
+                  <i class="fa fa-file"></i>
+                  <span class="menu-title" data-i18n="">
+                  Schedule
+                  </span>
+>>>>>>> master
                 </NavLink>
                   </li>
                 </ul>
@@ -328,14 +321,6 @@ const handleClick = () => {
                    <i class="fa fa-users"></i>
                    <span class="menu-title" data-i18n="">
                    Customers
-                  </span>
-                 </NavLink>
-               </li>
-               <li class ="nav-item">
-                 <NavLink to={"/admin/reports"}>
-                   <i class="fa fa-users"></i>
-                   <span class="menu-title" data-i18n="">
-                   Report
                   </span>
                  </NavLink>
                </li>
@@ -405,31 +390,26 @@ const handleClick = () => {
 
               <li class="nav-item">
                  
-              <ListItemButton onClick={() => handleClick()}>
-        
-        <span className="listStyle">
+               <ListItemButton onClick={handleClick}>
         <ListItemIcon>
-            <ScheduleIcon />
-          </ListItemIcon>
-  
-  
-                  <span class="menu-title" data-i18n="">
-                    Schedule
-                  </span>
-                  {open ? <ExpandLess /> : <ExpandMore />}
-                  </span>
-  
-        
-         
-        </ListItemButton>
-  
+          <ScheduleIcon />
+        </ListItemIcon>
+        {/* <ListItemText primary="Inbox" /> */}
+        <NavLink to={"/teamleader/schedule"}>
+                 
+                <span class="menu-title" data-i18n="">
+                  Schedule
+                </span>
+                </NavLink>
+        {open ? <ExpandLess /> : <ExpandMore />}
+      </ListItemButton>
 
-      <Collapse in={open}  unmountOnExit>
+      <Collapse in={open} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
         <ul>
                   <li>
-                  <NavLink to={"/teamleader/schedule"}>
-                
+                  <NavLink to={"/teadleader/schedule"}>
+                  <i class="fa fa-rss-square"></i>
                 <span class="menu-title" data-i18n="">
                   Schedule
                 </span>
@@ -437,7 +417,7 @@ const handleClick = () => {
                   </li>
                   <li>
                   <NavLink to={"/teamleader/recording"}>
-                 
+                  <i class="fa fa-rss-square"></i>
                 <span class="menu-title" data-i18n="">
                 Recording
                 </span>
@@ -447,14 +427,7 @@ const handleClick = () => {
         </List>
       </Collapse>
               </li>
-              <li class="nav-item">
-                <NavLink to={"/teamleader/reports"}>
-                  <i class="fa fa-users"></i>
-                  <span class="menu-title" data-i18n="">
-                    Reports
-                  </span>
-                </NavLink>
-              </li>
+
               <li class="nav-item">
                 <NavLink to={"/teamleader/addteamprof"}>
                   <i class="fa fa-users"></i>
@@ -530,30 +503,26 @@ const handleClick = () => {
 
               <li class="nav-item">
                  
-              <ListItemButton onClick={() => handleClick()}>
-        
-        <span className="listStyle">
+               <ListItemButton onClick={handleClick}>
         <ListItemIcon>
-            <ScheduleIcon />
-          </ListItemIcon>
-  
-  
-                  <span class="menu-title" data-i18n="">
-                    Schedule
-                  </span>
-                  {open ? <ExpandLess /> : <ExpandMore />}
-                  </span>
-  
-        
-         
-        </ListItemButton>
-  
-      <Collapse in={open}  unmountOnExit>
+          <ScheduleIcon />
+        </ListItemIcon>
+        {/* <ListItemText primary="Inbox" /> */}
+        <NavLink to={"/taxprofessional/schedule"}>
+                 
+                <span class="menu-title" data-i18n="">
+                  Schedule
+                </span>
+                </NavLink>
+        {open ? <ExpandLess /> : <ExpandMore />}
+      </ListItemButton>
+
+      <Collapse in={open} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
         <ul>
                   <li>
                   <NavLink to={"/taxprofessional/schedule"}>
-                 
+                  <i class="fa fa-rss-square"></i>
                 <span class="menu-title" data-i18n="">
                   Schedule
                 </span>
@@ -561,7 +530,7 @@ const handleClick = () => {
                   </li>
                   <li>
                   <NavLink to={"/taxprofessional/recording"}>
-
+                  <i class="fa fa-rss-square"></i>
                 <span class="menu-title" data-i18n="">
                 Recording
                 </span>
@@ -571,14 +540,7 @@ const handleClick = () => {
         </List>
       </Collapse>
               </li>
-              <li class="nav-item">
-                <NavLink to={"/taxprofessional/reports"}>
-                  <i class="fa fa-users"></i>
-                  <span class="menu-title" data-i18n="">
-                    Reports
-                  </span>
-                </NavLink>
-              </li>
+
               <li class="nav-item">
                 <NavLink to={"/taxprofessional/feedback"}>
                   <i class="fa fa-file-text"></i>

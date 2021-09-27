@@ -553,7 +553,6 @@ function EditTP() {
               <div class="col-lg-8 col-xl-8 col-md-12">
                 <Form
                   name="basic"
-                  autoComplete="off"
                   initialValues={{
                     name: `${data1}`,
                     email: `${data2}`,
@@ -617,8 +616,8 @@ function EditTP() {
                         className={classNames("form-control", {
                           "is-invalid": errors.post_email,
                         })}
-                        // onChange={(e) => emailHandler(e)}
-                        // onBlur={emailValidation}
+                        onChange={(e) => emailHandler(e)}
+                        onBlur={emailValidation}
                       />
                      
                     </div>

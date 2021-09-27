@@ -3,6 +3,9 @@ import { useForm, useFieldArray } from "react-hook-form";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import { useHistory } from "react-router-dom";
+import { getErrorMessage } from '../../../constants';
+import { Spinner } from "reactstrap"
+
 import {
   Card,
   CardHeader,
@@ -18,7 +21,7 @@ import Payment from "./Payment";
 import Select from "react-select";
 import Alerts from "../../../common/Alerts";
 import Mandatory from "../../../components/Common/Mandatory";
-import { Spinner } from 'reactstrap';
+
 
 
 
@@ -26,7 +29,7 @@ function ProposalComponent(props) {
   const { id } = props;
   const history = useHistory();
   const { handleSubmit, register, errors } = useForm();
-
+  const [load, setLoad] = useState(false);
   const userid = window.localStorage.getItem("tlkey");
   const [loading, setLoading] = useState(false);
 
@@ -161,7 +164,7 @@ function ProposalComponent(props) {
                 setLoading(true)
                 axios({
                   method: "POST",
-                  url: `${baseUrl}/tl/uploadProposal`,
+                  url: `${baseUrl}/tl/uploadProposal1`,
                   data: formData,
                 })
                   .then(function (response) {
@@ -175,7 +178,11 @@ function ProposalComponent(props) {
                     }
                   })
                   .catch((error) => {
-                    console.log("erroror - ", error);
+                   // console.log("erroror - ", error);
+                   getErrorMessage();
+          setTimeout(function(){
+          props.history.push(`/teamleader/sendproposal/${props.match.params.id}`);
+        },3000);
                   });
               }
             }
@@ -185,7 +192,7 @@ function ProposalComponent(props) {
         setLoading(true)
         axios({
           method: "POST",
-          url: `${baseUrl}/tl/uploadProposal`,
+          url: `${baseUrl}/tl/uploadProposal1`,
           data: formData,
         })
           .then(function (response) {
@@ -200,7 +207,11 @@ function ProposalComponent(props) {
             }
           })
           .catch((error) => {
-            console.log("erroror - ", error);
+           // console.log("erroror - ", error);
+           getErrorMessage();
+          setTimeout(function(){
+          history.push(`/teamleader/sendproposal/${id}`);
+        },3000);
           });
       }
 
@@ -270,7 +281,7 @@ function ProposalComponent(props) {
         </CardHeader>
 
         <CardBody>
-          <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
+          <form onSubmit={handleSubmit(onSubmit)}>
             <p style={{ color: "red" }}>{error}</p>
             <div style={{ display: "flex" }}>
               <div class="col-md-6">

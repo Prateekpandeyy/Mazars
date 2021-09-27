@@ -3,8 +3,12 @@ import axios from "axios";
 import { baseUrl } from "../../config/config";
 import { useForm } from "react-hook-form";
 import { Select } from "antd";
+import { Spinner } from "reactstrap";
+import { getErrorMessage } from '../../constants';
+import { useHistory, useParams } from "react-router-dom";
 
 function AdminFilter(props) {
+  const [loading, setLoading] = useState(false);
   const { Option } = Select;
   const { handleSubmit, register, errors, reset } = useForm();
 
@@ -30,6 +34,8 @@ function AdminFilter(props) {
   const [selectedData, setSelectedData] = useState([]);
   const [tax2, setTax2] = useState([]);
   const [store2, setStore2] = useState([]);
+  const [load, setLoad] = useState(false);
+  const history = useHistory();
 
   var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
   console.log("current_date :", current_date);
@@ -86,7 +92,7 @@ function AdminFilter(props) {
 
 
   const onSubmit = (data) => {
-
+    setLoading(true)
     console.log("data", data)
 
 
@@ -98,195 +104,283 @@ function AdminFilter(props) {
     if (acceptedProposal == "acceptedProposal") {
       axios
         .get(
-          `${baseUrl}/admin/getProposals?status1=2&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&pcat_id=${selectedData}`
+          `${baseUrl}/admin/getProposals1?status1=2&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&pcat_id=${selectedData}`
         )
         .then((res) => {
           console.log(res);
           if (res.data.code === 1) {
+            setLoading(false)
             if (res.data.result) {
               setData(res.data.result);
               setRecords(res.data.result.length);
             }
           }
-        });
+        })
+        .catch((error) => {
+          // console.log("erroror - ", error);
+           getErrorMessage();
+       setTimeout(function(){
+       history.push(`/admin/queriestab`);
+     },3000);
+         });
     }
 
     if (pendingAcceptedProposal == "pendingAcceptedProposal") {
       axios
         .get(
-          `${baseUrl}/admin/getProposals?status1=${data.p_status}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&pcat_id=${selectedData}`
+          `${baseUrl}/admin/getProposals1?status1=${data.p_status}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&pcat_id=${selectedData}`
         )
         .then((res) => {
           console.log(res);
           if (res.data.code === 1) {
+            setLoading(false)
             if (res.data.result) {
               setData(res.data.result);
               setRecords(res.data.result.length);
             }
           }
-        });
+        })
+        .catch((error) => {
+          // console.log("erroror - ", error);
+           getErrorMessage();
+       setTimeout(function(){
+       history.push(`/admin/queriestab`);
+     },3000);
+         });
     }
 
     if (declinedProposal == "declinedProposal") {
       axios
         .get(
-          `${baseUrl}/admin/getProposals?&status=6&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&pcat_id=${selectedData}`
+          `${baseUrl}/admin/getProposals1?&status=6&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&pcat_id=${selectedData}`
         )
         .then((res) => {
           console.log(res);
           if (res.data.code === 1) {
+            setLoading(false)
             if (res.data.result) {
               setData(res.data.result);
               setRecords(res.data.result.length);
             }
           }
-        });
+        })
+        .catch((error) => {
+          // console.log("erroror - ", error);
+           getErrorMessage();
+       setTimeout(function(){
+       history.push(`/admin/queriestab`);
+     },3000);
+         });
     }
 
     if (declinedQueries == "declinedQueries") {
       axios
         .get(
-          `${baseUrl}/admin/declinedQueries?cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=${data.p_status}&pcat_id=${selectedData}`
+          `${baseUrl}/admin/declinedQueries1?cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=${data.p_status}&pcat_id=${selectedData}`
         )
         .then((res) => {
           console.log(res);
           if (res.data.code === 1) {
+            setLoading(false)
             if (res.data.result) {
               setData(res.data.result);
               setRecords(res.data.result.length);
             }
           }
-        });
+        })
+        .catch((error) => {
+          // console.log("erroror - ", error);
+           getErrorMessage();
+       setTimeout(function(){
+       history.push(`/admin/queriestab`);
+     },3000);
+         });
     }
 
     if (pendingForProposal == "pendingForProposal") {
       axios
         .get(
-          `${baseUrl}/admin/pendingProposal?category=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=${data.p_status}&pcat_id=${selectedData}`
+          `${baseUrl}/admin/pendingProposal1?category=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=${data.p_status}&pcat_id=${selectedData}`
         )
         .then((res) => {
           console.log(res);
           if (res.data.code === 1) {
+            setLoading(false)
             if (res.data.result) {
               setData(res.data.result);
               setRecords(res.data.result.length);
             }
           }
-        });
+        })
+        .catch((error) => {
+          // console.log("erroror - ", error);
+           getErrorMessage();
+       setTimeout(function(){
+       history.push(`/admin/queriestab`);
+     },3000);
+         });
     }
 
     if (allQueries == "allQueries") {
       axios
         .get(
-          `${baseUrl}/admin/getAllQueries?cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=${data.p_status}&pcat_id=${selectedData}`
+          `${baseUrl}/admin/getAllQueries1?cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=${data.p_status}&pcat_id=${selectedData}`
         )
         .then((res) => {
           console.log(res);
           if (res.data.code === 1) {
+            setLoading(false)
             if (res.data.result) {
               setData(res.data.result);
               setRecords(res.data.result.length);
             }
           }
-        });
+        })
+        .catch((error) => {
+          // console.log("erroror - ", error);
+           getErrorMessage();
+       setTimeout(function(){
+       history.push(`/admin/queriestab`);
+     },3000);
+         });
     }
 
     if (pendingAlloation == "pendingAlloation") {
       axios
         .get(
-          `${baseUrl}/admin/pendingAllocation?category=${store2}&date1=${data.p_dateFrom}&date2=${data.p_dateTo}&pcat_id=${selectedData}`
+          `${baseUrl}/admin/pendingAllocation1?category=${store2}&date1=${data.p_dateFrom}&date2=${data.p_dateTo}&pcat_id=${selectedData}`
         )
         .then((res) => {
           console.log(res);
           if (res.data.code === 1) {
+            setLoading(false)
             if (res.data.result) {
               setData(res.data.result);
               setRecords(res.data.result.length);
             }
           }
-        });
+        })
+        .catch((error) => {
+          // console.log("erroror - ", error);
+           getErrorMessage();
+       setTimeout(function(){
+       history.push(`/admin/queriestab`);
+     },3000);
+         });
     }
 
     if (AllPayment == "AllPayment") {
       axios
         .get(
-          `${baseUrl}/tl/getUploadedProposals?cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=${data.p_status}&pcat_id=${selectedData}`
+          `${baseUrl}/tl/getUploadedProposals1?cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=${data.p_status}&pcat_id=${selectedData}`
         )
         .then((res) => {
           console.log(res);
           if (res.data.code === 1) {
+            setLoading(false)
             if (res.data.result) {
               setData(res.data.result);
               setRecords(res.data.result.length);
             }
           }
-        });
+        })
+        .catch((error) => {
+          // console.log("erroror - ", error);
+           getErrorMessage();
+       setTimeout(function(){
+       history.push(`/admin/queriestab`);
+     },3000);
+         });
     }
 
     if (unpaid == "unpaid") {
       axios
         .get(
-          `${baseUrl}/tl/getUploadedProposals?cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=1&pcat_id=${selectedData}`
+          `${baseUrl}/tl/getUploadedProposals1?cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=1&pcat_id=${selectedData}`
         )
         .then((res) => {
           console.log(res);
           if (res.data.code === 1) {
+            setLoading(false)
             if (res.data.result) {
               setData(res.data.result);
               setRecords(res.data.result.length);
             }
           }
-        });
+        })
+        .catch((error) => {
+          // console.log("erroror - ", error);
+           getErrorMessage();
+       setTimeout(function(){
+       history.push(`/admin/queriestab`);
+     },3000);
+         });
     }
 
     if (paid == "paid") {
       axios
         .get(
-          `${baseUrl}/tl/getUploadedProposals?cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=2&pcat_id=${selectedData}`
+          `${baseUrl}/tl/getUploadedProposals1?cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=2&pcat_id=${selectedData}`
         )
         .then((res) => {
           console.log(res);
           if (res.data.code === 1) {
+            setLoading(false)
             if (res.data.result) {
               setData(res.data.result);
               setRecords(res.data.result.length);
             }
           }
-        });
+        })
+        .catch((error) => {
+          // console.log("erroror - ", error);
+           getErrorMessage();
+       setTimeout(function(){
+       history.push(`/admin/queriestab`);
+     },3000);
+         });
     }
 
     if (allProposal == "allProposal") {
       axios
         .get(
-          `${baseUrl}/admin/getProposals?cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status1=${data.p_status}&pcat_id=${selectedData}`
+          `${baseUrl}/admin/getProposals1?cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status1=${data.p_status}&pcat_id=${selectedData}`
         )
         .then((res) => {
           console.log(res);
           if (res.data.code === 1) {
+            setLoading(false)
             if (res.data.result) {
               setData(res.data.result);
               setRecords(res.data.result.length);
             }
           }
-        });
+        })
+        .catch((error) => {
+          // console.log("erroror - ", error);
+           getErrorMessage();
+       setTimeout(function(){
+       history.push(`/admin/queriestab`);
+     },3000);
+         });
     }
   };
 
 
-  const Reset = () => {
-    return (
-      <>
-        <button
-          type="submit"
-          class="btn btn-primary mx-sm-1 mb-2"
-          onClick={() => resetData()}
-        >
-          Reset
-        </button>
-      </>
-    );
-  };
-
+    const Reset = () => {
+      return (
+        <>
+        
+          <button
+            type="submit"
+            class="btn btn-primary mx-sm-1 mb-2"
+            onClick={() => resetData()}
+          >
+            Reset
+          </button>
+        </>
+      );
+    };
   return (
     <>
       <div className="row">
@@ -451,10 +545,17 @@ function AdminFilter(props) {
                     </select>
                   )}
                 </div>
-
+                {
+            loading ?
+              // <Loader />
+              <span>
+                    <Spinner color="primary" />
+                  </span>
+              :
                 <button type="submit" class="btn btn-primary mx-sm-1 mb-2">
                   Search
                 </button>
+}
                 <Reset />
 
                 {/* <div class="form-group mb-2">

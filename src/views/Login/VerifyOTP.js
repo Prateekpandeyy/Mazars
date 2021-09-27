@@ -99,7 +99,7 @@ function VerifyOTP({ email, uid, time, setLoad,
     return (
 
         <div>
-            <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
+            <form onSubmit={handleSubmit(onSubmit)}>
                 {
                     disabled ?
                         null
