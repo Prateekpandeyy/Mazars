@@ -188,7 +188,7 @@ function InCompleteData({ CountIncomplete }) {
                     to={{
                         pathname: `/taxprofessional/chatting/${row.id}`,
                         obj: {
-                            message_type: "2",
+                            message_type: "4",
                             query_No: row.assign_no,
                             query_id: row.id,
                             routes: `/taxprofessional/proposal`
