@@ -408,20 +408,12 @@ function EditComponent() {
                       installment_amount={installment_amount}
                       due_date={due_date}
                       getQuery={getQuery}
-<<<<<<< HEAD
+
                       item={item}
+
+                    
                       clearValue={clearValue}
-=======
-<<<<<<< HEAD
-<<<<<<< HEAD
-                      item={item}
-                      clearValue={clearValue}
-=======
->>>>>>> dev_jyoti
->>>>>>> d84b9c3289cc7a587ee8dde0acfec1a013dd1747
-=======
->>>>>>> dev_jyoti
->>>>>>> d84b9c3289cc7a587ee8dde0acfec1a013dd1747
+
                     />
                 }
               </div>

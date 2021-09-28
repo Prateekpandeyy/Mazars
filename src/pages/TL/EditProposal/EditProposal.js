@@ -249,23 +249,9 @@ function EditComponent() {
     Object.entries(data).map(([key, value]) => {
       array2.push(value)
     });
-<<<<<<< HEAD
-<<<<<<< HEAD
+
     setDate(array2.slice(0, installment.value));
-    console.log("array2", array2)
-=======
-<<<<<<< HEAD
-=======
->>>>>>> d84b9c3289cc7a587ee8dde0acfec1a013dd1747
-    setDate(array2.slice(0, installment.value));
-    console.log("array2", array2)
-=======
-    setDate(array2);
->>>>>>> dev_jyoti
-<<<<<<< HEAD
->>>>>>> d84b9c3289cc7a587ee8dde0acfec1a013dd1747
-=======
->>>>>>> d84b9c3289cc7a587ee8dde0acfec1a013dd1747
+   
   };
 
   const installmentHandler = (key) => {
