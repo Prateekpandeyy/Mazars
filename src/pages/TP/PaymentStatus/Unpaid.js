@@ -24,7 +24,7 @@ import ChangeHistoryIcon from '@material-ui/icons/ChangeHistory';
 import PaymentIcon from '@material-ui/icons/Payment';
 import RejectedModal from "./RejectedModal";
 import DiscardReport from "../AssignmentTab/DiscardReport";
-import moment from "moment";
+
 
 
 
@@ -39,14 +39,13 @@ function AllPayment() {
     const [count, setCount] = useState("");
     const [payment, setPayment] = useState([]);
     const [modal, setModal] = useState(false);
-    const [addPaymentModal, setPaymentModal] = useState(false);
+
     const [assignNo, setAssignNo] = useState("");
 
 
-   
-    var rowStyle2 = {}
+    const [addPaymentModal, setPaymentModal] = useState(false);
     const rejectHandler = (key) => {
-       
+        console.log("key", key);
         setPaymentModal(!addPaymentModal);
         setAssignNo(key.assign_no)
     };
@@ -58,7 +57,7 @@ function AllPayment() {
 
     const getPaymentStatus = () => {
         axios.get(`${baseUrl}/tl/getUploadedProposals?tp_id=${JSON.parse(userid)}&status=1`).then((res) => {
-           
+            console.log(res);
             if (res.data.code === 1) {
                 setPayment(res.data.result);
                 setCount(res.data.result.length);
@@ -74,7 +73,7 @@ function AllPayment() {
     }
 
     const toggle = (key) => {
-      
+        console.log("key", key);
         setModal(!modal);
 
         fetch(`${baseUrl}//admin/getPaymentDetail?id=${key}`, {
@@ -91,17 +90,7 @@ function AllPayment() {
             .catch((error) => console.log(error));
     };
 
-// Row Style
-rowStyle2 = (row, index) => {
-    const style = {}
 
-    if(row.paid_status != "2" && row.status != "Complete" && moment(row.due_date).toDate() > moment().toDate){
-        style.backgroundColor = "#c1d8f2";
-        style.color = "#000111"
-    }
-   
-    return style;
-  }
     const columns = [
         {
             dataField: "",
@@ -418,8 +407,6 @@ rowStyle2 = (row, index) => {
                         data={payment}
                         columns={columns}
                         classes="table-responsive"
-                        rowStyle={rowStyle2}
-                        rowIndex
                     />
 
 

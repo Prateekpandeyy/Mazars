@@ -151,7 +151,7 @@ function VerifyOtp({ email, uid, loading, setLoading }) {
           <div class="heading text-center">
             <h2>Verify Your OTP</h2>
           </div>
-          <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
+          <form onSubmit={handleSubmit(onSubmit)}>
             {
               disabled ?
                 null
