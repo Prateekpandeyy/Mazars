@@ -404,15 +404,13 @@ function AllPayment() {
                 </CardHeader>
 
                 <CardBody>
-                <BootstrapTable
-            bootstrap4
-            keyField="id"
-            data={payment}
-            columns={columns}
-            
-            classes = "table-responsive"
-            rowIndex
-          />
+                    <BootstrapTable
+                        bootstrap4
+                        keyField="id"
+                        data={payment}
+                        columns={columns}
+                        classes="table-responsive"
+                    />
 
 
                     <RejectedModal
