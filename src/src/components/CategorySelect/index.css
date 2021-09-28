@@ -1,0 +1,15 @@
+.start_card{
+    background: blue;
+    color: white;
+    font-size: 18px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+
+.flex-container {
+    display: flex;
+    height: 200px;
+    align-items: center;
+    background-color: DodgerBlue;
+  }

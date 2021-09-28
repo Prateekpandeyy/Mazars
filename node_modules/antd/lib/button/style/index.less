@@ -101,7 +101,12 @@
 
   &-icon-only {
     .btn-square(@btn-prefix-cls);
-    vertical-align: -1px;
+    vertical-align: -3px;
+
+    > .@{iconfont-css-prefix} {
+      display: flex;
+      justify-content: center;
+    }
   }
 
   &-round {
@@ -190,10 +195,15 @@
     margin-left: @margin-xs;
   }
 
-  &-background-ghost {
+  &&-background-ghost {
     color: @btn-default-ghost-color;
-    background: @btn-default-ghost-bg !important;
     border-color: @btn-default-ghost-border;
+    &,
+    &:hover,
+    &:active,
+    &:focus {
+      background: @btn-default-ghost-bg;
+    }
   }
 
   &-background-ghost&-primary {
@@ -237,9 +247,10 @@
 
 a.@{btn-prefix-cls} {
   // Fixing https://github.com/ant-design/ant-design/issues/12978
+  // https://github.com/ant-design/ant-design/issues/29978
   // It is a render problem of chrome, which is only happened in the codesandbox demo
   // 0.1px for padding-top solution works and I don't why
-  padding-top: 0.1px;
+  padding-top: 0.01px !important;
   line-height: @btn-height-base - 2px;
 
   &-lg {

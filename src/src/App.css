@@ -1,0 +1,19 @@
+* {
+    margin: 0;
+    padding: 0;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+  }
+  
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    color: #3f3f3f;
+    font-family: Montserrat;
+    background: #f0f0f0 !important;
+    position: relative;
+    min-height: 100vh;
+  }
+ 
