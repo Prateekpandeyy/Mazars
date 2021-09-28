@@ -23,11 +23,15 @@ export const ReportUrl = "https://mazarsapi.multitvsolution.com/mazarapi/assets/
 // for server 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   export const baseUrl2 = "https://mazarsapi.multitvsolution.com"
 =======
 <<<<<<< HEAD
  // export const baseUrl2 = "https://mazarsapi.multitvsolution.com"
 >>>>>>> d84b9c3289cc7a587ee8dde0acfec1a013dd1747
+=======
+  export const baseUrl2 = "https://mazarsapi.multitvsolution.com"
+>>>>>>> parent of 9c699461e... done
 =======
   export const baseUrl2 = "https://mazarsapi.multitvsolution.com"
 >>>>>>> parent of 9c699461e... done
