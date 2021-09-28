@@ -24,8 +24,7 @@ import TeamFilter from "../../../components/Search-Filter/tlFilter";
 import ChangeHistoryIcon from '@material-ui/icons/ChangeHistory';
 import PaymentIcon from '@material-ui/icons/Payment';
 import RejectedModal from "./RejectedModal";
-
-
+import moment from 'moment';
 
 
 function AllPayment() {
@@ -41,9 +40,11 @@ function AllPayment() {
     const [modal, setModal] = useState(false);
     const [ViewDiscussion, setViewDiscussion] = useState(false);
     const [assignNo, setAssignNo] = useState("");
-
-
     const [addPaymentModal, setPaymentModal] = useState(false);
+
+    // UseState end 
+    // Global veriable 
+    var rowStyle2 = {}
     const rejectHandler = (key) => {
         console.log("key", key);
         setPaymentModal(!addPaymentModal);
@@ -90,7 +91,17 @@ function AllPayment() {
             .catch((error) => console.log(error));
     };
 
+// Row Style
+rowStyle2 = (row, index) => {
+    const style = {}
 
+    if(row.paid_status != "2" && row.status != "Complete" && moment(row.due_date).toDate() > moment().toDate){
+        style.backgroundColor = "#c1d8f2";
+        style.color = "#000111"
+    }
+   
+    return style;
+  }
     const columns = [
         {
             dataField: "",
@@ -412,6 +423,8 @@ function AllPayment() {
                         keyField="id"
                         data={payment}
                         columns={columns}
+                        rowStyle = {rowStyle2}
+                        rowIndex
                         classes="table-responsive"
                     />
  <DiscardReport

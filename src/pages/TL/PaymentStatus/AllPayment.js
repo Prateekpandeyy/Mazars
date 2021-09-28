@@ -24,7 +24,7 @@ import PaymentIcon from '@material-ui/icons/Payment';
 import AssessmentIcon from '@material-ui/icons/Assessment';
 import RejectedModal from "./RejectedModal";
 import DiscardReport from "../AssignmentTab/DiscardReport";
-
+import moment from "moment";
 
 
 
@@ -40,9 +40,13 @@ function AllPayment() {
     const [payment, setPayment] = useState([]);
     const [modal, setModal] = useState(false);
     const [assignNo, setAssignNo] = useState("");
+    const [addPaymentModal, setPaymentModal] = useState(false); 
 
 
-    const [addPaymentModal, setPaymentModal] = useState(false);
+    // Use State end
+    //Global veriable
+    var rowStyle2 = {}
+
     const rejectHandler = (key) => {
         console.log("key", key);
         setPaymentModal(!addPaymentModal);
@@ -90,7 +94,17 @@ function AllPayment() {
             .catch((error) => console.log(error));
     };
 
+// Row Style
+rowStyle2 = (row, index) => {
+    const style = {}
 
+    if(row.paid_status != "2" && row.status != "Complete" && moment(row.due_date).toDate() > moment().toDate){
+        style.backgroundColor = "#c1d8f2";
+        style.color = "#000111"
+    }
+   
+    return style;
+  }
     const columns = [
         {
             dataField: "",
@@ -411,6 +425,7 @@ function AllPayment() {
             columns={columns}
             
             classes = "table-responsive"
+            rowStyle={ rowStyle2 }
             rowIndex
           />
 
