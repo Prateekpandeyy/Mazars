@@ -3,7 +3,6 @@ import Layout from "../../../components/Layout/Layout";
 import {  useParams } from "react-router-dom";
 import ProposalComponent from "./ProposalComponent";
 
-
 function SendProposal() {
     const { id } = useParams();
   const userid = window.localStorage.getItem("tlkey");

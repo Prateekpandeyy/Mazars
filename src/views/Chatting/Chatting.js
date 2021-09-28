@@ -6,6 +6,7 @@ import Layout from "../../components/Layout/Layout";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
 import { useHistory } from "react-router-dom";
+import { getErrorMessage } from '../../constants';
 import {
   Card,
   CardHeader,
@@ -42,22 +43,24 @@ function Chatting(props) {
   const userId = window.localStorage.getItem("userid");
 
   const [item, setItem] = useState("");
-  const [data, setData] = useState({})
+  const [data, setData] = useState({});
   const [loading, setLoading] = useState(false);
-
+  const [time, setTime] = useState('');
+  const [load, setLoad] = useState(false);
+  const [disabled, setDisabled] = useState(false);
+  const [show, setShow] = useState(false);
   const { message_type, query_id, query_No, routes } = data
 
 
   useEffect(() => {
-    
+    console.log("useEffect", props)
     const dataItem = props.location.obj
-   console.log("dataItem", dataItem)
+
     if (dataItem) {
       localStorage.setItem("myDataCust", JSON.stringify(dataItem));
     }
     var myData = localStorage.getItem("myDataCust");
     var data2 = JSON.parse(myData)
-    console.log("data2", data2)
     setData(data2)
     setItem(data2.message_type)
   }, [item]);
@@ -91,8 +94,13 @@ console.log(query_id)
         }
       })
       .catch((error) => {
-        console.log("erroror - ", error);
-      });
+        //console.log("erroror - ", error);
+        getErrorMessage();
+        setTimeout(function(){
+        props.history.push(`/customer/chatting/${props.match.params.id}`);
+      },3000);
+    });
+  
   };
 
   return (
@@ -115,10 +123,7 @@ console.log(query_id)
           </Row>
         </CardHeader>
         <CardBody>
-          {
-            loading ?
-              <Loader />
-              :
+          
               <>
                 <form onSubmit={handleSubmit(onSubmit)}>
                   <div class="row" style={{ display: "flex", justifyContent: "center" }}>
@@ -181,22 +186,29 @@ console.log(query_id)
                           </div>
                         )}
                       </div>
-
+                      {
+            loading ?
+              // <Loader />
+              <div class="col-md-12">
+                    <Spinner color="primary" />
+                  </div>
+              :
                       <button type="submit" className="btn btn-primary">
                         Send
                       </button>
+}
                     </div>
                   </div>
                 </form>
                 <Mandatory />
               </>
-          }
+          
 
         </CardBody>
       </Card>
     </Layout >
   );
-}
+  }
 
 export default Chatting;
 

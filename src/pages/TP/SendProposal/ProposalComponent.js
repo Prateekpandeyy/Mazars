@@ -270,7 +270,7 @@ function ProposalComponent(props) {
         </CardHeader>
 
         <CardBody>
-          <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
+          <form onSubmit={handleSubmit(onSubmit)}>
             <p style={{ color: "red" }}>{error}</p>
             <div style={{ display: "flex" }}>
               <div class="col-md-6">

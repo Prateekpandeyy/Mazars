@@ -16,7 +16,7 @@ import { Link } from "react-router-dom";
 import BootstrapTable from "react-bootstrap-table-next";
 import PaymentModal from "./PaymentModal";
 import CommonServices from "../../common/common";
-import { useHistory } from "react-router";
+
 
 function Message(props) {
     
@@ -26,7 +26,6 @@ function Message(props) {
     const [data, setData] = useState(null);
 
     const [addPaymentModal, setPaymentModal] = useState(false);
-    let history = useHistory();
     const paymentHandler = (key) => {
       
         setPaymentModal(!addPaymentModal);
@@ -175,15 +174,6 @@ function Message(props) {
                     <Row>
                         <Col md="9">
                             <CardTitle tag="h4">Message</CardTitle>
-                        </Col>
-                        <Col md="3">
-                        <button
-                class="btn btn-success ml-auto" style={{float : "right"}}
-                onClick={() => history.goBack()}
-              >
-                <i class="fas fa-arrow-left mr-2"></i>
-                Go Back
-              </button>
                         </Col>
                     </Row>
                 </CardHeader>

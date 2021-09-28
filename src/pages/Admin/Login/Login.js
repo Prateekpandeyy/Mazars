@@ -95,7 +95,7 @@ function Login(props) {
               <div class="heading">
                 <h2>ADMIN LOGIN</h2>
               </div>
-              <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
+              <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="row">
                   <div className="col-md-12">
                     <div className="mb-3">

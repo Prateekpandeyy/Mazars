@@ -247,7 +247,7 @@ function InprogressAllocation() {
                         <div title="Send Message">
                           <Link
                             to={{
-                              pathname: `/customer/chatting/${row.id}&type=4`,
+                              pathname: `/customer/chatting/${row.id}`,
                               obj: {
                                 message_type: "4",
                                 query_No: row.assign_no,
@@ -266,17 +266,7 @@ function InprogressAllocation() {
                             ></i>
                           </Link>
                         </div>
-                        <div title="View Discussion Message">
-                                                    <i
-                                                        class="fa fa-comments-o"
-                                                        style={{
-                                                            fontSize: 16,
-                                                            cursor: "pointer",
-                                                            color: "orange"
-                                                        }}
-                                                        onClick={() => ViewDiscussionToggel(row.assign_no)}
-                                                    ></i>
-                                                </div>
+
 
                       </div> :
                       null
@@ -316,7 +306,7 @@ function InprogressAllocation() {
                         <div title="Send Message">
                           <Link
                             to={{
-                              pathname: `/customer/chatting/${row.id}&type=4`,
+                              pathname: `/customer/chatting/${row.id}`,
                               obj: {
                                 message_type: "4",
                                 query_No: row.assign_no,

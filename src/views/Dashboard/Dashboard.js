@@ -152,7 +152,7 @@ function Dashboard() {
             </tbody>
           </table>
 
-          {inprogress_queries != 0 || declined_queries != 0 ? <>
+          {inprogress_queries !== 0 ? <>
             <table className="table table-striped third main_table">
               <thead className="query_thead">
                 <tr>
@@ -167,7 +167,7 @@ function Dashboard() {
                 </tr>
               </tbody>
             </table>
-            {complete_query != 0  || declined_queries != 0 ? <>
+            {complete_query !== 0 ? <>
 
               <table className="table table-striped forth main_table">
                 <thead className="query_thead">
@@ -197,7 +197,7 @@ function Dashboard() {
                 </tbody>
               </table>
             </> : ""}   </> : ""}   </div>
-        {allproposal != 0 ? <>
+        {allproposal !== 0 ? <>
           <div className="col-md-3 content_header">
 
             <table className="table table-striped fifth main_table">
@@ -247,7 +247,7 @@ function Dashboard() {
               </thead>
             </table>
           </div>
-          {allassignment != 0 ? <>
+          {allassignment !== 0 ? <>
             <div className="col-md-3 content_header">
               <table className="table table-striped ninth main_table">
                 <thead className="assignment_thead">
@@ -288,7 +288,7 @@ function Dashboard() {
                 </thead>
               </table>
             </div>
-            {totalpayment != 0 ? <>
+            {totalpayment !== 0 ? <>
 
               <div className="col-md-3 content_header">
 

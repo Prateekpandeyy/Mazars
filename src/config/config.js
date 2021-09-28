@@ -1,4 +1,3 @@
-
 // http://13.232.121.233/mazarsapi/v1/
 
 
@@ -18,9 +17,10 @@ export const ReportUrl = "http://13.232.121.233/mazarsapi/assets/upload/report";
 // export const ReportUrl = "https://mazarsapi.multitvsolution.com/mazarapi/assets/upload/report";
 
 // for local
-  export const baseUrl2 = "http://13.232.121.233";
+   export const baseUrl2 = "http://13.232.121.233";
 
 // for server 
+<<<<<<< HEAD
  // export const baseUrl2 = "https://mazarsapi.multitvsolution.com"
 
 
@@ -30,3 +30,6 @@ export const ReportUrl = "http://13.232.121.233/mazarsapi/assets/upload/report";
 
 
 
+=======
+ //  export const baseUrl2 = "https://mazarsapi.multitvsolution.com"
+>>>>>>> dev_jyoti

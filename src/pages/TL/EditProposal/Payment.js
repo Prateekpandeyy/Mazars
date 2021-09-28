@@ -15,7 +15,6 @@ export default class YourComponent extends React.Component {
     amount = this.props.installment_amount
     installment_amount = this.amount.split(',');
     temp = this.installment_amount
-    tamp2;
     handleChange1(i, e) {
         const { value } = e.target
         this.temp[i] = value
@@ -23,7 +22,7 @@ export default class YourComponent extends React.Component {
     
         this.setState({
             values: {
-              ...this.temp.slice(0, this.props.installment)
+              ...this.temp
             }
         },
             () => {
@@ -42,7 +41,7 @@ export default class YourComponent extends React.Component {
 
         this.setState({
             dates: {
-              ...this.installmentDueDate.slice(0, this.props.installment)
+              ...this.installmentDueDate
             }
         },
             () => {
@@ -52,11 +51,11 @@ export default class YourComponent extends React.Component {
 
     componentDidMount() {
         this.setState({ isLoading: false });
-        
+
         var amount = this.props.installment_amount
         var date = this.props.due_date
 
-        const installment_amount = this.props.clearValue === false ? amount.split(',') : []
+        const installment_amount = amount.split(',');
         const due_date = date.split(',');
 
 

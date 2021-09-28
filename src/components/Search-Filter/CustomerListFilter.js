@@ -4,16 +4,22 @@ import { baseUrl } from "../../config/config";
 import "antd/dist/antd.css";
 import { Select } from "antd";
 import { useForm } from "react-hook-form";
-
+import Excel from 'exceljs';
+import { saveAs } from 'file-saver';
+const workSheetName = 'Worksheet-1';
+const workBookName = 'MyWorkBook';
+const myInputId = 'myInput';
 function CustomerListFilter(props) {
+  const workbook = new Excel.Workbook();
+
   const { handleSubmit, register, errors, reset } = useForm();
   const { Option, OptGroup } = Select;
 
   const [selectedData, setSelectedData] = useState([]);
 
-  const { setData, searchQuery, setRecords, records, getCustomer  } = props;
+  const { setData, searchQuery, setRecords, records, getCustomer,listData  } = props;
   var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
- 
+
   const [item] = useState(current_date);
   
   const resetData = () => {
@@ -21,6 +27,18 @@ function CustomerListFilter(props) {
     reset();
    getCustomer();
   };
+  const columns = [
+    { header: 'S.No', key: 'id' },
+    { header: 'Name', key: 'name' },
+    { header: 'Email', key: 'email' },
+    { header: 'Mobile No', key: 'phone' },
+    { header: 'Occupation', key: 'occupation' },
+    { header: 'Country', key: 'country' },
+    { header: 'State', key: 'state' },
+    { header: 'City', key: 'city' },
+    { header: 'Date', key: 'created' }
+  ];
+ 
 
   
 
@@ -35,6 +53,8 @@ axios
 )
 .then((res) => {
   console.log("myResult", res.data.result);
+  var finalData = res.data.result
+  debugger;
   if (res.data.code === 1) {
     if (res.data.result) {
       setData(res.data.result);
@@ -43,13 +63,86 @@ axios
   }
 });     
 };
+const exportToExcel = async () => {
+  debugger;
+//setData( arr => [...arr, `${arr}`]);
+
+
+// console.log(setData.todo)
+  
+  try {
+    
+    
+   // const myInput = document.getElementById(myInputId);
+    const fileName = "Excel file";
+
+    // creating one worksheet in workbook
+    const worksheet = workbook.addWorksheet(workSheetName);
+
+    // add worksheet columns
+    // each columns contains header and its mapping key from data
+    worksheet.columns = columns;
+
+    // updated the font for first row.
+    worksheet.getRow(1).font = { bold: true };
+
+    // loop through all of the columns and set the alignment with width.
+    worksheet.columns.forEach(column => {
+      column.width = column.header.length + 5;
+      column.alignment = { horizontal: 'center' };
+    });
+
+    // loop through data and add each one to worksheet
+    debugger;
+    listData.map(singleData => {
+      worksheet.addRow(singleData);
+    });
+
+    // loop through all of the rows and set the outline style.
+    worksheet.eachRow({ includeEmpty: false }, row => {
+      // store each cell to currentCell
+      const currentCell = row._cells;
+
+      // loop through currentCell to apply border only for the non-empty cell of excel
+      currentCell.forEach(singleCell => {
+        // store the cell address i.e. A1, A2, A3, B1, B2, B3, ...
+        const cellAddress = singleCell._address;
+
+        // apply border
+        worksheet.getCell(cellAddress).border = {
+          top: { style: 'thin' },
+          left: { style: 'thin' },
+          bottom: { style: 'thin' },
+          right: { style: 'thin' }
+        };
+      });
+    });
+
+    // write the content using writeBuffer
+    const buf =  await workbook.xlsx.writeBuffer();
+
+    // download the processed file
+    saveAs(new Blob([buf]), `${fileName}.xlsx`);
+  
+ 
+  } 
+   catch (error) {
+    console.error('<<<ERRROR>>>', error);
+    console.error('Something Went Wrong', error.message);
+  } finally {
+    // removing worksheet's instance to create new one
+    workbook.removeWorksheet(workSheetName);
+  }
+
+ 
+};
 
   return (
     <>
     <div className="row">
       <div className="col-sm-12 d-flex">
         <div>
-          <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
+          <form onSubmit={handleSubmit(onSubmit)}>
           <div className="row my-3">
         <div class="col-sm-3">
             
@@ -164,6 +257,13 @@ axios
                   <label className="form-select form-control"
                   >Total Records : {records}</label>
                 </div>
+                <button
+          type="submit"
+          class="btn btn-primary mx-sm-1 mb-2"
+          onClick={() => exportToExcel()}
+        >
+          Export to Excel
+        </button>
              </div>
               
               </div>
