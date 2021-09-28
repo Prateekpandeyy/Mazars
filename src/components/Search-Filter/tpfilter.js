@@ -454,7 +454,7 @@ function TaxProfessionalFilter(props) {
     if (AllQuery == "AllQuery") {
       axios
         .get(
-          `${baseUrl}/tl/getIncompleteQues1?tp_id=${JSON.parse(userid)}&status=${data.p_status}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&pcat_id=${selectedData}`
+          `${baseUrl}/tl/getIncompleteQues?tp_id=${JSON.parse(userid)}&status=${data.p_status}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&pcat_id=${selectedData}`
         )
         .then((res) => {
           console.log(res);
@@ -480,7 +480,7 @@ function TaxProfessionalFilter(props) {
     if (pendingForAcceptence == "pendingForAcceptence") {
       axios
         .get(
-          `${baseUrl}/tl/pendingQues1?tp_id=${JSON.parse(
+          `${baseUrl}/tl/pendingQues?tp_id=${JSON.parse(
             userid
           )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&pcat_id=${selectedData}`
         )
@@ -509,7 +509,7 @@ function TaxProfessionalFilter(props) {
       console.log("status1", status1)
       axios
         .get(
-          `${baseUrl}/tl/getIncompleteQues1?tp_id=${JSON.parse(userid)}&status=${status1}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&pcat_id=${selectedData}`
+          `${baseUrl}/tl/getIncompleteQues?tp_id=${JSON.parse(userid)}&status=${status1}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&pcat_id=${selectedData}`
         )
         .then((res) => {
           console.log(res);
@@ -533,7 +533,7 @@ function TaxProfessionalFilter(props) {
     if (DeclinedQuery == "DeclinedQuery") {
       axios
         .get(
-          `${baseUrl}/tl/declinedQueries1?tp_id=${JSON.parse(userid)}&status=${data.p_status}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&pcat_id=${selectedData}`
+          `${baseUrl}/tl/declinedQueries?tp_id=${JSON.parse(userid)}&status=${data.p_status}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&pcat_id=${selectedData}`
         )
         .then((res) => {
           console.log(res);
@@ -557,7 +557,7 @@ function TaxProfessionalFilter(props) {
     if (completeAssignment == "completeAssignment") {
       axios
         .get(
-          `${baseUrl}/tl/getCompleteQues1?tp_id=${JSON.parse(
+          `${baseUrl}/tl/getCompleteQues?tp_id=${JSON.parse(
             userid
           )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&pcat_id=${selectedData}`
         )
@@ -584,7 +584,7 @@ function TaxProfessionalFilter(props) {
     if (AllProposal == "AllProposal") {
       axios
         .get(
-          `${baseUrl}/tl/getProposalTl1?tp_id=${JSON.parse(
+          `${baseUrl}/tl/getProposalTl?tp_id=${JSON.parse(
             userid
           )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
           }&status=${data.p_status}&pcat_id=${selectedData}`
@@ -611,7 +611,7 @@ function TaxProfessionalFilter(props) {
     if (InprogressProposal == "InprogressProposal") {
       axios
         .get(
-          `${baseUrl}/tl/getProposalTl1?tp_id=${JSON.parse(
+          `${baseUrl}/tl/getProposalTl?tp_id=${JSON.parse(
             userid
           )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
           }&status=${data.p_status}&pcat_id=${selectedData}`
@@ -638,7 +638,7 @@ function TaxProfessionalFilter(props) {
     if(proposal == "proposal"){
       axios
       .get(
-        `${baseUrl}/tl/getProposalTl1?tp_id=${JSON.parse(
+        `${baseUrl}/tl/getProposalTl?tp_id=${JSON.parse(
           userid
         )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
         }&status=2&pcat_id=${selectedData}`
@@ -664,7 +664,7 @@ function TaxProfessionalFilter(props) {
     if (AllPayment == "AllPayment") {
       axios
         .get(
-          `${baseUrl}/tl/getUploadedProposals1?tp_id=${JSON.parse(userid)}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=${data.p_status}&pcat_id=${selectedData}`
+          `${baseUrl}/tl/getUploadedProposals?tp_id=${JSON.parse(userid)}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=${data.p_status}&pcat_id=${selectedData}`
         )
         .then((res) => {
           console.log(res);
@@ -688,7 +688,7 @@ function TaxProfessionalFilter(props) {
     if (Unpaid == "Unpaid") {
       axios
         .get(
-          `${baseUrl}/tl/getUploadedProposals1?&tp_id=${JSON.parse(userid)}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=1&pcat_id=${selectedData}`
+          `${baseUrl}/tl/getUploadedProposals?&tp_id=${JSON.parse(userid)}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=1&pcat_id=${selectedData}`
         )
         .then((res) => {
           console.log(res);
@@ -712,7 +712,7 @@ function TaxProfessionalFilter(props) {
     if (Paid == "Paid") {
       axios
         .get(
-          `${baseUrl}/tl/getUploadedProposals1?tp_id=${JSON.parse(userid)}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=2&pcat_id=${selectedData}`
+          `${baseUrl}/tl/getUploadedProposals?tp_id=${JSON.parse(userid)}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=2&pcat_id=${selectedData}`
         )
         .then((res) => {
           console.log(res);

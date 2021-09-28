@@ -56,7 +56,7 @@ function Feedback() {
 
     axios({
       method: "POST",
-      url: `${baseUrl}/customers/PostUserFeedback1`,
+      url: `${baseUrl}/customers/PostUserFeedback`,
       data: formData,
     })
       .then(function (response) {

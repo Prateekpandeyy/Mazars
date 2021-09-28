@@ -376,7 +376,7 @@ function AllQueriesData(props) {
 
         axios({
             method: "POST",
-            url: `${baseUrl}/customers/deleteQuery1`,
+            url: `${baseUrl}/customers/deleteQuery`,
             data: formData,
         })
             .then(function (response) {

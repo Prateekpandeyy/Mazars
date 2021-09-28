@@ -94,7 +94,7 @@ const [showTl, setShowTl] = useState(false)
   : formData.append("to", "customer") }
     axios({
       method: "POST",
-      url: `${baseUrl}/tl/messageSent1`,
+      url: `${baseUrl}/tl/messageSent`,
       data: formData,
     })
       .then(function (response) {
