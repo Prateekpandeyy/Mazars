@@ -413,11 +413,8 @@ function EditComponent(props) {
                       installment_amount={installment_amount}
                       due_date={due_date}
                       getQuery={getQuery}
-<<<<<<< HEAD
                       item={item}
                       clearValue={clearValue}
-=======
->>>>>>> 246ca4dcf0cabcb75fa581a04eadc89410eea344
                     />
                 }
               </div>

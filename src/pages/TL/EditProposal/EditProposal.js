@@ -259,12 +259,8 @@ function EditComponent(props) {
     Object.entries(data).map(([key, value]) => {
       array2.push(value)
     });
-<<<<<<< HEAD
     setDate(array2.slice(0, installment.value));
     console.log("array2", array2)
-=======
-    setDate(array2);
->>>>>>> 246ca4dcf0cabcb75fa581a04eadc89410eea344
   };
 
   const installmentHandler = (key) => {
