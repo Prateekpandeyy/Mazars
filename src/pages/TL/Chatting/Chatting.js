@@ -6,8 +6,6 @@ import Layout from "../../../components/Layout/Layout";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import { useAlert } from "react-alert";
-import { getErrorMessage } from '../../../constants';
-import { Spinner } from "reactstrap"
 import {
   Card,
   CardHeader,
@@ -43,7 +41,6 @@ function Chatting(props) {
   const [loading, setLoading] = useState(false);
   const [item, setItem] = useState("");
   const [data, setData] = useState({})
-  const [load, setLoad] = useState(false);
   const { message_type, query_id, query_No, routes } = data
 const [showTl, setShowTl] = useState(false)
 
@@ -108,11 +105,7 @@ const [showTl, setShowTl] = useState(false)
         }
       })
       .catch((error) => {
-        //console.log("erroror - ", error);
-        getErrorMessage();
-          setTimeout(function(){
-          props.history.push(`/teamleader/chatting/${props.match.params.id}`);
-        },3000);
+        console.log("erroror - ", error);
       });
   };
 
@@ -136,10 +129,10 @@ const [showTl, setShowTl] = useState(false)
           </Row>
         </CardHeader>
         <CardBody>
-          {/* {
+          {
             loading ?
               <Loader />
-              : */}
+              :
               <>
                 <form onSubmit={handleSubmit(onSubmit)}>
                   <div class="row" style={{ display: "flex", justifyContent: "center" }}>
@@ -167,6 +160,7 @@ const [showTl, setShowTl] = useState(false)
                             name="msg_type"
                             ref={register}
                             style={{ height: "33px" }}
+                            defaultValue={item}
                           >
                             <option value="">--select--</option>
                             <option value="4">Query Discussion</option>
@@ -242,23 +236,15 @@ type="text"
                           </div>
                         )}
                       </div>
-                      {
-            loading ?
-              // <Loader />
-              <div class="col-md-12">
-                    <Spinner color="primary" />
-                  </div>
-              :
                       <button type="submit" className="btn btn-primary">
                         Send
                       </button>
-}
                     </div>
                   </div>
                 </form>
                 <Mandatory />
               </>
-          {/* } */}
+          }
         </CardBody>
 
       </Card>

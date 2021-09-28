@@ -1,3 +1,5 @@
+
+
 import React, { useState, useEffect } from "react";
 import Layout from "../../components/Layout/Layout";
 import { useHistory, useParams } from "react-router-dom";
@@ -12,8 +14,6 @@ import Swal from "sweetalert2";
 import Mandatory from "../../components/Common/Mandatory";
 import classNames from "classnames";
 import Loader from "../../components/Loader/Loader";
-import { getErrorMessage } from '../../constants';
-import { Spinner } from "reactstrap"
 
 
 function EditQuery(props) {
@@ -40,9 +40,8 @@ function EditQuery(props) {
   const [load, setLoad] = useState(false);
   const [selectedOption, setSelectedOption] = useState([]);
   const [purposeOption, setPurposeOption] = useState([]);
-  const [selectError, setSelectError] = useState();
+  const [selectError, setSelectError] = useState()
   const [assessmentYear, setAssessmentYear] = useState([]);
-
 
 
   const purPoseQuery = (e) => {
@@ -194,11 +193,7 @@ function EditQuery(props) {
           }
         })
         .catch((error) => {
-          getErrorMessage();
-          setTimeout(function(){
-          props.history.push(`/customer/edit-query/${id}`);
-        },3000);
-      });
+        });
     }
   };
 
@@ -225,9 +220,9 @@ function EditQuery(props) {
         </CardHeader>
 
         <CardHeader>
-          {/* {load ? (
+          {load ? (
             <Loader />
-          ) : ( */}
+          ) : (
             <div className="container">
               <div class="col-xl-8 col-lg-8 col-md-12 py-4">
 
@@ -437,26 +432,18 @@ function EditQuery(props) {
                         />
                       </div>
                     </div>
-                  </div> 
-                  {
-            load ?
-              // <Loader />
-              <div class="col-md-12">
-                    <Spinner color="primary" />
                   </div>
-              :
 
                   <button type="submit" className="btn btn-primary">
                     Update
                   </button>
-}
                 </form>
 
               </div>
 
               <Mandatory />
             </div>
-          {/* )} */}
+          )}
         </CardHeader>
       </Card>
     </Layout>

@@ -241,7 +241,7 @@ function QueryAssingment() {
                                     <option value="">--select--</option>
                                     {taxProfessionDisplay.map((p, index) => (
                                       <option key={index} value={p.id}>
-                                        {p.name}
+                                        { p.tl_post_name + "-"   + p.name}
                                       </option>
                                     ))}
                                   </select>

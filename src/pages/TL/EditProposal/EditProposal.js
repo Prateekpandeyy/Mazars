@@ -5,8 +5,6 @@ import { baseUrl } from "../../../config/config";
 import { useAlert } from "react-alert";
 import { useHistory, useParams } from "react-router-dom";
 import Layout from "../../../components/Layout/Layout";
-import { getErrorMessage } from '../../../constants';
-import { Spinner } from "reactstrap"
 import {
   Card,
   CardHeader,
@@ -21,10 +19,10 @@ import Select from "react-select";
 import Alerts from "../../../common/Alerts";
 import classNames from "classnames";
 import Mandatory from "../../../components/Common/Mandatory";
+import { Spinner } from 'reactstrap';
 
 
-
-function EditComponent(props) {
+function EditComponent() {
 
   const alert = useAlert();
   const { register, handleSubmit, reset, errors } = useForm();
@@ -37,7 +35,7 @@ function EditComponent(props) {
   const [date, setDate] = useState();
   const [load, setLoad] = useState(true);
 
-
+  const[clearValue, setClearValue] = useState(true)
   const [payment, setPayment] = useState([]);
   const [installment, setInstallment] = useState([]);
   const [error, setError] = useState('');
@@ -192,11 +190,7 @@ function EditComponent(props) {
                     }
                   })
                   .catch((error) => {
-                   // console.log("erroror - ", error);
-                   getErrorMessage();
-          setTimeout(function(){
-          props.history.push(`/teamleader/chatting/${props.match.params.id}`);
-        },3000);
+                    console.log("erroror - ", error);
                   });
               }
             }
@@ -221,11 +215,7 @@ function EditComponent(props) {
             }
           })
           .catch((error) => {
-            //console.log("erroror - ", error);
-            getErrorMessage();
-          setTimeout(function(){
-          props.history.push(`/teamleader/chatting/${props.match.params.id}`);
-        },3000);
+            console.log("erroror - ", error);
           });
       }
   };
@@ -249,7 +239,7 @@ function EditComponent(props) {
     Object.entries(data).map(([key, value]) => {
       array1.push(value)
     });
-    setAmount(array1);
+    setAmount(array1.slice(0, installment.value));
   };
 
   const paymentDate = (data) => {
@@ -266,6 +256,7 @@ function EditComponent(props) {
   const installmentHandler = (key) => {
     console.log("key", key)
     setInstallment(key)
+    setClearValue(false)
   }
 
 
@@ -416,6 +407,7 @@ function EditComponent(props) {
                       due_date={due_date}
                       getQuery={getQuery}
                       item={item}
+                      clearValue={clearValue}
                     />
                 }
               </div>

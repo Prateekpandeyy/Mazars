@@ -5,8 +5,6 @@ import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import { useParams, Link, Redirect } from "react-router-dom";
 import { useAlert } from "react-alert";
-import { getErrorMessage } from '../../../constants';
-import {SetLoadingMethod} from '../../../ConstantLoading'
 import {
   Card,
   CardHeader,
@@ -16,7 +14,6 @@ import {
   Col,
   Table,
   Tooltip,
-  Spinner
 } from "reactstrap";
 import Alerts from "../../../common/Alerts";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -45,11 +42,7 @@ function QueryAssingment(props) {
   const [teamID, setTeamID] = useState(null);
   const [teamName, setTeamName] = useState("");
   const [query, setQuery] = useState(true);
-  const [time, setTime] = useState('')
-  const [load, setLoad] = useState(false);
-  const [disabled, setDisabled] = useState(false)
-  const [show, setShow] = useState(false);
- 
+
   const [expectedDate, setExpectedDate] = useState("");
 
   const [hideQuery, setHideQuery] = useState({
@@ -175,12 +168,8 @@ function QueryAssingment(props) {
         }
       })
       .catch((error) => {
-        //console.log("erroror - ", error);
-        getErrorMessage();
-        setTimeout(function(){
-        props.history.push(`/customer/chatting/${props.match.params.id}`);
-      },3000);
-    });
+        console.log("erroror - ", error);
+      });
   };
 
   const expectedDeliveryDate = (key) => {
@@ -234,10 +223,10 @@ function QueryAssingment(props) {
         </CardHeader>
         <CardHeader>
 
-          {/* {
+          {
             loading ?
               <Loader />
-              : */}
+              :
               <>
                 <div class="row mt-3">
                   <div class="col-md-12">
@@ -268,7 +257,7 @@ function QueryAssingment(props) {
                                   <option value="">-select-</option>
                                   {taxLeaderDisplay.map((p, index) => (
                                     <option key={index} value={p.id}>
-                                      {p.name}
+                                      {p.postname}
                                     </option>
                                   ))}
                                 </select>
@@ -304,21 +293,14 @@ function QueryAssingment(props) {
                                   </div>
                                 )}
                               </td>
-                                {
-                                  loading ?
-                                  // <Loader />
-                                  <div class="col-md-12">
-                                        <Spinner color="primary" />
-                                      </div>
-                                  :
+
                               <td>
                                 <button type="submit" class="btn btn-success">
                                   Assign
                                 </button>
                               </td>
-}
                             </tr>
-                           ) : (
+                          ) : (
                             <tr>
                               <th scope="row">{queryNo}</th>
                               <td>
@@ -347,16 +329,11 @@ function QueryAssingment(props) {
                                   disabled
                                 />
                               </td>
-                              
                               <td>
-                              
-            
                                 <button class="btn btn-success" disabled>
                                   Assigned
                                 </button>
-                               
                               </td>
-
                             </tr>
                           )}
                         </tbody>
@@ -367,7 +344,7 @@ function QueryAssingment(props) {
                   </div>
                 </div>
               </>
-           {/* } */}
+          }
 
         </CardHeader>
       </Card>

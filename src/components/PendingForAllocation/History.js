@@ -48,7 +48,7 @@ function History({ history,toggle,modal }) {
                       <td>{p.name}</td>
                       <td>{p.assign_no}</td>
                       <td>{p.status}</td>
-                      <td>{ChangeFormateDate(p.date_of_allocation)}</td>
+                      <td>{p.date_of_allocation}</td>
                       <td>{p.notes}</td>
                     </tr>
                   </tbody>
