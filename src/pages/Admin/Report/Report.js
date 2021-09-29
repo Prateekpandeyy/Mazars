@@ -1,7 +1,7 @@
 import React from 'react';
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import { useState } from 'react';
+import { useState , useEffect} from 'react';
 import classNames from "classnames";
 import { baseUrl } from "../../../config/config";
 import './Admin.css';
@@ -16,10 +16,49 @@ const Report = () => {
     const [taxprofessional, setTaxprofessional] = useState([]);
     const [category, setCategory] = useState([]);
     const [subCategory, setSubCategory] = useState([]);
+    const [tax, setTax] = useState([]);
+  const [tax2, setTax2] = useState([]);
+  const [store, setStore] = useState([]);
     const { handleSubmit, register, errors, getValues } = useForm();
     var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
  
   const [item] = useState(current_date);
+
+  useEffect(() => {
+    const getCategory = async () => {
+      await axios.get(`${baseUrl}/customers/getCategory?pid=0`).then((res) => {
+        if (res.data.code === 1) {
+          console.log(res.data.result)
+          setTax(res.data.result);
+        }
+      });
+    };
+
+    getCategory();
+  }, []);
+
+  useEffect(() => {
+    const getSubCategory = async () => {
+
+      await axios.get(`${baseUrl}/customers/getCategory?pid=${store}`).then((res) => {
+
+        if (res.data.code === 1) {
+          setTax2(res.data.result)
+        }
+      });
+    };
+    getSubCategory();
+  }, [store]);
+  const options = tax.map(d => (
+    {
+      "value": d.id,
+      "label": d.details
+    }))
+
+  const options2 = tax2.map(v => ({
+    "value": v.id,
+    "label": v.details
+  }))
     const onSubmit = (value) => {
         let formData = new FormData();
         formData.append("from", value.p_from);
@@ -128,13 +167,54 @@ onChange= {(e) =>setTeamleader(e)}/>
 </div>
        <div className="col-md-3">
            <label className="form-label">Category</label>
-           <Select isMulti = {true}
-          onChange={(e) => setCategory(e)}/>
+           <Select isMulti options={options}
+                       
+                        styles={{
+                          option: (styles, { data }) => {
+                            return {
+                              ...styles,
+                              color: data.value == 2
+                                ? "green"
+                                : "blue"
+                            };
+                          },
+                          multiValueLabel: (styles, { data }) => ({
+                            ...styles,
+                            color: data.value == 2
+                              ? "green"
+                              : "blue"
+                          }),
+                        }}
+
+                        onChange={(e) => setStore(e[0].value)}>
+                      </Select>
+
         </div>
         <div className="col-md-3">
             <label className="form-label">Sub Category</label>
-            <Select isMulti={true} 
-            onChange={(e) => setSubCategory(e)} />
+            <Select isMulti options={options2}
+                       
+                        onChange={subCategory}
+                        styles={{
+                          option: (styles, { data }) => {
+                            return {
+                              ...styles,
+                              color: data.value > 8
+                                ? "green"
+                                : "blue"
+                            };
+                          },
+                          multiValueLabel: (styles, { data }) => ({
+                            ...styles,
+                            color: data.value > 8
+                              ? "green"
+                              : "blue"
+                          }),
+                        }}
+
+                        // value={subData}
+                        >
+                      </Select>
             </div>
    </div>
    <div className="row">
