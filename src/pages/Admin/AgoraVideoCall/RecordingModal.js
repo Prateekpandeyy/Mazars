@@ -73,6 +73,9 @@ function RecordingModal({
                 console.log("erroror - ", error);
             });
     };
+    const exitBtn2 = () => {
+        history.push('/admin/schedule');
+    }
 
     return (
         <div>
@@ -138,7 +141,8 @@ function RecordingModal({
                                         name="p_message"
                                     ></textarea>
                                 </div>
-                                <button type="submit" className="btn btn-primary">
+                                <button type="button" className="btn btn-danger" onClick={() => exitBtn2()}>Cancel </button>
+                                <button type="submit" className="btn btn-primary mx-3">
                                     Submit
                                 </button>
                             </div>

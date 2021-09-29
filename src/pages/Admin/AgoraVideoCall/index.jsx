@@ -82,7 +82,8 @@ class AgoraCanvas extends React.Component {
       articleId : [],
       articleId2 : [],
       showRecBtn : false,
-      showButton : ''
+      showButton : '',
+      clickDisable : false
     };
 
     this.toggleModal = this.toggleModal.bind(this);
@@ -391,8 +392,8 @@ schdrularName;
 
 
   handleExit = async() => {
-   
-
+   if(this.state.clickDisable === false){
+     this.setState({clickDisable : true})
     var resourceId = localStorage.getItem("resourceId");
     var sid = localStorage.getItem("sid");
   
@@ -418,6 +419,9 @@ schdrularName;
         .catch((error) => {
        
       });
+   
+   }
+
     
   }
   sharingScreen = (e) => {
@@ -538,6 +542,9 @@ sleep(ms) {
             data:response,
             recordDisplay:!this.state.recordDisplay
           })
+          setTimeout(() => {
+            this.setState({clickDisable : false})
+          }, 1000)
       })
       .catch((error) => console.log(error));
   }
@@ -595,8 +602,10 @@ async startRecording(key){
   };
 // Start recording button
   recStart = () => {
+    
     this.accuire();
     this.setState({ showRecBtn: false  });
+    
   }
 
   //toggelStop
@@ -615,7 +624,8 @@ async startRecording(key){
 this.toggleModal("stop")
   }
   
-  else if(this.state.showButton == JSON.parse(this.teamKey)){
+  else if(this.state.showButton == JSON.parse(this.teamKey) && this.state.clickDisable === false){
+  console.log("done2")
     if(resourceId === undefined){
       var resourceId = localStorage.getItem("resourceId");
     var sid = localStorage.getItem("sid");
@@ -636,7 +646,9 @@ this.toggleModal("stop")
     data: data,
   })
   .then(json => 
-    this.toggleModal(json)) 
+    this.toggleModal(json) ,
+     this.setState({showRecBtn : true})
+    ) 
     .catch((error) => {
       
     });
