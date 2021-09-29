@@ -38,11 +38,12 @@ function PaymentModal({
     formData.append("status", 8);
     formData.append("amount", value.p_amount);
 
-    axios({
-      method: "POST",
-      url: `${baseUrl}/customers/PaymentPartialAccept`,
-      data: formData,
-    })
+    // axios({
+    //   method: "POST",
+    //   url: `${baseUrl}/customers/PaymentPartialAccept`,
+    //   data: formData,
+    // })
+    axios.get(`${baseUrl}/admin/getPaymentDetail?id=${assign_id}`)
       .then(function (response) {
         console.log("res-", response);
         if (response.data.code === 1) {
