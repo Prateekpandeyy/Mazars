@@ -624,7 +624,7 @@ async startRecording(key){
 this.toggleModal("stop")
   }
   
-  else if(this.state.showButton == JSON.parse(this.teamKey) && this.state.clickDisable === false){
+  else if(this.state.showButton == JSON.parse(this.teamKey)){
   console.log("done2")
     if(resourceId === undefined){
       var resourceId = localStorage.getItem("resourceId");
