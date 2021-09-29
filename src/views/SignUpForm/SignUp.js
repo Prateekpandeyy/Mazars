@@ -13,7 +13,7 @@ import Alerts from "../../common/Alerts";
 import ResendOtp from "./ResendOtp";
 import GetOTP from "./GetOTP";
 import Mandatory from "../../components/Common/Mandatory";
-
+import EmailValidation from "../../components/Common/EmailValidation";
 
 
 
@@ -158,54 +158,6 @@ function SignUp(props) {
   }
 
 
-  //eamil onchange
-  const emailHandler = (e) => {
-    setEmail(e.target.value);
-    console.log(e.target.value.length)
-    if (e.target.value.length < 1) {
-      setWemail("")
-    }
-  };
-
-
-  //email validaation with api
-  const emailValidation = (key) => {
-
-    var validRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    if (email.match(validRegex)) {
-      setWemail("");
-      setEmailError(false)
-      let formData = new FormData();
-      formData.append("email", email);
-      formData.append("type", 1);
-
-      axios({
-        method: "POST",
-        url: `${baseUrl}/customers/validateregistration`,
-        data: formData,
-      })
-        .then(function (response) {
-          console.log("resEmail-", response);
-          if (response.data.code === 1) {
-            setValiemail(response.data.result)
-            setInvalid('')
-            setEmailError(false)
-          } else if (response.data.code === 0) {
-            setInvalid(response.data.result)
-            setValiemail('')
-            setEmailError(true)
-          }
-        })
-        .catch((error) => {
-          console.log("erroror - ", error);
-        });
-    }
-    else {
-      setEmailError(true)
-      setWemail("invalid email")
-    }
-
-  }
 
 
   //phone onchange
@@ -366,7 +318,7 @@ function SignUp(props) {
     if (display === true && subm === false) {
       setLoading(true)
       let formData = new FormData();
-      formData.append("email", email);
+      formData.append("email", value.p_email);
       formData.append("phone", phone);
       formData.append("p", "registration");
 
@@ -471,17 +423,14 @@ function SignUp(props) {
                   <div className="col-md-6">
                     <div className="mb-3">
                       <label className="form-label">Email<span className="declined">*</span></label>
-                      <input
-                        type="text"
-                        name="p_email"
-                        className={classNames("form-control", {
-                          "is-invalid": errors.p_email || emailError === true || wEmail || invalid,
-                        })}
-                        onChange={(e) => emailHandler(e)}
-                        onBlur={emailValidation}
-                        placeholder="Enter Your Password"
-                        ref={register({ required: true })}
-                      />
+                     <EmailValidation
+                     setWemail = {setWemail}
+                      wEmail = {wEmail} 
+                      invalid = {invalid}
+                       setEmailError = {setEmailError}
+                        setValiemail = {setValiemail} 
+                        emailError = {emailError} 
+                        setInvalid = {setInvalid}  />
                       {
                         wEmail ? <p className="declined">{wEmail}</p> : <>
                           {valiEmail ?

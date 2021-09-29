@@ -5,15 +5,15 @@ import { baseUrl } from "../../config/config";
 
 import classNames from "classnames";
 import { Spinner } from "reactstrap"
-const PhoneValidation = (setWemail, wEmail, invalid, setEmailError, setValiemail,emailError, setInvalid) => {
+const EmailValidation = (props) => {
     const { handleSubmit, register, errors, getValues } = useForm();
 const [email, setEmail] = useState([])
     console.log(setEmail)
     const emailHandler = (e) => {
-        setEmail(e.target.value);
+      setEmail(e.target.value);
         console.log(e.target.value.length)
         if (e.target.value.length < 1) {
-          setWemail("")
+          props.setWemail("")
         }
       };
 
@@ -21,8 +21,8 @@ const [email, setEmail] = useState([])
 
         var validRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         if (email.match(validRegex)) {
-          setWemail("");
-          setEmailError(false)
+          props.setWemail("");
+          props.setEmailError(false)
           let formData = new FormData();
           formData.append("email", email);
           formData.append("type", 1);
@@ -35,13 +35,13 @@ const [email, setEmail] = useState([])
             .then(function (response) {
               console.log("resEmail-", response);
               if (response.data.code === 1) {
-                setValiemail(response.data.result)
-                setInvalid('')
-                setEmailError(false)
+                props.setValiemail(response.data.result)
+                props.setInvalid('')
+                props.setEmailError(false)
               } else if (response.data.code === 0) {
-                setInvalid(response.data.result)
-                setValiemail('')
-                setEmailError(true)
+                props.setInvalid(response.data.result)
+                props.setValiemail('')
+                props.setEmailError(true)
               }
             })
             .catch((error) => {
@@ -49,8 +49,8 @@ const [email, setEmail] = useState([])
             });
         }
         else {
-          setEmailError(true)
-          setWemail("invalid email")
+          props.setEmailError(true)
+          props.setWemail("invalid email")
         }
     
       }
@@ -62,7 +62,7 @@ return(
                         type="text"
                         name="p_email"
                         className={classNames("form-control", {
-                          "is-invalid": errors.p_email || emailError === true || wEmail || invalid,
+                          "is-invalid": errors.p_email || props.emailError === true || props.wEmail || props.invalid,
                         })}
                         onChange={(e) => emailHandler(e)}
                         onBlur={emailValidation}
@@ -73,4 +73,4 @@ return(
     </>
 )
 }
-export default PhoneValidation;
+export default EmailValidation;

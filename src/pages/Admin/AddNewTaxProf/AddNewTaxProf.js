@@ -13,10 +13,10 @@ import { useHistory } from "react-router-dom";
 import classNames from "classnames";
 import Mandatory from "../../../components/Common/Mandatory";
 import { Spinner } from "reactstrap";
-
+import EmailValidation from "../../../components/Common/EmailValidation";
 const Schema = yup.object().shape({
   p_name: yup.string().required("required name"),
-  p_email: yup.string().email("invalid email").required("required email"),
+  // p_email: yup.string().email("invalid email").required("required email"),
   p_phone: yup
     .string()
     .required("required phone no")
@@ -63,6 +63,7 @@ function AddNew() {
   const [post_na, setPost_na] = useState()
   const [tpEmail, setTpEmail] = useState('')
   const [loading, setLoading] = useState(false);
+  const [emailError, setEmailError] = useState(null);
   var kk = []
   var vv = []
   var post_name;
@@ -441,12 +442,13 @@ function AddNew() {
                       <label> Teamleader post email <span className="declined">*</span></label>
                       <input
                         type="email"
+                        name="post_email"
                         className={classNames("form-control", {
-                          "is-invalid": errors.p_email,
+                          "is-invalid": errors.post_email,
                         })}
                         disabled
                         defaultValue={tpEmail}
-                        name="post_email"
+                       
                         ref={register}
 
                       />
@@ -480,7 +482,7 @@ function AddNew() {
 
 
                       <label> TP post email <span className="declined">*</span></label>
-                      <input
+                      {/* <input
                         type="text"
                         name="p_email"
                         ref={register}
@@ -491,7 +493,15 @@ function AddNew() {
                         })}
                         onChange={(e) => emailHandler(e)}
                         onBlur={emailValidation}
-                      />
+                      /> */}
+                       <EmailValidation
+                     setWemail = {setWemail}
+                      wEmail = {wEmail} 
+                      invalid = {invalid}
+                       setEmailError = {setEmailError}
+                        setValiemail = {setValiemail} 
+                        emailError = {emailError} 
+                        setInvalid = {setInvalid}  />
                       {
                         wEmail ? <p className="declined">{wEmail}</p> : <>
                           {valiEmail ?

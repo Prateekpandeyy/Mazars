@@ -180,11 +180,11 @@ console.log("key", typeof(key))
                 }}
               ></i>
             </Link>
-            <i
+            {/* <i
               className="fa fa-trash"
               style={{ fontSize: 20, cursor: "pointer", marginLeft: "8px" }}
               onClick={() => del(row.id)}
-            ></i>
+            ></i> */}
           </>
         );
 

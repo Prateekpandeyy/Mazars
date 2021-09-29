@@ -19,7 +19,7 @@ function ResendOtp({ invalid, wEmail, indNumError, zipError, passError, email,
               else {
                 setLoading(true)
                 let formData = new FormData();
-                formData.append("email", email);
+                formData.append("email", value.p_email);
                 formData.append("phone", phone);
                 formData.append("p", "registration");
         
