@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import Layout from "../../../components/Layout/Layout";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
+import { getErrorMessage } from '../../../constants';
+import Loader from "../../../components/Loader/Loader";
 import {
   Card,
   CardHeader,
@@ -11,6 +13,7 @@ import {
   Col,
   Table,
   Tooltip,
+  Spinner
 } from "reactstrap";
 import DraftReportModal from "./DraftReportUpload";
 import FinalReportUpload from "./FinalReportUpload";
@@ -27,8 +30,8 @@ import DiscardReport from "../AssignmentTab/DiscardReport";
 import moment from "moment";
 
 
-function AssignmentTab() {
-
+function AssignmentTab(props) {
+  const [loading, setLoading] = useState(false);
   const history = useHistory();
   const userid = window.localStorage.getItem("tpkey");
 
@@ -480,6 +483,7 @@ function AssignmentTab() {
 
 
   const onSubmit = (data) => {
+    setLoading(true)
     console.log("data :", data);
     console.log("selectedData :", selectedData);
     axios
@@ -493,13 +497,21 @@ function AssignmentTab() {
       .then((res) => {
         console.log(res);
         if (res.data.code === 1) {
+          setLoading(false)
           if (res.data.result) {
             setAssignment(res.data.result);
             setRecords(res.data.result.length);
 
           }
         }
-      });
+      })
+      .catch((error) => {
+        // console.log("erroror - ", error);
+        getErrorMessage();
+         setTimeout(function(){
+         props.history.push(`/taxprofessional/assignment`);
+       },3000);
+       });
   };
 
 
@@ -660,9 +672,18 @@ function AssignmentTab() {
               <div class="form-group mx-sm-1  mb-2">
                 <label className="form-select form-control">Total Records : {records}</label>
               </div>
+              {
+            loading ?
+              // <Loader />
+              <div class="col-md-12">
+                    <Spinner color="primary" />
+                  </div>
+              :
+
               <button type="submit" class="btn btn-primary mx-sm-1 mb-2">
                 Search
               </button>
+}
 
               <Reset />
             </div>

@@ -54,7 +54,6 @@ axios
 .then((res) => {
   console.log("myResult", res.data.result);
   var finalData = res.data.result
-  debugger;
   if (res.data.code === 1) {
     if (res.data.result) {
       setData(res.data.result);
@@ -64,7 +63,6 @@ axios
 });     
 };
 const exportToExcel = async () => {
-  debugger;
 //setData( arr => [...arr, `${arr}`]);
 
 
@@ -93,7 +91,6 @@ const exportToExcel = async () => {
     });
 
     // loop through data and add each one to worksheet
-    debugger;
     listData.map(singleData => {
       worksheet.addRow(singleData);
     });

@@ -91,6 +91,8 @@ console.log(query_id)
           Alerts.SuccessNormal(variable)
 
           props.history.push(routes);
+        }else if (response.data.code === 0) {
+          setLoading(false)
         }
       })
       .catch((error) => {
