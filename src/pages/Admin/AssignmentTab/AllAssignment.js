@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import Layout from "../../../components/Layout/Layout";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
+import { getErrorMessage } from '../../../constants';
+import Loader from "../../../components/Loader/Loader";
 import {
   Card,
   CardHeader,
@@ -10,6 +12,7 @@ import {
   Row,
   Col,
   Table,
+  Spinner
 } from "reactstrap";
 import { useForm } from "react-hook-form";
 import "antd/dist/antd.css";
@@ -23,7 +26,8 @@ import DescriptionOutlinedIcon from '@material-ui/icons/DescriptionOutlined';
 import DiscardReport from "../AssignmentTab/DiscardReport";
 import moment from "moment";
 
-function AssignmentComponent() {
+function AssignmentComponent(props) {
+  const [loading, setLoading] = useState(false);
   const userid = window.localStorage.getItem("adminkey");
 
   const [assignmentDisplay, setAssignmentDisplay] = useState([]);
@@ -31,14 +35,12 @@ function AssignmentComponent() {
   const { Option, OptGroup } = Select;
   const [assignmentCount, setCountAssignment] = useState("");
   const [records, setRecords] = useState([]);
-
   const [selectedData, setSelectedData] = useState([]);
   const [status, setStatus] = useState([]);
   const [tax2, setTax2] = useState([]);
   const [store2, setStore2] = useState([]);
   const [hide, setHide] = useState();
   const [report, setReport] = useState();
-
   var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
   
   const [item] = useState(current_date);
@@ -378,6 +380,7 @@ console.log(warningDate < aa)
     return style;
   }
   const onSubmit = (data) => {
+    setLoading(true)
     console.log("data :", data);
     console.log("selectedData :", selectedData);
     axios
@@ -387,12 +390,20 @@ console.log(warningDate < aa)
       .then((res) => {
         console.log(res);
         if (res.data.code === 1) {
+          setLoading(false)
           if (res.data.result) {
             setAssignmentDisplay(res.data.result);
             setRecords(res.data.result.length);
           }
         }
-      });
+      })
+      .catch((error) => {
+        // console.log("erroror - ", error);
+        getErrorMessage();
+         setTimeout(function(){
+         props.history.push(`/admin/assignment`);
+       },3000);
+       });
   };
 
 
@@ -550,10 +561,18 @@ console.log(warningDate < aa)
                   </div>
 
               }
+                {
+            loading ?
+              // <Loader />
+              <div class="col-md-12">
+                    <Spinner color="primary" />
+                  </div>
+              :
 
               <button type="submit" class="btn btn-primary mx-sm-1 mb-2">
                 Search
               </button>
+}
 
               <Reset />
             </div>
