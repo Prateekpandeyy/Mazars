@@ -64,6 +64,7 @@ function AddNew() {
   const [tpEmail, setTpEmail] = useState('')
   const [loading, setLoading] = useState(false);
   const [emailError, setEmailError] = useState(null);
+  const [email2, setEmail2] = useState();
   var kk = []
   var vv = []
   var post_name;
@@ -79,14 +80,14 @@ function AddNew() {
   }))
 
   const teamleader1 = teamleader.map(v => (
-    console.log(v), {
+  {
       "value": v.id,
       "label": v.name
     }))
   useEffect(() => {
     const getTeamLeader = () => {
       axios.get(`${baseUrl}/tl/getTeamLeader`).then((res) => {
-        console.log(res);
+      
         if (res.data.code === 1) {
           setTeamLeader(res.data.result);
         }
@@ -98,7 +99,7 @@ function AddNew() {
   useEffect(() => {
     const getCategory = () => {
       axios.get(`${baseUrl}/customers/getCategory?pid=0`).then((res) => {
-        console.log(res);
+
         if (res.data.code === 1) {
           setTax(res.data.result);
         }
@@ -111,7 +112,7 @@ function AddNew() {
   useEffect(() => {
     const getSubCategory = () => {
       axios.get(`${baseUrl}/customers/getCategory?pid=${store}`).then((res) => {
-        console.log(res);
+     
         if (res.data.code === 1) {
           setTax2(res.data.result);
         }
@@ -122,7 +123,7 @@ function AddNew() {
 
   // OnSubmit Function
   const onSubmit = (value) => {
-    console.log("tealId", tl)
+
     var categeryList = []
     var categeryName = []
     var categeryName = []
@@ -133,12 +134,7 @@ function AddNew() {
       categeryList.push(i.value)
       categeryName.push(i.label)
     })
-    //  categoryData.map((i) => {
-    //    kk.push(i.value)
-    //    parentCategoryName.push(i.label)
-    //  })
-
-    console.log("subData", categoryData.label)
+   
     if (custCate.length < 1) {
       setError("Please select at least one value")
     }
@@ -151,7 +147,7 @@ function AddNew() {
     }
 
     else {
-      console.log("value :", value);
+
       setLoading(true)
     
       let formData = new FormData();
@@ -159,7 +155,7 @@ function AddNew() {
       formData.append("name", value.p_name);
       formData.append("phone", value.p_phone);
       formData.append("tp_id", tl);
-      formData.append("email", value.p_email);
+      formData.append("email", email2);
       formData.append("post_name", value.post_name)
       formData.append("cat_id", categeryList);
       formData.append("pcat_id", categoryData.value);
@@ -174,11 +170,11 @@ function AddNew() {
         data: formData,
       })
         .then(function (response) {
-          console.log("res-", response);
+        
           if (response.data.code === 1) {
             setLoading(false)
     
-            var variable = "Tax Professional Created Successfully"
+           
 
             Swal.fire({
               "title": "success",
@@ -202,7 +198,7 @@ function AddNew() {
           }
         })
         .catch((error) => {
-          console.log("erroror - ", error);
+       
         });
     };
   }
@@ -231,19 +227,11 @@ function AddNew() {
     setmcatname((oldData) => {
       return [...oldData, v.label]
     })
-    // v.map((val) => {
-    //   vv.push(val.value)
-    //   setmcategory(val.value);
-    //   setmcatname((oldData) => {
-    //     return [...oldData, val.label]
-    //   })
-    //   setStore(val.value)
-    // })
 
 
     if (vv.length > 0) {
       if (vv.includes("1") && vv.includes("2")) {
-        console.log("hdd")
+
       }
       else if (vv.includes("1")) {
 
@@ -289,15 +277,15 @@ function AddNew() {
 
   // Phone Validation function 
   const phoneValidation = () => {
-    console.log(phone.length)
+   
     if (phone.length > 10) {
-      console.log(phone.length)
+    
       setNumAvail("")
       setNumExist("")
       setIndNumError("Maximum 10 digit should be enter")
     }
     else if (phone.length < 10) {
-      console.log(phone.length)
+     
       setNumAvail("")
       setNumExist("")
       setIndNumError("Minimum 10 digit should be enter")
@@ -317,7 +305,7 @@ function AddNew() {
   //eamil onchange
   const emailHandler = (e) => {
     setEmail(e.target.value);
-    console.log(e.target.value.length)
+
     if (e.target.value.length < 1) {
       setWemail("")
     }
@@ -340,7 +328,7 @@ function AddNew() {
         data: formData,
       })
         .then(function (response) {
-          console.log("resEmail-", response);
+        
           if (response.data.code === 1) {
             setValiemail(response.data.result)
             setInvalid('')
@@ -350,7 +338,7 @@ function AddNew() {
           }
         })
         .catch((error) => {
-          console.log("erroror - ", error);
+
         });
     }
     else {
@@ -362,20 +350,20 @@ function AddNew() {
   // Tl Function 
   const tlFun = (e) => {
     var a;
-    console.log("id", e)
+ 
     teamleader.filter((p) => {
 
       if (p.id == e) {
-        console.log("pdi", p.id)
+      
         setTpEmail(p.email)
         setTl(p.id)
         setPost_na(p.post_name)
         a = p.post_name
-        console.log("aa", a)
+       
       }
     })
 
-    console.log(post_na)
+    
   }
 
 
@@ -421,7 +409,7 @@ function AddNew() {
                         <option value="">--select--</option>
                         {teamleader.map((p) =>
                         (
-                          console.log("pp", p.id),
+
                           <option key={p.Id} value={p.id}>
                             {p.post_name}
                           </option>
@@ -482,18 +470,7 @@ function AddNew() {
 
 
                       <label> TP post email <span className="declined">*</span></label>
-                      {/* <input
-                        type="text"
-                        name="p_email"
-                        ref={register}
-
-
-                        className={classNames("form-control", {
-                          "is-invalid": errors.post_email,
-                        })}
-                        onChange={(e) => emailHandler(e)}
-                        onBlur={emailValidation}
-                      /> */}
+                      
                        <EmailValidation
                      setWemail = {setWemail}
                       wEmail = {wEmail} 
@@ -501,7 +478,8 @@ function AddNew() {
                        setEmailError = {setEmailError}
                         setValiemail = {setValiemail} 
                         emailError = {emailError} 
-                        setInvalid = {setInvalid}  />
+                        setInvalid = {setInvalid}  
+                        setEmail2 = {setEmail2} />
                       {
                         wEmail ? <p className="declined">{wEmail}</p> : <>
                           {valiEmail ?

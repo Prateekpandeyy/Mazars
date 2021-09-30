@@ -58,7 +58,7 @@ function SignUp(props) {
   const [phoneError, setPhoneError] = useState(null)
   const [zipError1, setZipError1] = useState(null);
   const [subm, setSub] = useState(false)
-
+const [email2, setEmail2] = useState();
   const [loading, setLoading] = useState(false);
 
   //Css
@@ -87,7 +87,7 @@ function SignUp(props) {
 
 
   const getTime = () => {
-    console.log("get time")
+    
     if (load) {
       var timerOn = true;
       function timer(remaining) {
@@ -182,16 +182,16 @@ function SignUp(props) {
   //phone validaation with api
   const phoneValidation = () => {
     setPhoneError(false)
-    console.log(phone.length)
+    
     if (countryId && phone.length > 10) {
-      console.log(phone.length)
+   
       setNumAvail("")
       setNumExist("")
       setIndNumError("Maximum 10 value should be enter")
       setPhoneError(true)
     }
     else if (countryId && phone.length < 10) {
-      console.log(phone.length)
+     
       setNumAvail("")
       setNumExist("")
       setIndNumError("Minimum 10 value should be enter")
@@ -207,7 +207,7 @@ function SignUp(props) {
     else {
       setPhoneError(false)
       setIndNumError("")
-      console.log(countryId)
+
       let formData = new FormData();
       formData.append("phone", phone);
       formData.append("type", 2);
@@ -217,10 +217,10 @@ function SignUp(props) {
         data: formData,
       })
         .then(function (response) {
-          console.log("res-", response);
+         
           if (response.data.code === 1) {
             // setValiphone(response.data.result)
-            console.log(response.data.result)
+            
             setPhoneError(false)
             setNumExist('')
             setNumAvail(response.data.result);
@@ -228,16 +228,16 @@ function SignUp(props) {
           }
           else if (response.data.code === 0) {
             setPhoneError(true)
-            console.log(response.data.result)
+            
             setNumAvail('')
             setNumExist(response.data.result)
 
-            console.log("mobile" + setNumExist)
+         
           }
 
         })
         .catch((error) => {
-          // console.log("erroror - ", error);
+        
         });
     }
   }
@@ -246,7 +246,7 @@ function SignUp(props) {
 
   //zip oncahnge
   const zipValue = (e) => {
-    console.log("zipValue", e.target.value.length)
+   
     if (isNaN(e.target.value)) {
 
       setZipError("Please enter number only")
@@ -270,13 +270,13 @@ function SignUp(props) {
     if (countryId && zipCode && zipCode.length < 6) {
       setZipError1(true)
       setZipError("Minumum 6 digit should be there")
-      console.log(zipCode.length)
+
     }
 
     else if (countryId && zipCode && zipCode.length > 6) {
       setZipError1(true)
       setZipError("Maximum 6 digit allowed")
-      console.log(zipCode.length)
+    
     }
     else {
       setZipError1(false)
@@ -303,7 +303,7 @@ function SignUp(props) {
 
     let formData = new FormData();
     formData.append("name", value.p_name);
-    formData.append("email", value.p_email);
+    formData.append("email", email2);
     formData.append("phone", value.p_phone);
     formData.append("occupation", value.p_profession);
     formData.append("city", value.p_city)
@@ -318,7 +318,7 @@ function SignUp(props) {
     if (display === true && subm === false) {
       setLoading(true)
       let formData = new FormData();
-      formData.append("email", value.p_email);
+      formData.append("email", email2);
       formData.append("phone", phone);
       formData.append("p", "registration");
 
@@ -328,7 +328,7 @@ function SignUp(props) {
         data: formData,
       })
         .then(function (response) {
-          console.log("res-", response);
+         
           if (response.data.code === 1) {
             setLoading(false)
             setLoad(true)
@@ -340,7 +340,7 @@ function SignUp(props) {
           }
         })
         .catch((error) => {
-          console.log("erroror - ", error);
+        
         });
 
     }
@@ -351,7 +351,7 @@ function SignUp(props) {
         data: formData,
       })
         .then(function (response) {
-          console.log("res-", response);
+         
           if (response.data.code === 1) {
             setLoading(false)
             var variable = "Signup successfully."
@@ -361,13 +361,13 @@ function SignUp(props) {
             props.history.push("/customer/select-category");
           } else if (response.data.code === 0) {
             setLoading(false)
-            console.log("res -", response.data.result);
+          
             setLoad(false);
             Alerts.ErrorNormal("Incorrect OTP , please try again.")
           }
         })
         .catch((error) => {
-          console.log("erroror - ", error);
+        
         });
     }
 
@@ -390,6 +390,7 @@ function SignUp(props) {
     }
   }
 
+// getEmailValue 
 
   return (
     <>
@@ -430,7 +431,8 @@ function SignUp(props) {
                        setEmailError = {setEmailError}
                         setValiemail = {setValiemail} 
                         emailError = {emailError} 
-                        setInvalid = {setInvalid}  />
+                        setInvalid = {setInvalid}  
+                        setEmail2 = {setEmail2} />
                       {
                         wEmail ? <p className="declined">{wEmail}</p> : <>
                           {valiEmail ?

@@ -13,7 +13,7 @@ function Header({ id, cust_sign, admin, mtl, mtp, noSign, loginOTP }) {
     history.push("/customer/signin");
   }
 
-  console.log("hid:", id);
+ 
 
   return (
     <>

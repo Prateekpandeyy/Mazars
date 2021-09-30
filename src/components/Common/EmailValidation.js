@@ -8,10 +8,10 @@ import { Spinner } from "reactstrap"
 const EmailValidation = (props) => {
     const { handleSubmit, register, errors, getValues } = useForm();
 const [email, setEmail] = useState([])
-    console.log(setEmail)
+   
     const emailHandler = (e) => {
       setEmail(e.target.value);
-        console.log(e.target.value.length)
+      props.setEmail2(e.target.value)
         if (e.target.value.length < 1) {
           props.setWemail("")
         }
@@ -33,11 +33,12 @@ const [email, setEmail] = useState([])
             data: formData,
           })
             .then(function (response) {
-              console.log("resEmail-", response);
+             
               if (response.data.code === 1) {
                 props.setValiemail(response.data.result)
                 props.setInvalid('')
                 props.setEmailError(false)
+               
               } else if (response.data.code === 0) {
                 props.setInvalid(response.data.result)
                 props.setValiemail('')

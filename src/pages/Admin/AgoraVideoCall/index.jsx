@@ -739,10 +739,7 @@ else{
         }
         title="Exit"
       >
-        {/* {
-           this.state.showRecBtn === false ?
-           <i className="ag-icon ag-icon-leave"></i> :  ""
-        } */}
+       
      <i className="ag-icon ag-icon-leave"></i> 
       </span>
     );

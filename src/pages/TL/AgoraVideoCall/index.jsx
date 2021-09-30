@@ -82,7 +82,8 @@ class AgoraCanvas extends React.Component {
       articleId : [],
       articleId2 : [],
       showRecBtn : false,
-      showButton : ''
+      showButton : '',
+      clickDisable : false
     };
 
     this.toggleModal = this.toggleModal.bind(this);
@@ -397,69 +398,42 @@ schdrularName;
         item.style.display = "block";
       }
     });
-  };
-
-  // handleExit = (e) => {
-  //   if (e.currentTarget.classList.contains("disabled")) {
-  //     return;
-  //   }
-  //   try {
-  //     this.client && this.client.unpublish(this.localStream);
-  //     this.localStream && this.localStream.close();
-  //     if (this.state.stateSharing) {
-  //       this.shareClient && this.shareClient.unpublish(this.shareStream);
-  //       this.shareStream && this.shareStream.close();
-  //     }
-  //     this.client &&
-  //       this.client.leave(
-  //         () => {
-  //           console.log("Client succeed to leave.");
-  //         },
-  //         () => {
-  //           console.log("Client failed to leave.");
-  //         }
-  //       );
-  //   } finally {
-  //     this.setState({ readyState: false });
-  //     this.client = null;
-  //     this.localStream = null;
-  //     this.setState({showRecBtn : true})
-  //     // // redirect to index
-  //     window.location.hash = "/teamleader/schedule";
-  //   }
-  // };
-
-
-  handleExit = async() => {
-   
-
-    var resourceId = localStorage.getItem("resourceId");
-    var sid = localStorage.getItem("sid");
+  };  
   
-    var data = JSON.stringify({
-      "cname":this.channelName,
-      "uid":JSON.stringify(this.uid),
-      "clientRequest":{ }});
-    axios({
-      method: "POST",
-      headers: {
-        "content-type": "application/json;charset=utf-8",
-        "authorization": "Basic "+this.encodedString,
-        "cache-control": "no-cache",
-      },
-      url: `https://api.agora.io/v1/apps/${this.props.appId}/cloud_recording/resourceid/${resourceId}/sid/${sid}/mode/mix/stop`,
-      data: data,
-    })
-    .then(response => {
-      
-      this.tempArray.push(response.data.serverResponse.fileList)
-      this.setState({showRecBtn : true})
-    })
-        .catch((error) => {
-        console.log("error - ", error);
-      });
+  handleExit = async() => {
+    if(this.state.clickDisable === false){
+      this.setState({clickDisable : true})
+     var resourceId = localStorage.getItem("resourceId");
+     var sid = localStorage.getItem("sid");
+   
+     var data = JSON.stringify({
+       "cname":this.channelName,
+       "uid":JSON.stringify(this.uid),
+       "clientRequest":{ }});
+     axios({
+       method: "POST",
+       headers: {
+         "content-type": "application/json;charset=utf-8",
+         "authorization": "Basic "+this.encodedString,
+         "cache-control": "no-cache",
+       },
+       url: `https://api.agora.io/v1/apps/${this.props.appId}/cloud_recording/resourceid/${resourceId}/sid/${sid}/mode/mix/stop`,
+       data: data,
+     })
+     .then(response => {
+       
+       this.tempArray.push(response.data.serverResponse.fileList)
+       this.setState({showRecBtn : true})
+     })
+         .catch((error) => {
+        
+       });
     
-  }
+    }
+ 
+     
+   }
+ 
   sharingScreen = (e) => {
     if (this.state.stateSharing) {
       this.shareClient && this.shareClient.unpublish(this.shareStream);
@@ -554,34 +528,37 @@ sleep(ms) {
 }
 
 //get recording status
- async GetRecordingStatus(json){
-    console.log("GetRecordingStatus",json)
+async GetRecordingStatus(json){
+    
 
-    await this.sleep(3000); 
-    var resourceId = json.data.resourceId;
-    var sid = json.data.sid;
+  await this.sleep(3000); 
+  var resourceId = json.data.resourceId;
+  var sid = json.data.sid;
 
-    localStorage.setItem("resourceId", resourceId);
-    localStorage.setItem("sid", sid);
+  localStorage.setItem("resourceId", resourceId);
+  localStorage.setItem("sid", sid);
 
-    fetch(`https://api.agora.io/v1/apps/${this.props.appId}/cloud_recording/resourceid/${resourceId}/sid/${sid}/mode/mix/query`, {
-      method: "GET",
-      headers: {
-        "content-type": "application/json;charset=utf-8",
-        "authorization": "Basic "+this.encodedString,
-        "cache-control": "no-cache",
-      },
-  })
-      .then((res) => res.json())
-      .then((response) => {
-          console.log(response);
-          this.setState({
-            data:response,
-            recordDisplay:!this.state.recordDisplay
-          })
-      })
-      .catch((error) => console.log(error));
-  }
+  fetch(`https://api.agora.io/v1/apps/${this.props.appId}/cloud_recording/resourceid/${resourceId}/sid/${sid}/mode/mix/query`, {
+    method: "GET",
+    headers: {
+      "content-type": "application/json;charset=utf-8",
+      "authorization": "Basic "+this.encodedString,
+      "cache-control": "no-cache",
+    },
+})
+    .then((res) => res.json())
+    .then((response) => {
+       
+        this.setState({
+          data:response,
+          recordDisplay:!this.state.recordDisplay
+        })
+        setTimeout(() => {
+          this.setState({clickDisable : false})
+        }, 1000)
+    })
+    .catch((error) => console.log(error));
+}
 
 
 
@@ -613,8 +590,8 @@ async startRecording(key){
 
 
   //recording  acquire
-   accuire = () =>{
-    console.log("accuire - ");
+  accuire = () =>{
+   
     var data = "{\n  \"cname\": \"" + this.channelName + "\",\n  \"uid\": \"" + this.uid + "\",\n  \"clientRequest\":{\n  }\n}"
 
     axios({
@@ -631,18 +608,20 @@ async startRecording(key){
         this.startRecording(json)) 
         // console.log("accuire - ",json))
       .catch((error) => {
-        console.log("error - ", error);
+       
       });
   };
 // Start recording button
   recStart = () => {
+    
     this.accuire();
     this.setState({ showRecBtn: false  });
+    
   }
 
   //toggelStop
   toggleModal = (key) =>{
-  console.log("key",key)
+  
   this.setState({
     showModal: !this.state.showModal,
     recordDisplay:false
@@ -652,40 +631,46 @@ async startRecording(key){
 
  //stop recording 
  stopRecording = () => {
+  if(this.state.showRecBtn === true){
+this.toggleModal("stop")
+  }
   
-    if(this.state.showRecBtn === true){
-  this.toggleModal("stop")
-    }
- else if(this.state.showButton == JSON.parse(this.teamKey)){
-    var resourceId = localStorage.getItem("resourceId");
+  else if(this.state.showButton == JSON.parse(this.teamKey)){
+  console.log("done2")
+    if(resourceId === undefined){
+      var resourceId = localStorage.getItem("resourceId");
     var sid = localStorage.getItem("sid");
+    }
+
+  var data = JSON.stringify({
+    "cname":this.channelName,
+    "uid":JSON.stringify(this.uid),
+    "clientRequest":{ }});
+  axios({
+    method: "POST",
+    headers: {
+      "content-type": "application/json;charset=utf-8",
+      "authorization": "Basic "+this.encodedString,
+      "cache-control": "no-cache",
+    },
+    url: `https://api.agora.io/v1/apps/${this.props.appId}/cloud_recording/resourceid/${resourceId}/sid/${sid}/mode/mix/stop`,
+    data: data,
+  })
+  .then(json => 
+    this.toggleModal(json) ,
+     this.setState({showRecBtn : true})
+    ) 
+    .catch((error) => {
+      
+    });
+}
+else{
   
-    var data = JSON.stringify({
-      "cname":this.channelName,
-      "uid":JSON.stringify(this.uid),
-      "clientRequest":{ }});
-    axios({
-      method: "POST",
-      headers: {
-        "content-type": "application/json;charset=utf-8",
-        "authorization": "Basic "+this.encodedString,
-        "cache-control": "no-cache",
-      },
-      url: `https://api.agora.io/v1/apps/${this.props.appId}/cloud_recording/resourceid/${resourceId}/sid/${sid}/mode/mix/stop`,
-      data: data,
-    })
-    .then(json => 
-      this.toggleModal(json)) 
-      .catch((error) => {
-        console.log("error - ", error);
-      });
-  }
-  else{
-    console.log("exit");
-    window.location.hash = "/teamleader/schedule";
-  }
-    
-  };
+  window.location.hash = "/admin/schedule";
+}
+  
+};
+
 
   render() {
 
@@ -765,16 +750,13 @@ async startRecording(key){
         }
         title="Exit"
       >
-        {/* {
-           this.state.showRecBtn === false ?
-           <i className="ag-icon ag-icon-leave"></i> : ""
-        } */}
-                <i className="ag-icon ag-icon-leave"></i> 
+       
+     <i className="ag-icon ag-icon-leave"></i> 
       </span>
     );
 
 //recording btn on
-console.log(this.state.showRecBtn)
+
     const recordingBtn = (
       <span
         onClick={this.recStart}
@@ -804,12 +786,13 @@ const recordingBtnOff = (
      {
       this.state.showButton == JSON.parse(this.teamKey) ?
       // <FiberManualRecordIcon style={{ color: red[500] }}/> : ""
-      <img src = {recImg} style = {{width : "20px"}} /> : ""
+     <img src = {recImg} style = {{width : "20px"}} /> : ""
     }
             
   </span>
 );
-console.log(this.state.showRecBtn)
+
+
     return (
       <>
       <div id="ag-canvas" style={style}>   
