@@ -27,8 +27,10 @@ const Report = () => {
   const [nn, setNn] = useState([])
   const [mcategory, setmcategory] = useState([]);
   const [categoryData, setCategoryData] = useState([])
-  const [custCate2, setCustcate2] = useState([])
+  const [custCate2, setCustcate2] = useState([]);
+  const [data, setData] = useState([]);
   var kk = []
+  var pp = []
   var vv = []
   var allData1 = {}
   var dir = []
@@ -68,6 +70,23 @@ const Report = () => {
     };
     getSubCategory();
   }, [store]);
+
+  useEffect(() => {
+    getTeamLeader();
+
+  }, []);
+
+  const getTeamLeader = () => {
+    axios.get(`${baseUrl}/tl/getTeamLeader`).then((res) => {
+    
+      var dd = []
+      if (res.data.code === 1) {
+        pp.push(res.data.result)
+        setData((res.data.result));
+       console.log("teamleader" , res.data.result)
+      }
+    });
+  };
   const options = tax.map(d => (
     {
       "value": d.id,
@@ -78,6 +97,12 @@ const Report = () => {
     "value": v.id,
     "label": v.details
   }))
+  const options3 = data.map(d => (
+    {
+      "value": d.id,
+      "label": d.name
+    }))
+
     const onSubmit = (value) => {
         let formData = new FormData();
         formData.append("from", value.p_from);
@@ -214,6 +239,7 @@ const Report = () => {
             className={classNames("form-control", {
               "is-invalid": errors.p_mobile,
             })}
+            defaultValue={item}
           />
         </div>
       </div>
@@ -242,6 +268,7 @@ const Report = () => {
 <div className="mb-3">
 <label className="form-label">Teamleader</label>
 <Select  isMulti={true}
+options={options3}
 onChange= {(e) =>setTeamleader(e)}/>
 </div>
 </div>
