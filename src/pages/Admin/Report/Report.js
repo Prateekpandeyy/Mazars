@@ -15,7 +15,8 @@ const Report = () => {
   
     const [teamleader,setTeamleader] = useState([]);
     const [taxprofessional, setTaxprofessional] = useState([]);
-    const [category, setCategory] = useState([]);
+    const [tl, setTl] = useState([])
+    const [tp, setTp] = useState([])
     const [subCategory, setSubCategory] = useState([]);
     const [subData, subCategeryData] = useState([])
     const [custCate, setCustcate] = useState([])
@@ -129,13 +130,22 @@ const Report = () => {
       }))
 
     const onSubmit = (value) => {
+      var categeryList = []
+      var categeryName = []
+      var categeryName = []
+      var kk = []
+    var parentCategoryName = []
+    categoryData.map((i) => {
+      kk.push(i.value)
+      parentCategoryName.push(i.label)
+    })
         let formData = new FormData();
         formData.append("from", value.p_from);
         formData.append("to", value.p_to);
         formData.append("teamleader", teamleader);
         formData.append("taxprofessional", taxprofessional);
-        formData.append("category", category);
-        formData.append("subCategory", subCategory);
+        formData.append("category", parentCategoryName);
+        formData.append("subCategory", JSON.stringify(dd));
         formData.append("q_no", value.qno);
         formData.append("date_query", value.dataQuery);
         formData.append("cust_id", value.cust_id);
@@ -248,10 +258,21 @@ const Report = () => {
     a.map((i) => {
       console.log(i)
       setTaxId(i.value)
+      setTl(i.label)
+      setTeamleader((oldData) => {
+        return [...oldData, tl]
+      })
     
     })
   }
-  
+  const taxProfessional = (e) => {
+    e.map((i) => {
+      setTp(i.label); 
+      setTaxprofessional((oldData) => {
+        return [...oldData, tp]
+      })
+    })
+  }
     return (
         <>
           <Layout adminDashboard="adminDashboard" adminUserId={userid}>
@@ -309,7 +330,7 @@ onChange= {(e) =>teamLeader(e)}/>
 <div className="mb-3">
 <label className="form-label">Taxprofessional</label>
 <Select isMulti = {true} 
- options={options4} onChange={(e) => setTaxprofessional(e)}/>
+ options={options4} onChange={(e) => taxProfessional(e)}/>
 
 </div>
 </div>
