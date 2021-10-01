@@ -3,6 +3,8 @@ import axios from "axios";
 import { baseUrl } from "../../config/config";
 import { useForm } from "react-hook-form";
 import { Select } from "antd";
+import { Spinner } from 'reactstrap';
+import ShowError from "../../components/LoadingTime/LoadingTime";
 
 function CustomerFilter(props) {
   const { Option } = Select;
@@ -28,7 +30,7 @@ function CustomerFilter(props) {
   const [selectedData, setSelectedData] = useState([]);
   const [tax2, setTax2] = useState([]);
   const [store2, setStore2] = useState([]);
-
+const [loading, setLoading] = useState(false)
   var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
   console.log("current_date :", current_date);
   const [item] = useState(current_date);
@@ -82,7 +84,7 @@ function CustomerFilter(props) {
   };
 
   const onSubmit = (data) => {
-  
+  setLoading(true)
 
     if (query == "query") {
 
@@ -96,12 +98,16 @@ function CustomerFilter(props) {
         .then((res) => {
           console.log("myResult", res.data.result);
           if (res.data.code === 1) {
+            setLoading(false)
             if (res.data.result) {
               setData(res.data.result);
               setRecords(res.data.result.length);
             }
           }
-        });
+        })
+        .catch((error) => {
+          ShowError.LoadingError(setLoading)
+         });
     }
 
     if (InprogressAllocation == "InprogressAllocation") {
@@ -115,12 +121,16 @@ function CustomerFilter(props) {
         .then((res) => {
           console.log("myResult", res.data.result);
           if (res.data.code === 1) {
+            setLoading(false)
             if (res.data.result) {
               setData(res.data.result);
               setRecords(res.data.result.length);
             }
           }
-        });
+        })
+        .catch((error) => {
+          ShowError.LoadingError(setLoading)
+         });
     }
 
     if (InprogressQueryProposal == "InprogressQueryProposal") {
@@ -132,12 +142,16 @@ function CustomerFilter(props) {
         .then((res) => {
           console.log("myResult", res.data.result);
           if (res.data.code === 1) {
+            setLoading(false)
             if (res.data.result) {
               setData(res.data.result);
               setRecords(res.data.result.length);
             }
           }
-        });
+        })
+        .catch((error) => {
+          ShowError.LoadingError(setLoading)
+         });
     }
 
 
@@ -152,12 +166,16 @@ function CustomerFilter(props) {
         .then((res) => {
           console.log("myResult", res.data.result);
           if (res.data.code === 1) {
+            setLoading(false)
             if (res.data.result) {
               setData(res.data.result);
               setRecords(res.data.result.length);
             }
           }
-        });
+        })
+        .catch((error) => {
+          ShowError.LoadingError(setLoading)
+         });
     }
 
 
@@ -172,13 +190,17 @@ function CustomerFilter(props) {
         .then((res) => {
           console.log(res);
           if (res.data.code === 1) {
+            setLoading(false)
             if (res.data.result) {
               setData(res.data.result);
               setRecords(res.data.result.length);
 
             }
           }
-        });
+        })
+        .catch((error) => {
+          ShowError.LoadingError(setLoading)
+         });
     }
 
     if (inprogressProposal == "inprogressProposal") {
@@ -192,12 +214,16 @@ function CustomerFilter(props) {
         .then((res) => {
           console.log(res);
           if (res.data.code === 1) {
+            setLoading(false)
             if (res.data.result) {
               setData(res.data.result);
               setRecords(res.data.result.length);
             }
           }
-        });
+        })
+        .catch((error) => {
+          ShowError.LoadingError(setLoading)
+         });
     }
 
     if (acceptedProposal == "acceptedProposal") {
@@ -211,12 +237,16 @@ function CustomerFilter(props) {
         .then((res) => {
           console.log(res);
           if (res.data.code === 1) {
+            setLoading(false)
             if (res.data.result) {
               setData(res.data.result);
               setRecords(res.data.result.length);
             }
           }
-        });
+        })
+        .catch((error) => {
+          ShowError.LoadingError(setLoading)
+         });
     }
 
     if (declinedProposal == "declinedProposal") {
@@ -230,12 +260,16 @@ function CustomerFilter(props) {
         .then((res) => {
           console.log(res);
           if (res.data.code === 1) {
+            setLoading(false)
             if (res.data.result) {
               setData(res.data.result);
               setRecords(res.data.result.length);
             }
           }
-        });
+        })
+        .catch((error) => {
+          ShowError.LoadingError(setLoading)
+         });
     }
 
 
@@ -250,12 +284,16 @@ function CustomerFilter(props) {
         .then((res) => {
           console.log(res);
           if (res.data.code === 1) {
+            setLoading(false)
             if (res.data.result) {
               setData(res.data.result);
               setRecords(res.data.result.length);
             }
           }
-        });
+        })
+        .catch((error) => {
+          ShowError.LoadingError(setLoading)
+         });
     }
 
     if (allPayment == "allPayment") {
@@ -266,12 +304,16 @@ function CustomerFilter(props) {
         .then((res) => {
           console.log(res);
           if (res.data.code === 1) {
+            setLoading(false)
             if (res.data.result) {
               setData(res.data.result);
               setRecords(res.data.result.length);
             }
           }
-        });
+        })
+        .catch((error) => {
+          ShowError.LoadingError(setLoading)
+         });
     }
     if (unpaid == "unpaid") {
       axios
@@ -281,12 +323,16 @@ function CustomerFilter(props) {
         .then((res) => {
           console.log(res);
           if (res.data.code === 1) {
+            setLoading(false)
             if (res.data.result) {
               setData(res.data.result);
               setRecords(res.data.result.length);
             }
           }
-        });
+        })
+        .catch((error) => {
+          ShowError.LoadingError(setLoading)
+         });
     }
     if (paid == "paid") {
       axios
@@ -296,12 +342,16 @@ function CustomerFilter(props) {
         .then((res) => {
           console.log(res);
           if (res.data.code === 1) {
+            setLoading(false)
             if (res.data.result) {
               setData(res.data.result);
               setRecords(res.data.result.length);
             }
           }
-        });
+        })
+        .catch((error) => {
+          ShowError.LoadingError(setLoading)
+         });
     }
 
     
@@ -503,15 +553,18 @@ function CustomerFilter(props) {
 
                 </div>
 
-                <button type="submit" class="btn btn-primary mx-sm-1 mb-2">
-                  Search
-                </button>
+               
+                {
+                      loading ?
+                        <Spinner color="primary" />
+                        :
+                        <button type="submit" class="btn btn-primary mx-sm-1 mb-2">
+                        Search
+                      </button>
+                    }
                 <Reset />
 
-                {/* <div class="form-group mx-sm-2 mb-2">
-                  <label className="form-select form-control"
-                  >Total Records : {records}</label>
-                </div> */}
+               
 
               </div>
             </form>

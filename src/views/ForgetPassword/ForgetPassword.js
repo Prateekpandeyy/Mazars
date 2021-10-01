@@ -14,7 +14,7 @@ import classNames from "classnames";
 import { Link } from "react-router-dom";
 import Alerts from "../../common/Alerts";
 import Mandatory from "../../components/Common/Mandatory";
-
+import ShowError from "../../components/LoadingTime/LoadingTime";
 
 const Schema = yup.object().shape({
   p_email: yup.string().email("invalid email").required(""),
@@ -57,7 +57,7 @@ function ForgetPassword(props) {
         }
       })
       .catch((error) => {
-        console.log("erroror - ", error);
+       ShowError.LoadingError(setLoading)
       });
   };
 
@@ -79,12 +79,7 @@ function ForgetPassword(props) {
             <h2>Forgot Password</h2>
           </div>
 
-          {
-            loading ?
-              <div class="col-md-12">
-                <Spinner color="primary" />
-              </div>
-              :
+         
               <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
                 <div className="mb-3">
                   <label className="form-label">Email<span className="declined">*</span></label>
@@ -102,17 +97,25 @@ function ForgetPassword(props) {
                     <div className="invalid-feedback">{errors.p_email.message}</div>
                   )}
                 </div>
-
-                <button type="submit" className="btn btn-primary">
-                  Get OTP
-                </button>
-                <Link to="/" style={{ "margin": "10px" }}>
-                  <button type="submit" className="btn btn-secondary">
-                    Cancel
-                  </button>
-                </Link>
+                {
+                      loading ?
+                        <Spinner color="primary" />
+                        :
+                        <>
+                        <button type="submit" className="btn btn-primary">
+                        Get OTP
+                      </button>
+                       <Link to="/" style={{ "margin": "10px" }}>
+                       <button type="submit" className="btn btn-secondary">
+                         Cancel
+                       </button>
+                     </Link>
+                     </>
+                    }
+                
+               
               </form>
-          }
+          
           <Mandatory />
         </div>
 
@@ -128,23 +131,3 @@ export default ForgetPassword;
 
 
 
-
-{
-  /* <Link
-            to={{
-              pathname: `/customer/new-password`,
-              email:`${value.p_email}`
-            }}
-          ></Link>; */
-}
-
-  // const sendEmail = (email) => {
-  //   return (
-  //     <Link
-  //       to={{
-  //         pathname: `/customer/new-password`,
-  //         email: `${email}`,
-  //       }}
-  //     ></Link>
-  //   );
-  // };

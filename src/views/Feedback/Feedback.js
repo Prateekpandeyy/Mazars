@@ -18,6 +18,9 @@ import classNames from "classnames";
 import Alerts from "../../common/Alerts";
 import Mandatory from "../../components/Common/Mandatory";
 import Loader from "../../components/Loader/Loader";
+import { Spinner } from 'reactstrap';
+import ShowError from "../../components/LoadingTime/LoadingTime";
+
 
 
 const Schema = yup.object().shape({
@@ -36,7 +39,7 @@ function Feedback() {
   const { id } = useParams();
   const userId = window.localStorage.getItem("userid");
   const [loading, setLoading] = useState(false);
-
+ 
 
   const onSubmit = (value) => {
     console.log("value :", value)
@@ -66,7 +69,7 @@ function Feedback() {
         }
       })
       .catch((error) => {
-        console.log("erroror - ", error);
+      ShowError.LoadingError(setLoading)
       });
   };
 
@@ -92,10 +95,7 @@ function Feedback() {
         </CardHeader>
 
         <CardBody>
-          {
-            loading ?
-              <Loader />
-              :
+         
               <>
                 <form onSubmit={handleSubmit(onSubmit)}>
                   <div class="row" style={{ display: "flex", justifyContent: "center" }}>
@@ -130,16 +130,22 @@ function Feedback() {
                           </div>
                         )}
                       </div>
-                      <button type="submit" className="btn btn-primary">
-                        submit
-                      </button>
+                       
+                  {
+                      loading ?
+                        <Spinner color="primary" />
+                        :
+                        <button className="btn btn-primary" type="submit">
+                         Submit
+                        </button>
+                    }
                     </div>
                   </div>
 
                 </form>
                 <Mandatory />
               </>
-          }
+          
         </CardBody>
       </Card>
     </Layout>
@@ -147,30 +153,3 @@ function Feedback() {
 }
 
 export default Feedback;
-
-
-{/* <select
-                      class="form-control"
-                      name="p_assignment"
-                      ref={register}
-                    >
-                      <option value="">--select--</option>
-
-                      {assignment.map((p, i) => (
-                        <option key={i} value={p.assign_no}>
-                          {p.assign_no}
-                        </option>
-                      ))}
-                    </select> */}
- // useEffect(() => {
-  //   const getAssingment = () => {
-  //     axios.get(`${baseUrl}/customers/getAssignedAssignments?user=${JSON.parse(userId)}`).then((res) => {
-  //       console.log(res);
-  //       if (res.data.code === 1) {
-  //         setAssingment(res.data.result);
-  //       }
-  //     });
-  //   };
-
-  //   getAssingment();
-  // }, []);

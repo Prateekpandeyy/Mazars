@@ -12,7 +12,7 @@ import Alerts from "../../common/Alerts";
 import Mandatory from "../../components/Common/Mandatory";
 import ResendOtp from "./ResendOtp";
 import { Spinner } from "reactstrap";
-
+import ShowError from "../../components/LoadingTime/LoadingTime";
 
 
 function ChangePassword(props) {
@@ -101,7 +101,7 @@ function ChangePassword(props) {
           }
         })
         .catch((error) => {
-          console.log("erroror - ", error);
+        ShowError.LoadingError(setLoading)
         });
       return false
     }
@@ -124,7 +124,7 @@ function ChangePassword(props) {
         }
       })
       .catch((error) => {
-        console.log("erroror - ", error);
+       ShowError.LoadingError(setLoading)
       });
   };
 
@@ -148,7 +148,7 @@ function ChangePassword(props) {
             <h2>Change Password</h2>
           </div>
 
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
             <div className="row">
               <div className="col-md-12">
                 <div className="mb-3">

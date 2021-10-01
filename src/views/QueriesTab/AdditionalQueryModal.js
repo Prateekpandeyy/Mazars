@@ -5,7 +5,7 @@ import axios from "axios";
 import { baseUrl } from "../../config/config";
 import Swal from "sweetalert2";
 import { Spinner } from 'reactstrap';
-
+import ShowError from "../../components/LoadingTime/LoadingTime";
 function AdditionalQueryModal({
   additionalQuery,
   additionalHandler,
@@ -73,8 +73,8 @@ function AdditionalQueryModal({
         }
       })
       .catch((error) => {
-        console.log("erroror - ", error);
-      });
+        ShowError.LoadingError(setLoading)
+       });
   };
 
 

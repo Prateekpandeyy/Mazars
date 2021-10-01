@@ -15,8 +15,7 @@ import { useParams, Link } from "react-router-dom";
 import Alerts from "../../common/Alerts";
 import ResendOtp from "./ResendOtp";
 import { Spinner } from "reactstrap";
-
-
+import ShowError from "../../components/LoadingTime/LoadingTime";
 
 function NewPassword(props) {
   const alert = useAlert();
@@ -99,7 +98,7 @@ function NewPassword(props) {
         }
       })
       .catch((error) => {
-        console.log("erroror - ", error);
+        ShowError.LoadingError(setLoading)
       });
   };
 
@@ -109,7 +108,7 @@ function NewPassword(props) {
       <div className="container">
         <div className="form">
 
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
             <div className="heading">
               <h2>Reset Password</h2>
             </div>

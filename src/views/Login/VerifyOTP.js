@@ -8,7 +8,7 @@ import classNames from "classnames";
 import { useHistory } from "react-router-dom";
 import Alerts from "../../common/Alerts";
 import { Spinner } from 'reactstrap';
-
+import ShowError from "../../components/LoadingTime/LoadingTime";
 
 const Schema = yup.object().shape({
     p_otp: yup.string().required("mandatory"),
@@ -61,7 +61,7 @@ function VerifyOTP({ email, uid, time, setLoad,
                 }
             })
             .catch((error) => {
-                console.log("erroror - ", error);
+                ShowError.LoadingError(setLoading)
             });
     }
 
@@ -92,7 +92,7 @@ function VerifyOTP({ email, uid, time, setLoad,
                 }
             })
             .catch((error) => {
-                console.log("erroror - ", error);
+                ShowError.LoadingError(setLoading)
             });
     }
 

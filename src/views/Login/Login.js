@@ -14,7 +14,7 @@ import classNames from "classnames";
 import Alerts from "../../common/Alerts";
 import Mandatory from "../../components/Common/Mandatory";
 import { Spinner } from 'reactstrap';
-
+import ShowError from "../../components/LoadingTime/LoadingTime";
 const Schema = yup.object().shape({
   p_email: yup.string().email("invalid email").required(""),
   p_password: yup.string().required(""),
@@ -92,7 +92,7 @@ function LoginForm() {
         }
       })
       .catch((error) => {
-        console.log("erroror - ", error);
+       ShowError.LoadingError(setLoading)
       });
   };
 

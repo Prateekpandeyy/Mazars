@@ -6,6 +6,7 @@ import Layout from "../../components/Layout/Layout";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
 import { useHistory } from "react-router-dom";
+import ShowError from "../../components/LoadingTime/LoadingTime";
 import {
   Card,
   CardHeader,
@@ -20,8 +21,6 @@ import Alerts from "../../common/Alerts";
 import classNames from "classnames";
 import Mandatory from "../../components/Common/Mandatory";
 import Loader from "../../components/Loader/Loader";
-
-
 
 
 const Schema = yup.object().shape({
@@ -40,13 +39,10 @@ function Chatting(props) {
   });
 
   const userId = window.localStorage.getItem("userid");
-
   const [item, setItem] = useState("");
   const [data, setData] = useState({})
   const [loading, setLoading] = useState(false);
-
   const { message_type, query_id, query_No, routes } = data
-
 
   useEffect(() => {
     
@@ -91,7 +87,7 @@ console.log(query_id)
         }
       })
       .catch((error) => {
-        console.log("erroror - ", error);
+       ShowError.LoadingError(setLoading)
       });
   };
 
@@ -115,10 +111,7 @@ console.log(query_id)
           </Row>
         </CardHeader>
         <CardBody>
-          {
-            loading ?
-              <Loader />
-              :
+         
               <>
                 <form onSubmit={handleSubmit(onSubmit)}>
                   <div class="row" style={{ display: "flex", justifyContent: "center" }}>
@@ -182,16 +175,21 @@ console.log(query_id)
                         )}
                       </div>
 
-                      <button type="submit" className="btn btn-primary">
-                        Send
-                      </button>
+                      
+                  {
+                      loading ?
+                        <Spinner color="primary" />
+                        :
+                        <button className="btn btn-primary" type="submit">
+                         Send
+                        </button>
+                    }
                     </div>
                   </div>
                 </form>
                 <Mandatory />
               </>
-          }
-
+         
         </CardBody>
       </Card>
     </Layout >
@@ -199,19 +197,3 @@ console.log(query_id)
 }
 
 export default Chatting;
-
-
-{/* <select
-                    class="form-control"
-                    name="p_sms_type"
-                    ref={register}
-                    value={query_No}
-                  >
-                    <option value="">--select--</option>
-                    <option value="1">Information</option>
-                    <option value="2">Proposal Discussion</option>
-                    <option value="3">Assignment Discussion</option>
-                  </select> */}
-
-
-                

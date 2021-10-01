@@ -399,7 +399,7 @@ onChange= {(e) =>teamLeader(e)}/>
                </span>
                <span>
                <input type="checkbox" ref={register} name="dataQuery" id="dataQuery" checked disabled></input>
-               <label htmlFor="dataQuery">Data Query</label>
+               <label htmlFor="dataQuery">Query Date </label>
                </span>
                <span>
                <input type="checkbox" ref={register} name="cust_id" id="cust_id" checked disabled></input>

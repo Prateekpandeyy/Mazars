@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
 import Alerts from "../../common/Alerts";
-
+import ShowError from "../../components/LoadingTime/LoadingTime";
 
 
 function ResendOtp({ id, setDisabled, getTime, setLoad, setLoading }) {
@@ -35,14 +35,14 @@ function ResendOtp({ id, setDisabled, getTime, setLoad, setLoading }) {
                 }
             })
             .catch((error) => {
-                console.log("erroror - ", error);
+              ShowError.LoadingError(setLoading)
             });
     };
 
 
     return (
         <>
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
                 <div style={{ paddingTop: "10px" }}>
                     <button type="submit" class="btn btn-success">SEND OTP</button>
                 </div>
