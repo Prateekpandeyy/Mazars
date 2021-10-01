@@ -249,7 +249,9 @@ function EditComponent() {
     Object.entries(data).map(([key, value]) => {
       array2.push(value)
     });
+
     setDate(array2.slice(0, installment.value));
+   
   };
 
   const installmentHandler = (key) => {

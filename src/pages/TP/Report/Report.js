@@ -1,4 +1,5 @@
 import React from 'react';
+import { useState } from 'react';
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import classNames from "classnames";
@@ -10,7 +11,10 @@ import { Typography } from '@material-ui/core';
 import Mandatory from '../../../components/Common/Mandatory';
 
 const Report = () => {
-    const userid = window.localStorage.getItem("adminkey");
+    const userid = window.localStorage.getItem("tpkey");
+    var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
+ 
+    const [item] = useState(current_date);
     const { handleSubmit, register, errors, getValues } = useForm();
     const onSubmit = (value) => {
         let formData = new FormData();
@@ -66,12 +70,12 @@ const Report = () => {
     <div className="row">
       <div className="col-md-3">
 
-        <div className="mb-3">
-          <label className="form-label">From<span className="declined">*</span></label>
+      <div className="mb-3">
+          <label className="form-label">From</label>
           <input
             type="date"
             name="p_from"
-            ref={register({ required: true })}
+            ref={register}
             placeholder="Enter Mobile Number"
             className={classNames("form-control", {
               "is-invalid": errors.p_mobile,
@@ -81,26 +85,22 @@ const Report = () => {
       </div>
 
       <div className="col-md-3">
-        <div className="mb-3">
-          <label className="form-label">To<span className="declined">*</span></label>
+      <div className="mb-3">
+          <label className="form-label">To</label>
           <input
             type="date"
             name="p_to"
             className={classNames("form-control", {
               "is-invalid": errors.p_type,
             })}
-            
+            defaultValue={item}
+            max={item}
             placeholder="Enter type"
             ref={register({ required: true })}
           />
-          
         </div>
       </div>
-    
-   </div> 
-   <div className="row">
-   
-       <div className="col-md-3">
+      <div className="col-md-3">
            <label className="form-label">Category</label>
            <Select isMulti = {true} />
         </div>
@@ -108,10 +108,11 @@ const Report = () => {
             <label className="form-label">Sub Category</label>
             <Select isMulti={true} />
             </div>
-   </div>
+   </div> 
+  
    <div className="row">
        <div className="col-md-12">
-           <fieldset className="my-fieldset">
+       <fieldset className="my-fieldset">
            <legend className="login-legend">Basic Query Details</legend>
             <div className="basicFeild">
             <span>
@@ -119,7 +120,6 @@ const Report = () => {
                <label htmlFor="sno">S.No</label>
                </span>
                <span>
-
                <input type="checkbox" name="qno" ref={register} id="qno" checked disabled></input>
                <label htmlFor="qno">Query No</label>
                </span>
@@ -139,6 +139,15 @@ const Report = () => {
                <input type="checkbox" ref={register} name="basic_sub_category" id="basic_sub_category" checked disabled></input>
                <label htmlFor="basic_sub_category">Sub Category</label>
                </span>
+               <span> 
+<input type="checkbox" ref={register} name="tl_name" id="tl_name" checked disabled></input>
+<label htmlFor="tl_name">Name of Team Leader</label>
+
+</span>
+<span>
+<input type="checkbox"  ref={register}name="tp_name" id="tp_name" checked disabled></input>
+<label htmlFor="tp_name">Name of Tax Professional</label>
+</span> 
                <span>
 <input type="checkbox" name="assessment" ref={register} id="assessment"></input>
 <label htmlFor="assess_year">Assessment Year(s)</label>
@@ -156,26 +165,16 @@ const Report = () => {
     <input type="checkbox" ref={register} name="t_requested" id="t_requested"></input>
 <label htmlFor="t_requested">Timeline Requested</label>
 </span>
-
 <span>  <input type="checkbox" ref={register} name="spc_que" id="spc_que"></input>
 <label htmlFor="spc_que">Specific questions</label>
 </span>
 <span>  <input type="checkbox" ref={register} name="doa" id="doa"></input>
 <label htmlFor="doa">Date of Allocation of Query</label>
 </span>
-<span> 
-<input type="checkbox" ref={register} name="tl_name" id="tl_name" checked disabled></input>
-<label htmlFor="tl_name">Name of Team Leader</label>
-
-</span>
-<span>
-<input type="checkbox"  ref={register}name="tp_name" id="tp_name" checked disabled></input>
-<label htmlFor="tp_name">Name of Tax Professional</label>
-</span>             
-            </div>
-           </fieldset>
-           </div>
-   </div>
+</div>
+</fieldset>
+</div>
+</div>
 
 
    {/* Proposal */}
@@ -193,14 +192,13 @@ const Report = () => {
 <label htmlFor="proposedAmount">Proposed Amount</label>
 </span>
 <span>
-    <input type="checkbox"  ref={register} name="paymentTerms" id="paymentTerms"></input>
+<input type="checkbox"  ref={register} name="paymentTerms" id="paymentTerms"></input>
 <label htmlFor="paymentTerms">Payment Terms</label>
 </span>
 <span>
-    <input type="checkbox" ref={register} name="proposal_status" id="proposal_status"></input>
+<input type="checkbox" ref={register} name="proposal_status" id="proposal_status"></input>
 <label htmlFor="proposal_status">Proposal Status</label>
 </span>
-
 <span>  <input type="checkbox" ref={register} name="acceptedAmount" id="acceptedAmount"></input>
 <label htmlFor="acceptedAmount">Accepted Amount </label>
 </span>
@@ -210,9 +208,6 @@ const Report = () => {
 <span>  <input type="checkbox" ref={register} name="date_acceptance" id="date_acceptance"></input>
 <label htmlFor="date_acceptance">Date of Acceptance / Decline</label>
 </span>
-            
-            
-
 <span>
 <input type="checkbox" ref={register} name="amountReceived" id="amountReceived"></input>
 <label htmlFor="amountReceived">Total Amount Received</label>
@@ -225,27 +220,20 @@ const Report = () => {
     <input type="checkbox" ref={register} name="amount_overdue" id="amount_overdue"></input>
 <label htmlFor="amount_overdue">Total Amount Overdue</label>
 </span>
-
-
 <span>  <input type="checkbox" ref={register} name="declinedDate" id="declinedDate"></input>
 <label htmlFor="declinedDate">Payment decline date</label>
 </span>             
-            </div>
-      
+            </div>      
            </fieldset>
            </div>
    </div>
-
 
    {/* Assignment */}
    <div className="row">
        <div className="col-md-12">
        <fieldset className="my-fieldset">
-           <legend className="login-legend">Assessment</legend>
-         
-
+           <legend className="login-legend">Assignment</legend>
             <div className="basicFeild">
-            
             <span>
 <input type="checkbox" ref={register} name="assignNumber" id="assignNumber"></input>
 <label htmlFor="assignNumber">Assignment Number</label>
@@ -269,10 +257,7 @@ const Report = () => {
 <span>  <input type="checkbox" ref={register} name="assignTime" id="assignTime"></input>
 <label htmlFor="assignTime">Time taken to complete the assignment</label>
 </span>
-           
-            </div>
-
-           
+            </div>    
            </fieldset>
            </div>
    </div>
@@ -283,22 +268,17 @@ const Report = () => {
    <div className="row">
        <div className="col-md-12">
        <fieldset className="my-fieldset">
-           <legend className="login-legend">Payment Receipt</legend>
-            
+           <legend className="login-legend">Payment Receipt</legend>  
             <div className="basicFeild">
             <span>
 <input type="checkbox" ref={register} name="receiptDate" id="receiptDate"></input>
-<label htmlFor="receiptDate">Date</label>
+<label htmlFor="receiptDate">Date of Receipt</label>
 </span>   
-
 <span>
 <input type="checkbox" ref={register} name="amountReceived" id="amountReceived"></input>
 <label htmlFor="amountReceived">Amount Received</label>
 </span>
-       
             </div>
-
-           
            </fieldset>
            </div>
    </div>
