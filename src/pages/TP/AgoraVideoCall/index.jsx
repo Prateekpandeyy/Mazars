@@ -83,7 +83,8 @@ class AgoraCanvas extends React.Component {
       articleId : [],
       articleId2 : [],
       showRecBtn : false,
-      showButton : ''
+      showButton : '',
+      clickDisable : false
     };
 
     this.toggleModal = this.toggleModal.bind(this);
@@ -404,35 +405,39 @@ schdrularName;
 
 
   handleExit = async() => {
+    if(this.state.clickDisable === false){
+      this.setState({clickDisable : true})
+     var resourceId = localStorage.getItem("resourceId");
+     var sid = localStorage.getItem("sid");
    
-
-    var resourceId = localStorage.getItem("resourceId");
-    var sid = localStorage.getItem("sid");
-  
-    var data = JSON.stringify({
-      "cname":this.channelName,
-      "uid":JSON.stringify(this.uid),
-      "clientRequest":{ }});
-    axios({
-      method: "POST",
-      headers: {
-        "content-type": "application/json;charset=utf-8",
-        "authorization": "Basic "+this.encodedString,
-        "cache-control": "no-cache",
-      },
-      url: `https://api.agora.io/v1/apps/${this.props.appId}/cloud_recording/resourceid/${resourceId}/sid/${sid}/mode/mix/stop`,
-      data: data,
-    })
-    .then(response => {
-      
-      this.tempArray.push(response.data.serverResponse.fileList)
-      this.setState({showRecBtn : true})
-    })
-        .catch((error) => {
-        console.log("error - ", error);
-      });
+     var data = JSON.stringify({
+       "cname":this.channelName,
+       "uid":JSON.stringify(this.uid),
+       "clientRequest":{ }});
+     axios({
+       method: "POST",
+       headers: {
+         "content-type": "application/json;charset=utf-8",
+         "authorization": "Basic "+this.encodedString,
+         "cache-control": "no-cache",
+       },
+       url: `https://api.agora.io/v1/apps/${this.props.appId}/cloud_recording/resourceid/${resourceId}/sid/${sid}/mode/mix/stop`,
+       data: data,
+     })
+     .then(response => {
+       
+       this.tempArray.push(response.data.serverResponse.fileList)
+       this.setState({showRecBtn : true})
+     })
+         .catch((error) => {
+        
+       });
     
-  }
+    }
+ 
+     
+   }
+ 
   sharingScreen = (e) => {
     if (this.state.stateSharing) {
       this.shareClient && this.shareClient.unpublish(this.shareStream);
@@ -527,34 +532,37 @@ sleep(ms) {
 }
 
 //get recording status
- async GetRecordingStatus(json){
-    console.log("GetRecordingStatus",json)
+async GetRecordingStatus(json){
+    
 
-    await this.sleep(3000); 
-    var resourceId = json.data.resourceId;
-    var sid = json.data.sid;
+  await this.sleep(3000); 
+  var resourceId = json.data.resourceId;
+  var sid = json.data.sid;
 
-    localStorage.setItem("resourceId", resourceId);
-    localStorage.setItem("sid", sid);
+  localStorage.setItem("resourceId", resourceId);
+  localStorage.setItem("sid", sid);
 
-    fetch(`https://api.agora.io/v1/apps/${this.props.appId}/cloud_recording/resourceid/${resourceId}/sid/${sid}/mode/mix/query`, {
-      method: "GET",
-      headers: {
-        "content-type": "application/json;charset=utf-8",
-        "authorization": "Basic "+this.encodedString,
-        "cache-control": "no-cache",
-      },
-  })
-      .then((res) => res.json())
-      .then((response) => {
-          console.log(response);
-          this.setState({
-            data:response,
-            recordDisplay:!this.state.recordDisplay
-          })
-      })
-      .catch((error) => console.log(error));
-  }
+  fetch(`https://api.agora.io/v1/apps/${this.props.appId}/cloud_recording/resourceid/${resourceId}/sid/${sid}/mode/mix/query`, {
+    method: "GET",
+    headers: {
+      "content-type": "application/json;charset=utf-8",
+      "authorization": "Basic "+this.encodedString,
+      "cache-control": "no-cache",
+    },
+})
+    .then((res) => res.json())
+    .then((response) => {
+       
+        this.setState({
+          data:response,
+          recordDisplay:!this.state.recordDisplay
+        })
+        setTimeout(() => {
+          this.setState({clickDisable : false})
+        }, 1000)
+    })
+    .catch((error) => console.log(error));
+}
 
 
 
@@ -608,114 +616,124 @@ async startRecording(key){
       });
   };
 // Start recording button
-  recStart = () => {
-    this.accuire();
-    this.setState({ showRecBtn: false  });
-  }
+ // Start recording button
+ recStart = () => {
+    
+  this.accuire();
+  this.setState({ showRecBtn: false  });
+  
+}
 
-  //toggelStop
-  toggleModal = (key) =>{
-  console.log("key",key)
-  this.setState({
-    showModal: !this.state.showModal,
-    recordDisplay:false
-  })
+//toggelStop
+toggleModal = (key) =>{
+
+this.setState({
+  showModal: !this.state.showModal,
+  recordDisplay:false
+})
 }
 
 
- //stop recording 
- stopRecording = () => {
- 
-    if(this.state.showRecBtn === true){
-  this.toggleModal("stop")
-    }
-  if(this.state.showButton == JSON.parse(this.teamKey)){
+//stop recording 
+stopRecording = () => {
+if(this.state.showRecBtn === true){
+this.toggleModal("stop")
+}
+
+else if(this.state.showButton == JSON.parse(this.teamKey)){
+console.log("done2")
+  if(resourceId === undefined){
     var resourceId = localStorage.getItem("resourceId");
-    var sid = localStorage.getItem("sid");
-  
-    var data = JSON.stringify({
-      "cname":this.channelName,
-      "uid":JSON.stringify(this.uid),
-      "clientRequest":{ }});
-    axios({
-      method: "POST",
-      headers: {
-        "content-type": "application/json;charset=utf-8",
-        "authorization": "Basic "+this.encodedString,
-        "cache-control": "no-cache",
-      },
-      url: `https://api.agora.io/v1/apps/${this.props.appId}/cloud_recording/resourceid/${resourceId}/sid/${sid}/mode/mix/stop`,
-      data: data,
-    })
-    .then(json => 
-      this.toggleModal(json)) 
-      .catch((error) => {
-        console.log("error - ", error);
-      });
+  var sid = localStorage.getItem("sid");
   }
-  else{
-    console.log("exit");
-    window.location.hash = "/taxprofessional/schedule";
-  }
+
+var data = JSON.stringify({
+  "cname":this.channelName,
+  "uid":JSON.stringify(this.uid),
+  "clientRequest":{ }});
+axios({
+  method: "POST",
+  headers: {
+    "content-type": "application/json;charset=utf-8",
+    "authorization": "Basic "+this.encodedString,
+    "cache-control": "no-cache",
+  },
+  url: `https://api.agora.io/v1/apps/${this.props.appId}/cloud_recording/resourceid/${resourceId}/sid/${sid}/mode/mix/stop`,
+  data: data,
+})
+.then(json => 
+  this.toggleModal(json) ,
+   this.setState({showRecBtn : true})
+  ) 
+  .catch((error) => {
     
+  });
+}
+else{
+
+window.location.hash = "/admin/schedule";
+}
+
+};
+
+
+render() {
+
+  // console.log("data",this.state.data)
+
+  const style = {
+    display: "grid",
+    gridGap: "50px 26px",
+    alignItems: "center",
+    justifyItems: "center",
+    gridTemplateRows: "repeat(12, auto)",
+    gridTemplateColumns: "repeat(24, auto)",
   };
-
-  render() {
-
-    // console.log("data",this.state.data)
-
-    const style = {
-      display: "grid",
-      gridGap: "50px 26px",
-      alignItems: "center",
-      justifyItems: "center",
-      gridTemplateRows: "repeat(12, auto)",
-      gridTemplateColumns: "repeat(24, auto)",
-    };
-    
-    const videoControlBtn =
-      this.props.attendeeMode === "video" ? (
-        <span
-          onClick={this.handleCamera}
-          className="ag-btn videoControlBtn"
-          title="Enable/Disable Video"
-        >
-          <i className="ag-icon ag-icon-camera"></i>
-          <i className="ag-icon ag-icon-camera-off"></i>
-        </span>
-      ) : (
-        ""
-      );
-
-
-    const audioControlBtn =
-      this.props.attendeeMode !== "audience" ? (
-        <span
-          onClick={this.handleMic}
-          className="ag-btn audioControlBtn"
-          title="Enable/Disable Audio"
-        >
-          <i className="ag-icon ag-icon-mic"></i>
-          <i className="ag-icon ag-icon-mic-off"></i>
-        </span>
-      ) : (
-        ""
-      );
-
-    const switchDisplayBtn = (
+  
+  const videoControlBtn =
+    this.props.attendeeMode === "video" ? (
       <span
-        onClick={this.switchDisplay}
-        className={
-          this.state.streamList.length > 4
-            ? "ag-btn displayModeBtn disabled"
-            : "ag-btn displayModeBtn"
-        }
-        title="Switch Display Mode"
+        onClick={this.handleCamera}
+        className="ag-btn videoControlBtn"
+        title="Enable/Disable Video"
       >
-        <i className="ag-icon ag-icon-switch-display"></i>
+        <i className="ag-icon ag-icon-camera"></i>
+        <i className="ag-icon ag-icon-camera-off"></i>
       </span>
+    ) : (
+      ""
     );
 
+
+  const audioControlBtn =
+    this.props.attendeeMode !== "audience" ? (
+      <span
+        onClick={this.handleMic}
+        className="ag-btn audioControlBtn"
+        title="Enable/Disable Audio"
+      >
+        <i className="ag-icon ag-icon-mic"></i>
+        <i className="ag-icon ag-icon-mic-off"></i>
+      </span>
+    ) : (
+      ""
+    );
+
+  const switchDisplayBtn = (
+    <span
+      onClick={this.switchDisplay}
+      className={
+        this.state.streamList.length > 4
+          ? "ag-btn displayModeBtn disabled"
+          : "ag-btn displayModeBtn"
+      }
+      title="Switch Display Mode"
+    >
+      <i className="ag-icon ag-icon-switch-display"></i>
+    </span>
+  );
+
+   
     const hideRemoteBtn = (
       <span
         className={
@@ -738,16 +756,10 @@ async startRecording(key){
         }
         title="Exit"
       >
-        {/* {
-           this.state.showRecBtn === false ?
-           <i className="ag-icon ag-icon-leave"></i> : ""
-        } */}
-      <i className="ag-icon ag-icon-leave"></i>
+       
+     <i className="ag-icon ag-icon-leave"></i> 
       </span>
     );
-
-//recording btn on
-console.log(this.state.showRecBtn)
     const recordingBtn = (
       <span
         onClick={this.recStart}
@@ -777,11 +789,12 @@ const recordingBtnOff = (
      {
       this.state.showButton == JSON.parse(this.teamKey) ?
       // <FiberManualRecordIcon style={{ color: red[500] }}/> : ""
-      <img src = {recImg} style = {{width : "20px"}} /> : ""
+     <img src = {recImg} style = {{width : "20px"}} /> : ""
     }
             
   </span>
 );
+
 console.log(this.state.showRecBtn)
     return (
       <>

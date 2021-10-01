@@ -65,7 +65,9 @@ function RecordingModal({
                 console.log("erroror - ", error);
             });
     };
-
+    const exitBtn2 = () => {
+        history.push('/taxprofessional/schedule');
+    }
     return (
         <div>
             <Modal isOpen={isOpen} toggle={toggle} size="md">
@@ -130,6 +132,7 @@ function RecordingModal({
                                         name="p_message"
                                     ></textarea>
                                 </div>
+                                <button type="button" className="btn btn-danger mx-2" onClick={() => exitBtn2()}>Cancel </button>
                                 <button type="submit" className="btn btn-primary">
                                     Submit
                                 </button>

@@ -75,6 +75,9 @@ else{
                 console.log("erroror - ", error);
             });
     };
+    const exitBtn2 = () => {
+        history.push('/teamleader/schedule');
+    }
 
     return (
         <div>
@@ -140,6 +143,7 @@ else{
                                         name="p_message"
                                     ></textarea>
                                 </div>
+                                <button type="button" className="btn btn-danger" onClick={() => exitBtn2()}>Cancel </button>
                                 <button type="submit" className="btn btn-primary">
                                     Submit
                                 </button>

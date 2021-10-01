@@ -33,11 +33,11 @@ function TeamLeaderTab() {
   const [modal, setModal] = useState(false);
 
   const toggle = (key) => {
-    console.log("key", key);
+   
     setModal(!modal);
-console.log("key", typeof(key))
+
    if(typeof(key) == "object") {
-     console.log("cancle")
+    
    }
    else{
     {
@@ -49,7 +49,7 @@ console.log("key", typeof(key))
       })
         .then((res) => res.json())
         .then((response) => {
-          console.log(response);
+         
           setHistory(response.result);
         })
         .catch((error) => console.log(error));
@@ -120,8 +120,7 @@ console.log("key", typeof(key))
       formatter: function nameFormatter(cell, row) {
         var digit2 = [];
         digit2 = row.allpcat_id.split(",")
-        console.log("digit2", digit2)
-        console.log(digit2.includes("Indirect"))
+        
         return (
           <>
 
@@ -147,7 +146,7 @@ console.log("key", typeof(key))
       },
       formatter: function nameFormatter(cell, row) {
         var digit = [];
-        //  console.log(JSON.parse(row.allcat_id))
+
          digit = JSON.parse(row.allcat_id);
 
 // digit = row.allcat_id;
@@ -220,7 +219,7 @@ console.log("key", typeof(key))
 
   const getTeamLeader = () => {
     axios.get(`${baseUrl}/tl/getTeamLeader`).then((res) => {
-      console.log("Log", res.data.result)
+    
       var dd = []
       if (res.data.code === 1) {
         pp.push(res.data.result)
@@ -233,7 +232,7 @@ console.log("key", typeof(key))
 
   //check
   const del = (id) => {
-    console.log("del", id);
+   
 
     Swal.fire({
       title: "Are you sure?",
@@ -255,7 +254,7 @@ console.log("key", typeof(key))
     axios
       .get(`${baseUrl}/tl/deleteTeamLeader?id=${id}`)
       .then(function (response) {
-        console.log("delete-", response);
+        
         if (response.data.code === 1) {
           Swal.fire("Deleted!", "Your file has been deleted.", "success");
           getTeamLeader();

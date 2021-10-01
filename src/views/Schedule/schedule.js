@@ -12,8 +12,15 @@ import {
   Table,
 } from "reactstrap";
 import Demo from "./demo";
+import Swal from "sweetalert2";
 
-
+const thankyour = () => {
+  Swal.fire({
+    "title" : "Scuuess",
+    html : `<h1>Thank you </h1>`,
+    icon : "success"
+  })
+}
 function Schedule() {
   const userId = window.localStorage.getItem("userid");
 

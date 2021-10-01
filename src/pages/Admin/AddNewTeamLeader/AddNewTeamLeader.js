@@ -13,10 +13,9 @@ import { useHistory } from "react-router-dom";
 import classNames from "classnames";
 import Mandatory from "../../../components/Common/Mandatory";
 import { Spinner } from "reactstrap";
-import EmailValidation from "../../../components/Common/EmailValidation";
 const Schema = yup.object().shape({
   p_name: yup.string().required("required name"),
-  
+  p_email: yup.string().email("invalid email").required("required email"),
   p_phone: yup
     .string()
     .required("required phone no")
@@ -52,13 +51,17 @@ function AddNew() {
   const [categoryData, setCategoryData] = useState([])
   const [indNumError, setIndNumError] = useState(null)
   const [postValue, setPostName] = useState([]);
+  const [email, setEmail] = useState('');
+  const [emailPost, setEmailPost] = useState('');
   const [valiEmail, setValiemail] = useState(null)
+  const [valiEmailPost, setValiemailPost] = useState(null)
   const [invalid, setInvalid] = useState(null)
+  const [invalidPost, setInvalidPost] = useState(null)
   const [wEmail, setWemail] = useState();
+  const [wEmailPost, setWemailPost] = useState();
   const [loading, setLoading] = useState(false);
-  const [emailError, setEmailError] = useState(null)
+
   const [display, setDisplay] = useState(false);
-  const [email2, setEmail2] = useState();
   const [dd, setDd] = useState({
     direct: [],
     indirect: [],
@@ -85,7 +88,7 @@ function AddNew() {
     const postName = async () => {
       await axios.get(`${baseUrl}/admin/addTlPost`).then((res) => {
         if (res.data.code === 1) {
-         
+          console.log("myData", res.data.result.post)
           setPostName(res.data.result);
         }
       });
@@ -98,7 +101,7 @@ function AddNew() {
     const getCategory = async () => {
       await axios.get(`${baseUrl}/customers/getCategory?pid=0`).then((res) => {
         if (res.data.code === 1) {
-        
+          console.log(res.data.result)
           setTax(res.data.result);
         }
       });
@@ -126,15 +129,15 @@ function AddNew() {
 
   const onSubmit = (value) => {
    
-  
+    console.log((JSON.stringify(dd)))
     var categeryList = []
     var categeryName = []
     var categeryName = []
     var kk = []
     var parentCategoryName = []
-  
+    console.log(subData)
     subData.map((i) => {
-    
+      console.log(i)
       categeryList.push(i.value)
       categeryName.push(i.label)
     })
@@ -142,7 +145,7 @@ function AddNew() {
       kk.push(i.value)
       parentCategoryName.push(i.label)
     })
-    
+    console.log("subData", subData)
     if (custCate.length < 1) {
       setError("Please select at least one value")
     }
@@ -160,7 +163,7 @@ function AddNew() {
     
       let formData = new FormData();
 
-      formData.append("personal_email", email2);
+      formData.append("personal_email", value.p_email);
       formData.append("name", value.p_name);
       formData.append("phone", value.p_phone);
       formData.append("type", "tl");
@@ -215,11 +218,12 @@ function AddNew() {
   var indir = []
   // Sub Category Function
   const subCategory = (e) => {
-  
+    console.log("categoryData", dd)
     subCategeryData(e)
     setCustcate2(e)
     setError2("")
-   
+    console.log(e)
+    console.log("allData", allData1)
     e.map((i) => {
 
       i.value < 8 ? dir.push(i.label) : indir.push(i.label)
@@ -256,7 +260,7 @@ function AddNew() {
 
     if (vv.length > 0) {
       if (vv.includes("1") && vv.includes("2")) {
-      
+        console.log("hdd")
       }
       else if (vv.includes("1")) {
 
@@ -302,15 +306,15 @@ function AddNew() {
 
   // Phone Validation function 
   const phoneValidation = () => {
-  
+    console.log(phone.length)
     if (phone.length > 10) {
-     
+      console.log(phone.length)
       setNumAvail("")
       setNumExist("")
       setIndNumError("Maximum 10 digit should be enter")
     }
     else if (phone.length < 10) {
-  
+      console.log(phone.length)
       setNumAvail("")
       setNumExist("")
       setIndNumError("Minimum 10 digit should be enter")
@@ -327,10 +331,93 @@ function AddNew() {
     }
   }
 
- 
+  //eamil onchange
+  const emailHandler = (e) => {
+    setEmail(e.target.value);
+    console.log(e.target.value.length)
+    if (e.target.value.length < 1) {
+      setWemail("")
+    }
+  };
 
 
- 
+  //email validaation with api
+  const emailValidation = (key) => {
+
+    var validRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if (email.match(validRegex)) {
+      setWemail("");
+      let formData = new FormData();
+      formData.append("email", email);
+      formData.append("type", 1);
+
+      axios({
+        method: "POST",
+        url: `${baseUrl}/tl/validateregistration`,
+        data: formData,
+      })
+        .then(function (response) {
+          console.log("resEmail-", response);
+          if (response.data.code === 1) {
+            setValiemail(response.data.result)
+            setInvalid('')
+          } else if (response.data.code === 0) {
+            setInvalid(response.data.result)
+            setValiemail('')
+          }
+        })
+        .catch((error) => {
+          console.log("erroror - ", error);
+        });
+    }
+    else {
+      setWemail("invalid email")
+    }
+
+  }
+  // EmailHandlerPost1
+  const emailHandlerPost = (e) => {
+    setEmail(e.target.value);
+    console.log(e.target.value.length)
+    if (e.target.value.length < 1) {
+      setWemailPost("")
+    }
+  };
+  // Email Validation Post 
+  //email validaation Post with api
+  const emailValidationPost = (key) => {
+
+    var validRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if (emailPost.match(validRegex)) {
+      setWemailPost("");
+      let formData = new FormData();
+      formData.append("email", email);
+      formData.append("type", 1);
+
+      axios({
+        method: "POST",
+        url: `${baseUrl}/customers/validateregistration`,
+        data: formData,
+      })
+        .then(function (response) {
+          console.log("resEmail-", response);
+          if (response.data.code === 1) {
+            setValiemailPost(response.data.result)
+            setInvalidPost('')
+          } else if (response.data.code === 0) {
+            setInvalidPost(response.data.result)
+            setValiemailPost('')
+          }
+        })
+        .catch((error) => {
+          console.log("erroror - ", error);
+        });
+    }
+    else {
+      setWemailPost("invalid email")
+    }
+
+  }
   return (
     <Layout adminDashboard="adminDashboard" adminUserId={userid}>
       <Card>
@@ -378,16 +465,17 @@ function AddNew() {
                     <label>Teamleader Post Email <span className="declined">*</span></label>
                     
                    
-                    <EmailValidation
-                     setWemail = {setWemail}
-                      wEmail = {wEmail} 
-                      invalid = {invalid}
-                       setEmailError = {setEmailError}
-                        setValiemail = {setValiemail} 
-                        emailError = {emailError} 
-                        setInvalid = {setInvalid}  
-                        setEmail2 = {setEmail2} />
-                         {
+                      <input
+                        type="email"
+                        className={classNames("form-control", {
+                          "is-invalid": errors.post_email || wEmail || invalid,
+                        })}
+                        name="post_email"
+                        ref={register}
+                        onChange={(e) => emailHandler(e)}
+                        onBlur={emailValidation}
+                      />
+                      {
                         wEmail ? <p className="declined">{wEmail}</p> : <>
                           {valiEmail ?
                             <p className="completed">
@@ -398,7 +486,16 @@ function AddNew() {
                         </>
                       } 
                       
-                     
+                      {/* {
+                        wEmailPost ? <p className="declined">{wEmailPost}</p> : <>
+                          {valiEmailPost ?
+                            <p className="completed">
+                              {valiEmailPost}
+                            </p>
+                            :
+                            <p className="declined">{invalidPost}</p>}
+                        </>
+                      } */}
                     </div>
                   </div>
                 </div>
@@ -451,13 +548,23 @@ function AddNew() {
                       <input
                         type="email"
                         className={classNames("form-control", {
-                          "is-invalid": errors.post_email,
+                          "is-invalid": errors.p_email,
                         })}
-                        name="post_email"
+                        name="p_email"
                         ref={register}
-                     
+                        // onChange={(e) => emailHandler(e)}
+                        // onBlur={emailValidation}
                       />
-                      
+                      {/* {
+                        wEmail ? <p className="declined">{wEmail}</p> : <>
+                          {valiEmail ?
+                            <p className="completed">
+                              {valiEmail}
+                            </p>
+                            :
+                            <p className="declined">{invalid}</p>}
+                        </>
+                      } */}
                     </div>
                   </div>
                 </div>
