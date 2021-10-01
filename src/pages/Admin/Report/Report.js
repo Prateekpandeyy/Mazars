@@ -16,9 +16,28 @@ const Report = () => {
     const [taxprofessional, setTaxprofessional] = useState([]);
     const [category, setCategory] = useState([]);
     const [subCategory, setSubCategory] = useState([]);
+    const [subData, subCategeryData] = useState([])
+    const [custCate, setCustcate] = useState([])
     const [tax, setTax] = useState([]);
   const [tax2, setTax2] = useState([]);
   const [store, setStore] = useState([]);
+  const [error, setError] = useState()
+  const [error2, setError2] = useState();
+  const [mcatname, setmcatname] = useState([]);
+  const [nn, setNn] = useState([])
+  const [mcategory, setmcategory] = useState([]);
+  const [categoryData, setCategoryData] = useState([])
+  const [custCate2, setCustcate2] = useState([])
+  var kk = []
+  var vv = []
+  var allData1 = {}
+  var dir = []
+  var indir = []
+  const [dd, setDd] = useState({
+    direct: [],
+    indirect: [],
+  });
+
     const { handleSubmit, register, errors, getValues } = useForm();
     var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
  
@@ -106,6 +125,76 @@ const Report = () => {
 
    })
     }
+
+    // Category 
+    const category2 = (v) => {
+
+      setCategoryData(v)
+      setNn((oldData) => {
+        return [...oldData, mcategory]
+      })
+      setError("")
+      setCustcate(v)
+      v.map((val) => {
+        vv.push(val.value)
+        setmcategory(val.value);
+        setmcatname((oldData) => {
+          return [...oldData, val.label]
+        })
+        setStore(val.value)
+      })
+  
+  
+      if (vv.length > 0) {
+        if (vv.includes("1") && vv.includes("2")) {
+          console.log("hdd")
+        }
+        else if (vv.includes("1")) {
+  
+          for (let i = 0; i < subData.length; i++) {
+            if (subData[i].value < 9) {
+              kk.push(subData[i])
+            }
+          }
+          subCategeryData(kk)
+        }
+        else if (vv.includes("2")) {
+  
+          for (let i = 0; i < subData.length; i++) {
+            if (subData[i].value > 8) {
+              kk.push(subData[i])
+            }
+          }
+          subCategeryData(kk)
+        }
+      }
+  
+      else if (vv.length === 0) {
+        subCategeryData("")
+      }
+  
+    }
+
+    // Sub Category Function 
+    const subCategory22 = (e) => {
+      console.log("categoryData", dd)
+      subCategeryData(e)
+      setCustcate2(e)
+      setError2("")
+      console.log(e)
+      console.log("allData", allData1)
+      e.map((i) => {
+  
+        i.value < 8 ? dir.push(i.label) : indir.push(i.label)
+      })
+     
+      setDd({
+        direct: dir,
+        indirect: indir
+      })
+    }
+  
+  
     return (
         <>
           <Layout adminDashboard="adminDashboard" adminUserId={userid}>
@@ -168,7 +257,7 @@ onChange= {(e) =>setTeamleader(e)}/>
        <div className="col-md-3">
            <label className="form-label">Category</label>
            <Select isMulti options={options}
-                       
+                        className={error ? "customError" : ""}
                         styles={{
                           option: (styles, { data }) => {
                             return {
@@ -186,15 +275,14 @@ onChange= {(e) =>setTeamleader(e)}/>
                           }),
                         }}
 
-                        onChange={(e) => setStore(e[0].value)}>
+                        onChange={category2}>
                       </Select>
-
         </div>
         <div className="col-md-3">
             <label className="form-label">Sub Category</label>
             <Select isMulti options={options2}
-                       
-                        onChange={subCategory}
+                        className={error2 ? "customError" : ""}
+                        onChange={subCategory22}
                         styles={{
                           option: (styles, { data }) => {
                             return {
@@ -212,8 +300,7 @@ onChange= {(e) =>setTeamleader(e)}/>
                           }),
                         }}
 
-                        // value={subData}
-                        >
+                        value={subData}>
                       </Select>
             </div>
    </div>
