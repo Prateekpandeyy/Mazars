@@ -12,6 +12,7 @@ import Mandatory from '../../../components/Common/Mandatory';
 
 const Report = () => {
     const userid = window.localStorage.getItem("adminkey");
+  
     const [teamleader,setTeamleader] = useState([]);
     const [taxprofessional, setTaxprofessional] = useState([]);
     const [category, setCategory] = useState([]);
@@ -29,6 +30,8 @@ const Report = () => {
   const [categoryData, setCategoryData] = useState([])
   const [custCate2, setCustcate2] = useState([]);
   const [data, setData] = useState([]);
+  const [data2, setData2] = useState([]);
+  const [taxId, setTaxId] = useState();
   var kk = []
   var pp = []
   var vv = []
@@ -87,6 +90,23 @@ const Report = () => {
       }
     });
   };
+
+  useEffect(() => {
+    getTaxProf();
+  }, [taxId]);
+
+  const getTaxProf = () => {
+    axios
+      .get(`${baseUrl}/tp/getTaxProfessional?tl_id=${taxId}`)
+      .then((res) => {
+        console.log(res);
+        if (res.data.code === 1) {
+          setData2(res.data.result);
+         
+        }
+      });
+  };
+
   const options = tax.map(d => (
     {
       "value": d.id,
@@ -102,6 +122,11 @@ const Report = () => {
       "value": d.id,
       "label": d.name
     }))
+    const options4 = data2.map(d => (
+      {
+        "value": d.id,
+        "label": d.name
+      }))
 
     const onSubmit = (value) => {
         let formData = new FormData();
@@ -218,7 +243,14 @@ const Report = () => {
         indirect: indir
       })
     }
-  
+  const teamLeader = (a) => {
+    console.log(a)
+    a.map((i) => {
+      console.log(i)
+      setTaxId(i.value)
+    
+    })
+  }
   
     return (
         <>
@@ -269,7 +301,7 @@ const Report = () => {
 <label className="form-label">Teamleader</label>
 <Select  isMulti={true}
 options={options3}
-onChange= {(e) =>setTeamleader(e)}/>
+onChange= {(e) =>teamLeader(e)}/>
 </div>
 </div>
 
@@ -277,7 +309,7 @@ onChange= {(e) =>setTeamleader(e)}/>
 <div className="mb-3">
 <label className="form-label">Taxprofessional</label>
 <Select isMulti = {true} 
-  onChange={(e) => setTaxprofessional(e)}/>
+ options={options4} onChange={(e) => setTaxprofessional(e)}/>
 
 </div>
 </div>

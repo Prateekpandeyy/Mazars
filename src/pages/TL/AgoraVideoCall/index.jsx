@@ -666,7 +666,7 @@ this.toggleModal("stop")
 }
 else{
   
-  window.location.hash = "/admin/schedule";
+  window.location.hash = "/teamleader/schedule";
 }
   
 };

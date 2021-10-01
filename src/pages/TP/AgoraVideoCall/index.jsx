@@ -671,7 +671,7 @@ axios({
 }
 else{
 
-window.location.hash = "/admin/schedule";
+window.location.hash = "/taxprofessional/schedule";
 }
 
 };
