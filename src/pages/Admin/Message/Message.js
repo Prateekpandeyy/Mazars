@@ -14,7 +14,6 @@ import {
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import BootstrapTable from "react-bootstrap-table-next";
-import { useHistory } from "react-router";
 // import PaymentModal from "./PaymentModal";
 import CommonServices from "../../../common/common";
 
@@ -26,7 +25,7 @@ function Message(props) {
     const [query, setQuery] = useState([]);
     const [data, setData] = useState(null);
 
-const history = useHistory();
+
     useEffect(() => {
         getMessage();
     }, []);
@@ -159,19 +158,10 @@ const history = useHistory();
     return (
         <Layout adminDashboard="adminDashboard" adminUserId={userId}>
             <Card>
-            <CardHeader>
+                <CardHeader>
                     <Row>
                         <Col md="9">
                             <CardTitle tag="h4">Message</CardTitle>
-                        </Col>
-                        <Col md="3">
-                        <button
-                class="btn btn-success ml-auto" style={{float : "right"}}
-                onClick={() => history.goBack()}
-              >
-                <i class="fas fa-arrow-left mr-2"></i>
-                Go Back
-              </button>
                         </Col>
                     </Row>
                 </CardHeader>

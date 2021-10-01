@@ -235,7 +235,7 @@ function PendingForProposals({ CountPendingProposal }) {
                         <td>{p.name}</td>
                         <td>{p.assign_no}</td>
                         <td>{p.status}</td>
-                        <td>{p.date_of_allocation}</td>
+                        <td>{ChangeFormateDate(p.date_of_allocation)}</td>
                       </tr>
                     </tbody>
                   ))

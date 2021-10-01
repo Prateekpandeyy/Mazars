@@ -42,7 +42,7 @@ function PaymentGateway(){
  console.log("onSubmit");
  
     let formData = new FormData()
-    formData.append("token", "09f3b52d937b320e929ad45153ef745d");
+    formData.append("token", "ba58d28345a083d2630c67ed44c8d92f");
     formData.append("timestamp", "09-09-2021 13:52:02");
     formData.append("mobile", "9818685050");
     formData.append("type", "F");
@@ -50,82 +50,23 @@ function PaymentGateway(){
     formData.append("billDescription", JSON.stringify(billdes));
     formData.append("ekycStatus", 0);
     formData.append("public_key", "791E14FF-6243-4A73-A6E1");
-    formData.append("Bill_no", "11189974221");
+    formData.append("Bill_no", "1118997422");
     formData.append("Balance", "100");
-    formData.append("Bill_due_date",  "24-09-2021");
+    formData.append("Bill_due_date",  "21-09-2021");
     formData.append("user_id", "9818685050");
     formData.append("merchant_id", "T10012");
     formData.append("agent_id", "8595923172");
     formData.append("caf_number", "");
 
-    // axios({
-    //   method : "POST", 
-    //   url : "https://pay.mobilpay.in/index.php/getUserBillData",
-    //   data : formData
-    // })
-    var myHeaders = new Headers();
-myHeaders.append("Content-Type", "application/json");
-
-var raw = JSON.stringify({
-  "token": "09f3b52d937b320e929ad45153ef745d",
-  "timestamp": "09-09-2021 13:52:02",
-  "mobile": "7703954008",
-  "type": "F",
-  "userInfo": {
-    "state": "Haryana",
-    "email": "na@gmail.com",
-    "gender": "",
-    "dob": "",
-    "city": "Gurgaon",
-    "pincode": "122002",
-    "status": "1",
-    "first_name": "Test",
-    "last_name": "Test",
-    "address_line_1": "Test, Tower - A, Ground Floor",
-    "address_line_2": "DLF Phase I",
-    "plan_name": "20 Mbps free"
-  },
-  "billDescription": {
-    "HSN_SAC_code": "15684",
-    "Desc": "20 Mbps free",
-    "Qty": "1",
-    "UoM": "NA",
-    "Rate": "10.0",
-    "Total": "10.0",
-    "Discount": "0",
-    "Delivery_Charges": "0",
-    "Net_Tax_Val": "0",
-    "CGST_Rate": "0",
-    "CGST_Amount": "0",
-    "SGST_Rate": "0",
-    "SGST_Amount": "0",
-    "IGST_Rate": "0",
-    "IGST_Amount": "0",
-    "Total_Amount": "10.0"
-  },
-  "ekycStatus": "1",
-  "public_key": "791E14FF-6243-4A73-A6E1",
-  "Bill_no": "15293997",
-  "Balance": "10.0",
-  "Bill_due_date": "20-09-2021",
-  "user_id": "7703954008",
-  "merchant_id": "T10001",
-  "agent_id": "8689003344",
-  "caf_number": "TP-EC-44882"
-});
-
-var requestOptions = {
-  method: 'POST',
-  headers: myHeaders,
-  body: raw,
-  redirect: 'follow'
-};
-
-fetch("https://pay.mobilpay.in/index.php/getUserBillData", requestOptions)
-  .then(response => response.text())
-  .then(result => console.log(result))
-  .catch(error => console.log('error', error));
-    }
+    axios({
+      method : "POST", 
+      url : "https://pay.mobilpay.in/index.php/getUserBillData",
+      data : formData
+    })
+    .then(function (response) {
+      console.log("response", response)
+    })
+      };
       return(
         <div className="container">
 

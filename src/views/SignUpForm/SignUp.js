@@ -93,7 +93,7 @@ function SignUp(props) {
       function timer(remaining) {
         var s = remaining % 60;
         s = s < 10 ? '0' + s : s;
-        setTime(remaining)
+        setTime(s)
         remaining -= 1;
         if (remaining >= 0 && timerOn) {
           setTimeout(function () {
@@ -104,7 +104,7 @@ function SignUp(props) {
         setDisabled(true)
         // setDisplay(false)
       }
-      timer(180);
+      timer(60);
     }
   }
 
@@ -450,7 +450,7 @@ function SignUp(props) {
           </div>
           <>
             <div>
-              <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
+              <form onSubmit={handleSubmit(onSubmit)} autocomplete="off">
                 <div className="row">
                   <div className="col-md-6">
 
