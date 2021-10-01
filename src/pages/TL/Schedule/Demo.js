@@ -223,12 +223,12 @@ function Demo() {
     }
   };
 
-  const commitChanges = ({ added, changed, deleted, cancel }) => {
+  const commitChanges = ({ added, changed, deleted }) => {
 
     if (added) {
       setLoading(true)
       console.log("added - ", added);
-console.log("cancle", cancel)
+
       var startDate = added.startDate;
       var endDate = added.endDate;
 
@@ -415,7 +415,7 @@ console.log("cancle", cancel)
           :
           <>
             <Paper>
-              <Scheduler data={data} height={570}>
+              <Scheduler data={data} height={580}>
                 <ViewState
                   defaultCurrentDate={currentDate}
                   defaultCurrentViewName="Week"

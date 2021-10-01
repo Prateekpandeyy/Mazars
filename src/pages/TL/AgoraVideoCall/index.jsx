@@ -652,11 +652,8 @@ async startRecording(key){
 
  //stop recording 
  stopRecording = () => {
-  
-    if(this.state.showRecBtn === true){
-  this.toggleModal("stop")
-    }
- else if(this.state.showButton == JSON.parse(this.teamKey)){
+ 
+  if(this.state.showButton == JSON.parse(this.teamKey)){
     var resourceId = localStorage.getItem("resourceId");
     var sid = localStorage.getItem("sid");
   
@@ -765,11 +762,11 @@ async startRecording(key){
         }
         title="Exit"
       >
-        {/* {
+        {
            this.state.showRecBtn === false ?
            <i className="ag-icon ag-icon-leave"></i> : ""
-        } */}
-                <i className="ag-icon ag-icon-leave"></i> 
+        }
+     
       </span>
     );
 

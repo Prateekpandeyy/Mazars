@@ -369,7 +369,6 @@ function AllPayment() {
                         data={payment}
                         columns={columns}
                         classes="table-responsive"
-                        rowIndex
                     />
 
                     <Modal isOpen={modal} fade={false} toggle={toggle}>

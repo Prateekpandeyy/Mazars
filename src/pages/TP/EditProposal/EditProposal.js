@@ -5,6 +5,7 @@ import { baseUrl } from "../../../config/config";
 import { useAlert } from "react-alert";
 import { useHistory, useParams } from "react-router-dom";
 import Layout from "../../../components/Layout/Layout";
+import { getErrorMessage } from '../../../constants';
 import {
   Card,
   CardHeader,
@@ -22,7 +23,7 @@ import Mandatory from "../../../components/Common/Mandatory";
 import { Spinner } from 'reactstrap';
 
 
-function EditComponent() {
+function EditComponent(props) {
 
   const alert = useAlert();
   const { register, handleSubmit, reset, errors } = useForm();
@@ -35,16 +36,13 @@ function EditComponent() {
   const [date, setDate] = useState();
   const [load, setLoad] = useState(true);
 
-  const[clearValue, setClearValue] = useState(true)
+
   const [payment, setPayment] = useState([]);
   const [installment, setInstallment] = useState([]);
   const [error, setError] = useState('');
   const [diserror, setdiserror] = useState("")
   const history = useHistory();
   const { id } = useParams();
-  
-  var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
-  const [item] = useState(current_date);
 
   const [proposal, setProposal] = useState({
     query: "",
@@ -192,7 +190,11 @@ function EditComponent() {
                     }
                   })
                   .catch((error) => {
-                    console.log("erroror - ", error);
+                    //console.log("erroror - ", error);
+                    getErrorMessage();
+        setTimeout(function(){
+        props.history.push(`/taxprofessional/edit-proposal/${props.match.params.id}`);
+      },3000);
                   });
               }
             }
@@ -217,7 +219,11 @@ function EditComponent() {
             }
           })
           .catch((error) => {
-            console.log("erroror - ", error);
+           // console.log("erroror - ", error);
+            getErrorMessage();
+        setTimeout(function(){
+        props.history.push(`/taxprofessional/edit-proposal/${props.match.params.id}`);
+      },3000);
           });
       }
   };
@@ -257,7 +263,6 @@ function EditComponent() {
   const installmentHandler = (key) => {
     console.log("key", key)
     setInstallment(key)
-    setClearValue(false)
   }
 
 
@@ -284,7 +289,7 @@ function EditComponent() {
         </CardHeader>
 
         <CardBody>
-          <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
+          <form onSubmit={handleSubmit(onSubmit)}>
 
             <div style={{ display: "flex" }}>
               <div class="col-md-6">
@@ -378,7 +383,6 @@ function EditComponent() {
                       ref={register({ required: true })}
                       placeholder="Enter Hourly basis"
                       defaultValue={due_date}
-                      min={item}
                     />
                   </div>
                 ) :
@@ -408,22 +412,19 @@ function EditComponent() {
                       installment_amount={installment_amount}
                       due_date={due_date}
                       getQuery={getQuery}
-
-                      item={item}
-
-                    
-                      clearValue={clearValue}
-
                     />
                 }
               </div>
             </div>
 
             <div class="form-group col-md-6">
-              {
-                loading ?
-                  <Spinner color="primary" />
-                  :
+            {
+            loading ?
+              // <Loader />
+              <div class="col-md-12">
+                    <Spinner color="primary" />
+                  </div>
+              :
                   <button type="submit" class="btn btn-primary">
                     Submit
                   </button>

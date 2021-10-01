@@ -9,6 +9,7 @@ import { useAlert } from "react-alert";
 import Swal from 'sweetalert2'
 import { useParams, useHistory } from "react-router-dom";
 import classNames from "classnames";
+import { getErrorMessage } from '../../../constants';
 import {
   Card,
   CardHeader,
@@ -236,7 +237,11 @@ console.log(data2)
        
         })
         .catch((error) => {
-          console.log("erroror - ", error);
+          //console.log("erroror - ", error);
+          getErrorMessage();
+          setTimeout(function(){
+          history.push(`/admin/edittl/${id}`);
+        },3000);
         });
     }
   };
@@ -284,7 +289,35 @@ console.log(data2)
 
     else {
       setIndNumError("")
-      
+      let formData = new FormData();
+      formData.append("phone", phone);
+      formData.append("type", 2);
+      axios({
+        method: "POST",
+        url: `${baseUrl}/customers/validateregistration`,
+        data: formData,
+      })
+        .then(function (response) {
+          console.log("res-", response);
+          if (response.data.code === 1) {
+          
+          
+            setNumExist('')
+            setNumAvail(response.data.result);
+
+          }
+          else if (response.data.code === 0) {
+          
+            setNumAvail('')
+            setNumExist(response.data.result)
+
+            console.log("mobile" + setNumExist)
+          }
+
+        })
+        .catch((error) => {
+          // console.log("erroror - ", error);
+        });
     }
   }
   var allData1 = {}
@@ -377,7 +410,7 @@ const emailValidation = (key) => {
 
     axios({
       method: "POST",
-      url: `${baseUrl}/tl/validateregistration`,
+      url: `${baseUrl}/customers/validateregistration`,
       data: formData,
     })
       .then(function (response) {
@@ -391,8 +424,8 @@ const emailValidation = (key) => {
         }
       })
       .catch((error) => {
-        console.log("erroror - ", error);
-      });
+      console.log("erroror - ", error);
+      });  
   }
   else {
     setWemail("invalid email")
@@ -475,7 +508,6 @@ if(data5 != undefined){
               <div class="col-lg-2 col-xl-2 col-md-12"></div>
               <div class="col-lg-8 col-xl-8 col-md-12">
                 <Form
-                autoComplete="off"
                   name="basic"
                   initialValues={{
                     name: `${data1}`,
@@ -543,8 +575,7 @@ if(data5 != undefined){
                             "is-invalid": errors.p_phone || indNumError || numExist,
                           })}
                             onChange={(e) => phoneHandler(e)}
-                            onBlur={phoneValidation}
-                             />
+                            onBlur={phoneValidation} />
                         </Form.Item>
                       </div>
                       {indNumError ? <p className="declined">{indNumError}</p> : <>
@@ -567,7 +598,7 @@ if(data5 != undefined){
                         <Form.Item name="email">
                           <Input
                           className={classNames("form-control", {
-                            "is-invalid": errors.email,
+                            "is-invalid": errors.p_email,
                           })}
                         //  onBlur={emailValidation} 
                          onChange={(e) => emailHandler(e)} />
@@ -656,14 +687,18 @@ if(data5 != undefined){
                     <div class="col-md-6">
                       <div class="form-group">
                       {
-                loading ?
-                  <Spinner color="primary" />
-                  :
+            loading ?
+              // <Loader />
+              <span>
+                    <Spinner color="primary" />
+                  </span>
+              :
                         <Form.Item>
                           <Button type="primary" htmlType="submit">
                             Update
                           </Button>
-                        </Form.Item>  }
+                        </Form.Item>
+                          }
                       </div>
                     </div>
                   </div>

@@ -89,7 +89,7 @@ function Login(props) {
               <div className="heading">
                 <h2>MTL Login</h2>
               </div>
-              <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
+              <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="row">
                   <div className="col-md-12">
                     <div className="mb-3">

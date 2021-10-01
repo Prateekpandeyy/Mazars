@@ -6,6 +6,8 @@ import Layout from "../../../components/Layout/Layout";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import { useAlert } from "react-alert";
+import { getErrorMessage } from '../../../constants';
+import { Spinner } from "reactstrap"
 import {
   Card,
   CardHeader,
@@ -87,7 +89,11 @@ function Chatting(props) {
         }
       })
       .catch((error) => {
-        console.log("erroror - ", error);
+        //console.log("erroror - ", error);
+        getErrorMessage();
+        setTimeout(function(){
+        props.history.push(`/taxprofessional/chatting/${props.match.params.id}`);
+      },3000);
       });
   };
 
@@ -111,10 +117,6 @@ function Chatting(props) {
           </Row>
         </CardHeader>
         <CardBody>
-          {
-            loading ?
-              <Loader />
-              :
               <>
                 <form onSubmit={handleSubmit(onSubmit)}>
                   <div class="row" style={{ display: "flex", justifyContent: "center" }}>
@@ -142,7 +144,6 @@ function Chatting(props) {
                             name="msg_type"
                             ref={register}
                             style={{ height: "33px" }}
-                            defaultValue={item}
                           >
                             <option value="">--select--</option>
                             <option value="4">Query Discussion</option>
@@ -198,15 +199,23 @@ function Chatting(props) {
                           </div>
                         )}
                       </div>
+                      {
+            loading ?
+              // <Loader />
+              <div class="col-md-12">
+                    <Spinner color="primary" />
+                  </div>
+              :
                       <button type="submit" className="btn btn-primary">
                         Send
                       </button>
+}
                     </div>
                   </div>
                 </form>
                 <Mandatory />
               </>
-          }
+          
         </CardBody>
 
       </Card>

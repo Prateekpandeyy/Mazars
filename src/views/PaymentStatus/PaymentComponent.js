@@ -10,6 +10,7 @@ import CommonServices from "../../common/common";
 import Loader from "../../components/Loader/Loader";
 
 
+
 function PaymentModal({
   addPaymentModal,
   paymentHandler,
@@ -37,19 +38,19 @@ function PaymentModal({
     formData.append("status", 8);
     formData.append("amount", value.p_amount);
 
-    // axios({
-    //   method: "POST",
-    //   url: `${baseUrl}/customers/PaymentPartialAccept`,
-    //   data: formData,
-    // })
-    axios.get(`${baseUrl}/admin/getPaymentDetail?id=${assign_id}`)
+    axios({
+      method: "POST",
+      url: `${baseUrl}/customers/PaymentPartialAccept`,
+      data: formData,
+    })
       .then(function (response) {
-        console.log("res-", response.data.paymnet_detail);
+        console.log("res-", response);
         if (response.data.code === 1) {
-          // setLoading(false)
-         
-          window.location.href= (`${response.data.payment_detail[0].paymenturl}`)
-         
+          setLoading(false)
+          var variable = "Payment made successfully."
+          Alerts.SuccessNormal(variable)
+          getPaymentStatus();
+          paymentHandler();
         } else if (response.data.code === 0) {
           setLoading(false)
         }
@@ -84,17 +85,11 @@ function PaymentModal({
               <ModalBody>
                 <table class="table table-bordered">
                   <tr>
-                    <th>Paid Amount</th>
-                    <th>Due Date</th>
-                    {/* <td>{accepted_amount}</td> */}
-                   
+                    <th>Accepted Amount</th>
+                    <td>{accepted_amount}</td>
                   </tr>
                   <tr>
-                    <td>{accepted_amount - paid_amount}</td>
-                    <td> {CommonServices.removeTime(due_date)}</td>
-                  </tr>
-                  {/* <tr>
-                   
+                    <th>Paid Amount</th>
                     <td>{paid_amount}</td>
                   </tr>
                   <tr>
@@ -127,13 +122,13 @@ function PaymentModal({
                           :
                           ""
                     }
-                  </tr> */}
+                  </tr>
 
                 </table>
                 <form onSubmit={handleSubmit(onSubmit)}>
                   {+accepted_amount == +paid_amount ? null : (
                     <div>
-                      {/* <div className="mb-3">
+                      <div className="mb-3">
                         <input
                           type="text"
                           name="p_amount"
@@ -142,7 +137,7 @@ function PaymentModal({
                           defaultValue={accepted_amount - paid_amount}
                           placeholder="enter amount"
                         />
-                      </div> */}
+                      </div>
                       <div class="modal-footer">
                         <button type="submit" className="btn btn-primary">
                           Pay

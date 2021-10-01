@@ -3,8 +3,11 @@ import axios from "axios";
 import { baseUrl } from "../../config/config";
 import { useForm } from "react-hook-form";
 import { Select } from "antd";
-
+import { Spinner } from "reactstrap";
+import { getErrorMessage } from '../../constants';
+import { useHistory, useParams } from "react-router-dom";
 function CustomerFilter(props) {
+  const [loading, setLoading] = useState(false);
   const { Option } = Select;
   const { handleSubmit, register, errors, reset } = useForm();
 
@@ -22,12 +25,15 @@ function CustomerFilter(props) {
     allPayment,
     paid,
     unpaid,
-    assignment } = props;
+    assignment,loadingMethod } = props;
 
 
   const [selectedData, setSelectedData] = useState([]);
   const [tax2, setTax2] = useState([]);
   const [store2, setStore2] = useState([]);
+  const [load, setLoad] = useState(false)
+  const history = useHistory();
+  //const [loading, setLoading] = useState(false);
 
   var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
   console.log("current_date :", current_date);
@@ -74,15 +80,17 @@ function CustomerFilter(props) {
 
   //reset date
   const resetData = () => {
+    //setLoading(true)
     console.log("resetData ..");
     reset();
     setSelectedData([]);
     setStore2([]);
     getData();
+   // setLoading(false)
   };
 
   const onSubmit = (data) => {
-  
+    setLoading(true)
 
     if (query == "query") {
 
@@ -96,14 +104,21 @@ function CustomerFilter(props) {
         .then((res) => {
           console.log("myResult", res.data.result);
           if (res.data.code === 1) {
+            setLoading(false)
             if (res.data.result) {
               setData(res.data.result);
               setRecords(res.data.result.length);
             }
           }
-        });
+        })
+        .catch((error) => {
+          // console.log("erroror - ", error);
+           getErrorMessage();
+       setTimeout(function(){
+       history.push(`/customer/queries`);
+     },3000);
+         });
     }
-
     if (InprogressAllocation == "InprogressAllocation") {
       axios
         .get(
@@ -115,12 +130,20 @@ function CustomerFilter(props) {
         .then((res) => {
           console.log("myResult", res.data.result);
           if (res.data.code === 1) {
+            setLoading(false);
             if (res.data.result) {
               setData(res.data.result);
               setRecords(res.data.result.length);
             }
           }
-        });
+        })
+        .catch((error) => {
+          // console.log("erroror - ", error);
+           getErrorMessage();
+       setTimeout(function(){
+       history.push(`/customer/queries`);
+     },3000);
+         });
     }
 
     if (InprogressQueryProposal == "InprogressQueryProposal") {
@@ -132,14 +155,21 @@ function CustomerFilter(props) {
         .then((res) => {
           console.log("myResult", res.data.result);
           if (res.data.code === 1) {
+            setLoading(false);
             if (res.data.result) {
               setData(res.data.result);
               setRecords(res.data.result.length);
             }
           }
-        });
+        })
+        .catch((error) => {
+          // console.log("erroror - ", error);
+           getErrorMessage();
+       setTimeout(function(){
+       history.push(`/customer/queries`);
+     },3000);
+         });
     }
-
 
     if (DeclinedQuery == "DeclinedQuery") {
       axios
@@ -152,12 +182,20 @@ function CustomerFilter(props) {
         .then((res) => {
           console.log("myResult", res.data.result);
           if (res.data.code === 1) {
+            setLoading(false);
             if (res.data.result) {
               setData(res.data.result);
               setRecords(res.data.result.length);
             }
           }
-        });
+        })
+        .catch((error) => {
+          // console.log("erroror - ", error);
+           getErrorMessage();
+       setTimeout(function(){
+       history.push(`/customer/queries`);
+     },3000);
+         });
     }
 
 
@@ -172,13 +210,21 @@ function CustomerFilter(props) {
         .then((res) => {
           console.log(res);
           if (res.data.code === 1) {
+            setLoading(false);
             if (res.data.result) {
               setData(res.data.result);
               setRecords(res.data.result.length);
 
             }
           }
-        });
+        })
+        .catch((error) => {
+          // console.log("erroror - ", error);
+           getErrorMessage();
+       setTimeout(function(){
+       history.push(`/customer/queries`);
+     },3000);
+         });
     }
 
     if (inprogressProposal == "inprogressProposal") {
@@ -192,12 +238,20 @@ function CustomerFilter(props) {
         .then((res) => {
           console.log(res);
           if (res.data.code === 1) {
+            setLoading(false);
             if (res.data.result) {
               setData(res.data.result);
               setRecords(res.data.result.length);
             }
           }
-        });
+        })
+        .catch((error) => {
+          // console.log("erroror - ", error);
+           getErrorMessage();
+       setTimeout(function(){
+       history.push(`/customer/queries`);
+     },3000);
+         });
     }
 
     if (acceptedProposal == "acceptedProposal") {
@@ -211,12 +265,21 @@ function CustomerFilter(props) {
         .then((res) => {
           console.log(res);
           if (res.data.code === 1) {
+            setLoading(false);
             if (res.data.result) {
               setData(res.data.result);
               setRecords(res.data.result.length);
             }
+            
           }
-        });
+        })
+        .catch((error) => {
+          // console.log("erroror - ", error);
+           getErrorMessage();
+       setTimeout(function(){
+       history.push(`/customer/queries`);
+     },3000);
+         });
     }
 
     if (declinedProposal == "declinedProposal") {
@@ -230,13 +293,22 @@ function CustomerFilter(props) {
         .then((res) => {
           console.log(res);
           if (res.data.code === 1) {
+            setLoading(false);
             if (res.data.result) {
               setData(res.data.result);
               setRecords(res.data.result.length);
             }
+            
           }
-        });
-    }
+        })
+        .catch((error) => {
+          // console.log("erroror - ", error);
+           getErrorMessage();
+       setTimeout(function(){
+       history.push(`/customer/queries`);
+     },3000);
+         });
+    } 
 
 
     if (assignment == "assignment") {
@@ -250,13 +322,22 @@ function CustomerFilter(props) {
         .then((res) => {
           console.log(res);
           if (res.data.code === 1) {
+            setLoading(false);
             if (res.data.result) {
               setData(res.data.result);
               setRecords(res.data.result.length);
             }
+           
           }
-        });
-    }
+        })
+        .catch((error) => {
+          // console.log("erroror - ", error);
+           getErrorMessage();
+       setTimeout(function(){
+       history.push(`/customer/queries`);
+     },3000);
+         });
+    } 
 
     if (allPayment == "allPayment") {
       axios
@@ -266,13 +347,22 @@ function CustomerFilter(props) {
         .then((res) => {
           console.log(res);
           if (res.data.code === 1) {
+            setLoading(false);
             if (res.data.result) {
               setData(res.data.result);
               setRecords(res.data.result.length);
             }
+           
           }
-        });
-    }
+        })
+        .catch((error) => {
+          // console.log("erroror - ", error);
+           getErrorMessage();
+       setTimeout(function(){
+       history.push(`/customer/queries`);
+     },3000);
+         });
+    } 
     if (unpaid == "unpaid") {
       axios
         .get(
@@ -281,13 +371,23 @@ function CustomerFilter(props) {
         .then((res) => {
           console.log(res);
           if (res.data.code === 1) {
+            setLoading(false);
             if (res.data.result) {
               setData(res.data.result);
               setRecords(res.data.result.length);
             }
+           
           }
-        });
-    }
+        })
+        .catch((error) => {
+          // console.log("erroror - ", error);
+           getErrorMessage();
+       setTimeout(function(){
+       history.push(`/customer/queries`);
+     },3000);
+         });
+        
+    } 
     if (paid == "paid") {
       axios
         .get(
@@ -296,13 +396,24 @@ function CustomerFilter(props) {
         .then((res) => {
           console.log(res);
           if (res.data.code === 1) {
+            setLoading(false);
             if (res.data.result) {
               setData(res.data.result);
               setRecords(res.data.result.length);
             }
+            
           }
-        });
-    }
+        })
+        .catch((error) => {
+          // console.log("erroror - ", error);
+           getErrorMessage();
+       setTimeout(function(){
+       history.push(`/customer/queries`);
+     },3000);
+         });
+    } 
+      // setLoading(false);
+   
 
     
   };
@@ -310,6 +421,7 @@ function CustomerFilter(props) {
   const Reset = () => {
     return (
       <>
+      
         <button
           type="submit"
           class="btn btn-primary mx-sm-1 mb-2"
@@ -502,10 +614,18 @@ function CustomerFilter(props) {
                   )}
 
                 </div>
+                {
+            loading ?
+              // <Loader />
+              <span>
+                    <Spinner color="primary" />
+                  </span>
+              :
 
                 <button type="submit" class="btn btn-primary mx-sm-1 mb-2">
                   Search
                 </button>
+}
                 <Reset />
 
                 {/* <div class="form-group mx-sm-2 mb-2">

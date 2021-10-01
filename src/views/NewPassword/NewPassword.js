@@ -43,7 +43,7 @@ function NewPassword(props) {
 
   useEffect(() => {
     getTime()
-  }, [load]);
+  }, []);
 
   const getTime = () => {
     if (load) {
@@ -51,7 +51,7 @@ function NewPassword(props) {
       function timer(remaining) {
         var s = remaining % 60;
         s = s < 10 ? '0' + s : s;
-        setTime(remaining)
+        setTime(s)
         remaining -= 1;
         if (remaining >= 0 && timerOn) {
           setTimeout(function () {
@@ -62,7 +62,7 @@ function NewPassword(props) {
         setDisabled(true)
       }
       setLoad(false)
-      timer(180);
+      timer(60);
     }
 
   }

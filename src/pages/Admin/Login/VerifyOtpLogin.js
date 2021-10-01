@@ -17,7 +17,9 @@ const Schema = yup.object().shape({
 
 
 function VerifyOtp({ email, uid, loading, setLoading }) {
-  
+  console.log("email :", email);
+  console.log("uid :", uid);
+
 
   const { handleSubmit, register, errors, reset } = useForm({
     resolver: yupResolver(Schema),
@@ -34,7 +36,7 @@ function VerifyOtp({ email, uid, loading, setLoading }) {
     function timer(remaining) {
       var s = remaining % 60;
       s = s < 10 ? '0' + s : s;
-      setTime(remaining)
+      setTime(s)
       remaining -= 1;
       if (remaining >= 0 && timerOn) {
         setTimeout(function () {
@@ -45,7 +47,7 @@ function VerifyOtp({ email, uid, loading, setLoading }) {
       setDisabled(true)
 
     }
-    timer(180);
+    timer(60);
   }, [num]);
 
   useEffect(() => {
@@ -54,7 +56,7 @@ function VerifyOtp({ email, uid, loading, setLoading }) {
     function timer(remaining) {
       var s = remaining % 60;
       s = s < 10 ? '0' + s : s;
-      setTime(remaining)
+      setTime(s)
       remaining -= 1;
       if (remaining >= 0 && timerOn) {
         setTimeout(function () {
@@ -65,7 +67,7 @@ function VerifyOtp({ email, uid, loading, setLoading }) {
       setDisabled(true)
 
     }
-    timer(180);
+    timer(60);
   }, []);
 
   const validOtp = (e) => {
@@ -150,7 +152,7 @@ function VerifyOtp({ email, uid, loading, setLoading }) {
           <div class="heading text-center">
             <h2>Verify Your OTP</h2>
           </div>
-          <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
+          <form onSubmit={handleSubmit(onSubmit)}>
             {
               disabled ?
                 null

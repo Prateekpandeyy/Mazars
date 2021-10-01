@@ -346,7 +346,7 @@ function Unpaid() {
                                     to={{
                                         pathname: `/customer/chatting/${row.assign_id}`,
                                         obj: {
-                                            message_type: "5",
+                                            message_type: "2",
                                             query_No: row.assign_no,
                                             query_id: row.q_id,
                                             routes: `/customer/proposal`

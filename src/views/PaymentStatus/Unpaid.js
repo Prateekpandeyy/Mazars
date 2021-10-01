@@ -303,85 +303,85 @@ function Paid() {
         return oldDate.slice(0, 10).toString().split("-").reverse().join("-");
       },
     },
-    {
-      text: "Action",
-      dataField: "",
-      style: {
-        fontSize: "11px",
-      },
-      headerStyle: () => {
-        return { fontSize: "11px", width: "90px" };
-      },
-      formatter: function (cell, row) {
-        return (
-          <>
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
+    // {
+    //   text: "Action",
+    //   dataField: "",
+    //   style: {
+    //     fontSize: "11px",
+    //   },
+    //   headerStyle: () => {
+    //     return { fontSize: "11px", width: "90px" };
+    //   },
+    //   formatter: function (cell, row) {
+    //     return (
+    //       <>
+    //         <div style={{ display: "flex", justifyContent: "space-between" }}>
 
-              <div>
-                {
-                  row.paid_status == "0" ?
-                    <div
-                      style={{ cursor: "pointer" }}
-                      title="Pay Amount"
-                      onClick={() => paymentHandler(row)}>
-                      <PaymentIcon color="primary" />
-                    </div>
-                    :
-                    null
-                }
-              </div>
+    //           <div>
+    //             {
+    //               row.paid_status == "0" ?
+    //                 <div
+    //                   style={{ cursor: "pointer" }}
+    //                   title="Pay Amount"
+    //                   onClick={() => paymentHandler(row)}>
+    //                   <PaymentIcon color="primary" />
+    //                 </div>
+    //                 :
+    //                 null
+    //             }
+    //           </div>
 
-              {
-                row.paid_amount > 0 ? <div style={{ cursor: "pointer" }} title="Payment History">
-                  <i
-                    class="fa fa-credit-card"
-                    style={{ color: "green", fontSize: "16px" }}
-                    onClick={() => toggle(row.assign_id)}
-                  ></i>
-                </div>
-                  :
-                  null
-              }
+    //           {
+    //             row.paid_amount > 0 ? <div style={{ cursor: "pointer" }} title="Payment History">
+    //               <i
+    //                 class="fa fa-credit-card"
+    //                 style={{ color: "green", fontSize: "16px" }}
+    //                 onClick={() => toggle(row.assign_id)}
+    //               ></i>
+    //             </div>
+    //               :
+    //               null
+    //           }
 
 
-              <div title="Send Message">
-                <Link
-                  to={{
-                    pathname: `/customer/chatting/${row.assign_id}`,
-                    obj: {
-                      message_type: "2",
-                      query_No: row.assign_no,
-                      query_id: row.q_id,
-                      routes: `/customer/proposal`
-                    }
-                  }}
-                >
-                  <i
-                    class="fa fa-comments-o"
-                    style={{
-                      fontSize: 16,
-                      cursor: "pointer",
-                      color: "blue"
-                    }}
-                  ></i>
-                </Link>
-              </div>
-              <div title="View Discussion Message">
-                <i
-                  class="fa fa-comments-o"
-                  style={{
-                    fontSize: 16,
-                    cursor: "pointer",
-                    color: "orange"
-                  }}
-                  onClick={() => ViewDiscussionToggel(row.assign_no)}
-                ></i>
-              </div>
-            </div>
-          </>
-        );
-      },
-    },
+    //           <div title="Send Message">
+    //             <Link
+    //               to={{
+    //                 pathname: `/customer/chatting/${row.assign_id}`,
+    //                 obj: {
+    //                   message_type: "2",
+    //                   query_No: row.assign_no,
+    //                   query_id: row.q_id,
+    //                   routes: `/customer/proposal`
+    //                 }
+    //               }}
+    //             >
+    //               <i
+    //                 class="fa fa-comments-o"
+    //                 style={{
+    //                   fontSize: 16,
+    //                   cursor: "pointer",
+    //                   color: "blue"
+    //                 }}
+    //               ></i>
+    //             </Link>
+    //           </div>
+    //           <div title="View Discussion Message">
+    //             <i
+    //               class="fa fa-comments-o"
+    //               style={{
+    //                 fontSize: 16,
+    //                 cursor: "pointer",
+    //                 color: "orange"
+    //               }}
+    //               onClick={() => ViewDiscussionToggel(row.assign_no)}
+    //             ></i>
+    //           </div>
+    //         </div>
+    //       </>
+    //     );
+    //   },
+    // },
   ];
 
 

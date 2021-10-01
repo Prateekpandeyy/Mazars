@@ -50,7 +50,7 @@ function LoginForm() {
       function timer(remaining) {
         var s = remaining % 60;
         s = s < 10 ? '0' + s : s;
-        setTime(remaining)
+        setTime(s)
         remaining -= 1;
         if (remaining >= 0 && timerOn) {
           setTimeout(function () {
@@ -61,7 +61,7 @@ function LoginForm() {
         setDisabled(true)
         setLoad(false)
       }
-      timer(180);
+      timer(60);
     }
 
   }
@@ -87,7 +87,7 @@ function LoginForm() {
           setLoad(true)
           setUid(response.data.user_id)
         } else if (response.data.code === 0) {
-          Alerts.ErrorNormal(response.data.result)
+          Alerts.ErrorNormal("Invalid email or password.")
           setLoading(false)
         }
       })
@@ -145,7 +145,7 @@ function LoginForm() {
               </div>
                 :
                 <div className="customForm">
-                  <form onSubmit={handleSubmit(onSubmit)} className="signInForm" autoComplete="off">
+                  <form onSubmit={handleSubmit(onSubmit)} className="signInForm">
                     <div className="form-group">
                       <label className="form-label">Email <span className="declined">*</span></label>
                       <input
