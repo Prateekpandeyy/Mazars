@@ -72,7 +72,9 @@ function PaymentModal({
     ))
     return dataItem;
   }
-console.log("paymentStatus2", pay3)
+if(addPaymentModal === true){
+  var kk = pay.installment_amount.split(",")
+}
 
   return (
     <div>
@@ -90,9 +92,9 @@ console.log("paymentStatus2", pay3)
                     <th>Due Date</th>
                     <th>Pay</th>
                   </tr>
-                 {pay3?.map((i, e) => (
+                  {kk?.map((i, e) => (
                     <tr>
-                    <td>{i}</td>
+                    <td>{i == "0" ? pay.amount : i }</td>
                     <td> {CommonServices.removeTime(due_date)}</td>
                     <td><form onSubmit={handleSubmit(onSubmit)}>
                   {+accepted_amount == +paid_amount ? <p>paid</p> : (
@@ -105,6 +107,7 @@ console.log("paymentStatus2", pay3)
                 </form></td>
                   </tr>
                  ))}
+                 
                 
                 </table>
                 
