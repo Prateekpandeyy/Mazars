@@ -90,7 +90,7 @@ class AgoraCanvas extends React.Component {
     this.startRecording = this.startRecording.bind(this);
   }
 
-  // userId = window.localStorage.getItem("tlkey");
+ 
   allrecording = [];
   teamKey = window.localStorage.getItem("adminkey");
   uid = Math.floor((Math.random() * 10000) + 1);
@@ -161,7 +161,7 @@ schdrularName;
     axios
             .get(`${baseUrl}/tl/videoScheduler?id=${this.props.id}`)
             .then((res) => {
-                console.log("myResponse", res.data.result.items[0]);
+                
            
                
                 if (res.data.code === 1) {
@@ -595,7 +595,7 @@ async startRecording(key){
     })
       .then(json => 
         this.startRecording(json)) 
-        // console.log("accuire - ",json))
+    
       .catch((error) => {
        
       });
@@ -625,7 +625,7 @@ this.toggleModal("stop")
   }
   
   else if(this.state.showButton == JSON.parse(this.teamKey)){
-  console.log("done2")
+ 
     if(resourceId === undefined){
       var resourceId = localStorage.getItem("resourceId");
     var sid = localStorage.getItem("sid");
@@ -663,8 +663,7 @@ else{
 
   render() {
 
-    // console.log("data",this.state.data)
-
+    
     const style = {
       display: "grid",
       gridGap: "50px 26px",
@@ -774,7 +773,7 @@ const recordingBtnOff = (
   >
      {
       this.state.showButton == JSON.parse(this.teamKey) ?
-      // <FiberManualRecordIcon style={{ color: red[500] }}/> : ""
+    
      <img src = {recImg} style = {{width : "20px"}} /> : ""
     }
             

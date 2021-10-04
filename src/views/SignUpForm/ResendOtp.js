@@ -7,7 +7,7 @@ import Alerts from "../../common/Alerts";
 import { Spinner } from 'reactstrap';
 
 
-function ResendOtp({ invalid, wEmail, indNumError, zipError, passError, email,
+function ResendOtp({ invalid, wEmail, disabled, indNumError, zipError, passError, email,
     phone, setDisabled, getTime, setLoad, loading, emailError, phoneError, zipError1, setLoading }) {
 
     const { handleSubmit, errors, reset } = useForm();
@@ -59,10 +59,15 @@ function ResendOtp({ invalid, wEmail, indNumError, zipError, passError, email,
         <>
             <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
 
-                <div style={{ paddingTop: "10px" }}>
-                    <button type="submit" class="btn btn-success">SEND OTP</button>
-                </div>
-
+                
+                {
+                      disabled ?
+                        <Spinner color="primary" />
+                        :
+                        <div style={{ paddingTop: "10px" }}>
+                        <button type="submit" class="btn btn-success">SEND OTP</button>
+                    </div>
+                    }
             </form>
         </>
     );

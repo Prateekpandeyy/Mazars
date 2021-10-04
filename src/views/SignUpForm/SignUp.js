@@ -726,7 +726,7 @@ const [email2, setEmail2] = useState();
 
               {
                 disabled ?
-                  <ResendOtp setDisabled={setDisabled} getTime={getTime}
+                  <ResendOtp setDisabled={setDisabled} disabled={disabled} getTime={getTime}
                     email={email} phone={phone} setLoad={setLoad} invalid={invalid} indNumError={indNumError}
                     wEmail={wEmail} zipError={zipError} passError={passError}
                     setLoading={setLoading} loading={loading}
