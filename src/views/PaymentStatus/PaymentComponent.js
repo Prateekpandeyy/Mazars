@@ -15,6 +15,7 @@ function PaymentModal({
   paymentHandler,
   pay,
   getPaymentStatus,
+  pay3
 }) {
   const { handleSubmit, register } = useForm();
   const alert = useAlert();
@@ -71,10 +72,11 @@ function PaymentModal({
     ))
     return dataItem;
   }
+console.log("paymentStatus2", pay3)
 
   return (
     <div>
-      <Modal isOpen={addPaymentModal} toggle={paymentHandler} size="md">
+      <Modal isOpen={addPaymentModal}  toggle={paymentHandler} size="md">
         <ModalHeader toggle={paymentHandler}>Payment</ModalHeader>
         {
           loading ?
@@ -86,71 +88,26 @@ function PaymentModal({
                   <tr>
                     <th>Paid Amount</th>
                     <th>Due Date</th>
-                    {/* <td>{accepted_amount}</td> */}
-                   
+                    <th>Pay</th>
                   </tr>
-                  <tr>
-                    <td>{accepted_amount - paid_amount}</td>
+                 {pay3?.map((i, e) => (
+                    <tr>
+                    <td>{i}</td>
                     <td> {CommonServices.removeTime(due_date)}</td>
-                  </tr>
-                  {/* <tr>
-                   
-                    <td>{paid_amount}</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Payment Terms</th>
-                    {
-                      payment_terms == "lumpsum" ?
-                        <td>
-                          <tr>
-
-                            <th>Due Dates</th>
-                          </tr>
-                          <tr>
-                            <td>
-                              {CommonServices.removeTime(due_date)}
-                            </td>
-                          </tr>
-                        </td>
-                        :
-                        payment_terms == "installment" ?
-                          <td>
-                            <tr>
-                              <th>Installment Amount</th>
-                              <th>Due Dates</th>
-                            </tr>
-                            <tr>
-                              <td>{installAmount(installment_amount)}</td>
-                              <td>{installAmount(due_date)}</td>
-                            </tr>
-                          </td>
-                          :
-                          ""
-                    }
-                  </tr> */}
-
-                </table>
-                <form onSubmit={handleSubmit(onSubmit)}>
-                  {+accepted_amount == +paid_amount ? null : (
-                    <div>
-                      {/* <div className="mb-3">
-                        <input
-                          type="text"
-                          name="p_amount"
-                          ref={register}
-                          className="form-control"
-                          defaultValue={accepted_amount - paid_amount}
-                          placeholder="enter amount"
-                        />
-                      </div> */}
-                      <div class="modal-footer">
-                        <button type="submit" className="btn btn-primary">
-                          Pay
-                        </button>
-                      </div>
-                    </div>
+                    <td><form onSubmit={handleSubmit(onSubmit)}>
+                  {+accepted_amount == +paid_amount ? <p>paid</p> : (
+                   <button type="submit" className="btn btn-primary">
+                      Pay
+                   </button>
+                    
+                
                   )}
-                </form>
+                </form></td>
+                  </tr>
+                 ))}
+                
+                </table>
+                
               </ModalBody>
             </>
         }

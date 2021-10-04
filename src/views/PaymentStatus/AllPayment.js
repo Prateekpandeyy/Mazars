@@ -35,7 +35,7 @@ function Paid() {
   const [count, setCount] = useState("");
   const [payment, setPayment] = useState([]);
   const [modal, setModal] = useState(false);
-
+  const [no_ins, setNo_ins] = useState([]);
   const [pay, setPay] = useState({
     pay: "",
     amount: "",
@@ -77,6 +77,7 @@ function Paid() {
 
   const [assignNo, setAssignNo] = useState('');
   const [ViewDiscussion, setViewDiscussion] = useState(false);
+  var ins = []
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key)
@@ -166,7 +167,7 @@ function Paid() {
                 <>
                     <Link
                         to={{
-                            pathname: `/admin/queries/${row.assign_id}`,
+                            pathname: `/customer/my-assingment/${row.assign_id}`,
                             routes: "paymentstatus",
                         }}
                     >
@@ -322,6 +323,8 @@ function Paid() {
         return { fontSize: "11px", width: "90px" };
       },
       formatter: function (cell, row) {
+         ins = row.installment_amount.split(",")
+       setNo_ins(row.installment_amount.split(","));
         return (
           <>
             <div style={{ display: "flex", justifyContent: "space-between" }}>
@@ -403,7 +406,7 @@ function Paid() {
     order: 'desc'
   }];
 
-
+console.log(no_ins)
   return (
     <>
       <>
@@ -436,7 +439,8 @@ function Paid() {
               paymentHandler={paymentHandler}
               addPaymentModal={addPaymentModal}
               pay={pay}
-              getPaymentStatus={getPaymentStatus}
+              getPaymentStatus={no_ins}
+               pay3 = {no_ins}
             />
 
             <DiscardReport

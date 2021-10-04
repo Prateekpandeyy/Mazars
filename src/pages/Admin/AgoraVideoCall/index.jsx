@@ -192,6 +192,7 @@ schdrularName;
           dom = document.createElement("section");
           dom.setAttribute("id", "ag-item-" + id);
           dom.setAttribute("class", "ag-item");
+         
           canvas.appendChild(dom);
           item.play("ag-item-" + id);
         }
