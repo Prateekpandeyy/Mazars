@@ -4,9 +4,9 @@
 
 
 //for local
-export const baseUrl = "http://13.232.121.233/mazarsapi/v1";
-export const ImageUrl = "http://13.232.121.233/mazarsapi/assets/image";
-export const ReportUrl = "http://13.232.121.233/mazarsapi/assets/upload/report";
+// export const baseUrl = "http://13.232.121.233/mazarsapi/v1";
+// export const ImageUrl = "http://13.232.121.233/mazarsapi/assets/image";
+// export const ReportUrl = "http://13.232.121.233/mazarsapi/assets/upload/report";
 
 
 
