@@ -8,9 +8,9 @@ import "antd/dist/antd.css";
 import BootstrapTable from "react-bootstrap-table-next";
 import TeamFilter from "../../../components/Search-Filter/tlFilter";
 import ChatHistory from "./ChatHistory";
+import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import DiscardReport from "../AssignmentTab/DiscardReport";
-
-
+import Tds from "./Tds";
 
 
 
@@ -19,23 +19,33 @@ function AllProposal() {
     const [records, setRecords] = useState([]);
     const [proposal, setProposal] = useState([]);
     const [count, setCount] = useState("");
-    const [id, setId] = useState(null);
 
+
+    const [id, setId] = useState(null);
+    const [id2, setId2] = useState(null)
+    const [tds, setTds] = useState(false)
     const [addPaymentModal, setPaymentModal] = useState(false);
+    const [assignNo, setAssignNo] = useState('');  
+    const [ViewDiscussion, setViewDiscussion] = useState(false);
+    const [tdsForm , setTdsForm] = useState(false)
     const chatHandler = (key) => {
-        console.log(key);
-        setPaymentModal(!addPaymentModal);
+         setPaymentModal(!addPaymentModal);
         setId(key.assign_no);
     };
-
-
-    const [assignNo, setAssignNo] = useState('');
-    const [ViewDiscussion, setViewDiscussion] = useState(false);
+   const addTdsToggle = (key) => {
+       console.log("done")
+       setTdsForm(!tdsForm)
+   }
     const ViewDiscussionToggel = (key) => {
+        console.log(key)
         setViewDiscussion(!ViewDiscussion);
         setAssignNo(key)
     }
-
+    // const addTdsToggle = (key) => {
+    //     console.log("mey", key)
+    //     setTds(false)
+    //     setAssignNo(key)
+    //        }
     useEffect(() => {
         getProposalList();
     }, []);
@@ -53,7 +63,7 @@ function AllProposal() {
             });
     };
 
-
+console.log("tds22", tds)
     const columns = [
         {
             text: "S.No",
@@ -268,6 +278,7 @@ function AllProposal() {
                             </div>
 
                             {row.status_code > "3" || row.status_code == "10" ?
+                            <>
                                 <div style={{ cursor: "pointer", marginLeft: "8px" }} title="View Proposal">
 
                                     <a
@@ -279,7 +290,12 @@ function AllProposal() {
                                             style={{ color: "green", fontSize: "16px" }}
                                         />
                                     </a>
+                                    <div>
+                                        <AccountBalanceIcon
+                                         onClick = {(e) => addTdsToggle()} />
+                                    </div>
                                 </div>
+                                </>
                                 :
                                 null
                             }
@@ -365,6 +381,10 @@ function AllProposal() {
                         ViewDiscussion={ViewDiscussion}
                         report={assignNo}
                         getData={getProposalList}
+                    />
+                    <Tds 
+                    tdsForm = {tdsForm}
+                    addTdsToggle = {addTdsToggle}
                     />
                 </CardBody>
             </Card>
