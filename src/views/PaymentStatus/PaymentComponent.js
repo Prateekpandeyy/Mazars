@@ -30,24 +30,18 @@ function PaymentModal({
 
 
   const onSubmit = (value) => {
-    console.log("value :", value);
-
+  
     setLoading(true)
     let formData = new FormData();
     formData.append("id", assign_id);
     formData.append("status", 8);
     formData.append("amount", value.p_amount);
 
-    // axios({
-    //   method: "POST",
-    //   url: `${baseUrl}/customers/PaymentPartialAccept`,
-    //   data: formData,
-    // })
+  
     axios.get(`${baseUrl}/admin/getPaymentDetail?id=${assign_id}`)
       .then(function (response) {
-        console.log("res-", response.data.paymnet_detail);
+      
         if (response.data.code === 1) {
-          // setLoading(false)
          
           window.location.href= (`${response.data.payment_detail[0].paymenturl}`)
          
@@ -62,7 +56,6 @@ function PaymentModal({
 
   const installAmount = (data) => {
     var item = data.split(',')
-    console.log("item", item);
 
     const dataItem = item.map((p, i) =>
     (

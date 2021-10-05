@@ -36,15 +36,11 @@ class Meeting extends React.Component {
           className="ag-header"
           style={{ color: "green", fontWeight: "bold" }}
         >
-          <div className="ag-header-lead">
-            <span>Video Call</span>
-          </div>
+          
           <div className="ag-header-msg">
             &nbsp;<span id="room-name">{this.channel}</span>
           </div>
-          <div className="ag-header-msg">
-           <h1>Recording has been started</h1>
-          </div>
+         
         </div>
         <div className="ag-main">
           <div className="ag-container">

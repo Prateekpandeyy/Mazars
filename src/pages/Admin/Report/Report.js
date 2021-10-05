@@ -9,14 +9,11 @@ import Select from 'react-select';
 import Layout from "../../../components/Layout/Layout";
 import { Typography } from '@material-ui/core';
 import Mandatory from '../../../components/Common/Mandatory';
-
+import { useHistory } from 'react-router';
 const Report = () => {
     const userid = window.localStorage.getItem("adminkey");
   
-    const [teamleader,setTeamleader] = useState([]);
-    const [taxprofessional, setTaxprofessional] = useState([]);
-    const [tl, setTl] = useState([])
-    const [tp, setTp] = useState([])
+  
     const [subCategory, setSubCategory] = useState([]);
     const [subData, subCategeryData] = useState([])
     const [custCate, setCustcate] = useState([])
@@ -33,17 +30,16 @@ const Report = () => {
   const [data, setData] = useState([]);
   const [data2, setData2] = useState([]);
   const [taxId, setTaxId] = useState();
+  const [teamleader44, setTeamleader44] = useState() 
+  const [taxprofessional44, setTaxprofessional44] = useState()
   var kk = []
   var pp = []
   var vv = []
   var allData1 = {}
   var dir = []
   var indir = []
-  const [dd, setDd] = useState({
-    direct: [],
-    indirect: [],
-  });
-
+  const [dd, setDd] = useState();
+const history = useHistory()
     const { handleSubmit, register, errors, getValues } = useForm();
     var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
  
@@ -87,7 +83,7 @@ const Report = () => {
       if (res.data.code === 1) {
         pp.push(res.data.result)
         setData((res.data.result));
-       console.log("teamleader" , res.data.result)
+       
       }
     });
   };
@@ -130,22 +126,13 @@ const Report = () => {
       }))
 
     const onSubmit = (value) => {
-      var categeryList = []
-      var categeryName = []
-      var categeryName = []
-      var kk = []
-    var parentCategoryName = []
-    categoryData.map((i) => {
-      kk.push(i.value)
-      parentCategoryName.push(i.label)
-    })
         let formData = new FormData();
         formData.append("from", value.p_from);
         formData.append("to", value.p_to);
-        formData.append("teamleader", teamleader);
-        formData.append("taxprofessional", taxprofessional);
-        formData.append("category", parentCategoryName);
-        formData.append("subCategory", JSON.stringify(dd));
+        formData.append("teamleader", teamleader44);
+        formData.append("taxprofessional", taxprofessional44);
+        formData.append("category", mcatname);
+        formData.append("subCategory", dd);
         formData.append("q_no", value.qno);
         formData.append("date_query", value.dataQuery);
         formData.append("cust_id", value.cust_id);
@@ -184,11 +171,17 @@ const Report = () => {
      data : formData
 
    })
+   .then(function (response) {
+  window.location.assign(`${baseUrl}/report/generateReport`)
+   })
+   .catch((error) => {
+     console.log("erroror - ", error);
+   });
     }
 
     // Category 
     const category2 = (v) => {
-
+let cc = []
       setCategoryData(v)
       setNn((oldData) => {
         return [...oldData, mcategory]
@@ -197,14 +190,13 @@ const Report = () => {
       setCustcate(v)
       v.map((val) => {
         vv.push(val.value)
+        cc.push(val.value)
         setmcategory(val.value);
-        setmcatname((oldData) => {
-          return [...oldData, val.label]
-        })
+       
         setStore(val.value)
       })
   
-  
+  setmcatname(cc)
       if (vv.length > 0) {
         if (vv.includes("1") && vv.includes("2")) {
           console.log("hdd")
@@ -241,37 +233,30 @@ const Report = () => {
       subCategeryData(e)
       setCustcate2(e)
       setError2("")
-      console.log(e)
-      console.log("allData", allData1)
+     
       e.map((i) => {
   
-        i.value < 8 ? dir.push(i.label) : indir.push(i.label)
+        i.value < 8 ? dir.push(i.value) : indir.push(i.value)
       })
      
-      setDd({
-        direct: dir,
-        indirect: indir
-      })
+      setDd([dir, indir])
     }
   const teamLeader = (a) => {
-    console.log(a)
+ let tk = []
     a.map((i) => {
-      console.log(i)
-      setTaxId(i.value)
-      setTl(i.label)
-      setTeamleader((oldData) => {
-        return [...oldData, tl]
-      })
-    
+      console.log(i.value)
+      setTaxId(i.value) 
+     tk.push(i.value)
     })
+    setTeamleader44(tk)
   }
   const taxProfessional = (e) => {
+    let kk2 = []
     e.map((i) => {
-      setTp(i.label); 
-      setTaxprofessional((oldData) => {
-        return [...oldData, tp]
-      })
+      
+      kk2.push(i.value)
     })
+    setTaxprofessional44(kk2)
   }
     return (
         <>
