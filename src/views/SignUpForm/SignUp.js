@@ -362,6 +362,7 @@ function SignUp(props) {
     formData.append("country", countryName);
     formData.append("state", stateName);
     formData.append("stdcode", countryCode);
+    formData.append("gst_no", value.p_gstno);
 
     if (display === true && subm === false) {
       setLoading(true)
@@ -479,7 +480,7 @@ function SignUp(props) {
                         })}
                         onChange={(e) => emailHandler(e)}
                         onBlur={emailValidation}
-                        placeholder="Enter Your Password"
+                        placeholder="Enter Your Email"
                         ref={register({ required: true })}
                       />
                       {
@@ -718,6 +719,18 @@ function SignUp(props) {
                           {errors.p_confirm_password.message}
                         </div>
                       )}
+                    </div>
+                  </div>
+                  <div className="col-md-6">
+                    <div className="mb-3">
+                      <label className="form-label">GST No</label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        name="p_gstno"
+                        ref={register({ required: false })}
+                        placeholder="Enter GST no"
+                      />
                     </div>
                   </div>
 
