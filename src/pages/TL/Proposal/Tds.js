@@ -140,7 +140,7 @@ setSac(k.sac)
   
     return(
       
-        <Modal isOpen={props.tdsForm} toggle={props.addTdsToggle} size="lg">
+        <Modal isOpen={props.tdsForm} toggle={props.addTdsToggle} style={{display: "flex"}}>
         <ModalHeader toggle={props.addTdsToggle}> Generate Invoice</ModalHeader>
         <ModalBody>
     
@@ -148,20 +148,21 @@ setSac(k.sac)
             
     <div className="container gutter-3">
             <div className="row my-2">
+              {services === undefined ? "" : 
               <div className="col-md-6">
-                  <label>Descirption </label>
-              <select 
-              ref={register}
-            style={{height : "33.5px"}}
-            required
-              onChange = {(e) => serviceFun(e.target.value)}
-              name="description" className="form-control">
-                  <option value="">--select--</option>
-              {services.map((i) => (
-                   <option value={i.service} key={i.id} className="form-control"> {i.service}</option>
-              ))}
-                </select>
-                  </div>
+              <label>Descirption </label>
+          <select 
+          ref={register}
+        style={{height : "33.5px"}}
+        required
+          onChange = {(e) => serviceFun(e.target.value)}
+          name="description" className="form-control">
+              <option value="">--select--</option>
+          {services.map((i) => (
+               <option value={i.service} key={i.id} className="form-control"> {i.service}</option>
+          ))}
+            </select>
+              </div>}
                   <div className="col-md-6">
                   <label>Basic Amount</label>
                     <input 
@@ -174,7 +175,7 @@ setSac(k.sac)
                     disabled
                   defaultValue={props.paidAmount}
                     onBlur={(e) => setBasicamount(e.target.value)}/>
-                    </div>
+                    </div> 
             </div>
            
             <div className="row my-2">
