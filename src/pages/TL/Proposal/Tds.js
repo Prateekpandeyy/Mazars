@@ -11,6 +11,7 @@ import moment from "moment";
 import { useRef } from "react";
 import { useState } from "react";
 import ReactToPdf from 'react-to-pdf';
+
 function Tds (props)  {
     const userid = window.localStorage.getItem("tlkey")
     const f2 = useRef(null);
@@ -20,13 +21,23 @@ function Tds (props)  {
     const [sgetTotal, setSgstTotal] = useState()
     const [igetTotal, setIgstTotal] = useState()
     const [grandTotal, setgrandTotal] = useState();
-    const [paymentDetails, setPaymentDetails] = useState([]);
-    const [item] = useState(current_date);
+  const [services, setServices] = useState();
     const [pdf, setPdf] = useState(false);
     const [total, setTotal] = useState()
     var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
  
-  
+  const getServices = () => {
+    axios.get(`${baseUrl}/tl/getServices`)
+    .then((res) => {
+      console.log(res)
+      if(res.data.code === 1){
+        setServices(res.data.result);
+      }
+    })
+  }
+  useEffect(() => {
+    getServices();
+  }, [])
     const { handleSubmit, register, errors, getValues } = useForm();
     const options = {
         orientation: 'landscape',
@@ -146,7 +157,7 @@ setSac(k.sac)
               onChange = {(e) => serviceFun(e.target.value)}
               name="description" className="form-control">
                   <option value="">--select--</option>
-              {serviceData.map((i) => (
+              {services.map((i) => (
                    <option value={i.service} key={i.id} className="form-control"> {i.service}</option>
               ))}
                 </select>
