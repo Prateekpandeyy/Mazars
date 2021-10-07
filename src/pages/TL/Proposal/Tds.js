@@ -23,7 +23,7 @@ function Tds (props)  {
     const [paymentDetails, setPaymentDetails] = useState([]);
     const [item] = useState(current_date);
     const [pdf, setPdf] = useState(false);
-    const [ii, setIi] = useState(false)
+    const [total, setTotal] = useState()
     var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
  
   
@@ -35,52 +35,73 @@ function Tds (props)  {
     };  
 const cgstFun = (e) => {
    let cget;
-   cget = parseInt(props.paidAmount * e.target.value / 100) + parseInt(props.paidAmount)
+
+   cget = parseInt(props.paidAmount * e.target.value / 100)
     setCgstTotal(cget)
-   
+   setTotal(parseInt(props.paidAmount) + parseInt(cget))
 }
 
 const sgstFun = (e) => {
     let cget;
-    cget = parseInt(cgetTotal * e.target.value / 100) + parseInt(cgetTotal)
-     setSgstTotal(cget)
-    
+        cget = parseInt(props.paidAmount * e.target.value / 100)
+        setSgstTotal(cget)
+        if(cgetTotal == undefined){
+            setTotal(parseInt(props.paidAmount) + parseInt(cget))
+        }
+        else{
+            setTotal(parseInt(total) + parseInt(cget))
+        }
  }
 
  const igstFun = (e) => {
-    let cget;
-    cget = parseInt(sgetTotal * e.target.value / 100) + parseInt(sgetTotal)
-     setIgstTotal(cget)
+   
+        let cget;
+        cget = parseInt(props.paidAmount * e.target.value / 100) 
+         setIgstTotal(cget)
+         if(cgetTotal == undefined && sgetTotal == undefined)
+        {
+            setTotal(parseInt(props.paidAmount) + parseInt(cget))
+        }
+        else{
+            setTotal(parseInt(total) + parseInt(cget))
+        }
+       
     
  }
  const tdsFun = (e) => {
     let cget;
-    cget = parseInt(igetTotal) - parseInt(igetTotal * e.target.value / 100) 
+    if(total === undefined){
+        cget = parseInt(props.paidAmount) - parseInt(props.paidAmount * e.target.value / 100) 
      setgrandTotal(cget)
+    }
+    else {
+        cget = parseInt(total) - parseInt(props.paidAmount * e.target.value / 100) 
+     setgrandTotal(cget)
+    }
     
  }
 
     const onSubmit= (value) => {
-    //    setPdf(true)
+        setPdf(true)
         let formData = new FormData();
-       formData.append("tl_id", userid);
+       formData.append("tl_id", JSON.parse(userid));
          formData.append("id", props.id)
          formData.append("qno", props.report)
          formData.append("description", value.description);
          formData.append("serviceCode", sac33);
         formData.append("basic_amount", props.paidAmount);
         formData.append("cgst_rate", value.cgst_rate);
-        formData.append("cgst_amount", props.paidAmount);
+        
         formData.append("cgst_total", cgetTotal)
         formData.append("sgst_rate", value.sgst_rate);
-        formData.append("sgst_amount", cgetTotal);
+       
         formData.append("sgst_total", sgetTotal)
         formData.append("igst_rate", value.igst_rate);
-        formData.append("igst_amount", sgetTotal);
+      
         formData.append("igst_total", igetTotal)
         formData.append("total", igetTotal);
         formData.append("tds_rate", value.tds_rate);
-        formData.append("tds_amount", igetTotal);
+      
         formData.append("tds_total", grandTotal)
         
         axios({
@@ -108,204 +129,182 @@ setSac(k.sac)
   
     return(
       
-        <Modal isOpen={props.tdsForm} toggle={props.addTdsToggle} size="md">
+        <Modal isOpen={props.tdsForm} toggle={props.addTdsToggle} size="lg">
         <ModalHeader toggle={props.addTdsToggle}> Generate Invoice</ModalHeader>
         <ModalBody>
-        <form onSubmit={handleSubmit(onSubmit)} autocomplete="off" ref={f2}>
+    
+    <form onSubmit={handleSubmit(onSubmit)} autocomplete="off" ref={f2}>
             
-           
-                <div className="row">
+    <div className="container gutter-3">
+            <div className="row my-2">
+              <div className="col-md-6">
+                  <label>Descirption </label>
+              <select 
+              ref={register}
+            style={{height : "33.5px"}}
+            required
+              onChange = {(e) => serviceFun(e.target.value)}
+              name="description" className="form-control">
+                  <option value="">--select--</option>
+              {serviceData.map((i) => (
+                   <option value={i.service} key={i.id} className="form-control"> {i.service}</option>
+              ))}
+                </select>
+                  </div>
                   <div className="col-md-6">
-                      <label>Descirption </label>
-                  <select 
-                  ref={register}
-                style={{height : "33.5px"}}
-                  onChange = {(e) => serviceFun(e.target.value)}
-                  name="description" className="form-control">
-                      <option value="">--select--</option>
-                  {serviceData.map((i) => (
-                       <option value={i.id} key={i.id} className="form-control"> {i.service}</option>
-                  ))}
-                    </select>
+                  <label>Basic Amount</label>
+                    <input 
+                    type="text"
+
+                    name="basic_amount"
+                    ref={register({required : true})}
+                    className="form-control"
+                    placeholder="Amount" 
+                    disabled
+                  defaultValue={props.paidAmount}
+                    onBlur={(e) => setBasicamount(e.target.value)}/>
+                    </div>
+            </div>
+           
+            <div className="row my-2">
+              <div className="col-md-4">
+              <h4>CGST</h4>
+             <div className="row">
+             <div className="col-md-6">
+              <input 
+                    type="text"
+                    ref={register}
+                    className="form-control"
+                    placeholder="Rate"
+                    defaultValue={0}
+                    name="cgst_rate"
+                    onChange= {(e) => cgstFun(e)} />
+                
+                  </div>
+                  <div className="col-md-6">
+                  <input 
+                    type="text"
+                    className="form-control"
+                    ref={register}
+                    placeholder="Total" 
+                    disabled 
+                    name="cgst_total"
+                    defaultValue = {cgetTotal}/>
+                  </div>
+                 </div>
+                  </div>
+                  <div className="col-md-4">
+                  <h4>SGST/UTGST </h4>
+              <div className="row">
+                  <div className="col-md-6">
+                  <input 
+                    type="text"
+                    className="form-control"
+                    ref={register}
+                    name="sgst_rate"
+                    placeholder="Rate" 
+                    defaultValue={0}
+                    onChange= {(e) => sgstFun(e)}/>
                       </div>
                       <div className="col-md-6">
-                      <label>Basic Amount</label>
-                        <input 
-                        type="text"
-
-                        name="basic_amount"
-                        ref={register({required : true})}
-                        className="form-control"
-                        placeholder="Amount" 
-                        disabled
-                      defaultValue={props.paidAmount}
-                        onBlur={(e) => setBasicamount(e.target.value)}/>
-                        </div>
-                </div>
-               
-                <div className="row">
-                  <div className="col-md-12">
-                  <h4>CGST</h4>
-                      </div>
-                    <div className="col-md-4 my-1">
-                    <input 
-                        type="text"
-                        ref={register}
-                        className="form-control"
-                        placeholder="Rate"
-                        name="cgst_rate"
-                        onChange= {(e) => cgstFun(e)} />
-                        </div>
-                        <div className="col-md-4 my-1">
-                    <input 
-                        type="text"
-                        className="form-control"
-                        ref={register}
-                        placeholder="Amount"
-                        name="cgst_amount"
-                        defaultValue={props.paidAmount}
-                        disabled />
-                        </div>
-                        <div className="col-md-4 my-1">
-                    <input 
-                        type="text"
-                        className="form-control"
-                        ref={register}
-                        placeholder="Total" 
-                        disabled 
-                        name="cgst_total"
-                        defaultValue = {cgetTotal}/>
-                        </div>
-                </div>
-                <div className="row">
-                  <div className="col-md-12">
-                  <h4>SGST/UTGST </h4>
-                      </div>
-                    <div className="col-md-4 my-1">
-                    <input 
-                        type="text"
-                        className="form-control"
-                        ref={register}
-                        name="sgst_rate"
-                        placeholder="Rate" 
-                        onChange= {(e) => sgstFun(e)}/>
-                        </div>
-                        <div className="col-md-4 my-1">
-                    <input 
-                        type="text"
-                        className="form-control"
-                        name="sgst_amount"
-                        ref={register}
-                        placeholder="Amount"
-                        disabled
-                        defaultValue={cgetTotal} />
-                        </div>
-                        <div className="col-md-4 my-1">
-                    <input 
-                        type="text"
-                        className="form-control"
-                        ref={register}
-                        placeholder="Total"
-                        name="sgst_total" 
-                        disabled
-                        defaultValue={sgetTotal}/>
-                        </div>
-                </div>
-                <div className="row">
-                  <div className="col-md-12">
-                  <h4>IGST </h4>
-                      </div>
-                    <div className="col-md-4 my-1">
-                    <input 
-                        type="text"
-                        className="form-control"
-                        placeholder="Rate"
-                        ref={register}
-                        name="igst_rate"
-                        onChange= {(e) => igstFun(e)} />
-                        </div>
-                        <div className="col-md-4 my-1">
-                    <input 
-                        type="text"
-                        ref={register}
-                        className="form-control"
-                        name="igst_amount"
-                        placeholder="Amount"
-                        disabled
-                        defaultValue={sgetTotal} />
-                        </div>
-                        <div className="col-md-4 my-1">
-                    <input 
-                        type="text"
-                        className="form-control"
-                        placeholder="Total"
-                        name="igst_total"
-                        disabled
-                        ref={register}
-                        defaultValue={igetTotal} />
-                        </div>
-                </div>
-                <div className="row">
+                      <input 
+                    type="text"
+                    className="form-control"
+                    ref={register}
+                    placeholder="Total"
+                    name="sgst_total" 
+                    disabled
+                    defaultValue={sgetTotal}/>
+                          </div>
+                  </div>
+            
+                  </div>
+                  <div className="col-md-4">
+              <h4>IGST</h4>
+              <div className="row">
+              <div className="col-md-6">
+                <input 
+                    type="text"
+                    className="form-control"
+                    placeholder="Rate"
+                    ref={register}
+                    name="igst_rate"
+                    defaultValue={0}
+                    onChange= {(e) => igstFun(e)} />
+                    </div>
+                   
+                    <div className="col-md-6">
+                <input 
+                    type="text"
+                    className="form-control"
+                    placeholder="Total"
+                    name="igst_total"
+                    disabled
+                    ref={register}
+                    defaultValue={igetTotal} />
+                    </div>
+                  </div>
+                  </div>
+                  </div>
+                
+          
+          
+            <div className="row my-2">
+                <div className="col-md-4">
+                  <h4>Total</h4>
+                    </div>
                     <div className="col-md-4">
-                      <h4>Total</h4>
                         </div>
                         <div className="col-md-4">
+                       
+                    <input 
+                    type="text"
+                    className="form-control"
+                    placeholder="Total"
+                    name="total"
+                    disabled
+                    defaultValue={props.paidAmount}
+                    ref={register}
+                   value={total} />
                             </div>
-                            <div className="col-md-4">
-                           
-                        <input 
-                        type="text"
-                        className="form-control"
-                        placeholder="Total"
-                        name="total"
-                        disabled
-                        ref={register}
-                        defaultValue={igetTotal} />
-                                </div>
-                    </div>
-                <div className="row">
-                  <div className="col-md-12">
-                  <h4>TDS </h4>
-                      </div>
-                    <div className="col-md-4 my-1">
-                    <input 
-                        type="text"
-                        className="form-control"
-                        placeholder="Rate"
-                        name="tds_rate"
-                        ref={register}
-                        onChange= {(e) => tdsFun(e)} />
-                        </div>
-                        <div className="col-md-4 my-1">
-                    <input 
-                        type="text"
-                        className="form-control"
-                        name="tds_amount"
-                        placeholder="Amount"
-                        disabled
-                        ref={register}
-                        defaultValue={igetTotal} />
-                        </div>
-                        <div className="col-md-4 my-1">
-                    <input 
-                        type="text"
-                        ref={register}
-                        className="form-control"
-                        placeholder="Total"
-                        name="tds_total"
-                        disabled
-                        defaultValue={grandTotal} />
-                        </div>
                 </div>
-             {
-                 pdf === false ?
-                 <>
-                 <button  type="submit" className="btn btn-success">submit</button>
-              
-                 <button  type="button" className="btn btn-danger mx-3" onClick={props.addTdsToggle}>Cancle</button> 
-                 </> : ""
-             }
-            </form>
+            <div className="row my-2">
+              <div className="col-md-4 my-1">
+              <h4>TDS </h4>
+                  </div>
+                <div className="col-md-4 my-1">
+                <input 
+                    type="text"
+                    className="form-control"
+                    placeholder="Rate"
+                    name="tds_rate"
+                    defaultValue={0}
+                    ref={register}
+                    onChange= {(e) => tdsFun(e)} />
+                    </div>
+                   
+                    <div className="col-md-4 my-1">
+                <input 
+                    type="text"
+                    ref={register}
+                    className="form-control"
+                    placeholder="Total"
+                    name="tds_total"
+                    disabled
+                    defaultValue={grandTotal} />
+                    </div>
+            </div>
+         {
+             pdf === false ?
+             <>
+             <button  type="submit" className="btn btn-success">submit</button>
+          
+             <button  type="button" className="btn btn-danger mx-3" onClick={props.addTdsToggle}>Cancle</button> 
+             </> : ""
+         }
+          </div>
+        </form>
+       
             {pdf === true ? 
             <ReactToPdf targetRef={f2} filename="invoice.pdf" options={options} x={.5} y={.5} scale={0.8}>
             {({toPdf}) => (
