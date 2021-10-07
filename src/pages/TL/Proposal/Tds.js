@@ -140,7 +140,7 @@ setSac(k.sac)
   
     return(
       
-        <Modal isOpen={props.tdsForm} toggle={props.addTdsToggle} style={{display: "flex"}}>
+        <Modal isOpen={props.tdsForm} toggle={props.addTdsToggle} style={{display: "flex", width: "600px"}}>
         <ModalHeader toggle={props.addTdsToggle}> Generate Invoice</ModalHeader>
         <ModalBody>
     
