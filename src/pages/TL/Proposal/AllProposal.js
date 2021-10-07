@@ -290,11 +290,12 @@ console.log("tds22", tds)
                                             style={{ color: "green", fontSize: "16px" }}
                                         />
                                     </a>
-                                    <div>
+                                  
+                                </div>
+                                <div>
                                         <AccountBalanceIcon
                                          onClick = {(e) => addTdsToggle()} />
                                     </div>
-                                </div>
                                 </>
                                 :
                                 null
