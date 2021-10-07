@@ -299,7 +299,7 @@ const [email2, setEmail2] = useState();
 
   const onSubmit = (value) => {
 
-
+console.log("done", value)
 
     let formData = new FormData();
     formData.append("name", value.p_name);

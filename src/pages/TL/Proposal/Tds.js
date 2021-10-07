@@ -8,39 +8,25 @@ import { serviceData } from "./serviceData";
 import className from 'classnames';
 import { useReactToPrint } from 'react-to-print';
 import moment from "moment";
+import { useRef } from "react";
+import { useState } from "react";
 import ReactToPdf from 'react-to-pdf';
 function Tds (props)  {
-    const f2 = React.createRef();
-    const [sac33, setSac] = React.useState([])
-    const [basicAmount, setBasicamount] = React.useState()
-    const [cgetTotal, setCgstTotal] = React.useState()
-    const [sgetTotal, setSgstTotal] = React.useState()
-    const [igetTotal, setIgstTotal] = React.useState()
-    const [grandTotal, setgrandTotal] = React.useState();
-    const [paymentDetails2, setPaymentDetails2] = React.useState([]);
-    const [item] = React.useState(current_date);
-    const [pdf, setPdf] = React.useState(false);
-    const [tt, tt2] = React.useState();
+    const userid = window.localStorage.getItem("tlkey")
+    const f2 = useRef(null);
+    const [sac33, setSac] = useState([])
+    const [basicAmount, setBasicamount] = useState()
+    const [cgetTotal, setCgstTotal] = useState()
+    const [sgetTotal, setSgstTotal] = useState()
+    const [igetTotal, setIgstTotal] = useState()
+    const [grandTotal, setgrandTotal] = useState();
+    const [paymentDetails, setPaymentDetails] = useState([]);
+    const [item] = useState(current_date);
+    const [pdf, setPdf] = useState(false);
+    const [ii, setIi] = useState(false)
     var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
- var details;
-  const getDetails = () => {
-  if(paymentDetails2 != undefined){
-    axios
-    .get(`${baseUrl}/admin/getPaymentDetail?id=${props.report}`)
-    .then((res) => {
-        console.log(res);
-        if (res.data.code === 1) {
-            console.log(res.data.payment_detail)
-            setPaymentDetails2(res.data.payment_detail);
-            tt2(res.data.payment_detail[0].paid_amount)
-           
-        }
-    });
-  }
-};
-useEffect(() => {
-    getDetails();
-}, [props.report])
+ 
+  
     const { handleSubmit, register, errors, getValues } = useForm();
     const options = {
         orientation: 'landscape',
@@ -49,7 +35,7 @@ useEffect(() => {
     };  
 const cgstFun = (e) => {
    let cget;
-   cget = parseInt(basicAmount * e.target.value / 100) + parseInt(basicAmount)
+   cget = parseInt(props.paidAmount * e.target.value / 100) + parseInt(props.paidAmount)
     setCgstTotal(cget)
    
 }
@@ -73,30 +59,39 @@ const sgstFun = (e) => {
      setgrandTotal(cget)
     
  }
-console.log("assignNo", props.report)
+
     const onSubmit= (value) => {
-       setPdf(true)
+    //    setPdf(true)
         let formData = new FormData();
-       
-       
+       formData.append("tl_id", userid);
+         formData.append("id", props.id)
+         formData.append("qno", props.report)
          formData.append("description", value.description);
          formData.append("serviceCode", sac33);
-        formData.append("basic_amount", value.basic_amount);
+        formData.append("basic_amount", props.paidAmount);
         formData.append("cgst_rate", value.cgst_rate);
-        formData.append("cgst_amount", value.cgst_amount);
-        formData.append("cgst_total", value.cgst_total)
+        formData.append("cgst_amount", props.paidAmount);
+        formData.append("cgst_total", cgetTotal)
         formData.append("sgst_rate", value.sgst_rate);
-        formData.append("sgst_amount", value.sgst_amount);
-        formData.append("sgst_total", value.sgst_total)
+        formData.append("sgst_amount", cgetTotal);
+        formData.append("sgst_total", sgetTotal)
         formData.append("igst_rate", value.igst_rate);
-        formData.append("igst_amount", value.igst_amount);
-        formData.append("igst_total", value.igst_total)
-        formData.append("description", value.total);
+        formData.append("igst_amount", sgetTotal);
+        formData.append("igst_total", igetTotal)
+        formData.append("total", igetTotal);
+        formData.append("tds_rate", value.tds_rate);
+        formData.append("tds_amount", igetTotal);
+        formData.append("tds_total", grandTotal)
         
         axios({
             method : "POST",
             data : formData,
-            url : `${baseUrl}/`
+            url : `${baseUrl}/tl/generateInvoive`
+        })
+        .then((res) => {
+            if(res.data.code === 1){
+                console.log(res)
+            }
         })
       
     }
@@ -123,6 +118,7 @@ setSac(k.sac)
                   <div className="col-md-6">
                       <label>Descirption </label>
                   <select 
+                  ref={register}
                 style={{height : "33.5px"}}
                   onChange = {(e) => serviceFun(e.target.value)}
                   name="description" className="form-control">
@@ -142,7 +138,7 @@ setSac(k.sac)
                         className="form-control"
                         placeholder="Amount" 
                         disabled
-                          defaultValue={paymentDetails2 == undefined ? "" : tt}
+                      defaultValue={props.paidAmount}
                         onBlur={(e) => setBasicamount(e.target.value)}/>
                         </div>
                 </div>
@@ -154,6 +150,7 @@ setSac(k.sac)
                     <div className="col-md-4 my-1">
                     <input 
                         type="text"
+                        ref={register}
                         className="form-control"
                         placeholder="Rate"
                         name="cgst_rate"
@@ -163,15 +160,17 @@ setSac(k.sac)
                     <input 
                         type="text"
                         className="form-control"
+                        ref={register}
                         placeholder="Amount"
                         name="cgst_amount"
-                        defaultValue={basicAmount}
+                        defaultValue={props.paidAmount}
                         disabled />
                         </div>
                         <div className="col-md-4 my-1">
                     <input 
                         type="text"
                         className="form-control"
+                        ref={register}
                         placeholder="Total" 
                         disabled 
                         name="cgst_total"
@@ -186,6 +185,7 @@ setSac(k.sac)
                     <input 
                         type="text"
                         className="form-control"
+                        ref={register}
                         name="sgst_rate"
                         placeholder="Rate" 
                         onChange= {(e) => sgstFun(e)}/>
@@ -195,6 +195,7 @@ setSac(k.sac)
                         type="text"
                         className="form-control"
                         name="sgst_amount"
+                        ref={register}
                         placeholder="Amount"
                         disabled
                         defaultValue={cgetTotal} />
@@ -203,6 +204,7 @@ setSac(k.sac)
                     <input 
                         type="text"
                         className="form-control"
+                        ref={register}
                         placeholder="Total"
                         name="sgst_total" 
                         disabled
@@ -218,12 +220,14 @@ setSac(k.sac)
                         type="text"
                         className="form-control"
                         placeholder="Rate"
+                        ref={register}
                         name="igst_rate"
                         onChange= {(e) => igstFun(e)} />
                         </div>
                         <div className="col-md-4 my-1">
                     <input 
                         type="text"
+                        ref={register}
                         className="form-control"
                         name="igst_amount"
                         placeholder="Amount"
@@ -237,20 +241,27 @@ setSac(k.sac)
                         placeholder="Total"
                         name="igst_total"
                         disabled
+                        ref={register}
                         defaultValue={igetTotal} />
                         </div>
                 </div>
                 <div className="row">
-                    <div className="col-md-12">
-                        <label>Total</label>
+                    <div className="col-md-4">
+                      <h4>Total</h4>
+                        </div>
+                        <div className="col-md-4">
+                            </div>
+                            <div className="col-md-4">
+                           
                         <input 
                         type="text"
                         className="form-control"
                         placeholder="Total"
                         name="total"
                         disabled
+                        ref={register}
                         defaultValue={igetTotal} />
-                        </div>
+                                </div>
                     </div>
                 <div className="row">
                   <div className="col-md-12">
@@ -262,6 +273,7 @@ setSac(k.sac)
                         className="form-control"
                         placeholder="Rate"
                         name="tds_rate"
+                        ref={register}
                         onChange= {(e) => tdsFun(e)} />
                         </div>
                         <div className="col-md-4 my-1">
@@ -271,11 +283,13 @@ setSac(k.sac)
                         name="tds_amount"
                         placeholder="Amount"
                         disabled
+                        ref={register}
                         defaultValue={igetTotal} />
                         </div>
                         <div className="col-md-4 my-1">
                     <input 
                         type="text"
+                        ref={register}
                         className="form-control"
                         placeholder="Total"
                         name="tds_total"

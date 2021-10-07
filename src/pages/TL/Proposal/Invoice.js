@@ -19,23 +19,23 @@ const Invoice = () => {
     const [count, setCount] = useState("");
 
 
-    const [id, setId] = useState(null);
-    const [id2, setId2] = useState(null)
+    const [id, setId] = useState();
+  
     const [tds, setTds] = useState(false)
-    const [addPaymentModal, setPaymentModal] = useState(false);
+  
     const [assignNo, setAssignNo] = useState('');  
     const [ViewDiscussion, setViewDiscussion] = useState(false);
     const [tdsForm , setTdsForm] = useState(false)
+    const [paidAmount, setPaidAmount] = useState()
 
     
-    const chatHandler = (key) => {
-         setPaymentModal(!addPaymentModal);
-        setId(key.assign_no);
-    };
+ 
    const addTdsToggle = (key) => {
-       console.log("done")
+       console.log(key.assign_id)
        setTdsForm(!tdsForm)
-       setAssignNo(key)
+       setAssignNo(key.assign_no)
+       setPaidAmount(key.paid_amount)
+       setId(key.id)
    }
     const ViewDiscussionToggel = (key) => {
         console.log(key)
@@ -146,60 +146,8 @@ console.log("tds22", tds)
                 return (
                     <>
                         <div style={{ display: "flex", justifyContent: "space-between" }}>
-                            
-
-                          
-                                
-                               
-                                      
-                                   
-                               
-
-
-                            <div>
-                                {
-                                    row.status == "Customer Declined; Proposal" ?
-                                        null
-                                        :
-                                        <div title="Send Message">
-                                            <Link
-                                                to={{
-                                                    pathname: `/teamleader/chatting/${row.id}`,
-                                                    obj: {
-                                                        message_type: "2",
-                                                        query_No: row.assign_no,
-                                                        query_id: row.id,
-                                                        routes: `/teamleader/proposal`
-                                                    }
-                                                }}
-                                            >
-                                                <i
-                                                    class="fa fa-comments-o"
-                                                    style={{
-                                                        fontSize: 16,
-                                                        cursor: "pointer",
-                                                        marginLeft: "8px",
-                                                        color: "blue"
-                                                    }}
-                                                ></i>
-                                            </Link>
-                                        </div>
-                                }
-                            </div>
-
-                            <div title="View Discussion Message">
-                                <i
-                                    class="fa fa-comments-o"
-                                    style={{
-                                        fontSize: 16,
-                                        cursor: "pointer",
-                                        color: "orange"
-                                    }}
-                                    onClick={() => ViewDiscussionToggel(row.assign_no)}
-                                ></i>
-                            </div>
                             <AccountBalanceIcon
-                                         onClick = {() => addTdsToggle(row.assign_id)} />
+                              onClick = {() => addTdsToggle(row)} />
                         </div>
                     </>
                 );
@@ -211,7 +159,7 @@ console.log("tds22", tds)
         <Layout TLDashboard="TLDashboard" TLuserId={userid}>
         <>
             <Card>
-                <CardHeader>
+                {/* <CardHeader>
                     <TeamFilter
                         setData={setProposal}
                         getData={getProposalList}
@@ -219,7 +167,7 @@ console.log("tds22", tds)
                         setRecords={setRecords}
                         records={records}
                     />
-                </CardHeader>
+                </CardHeader> */}
                 <CardBody>
                     <BootstrapTable
                         bootstrap4
@@ -239,7 +187,8 @@ console.log("tds22", tds)
                     <Tds 
                     tdsForm = {tdsForm}
                     addTdsToggle = {addTdsToggle}
-                   
+                    id={id}
+                    paidAmount={paidAmount}
                     report = {assignNo}
                     />
                 </CardBody>
