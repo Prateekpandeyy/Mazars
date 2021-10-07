@@ -99,6 +99,7 @@ import TlMeetingComponent from './pages/TL/MeetingComponent/MeetingComponent'
 import TlRecording from './pages/TL/Recording/Recording'
 import TlReport from "./pages/TL/Report/Report";
 import TlInvoice from "./pages/TL/Proposal/Invoice"
+import TlInvoiceTab from "./pages/TL/Proposal/InvoiceTab";
 
 // TP routes
 import TpStart from './pages/TP/Start/Start'
@@ -240,6 +241,7 @@ function App() {
             <PrivateRouteTL exact path="/teamleader/recording" component={TlRecording} />
             <PrivateRouteTL exact path="/teamleader/reports" component={TlReport}/>
             <PrivateRouteTL exact path="/teamleader/invoice" component={TlInvoice}/>
+            <PrivateRouteTL exact path="/teamleader/tlinvoice" component={TlInvoiceTab}/>
 
 
             <PublicRouteTP exact path="/taxprofessional/start" component={TpStart} />

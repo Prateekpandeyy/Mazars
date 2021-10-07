@@ -17,10 +17,10 @@ function Tds (props)  {
     const f2 = useRef(null);
     const [sac33, setSac] = useState([])
     const [basicAmount, setBasicamount] = useState()
-    const [cgetTotal, setCgstTotal] = useState()
-    const [sgetTotal, setSgstTotal] = useState()
-    const [igetTotal, setIgstTotal] = useState()
-    const [grandTotal, setgrandTotal] = useState();
+    const [cgetTotal, setCgstTotal] = useState(null)
+    const [sgetTotal, setSgstTotal] = useState(null)
+    const [igetTotal, setIgstTotal] = useState(null)
+    const [grandTotal, setgrandTotal] = useState(null);
   const [services, setServices] = useState();
     const [pdf, setPdf] = useState(false);
     const [total, setTotal] = useState()
@@ -140,7 +140,7 @@ setSac(k.sac)
   
     return(
       
-        <Modal isOpen={props.tdsForm} toggle={props.addTdsToggle} style={{display: "flex", width: "600px"}}>
+        <Modal isOpen={props.tdsForm} toggle={props.addTdsToggle} size="sm" style={{display : "flxe", maxWidth : "600px"}}>
         <ModalHeader toggle={props.addTdsToggle}> Generate Invoice</ModalHeader>
         <ModalBody>
     
@@ -305,8 +305,10 @@ setSac(k.sac)
                     disabled
                     defaultValue={grandTotal} />
                     </div>
+                    <small>Please select tds</small>
             </div>
-         {
+        <ModalFooter>
+        {
              pdf === false ?
              <>
              <button  type="submit" className="btn btn-success">submit</button>
@@ -314,6 +316,7 @@ setSac(k.sac)
              <button  type="button" className="btn btn-danger mx-3" onClick={props.addTdsToggle}>Cancle</button> 
              </> : ""
          }
+        </ModalFooter>
           </div>
         </form>
        

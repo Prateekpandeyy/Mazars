@@ -12,7 +12,7 @@ import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import DiscardReport from "../AssignmentTab/DiscardReport";
 import Tds from "./Tds";
 
-const Invoice = () => {
+const Generated = () => {
     const userid = window.localStorage.getItem("tlkey");
     const [records, setRecords] = useState([]);
     const [proposal, setProposal] = useState([]);
@@ -49,7 +49,7 @@ const Invoice = () => {
 
     const getProposalList = () => {
         axios
-            .get(`${baseUrl}/admin/getPaymentDetail?tl_id=${JSON.parse(userid)}&generate=0`)
+            .get(`${baseUrl}/admin/getPaymentDetail?tl_id=${JSON.parse(userid)}&generate=1`)
             .then((res) => {
                 console.log(res);
                 if (res.data.code === 1) {
@@ -197,4 +197,4 @@ console.log("tds22", tds)
      
     );
 }
-export default Invoice;
+export default Generated;

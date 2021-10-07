@@ -385,7 +385,7 @@ const handleClick = () => {
                 </NavLink>
               </li>
               <li class="nav-item">
-                <NavLink to={"/teamleader/invoice"}>
+                <NavLink to={"/teamleader/tlinvoice"}>
                   <i class="fa fa-file-text"></i>
                   <span class="menu-title" data-i18n="">
                    Invoice
