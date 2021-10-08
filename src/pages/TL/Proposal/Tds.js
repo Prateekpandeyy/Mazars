@@ -18,11 +18,12 @@ function Tds (props)  {
     const [cgetTotal, setCgstTotal] = useState()
     const [sgetTotal, setSgstTotal] = useState()
     const [igetTotal, setIgstTotal] = useState()
-    const [tds, setTds] = useState()
+    const [tds2, setTds] = useState()
     const [grandTotal, setgrandTotal] = useState(0);
   const [services, setServices] = useState();
     const [pdf, setPdf] = useState(false);
     const [total, setTotal] = useState()
+    const [tt, setTt] = useState(false);
     var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
  
   const getServices = () => {
@@ -41,7 +42,8 @@ function Tds (props)  {
   
 const cgstFun = (e) => {
    let cget;
-
+setTds(0)
+setTt(false)
    cget = parseInt(props.paidAmount * e.target.value / 100)
     setCgstTotal(cget)
    setTotal(parseInt(cget))
@@ -49,6 +51,8 @@ const cgstFun = (e) => {
 
 const sgstFun = (e) => {
     let cget;
+    setTds(0)
+    setTt(false)
         cget = parseInt(props.paidAmount * e.target.value / 100)
         setSgstTotal(cget)
         if(cgetTotal == undefined){
@@ -60,7 +64,8 @@ const sgstFun = (e) => {
  }
 
  const igstFun = (e) => {
-   
+   setTds(0)
+   setTt(false)
         let cget;
         cget = parseInt(props.paidAmount * e.target.value / 100) 
          setIgstTotal(cget)
@@ -73,11 +78,12 @@ const sgstFun = (e) => {
           
  }
  const tdsFun = (e) => {
-    let cget;
-   
+   setTt(true)
+      setTds(props.paidAmount * e.target.value / 100)
+    
+ 
   
-      cget = parseInt(props.paidAmount) - parseInt(props.paidAmount * e.target.value / 100) 
-      setTds(cget) 
+ 
     
     
  }
@@ -256,7 +262,7 @@ setServices2(k.service)
           
             <div className="row my-2">
                 <div className="col-md-4">
-                  <h4>Total Tds</h4>
+                  <h4>Total Gst</h4>
                     </div>
                     <div className="col-md-4">
                         </div>
@@ -316,7 +322,25 @@ setServices2(k.service)
                     placeholder="Total"
                     name="tds_total"
                     disabled
-                    defaultValue={tds != undefined ? tds : 0} />
+                    value={tds2 != undefined ? tds2 : 0} />
+                    </div>
+                   
+            </div>
+            <div className="row my-2">
+              <div className="col-md-6 my-1">
+              <h4>Net Paid Amount</h4>
+                  </div>
+              
+                   
+                    <div className="col-md-6 my-1">
+                <input 
+                    type="text"
+                    ref={register}
+                    className="form-control"
+                    placeholder="Total"
+                    name="tds_total"
+                    disabled
+                  value={total != undefined ? parseInt(props.paidAmount) + parseInt(total) : props.paidAmount} />
                     </div>
                    
             </div>

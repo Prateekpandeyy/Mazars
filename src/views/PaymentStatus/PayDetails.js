@@ -17,6 +17,7 @@ import {
   Button,
 } from "reactstrap";
 import BootstrapTable from "react-bootstrap-table-next";
+import { baseUrl2 } from "../../config/config";
 import { useParams, Link, useHistory } from "react-router-dom";
 const PayDetails = () => {
     const userId = window.localStorage.getItem("userid");
@@ -46,7 +47,7 @@ axios.get(`${baseUrl}/admin/getPaymentDetail?id=${id}`)
                 fontSize: "11px",
             },
             headerStyle: () => {
-                return { fontSize: "11px" };
+                return { fontSize: "11px", width: "90px" };
             },
         },
         {
@@ -57,18 +58,16 @@ axios.get(`${baseUrl}/admin/getPaymentDetail?id=${id}`)
                 fontSize: "11px",
             },
             headerStyle: () => {
-                return { fontSize: "11px" };
+                return { fontSize: "11px", width: "90px" };
             },
         },
         {
             dataField: "billno",
             text: "Bill No",
            
-            style: {
-                fontSize: "11px",
-            },
+            
             headerStyle: () => {
-                return { fontSize: "11px" };
+                return { fontSize: "11px", width: "90px" };
             },
         },
         {
@@ -79,7 +78,29 @@ axios.get(`${baseUrl}/admin/getPaymentDetail?id=${id}`)
                 fontSize: "11px",
             },
             headerStyle: () => {
-                return { fontSize: "11px" };
+                return { fontSize: "11px", width: "90px" };
+            },
+        },
+        {
+            dataField: "city",
+            text: "City",
+           
+            style: {
+                fontSize: "11px",
+            },
+            headerStyle: () => {
+                return { fontSize: "11px", width: "90px" };
+            },
+        },
+        {
+            dataField: "gstin",
+            text: "Gstin",
+           
+            style: {
+                fontSize: "11px",
+            },
+            headerStyle: () => {
+                return { fontSize: "11px", width: "90px" };
             },
         },
         {
@@ -90,13 +111,30 @@ axios.get(`${baseUrl}/admin/getPaymentDetail?id=${id}`)
                 fontSize: "11px",
             },
             headerStyle: () => {
-                return { fontSize: "11px" };
+                return { fontSize: "11px", width: "90px" };
             },
             formatter: function dateFormat(cell, row) {
                 return(
-                    <a href={`http://13.232.121.233/mazarsapi/${row.invoice}`}>Invoice</a>
+                    <a href={`${baseUrl2}/mazarsapi/${row.invoice}`} target="_blank">Invoice</a>
                 )
             },
+           
+        },
+        {
+            dataField: "email",
+            text: "Email",
+           
+            style: {
+                fontSize: "11px",
+            },
+            headerStyle: () => {
+                return { fontSize: "11px", width: "90px" };
+            },
+            // formatter: function dateFormat(cell, row) {
+            //     return(
+            //         <a href={`${baseUrl2}/mazarsapi/${row.invoice}`} target="_blank">Invoice</a>
+            //     )
+            // },
            
         },
        
@@ -112,13 +150,19 @@ return(
    <>
     <Layout custDashboard="custDashboard" custUserId={userId}>
     {paymentDetail === undefined ? "" : 
-    <BootstrapTable
+  <Card>
+      <CardHeader>
+          </CardHeader>
+          <CardBody>
+        <BootstrapTable
     bootstrap4
     keyField="id"
     data={paymentDetail}
     columns={columns}
     classes="table-responsive"
-/>}
+/>
+</CardBody>
+</Card>}
 </Layout>                  
    </>
 )
