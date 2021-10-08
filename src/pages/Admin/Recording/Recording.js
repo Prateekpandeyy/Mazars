@@ -170,7 +170,7 @@ const canBtn = {
     return (
      <>
        <Layout adminDashboard="adminDashboard" adminUserId={userid}>
-           <div style={{position:"relative", height : "100vh", overflow : "scroll"}}>
+           <div style={{position:"relative", height : "80vh", overflow : "scroll"}}>
                 <Card>
                 <CardHeader>
                     <Row>

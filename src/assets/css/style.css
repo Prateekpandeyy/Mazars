@@ -9,7 +9,9 @@
 .heading {
   padding-bottom: 2%;
 }
-
+.cardclass{
+  height: 525px !important;
+}
 .form {
   width: 60%;
   margin: auto;

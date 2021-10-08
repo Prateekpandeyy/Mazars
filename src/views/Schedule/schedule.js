@@ -19,7 +19,7 @@ function Schedule() {
 
   return (
     <Layout custDashboard="custDashboard" custUserId={userId}>
-      <Card>
+      <Card className="cardclass">
         <CardHeader>
         <Row>
             <Col md="7">
@@ -31,7 +31,7 @@ function Schedule() {
          
         </CardHeader>
     
-      <Demo />
+      <Demo/>
       
       </Card>
     </Layout>

@@ -166,7 +166,7 @@ const canBtn = {
     return (
         <>
      <Layout TPDashboard="TPDashboard" TPuserId={userid}>
-            <div style={{position:"relative", height : "100vh", overflow : "scroll"}}>
+            <div style={{position:"relative", height : "80vh", overflow : "scroll"}}>
                  <Card>
                  <CardHeader>
                      <Row>

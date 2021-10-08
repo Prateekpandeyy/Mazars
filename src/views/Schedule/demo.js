@@ -246,7 +246,7 @@ function Demo() {
 
   return (
     <Paper>
-      <Scheduler data={data} height={600}>
+      <Scheduler data={data} height={535}>
         <ViewState
           defaultCurrentDate={currentDate}
           defaultCurrentViewName="Week"
