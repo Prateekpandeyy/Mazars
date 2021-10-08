@@ -49,7 +49,7 @@ const Generated = () => {
 
     const getProposalList = () => {
         axios
-            .get(`${baseUrl}/admin/getPaymentDetail?tl_id=${JSON.parse(userid)}&generate=1`)
+            .get(`${baseUrl}/admin/getPaymentDetail?tl_id=${JSON.parse(userid)}&invoice=1`)
             .then((res) => {
                 console.log(res);
                 if (res.data.code === 1) {
@@ -146,8 +146,13 @@ console.log("tds22", tds)
                 return (
                     <>
                         <div style={{ display: "flex", justifyContent: "space-between" }}>
-                            <AccountBalanceIcon
-                              onClick = {() => addTdsToggle(row)} />
+                        <a
+                    href={`http://13.232.121.233/mazarsapi/${row.invoice}`}
+                    target="_blank"
+                  >
+                        <i class="fa fa-eye" 
+                              />
+                              </a>
                         </div>
                     </>
                 );

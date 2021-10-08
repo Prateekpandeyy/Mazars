@@ -31,7 +31,7 @@ const Invoice = () => {
     
  
    const addTdsToggle = (key) => {
-       console.log(key.assign_id)
+     
        setTdsForm(!tdsForm)
        setAssignNo(key.assign_no)
        setPaidAmount(key.paid_amount)
@@ -49,7 +49,7 @@ const Invoice = () => {
 
     const getProposalList = () => {
         axios
-            .get(`${baseUrl}/admin/getPaymentDetail?tl_id=${JSON.parse(userid)}&generate=0`)
+            .get(`${baseUrl}/admin/getPaymentDetail?tl_id=${JSON.parse(userid)}&invoice=0`)
             .then((res) => {
                 console.log(res);
                 if (res.data.code === 1) {

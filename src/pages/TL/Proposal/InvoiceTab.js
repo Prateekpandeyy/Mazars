@@ -37,19 +37,20 @@ return(
                         }}
                     >
                         <Tab style={tabIndex == 0 ? myStyle2 : myStyle1}>
-                           Generate
+                           Generated
                         </Tab>
                         <Tab style={tabIndex == 1 ? myStyle2 : myStyle1}>
-                          Generated
+                          Generate
                         </Tab>
                         
                     </TabList>
 
                     <TabPanel>
-                        <Invoice />
+                    <Generated />
                     </TabPanel>
                     <TabPanel>
-                        <Generated />
+                    <Invoice />
+                      
                     </TabPanel>
                     
                 </Tabs>

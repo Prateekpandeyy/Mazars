@@ -3,24 +3,23 @@ import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import { useForm } from "react-hook-form";
-import Typography from "@material-ui/core/Typography";
-import { serviceData } from "./serviceData";
-import className from 'classnames';
-import { useReactToPrint } from 'react-to-print';
-import moment from "moment";
 import { useRef } from "react";
 import { useState } from "react";
-import ReactToPdf from 'react-to-pdf';
+
+import { useHistory } from "react-router";
 
 function Tds (props)  {
+  const history = useHistory();
     const userid = window.localStorage.getItem("tlkey")
     const f2 = useRef(null);
     const [sac33, setSac] = useState([])
     const [basicAmount, setBasicamount] = useState()
-    const [cgetTotal, setCgstTotal] = useState(null)
-    const [sgetTotal, setSgstTotal] = useState(null)
-    const [igetTotal, setIgstTotal] = useState(null)
-    const [grandTotal, setgrandTotal] = useState(null);
+    const [services2, setServices2] = useState();
+    const [cgetTotal, setCgstTotal] = useState()
+    const [sgetTotal, setSgstTotal] = useState()
+    const [igetTotal, setIgstTotal] = useState()
+    const [tds, setTds] = useState()
+    const [grandTotal, setgrandTotal] = useState(0);
   const [services, setServices] = useState();
     const [pdf, setPdf] = useState(false);
     const [total, setTotal] = useState()
@@ -38,18 +37,14 @@ function Tds (props)  {
   useEffect(() => {
     getServices();
   }, [])
-    const { handleSubmit, register, errors, getValues } = useForm();
-    const options = {
-        orientation: 'landscape',
-        unit: 'in',
-        format: [6, 8]
-    };  
+    const { handleSubmit, register, errors, getValues, reset } = useForm();
+  
 const cgstFun = (e) => {
    let cget;
 
    cget = parseInt(props.paidAmount * e.target.value / 100)
     setCgstTotal(cget)
-   setTotal(parseInt(props.paidAmount) + parseInt(cget))
+   setTotal(parseInt(cget))
 }
 
 const sgstFun = (e) => {
@@ -57,7 +52,7 @@ const sgstFun = (e) => {
         cget = parseInt(props.paidAmount * e.target.value / 100)
         setSgstTotal(cget)
         if(cgetTotal == undefined){
-            setTotal(parseInt(props.paidAmount) + parseInt(cget))
+            setTotal(parseInt(cget))
         }
         else{
             setTotal(parseInt(total) + parseInt(cget))
@@ -69,36 +64,31 @@ const sgstFun = (e) => {
         let cget;
         cget = parseInt(props.paidAmount * e.target.value / 100) 
          setIgstTotal(cget)
-         if(cgetTotal == undefined && sgetTotal == undefined)
-        {
-            setTotal(parseInt(props.paidAmount) + parseInt(cget))
-        }
-        else{
-            setTotal(parseInt(total) + parseInt(cget))
-        }
-       
-    
+         if(sgetTotal === undefined){
+           setTotal(parseInt(cget))
+         }
+         else{
+          setTotal(parseInt(total) + parseInt(cget))  
+         }
+          
  }
  const tdsFun = (e) => {
     let cget;
-    if(total === undefined){
-        cget = parseInt(props.paidAmount) - parseInt(props.paidAmount * e.target.value / 100) 
-     setgrandTotal(cget)
-    }
-    else {
-        cget = parseInt(total) - parseInt(props.paidAmount * e.target.value / 100) 
-     setgrandTotal(cget)
-    }
+   
+  
+      cget = parseInt(props.paidAmount) - parseInt(props.paidAmount * e.target.value / 100) 
+      setTds(cget) 
+    
     
  }
 
     const onSubmit= (value) => {
-        setPdf(true)
+      
         let formData = new FormData();
        formData.append("tl_id", JSON.parse(userid));
          formData.append("id", props.id)
          formData.append("qno", props.report)
-         formData.append("description", value.description);
+         formData.append("description", services2);
          formData.append("serviceCode", sac33);
         formData.append("basic_amount", props.paidAmount);
         formData.append("cgst_rate", value.cgst_rate);
@@ -122,17 +112,20 @@ const sgstFun = (e) => {
         })
         .then((res) => {
             if(res.data.code === 1){
-                console.log(res)
+                history.push("/teamleader/tlinvoice")
             }
+          
         })
       
     }
   const serviceFun = (e) => {
     
-   serviceData.map((k) => {
+   services.map((k) => {
+    
 if(k.id == e) {
  console.log(k.sac)
 setSac(k.sac)
+setServices2(k.service)
 }
    })
      
@@ -159,7 +152,7 @@ setSac(k.sac)
           name="description" className="form-control">
               <option value="">--select--</option>
           {services.map((i) => (
-               <option value={i.service} key={i.id} className="form-control"> {i.service}</option>
+               <option value={i.id} key={i.id} className="form-control"> {i.service}</option>
           ))}
             </select>
               </div>}
@@ -263,7 +256,7 @@ setSac(k.sac)
           
             <div className="row my-2">
                 <div className="col-md-4">
-                  <h4>Total</h4>
+                  <h4>Total Tds</h4>
                     </div>
                     <div className="col-md-4">
                         </div>
@@ -275,11 +268,31 @@ setSac(k.sac)
                     placeholder="Total"
                     name="total"
                     disabled
-                    defaultValue={props.paidAmount}
+                    defaultValue={0}
                     ref={register}
                    value={total} />
                             </div>
                 </div>
+                <div className="row my-2">
+                <div className="col-md-4">
+                  <h4>Total Amount</h4>
+                    </div>
+                    <div className="col-md-4">
+                        </div>
+                        <div className="col-md-4">
+                       
+                    <input 
+                    type="text"
+                    className="form-control"
+                    placeholder="Total"
+                    name="totalAmount"
+                    disabled
+                   
+                    ref={register}
+                   value={total != undefined ? parseInt(props.paidAmount) + parseInt(total) : props.paidAmount} />
+                            </div>
+                </div>
+           
             <div className="row my-2">
               <div className="col-md-4 my-1">
               <h4>TDS </h4>
@@ -303,29 +316,23 @@ setSac(k.sac)
                     placeholder="Total"
                     name="tds_total"
                     disabled
-                    defaultValue={grandTotal} />
+                    defaultValue={tds != undefined ? tds : 0} />
                     </div>
-                    <small>Please select tds</small>
+                   
             </div>
         <ModalFooter>
-        {
-             pdf === false ?
+       
              <>
              <button  type="submit" className="btn btn-success">submit</button>
           
              <button  type="button" className="btn btn-danger mx-3" onClick={props.addTdsToggle}>Cancle</button> 
-             </> : ""
-         }
+             </>
         </ModalFooter>
           </div>
         </form>
        
-            {pdf === true ? 
-            <ReactToPdf targetRef={f2} filename="invoice.pdf" options={options} x={.5} y={.5} scale={0.8}>
-            {({toPdf}) => (
-                <button className="btn btn-secondary my-2" onClick={toPdf}>Generate pdf</button>
-            )}
-        </ReactToPdf> : ""}
+           
+      
         </ModalBody>
       </Modal>
     )

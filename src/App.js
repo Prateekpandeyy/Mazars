@@ -35,6 +35,7 @@ import FeedbackData from './views/FeedbackData/FeedbackData'
 import PaymentStatus from './views/PaymentStatus/PaymentStatus'
 import PaymentGateway from "./views/PaymentGateway.js/PaymentGateway";
 import ThankYou from "./views/ThankYou/Thankyou";
+import payDetails from "./views/PaymentStatus/PayDetails";
 
 
 
@@ -133,6 +134,7 @@ import PublicRouteUser from './Service/PublicRouteUser'
 import PublicRouteAdmin from './Service/PublicRouteAdmin'
 import PublicRouteTL from './Service/PublicRouteTL'
 import PublicRouteTP from './Service/PublicRouteTP'
+import PayDetails from "./views/PaymentStatus/PayDetails";
 
 
 const options = {
@@ -177,8 +179,8 @@ function App() {
             <PrivateRouteUser exact path="/customer/feedback-data" component={FeedbackData} />
             <PrivateRouteUser exact path="/customer/paymentstatus" component={PaymentStatus} />
             <PrivateRouteUser exact path="/customer/payment" component={PaymentGateway} />
-            <PrivateRouteUser exact path="/customer/thankyou" component={ThankYou} />
-
+            <PrivateRouteUser exact path="/customer/thankyou" component={ThankYou} />  
+            <PrivateRouteUser exact path="/customer/paydetails/:id" component={payDetails} />
             <PublicRouteAdmin exact path="/admin/start" component={AdminStart} />
             <PublicRouteAdmin exact path="/admin/login" component={AdminLogin} />
             <PublicRouteAdmin exact path="/admin/forget-password" component={AdminForgetPassword} />
