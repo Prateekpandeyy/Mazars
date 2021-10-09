@@ -292,10 +292,7 @@ console.log("tds22", tds)
                                     </a>
                                   
                                 </div>
-                                <div>
-                                        <AccountBalanceIcon
-                                         onClick = {(e) => addTdsToggle()} />
-                                    </div>
+                              
                                 </>
                                 :
                                 null

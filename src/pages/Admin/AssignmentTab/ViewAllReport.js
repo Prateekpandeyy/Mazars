@@ -55,7 +55,21 @@ const viewStyle = {
         console.log("erroror - ", error);
       });
   }
-
+  // const toggleDiscard = (id) => {
+  //   Swal.fire({
+  //     title: "Are you sure?",
+  //     text: "Do you want to discard ?",
+  //     type: "warning",
+  //     showCancelButton: true,
+  //     confirmButtonColor: "#3085d6",
+  //     cancelButtonColor: "#d33",
+  //     confirmButtonText: "Yes, discarded it!",
+  //   }).then((result) => {
+  //     if (result.value) {
+  //       deleteCliente(id);
+  //     }
+  //   });
+  // };
   return (
     <div>
       <Modal isOpen={reportModal} toggle={ViewReport} size="lg" scrollable>
@@ -125,13 +139,13 @@ const viewStyle = {
                   <br>
                   </br> 
                   {p.customer_files === null ?  "" : <p>   Reviewed Report </p> }</td>
-                    <td>
+                  <td>
                       {
                         p.stages_type == "2" ?
                           <div>
                             {
                               p.status == "0" ?
-                              <p style={{ color: "red" }}>Pending</p>
+                                <p style={{ color: "red" }}>Pending</p>
                                 :
                                 p.status == "1" ?
                                   <div style={{ cursor: "pointer" }} title="Customer Accepted">
@@ -140,21 +154,38 @@ const viewStyle = {
                                       style={{
                                         color: "blue",
                                         fontSize: "16px",
+                                        marginLeft: "10px"
                                       }}
                                     ></i>
                                   </div> :
                                   p.status == "2" ?
-                                    <div title="Discussion">
-                                      <i
-                                        class="fa fa-comments-o"
-                                        style={{
-                                          fontSize: 16,
-                                          cursor: "pointer",
-                                          marginLeft: "8px",
-                                          color: "blue"
-                                        }}
-                                      ></i>
-                                    </div> :
+                                    <div style={{ display: "flex", justifyContent: "space-around" }}>
+                                      <div title="Discussion">
+                                        <i
+                                          class="fa fa-comments-o"
+                                          style={{
+                                            fontSize: 16,
+                                            cursor: "pointer",
+                                            marginLeft: "8px",
+                                            color: "green"
+                                          }}
+                                          // onClick={() => toggleNested(p)}
+                                        ></i>
+                                      </div>
+                                      <div title="Discard">
+                                        <i
+                                          class="fa fa-times"
+                                          style={{
+                                            fontSize: 16,
+                                            cursor: "pointer",
+                                            marginLeft: "8px",
+                                            color: "red"
+                                          }}
+                                          // onClick={() => toggleDiscard(p)}
+                                        ></i>
+                                      </div>
+                                    </div>
+                                    :
                                     p.status == "3" ?
                                       <p style={{ color: "red" }}>Discarded</p> :
                                       null

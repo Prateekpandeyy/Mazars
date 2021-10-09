@@ -206,7 +206,24 @@ function AllQueriesData() {
                     <>
                         {   
                             row.status == "Declined Query" ?
-                                null
+                            <>
+                            {dateMnsFive > curDate === true ?
+                                <div title="Send Feedback"
+                                style={{
+                                    cursor: "pointer",
+                                }}>
+                                <Link
+                                    to={{
+                                        pathname: `/customer/feedback/${row.assign_no}`,
+                                        obj: {
+                                            routes: `/customer/queries`
+                                        }
+                                    }}
+                                >
+                                    <FeedbackIcon />
+                                </Link>
+                            </div> : ""} 
+                            </>
                                 :
                                 <div>
                     {

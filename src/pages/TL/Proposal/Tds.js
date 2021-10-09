@@ -41,6 +41,8 @@ var tdsRate = 10;
   }, [])
   useEffect(() => {
     setCgstTotal(parseInt(props.paidAmount * cgstRate / 100))
+    setIgstTotal(parseInt(0));
+    setSgstTotal(parseInt(0))
     setGst(parseInt(props.paidAmount * cgstRate / 100))
     setTds(parseInt(props.paidAmount * tdsRate / 100))
     setTotal(parseInt(props.paidAmount) + parseInt(props.paidAmount * cgstRate / 100))
@@ -180,10 +182,11 @@ const sgstFun = (e) => {
         formData.append("igst_rate", value.igst_rate);
       
         formData.append("igst_total", igetTotal)
-        formData.append("total", igetTotal);
+        formData.append("total", total);
         formData.append("tds_rate", value.tds_rate);
       
-        formData.append("tds_total", grandTotal)
+        formData.append("tds_total", tds2)
+        formData.append("netpaid_amount", grandTotal)
         
         axios({
             method : "POST",
@@ -295,10 +298,10 @@ setServices2(k.service)
                     type="text"
                     className="form-control"
                     ref={register}
-                    placeholder="0"
+                    
                     name="sgst_total" 
                     disabled
-                    defaultValue={sgetTotal}/>
+                    value={sgetTotal}/>
                           </div>
                   </div>
             
@@ -321,11 +324,11 @@ setServices2(k.service)
                 <input 
                     type="text"
                     className="form-control"
-                    placeholder="Total"
+                  
                     name="igst_total"
                     disabled
                     ref={register}
-                    defaultValue={igetTotal} />
+                    value={igetTotal} />
                     </div>
                   </div>
                   </div>

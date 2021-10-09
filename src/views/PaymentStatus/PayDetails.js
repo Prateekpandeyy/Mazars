@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
 import Layout from "../../components/Layout/Layout";
+import PaymentIcon from '@mui/icons-material/Payment';
 import {
   Card,
   CardHeader,
@@ -19,10 +20,13 @@ import {
 import BootstrapTable from "react-bootstrap-table-next";
 import { baseUrl2 } from "../../config/config";
 import { useParams, Link, useHistory } from "react-router-dom";
+import PayModal from "./PayModal";
 const PayDetails = () => {
     const userId = window.localStorage.getItem("userid");
     const { id } = useParams();
     const [paymentDetail, setPaymentDetail] = useState();
+    const [modal, setModal] = useState(false);
+    const [modalData, setModalData] = useState()
     const paydetails2 = () => {
 axios.get(`${baseUrl}/admin/getPaymentDetail?id=${id}`)
 .then((res) => {
@@ -36,6 +40,14 @@ axios.get(`${baseUrl}/admin/getPaymentDetail?id=${id}`)
     useEffect(() => {
         paydetails2()
     }, [])
+ const openModal = (key) => {
+   if(key){
+       setModalData(key)
+    console.log("row", key)
+   }
+setModal(!modal)
+
+    }
     const columns = [
         {
             dataField: "",
@@ -130,14 +142,29 @@ axios.get(`${baseUrl}/admin/getPaymentDetail?id=${id}`)
             headerStyle: () => {
                 return { fontSize: "11px", width: "90px" };
             },
-            // formatter: function dateFormat(cell, row) {
-            //     return(
-            //         <a href={`${baseUrl2}/mazarsapi/${row.invoice}`} target="_blank">Invoice</a>
-            //     )
-            // },
+           
            
         },
        
+        {
+            dataField: "",
+            text: "Pay",
+           
+            style: {
+                fontSize: "11px",
+            },
+            headerStyle: () => {
+                return { fontSize: "11px", width: "90px" };
+            },
+           
+           formatter: function dateFormat(cell, row){
+               console.log("roww", row)
+               return(
+                   <PaymentIcon  onClick={() => openModal(row)}/>
+                   
+               )
+           }
+        },
        
        
         
@@ -161,6 +188,10 @@ return(
     columns={columns}
     classes="table-responsive"
 />
+<PayModal 
+showModal = {modal}
+modalToggle = {openModal}
+modalData = {modalData}/>
 </CardBody>
 </Card>}
 </Layout>                  
