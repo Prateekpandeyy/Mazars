@@ -314,6 +314,7 @@ console.log("done", value)
     formData.append("country", countryName);
     formData.append("state", stateName);
     formData.append("stdcode", countryCode);
+    formData.append("gstin_no", value.p_gstIn);
 
     if (display === true && subm === false) {
       setLoading(true)
@@ -588,6 +589,20 @@ console.log("done", value)
                         placeholder="Enter Zipcode"
                         onChange={(e) => zipValue(e)}
                         onBlur={zipVali2}
+                      />
+                    </div>
+                    <p className="declined">{zipError}</p>
+                  </div>
+                  <div className="col-md-6">
+                    <div className="mb-3">
+                      <label className="form-label">GST IN</label>
+                      <input
+                        type="text"
+                       className="form-control"
+                        name="p_gstIn"
+                        ref={register}
+                        placeholder="Enter GST Code"
+                       
                       />
                     </div>
                     <p className="declined">{zipError}</p>

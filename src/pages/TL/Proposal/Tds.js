@@ -27,6 +27,12 @@ function Tds (props)  {
     var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
  var cgstRate = 18;
 var tdsRate = 10;
+const percent = {
+  display : "flex", 
+  justifyContent : "space-between",
+  flexDirection : "row",
+  alignItems : "center"
+}
   const getServices = () => {
     axios.get(`${baseUrl}/tl/getServices`)
     .then((res) => {
@@ -213,11 +219,13 @@ setServices2(k.service)
    })
      
   }
-  
+  console.log("done", props)
     return(
       
         <Modal isOpen={props.tdsForm} toggle={props.addTdsToggle} size="sm" style={{display : "flxe", maxWidth : "600px"}}>
-        <ModalHeader toggle={props.addTdsToggle}> Generate Invoice</ModalHeader>
+        <ModalHeader toggle={props.addTdsToggle}> Generate Invoice - 
+        
+        </ModalHeader>
         <ModalBody>
     
     <form onSubmit={handleSubmit(onSubmit)} autocomplete="off" ref={f2}>
@@ -257,15 +265,16 @@ setServices2(k.service)
               <div className="col-md-4">
               <h4>CGST</h4>
              <div className="row">
-             <div className="col-md-6">
+             <div className="col-md-6" style={percent}>
               <input 
                     type="text"
                     ref={register}
                     className="form-control"
+                    
                     placeholder="Rate"
                     defaultValue={cgstRate}
                     name="cgst_rate"
-                    onChange= {(e) => cgstFun(e)} />
+                    onChange= {(e) => cgstFun(e)} /> %
                 
                   </div>
                   <div className="col-md-6">
@@ -283,15 +292,16 @@ setServices2(k.service)
                   <div className="col-md-4">
                   <h4>SGST/UTGST </h4>
               <div className="row">
-                  <div className="col-md-6">
+                  <div className="col-md-6" style={percent}>
                   <input 
                     type="text"
                     className="form-control"
                     ref={register}
+                    
                     name="sgst_rate"
                     placeholder="Rate" 
                     defaultValue={0}
-                    onChange= {(e) => sgstFun(e)}/>
+                    onChange= {(e) => sgstFun(e)}/> %
                       </div>
                       <div className="col-md-6">
                       <input 
@@ -309,15 +319,16 @@ setServices2(k.service)
                   <div className="col-md-4">
               <h4>IGST</h4>
               <div className="row">
-              <div className="col-md-6">
+              <div className="col-md-6" style={percent}>
                 <input 
                     type="text"
                     className="form-control"
+                  
                     placeholder="Rate"
                     ref={register}
                     name="igst_rate"
                     defaultValue={0}
-                    onChange= {(e) => igstFun(e)} />
+                    onChange= {(e) => igstFun(e)} /> %
                     </div>
                    
                     <div className="col-md-6">
@@ -355,6 +366,7 @@ setServices2(k.service)
                    value={gst} />
                             </div>
                 </div>
+                <hr/>
                 <div className="row my-2">
                 <div className="col-md-4">
                   <h4>Total Amount</h4>
@@ -380,14 +392,22 @@ setServices2(k.service)
               <h4>TDS </h4>
                   </div>
                 <div className="col-md-4 my-1">
-                <input 
+               <div className = "row">
+                
+                   <div className="col-md-6"  style={percent}>
+                   <input 
                     type="text"
                     className="form-control"
+                   
                     placeholder="Rate"
                     name="tds_rate"
                     defaultValue={tdsRate}
                     ref={register}
-                    onChange= {(e) => tdsFun(e)} />
+                    onChange= {(e) => tdsFun(e)} /> %
+                     </div>
+                     <div className="col-md-6">
+                   </div>
+                 </div>
                     </div>
                    
                     <div className="col-md-4 my-1">
@@ -406,9 +426,9 @@ setServices2(k.service)
               <div className="col-md-6 my-1">
               <h4>Net Paid Amount</h4>
                   </div>
-              
+                  <div className="col-md-2 my-1"></div>
                    
-                    <div className="col-md-6 my-1">
+                    <div className="col-md-4 my-1">
                 <input 
                     type="text"
                     ref={register}

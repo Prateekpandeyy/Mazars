@@ -11,6 +11,7 @@ import ChatHistory from "./ChatHistory";
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import DiscardReport from "../AssignmentTab/DiscardReport";
 import Tds from "./Tds";
+import InvoiceFilter from "../../../components/Search-Filter/InvoiceFilter";
 
 const Invoice = () => {
     const userid = window.localStorage.getItem("tlkey");
@@ -27,7 +28,7 @@ const Invoice = () => {
     const [ViewDiscussion, setViewDiscussion] = useState(false);
     const [tdsForm , setTdsForm] = useState(false)
     const [paidAmount, setPaidAmount] = useState()
-
+    const [installmentNo, setInstallmentNo] = useState();
     
  
    const addTdsToggle = (key) => {
@@ -36,6 +37,7 @@ const Invoice = () => {
        setAssignNo(key.assign_no)
        setPaidAmount(key.paid_amount)
        setId(key.id)
+       setInstallmentNo(key.installment_no)
    }
     const ViewDiscussionToggel = (key) => {
         console.log(key)
@@ -134,6 +136,17 @@ console.log("tds22", tds)
                 return { fontSize: "11px" };
             },
         }, 
+        {
+            text: "Installment No",
+            dataField: "installment_no",
+            sort: true,
+            style: {
+                fontSize: "11px",
+            },
+            headerStyle: () => {
+                return { fontSize: "11px" };
+            },
+        }, 
        
        
         {
@@ -168,6 +181,10 @@ console.log("tds22", tds)
                         records={records}
                     />
                 </CardHeader> */}
+                <CardHeader>
+                    <InvoiceFilter />
+                    </CardHeader>
+
                 <CardBody>
                     <BootstrapTable
                         bootstrap4
@@ -190,6 +207,7 @@ console.log("tds22", tds)
                     id={id}
                     paidAmount={paidAmount}
                     report = {assignNo}
+                    installmentNo = {installmentNo}
                     />
                 </CardBody>
             </Card>

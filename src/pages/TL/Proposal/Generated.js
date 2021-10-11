@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Layout from "../../../components/Layout/Layout";
 import axios from "axios";
-import { baseUrl } from "../../../config/config";
+import { baseUrl, baseUrl3 } from "../../../config/config";
 import { Card, CardHeader, CardBody, CardTitle, Row, Col } from "reactstrap";
 import { Link } from "react-router-dom";
 import "antd/dist/antd.css";
@@ -11,6 +11,7 @@ import ChatHistory from "./ChatHistory";
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import DiscardReport from "../AssignmentTab/DiscardReport";
 import Tds from "./Tds";
+import InvoiceFilter from "../../../components/Search-Filter/InvoiceFilter"
 
 const Generated = () => {
     const userid = window.localStorage.getItem("tlkey");
@@ -134,7 +135,17 @@ console.log("tds22", tds)
                 return { fontSize: "11px" };
             },
         }, 
-       
+        {
+            text: "Installment No",
+            dataField: "installment_no",
+            sort: true,
+            style: {
+                fontSize: "11px",
+            },
+            headerStyle: () => {
+                return { fontSize: "11px" };
+            },
+        }, 
        
         {
             text: "Action",
@@ -147,7 +158,7 @@ console.log("tds22", tds)
                     <>
                         <div style={{ display: "flex", justifyContent: "space-between" }}>
                         <a
-                    href={`http://13.232.121.233/mazarsapi/${row.invoice}`}
+                    href={`${baseUrl3}/${row.invoice}`}
                     target="_blank"
                   >
                         <i class="fa fa-eye" 
@@ -173,6 +184,9 @@ console.log("tds22", tds)
                         records={records}
                     />
                 </CardHeader> */}
+                <CardHeader>
+                    <InvoiceFilter />
+                    </CardHeader>
                 <CardBody>
                     <BootstrapTable
                         bootstrap4

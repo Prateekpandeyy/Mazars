@@ -374,7 +374,8 @@ class AgoraCanvas extends React.Component {
       this.client = null;
       this.localStream = null;
       // redirect to index
-      window.location.hash = "/customer/schedule";
+      // window.location.hash = "/customer/schedule";
+      window.location.assign("/customer/schedule")
     }
   };
 
