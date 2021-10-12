@@ -10,6 +10,7 @@ import TeamFilter from "../../../components/Search-Filter/tlFilter";
 import ChatHistory from "./ChatHistory";
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import DiscardReport from "../AssignmentTab/DiscardReport";
+import DescriptionOutlinedIcon from "@material-ui/icons/DescriptionOutlined";
 import Tds from "./Tds";
 import InvoiceFilter from "../../../components/Search-Filter/InvoiceFilter"
 
@@ -161,8 +162,7 @@ console.log("tds22", tds)
                     href={`${baseUrl3}/${row.invoice}`}
                     target="_blank"
                   >
-                        <i class="fa fa-eye" 
-                              />
+                         <DescriptionOutlinedIcon color="secondary" />
                               </a>
                         </div>
                     </>

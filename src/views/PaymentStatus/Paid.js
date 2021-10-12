@@ -323,7 +323,13 @@ function Unpaid() {
                                             style={{ cursor: "pointer" }}
                                             title="Pay Amount"
                                             onClick={() => paymentHandler(row)}>
-                                            <PaymentIcon color="primary" />
+                                          <i
+                                            class="fa fa-mail-forward"
+                                            style={{
+                                                fontSize: "14px",
+                                                cursor: "pointer",
+                                            }}
+                                        ></i>
                                         </div>
                                         :
                                         null

@@ -10,15 +10,28 @@ const PayModal = (props) => {
     const [payValue, setpayValue] = useState()
     const [tdsRate, setTdsRate] = useState();
     const [tdsAmount, setTdsAmount] = useState()
+    const [disable, setDisable] = useState(false)
  
     useEffect(() => {
        if(props.modalData){
            setTdsRate(props.modalData.tds_rate)
            setTdsAmount(props.modalData.tds_amount)
         setpayValue(parseInt(props.modalData.paid_amount) + parseInt(parseInt(props.modalData.cgst_amount) + parseInt(props.modalData.igst_amount) + parseInt(props.modalData.igst_amount) - parseInt(props.modalData.tds_amount)))
-       }
+    tdsDisable(); 
+    }
     }, [props.modalData])
+    const tdsDisable = () => {
+        if(props.modalData.paymenturl != undefined || props.modalData.paymenturl != null){
+            setDisable(true);
+        }
+    }
     const payFun = (e) => {
+       if(props.modalData.paymenturl != null || props.modalData.paymenturl != undefined){
+ 
+        window.location.assign(props.modalData.paymenturl)
+       }
+       else{
+           console.log("undone")
         let formData = new FormData();
         formData.append("id", props.modalData.id);
         formData.append("cid", JSON.parse(userid));
@@ -36,6 +49,7 @@ const PayModal = (props) => {
                 window.location.assign(res.data.result)
             }
         })
+       }
        
     }
     const inVal = (e) => {
@@ -83,7 +97,7 @@ return(
 </tr>
 <tr>
     <td>TDS</td>
-    <td style={{display :"flex"}}><input type="text" style={{display : "flex", width: "50px"}} defaultValue={props.modalData.tds_rate} onChange= {(val) => inVal(val)}/> % </td>
+    <td style={{display :"flex"}}><input type="text" disabled = {disable} style={{display : "flex", width: "50px"}} defaultValue={props.modalData.tds_rate} onChange= {(val) => inVal(val)}/> % </td>
     <td>{tdsAmount}</td>
 </tr>
 <tr>

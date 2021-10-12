@@ -5,7 +5,7 @@ import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import { useForm } from "react-hook-form";
 import { useRef } from "react";
 import { useState } from "react";
-
+import classNames from "classnames";
 import { useHistory } from "react-router";
 import { parseInt } from "lodash";
 
@@ -219,7 +219,7 @@ setServices2(k.service)
    })
      
   }
-  console.log("done", props)
+
     return(
       
         <Modal isOpen={props.tdsForm} toggle={props.addTdsToggle} size="sm" style={{display : "flxe", maxWidth : "600px"}}>
@@ -234,13 +234,15 @@ setServices2(k.service)
             <div className="row my-2">
               {services === undefined ? "" : 
               <div className="col-md-6">
-              <label>Descirption </label>
+              <label>Descirption <span className="declined">*</span></label>
           <select 
-          ref={register}
+           ref={register({ required: true })}
+           name="description"
         style={{height : "33.5px"}}
-        required
           onChange = {(e) => serviceFun(e.target.value)}
-          name="description" className="form-control">
+          className={classNames("form-control", {
+            "is-invalid": errors.p_name,
+          })}>
               <option value="">--select--</option>
           {services.map((i) => (
                <option value={i.id} key={i.id} className="form-control"> {i.service}</option>
@@ -349,7 +351,7 @@ setServices2(k.service)
           
             <div className="row my-2">
                 <div className="col-md-4">
-                  <h4>Total Gst</h4>
+                  <h4>Total TDS</h4>
                     </div>
                     <div className="col-md-4">
                         </div>

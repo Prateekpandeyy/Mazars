@@ -4,6 +4,7 @@ import axios from "axios";
 import { baseUrl } from "../../config/config";
 import Layout from "../../components/Layout/Layout";
 import PaymentIcon from '@mui/icons-material/Payment';
+import DescriptionOutlinedIcon from "@material-ui/icons/DescriptionOutlined";
 import {
   Card,
   CardHeader,
@@ -22,6 +23,7 @@ import { baseUrl2 } from "../../config/config";
 import { useParams, Link, useHistory } from "react-router-dom";
 import PayModal from "./PayModal";
 const PayDetails = () => {
+    let history = useHistory();
     const userId = window.localStorage.getItem("userid");
     const { id } = useParams();
     const [paymentDetail, setPaymentDetail] = useState();
@@ -127,7 +129,11 @@ setModal(!modal)
             },
             formatter: function dateFormat(cell, row) {
                 return(
-                    <a href={`${baseUrl2}/mazarsapi/${row.invoice}`} target="_blank">Invoice</a>
+                   <>
+                   {row.invoice_generated == "1" ? 
+                    <a href={`${baseUrl2}/mazarsapi/${row.invoice}`} target="_blank">
+                          <DescriptionOutlinedIcon color="secondary" /></a> : ""}
+                   </>
                 )
             },
            
@@ -135,6 +141,19 @@ setModal(!modal)
         {
             dataField: "email",
             text: "Email",
+           
+            style: {
+                fontSize: "11px",
+            },
+            headerStyle: () => {
+                return { fontSize: "11px", width: "90px" };
+            },
+           
+           
+        },
+        {
+            dataField: "Installment No",
+            text: "installment_no",
            
             style: {
                 fontSize: "11px",
@@ -160,7 +179,11 @@ setModal(!modal)
            formatter: function dateFormat(cell, row){
                console.log("roww", row)
                return(
-                   <PaymentIcon  onClick={() => openModal(row)}/>
+                <>
+                {row.invoice_generated == "1" ? 
+                 <PaymentIcon  onClick={() => openModal(row)}/> : ""}
+                </>
+                  
                    
                )
            }
@@ -179,6 +202,17 @@ return(
     {paymentDetail === undefined ? "" : 
   <Card>
       <CardHeader>
+         <Row>
+         <Col md="8">
+              <h4>Payment Details</h4>
+              </Col>
+      <Col md="4">
+              <button class="btn btn-success" onClick={() => history.goBack()}>
+                <i class="fas fa-arrow-left mr-2"></i>
+                Go Back
+              </button>
+            </Col>
+         </Row>
           </CardHeader>
           <CardBody>
         <BootstrapTable
