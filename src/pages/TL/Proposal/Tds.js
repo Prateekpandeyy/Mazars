@@ -347,7 +347,7 @@ setServices2(k.service)
                   </div>
                   </div>
                 
-          
+          <hr/>
           
             <div className="row my-2">
                 <div className="col-md-4">

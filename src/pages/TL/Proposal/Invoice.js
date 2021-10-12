@@ -125,6 +125,16 @@ console.log("tds22", tds)
             headerStyle: () => {
                 return { fontSize: "11px" };
             },
+            formatter : function(cell, row){
+                let dueDate=row.due_date.split("-").reverse().join("-")
+                console.log("row", row.due_date.split("-").reverse().join("-"))
+                return(
+                   
+                    <>
+              {dueDate}
+                    </>
+                )
+            }
         }, 
         {
             text: "Paid Amount",

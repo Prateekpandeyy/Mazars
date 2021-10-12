@@ -66,6 +66,16 @@ function AllQuery() {
             headerStyle: () => {
                 return { fontSize: "12px" };
             },
+            formatter : function(cell, row){
+                let dueDate=row.created.split("-").reverse().join("-")
+              
+                return(
+                   
+                    <>
+              {dueDate}
+                    </>
+                )
+            }
         },
         {
             text: "Query No",
