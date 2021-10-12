@@ -320,12 +320,24 @@ function Paid() {
               <div>
                 {
                   row.paid_status == "0" ?
-                    <div
-                      style={{ cursor: "pointer" }}
-                      title="Pay Amount"
-                      onClick={() => paymentHandler(row)}>
-                      <PaymentIcon color="primary" />
-                    </div>
+                  <div
+                  style={{ cursor: "pointer" }}
+                  title="Pay Amount"
+                 >
+                    <Link
+              to={{
+                pathname: `/customer/paydetails/${row.assign_id}`,
+                obj: {
+                  message_type: "5",
+                  query_No: row.assign_no,
+                  query_id: row.q_id,
+                  routes: `/customer/payment`
+                }
+              }}
+            >
+                                      <PaymentIcon color="primary" />
+                  </Link>
+                </div>
                     :
                     null
                 }

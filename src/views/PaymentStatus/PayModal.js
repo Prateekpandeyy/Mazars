@@ -56,7 +56,7 @@ const PayModal = (props) => {
         console.log(e.target.value)
         setTdsRate(e.target.value)
         let a = parseInt(props.modalData.cgst_amount) + parseInt(props.modalData.sgst_amount) + parseInt(props.modalData.igst_amount)
-setTdsAmount((e.target.value * props.modalData.paid_amount) / 100)
+setTdsAmount(Number((e.target.value * props.modalData.paid_amount) / 100).toFixed(0))
 let b = parseInt((e.target.value * props.modalData.paid_amount) / 100)
 let c = parseInt(a) - parseInt(b)
 setpayValue(parseInt(props.modalData.paid_amount) + parseInt(c))
@@ -75,7 +75,7 @@ return(
     <td></td>
     <td>{props.modalData.paid_amount}</td>
     </tr>
-<tr>
+{/* <tr>
     <td>CGST</td>
     <td>{props.modalData.cgst_rate}%</td>
     <td>{props.modalData.cgst_amount}</td>
@@ -89,11 +89,11 @@ return(
     <td>IGST</td>
     <td>{props.modalData.igst_rate}%</td>
     <td>{props.modalData.igst_amount}</td>
-</tr>
+</tr> */}
 <tr>
     <td>Invoice Amount</td>
     <td></td>
-    <td>{parseInt(props.modalData.igst_amount) + parseInt(props.modalData.cgst_amount) + parseInt(props.modalData.sgst_amount)}</td>
+    <td>{parseInt(props.modalData.paid_amount) + parseInt(props.modalData.igst_amount) + parseInt(props.modalData.cgst_amount) + parseInt(props.modalData.sgst_amount)}</td>
 </tr>
 <tr>
     <td>TDS</td>

@@ -343,13 +343,7 @@ function Paid() {
                     }
                   }}
                 >
-                     <i
-                                            class="fa fa-mail-forward"
-                                            style={{
-                                                fontSize: "14px",
-                                                cursor: "pointer",
-                                            }}
-                                        ></i>
+                                          <PaymentIcon color="primary" />
                       </Link>
                     </div>
                     :
