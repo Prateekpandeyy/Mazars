@@ -30,6 +30,7 @@ const Invoice = () => {
     const [tdsForm , setTdsForm] = useState(false)
     const [paidAmount, setPaidAmount] = useState()
     const [installmentNo, setInstallmentNo] = useState();
+    const [billNo, setBillNo] = useState()
     
  
    const addTdsToggle = (key) => {
@@ -39,6 +40,7 @@ const Invoice = () => {
        setPaidAmount(key.paid_amount)
        setId(key.id)
        setInstallmentNo(key.installment_no)
+       setBillNo(key.bill_no);
    }
     const ViewDiscussionToggel = (key) => {
         console.log(key)
@@ -231,6 +233,7 @@ console.log("tds22", tds)
                     paidAmount={paidAmount}
                     report = {assignNo}
                     installmentNo = {installmentNo}
+                    billNo = {billNo}
                     />
                 </CardBody>
             </Card>

@@ -234,7 +234,7 @@ const basicFun = (e) => {
         formData.append("tds_total", tds2)
         formData.append("netpaid_amount", grandTotal)
         formData.append("gst_in", value.gst_in);
-        formData.append("bill_no", value.bill_no)
+        formData.append("bill_no", props.billNo)
         axios({
             method : "POST",
             data : formData,
@@ -298,6 +298,7 @@ setServices2(k.service)
          type="text"
          ref={register}
          name="bill_no"
+         value={props.billNo}
          className="form-control"
           />
             </div>
