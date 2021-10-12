@@ -11,8 +11,9 @@ import ChatHistory from "./ChatHistory";
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import DiscardReport from "../AssignmentTab/DiscardReport";
 import Tds from "./Tds";
+import OutlinedInputIcons from "@mui/material/OutlinedInput";
 import InvoiceFilter from "../../../components/Search-Filter/InvoiceFilter";
-
+import DescriptionOutlinedIcon from '@material-ui/icons/DescriptionOutlined';
 const Invoice = () => {
     const userid = window.localStorage.getItem("tlkey");
     const [records, setRecords] = useState([]);
@@ -159,8 +160,16 @@ console.log("tds22", tds)
                 return (
                     <>
                         <div style={{ display: "flex", justifyContent: "space-between" }}>
-                            <AccountBalanceIcon
-                              onClick = {() => addTdsToggle(row)} />
+                        <i
+                                            class="fa fa-mail-forward"
+                                            style={{
+                                                fontSize: "14px",
+                                                cursor: "pointer",
+                                                color : "blue",
+                                            }}
+                                            onClick = {() => addTdsToggle(row)} 
+                                        ></i>
+                           
                         </div>
                     </>
                 );

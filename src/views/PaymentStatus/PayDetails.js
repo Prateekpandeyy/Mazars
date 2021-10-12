@@ -94,6 +94,16 @@ setModal(!modal)
             headerStyle: () => {
                 return { fontSize: "11px", width: "90px" };
             },
+            formatter : function(cell, row){
+                let dueDate="done";
+              //  console.log("row", row.due_date.split("-").slice[::-1])
+                return(
+                   
+                    <>
+              {dueDate}
+                    </>
+                )
+            }
         },
         {
             dataField: "city",
@@ -181,7 +191,19 @@ setModal(!modal)
                return(
                 <>
                 {row.invoice_generated == "1" ? 
-                 <PaymentIcon  onClick={() => openModal(row)}/> : ""}
+              <>
+              {row.is_paid == "0" ? 
+                <i
+                class="fa fa-mail-forward"
+                style={{
+                    fontSize: "14px",
+                    cursor: "pointer",
+                    color: "blue"
+                }}
+                onClick={() => openModal(row)}
+            ></i> : <p style={{backgroundColor : "red", color : "white"}}>Paid</p>}
+              </>
+               : ""}
                 </>
                   
                    

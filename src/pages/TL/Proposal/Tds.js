@@ -371,7 +371,7 @@ setServices2(k.service)
                 <hr/>
                 <div className="row my-2">
                 <div className="col-md-4">
-                  <h4>Total Amount</h4>
+                  <h4>Total Invoice Amount</h4>
                     </div>
                     <div className="col-md-4">
                         </div>
@@ -426,7 +426,7 @@ setServices2(k.service)
             </div>
             <div className="row my-2">
               <div className="col-md-6 my-1">
-              <h4>Net Paid Amount</h4>
+              <h4>Net Payable Amount</h4>
                   </div>
                   <div className="col-md-2 my-1"></div>
                    

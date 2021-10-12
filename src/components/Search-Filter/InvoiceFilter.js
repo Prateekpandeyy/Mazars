@@ -65,12 +65,13 @@ const InvoiceFilter = (props) => {
                    ref={register}
                     className="form-control"
                     name="installment_no">
-                     <option>1</option>
-                     <option>2</option>
-                     <option>3</option>
-                     <option>4</option>
-                     <option>5</option>
-                     <option>6</option>
+                      <option value="">Please select installment</option>
+                     <option value="1">1</option>
+                     <option value="2">2</option>
+                     <option value="3">3</option>
+                     <option value="4">4</option>
+                     <option value="5">5</option>
+                     <option value="6">6</option>
                   </select>
                        </div>
                       
