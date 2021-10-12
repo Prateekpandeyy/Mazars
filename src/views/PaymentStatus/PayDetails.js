@@ -152,8 +152,8 @@ setModal(!modal)
            
         },
         {
-            dataField: "Installment No",
-            text: "installment_no",
+            dataField: "installment_no",
+            text: "Installment No",
            
             style: {
                 fontSize: "11px",

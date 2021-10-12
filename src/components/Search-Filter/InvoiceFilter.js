@@ -2,24 +2,69 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
 import { useForm } from "react-hook-form";
-const InvoiceFilter = () => {
+const InvoiceFilter = (props) => {
+  console.log("props", props)
    const { handleSubmit, register, errors, reset } = useForm();
    var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
  
   const [item] = useState(current_date);
+  
+  const onSubmit = (data) => {
+    console.log("done", props.AllPayment)
+    let formData = new FormData();
+    formData.append("qno", data.query_no);
+    formData.append("from_date", data.p_dateFrom);
+    formData.append("to_date", data.p_dateTo);
+    formData.append("installment_no", data.installment_no)
+
+    if(props.invoice == "generated"){
+      axios({
+        method: "POST",
+        url: `${baseUrl}/admin/getPaymentDetail?tl_id=${props.userid}&invoice=1`,
+        data: formData,
+      })
+      .then((res) => {
+       if(res.data.code === 1){
+        props.setData(res.data.payment_detail);
+       }
+      })
+    }
+    else if (props.invoice == "create"){
+      axios({
+        method: "POST",
+        url: `${baseUrl}/admin/getPaymentDetail?tl_id=${props.userid}&invoice=0`,
+        data: formData,
+      })
+      .then((res) => {
+       if(res.data.code === 1){
+        props.setData(res.data.payment_detail);
+       }
+      })
+    }
+    
+  }
+  const resetData = () => {
+    reset();
+    props.getData()
+  }
     return(
        <>
       
-        <form>
+        <form onSubmit={handleSubmit(onSubmit)}> 
            <div className="row">
                <div className="col-md-3">
                <input   
             type = "text"
+            name="query_no"
+            ref={register}
             placeholder="Enter Query Number" 
             className="form-control"/>
                    </div>
                    <div className="col-md-3">
-                  <select className="form-control">
+                  <select
+                   ref={register}
+                    className="form-control"
+                    name="installment_no">
                      <option>1</option>
                      <option>2</option>
                      <option>3</option>
@@ -65,8 +110,8 @@ const InvoiceFilter = () => {
                       
            </div>
           <div className="mt-3">
-          <button className="btn btn-success">Search</button>
-           <button className="btn btn-primary mx-2">Reset</button>
+          <button className="btn btn-success" type="submit">Search</button>
+           <button className="btn btn-primary mx-2" onClick={() => resetData()}>Reset</button>
           </div>
         </form>
        </>

@@ -182,7 +182,11 @@ console.log("tds22", tds)
                     />
                 </CardHeader> */}
                 <CardHeader>
-                    <InvoiceFilter />
+                    <InvoiceFilter
+                     setData={setProposal}
+                     getData={getProposalList}
+                     invoice = "create" 
+                     userid = {JSON.parse(userid)}/>
                     </CardHeader>
 
                 <CardBody>

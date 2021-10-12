@@ -175,18 +175,15 @@ console.log("tds22", tds)
 
         <>
             <Card>
-                {/* <CardHeader>
-                    <TeamFilter
-                        setData={setProposal}
-                        getData={getProposalList}
-                        AllProposal="AllProposal"
-                        setRecords={setRecords}
-                        records={records}
-                    />
-                </CardHeader> */}
-                <CardHeader>
-                    <InvoiceFilter />
+              
+             <CardHeader>
+                    <InvoiceFilter
+                     setData={setProposal}
+                     getData={getProposalList}
+                     invoice="generated" 
+                     userid = {JSON.parse(userid)}/>
                     </CardHeader>
+
                 <CardBody>
                     <BootstrapTable
                         bootstrap4
