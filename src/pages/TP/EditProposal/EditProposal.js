@@ -130,7 +130,6 @@ function EditComponent(props) {
 
     formData.append("payment_terms", payment.value);
     formData.append("no_of_installment", installment.value);
-
     payment.label == "lumpsum" ?
       formData.append("due_date", lumsum) :
       payment.label == "installment" ?
@@ -167,7 +166,7 @@ function EditComponent(props) {
               function myFunction(total, value) {
                 return Number(total) + Number(value);
               }
-              if (value.p_fixed != sum) {
+              if (parseInt(value.p_fixed) != sum) {
                 Alerts.ErrorNormal(`Sum of all installments should be equal to ${value.p_fixed}.`)
                 console.log(`Sum of all installments should be equal to ${value.p_fixed}.`)
               } else {
@@ -242,7 +241,6 @@ function EditComponent(props) {
 
   const paymentAmount = (data) => {
     console.log("paymentAmount", data)
-
     var array1 = []
     Object.entries(data).map(([key, value]) => {
       array1.push(value)

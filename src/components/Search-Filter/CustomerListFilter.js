@@ -64,7 +64,6 @@ axios
 });     
 };
 const exportToExcel = async () => {
-  debugger;
 //setData( arr => [...arr, `${arr}`]);
 
 
@@ -93,7 +92,6 @@ const exportToExcel = async () => {
     });
 
     // loop through data and add each one to worksheet
-    debugger;
     listData.map(singleData => {
       worksheet.addRow(singleData);
     });

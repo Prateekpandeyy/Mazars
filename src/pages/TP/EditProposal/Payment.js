@@ -19,7 +19,6 @@ export default class YourComponent extends React.Component {
         const { value } = e.target
         this.temp[i] = value
         console.log(this.temp)
-    
         this.setState({
             values: {
               ...this.temp
