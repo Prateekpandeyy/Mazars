@@ -87,7 +87,7 @@ setModal(!modal)
         {
             dataField: "due_date",
             text: "Due Date",
-           
+           sort : true,
             style: {
                 fontSize: "11px",
             },
@@ -95,8 +95,8 @@ setModal(!modal)
                 return { fontSize: "11px", width: "90px" };
             },
             formatter : function(cell, row){
-                let dueDate="done";
-              //  console.log("row", row.due_date.split("-").slice[::-1])
+                let dueDate=row.due_date.split("-").reverse().join("-")
+                console.log("row", row.due_date.split("-").reverse().join("-"))
                 return(
                    
                     <>
@@ -229,7 +229,7 @@ return(
               <h4>Payment Details</h4>
               </Col>
       <Col md="4">
-              <button class="btn btn-success" onClick={() => history.goBack()}>
+              <button class="btn btn-success" style={{display : "flex", margin : "0 0 0 auto"}} onClick={() => history.goBack()}>
                 <i class="fas fa-arrow-left mr-2"></i>
                 Go Back
               </button>

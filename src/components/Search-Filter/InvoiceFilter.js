@@ -60,7 +60,7 @@ const InvoiceFilter = (props) => {
             placeholder="Enter Query Number" 
             className="form-control"/>
                    </div>
-                   <div className="col-md-3">
+                   <div className="col-md-2">
                   <select
                    ref={register}
                     className="form-control"
@@ -74,9 +74,8 @@ const InvoiceFilter = (props) => {
                      <option value="6">6</option>
                   </select>
                        </div>
-                      
-                        
-                       <div class="form-inline">
+                  <div className="col-md-7">
+                  <div class="form-inline">
              
 
              <div class="form-group mx-sm-1  mb-2">
@@ -108,6 +107,9 @@ const InvoiceFilter = (props) => {
                />
              </div>
 </div>
+                    </div>    
+                        
+                
                       
            </div>
           <div className="mt-3">

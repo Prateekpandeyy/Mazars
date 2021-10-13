@@ -86,6 +86,16 @@ const hist = useHistory();
       headerStyle: () => {
         return { fontSize: "12px" };
       },
+      formatter : function(cell, row){
+        let dueDate=row.created.split("-").reverse().join("-")
+       // console.log("row", row.due_date.split("-").reverse().join("-"))
+        return(
+           
+            <>
+      {dueDate}
+            </>
+        )
+    }
     },
     {
       text: "Query No",
