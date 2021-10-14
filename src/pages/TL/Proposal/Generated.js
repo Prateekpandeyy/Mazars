@@ -19,26 +19,28 @@ const Generated = () => {
     const [records, setRecords] = useState([]);
     const [proposal, setProposal] = useState([]);
     const [count, setCount] = useState("");
-
-
     const [id, setId] = useState();
-  
-    const [tds, setTds] = useState(false)
-  
     const [assignNo, setAssignNo] = useState('');  
     const [ViewDiscussion, setViewDiscussion] = useState(false);
     const [tdsForm , setTdsForm] = useState(false)
     const [paidAmount, setPaidAmount] = useState()
-
+    const [installmentNo, setInstallmentNo] = useState();
+    const [billNo, setBillNo] = useState()
+    const [id2, setId2] = useState()
+    const [gstNo, setGstinNo] = useState();
     
  
-   const addTdsToggle = (key) => {
-       console.log(key.assign_id)
-       setTdsForm(!tdsForm)
-       setAssignNo(key.assign_no)
-       setPaidAmount(key.paid_amount)
-       setId(key.id)
-   }
+    const addTdsToggle = (key) => {
+       // console.log(key.billno)
+      setGstinNo(key.gstin_no);
+        setTdsForm(!tdsForm)
+        setAssignNo(key.assign_no)
+        setPaidAmount(key.paid_amount)
+        setId(key.id)
+        setInstallmentNo(key.installment_no)
+        setBillNo(key.billno);
+        setId2(key.id)
+    }
     const ViewDiscussionToggel = (key) => {
         console.log(key)
         setViewDiscussion(!ViewDiscussion);
@@ -61,7 +63,7 @@ const Generated = () => {
             });
     };
 
-console.log("tds22", tds)
+
     const columns = [
         {
             text: "S.No",
@@ -167,14 +169,26 @@ console.log("tds22", tds)
             formatter: function (cell, row) {
                 return (
                     <>
-                        <div style={{ display: "flex", justifyContent: "space-between" }}>
+                        <div style={{ display: "flex", justifyContent: "space-evenly" }}>
                         <a
                     href={`${baseUrl3}/${row.invoice}`}
                     target="_blank"
                   >
                          <DescriptionOutlinedIcon color="secondary" />
                               </a>
+                              {row.is_paid == "0" ? 
+                        <i
+                        class="fa fa-mail-forward"
+                        style={{
+                            fontSize: "14px",
+                            cursor: "pointer",
+                            color : "blue",
+                        }}
+                       onClick = {() => addTdsToggle(row)} 
+                    ></i> : ""
+                        }
                         </div>
+                      
                     </>
                 );
             },
@@ -216,6 +230,11 @@ console.log("tds22", tds)
                     id={id}
                     paidAmount={paidAmount}
                     report = {assignNo}
+                    installmentNo = {installmentNo}
+                    billNo = {billNo}
+                    id = {id2}
+                    generated = {"edited"}
+                    gstNo = {gstNo}
                     />
                 </CardBody>
             </Card>

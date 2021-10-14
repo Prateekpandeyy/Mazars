@@ -25,12 +25,13 @@ function Tds (props)  {
    const [total, setTotal] = useState()
    const [pocketExp, setPocketExp] = useState()
    const [cgetRate, setCgetRate] = useState()
-   const [igetRate, setIgetRate] = useState(0);
-   const [sgetRate, setSgetRate] = useState(0);
+   const [igetRate, setIgetRate] = useState();
+   const [sgetRate, setSgetRate] = useState();
    const [basicAmount, setBasicAmount] = useState()
    const [billNo, setBillNo] = useState();
    const [gstNum , setGstNum] = useState();
-    var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
+   const [disabled, setDisabled] = useState(false)
+  
 
 var tdsRate = 10;
 const percent = {
@@ -52,8 +53,14 @@ const percent = {
     getServices();
   }, [])
   useEffect(() => {
-    setCgetRate(18)
-    setGstNum(props.gstNo);
+    if(props.generated == "edited"){
+    getDataild();
+    }
+    else {
+      setCgetRate(18);
+      setIgetRate(0);
+      setSgetRate(0)
+      setGstNum(props.gstNo);
     setBillNo(props.billNo +"/" + props.id)
     setBasicAmount(props.paidAmount)
     setPocketExp(0)
@@ -64,113 +71,70 @@ const percent = {
     setTds(parseInt(props.paidAmount * tdsRate / 100))
     setTotal(parseInt(props.paidAmount) + parseInt(props.paidAmount * cgetRate / 100))
     setgrandTotal(parseInt(parseInt(props.paidAmount) + parseInt(props.paidAmount * 18 / 100)) - parseInt(props.paidAmount * tdsRate / 100))
+    }
   }, [props.paidAmount])
     const { handleSubmit, register, errors, getValues, reset } = useForm();
 
+const getDataild = () => {
+  axios
+  .get(`${baseUrl}/admin/getPaymentDetail?tl_id=${JSON.parse(userid)}&invoice=1&invoice_id=${props.id}`)
+.then((res) => {
+console.log("res", res.data.payment_detail)
+if(res.data.payment_detail){
+  res.data.payment_detail.map((i) => {
+   
+     setGstNum(i.gstin_no)
+ setBillNo(i.billno)
 
+ setBasicAmount(parseInt(i.paid_amount))
+ setPocketExp(parseInt(i.opt_expenses));
+ setCgstTotal(parseInt(i.cgst_amount));
+ setIgstTotal(parseInt(i.igst_amount));
+ setSgstTotal(parseInt(i.sgst_amount));
+ setCgetRate(parseInt(i.cgst_rate));
+ setIgetRate(parseInt(i.igst_rate));
+ setSgetRate(parseInt(i.sgst_rate));
+setTds(parseInt(i.tds_amount))
+ setgrandTotal(parseInt(i.payable_amount))
+ setTotal(parseInt(i.invoice_amount))
+ setGst(parseInt(i.gst));
+ setDisabled(true);
+  })
+}
+
+})
+}
   // Cgst Tax function
 const cgstFun = (e) => {
   setCgetRate(e.target.value);
   let a = parseInt(basicAmount) + parseInt(pocketExp);
    let cget = parseInt(a * e.target.value / 100)
-    setCgstTotal(parseInt(a * e.target.value / 100))
-   setTotal(parseInt(cget))
-   if(igetTotal === undefined && sgetTotal === undefined){
-    setGst(cget)
-    setTotal(parseInt(cget) + parseInt(a))
-    setgrandTotal(parseInt((parseInt(cget) + parseInt(a)) - parseInt(tds2)))
-   }
-  else if(igetTotal === undefined){
-    setGst((oldData) => {
-      return(parseInt(cget) + parseInt(sgetTotal))
-    })
-   setTotal(parseInt(cget) + parseInt(sgetTotal) + parseInt(a))
-   setgrandTotal(parseInt((parseInt(cget) + parseInt(sgetTotal) + parseInt(a))) - parseInt(tds2))
-  }
- else if(sgetTotal === undefined){
-   setGst((oldData) => {
-     return(parseInt(cget) + parseInt(igetTotal))
-   })
-   setTotal(parseInt(cget) + parseInt(igetTotal) + parseInt(a))
-   setgrandTotal(parseInt((parseInt(cget) + parseInt(igetTotal) + parseInt(a))) - parseInt(tds2))
- }
- else {
-   setGst((oldData) => {
-     return(parseInt(cget) + parseInt(sgetTotal) + parseInt(igetTotal))
-   })
-   setTotal(parseInt(cget) + parseInt(igetTotal) + parseInt(sgetTotal) + parseInt(props.paidAmount))
-   setgrandTotal(parseInt((parseInt(cget) + parseInt(igetTotal) + parseInt(sgetTotal) + parseInt(a))) - parseInt(tds2))
- }
+   setCgstTotal(parseInt(cget));
+   setGst(parseInt(cget + igetTotal + sgetTotal))
+   setTotal(parseInt(cget + igetTotal + sgetTotal + a))
+   setgrandTotal(parseInt(cget + sgetTotal + igetTotal + a - tds2))
+
 }
 // Sgst tax function
 const sgstFun = (e) => {
   setSgetRate(e.target.value)
   let a = parseInt(basicAmount) + parseInt(pocketExp);
-    let cget;
-        cget = parseInt(a * e.target.value / 100)
-        setSgstTotal(cget)
-        if(igetTotal === undefined && cgetTotal === undefined){
-          setGst(cget)
-          setTotal(parseInt(cget) + parseInt(a))
-          setgrandTotal(parseInt(setTotal(parseInt(cget) + parseInt(a))) - parseInt(tds2))
-        }
-       else if(igetTotal === undefined){
-         setGst((oldData) => {
-           return(parseInt(cgetTotal) + parseInt(cget))
-         })
-         setTotal(parseInt(cget) + parseInt(cgetTotal) + parseInt(a))
-         setgrandTotal(parseInt((parseInt(cget) + parseInt(cgetTotal) + parseInt(a))) - parseInt(tds2))
-       }
-      else if(cgetTotal === undefined){
-        setGst((oldData) => {
-          return(parseInt(igetTotal) + parseInt(cget))
-        })
-        setTotal(parseInt(cget) + parseInt(igetTotal) + parseInt(a))
-        setgrandTotal(parseInt((parseInt(cget) + parseInt(igetTotal) + parseInt(a))) - parseInt(tds2))
-      }
-      else {
-        setGst((oldData) => {
-          return(parseInt(cget) + parseInt(cgetTotal) + parseInt(igetTotal))
-        })
-        setTotal(parseInt(cget) + parseInt(igetTotal) + parseInt(cgetTotal) + parseInt(a))
-      setgrandTotal(parseInt((parseInt(cget) + parseInt(igetTotal) + parseInt(cgetTotal) + parseInt(a))) - parseInt(tds2))
-      }
-   
+        let cget = parseInt(a * e.target.value / 100)
+        setSgstTotal(parseInt(cget))
+        setTotal(parseInt(cget + igetTotal + cgetTotal + a))
+        setGst(parseInt(cget + igetTotal + cgetTotal))
+        setgrandTotal(parseInt(cget + igetTotal + cgetTotal + a - tds2))
  }
 // Igst tax function
  const igstFun = (e) => {
    setIgetRate(e.target.value)
   let a = parseInt(basicAmount) + parseInt(pocketExp);
-        let cget;
-        cget = parseInt(a * e.target.value / 100) 
+      let cget = parseInt(a * e.target.value / 100) 
          setIgstTotal(cget) 
-         if(cgetTotal === undefined && sgetTotal === undefined){
-          setGst(cget)
-          setTotal(parseInt(cget) + parseInt(a))
-          setgrandTotal(parseInt((parseInt(cget) + parseInt(a))) - parseInt(tds2))
-        }
-       else if(cgetTotal === undefined){
-         setGst((oldData) => {
-           return(parseInt(sgetTotal) + parseInt(cget))
-         })
-         setTotal(parseInt(cget) + parseInt(sgetTotal) + parseInt(a))
-       setgrandTotal(parseInt((parseInt(cget) + parseInt(sgetTotal) + parseInt(a))) - parseInt(tds2))
-        }
-      else if(sgetTotal === undefined){
-        setGst((oldData) => {
-          return(parseInt(cgetTotal) + parseInt(cget))
-        })
-        setTotal(parseInt(cget) + parseInt(cgetTotal) + parseInt(a))
-        setgrandTotal(parseInt((parseInt(cget) + parseInt(cgetTotal) + parseInt(a))) - parseInt(tds2))
-      }
-      else {
-        setGst((oldData) => {
-          return(parseInt(cget) + parseInt(sgetTotal) + parseInt(cgetTotal))
-        })
-        setTotal(parseInt(cget) + parseInt(sgetTotal) + parseInt(cgetTotal) + parseInt(a))
-     setgrandTotal(parseInt((parseInt(cget) + parseInt(sgetTotal) + parseInt(cgetTotal) + parseInt(a))) - parseInt(tds2))
-      } 
-      
+         setGst(parseInt(cget + sgetTotal + cgetTotal));
+         setTotal(parseInt(cget + sgetTotal + cgetTotal + a))
+         setgrandTotal(parseInt(cget + cgetTotal + sgetTotal + a - tds2))
+        
  }
  // Tds function
  const tdsFun = (e) => {
@@ -178,7 +142,9 @@ const sgstFun = (e) => {
    let cget = (a * e.target.value / 100)
       setTds(cget)
     setgrandTotal(parseInt(total) - parseInt(cget))    
- }
+ } 
+
+ // Pocket Function
  const pocketExpFun = (e) => {
   setPocketExp(e.target.value)
   let a = parseInt(e.target.value) + parseInt(basicAmount);
@@ -209,9 +175,6 @@ const basicFun = (e) => {
     setCgstTotal(a * cgetRate / 100);
    setSgstTotal(a * sgetRate / 100);
    setIgstTotal(a * igetRate / 100);
-  //  setGst((oldData) => {
-  //   return(parseInt(a * cgetRate / 100) + parseInt(a * igetRate / 100) + parseInt(a * sgetRate / 100))
-  // })
  setGst((oldData) => {
   return(parseInt(a * cgetRate / 100) + parseInt(a * igetRate / 100) + parseInt(a * sgetRate / 100))
  })
@@ -236,7 +199,7 @@ const basicFun = (e) => {
          formData.append("serviceCode", sac33);
         formData.append("basic_amount", basicAmount);
         formData.append("cgst_rate", cgetRate);
-        formData.append("oop_expensive", pocketExp);
+        formData.append("opt_expenses", pocketExp);
         formData.append("cgst_total", cgetTotal)
         formData.append("sgst_rate", sgetRate);
        
@@ -246,10 +209,10 @@ const basicFun = (e) => {
         formData.append("igst_total", igetTotal)
         formData.append("total", total);
         formData.append("tds_rate", tdsRate);
-      
+        formData.append("gst", gst);
         formData.append("tds_total", tds2)
         formData.append("netpaid_amount", grandTotal)
-        formData.append("gst_in", gstNum);
+        formData.append("gstin_no", gstNum);
         formData.append("bill_no", billNo)
         axios({
             method : "POST",
@@ -269,7 +232,6 @@ const basicFun = (e) => {
    services.map((k) => {
     
 if(k.id == e) {
- console.log(k.sac)
 setSac(k.sac)
 setServices2(k.service)
 }
@@ -309,7 +271,7 @@ setServices2(k.service)
           <div className="col-md-6">
           <div className="row">
           <div className="col-md-12">
-          <label>Bill No</label>
+          <label>Invoice No</label>
             </div>
             <div className="col-md-12">
          <input 
@@ -317,6 +279,7 @@ setServices2(k.service)
          ref={register}
          name="bill_no"
          value={billNo}
+         disabled = {disabled}
          className="form-control"
          onChange= {(e) => (setBillNo(e.target.value) + "/id")}
           />
@@ -381,7 +344,7 @@ setServices2(k.service)
                     className="form-control"
                     
                     placeholder="Rate"
-                    defaultValue={cgetRate}
+                    value={cgetRate}
                     name="cgst_rate"
                     onChange= {(e) => cgstFun(e)} /> %
                 
@@ -409,7 +372,7 @@ setServices2(k.service)
                     
                     name="sgst_rate"
                     placeholder="Rate" 
-                    defaultValue={0}
+                   value = {sgetRate}
                     onChange= {(e) => sgstFun(e)}/> %
                       </div>
                       <div className="col-md-6">
@@ -436,7 +399,7 @@ setServices2(k.service)
                     placeholder="Rate"
                     ref={register}
                     name="igst_rate"
-                    defaultValue={0}
+                   value={igetRate}
                     onChange= {(e) => igstFun(e)} /> %
                     </div>
                    
@@ -470,7 +433,7 @@ setServices2(k.service)
                     placeholder="Total"
                     name="total"
                     disabled
-                    defaultValue={0}
+                   
                     ref={register}
                    value={Math.round(gst)} />
                             </div>
@@ -553,7 +516,7 @@ setServices2(k.service)
              <>
              <button  type="submit" className="btn btn-success">submit</button>
           
-             <button  type="button" className="btn btn-danger mx-3" onClick={props.addTdsToggle}>Cancle</button> 
+             <button  type="button" className="btn btn-danger mx-3" onClick={props.addTdsToggle}>Cancel</button> 
              </>
         </ModalFooter>
           </div>
