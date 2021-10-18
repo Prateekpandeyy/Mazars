@@ -13,7 +13,7 @@ import { withSuccess } from "antd/lib/modal/confirm";
 
 function Tds (props)  {
   const history = useHistory();
-    const userid = window.localStorage.getItem("tpkey")
+    const userid = window.localStorage.getItem("tlkey")
     const f2 = useRef(null);
     const [sac33, setSac] = useState([])
     const [services2, setServices2] = useState();
@@ -82,7 +82,7 @@ const percent = {
 
 const getDataild = () => {
   axios
-  .get(`${baseUrl}/admin/getPaymentDetail?tl_id=${JSON.parse(userid)}&invoice=1&invoice_id=${props.id}`)
+  .get(`${baseUrl}/admin/getPaymentDetail?tp_id=${JSON.parse(userid)}&invoice=1&invoice_id=${props.id}`)
 .then((res) => {
 
 if(res.data.payment_detail){
@@ -154,7 +154,7 @@ const sgstFun = (e) => {
  // Pocket Function
  const pocketExpFun = (e) => {
   setPocketExp(e.target.value)
-  let a = parseInt(e.target.value) + parseInt(basicAmount);
+  let a = Math.round(parseInt(e.target.value) + parseInt(basicAmount));
   if(e.target.value > 0){
     setCgstTotal(a * cgetRate / 100);
    setSgstTotal(a * sgetRate / 100);
@@ -164,19 +164,19 @@ const sgstFun = (e) => {
   return(parseInt(Math.round(a * cgetRate / 100)) + parseInt(Math.round(a * igetRate / 100)) + parseInt(Math.round(a * sgetRate / 100)))
  })
   setTotal((oldData) => {
-    return(parseInt(a * cgetRate / 100) + parseInt(a * igetRate / 100) + parseInt(a * sgetRate / 100) + parseInt(a))
+    return(parseInt(Math.round(a * cgetRate / 100)) + parseInt(Math.round(a * igetRate / 100)) + parseInt(Math.round(a * sgetRate / 100)) + parseInt(a))
   })
   }
   setgrandTotal((oldData) => {
-    return((parseInt(a * cgetRate / 100) + parseInt(a * igetRate / 100) + parseInt(a * sgetRate / 100) + parseInt(a)) - parseInt(a * tdsRate / 100))
+    return((parseInt(Math.round(a * cgetRate / 100)) + parseInt(Math.round(a * igetRate / 100)) + parseInt(Math.round(a * sgetRate / 100)) + parseInt(a)) - parseInt(a * tdsRate / 100))
   })
   setTds((oldData) => {
-    return(parseInt(a * tdsRate / 100))
+    return(parseInt(Math.round(a * tdsRate / 100)))
   })
 }
 
 const basicFun = (e) => {
-  let a = parseInt(e.target.value) + parseInt(pocketExp);
+  let a = Math.round(parseInt(e.target.value) + parseInt(pocketExp));
   setBasicAmount(e.target.value);
   if(e.target.value > 0){
     setCgstTotal(a * cgetRate / 100);
@@ -186,20 +186,20 @@ const basicFun = (e) => {
     return(parseInt(Math.round(a * cgetRate / 100)) + parseInt(Math.round(a * igetRate / 100)) + parseInt(Math.round(a * sgetRate / 100)))
    })
   setTotal((oldData) => {
-    return(parseInt(a * cgetRate / 100) + parseInt(a * igetRate / 100) + parseInt(a * sgetRate / 100) + parseInt(a))
+    return(parseInt(Math.round(a * cgetRate / 100)) + parseInt(Math.round(a * igetRate / 100)) + parseInt(Math.round(a * sgetRate / 100)) + parseInt(a))
   })
   }
   setgrandTotal((oldData) => {
-    return((parseInt(a * cgetRate / 100) + parseInt(a * igetRate / 100) + parseInt(a * sgetRate / 100) + parseInt(a)) - parseInt(a * tdsRate / 100))
+    return((parseInt(Math.round(a * cgetRate / 100)) + parseInt(Math.round(a * igetRate / 100)) + parseInt(Math.round(a * sgetRate / 100)) + parseInt(a)) - parseInt(Math.round(a * tdsRate / 100)))
   })
   setTds((oldData) => {
-    return(parseInt(a * tdsRate / 100))
+    return(parseInt(Math.round(a * tdsRate / 100)))
   })
 }
     const onSubmit= (value) => {
       
         let formData = new FormData();
-       formData.append("tl_id", JSON.parse(userid));
+       formData.append("tp_id", JSON.parse(userid));
          formData.append("id", props.id)
          formData.append("qno", props.report)
          formData.append("description", description);
@@ -233,7 +233,7 @@ const basicFun = (e) => {
                 html : "Invoice generated successfully",
                 icon : "success"
               })
-                history.push("/teamleader/tlinvoice")
+                history.push("/taxprofessional/tpinvoice")
             }
           
         })
