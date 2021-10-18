@@ -26,7 +26,7 @@ function Sidebar({ adminDashboard, custDashboard, TLDashboard, TPDashboard , fee
   const tpkey = window.localStorage.getItem("tpkey");
   const adminkey = window.localStorage.getItem("adminkey")
   const toggleTab = (index) => {
-    console.log(index);
+  
     setToggleState(index);
   };
 const feedNumber = {
@@ -46,9 +46,9 @@ useEffect(() => {
 const getFeedback2 = () => {
   if(adminDashboard != undefined){
     axios.get(`${baseUrl}/customers/getFeedback?uid=${JSON.parse(adminkey)}&&type=total`).then((res) => {
-      console.log(res);
+
       if (res.data.code === 1) {
-        // setFeedBackData(res.data.result);
+       
        if(res.data.result != undefined){
          setfeedbackNumber2(res.data.result[0].total)
        
@@ -66,7 +66,7 @@ const getFeedbacktl = () => {
   axios
   .get(`${baseUrl}/customers/getFeedback?tl_id=${JSON.parse(tlkey)}&&type=total`)
   .then((res) => {
-    console.log(res);
+
     if(res.data.result != undefined){
       setfeedbackNumbertl(res.data.result[0].total)
     
@@ -86,7 +86,7 @@ const getFeedbacktp = () => {
     axios
     .get(`${baseUrl}/customers/getFeedback?tp_id=${JSON.parse(tpkey)}&&type=total`)
     .then((res) => {
-      console.log(res);
+
       if(res.data.result != undefined){
         setfeedbackNumbertp(res.data.result[0].total)
       
@@ -101,11 +101,11 @@ useState(() => {
   getFeedbacktp();
 }, [TPDashboard])
 const show = () => {
-  console.log("done")
+ 
     setOpen(true);
 }
 const handleClick = () => {
-  console.log("clicked")
+
   setOpen(!open);
 };
   return (

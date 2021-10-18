@@ -3,7 +3,7 @@ import CommonServices from "../../common/common";
 
 
 function Feedback({ feedback }) {
-    console.log("feedback", feedback);
+  
 
     return (
         <div>

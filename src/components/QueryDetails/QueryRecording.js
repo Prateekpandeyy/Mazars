@@ -57,21 +57,19 @@ const canBtn = {
     cursor : "pointer",
     color : "red"
 }
-console.log("assignNo", assingNo.assingNo)
+
     const getRecording = () => {
         axios
             .get(`${baseUrl}/tl/callRecordingPostlist?assign_id=${assingNo.assingNo}`)
             .then((res) => {
-                console.log(res);
+              
                 if (res.data.code === 1) {
                     setFeedBackData(res.data.result);
                 }
             });
     };
    
-    // if(assingNo.assingNo != undefined){
-    //     getRecording();
-    // }
+   
     const columns = [
         {
             text: "S.No",
@@ -120,7 +118,7 @@ console.log("assignNo", assingNo.assingNo)
                 return { fontSize: "12px", width: "20px" };
             },
             formatter: function nameFormatter(cell, row) {
-                console.log(row);
+              
                 return (
                     <>
                         <div>
@@ -144,7 +142,7 @@ console.log("assignNo", assingNo.assingNo)
 
 
 
-    console.log("videourl", videoid)
+  
    
     return (
      
@@ -197,22 +195,7 @@ console.log("assignNo", assingNo.assingNo)
      
     </div>
   : ""}
-            {/* <ReactHlsPlayer
-    src={videoid}   
-     autoPlay={false}
-    controls={true}
-    width="100%"
-    height="auto"
-  /> */}
-            {/* <ReactHlsPlayer
-    src={videoid}
-    hlsConfig={{
-      maxLoadingDelay: 4,
-      minAutoBitrate: 0,
-      lowLatencyMode: true,
-    }}
-  /> */}
-  {/* <ReactPlayer url={videoid} /> */}
+           
            </div>
 
     );

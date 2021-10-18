@@ -59,7 +59,7 @@ function CategorySelect({ addfreshbtn, startbtn }, props) {
   useEffect(() => {
     const getCategory = () => {
       axios.get(`${baseUrl}/customers/getCategory?pid=0`).then((res) => {
-        console.log(res);
+      
         if (res.data.code === 1) {
           setTax(res.data.result);
         }
@@ -74,7 +74,7 @@ function CategorySelect({ addfreshbtn, startbtn }, props) {
     const getSubCategory = () => {
      if(store.length != -1){
       axios.get(`${baseUrl}/customers/getCategory?pid=${store}`).then((res) => {
-        console.log(res);
+       
         if (res.data.code === 1) {
           setTax2(res.data.result);
         }
@@ -86,7 +86,7 @@ function CategorySelect({ addfreshbtn, startbtn }, props) {
 
 
   const onSubmit = (value) => {
-    console.log("value :", value);
+
   };
 
   return (

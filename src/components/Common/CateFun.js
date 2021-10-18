@@ -1,88 +1,59 @@
 import React from 'react';
-import { createContext } from 'react';
-import { useState } from 'react';
-import AddNew from '../../pages/Admin/AddNewTeamLeader/AddNewTeamLeader';
-import Category  from './Category';
-
-const catData = createContext();
-const catData2 = createContext();
+import Select from "react-select";
+import { useState , useEffect, useContext} from 'react';
+import axios from "axios";
+import { baseUrl } from '../../config/config';
+import { Category33 } from './Category';
 const CateFun = () => {
-    const [error, setError] = useState()
-    const [nn, setNn] = useState([])
-    const [categoryData, setCategoryData] = useState([])
-    const [custCate, setCustcate] = useState([])
-    const [mcatname, setmcatname] = useState([]);
-  const [mcategory, setmcategory] = useState([]);
-  const [store, setStore] = useState([]);
-  const [subData, subCategeryData] = useState([])
-
-
-  var kk = []
-  var vv = []
-
-// Category Function
-const category = (v) => {
-console.log("done2", v)
-    setCategoryData(v)
-    setNn((oldData) => {
-      return [...oldData, mcategory]
-    })
-    setError("")
-    setCustcate(v)
-    v.map((val) => {
-      vv.push(val.value)
-      setmcategory(val.value);
-      setmcatname((oldData) => {
-        return [...oldData, val.label]
-      })
-      setStore(val.value)
-    })
-
-
-    if (vv.length > 0) {
-      if (vv.includes("1") && vv.includes("2")) {
-        console.log("hdd")
+  const dataCate = useContext(Category33);
+  const [tax, setTax] = useState([]);
+  const [error, setError] = useState()
+  const getCategory = async () => {
+    await axios.get(`${baseUrl}/customers/getCategory?pid=0`).then((res) => {
+      if (res.data.code === 1) {
+      
+        setTax(res.data.result);
       }
-      else if (vv.includes("1")) {
-
-        for (let i = 0; i < subData.length; i++) {
-          if (subData[i].value < 9) {
-            kk.push(subData[i])
-          }
-        }
-        subCategeryData(kk)
-      }
-      else if (vv.includes("2")) {
-
-        for (let i = 0; i < subData.length; i++) {
-          if (subData[i].value > 8) {
-            kk.push(subData[i])
-          }
-        }
-        subCategeryData(kk)
-      }
-    }
-
-    else if (vv.length === 0) {
-      subCategeryData("")
-    }
-
-  }
-  const valueProvider = {category, store}
+    });
+  };
+  
+// UseEffect 
+useEffect(() => {
+getCategory();
+}, []);
+  const options = tax.map(d => (
+    {
+      "value": d.id,
+      "label": d.details
+    }))
 return(
   <>
   
-
-    <catData.Provider value= {"Prateek"}>
-    
-
-<Category />
-    </catData.Provider>
- 
+  <Select isMulti options={options}
+                        className={error ? "customError" : ""}
+                        styles={{
+                          option: (styles, { data }) => {
+                            return {
+                              ...styles,
+                              color: data.value == 2
+                                ? "green"
+                                : "blue"
+                            };
+                          },
+                          multiValueLabel: (styles, { data }) => ({
+                            ...styles,
+                            color: data.value == 2
+                              ? "green"
+                              : "blue"
+                          }),
+                        }}
+                       onChange={() => dataCate.Category()}
+                      >
+                      </Select>
+                     
     </>
    
 )
 
 }
 export default CateFun;
-export { catData };

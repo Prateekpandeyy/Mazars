@@ -90,7 +90,7 @@ function TeamFilter(props) {
 
   const onSubmit = (data) => {
 
-console.log("search", pendingForAcceptence)
+
     if (AllQuery == "AllQuery") {
       axios
         .get(
@@ -111,7 +111,7 @@ console.log("search", pendingForAcceptence)
 
 
     if (pendingForAcceptence == "pendingForAcceptence") {
-      console.log("pending for acceptance")
+     
       axios
         .get(
           `${baseUrl}/tl/pendingQues?id=${JSON.parse(

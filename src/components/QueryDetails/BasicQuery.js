@@ -5,7 +5,7 @@ import { ImageUrl } from "../../config/config";
 
 
 function BasicQuery({ p, diaplaySpecific, queryDocs, year, purpose }) {
-  // console.log("p", p);
+
   return (
     <>
       <div>

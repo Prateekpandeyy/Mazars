@@ -30,14 +30,13 @@ function ProposalDetails({
 
   const { tlname, date_of_allocation } = diaplayHistory;
 
-  console.log("installment_amount", installment_amount.split(','));
+  
 
 
   //installment
   const installAmount = (data) => {
     var item = data.split(',')
-    console.log("item", item);
-
+   
     const dataItem = item.map((p, i) =>
     (
       <>
@@ -58,16 +57,13 @@ function ProposalDetails({
   }
 
   const [currentDate] = useState(convert(date));
-  console.log("currentDate", currentDate)
-
-
+ 
 
   const dataCheck = (dateArr) => {
 
     for (let i = 0; i < dateArr.length; i++) {
       if (dateArr[i] === currentDate) {
-        console.log("true hai---", currentDate)
-        console.log("i", i)
+
         return i
       }
     }
@@ -77,12 +73,9 @@ function ProposalDetails({
     var item1 = a.split(',')
     var item2 = b.split(',')
 
-    console.log("item1-", item1);
-    console.log("item2", item2);
-
     var due = dataCheck(item2);
 
-    console.log("due_date_length", due)
+   
 
     //total installment
 
@@ -99,11 +92,10 @@ function ProposalDetails({
     }, 0);
 
 
-    console.log("total_Installment---",);
-    console.log('total_Payment_History', total_Payment_History)
+    
 
     var amount = total_Installment - total_Payment_History
-    console.log('amount', amount)
+
 
     if (amount > 0) {
       return amount
@@ -301,20 +293,4 @@ export default ProposalDetails;
 
 
 
-      // for (const date of dateArr) {
-      // var dateInArr = new Date(date)
-      // var currentDate = new Date()
-      // var same = dateInArr.getDate() <= currentDate.getDate();
-      // if (same) {
-      //   console.log("true hai", date)
-      // } else {
-      //   console.log(`A JavaScript type is: `, date)
-      // }
-      // }
-
-   // var total_Installment = item1.reduce(myFunction)
-    // function myFunction(total, value, index) {
-    //   if (index <= due) {
-    //     return Number(total) + Number(value);
-    //   }
-    // }
+ 

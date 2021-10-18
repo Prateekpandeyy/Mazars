@@ -15,21 +15,21 @@ function SearchFilter(props) {
 
   //search filter
   const handleChange = (value) => {
-    console.log(`selected ${value}`);
+
     setSelectedData(value);
     getData();
   };
 
   //reset date
   const resetData = () => {
-    console.log("resetData ..");
+  
     reset();
     getData();
   };
 
   //reset category
   const resetCategory = () => {
-    console.log("resetData ..");
+  
     setSelectedData([]);
     getData();
   };
@@ -37,8 +37,7 @@ function SearchFilter(props) {
 
   
   const onSubmit = (data) => {
-    console.log("data :", data);
-    console.log("selectedData :", selectedData);
+ 
 
     if (allquery == "allquery") {
       axios
@@ -46,7 +45,7 @@ function SearchFilter(props) {
           `${baseUrl}/admin/getAllQueries?cat_id=${selectedData}&from=${data.p_dateFrom}&to=${data.p_dateTo}`
         )
         .then((res) => {
-          console.log(res);
+        
           if (res.data.code === 1) {
             if (res.data.result) {
               setData(res.data.result);
@@ -61,7 +60,7 @@ function SearchFilter(props) {
           `${baseUrl}/admin/pendingAllocation?category=${selectedData}&date1=${data.p_dateFrom}&date2=${data.p_dateTo}`
         )
         .then((res) => {
-          console.log(res);
+         
           if (res.data.code === 1) {
             if (res.data.result) {
               setData(res.data.result);

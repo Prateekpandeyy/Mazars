@@ -35,7 +35,7 @@ const Invoice = () => {
     const [gstNo, setGstinNo] = useState();
  
    const addTdsToggle = (key) => {
-       console.log(key.billno)
+      
      setGstinNo(key.gstin_no);
        setTdsForm(!tdsForm)
        setAssignNo(key.assign_no)
@@ -46,7 +46,7 @@ const Invoice = () => {
        setId2(key.id)
    }
     const ViewDiscussionToggel = (key) => {
-        console.log(key)
+      
         setViewDiscussion(!ViewDiscussion);
         
     }
@@ -59,7 +59,7 @@ const Invoice = () => {
         axios
             .get(`${baseUrl}/admin/getPaymentDetail?tl_id=${JSON.parse(userid)}&invoice=0`)
             .then((res) => {
-                console.log(res);
+               
                 if (res.data.code === 1) {
                     setProposal(res.data.payment_detail);
                    
@@ -67,7 +67,6 @@ const Invoice = () => {
             });
     };
 
-console.log("tds22", tds)
     const columns = [
         {
             text: "S.No",
@@ -93,7 +92,7 @@ console.log("tds22", tds)
                 return { fontSize: "11px" };
             },
             formatter: function nameFormatter(cell, row) {
-                console.log(row);
+
                 return (
                     <>
 
@@ -110,8 +109,8 @@ console.log("tds22", tds)
             },
         },
         {
-            text: "Bill No",
-            dataField: "billno",
+            text: "Installment No",
+            dataField: "installment_no",
             sort: true,
             style: {
                 fontSize: "11px",
@@ -119,7 +118,7 @@ console.log("tds22", tds)
             headerStyle: () => {
                 return { fontSize: "11px" };
             },
-        },
+        }, 
         {
             text: "Due Date",
             dataField: "due_date",
@@ -132,7 +131,7 @@ console.log("tds22", tds)
             },
             formatter : function(cell, row){
                 let dueDate=row.due_date.split("-").reverse().join("-")
-                console.log("row", row.due_date.split("-").reverse().join("-"))
+
                 return(
                    
                     <>
@@ -142,7 +141,7 @@ console.log("tds22", tds)
             }
         }, 
         {
-            text: "Paid Amount",
+            text: "Amount",
             dataField: "paid_amount",
             sort: true,
             style: {
@@ -152,17 +151,7 @@ console.log("tds22", tds)
                 return { fontSize: "11px" };
             },
         }, 
-        {
-            text: "Installment No",
-            dataField: "installment_no",
-            sort: true,
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
-        }, 
+        
        
        
         {
@@ -172,7 +161,9 @@ console.log("tds22", tds)
                 return { fontSize: "12px", width: "110px" };
             },
             formatter: function (cell, row) {
+
                 return (
+                    
                     <>
                         <div style={{ display: "flex", justifyContent: "space-between" }}>
                         <i
@@ -190,21 +181,14 @@ console.log("tds22", tds)
                 );
             },
         },
+       
     ];
 
     return (
 
         <>
             <Card>
-                {/* <CardHeader>
-                    <TeamFilter
-                        setData={setProposal}
-                        getData={getProposalList}
-                        AllProposal="AllProposal"
-                        setRecords={setRecords}
-                        records={records}
-                    />
-                </CardHeader> */}
+              
                 <CardHeader>
                     <InvoiceFilter
                      setData={setProposal}
@@ -216,7 +200,7 @@ console.log("tds22", tds)
                 <CardBody>
                     <BootstrapTable
                         bootstrap4
-                        keyField="id"
+                        keyField='id'
                         data={proposal}
                         columns={columns}
                         rowIndex

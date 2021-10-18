@@ -5,7 +5,7 @@ import CommonServices from "../../common/common";
 
 function DraftReports({ id }) {
 
-    console.log("igg-", id)
+    
 
     const userId = window.localStorage.getItem("userid");
     const [assignmentDisplay, setAssignmentDisplay] = useState([]);
@@ -21,7 +21,7 @@ function DraftReports({ id }) {
             )
             .then((res) => {
                 if (res) {
-                    console.log("mmmm-", res)
+                  
                     setAssignmentDisplay(res.data.result);
                 }
             });

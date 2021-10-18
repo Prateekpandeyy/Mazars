@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
-import { Link, useHistory } from "react-router-dom";
-import { components } from "react-select";
+import { Link } from "react-router-dom";
 
 
 function CustomerNotification({ tokenKey, name }) {
 
-    // const userId = window.localStorage.getItem("userid");
 
-    const [notification, setNotification] = useState([]);
+
+   
     const [countNotification, setCountNotification] = useState("");
    
 
@@ -22,9 +21,9 @@ function CustomerNotification({ tokenKey, name }) {
         axios
             .get(`${baseUrl}/customers/getNotification?id=${JSON.parse(tokenKey)}&type_list=uread`)
             .then((res) => {
-                console.log(res);
+              
                 if (res.data.code === 1) {
-                    setNotification(res.data.result);
+                   
                    if(res.data.result[0] != undefined){
                     setCountNotification(res.data.result[0].total);
                    }

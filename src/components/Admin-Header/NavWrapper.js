@@ -1,6 +1,4 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { baseUrl } from "../../config/config";
+import React from "react";
 import { Link, useHistory } from "react-router-dom";
 import CustomerNotification from "./CustomerNotification";
 import LockOpenIcon from '@material-ui/icons/LockOpen';
@@ -17,8 +15,6 @@ function NavWrapper(props) {
   const tlkey = window.localStorage.getItem("tlkey");
   const tpkey = window.localStorage.getItem("tpkey")
 
-  // const CustEmail = window.localStorage.getItem("email");
-console.log("porps", email, feedbackNumber)
 
   return (
     <>

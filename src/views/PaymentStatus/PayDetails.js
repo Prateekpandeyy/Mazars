@@ -19,7 +19,7 @@ import {
   Button,
 } from "reactstrap";
 import BootstrapTable from "react-bootstrap-table-next";
-import { baseUrl2 } from "../../config/config";
+import { baseUrl2, baseUrl3 } from "../../config/config";
 import { useParams, Link, useHistory } from "react-router-dom";
 import PayModal from "./PayModal";
 const PayDetails = () => {
@@ -45,7 +45,7 @@ axios.get(`${baseUrl}/admin/getPaymentDetail?id=${id}`)
  const openModal = (key) => {
    if(key){
        setModalData(key)
-    console.log("row", key)
+   
    }
 setModal(!modal)
 
@@ -72,17 +72,38 @@ setModal(!modal)
                 fontSize: "11px",
             },
             headerStyle: () => {
-                return { fontSize: "11px", width: "90px" };
+                return { fontSize: "11px", width: "120px" };
             },
         },
         {
+            dataField: "installment_no",
+            text: "Installment No",
+           
+            style: {
+                fontSize: "11px",
+            },
+            headerStyle: () => {
+                return { fontSize: "11px", width: "80px" };
+            },
+           
+           
+        },
+        {
             dataField: "billno",
-            text: "Bill No",
+            text: "Invoice No",
            
             
             headerStyle: () => {
-                return { fontSize: "11px", width: "90px" };
+                return { fontSize: "11px", width: "150px" };
             },
+            formatter : function(cell, row){
+                return(
+                    <>
+                    {row.invoice_generated == "0" ? "" : 
+                    <p>{row.billno}</p>}
+                    </>
+                )
+            }
         },
         {
             dataField: "due_date",
@@ -92,7 +113,7 @@ setModal(!modal)
                 fontSize: "11px",
             },
             headerStyle: () => {
-                return { fontSize: "11px", width: "90px" };
+                return { fontSize: "11px", width: "120px" };
             },
             formatter : function(cell, row){
                 let dueDate=row.due_date.split("-").reverse().join("-")
@@ -105,28 +126,39 @@ setModal(!modal)
                 )
             }
         },
+       
         {
-            dataField: "city",
-            text: "City",
+            dataField: "invoice_amount",
+            text: "Invoice Amount",
            
             style: {
                 fontSize: "11px",
             },
             headerStyle: () => {
-                return { fontSize: "11px", width: "90px" };
+                return { fontSize: "11px", width: "120px" };
             },
         },
         {
-            dataField: "gstin",
-            text: "Gstin",
-           
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px", width: "90px" };
-            },
+            dataField : "tds",
+            text : "Tds Deducted",
+            style : {
+                fontSize : "11px"
+            }, 
+            headerStyle : () => {
+                return { fontSize : "11px", width : "100px"}
+            }
         },
+        {
+            dataField : "tds",
+            text : "Amount Paid",
+            style : {
+                fontSize : "11px"
+            }, 
+            headerStyle : () => {
+                return { fontSize : "11px", width : "100px"}
+            }
+        },
+        
         {
             dataField: "invoice",
             text: "Invoice",
@@ -141,39 +173,15 @@ setModal(!modal)
                 return(
                    <>
                    {row.invoice_generated == "1" ? 
-                    <a href={`${baseUrl2}/mazarsapi/${row.invoice}`} target="_blank">
+                    <a href={`${baseUrl3}/${row.invoice}`} target="_blank">
                           <DescriptionOutlinedIcon color="secondary" /></a> : ""}
                    </>
                 )
             },
            
         },
-        {
-            dataField: "email",
-            text: "Email",
-           
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px", width: "90px" };
-            },
-           
-           
-        },
-        {
-            dataField: "installment_no",
-            text: "Installment No",
-           
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px", width: "90px" };
-            },
-           
-           
-        },
+        
+       
        
         {
             dataField: "",
@@ -203,7 +211,8 @@ setModal(!modal)
                 onClick={() => openModal(row)}
             ></i> : <p style={{backgroundColor : "red", color : "white"}}>Paid</p>}
               </>
-               : ""}
+               : 
+               <a href={row.receipt_url}>Click to view payment receipt</a>}
                 </>
                   
                    

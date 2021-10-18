@@ -36,7 +36,7 @@ function PendingAllocation({ CountPendingForAllocation }) {
   const [modal, setModal] = useState(false);
 
   const toggle = (key) => {
-    console.log("key", key);
+   
     setModal(!modal);
 
     fetch(`${baseUrl}/customers/getQueryHistory?q_id=${key}`, {
@@ -47,7 +47,7 @@ function PendingAllocation({ CountPendingForAllocation }) {
     })
       .then((res) => res.json())
       .then((response) => {
-        console.log(response);
+       
         setHistory(response.result);
       })
       .catch((error) => console.log(error));
@@ -62,7 +62,7 @@ function PendingAllocation({ CountPendingForAllocation }) {
 
   const getPendingForAllocation = () => {
     axios.get(`${baseUrl}/admin/pendingAllocation`).then((res) => {
-      console.log("repforquery", res.data.result);
+    
       if (res.data.code === 1) {
         // CountPendingForAllocation(res.data.result.length);
         setPendingData(res.data.result);
@@ -92,7 +92,7 @@ function PendingAllocation({ CountPendingForAllocation }) {
         return { fontSize: "12px" };
       },
       formatter: function dateFormat(cell, row) {
-        console.log("dt", row.created);
+     
         var oldDate = row.created;
         if (oldDate == null) {
           return null;
@@ -107,7 +107,7 @@ function PendingAllocation({ CountPendingForAllocation }) {
         return { fontSize: "12px" };
       },
       formatter: function nameFormatter(cell, row) {
-        console.log(row);
+      
         return (
           <>
             <Link
@@ -293,74 +293,3 @@ function PendingAllocation({ CountPendingForAllocation }) {
 }
 
 export default PendingAllocation;
-  // axios
-    //   .get(`${baseUrl}/tl/deleteTeamLeader?id=${id}`)
-    //   .then(function (response) {
-    //     console.log("delete-", response);
-    // if (response.data.code === 1) {
-    //   Swal.fire("Deleted!", "Your file has been deleted.", "success");
-    //   getTeamLeader();
-    // } else {
-    //   Swal.fire("Oops...", "Errorr ", "error");
-    // }
-
-    //   })
-    //   .catch((error) => {
-    //     console.log("erroror - ", error);
-    //   });
-
-
-/* <td style={{ textAlign: "center" }}>
-                      {p.is_assigned === "1" && (
-                        <p style={{ color: "green" }}>
-                          <i class="fa fa-circle"
-                          style={{fontSize:"10px" ,marginRight:"4px"}}>
-                            </i>
-                            {p.allocation_time}
-                          </p>
-                      )}
-
-                      {p.reject === "3" && (
-                        <p style={{ color: "red" }}>
-                          Query Rejected By {p.tname}
-                        </p>
-                      )}
-                    </td> */
-
-//   <Modal isOpen={addModal} toggle={addHandler} size="md">
-//   <ModalHeader toggle={addHandler}>Show history</ModalHeader>
-//   <ModalBody>
-// <table class="table table-bordered">
-//   <thead>
-//     <tr>
-//       <th scope="col">Titles</th>
-//       <th scope="col">Data</th>
-//     </tr>
-//   </thead>
-
-//   {history.length > 0
-//     ? history.map((p, i) => (
-//         <tbody>
-//           <tr>
-//             <th scope="row">Name</th>
-//             <td>{p.name}</td>
-//           </tr>
-
-//           <tr>
-//             <th scope="row">Date of Allocation</th>
-//             <td>{ChangeFormateDate(p.date_of_allocation)}</td>
-//           </tr>
-//           <tr>
-//             <th scope="row">Query No</th>
-//             <td>{p.assign_no}</td>
-//           </tr>
-//           <tr>
-//             <th scope="row">Status</th>
-//             <td>{p.status}</td>
-//           </tr>
-//         </tbody>
-//       ))
-//     : null}
-// </table>
-//   </ModalBody>
-// </Modal>

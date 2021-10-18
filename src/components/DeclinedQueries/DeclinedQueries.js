@@ -29,7 +29,7 @@ function DeclinedQueries({ CountPendingForPayment }) {
 
   const getPendingForPayment = () => {
     axios.get(`${baseUrl}/admin/declinedQueries`).then((res) => {
-      console.log(res);
+    
       if (res.data.code === 1) {
         setPendingData(res.data.result);
         setRecords(res.data.result.length);
@@ -49,7 +49,7 @@ function DeclinedQueries({ CountPendingForPayment }) {
         return { fontSize: "12px", width: "50px" };
       },
       formatter: (cellContent, row, rowIndex, index) => {
-        console.log("rowIndex : ", index);
+     
         return <div>{rowIndex + 1}</div>;
       },
     },

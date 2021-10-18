@@ -27,7 +27,7 @@ function RecordingFilter(props) {
 
 
   var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
-  console.log("current_date :", current_date);
+  
   const [item] = useState(current_date);
 
  
@@ -46,9 +46,9 @@ function RecordingFilter(props) {
   };
 
   const onSubmit = (data) => {
-  console.log()
+ 
 if(SearchQuery == "SearchQuery") {
-   console.log("myQuery", data.queryNo)
+  
     axios
         .get(
           `${baseUrl}/tl/callRecordingPostlist?uid=${JSON.parse(userid)}&assign_id=${data.queryNo}`)
@@ -64,164 +64,7 @@ if(SearchQuery == "SearchQuery") {
         });
 }
 
-    // if (pendingForAcceptence == "pendingForAcceptence") {
-    //   axios
-    //     .get(
-    //       `${baseUrl}/tl/pendingQues?tp_id=${JSON.parse(
-    //         userid
-    //       )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&pcat_id=${selectedData}`
-    //     )
-    //     .then((res) => {
-    //       console.log(res);
-    //       if (res.data.code === 1) {
-    //         if (res.data.result) {
-    //           setData(res.data.result);
-    //           setRecords(res.data.result.length);
-
-    //         }
-    //       }
-    //     });
-    // }
-
-    // if (InprogressQuery == "InprogressQuery") {
-
-    //   console.log("status1", status1)
-    //   axios
-    //     .get(
-    //       `${baseUrl}/tl/getIncompleteQues?tp_id=${JSON.parse(userid)}&status=${status1}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&pcat_id=${selectedData}`
-    //     )
-    //     .then((res) => {
-    //       console.log(res);
-    //       if (res.data.code === 1) {
-    //         if (res.data.result) {
-    //           setData(res.data.result);
-    //           setRecords(res.data.result.length);
-    //         }
-    //       }
-    //     });
-    // }
-
-    // if (DeclinedQuery == "DeclinedQuery") {
-    //   axios
-    //     .get(
-    //       `${baseUrl}/tl/declinedQueries?tp_id=${JSON.parse(userid)}&status=${data.p_status}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&pcat_id=${selectedData}`
-    //     )
-    //     .then((res) => {
-    //       console.log(res);
-    //       if (res.data.code === 1) {
-    //         if (res.data.result) {
-    //           setData(res.data.result);
-    //           setRecords(res.data.result.length);
-    //         }
-    //       }
-    //     });
-    // }
-
-    // if (completeAssignment == "completeAssignment") {
-    //   axios
-    //     .get(
-    //       `${baseUrl}/tl/getCompleteQues?tp_id=${JSON.parse(
-    //         userid
-    //       )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&pcat_id=${selectedData}`
-    //     )
-    //     .then((res) => {
-    //       console.log(res);
-    //       if (res.data.code === 1) {
-    //         if (res.data.result) {
-    //           setData(res.data.result);
-    //           setRecords(res.data.result.length);
-
-    //         }
-    //       }
-    //     });
-    // }
-
-    // if (AllProposal == "AllProposal") {
-    //   axios
-    //     .get(
-    //       `${baseUrl}/tl/getProposalTl?tp_id=${JSON.parse(
-    //         userid
-    //       )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
-    //       }&status=${data.p_status}&pcat_id=${selectedData}`
-    //     )
-    //     .then((res) => {
-    //       console.log(res);
-    //       if (res.data.code === 1) {
-    //         if (res.data.result) {
-    //           setData(res.data.result);
-    //           setRecords(res.data.result.length);
-    //         }
-    //       }
-    //     });
-    // }
-
-    // if (InprogressProposal == "InprogressProposal") {
-    //   axios
-    //     .get(
-    //       `${baseUrl}/tl/getProposalTl?tp_id=${JSON.parse(
-    //         userid
-    //       )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
-    //       }&status=${data.p_status}&pcat_id=${selectedData}`
-    //     )
-    //     .then((res) => {
-    //       console.log(res);
-    //       if (res.data.code === 1) {
-    //         if (res.data.result) {
-    //           setData(res.data.result);
-    //           setRecords(res.data.result.length);
-    //         }
-    //       }
-    //     });
-    // }
-
-
-    // if (AllPayment == "AllPayment") {
-    //   axios
-    //     .get(
-    //       `${baseUrl}/tl/getUploadedProposals?tp_id=${JSON.parse(userid)}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=${data.p_status}&pcat_id=${selectedData}`
-    //     )
-    //     .then((res) => {
-    //       console.log(res);
-    //       if (res.data.code === 1) {
-    //         if (res.data.result) {
-    //           setData(res.data.result);
-    //           setRecords(res.data.result.length);
-    //         }
-    //       }
-    //     });
-    // }
-
-    // if (Unpaid == "Unpaid") {
-    //   axios
-    //     .get(
-    //       `${baseUrl}/tl/getUploadedProposals?&tp_id=${JSON.parse(userid)}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=1&pcat_id=${selectedData}`
-    //     )
-    //     .then((res) => {
-    //       console.log(res);
-    //       if (res.data.code === 1) {
-    //         if (res.data.result) {
-    //           setData(res.data.result);
-    //           setRecords(res.data.result.length);
-    //         }
-    //       }
-    //     });
-    // }
-
-    // if (Paid == "Paid") {
-    //   axios
-    //     .get(
-    //       `${baseUrl}/tl/getUploadedProposals?tp_id=${JSON.parse(userid)}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=2&pcat_id=${selectedData}`
-    //     )
-    //     .then((res) => {
-    //       console.log(res);
-    //       if (res.data.code === 1) {
-    //         if (res.data.result) {
-    //           setData(res.data.result);
-    //           setRecords(res.data.result.length);
-    //         }
-    //       }
-    //     });
-    // }
+   
   };
 
 
@@ -249,11 +92,7 @@ if(SearchQuery == "SearchQuery") {
           <div>
             <form onSubmit={handleSubmit(onSubmit)}>
               <div class="form-inline">
-            {/* <input
-            type = "text" 
-            name = "queryNO"
-            className = "form-control"
-            name="recordingsearch"/> */}
+          
              <input
                     type="text"
                     name="queryNo"

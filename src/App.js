@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { HashRouter as Router, Route, Switch } from "react-router-dom";
 import "./App.css";
 import { positions, Provider, transitions } from "react-alert";
@@ -134,7 +134,7 @@ import PublicRouteUser from './Service/PublicRouteUser'
 import PublicRouteAdmin from './Service/PublicRouteAdmin'
 import PublicRouteTL from './Service/PublicRouteTL'
 import PublicRouteTP from './Service/PublicRouteTP'
-import PayDetails from "./views/PaymentStatus/PayDetails";
+// import PayDetails from "./views/PaymentStatus/PayDetails";
 
 
 const options = {

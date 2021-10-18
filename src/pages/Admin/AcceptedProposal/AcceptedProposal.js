@@ -36,7 +36,7 @@ function AcceptedProposal({ acceptedProposal }) {
   }, []);
   const getAcceptedProposal = () => {
     axios.get(`${baseUrl}/admin/getProposals?status1=2`).then((res) => {
-      console.log(res);
+   
       if (res.data.code === 1) {
         setProposalDisplay(res.data.result);
         setRecords(res.data.result.length);
@@ -71,7 +71,7 @@ function AcceptedProposal({ acceptedProposal }) {
         return { fontSize: "11px" };
       },
       formatter: function dateFormat(cell, row) {
-        console.log("dt", row.created);
+
         var oldDate = row.created;
         if (oldDate == null) {
           return null;
@@ -89,7 +89,7 @@ function AcceptedProposal({ acceptedProposal }) {
         return { fontSize: "11px" };
       },
       formatter: function nameFormatter(cell, row) {
-        console.log(row);
+     
         return (
           <>
             <Link to={`/admin/queries/${row.q_id}`}>{row.assign_no}</Link>
@@ -130,7 +130,7 @@ function AcceptedProposal({ acceptedProposal }) {
         return { fontSize: "11px" };
       },
       formatter: function dateFormat(cell, row) {
-        console.log("dt", row.DateofProposal);
+
         var oldDate = row.DateofProposal;
         if (oldDate == null) {
           return null;
@@ -149,7 +149,7 @@ function AcceptedProposal({ acceptedProposal }) {
         return { fontSize: "11px" };
       },
       formatter: function dateFormat(cell, row) {
-        console.log("dt", row.cust_accept_date);
+      
         var oldDate = row.cust_accept_date;
         if (oldDate == null) {
           return null;

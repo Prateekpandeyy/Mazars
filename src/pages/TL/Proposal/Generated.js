@@ -13,8 +13,9 @@ import DiscardReport from "../AssignmentTab/DiscardReport";
 import DescriptionOutlinedIcon from "@material-ui/icons/DescriptionOutlined";
 import Tds from "./Tds";
 import InvoiceFilter from "../../../components/Search-Filter/InvoiceFilter"
-
+import moment from "moment";
 const Generated = () => {
+    var rowStyle2 = {}
     const userid = window.localStorage.getItem("tlkey");
     const [records, setRecords] = useState([]);
     const [proposal, setProposal] = useState([]);
@@ -31,7 +32,7 @@ const Generated = () => {
     
  
     const addTdsToggle = (key) => {
-       // console.log(key.billno)
+   
       setGstinNo(key.gstin_no);
         setTdsForm(!tdsForm)
         setAssignNo(key.assign_no)
@@ -42,7 +43,7 @@ const Generated = () => {
         setId2(key.id)
     }
     const ViewDiscussionToggel = (key) => {
-        console.log(key)
+      
         setViewDiscussion(!ViewDiscussion);
         
     }
@@ -55,7 +56,7 @@ const Generated = () => {
         axios
             .get(`${baseUrl}/admin/getPaymentDetail?tl_id=${JSON.parse(userid)}&invoice=1`)
             .then((res) => {
-                console.log(res);
+              
                 if (res.data.code === 1) {
                     setProposal(res.data.payment_detail);
                    
@@ -89,7 +90,7 @@ const Generated = () => {
                 return { fontSize: "11px" };
             },
             formatter: function nameFormatter(cell, row) {
-                console.log(row);
+                
                 return (
                     <>
 
@@ -106,7 +107,18 @@ const Generated = () => {
             },
         },
         {
-            text: "Bill No",
+            text: "Installment No",
+            dataField: "installment_no",
+            sort: true,
+            style: {
+                fontSize: "11px",
+            },
+            headerStyle: () => {
+                return { fontSize: "11px" };
+            },
+        },
+        {
+            text: "Invoice No",
             dataField: "billno",
             sort: true,
             style: {
@@ -128,7 +140,7 @@ const Generated = () => {
             },
             formatter : function(cell, row){
                 let dueDate=row.due_date.split("-").reverse().join("-")
-                console.log("row", row.due_date.split("-").reverse().join("-"))
+
                 return(
                    
                     <>
@@ -138,7 +150,7 @@ const Generated = () => {
             }
         }, 
         {
-            text: "Paid Amount",
+            text: "Amount",
             dataField: "paid_amount",
             sort: true,
             style: {
@@ -148,17 +160,7 @@ const Generated = () => {
                 return { fontSize: "11px" };
             },
         }, 
-        {
-            text: "Installment No",
-            dataField: "installment_no",
-            sort: true,
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
-        }, 
+        
        
         {
             text: "Action",
@@ -178,7 +180,7 @@ const Generated = () => {
                               </a>
                               {row.is_paid == "0" ? 
                         <i
-                        class="fa fa-mail-forward"
+                        class="fa fa-edit"
                         style={{
                             fontSize: "14px",
                             cursor: "pointer",
@@ -195,6 +197,25 @@ const Generated = () => {
         },
     ];
 
+    rowStyle2 = (row, index) => {
+        const style = {}
+        var warningDate = moment(row.Exp_Delivery_Date).add(5, 'day').toDate();
+        // var warnformat = warningDate.format("YYYY-MM-DD");
+        var aa = moment().toDate();
+       
+    
+        if(row.paid_status != "2" && row.status != "Complete" && warningDate < aa)  {
+          style.backgroundColor = "#c1d8f2";
+          style.color = "#000111"
+        }
+        else if(row.paid_status != "2" && warningDate > aa){
+          style.backgroundColor = "#fff";
+          style.color = "#000"
+        }
+      
+        return style;
+      }
+    
     return (
 
         <>
@@ -215,6 +236,7 @@ const Generated = () => {
                         data={proposal}
                         columns={columns}
                         rowIndex
+                        rowStyle={ rowStyle2 }
                     />
 
                    

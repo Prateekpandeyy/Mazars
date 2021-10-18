@@ -88,7 +88,7 @@ function AddNew() {
     const postName = async () => {
       await axios.get(`${baseUrl}/admin/addTlPost`).then((res) => {
         if (res.data.code === 1) {
-          console.log("myData", res.data.result.post)
+       
           setPostName(res.data.result);
         }
       });
@@ -101,7 +101,7 @@ function AddNew() {
     const getCategory = async () => {
       await axios.get(`${baseUrl}/customers/getCategory?pid=0`).then((res) => {
         if (res.data.code === 1) {
-          console.log(res.data.result)
+          
           setTax(res.data.result);
         }
       });
@@ -129,15 +129,15 @@ function AddNew() {
 
   const onSubmit = (value) => {
    
-    console.log((JSON.stringify(dd)))
+   
     var categeryList = []
     var categeryName = []
     var categeryName = []
     var kk = []
     var parentCategoryName = []
-    console.log(subData)
+  
     subData.map((i) => {
-      console.log(i)
+   
       categeryList.push(i.value)
       categeryName.push(i.label)
     })
@@ -145,7 +145,7 @@ function AddNew() {
       kk.push(i.value)
       parentCategoryName.push(i.label)
     })
-    console.log("subData", subData)
+   
     if (custCate.length < 1) {
       setError("Please select at least one value")
     }
@@ -218,12 +218,11 @@ function AddNew() {
   var indir = []
   // Sub Category Function
   const subCategory = (e) => {
-    console.log("categoryData", dd)
+  
     subCategeryData(e)
     setCustcate2(e)
     setError2("")
-    console.log(e)
-    console.log("allData", allData1)
+  
     e.map((i) => {
 
       i.value < 8 ? dir.push(i.label) : indir.push(i.label)
@@ -260,7 +259,7 @@ function AddNew() {
 
     if (vv.length > 0) {
       if (vv.includes("1") && vv.includes("2")) {
-        console.log("hdd")
+       
       }
       else if (vv.includes("1")) {
 
@@ -306,15 +305,15 @@ function AddNew() {
 
   // Phone Validation function 
   const phoneValidation = () => {
-    console.log(phone.length)
+   
     if (phone.length > 10) {
-      console.log(phone.length)
+     
       setNumAvail("")
       setNumExist("")
       setIndNumError("Maximum 10 digit should be enter")
     }
     else if (phone.length < 10) {
-      console.log(phone.length)
+     
       setNumAvail("")
       setNumExist("")
       setIndNumError("Minimum 10 digit should be enter")
@@ -334,7 +333,7 @@ function AddNew() {
   //eamil onchange
   const emailHandler = (e) => {
     setEmail(e.target.value);
-    console.log(e.target.value.length)
+  
     if (e.target.value.length < 1) {
       setWemail("")
     }
@@ -357,7 +356,7 @@ function AddNew() {
         data: formData,
       })
         .then(function (response) {
-          console.log("resEmail-", response);
+
           if (response.data.code === 1) {
             setValiemail(response.data.result)
             setInvalid('')
@@ -367,7 +366,7 @@ function AddNew() {
           }
         })
         .catch((error) => {
-          console.log("erroror - ", error);
+
         });
     }
     else {
@@ -378,7 +377,7 @@ function AddNew() {
   // EmailHandlerPost1
   const emailHandlerPost = (e) => {
     setEmail(e.target.value);
-    console.log(e.target.value.length)
+ 
     if (e.target.value.length < 1) {
       setWemailPost("")
     }
@@ -400,7 +399,7 @@ function AddNew() {
         data: formData,
       })
         .then(function (response) {
-          console.log("resEmail-", response);
+
           if (response.data.code === 1) {
             setValiemailPost(response.data.result)
             setInvalidPost('')
@@ -410,7 +409,7 @@ function AddNew() {
           }
         })
         .catch((error) => {
-          console.log("erroror - ", error);
+        
         });
     }
     else {
@@ -647,3 +646,7 @@ function AddNew() {
 }
 
 export default AddNew;
+
+
+
+

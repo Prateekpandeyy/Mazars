@@ -39,7 +39,7 @@ function AllQueriesData() {
 
   const getAllQueriesData = () => {
     axios.get(`${baseUrl}/admin/getAllQueries`).then((res) => {
-      console.log(res);
+     
       if (res.data.code === 1) {
         setAllQueriesData(res.data.result);
         setRecords(res.data.result.length);
@@ -58,7 +58,7 @@ function AllQueriesData() {
         return { fontSize: "12px", width: "50px" };
       },
       formatter: (cellContent, row, rowIndex, index) => {
-        console.log("rowIndex : ", index);
+
         return <div>{rowIndex + 1}</div>;
       },
     },

@@ -5,7 +5,7 @@ import Footer from "../Admin-Footer/Admin-Footer";
 
 
 function Layout(props) {
-  // console.log(props)
+
   const {
     custDashboard, adminDashboard, TLDashboard,
     TPDashboard,

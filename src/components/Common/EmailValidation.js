@@ -46,7 +46,7 @@ const [email, setEmail] = useState([])
               }
             })
             .catch((error) => {
-              console.log("erroror - ", error);
+            
             });
         }
         else {

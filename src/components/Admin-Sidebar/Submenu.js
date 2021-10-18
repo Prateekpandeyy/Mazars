@@ -23,7 +23,7 @@ function Submenu(props){
       const getFeedback2 = () => {
         if(props.adminDashboard != undefined && open === false){
           axios.get(`${baseUrl}/customers/getFeedback?uid=${JSON.parse(adminkey)}&&type=total`).then((res) => {
-            console.log(res);
+         
             if (res.data.code === 1) {
               // setFeedBackData(res.data.result);
              if(res.data.result != undefined){

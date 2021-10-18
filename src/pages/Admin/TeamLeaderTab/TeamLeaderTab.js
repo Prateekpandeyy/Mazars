@@ -12,13 +12,10 @@ import {
   CardTitle,
   Row,
   Col,
-  Table,
 } from "reactstrap";
 import BootstrapTable from "react-bootstrap-table-next";
 import Swal from "sweetalert2";
-import { TurnedIn } from "@material-ui/icons";
 import History from './History.js';
-import { InputAdornment } from "@material-ui/core";
 function TeamLeaderTab() {
   const alert = useAlert();
   const [data, setData] = useState([]);
@@ -179,11 +176,7 @@ function TeamLeaderTab() {
                 }}
               ></i>
             </Link>
-            {/* <i
-              className="fa fa-trash"
-              style={{ fontSize: 20, cursor: "pointer", marginLeft: "8px" }}
-              onClick={() => del(row.id)}
-            ></i> */}
+          
           </>
         );
 
@@ -264,7 +257,7 @@ function TeamLeaderTab() {
 
       })
       .catch((error) => {
-        console.log("erroror - ", error);
+        
       });
   };
 
@@ -273,7 +266,7 @@ function TeamLeaderTab() {
   return (
 
     <Layout adminDashboard="adminDashboard" adminUserId={userid}>
-      {console.log("Layout")}
+     
       <Card>
         <CardHeader>
           <Row>

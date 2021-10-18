@@ -8,6 +8,8 @@ import { useState } from "react";
 import classNames from "classnames";
 import { useHistory } from "react-router";
 import { parseInt } from "lodash";
+import Swal from "sweetalert2";
+import { withSuccess } from "antd/lib/modal/confirm";
 
 function Tds (props)  {
   const history = useHistory();
@@ -43,7 +45,7 @@ const percent = {
   const getServices = () => {
     axios.get(`${baseUrl}/tl/getServices`)
     .then((res) => {
-      console.log(res)
+
       if(res.data.code === 1){
         setServices(res.data.result);
       }
@@ -79,7 +81,7 @@ const getDataild = () => {
   axios
   .get(`${baseUrl}/admin/getPaymentDetail?tl_id=${JSON.parse(userid)}&invoice=1&invoice_id=${props.id}`)
 .then((res) => {
-console.log("res", res.data.payment_detail)
+
 if(res.data.payment_detail){
   res.data.payment_detail.map((i) => {
    
@@ -221,6 +223,11 @@ const basicFun = (e) => {
         })
         .then((res) => {
             if(res.data.code === 1){
+              Swal.fire({
+                title : "success", 
+                html : "Invoice generated successfully",
+                icon : "success"
+              })
                 history.push("/teamleader/tlinvoice")
             }
           

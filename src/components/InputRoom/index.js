@@ -18,29 +18,7 @@ class Index extends React.Component {
     };
   }
 
-  // componentDidMount() {
-  //   window.addEventListener("keypress", (e) => {
-  //     e.keyCode === 13 && this.handleJoin();
-  //   });
-  // }
-
-  //pass id
-  // handleChannel = (val, state) => {
-  //   this.setState({
-  //     channel: val,
-  //   });
-  // };
-
-  // handleJoin = () => {
-  //   console.log(this.state);
-  //   Cookies.set("channel", this.state.channel); //input channel name
-  //   Cookies.set("baseMode", this.state.baseMode);
-  //   Cookies.set("transcode", this.state.transcode);
-  //   Cookies.set("attendeeMode", this.state.attendeeMode); // select video call
-  //   Cookies.set("videoProfile", this.state.videoProfile);
-  //   window.location.hash = "customer/meeting";
-  // };
-
+ 
   render() {
     return (
       <div className="wrapper index">

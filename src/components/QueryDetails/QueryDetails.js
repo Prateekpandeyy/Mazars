@@ -33,15 +33,7 @@ function QueryDetails({
   reports, 
   submitData
 }) {
-  console.log("p", customerQuery);
-
-  // const history = useHistory();
-
-  // const [addModal, setAddModal] = useState(false);
-  // const addHandler = () => {
-  //   console.log("addhandler")
-  //   setAddModal(!addModal);
-  // }
+ 
 
 
   const [activeTab, setActiveTab] = useState('1');

@@ -4,7 +4,7 @@ import { Redirect, Route, useLocation } from "react-router-dom";
 
 const PublicRoutesTL = ({ component: Component, ...rest }) => {
 
-    const location = useLocation();
+  
     
     return (
         <Route

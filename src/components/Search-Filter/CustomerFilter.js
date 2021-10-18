@@ -32,7 +32,7 @@ function CustomerFilter(props) {
   const [store2, setStore2] = useState([]);
 const [loading, setLoading] = useState(false)
   var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
-  console.log("current_date :", current_date);
+  
   const [item] = useState(current_date);
 
 
@@ -42,7 +42,7 @@ const [loading, setLoading] = useState(false)
       axios
       .get(`${baseUrl}/customers/getCategory?pid=${selectedData}`)
       .then((res) => {
-        console.log(res);
+     
         if (res.data.code === 1) {
           setTax2(res.data.result);
         }
@@ -54,20 +54,20 @@ const [loading, setLoading] = useState(false)
 
   //handleCategory
   const handleCategory = (value) => {
-    console.log(`selected ${value}`);
+   
     setSelectedData(value);
     setStore2([]);
   };
 
   //handleSubCategory
   const handleSubCategory = (value) => {
-    console.log(`sub-cat ${value}`);
+    
     setStore2(value);
   };
 
   //reset category
   const resetCategory = () => {
-    console.log("resetCategory ..");
+    
     setSelectedData([]);
     setStore2([]);
     setTax2([]);
@@ -76,7 +76,7 @@ const [loading, setLoading] = useState(false)
 
   //reset date
   const resetData = () => {
-    console.log("resetData ..");
+
     reset();
     setSelectedData([]);
     setStore2([]);
@@ -96,7 +96,7 @@ const [loading, setLoading] = useState(false)
           }&status=${data.p_status}&pcat_id=${selectedData}`
         )
         .then((res) => {
-          console.log("myResult", res.data.result);
+          
           if (res.data.code === 1) {
             setLoading(false)
             if (res.data.result) {
@@ -119,7 +119,7 @@ const [loading, setLoading] = useState(false)
           }&status=${data.p_status}&pcat_id=${selectedData}`
         )
         .then((res) => {
-          console.log("myResult", res.data.result);
+
           if (res.data.code === 1) {
             setLoading(false)
             if (res.data.result) {
@@ -140,7 +140,7 @@ const [loading, setLoading] = useState(false)
           }&pcat_id=${selectedData}`
         )
         .then((res) => {
-          console.log("myResult", res.data.result);
+        
           if (res.data.code === 1) {
             setLoading(false)
             if (res.data.result) {
@@ -164,7 +164,7 @@ const [loading, setLoading] = useState(false)
           }&pcat_id=${selectedData}&status=${data.p_status}`
         )
         .then((res) => {
-          console.log("myResult", res.data.result);
+
           if (res.data.code === 1) {
             setLoading(false)
             if (res.data.result) {
@@ -188,7 +188,7 @@ const [loading, setLoading] = useState(false)
           }&status=${data.p_status}&pcat_id=${selectedData}`
         )
         .then((res) => {
-          console.log(res);
+         
           if (res.data.code === 1) {
             setLoading(false)
             if (res.data.result) {
@@ -212,7 +212,7 @@ const [loading, setLoading] = useState(false)
           }&status=${data.p_status}&pcat_id=${selectedData}`
         )
         .then((res) => {
-          console.log(res);
+        
           if (res.data.code === 1) {
             setLoading(false)
             if (res.data.result) {
@@ -235,7 +235,7 @@ const [loading, setLoading] = useState(false)
           }&status=2&pcat_id=${selectedData}`
         )
         .then((res) => {
-          console.log(res);
+         
           if (res.data.code === 1) {
             setLoading(false)
             if (res.data.result) {
@@ -258,7 +258,7 @@ const [loading, setLoading] = useState(false)
           }&status=3pcat_id=${selectedData}`
         )
         .then((res) => {
-          console.log(res);
+       
           if (res.data.code === 1) {
             setLoading(false)
             if (res.data.result) {
@@ -282,7 +282,7 @@ const [loading, setLoading] = useState(false)
           }&status=${data.p_status}&pcat_id=${selectedData}`
         )
         .then((res) => {
-          console.log(res);
+       
           if (res.data.code === 1) {
             setLoading(false)
             if (res.data.result) {
@@ -302,7 +302,7 @@ const [loading, setLoading] = useState(false)
           `${baseUrl}/tl/getUploadedProposals?cid=${JSON.parse(id)}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=${data.p_status}&pcat_id=${selectedData}`
         )
         .then((res) => {
-          console.log(res);
+        
           if (res.data.code === 1) {
             setLoading(false)
             if (res.data.result) {
@@ -321,7 +321,7 @@ const [loading, setLoading] = useState(false)
           `${baseUrl}/tl/getUploadedProposals?cid=${JSON.parse(id)}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=1&pcat_id=${selectedData}`
         )
         .then((res) => {
-          console.log(res);
+        
           if (res.data.code === 1) {
             setLoading(false)
             if (res.data.result) {
@@ -340,7 +340,7 @@ const [loading, setLoading] = useState(false)
           `${baseUrl}/tl/getUploadedProposals?cid=${JSON.parse(id)}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=2&pcat_id=${selectedData}`
         )
         .then((res) => {
-          console.log(res);
+      
           if (res.data.code === 1) {
             setLoading(false)
             if (res.data.result) {

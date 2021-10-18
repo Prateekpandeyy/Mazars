@@ -36,7 +36,7 @@ function PendingForProposals({ CountPendingProposal }) {
   const [modal, setModal] = useState(false);
 
   const toggle = (key) => {
-    console.log("key", key);
+   
     setModal(!modal);
 
     fetch(`${baseUrl}/customers/getQueryHistory?q_id=${key}`, {
@@ -47,7 +47,7 @@ function PendingForProposals({ CountPendingProposal }) {
     })
       .then((res) => res.json())
       .then((response) => {
-        console.log(response);
+     
         setHistory(response.result);
       })
       .catch((error) => console.log(error));
@@ -59,7 +59,7 @@ function PendingForProposals({ CountPendingProposal }) {
 
   const getPendingForProposals = () => {
     axios.get(`${baseUrl}/admin/pendingProposal`).then((res) => {
-      console.log(res);
+      
       if (res.data.code === 1) {
         setNonPendingData(res.data.result);
         setRecords(res.data.result.length);
@@ -85,7 +85,7 @@ function PendingForProposals({ CountPendingProposal }) {
       sort: true,
 
       formatter: function dateFormat(cell, row) {
-        console.log("dt", row.created);
+      
         var oldDate = row.created;
         if (oldDate == null) {
           return null;
@@ -97,11 +97,11 @@ function PendingForProposals({ CountPendingProposal }) {
       dataField: "assign_no",
       text: "Query No",
       formatter: function nameFormatter(cell, row) {
-        console.log(row);
+       
         return (
           <>
             <Link
-              // to={`/admin/queries/${row.id}`}
+          
               to={{
                 pathname: `/admin/queries/${row.id}`,
                 index: 2,
@@ -182,14 +182,6 @@ function PendingForProposals({ CountPendingProposal }) {
 
 
 
-  //change date format
-  function ChangeFormateDate(oldDate) {
-    console.log("date", oldDate);
-    if (oldDate == null) {
-      return null;
-    }
-    return oldDate.toString().split("-").reverse().join("-");
-  }
 
   return (
     <>
@@ -255,10 +247,3 @@ function PendingForProposals({ CountPendingProposal }) {
 }
 
 export default PendingForProposals;
-{
-  /* <td class="text-center">
-                      <p style={{ color: "green" }}>
-                        Query accepted by {p.tname}
-                      </p>
-                    </td> */
-}

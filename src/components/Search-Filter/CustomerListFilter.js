@@ -17,7 +17,7 @@ function CustomerListFilter(props) {
   const [item] = useState(current_date);
   
   const resetData = () => {
-    console.log("resetData ..");
+   
     reset();
    getCustomer();
   };
@@ -34,7 +34,7 @@ axios
   }&email=${data.email}&occupation=${data.occupation}&from=${data.p_dateFrom}&to=${data.p_dateTo}`
 )
 .then((res) => {
-  console.log("myResult", res.data.result);
+
   if (res.data.code === 1) {
     if (res.data.result) {
       setData(res.data.result);

@@ -36,7 +36,6 @@ function AdminHeader({ custUserId, adminUserId, TLuserId, TPuserId , feedbackNum
   var name = JSON.parse(nm);
   
 
-console.log("adminHeader", custUserId)
 
   const CustEmail = window.localStorage.getItem("custEmail");
   const adminEmail = window.localStorage.getItem("adminEmail");
