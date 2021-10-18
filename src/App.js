@@ -125,6 +125,7 @@ import TpMeetingComponent from './pages/TP/MeetingComponent/MeetingComponent'
 import TpViewNotification from './pages/TP/ViewNotification/ViewNotification'
 import TpRecording from './pages/TP/Recording/Recording'
 import TpReport from "./pages/TP/Report/Report";
+import TpInvoice from "./pages/TP/Invoice/Invoice.js";
 //private routes
 import PrivateRouteUser from './Service/PrivateRouteUser'
 import PrivateRouteAdmin from './Service/PrivateRouteAdmin'
@@ -269,6 +270,7 @@ function App() {
             <PrivateRouteTP exact path="/taxprofessional/view-notification/:id" component={TpViewNotification} />
             <PrivateRouteTP exact path="/taxprofessional/recording" component={TpRecording} />
             <PrivateRouteTP exact path="/taxprofessional/reports" component={TpReport}/>
+            <PrivateRouteTP exact path="/taxprofessional/tpinvoice" component={TpInvoice}/>
             <Route exact path="/*" component={PageNotFound} />
 
           </Switch>

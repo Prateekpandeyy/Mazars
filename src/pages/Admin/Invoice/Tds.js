@@ -9,11 +9,10 @@ import classNames from "classnames";
 import { useHistory } from "react-router";
 import { parseInt } from "lodash";
 import Swal from "sweetalert2";
-import { withSuccess } from "antd/lib/modal/confirm";
 
 function Tds (props)  {
   const history = useHistory();
-    const userid = window.localStorage.getItem("tlkey")
+    const userid = window.localStorage.getItem("adminkey")
     const f2 = useRef(null);
     const [sac33, setSac] = useState([])
     const [services2, setServices2] = useState();
@@ -32,9 +31,8 @@ function Tds (props)  {
    const [basicAmount, setBasicAmount] = useState()
    const [billNo, setBillNo] = useState();
    const [gstNum , setGstNum] = useState();
-   const [tdsR, setTdsR] = useState();
    const [disabled, setDisabled] = useState(false)
-  const [description, setDiscription] = useState()
+  
 
 var tdsRate = 10;
 const percent = {
@@ -60,8 +58,6 @@ const percent = {
     getDataild();
     }
     else {
-     
-      setTdsR(10)
       setCgetRate(18);
       setIgetRate(0);
       setSgetRate(0)
@@ -87,11 +83,10 @@ const getDataild = () => {
 
 if(res.data.payment_detail){
   res.data.payment_detail.map((i) => {
-  
+   
      setGstNum(i.gstin_no)
  setBillNo(i.billno)
- setDiscription(i.description)
-setTdsR(i.tds_rate)
+
  setBasicAmount(parseInt(i.paid_amount))
  setPocketExp(parseInt(i.opt_expenses));
  setCgstTotal(parseInt(i.cgst_amount));
@@ -116,7 +111,7 @@ const cgstFun = (e) => {
   let a = parseInt(basicAmount) + parseInt(pocketExp);
    let cget = parseInt(a * e.target.value / 100)
    setCgstTotal(parseInt(cget));
-   setGst(parseInt(Math.round(cget) + Math.round(igetTotal) + Math.round(sgetTotal)))
+   setGst(parseInt(cget + igetTotal + sgetTotal))
    setTotal(parseInt(cget + igetTotal + sgetTotal + a))
    setgrandTotal(parseInt(cget + sgetTotal + igetTotal + a - tds2))
 
@@ -128,7 +123,7 @@ const sgstFun = (e) => {
         let cget = parseInt(a * e.target.value / 100)
         setSgstTotal(parseInt(cget))
         setTotal(parseInt(cget + igetTotal + cgetTotal + a))
-        setGst(parseInt(Math.round(cget) + Math.round(igetTotal) + Math.round(cgetTotal)))
+        setGst(parseInt(cget + igetTotal + cgetTotal))
         setgrandTotal(parseInt(cget + igetTotal + cgetTotal + a - tds2))
  }
 // Igst tax function
@@ -137,14 +132,13 @@ const sgstFun = (e) => {
   let a = parseInt(basicAmount) + parseInt(pocketExp);
       let cget = parseInt(a * e.target.value / 100) 
          setIgstTotal(cget) 
-         setGst(parseInt(Math.round(cget) + Math.round(sgetTotal) + Math.round(cgetTotal)));
+         setGst(parseInt(cget + sgetTotal + cgetTotal));
          setTotal(parseInt(cget + sgetTotal + cgetTotal + a))
          setgrandTotal(parseInt(cget + cgetTotal + sgetTotal + a - tds2))
         
  }
  // Tds function
  const tdsFun = (e) => {
-   setTdsR(e.target.value)
   let a = parseInt(basicAmount) + parseInt(pocketExp);
    let cget = (a * e.target.value / 100)
       setTds(cget)
@@ -161,7 +155,7 @@ const sgstFun = (e) => {
    setIgstTotal(a * igetRate / 100);
    // })
  setGst((oldData) => {
-  return(parseInt(Math.round(a * cgetRate / 100)) + parseInt(Math.round(a * igetRate / 100)) + parseInt(Math.round(a * sgetRate / 100)))
+  return(parseInt(a * cgetRate / 100) + parseInt(a * igetRate / 100) + parseInt(a * sgetRate / 100))
  })
   setTotal((oldData) => {
     return(parseInt(a * cgetRate / 100) + parseInt(a * igetRate / 100) + parseInt(a * sgetRate / 100) + parseInt(a))
@@ -182,9 +176,9 @@ const basicFun = (e) => {
     setCgstTotal(a * cgetRate / 100);
    setSgstTotal(a * sgetRate / 100);
    setIgstTotal(a * igetRate / 100);
-   setGst((oldData) => {
-    return(parseInt(Math.round(a * cgetRate / 100)) + parseInt(Math.round(a * igetRate / 100)) + parseInt(Math.round(a * sgetRate / 100)))
-   })
+ setGst((oldData) => {
+  return(parseInt(a * cgetRate / 100) + parseInt(a * igetRate / 100) + parseInt(a * sgetRate / 100))
+ })
   setTotal((oldData) => {
     return(parseInt(a * cgetRate / 100) + parseInt(a * igetRate / 100) + parseInt(a * sgetRate / 100) + parseInt(a))
   })
@@ -202,7 +196,7 @@ const basicFun = (e) => {
        formData.append("tl_id", JSON.parse(userid));
          formData.append("id", props.id)
          formData.append("qno", props.report)
-         formData.append("description", description);
+         formData.append("description", services2);
          formData.append("serviceCode", sac33);
         formData.append("basic_amount", basicAmount);
         formData.append("cgst_rate", cgetRate);
@@ -215,7 +209,7 @@ const basicFun = (e) => {
       
         formData.append("igst_total", igetTotal)
         formData.append("total", total);
-        formData.append("tds_rate", tdsR);
+        formData.append("tds_rate", tdsRate);
         formData.append("gst", gst);
         formData.append("tds_total", tds2)
         formData.append("netpaid_amount", grandTotal)
@@ -233,14 +227,14 @@ const basicFun = (e) => {
                 html : "Invoice generated successfully",
                 icon : "success"
               })
-                history.push("/teamleader/tlinvoice")
+                history.push("/admin/adinvoice")
             }
           
         })
       
     }
   const serviceFun = (e) => {
-    setDiscription(e)
+    
    services.map((k) => {
     
 if(k.id == e) {
@@ -304,19 +298,16 @@ setServices2(k.service)
               <div className="col-md-6">
               <label>Descirption <span className="declined">*</span></label>
           <select 
-       //   defaultValue={description}
-       value={description}
            ref={register({ required: true })}
            name="description"
         style={{height : "33.5px"}}
           onChange = {(e) => serviceFun(e.target.value)}
           className={classNames("form-control", {
             "is-invalid": errors.p_name,
-            
           })}>
-              
+              <option value="">--select--</option>
           {services.map((i) => (
-               <option value={i.services} key={i.id} className="form-control"> {i.service}</option>
+               <option value={i.id} key={i.id} className="form-control"> {i.service}</option>
           ))}
             </select>
               </div>}
@@ -398,7 +389,7 @@ setServices2(k.service)
                     
                     name="sgst_total" 
                     disabled
-                    value={Math.round(sgetTotal)}/>
+                    value={Number(sgetTotal).toFixed(0)}/>
                           </div>
                   </div>
             
@@ -426,7 +417,7 @@ setServices2(k.service)
                     name="igst_total"
                     disabled
                     ref={register}
-                    value={Math.round(igetTotal)} />
+                    value={Number(igetTotal).toFixed(0)} />
                     </div>
                   </div>
                   </div>
@@ -469,7 +460,7 @@ setServices2(k.service)
                     disabled
                    
                     ref={register}
-                   value={Math.round(total)} />
+                   value={Number(total).toFixed(0)} />
                             </div>
                 </div>
            
@@ -487,7 +478,7 @@ setServices2(k.service)
                    
                     placeholder="Rate"
                     name="tds_rate"
-                    defaultValue={tdsR}
+                    defaultValue={tdsRate}
                     ref={register}
                     onChange= {(e) => tdsFun(e)} /> %
                      </div>
@@ -504,7 +495,7 @@ setServices2(k.service)
                     placeholder="Total"
                     name="tds_total"
                     disabled
-                    value={Math.round(tds2)} />
+                    value={Number(tds2).toFixed(0)} />
                     </div>
                    
             </div>
@@ -522,7 +513,7 @@ setServices2(k.service)
                     placeholder="Total"
                     name="tds_total"
                     disabled
-                  value={Math.round(grandTotal)} />
+                  value={Number(grandTotal).toFixed(0)} />
                     </div>
                    
             </div>

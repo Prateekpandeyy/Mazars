@@ -139,23 +139,39 @@ setModal(!modal)
             },
         },
         {
-            dataField : "tds",
+            dataField : "tds_amount",
             text : "Tds Deducted",
             style : {
                 fontSize : "11px"
             }, 
             headerStyle : () => {
                 return { fontSize : "11px", width : "100px"}
+            },
+            formatter : function(cell, row){
+                return(
+                    <>
+                    {row.is_paid == "1" ? 
+                    <p>{row.tds_amount}</p> : ""}
+                    </>
+                )
             }
         },
         {
-            dataField : "tds",
+            dataField : "amount",
             text : "Amount Paid",
             style : {
                 fontSize : "11px"
             }, 
             headerStyle : () => {
                 return { fontSize : "11px", width : "100px"}
+            },
+            formatter: function (cell,row){
+                return(
+                    <>
+                    {row.is_paid == "1" ? 
+                    <p>{row.amount}</p> : ""}
+                    </>
+                )
             }
         },
         
@@ -209,10 +225,9 @@ setModal(!modal)
                     color: "blue"
                 }}
                 onClick={() => openModal(row)}
-            ></i> : <p style={{backgroundColor : "red", color : "white"}}>Paid</p>}
+            ></i> :   <a href={row.receipt_url}>Payment receipt</a>}
               </>
-               : 
-               <a href={row.receipt_url}>Click to view payment receipt</a>}
+               : ""}
                 </>
                   
                    

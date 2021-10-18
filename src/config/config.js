@@ -23,5 +23,5 @@ export const baseUrl3 = "http://13.232.121.233/mazarsapi"
 
 
 // for server 
-//   export const baseUrl2 = "https://mazarsapi.multitvsolution.com"
-//   export const baseUrl3 = "https://mazarsapi.multitvsolution.com/mazarapi"
+  // export const baseUrl2 = "https://mazarsapi.multitvsolution.com"
+  // export const baseUrl3 = "https://mazarsapi.multitvsolution.com/mazarapi"
