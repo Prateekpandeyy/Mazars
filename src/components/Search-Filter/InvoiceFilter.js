@@ -13,8 +13,8 @@ const InvoiceFilter = (props) => {
   
     let formData = new FormData();
     formData.append("qno", data.query_no);
-    formData.append("from_date", data.p_dateFrom);
-    formData.append("to_date", data.p_dateTo);
+    formData.append("from", data.p_dateFrom);
+    formData.append("to", data.p_dateTo);
     formData.append("installment_no", data.installment_no)
 
     if(props.invoice == "generated"){
@@ -41,6 +41,54 @@ const InvoiceFilter = (props) => {
        }
       })
     }
+    else if (props.invoice == "tpcreate"){
+      axios({
+        method: "POST",
+        url: `${baseUrl}/admin/getPaymentDetail?tp_id=${props.userid}&invoice=0`,
+        data: formData,
+      })
+      .then((res) => {
+       if(res.data.code === 1){
+        props.setData(res.data.payment_detail);
+       }
+      })
+    }
+    else if(props.invoice == "tpgenerated"){
+      axios({
+        method: "POST",
+        url: `${baseUrl}/admin/getPaymentDetail?tp_id=${props.userid}&invoice=1`,
+        data: formData,
+      })
+      .then((res) => {
+       if(res.data.code === 1){
+        props.setData(res.data.payment_detail);
+       }
+      })
+    }
+    else if(props.invoice == "admingenerated"){
+      axios({
+        method: "POST",
+        url: `${baseUrl}/admin/getPaymentDetail?&invoice=1`,
+        data: formData,
+      })
+      .then((res) => {
+       if(res.data.code === 1){
+        props.setData(res.data.payment_detail);
+       }
+      })
+    }
+    else if (props.invoice == "admincreate"){
+      axios({
+        method: "POST",
+        url: `${baseUrl}/admin/getPaymentDetail?&invoice=0`,
+        data: formData,
+      })
+      .then((res) => {
+       if(res.data.code === 1){
+        props.setData(res.data.payment_detail);
+       }
+      })
+    } 
     
   }
   const resetData = () => {
@@ -88,7 +136,7 @@ const InvoiceFilter = (props) => {
                  name="p_dateFrom"
                  className="form-select form-control"
                  ref={register}
-                 max={item}
+               
                />
              </div>
 
@@ -103,7 +151,7 @@ const InvoiceFilter = (props) => {
                  className="form-select form-control"
                  ref={register}
                 defaultValue={item}
-                 max={item}
+               
                />
              </div>
 </div>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
 import { Link } from "react-router-dom";
@@ -6,20 +6,15 @@ import {
   Card,
   CardHeader,
   CardBody,
-  CardTitle,
-  Row,
-  Col,
-  Table,
 } from "reactstrap";
-
-
 import BootstrapTable from "react-bootstrap-table-next";
 import AdminFilter from "../../components/Search-Filter/AdminFilter";
 import Records from "../../components/Records/Records";
 import DiscardReport from "../../pages/Admin/AssignmentTab/DiscardReport";
+import { DataValue } from "../../pages/Admin/QueriesTab/QueriesTab";
 
 
-function AllQueriesData() {
+function AllQueriesData(props) {
 
   const [allQueriesData, setAllQueriesData] = useState([])
   const [records, setRecords] = useState([]);
@@ -35,16 +30,17 @@ function AllQueriesData() {
 
   useEffect(() => {
     getAllQueriesData();
-  }, []);
+  }, [props.allData]);
 
   const getAllQueriesData = () => {
     axios.get(`${baseUrl}/admin/getAllQueries`).then((res) => {
      
       if (res.data.code === 1) {
-        setAllQueriesData(res.data.result);
+       // setAllQueriesData(res.data.result);
         setRecords(res.data.result.length);
       }
     });
+    setAllQueriesData(props.allData)
   };
 
 
@@ -212,6 +208,7 @@ function AllQueriesData() {
 
   return (
     <>
+   
       <Card>
         <CardHeader>
           <AdminFilter
@@ -225,14 +222,15 @@ function AllQueriesData() {
         </CardHeader>
         <CardBody>
           <Records records={records} />
+         {allQueriesData != undefined ? 
           <BootstrapTable
-            bootstrap4
-            keyField="id"
-            data={allQueriesData}
-            columns={columns}
-            rowIndex
-            wrapperClasses="table-responsive"
-          />
+          bootstrap4
+          keyField="id"
+          data={allQueriesData}
+          columns={columns}
+          rowIndex
+          wrapperClasses="table-responsive"
+        /> : ""}
 
 
           <DiscardReport
@@ -249,16 +247,3 @@ function AllQueriesData() {
 }
 
 export default AllQueriesData;
-
-
-
-{/* <div class="row">
-            <div className="col-9">
-            </div>
-            <div className="col-3">
-              <div class="form-group">
-                <label className="form-select form-control"
-                >Total Records : 12</label>
-              </div>
-            </div>
-          </div> */}

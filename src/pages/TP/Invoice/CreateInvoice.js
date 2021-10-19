@@ -186,7 +186,7 @@ const CreateInvoice = () => {
                     <InvoiceFilter
                      setData={setProposal}
                      getData={getProposalList}
-                     invoice = "create" 
+                     invoice = "tpcreate" 
                      userid = {JSON.parse(userid)}/>
                     </CardHeader>
 

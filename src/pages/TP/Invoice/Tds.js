@@ -13,7 +13,7 @@ import { withSuccess } from "antd/lib/modal/confirm";
 
 function Tds (props)  {
   const history = useHistory();
-    const userid = window.localStorage.getItem("tlkey")
+    const userid = window.localStorage.getItem("tpkey")
     const f2 = useRef(null);
     const [sac33, setSac] = useState([])
     const [services2, setServices2] = useState();
@@ -166,7 +166,7 @@ const sgstFun = (e) => {
   setTotal((oldData) => {
     return(parseInt(Math.round(a * cgetRate / 100)) + parseInt(Math.round(a * igetRate / 100)) + parseInt(Math.round(a * sgetRate / 100)) + parseInt(a))
   })
-  }
+  
   setgrandTotal((oldData) => {
     return((parseInt(Math.round(a * cgetRate / 100)) + parseInt(Math.round(a * igetRate / 100)) + parseInt(Math.round(a * sgetRate / 100)) + parseInt(a)) - parseInt(a * tdsRate / 100))
   })
@@ -174,6 +174,7 @@ const sgstFun = (e) => {
     return(parseInt(Math.round(a * tdsRate / 100)))
   })
 }
+ }
 
 const basicFun = (e) => {
   let a = Math.round(parseInt(e.target.value) + parseInt(pocketExp));
@@ -188,13 +189,14 @@ const basicFun = (e) => {
   setTotal((oldData) => {
     return(parseInt(Math.round(a * cgetRate / 100)) + parseInt(Math.round(a * igetRate / 100)) + parseInt(Math.round(a * sgetRate / 100)) + parseInt(a))
   })
-  }
+  
   setgrandTotal((oldData) => {
     return((parseInt(Math.round(a * cgetRate / 100)) + parseInt(Math.round(a * igetRate / 100)) + parseInt(Math.round(a * sgetRate / 100)) + parseInt(a)) - parseInt(Math.round(a * tdsRate / 100)))
   })
   setTds((oldData) => {
     return(parseInt(Math.round(a * tdsRate / 100)))
   })
+}
 }
     const onSubmit= (value) => {
       
@@ -323,7 +325,7 @@ setServices2(k.service)
                   <div className="col-md-6">
                   <label>Basic Amount</label>
                     <input 
-                    type="text"
+                    type="number"
 
                     name="basic_amount"
                     ref={register({required : true})}
@@ -339,7 +341,7 @@ setServices2(k.service)
                </div>
                <div className="col-md-6">
                <input 
-                    type="text"
+                    type="number"
                     name="pocket_amount"
                     ref={register}
                     className="form-control"
@@ -354,7 +356,7 @@ setServices2(k.service)
              <div className="row">
              <div className="col-md-6" style={percent}>
               <input 
-                    type="text"
+                    type="number"
                     ref={register}
                     className="form-control"
                     
@@ -381,7 +383,7 @@ setServices2(k.service)
               <div className="row">
                   <div className="col-md-6" style={percent}>
                   <input 
-                    type="text"
+                    type="number"
                     className="form-control"
                     ref={register}
                     
@@ -408,7 +410,7 @@ setServices2(k.service)
               <div className="row">
               <div className="col-md-6" style={percent}>
                 <input 
-                    type="text"
+                    type="number"
                     className="form-control"
                   
                     placeholder="Rate"
@@ -482,7 +484,7 @@ setServices2(k.service)
                 
                    <div className="col-md-6"  style={percent}>
                    <input 
-                    type="text"
+                    type="number"
                     className="form-control"
                    
                     placeholder="Rate"

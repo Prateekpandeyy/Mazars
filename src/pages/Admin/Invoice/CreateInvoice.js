@@ -43,7 +43,7 @@ const CreateInvoice = () => {
 
     const getProposalList = () => {
         axios
-            .get(`${baseUrl}/admin/getPaymentDetail?tl_id=${JSON.parse(userid)}&invoice=0`)
+            .get(`${baseUrl}/admin/getPaymentDetail?&invoice=0`)
             .then((res) => {
                
                 if (res.data.code === 1) {
@@ -140,33 +140,6 @@ const CreateInvoice = () => {
         
        
        
-        {
-            text: "Action",
-            dataField: "",
-            headerStyle: () => {
-                return { fontSize: "12px", width: "110px" };
-            },
-            formatter: function (cell, row) {
-
-                return (
-                    
-                    <>
-                        <div style={{ display: "flex", justifyContent: "space-between" }}>
-                        <i
-                                            class="fa fa-mail-forward"
-                                            style={{
-                                                fontSize: "14px",
-                                                cursor: "pointer",
-                                                color : "blue",
-                                            }}
-                                            onClick = {() => addTdsToggle(row)} 
-                                        ></i>
-                           
-                        </div>
-                    </>
-                );
-            },
-        },
        
     ];
 
@@ -179,7 +152,7 @@ const CreateInvoice = () => {
                     <InvoiceFilter
                      setData={setProposal}
                      getData={getProposalList}
-                     invoice = "create" 
+                     invoice = "admincreate" 
                      userid = {JSON.parse(userid)}/>
                     </CardHeader>
 

@@ -10,7 +10,7 @@ import moment from "moment";
 import DescriptionOutlinedIcon from "@material-ui/icons/DescriptionOutlined";
 const Generated = () => {
     var rowStyle2 = {}
-    const userid = window.localStorage.getItem("tpkey");
+    const userid = window.localStorage.getItem("adminkey");
     const [records, setRecords] = useState([]);
     const [proposal, setProposal] = useState([]);
     const [count, setCount] = useState("");
@@ -43,7 +43,7 @@ const Generated = () => {
 
     const getProposalList = () => {
         axios
-            .get(`${baseUrl}/admin/getPaymentDetail?tp_id=${JSON.parse(userid)}&invoice=1`)
+            .get(`${baseUrl}/admin/getPaymentDetail?&invoice=1`)
             .then((res) => {
               
                 if (res.data.code === 1) {
@@ -167,17 +167,7 @@ const Generated = () => {
                   >
                          <DescriptionOutlinedIcon color="secondary" />
                               </a>
-                              {row.is_paid == "0" ? 
-                        <i
-                        class="fa fa-edit"
-                        style={{
-                            fontSize: "14px",
-                            cursor: "pointer",
-                            color : "blue",
-                        }}
-                       onClick = {() => addTdsToggle(row)} 
-                    ></i> : ""
-                        }
+                             
                         </div>
                       
                     </>
@@ -214,7 +204,7 @@ const Generated = () => {
                     <InvoiceFilter
                      setData={setProposal}
                      getData={getProposalList}
-                     invoice="generated" 
+                     invoice="admingenerated" 
                      userid = {JSON.parse(userid)}/>
                     </CardHeader>
 

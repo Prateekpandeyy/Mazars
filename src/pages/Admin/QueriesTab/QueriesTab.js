@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useLayoutEffect } from "react";
+import React, { useState, useEffect, useLayoutEffect , createContext} from "react";
 import Layout from "../../../components/Layout/Layout";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
@@ -9,12 +9,11 @@ import DeclinedQueries from "../../../components/DeclinedQueries/DeclinedQueries
 import AllQueriesData from "../../../components/AllQueriesData/AllQueriesData";
 import { Tab, Tabs, TabPanel, TabList } from "react-tabs";
 
-
 function QueriesTab(props) {
   
 
   const userid = window.localStorage.getItem("adminkey");
-
+  const [allData, setAllData] = useState()
   const [allQueriesCount, setAllQueriesCount] = useState("");
   const [pendingProposalCount, setPendingProposalCount] = useState("");
   const [declined, setDeclined] = useState("");
@@ -34,6 +33,7 @@ function QueriesTab(props) {
      
       if (res.data.code === 1) {
         setAllQueriesCount(res.data.result.length);
+        setAllData(res.data.result);
       }
     });
   };
@@ -93,6 +93,7 @@ function QueriesTab(props) {
 
   return (
     <Layout adminDashboard="adminDashboard" adminUserId={userid}>
+    
       <div>
         <Tabs selectedIndex={tabIndex} onSelect={(index) => setTabIndex(index)}>
           <TabList
@@ -118,7 +119,7 @@ function QueriesTab(props) {
           </TabList>
 
           <TabPanel>
-            <AllQueriesData />
+            <AllQueriesData allData={allData}/>
           </TabPanel>
 
           <TabPanel>
@@ -134,6 +135,7 @@ function QueriesTab(props) {
           </TabPanel>
         </Tabs>
       </div>
+     
     </Layout>
   );
 }

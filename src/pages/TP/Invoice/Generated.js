@@ -215,7 +215,7 @@ const Generated = () => {
                     <InvoiceFilter
                      setData={setProposal}
                      getData={getProposalList}
-                     invoice="generated" 
+                     invoice="tpgenerated" 
                      userid = {JSON.parse(userid)}/>
                     </CardHeader>
 
