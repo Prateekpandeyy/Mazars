@@ -104,23 +104,23 @@ function EditTL() {
   useEffect(() => {
     axios.get(`${baseUrl}/tl/AddTeamLead`).then((res) => {
       if (res.data.code === 1) {
-        console.log("myData", res.data.result)
+       
       }
       else {
-        console.log(res.data.result)
+       
       }
     })
   }, [])
   const getTeamLeader = () => {
     axios.get(`${baseUrl}/tl/getTeamLeader?id=${id}`).then((res) => {
-      console.log(res);
+     
       if (res.data.code === 1) {
         setValue(res.data.result[0]);
         setStore(res.data.result[0].pcat_id);
       }
     });
   };
-  console.log("value -", value.name);
+ 
   const data1 = value.name;
   const data2 = value.personal_email;
   const data3 = value.phone;
@@ -131,11 +131,11 @@ function EditTL() {
   const data8 = value.cat_id;
   const data9 = value.pcat_id;
  
-console.log(data2)
+
   useEffect(() => {
     const getCategory = () => {
       axios.get(`${baseUrl}/customers/getCategory?pid=0`).then((res) => {
-        console.log(res);
+       
         if (res.data.code === 1) {
           setTax(res.data.result);
         }
@@ -148,7 +148,7 @@ console.log(data2)
   useEffect(() => {
     const getSubCategory = () => {
       axios.get(`${baseUrl}/customers/getCategory?pid=${store}`).then((res) => {
-        console.log(res);
+       
         if (res.data.code === 1) {
           setTax2(res.data.result);
         }
@@ -210,7 +210,7 @@ console.log(data2)
         data: formData,
       })
         .then(function (response) {
-          console.log("res-", response);
+       
           if (response.data.code === 1) {
             setLoading(false)
             Swal.fire({
@@ -236,7 +236,7 @@ console.log(data2)
        
         })
         .catch((error) => {
-          console.log("erroror - ", error);
+         
         });
     }
   };
@@ -263,15 +263,15 @@ console.log(data2)
 
   // Phone Validation function 
   const phoneValidation = () => {
-    console.log(phone.length)
+   
     if (phone.length > 10) {
-      console.log(phone.length)
+     
       setNumAvail("")
       setNumExist("")
       setIndNumError("Maximum 10 digit should be enter")
     }
     else if (phone.length < 10) {
-      console.log(phone.length)
+     
       setNumAvail("")
       setNumExist("")
       setIndNumError("Minimum 10 digit should be enter")
@@ -311,7 +311,7 @@ console.log(data2)
   const category = (v) => {
    
     setCategoryData(v)
-    console.log("MyData", v)
+
     setError("")
     setCustcate(v)
 
@@ -329,7 +329,7 @@ console.log(data2)
 
     if (vv.length > 0) {
       if (vv.includes("1") && vv.includes("2")) {
-        console.log("hdd")
+      
       }
       else if (vv.includes("1")) {
 
@@ -358,7 +358,7 @@ console.log(data2)
  //eamil onchange
  const emailHandler = (e) => {
   setEmail(e.target.value);
-  console.log(e.target.value.length)
+ 
   if (e.target.value.length < 1) {
     setWemail("")
   }
@@ -381,7 +381,7 @@ const emailValidation = (key) => {
       data: formData,
     })
       .then(function (response) {
-        console.log("resEmail-", response);
+      
         if (response.data.code === 1) {
           setValiemail(response.data.result)
           setInvalid('')
@@ -391,7 +391,7 @@ const emailValidation = (key) => {
         }
       })
       .catch((error) => {
-        console.log("erroror - ", error);
+       
       });
   }
   else {
@@ -401,13 +401,13 @@ const emailValidation = (key) => {
 var e = 1;
 const defValue = () => {
   const data55 = data4.split(",")
-  console.log(data55)
+ 
    a = data55.map((i => ({
     "value" : ++e,
     "label" : i
   }) ))
 
-console.log(a)
+
 }
 const defSubValue = () => {
  var dir1;
@@ -425,7 +425,7 @@ const defSubValue = () => {
  indirvalue.map((o) => {
    allsubcatvalue.push(o)
  })
- console.log("data5", subcatgerydefvalue.direct)
+ 
  dir1 = subcatgerydefvalue.direct.map((i => ({
   "value" : ++d,
   "label" : i
@@ -435,8 +435,7 @@ dir2 = subcatgerydefvalue.indirect.map((i => ({
   "label" : i
 }) ))
 subdefval = [...dir1, ...dir2]
-console.log("directArray", subdefval)
-console.log("inArray", a)
+
 }
 
 

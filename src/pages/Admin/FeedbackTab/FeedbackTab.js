@@ -29,7 +29,7 @@ function FeedbackTab() {
 
   const getFeedback = () => {
     axios.get(`${baseUrl}/customers/getFeedback`).then((res) => {
-      console.log(res);
+     
       if (res.data.code === 1) {
         setFeedBackData(res.data.result);
        if(res.data.result != undefined){
@@ -69,7 +69,7 @@ function FeedbackTab() {
         return { fontSize: "12px", width: "40px" };
       },
       formatter: function nameFormatter(cell, row) {
-        console.log(row);
+        
         return <>{row.assign_no}</>;
       },
     },
@@ -81,7 +81,7 @@ function FeedbackTab() {
         return { fontSize: "12px", width: "150px" };
       },
       formatter: function nameFormatter(cell, row) {
-        console.log(row);
+        
         return (
           <>
             <div>
@@ -118,7 +118,7 @@ function FeedbackTab() {
   // readnotification
   const readNotification = (id) => {
 
-    console.log("call", id)
+  
     let formData = new FormData();
     formData.append("id", id);
     formData.append("type", "admin");
@@ -129,7 +129,7 @@ function FeedbackTab() {
       data: formData,
     })
       .then(function (response) {
-        console.log("res-", response)
+      
         if (response.data.code === 1) {
        
           getFeedback();
@@ -138,7 +138,7 @@ function FeedbackTab() {
     
       })
       .catch((error) => {
-        console.log("erroror - ", error);
+      
       });
   };
 

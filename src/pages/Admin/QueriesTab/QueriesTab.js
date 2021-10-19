@@ -11,7 +11,7 @@ import { Tab, Tabs, TabPanel, TabList } from "react-tabs";
 
 
 function QueriesTab(props) {
-  // console.log("queries tab: ", props);
+  
 
   const userid = window.localStorage.getItem("adminkey");
 
@@ -31,7 +31,7 @@ function QueriesTab(props) {
 
   const CountAllQuery = (data) => {
     axios.get(`${baseUrl}/admin/getAllQueries`).then((res) => {
-      console.log(res);
+     
       if (res.data.code === 1) {
         setAllQueriesCount(res.data.result.length);
       }
@@ -40,7 +40,7 @@ function QueriesTab(props) {
 
   const CountInprogressAllocation = () => {
     axios.get(`${baseUrl}/admin/pendingAllocation`).then((res) => {
-      console.log(res);
+     
       if (res.data.code === 1) {
         setInprogressAllocation(res.data.result.length);
       }
@@ -49,7 +49,7 @@ function QueriesTab(props) {
 
   const CountInprogressProposal = () => {
     axios.get(`${baseUrl}/admin/pendingProposal`).then((res) => {
-      console.log(res);
+     
       if (res.data.code === 1) {
         setPendingProposalCount(res.data.result.length);
       }
@@ -58,7 +58,7 @@ function QueriesTab(props) {
 
   const CountDeclined = () => {
     axios.get(`${baseUrl}/admin/declinedQueries`).then((res) => {
-      console.log(res);
+     
       if (res.data.code === 1) {
         setDeclined(res.data.result.length);
       }
@@ -140,22 +140,3 @@ function QueriesTab(props) {
 
 export default QueriesTab;
 
-
-
-  // const count_PFA = window.localStorage.getItem("count_PFA");
-
-  // const CountAllQuery = (data) => {
-  //   setAllQueriesCount(data);
-  // };
-
-  // const CountPendingProposal = (data) => {
-  //   setPendingProposalCount(data);
-  // };
-
-  // const CountPendingForPayment = (data) => {
-  //   setPendingforPayment(data);
-  // };
-
-  // const CountPendingForAllocation = (data) => {
-  //   setPendingforAllocation(data);
-  // };

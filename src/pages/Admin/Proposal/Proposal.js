@@ -24,13 +24,13 @@ function Proposal(props) {
       axios
         .get(`${baseUrl}/admin/getProposals`)
         .then((response) => {
-          console.log("code---", response);
+          
           if (response.data.code === 1) {
             setAllProposalCount(response.data.result.length);
           }
         })
         .catch((error) => {
-          console.log("error", error);
+          
         });
     };
 
@@ -38,13 +38,13 @@ function Proposal(props) {
       axios
         .get(`${baseUrl}/admin/getProposals?status1=2`)
         .then((response) => {
-          console.log("code---", response);
+          
           if (response.data.code === 1) {
             setAcceptedProposalCount(response.data.result.length);
           }
         })
         .catch((error) => {
-          console.log("error", error);
+          
         });
     };
 
@@ -52,13 +52,13 @@ function Proposal(props) {
       axios
         .get(`${baseUrl}/admin/getProposals?&status=6`)
         .then((response) => {
-          console.log("code---", response);
+          
           if (response.data.code === 1) {
             setDeclinedProposalCount(response.data.result.length);
           }
         })
         .catch((error) => {
-          console.log("error", error);
+          
         });
     };
 
@@ -66,13 +66,13 @@ function Proposal(props) {
       axios
         .get(`${baseUrl}/admin/getProposals?status1=1`)
         .then((response) => {
-          console.log("code---", response);
+          
           if (response.data.code === 1) {
             setPendingProposalCount(response.data.result.length);
           }
         })
         .catch((error) => {
-          console.log("error", error);
+          
         });
     };
 

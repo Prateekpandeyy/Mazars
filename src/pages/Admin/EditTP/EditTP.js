@@ -105,27 +105,27 @@ function EditTP() {
   }, [id]);
 
   useEffect(() => {
-    console.log("baseUrl", baseUrl)
+   
     axios.get(`${baseUrl}/tp/getTaxProfessional`).then((res) => {
       if (res.data.code === 1) {
-        console.log("myData", res.data.result)
+      
       }
       else {
-        console.log(res.data.result)
+        
       }
     })
   }, [])
   const getTeamLeader = () => {
    
     axios.get(`${baseUrl}/tl/getTeamLeader?id=${id}`).then((res) => {
-      console.log(res);
+     
       if (res.data.code === 1) {
         setValue(res.data.result[0]);
         setStore(res.data.result[0].pcat_id);
       }
     });
   };
-  console.log("value -", value.name);
+ 
   const data1 = value.name;
   const data2 = value.personal_email;
   const data3 = value.phone;
@@ -138,11 +138,11 @@ function EditTP() {
   const data10 = value.tl_id
   const data11 = value.tl_name
   const postEmmail = value.tl_post_email;
-  console.log(data2)
+ 
   useEffect(() => {
     const getCategory = () => {
       axios.get(`${baseUrl}/customers/getCategory?pid=0`).then((res) => {
-        console.log(res);
+       
         if (res.data.code === 1) {
           setTax(res.data.result);
         }
@@ -158,20 +158,20 @@ function EditTP() {
   const getTutorial = (id) => {
     TaxProffesionalService.get(id)
       .then((res) => {
-        console.log(res.data);
+       
         if (res.data.code === 1) {
           setValue(res.data.result[0]);
           setStore(res.data.result[0].pcat_id);
         }
       })
       .catch((e) => {
-        console.log(e);
+     
       });
   };
   useEffect(() => {
     const getSubCategory = () => {
       axios.get(`${baseUrl}/customers/getCategory?pid=${store}`).then((res) => {
-        console.log(res);
+        
         if (res.data.code === 1) {
           setTax2(res.data.result);
         }
@@ -183,7 +183,7 @@ function EditTP() {
   useEffect(() => {
     const getTeamLeader = () => {
       axios.get(`${baseUrl}/tl/getTeamLeader`).then((res) => {
-        console.log(res);
+        
         if (res.data.code === 1) {
           setTeamLeader(res.data.result);
         }
@@ -203,11 +203,7 @@ function EditTP() {
       categeryList.push(i.value)
       categeryName.push(i.label)
     })
-    // categoryData.map((i) => {
-    //   kk.push(i.value)
-    //   parentCategoryName.push(i.label)
-    // })
-    console.log("subData", subData)
+   
     if (custCate.length < 1 && data4.length < 1) {
       setError("Please select at least one value")
     }
@@ -260,12 +256,10 @@ function EditTP() {
         data: formData,
       })
         .then(function (response) {
-          console.log("res-", response);
+        
           if (response.data.code === 1) {
            setLoading(false)
-            // var variable = "Team Leader details updated successfully."
-            // Alerts.SuccessNormal(variable)
-           
+          
             Swal.fire({
               "title": "Success",
               "html": "Tax Professional details updated successfully",
@@ -287,7 +281,7 @@ function EditTP() {
        
         })
         .catch((error) => {
-          console.log("erroror - ", error);
+         
         });
     }
   };
@@ -314,15 +308,15 @@ function EditTP() {
 
   // Phone Validation function 
   const phoneValidation = () => {
-    console.log(phone.length)
+   
     if (phone.length > 10) {
-      console.log(phone.length)
+     
       setNumAvail("")
       setNumExist("")
       setIndNumError("Maximum 10 digit should be enter")
     }
     else if (phone.length < 10) {
-      console.log(phone.length)
+     
       setNumAvail("")
       setNumExist("")
       setIndNumError("Minimum 10 digit should be enter")
@@ -335,35 +329,7 @@ function EditTP() {
 
     else {
       setIndNumError("")
-      // let formData = new FormData();
-      // formData.append("phone", phone);
-      // formData.append("type", 2);
-      // axios({
-      //   method: "POST",
-      //   url: `${baseUrl}/customers/validateregistration`,
-      //   data: formData,
-      // })
-      //   .then(function (response) {
-      //     console.log("res-", response);
-      //     if (response.data.code === 1) {
-      //       // setValiphone(response.data.result)
-      //       console.log(response.data.result)
-      //       setNumExist('')
-      //       setNumAvail(response.data.result);
-
-      //     }
-      //     else if (response.data.code === 0) {
-      //       console.log(response.data.result)
-      //       setNumAvail('')
-      //       setNumExist(response.data.result)
-
-      //       console.log("mobile" + setNumExist)
-      //     }
-
-      //   })
-      //   .catch((error) => {
-      //     // console.log("erroror - ", error);
-      //   });
+     
     }
   }
 
@@ -379,20 +345,10 @@ function EditTP() {
   const category = (v) => {
     selectInputRef.current.select.clearValue();
     setCategoryData(v)
-    console.log("MyData", v)
     setError("")
     setCustcate(v)
 
-    // v.map((val) => {
-    //   vv.push(val.value)
-    //   setmcategory((oldData) => {
-    //     return [...oldData, val.value]
-    //   })
-    //   setmcatname((oldData) => {
-    //     return [...oldData, val.label]
-    //   })
-    //   setStore(val.value)
-    // })
+   
    
     setStore(v.value)
     vv.push(v.value);
@@ -403,7 +359,7 @@ function EditTP() {
     subdefval = {}
     if (vv.length > 0) {
       if (vv.includes("1") && vv.includes("2")) {
-        console.log("hdd")
+        
       }
       else if (vv.includes("1")) {
 
@@ -432,7 +388,7 @@ function EditTP() {
   //eamil onchange
   const emailHandler = (e) => {
     setEmail(e.target.value);
-    console.log(e.target.value.length)
+  
     if (e.target.value.length < 1) {
       setWemail("")
     }
@@ -449,68 +405,17 @@ function EditTP() {
       formData.append("email", email);
       formData.append("type", 1);
 
-      // axios({
-      //   method: "POST",
-      //   url: `${baseUrl}/customers/validateregistration`,
-      //   data: formData,
-      // })
-      //   .then(function (response) {
-      //     console.log("resEmail-", response);
-      //     if (response.data.code === 1) {
-      //       setValiemail(response.data.result)
-      //       setInvalid('')
-      //     } else if (response.data.code === 0) {
-      //       setInvalid(response.data.result)
-      //       setValiemail('')
-      //     }
-      //   })
-      //   .catch((error) => {
-      //     console.log("erroror - ", error);
-      //   });
+      
     }
     else {
       setWemail("Invalid email")
     }
   }
 
-  // tlFun Function
-//   const tlFun = (e) => {
-//     var a ;
-//   console.log("id", e)
- 
-//   teamleader.filter((p) => {
-   
-//     if(p.id == e){
-//    console.log(p.post_name)
-//    console.log("teamLeader", p.id)
-//      setTl(p.id)
-//      setPost_na(p.post_name)
-//     }
-//   })
-//  console.log("tlId", tl)
-//     let formData = new FormData()
-//     formData.append("post", post_na)
-//     axios({
-//       method  :"POST",
-//       url  : `${baseUrl}/admin/addTpPost?post=${post_na}`,
-//       data : formData
-//     })
-//     .then(function (response) {
-//       if(response.data.code === 1){
-//         setPost1(response.data.result)
-//       }
-//       else if(response.data.code === 0){
-//         console.log(response.data.result)
-//       }
-//     } )
-//     .catch((error) => {
-//       console.log("erroror - ", error);
-//     });
-//   }
+  
  const defSubValue = () => {
  var k;
  
-   console.log("done2")
    var subcatgerydefvalue = value.allcat_id.split(",");
    value.allpcat_id.includes("Indirect") === true  ? k = 8 : k = 2
  
@@ -518,7 +423,7 @@ function EditTP() {
    "value" : ++k,
    "label" : i
  }) ))
- console.log("subDefVal33", value.allpcat_id)
+ 
   }
  
  if(data5 != undefined){

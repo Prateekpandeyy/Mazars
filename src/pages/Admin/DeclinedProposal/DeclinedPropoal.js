@@ -36,7 +36,7 @@ function DeclinedProposal({ declinedProposal }) {
 
   const getDeclinedProposal = () => {
     axios.get(`${baseUrl}/admin/getProposals?&status=6`).then((res) => {
-      console.log(res);
+
       if (res.data.code === 1) {
         setProposalDisplay(res.data.result);
         setRecords(res.data.result.length);
@@ -72,7 +72,7 @@ function DeclinedProposal({ declinedProposal }) {
         return { fontSize: "11px" };
       },
       formatter: function dateFormat(cell, row) {
-        console.log("dt", row.created);
+
         var oldDate = row.created;
         if (oldDate == null) {
           return null;
@@ -90,7 +90,7 @@ function DeclinedProposal({ declinedProposal }) {
         return { fontSize: "11px" };
       },
       formatter: function nameFormatter(cell, row) {
-        console.log(row);
+      
         return (
           <>
             <Link
@@ -139,7 +139,7 @@ function DeclinedProposal({ declinedProposal }) {
         return { fontSize: "11px" };
       },
       formatter: function dateFormat(cell, row) {
-        console.log("dt", row.DateofProposal);
+      
         var oldDate = row.DateofProposal;
         if (oldDate == null) {
           return null;
@@ -158,7 +158,7 @@ function DeclinedProposal({ declinedProposal }) {
         return { fontSize: "11px" };
       },
       formatter: function dateFormat(cell, row) {
-        console.log("dt", row.cust_accept_date);
+     
         var oldDate = row.cust_accept_date;
         if (oldDate == null) {
           return null;

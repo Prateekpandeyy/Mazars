@@ -39,7 +39,7 @@ function QueryRejection(props) {
 
 
     const onSubmit = (value) => {
-        console.log("value :", value)
+      
         setLoading(true)
 
         let formData = new FormData();
@@ -52,7 +52,7 @@ function QueryRejection(props) {
             data: formData,
         })
             .then(function (response) {
-                console.log("res-", response);
+               
                 if (response.data.code === 1) {
                     setLoading(false)
                     Alerts.SuccessNormal("Query declined successfully.")
@@ -65,7 +65,7 @@ function QueryRejection(props) {
                 }
             })
             .catch((error) => {
-                console.log("erroror - ", error);
+                
             });
     };
 

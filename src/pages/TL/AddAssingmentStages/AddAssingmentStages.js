@@ -37,12 +37,10 @@ function AddAssingmentStages() {
     axios
       .get(`${baseUrl}/tl/getUploadedProposals?assign_no=${id}&uid=${JSON.parse(userid)}`)
       .then((res) => {
-        console.log(res);
-        console.log("dt -", res.data.result[0].client_discussion);
+       
 
         if (res.data.code === 1) {
-          console.log("ress2", res.data.result)
-          setAssignmentstages(res.data.result);
+            setAssignmentstages(res.data.result);
           reset(res.data.result[0]);
           setClientDiscussion(res.data.result[0].client_discussion)
         }
@@ -50,7 +48,7 @@ function AddAssingmentStages() {
   };
 
   const onSubmit = (value) => {
-    console.log(value);
+  
    
     if(assignmentStages[0].paid_status=='0' && value.other_stage=='completed')
     {    
@@ -81,7 +79,7 @@ function AddAssingmentStages() {
           data: formData,
         })
           .then(function (response) {
-            console.log("res-", response);
+           
             if (response.data.code === 1) {
               setLoading(false)
               Alerts.SuccessNormal("Assignment Stage updated successfully.")
@@ -92,7 +90,7 @@ function AddAssingmentStages() {
             }
           })
           .catch((error) => {
-            console.log("erroror - ", error);
+            
           });
       }
       else{
@@ -121,7 +119,7 @@ function AddAssingmentStages() {
         data: formData,
       })
         .then(function (response) {
-          console.log("res-", response);
+        
           if (response.data.code === 1) {
             setLoading(false)
             Alerts.SuccessNormal("Assignment Stage updated successfully.")
@@ -132,7 +130,7 @@ function AddAssingmentStages() {
           }
         })
         .catch((error) => {
-          console.log("erroror - ", error);
+       
         });
     }
   

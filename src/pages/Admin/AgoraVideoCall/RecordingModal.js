@@ -18,11 +18,10 @@ function RecordingModal({
     const { handleSubmit, register, errors } = useForm();
     const userId = window.localStorage.getItem("adminkey");
 
-    console.log("item", item)
+ 
 
     const { assign_no, id, username, start } = item
-    console.log("assign_no", username)
-
+  
 
     //submit
     const onSubmit = (value) => {
@@ -38,7 +37,7 @@ function RecordingModal({
             completeRecording = serverResponse;
         }
                 const { fileList } = serverResponse
-                console.log("fileList +++ ", completeRecording);
+              
         
                 let formData = new FormData();
                 formData.append("uid", JSON.parse(userId));
@@ -58,7 +57,7 @@ function RecordingModal({
             data: formData,
         })
             .then(function (response) {
-                console.log("res-", response);
+              
                 if (response.data.code === 1) {
                     toggle()
                     history.push('/admin/schedule');
@@ -70,7 +69,7 @@ function RecordingModal({
                 }
             })
             .catch((error) => {
-                console.log("erroror - ", error);
+               
             });
     };
     const exitBtn2 = () => {

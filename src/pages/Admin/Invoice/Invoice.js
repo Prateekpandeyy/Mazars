@@ -3,7 +3,7 @@ import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import Layout from "../../../components/Layout/Layout";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
-import createInvoice from "./Invoice";
+import CreateInvoice from "./CreateInvoice";
 import Generated from "./Generated";
 const InvoiceTab = () => {
     const userid = window.localStorage.getItem("adminkey")
@@ -49,7 +49,7 @@ return(
                     <Generated />
                     </TabPanel>
                     <TabPanel>
-                    <Invoice />
+                    <CreateInvoice />
                       
                     </TabPanel>
                     

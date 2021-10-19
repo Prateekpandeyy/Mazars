@@ -8,7 +8,7 @@ import DraftReport from "./DraftReport";
 import FinalReport from "./FinalReport";
 
 function AssignmentTab(props) {
-    // console.log("queries tab: ", props);
+ 
 
     const userid = window.localStorage.getItem("adminkey");
 
@@ -26,7 +26,7 @@ function AssignmentTab(props) {
 
     const CountAllAssignment = (data) => {
         axios.get(`${baseUrl}/tl/getAssignments`).then((res) => {
-            console.log(res);
+         
             if (res.data.code === 1) {
                 setAllAssignmentCount(res.data.result.length);
             }
@@ -35,7 +35,7 @@ function AssignmentTab(props) {
 
     const CountDraftReport = () => {
         axios.get(`${baseUrl}/tl/getAssignments?assignment_status=Draft_Report&stages_status=1`).then((res) => {
-            console.log(res);
+          ;
             if (res.data.code === 1) {
                 setDraft(res.data.result.length);
             }
@@ -44,7 +44,7 @@ function AssignmentTab(props) {
 
     const CountFinalReport = () => {
         axios.get(`${baseUrl}/tl/getAssignments?assignment_status=Delivery_of_report&stages_status=1`).then((res) => {
-            console.log(res);
+          ;
             if (res.data.code === 1) {
                 setFinal(res.data.result.length);
             }

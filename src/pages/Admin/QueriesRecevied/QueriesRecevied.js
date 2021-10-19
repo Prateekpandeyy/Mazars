@@ -16,7 +16,7 @@ import {
 import QueryDetails from "../../../components/QueryDetails/QueryDetails";
 
 function QueriesRecevied(props) {
-  console.log("props", props);
+ 
 
   const { id } = useParams();
   const history = useHistory();
@@ -69,12 +69,12 @@ function QueriesRecevied(props) {
   useEffect(() => {
     const getSubmittedAssingment = () => {
       axios.get(`${baseUrl}/tl/getQueryDetails?id=${id}`).then((res) => {
-        console.log("admin QD", res);
+       
         if (res.data.code === 1) {
 
           if (res.data.result) {
             if (res.data.result[0].name == null) {
-              console.log("null")
+             
             }
             else {
               setSubmitData(res.data.result);
@@ -102,7 +102,7 @@ function QueriesRecevied(props) {
           var purposeItem = res.data.result[0].purpose_opinion;
           var assementItem = res.data.result[0].assessment_year;
 
-          console.log("purposeItem-", typeof purposeItem);
+          
           try {
             var myPurpose = JSON.parse(purposeItem);
             var myYear = JSON.parse(assementItem);
@@ -163,7 +163,7 @@ function QueriesRecevied(props) {
     axios
       .get(`${baseUrl}/tl/GetAdditionalQueries?assignno=${assingNo}`)
       .then((res) => {
-        console.log(res);
+       
         if (res.data.code === 1) {
           setDisplayQuery(res.data.result);
         }

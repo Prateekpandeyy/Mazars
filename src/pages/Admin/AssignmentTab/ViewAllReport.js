@@ -46,30 +46,16 @@ const viewStyle = {
       data: formData,
     })
       .then(function (response) {
-        console.log("res-", response);
+       
         if (response.data.code === 1) {
           setData(response.data.result)
         }
       })
       .catch((error) => {
-        console.log("erroror - ", error);
+       
       });
   }
-  // const toggleDiscard = (id) => {
-  //   Swal.fire({
-  //     title: "Are you sure?",
-  //     text: "Do you want to discard ?",
-  //     type: "warning",
-  //     showCancelButton: true,
-  //     confirmButtonColor: "#3085d6",
-  //     cancelButtonColor: "#d33",
-  //     confirmButtonText: "Yes, discarded it!",
-  //   }).then((result) => {
-  //     if (result.value) {
-  //       deleteCliente(id);
-  //     }
-  //   });
-  // };
+ 
   return (
     <div>
       <Modal isOpen={reportModal} toggle={ViewReport} size="lg" scrollable>

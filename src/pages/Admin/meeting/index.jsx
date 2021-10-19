@@ -30,9 +30,7 @@ class Meeting extends React.Component {
   }
  
   render() {
-    console.log("channelid-",this.channel)
-    console.log("render")
-
+   
     return (
       
       <div className="wrapper meeting">

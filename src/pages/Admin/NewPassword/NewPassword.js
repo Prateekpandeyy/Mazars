@@ -62,7 +62,7 @@ function NewPassword(props) {
 
 
   const onSubmit = (value) => {
-    console.log("value :", value);
+  
     setLoading(true)
 
     let formData = new FormData();
@@ -77,7 +77,7 @@ function NewPassword(props) {
       data: formData,
     })
       .then(function (response) {
-        console.log("res-", response);
+      
         if (response.data.code === 1) {
           setLoading(false)
           var variable = "Password changed successfully."
@@ -90,7 +90,7 @@ function NewPassword(props) {
         }
       })
       .catch((error) => {
-        console.log("erroror - ", error);
+       
       });
   };
 

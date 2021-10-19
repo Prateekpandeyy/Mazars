@@ -48,7 +48,7 @@ function AllPayment() {
 
     const getPaymentStatus = () => {
         axios.get(`${baseUrl}/tl/getUploadedProposals`).then((res) => {
-            console.log(res);
+            
             if (res.data.code === 1) {
                 setPayment(res.data.result);
                 setPaymentCount(res.data.result.length);
@@ -59,7 +59,7 @@ function AllPayment() {
 
     const [modal, setModal] = useState(false);
     const toggle = (key) => {
-        console.log("key", key);
+      
         setModal(!modal);
 
         fetch(`${baseUrl}//admin/getPaymentDetail?id=${key}`, {
@@ -70,7 +70,7 @@ function AllPayment() {
         })
             .then((res) => res.json())
             .then((response) => {
-                console.log(response);
+               
                 setPay(response.payment_detail);
             })
             .catch((error) => console.log(error));
@@ -101,7 +101,7 @@ function AllPayment() {
                 return { fontSize: "11px" };
             },
             formatter: function dateFormat(cell, row) {
-                console.log("dt", row.query_created_date);
+              
                 var oldDate = row.query_created_date;
                 if (oldDate == null) {
                     return null;
@@ -119,7 +119,7 @@ function AllPayment() {
                 return { fontSize: "11px" };
             },
             formatter: function nameFormatter(cell, row) {
-                console.log(row);
+              
                 return (
                     <>
                         <Link
@@ -167,7 +167,7 @@ function AllPayment() {
                 return { fontSize: "11px" };
             },
             formatter: function dateFormat(cell, row) {
-                console.log("dt", row.cust_accept_date);
+               
                 var oldDate = row.cust_accept_date;
                 if (oldDate == null) {
                     return null;
@@ -260,7 +260,7 @@ function AllPayment() {
                 return { fontSize: "11px" };
             },
             formatter: function dateFormat(cell, row) {
-                console.log("dt", row.cust_paid_date);
+                
                 var oldDate = row.cust_paid_date;
                 if (oldDate == null) {
                     return null;

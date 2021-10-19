@@ -69,7 +69,7 @@ function Login(props) {
         }
       })
       .catch((error) => {
-        console.log("erroror - ", error);
+      
       });
   };
 

@@ -31,7 +31,7 @@ function ForgetPassword(props) {
   const [loading, setLoading] = useState(false);
 
   const onSubmit = (value) => {
-    console.log("value :", value);
+   
     setLoading(true)
 
     let formData = new FormData();
@@ -43,7 +43,7 @@ function ForgetPassword(props) {
       data: formData,
     })
       .then(function (response) {
-        console.log("res-", response);
+      
         if (response.data.code === 1) {
           setLoading(false)
           Alerts.SuccessNormal("As per your request , OTP has been sent to your email address.")
@@ -54,16 +54,16 @@ function ForgetPassword(props) {
         }
       })
       .catch((error) => {
-        console.log("erroror - ", error);
+        
       });
   };
 
   const valueHandler = () => {
     var item = props.location.email
 
-    console.log("item : ", item)
+    
     if (item == "null") {
-      console.log("item : ", item)
+     
     } else {
       return item
     }

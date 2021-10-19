@@ -29,7 +29,7 @@ function PendingRecevied() {
   useEffect(() => {
     const getSubmittedAssingment = () => {
       axios.get(`${baseUrl}/tl/GetQueryDetails?id=${id}`).then((res) => {
-        console.log(res);
+        
         if (res.data.code === 1) {
           setSubmitData(res.data.result);
           setDisplaySpecific(res.data.additional_queries);
@@ -42,13 +42,13 @@ function PendingRecevied() {
     getQuery();
   }, [assingNo]);
 
-  console.log(assingNo);
+ 
 
   const getQuery = () => {
     axios
       .get(`${baseUrl}/tl/GetAdditionalQueries?assignno=${assingNo}`)
       .then((res) => {
-        console.log(res);
+        
         if (res.data.code === 1) {
           setDisplayQuery(res.data.result);
         }
@@ -57,7 +57,7 @@ function PendingRecevied() {
 
      //change date format
      function ChangeFormateDate(oldDate) {
-      console.log("date", oldDate);
+     
       if (oldDate == null) {
         return null;
       }

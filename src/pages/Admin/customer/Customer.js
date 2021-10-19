@@ -35,7 +35,7 @@ function Customer() {
 
   const getCustomer = () => {
     axios.get(`${baseUrl}/admin/getAllList`).then((res) => {
-      console.log(res);
+     
       if (res.data.code === 1) {
         setData(res.data.result);
         setTpCount(res.data.result.length);
@@ -46,10 +46,10 @@ function Customer() {
  
 
   const toggle = (key) => {
-    console.log("key", key);
+   
     setModal(!modal);
     if(typeof(key) == "object") {
-      console.log("cancle")
+    
     }
     else{
       fetch(`${baseUrl}/admin/userhistory?id=${key}`, {
@@ -60,7 +60,7 @@ function Customer() {
       })
         .then((res) => res.json())
         .then((response) => {
-          console.log(response);
+          
           setHistory(response.result);
         })
         .catch((error) => console.log(error));
@@ -175,11 +175,11 @@ function Customer() {
 
   //check
   const show = (key) => {
-  console.log("showId", key)
+ 
     setModal(!modal);
 
    if(typeof(key) == "object") {
-     console.log("cancle")
+    
    }
    else{
     {
@@ -189,7 +189,7 @@ function Customer() {
         .then((response) => {
          
          if(response.data.code === 1){
-          console.log("response", response.data.result)
+        
            setHistory(response.data.result)
          }
         })
@@ -202,11 +202,11 @@ function Customer() {
 
   // delete data
   const deleteCliente = (id) => {
-    console.log("del", id);
+  
     axios
       .get(`${baseUrl}/tl/deleteTeamLeader?id=${id}`)
       .then(function (response) {
-        console.log("delete-", response);
+      
         if (response.data.code === 1) {
           Swal.fire("Deleted!", "Your file has been deleted.", "success");
           getCustomer();
@@ -215,7 +215,7 @@ function Customer() {
         }
       })
       .catch((error) => {
-        console.log("erroror - ", error);
+       
       });
   };
 

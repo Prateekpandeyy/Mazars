@@ -55,7 +55,7 @@ function FinalReport() {
 
   const getAssignmentData = () => {
     axios.get(`${baseUrl}/tl/getAssignments?assignment_status=Delivery_of_report&stages_status=1`).then((res) => {
-      console.log(res);
+    
       if (res.data.code === 1) {
         setAssignmentDisplay(res.data.result);
         setCountAssignment(res.data.result.length);
@@ -70,7 +70,7 @@ function FinalReport() {
       axios
         .get(`${baseUrl}/customers/getCategory?pid=${selectedData}`)
         .then((res) => {
-          console.log(res);
+        
           if (res.data.code === 1) {
             setTax2(res.data.result);
           }
@@ -81,20 +81,20 @@ function FinalReport() {
 
   //handleCategory
   const handleCategory = (value) => {
-    console.log(`selected ${value}`);
+    
     setSelectedData(value);
     setStore2([]);
   };
 
   //handleSubCategory
   const handleSubCategory = (value) => {
-    console.log(`selected ${value}`);
+  
     setStore2(value);
   };
 
   //reset category
   const resetCategory = () => {
-    console.log("resetCategory ..");
+   
     setSelectedData([]);
     setStore2([]);
     getAssignmentData();
@@ -102,7 +102,7 @@ function FinalReport() {
 
   //reset date
   const resetData = () => {
-    console.log("resetData ..");
+  
     reset();
     setStatus([]);
     setSelectedData([]);
@@ -112,7 +112,7 @@ function FinalReport() {
 
   //assingmentStatus
   const assingmentStatus = (value) => {
-    console.log(`selected ${value}`);
+    
     setStatus(value);
   };
  // View Report 
@@ -141,7 +141,7 @@ function FinalReport() {
         return { fontSize: "12px" };
       },
       formatter: function dateFormat(cell, row) {
-        console.log("dt", row.date_of_query);
+     
         var oldDate = row.date_of_query;
         if (oldDate == null) {
           return null;
@@ -156,7 +156,7 @@ function FinalReport() {
         return { fontSize: "12px" };
       },
       formatter: function nameFormatter(cell, row) {
-        console.log(row);
+      
         return (
           <>
             {/* <Link to={`/admin/queries/${row.q_id}`}>{row.assign_no}</Link> */}
@@ -234,7 +234,7 @@ function FinalReport() {
         return { fontSize: "12px" };
       },
       formatter: function dateFormat(cell, row) {
-        console.log("dt", row.Exp_Delivery_Date);
+    
         var oldDate = row.Exp_Delivery_Date;
         if (oldDate == null) {
           return null;
@@ -250,7 +250,7 @@ function FinalReport() {
         return { fontSize: "12px" };
       },
       formatter: function dateFormat(cell, row) {
-        console.log("dt", row.final_date);
+      
         var oldDate = row.final_date;
         if (oldDate == null || oldDate == "0000-00-00 00:00:00") {
           return null;
@@ -258,41 +258,7 @@ function FinalReport() {
         return oldDate.slice(0, 10).toString().split("-").reverse().join("-");
       },
     },
-    // {
-    //   text: "Deliverable",
-    //   dataField: "",
-    //   sort: true,
-    //   headerStyle: () => {
-    //     return { fontSize: "12px" };
-    //   },
-    //   formatter: function (cell, row) {
-    //     return (
-    //       <>
-    //         {!row.final_report == "" ? (
-    //           <div>
-    //             <a
-    //               href={`http://65.0.220.156/mazarapi/assets/upload/report/${row.assign_no}/${row.final_report}`}
-    //               target="_blank"
-    //             >
-    //               <i class="fa fa-file-text" style={{ fontSize: "16px" }}></i>{" "}
-    //               final
-    //             </a>
-    //           </div>
-    //         ) : row.assignement_draft_report ? (
-    //           <div>
-    //             <a
-    //               href={`http://65.0.220.156/mazarapi/assets/upload/report/${row.assign_no}/${row.assignement_draft_report}`}
-    //               target="_blank"
-    //             >
-    //               <i class="fa fa-file-text" style={{ fontSize: "16px" }}></i>{" "}
-    //               draft
-    //             </a>
-    //           </div>
-    //         ) : null}
-    //       </>
-    //     );
-    //   },
-    // },
+   
     {
       text: "Deliverable",
       dataField: "",
@@ -401,14 +367,13 @@ function FinalReport() {
     return style;
   }
   const onSubmit = (data) => {
-    console.log("data :", data);
-    console.log("selectedData :", selectedData);
+
     axios
       .get(
         `${baseUrl}/tl/getAssignments?assignment_status=Delivery_of_report&stages_status=1&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}`
       )
       .then((res) => {
-        console.log(res);
+      
         if (res.data.code === 1) {
           if (res.data.result) {
             setAssignmentDisplay(res.data.result);

@@ -15,14 +15,14 @@ function Reset() {
 
 
   const handleChange = (value) => {
-    console.log(`selected ${value}`);
+  
     setStore2(value);
   };
 
   useEffect(() => {
     const getTeamLeader = () => {
       axios.get(`${baseUrl}/tl/getTeamLeader?id=243`).then((res) => {
-        console.log(res);
+      
         setValue(res.data.result[0]);    
       });
     };
@@ -30,7 +30,7 @@ function Reset() {
     getTeamLeader();
   }, []);
 
-  console.log("value -", value.name);
+ 
   const data1 = value.name;
   const data2 = value.email;
   const data3 = value.phone;
@@ -42,7 +42,7 @@ function Reset() {
       axios
         .get(`${baseUrl}/customers/getCategory?pid=${store2}`)
         .then((res) => {
-          console.log(res);
+         
           if (res.data.code === 1) {
             setTax2(res.data.result);
           }
@@ -52,31 +52,9 @@ function Reset() {
   }, [store2]);
 
   const onFinish = (values) => {
-    console.log(values);
+   
 
-    // let formData = new FormData();
-    // formData.append("email", value.p_email);
-    // formData.append("name", value.p_name);
-    // formData.append("phone", value.p_phone);
-    // formData.append("pcat_id", value.p_tax);
-    // formData.append("cat_id", value.p_tax2);
-    // formData.append("id", id);
-
-    // axios({
-    //   method: "POST",
-    //   url: `${baseUrl}/tl/updateTeamLeader`,
-    //   data: formData,
-    // })
-    //   .then(function (response) {
-    //     console.log("res-", response);
-    //     if (response.data.code === 1) {
-    //       alert.success("TL updated  !");
-    //       history.goBack();
-    //     }
-    //   })
-    //   .catch((error) => {
-    //     console.log("erroror - ", error);
-    //   });
+  
   };
 
   if (!(data1 && data2 && data3 && data4 && data5)) return <p>loading</p>;
@@ -132,42 +110,7 @@ function Reset() {
 
           </Form>
 
-          {/* <Form name="nest-messages" onFinish={onFinish}>
-            <Form.Item name={["query", "name"]} label=" name">
-              <Input />
-            </Form.Item>
-            <Form.Item name={["query", "email"]} label="email ">
-              <Input defaultValue={data2} />
-            </Form.Item>
-
-            <Form.Item name={["query", "phone"]} label="phone">
-              <Input defaultValue={data3} />
-            </Form.Item>
-
-            <Form.Item name={["query", "pcat_1"]} label="Category">
-              <Select onChange={handleChange}>
-                <Option value="1">Direct</Option>
-                <Option value="2">InDirect</Option>
-              </Select>
-            </Form.Item>
-
-            <Form.Item name={["query", "cat_1"]} label="Sub-category">
-              <Select defaultValue={data5}>
-                <Option value="">--Select Sub-Category--</Option>
-                {tax2.map((p, index) => (
-                  <Option key={index} value={p.id}>
-                    {p.details}
-                  </Option>
-                ))}
-              </Select>
-            </Form.Item>
-
-            <Form.Item>
-              <Button type="primary" htmlType="submit">
-                Submit
-              </Button>
-            </Form.Item>
-          </Form> */}
+         
         </div>
       </>
     );
@@ -175,51 +118,3 @@ function Reset() {
 
 export default Reset;
 
-// <Option value="3">Assessment</Option>
-// <Option value="4">others</Option>
-
-// import React from "react";
-// import ReactDOM from "react-dom";
-// import Select from "react-select";
-// import { useForm, Controller } from "react-hook-form";
-// import { Checkbox, Input } from "@material-ui/core";
-// import { Input as AntdInput } from "antd";
-
-// import "./styles.css";
-
-// const App = () => {
-//   const { control, handleSubmit } = useForm();
-
-//   const onSubmit = data => {
-//     alert(JSON.stringify(data));
-//   };
-
-//   return (
-//     <form onSubmit={handleSubmit(onSubmit)}>
-
-//       <label>Ice Cream Preference</label>
-//       <Controller
-//         name="iceCreamType"
-//         as={Select}
-//         options={[
-//           { value: "chocolate", label: "Chocolate" },
-//           { value: "strawberry", label: "Strawberry" },
-//           { value: "vanilla", label: "Vanilla" }
-//         ]}
-//         control={control}
-//         defaultValue={[{ value: "vanilla", label: "Vanilla" }]}
-//       />
-
-//       <input type="submit" />
-//     </form>
-//   );
-// };
-
-// const rootElement = document.getElementById("root");
-
-// ReactDOM.render(
-//   <React.StrictMode>
-//     <App />
-//   </React.StrictMode>,
-//   rootElement
-// );

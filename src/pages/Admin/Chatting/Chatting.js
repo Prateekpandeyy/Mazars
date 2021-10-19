@@ -34,7 +34,7 @@ const Schema = yup.object().shape({
 
 function Chatting(props) {
 
-  console.log("props", props)
+ 
 
   const alert = useAlert();
   const history = useHistory();
@@ -53,7 +53,7 @@ function Chatting(props) {
 
 
   useEffect(() => {
-    console.log("useEffect", props)
+
     const dataItem = props.location.obj
 
     if (dataItem) {
@@ -68,7 +68,7 @@ function Chatting(props) {
 
 
   const onSubmit = (value) => {
-    console.log("value :", value);
+    
     setLoading(true)
     let formData = new FormData();
     formData.append("uid", JSON.parse(userId));
@@ -83,7 +83,7 @@ function Chatting(props) {
       data: formData,
     })
       .then(function (response) {
-        console.log("res-", response);
+      
         if (response.data.code === 1) {
           reset();
           setLoading(false)
@@ -95,7 +95,7 @@ function Chatting(props) {
         }
       })
       .catch((error) => {
-        console.log("erroror - ", error);
+       
       });
   };
 
@@ -224,33 +224,3 @@ function Chatting(props) {
 }
 
 export default Chatting;
-
-
-{/* <select
-                    class="form-control"
-                    name="p_sms_type"
-                    ref={register}
-                    value={query_No}
-                  >
-                    <option value="">--select--</option>
-                    <option value="1">Information</option>
-                    <option value="2">Proposal Discussion</option>
-                    <option value="3">Assignment Discussion</option>
-                  </select> */}
-
-                    // useEffect(() => {
-  //   const getQuery = () => {
-  //     axios.get(`${baseUrl}/customers/getAssignedAssignments?user=${JSON.parse(userId)}
-  //     &type=1`)
-  //       .then((res) => {
-  //         console.log(res);
-  //         if (res.data.code === 1) {
-  //           // setAssingment(res.data.result);
-  //         }
-  //       });
-  //   };
-
-  //   getQuery();
-  // }, []);
-    // const dataItem = props.location.obj
-  // const { message_type, query_id, query_No, routes } = dataItem

@@ -17,7 +17,7 @@ import {
 function History({ history,toggle,modal }) {
   //change date format
   function ChangeFormateDate(oldDate) {
-    // console.log("date", oldDate);
+   
     if (oldDate == null) {
       return null;
     }

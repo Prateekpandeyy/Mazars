@@ -49,7 +49,7 @@ const history = useHistory()
     const getCategory = async () => {
       await axios.get(`${baseUrl}/customers/getCategory?pid=0`).then((res) => {
         if (res.data.code === 1) {
-          console.log(res.data.result)
+       
           setTax(res.data.result);
         }
       });
@@ -96,7 +96,7 @@ const history = useHistory()
     axios
       .get(`${baseUrl}/tp/getTaxProfessional?tl_id=${taxId}`)
       .then((res) => {
-        console.log(res);
+      
         if (res.data.code === 1) {
           setData2(res.data.result);
          
@@ -175,7 +175,7 @@ const history = useHistory()
   window.location.assign(`${baseUrl}/report/generateReport`)
    })
    .catch((error) => {
-     console.log("erroror - ", error);
+  
    });
     }
 
@@ -199,7 +199,7 @@ let cc = []
   setmcatname(cc)
       if (vv.length > 0) {
         if (vv.includes("1") && vv.includes("2")) {
-          console.log("hdd")
+       
         }
         else if (vv.includes("1")) {
   
@@ -229,7 +229,7 @@ let cc = []
 
     // Sub Category Function 
     const subCategory22 = (e) => {
-      console.log("categoryData", dd)
+  
       subCategeryData(e)
       setCustcate2(e)
       setError2("")
@@ -244,12 +244,12 @@ let cc = []
   const teamLeader = (a) => {
  let tk = []
     a.map((i) => {
-      console.log(i.value)
+    
       setTaxId(i.value) 
      tk.push(i.value)
     })
     setTeamleader44(tk)
-    console.log("kk")
+  
   }
   const taxProfessional = (e) => {
     let kk2 = []

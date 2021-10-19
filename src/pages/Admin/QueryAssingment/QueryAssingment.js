@@ -65,7 +65,6 @@ function QueryAssingment(props) {
 
 
   var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
-  console.log("current_date :", current_date);
   const [item] = useState(current_date);
 
   useEffect(() => {
@@ -75,7 +74,7 @@ function QueryAssingment(props) {
 
   const getTaxLeader = () => {
     axios.get(`${baseUrl}/tl/getTeamLeader`).then((res) => {
-      console.log(res);
+      
       if (res.data.code === 1) {
         setTaxLeaderDisplay(res.data.result);
       }
@@ -84,7 +83,7 @@ function QueryAssingment(props) {
 
   const getQueryData = () => {
     axios.get(`${baseUrl}/tl/GetQueryDetails?id=${id}`).then((res) => {
-      console.log(res);
+      
       if (res.data.code === 1) {
         setQuerData({
           queryNo: res.data.result[0].assign_no,
@@ -104,7 +103,7 @@ function QueryAssingment(props) {
     axios
       .get(`${baseUrl}/tl/CheckIfAssigned?assignno=${queryNo}`)
       .then((res) => {
-        console.log(res);
+        
         if (res.data.code === 1) {
           setQuery(false);
           setHideQuery({
@@ -118,18 +117,18 @@ function QueryAssingment(props) {
   };
 
   const handleChange = (e) => {
-    console.log("val-", e.target.value);
+   
     setTeamID(e.target.value);
     var value = taxLeaderDisplay.filter(function (item) {
       return item.id == e.target.value;
     });
-    console.log(value[0].name);
+    
     setTeamName(value[0].name);
   };
 
   const onSubmit = (value) => {
     setLoading(true)
-    console.log("value :", value);
+  
     var expdeliverydate = value.p_expdeldate.replace(
       /(\d\d)\/(\d\d)\/(\d{4})/,
       "$3-$1-$2"
@@ -153,7 +152,7 @@ function QueryAssingment(props) {
       data: formData,
     })
       .then(function (response) {
-        console.log("res-", response);
+     
         if (response.data.code === 1) {
           setLoading(false)
           var variable = "Query assigned successfully."
@@ -168,12 +167,12 @@ function QueryAssingment(props) {
         }
       })
       .catch((error) => {
-        console.log("erroror - ", error);
+        
       });
   };
 
   const expectedDeliveryDate = (key) => {
-    console.log("timlines : ", key);
+  
 
     const d = new Date();
 
@@ -183,18 +182,18 @@ function QueryAssingment(props) {
         d2.getFullYear() + "-" + (d2.getMonth() + 1) + "-" + d2.getDate();
       // d2.getDate() + "/" + (d2.getMonth() + 1) + "/" + d2.getFullYear();
 
-      console.log("Urgent:", new_date);
+     
       setExpectedDate(new_date);
     } else if (key == "Regular (10-12 Working Days)") {
       const d2 = new Date(d.getTime() + 1296000000);
       const new_date =
         d2.getFullYear() + "-" + (d2.getMonth() + 1) + "-" + d2.getDate();
-      console.log("regular:", new_date);
+     
       setExpectedDate(new_date);
     }
   };
 
-  console.log("expectedDate", expectedDate)
+
 
   return (
     <Layout adminDashboard="adminDashboard" adminUserId={userId}>

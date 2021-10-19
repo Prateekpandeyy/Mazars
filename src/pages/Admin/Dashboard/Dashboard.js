@@ -76,7 +76,7 @@ function Dashboard() {
       axios
         .get(`${baseUrl}/admin/totalComplete`)
         .then((response) => {
-          console.log("code---", response);
+       
           if (response.data.code === 1) {
             setAllQueries({
               total: response.data.result.total,
@@ -101,7 +101,7 @@ function Dashboard() {
           }
         })
         .catch((error) => {
-          console.log("error", error);
+         
         });
     };
 
@@ -109,7 +109,7 @@ function Dashboard() {
       axios
         .get(`${baseUrl}/admin/getAssignmentsCount`)
         .then((response) => {
-          console.log("code---", response);
+         
           if (response.data.code === 1) {
             setAssignment({
               inprogress: response.data.result.inprogress,
@@ -124,7 +124,7 @@ function Dashboard() {
           }
         })
         .catch((error) => {
-          console.log("error", error);
+         
         });
     };
 
@@ -132,7 +132,7 @@ function Dashboard() {
       axios
         .get(`${baseUrl}/admin/getAssignmentsPaymentCount`)
         .then((response) => {
-          console.log("code---", response);
+        
           if (response.data.code === 1) {
             setPayment({
               paid: response.data.result.paid,
@@ -141,7 +141,7 @@ function Dashboard() {
           }
         })
         .catch((error) => {
-          console.log("error", error);
+         
         });
     };
 
@@ -150,7 +150,7 @@ function Dashboard() {
     getAssignment();
   }, []);
 
-  console.log("declined", declined)
+  
 
   return (
     <Layout adminDashboard="adminDashboard" adminUserId={userId}>

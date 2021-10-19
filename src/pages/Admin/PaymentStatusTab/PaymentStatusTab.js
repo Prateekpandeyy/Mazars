@@ -31,7 +31,7 @@ function PaymentStatus(props) {
     axios
       .get(`${baseUrl}/tl/getUploadedProposals`)
       .then((res) => {
-        console.log(res);
+     
         if (res.data.code === 1) {
           setAllPayment(res.data.result.length);
         }
@@ -42,7 +42,7 @@ function PaymentStatus(props) {
     axios
       .get(`${baseUrl}/tl/getUploadedProposals?status=1`)
       .then((res) => {
-        console.log(res);
+     
         if (res.data.code === 1) {
           setPaid(res.data.result.length);
         }
@@ -53,7 +53,7 @@ function PaymentStatus(props) {
     axios
       .get(`${baseUrl}/tl/getUploadedProposals?status=2`)
       .then((res) => {
-        console.log(res);
+     
         if (res.data.code === 1) {
           setUnpaid(res.data.result.length);
         }
