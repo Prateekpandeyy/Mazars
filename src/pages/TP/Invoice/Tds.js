@@ -9,7 +9,7 @@ import classNames from "classnames";
 import { useHistory } from "react-router";
 import { parseInt } from "lodash";
 import Swal from "sweetalert2";
-import { withSuccess } from "antd/lib/modal/confirm";
+import './porposalStyle.css';
 
 function Tds (props)  {
   const history = useHistory();
@@ -336,7 +336,7 @@ setServices2(k.service)
                     </div> 
             </div>
            <div className="row my-2">
-             <div className="col-md-6">
+             <div className="col-md-6 headCenter">
                <h5>Out of Pocket Expenses</h5>
                </div>
                <div className="col-md-6">
@@ -352,7 +352,7 @@ setServices2(k.service)
              </div>
             <div className="row my-2">
               <div className="col-md-4">
-              <h4>CGST</h4>
+              <h5>CGST</h5>
              <div className="row">
              <div className="col-md-6" style={percent}>
               <input 
@@ -379,7 +379,7 @@ setServices2(k.service)
                  </div>
                   </div>
                   <div className="col-md-4">
-                  <h4>SGST/UTGST </h4>
+                  <h5>SGST/UTGST </h5>
               <div className="row">
                   <div className="col-md-6" style={percent}>
                   <input 
@@ -406,7 +406,7 @@ setServices2(k.service)
             
                   </div>
                   <div className="col-md-4">
-              <h4>IGST</h4>
+              <h5>IGST</h5>
               <div className="row">
               <div className="col-md-6" style={percent}>
                 <input 
@@ -437,8 +437,8 @@ setServices2(k.service)
           <hr/>
           
             <div className="row my-2">
-                <div className="col-md-4">
-                  <h4>Total GST</h4>
+                <div className="col-md-4 headCenter">
+                  <h5>Total GST</h5>
                     </div>
                     <div className="col-md-4">
                         </div>
@@ -457,8 +457,8 @@ setServices2(k.service)
                 </div>
                 <hr/>
                 <div className="row my-2">
-                <div className="col-md-8">
-                  <h4>Total Invoice Amount</h4>
+                <div className="col-md-8 headCenter">
+                  <h5>Total Invoice Amount</h5>
                     </div>
                    
                         <div className="col-md-4">
@@ -476,8 +476,8 @@ setServices2(k.service)
                 </div>
            
             <div className="row my-2">
-              <div className="col-md-4 my-1">
-              <h4>TDS </h4>
+              <div className="col-md-4 my-1 headCenter">
+              <h5>TDS </h5>
                   </div>
                 <div className="col-md-4 my-1">
                <div className = "row">
@@ -511,8 +511,8 @@ setServices2(k.service)
                    
             </div>
             <div className="row my-2">
-              <div className="col-md-6 my-1">
-              <h4>Net Payable Amount</h4>
+              <div className="col-md-6 my-1 headCenter">
+              <h5>Net Payable Amount</h5>
                   </div>
                   <div className="col-md-2 my-1"></div>
                    
