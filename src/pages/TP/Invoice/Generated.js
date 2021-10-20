@@ -49,7 +49,7 @@ const Generated = () => {
               
                 if (res.data.code === 1) {
                     setProposal(res.data.payment_detail);
-                   
+                    setRecords(res.data.payment_detail.length)
                 }
             });
     };
@@ -216,6 +216,8 @@ const Generated = () => {
                      setData={setProposal}
                      getData={getProposalList}
                      invoice="tpgenerated" 
+                     setRec={setRecords}
+                     records={records}
                      userid = {JSON.parse(userid)}/>
                     </CardHeader>
 

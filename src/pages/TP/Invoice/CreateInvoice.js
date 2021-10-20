@@ -55,7 +55,7 @@ const CreateInvoice = () => {
                
                 if (res.data.code === 1) {
                     setProposal(res.data.payment_detail);
-                   
+                    setRecords(res.data.payment_detail.length)
                 }
             });
     };
@@ -187,6 +187,8 @@ const CreateInvoice = () => {
                      setData={setProposal}
                      getData={getProposalList}
                      invoice = "tpcreate" 
+                     setRec={setRecords}
+                     records={records}
                      userid = {JSON.parse(userid)}/>
                     </CardHeader>
 

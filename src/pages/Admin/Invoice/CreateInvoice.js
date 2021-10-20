@@ -19,7 +19,7 @@ const CreateInvoice = () => {
     const [billNo, setBillNo] = useState()
     const [id2, setId2] = useState()
     const [gstNo, setGstinNo] = useState();
- 
+    const [records, setRecords] = useState([]);
    const addTdsToggle = (key) => {
       
      setGstinNo(key.gstin_no);
@@ -48,7 +48,7 @@ const CreateInvoice = () => {
                
                 if (res.data.code === 1) {
                     setProposal(res.data.payment_detail);
-                   
+                    setRecords(res.data.payment_detail.length)
                 }
             });
     };
@@ -152,6 +152,8 @@ const CreateInvoice = () => {
                     <InvoiceFilter
                      setData={setProposal}
                      getData={getProposalList}
+                     setRec={setRecords}
+                     records={records}
                      invoice = "admincreate" 
                      userid = {JSON.parse(userid)}/>
                     </CardHeader>
