@@ -166,7 +166,7 @@ function Paid() {
                 <>
                     <Link
                         to={{
-                            pathname: `/admin/queries/${row.assign_id}`,
+                            pathname: `/customer/queries/${row.assign_id}`,
                             routes: "paymentstatus",
                         }}
                     >

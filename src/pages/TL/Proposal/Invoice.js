@@ -62,7 +62,8 @@ const Invoice = () => {
                
                 if (res.data.code === 1) {
                     setProposal(res.data.payment_detail);
-                   
+                  
+                  setRecords(res.data.payment_detail.length)
                 }
             });
     };
@@ -193,6 +194,8 @@ const Invoice = () => {
                     <InvoiceFilter
                      setData={setProposal}
                      getData={getProposalList}
+                     setRec={setRecords}
+                     records={records}
                      invoice = "create" 
                      userid = {JSON.parse(userid)}/>
                     </CardHeader>

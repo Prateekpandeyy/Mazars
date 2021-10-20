@@ -59,7 +59,7 @@ const Generated = () => {
               
                 if (res.data.code === 1) {
                     setProposal(res.data.payment_detail);
-                   
+                    console.log(res.data.payment_detail.length)
                 }
             });
     };

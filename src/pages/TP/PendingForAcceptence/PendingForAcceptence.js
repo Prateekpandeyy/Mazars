@@ -12,9 +12,10 @@ import TaxProfessionalFilter from "../../../components/Search-Filter/tpfilter";
 import RejectedModal from "./RejectedModal";
 import Alerts from "../../../common/Alerts";
 import { Spinner } from 'reactstrap';
-
+import { useHistory } from "react-router";
 
 function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
+  let history = useHistory();
   const userid = window.localStorage.getItem("tpkey");
   const [loading, setLoading] = useState(false);
 
@@ -209,8 +210,10 @@ function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
         if (response.data.code === 1) {
           setLoading(false)
           Alerts.SuccessNormal("Query accepted successfully.")
+          
           getPendingforAcceptance();
-          updateTab(1);
+         // updateTab(1);
+         history.push("/proposal")
         } else if (response.data.code === 0) {
           setLoading(false)
         }

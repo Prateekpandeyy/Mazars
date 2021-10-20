@@ -26,6 +26,7 @@ const InvoiceFilter = (props) => {
       .then((res) => {
        if(res.data.code === 1){
         props.setData(res.data.payment_detail);
+        props.setRecords(res.data.payment_detail.length)
        }
       })
     }
@@ -38,6 +39,7 @@ const InvoiceFilter = (props) => {
       .then((res) => {
        if(res.data.code === 1){
         props.setData(res.data.payment_detail);
+       props.setRecords(res.data.payment_detail.length)
        }
       })
     }
@@ -50,6 +52,7 @@ const InvoiceFilter = (props) => {
       .then((res) => {
        if(res.data.code === 1){
         props.setData(res.data.payment_detail);
+       props.setRecords(res.data.payment_detail.length)
        }
       })
     }
@@ -62,6 +65,7 @@ const InvoiceFilter = (props) => {
       .then((res) => {
        if(res.data.code === 1){
         props.setData(res.data.payment_detail);
+        props.setRecords(res.data.payment_detail.length)
        }
       })
     }
@@ -74,6 +78,7 @@ const InvoiceFilter = (props) => {
       .then((res) => {
        if(res.data.code === 1){
         props.setData(res.data.payment_detail);
+        props.setRecords(res.data.payment_detail.length)
        }
       })
     }
@@ -86,6 +91,7 @@ const InvoiceFilter = (props) => {
       .then((res) => {
        if(res.data.code === 1){
         props.setData(res.data.payment_detail);
+        props.setRecords(res.data.payment_detail.length)
        }
       })
     } 
@@ -163,7 +169,12 @@ const InvoiceFilter = (props) => {
           <div className="mt-3">
           <button className="btn btn-success" type="submit">Search</button>
            <button className="btn btn-primary mx-2" onClick={() => resetData()}>Reset</button>
+           <div class="form-group mx-sm-1  mb-2">
+                  <label className="form-select form-control"
+                  >Total Records : {props.records}</label>
+                </div>
           </div>
+         
         </form>
        </>
     )

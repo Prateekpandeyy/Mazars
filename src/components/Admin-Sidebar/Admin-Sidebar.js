@@ -100,10 +100,7 @@ const getFeedbacktp = () => {
 useState(() => {
   getFeedbacktp();
 }, [TPDashboard])
-const show = () => {
- 
-    setOpen(true);
-}
+
 const handleClick = () => {
 
   setOpen(!open);
