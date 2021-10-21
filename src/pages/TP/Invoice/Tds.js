@@ -87,7 +87,7 @@ const getDataild = () => {
 
 if(res.data.payment_detail){
   res.data.payment_detail.map((i) => {
-  
+    setSac(i.serviceCode)
      setGstNum(i.gstin_no)
  setBillNo(i.billno)
  setDiscription(i.description)
@@ -245,7 +245,7 @@ const basicFun = (e) => {
     setDiscription(e)
    services.map((k) => {
     
-if(k.id == e) {
+if(k.service == e) {
 setSac(k.sac)
 setServices2(k.service)
 }
@@ -316,7 +316,7 @@ setServices2(k.service)
             "is-invalid": errors.p_name,
             
           })}>
-              
+               <option value="">please select value</option>
           {services.map((i) => (
                <option value={i.services} key={i.id} className="form-control"> {i.service}</option>
           ))}

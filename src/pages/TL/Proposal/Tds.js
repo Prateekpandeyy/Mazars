@@ -60,7 +60,7 @@ const percent = {
     getDataild();
     }
     else {
-     
+   
       setTdsR(10)
       setCgetRate(18);
       setIgetRate(0);
@@ -87,7 +87,7 @@ const getDataild = () => {
 
 if(res.data.payment_detail){
   res.data.payment_detail.map((i) => {
-  
+  setSac(i.serviceCode)
      setGstNum(i.gstin_no)
  setBillNo(i.billno)
  setDiscription(i.description)
@@ -245,7 +245,7 @@ const basicFun = (e) => {
     setDiscription(e)
    services.map((k) => {
     
-if(k.id == e) {
+if(k.service == e) {
 setSac(k.sac)
 setServices2(k.service)
 }
@@ -293,7 +293,7 @@ setServices2(k.service)
          ref={register}
          name="bill_no"
          value={billNo}
-         disabled = {disabled}
+         disabled 
          className="form-control"
          onChange= {(e) => (setBillNo(e.target.value) + "/id")}
           />
@@ -316,7 +316,7 @@ setServices2(k.service)
             "is-invalid": errors.p_name,
             
           })}>
-              
+              <option value="">please select value</option>
           {services.map((i) => (
                <option value={i.services} key={i.id} className="form-control"> {i.service}</option>
           ))}
@@ -352,7 +352,7 @@ setServices2(k.service)
              </div>
             <div className="row my-2">
               <div className="col-md-4">
-              <h5>CGST</h5>
+              <h6>CGST</h6>
              <div className="row">
              <div className="col-md-6" style={percent}>
               <input 
@@ -379,7 +379,7 @@ setServices2(k.service)
                  </div>
                   </div>
                   <div className="col-md-4">
-                  <h5>SGST/UTGST </h5>
+                  <h6>SGST/UTGST </h6>
               <div className="row">
                   <div className="col-md-6" style={percent}>
                   <input 
@@ -406,7 +406,7 @@ setServices2(k.service)
             
                   </div>
                   <div className="col-md-4">
-              <h5>IGST</h5>
+              <h6>IGST</h6>
               <div className="row">
               <div className="col-md-6" style={percent}>
                 <input 

@@ -164,14 +164,14 @@ function Paid() {
             console.log(row);
             return (
                 <>
-                    <Link
-                        to={{
-                            pathname: `/customer/queries/${row.assign_id}`,
-                            routes: "paymentstatus",
-                        }}
-                    >
-                        {row.assign_no}
-                    </Link>
+                       <Link
+                            to={{
+                                pathname: `/customer/my-assingment/${row.assign_id}`,
+                                routes: "paymentstatus",
+                            }}
+                        >
+                            {row.assign_no}
+                        </Link>
                 </>
             );
         },

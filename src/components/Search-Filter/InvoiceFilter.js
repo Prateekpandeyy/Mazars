@@ -33,7 +33,7 @@ const InvoiceFilter = (props) => {
     else if (props.invoice == "create"){
       axios({
         method: "POST",
-        url: `${baseUrl}/admin/getPaymentDetail?tl_id=${props.userid}&invoice=0`,
+        url: `${baseUrl}/admin/getPaymentDetail?tl_id=${props.userid}&invoice=0&ststus=${data.opt}`,
         data: formData,
       })
       .then((res) => {
@@ -117,7 +117,8 @@ const InvoiceFilter = (props) => {
                    <div className="col-md-2">
                   <select
                    ref={register}
-                    className="form-control"
+                    className="form-select form-control"
+                    style={{ height: "33px" }}
                     name="installment_no">
                       <option value="">Please select installment</option>
                      <option value="1">1</option>
@@ -167,12 +168,28 @@ const InvoiceFilter = (props) => {
                       
            </div>
           <div className="mt-3">
-         
-           <div class="form-group mx-sm-1  mb-2 d-flex">
-           <button className="btn btn-success" type="submit">Search</button>
-           <button className="btn btn-primary mx-2" onClick={() => resetData()}>Reset</button>
-                  <label className="form-select form-control"
+        
+           <div class="form-group mx-sm-1  mb-2 d-flex w-100">
+         <div className="row">
+        <div className="col-md-4">
+        <select name="opt" className="form-select form-control" ref={register}  style={{ height: "33px" }}>
+        <option value="">Please select </option>
+           <option value="1">Create Invoice</option>
+           <option value="2">Generated</option>
+           <option value="3">Declined</option>
+           </select>
+          </div> 
+           <div className="col-md-3 d-flex">
+           <button className="btn btn-success" type="submit"  style={{ height: "33px" }}>Search</button>
+           <button className="btn btn-primary mx-2" onClick={() => resetData()}  style={{ height: "33px" }}>Reset</button>
+           </div>
+                 <div className="col-md-5 d-flex justify-content-center">
+                 <span style={{display : "flex"}}>
+                 <label className="form-select form-control"
                   >Total Records : {props.records}</label>
+                 </span>
+                   </div>
+           </div>
                 </div>
           </div>
          

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import CommonServices from "../../common/common";
-import { baseUrl } from "../../config/config";
+import { baseUrl, baseUrl3 } from "../../config/config";
 
 
 function ProposalDetails({
@@ -211,12 +211,14 @@ function ProposalDetails({
                         <th>No of Installments</th>
                         <th>Installment Amount</th>
                         <th>Due Dates</th>
+                      
                       </tr>
                       <tr>
                         <td>{payment_terms}</td>
                         <td>{no_of_installment}</td>
                         <td>{installAmount(installment_amount)}</td>
                         <td>{installAmount(due_date)}</td>
+                        <td>{}</td>
                       </tr>
                     </td>
                     :
@@ -249,12 +251,23 @@ function ProposalDetails({
               <td>
                 <tr>
                   <th>Date</th>
-                  <th>Amount</th>
+                 
+                    <th>Payable Amount</th>
+                    <th>Tds</th>
+                    <th>Action</th>
                 </tr>
                 {paymentDetails.map((pay, i) => (
                   <tr>
-                    <td>{CommonServices.removeTime(pay.payment_date)}</td>
-                    <td>{pay.paid_amount}</td>
+                   {pay.is_paid == "0" ? <td></td> : 
+                   <td>{CommonServices.removeTime(pay.payment_date)}</td>}
+                  
+                    <td>{pay.payable_amount}</td>
+                    <td>{pay.tds_amount}</td>
+                    <td>
+                    <a href={`${baseUrl3}/${pay.invoice}`} target="_blank"> Click to view</a>
+                   {pay.is_paid == "0" ? 
+                   "": 
+                   <a href={pay.paymenturl}>Click to view</a>} </td>
                   </tr>
                 ))}
               </td>
