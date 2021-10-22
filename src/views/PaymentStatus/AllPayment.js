@@ -316,7 +316,7 @@ function Paid() {
       text: "Action",
       dataField: "",
       style: {
-        fontSize: "11px",
+        fontSize: "11px", display:"flex", justifyContent : "flex-start"
       },
       headerStyle: () => {
         return { fontSize: "11px", width: "90px" };
@@ -324,12 +324,12 @@ function Paid() {
       formatter: function (cell, row) {
         return (
           <>
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
+           
               <div>
                 {
                   row.paid_status == "0" ?
                     <div
-                      style={{ cursor: "pointer" }}
+                      style={{ cursor: "pointer", margin: "0 3px" }}
                       title="Pay Amount"
                      >
                         <Link
@@ -353,13 +353,25 @@ function Paid() {
 
               <div>
                 {
-                  row.paid_amount > 0 ?
-                    <div style={{ cursor: "pointer" }} title="Payment History">
-                      <i
+                  row.paid_amount > 0 && row.paid_status > 0 ?
+                    <div style={{ cursor: "pointer", margin: "0 5px" }} title="Payment History">
+                   <Link
+                  to={{
+                    pathname: `/customer/paydetails/${row.assign_id}`,
+                    obj: {
+                      message_type: "5",
+                      query_No: row.assign_no,
+                      query_id: row.q_id,
+                      routes: `/customer/payment`
+                    }
+                  }}
+                >
+                                   <i
                         class="fa fa-credit-card"
                         style={{ color: "green", fontSize: "16px" }}
-                        onClick={() => toggle(row.assign_id)}
+                       
                       ></i>
+                      </Link>    
                     </div>
                     :
                     null
@@ -367,7 +379,7 @@ function Paid() {
               </div>
 
 
-              <div title="Send Message">
+              <div title="Send Message" style={{pointer : "cursor", margin: "0 5px"}}>
                 <Link
                   to={{
                     pathname: `/customer/chatting/${row.assign_id}`,
@@ -389,7 +401,7 @@ function Paid() {
                   ></i>
                 </Link>
               </div>
-              <div title="View Discussion Message">
+              <div title="View Discussion Message" style={{pointer : "cursor", margin: "0 5px"}}>
                 <i
                   class="fa fa-comments-o"
                   style={{
@@ -402,8 +414,7 @@ function Paid() {
               </div>
 
 
-            </div>
-
+          
           </>
         );
       },

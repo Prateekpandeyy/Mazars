@@ -16,7 +16,7 @@ const InvoiceFilter = (props) => {
     formData.append("from", data.p_dateFrom);
     formData.append("to", data.p_dateTo);
     formData.append("installment_no", data.installment_no)
-
+    formData.append("status", data.opt)
     if(props.invoice == "generated"){
       axios({
         method: "POST",
@@ -169,21 +169,24 @@ const InvoiceFilter = (props) => {
            </div>
           <div className="mt-3">
         
-           <div class="form-group mx-sm-1  mb-2 d-flex w-100">
+           <div class="form-group mx-sm-1  mb-2">
          <div className="row">
-        <div className="col-md-4">
+      {props.invoice =="tpcreate" || props.invoice == "admincreate" || props.invoice == "create" ? "" :
+        <div className="col-md-2">
         <select name="opt" className="form-select form-control" ref={register}  style={{ height: "33px" }}>
-        <option value="">Please select </option>
-           <option value="1">Create Invoice</option>
-           <option value="2">Generated</option>
-           <option value="3">Declined</option>
+        <option value="">Select </option>
+           <option value="0">Unpaid</option>
+           <option value="1">Paid</option>
+           <option value="2">Declined</option>
            </select>
-          </div> 
-           <div className="col-md-3 d-flex">
-           <button className="btn btn-success" type="submit"  style={{ height: "33px" }}>Search</button>
+          </div> }
+           <div className="col-md-3">
+         
+          <button className="btn btn-success" type="submit"  style={{ height: "33px" }}>Search</button>
            <button className="btn btn-primary mx-2" onClick={() => resetData()}  style={{ height: "33px" }}>Reset</button>
-           </div>
-                 <div className="col-md-5 d-flex justify-content-center">
+            </div>
+        
+                 <div className="col-md-4">
                  <span style={{display : "flex"}}>
                  <label className="form-select form-control"
                   >Total Records : {props.records}</label>

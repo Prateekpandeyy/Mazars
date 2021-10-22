@@ -225,7 +225,10 @@ setModal(!modal)
                     color: "blue"
                 }}
                 onClick={() => openModal(row)}
-            ></i> :   <a href={row.receipt_url}>Payment receipt</a>}
+            ></i> :   <>
+            {row.is_paid == "1" ?  <a href={row.receipt_url}>Payment receipt</a> 
+            : <p style={{fontWieght: "800", fontSize: "16px", padding: "5px", color : "red"}}>Declined</p> }
+            </>}
               </>
                : ""}
                 </>

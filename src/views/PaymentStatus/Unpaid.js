@@ -307,7 +307,7 @@ function Paid() {
       text: "Action",
       dataField: "",
       style: {
-        fontSize: "11px",
+        fontSize: "11px", display:"flex", justifyContent : "flex-start"
       },
       headerStyle: () => {
         return { fontSize: "11px", width: "90px" };
@@ -315,56 +315,70 @@ function Paid() {
       formatter: function (cell, row) {
         return (
           <>
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
-
+           
               <div>
                 {
                   row.paid_status == "0" ?
-                  <div
-                  style={{ cursor: "pointer" }}
-                  title="Pay Amount"
-                 >
-                    <Link
-              to={{
-                pathname: `/customer/paydetails/${row.assign_id}`,
-                obj: {
-                  message_type: "5",
-                  query_No: row.assign_no,
-                  query_id: row.q_id,
-                  routes: `/customer/payment`
-                }
-              }}
-            >
-                                      <PaymentIcon color="primary" />
-                  </Link>
-                </div>
+                    <div
+                      style={{ cursor: "pointer", margin: "0 3px" }}
+                      title="Pay Amount"
+                     >
+                        <Link
+                  to={{
+                    pathname: `/customer/paydetails/${row.assign_id}`,
+                    obj: {
+                      message_type: "5",
+                      query_No: row.assign_no,
+                      query_id: row.q_id,
+                      routes: `/customer/payment`
+                    }
+                  }}
+                >
+                                          <PaymentIcon color="primary" />
+                      </Link>
+                    </div>
                     :
                     null
                 }
               </div>
 
-              {
-                row.paid_amount > 0 ? <div style={{ cursor: "pointer" }} title="Payment History">
-                  <i
-                    class="fa fa-credit-card"
-                    style={{ color: "green", fontSize: "16px" }}
-                    onClick={() => toggle(row.assign_id)}
-                  ></i>
-                </div>
-                  :
-                  null
-              }
+              <div>
+                {
+                  row.paid_amount > 0 && row.paid_status > 0 ?
+                    <div style={{ cursor: "pointer", margin: "0 5px" }} title="Payment History">
+                   <Link
+                  to={{
+                    pathname: `/customer/paydetails/${row.assign_id}`,
+                    obj: {
+                      message_type: "5",
+                      query_No: row.assign_no,
+                      query_id: row.q_id,
+                      routes: `/customer/payment`
+                    }
+                  }}
+                >
+                                   <i
+                        class="fa fa-credit-card"
+                        style={{ color: "green", fontSize: "16px" }}
+                       
+                      ></i>
+                      </Link>    
+                    </div>
+                    :
+                    null
+                }
+              </div>
 
 
-              <div title="Send Message">
+              <div title="Send Message" style={{pointer : "cursor", margin: "0 5px"}}>
                 <Link
                   to={{
                     pathname: `/customer/chatting/${row.assign_id}`,
                     obj: {
-                      message_type: "2",
+                      message_type: "5",
                       query_No: row.assign_no,
                       query_id: row.q_id,
-                      routes: `/customer/proposal`
+                      routes: `/customer/payment`
                     }
                   }}
                 >
@@ -378,7 +392,7 @@ function Paid() {
                   ></i>
                 </Link>
               </div>
-              <div title="View Discussion Message">
+              <div title="View Discussion Message" style={{pointer : "cursor", margin: "0 5px"}}>
                 <i
                   class="fa fa-comments-o"
                   style={{
@@ -389,7 +403,9 @@ function Paid() {
                   onClick={() => ViewDiscussionToggel(row.assign_no)}
                 ></i>
               </div>
-            </div>
+
+
+          
           </>
         );
       },

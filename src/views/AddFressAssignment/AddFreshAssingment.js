@@ -129,6 +129,7 @@ function AddFreshAssingment(props) {
         .post(`${baseUrl}/customers/PostQuestion`, formData, {
           headers: {
             "content-type": "multipart/form-data",
+            'Authorization': 'JWT fefege...'
           },
         })
         .then(function (response) {

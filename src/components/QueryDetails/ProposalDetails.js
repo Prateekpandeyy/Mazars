@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import CommonServices from "../../common/common";
 import { baseUrl, baseUrl3 } from "../../config/config";
-
+import DescriptionOutlinedIcon from "@material-ui/icons/DescriptionOutlined";
 
 function ProposalDetails({
   diaplayProposal,
@@ -264,10 +264,20 @@ function ProposalDetails({
                     <td>{pay.payable_amount}</td>
                     <td>{pay.tds_amount}</td>
                     <td>
-                    <a href={`${baseUrl3}/${pay.invoice}`} target="_blank"> Click to view</a>
+                    <a href={`${baseUrl3}/${pay.invoice}`} target="_blank"> <span title="View Invoice">
+                    <DescriptionOutlinedIcon color="secondary" />
+                    </span></a>
                    {pay.is_paid == "0" ? 
-                   "": 
-                   <a href={pay.paymenturl}>Click to view</a>} </td>
+                   "": <>
+                  
+                      <a href={pay.paymenturl} target="_blank">
+                    <span title="view receipt" style={{margin: "0 2px"}}>
+                    <i 
+                   className="fa fa-eye"
+                   style={{color : "green", 
+                   fontSize : "16px", 
+                   pointer : "cursor"}}>
+                     </i></span></a> </>} </td>
                   </tr>
                 ))}
               </td>

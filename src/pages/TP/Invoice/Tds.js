@@ -174,7 +174,7 @@ const sgstFun = (e) => {
     return(parseInt(Math.round(a * tdsRate / 100)))
   })
 }
- }
+}
 
 const basicFun = (e) => {
   let a = Math.round(parseInt(e.target.value) + parseInt(pocketExp));

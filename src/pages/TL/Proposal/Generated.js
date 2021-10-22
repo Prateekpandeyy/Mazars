@@ -162,7 +162,27 @@ const Generated = () => {
             },
         }, 
         
-       
+        {
+            text: "Status",
+            dataField: "",
+            sort: true,
+            style: {
+                fontSize: "11px",
+            },
+            headerStyle: () => {
+                return { fontSize: "11px" };
+            },
+            formatter : function(cell, row) {
+                return(
+                    <>
+                    {row.is_paid == "0" ? <p>Unpaid</p> : 
+                    <>
+                    {row.is_paid == "1" ? <p>Paid</p> : <p>Declined</p>}
+                    </>}
+                    </>
+                )
+            }
+        }, 
         {
             text: "Action",
             dataField: "",
@@ -172,7 +192,7 @@ const Generated = () => {
             formatter: function (cell, row) {
                 return (
                     <>
-                        <div style={{ display: "flex", justifyContent: "space-evenly" }}>
+                       <div style={{ display: "flex", alignItems:"center" }}>
                         <a
                     href={`${baseUrl3}/${row.invoice}`}
                     target="_blank"
@@ -183,7 +203,8 @@ const Generated = () => {
                         <i
                         class="fa fa-edit"
                         style={{
-                            fontSize: "14px",
+                            fontSize: "16px",
+                            margin: "0 5px",
                             cursor: "pointer",
                             color : "blue",
                         }}
@@ -203,19 +224,25 @@ const Generated = () => {
         var warningDate = moment(row.due_date).subtract(5, 'day').toDate();
         // var warnformat = warningDate.format("YYYY-MM-DD");
         var aa = moment().toDate();
-       
-   
-        if(row.paid_status != "2" && row.status != "Complete" && warningDate < aa)  {
+         var cc = moment(row.due_date).toDate();
+        
+         if(row.paid_status != "2" && row.is_paid != "1" && cc < aa){
+            style.backgroundColor = "#bfdfd2";
+          style.color = "#000111"
+        }
+       else if(row.paid_status != "2" && row.is_paid != "1" && row.status != "Complete" && warningDate < aa)  {
           style.backgroundColor = "#c1d8f2";
           style.color = "#000111"
         }
-        else if(row.paid_status != "2" && warningDate > aa){
+       
+        else if(row.paid_status != "2" && row.is_paid != "1" && warningDate > aa){
           style.backgroundColor = "#fff";
           style.color = "#000"
         }
       
         return style;
       }
+  
     
     return (
 

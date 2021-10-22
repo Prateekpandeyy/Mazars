@@ -199,7 +199,7 @@ function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
     formData.append("tp_id", JSON.parse(userid));
     formData.append("assignment_id", key.id);
     formData.append("allocation_id", key.allocation_id);
-
+   
     axios({
       method: "POST",
       url: `${baseUrl}/tp/AcceptRejectQuery`,
@@ -213,7 +213,7 @@ function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
           
           getPendingforAcceptance();
          // updateTab(1);
-         history.push("/proposal")
+         history.push("/taxprofessional/proposal")
         } else if (response.data.code === 0) {
           setLoading(false)
         }

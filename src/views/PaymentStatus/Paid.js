@@ -306,86 +306,109 @@ function Unpaid() {
             text: "Action",
             dataField: "",
             style: {
-                fontSize: "11px",
+              fontSize: "11px", display:"flex", justifyContent : "flex-start"
             },
             headerStyle: () => {
-                return { fontSize: "11px", width: "90px" };
+              return { fontSize: "11px", width: "90px" };
             },
             formatter: function (cell, row) {
-                return (
-                    <>
-                        <div style={{ display: "flex", justifyContent: "space-between" }}>
-
-                            <div>
-                                {
-                                    row.paid_status == "0" ?
-                                        <div
-                                            style={{ cursor: "pointer" }}
-                                            title="Pay Amount"
-                                            onClick={() => paymentHandler(row)}>
-                                          <i
-                                            class="fa fa-mail-forward"
-                                            style={{
-                                                fontSize: "14px",
-                                                cursor: "pointer",
-                                            }}
-                                        ></i>
-                                        </div>
-                                        :
-                                        null
-                                }
-                            </div>
-
-                            {
-                                row.paid_amount > 0 ? <div style={{ cursor: "pointer" }} title="Payment History">
-                                    <i
-                                        class="fa fa-credit-card"
-                                        style={{ color: "green", fontSize: "16px" }}
-                                        onClick={() => toggle(row.assign_id)}
-                                    ></i>
-                                </div>
-                                    :
-                                    null
-                            }
-                            <div title="Send Message">
-                                <Link
-                                    to={{
-                                        pathname: `/customer/chatting/${row.assign_id}`,
-                                        obj: {
-                                            message_type: "5",
-                                            query_No: row.assign_no,
-                                            query_id: row.q_id,
-                                            routes: `/customer/proposal`
-                                        }
-                                    }}
-                                >
-                                    <i
-                                        class="fa fa-comments-o"
-                                        style={{
-                                            fontSize: 16,
-                                            cursor: "pointer",
-                                            color: "blue"
-                                        }}
-                                    ></i>
-                                </Link>
-                            </div>
-                            <div title="View Discussion Message">
-                                <i
-                                    class="fa fa-comments-o"
-                                    style={{
-                                        fontSize: 16,
-                                        cursor: "pointer",
-                                        color: "orange"
-                                    }}
-                                    onClick={() => ViewDiscussionToggel(row.assign_no)}
-                                ></i>
-                            </div>
-                        </div>
-                    </>
-                );
+              return (
+                <>
+                 
+                    <div>
+                      {
+                        row.paid_status == "0" ?
+                          <div
+                            style={{ cursor: "pointer", margin: "0 3px" }}
+                            title="Pay Amount"
+                           >
+                              <Link
+                        to={{
+                          pathname: `/customer/paydetails/${row.assign_id}`,
+                          obj: {
+                            message_type: "5",
+                            query_No: row.assign_no,
+                            query_id: row.q_id,
+                            routes: `/customer/payment`
+                          }
+                        }}
+                      >
+                                                <PaymentIcon color="primary" />
+                            </Link>
+                          </div>
+                          :
+                          null
+                      }
+                    </div>
+      
+                    <div>
+                      {
+                        row.paid_amount > 0 && row.paid_status > 0 ?
+                          <div style={{ cursor: "pointer", margin: "0 5px" }} title="Payment History">
+                         <Link
+                        to={{
+                          pathname: `/customer/paydetails/${row.assign_id}`,
+                          obj: {
+                            message_type: "5",
+                            query_No: row.assign_no,
+                            query_id: row.q_id,
+                            routes: `/customer/payment`
+                          }
+                        }}
+                      >
+                                         <i
+                              class="fa fa-credit-card"
+                              style={{ color: "green", fontSize: "16px" }}
+                             
+                            ></i>
+                            </Link>    
+                          </div>
+                          :
+                          null
+                      }
+                    </div>
+      
+      
+                    <div title="Send Message" style={{pointer : "cursor", margin: "0 5px"}}>
+                      <Link
+                        to={{
+                          pathname: `/customer/chatting/${row.assign_id}`,
+                          obj: {
+                            message_type: "5",
+                            query_No: row.assign_no,
+                            query_id: row.q_id,
+                            routes: `/customer/payment`
+                          }
+                        }}
+                      >
+                        <i
+                          class="fa fa-comments-o"
+                          style={{
+                            fontSize: 16,
+                            cursor: "pointer",
+                            color: "blue"
+                          }}
+                        ></i>
+                      </Link>
+                    </div>
+                    <div title="View Discussion Message" style={{pointer : "cursor", margin: "0 5px"}}>
+                      <i
+                        class="fa fa-comments-o"
+                        style={{
+                          fontSize: 16,
+                          cursor: "pointer",
+                          color: "orange"
+                        }}
+                        onClick={() => ViewDiscussionToggel(row.assign_no)}
+                      ></i>
+                    </div>
+      
+      
+                
+                </>
+              );
             },
-        },
-
+          },
     ];
 
 
