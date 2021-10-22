@@ -8,6 +8,7 @@ import Tds from "./Tds";
 import InvoiceFilter from "../../../components/Search-Filter/InvoiceFilter"
 import moment from "moment";
 import DescriptionOutlinedIcon from "@material-ui/icons/DescriptionOutlined";
+import Records from "../../../components/Records/Records";
 const Generated = () => {
     var rowStyle2 = {}
     const userid = window.localStorage.getItem("adminkey");
@@ -238,6 +239,7 @@ const Generated = () => {
                     </CardHeader>
 
                 <CardBody>
+                <Records records={records} />
                     <BootstrapTable
                         bootstrap4
                         keyField="id"

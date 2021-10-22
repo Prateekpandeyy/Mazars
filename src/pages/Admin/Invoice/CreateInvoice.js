@@ -7,6 +7,7 @@ import BootstrapTable from "react-bootstrap-table-next";
 import DiscardReport from "../AssignmentTab/DiscardReport";
 import Tds from "./Tds";
 import InvoiceFilter from "../../../components/Search-Filter/InvoiceFilter";
+import Records from "../../../components/Records/Records";
 const CreateInvoice = () => {
     const userid = window.localStorage.getItem("adminkey");
     const [proposal, setProposal] = useState([]);
@@ -159,6 +160,7 @@ const CreateInvoice = () => {
                     </CardHeader>
 
                 <CardBody>
+                <Records records={records} />
                     <BootstrapTable
                         bootstrap4
                         keyField='id'

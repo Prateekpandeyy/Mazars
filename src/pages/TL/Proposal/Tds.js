@@ -151,24 +151,30 @@ const sgstFun = (e) => {
     setgrandTotal(parseInt(total) - parseInt(cget))    
  } 
 
- // Pocket Function
  const pocketExpFun = (e) => {
+  
   setPocketExp(e.target.value)
-  let a = Math.round(parseInt(e.target.value) + parseInt(basicAmount));
-  if(e.target.value > 0){
+  if(e.target.value){
+    let a = parseInt(e.target.value) + parseInt(basicAmount);
+   console.log(a)
+ 
+  let cget1 = parseInt(Math.round(a * cgetRate / 100))
+  let sget1 = parseInt(Math.round(a * sgetRate / 100))
+  let iget1 = parseInt(Math.round(a * igetRate / 100))
+  
     setCgstTotal(a * cgetRate / 100);
    setSgstTotal(a * sgetRate / 100);
    setIgstTotal(a * igetRate / 100);
-   // })
+   
  setGst((oldData) => {
-  return(parseInt(Math.round(a * cgetRate / 100)) + parseInt(Math.round(a * igetRate / 100)) + parseInt(Math.round(a * sgetRate / 100)))
+  return(parseInt(parseInt(cget1) + parseInt(sget1) + parseInt(iget1)))
  })
   setTotal((oldData) => {
-    return(parseInt(Math.round(a * cgetRate / 100)) + parseInt(Math.round(a * igetRate / 100)) + parseInt(Math.round(a * sgetRate / 100)) + parseInt(a))
+    return(parseInt(cget1) + parseInt(iget1) + parseInt(sget1) + parseInt(a))
   })
   
   setgrandTotal((oldData) => {
-    return((parseInt(Math.round(a * cgetRate / 100)) + parseInt(Math.round(a * igetRate / 100)) + parseInt(Math.round(a * sgetRate / 100)) + parseInt(a)) - parseInt(a * tdsRate / 100))
+    return((parseInt(cget1) + parseInt(iget1) + parseInt(sget1) + parseInt(a)) - parseInt(a * tdsRate / 100))
   })
   setTds((oldData) => {
     return(parseInt(Math.round(a * tdsRate / 100)))
