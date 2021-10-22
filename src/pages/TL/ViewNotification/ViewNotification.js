@@ -48,7 +48,7 @@ function ViewNotification() {
       });
   };
 
-  console.log("data-", data);
+
 
   return (
     <Layout TLDashboard="TLDashboard" TLuserId={userid}>

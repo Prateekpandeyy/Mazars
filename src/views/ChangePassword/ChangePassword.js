@@ -35,7 +35,7 @@ function ChangePassword(props) {
   }, [load]);
 
   const getTime = () => {
-    // console.log("get time")
+
 
     if (load) {
       var timerOn = true;
@@ -65,7 +65,7 @@ function ChangePassword(props) {
   };
 
   const onSubmit = (value) => {
-    console.log("value :", value);
+   
     setLoading(true)
 
     setEmail(value.p_email)
@@ -89,7 +89,7 @@ function ChangePassword(props) {
         data: formData,
       })
         .then(function (response) {
-          console.log("res-", response);
+         
           if (response.data.code === 1) {
             setLoading(false)
             setLoad(true)
@@ -111,7 +111,7 @@ function ChangePassword(props) {
       data: formData,
     })
       .then(function (response) {
-        console.log("res-", response);
+     
         if (response.data.code === 1) {
           setLoading(false)
           var variable = "Password changed successfully."
@@ -119,7 +119,7 @@ function ChangePassword(props) {
           props.history.push("/customer/dashboard");
         } else if (response.data.code === 0) {
           setLoading(false)
-          console.log(response.data.result);
+        
           Alerts.ErrorNormal("Incorrect OTP, please try again.")
         }
       })

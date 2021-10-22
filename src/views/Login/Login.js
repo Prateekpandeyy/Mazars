@@ -44,7 +44,7 @@ function LoginForm() {
 
 
   const getTime = () => {
-    // console.log("get time")
+
     if (load) {
       var timerOn = true;
       function timer(remaining) {
@@ -79,7 +79,7 @@ function LoginForm() {
       data: formData,
     })
       .then(function (response) {
-        console.log("res-", response);
+        
         if (response.data.code === 1) {
           setLoading(false)
           Alerts.SuccessNormal("As per your request, OTP has been sent to your registered email address.")
@@ -98,7 +98,7 @@ function LoginForm() {
 
 
   const handleChange = (e) => {
-    console.log("val-", e.target.value);
+   
     setEmail(e.target.value);
   };
 

@@ -16,7 +16,7 @@ function GetOTP({ email, phone, setShow }) {
 
     //get OTP
     const getOtp = () => {
-        console.log("call otp")
+
 
 
         if (email && phone) {
@@ -31,7 +31,7 @@ function GetOTP({ email, phone, setShow }) {
                 data: formData,
             })
                 .then(function (response) {
-                    console.log("res-", response);
+                  
                     if (response.data.code === 1) {
                         // setLoad(true)
                         setShow(true)
@@ -43,7 +43,7 @@ function GetOTP({ email, phone, setShow }) {
 
                 })
                 .catch((error) => {
-                    console.log("erroror - ", error);
+                   
                 });
         }
     }

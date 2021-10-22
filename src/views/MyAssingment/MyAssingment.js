@@ -59,7 +59,7 @@ function MyAssingment() {
   useEffect(() => {
     const getSubmittedAssingment = () => {
       axios.get(`${baseUrl}/customers/getQueryDetails?id=${id}`).then((res) => {
-        console.log(res);
+
         if (res.data.code === 1) {
           setSubmitData(res.data.result);
           setDisplaySpecific(res.data.additional_queries);
@@ -72,7 +72,7 @@ function MyAssingment() {
           var purposeItem = res.data.result[0].purpose_opinion;
           var assementItem = res.data.result[0].assessment_year;
 
-          console.log("purposeItem-", typeof purposeItem);
+       
           try {
             var myPurpose = JSON.parse(purposeItem);
             var myYear = JSON.parse(assementItem);
@@ -133,14 +133,14 @@ function MyAssingment() {
     axios
       .get(`${baseUrl}/tl/GetAdditionalQueries?assignno=${assingNo}`)
       .then((res) => {
-        console.log(res);
+    
         if (res.data.code === 1) {
           setDisplayQuery(res.data.result);
         }
       });
   };
 
-  // console.log("purpose -", JSON.parse(purpose));
+
 
   return (
     <Layout custDashboard="custDashboard" custUserId={userId}>
@@ -200,39 +200,3 @@ function MyAssingment() {
 }
 
 export default MyAssingment;
-
-// <h2 class="mb-0 query">
-// <button
-//   class="btn btn-link btn-block text-left"
-//   type="button"
-//   data-toggle="collapse"
-//   data-target={`#${i}`}
-//   aria-expanded="true"
-//   aria-controls="collapseOne"
-// >
-//   {p.assign_no}
-// </button>
-// <div style={{display:"flex" , justifyContent:"space-evenly"}}>
-//   <p class="m-0" style={{ fontSize: "15px" }}>
-//     Submitted on
-//   </p>
-//   <p class="m-0" style={{ fontSize: "15px" }}>
-//    : {p.created}
-//   </p>
-// </div>
-// <div class="d-flex">
-//   <div class="additional">
-//     <button
-//       class="btn"
-//       data-toggle="modal"
-//       data-target="#staticBackdrop"
-//       onClick={addHandler}
-//     >
-//       Add. Query
-//     </button>
-//   </div>
-//   <div class="complete">
-//     <p>Pending</p>
-//   </div>
-// </div>
-// </h2>

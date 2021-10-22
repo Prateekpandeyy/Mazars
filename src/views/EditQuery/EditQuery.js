@@ -65,7 +65,7 @@ function EditQuery(props) {
     axios
       .get(`${baseUrl}/customers/getAssesmentYear`)
       .then((res) => {
-        console.log(res);
+     
         if (res.data.code === 1) {
           setAssessmentYear(res.data.result);
         }
@@ -120,7 +120,7 @@ function EditQuery(props) {
       setSelectError("At least one value should be enter")
     }
     else if (value.p_Softcopy_word === false && value.p_Softcopy_digital === false && value.p_Softcopy_physical === false) {
-      console.log("checked")
+    
       setCheckerror("Please select at least one.")
     }
     else {

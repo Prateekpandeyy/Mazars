@@ -17,7 +17,7 @@ function AdditionalQueryModal({
   const [loading, setLoading] = useState(false);
 
   const onSubmit = (value) => {
-    console.log("value :", value);
+ 
     setLoading(true)
 
     let formData = new FormData();
@@ -37,7 +37,7 @@ function AdditionalQueryModal({
       data: formData,
     })
       .then(function (response) {
-        console.log("res-", response);
+    
         if (response.data.code === 1) {
           setLoading(false)
           var message = response.data.message

@@ -42,7 +42,7 @@ function Feedback() {
  
 
   const onSubmit = (value) => {
-    console.log("value :", value)
+
     setLoading(true)
     let formData = new FormData();
     formData.append("assign_no", id);
@@ -55,7 +55,7 @@ function Feedback() {
       data: formData,
     })
       .then(function (response) {
-        console.log("res-", response);
+    
         if (response.data.code === 1) {
           setLoading(false)
           reset();

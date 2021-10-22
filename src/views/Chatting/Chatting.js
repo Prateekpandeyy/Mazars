@@ -31,7 +31,6 @@ const Schema = yup.object().shape({
 
 function Chatting(props) {
 
-  console.log("props", props)
 
   const history = useHistory();
   const { handleSubmit, register, errors, reset } = useForm({
@@ -47,13 +46,13 @@ function Chatting(props) {
   useEffect(() => {
     
     const dataItem = props.location.obj
-   console.log("dataItem", dataItem)
+ 
     if (dataItem) {
       localStorage.setItem("myDataCust", JSON.stringify(dataItem));
     }
     var myData = localStorage.getItem("myDataCust");
     var data2 = JSON.parse(myData)
-    console.log("data2", data2)
+   
     setData(data2)
     setItem(data2.message_type)
   }, [item]);
@@ -61,8 +60,7 @@ function Chatting(props) {
 
 
   const onSubmit = (value) => {
-    console.log("value :", value);
-console.log(query_id)
+   
     setLoading(true)
     let formData = new FormData();
     formData.append("uid", JSON.parse(userId));
@@ -76,7 +74,7 @@ console.log(query_id)
       data: formData,
     })
       .then(function (response) {
-        console.log("res-", response);
+     
         if (response.data.code === 1) {
           setLoading(false)
           reset();

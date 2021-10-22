@@ -55,7 +55,7 @@ function InprogressAllocation() {
         `${baseUrl}/customers/incompleteAssignments?user=${JSON.parse(userId)}&status=1`
       )
       .then((res) => {
-        console.log(res);
+
         if (res.data.code === 1) {
           setQuery(res.data.result);
           setCountQueries(res.data.result.length);
@@ -84,7 +84,7 @@ function InprogressAllocation() {
         return { fontSize: "12px" };
       },
       formatter: function dateFormat(cell, row) {
-        console.log("dt", row.created);
+       
         var oldDate = row.created;
         if (oldDate == null) {
           return null;
@@ -99,12 +99,10 @@ function InprogressAllocation() {
         return { fontSize: "12px" };
       },
       formatter: function nameFormatter(cell, row) {
-        console.log(row);
+      
         return (
           <>
-            {/* <Link to={`/customer/my-assingment/${row.id}`}>
-              {row.assign_no}
-            </Link> */}
+           
             <Link
               to={{
                 pathname: `/customer/my-assingment/${row.id}`,
@@ -183,7 +181,7 @@ function InprogressAllocation() {
         return { fontSize: "12px" };
       },
       formatter: function dateFormat(cell, row) {
-        console.log("dt", row.exp_delivery_date);
+      
 
         return (
           <>
@@ -365,8 +363,7 @@ function InprogressAllocation() {
 
   //check
   const del = (id) => {
-    console.log("del", id);
-
+   
     Swal.fire({
       title: "Are you sure?",
       text: "Do you want to delete query ?",
@@ -393,7 +390,7 @@ function InprogressAllocation() {
       data: formData,
     })
       .then(function (response) {
-        console.log("res-", response);
+      
         if (response.data.code === 1) {
           Swal.fire("", "Query deleted successfully.", "success");
           getQueriesData();
@@ -402,7 +399,7 @@ function InprogressAllocation() {
         }
       })
       .catch((error) => {
-        console.log("erroror - ", error);
+       
       });
   };
 

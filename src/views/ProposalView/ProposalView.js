@@ -73,9 +73,9 @@ function ProposalView(props) {
         `${baseUrl}/customers/getQueryDetails?id=${id}`
       )
       .then((res) => {
-        console.log(res);
+      
         if (res.data.code === 1) {
-          console.log(res.data.result[0].query_status);
+        
 
           if (res.data.result[0].query_status) {
             setQueryStatus(res.data.result[0].query_status);
@@ -105,7 +105,7 @@ function ProposalView(props) {
 
   const [addPaymentModal, setPaymentModal] = useState(false);
   const readTerms = () => {
-    console.log("key");
+ 
     setPaymentModal(!addPaymentModal);
   };
 
@@ -118,10 +118,10 @@ function ProposalView(props) {
 
 
   const onSubmit = (value) => {
-    console.log("value :", value);
+  
 
     if (valueCheckBox === false) {
-      console.log("catch")
+     
       setCheckerror("Please , You have to select")
     }
     else {
@@ -137,7 +137,7 @@ function ProposalView(props) {
         data: formData,
       })
         .then(function (response) {
-          console.log("res-", response);
+       
           if (response.data.code === 1) {
             setLoading(false)
             var variable = "Proposal accepted successfully."
@@ -152,7 +152,7 @@ function ProposalView(props) {
 
         })
         .catch((error) => {
-          console.log("erroror - ", error);
+       
         });
     }
 
@@ -161,7 +161,7 @@ function ProposalView(props) {
 
   const installAmount = (data) => {
     var item = data.split(',')
-    console.log("item", item);
+   
 
     const dataItem = item.map((p, i) =>
     (
@@ -175,9 +175,9 @@ function ProposalView(props) {
 
   //rejected
   const rejected = (id) => {
-    console.log("del", id);
+   
     if (valueCheckBox === false) {
-      console.log("catch")
+   
       setCheckerror("Please , You have to select")
     } else {
       Swal.fire({
@@ -210,7 +210,7 @@ function ProposalView(props) {
       data: formData,
     })
       .then(function (response) {
-        console.log("res-", response);
+       
         if (response.data.code === 1) {
           setLoading(false)
           Swal.fire("Rejected!", "Proposal rejected successfully.", "success");
@@ -224,7 +224,7 @@ function ProposalView(props) {
         }
       })
       .catch((error) => {
-        console.log("erroror - ", error);
+     
       });
   };
 

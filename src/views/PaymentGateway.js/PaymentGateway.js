@@ -38,8 +38,7 @@ function PaymentGateway(){
         "Total_Amount": "1.0"
     }
     const onSubmit = (value) => {
-      
- console.log("onSubmit");
+
  
     let formData = new FormData()
     formData.append("token", "09f3b52d937b320e929ad45153ef745d");
@@ -58,11 +57,7 @@ function PaymentGateway(){
     formData.append("agent_id", "8595923172");
     formData.append("caf_number", "");
 
-    // axios({
-    //   method : "POST", 
-    //   url : "https://pay.mobilpay.in/index.php/getUserBillData",
-    //   data : formData
-    // })
+  
     var myHeaders = new Headers();
 myHeaders.append("Content-Type", "application/json");
 

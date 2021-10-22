@@ -24,13 +24,13 @@ const PayModal = (props) => {
    
     const payFun = (e) => {
   
-           console.log("undone")
+         
         let formData = new FormData();
         formData.append("id", props.modalData.id);
         formData.append("cid", JSON.parse(userid));
         formData.append("tds_rate", tdsRate);
         formData.append("tds_amount", tdsAmount)
-        console.log("Paid")
+       
         axios({
             method :"POST", 
             url : `${baseUrl}/customers/payCall`,
@@ -38,7 +38,7 @@ const PayModal = (props) => {
         })
         .then((res) => {
             if(res.data.code === 1){
-                console.log(res.data.result)
+             
                 window.location.assign(res.data.result)
             }
         })
@@ -47,7 +47,7 @@ const PayModal = (props) => {
     }
     const inVal = (e) => {
         let tdAmount = parseInt((parseInt(props.modalData.paid_amount) + parseInt(props.modalData.opt_expenses)))
-        console.log(e.target.value)
+      
         setTdsRate(e.target.value)
         let a = parseInt(props.modalData.cgst_amount) + parseInt(props.modalData.sgst_amount) + parseInt(props.modalData.igst_amount)
 setTdsAmount(Number((e.target.value * tdAmount) / 100).toFixed(0))

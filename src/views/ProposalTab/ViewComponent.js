@@ -5,7 +5,7 @@ import CommonServices from "../../common/common";
 
 function ViewComponent({ viewModal, ViewHandler, getProposalData, viewData }) {
 
-  console.log("viewData", viewData)
+  
   return (
     <div>
       <Modal isOpen={viewModal} toggle={ViewHandler} size="md">

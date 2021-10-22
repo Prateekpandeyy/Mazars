@@ -78,7 +78,7 @@ const logout = () => {
     localStorage.removeItem("adminkey");
     localStorage.removeItem("adminEmail");
     history.push("/admin/login");
-  }, 10800)
+  }, 864000)
 }
   const handleChange = (e) => {
 

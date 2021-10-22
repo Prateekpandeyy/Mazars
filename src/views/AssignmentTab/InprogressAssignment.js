@@ -72,7 +72,7 @@ function InprogressAssignment() {
         `${baseUrl}/customers/completeAssignments?user=${JSON.parse(userId)}&status=1`
       )
       .then((res) => {
-        console.log(res);
+       
         if (res.data.code === 1) {
           setAssignmentDisplay(res.data.result);
           setAssignmentQueries(res.data.result.length);
@@ -100,7 +100,7 @@ function InprogressAssignment() {
         return { fontSize: "12px" };
       },
       formatter: function dateFormat(cell, row) {
-        console.log("dt", row.created);
+       
         var oldDate = row.created;
         if (oldDate == null) {
           return null;
@@ -115,7 +115,7 @@ function InprogressAssignment() {
         return { fontSize: "12px" };
       },
       formatter: function nameFormatter(cell, row) {
-        console.log(row);
+      
         return (
           <>
             <Link to={`/customer/my-assingment/${row.id}`}>
@@ -156,7 +156,7 @@ function InprogressAssignment() {
         return { fontSize: "12px" };
       },
       formatter: function dateFormat(cell, row) {
-        console.log("dt", row.created);
+       
         var oldDate = row.created;
         if (oldDate == null) {
           return null;
@@ -172,7 +172,7 @@ function InprogressAssignment() {
         return { fontSize: "12px" };
       },
       formatter: function dateFormat(cell, row) {
-        console.log("dt", row.final_date);
+    
         var oldDate = row.final_date;
         if (oldDate == null || oldDate == "0000-00-00") {
           return null;
@@ -187,73 +187,11 @@ function InprogressAssignment() {
         return { fontSize: "12px" };
       },
       formatter: function (cell, row) {
-        // console.log(row.final_report);
+       
         return (
           <>
 
-            {/* {
-              row.status == "Payment decliend" ? null :
-                <div>
-                  {row.assignment_draft_report || row.final_report ?
-                    <div title="View All Report"
-                      style={{ cursor: "pointer", textAlign: "center" }}
-                      onClick={() => ViewReport(row.assign_no)}
-                    >
-                      <DescriptionOutlinedIcon color="secondary" />
-                    </div>
-                    :
-                    null
-                  }
-
-                  {row.assignment_draft_report && !row.final_report ? (
-                    row.draft_report == "completed" ?
-                      null :
-                      <div style={{ display: "flex", justifyContent: "space-around" }}>
-
-                        <div style={{ cursor: "pointer" }} title="Accepted">
-                          <i
-                            class="fa fa-check"
-                            style={{
-                              color: "green",
-                              fontSize: "16px",
-                            }}
-                            onClick={() => acceptHandler(row)}
-                          ></i>
-                        </div>
-
-                        <div title="Send Message">
-                          <Link
-                            to={{
-                              pathname: `/customer/chatting/${row.id}`,
-                              obj: {
-                                message_type: "3",
-                                query_No: row.assign_no,
-                                query_id: row.id,
-                                routes: `/customer/assignment`
-                              }
-                            }}
-                          >
-                            <i
-                              class="fa fa-comments-o"
-                              style={{
-                                fontSize: 16,
-                                cursor: "pointer",
-                                marginLeft: "8px",
-                                color: "green"
-                              }}
-                            ></i>
-                          </Link>
-                        </div>
-                      </div>
-
-                  ) : null}
-
-                </div>
-            }
-
- */}
-
-
+        
 {
   row.status == "Payment decliend" || row.paid_status == "2" ? null :
     <div>
@@ -336,7 +274,7 @@ function InprogressAssignment() {
 
   //accept handler
   const acceptHandler = (key) => {
-    console.log("acceptHandler", key);
+   
 
     let formData = new FormData();
     formData.append("uid", JSON.parse(userId));
@@ -350,7 +288,7 @@ function InprogressAssignment() {
       data: formData,
     })
       .then(function (response) {
-        console.log("response-", response);
+      
         if (response.data.code === 1) {
 
           var variable = "Draft accepted successfully "
@@ -358,14 +296,14 @@ function InprogressAssignment() {
         }
       })
       .catch((error) => {
-        console.log("erroror - ", error);
+       
       });
   };
 
 
   //tl,phone,email
   function priceFormatter(cell, row) {
-    console.log("row", row);
+  
     if (row) {
       return (
         <>

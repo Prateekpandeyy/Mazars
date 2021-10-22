@@ -65,7 +65,7 @@ function Dashboard() {
       axios
         .get(`${baseUrl}/customers/totalComplete?uid=${JSON.parse(userId)}`)
         .then((response) => {
-          console.log("code---", response);
+
           if (response.data.code === 1) {
             setAllQueries({
               total: response.data.result.total,
@@ -104,15 +104,13 @@ function Dashboard() {
           }
         })
         .catch((error) => {
-          console.log("error", error);
+      
         });
     };
 
 
     getAllQueries();
   }, []);
-
-  console.log("declined", declined)
 
 
   return (

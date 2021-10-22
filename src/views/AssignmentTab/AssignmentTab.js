@@ -39,7 +39,7 @@ function AssignmentTab(props) {
     axios
       .get(`${baseUrl}/customers/completeAssignments?user=${JSON.parse(userId)}`)
       .then((res) => {
-        console.log(res);
+        
         setAllAssignment(res.data.result.length);
       });
   };
@@ -48,7 +48,7 @@ function AssignmentTab(props) {
     axios
       .get(`${baseUrl}/customers/completeAssignments?user=${JSON.parse(userId)}&status=1`)
       .then((response) => {
-        console.log("code---", response);
+       
         if (response.data.code === 1) {
           setInprogressAssignmentCount(response.data.result.length);
         }
@@ -59,7 +59,7 @@ function AssignmentTab(props) {
     axios
       .get(`${baseUrl}/customers/completeAssignments?user=${JSON.parse(userId)}&status=2`)
       .then((res) => {
-        console.log(res);
+      
         if (res.data.code === 1) {
           setCompleteAssignment(res.data.result.length);
         }
@@ -70,7 +70,7 @@ function AssignmentTab(props) {
     axios
       .get(`${baseUrl}/customers/completeAssignments?user=${JSON.parse(userId)}&status=3`)
       .then((response) => {
-        console.log("code---", response);
+     
         if (response.data.code === 1) {
           setDeclinedAssignment(response.data.result.length);
         }
@@ -156,67 +156,3 @@ export default AssignmentTab;
 
 
 
-
-
-{/* {!row.final_report == "" ? (
-                  <div title="Final Report">
-                    <a
-                      href={`http://65.0.220.156/mazarapi/assets/upload/report/${row.assign_no}/${row.final_report}`}
-                      target="_blank"
-                    >
-                      <i class="fa fa-file-text" style={{ fontSize: "16px" }}></i>
-                    </a>
-                  </div>
-                ) : row.assignment_draft_report ? (
-                  <div title="Draft Report">
-                    <a
-                      href={`http://65.0.220.156/mazarapi/assets/upload/report/${row.assign_no}/${row.assignment_draft_report}`}
-                      target="_blank"
-                    >
-                      <i class="fa fa-file-text" style={{ fontSize: "16px" }}></i>
-                    </a>
-                  </div>
-                ) : null} */}
-
-
-{/* {row.vstart < 11 &&
-                row.vend >= 0 &&
-                !(row.vstart == null && row.vend == null) ? (
-                <div style={{ cursor: "pointer" }} title="Video Chat">
-                  <i
-                    class="fa fa-video-camera"
-                    style={{ color: "red", fontSize: "16px" }}
-                    onClick={() => handleJoin(row.id)}
-                  ></i>
-                </div>
-              ) : null} */}
-
-{/* <div title="Send Message">
-                <Link
-                  to={{
-                    pathname: `/customer/chatting/${row.id}`,
-                    obj: {
-                      message_type: "3",
-                      query_No: row.assign_no,
-                      query_id: row.id,
-                      routes: `/customer/assignment`
-                    }
-                  }}
-                >
-                  <i
-                    class="fa fa-comments-o"
-                    style={{
-                      fontSize: 16,
-                      cursor: "pointer",
-                      marginLeft: "8px",
-                      color: "blue"
-                    }}
-                  ></i>
-                </Link>
-              </div>
-
-              <div title="Send Feedback" style={{ cursor: "pointer" }}>
-                <Link to={`/customer/feedback/${row.assign_no}`}>
-                  <FeedbackIcon />
-                </Link>
-              </div> */}

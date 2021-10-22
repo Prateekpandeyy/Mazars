@@ -33,7 +33,7 @@ const PayDetails = () => {
 axios.get(`${baseUrl}/admin/getPaymentDetail?id=${id}`)
 .then((res) => {
     if(res.data.code === 1){
-        console.log(res.data.payment_detail[0])
+       
         setPaymentDetail(res.data.payment_detail)
     }
    
@@ -117,7 +117,7 @@ setModal(!modal)
             },
             formatter : function(cell, row){
                 let dueDate=row.due_date.split("-").reverse().join("-")
-                console.log("row", row.due_date.split("-").reverse().join("-"))
+
                 return(
                    
                     <>
@@ -211,7 +211,7 @@ setModal(!modal)
             },
            
            formatter: function dateFormat(cell, row){
-               console.log("roww", row)
+             
                return(
                 <>
                 {row.invoice_generated == "1" ? 

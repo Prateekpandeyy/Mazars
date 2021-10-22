@@ -45,8 +45,7 @@ function VerifyOTP({ email, uid, time, setLoad,
             data: formData,
         })
             .then(function (response) {
-                console.log("res-", response);
-                console.log("res-", response.data["otp "]);
+               
 
                 if (response.data.code == 1) {
                     setLoading(false)
@@ -79,7 +78,7 @@ function VerifyOTP({ email, uid, time, setLoad,
             data: formData,
         })
             .then(function (response) {
-                console.log("res-", response);
+              
                 if (response.data.code === 1) {
                     setLoading(false)
                     Alerts.SuccessNormal("An OTP has been sent to your registered email address.")

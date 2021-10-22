@@ -58,7 +58,7 @@ function AllQueriesData() {
                 `${baseUrl}/customers/incompleteAssignments?user=${JSON.parse(userId)}`
             )
             .then((res) => {
-               console.log("myResult", res.data.result)
+
                 if (res.data.code === 1) {
                     setQuery(res.data.result);
                     setCountQueries(res.data.result.length);
@@ -414,7 +414,7 @@ function AllQueriesData() {
                 }
             })
             .catch((error) => {
-                console.log("erroror - ", error);
+               
             });
     };
 

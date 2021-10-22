@@ -8,11 +8,11 @@ function DeleteQuery({ id, setLoad }) {
   const userId = window.localStorage.getItem("userid");
   const history = useHistory();
 
-  //   console.log("id", id);
+
 
   //check
   const del = (id) => {
-    console.log("del", id);
+
 
     Swal.fire({
       title: "Are you sure?",
@@ -41,7 +41,7 @@ function DeleteQuery({ id, setLoad }) {
       data: formData,
     })
       .then(function (response) {
-        console.log("res-", response);
+
         if (response.data.code === 1) {
           setLoad(false)
           Swal.fire("", "Query deleted successfully.", "success");
@@ -52,7 +52,7 @@ function DeleteQuery({ id, setLoad }) {
         }
       })
       .catch((error) => {
-        console.log("erroror - ", error);
+     
       });
   };
 

@@ -29,10 +29,9 @@ function RejectedModal({
 
   const [loading, setLoading] = useState(false);
 
-  console.log("dataItem :", dataItem);
 
   const onSubmit = (value) => {
-    console.log("value :", value);
+   
     setLoading(true)
 
     let formData = new FormData();
@@ -49,7 +48,7 @@ function RejectedModal({
       data: formData,
     })
       .then(function (response) {
-        console.log("response-", response);
+    
         if (response.data.code === 1) {
           setLoading(false)
           toggleNested();
@@ -61,7 +60,7 @@ function RejectedModal({
         }
       })
       .catch((error) => {
-        console.log("erroror - ", error);
+       
       });
   };
 

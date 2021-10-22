@@ -41,7 +41,7 @@ function QueriesTab(props) {
   const CountAllQuery = (data) => {
     axios.get(`${baseUrl}/customers/incompleteAssignments?user=${JSON.parse(userId)}`)
       .then((res) => {
-        console.log(res);
+       
         if (res.data.code === 1) {
           setAllQueriesCount(res.data.result.length);
         }
@@ -50,7 +50,7 @@ function QueriesTab(props) {
 
   const CountInprogressAllocation = () => {
     axios.get(`${baseUrl}/customers/incompleteAssignments?user=${JSON.parse(userId)}&status=1`).then((res) => {
-      console.log(res);
+     
       if (res.data.code === 1) {
         setInprogressAllocation(res.data.result.length);
       }
@@ -59,7 +59,7 @@ function QueriesTab(props) {
 
   const CountInprogressProposal = () => {
     axios.get(`${baseUrl}/customers/incompleteAssignments?user=${JSON.parse(userId)}&status=2`).then((res) => {
-      console.log(res);
+     
       if (res.data.code === 1) {
         setInprogressProposal(res.data.result.length);
       }
@@ -68,7 +68,7 @@ function QueriesTab(props) {
 
   const CountDeclined = () => {
     axios.get(`${baseUrl}/customers/declinedQueries?uid=${JSON.parse(userId)}`).then((res) => {
-      console.log(res);
+     
       if (res.data.code === 1) {
         setDeclined(res.data.result.length);
       }

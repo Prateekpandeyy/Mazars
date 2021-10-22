@@ -70,7 +70,7 @@ function AddFreshAssingment(props) {
     axios
       .get(`${baseUrl}/customers/getAssesmentYear`)
       .then((res) => {
-        console.log(res);
+
         if (res.data.code === 1) {
           setAssessmentYear(res.data.result);
         }
@@ -79,19 +79,18 @@ function AddFreshAssingment(props) {
 
 
   const onSubmit = (value) => {
-    console.log(value)
-
+   
     const a = value.p_fact;
     const b = value.users;
     if (a == '') {
       setcustError("");
-      console.log(b)
+     
     }
     else if (purposeOption < 1) {
       setSelectError("At least one value should be enter")
     }
     else if (value.p_format_word === false && value.p_format_digital === false && value.p_format_physically === false) {
-      console.log("catch")
+    
       setCheckerror("Please select at least one.")
     }
 
@@ -102,7 +101,7 @@ function AddFreshAssingment(props) {
       var uploadImg = value.upload;
       if (uploadImg) {
         for (var i = 0; i < uploadImg.length; i++) {
-          console.log("pics", value.upload[i].pics[0]);
+        
           let a = value.upload[i].pics[0];
           formData.append("upload_1[]", a);
         }
@@ -133,7 +132,7 @@ function AddFreshAssingment(props) {
           },
         })
         .then(function (response) {
-          console.log("res-", response);
+       
           if (response.data.code === 1) {
             reset();
             var message = response.data.message
@@ -169,7 +168,8 @@ function AddFreshAssingment(props) {
           }
         })
         .catch((error) => {
-          console.log("erroror - ", error);
+          ShowError.LoadingError(setLoading)
+         
         });
     }
   };

@@ -22,7 +22,7 @@ const Schema = yup.object().shape({
 
 
 function ForgetPassword(props) {
-  console.log("props : ", props.location.email);
+
 
   const alert = useAlert();
   const { handleSubmit, register, reset, errors } = useForm({
@@ -32,7 +32,7 @@ function ForgetPassword(props) {
 
 
   const onSubmit = (value) => {
-    console.log("value :", value);
+   
     setLoading(true)
 
     let formData = new FormData();
@@ -45,14 +45,14 @@ function ForgetPassword(props) {
       data: formData,
     })
       .then(function (response) {
-        console.log("res-", response);
+       
         if (response.data.code === 1) {
           setLoading(false)
           Alerts.SuccessNormal("As per your request, OTP has been sent to your regsitered email address.")
           props.history.push(`/customer/new-password/${value.p_email}`)
         } else if (response.data.code === 0) {
           setLoading(false)
-          console.log(response.data.result);
+       
           Alerts.ErrorNormal("Invalid email.")
         }
       })
@@ -64,7 +64,7 @@ function ForgetPassword(props) {
   const valueHandler = () => {
     var item = props.location.email
     if (item == "undefined") {
-      console.log("item : ", item)
+      
     } else {
       return item
     }

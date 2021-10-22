@@ -50,7 +50,7 @@ function PaymentModal({
         }
       })
       .catch((error) => {
-        console.log("erroror - ", error);
+     
       });
   };
 

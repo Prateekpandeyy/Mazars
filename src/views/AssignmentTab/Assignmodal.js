@@ -21,7 +21,7 @@ function Assignmodal({
  
   let history = useHistory();
   const onSubmit = (value) => {
-    console.log("valueAssign :", value.p_upload);
+   
     setLoading(true)
 
     let formData = new FormData();
@@ -44,7 +44,7 @@ function Assignmodal({
       data: formData,
     })
       .then(function (response) {
-        console.log("res-", response);
+       
         if (response.data.code === 1) {
           setLoading(false)
           var message = response.data.message

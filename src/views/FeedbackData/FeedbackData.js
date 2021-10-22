@@ -18,7 +18,7 @@ import CommonServices from "../../common/common";
 
 
 function FeedbackData(props) {
-    console.log("props", props.location.obj)
+
 
     const userId = window.localStorage.getItem("userid");
     const [query, setQuery] = useState([]);
@@ -35,7 +35,7 @@ function FeedbackData(props) {
                 `${baseUrl}/customers/getFeedback?uid=${JSON.parse(userId)}`
             )
             .then((res) => {
-                console.log(res);
+            
                 if (res.data.code === 1) {
                     setQuery(res.data.result);
                 }
@@ -61,17 +61,7 @@ function FeedbackData(props) {
             headerStyle: () => {
                 return { fontSize: "12px", width: "60px" };
             },
-            // formatter: function nameFormatter(cell, row) {
-            //     console.log(row);
-            //     return (
-            //         <>
-            //             <div style={{ display: "flex" }}>
-            //                 <p>{CommonServices.removeTime(row.created)}</p>
-            //                 <p style={{ marginLeft: "15px" }}>{CommonServices.removeDate(row.created)}</p>
-            //             </div>
-            //         </>
-            //     );
-            // },
+          
         },
 
         {
@@ -81,7 +71,7 @@ function FeedbackData(props) {
                 return { fontSize: "12px", width: "40px" };
             },
             formatter: function nameFormatter(cell, row) {
-                console.log(row);
+               
                 return (
                     <>
                         {row.assign_no}
@@ -128,18 +118,4 @@ function FeedbackData(props) {
 }
 
 export default FeedbackData;
-        // {
-        //     text: "Time",
-        //     sort: true,
-        //     headerStyle: () => {
-        //         return { fontSize: "12px", width: "30px" };
-        //     },
-        //     formatter: function nameFormatter(cell, row) {
-        //         console.log(row);
-        //         return (
-        //             <>
-        //                 {CommonServices.removeDate(row.created)}
-        //             </>
-        //         );
-        //     },
-        // },
+       

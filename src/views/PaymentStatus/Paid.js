@@ -88,7 +88,7 @@ function Unpaid() {
 
     const getPaymentStatus = () => {
         axios.get(`${baseUrl}/tl/getUploadedProposals?cid=${JSON.parse(userId)}&status=2`).then((res) => {
-            console.log(res);
+
             if (res.data.code === 1) {
                 setPayment(res.data.result);
                 setCount(res.data.result.length);
@@ -99,7 +99,7 @@ function Unpaid() {
     };
 
     const toggle = (key) => {
-        console.log("key", key);
+    
         setModal(!modal);
 
         fetch(`${baseUrl}/admin/getPaymentDetail?id=${key}`, {
@@ -110,7 +110,7 @@ function Unpaid() {
         })
             .then((res) => res.json())
             .then((response) => {
-                console.log(response);
+             
                 setPay(response.payment_detail);
             })
             .catch((error) => console.log(error));
@@ -142,7 +142,7 @@ function Unpaid() {
                 return { fontSize: "11px" };
             },
             formatter: function dateFormat(cell, row) {
-                console.log("dt", row.query_created_date);
+               
                 var oldDate = row.query_created_date;
                 if (oldDate == null) {
                     return null;
@@ -160,7 +160,7 @@ function Unpaid() {
                 return { fontSize: "11px" };
             },
             formatter: function nameFormatter(cell, row) {
-                console.log(row);
+                
                 return (
                     <>
                         <Link
@@ -208,7 +208,7 @@ function Unpaid() {
                 return { fontSize: "11px" };
             },
             formatter: function dateFormat(cell, row) {
-                console.log("dt", row.cust_accept_date);
+              
                 var oldDate = row.cust_accept_date;
                 if (oldDate == null) {
                     return null;
@@ -294,7 +294,7 @@ function Unpaid() {
                 return { fontSize: "11px" };
             },
             formatter: function dateFormat(cell, row) {
-                console.log("dt", row.cust_paid_date);
+              
                 var oldDate = row.cust_paid_date;
                 if (oldDate == null) {
                     return null;
@@ -306,7 +306,7 @@ function Unpaid() {
             text: "Action",
             dataField: "",
             style: {
-              fontSize: "11px", display:"flex", justifyContent : "flex-start"
+              fontSize: "11px"
             },
             headerStyle: () => {
               return { fontSize: "11px", width: "90px" };
@@ -314,7 +314,7 @@ function Unpaid() {
             formatter: function (cell, row) {
               return (
                 <>
-                 
+                 <div style={{display : "flex"}}>
                     <div>
                       {
                         row.paid_status == "0" ?
@@ -403,7 +403,7 @@ function Unpaid() {
                       ></i>
                     </div>
       
-      
+                    </div>
                 
                 </>
               );

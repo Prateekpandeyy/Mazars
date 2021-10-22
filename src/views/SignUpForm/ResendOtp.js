@@ -24,18 +24,18 @@ function ResendOtp({ invalid, wEmail, disabled, indNumError, zipError, passError
                 formData.append("p", "registration");
         
                 if (invalid || wEmail || indNumError || zipError || passError) {
-                    console.log("resend false")
+                    
                     setLoad(false)
                 }
                 else {
-                    console.log("send otp true")
+                    
                     axios({
                         method: "POST",
                         url: `${baseUrl}/customers/forgototp`,
                         data: formData,
                     })
                         .then(function (response) {
-                            console.log("res-", response);
+                            
                             if (response.data.code === 1) {
                                 Alerts.SuccessNormal("As per your request , OTP has been sent to your email address.")
                                 setDisabled(false)
@@ -47,7 +47,7 @@ function ResendOtp({ invalid, wEmail, disabled, indNumError, zipError, passError
                             }
                         })
                         .catch((error) => {
-                            console.log("erroror - ", error);
+                           
                         });
                     }
                    }

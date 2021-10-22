@@ -28,7 +28,7 @@ function PaymentModal({
 
 
   const onSubmit = (value) => {
-    console.log("value :", value);
+ 
 
     let formData = new FormData();
     formData.append("id", id);
@@ -41,7 +41,7 @@ function PaymentModal({
       data: formData,
     })
       .then(function (response) {
-        console.log("res-", response);
+     
         if (response.data.code === 1) {
 
           var variable = "Payment Done Successfully "
@@ -52,13 +52,13 @@ function PaymentModal({
         }
       })
       .catch((error) => {
-        console.log("erroror - ", error);
+     
       });
   };
 
   const installAmount = (data) => {
     var item = data.split(',')
-    console.log("item", item);
+   
 
     const dataItem = item.map((p, i) =>
     (

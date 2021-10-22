@@ -41,7 +41,7 @@ function CustomerDeclinedPayment() {
 
     const [reportModal, setReportModal] = useState(false);
     const ViewReport = (key) => {
-        console.log("key - ", key);
+      
         setReportModal(!reportModal);
         setReport(key.assign_no);
         setDataItem(key)
@@ -66,7 +66,7 @@ function CustomerDeclinedPayment() {
                 `${baseUrl}/customers/completeAssignments?user=${JSON.parse(userId)}&status=3`
             )
             .then((res) => {
-                console.log(res);
+               
                 if (res.data.code === 1) {
                     setAssignmentDisplay(res.data.result);
                     setAssignmentQueries(res.data.result.length);
@@ -94,7 +94,7 @@ function CustomerDeclinedPayment() {
                 return { fontSize: "12px" };
             },
             formatter: function dateFormat(cell, row) {
-                console.log("dt", row.created);
+              
                 var oldDate = row.created;
                 if (oldDate == null) {
                     return null;
@@ -109,7 +109,7 @@ function CustomerDeclinedPayment() {
                 return { fontSize: "12px" };
             },
             formatter: function nameFormatter(cell, row) {
-                console.log(row);
+            
                 return (
                     <>
                         <Link to={`/customer/my-assingment/${row.id}`}>
@@ -150,7 +150,7 @@ function CustomerDeclinedPayment() {
                 return { fontSize: "12px" };
             },
             formatter: function dateFormat(cell, row) {
-                console.log("dt", row.created);
+               
                 var oldDate = row.created;
                 if (oldDate == null) {
                     return null;
@@ -166,7 +166,7 @@ function CustomerDeclinedPayment() {
                 return { fontSize: "12px" };
             },
             formatter: function dateFormat(cell, row) {
-                console.log("dt", row.final_date);
+              
                 var oldDate = row.final_date;
                 if (oldDate == null || oldDate == "0000-00-00") {
                     return null;
@@ -181,7 +181,7 @@ function CustomerDeclinedPayment() {
                 return { fontSize: "12px" };
             },
             formatter: function (cell, row) {
-                // console.log(row.final_report);
+               
                 return (
                     <>
 
@@ -269,7 +269,7 @@ function CustomerDeclinedPayment() {
 
     //tl,phone,email
     function priceFormatter(cell, row) {
-        console.log("row", row);
+       
         if (row) {
             return (
                 <>

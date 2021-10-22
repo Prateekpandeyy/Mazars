@@ -40,7 +40,7 @@ function Proposal(props) {
     axios
       .get(`${baseUrl}/customers/getProposals?uid=${JSON.parse(userId)}`)
       .then((res) => {
-        console.log(res);
+
         setAllProposalCount(res.data.result.length);
       });
   };
@@ -49,7 +49,7 @@ function Proposal(props) {
     axios
       .get(`${baseUrl}/customers/getProposals?uid=${JSON.parse(userId)}&status=1`)
       .then((response) => {
-        console.log("code---", response);
+      
         if (response.data.code === 1) {
           setInprogressProposalCount(response.data.result.length);
         }
@@ -60,7 +60,7 @@ function Proposal(props) {
     axios
       .get(`${baseUrl}/customers/getProposals?uid=${JSON.parse(userId)}&status=2`)
       .then((res) => {
-        console.log(res);
+       
         if (res.data.code === 1) {
           setAcceptedProposalCount(res.data.result.length);
         }
@@ -71,7 +71,7 @@ function Proposal(props) {
     axios
       .get(`${baseUrl}/customers/getProposals?uid=${JSON.parse(userId)}&status=3`)
       .then((response) => {
-        console.log("code---", response);
+        
         if (response.data.code === 1) {
           setDeclinedProposalCount(response.data.result.length);
         }
@@ -101,7 +101,6 @@ function Proposal(props) {
   };
 
 
-  console.log("allProposalCount", allProposalCount)
 
 
   return (

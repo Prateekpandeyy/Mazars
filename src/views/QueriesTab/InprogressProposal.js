@@ -42,7 +42,7 @@ function InprogressProposal() {
         `${baseUrl}/customers/incompleteAssignments?user=${JSON.parse(userId)}&status=2`
       )
       .then((res) => {
-        console.log(res);
+       
         if (res.data.code === 1) {
           setQuery(res.data.result);
           setCountQueries(res.data.result.length);
@@ -71,7 +71,7 @@ function InprogressProposal() {
         return { fontSize: "12px" };
       },
       formatter: function dateFormat(cell, row) {
-        console.log("dt", row.created);
+       
         var oldDate = row.created;
         if (oldDate == null) {
           return null;
@@ -86,7 +86,7 @@ function InprogressProposal() {
         return { fontSize: "12px" };
       },
       formatter: function nameFormatter(cell, row) {
-        console.log(row);
+       
         return (
           <>
             <Link to={`/customer/my-assingment/${row.q_id}`}>
@@ -123,14 +123,7 @@ function InprogressProposal() {
           <>
             <div className="completed">
               {row.status}
-              {/* {
-                row.status == "Inprogress" ?
-                  <p className="completed">
-                    {row.statusdescription}
-                  </p>
-                  :
-                  null
-              } */}
+            
             </div>
           </>
         );
@@ -144,7 +137,7 @@ function InprogressProposal() {
         return { fontSize: "12px" };
       },
       formatter: function dateFormat(cell, row) {
-        console.log("dt", row.exp_delivery_date);
+        
 
         return (
           <>

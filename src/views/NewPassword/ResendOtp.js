@@ -23,7 +23,7 @@ function ResendOtp({ id, setDisabled, getTime, setLoad, setLoading }) {
             data: formData,
         })
             .then(function (response) {
-                console.log("res-", response);
+            
                 if (response.data.code === 1) {
                     setLoading(false)
                     Alerts.SuccessNormal("As per your request, OTP has been sent to your regsitered email address.")

@@ -9,10 +9,10 @@ const PrivateRouteUser = ({ component: Component, ...rest }) => {
       {...rest}
       component={(props) => {
         const token = window.localStorage.getItem("userid");
-        console.log("userid -", token)
+
 
         if (token) {
-          console.log("userid -", token)
+  
           return <Component {...props} />;
         } else {
           return (

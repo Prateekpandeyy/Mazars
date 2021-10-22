@@ -58,13 +58,13 @@ function ViewReport({
       data: formData,
     })
       .then(function (response) {
-        console.log("res-", response);
+       
         if (response.data.code === 1) {
           setData(response.data.result)
         }
       })
       .catch((error) => {
-        console.log("erroror - ", error);
+      
       });
   }
   const additionalHandler = (p) => {
@@ -76,7 +76,7 @@ function ViewReport({
 
   //accept handler
   const acceptHandler = (key) => {
-    console.log("acceptHandler", key);
+   
 
     let formData = new FormData();
     formData.append("uid", JSON.parse(userId));
@@ -92,7 +92,7 @@ function ViewReport({
       data: formData,
     })
       .then(function (response) {
-        console.log("response-", response);
+   
         if (response.data.code === 1) {
           getData();
           var variable = "Draft accepted successfully "
@@ -100,7 +100,7 @@ function ViewReport({
         }
       })
       .catch((error) => {
-        console.log("erroror - ", error);
+     
       });
   };
 

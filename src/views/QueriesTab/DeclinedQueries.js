@@ -47,7 +47,7 @@ function DeclinedQueries() {
         `${baseUrl}/customers/declinedQueries?uid=${JSON.parse(userId)}`
       )
       .then((res) => {
-        console.log(res);
+
         if (res.data.code === 1) {
           setQuery(res.data.result);
           setCountQueries(res.data.result.length);
@@ -76,7 +76,7 @@ function DeclinedQueries() {
         return { fontSize: "12px" };
       },
       formatter: function dateFormat(cell, row) {
-        console.log("dt", row.created);
+
         var oldDate = row.created;
         if (oldDate == null) {
           return null;
@@ -91,7 +91,7 @@ function DeclinedQueries() {
         return { fontSize: "12px" };
       },
       formatter: function nameFormatter(cell, row) {
-        console.log(row);
+       
         return (
           <>
             <Link to={`/customer/my-assingment/${row.id}`}>
@@ -159,7 +159,7 @@ function DeclinedQueries() {
         return { fontSize: "12px" };
       },
       formatter: function dateFormat(cell, row) {
-        console.log("dt", row.exp_delivery_date);
+   
 
         return (
           <>

@@ -68,11 +68,11 @@ function NewPassword(props) {
 
 
   const onSubmit = (value) => {
-    console.log("value :", value);
+  
     setLoading(true)
 
     let formData = new FormData();
-    // formData.append("user_id", value.p_name);
+   
     formData.append("email", value.p_email);
     formData.append("code", value.p_code);
     formData.append("password", value.p_password);
@@ -84,7 +84,7 @@ function NewPassword(props) {
       data: formData,
     })
       .then(function (response) {
-        console.log("res-", response);
+       
         if (response.data.code === 1) {
           setLoading(false)
           var variable = "Password reset successfully."
@@ -93,7 +93,7 @@ function NewPassword(props) {
           props.history.push("/");
         } else if (response.data.code === 0) {
           setLoading(false)
-          console.log(response.data.result);
+          
           Alerts.ErrorNormal("Incorrect OTP, please try again.")
         }
       })
