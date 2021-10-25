@@ -13,6 +13,7 @@ import { useParams, Link } from "react-router-dom";
 import Alerts from "../../../common/Alerts";
 import ResendOtp from "./ResendOtp";
 import { Spinner } from "reactstrap";
+import LoadingTime from "../../../components/LoadingTime/LoadingTime";
 
 
 
@@ -38,27 +39,9 @@ function NewPassword(props) {
 
 
   useEffect(() => {
-    getTime()
+    LoadingTime.timer2(setTime, setDisabled)
   }, []);
 
-
-  const getTime = () => {
-    var timerOn = true;
-    function timer(remaining) {
-      var s = remaining % 60;
-      s = s < 10 ? '0' + s : s;
-      setTime(remaining)
-      remaining -= 1;
-      if (remaining >= 0 && timerOn) {
-        setTimeout(function () {
-          timer(remaining);
-        }, 1000);
-        return;
-      }
-      setDisabled(true)
-    }
-    timer(180);
-  }
 
 
   const onSubmit = (value) => {
@@ -223,9 +206,10 @@ function NewPassword(props) {
                       {errors.p_code.message}
                     </div>
                   )}
+                  {disabled === false ? 
                   <small class="text-center">
-                    Note: OTP is valid for {time} seconds.
-                  </small>
+                  Note: OTP is valid for {time} seconds.
+                </small> : ""}
                 </div>
               </div>
             </div>
@@ -255,7 +239,7 @@ function NewPassword(props) {
           {
             disabled ?
               <ResendOtp id={id} setDisabled={setDisabled}
-                getTime={getTime} setLoading={setLoading} />
+              setTime={setTime}  loading = {loading} getTime={LoadingTime.timer2} setLoading={setLoading} />
               :
               null
           }

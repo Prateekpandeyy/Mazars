@@ -62,12 +62,6 @@ else{
                 if (response.data.code === 1) {
                     toggle()
                     history.push('/teamleader/schedule');
-                    // reset();
-                    // setLoading(false)
-                    // var variable = "Message sent successfully."
-                    // Alerts.SuccessNormal(variable)
-                    // props.history.push(routes);
-                  
                 }
                
             })
@@ -144,7 +138,7 @@ else{
                                     ></textarea>
                                 </div>
                                 <button type="button" className="btn btn-danger" onClick={() => exitBtn2()}>Cancel </button>
-                                <button type="submit" className="btn btn-primary">
+                                <button type="submit" className="btn btn-primary mx-2">
                                     Submit
                                 </button>
                             </div>

@@ -70,7 +70,7 @@ import adMeetingComponent from './pages/Admin/MeetingComponent/MeetingComponent'
 import Customer from "./pages/Admin/customer/Customer";
 import adminReport from "./pages/Admin/Report/Report";
 import AdminInvoice from "./pages/Admin/Invoice/Invoice";
-
+import LoginFun from "./components/LoginForm/LoginFun";
 //TL routes
 import TlStart from './pages/TL/Start/Start'
 import TlLogin from './pages/TL/Login/Login'
@@ -184,7 +184,7 @@ function App() {
             <PrivateRouteUser exact path="/customer/thankyou" component={ThankYou} />  
             <PrivateRouteUser exact path="/customer/paydetails/:id" component={payDetails} />
             <PublicRouteAdmin exact path="/admin/start" component={AdminStart} />
-            <PublicRouteAdmin exact path="/admin/login" component={AdminLogin} />
+            <PublicRouteAdmin exact path="/admin/login" component={LoginFun} />
             <PublicRouteAdmin exact path="/admin/forget-password" component={AdminForgetPassword} />
             <PublicRouteAdmin exact path="/admin/new-password/:id" component={AdminNewPassword} />
 

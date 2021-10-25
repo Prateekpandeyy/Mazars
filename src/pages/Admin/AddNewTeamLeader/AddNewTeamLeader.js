@@ -84,18 +84,18 @@ function AddNew() {
   }))
 
 
-  useEffect(() => {
-    const postName = async () => {
-      await axios.get(`${baseUrl}/admin/addTlPost`).then((res) => {
-        if (res.data.code === 1) {
+  // useEffect(() => {
+  //   const postName = async () => {
+  //     await axios.get(`${baseUrl}/admin/addTlPost`).then((res) => {
+  //       if (res.data.code === 1) {
        
-          setPostName(res.data.result);
-        }
-      });
-    };
+  //         setPostName(res.data.result);
+  //       }
+  //     });
+  //   };
 
-    postName();
-  }, []);
+  //   postName();
+  // }, []);
 
   useEffect(() => {
     const getCategory = async () => {

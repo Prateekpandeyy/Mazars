@@ -32,6 +32,7 @@ const Report = () => {
   const [taxId, setTaxId] = useState();
   const [teamleader44, setTeamleader44] = useState() 
   const [taxprofessional44, setTaxprofessional44] = useState()
+  const [custData, setcustData] = useState();
   var kk = []
   var pp = []
   var vv = []
@@ -73,6 +74,7 @@ const history = useHistory()
 
   useEffect(() => {
     getTeamLeader();
+    getData();
 
   }, []);
 
@@ -104,6 +106,23 @@ const history = useHistory()
       });
   };
 
+
+  const getData = () => {
+    axios
+    .get(`${baseUrl}/tl/videoScheduler?tl_id=1`)
+      .then((res) => {
+       
+        var a = res.data.result.items;
+        if (a) {
+          setcustData(a.map(mapAppointmentData));
+        }
+      });
+  };
+
+const mapAppointmentData = ((appiontmentData) => ({
+"label" : appiontmentData.id,
+"value" : appiontmentData.id
+}))
   const options = tax.map(d => (
     {
       "value": d.id,
@@ -298,7 +317,16 @@ let cc = []
             ref={register({ required: true })}
           />
         </div>
+       
       </div>
+      <div className="col-md-3">
+      <div className="mb-3">
+          <label className="form-label">Customer Id</label>
+         <Select isMulti options={custData}>
+
+         </Select>
+        </div>
+          </div>
     
    </div> 
    <div className="row">

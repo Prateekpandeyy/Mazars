@@ -15,6 +15,7 @@ import Alerts from "../../common/Alerts";
 import Mandatory from "../../components/Common/Mandatory";
 import { Spinner } from 'reactstrap';
 import ShowError from "../../components/LoadingTime/LoadingTime";
+import LoadingTime from "../../components/LoadingTime/LoadingTime";
 const Schema = yup.object().shape({
   p_email: yup.string().email("invalid email").required(""),
   p_password: yup.string().required(""),
@@ -46,22 +47,7 @@ function LoginForm() {
   const getTime = () => {
 
     if (load) {
-      var timerOn = true;
-      function timer(remaining) {
-        var s = remaining % 60;
-        s = s < 10 ? '0' + s : s;
-        setTime(remaining)
-        remaining -= 1;
-        if (remaining >= 0 && timerOn) {
-          setTimeout(function () {
-            timer(remaining);
-          }, 1000);
-          return;
-        }
-        setDisabled(true)
-        setLoad(false)
-      }
-      timer(180);
+      LoadingTime.timer2(setTime, setDisabled)
     }
 
   }

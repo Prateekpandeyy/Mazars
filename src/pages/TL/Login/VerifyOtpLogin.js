@@ -9,7 +9,7 @@ import { useHistory } from "react-router-dom";
 import Alerts from "../../../common/Alerts";
 import Mandatory from "../../../components/Common/Mandatory";
 import { Spinner } from "reactstrap";
-
+import LoadingTime from '../../../components/LoadingTime/LoadingTime';
 
 const Schema = yup.object().shape({
   p_otp: yup.string().required(""),
@@ -31,43 +31,11 @@ function VerifyOtp({ email, uid, loading, setLoading }) {
 
 
   useEffect(() => {
-    console.log("call useEffect button")
-    var timerOn = true;
-    function timer(remaining) {
-      var s = remaining % 60;
-      s = s < 10 ? '0' + s : s;
-      setTime(remaining)
-      remaining -= 1;
-      if (remaining >= 0 && timerOn) {
-        setTimeout(function () {
-          timer(remaining);
-        }, 1000);
-        return;
-      }
-      setDisabled(true)
-
-    }
-    timer(180);
+    LoadingTime.timer2(setTime, setDisabled)
   }, [num]);
 
   useEffect(() => {
-    console.log("call useEffect")
-    var timerOn = true;
-    function timer(remaining) {
-      var s = remaining % 60;
-      s = s < 10 ? '0' + s : s;
-      setTime(remaining)
-      remaining -= 1;
-      if (remaining >= 0 && timerOn) {
-        setTimeout(function () {
-          timer(remaining);
-        }, 1000);
-        return;
-      }
-      setDisabled(true)
-
-    }
-    timer(180);
+    LoadingTime.timer2(setTime, setDisabled)
   }, []);
 
 

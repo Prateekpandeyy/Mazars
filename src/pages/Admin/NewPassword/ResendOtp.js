@@ -6,7 +6,7 @@ import Alerts from "../../../common/Alerts";
 
 
 
-function ResendOtp({ id, setDisabled, getTime, setLoading }) {
+function ResendOtp({ id, setTime, setDisabled, loading, getTime, setLoading }) {
 
     const { handleSubmit, errors, reset } = useForm();
 
@@ -26,7 +26,7 @@ function ResendOtp({ id, setDisabled, getTime, setLoading }) {
                     setLoading(false)
                     Alerts.SuccessNormal("As per your request, OTP has been sent to your registered email address.")
                     setDisabled(false)
-                    getTime();
+                    getTime(setTime, setDisabled);
                 } else if (response.data.code === 0) {
                     setLoading(false)
                     Alerts.ErrorNormal("Some thing went wrong, please try again")
@@ -41,9 +41,10 @@ function ResendOtp({ id, setDisabled, getTime, setLoading }) {
     return (
         <>
             <form onSubmit={handleSubmit(onSubmit)}>
+{loading === true ? "" :
                 <div style={{ paddingTop: "10px" }}>
-                    <button type="submit" class="btn btn-success">SEND OTP</button>
-                </div>
+                <button type="submit" class="btn btn-success">SEND OTP</button>
+            </div>}
             </form>
         </>
     );

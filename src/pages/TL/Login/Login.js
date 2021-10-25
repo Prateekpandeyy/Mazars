@@ -14,7 +14,7 @@ import Alerts from "../../../common/Alerts";
 import Mandatory from "../../../components/Common/Mandatory";
 import VerifyOtpLogin from "./VerifyOtpLogin";
 import { Spinner } from "reactstrap";
-
+import { useHistory } from "react-router";
 
 
 const Schema = yup.object().shape({
@@ -25,6 +25,7 @@ const Schema = yup.object().shape({
 });
 
 function Login(props) {
+  let history = useHistory()
   const alert = useAlert();
   const { handleSubmit, register, reset, errors } = useForm({
     resolver: yupResolver(Schema),
@@ -56,10 +57,12 @@ function Login(props) {
       .then(function (response) {
         console.log("res-", response);
         if (response.data.code === 1) {
+          logout();
           setShow(true)
           setLoading(false)
           Alerts.SuccessNormal("As per your request, OTP has been sent to your registered email address.")
           setUid(response.data.user_id)
+         
         } else if (response.data.code === 0) {
           setLoading(false)
           Alerts.ErrorNormal("Invalid email or password.")
@@ -74,6 +77,13 @@ function Login(props) {
     console.log("val-", e.target.value);
     setEmail(e.target.value);
   };
+  const logout = () => {
+    setTimeout(() => {
+      localStorage.removeItem("adminkey");
+      localStorage.removeItem("adminEmail");
+      history.push("/admin/login");
+    }, 36000000)
+  }
   return (
     <>
       <Header mtl="mtl" />
