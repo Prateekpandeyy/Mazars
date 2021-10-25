@@ -201,7 +201,7 @@ function AddFreshAssingment(props) {
                   <div className="row">
                     <div className="col-md-6">
                       <div className="mb-3">
-                        <label className="form-label">Facts of the case <span className="declined">*</span></label>
+                        <label className="form-label">Brief fact of the case <span className="declined">*</span></label>
                         <textarea
                           className={classNames("form-control", {
                             "is-invalid": errors.p_fact,
@@ -368,7 +368,7 @@ function AddFreshAssingment(props) {
                     <div className="col-md-6">
                       <div className="mb-3">
                         <label className="form-label">
-                          Purpose for which Opinion is sought <span className="declined">*</span>
+                        Purpose of the query <span className="declined">*</span>
                         </label>
                         <Select
                           closeMenuOnSelect={false}

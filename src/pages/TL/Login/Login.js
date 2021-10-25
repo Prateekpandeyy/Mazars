@@ -55,8 +55,9 @@ function Login(props) {
       data: formData,
     })
       .then(function (response) {
-        console.log("res-", response);
+       
         if (response.data.code === 1) {
+          console.log(response)
           logout();
           setShow(true)
           setLoading(false)

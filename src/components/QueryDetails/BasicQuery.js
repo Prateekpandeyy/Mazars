@@ -59,7 +59,7 @@ function BasicQuery({ p, diaplaySpecific, queryDocs, year, purpose }) {
               </td>
             </tr>
             <tr>
-              <th scope="row">Fact of the Case</th>
+              <th scope="row">Brief fact of the case</th>
               <td>{p.fact_case}</td>
             </tr>
             <tr>
@@ -87,7 +87,7 @@ function BasicQuery({ p, diaplaySpecific, queryDocs, year, purpose }) {
               </td>
             </tr>
             <tr>
-              <th scope="row">Purpose for which Opinion is sought</th>
+              <th scope="row">Purpose of the query</th>
               <td colspan="1">
                 {purpose.map((p, i) => (
                   <p key={i}>{p.value}</p>
