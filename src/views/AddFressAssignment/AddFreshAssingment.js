@@ -5,7 +5,6 @@ import { baseUrl } from "../../config/config";
 import { useAlert } from "react-alert";
 import Select from "react-select";
 import './style.css'
-
 import Swal from "sweetalert2";
 import { purpose } from "./data";
 import Layout from "../../components/Layout/Layout";
@@ -20,6 +19,8 @@ import Mandatory from "../../components/Common/Mandatory";
 import classNames from "classnames";
 import { Spinner } from 'reactstrap';
 import ShowError from "../../components/LoadingTime/LoadingTime";
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 
 
@@ -44,7 +45,7 @@ function AddFreshAssingment(props) {
   const [purposeOption, setPurposeOption] = useState([]);
   const [custError, setcustError] = useState([])
   const [assessmentYear, setAssessmentYear] = useState([]);
-
+  const [det, addDet] = useState();
 
   const [loading, setLoading] = useState(false);
   const [selectError, setSelectError] = useState()
@@ -53,9 +54,11 @@ function AddFreshAssingment(props) {
   const remError = () => {
     setCheckerror("")
   }
-  const valiFun = (e) => {
-    setcustError("")
-  }
+  // const valiFun = (e) => {
+  //   console.log(e)
+  //   setcustError("")
+  //   addDet(editor.getData());
+  // }
   const purPoseQuery = (e) => {
     setSelectError("")
     setPurposeOption(e)
@@ -107,7 +110,7 @@ function AddFreshAssingment(props) {
         }
       }
 
-      formData.append("fact", value.p_fact);
+      formData.append("fact", det);
       formData.append("specific", JSON.stringify(value.users));
       formData.append("timelines", value.p_timelines);
       formData.append("user", JSON.parse(userId));
@@ -128,7 +131,7 @@ function AddFreshAssingment(props) {
         .post(`${baseUrl}/customers/PostQuestion`, formData, {
           headers: {
             "content-type": "multipart/form-data",
-            'Authorization': 'JWT fefege...'
+            // 'Authorization': 'JWT fefege...'
           },
         })
         .then(function (response) {
@@ -202,16 +205,22 @@ function AddFreshAssingment(props) {
                     <div className="col-md-6">
                       <div className="mb-3">
                         <label className="form-label">Brief fact of the case <span className="declined">*</span></label>
-                        <textarea
-                          className={classNames("form-control", {
-                            "is-invalid": errors.p_fact,
-                          })}
-                          id="textarea"
-                          rows="6"
-                          name="p_fact"
-                          onChange={valiFun}
-                          ref={register({ required: true })}
-                        ></textarea>
+                      
+                        <CKEditor
+                     editor={ ClassicEditor }
+                    className={classNames("form-control", {
+                      "is-invalid": errors.p_fact,
+                    })}
+                    id="textarea"
+                    rows="6"
+                    name="p_fact"
+                    onChange={ ( event, editor ) => {
+                      addDet(editor.getData());
+                      setcustError("")
+                    
+                  } }
+                    ref={register({ required: true })}
+                />
                       </div>
                     </div>
 

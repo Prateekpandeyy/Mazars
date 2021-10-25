@@ -1,10 +1,18 @@
 import React, { useState, useEffect } from "react";
 import CommonServices from "../../common/common";
 import { ImageUrl } from "../../config/config";
-
+import { Markup } from 'interweave';
 
 
 function BasicQuery({ p, diaplaySpecific, queryDocs, year, purpose }) {
+//   function htmlDecode(html) {
+//     var parser = new DOMParser;
+//     var dom = parser.parseFromString(
+//         '<!doctype html><body>' + html,
+//         'text/html');
+//      return dom.body.textContent;
+// }
+
 
   return (
     <>
@@ -60,7 +68,7 @@ function BasicQuery({ p, diaplaySpecific, queryDocs, year, purpose }) {
             </tr>
             <tr>
               <th scope="row">Brief fact of the case</th>
-              <td>{p.fact_case}</td>
+            <Markup content={p.fact_case} />
             </tr>
             <tr>
               <th scope="row">Uploaded Documents</th>
