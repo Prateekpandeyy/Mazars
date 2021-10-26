@@ -21,7 +21,8 @@ import { Spinner } from 'reactstrap';
 import ShowError from "../../components/LoadingTime/LoadingTime";
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-
+import {Font }from "@ckeditor/ckeditor5-font";
+import PublishIcon from '@material-ui/icons/Publish';
 
 
 function AddFreshAssingment(props) {
@@ -54,6 +55,65 @@ function AddFreshAssingment(props) {
   const remError = () => {
     setCheckerror("")
   }
+  ClassicEditor
+    .create( document.querySelector( '#textarea' ), {
+        fontColor: {
+            colors: [
+                {
+                    color: 'hsl(0, 0%, 0%)',
+                    label: 'Black'
+                },
+                {
+                    color: 'hsl(0, 0%, 30%)',
+                    label: 'Dim grey'
+                },
+                {
+                    color: 'hsl(0, 0%, 60%)',
+                    label: 'Grey'
+                },
+                {
+                    color: 'hsl(0, 0%, 90%)',
+                    label: 'Light grey'
+                },
+                {
+                    color: 'hsl(0, 0%, 100%)',
+                    label: 'White',
+                    hasBorder: true
+                },
+
+                // ...
+            ]
+        },
+        fontBackgroundColor: {
+            colors: [
+                {
+                    color: 'hsl(0, 75%, 60%)',
+                    label: 'Red'
+                },
+                {
+                    color: 'hsl(30, 75%, 60%)',
+                    label: 'Orange'
+                },
+                {
+                    color: 'hsl(60, 75%, 60%)',
+                    label: 'Yellow'
+                },
+                {
+                    color: 'hsl(90, 75%, 60%)',
+                    label: 'Light green'
+                },
+                {
+                    color: 'hsl(120, 75%, 60%)',
+                    label: 'Green'
+                },
+
+                // ...
+            ]
+        },
+        toolbar: [
+            'heading', 'bulletedList', 'numberedList', 'fontColor', 'fontBackgroundColor', 'undo', 'redo'
+        ]
+    } )
   // const valiFun = (e) => {
   //   console.log(e)
   //   setcustError("")
@@ -100,16 +160,23 @@ function AddFreshAssingment(props) {
     else {
       setLoading(true);
       let formData = new FormData();
-
-      var uploadImg = value.upload;
+     // console.log("valueImg", value.uploadImg.length)
+      var uploadImg = value.uploadImg;
+    
+      // if (uploadImg) {
+      //   for (var i = 0; i < uploadImg.length; i++) {
+        
+      //     let a = value.upload[i].pics[0];
+      //     formData.append("upload_1[]", a);
+      //   }
+      // }
       if (uploadImg) {
         for (var i = 0; i < uploadImg.length; i++) {
-        
-          let a = value.upload[i].pics[0];
-          formData.append("upload_1[]", a);
+          let file = uploadImg[i];
+          formData.append("upload_1[]", file);
         }
       }
-
+      console.log("valueImg", value.upload)
       formData.append("fact", det);
       formData.append("specific", JSON.stringify(value.users));
       formData.append("timelines", value.p_timelines);
@@ -202,7 +269,7 @@ function AddFreshAssingment(props) {
 
                 <form onSubmit={handleSubmit(onSubmit)}>
                   <div className="row">
-                    <div className="col-md-6">
+                    <div className="col-md-12">
                       <div className="mb-3">
                         <label className="form-label">Brief fact of the case <span className="declined">*</span></label>
                       
@@ -211,21 +278,101 @@ function AddFreshAssingment(props) {
                     className={classNames("form-control", {
                       "is-invalid": errors.p_fact,
                     })}
+                    config = {{
+                    
+                      highlight: {
+                        options: [
+                            {
+                                model: 'greenMarker',
+                                class: 'marker-green',
+                                title: 'Green marker',
+                                color: 'var(--ck-highlight-marker-green)',
+                                type: 'marker'
+                            },
+                            {
+                                model: 'redPen',
+                                class: 'pen-red',
+                                title: 'Red pen',
+                                color: 'var(--ck-highlight-pen-red)',
+                                type: 'pen'
+                            }
+                        ]
+                    },
+                      fontFamily: {
+                        options: [
+                            'default',
+                            'Ubuntu, Arial, sans-serif',
+                            'Ubuntu Mono, Courier New, Courier, monospace'
+                        ]
+                    },
+                    fontColor: {
+                      colors: [
+                          {
+                              color: 'hsl(0, 0%, 0%)',
+                              label: 'Black'
+                          },
+                          {
+                              color: 'hsl(0, 0%, 30%)',
+                              label: 'Dim grey'
+                          },
+                          {
+                              color: 'hsl(0, 0%, 60%)',
+                              label: 'Grey'
+                          },
+                          {
+                              color: 'hsl(0, 0%, 90%)',
+                              label: 'Light grey'
+                          },
+                          {
+                              color: 'hsl(0, 0%, 100%)',
+                              label: 'White',
+                              hasBorder: true
+                          },
+          
+                          // ...
+                      ]
+                  },
+                    toolbar: [
+                   ' highlight', 'heading',  'bold', 'italic',  'bulletedList', 'numberedList', 'undo', 'redo'
+                    ]
+                    }}
+                    // config={{
+                    //   plugins: [ Font ],
+                    //   toolbar: [
+                    //       'heading',  'bold', 'italic', 'fontColor','bulletedList', 'numberedList', 
+                    //       'undo', 'redo'
+                    //   ],
+                    //   fontColor: {
+                    //   colors: [
+                    //       {
+                    //           color: 'hsl(0, 0%, 0%)',
+                    //           label: 'Black'
+                    //       },
+                    //       {
+                    //           color: 'hsl(0, 0%, 30%)',
+                    //           label: 'Dim grey'
+                    //       },
+                    //       // ...
+                    //       ]
+                    //   },
+                    //   }}
+          
                     id="textarea"
-                    rows="6"
+                    rows="12"
                     name="p_fact"
                     onChange={ ( event, editor ) => {
                       addDet(editor.getData());
                       setcustError("")
                     
                   } }
+                  
                     ref={register({ required: true })}
                 />
                       </div>
                     </div>
 
-                    <div className="col-md-6">
-                      <div className="question_query mb-2">
+                  
+                      {/* <div className="question_query mb-2">
                         <label className="form-label">
                           Specific Questions for advisory <span className="declined">*</span>
                         </label>
@@ -235,9 +382,9 @@ function AddFreshAssingment(props) {
                         >
                           +
                         </div>
-                      </div>
+                      </div> */}
 
-                      {fields.length > 0 &&
+                      {/* {fields.length > 0 &&
                         fields.map((item, index) => (
                           <div
                             className="question_query_field mb-2"
@@ -260,8 +407,8 @@ function AddFreshAssingment(props) {
                               -
                             </div>
                           </div>
-                        ))}
-                    </div>
+                        ))} */}
+                    
 
                     <div className="col-md-6">
                       <div className="mb-3">
@@ -425,20 +572,30 @@ const ImageUploads = ({ register, control }) => {
     <>
       <div className="question_query mb-2">
         <label className="form-label">Upload Your Document</label>
-        <div className="btn btn-primary" onClick={() => append({ pics: "" })}>
-          +
+        <div className="btn" onClick={() => append({ pics: "" })}>
+        <PublishIcon color="secondary" />
         </div>
       </div>
 
       {fields.map((item, index) => (
         <div className="question_query_field mb-2" key={index}>
-          <input
+          {/* <input
             type="file"
+            multiple={true}
             name={`upload[${index}].pics`}
             ref={register()}
             className="form-control-file manage_file"
             defaultValue={item.pics}
-          />
+          /> */}
+           <input
+                type="file"
+                // name={`upload[${index}].pics`}
+                name= "uploadImg"
+                ref={register}
+                className="form-control-file manage_file"
+                multiple
+                defaultValue={item.pics}
+              />
           <div className="btn btn-primary ml-2" onClick={() => remove(index)}>
             -
           </div>

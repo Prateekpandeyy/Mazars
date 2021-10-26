@@ -16,12 +16,15 @@ import classNames from "classnames";
 import Loader from "../../components/Loader/Loader";
 import { Spinner } from 'reactstrap';
 import ShowError from "../../components/LoadingTime/LoadingTime";
-
+import { Markup } from 'interweave';
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import PublishIcon from '@material-ui/icons/Publish';
 function EditQuery(props) {
 
   const history = useHistory();
   const { id } = useParams();
-
+  
   const { handleSubmit, register, errors, reset, control, setValue } = useForm({
     defaultValues: {
       users: [{ query: "" }],
@@ -43,7 +46,8 @@ function EditQuery(props) {
   const [purposeOption, setPurposeOption] = useState([]);
   const [selectError, setSelectError] = useState()
   const [assessmentYear, setAssessmentYear] = useState([]);
-
+    const [value2 , setValue2] = useState();
+    const [val3, setVal3] = useState()
 
   const purPoseQuery = (e) => {
     setSelectError("")
@@ -53,14 +57,14 @@ function EditQuery(props) {
   const remError = () => {
     setCheckerror("")
   }
-
-
+ 
   useEffect(() => {
     getAssementYear();
     getQuery();
+   
   }, []);
 
-
+ 
   const getAssementYear = () => {
     axios
       .get(`${baseUrl}/customers/getAssesmentYear`)
@@ -95,8 +99,10 @@ function EditQuery(props) {
         } catch (e) {
           return false;
         }
-
-        setValue("fact_case", res.data.result[0].fact_case);
+        console.log(<Markup content={res.data.result[0].fact_case}/>)
+        setValue2(res.data.result[0].fact_case);
+     
+      //  setValue("fact_case", res.data.result[0].fact_case);
         setValue("case_name", res.data.result[0].case_name);
         setValue("p_Softcopy_word", Boolean(+res.data.result[0].softcopy_word));
         setValue(
@@ -136,7 +142,7 @@ function EditQuery(props) {
           formData.append("upload_1[]", a);
         }
       }
-      formData.append("fact", value.fact_case);
+      formData.append("fact", value2);
       formData.append("specific", JSON.stringify(value.users));
       formData.append("timelines", value.p_timelines);
       formData.append("user", JSON.parse(userId));
@@ -216,6 +222,7 @@ function EditQuery(props) {
               <DeleteQuery id={id} setLoading={setLoading}/>
             </Col>
           </Row>
+         
         </CardHeader>
 
         <CardHeader>
@@ -228,15 +235,38 @@ function EditQuery(props) {
                     <div className="col-md-6">
                       <div className="mb-3">
                         <label className="form-label">Facts of the case <span className="declined">*</span></label>
-                        <textarea
+                        {/* <textarea
                           className={classNames("form-control", {
                             "is-invalid": errors.fact_case,
                           })}
                           id="textarea"
                           rows="6"
-                          name="fact_case"
+                        
+                        //  name="fact_case"
                           ref={register({ required: true })}
-                        ></textarea>
+                          
+                        >
+                           
+                        </textarea> */}
+                        
+                        <CKEditor
+                     editor={ ClassicEditor }
+                    className={classNames("form-control", {
+                      "is-invalid": errors.p_fact,
+                    })}
+                    id="textarea22"
+                    rows="6"
+                    name="p_fact"
+                   data={value2}
+                    onChange={ ( event, editor ) => {
+                      setValue2(editor.getData());
+                      // setcustError("")
+                    
+                  } }
+                    //ref={register({ required: true })}
+                >
+                  
+                  </CKEditor>
                       </div>
                     </div>
 
@@ -464,8 +494,8 @@ const ImageUploads = ({ register, control }) => {
     <>
       <div className="question_query mb-2">
         <label className="form-label">Upload Your Document</label>
-        <div className="btn btn-primary" onClick={() => append({ pics: "" })}>
-          +
+        <div className="btn" onClick={() => append({ pics: "" })}>
+        <PublishIcon color="secondary" />
         </div>
       </div>
 
@@ -474,6 +504,7 @@ const ImageUploads = ({ register, control }) => {
           <input
             type="file"
             name={`upload[${index}].pics`}
+            multiple={true}
             ref={register()}
             className="form-control-file manage_file"
             defaultValue={item.pics}
