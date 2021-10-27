@@ -114,6 +114,7 @@ console.log("tds22", tds)
                         <Link
                             to={{
                                 pathname: `/teamleader/queries/${row.id}`,
+                                index : 0,
                                 routes: "proposal",
                             }}
                         >

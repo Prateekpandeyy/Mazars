@@ -173,6 +173,7 @@ function AssignmentComponent() {
             <Link
               to={{
                 pathname: `/admin/queries/${row.q_id}`,
+                index : 0,
                 routes: "assignment",
               }}
             >

@@ -163,6 +163,7 @@ function FinalReport() {
             <Link
               to={{
                 pathname: `/admin/queries/${row.q_id}`,
+                index : 2,
                 routes: "assignment",
               }}
             >

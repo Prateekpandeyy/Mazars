@@ -100,6 +100,7 @@ function AcceptedProposal() {
                         <Link
                             to={{
                                 pathname: `/teamleader/queries/${row.id}`,
+                                index : 2,
                                 routes: "proposal",
                             }}
                         >

@@ -96,7 +96,7 @@ function DeclinedProposal({ declinedProposal }) {
             <Link
               to={{
                 pathname: `/admin/queries/${row.q_id}`,
-                index: 2,
+                index: 3,
                 routes: "proposal",
               }}
             >

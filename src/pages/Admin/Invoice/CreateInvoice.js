@@ -86,7 +86,9 @@ const CreateInvoice = () => {
                         <Link
                             to={{
                                 pathname: `/admin/queries/${row.id}`,
-                                routes: "proposal",
+                                index : 1,
+                                routes: "adinvoice",
+                                
                             }}
                         >
                             {row.assign_no}

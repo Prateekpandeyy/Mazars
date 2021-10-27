@@ -143,6 +143,7 @@ function AllPayment() {
                         <Link
                             to={{
                                 pathname: `/teamleader/queries/${row.assign_id}`,
+                                index : 2, 
                                 routes: "paymentstatus",
                             }}
                         >

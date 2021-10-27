@@ -500,19 +500,22 @@ const ImageUploads = ({ register, control }) => {
       </div>
 
       {fields.map((item, index) => (
+        <>
+        {index === 0 ? 
         <div className="question_query_field mb-2" key={index}>
-          <input
-            type="file"
-            name={`upload[${index}].pics`}
-            multiple={true}
-            ref={register()}
-            className="form-control-file manage_file"
-            defaultValue={item.pics}
-          />
-          <div className="btn btn-primary ml-2" onClick={() => remove(index)}>
-            -
-          </div>
+        <input
+          type="file"
+          name={`upload[${index}].pics`}
+          multiple={true}
+          ref={register()}
+          className="form-control-file manage_file"
+          defaultValue={item.pics}
+        />
+        <div className="btn btn-primary ml-2" onClick={() => remove(index)}>
+          -
         </div>
+      </div> : ""}
+        </>
       ))}
     </>
   );

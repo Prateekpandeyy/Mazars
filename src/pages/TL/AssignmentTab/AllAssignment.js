@@ -188,6 +188,7 @@ function AssignmentTab() {
             <Link
               to={{
                 pathname: `/teamleader/queries/${row.q_id}`,
+                index : 0,
                 routes: "assignment",
               }}
             >

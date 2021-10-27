@@ -174,6 +174,7 @@ const ViewReport = (key) => {
                         <Link
                             to={{
                                 pathname: `/teamleader/queries/${row.q_id}`,
+                                index : 2,
                                 routes: "assignment",
                             }}
                         >

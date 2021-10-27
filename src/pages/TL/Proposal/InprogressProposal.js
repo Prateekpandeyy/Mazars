@@ -101,6 +101,7 @@ function InprogressProposal() {
                         <Link
                             to={{
                                 pathname: `/teamleader/queries/${row.id}`,
+                                index : 1,
                                 routes: "proposal",
                             }}
                         >

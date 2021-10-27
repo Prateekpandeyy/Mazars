@@ -101,6 +101,7 @@ function DeclinedProposal() {
                         <Link
                             to={{
                                 pathname: `/teamleader/queries/${row.id}`,
+                                index : 3,
                                 routes: "proposal",
                             }}
                         >

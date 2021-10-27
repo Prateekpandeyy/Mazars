@@ -125,6 +125,7 @@ function AllPayment() {
                         <Link
                             to={{
                                 pathname: `/admin/queries/${row.assign_id}`,
+                                index : 0,
                                 routes: "paymentstatus",
                             }}
                         >

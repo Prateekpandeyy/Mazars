@@ -31,7 +31,8 @@ function QueryDetails({
   year,
   feedback,
   reports, 
-  submitData
+  submitData,
+  accept
 }) {
  
 
@@ -124,6 +125,7 @@ function QueryDetails({
                     diaplayHistory={diaplayHistory}
                     paymentDetails={paymentDetails}
                     p={p}
+                    accept={accept}
                   />
                 </Card>
               </Col>

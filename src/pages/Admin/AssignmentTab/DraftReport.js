@@ -162,6 +162,7 @@ var rowStyle2 = {}
             <Link
               to={{
                 pathname: `/admin/queries/${row.q_id}`,
+                index : 1,
                 routes: "assignment",
               }}
             >

@@ -110,7 +110,7 @@ const hist = useHistory();
             <Link
               to={{
                 pathname: `/teamleader/queries/${row.id}`,
-                index: 1,
+                index: 3,
                 routes: "queriestab",
               }}
             >

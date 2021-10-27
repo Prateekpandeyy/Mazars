@@ -87,7 +87,9 @@ const Generated = () => {
                         <Link
                             to={{
                                 pathname: `/admin/queries/${row.id}`,
-                                routes: "proposal",
+                                index : 0,
+                                routes: "adinvoice",
+                                
                             }}
                         >
                             {row.assign_no}

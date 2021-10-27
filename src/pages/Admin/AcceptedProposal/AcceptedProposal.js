@@ -92,7 +92,13 @@ function AcceptedProposal({ acceptedProposal }) {
      
         return (
           <>
-            <Link to={`/admin/queries/${row.q_id}`}>{row.assign_no}</Link>
+           <Link
+              to={{
+                pathname: `/admin/queries/${row.q_id}`,
+                index: 2,
+                routes: "proposal",
+              }}
+            >{row.assign_no}</Link>
           </>
         );
       },

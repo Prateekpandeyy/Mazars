@@ -155,6 +155,7 @@ rowStyle2 = (row, index) => {
                         <Link
                             to={{
                                 pathname: `/teamleader/queries/${row.assign_id}`,
+                                index : 1,
                                 routes: "paymentstatus",
                             }}
                         >

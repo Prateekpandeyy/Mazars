@@ -100,7 +100,8 @@ const Invoice = () => {
                         <Link
                             to={{
                                 pathname: `/teamleader/queries/${row.id}`,
-                                routes: "proposal",
+                                index : 1,
+                                routes: "tlinvoice",
                             }}
                         >
                             {row.assign_no}

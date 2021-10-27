@@ -21,7 +21,7 @@ function MyAssingment() {
   const [year, setYear] = useState([]);
   const [feedback, setFeedback] = useState([]);
   const [reports, setReports] = useState([]);
-
+  const [accept, setAccept] = useState();
 
   const [diaplayProposal, setDisplayProposal] = useState({
     amount: "",
@@ -38,6 +38,7 @@ function MyAssingment() {
     no_of_installment: "",
     installment_amount: "",
     due_date: "",
+   
   });
 
   const [diaplayAssignment, setDisplayAssignment] = useState([
@@ -67,7 +68,8 @@ function MyAssingment() {
           setAssingmentNo(res.data.result[0].assign_no);
           setFeedback(res.data.feedback_detail);
           setReports(res.data.reports);
-     
+         // console.log("done22", res.data.result[0].accept)
+          setAccept(res.data.result[0].accept)
 
           var purposeItem = res.data.result[0].purpose_opinion;
           var assementItem = res.data.result[0].assessment_year;
@@ -98,8 +100,10 @@ function MyAssingment() {
               no_of_installment: res.data.proposal_queries[0].no_of_installment,
               installment_amount: res.data.proposal_queries[0].installment_amount,
               due_date: res.data.proposal_queries[0].due_date,
-
+              accept : res.data.result[0].accept
+            
             });
+            
           }
 
           if (res.data.assignment.length > 0) {
@@ -189,7 +193,7 @@ function MyAssingment() {
                 feedback={feedback}
                 reports={reports}
                 submitData = {submitData}
-
+                accept = {accept}
               />
             ))}
           </div>

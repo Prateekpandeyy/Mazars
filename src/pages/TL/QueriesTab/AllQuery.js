@@ -91,7 +91,7 @@ function AllQuery() {
                         <Link
                             to={{
                                 pathname: `/teamleader/queries/${row.id}`,
-                                index: 1,
+                                index: 0,
                                 routes: "queriestab",
                             }}
                         >

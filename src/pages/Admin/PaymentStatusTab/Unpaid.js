@@ -123,6 +123,7 @@ function Unpaid() {
                         <Link
                             to={{
                                 pathname: `/admin/queries/${row.assign_id}`,
+                                index : 2,
                                 routes: "paymentstatus",
                             }}
                         >

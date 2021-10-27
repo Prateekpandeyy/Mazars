@@ -192,6 +192,7 @@ rowStyle2 = (row, index) => {
                         <Link
                             to={{
                                 pathname: `/teamleader/queries/${row.q_id}`,
+                                index : 1,
                                 routes: "assignment",
                             }}
                         >

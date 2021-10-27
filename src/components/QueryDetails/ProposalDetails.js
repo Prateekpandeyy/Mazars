@@ -8,6 +8,7 @@ function ProposalDetails({
   diaplayHistory,
   paymentDetails,
   p,
+  accept
 }) {
 
   const {
@@ -26,6 +27,8 @@ function ProposalDetails({
     no_of_installment,
     installment_amount,
     due_date,
+    
+    
   } = diaplayProposal;
 
   const { tlname, date_of_allocation } = diaplayHistory;
@@ -101,7 +104,7 @@ function ProposalDetails({
       return amount
     }
   }
-
+console.log(accept)
   return (
     <>
       <div>
@@ -129,7 +132,7 @@ function ProposalDetails({
             </tr>
             <tr>
               <th scope="row">Name of Team Leader</th>
-              <td>{tlname}</td>
+              <td>{accept == 0 ? "" : tlname}</td>
             </tr>
             <tr>
               <th scope="row">Name of Tax Professional(s)</th>

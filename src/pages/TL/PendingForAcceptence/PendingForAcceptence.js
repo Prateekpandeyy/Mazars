@@ -93,7 +93,7 @@ function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
             <Link
               to={{
                 pathname: `/teamleader/queries/${row.id}`,
-                index: 0,
+                index: 2,
                 routes: "queriestab",
               }}
             >
