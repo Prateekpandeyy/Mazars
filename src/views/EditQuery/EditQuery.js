@@ -227,28 +227,15 @@ function EditQuery(props) {
 
         <CardHeader>
          
-            <div className="container">
-              <div class="col-xl-8 col-lg-8 col-md-12 py-4">
+            <div className="container-fluid">
+              <div class="col-xl-12 col-lg-12 col-md-12 py-4">
 
                 <form onSubmit={handleSubmit(onSubmit)}>
                   <div className="row">
-                    <div className="col-md-6">
+                    <div className="col-md-12">
                       <div className="mb-3">
                         <label className="form-label">Facts of the case <span className="declined">*</span></label>
-                        {/* <textarea
-                          className={classNames("form-control", {
-                            "is-invalid": errors.fact_case,
-                          })}
-                          id="textarea"
-                          rows="6"
-                        
-                        //  name="fact_case"
-                          ref={register({ required: true })}
-                          
-                        >
-                           
-                        </textarea> */}
-                        
+                     
                         <CKEditor
                      editor={ ClassicEditor }
                     className={classNames("form-control", {
@@ -269,7 +256,8 @@ function EditQuery(props) {
                   </CKEditor>
                       </div>
                     </div>
-
+</div>
+<div className="row">
                     <div className="col-md-6">
                       <div className="question_query mb-2">
                         <label className="form-label">

@@ -126,18 +126,18 @@ function EditTP() {
     });
   };
  
-  const data1 = value.name;
-  const data2 = value.personal_email;
-  const data3 = value.phone;
-  const data4 = value.allpcat_id;
-  const data5 = value.allcat_id;
-  const data6 = value.post_name;
-  const data7 = value.email;
-  const data8 = value.cat_id;
-  const data9 = value.pcat_id
-  const data10 = value.tl_id
-  const data11 = value.tl_name
-  const postEmmail = value.tl_post_email;
+  var data1 = value.name;
+  var data2 = value.personal_email;
+  var data3 = value.phone;
+  var data4 = value.allpcat_id;
+  var data5 = value.allcat_id;
+  var data6 = value.post_name;
+  var data7 = value.email;
+  var data8 = value.cat_id;
+  var data9 = value.pcat_id
+  var data10 = value.tl_id
+  var data11 = value.tl_name
+  var postEmmail = value.tl_post_email;
  
   useEffect(() => {
     const getCategory = () => {
@@ -472,7 +472,9 @@ function EditTP() {
                   <div class="col-md-6">
                   <div class="form-group">
                   <label>Teamleader post name <span className="declined">*</span></label>
-                  <input type="text" className = "form-control" defaultValue = {data11} disabled />   
+                  <input type="text" className = "form-control" 
+                  defaultValue = {data11} 
+              disabled />   
                     </div>
                   </div>
                     <div class="col-md-6">
@@ -482,7 +484,7 @@ function EditTP() {
                           type="text"
                           name="post_email"
                           defaultValue = {postEmmail}
-                          disabled
+                         disabled
                           className={classNames("form-control", {
                             "is-invalid": errors.post_email,
                           })}
@@ -500,8 +502,9 @@ function EditTP() {
                         <input
                           type="text"
                           name="post_name"
-                          disabled
+                          
                           defaultValue={data6}
+                          onChange={(e) => data6= e.target.value}
                           className={classNames("form-control", {
                             "is-invalid": errors.post_name,
                           })}
@@ -517,8 +520,9 @@ function EditTP() {
                         type="text"
                         name="p_email"
                         ref={register}
-                      disabled
+                     
                       defaultValue={data7}
+                      onChange={(e) => data7 = e.target.value}
                         className={classNames("form-control", {
                           "is-invalid": errors.post_email,
                         })}

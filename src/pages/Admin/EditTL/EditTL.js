@@ -126,8 +126,8 @@ function EditTL() {
   const data3 = value.phone;
   const data4 = value.allpcat_id;
   const data5 = value.allcat_id;
-  const data6 = value.post_name;
-  const data7 = value.email;
+  var data6 = value.post_name;
+  var data7 = value.email;
   const data8 = value.cat_id;
   const data9 = value.pcat_id;
  
@@ -492,8 +492,9 @@ if(data5 != undefined){
                         <input
                           type="text"
                           name="post_name"
-                          disabled
+                        
                           defaultValue={data6}
+                          onChange = {(e) => data6 = e.target.value}
                           className={classNames("form-control", {
                             "is-invalid": errors.post_name,
                           })}
@@ -508,8 +509,7 @@ if(data5 != undefined){
                           type="text"
                           name="post_email"
                           defaultValue={data7}
-
-                          disabled
+                          onChange={(e) => data7 = e.target.value}
                           className={classNames("form-control", {
                             "is-invalid": errors.post_email,
                           })}

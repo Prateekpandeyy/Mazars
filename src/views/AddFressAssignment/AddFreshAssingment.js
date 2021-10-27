@@ -38,7 +38,7 @@ function AddFreshAssingment(props) {
   });
   const userId = window.localStorage.getItem("userid");
   const category = window.localStorage.getItem("category");
-  const userNameId = window.localStorage.getItem("name");
+  // const userNameId = window.localStorage.getItem("name");
   const [custcheckError, setCheckerror] = useState(null);
   const [selectedOption, setSelectedOption] = useState([]);
   const [purposeOption, setPurposeOption] = useState([]);
@@ -53,11 +53,7 @@ function AddFreshAssingment(props) {
   const remError = () => {
     setCheckerror("")
   }
-  // const valiFun = (e) => {
-  //   console.log(e)
-  //   setcustError("")
-  //   addDet(editor.getData());
-  // }
+ 
   const purPoseQuery = (e) => {
     setSelectError("")
     setPurposeOption(e)
@@ -99,23 +95,14 @@ function AddFreshAssingment(props) {
     else {
       setLoading(true);
       let formData = new FormData();
-     // console.log("valueImg", value.uploadImg.length)
       var uploadImg = value.uploadImg;
-    
-      // if (uploadImg) {
-      //   for (var i = 0; i < uploadImg.length; i++) {
-        
-      //     let a = value.upload[i].pics[0];
-      //     formData.append("upload_1[]", a);
-      //   }
-      // }
       if (uploadImg) {
         for (var i = 0; i < uploadImg.length; i++) {
           let file = uploadImg[i];
           formData.append("upload_1[]", file);
         }
       }
-      console.log("valueImg", value.upload)
+   
       formData.append("fact", det);
       formData.append("specific", JSON.stringify(value.users));
       formData.append("timelines", value.p_timelines);
@@ -204,14 +191,15 @@ function AddFreshAssingment(props) {
           </CardHeader>
          
             <div className="container">
-              <div class="col-xl-8 col-lg-8 col-md-12 py-4">
+              <div class="col-xl-12 col-lg-12 col-md-12 py-4">
 
                 <form onSubmit={handleSubmit(onSubmit)}>
                   <div className="row">
-                    <div className="col-md-6">
+                    <div className="col-md-12">
                       <div className="mb-3">
                         <label className="form-label">Brief fact of the case <span className="declined">*</span></label>
-                      
+
+{/*                       
                         <CKEditor
                      editor={ ClassicEditor }
                     className={classNames("form-control", {
@@ -226,10 +214,27 @@ function AddFreshAssingment(props) {
                     
                   } }
                     ref={register({ required: true })}
-                />
+                /> */}
+                  <CKEditor
+                     editor={ ClassicEditor }
+                    className={classNames("form-control", {
+                      "is-invalid": errors.p_fact,
+                    })}
+                    id="textarea22"
+                    rows="6"
+                    name="p_fact"
+                
+                    onChange={ ( event, editor ) => {
+                      addDet(editor.getData());
+                      setcustError("")
+                    
+                  } }
+
+                ></CKEditor>
                       </div>
                     </div>
-
+</div>
+<div className="row">
                     <div className="col-md-6">
                       <div className="question_query mb-2">
                         <label className="form-label">
@@ -441,14 +446,7 @@ const ImageUploads = ({ register, control }) => {
     {index === 0 ? 
       <div className="question_query_field mb-2" key={index}>
       
-      {/* <input
-        type="file"
-        multiple={true}
-        name={`upload[${index}].pics`}
-        ref={register()}
-        className="form-control-file manage_file"
-        defaultValue={item.pics}
-      /> */}
+      
      
        <input
             type="file"
