@@ -569,7 +569,7 @@ function EditTP() {
                   
                     <label> TP post email <span className="declined">*</span></label>
                       <input
-                        type="text"
+                        type="email"
                         name="p_email"
                         ref={register}
                      
@@ -636,11 +636,10 @@ function EditTP() {
                         <label>Email <span className="declined">*</span></label>
                         <Form.Item name="email">
                           <Input
+                          type="email"
                             className={classNames("form-control", {
-                              "is-invalid": errors.p_email || wEmail || invalid,
-                            })}
-                            onBlur={emailValidation}
-                            onChange={(e) => emailHandler(e)} />
+                              "is-invalid": errors.email || wEmail ,
+                            })}/>
                         </Form.Item>
                         {
                           wEmail ? <p className="declined">{wEmail}</p> : ""
