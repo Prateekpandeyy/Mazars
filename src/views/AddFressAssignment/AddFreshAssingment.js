@@ -1,4 +1,4 @@
-import { useForm, useFieldArray } from "react-hook-form";
+import { useForm, useFieldArray ,  Controller } from "react-hook-form";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
@@ -32,7 +32,7 @@ function AddFreshAssingment(props) {
     },
   });
 
-  const { append, remove, fields } = useFieldArray({
+  const { append, remove, fields} = useFieldArray({
     control,
     name: "users",
   });
@@ -199,24 +199,68 @@ function AddFreshAssingment(props) {
                       <div className="mb-3">
                         <label className="form-label">Brief fact of the case <span className="declined">*</span></label>
 
-{/*                       
-                        <CKEditor
-                     editor={ ClassicEditor }
-                    className={classNames("form-control", {
-                      "is-invalid": errors.p_fact,
-                    })}
-                    id="textarea"
-                    rows=""
-                    name="p_fact"
-                    onChange={ ( event, editor ) => {
-                      addDet(editor.getData());
-                      setcustError("")
-                    
-                  } }
-                    ref={register({ required: true })}
-                /> */}
                   <CKEditor
                      editor={ ClassicEditor }
+                     config = {{
+                      
+                      highlight: {
+                        options: [
+                            {
+                                model: 'greenMarker',
+                                class: 'marker-green',
+                                title: 'Green marker',
+                                color: 'var(--ck-highlight-marker-green)',
+                                type: 'marker'
+                            },
+                            {
+                                model: 'redPen',
+                                class: 'pen-red',
+                                title: 'Red pen',
+                                color: 'var(--ck-highlight-pen-red)',
+                                type: 'pen'
+                            }
+                        ]
+                    },
+                      fontFamily: {
+                        options: [
+                            'default',
+                            'Ubuntu, Arial, sans-serif',
+                            'Ubuntu Mono, Courier New, Courier, monospace'
+                        ]
+                    },
+                    fontColor: {
+                      colors: [
+                          {
+                              color: 'hsl(0, 0%, 0%)',
+                              label: 'Black'
+                          },
+                          {
+                              color: 'hsl(0, 0%, 30%)',
+                              label: 'Dim grey'
+                          },
+                          {
+                              color: 'hsl(0, 0%, 60%)',
+                              label: 'Grey'
+                          },
+                          {
+                              color: 'hsl(0, 0%, 90%)',
+                              label: 'Light grey'
+                          },
+                          {
+                              color: 'hsl(0, 0%, 100%)',
+                              label: 'White',
+                              hasBorder: true
+                          },
+
+                          // ...
+                      ]
+                  },
+                    toolbar: [
+                   ' highlight', 'heading',  'bold', 'fontColor', 'italic',  'bulletedList', 'numberedList', 'undo', 'redo'
+                    ],
+                  
+                    }}
+                    
                     className={classNames("form-control", {
                       "is-invalid": errors.p_fact,
                     })}
@@ -252,7 +296,7 @@ function AddFreshAssingment(props) {
                         fields.map((item, index) => (
                           <div
                             className="question_query_field mb-2"
-                            key={index}
+                            key={item.id}
                           >
                             <input
                               type="text"
@@ -264,6 +308,7 @@ function AddFreshAssingment(props) {
                               placeholder="Specify your query"
                               defaultValue={`${item.query}`}
                             />
+                            
                             <div
                               className="btn btn-primary ml-2"
                               onClick={() => remove(index)}
@@ -272,6 +317,7 @@ function AddFreshAssingment(props) {
                             </div>
                           </div>
                         ))}
+                      
                     </div>
 
                     <div className="col-md-6">

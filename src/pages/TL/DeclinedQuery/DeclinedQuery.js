@@ -30,7 +30,7 @@ function DeclinedQuery({ CountIncomplete }) {
     axios
       .get(`${baseUrl}/tl/declinedQueries?id=${JSON.parse(userid)}`)
       .then((res) => {
-        console.log(res);
+      
         if (res.data.code === 1) {
           setInCompleteData(res.data.result);
           setRecords(res.data.result.length);
@@ -64,10 +64,10 @@ function DeclinedQuery({ CountIncomplete }) {
         return { fontSize: "12px" };
       },
       formatter: function nameFormatter(cell, row) {
-        console.log(row);
+      
         return (
           <>
-            {/* <Link to={`/teamleader/queries/${row.id}`}>{row.assign_no}</Link> */}
+         
             <Link
               to={{
                 pathname: `/teamleader/queries/${row.id}`,
@@ -113,7 +113,7 @@ function DeclinedQuery({ CountIncomplete }) {
         return { fontSize: "12px" };
       },
       formatter: function dateFormat(cell, row) {
-        console.log("dt", row.Exp_Delivery_Date);
+       
         var oldDate = row.Exp_Delivery_Date;
         if (oldDate == null) {
           return null;

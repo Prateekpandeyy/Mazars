@@ -29,7 +29,7 @@ function AddNew() {
   const userid = window.localStorage.getItem("tlkey");
 
   const onSubmit = (value) => {
-    console.log("value :", value);
+    
 
     let formData = new FormData();
     formData.append("email", value.p_email);
@@ -43,14 +43,14 @@ function AddNew() {
       data: formData,
     })
       .then(function (response) {
-        console.log("res-", response);     
+           
         if (response.data.code === 1) {
           alert.success("TP created  !");
           reset();
         }
       })
       .catch((error) => {
-        console.log("erroror - ", error);
+      
       });
 
   };

@@ -41,7 +41,7 @@ function Login(props) {
   };
 
   const onSubmit = (value) => {
-    console.log("value :", value);
+  
     setLoading(true)
 
     let formData = new FormData();
@@ -57,7 +57,7 @@ function Login(props) {
       .then(function (response) {
        
         if (response.data.code === 1) {
-          console.log(response)
+         
           logout();
           setShow(true)
           setLoading(false)
@@ -70,12 +70,12 @@ function Login(props) {
         }
       })
       .catch((error) => {
-        console.log("erroror - ", error);
+        
       });
   };
 
   const handleChange = (e) => {
-    console.log("val-", e.target.value);
+    
     setEmail(e.target.value);
   };
   const logout = () => {

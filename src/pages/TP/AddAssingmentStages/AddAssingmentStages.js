@@ -37,8 +37,6 @@ function AddAssingmentStages() {
     axios
       .get(`${baseUrl}/tl/getUploadedProposals?assign_no=${id}&uid=${JSON.parse(userid)}`)
       .then((res) => {
-        console.log(res);
-        console.log("dt -", res.data.result[0].client_discussion);
 
         if (res.data.code === 1) {
           setAssignmentstages(res.data.result);
@@ -49,7 +47,7 @@ function AddAssingmentStages() {
   };
 
   const onSubmit = (value) => {
-    console.log(value);
+ 
     if(assignmentStages[0].paid_status=='0' && value.other_stage=='completed')
     {    
     Swal.fire({
@@ -80,7 +78,7 @@ function AddAssingmentStages() {
           data: formData,
         })
           .then(function (response) {
-            console.log("res-", response);
+          
             if (response.data.code === 1) {
               setLoading(false)
               Alerts.SuccessNormal("Assignment Stage updated successfully.")
@@ -91,11 +89,9 @@ function AddAssingmentStages() {
             }
           })
           .catch((error) => {
-            console.log("erroror - ", error);
+        
           });
-      
-      //   history.push("/teamleader/assignment");
-      //  return false;
+     
       }
       else{
         history.push("/taxprofessional/assignment");
@@ -123,7 +119,7 @@ function AddAssingmentStages() {
         data: formData,
       })
         .then(function (response) {
-          console.log("res-", response);
+       
           if (response.data.code === 1) {
             setLoading(false)
             Alerts.SuccessNormal("Assignment Stage updated successfully.")
@@ -134,7 +130,7 @@ function AddAssingmentStages() {
           }
         })
         .catch((error) => {
-          console.log("erroror - ", error);
+        
         });
     
     }

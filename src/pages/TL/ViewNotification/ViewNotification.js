@@ -38,13 +38,13 @@ function ViewNotification() {
       data: formData,
     })
       .then(function (response) {
-        console.log("res-", response);
+;
         if (response.data.code === 1) {
           setData(response.data.result[0]);
         }
       })
       .catch((error) => {
-        console.log("erroror - ", error);
+     
       });
   };
 

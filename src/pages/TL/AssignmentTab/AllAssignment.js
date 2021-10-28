@@ -47,7 +47,7 @@ function AssignmentTab() {
   const [hide, setHide] = useState();
 
   var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
-  console.log("current_date :", current_date);
+
   const [item] = useState(current_date);
 
   const [baseMode, SetbaseMode] = useState("avc");
@@ -83,7 +83,7 @@ function AssignmentTab() {
     axios
       .get(`${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(userid)}`)
       .then((res) => {
-        console.log(res);
+       
         if (res.data.code === 1) {
           setAssignment(res.data.result);
           setCount(res.data.result.length);
@@ -99,7 +99,7 @@ function AssignmentTab() {
       axios
       .get(`${baseUrl}/customers/getCategory?pid=${selectedData}`)
       .then((res) => {
-        console.log(res);
+     
         if (res.data.code === 1) {
           setTax2(res.data.result);
         }
@@ -111,20 +111,20 @@ function AssignmentTab() {
 
   //handleCategory
   const handleCategory = (value) => {
-    console.log(`selected ${value}`);
+    
     setSelectedData(value);
     setStore2([]);
   };
 
   //handleSubCategory
   const handleSubCategory = (value) => {
-    console.log(`selected ${value}`);
+    
     setStore2(value);
   };
 
   //reset category
   const resetCategory = () => {
-    console.log("resetCategory ..");
+ 
     setSelectedData([]);
     setStore2([]);
     getAssignmentList();
@@ -132,7 +132,7 @@ function AssignmentTab() {
 
   //reset date
   const resetData = () => {
-    console.log("resetData ..");
+  
     reset();
     setStatus([]);
     setSelectedData([]);
@@ -142,7 +142,7 @@ function AssignmentTab() {
 
   //assingmentStatus
   const assingmentStatus = (value) => {
-    console.log(`selected ${value}`);
+    
     setStatus(value);
   };
 
@@ -167,7 +167,7 @@ function AssignmentTab() {
         return { fontSize: "12px" };
       },
       formatter: function dateFormat(cell, row) {
-        console.log("dt", row.date_of_query);
+    
         var oldDate = row.date_of_query;
         if (oldDate == null) {
           return null;
@@ -182,7 +182,7 @@ function AssignmentTab() {
         return { fontSize: "12px" };
       },
       formatter: function nameFormatter(cell, row) {
-        console.log(row);
+      
         return (
           <>
             <Link
@@ -265,7 +265,7 @@ function AssignmentTab() {
         return { fontSize: "12px" };
       },
       formatter: function dateFormat(cell, row) {
-        console.log("dt", row.Exp_Delivery_Date);
+      
         var oldDate = row.Exp_Delivery_Date;
         if (oldDate == null) {
           return null;
@@ -281,7 +281,7 @@ function AssignmentTab() {
         return { fontSize: "12px" };
       },
       formatter: function dateFormat(cell, row) {
-        console.log("dt", row.final_date);
+       
         var oldDate = row.final_date;
         if (oldDate == null || oldDate == "0000-00-00 00:00:00") {
           return null;
@@ -468,7 +468,7 @@ function AssignmentTab() {
   // draft modal
   const [draftModal, setDraftModal] = useState(false);
   const uploadDraftReport = (id) => {
-    console.log(id);
+    
     setDraftModal(!draftModal);
     setId(id);
   };
@@ -477,15 +477,14 @@ function AssignmentTab() {
   // final modal
   const [fianlModal, setFianlModal] = useState(false);
   const uploadFinalReport = (id) => {
-    console.log(id);
+    
     setFianlModal(!fianlModal);
     setFinalId(id);
   };
 
 
   const onSubmit = (data) => {
-    console.log("data :", data);
-    console.log("selectedData :", selectedData);
+  
     axios
       .get(
         `${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(
@@ -495,7 +494,7 @@ function AssignmentTab() {
         }&pcat_id=${selectedData}`
       )
       .then((res) => {
-        console.log(res);
+      
         if (res.data.code === 1) {
           if (res.data.result) {
             setAssignment(res.data.result);

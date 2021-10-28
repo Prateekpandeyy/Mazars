@@ -33,19 +33,15 @@ function AllProposal() {
         setId(key.assign_no);
     };
    const addTdsToggle = (key) => {
-       console.log("done")
+     
        setTdsForm(!tdsForm)
    }
     const ViewDiscussionToggel = (key) => {
-        console.log(key)
+      
         setViewDiscussion(!ViewDiscussion);
         setAssignNo(key)
     }
-    // const addTdsToggle = (key) => {
-    //     console.log("mey", key)
-    //     setTds(false)
-    //     setAssignNo(key)
-    //        }
+      
     useEffect(() => {
         getProposalList();
     }, []);
@@ -54,7 +50,7 @@ function AllProposal() {
         axios
             .get(`${baseUrl}/tl/getProposalTl?id=${JSON.parse(userid)}`)
             .then((res) => {
-                console.log(res);
+               
                 if (res.data.code === 1) {
                     setProposal(res.data.result);
                     setCount(res.data.result.length);
@@ -63,7 +59,6 @@ function AllProposal() {
             });
     };
 
-console.log("tds22", tds)
     const columns = [
         {
             text: "S.No",
@@ -89,7 +84,7 @@ console.log("tds22", tds)
                 return { fontSize: "11px" };
             },
             formatter: function dateFormat(cell, row) {
-                console.log("dt", row.query_date);
+           
                 var oldDate = row.query_date;
                 if (oldDate == null) {
                     return null;
@@ -107,7 +102,7 @@ console.log("tds22", tds)
                 return { fontSize: "11px" };
             },
             formatter: function nameFormatter(cell, row) {
-                console.log(row);
+              
                 return (
                     <>
 
@@ -157,7 +152,7 @@ console.log("tds22", tds)
                 return { fontSize: "11px" };
             },
             formatter: function dateFormat(cell, row) {
-                console.log("dt", row.DateofProposal);
+              
                 var oldDate = row.DateofProposal;
                 if (oldDate == null) {
                     return null;
@@ -176,7 +171,7 @@ console.log("tds22", tds)
                 return { fontSize: "11px" };
             },
             formatter: function dateFormat(cell, row) {
-                console.log("dt", row.cust_accept_date);
+              
                 var oldDate = row.cust_accept_date;
                 if (oldDate == null) {
                     return null;

@@ -30,7 +30,7 @@ function AddTeamProf() {
     axios
       .get(`${baseUrl}/tp/getTaxProfessional?tl_id=${JSON.parse(userid)}`)
       .then((res) => {
-        console.log(res);
+      
         if (res.data.code === 1) {
           setData(res.data.result);
           setCount(res.data.result.length);
@@ -154,18 +154,16 @@ function AddTeamProf() {
   ]
   // delete data
   const del = (id) => {
-    console.log("del", id);
+    
 
     axios
       .get(`${baseUrl}/delete/TaxLead/${id}`)
       .then(function (response) {
-        console.log("delete-", response);
-        alert.success("successfully deleted ");
+                alert.success("successfully deleted ");
         getTaxProf();
       })
       .catch((error) => {
-        console.log("erroror - ", error);
-      });
+              });
   };
 
   return (

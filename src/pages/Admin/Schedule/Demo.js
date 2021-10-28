@@ -62,7 +62,7 @@ function Demo() {
     axios
     .get(`${baseUrl}/tl/videoScheduler?tl_id=1`)
       .then((res) => {
-        console.log(res)
+      
         var a = res.data.result.items;
         if (a) {
           setData(a.map(mapAppointmentData));

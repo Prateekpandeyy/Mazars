@@ -29,7 +29,7 @@ function RejectedModal({
   
 
   const onSubmit = (value) => {
-    console.log("value :", value);
+  
     setLoading(true)
 
     let formData = new FormData();
@@ -45,7 +45,7 @@ function RejectedModal({
       data: formData,
     })
       .then(function (response) {
-        console.log("res-", response);
+      
         if (response.data.code === 1) {
           setLoading(false)
           Alerts.SuccessNormal("Query rejected successfully.")
@@ -56,7 +56,7 @@ function RejectedModal({
         }
       })
       .catch((error) => {
-        console.log("erroror - ", error);
+       
       });
   };
 

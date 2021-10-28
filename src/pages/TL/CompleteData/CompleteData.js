@@ -88,7 +88,7 @@ const hist = useHistory();
       },
       formatter : function(cell, row){
         let dueDate=row.created.split("-").reverse().join("-")
-       // console.log("row", row.due_date.split("-").reverse().join("-"))
+     
         return(
            
             <>

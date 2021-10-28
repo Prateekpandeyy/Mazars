@@ -33,7 +33,7 @@ function PendingRecevied() {
 
   const getQueryDetails = () => {
     axios.get(`${baseUrl}/tl/GetQueryDetails?id=${id}`).then((res) => {
-      console.log(res);
+     
       if (res.data.code === 1) {
         setSubmitData(res.data.result);
         setDisplaySpecific(res.data.additional_queries);
@@ -46,7 +46,7 @@ function PendingRecevied() {
     axios
       .get(`${baseUrl}/tl/GetAdditionalQueries?assignno=${assingNo}`)
       .then((res) => {
-        console.log(res);
+       
         if (res.data.code === 1) {
           setDisplayQuery(res.data.result);
         }
@@ -57,7 +57,7 @@ function PendingRecevied() {
 
 
   const acceptHandler = (key) => {
-    console.log("acceptHandler", key);
+    
 
     let formData = new FormData();
     formData.append("set", 1);
@@ -71,19 +71,19 @@ function PendingRecevied() {
       data: formData,
     })
       .then(function (response) {
-        console.log("response-", response);
+       
         if (response.data.code === 1) {
           alert.success("Query accepted");
           history.goBack()
         }
       })
       .catch((error) => {
-        console.log("erroror - ", error);
+    
       });
   };
 
   const rejectHandler = (key) => {
-    console.log("rejectHandler", key);
+   
 
     let formData = new FormData();
     formData.append("set", 0);
@@ -97,14 +97,14 @@ function PendingRecevied() {
       data: formData,
     })
       .then(function (response) {
-        console.log("res-", response);
+      
         if (response.data.code === 1) {
           alert.success("Query rejected");
           history.goBack()
         }
       })
       .catch((error) => {
-        console.log("erroror - ", error);
+    
       });
   };
 
@@ -112,7 +112,7 @@ function PendingRecevied() {
 
      //change date format
      function ChangeFormateDate(oldDate) {
-      console.log("date", oldDate);
+      
       if (oldDate == null) {
         return null;
       }

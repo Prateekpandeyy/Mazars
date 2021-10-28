@@ -76,7 +76,7 @@ const [showTl, setShowTl] = useState(false)
 
 
   const onSubmit = (value) => {
-    console.log("value :", value);
+    
     setLoading(true)
     let formData = new FormData();
     formData.append("uid", JSON.parse(userId));
@@ -95,7 +95,7 @@ const [showTl, setShowTl] = useState(false)
       data: formData,
     })
       .then(function (response) {
-        console.log("res-", response);
+
         if (response.data.code === 1) {
           reset();
           setLoading(false)
@@ -105,7 +105,7 @@ const [showTl, setShowTl] = useState(false)
         }
       })
       .catch((error) => {
-        console.log("erroror - ", error);
+      
       });
   };
 

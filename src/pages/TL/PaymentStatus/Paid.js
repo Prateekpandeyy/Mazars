@@ -44,7 +44,7 @@ function AllPayment() {
     const [ViewDiscussion, setViewDiscussion] = useState(false);
     const [addPaymentModal, setPaymentModal] = useState(false);
     const rejectHandler = (key) => {
-        console.log("key", key);
+      
         setPaymentModal(!addPaymentModal);
         setAssignNo(key.assign_no)
     };
@@ -56,7 +56,7 @@ function AllPayment() {
 
     const getPaymentStatus = () => {
         axios.get(`${baseUrl}/tl/getUploadedProposals?uid=${JSON.parse(userid)}&status=2`).then((res) => {
-            console.log(res);
+           
             if (res.data.code === 1) {
                 setPayment(res.data.result);
                 setCount(res.data.result.length);
@@ -72,7 +72,7 @@ function AllPayment() {
     }
 
     const toggle = (key) => {
-        console.log("key", key);
+      
         setModal(!modal);
 
         fetch(`${baseUrl}//admin/getPaymentDetail?id=${key}`, {
@@ -83,7 +83,7 @@ function AllPayment() {
         })
             .then((res) => res.json())
             .then((response) => {
-                console.log(response);
+            
                 setPay(response.payment_detail);
             })
             .catch((error) => console.log(error));
@@ -115,7 +115,7 @@ function AllPayment() {
                 return { fontSize: "11px" };
             },
             formatter: function dateFormat(cell, row) {
-                console.log("dt", row.query_created_date);
+          
                 var oldDate = row.query_created_date;
                 if (oldDate == null) {
                     return null;
@@ -133,12 +133,9 @@ function AllPayment() {
                 return { fontSize: "11px" };
             },
             formatter: function nameFormatter(cell, row) {
-                console.log(row);
+                
                 return (
                     <>
-                        {/* <Link to={`/teamleader/queries/${row.assign_id}`}>
-              {row.assign_no}
-            </Link> */}
 
                         <Link
                             to={{
@@ -186,7 +183,7 @@ function AllPayment() {
                 return { fontSize: "11px" };
             },
             formatter: function dateFormat(cell, row) {
-                console.log("dt", row.cust_accept_date);
+          
                 var oldDate = row.cust_accept_date;
                 if (oldDate == null) {
                     return null;
@@ -270,7 +267,7 @@ function AllPayment() {
                 return { fontSize: "11px" };
             },
             formatter: function dateFormat(cell, row) {
-                console.log("dt", row.cust_paid_date);
+             
                 var oldDate = row.cust_paid_date;
                 if (oldDate == null) {
                     return null;
@@ -354,69 +351,7 @@ function AllPayment() {
                 );
             },
         },
-        // {
-        //     text: "Action",
-        //     style: {
-        //         fontSize: "11px",
-        //     },
-        //     headerStyle: () => {
-        //         return { fontSize: "11px" };
-        //     },
-        //     formatter: function (cell, row) {
-        //         return (
-        //             <>
-
-        //                 <div style={{ display: "flex", justifyContent: "space-between", width: "60px" }}>
-        //                     {
-        //                         row.paid_status == "0" ? null :
-        //                             <div title="Payment History"
-        //                                 onClick={() => toggle(row.assign_id)}
-        //                                 style={{ color: "green", fontSize: "16px", cursor: "pointer" }}
-        //                             >
-        //                                 <ChangeHistoryIcon />
-        //                             </div>
-        //                     }
-
-        //                     {
-        //                         (row.paid_status == "0") ?
-        //                             <div title="Payment decline"
-        //                                 onClick={() => rejectHandler(row)}
-        //                                 style={{ color: "red", fontSize: "16px", cursor: "pointer" }}
-        //                             >
-        //                                 <PaymentIcon />
-        //                             </div>
-        //                             :
-        //                             null
-        //                     }
-
-        //                     <div title="Send Message">
-        //                         <Link
-        //                             to={{
-        //                                 pathname: `/teamleader/chatting/${row.assign_id}`,
-        //                                 obj: {
-        //                                     message_type: "2",
-        //                                     query_No: row.assign_no,
-        //                                     query_id: row.assign_id,
-        //                                     routes: `/teamleader/proposal`
-        //                                 }
-        //                             }}
-        //                         >
-        //                             <i
-        //                                 class="fa fa-comments-o"
-        //                                 style={{
-        //                                     fontSize: 16,
-        //                                     cursor: "pointer",
-        //                                     marginLeft: "8px",
-        //                                     color: "blue"
-        //                                 }}
-        //                             ></i>
-        //                         </Link>
-        //                     </div>
-        //                 </div>
-        //             </>
-        //         );
-        //     },
-        // },
+      
     ];
 
 

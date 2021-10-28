@@ -17,8 +17,7 @@ const Schema = yup.object().shape({
 
 
 function VerifyOtp({ email, uid, loading, setLoading }) {
-  console.log("email :", email);
-  console.log("uid :", uid);
+
 
 
   const { handleSubmit, register, errors, reset } = useForm({
@@ -47,7 +46,7 @@ function VerifyOtp({ email, uid, loading, setLoading }) {
   }
 
   const onSubmit = (value) => {
-    console.log("value :", value);
+  
     setLoading(true)
 
     let formData = new FormData();
@@ -60,7 +59,7 @@ function VerifyOtp({ email, uid, loading, setLoading }) {
       data: formData,
     })
       .then(function (response) {
-        console.log("res-", response);
+     
 
         if (response.data.code == 1) {
           setLoading(false)
@@ -75,7 +74,7 @@ function VerifyOtp({ email, uid, loading, setLoading }) {
         }
       })
       .catch((error) => {
-        console.log("erroror - ", error);
+      
       });
   }
 
@@ -93,7 +92,7 @@ function VerifyOtp({ email, uid, loading, setLoading }) {
       data: formData,
     })
       .then(function (response) {
-        console.log("res-", response);
+     
         if (response.data.code === 1) {
           setLoading(false)
           Alerts.SuccessNormal("As per your request, OTP has been sent to your registered email address.")
@@ -105,7 +104,7 @@ function VerifyOtp({ email, uid, loading, setLoading }) {
         }
       })
       .catch((error) => {
-        console.log("erroror - ", error);
+     
       });
   }
 

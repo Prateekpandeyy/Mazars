@@ -64,7 +64,12 @@ function AddNew() {
   const [tpEmail, setTpEmail] = useState('')
   const [loading, setLoading] = useState(false);
   const [emailError, setEmailError] = useState(null);
-  const [email2, setEmail2] = useState();
+  const [email2, setEmail2] = useState([]);
+  
+  const [posError, setposError] = useState({
+    available : '',
+    exits : ''
+  });
   var kk = []
   var vv = []
   var post_name;
@@ -366,7 +371,30 @@ function AddNew() {
     
   }
 
-
+  const checktlPost = (e) => {
+    setPostName(e.target.value)
+    let a = e.target.value;
+    let formData = new FormData();
+    formData.append("tlpost", a)
+  
+    axios({
+      method: "POST",
+      url : `${baseUrl}/tl/validateTLPost`,
+      data: formData,
+    })
+    .then(function (res) {
+      if(res.data.code === 1){
+        setposError({
+          available : "Post aviable"
+        })
+      }
+      else{
+        setposError({
+          exits : "Post already exits"
+        })
+      }
+    })
+    }
   return (
     <Layout adminDashboard="adminDashboard" adminUserId={userid}>
       <Card>
@@ -452,16 +480,15 @@ function AddNew() {
                       <input
                         type="text"
                         name="post_name"
-
-
+                        onBlur={(e) => checktlPost(e)}
                         className={classNames("form-control", {
                           "is-invalid": errors.post_name,
                         })}
                         ref={register}
-
-
                       />
-
+ {posError.available ? 
+                    <p className="completed"> {posError.available}</p> : 
+                    <p className="declined">{posError.exits}</p>}
                     </div>
                   </div>
 

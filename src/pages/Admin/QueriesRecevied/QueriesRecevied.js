@@ -33,7 +33,7 @@ function QueriesRecevied(props) {
 
   const [purpose, setPurpose] = useState([]);
   const [year, setYear] = useState([]);
-
+  const [accept, setAccept] = useState();
   const [diaplayProposal, setDisplayProposal] = useState({
     amount: "",
     accepted_amount: "",
@@ -71,7 +71,7 @@ function QueriesRecevied(props) {
       axios.get(`${baseUrl}/tl/getQueryDetails?id=${id}`).then((res) => {
        
         if (res.data.code === 1) {
-
+          setAccept(res.data.result[0].accept)
           if (res.data.result) {
             if (res.data.result[0].name == null) {
              
@@ -214,7 +214,7 @@ function QueriesRecevied(props) {
                 year={year}
                 feedback={feedback}
                 reports={reports}
-
+                accept = {accept}
               />
             ))}
           </div>

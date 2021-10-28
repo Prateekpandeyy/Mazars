@@ -21,7 +21,7 @@ function QueriesRecevied() {
   const [year, setYear] = useState([]);
   const [feedback, setFeedback] = useState([]);
   const [reports, setReports] = useState([]);
-
+  const [accept, setAccept] = useState();
   const [diaplayProposal, setDisplayProposal] = useState({
     amount: "",
     accepted_amount: "",
@@ -57,7 +57,7 @@ function QueriesRecevied() {
   useEffect(() => {
     const getSubmittedAssingment = () => {
       axios.get(`${baseUrl}/customers/getQueryDetails?id=${id}`).then((res) => {
-        console.log(res);
+
         if (res.data.code === 1) {
           setSubmitData(res.data.result);
           setDisplaySpecific(res.data.additional_queries);
@@ -65,11 +65,12 @@ function QueriesRecevied() {
           setAssingmentNo(res.data.result[0].assign_no);
           setFeedback(res.data.feedback_detail);
           setReports(res.data.reports);
+          setAccept(res.data.result[0].accept)
 
           var purposeItem = res.data.result[0].purpose_opinion;
           var assementItem = res.data.result[0].assessment_year;
 
-          console.log("purposeItem-", typeof purposeItem);
+        
           try {
             var myPurpose = JSON.parse(purposeItem);
             var myYear = JSON.parse(assementItem);
@@ -107,7 +108,7 @@ function QueriesRecevied() {
           }
           if (res.data.history_queries.length > 0) {
             setDisplayHistory({
-              tpname: res.data.history_queries[0].tname,
+              tlname: res.data.history_queries[0].tname,
               date_of_allocation:
                 res.data.history_queries[0].date_of_allocation,
             });
@@ -128,7 +129,7 @@ function QueriesRecevied() {
     axios
       .get(`${baseUrl}/tp/GetAdditionalQueries?assignno=${assingNo}`)
       .then((res) => {
-        console.log(res);
+       
         if (res.data.code === 1) {
           setDisplayQuery(res.data.result);
         }
@@ -176,7 +177,7 @@ function QueriesRecevied() {
                 year={year}
                 feedback={feedback}
                 reports={reports}
-
+                accept = {accept}
               />
             ))}
           </div>

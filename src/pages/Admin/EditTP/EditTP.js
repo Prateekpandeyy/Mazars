@@ -22,7 +22,7 @@ import {
 
 import { Form, Input, Button } from "antd";
 import Select from "react-select";
-import Alerts from "../../../common/Alerts";
+
 import { Spinner } from "reactstrap";
 import Swal from "sweetalert2";
 const Schema = yup.object().shape({
@@ -77,6 +77,10 @@ function EditTP() {
   const [show, setShow] = useState([])
   const [post_na, setPost_na] = useState()
   const [loading, setLoading] = useState(false);
+  const [posError, setposError] = useState({
+    available : '',
+    exits : ''
+  });
   const selectInputRef = useRef();
   const { handleSubmit, register, reset, errors } = useForm({
     resolver: yupResolver(Schema),
@@ -388,7 +392,7 @@ function EditTP() {
   //eamil onchange
   const emailHandler = (e) => {
     setEmail(e.target.value);
-  
+    data7 = e.target.value
     if (e.target.value.length < 1) {
       setWemail("")
     }
@@ -404,8 +408,26 @@ function EditTP() {
       let formData = new FormData();
       formData.append("email", email);
       formData.append("type", 1);
+      formData.append("id", id)
 
-      
+      axios({
+        method: "POST",
+        url: `${baseUrl}/validateEditRegistration`,
+        data: formData,
+      })
+      .then(function (response) {
+
+        if (response.data.code === 1) {
+          setValiemail(response.data.result)
+          setInvalid('')
+        } else if (response.data.code === 0) {
+          setInvalid(response.data.result)
+          setValiemail('')
+        }
+      })
+      .catch((error) => {
+
+      });
     }
     else {
       setWemail("Invalid email")
@@ -429,6 +451,33 @@ function EditTP() {
  if(data5 != undefined){
    defSubValue();
  }
+
+ const checktlPost = (e) => {
+  setPostName(e.target.value)
+  data6 = e.target.value;
+  let a = e.target.value;
+  let formData = new FormData();
+  formData.append("tlpost", a)
+  formData.append("id", id )
+  axios({
+    method: "POST",
+    url : `${baseUrl}/tl/validateTLPost`,
+    data: formData,
+  })
+  .then(function (res) {
+    if(res.data.code === 1){
+      setposError({
+        available : "Post aviable"
+      })
+    }
+    else{
+      setposError({
+        exits : "Post already exits"
+      })
+    }
+  })
+  }
+ 
   return (
     <Layout adminDashboard="adminDashboard" adminUserId={userid}>
       <Card>
@@ -502,13 +551,16 @@ function EditTP() {
                         <input
                           type="text"
                           name="post_name"
-                          
+                          onBlur={(e) => checktlPost(e)}
                           defaultValue={data6}
                           onChange={(e) => data6= e.target.value}
                           className={classNames("form-control", {
                             "is-invalid": errors.post_name,
                           })}
                         />
+                         {posError.available ? 
+                    <p className="completed"> {posError.available}</p> : 
+                    <p className="declined">{posError.exits}</p>}
                       </div>
                     </div>
                     <div class="col-md-6">
@@ -522,14 +574,23 @@ function EditTP() {
                         ref={register}
                      
                       defaultValue={data7}
-                      onChange={(e) => data7 = e.target.value}
+                     
                         className={classNames("form-control", {
                           "is-invalid": errors.post_email,
                         })}
-                        // onChange={(e) => emailHandler(e)}
-                        // onBlur={emailValidation}
+                        onChange={(e) => emailHandler(e)}
+                        onBlur={emailValidation}
                       />
-                     
+                      {
+                        wEmail ? <p className="declined">{wEmail}</p> : <>
+                          {valiEmail ?
+                            <p className="completed">
+                              {valiEmail}
+                            </p>
+                            :
+                            <p className="declined">{invalid}</p>}
+                        </>
+                      } 
                     </div>
                   </div>
                    

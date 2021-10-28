@@ -156,7 +156,7 @@ const sgstFun = (e) => {
   setPocketExp(e.target.value)
   if(e.target.value){
     let a = parseInt(e.target.value) + parseInt(basicAmount);
-   console.log(a)
+  
  
   let cget1 = parseInt(Math.round(a * cgetRate / 100))
   let sget1 = parseInt(Math.round(a * sgetRate / 100))

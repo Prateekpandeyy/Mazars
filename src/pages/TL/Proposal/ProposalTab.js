@@ -57,7 +57,7 @@ function ProposalTab(props) {
             axios
                 .get(`${baseUrl}/tl/getProposalTl?id=${JSON.parse(userid)}`)
                 .then((response) => {
-                    console.log("code---", response);
+                   
                     if (response.data.code === 1) {
                         setAllProposal(response.data.result.length);
                     }
@@ -68,7 +68,7 @@ function ProposalTab(props) {
             axios
                 .get(`${baseUrl}/tl/getProposalTl?id=${JSON.parse(userid)}&status=1`)
                 .then((response) => {
-                    console.log("code---", response);
+                   
                     if (response.data.code === 1) {
                         setInprogressProposal(response.data.result.length);
                     }
@@ -79,7 +79,7 @@ function ProposalTab(props) {
             axios
                 .get(`${baseUrl}/tl/getProposalTl?id=${JSON.parse(userid)}&status=2`)
                 .then((response) => {
-                    console.log("code---", response);
+                   
                     if (response.data.code === 1) {
                         setAcceptedProposal(response.data.result.length);
                     }
@@ -90,7 +90,7 @@ function ProposalTab(props) {
             axios
                 .get(`${baseUrl}/tl/getProposalTl?id=${JSON.parse(userid)}&status=3`)
                 .then((response) => {
-                    console.log("code---", response);
+                   
                     if (response.data.code === 1) {
                         setDeclinedProposal(response.data.result.length);
                     }

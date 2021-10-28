@@ -45,7 +45,7 @@ const videoIcon = {
         axios
             .get(`${baseUrl}/tl/callRecordingPostlist?uid=${JSON.parse(userid)}`)
             .then((res) => {
-                console.log(res);
+             
                 if (res.data.code === 1) {
                     setFeedBackData(res.data.result);
                     setRecords(res.data.result.length)
@@ -159,7 +159,6 @@ const canBtn = {
 
 
 
-    console.log("videourl", videoid)
 
     return (
         <>

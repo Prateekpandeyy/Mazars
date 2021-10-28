@@ -55,7 +55,7 @@ function QueriesTab(props) {
       axios
         .get(`${baseUrl}/tl/getIncompleteQues?id=${JSON.parse(userid)}`)
         .then((res) => {
-          console.log(res);
+          
           if (res.data.code === 1) {
             setAllQuery(res.data.result.length);
           }
@@ -66,7 +66,7 @@ function QueriesTab(props) {
       axios
         .get(`${baseUrl}/tl/pendingQues?id=${JSON.parse(userid)}`)
         .then((res) => {
-          console.log(res);
+          
           if (res.data.code === 1) {
             setPendingForAcceptence(res.data.result.length);
           }
@@ -77,7 +77,7 @@ function QueriesTab(props) {
       axios
         .get(`${baseUrl}/tl/getIncompleteQues?id=${JSON.parse(userid)}&status=1`)
         .then((res) => {
-          console.log(res);
+          
           if (res.data.code === 1) {
             setIncomplete(res.data.result.length);
           }
@@ -88,7 +88,7 @@ function QueriesTab(props) {
       axios
       .get(`${baseUrl}/tl/pendingAllocation?uid=${JSON.parse(userid)}`)
         .then((res) => {
-          console.log(res);
+          
           if (res.data.code === 1) {
             setcomplete(res.data.result.length);
           }
@@ -99,7 +99,7 @@ function QueriesTab(props) {
       axios
         .get(`${baseUrl}/tl/declinedQueries?id=${JSON.parse(userid)}`)
         .then((res) => {
-          console.log(res);
+          
           if (res.data.code === 1) {
             setDeclined(res.data.result.length);
           }

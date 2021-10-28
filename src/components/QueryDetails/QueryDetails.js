@@ -88,14 +88,7 @@ function QueryDetails({
               Recording
             </NavLink>
           </NavItem> }
-          {/* <NavItem>
-            <NavLink
-              className={classnames({ active: activeTab === '5' })}
-              onClick={() => { toggle('5'); }}
-            >
-              UPLOAD ADDITIONAL DOCUMENTS
-            </NavLink>
-          </NavItem> */}
+         
 
         </Nav>
 

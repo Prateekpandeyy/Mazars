@@ -238,6 +238,66 @@ function EditQuery(props) {
                      
                         <CKEditor
                      editor={ ClassicEditor }
+                     config = {{
+
+                      highlight: {
+                        options: [
+                            {
+                                model: 'greenMarker',
+                                class: 'marker-green',
+                                title: 'Green marker',
+                                color: 'var(--ck-highlight-marker-green)',
+                                type: 'marker'
+                            },
+                            {
+                                model: 'redPen',
+                                class: 'pen-red',
+                                title: 'Red pen',
+                                color: 'var(--ck-highlight-pen-red)',
+                                type: 'pen'
+                            }
+                        ]
+                    },
+                      fontFamily: {
+                        options: [
+                            'default',
+                            'Ubuntu, Arial, sans-serif',
+                            'Ubuntu Mono, Courier New, Courier, monospace'
+                        ]
+                    },
+                    fontColor: {
+                      colors: [
+                          {
+                              color: 'hsl(0, 0%, 0%)',
+                              label: 'Black'
+                          },
+                          {
+                              color: 'hsl(0, 0%, 30%)',
+                              label: 'Dim grey'
+                          },
+                          {
+                              color: 'hsl(0, 0%, 60%)',
+                              label: 'Grey'
+                          },
+                          {
+                              color: 'hsl(0, 0%, 90%)',
+                              label: 'Light grey'
+                          },
+                          {
+                              color: 'hsl(0, 0%, 100%)',
+                              label: 'White',
+                              hasBorder: true
+                          },
+
+                          // ...
+                      ]
+                  },
+                    toolbar: [
+                   ' highlight', 'heading',  'bold', 'fontColor', 'italic',  'bulletedList', 'numberedList', 'undo', 'redo'
+                    ],
+                  
+                    }}
+                    
                     className={classNames("form-control", {
                       "is-invalid": errors.p_fact,
                     })}
@@ -272,7 +332,7 @@ function EditQuery(props) {
                       </div>
 
                       {fields.map((item, index) => (
-                        <div className="question_query_field mb-2" key={index}>
+                        <div className="question_query_field mb-2" key={item.id}>
                           <input
                             type="text"
                             className={classNames("form-control", {

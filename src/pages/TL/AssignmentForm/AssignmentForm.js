@@ -17,7 +17,7 @@ import {
 import { useForm } from "react-hook-form";
 
 function AssignmentForm(props) {
-  console.log("props", props.location.clients);
+
 
   const alert = useAlert();
   const { handleSubmit, register, errors, reset, setValue } = useForm();
@@ -37,8 +37,7 @@ function AssignmentForm(props) {
     axios
       .get(`${baseUrl}/tl/getUploadedProposals?assign_no=${id}`)
       .then((res) => {
-        console.log(res);
-        console.log(res.data.result);
+      
         if (res.data.code === 1) {
           setAssignNo(res.data.result[0].assign_no);
         }
@@ -50,7 +49,7 @@ function AssignmentForm(props) {
   }, [assignNo]);
 
   const getDetails = (value) => {
-    console.log("value :", value);
+  
     let formData = new FormData();
     formData.append("assign_no", assignNo);
     formData.append("uid", JSON.parse(userid));
@@ -62,19 +61,18 @@ function AssignmentForm(props) {
       data: formData,
     })
       .then(function (response) {
-        console.log("res-", response);
+       
         if (response.data.code === 1) {
           setData(response.data.result);
         }
       })
       .catch((error) => {
-        console.log("erroror - ", error);
+       
       });
   };
 
   const onSubmit = (value) => {
-    console.log("value :", value);
-
+   
     let formData = new FormData();
     formData.append("assign_id", id);
     formData.append("assign_no", assignNo);
@@ -93,7 +91,7 @@ function AssignmentForm(props) {
       data: formData,
     })
       .then(function (response) {
-        console.log("res-", response);
+       
         if (response.data.code === 1) {
           alert.success(<Msg />);
           getDetails();
@@ -101,7 +99,7 @@ function AssignmentForm(props) {
         }
       })
       .catch((error) => {
-        console.log("erroror - ", error);
+      
       });
   };
 
@@ -114,7 +112,7 @@ function AssignmentForm(props) {
     );
   };
 
-  console.log("item - ", item);
+
   return (
     <Layout TLDashboard="TLDashboard" TLuserId={userid}>
       <Card>

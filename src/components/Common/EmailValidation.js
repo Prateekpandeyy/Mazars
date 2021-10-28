@@ -66,7 +66,7 @@ return(
                           "is-invalid": errors.p_email || props.emailError === true || props.wEmail || props.invalid,
                         })}
                         onChange={(e) => emailHandler(e)}
-                        onBlur={emailValidation}
+                        onBlur={(e) => emailValidation(e)}
                         placeholder="Enter Your Password"
                         ref={register({ required: true })}
                       />

@@ -174,30 +174,31 @@ function InprogressAllocation() {
       },
     },
     {
-      text: "Expected Delivery Date",
+      text: "Expected / Actual Delivery Date",
       dataField: "exp_delivery_date",
       sort: true,
       headerStyle: () => {
-        return { fontSize: "12px" };
+          return { fontSize: "12px" };
       },
       formatter: function dateFormat(cell, row) {
-      
-
-        return (
-          <>
-            {
-              row.status == "Declined Query"
-                ? null
-                :
-                row.status_code >= "1" ?
-                  CommonServices.removeTime(row.exp_delivery_date)
-                  :
-                  null
-            }
-          </>
-        )
+         
+     
+          return (
+            
+              <>
+                  {
+                      row.status == "Declined Query"
+                          ? null
+                          :
+                          row.status_code != "3" && row.status_code > "1" ?
+                              CommonServices.removeTime(row.exp_delivery_date)
+                              :
+                              null
+                  }
+              </>
+          )
       },
-    },
+  },
     {
       text: "Action",
       headerStyle: () => {

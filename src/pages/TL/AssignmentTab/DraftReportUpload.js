@@ -18,12 +18,12 @@ function DraftReport({ draftModal, uploadDraftReport, id, getAssignmentList }) {
 
 
   const onSubmit = (value) => {
-    console.log("value :", value);
+  
     setLoading(true)
 
     let formData = new FormData();
     var uploadImg = value.p_draft;
-    console.log("uploadImg", uploadImg);
+   
 
     if (uploadImg) {
       for (var i = 0; i < uploadImg.length; i++) {
@@ -38,7 +38,7 @@ function DraftReport({ draftModal, uploadDraftReport, id, getAssignmentList }) {
         'content-type': 'multipart/form-data'
       }
     }).then(response => {
-      console.log(response)
+    
       if (response.data.code === 1) {
         setLoading(false)
         var message = response.data.message

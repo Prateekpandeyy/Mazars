@@ -62,6 +62,10 @@ function AddNew() {
   const [loading, setLoading] = useState(false);
 
   const [display, setDisplay] = useState(false);
+  const [posError, setposError] = useState({
+    available : '',
+    exits : ''
+  });
   const [dd, setDd] = useState({
     direct: [],
     indirect: [],
@@ -84,18 +88,7 @@ function AddNew() {
   }))
 
 
-  // useEffect(() => {
-  //   const postName = async () => {
-  //     await axios.get(`${baseUrl}/admin/addTlPost`).then((res) => {
-  //       if (res.data.code === 1) {
-       
-  //         setPostName(res.data.result);
-  //       }
-  //     });
-  //   };
 
-  //   postName();
-  // }, []);
 
   useEffect(() => {
     const getCategory = async () => {
@@ -153,7 +146,7 @@ function AddNew() {
 
       setError2("Please select at least one value")
     }
-    else if (invalid || wEmail || indNumError) {
+    else if (invalid || wEmail || indNumError || posError.exits) {
       setDisplay(false)
     }
 
@@ -417,6 +410,30 @@ function AddNew() {
     }
 
   }
+  const checktlPost = (e) => {
+  setPostName(e.target.value)
+  let a = e.target.value;
+  let formData = new FormData();
+  formData.append("tlpost", a)
+
+  axios({
+    method: "POST",
+    url : `${baseUrl}/tl/validateTLPost`,
+    data: formData,
+  })
+  .then(function (res) {
+    if(res.data.code === 1){
+      setposError({
+        available : "Post aviable"
+      })
+    }
+    else{
+      setposError({
+        exits : "Post already exits"
+      })
+    }
+  })
+  }
   return (
     <Layout adminDashboard="adminDashboard" adminUserId={userid}>
       <Card>
@@ -450,12 +467,15 @@ function AddNew() {
                       <input
                         type="text"
                         className={classNames("form-control", {
-                          "is-invalid": errors.p_name,
+                          "is-invalid": errors.p_name || posError.exits,
                         })}
-                        defaultValue={postValue.post}
+                        onBlur={(e) => checktlPost(e)}
                         name="post_name"
                         ref={register}
                       />
+                    {posError.available ? 
+                    <p className="completed"> {posError.available}</p> : 
+                    <p className="declined">{posError.exits}</p>}
 
                     </div>
                   </div>
@@ -484,17 +504,7 @@ function AddNew() {
                             <p className="declined">{invalid}</p>}
                         </>
                       } 
-                      
-                      {/* {
-                        wEmailPost ? <p className="declined">{wEmailPost}</p> : <>
-                          {valiEmailPost ?
-                            <p className="completed">
-                              {valiEmailPost}
-                            </p>
-                            :
-                            <p className="declined">{invalidPost}</p>}
-                        </>
-                      } */}
+                     
                     </div>
                   </div>
                 </div>

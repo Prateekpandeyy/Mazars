@@ -16,7 +16,7 @@ function DraftReport({ fianlModal, uploadFinalReport, id, getAssignmentList }) {
 
 
   const onSubmit = (value) => {
-    console.log("value :", value);
+  
     setLoading(true)
 
     let formData = new FormData();
@@ -39,7 +39,7 @@ function DraftReport({ fianlModal, uploadFinalReport, id, getAssignmentList }) {
         },
       })
       .then((response) => {
-        console.log(response.data);
+   
         if (response.data.code === 1) {
           setLoading(false)
 

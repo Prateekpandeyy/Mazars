@@ -108,28 +108,25 @@ allrecording;
     // init AgoraRTC local client
     this.client = AgoraRTC.createClient({ mode: $.transcode });
     this.client.init($.appId, () => {
-      console.log("AgoraRTC client initialized");
+     
       this.subscribeStreamEvents();
 
       this.client.join($.appId, $.channel, $.uid, (uid) => {
         this.state.uid = uid;
-        console.log("User " + uid + " join channel successfully");
-        console.log("At " + new Date().toLocaleTimeString());
-        // create local stream
-        // It is not recommended to setState in function addStream
+       
         this.localStream = this.streamInit(uid, $.attendeeMode, $.videoProfile);
         this.localStream.init(
           () => {
             if ($.attendeeMode !== "audience") {
               this.addStream(this.localStream, true);
               this.client.publish(this.localStream, (err) => {
-                console.log("Publish local stream error: " + err);
+               
               });
             }
             this.setState({ readyState: true });
           },
           (err) => {
-            console.log("getUserMedia failed", err);
+          
             this.setState({ readyState: true });
           }
         );
@@ -157,14 +154,10 @@ allrecording;
 schdrularName;
 
   getSchedulerData =() =>{
-    console.log("getSchedulerData--",this.props.id)
-
-    axios
+       axios
             .get(`${baseUrl}/tl/videoScheduler?id=${this.props.id}`)
             .then((res) => {
-                console.log("myResult", res);
-           
-               
+                       
                 if (res.data.code === 1) {
                   this.setState({
                     item:res.data.result.items[0],
@@ -241,11 +234,10 @@ schdrularName;
     this.client &&
       this.client.leave(
         () => {
-          console.log("Client succeed to leave.");
+          
         },
         () => {
-          console.log("Client failed to leave.");
-        }
+                  }
       );
   }
 
@@ -279,35 +271,26 @@ schdrularName;
     let rt = this;
     rt.client.on("stream-added", function (evt) {
       let stream = evt.stream;
-      console.log("New stream added: " + stream.getId());
-      console.log("At " + new Date().toLocaleTimeString());
-      console.log("Subscribe ", stream);
+      
       rt.client.subscribe(stream, function (err) {
-        console.log("Subscribe stream failed", err);
+        
       });
     });
 
     rt.client.on("peer-leave", function (evt) {
-      console.log("Peer has left: " + evt.uid);
-      console.log(new Date().toLocaleTimeString());
-      console.log(evt);
+     
       rt.removeStream(evt.uid);
     });
 
     rt.client.on("stream-subscribed", function (evt) {
       let stream = evt.stream;
-      console.log("Got stream-subscribed event");
-      console.log(new Date().toLocaleTimeString());
-      console.log("Subscribe remote stream successfully: " + stream.getId());
-      console.log(evt);
+    
       rt.addStream(stream);
     });
 
     rt.client.on("stream-removed", function (evt) {
       let stream = evt.stream;
-      console.log("Stream removed: " + stream.getId());
-      console.log(new Date().toLocaleTimeString());
-      console.log(evt);
+     
       rt.removeStream(stream.getId());
     });
   };
@@ -446,16 +429,11 @@ schdrularName;
       this.shareClient = AgoraRTC.createClient({ mode: $.transcode });
 
       this.shareClient.init($.appId, () => {
-        console.log("AgoraRTC client initialized");
-
+     
         this.subscribeStreamEvents();
         this.shareClient.join($.appId, $.channel, $.uid, (uid) => {
           this.state.uid = uid;
-          console.log("User " + uid + " join channel successfully");
-          console.log("At " + new Date().toLocaleTimeString());
-          // create local stream
-          // It is not recommended to setState in function addStream
-          
+         
           this.shareStream = this.streamInitSharing(
             uid,
             $.attendeeMode,
@@ -466,13 +444,13 @@ schdrularName;
               if ($.attendeeMode !== "audience") {
                 this.addStream(this.shareStream, true);
                 this.shareClient.publish(this.shareStream, (err) => {
-                  console.log("Publish local stream error: " + err);
+                 
                 });
               }
               this.setState({ readyState: true });
             },
             (err) => {
-              console.log("getUserMedia failed", err);
+            
               this.setState({ readyState: true });
             }
           );
@@ -509,11 +487,11 @@ schdrularName;
 
 
   CreateS3Folder = (uid) =>{
-    console.log("CreateS3Folder",uid)
+   
     axios
             .get(`https://virtualapi.multitvsolution.com/s3/createMPObject.php?folder_id=${JSON.parse(uid)}`)
             .then((res) => {
-                console.log(res);    
+                
             });
   }
 
@@ -564,7 +542,7 @@ async GetRecordingStatus(json){
 
 //start recording
 async startRecording(key){
-    console.log("startRecording - ",key);
+   
     var resourceId = key.data.resourceId 
     
     this.CreateS3Folder(JSON.stringify(this.uid));
@@ -584,7 +562,7 @@ async startRecording(key){
     })
     .then(json => this.GetRecordingStatus(json)) 
       .catch((error) => {
-        console.log("error - ", error);
+      
       });
   };
 
@@ -606,7 +584,7 @@ async startRecording(key){
     })
       .then(json => 
         this.startRecording(json)) 
-        // console.log("accuire - ",json))
+       
       .catch((error) => {
        
       });
@@ -636,7 +614,7 @@ this.toggleModal("stop")
   }
   
   else if(this.state.showButton == JSON.parse(this.teamKey)){
-  console.log("done2")
+ 
     if(resourceId === undefined){
       var resourceId = localStorage.getItem("resourceId");
     var sid = localStorage.getItem("sid");
@@ -674,8 +652,7 @@ else{
 
   render() {
 
-    // console.log("data",this.state.data)
-
+    
     const style = {
       display: "grid",
       gridGap: "50px 26px",

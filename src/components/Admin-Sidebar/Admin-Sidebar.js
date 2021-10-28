@@ -266,7 +266,7 @@ const handleClick = () => {
 
               <li class="nav-item">
                  
-              <ListItemButton onClick={() => handleClick()}>
+              <ListItemButton  onMouseEnter={() => handleClick()}>
         
       <span className="listStyle">
       <ListItemIcon>
@@ -416,7 +416,7 @@ const handleClick = () => {
 
               <li class="nav-item">
                  
-              <ListItemButton onClick={() => handleClick()}>
+              <ListItemButton onMouseEnter={() => handleClick()}>
         
         <span className="listStyle">
         <ListItemIcon>
@@ -548,7 +548,7 @@ const handleClick = () => {
 
               <li class="nav-item">
                  
-              <ListItemButton onClick={() => handleClick()}>
+              <ListItemButton onMouseEnter={() => handleClick()}>
         
         <span className="listStyle">
         <ListItemIcon>

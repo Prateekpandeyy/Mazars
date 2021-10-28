@@ -104,7 +104,7 @@ function ProposalDetails({
       return amount
     }
   }
-console.log(accept)
+
   return (
     <>
       <div>

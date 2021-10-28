@@ -71,6 +71,11 @@ function EditTL() {
   const [error2, setError2] = useState();
   const [custCate2, setCustcate2] = useState([])
   const [loading, setLoading] = useState(false);
+ 
+  const [posError, setposError] = useState({
+    available : '',
+    exits : ''
+  });
   const { handleSubmit, register, reset, errors } = useForm({
     resolver: yupResolver(Schema),
   });
@@ -181,7 +186,7 @@ function EditTL() {
     else if (subData.length < 1 && data5.length < 1) {
       setError2("Please select at least one value")
     }
-    else if (invalid || wEmail || indNumError) {
+    else if (invalid || wEmail || indNumError || posError.exits) {
       setDisplay(false)
     }
     else {
@@ -192,7 +197,7 @@ function EditTL() {
       formData.append("name", value.name);
       formData.append("phone", value.phone);
       formData.append("email", data7)
-      formData.append("post_name", data6)
+      formData.append("post_name", postValue)
      {categeryList.length > 1 ?  formData.append("cat_id", categeryList) : 
      formData.append("cat_id", data8) }
      {kk.length === 0 ?  formData.append("pcat_id", data9) : 
@@ -367,7 +372,7 @@ function EditTL() {
 
 //email validaation with api
 const emailValidation = (key) => {
-
+console.log(key.target.value)
   var validRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   if (email.match(validRegex)) {
     setWemail("");
@@ -445,7 +450,32 @@ if(data4 != undefined){
 if(data5 != undefined){
   defSubValue();
 }
-
+const checktlPost = (e) => {
+  setPostName(e.target.value)
+  data6 = e.target.value;
+  let a = e.target.value;
+  let formData = new FormData();
+  formData.append("tlpost", a)
+  formData.append("id", id )
+  axios({
+    method: "POST",
+    url : `${baseUrl}/tl/validateTLPost`,
+    data: formData,
+  })
+  .then(function (res) {
+    if(res.data.code === 1){
+      setposError({
+        available : "Post aviable"
+      })
+    }
+    else{
+      setposError({
+        exits : "Post already exits"
+      })
+    }
+  })
+  }
+ 
   return (
     <Layout adminDashboard="adminDashboard" adminUserId={userid}>
       <Card>
@@ -492,13 +522,16 @@ if(data5 != undefined){
                         <input
                           type="text"
                           name="post_name"
-                        
+                          onBlur={(e) => checktlPost(e)}
                           defaultValue={data6}
                           onChange = {(e) => data6 = e.target.value}
                           className={classNames("form-control", {
-                            "is-invalid": errors.post_name,
+                            "is-invalid": errors.post_name || posError.exits,
                           })}
                         />
+                          {posError.available ? 
+                    <p className="completed"> {posError.available}</p> : 
+                    <p className="declined">{posError.exits}</p>}
                       </div>
                     </div>
 
@@ -508,12 +541,23 @@ if(data5 != undefined){
                         <input
                           type="text"
                           name="post_email"
+                          onBlur={(e) => emailValidation(e)}
                           defaultValue={data7}
-                          onChange={(e) => data7 = e.target.value}
+                          onChange={(e) => emailHandler(e)}
                           className={classNames("form-control", {
                             "is-invalid": errors.post_email,
                           })}
                         />
+                                              {
+                        wEmail ? <p className="declined">{wEmail}</p> : <>
+                          {valiEmail ?
+                            <p className="completed">
+                              {valiEmail}
+                            </p>
+                            :
+                            <p className="declined">{invalid}</p>}
+                        </>
+                      } 
                       </div>
                     </div>
                   </div>

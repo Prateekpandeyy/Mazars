@@ -22,9 +22,9 @@ function EditTP() {
 
   useEffect(() => {
     const getTeamLeader = () => {
-      console.log("bb2", baseUrl)
+
       axios.get(`${baseUrl}/tp/getTaxProfessional?id=${id}`).then((res) => {
-        console.log(res);
+      
         if (res.data.code === 1) {
           setUser({
             name: res.data.result[0].name,
@@ -39,7 +39,7 @@ function EditTP() {
 
 
   const onSubmit = (value) => {
-    console.log("value :", value);
+ 
     let formData = new FormData();
     formData.append("email", value.p_email);
     formData.append("name", value.p_name);
@@ -52,13 +52,13 @@ function EditTP() {
       data: formData,
     })
       .then(function (response) {
-        console.log("res-", response);
+       
         if (response.data.code === 1) {
           alert.success("TL updated  !");
         }
       })
       .catch((error) => {
-        console.log("erroror - ", error);
+      
       });
   };
 
