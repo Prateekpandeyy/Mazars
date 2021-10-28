@@ -412,7 +412,7 @@ function EditTP() {
 
       axios({
         method: "POST",
-        url: `${baseUrl}/validateEditRegistration`,
+        url: `${baseUrl}/tl/validateEditRegistration`,
         data: formData,
       })
       .then(function (response) {

@@ -13,6 +13,7 @@ import { useHistory } from "react-router-dom";
 import classNames from "classnames";
 import Mandatory from "../../../components/Common/Mandatory";
 import { Spinner } from "reactstrap";
+import EmailValidation from "../../../components/Common/EmailValidation";
 const Schema = yup.object().shape({
   p_name: yup.string().required("required name"),
   p_email: yup.string().email("invalid email").required("required email"),
@@ -51,7 +52,7 @@ function AddNew() {
   const [categoryData, setCategoryData] = useState([])
   const [indNumError, setIndNumError] = useState(null)
   const [postValue, setPostName] = useState([]);
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState([]);
   const [emailPost, setEmailPost] = useState('');
   const [valiEmail, setValiemail] = useState(null)
   const [valiEmailPost, setValiemailPost] = useState(null)
@@ -60,7 +61,7 @@ function AddNew() {
   const [wEmail, setWemail] = useState();
   const [wEmailPost, setWemailPost] = useState();
   const [loading, setLoading] = useState(false);
-
+  const [emailError, setEmailError] = useState(null);
   const [display, setDisplay] = useState(false);
   const [posError, setposError] = useState({
     available : '',
@@ -162,7 +163,7 @@ function AddNew() {
       formData.append("type", "tl");
       formData.append("cat_id", categeryList)
       formData.append("post_name", value.post_name)
-      formData.append("email", value.post_email)
+      formData.append("email", email)
       formData.append("pcat_id", kk)
       formData.append("allpcat_id", parentCategoryName)
       formData.append("allcat_id", JSON.stringify(dd))
@@ -367,49 +368,7 @@ function AddNew() {
     }
 
   }
-  // EmailHandlerPost1
-  const emailHandlerPost = (e) => {
-    setEmail(e.target.value);
  
-    if (e.target.value.length < 1) {
-      setWemailPost("")
-    }
-  };
-  // Email Validation Post 
-  //email validaation Post with api
-  const emailValidationPost = (key) => {
-
-    var validRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    if (emailPost.match(validRegex)) {
-      setWemailPost("");
-      let formData = new FormData();
-      formData.append("email", email);
-      formData.append("type", 1);
-
-      axios({
-        method: "POST",
-        url: `${baseUrl}/customers/validateregistration`,
-        data: formData,
-      })
-        .then(function (response) {
-
-          if (response.data.code === 1) {
-            setValiemailPost(response.data.result)
-            setInvalidPost('')
-          } else if (response.data.code === 0) {
-            setInvalidPost(response.data.result)
-            setValiemailPost('')
-          }
-        })
-        .catch((error) => {
-        
-        });
-    }
-    else {
-      setWemailPost("invalid email")
-    }
-
-  }
   const checktlPost = (e) => {
   setPostName(e.target.value)
   let a = e.target.value;
@@ -484,16 +443,15 @@ function AddNew() {
                     <label>Teamleader Post Email <span className="declined">*</span></label>
                     
                    
-                      <input
-                        type="email"
-                        className={classNames("form-control", {
-                          "is-invalid": errors.post_email || wEmail || invalid,
-                        })}
-                        name="post_email"
-                        ref={register}
-                        onChange={(e) => emailHandler(e)}
-                        onBlur={emailValidation}
-                      />
+                    <EmailValidation
+                     setWemail = {setWemail}
+                      wEmail = {wEmail} 
+                      invalid = {invalid}
+                       setEmailError = {setEmailError}
+                        setValiemail = {setValiemail} 
+                        emailError = {emailError} 
+                        setInvalid = {setInvalid}  
+                        setEmail2 = {setEmail} />
                       {
                         wEmail ? <p className="declined">{wEmail}</p> : <>
                           {valiEmail ?

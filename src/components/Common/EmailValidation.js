@@ -20,7 +20,7 @@ const [email, setEmail] = useState([])
       const emailValidation = (key) => {
 
         var validRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        if (email.match(validRegex)) {
+        if (email.length > 0 && email.match(validRegex)) {
           props.setWemail("");
           props.setEmailError(false)
           let formData = new FormData();

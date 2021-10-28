@@ -307,51 +307,7 @@ function AddNew() {
     }
   }
 
-  //eamil onchange
-  const emailHandler = (e) => {
-    setEmail(e.target.value);
-
-    if (e.target.value.length < 1) {
-      setWemail("")
-    }
-  };
-
-
-  //email validaation with api
-  const emailValidation = (key) => {
-
-    var validRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    if (email.match(validRegex)) {
-      setWemail("");
-      let formData = new FormData();
-      formData.append("email", email);
-      formData.append("type", 1);
-
-      axios({
-        method: "POST",
-        url: `${baseUrl}/tl/validateregistration`,
-        data: formData,
-      })
-        .then(function (response) {
-        
-          if (response.data.code === 1) {
-            setValiemail(response.data.result)
-            setInvalid('')
-          } else if (response.data.code === 0) {
-            setInvalid(response.data.result)
-            setValiemail('')
-          }
-        })
-        .catch((error) => {
-
-        });
-    }
-    else {
-      setWemail("invalid email")
-    }
-
-  }
-
+ 
   // Tl Function 
   const tlFun = (e) => {
     var a;
