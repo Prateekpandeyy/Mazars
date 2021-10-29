@@ -21,6 +21,8 @@ function QueriesRecevied() {
   const [year, setYear] = useState([]);
   const [feedback, setFeedback] = useState([]);
   const [reports, setReports] = useState([]);
+  const [tlName2, setTlname] = useState();
+  const[tp22, setTp22] = useState();
   const [accept, setAccept] = useState();
   const [diaplayProposal, setDisplayProposal] = useState({
     amount: "",
@@ -56,9 +58,11 @@ function QueriesRecevied() {
 
   useEffect(() => {
     const getSubmittedAssingment = () => {
-      axios.get(`${baseUrl}/customers/getQueryDetails?id=${id}`).then((res) => {
+      axios.get(`${baseUrl}/tl/getQueryDetails?id=${id}`).then((res) => {
 
         if (res.data.code === 1) {
+          setTlname(res.data.result[0].tlname);
+          setTp22(res.data.result[0].tpname);
           setSubmitData(res.data.result);
           setDisplaySpecific(res.data.additional_queries);
           setPaymentDetails(res.data.payment_detail);
@@ -97,6 +101,12 @@ function QueriesRecevied() {
               installment_amount: res.data.proposal_queries[0].installment_amount,
               due_date: res.data.proposal_queries[0].due_date,
             });
+            setDisplayHistory({
+              tlname: res.data.proposal_queries[0].tlname,
+              date_of_allocation:
+                res.data.history_queries[0].date_of_allocation,
+            });
+          
           }
 
           if (res.data.assignment.length > 0) {
@@ -106,13 +116,13 @@ function QueriesRecevied() {
               date_of_delivery: res.data.assignment[0].date_of_delivery,
             });
           }
-          if (res.data.history_queries.length > 0) {
-            setDisplayHistory({
-              tlname: res.data.history_queries[0].tname,
-              date_of_allocation:
-                res.data.history_queries[0].date_of_allocation,
-            });
-          }
+          // if (res.data.history_queries.length > 0) {
+          //   setDisplayHistory({
+          //     tlname: res.data.history_queries[0].tname,
+          //     date_of_allocation:
+          //       res.data.history_queries[0].date_of_allocation,
+          //   });
+          // }
           if (res.data.queries_document) {
             if (res.data.queries_document.length > 0) {
               setQueryDocs(res.data.queries_document);
@@ -178,6 +188,8 @@ function QueriesRecevied() {
                 feedback={feedback}
                 reports={reports}
                 accept = {accept}
+                tlName2={tlName2}
+                tp22 = {tp22}
               />
             ))}
           </div>

@@ -39,9 +39,9 @@ const Schema = yup.object().shape({
 function EditTL() {
   const { Option } = Select;
   const { id } = useParams();
-  const history = useHistory();
+  
   const alert = useAlert();
-
+  let history = useHistory();
   const userid = window.localStorage.getItem("adminkey");
 
   const [tax, setTax] = useState([]);
@@ -71,7 +71,7 @@ function EditTL() {
   const [error2, setError2] = useState();
   const [custCate2, setCustcate2] = useState([])
   const [loading, setLoading] = useState(false);
- 
+ const [showDel, setShowDel] = useState(null)
   const [posError, setposError] = useState({
     available : '',
     exits : ''
@@ -118,10 +118,12 @@ function EditTL() {
   }, [])
   const getTeamLeader = () => {
     axios.get(`${baseUrl}/tl/getTeamLeader?id=${id}`).then((res) => {
-     
+   console.log(res.data.result[0].is_delete)
       if (res.data.code === 1) {
         setValue(res.data.result[0]);
         setStore(res.data.result[0].pcat_id);
+        setShowDel(res.data.result[0].is_delete)
+       
       }
     });
   };
@@ -135,7 +137,7 @@ function EditTL() {
   var data7 = value.email;
   const data8 = value.cat_id;
   const data9 = value.pcat_id;
- 
+   
 
   useEffect(() => {
     const getCategory = () => {
@@ -196,8 +198,12 @@ function EditTL() {
       formData.append("personal_email", value.email);
       formData.append("name", value.name);
       formData.append("phone", value.phone);
-      formData.append("email", data7)
-      formData.append("post_name", postValue)
+     {email.length > 1 ? 
+      formData.append("email", email) :
+      formData.append("email", data7)}
+      {postValue.length > 1 ?  
+        formData.append("post_name", postValue) :
+        formData.append("post_name", data6)}
      {categeryList.length > 1 ?  formData.append("cat_id", categeryList) : 
      formData.append("cat_id", data8) }
      {kk.length === 0 ?  formData.append("pcat_id", data9) : 
@@ -362,6 +368,7 @@ function EditTL() {
 
  //eamil onchange
  const emailHandler = (e) => {
+   data7 = e.target.value;
   setEmail(e.target.value);
  
   if (e.target.value.length < 1) {
@@ -379,10 +386,10 @@ console.log(key.target.value)
     let formData = new FormData();
     formData.append("email", email);
     formData.append("type", 1);
-
+    formData.append("id", id)
     axios({
       method: "POST",
-      url: `${baseUrl}/tl/validateregistration`,
+      url: `${baseUrl}/tl/validateEditRegistration`,
       data: formData,
     })
       .then(function (response) {
@@ -475,12 +482,49 @@ const checktlPost = (e) => {
     }
   })
   }
- 
+ const tlName22 = (e) => {
+   console.log(e.target.value)
+   data6 = e.target.value
+ }
+ const del = (e) => {
+   Swal.fire({
+    title: "Are you sure?",
+    text: "It will permanently deleted !",
+    type: "warning",
+    showCancelButton : true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes, delete it!",
+   }).then((result) => {
+    if (result.value) {
+      deleteCliente(id);
+    }
+  });
+ }
+ const deleteCliente = (id) => {
+  axios
+    .get(`${baseUrl}/tl/deleteTeamLeader?id=${id}`)
+    .then(function (response) {
+      
+      if (response.data.code === 1) {
+        Swal.fire("Taxprofessional has been deleted successfully");
+        history.goBack();
+        getTeamLeader();
+      } else {
+        Swal.fire("Oops...", "Errorr ", "error");
+        history.goBack();
+      }
+
+    })
+    .catch((error) => {
+      
+    });
+};
   return (
     <Layout adminDashboard="adminDashboard" adminUserId={userid}>
       <Card>
         <CardHeader>
-          <div class="col-md-12 d-flex">
+          <div class="col-md-12 d-flex justify-content-between">
             <div>
               <button
                 class="btn btn-success ml-3"
@@ -493,6 +537,9 @@ const checktlPost = (e) => {
             <div class="text-center ml-5">
               <h4>Edit Team Leader</h4>
             </div>
+            <div>
+             {showDel == "0" ?  <button className="btn btn-danger" onClick={(e) => del(e)}>Delete</button> : ""}
+              </div>
           </div>
         </CardHeader>
 
@@ -524,7 +571,8 @@ const checktlPost = (e) => {
                           name="post_name"
                           onBlur={(e) => checktlPost(e)}
                           defaultValue={data6}
-                          onChange = {(e) => data6 = e.target.value}
+                         disabled = {showDel == "1" ? true : ""}
+                          onChange = {(e) => tlName22(e)}
                           className={classNames("form-control", {
                             "is-invalid": errors.post_name || posError.exits,
                           })}
@@ -542,6 +590,7 @@ const checktlPost = (e) => {
                           type="text"
                           name="post_email"
                           onBlur={(e) => emailValidation(e)}
+                          disabled = {showDel == "1" ? true : ""}
                           defaultValue={data7}
                           onChange={(e) => emailHandler(e)}
                           className={classNames("form-control", {
@@ -613,7 +662,8 @@ const checktlPost = (e) => {
                             "is-invalid": errors.email,
                           })}
                         //  onBlur={emailValidation} 
-                         onChange={(e) => emailHandler(e)} />
+                       //  onChange={(e) => emailHandler(e)}
+                          />
                         </Form.Item>
                         {/* {
                         wEmail ? <p className="declined">{wEmail}</p> : <>

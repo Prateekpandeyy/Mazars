@@ -8,7 +8,9 @@ function ProposalDetails({
   diaplayHistory,
   paymentDetails,
   p,
-  accept
+  accept,
+  tlName2,
+  tp22
 }) {
 
   const {
@@ -132,11 +134,11 @@ function ProposalDetails({
             </tr>
             <tr>
               <th scope="row">Name of Team Leader</th>
-              <td>{accept == 0 ? "" : tlname}</td>
+              <td>{accept == 0 ? "" : tlName2}</td>
             </tr>
             <tr>
               <th scope="row">Name of Tax Professional(s)</th>
-              <td></td>
+              <td>{tp22}</td>
             </tr>
             <tr>
               <th scope="row">Date of Proposal</th>

@@ -434,13 +434,12 @@ const handleClick = () => {
          
         </ListItemButton>
   
-
       <Collapse in={open}  unmountOnExit>
         <List component="div" disablePadding>
         <ul>
                   <li>
                   <NavLink to={"/teamleader/schedule"}>
-                
+                 
                 <span class="menu-title" data-i18n="">
                   Schedule
                 </span>

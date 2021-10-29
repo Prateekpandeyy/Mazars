@@ -416,6 +416,7 @@ schdrularName;
       
       this.tempArray.push(response.data.serverResponse.fileList)
       this.setState({showRecBtn : true})
+
     })
         .catch((error) => {
        
@@ -554,7 +555,7 @@ sleep(ms) {
 
 //start recording
 async startRecording(key){
-  
+
     var resourceId = key.data.resourceId 
     
     this.CreateS3Folder(JSON.stringify(this.uid));
@@ -603,7 +604,8 @@ async startRecording(key){
   };
 // Start recording button
   recStart = () => {
-    
+    this.localStream.enableAudio();
+    this.localStream.enableVideo();
     this.accuire();
     this.setState({ showRecBtn: false  });
     
@@ -622,7 +624,11 @@ async startRecording(key){
  //stop recording 
  stopRecording = () => {
   if(this.state.showRecBtn === true){
-this.toggleModal("stop")
+  
+return(
+  this.toggleModal("stop"),
+this.localStream.disableVideo()
+)
   }
   
   else if(this.state.showButton == JSON.parse(this.teamKey)){
@@ -648,8 +654,12 @@ this.toggleModal("stop")
   })
   .then(json => 
     this.toggleModal(json) ,
-     this.setState({showRecBtn : true})
+     this.setState({showRecBtn : true}),
+    this.localStream.disableAudio(),
+    this.localStream.disableVideo()
+    
     ) 
+  
     .catch((error) => {
       
     });

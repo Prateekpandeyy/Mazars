@@ -77,6 +77,7 @@ function EditTP() {
   const [show, setShow] = useState([])
   const [post_na, setPost_na] = useState()
   const [loading, setLoading] = useState(false);
+  const [showDel, setShowDel] = useState(null)
   const [posError, setposError] = useState({
     available : '',
     exits : ''
@@ -126,6 +127,7 @@ function EditTP() {
       if (res.data.code === 1) {
         setValue(res.data.result[0]);
         setStore(res.data.result[0].pcat_id);
+        setShowDel(res.data.result[0].isdelete)
       }
     });
   };
@@ -166,6 +168,7 @@ function EditTP() {
         if (res.data.code === 1) {
           setValue(res.data.result[0]);
           setStore(res.data.result[0].pcat_id);
+          setShowDel(res.data.result[0].is_delete)
         }
       })
       .catch((e) => {
@@ -187,9 +190,10 @@ function EditTP() {
   useEffect(() => {
     const getTeamLeader = () => {
       axios.get(`${baseUrl}/tl/getTeamLeader`).then((res) => {
-        
+        console.log(res.data.result[0].isdelete)
         if (res.data.code === 1) {
           setTeamLeader(res.data.result);
+          
         }
       });
     };
@@ -228,8 +232,12 @@ function EditTP() {
       formData.append("phone", value.phone);
     
       formData.append("tp_id", data10);
-      formData.append("email", data7)
-      formData.append("post_name", data6)
+      {email.length > 1 ? 
+        formData.append("email", email) :
+        formData.append("email", data7)}
+        {postValue.length > 1 ?  
+          formData.append("post_name", postValue) :
+          formData.append("post_name", data6)}
       {
         categeryList.length > 1 ? formData.append("cat_id", categeryList) :
         formData.append("cat_id", data8)
@@ -477,12 +485,45 @@ function EditTP() {
     }
   })
   }
+  const del = (e) => {
+    Swal.fire({
+     title: "Are you sure?",
+     text: "It will permanently deleted !",
+     type: "warning",
+     showCancelButton : true,
+     confirmButtonColor: "#3085d6",
+     cancelButtonColor: "#d33",
+     confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+     if (result.value) {
+       deleteCliente(id);
+     }
+   });
+  }
+  const deleteCliente = (id) => {
+   axios
+     .get(`${baseUrl}/tp/deleteTP?id=${id}`)
+     .then(function (response) {
+       
+       if (response.data.code === 1) {
+         Swal.fire("Teamleader has been deleted successfully");
+         history.goBack();
+         getTeamLeader();
+       } else {
+         Swal.fire("Oops...", "Errorr ", "error");
+         history.goBack();
+       }
  
+     })
+     .catch((error) => {
+       
+     });
+ };
   return (
     <Layout adminDashboard="adminDashboard" adminUserId={userid}>
       <Card>
         <CardHeader>
-          <div class="col-md-12 d-flex">
+          <div class="col-md-12 d-flex justify-content-between">
             <div>
               <button
                 class="btn btn-success ml-3"
@@ -495,6 +536,9 @@ function EditTP() {
             <div class="text-center ml-5">
               <h4>Edit Tax Professional</h4>
             </div>
+            <div>
+             {showDel == "0" ?  <button className="btn btn-danger" onClick={(e) => del(e)}>Delete</button> : ""}
+              </div>
           </div>
         </CardHeader>
 
@@ -552,6 +596,7 @@ function EditTP() {
                           type="text"
                           name="post_name"
                           onBlur={(e) => checktlPost(e)}
+                          disabled = {showDel == "1" ? true : ""}
                           defaultValue={data6}
                           onChange={(e) => data6= e.target.value}
                           className={classNames("form-control", {
@@ -572,7 +617,7 @@ function EditTP() {
                         type="email"
                         name="p_email"
                         ref={register}
-                     
+                        disabled = {showDel == "1" ? true : ""}
                       defaultValue={data7}
                      
                         className={classNames("form-control", {

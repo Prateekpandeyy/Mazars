@@ -618,7 +618,8 @@ async startRecording(key){
 // Start recording button
  // Start recording button
  recStart = () => {
-    
+  this.localStream.enableAudio();
+  this.localStream.enableVideo();
   this.accuire();
   this.setState({ showRecBtn: false  });
   
@@ -637,7 +638,9 @@ this.setState({
 //stop recording 
 stopRecording = () => {
 if(this.state.showRecBtn === true){
-this.toggleModal("stop")
+  return(this.toggleModal("stop"),
+  this.localStream.disableVideo(),
+this.localStream.disableAudio())
 }
 
 else if(this.state.showButton == JSON.parse(this.teamKey)){
@@ -663,7 +666,9 @@ axios({
 })
 .then(json => 
   this.toggleModal(json) ,
-   this.setState({showRecBtn : true})
+   this.setState({showRecBtn : true}),
+   this.localStream.disableVideo(),
+   this.localStream.disableAudio(),
   ) 
   .catch((error) => {
     

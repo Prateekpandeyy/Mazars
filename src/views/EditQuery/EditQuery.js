@@ -471,13 +471,15 @@ function EditQuery(props) {
                         <>
                           <div>
                             {queryDocs.map((p, i) => (
-                              <ul>
+                              <ul style={{listStyle : "none"}}>
                                 <li>
                                   <a
                                     href={`${ImageUrl}/${p.assign_no}/${p.name}`}
                                     target="_blank"
                                   >
-                                    <i
+                                  <em>
+                                    {++i}
+                                    </em>  <i
                                       class="fa fa-photo"
                                       style={{ width: "50", height: "20" }}
                                     ></i>

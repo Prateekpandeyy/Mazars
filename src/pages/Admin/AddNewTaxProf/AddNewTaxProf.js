@@ -462,7 +462,8 @@ function AddNew() {
                         setValiemail = {setValiemail} 
                         emailError = {emailError} 
                         setInvalid = {setInvalid}  
-                        setEmail2 = {setEmail2} />
+                        setEmail2 = {setEmail2}
+                        name = "taxprofessional" />
                       {
                         wEmail ? <p className="declined">{wEmail}</p> : <>
                           {valiEmail ?

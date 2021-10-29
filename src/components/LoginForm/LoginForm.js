@@ -62,6 +62,14 @@ return(
               name="password"
               placeholder="Enter Password"
               ref={register}
+              onCopy={(e) => {
+                e.preventDefault();
+                return false
+              }}
+              onPaste={(e) => {
+                e.preventDefault();
+                return false
+              }}
             />
             <i
               className={`fa ${data3.isPasswordShow ? "fa-eye-slash" : "fa-eye"} password-icon`}

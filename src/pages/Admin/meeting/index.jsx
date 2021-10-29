@@ -33,10 +33,10 @@ class Meeting extends React.Component {
    
     return (
       
-      <div className="wrapper meeting">
+      <div className="wrapper meeting" style={{ display : "flex", flexDirection: "column" , height: "100vh" }}>
                  
          {this.state.showmeetingScreen === true ?
-       <div>
+             <div style={{ display : "flex", flexDirection: "column" , height: "100%" }}>
           <div
           className="ag-header"
           style={{ color: "green", fontWeight: "bold" }}
@@ -69,7 +69,7 @@ class Meeting extends React.Component {
          playing={true}
          onEnded={() => this.setState({showmeetingScreen : true})}
          width='100%'
-         height='600px'
+         height='650px'
         />}
       </div>
     );

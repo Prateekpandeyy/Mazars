@@ -32,7 +32,9 @@ function QueryDetails({
   feedback,
   reports, 
   submitData,
-  accept
+  accept,
+  tlName2,
+  tp22
 }) {
  
 
@@ -119,6 +121,8 @@ function QueryDetails({
                     paymentDetails={paymentDetails}
                     p={p}
                     accept={accept}
+                    tlName2={tlName2}
+                    tp22 = {tp22}
                   />
                 </Card>
               </Col>

@@ -22,7 +22,8 @@ function QueriesRecevied(props) {
   const [feedback, setFeedback] = useState([]);
   const [reports, setReports] = useState([]);
   const [accept, setAccept] = useState();
-
+  const [tlName2, setTlname] = useState();
+  const[tp22, setTp22] = useState();
   const [diaplayProposal, setDisplayProposal] = useState({
     amount: "",
     accepted_amount: "",
@@ -60,6 +61,8 @@ function QueriesRecevied(props) {
       axios.get(`${baseUrl}/tl/getQueryDetails?id=${id}`).then((res) => {
       
         if (res.data.code === 1) {
+          setTlname(res.data.result[0].tlname);
+          setTp22(res.data.result[0].tpname);
           setAccept(res.data.result[0].accept)
           if (res.data.result) {
             if (res.data.result[0].name == null) {
@@ -117,6 +120,12 @@ function QueriesRecevied(props) {
               installment_amount: res.data.proposal_queries[0].installment_amount,
               due_date: res.data.proposal_queries[0].due_date,
             });
+            setDisplayHistory({
+              tlname: res.data.proposal_queries[0].tlname,
+              date_of_allocation:
+                res.data.history_queries[0].date_of_allocation,
+            });
+          
           }
 
           if (res.data.assignment.length > 0) {
@@ -126,13 +135,13 @@ function QueriesRecevied(props) {
               date_of_delivery: res.data.assignment[0].date_of_delivery,
             });
           }
-          if (res.data.history_queries.length > 0) {
-            setDisplayHistory({
-              tlname: res.data.history_queries[0].tname,
-              date_of_allocation:
-                res.data.history_queries[0].date_of_allocation,
-            });
-          }
+          // if (res.data.history_queries.length > 0) {
+          //   setDisplayHistory({
+          //     tlname: res.data.history_queries[0].tname,
+          //     date_of_allocation:
+          //       res.data.history_queries[0].date_of_allocation,
+          //   });
+          // }
           if (res.data.queries_document) {
             if (res.data.queries_document.length > 0) {
               setQueryDocs(res.data.queries_document);
@@ -200,6 +209,8 @@ function QueriesRecevied(props) {
                 feedback={feedback}
                 reports={reports}
                 accept = {accept}
+                tlName2={tlName2}
+                tp22 = {tp22}
               />
             ))}
           </div>

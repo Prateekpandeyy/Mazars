@@ -95,7 +95,7 @@ function RejectedModal({
                     <button type="submit" className="btn btn-primary">
                       Submit
                     </button>
-                    <Button color="primary" onClick={toggleNested}>Cancel</Button>
+                    <Button color="primary"className="btn btn-danger ml-2" onClick={toggleNested}>Cancel</Button>
                   </div>
               }
             </div>

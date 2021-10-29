@@ -54,7 +54,7 @@ function NavWrapper(props) {
               </li>
 
               <li>
-                <h4 class="brand-text text-white">{CommonServices.capitalizeFirstLetter(name)}: {JSON.parse(email)} </h4>
+                <h4 class="brand-text text-white">{name == "customer" ? CommonServices.capitalizeFirstLetter("client") : CommonServices.capitalizeFirstLetter(name)}: {JSON.parse(email)} </h4>
               </li>
              
             </ul>
@@ -127,6 +127,5 @@ function NavWrapper(props) {
 }
 
 export default NavWrapper;
-
 
 

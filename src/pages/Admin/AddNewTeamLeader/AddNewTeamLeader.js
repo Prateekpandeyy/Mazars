@@ -451,7 +451,9 @@ function AddNew() {
                         setValiemail = {setValiemail} 
                         emailError = {emailError} 
                         setInvalid = {setInvalid}  
-                        setEmail2 = {setEmail} />
+                        setEmail2 = {setEmail} 
+                        name="teamleader"/>
+                        
                       {
                         wEmail ? <p className="declined">{wEmail}</p> : <>
                           {valiEmail ?

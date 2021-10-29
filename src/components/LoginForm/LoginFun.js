@@ -56,7 +56,7 @@ const LoginFun = () => {
       localStorage.removeItem("adminkey");
       localStorage.removeItem("adminEmail");
       history.push("/admin/login");
-    }, 36000000)
+    }, 600000)
   }
     const handleChange = (e) => {
   

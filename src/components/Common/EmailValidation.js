@@ -26,28 +26,54 @@ const [email, setEmail] = useState([])
           let formData = new FormData();
           formData.append("email", email);
           formData.append("type", 1);
-    
-          axios({
-            method: "POST",
-            url: `${baseUrl}/customers/validateregistration`,
-            data: formData,
-          })
-            .then(function (response) {
+    if(props.name === "teamleader" || props.name =="taxprofessional"){
+      axios({
+        method: "POST",
+        url: `${baseUrl}/tl/validateregistration`,
+        data: formData,
+      })
+      .then(function (response) {
              
-              if (response.data.code === 1) {
-                props.setValiemail(response.data.result)
-                props.setInvalid('')
-                props.setEmailError(false)
-               
-              } else if (response.data.code === 0) {
-                props.setInvalid(response.data.result)
-                props.setValiemail('')
-                props.setEmailError(true)
-              }
-            })
-            .catch((error) => {
-            
-            });
+        if (response.data.code === 1) {
+          props.setValiemail(response.data.result)
+          props.setInvalid('')
+          props.setEmailError(false)
+         
+        } else if (response.data.code === 0) {
+          props.setInvalid(response.data.result)
+          props.setValiemail('')
+          props.setEmailError(true)
+        }
+      })
+      .catch((error) => {
+      
+      });
+    }
+    else{
+      axios({
+        method: "POST",
+        url: `${baseUrl}/customers/validateregistration`,
+        data: formData,
+      })
+      .then(function (response) {
+             
+        if (response.data.code === 1) {
+          props.setValiemail(response.data.result)
+          props.setInvalid('')
+          props.setEmailError(false)
+         
+        } else if (response.data.code === 0) {
+          props.setInvalid(response.data.result)
+          props.setValiemail('')
+          props.setEmailError(true)
+        }
+      })
+      .catch((error) => {
+      
+      });
+    }
+        
+          
         }
         else {
           props.setEmailError(true)

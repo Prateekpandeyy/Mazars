@@ -4,7 +4,7 @@ import axios from "axios";
 import { baseUrl } from "../../config/config";
 import { useHistory } from "react-router-dom";
 
-function DeleteQuery({ id, setLoad }) {
+function DeleteQuery({ id, setLoading }) {
   const userId = window.localStorage.getItem("userid");
   const history = useHistory();
 
@@ -30,7 +30,7 @@ function DeleteQuery({ id, setLoad }) {
   };
 
   const deleteCliente = (id) => {
-    setLoad(true)
+    setLoading(true)
     let formData = new FormData();
     formData.append("uid", JSON.parse(userId));
     formData.append("id", id);
@@ -43,11 +43,11 @@ function DeleteQuery({ id, setLoad }) {
       .then(function (response) {
 
         if (response.data.code === 1) {
-          setLoad(false)
+          setLoading(false)
           Swal.fire("", "Query deleted successfully.", "success");
           history.push("/customer/queries");
         } else {
-          setLoad(false)
+          setLoading(false)
           Swal.fire("Oops...", "Query not deleted", "error");
         }
       })

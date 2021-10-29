@@ -13,6 +13,7 @@ import {
   Col,
   Table,
 } from "reactstrap";
+import classNames from "classnames";
 import QueryDetails from "../../../components/QueryDetails/QueryDetails";
 
 function QueriesRecevied(props) {
@@ -34,6 +35,8 @@ function QueriesRecevied(props) {
   const [purpose, setPurpose] = useState([]);
   const [year, setYear] = useState([]);
   const [accept, setAccept] = useState();
+  const [tlName2, setTlname] = useState();
+  const[tp22, setTp22] = useState();
   const [diaplayProposal, setDisplayProposal] = useState({
     amount: "",
     accepted_amount: "",
@@ -72,6 +75,8 @@ function QueriesRecevied(props) {
        
         if (res.data.code === 1) {
           setAccept(res.data.result[0].accept)
+          setTlname(res.data.result[0].tlname);
+          setTp22(res.data.result[0].tpname);
           if (res.data.result) {
             if (res.data.result[0].name == null) {
              
@@ -97,22 +102,24 @@ function QueriesRecevied(props) {
           if (res.data.reports) {
             setReports(res.data.reports);
           }
-
+         
 
           var purposeItem = res.data.result[0].purpose_opinion;
           var assementItem = res.data.result[0].assessment_year;
-
+         
           
           try {
             var myPurpose = JSON.parse(purposeItem);
             var myYear = JSON.parse(assementItem);
+            
             setPurpose(myPurpose);
             setYear(myYear);
           } catch (e) {
-            return false;
+            
           }
-
+         
           if (res.data.proposal_queries.length > 0) {
+           
             setDisplayProposal({
               accepted_amount: res.data.proposal_queries[0].accepted_amount,
               payment_received: res.data.proposal_queries[0].paid_amount,
@@ -129,22 +136,29 @@ function QueriesRecevied(props) {
               installment_amount: res.data.proposal_queries[0].installment_amount,
               due_date: res.data.proposal_queries[0].due_date,
             });
+          
+            setDisplayHistory({
+              tlname: res.data.proposal_queries[0].tlname,
+              date_of_allocation:
+                res.data.history_queries[0].date_of_allocation,
+            });
           }
 
           if (res.data.assignment.length > 0) {
+          
             setDisplayAssignment({
               assignment_number: res.data.assignment[0].assignment_number,
               assignment_date: res.data.assignment[0].created,
               date_of_delivery: res.data.assignment[0].date_of_delivery,
             });
           }
-          if (res.data.history_queries.length > 0) {
-            setDisplayHistory({
-              tlname: res.data.history_queries[0].tname,
-              date_of_allocation:
-                res.data.history_queries[0].date_of_allocation,
-            });
-          }
+          // if (res.data.history_queries.length > 0) {
+          //   setDisplayHistory({
+          //     tlname: res.data.history_queries[0].tlname,
+          //     date_of_allocation:
+          //       res.data.history_queries[0].date_of_allocation,
+          //   });
+          // }
           if (res.data.queries_document) {
             if (res.data.queries_document.length > 0) {
               setQueryDocs(res.data.queries_document);
@@ -186,14 +200,21 @@ function QueriesRecevied(props) {
               style={{ padding: ".5rem .1rem" }}
             >
               <h2 class="mb-0 query ml-3">
-                <Link
+                {/* <Link
                   to={{
                     pathname: `/admin/${props.location.routes}`,
                     index: props.location.index,
                   }}
                 >
                   <button class="btn btn-success ml-3">Go Back</button>
-                </Link>
+                </Link> */}
+                 <button
+                class="btn btn-success ml-3"
+                onClick={() => history.goBack()}
+              >
+              
+                Go Back
+              </button>
               </h2>
             </div>
 
@@ -215,6 +236,8 @@ function QueriesRecevied(props) {
                 feedback={feedback}
                 reports={reports}
                 accept = {accept}
+                tlName2={tlName2}
+                tp22 = {tp22}
               />
             ))}
           </div>

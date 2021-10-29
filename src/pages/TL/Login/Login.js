@@ -134,6 +134,14 @@ function Login(props) {
                         placeholder="Enter Password"
                         autocomplete="off"
                         ref={register}
+                        onCopy={(e) => {
+                          e.preventDefault();
+                          return false
+                        }}
+                        onPaste={(e) => {
+                          e.preventDefault();
+                          return false
+                        }}
                       />
                       <i
                         className={`fa ${isPasswordShow ? "fa-eye-slash" : "fa-eye"} password-icon`}
