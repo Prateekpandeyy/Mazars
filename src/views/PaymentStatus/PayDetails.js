@@ -21,7 +21,10 @@ import {
 import BootstrapTable from "react-bootstrap-table-next";
 import { baseUrl2, baseUrl3 } from "../../config/config";
 import { useParams, Link, useHistory } from "react-router-dom";
+import styled from "styled-components";
 import PayModal from "./PayModal";
+import { Typography } from "antd";
+
 const PayDetails = () => {
     let history = useHistory();
     const userId = window.localStorage.getItem("userid");
@@ -29,6 +32,7 @@ const PayDetails = () => {
     const [paymentDetail, setPaymentDetail] = useState();
     const [modal, setModal] = useState(false);
     const [modalData, setModalData] = useState()
+    const [showTable, setShowTable] = useState();
     const paydetails2 = () => {
 axios.get(`${baseUrl}/admin/getPaymentDetail?id=${id}`)
 .then((res) => {
@@ -211,7 +215,8 @@ setModal(!modal)
             },
            
            formatter: function dateFormat(cell, row){
-             
+             row.invoice_generated == "1" ?
+             setShowTable(true) : setShowTable(false)
                return(
                 <>
                 {row.invoice_generated == "1" ? 
@@ -237,14 +242,15 @@ setModal(!modal)
                )
            }
         },
-       
-       
-        
-       
-      
-        
+           
       ];
-      
+    
+      const Container = styled.div `
+      dispaly : flex;
+      width : 100%;
+      height : 100%;
+      justify-content : center;
+      align-items : center`
 return(
    <>
     <Layout custDashboard="custDashboard" custUserId={userId}>
@@ -264,13 +270,18 @@ return(
          </Row>
           </CardHeader>
           <CardBody>
-        <BootstrapTable
-    bootstrap4
-    keyField="id"
-    data={paymentDetail}
-    columns={columns}
-    classes="table-responsive"
-/>
+      {showTable === true ? 
+      <BootstrapTable
+      bootstrap4
+      keyField="id"
+      data={paymentDetail}
+      columns={columns}
+      classes="table-responsive"
+  /> : <Container>
+      <Typography variant="h1" color="green">
+          Invoice not generated, please wait for invoice ...
+      </Typography>
+      </Container>}
 <PayModal 
 showModal = {modal}
 modalToggle = {openModal}
