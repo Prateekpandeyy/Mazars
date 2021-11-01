@@ -32,13 +32,21 @@ const PayDetails = () => {
     const [paymentDetail, setPaymentDetail] = useState();
     const [modal, setModal] = useState(false);
     const [modalData, setModalData] = useState()
-    const [showTable, setShowTable] = useState();
+    const [showTable, setShowTable] = useState(null);
     const paydetails2 = () => {
 axios.get(`${baseUrl}/admin/getPaymentDetail?id=${id}`)
 .then((res) => {
     if(res.data.code === 1){
        
         setPaymentDetail(res.data.payment_detail)
+        //console.log(res.data.payment_detail.length)
+       // setShowTable(res.data.payment_detail[0].invoice_generated)
+       if(res.data.payment_detail.length > 0){
+           setShowTable(true)
+       }
+       else {
+           setShowTable(false)
+       }
     }
    
 })
@@ -215,8 +223,7 @@ setModal(!modal)
             },
            
            formatter: function dateFormat(cell, row){
-             row.invoice_generated == "1" ?
-             setShowTable(true) : setShowTable(false)
+           
                return(
                 <>
                 {row.invoice_generated == "1" ? 
@@ -250,7 +257,8 @@ setModal(!modal)
       width : 100%;
       height : 100%;
       justify-content : center;
-      align-items : center`
+      align-items : center;
+      color: red`
 return(
    <>
     <Layout custDashboard="custDashboard" custUserId={userId}>
@@ -270,18 +278,18 @@ return(
          </Row>
           </CardHeader>
           <CardBody>
-      {showTable === true ? 
-      <BootstrapTable
-      bootstrap4
-      keyField="id"
-      data={paymentDetail}
-      columns={columns}
-      classes="table-responsive"
-  /> : <Container>
-      <Typography variant="h1" color="green">
-          Invoice not generated, please wait for invoice ...
-      </Typography>
-      </Container>}
+   {showTable == true ? 
+  
+  <BootstrapTable
+  bootstrap4
+  keyField="id"
+  data={paymentDetail}
+  columns={columns}
+  classes="table-responsive"
+/>  : 
+<Container>
+    <p>Invoice not generated</p>
+    </Container>}
 <PayModal 
 showModal = {modal}
 modalToggle = {openModal}

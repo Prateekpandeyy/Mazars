@@ -140,8 +140,19 @@ const Generated = () => {
             }
         }, 
         {
-            text: "Amount",
-            dataField: "paid_amount",
+            text: "Invoice amount",
+            dataField: "invoice_amount",
+            sort: true,
+            style: {
+                fontSize: "11px",
+            },
+            headerStyle: () => {
+                return { fontSize: "11px" };
+            },
+        },
+        {
+            text: "Tds Deducted",
+            dataField: "tds_amount",
             sort: true,
             style: {
                 fontSize: "11px",

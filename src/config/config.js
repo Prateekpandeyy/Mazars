@@ -1,8 +1,3 @@
-// http://13.232.121.233/mazarsapi/v1/
-
-
-
-
 //for local
 export const baseUrl = "http://13.232.121.233/mazarsapi/v1";
 export const ImageUrl = "http://13.232.121.233/mazarsapi/assets/image";
