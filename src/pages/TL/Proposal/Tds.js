@@ -144,18 +144,36 @@ const sgstFun = (e) => {
  }
  // Tds function
  const tdsFun = (e) => {
-   setTdsR(e.target.value)
+ if(e.target.value > 100){
+   setTdsR(100);
+   let a = parseInt(basicAmount) + parseInt(pocketExp);
+   let cget = Math.round((a * 100 / 100))
+      setTds(cget)
+    setgrandTotal(parseInt(total) - parseInt(cget))
+  
+ }  
+ else{
+  setTdsR(e.target.value)
   let a = parseInt(basicAmount) + parseInt(pocketExp);
    let cget = Math.round((a * e.target.value / 100))
       setTds(cget)
-    setgrandTotal(parseInt(total) - parseInt(cget))    
+    setgrandTotal(parseInt(total) - parseInt(cget))  
+ }
  } 
 
  const pocketExpFun = (e) => {
   
   setPocketExp(e.target.value)
+
+  let a;
   if(e.target.value){
-    let a = Math.round(e.target.value) + parseInt(basicAmount);
+    if(basicAmount.length == "0"){
+       a = Math.round(e.target.value) + parseInt(0);
+    }
+    else{
+      a = Math.round(e.target.value) + parseInt(basicAmount);
+    }
+   
   
  
   let cget1 = parseInt(Math.round(a * cgetRate / 100))
@@ -183,6 +201,7 @@ const sgstFun = (e) => {
 }
 
 const basicFun = (e) => {
+ 
   let a = Math.round(parseInt(e.target.value) + parseInt(pocketExp));
   let tdsamount = parseInt(Math.round(a * tdsRate / 100))
   setBasicAmount(e.target.value);
@@ -280,6 +299,7 @@ setServices2(k.service)
             <div className="col-md-12">
          <input 
          type="text"
+         maxLength="24"
          ref={register}
          name="gst_in"
          value={gstNum}
@@ -493,10 +513,10 @@ setServices2(k.service)
                    <input 
                     type="number"
                     className="form-control"
-                   
+                 
                     placeholder="Rate"
                     name="tds_rate"
-                    defaultValue={tdsR}
+                    value={tdsR}
                     ref={register}
                     onChange= {(e) => tdsFun(e)} /> %
                      </div>

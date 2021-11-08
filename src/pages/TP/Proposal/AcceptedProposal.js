@@ -25,12 +25,7 @@ function AcceptedProposal() {
         setId(key.assign_no);
     };
 
-    // const [assignNo, setAssignNo] = useState('');
-    // const [ViewDiscussion, setViewDiscussion] = useState(false);
-    // const ViewDiscussionToggel = (key) => {
-    //     setViewDiscussion(!ViewDiscussion);
-    //     setAssignNo(key)
-    // }
+   
 
     useEffect(() => {
         getProposalList();
@@ -195,7 +190,7 @@ function AcceptedProposal() {
             },
         },
         {
-            dataField: "ProposedAmount",
+            dataField: "",
             text: "Proposed Amount",
             sort: true,
             style: {
@@ -204,6 +199,14 @@ function AcceptedProposal() {
             headerStyle: () => {
                 return { fontSize: "11px" };
             },
+            formatter: function nameFormatter(cell, row){
+                var nfObject = new Intl.NumberFormat('en-US')
+                 var x = row.ProposedAmount;
+                 console.log(nfObject.format(x))
+                 return(
+                   <p>{nfObject.format(x)}</p>
+                 )
+               }
         },
         {
             dataField: "accepted_amount",

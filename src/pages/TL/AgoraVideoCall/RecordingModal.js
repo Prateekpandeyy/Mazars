@@ -50,7 +50,7 @@ else{
         formData.append("participants", username);
         formData.append("schedule_id", id);
 
-
+        axios.get(`${baseUrl}/tl/freeslottime?schedule_id=${id}&&uid=${JSON.parse(userId)}`)
         axios({
             method: "POST",
             url: `${baseUrl}/tl/callRecordingPost`,

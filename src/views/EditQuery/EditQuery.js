@@ -20,6 +20,8 @@ import { Markup } from 'interweave';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import PublishIcon from '@material-ui/icons/Publish';
+import Box from '@material-ui/core/Box';
+import CircularProgress from '@material-ui/core/CircularProgress';
 function EditQuery(props) {
 
   const history = useHistory();
@@ -48,7 +50,7 @@ function EditQuery(props) {
   const [assessmentYear, setAssessmentYear] = useState([]);
     const [value2 , setValue2] = useState();
     const [val3, setVal3] = useState()
-
+    const [uploadOrDownloadCount, setUploadOrDownloadCount] = useState(10);
   const purPoseQuery = (e) => {
     setSelectError("")
     setPurposeOption(e)
@@ -130,6 +132,11 @@ function EditQuery(props) {
       setCheckerror("Please select at least one.")
     }
     else {
+      const timer = setInterval(() => {
+        setUploadOrDownloadCount(
+          (beforeValue) => (beforeValue >= 90 ? 90 
+                            : beforeValue + 10));
+      }, 800);
       setLoading(true)
       let formData = new FormData();
 
@@ -170,6 +177,7 @@ function EditQuery(props) {
         .then(function (response) {
 
           if (response.data.code === 1) {
+            setUploadOrDownloadCount(100)
             var message = response.data.message
             if (message == "") {
               Swal.fire(
@@ -513,7 +521,23 @@ function EditQuery(props) {
 
                   {
                       loading ?
-                        <Spinner color="primary" />
+                      <Box position="relative" display="inline-flex">
+                      <CircularProgress variant="determinate" 
+                                        value={uploadOrDownloadCount} />
+                      <Box
+                        bottom={0}
+                        right={0}
+                        top={0}
+                        justifyContent="center"
+                        left={0}
+                        display="flex"
+                        alignItems="center"
+                        position="absolute"
+                      >
+                        {`${Math.round(uploadOrDownloadCount)}%`}
+                      </Box>
+                    </Box>
+                            
                         :
                         <button className="btn btn-success" type="submit">
                           Update

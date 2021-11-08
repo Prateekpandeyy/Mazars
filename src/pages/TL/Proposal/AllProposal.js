@@ -216,7 +216,7 @@ function AllProposal() {
             },
         },
         {
-            dataField: "ProposedAmount",
+            dataField: "",
             text: "Proposed Amount",
             sort: true,
             style: {
@@ -225,6 +225,14 @@ function AllProposal() {
             headerStyle: () => {
                 return { fontSize: "11px" };
             },
+            formatter: function nameFormatter(cell, row){
+                var nfObject = new Intl.NumberFormat('en-US')
+                 var x = row.ProposedAmount;
+                 console.log(nfObject.format(x))
+                 return(
+                   <p>{nfObject.format(x)}</p>
+                 )
+               }
         },
         {
             dataField: "accepted_amount",

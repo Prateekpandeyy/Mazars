@@ -35,7 +35,7 @@ function ProposalDetails({
 
   const { tlname, date_of_allocation } = diaplayHistory;
 
-  
+  var nfObject = new Intl.NumberFormat('en-US')
 
 
   //installment
@@ -233,7 +233,7 @@ function ProposalDetails({
             </tr>
             <tr>
               <th scope="row">Proposed Amount</th>
-              <td>{amount}</td>
+              <td>{nfObject.format(amount)}</td>
             </tr>
             <tr>
               <th scope="row">Proposal Status</th>
@@ -245,7 +245,7 @@ function ProposalDetails({
             </tr>
             <tr>
               <th scope="row">Amount Accepted</th>
-              <td>{accepted_amount}</td>
+              <td>{nfObject.format(accepted_amount)}</td>
             </tr>
             <tr>
               <th scope="row">Date of Acceptance / Decline</th>
@@ -266,8 +266,8 @@ function ProposalDetails({
                    {pay.is_paid == "0" ? <td></td> : 
                    <td>{CommonServices.removeTime(pay.payment_date)}</td>}
                   
-                    <td>{pay.payable_amount}</td>
-                    <td>{pay.tds_amount}</td>
+                    <td>{nfObject.format(pay.payable_amount)}</td>
+                    <td>{nfObject.format(pay.tds_amount)}</td>
                     <td>
                     <a href={`${baseUrl3}/${pay.invoice}`} target="_blank"> <span title="View Invoice">
                     <DescriptionOutlinedIcon color="secondary" />
@@ -289,7 +289,7 @@ function ProposalDetails({
             </tr>
             <tr>
               <th scope="row">Payment Received</th>
-              <td>{payment_received}</td>
+              <td>{nfObject.format(payment_received)}</td>
             </tr>
             <tr>
               <th scope="row">Payment Due</th>
@@ -297,7 +297,7 @@ function ProposalDetails({
             </tr>
             <tr>
               <th scope="row">Payment Outstanding</th>
-              <td>{accepted_amount - payment_received}</td>
+              <td>{nfObject.format(accepted_amount - payment_received)}</td>
             </tr>
             <tr>
               <th scope="row">Payment declined reason</th>

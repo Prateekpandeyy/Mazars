@@ -22,7 +22,8 @@ import ShowError from "../../components/LoadingTime/LoadingTime";
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import PublishIcon from '@material-ui/icons/Publish';
-
+import Box from '@material-ui/core/Box';
+import CircularProgress from '@material-ui/core/CircularProgress';
 function AddFreshAssingment(props) {
   const alert = useAlert();
   const history = useHistory();
@@ -48,7 +49,7 @@ function AddFreshAssingment(props) {
 
   const [loading, setLoading] = useState(false);
   const [selectError, setSelectError] = useState()
-
+  const [uploadOrDownloadCount, setUploadOrDownloadCount] = useState(10);
 
   const remError = () => {
     setCheckerror("")
@@ -94,8 +95,20 @@ function AddFreshAssingment(props) {
 
     else {
       setLoading(true);
-      let formData = new FormData();
       var uploadImg = value.uploadImg;
+      if(uploadImg === undefined){
+        uploadImg = 0;
+      }
+      let t = 100 * uploadImg.length;
+      const timer = setInterval(() => {
+    
+        setUploadOrDownloadCount(
+          (beforeValue) => (beforeValue >= 90 ? 90 
+                            : beforeValue + 10 ));
+      }, t);
+  
+      let formData = new FormData();
+     
       if (uploadImg) {
         for (var i = 0; i < uploadImg.length; i++) {
           let file = uploadImg[i];
@@ -130,6 +143,8 @@ function AddFreshAssingment(props) {
         .then(function (response) {
        
           if (response.data.code === 1) {
+            setUploadOrDownloadCount(100)
+            clearInterval(timer)
             reset();
             var message = response.data.message
             var query_no = response.data.query_no
@@ -201,65 +216,11 @@ function AddFreshAssingment(props) {
 
                   <CKEditor
                      editor={ ClassicEditor }
-                     config = {{
-                      
-                      highlight: {
-                        options: [
-                            {
-                                model: 'greenMarker',
-                                class: 'marker-green',
-                                title: 'Green marker',
-                                color: 'var(--ck-highlight-marker-green)',
-                                type: 'marker'
-                            },
-                            {
-                                model: 'redPen',
-                                class: 'pen-red',
-                                title: 'Red pen',
-                                color: 'var(--ck-highlight-pen-red)',
-                                type: 'pen'
-                            }
-                        ]
-                    },
-                      fontFamily: {
-                        options: [
-                            'default',
-                            'Ubuntu, Arial, sans-serif',
-                            'Ubuntu Mono, Courier New, Courier, monospace'
-                        ]
-                    },
-                    fontColor: {
-                      colors: [
-                          {
-                              color: 'hsl(0, 0%, 0%)',
-                              label: 'Black'
-                          },
-                          {
-                              color: 'hsl(0, 0%, 30%)',
-                              label: 'Dim grey'
-                          },
-                          {
-                              color: 'hsl(0, 0%, 60%)',
-                              label: 'Grey'
-                          },
-                          {
-                              color: 'hsl(0, 0%, 90%)',
-                              label: 'Light grey'
-                          },
-                          {
-                              color: 'hsl(0, 0%, 100%)',
-                              label: 'White',
-                              hasBorder: true
-                          },
-
-                          // ...
-                      ]
-                  },
-                    toolbar: [
-                   ' highlight', 'heading',  'bold', 'fontColor', 'italic',  'bulletedList', 'numberedList', 'undo', 'redo'
-                    ],
-                  
-                    }}
+                  //    config = {{
+                  //   toolbar: [
+                  //  ' highlight', 'heading',  'bold', 'fontColor', 'italic',  'bulletedList', 'numberedList', 'undo', 'redo'
+                  //   ],
+                  //   }}
                     
                     className={classNames("form-control", {
                       "is-invalid": errors.p_fact,
@@ -451,7 +412,23 @@ function AddFreshAssingment(props) {
                  
                   {
                       loading ?
-                        <Spinner color="primary" />
+                   
+                        <Box position="relative" display="inline-flex">
+        <CircularProgress variant="determinate" 
+                          value={uploadOrDownloadCount} />
+        <Box
+          bottom={0}
+          right={0}
+          top={0}
+          justifyContent="center"
+          left={0}
+          display="flex"
+          alignItems="center"
+          position="absolute"
+        >
+          {`${Math.round(uploadOrDownloadCount)}%`}
+        </Box>
+      </Box>
                         :
                         <button className="btn btn-success" type="submit">
                          Submit

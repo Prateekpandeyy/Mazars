@@ -38,7 +38,7 @@ function RecordingModal({
         }
                 const { fileList } = serverResponse
               
-        
+        let formData2 = new FormData();
                 let formData = new FormData();
                 formData.append("uid", JSON.parse(userId));
                 formData.append("fileList", completeRecording);
@@ -50,6 +50,7 @@ function RecordingModal({
         
         
 
+axios.get(`${baseUrl}/tl/freeslottime?schedule_id=${id}&&uid=${JSON.parse(userId)}`)
 
         axios({
             method: "POST",
