@@ -113,7 +113,9 @@ function EditTP() {
    
     axios.get(`${baseUrl}/tp/getTaxProfessional`).then((res) => {
       if (res.data.code === 1) {
-      
+        setValue(res.data.result[0]);
+        setStore(res.data.result[0].pcat_id);
+        setShowDel(res.data.result[0].isdelete)
       }
       else {
         
