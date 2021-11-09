@@ -51,7 +51,6 @@ function ProposalDetails({
     return dataItem;
   }
 
-
   // curent date
   var date = new Date();
   function convert(str) {
@@ -132,6 +131,8 @@ function ProposalDetails({
               <th scope="row">Date of Allocation</th>
               <td>{CommonServices.changeFormateDate(date_of_allocation)}</td>
             </tr>
+            
+            
             <tr>
               <th scope="row">Name of Team Leader</th>
               <td>{accept == 0 ? "" : tlName2}</td>

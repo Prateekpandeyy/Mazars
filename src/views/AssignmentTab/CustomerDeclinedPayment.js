@@ -138,10 +138,46 @@ function CustomerDeclinedPayment() {
         {
             dataField: "status",
             text: "Status",
-            headerStyle: () => {
-                return { fontSize: "12px" };
+            style: {
+              fontSize: "11px",
             },
-        },
+            headerStyle: () => {
+              return { fontSize: "12px", width: "200px" };
+            },
+            formatter: function (cell, row) {
+              return (
+                <>
+                  <div>
+                    {row.paid_status == "2" &&
+                      <p>
+                        <span style={{ color: "red" }}>Payment Declined</span>
+                      </p>
+                    }
+                    <p>
+                      <span style={{ fontWeight: "bold" }}>Client Discussion :</span>
+                      {row.client_discussion}
+                    </p>
+                    <p>
+                      <span style={{ fontWeight: "bold" }}>Draft Report :</span>
+                      {row.draft_report}
+                    </p>
+                    <p>
+                      <span style={{ fontWeight: "bold" }}>Final Discussion :</span>
+                      {row.final_discussion}
+                    </p>
+                    <p>
+                      <span style={{ fontWeight: "bold" }}>Delivery of Final Report :</span>
+                      {row.delivery_report}
+                    </p>
+                    <p>
+                      <span style={{ fontWeight: "bold" }}>Awaiting Completion :</span>
+                      {row.other_stage}
+                    </p>
+                  </div>
+                </>
+              );
+            },
+          },
         {
             dataField: "Exp_Delivery_Date",
             text: "Expected date of delivery",

@@ -76,7 +76,11 @@ function MyAssingment() {
           var purposeItem = res.data.result[0].purpose_opinion;
           var assementItem = res.data.result[0].assessment_year;
 
-       
+          setDisplayHistory({
+          tlname: res.data.proposal_queries,
+            date_of_allocation:
+              res.data.history_queries[0].date_of_allocation,
+          });
           try {
             var myPurpose = JSON.parse(purposeItem);
             var myYear = JSON.parse(assementItem);
@@ -105,11 +109,7 @@ function MyAssingment() {
               accept : res.data.result[0].accept
             
             });
-            setDisplayHistory({
-              tlname: res.data.proposal_queries[0].tlname,
-              date_of_allocation:
-                res.data.history_queries[0].date_of_allocation,
-            });
+            
           }
 
           if (res.data.assignment.length > 0) {

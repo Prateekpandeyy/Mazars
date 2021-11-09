@@ -4,7 +4,8 @@ import { ImageUrl } from "../../config/config";
 import { Markup } from 'interweave';
 
 
-function BasicQuery({ p, diaplaySpecific, queryDocs, year, purpose }) {
+function BasicQuery({ p, diaplaySpecific, queryDocs, year, purpose, declined2,
+  declinedStatus }) {
 //   function htmlDecode(html) {
 //     var parser = new DOMParser;
 //     var dom = parser.parseFromString(
@@ -121,6 +122,11 @@ function BasicQuery({ p, diaplaySpecific, queryDocs, year, purpose }) {
               <th scope="row">Timelines within which Opinion is Required</th>
               <td colspan="1">{p.Timelines}</td>
             </tr>
+            {declinedStatus === true ? 
+            <tr>
+              <th scope="row">Date of Declined</th>
+              <td>{declined2}</td>
+              </tr> : ""}
             {
               p.query_status == "-1" ?
                 <tr>

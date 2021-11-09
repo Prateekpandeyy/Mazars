@@ -507,7 +507,7 @@ const checktlPost = (e) => {
     .then(function (response) {
       
       if (response.data.code === 1) {
-        Swal.fire("Taxprofessional has been deleted successfully");
+        Swal.fire("Teamleader has been deleted successfully");
         history.goBack();
         getTeamLeader();
       } else {

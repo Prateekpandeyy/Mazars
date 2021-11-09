@@ -179,7 +179,7 @@ const sgstFun = (e) => {
   let cget1 = parseInt(Math.round(a * cgetRate / 100))
   let sget1 = parseInt(Math.round(a * sgetRate / 100))
   let iget1 = parseInt(Math.round(a * igetRate / 100))
-  let tdsamount = parseInt(Math.round(a * tdsRate / 100))
+  let tdsamount = parseInt(Math.round(a * tdsR / 100))
     setCgstTotal(Math.round(a * cgetRate / 100));
    setSgstTotal(Math.round(a * sgetRate / 100));
    setIgstTotal(Math.round(a * igetRate / 100));
@@ -203,7 +203,7 @@ const sgstFun = (e) => {
 const basicFun = (e) => {
  
   let a = Math.round(parseInt(e.target.value) + parseInt(pocketExp));
-  let tdsamount = parseInt(Math.round(a * tdsRate / 100))
+  let tdsamount = parseInt(Math.round(a * tdsR / 100))
   setBasicAmount(e.target.value);
   if(e.target.value > 0){
     setCgstTotal(Math.round(a * cgetRate / 100));
