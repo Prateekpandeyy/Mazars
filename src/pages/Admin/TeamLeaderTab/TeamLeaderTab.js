@@ -147,6 +147,7 @@ function TeamLeaderTab() {
          digit = JSON.parse(row.allcat_id);
 
 // digit = row.allcat_id;
+console.log(digit.direct)
         return (
           <>
             <p style={{ "color": "blue", "diplay": "block" }}>{digit.direct + ","} </p>

@@ -105,35 +105,9 @@ function EditTP() {
   }))
 
 
-  useEffect(() => {
-    getTeamLeader();
-  }, [id]);
-
-  useEffect(() => {
-   
-    axios.get(`${baseUrl}/tp/getTaxProfessional`).then((res) => {
-      if (res.data.code === 1) {
-        setValue(res.data.result[0]);
-        setStore(res.data.result[0].pcat_id);
-        setShowDel(res.data.result[0].isdelete)
-      }
-      else {
-        
-      }
-    })
-  }, [])
-  const getTeamLeader = () => {
-   
-    axios.get(`${baseUrl}/tl/getTeamLeader?id=${id}`).then((res) => {
-     
-      if (res.data.code === 1) {
-        setValue(res.data.result[0]);
-        setStore(res.data.result[0].pcat_id);
-        setShowDel(res.data.result[0].isdelete)
-      }
-    });
-  };
  
+
+  
   var data1 = value.name;
   var data2 = value.personal_email;
   var data3 = value.phone;
@@ -164,7 +138,7 @@ function EditTP() {
   }, [id]);
 
   const getTutorial = (id) => {
-    TaxProffesionalService.get(id)
+   axios.get(`${baseUrl}/tp/getTaxProfessional?id=${id}`)
       .then((res) => {
        
         if (res.data.code === 1) {
@@ -189,18 +163,6 @@ function EditTP() {
     getSubCategory();
   }, [store]);
 
-  useEffect(() => {
-    const getTeamLeader = () => {
-      axios.get(`${baseUrl}/tl/getTeamLeader`).then((res) => {
-        console.log(res.data.result[0].isdelete)
-        if (res.data.code === 1) {
-          setTeamLeader(res.data.result);
-          
-        }
-      });
-    };
-    getTeamLeader();
-  }, []);
 
   const onFinish = (value) => {
 
@@ -508,9 +470,8 @@ function EditTP() {
      .then(function (response) {
        
        if (response.data.code === 1) {
-         Swal.fire("Teamleader has been deleted successfully");
+         Swal.fire("Taxprofessional has been deleted successfully");
          history.goBack();
-         getTeamLeader();
        } else {
          Swal.fire("Oops...", "Errorr ", "error");
          history.goBack();

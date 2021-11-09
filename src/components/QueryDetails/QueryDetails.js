@@ -34,7 +34,9 @@ function QueryDetails({
   submitData,
   accept,
   tlName2,
-  tp22
+  tp22,
+  declined2,
+  declinedStatus
 }) {
  
 
@@ -123,6 +125,8 @@ function QueryDetails({
                     accept={accept}
                     tlName2={tlName2}
                     tp22 = {tp22}
+                    declined2={declined2}
+                    declinedStatus={declinedStatus}
                   />
                 </Card>
               </Col>

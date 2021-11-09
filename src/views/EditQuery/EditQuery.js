@@ -132,21 +132,42 @@ function EditQuery(props) {
       setCheckerror("Please select at least one.")
     }
     else {
+      // const timer = setInterval(() => {
+      //   setUploadOrDownloadCount(
+      //     (beforeValue) => (beforeValue >= 90 ? 90 
+      //                       : beforeValue + 10));
+      // }, 800);
+      // setLoading(true)
+      // let formData = new FormData();
+
+      // var uploadImg = value.upload;
+      // if (uploadImg) {
+      //   for (var i = 0; i < uploadImg.length; i++) {
+
+
+      //     let a = value.upload[i].pics[0];
+      //     formData.append("upload_1[]", a);
+      //   }
+      // }
+      setLoading(true);
+      var uploadImg = value.uploadImg;
+      if(uploadImg === undefined){
+        uploadImg = 0;
+      }
+      let t = 100 * uploadImg.length;
       const timer = setInterval(() => {
+    
         setUploadOrDownloadCount(
           (beforeValue) => (beforeValue >= 90 ? 90 
-                            : beforeValue + 10));
-      }, 800);
-      setLoading(true)
+                            : beforeValue + 10 ));
+      }, t);
+  
       let formData = new FormData();
-
-      var uploadImg = value.upload;
+     
       if (uploadImg) {
         for (var i = 0; i < uploadImg.length; i++) {
-
-
-          let a = value.upload[i].pics[0];
-          formData.append("upload_1[]", a);
+          let file = uploadImg[i];
+          formData.append("upload_1[]", file);
         }
       }
       formData.append("fact", value2);

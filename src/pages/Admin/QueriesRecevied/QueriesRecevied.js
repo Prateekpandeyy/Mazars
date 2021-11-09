@@ -37,6 +37,8 @@ function QueriesRecevied(props) {
   const [accept, setAccept] = useState();
   const [tlName2, setTlname] = useState();
   const[tp22, setTp22] = useState();
+  const [declined2, setDeclined2] = useState();
+  const [declinedStatus, setDeclinedStatus] = useState(false)
   const [diaplayProposal, setDisplayProposal] = useState({
     amount: "",
     accepted_amount: "",
@@ -77,6 +79,12 @@ function QueriesRecevied(props) {
           setAccept(res.data.result[0].accept)
           setTlname(res.data.result[0].tlname);
           setTp22(res.data.result[0].tpname);
+         if(res.data.result[0].status =="Declined Query"){
+           console.log(res.data.result[0].declined_date.split(" ")[0].split("-").reverse().join("-"))
+         let a = res.data.result[0].declined_date.split(" ")[0].split("-").reverse().join("-")
+           setDeclined2(a)
+          setDeclinedStatus(true)
+         }
           if (res.data.result) {
             if (res.data.result[0].name == null) {
              
@@ -238,6 +246,8 @@ function QueriesRecevied(props) {
                 accept = {accept}
                 tlName2={tlName2}
                 tp22 = {tp22}
+                declined2={declined2}
+                declinedStatus={declinedStatus}
               />
             ))}
           </div>

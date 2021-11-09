@@ -146,7 +146,6 @@ const options = {
   transition: transitions.SCALE,
 };
 
-
 function App() {
   return (
     <div>

@@ -421,7 +421,7 @@ const closeFun = () => {
           :
           <>
             <Paper>
-              <Scheduler data={data} height={535}>
+            <Scheduler data={data} height={570}>
                 <ViewState
                   defaultCurrentDate={currentDate}
                   defaultCurrentViewName="Week"
