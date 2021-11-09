@@ -61,20 +61,21 @@ function QueriesRecevied() {
       axios.get(`${baseUrl}/tl/getQueryDetails?id=${id}`).then((res) => {
 
         if (res.data.code === 1) {
+          setAccept(res.data.result[0].query_status)
+          setTlname(res.data.result[0].tlname);
+          setTp22(res.data.result[0].tpname);
           setDisplayHistory({
             tlname: res.data.proposal_queries,
             date_of_allocation:
               res.data.history_queries[0].date_of_allocation,
           });
-          setTlname(res.data.result[0].tlname);
-          setTp22(res.data.result[0].tpname);
           setSubmitData(res.data.result);
           setDisplaySpecific(res.data.additional_queries);
           setPaymentDetails(res.data.payment_detail);
           setAssingmentNo(res.data.result[0].assign_no);
           setFeedback(res.data.feedback_detail);
           setReports(res.data.reports);
-          setAccept(res.data.result[0].accept)
+
 
           var purposeItem = res.data.result[0].purpose_opinion;
           var assementItem = res.data.result[0].assessment_year;

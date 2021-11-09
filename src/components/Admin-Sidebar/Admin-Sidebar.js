@@ -45,7 +45,7 @@ useEffect(() => {
 }, [adminDashboard])
 const getFeedback2 = () => {
   if(adminDashboard != undefined){
-    axios.get(`${baseUrl}/customers/getFeedback?uid=${JSON.parse(adminkey)}&&type=total`).then((res) => {
+    axios.get(`${baseUrl}/admin/getFeedback?uid=${JSON.parse(adminkey)}&&type=total`).then((res) => {
 
       if (res.data.code === 1) {
        

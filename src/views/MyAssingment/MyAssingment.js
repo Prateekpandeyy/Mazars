@@ -63,26 +63,33 @@ function MyAssingment() {
       axios.get(`${baseUrl}/customers/getQueryDetails?id=${id}`).then((res) => {
 
         if (res.data.code === 1) {
+          setAccept(res.data.result[0].query_status)
+          setTlname(res.data.result[0].tlname);
+          setTp22(res.data.result[0].tpname);
+          if(res.data.history_queries[0] === undefined){
+           
+          }
+          else{
+            setDisplayHistory({
+              tlname: res.data.proposal_queries,
+              date_of_allocation:
+                res.data.history_queries[0].date_of_allocation,
+            });
+          }
+         
           setSubmitData(res.data.result);
           setDisplaySpecific(res.data.additional_queries);
           setPaymentDetails(res.data.payment_detail);
           setAssingmentNo(res.data.result[0].assign_no);
           setFeedback(res.data.feedback_detail);
           setReports(res.data.reports);
-         // console.log("done22", res.data.result[0].accept)
-          setAccept(res.data.result[0].accept)
-          setTlname(res.data.result[0].tlname);
-          setTp22(res.data.result[0].tpname);
+    
+         
+       
           var purposeItem = res.data.result[0].purpose_opinion;
           var assementItem = res.data.result[0].assessment_year;
 
-          if(res.data.result[0].accept == "1"){
-            setDisplayHistory({
-              tlname: res.data.proposal_queries,
-                date_of_allocation:
-                  res.data.history_queries[0].date_of_allocation,
-              });
-          }
+          
           try {
             var myPurpose = JSON.parse(purposeItem);
             var myYear = JSON.parse(assementItem);

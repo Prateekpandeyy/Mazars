@@ -76,7 +76,7 @@ function QueriesRecevied(props) {
       axios.get(`${baseUrl}/tl/getQueryDetails?id=${id}`).then((res) => {
        
         if (res.data.code === 1) {
-          setAccept(res.data.result[0].accept)
+          setAccept(res.data.result[0].query_status)
           setTlname(res.data.result[0].tlname);
           setTp22(res.data.result[0].tpname);
           setDisplayHistory({

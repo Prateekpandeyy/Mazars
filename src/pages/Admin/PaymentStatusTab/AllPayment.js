@@ -59,10 +59,13 @@ function AllPayment() {
 
     const [modal, setModal] = useState(false);
     const toggle = (key) => {
-      
+    
         setModal(!modal);
+        if(typeof(key) == "object"){
 
-        fetch(`${baseUrl}//admin/getPaymentDetail?id=${key}`, {
+        }
+       else{
+        fetch(`${baseUrl}//admin/getPaymentDetail?id=${key}&&status=1`, {
             method: "GET",
             headers: new Headers({
                 Accept: "application/vnd.github.cloak-preview",
@@ -74,6 +77,7 @@ function AllPayment() {
                 setPay(response.payment_detail);
             })
             .catch((error) => console.log(error));
+       }
     };
 
     const columns = [
@@ -374,14 +378,15 @@ function AllPayment() {
                     />
 
                     <Modal isOpen={modal} fade={false} toggle={toggle}>
-                        <ModalHeader toggle={toggle}>History</ModalHeader>
+                        <ModalHeader toggle={toggle}>Payment History</ModalHeader>
                         <ModalBody>
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
                                         <th scope="row">S.No</th>
-                                        <th scope="row">Date</th>
+                                        <th scope="row">Date of Payment</th>
                                         <th scope="row">Amount</th>
+                                        <th scope="row">Payment Receipt</th>
                                     </tr>
                                 </thead>
                                 {pay.length > 0
@@ -391,6 +396,7 @@ function AllPayment() {
                                                 <td>{i + 1}</td>
                                                 <td>{CommonServices.removeTime(p.payment_date)}</td>
                                                 <td>{p.paid_amount}</td>
+                                                <td><a href={p.receipt_url}>Payment Receipt</a></td>
                                             </tr>
                                         </tbody>
                                     ))
