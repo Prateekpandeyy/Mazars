@@ -125,7 +125,7 @@ function TeamLeaderTab() {
               digit2.map((e) => {
                 return (
                   <>
-                    <p className={e.includes("Indirect") === true ? "dirCla" : "indirCla"}> {e + ","}</p>
+                    <p className={e.includes("Indirect") === true ? "dirCla" : "indirCla"}> {e}</p>
                   </>
                 )
               })
@@ -145,13 +145,26 @@ function TeamLeaderTab() {
         var digit = [];
 
          digit = JSON.parse(row.allcat_id);
+let k, pp;
 
-// digit = row.allcat_id;
-console.log(digit.direct)
+if(digit.direct.length -1 == "1"){
+  k = ", ";
+}
+else{
+  k = "";
+}
+if(digit.indirect.length -1 == "1"){
+  pp = ", ";
+}
+else{
+  pp = "";
+}
         return (
           <>
-            <p style={{ "color": "blue", "diplay": "block" }}>{digit.direct + ","} </p>
-            <p style={{ "color": "green", "display": "block" }}>{digit.indirect + ","}</p>
+           {digit.direct.length == "0" ? "" : 
+            <p style={{ "color": "blue", "diplay": "block" }}>{digit.direct + k} </p> }
+           {digit.indirect.length == "0" ? "" :
+            <p style={{ "color": "green", "display": "block" }}>{digit.indirect + pp}</p>}
           </>
 
         )

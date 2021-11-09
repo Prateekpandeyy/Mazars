@@ -10,9 +10,7 @@ function ProposalDetails({
   p,
   accept,
   tlName2,
-  tp22,
-  declined2,
-  declinedStatus
+  tp22
 }) {
 
   const {
@@ -52,7 +50,6 @@ function ProposalDetails({
     ))
     return dataItem;
   }
-console.log(declined2, declinedStatus)
 
   // curent date
   var date = new Date();
@@ -134,11 +131,7 @@ console.log(declined2, declinedStatus)
               <th scope="row">Date of Allocation</th>
               <td>{CommonServices.changeFormateDate(date_of_allocation)}</td>
             </tr>
-            {declinedStatus === true ? 
-            <tr>
-              <th scope="row">Date of Declined</th>
-              <td>{declined2}</td>
-              </tr> : ""}
+            
             
             <tr>
               <th scope="row">Name of Team Leader</th>

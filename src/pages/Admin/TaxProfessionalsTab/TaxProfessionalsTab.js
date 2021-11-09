@@ -154,7 +154,7 @@ function TaxProfessionalsTab() {
              digit2.map((e) => {
              return(
                <>
-            <p className= {e.includes("Indirect") === true ? "dirCla" : "indirCla"}> {e + ","}</p>  
+            <p className= {e.includes("Indirect") === true ? "dirCla" : "indirCla"}> {e}</p>  
                </>
              ) 
            })
@@ -177,7 +177,13 @@ function TaxProfessionalsTab() {
         var digit = [];
          
         digit = row.allcat_id.split(",")
-      
+      let kk;
+      if(digit.length > 1){
+        kk = ","
+      }
+      else{
+        kk = ""
+      }
       
         return(
           <>
@@ -186,7 +192,7 @@ function TaxProfessionalsTab() {
             digit.map((e) => {
             return(
               <>
-             <p className= {row.allpcat_id.includes("Indirect") === true ? "dirCla" : "indirCla"}> {e + ","}</p>  
+             <p className= {row.allpcat_id.includes("Indirect") === true ? "dirCla" : "indirCla"}> {e + kk}</p>  
               </>
             ) 
           })
