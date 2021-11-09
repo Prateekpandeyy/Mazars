@@ -46,14 +46,28 @@ const PayModal = (props) => {
        
     }
     const inVal = (e) => {
+       if(e.target.value > 100){
+setTdsRate(100)
+let tdAmount = parseInt((parseInt(props.modalData.paid_amount) + parseInt(props.modalData.opt_expenses)))
+      
+      
+let a = parseInt(props.modalData.cgst_amount) + parseInt(props.modalData.sgst_amount) + parseInt(props.modalData.igst_amount)
+setTdsAmount(Number((e.target.value * tdAmount) / 100).toFixed(0))
+let b = Number((100 * tdAmount) / 100).toFixed(0)
+
+setpayValue(parseInt(props.modalData.invoice_amount) - parseInt(b))
+       }
+       else{
+        setTdsRate(e.target.value)
         let tdAmount = parseInt((parseInt(props.modalData.paid_amount) + parseInt(props.modalData.opt_expenses)))
       
-        setTdsRate(e.target.value)
+      
         let a = parseInt(props.modalData.cgst_amount) + parseInt(props.modalData.sgst_amount) + parseInt(props.modalData.igst_amount)
 setTdsAmount(Number((e.target.value * tdAmount) / 100).toFixed(0))
 let b = Number((e.target.value * tdAmount) / 100).toFixed(0)
 
 setpayValue(parseInt(props.modalData.invoice_amount) - parseInt(b))
+       }
     }
 return(
     <Modal isOpen={props.showModal} toggle={props.modalToggle} size="sm" style={{display : "flxe", maxWidth : "600px"}}>
@@ -72,7 +86,7 @@ return(
 </tr>
 <tr>
     <td>TDS</td>
-    <td style={{display :"flex"}}><input type="text"  style={{display : "flex", width: "50px"}} defaultValue={props.modalData.tds_rate} onChange= {(val) => inVal(val)}/> % </td>
+    <td style={{display :"flex"}}><input type="text"  style={{display : "flex", width: "50px"}} value={tdsRate} onChange= {(val) => inVal(val)}/> % </td>
     <td>{tdsAmount}</td>
 </tr>
 <tr>

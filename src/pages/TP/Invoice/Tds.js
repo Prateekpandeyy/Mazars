@@ -353,6 +353,7 @@ setServices2(k.service)
                     className="form-control"
                     placeholder="Amount" 
                     onChange= {(e) => basicFun(e)}
+                    disabled
                   value={basicAmount}/>
                     </div> 
             </div>

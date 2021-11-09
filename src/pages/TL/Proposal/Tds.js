@@ -358,6 +358,7 @@ setServices2(k.service)
                     ref={register({required : true})}
                     className="form-control"
                     placeholder="Amount" 
+                    disabled
                     onChange= {(e) => basicFun(e)}
                   value={basicAmount}/>
                     </div> 
