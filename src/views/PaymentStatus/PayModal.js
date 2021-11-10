@@ -52,7 +52,7 @@ let tdAmount = parseInt((parseInt(props.modalData.paid_amount) + parseInt(props.
       
       
 let a = parseInt(props.modalData.cgst_amount) + parseInt(props.modalData.sgst_amount) + parseInt(props.modalData.igst_amount)
-setTdsAmount(Number((e.target.value * tdAmount) / 100).toFixed(0))
+setTdsAmount(Number((100 * tdAmount) / 100).toFixed(0))
 let b = Number((100 * tdAmount) / 100).toFixed(0)
 
 setpayValue(parseInt(props.modalData.invoice_amount) - parseInt(b))

@@ -114,7 +114,7 @@ const cgstFun = (e) => {
   if(e.target.value > 100){
     setCgetRate(100);
     let a = parseInt(basicAmount) + parseInt(pocketExp);
-     let cget = Math.round(a * 10 / 100)
+     let cget = Math.round(a * 100 / 100)
      setCgstTotal(parseInt(cget));
      setGst(parseInt(Math.round(cget) + Math.round(igetTotal) + Math.round(sgetTotal)))
      setTotal(parseInt(cget + igetTotal + sgetTotal + a))

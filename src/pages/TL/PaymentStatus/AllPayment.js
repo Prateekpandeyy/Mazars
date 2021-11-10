@@ -468,7 +468,7 @@ rowStyle2 = (row, index) => {
                                                 <td>{i + 1}</td>
                                                 <td>{CommonServices.removeTime(p.payment_date)}</td>
                                                 <td>{p.paid_amount}</td>
-                                                <td><a href={p.receipt_url}>Payment Receipt</a></td>
+                                                <td><a href={p.receipt_url} target="_blank">Payment Receipt</a></td>
                                             </tr>
                                         </tbody>
                                     ))

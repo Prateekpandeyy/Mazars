@@ -79,11 +79,17 @@ function QueriesRecevied(props) {
           setAccept(res.data.result[0].query_status)
           setTlname(res.data.result[0].tlname);
           setTp22(res.data.result[0].tpname);
-          setDisplayHistory({
-            tlname: res.data.proposal_queries,
-            date_of_allocation:
-              res.data.history_queries[0].date_of_allocation,
-          });
+          if(res.data.history_queries[0] === undefined){
+
+          }
+          else{
+            setDisplayHistory({
+              tlname: res.data.proposal_queries,
+              date_of_allocation:
+                res.data.history_queries[0].date_of_allocation,
+            });
+          }
+         
          if(res.data.result[0].status =="Declined Query"){
            console.log(res.data.result[0].declined_date.split(" ")[0].split("-").reverse().join("-"))
          let a = res.data.result[0].declined_date.split(" ")[0].split("-").reverse().join("-")
