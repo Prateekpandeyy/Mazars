@@ -10,6 +10,7 @@ function ProposalDetails({
   p,
   accept,
   tlName2,
+  tpStatus,
   tp22
 }) {
 
@@ -139,7 +140,7 @@ function ProposalDetails({
             </tr>
             <tr>
               <th scope="row">Name of Tax Professional(s)</th>
-              <td>{tp22}</td>
+              <td>{tpStatus == "2" ? tp22 : ""}</td>
             </tr>
             <tr>
               <th scope="row">Date of Proposal</th>

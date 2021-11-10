@@ -15,7 +15,7 @@ import {
 } from "reactstrap";
 import classNames from "classnames";
 import QueryDetails from "../../../components/QueryDetails/QueryDetails";
-
+import moment from 'moment';
 function QueriesRecevied(props) {
  
 
@@ -37,8 +37,10 @@ function QueriesRecevied(props) {
   const [accept, setAccept] = useState();
   const [tlName2, setTlname] = useState();
   const[tp22, setTp22] = useState();
+  const [tpStatus, setTpstatus] = useState();
   const [declined2, setDeclined2] = useState();
   const [declinedStatus, setDeclinedStatus] = useState(false)
+  const [finalDate, setFinalDate] = useState()
   const [diaplayProposal, setDisplayProposal] = useState({
     amount: "",
     accepted_amount: "",
@@ -76,6 +78,9 @@ function QueriesRecevied(props) {
       axios.get(`${baseUrl}/tl/getQueryDetails?id=${id}`).then((res) => {
        
         if (res.data.code === 1) {
+          
+         
+          setTpstatus(res.data.result[0].tp_status);
           setAccept(res.data.result[0].query_status)
           setTlname(res.data.result[0].tlname);
           setTp22(res.data.result[0].tpname);
@@ -88,6 +93,12 @@ function QueriesRecevied(props) {
               date_of_allocation:
                 res.data.history_queries[0].date_of_allocation,
             });
+            let a = moment(res.data.result[0].final_date);
+            let b = moment(res.data.history_queries[0].acpt_reject_time)
+            let c = a.diff(b)
+            let d = moment.duration(c)
+            let finalDate = d.days() + 1;
+           setFinalDate(finalDate)
           }
          
          if(res.data.result[0].status =="Declined Query"){
@@ -254,8 +265,10 @@ function QueriesRecevied(props) {
                 accept = {accept}
                 tlName2={tlName2}
                 tp22 = {tp22}
+                tpStatus={tpStatus}
                 declined2={declined2}
                 declinedStatus={declinedStatus}
+                finalDate={finalDate}
               />
             ))}
           </div>

@@ -5,7 +5,7 @@ import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import { useParams, Link, useHistory } from "react-router-dom";
 import QueryDetails from "../../../components/QueryDetails/QueryDetails";
-
+import moment from 'moment';
 function QueriesRecevied() {
   const { id } = useParams();
   const history = useHistory();
@@ -23,7 +23,9 @@ function QueriesRecevied() {
   const [reports, setReports] = useState([]);
   const [tlName2, setTlname] = useState();
   const[tp22, setTp22] = useState();
+  const [tpStatus, setTpstatus] = useState();
   const [accept, setAccept] = useState();
+  const [finalDate, setFinalDate] = useState()
   const [diaplayProposal, setDisplayProposal] = useState({
     amount: "",
     accepted_amount: "",
@@ -61,14 +63,26 @@ function QueriesRecevied() {
       axios.get(`${baseUrl}/tl/getQueryDetails?id=${id}`).then((res) => {
 
         if (res.data.code === 1) {
+          setTpstatus(res.data.result[0].tp_status);
           setAccept(res.data.result[0].query_status)
           setTlname(res.data.result[0].tlname);
           setTp22(res.data.result[0].tpname);
-          setDisplayHistory({
-            tlname: res.data.proposal_queries,
-            date_of_allocation:
-              res.data.history_queries[0].date_of_allocation,
-          });
+          if(res.data.history_queries[0] === undefined){
+
+          }
+          else{
+            setDisplayHistory({
+              tlname: res.data.proposal_queries,
+              date_of_allocation:
+                res.data.history_queries[0].date_of_allocation,
+            });
+            let a = moment(res.data.result[0].final_date);
+            let b = moment(res.data.history_queries[0].acpt_reject_time)
+            let c = a.diff(b)
+            let d = moment.duration(c)
+            let finalDate = d.days() + 1;
+           setFinalDate(finalDate)
+          }
           setSubmitData(res.data.result);
           setDisplaySpecific(res.data.additional_queries);
           setPaymentDetails(res.data.payment_detail);
@@ -189,8 +203,10 @@ function QueriesRecevied() {
                 feedback={feedback}
                 reports={reports}
                 accept = {accept}
+                tpStatus={tpStatus}
                 tlName2={tlName2}
                 tp22 = {tp22}
+                finalDate={finalDate}
               />
             ))}
           </div>
