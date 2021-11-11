@@ -70,6 +70,8 @@ import adMeetingComponent from './pages/Admin/MeetingComponent/MeetingComponent'
 import Customer from "./pages/Admin/customer/Customer";
 import adminReport from "./pages/Admin/Report/Report";
 import AdminInvoice from "./pages/Admin/Invoice/Invoice";
+import AdpayDetails from "./pages/Admin/PaymentStatusTab/Paydetails";
+
 import LoginFun from "./components/LoginForm/LoginFun";
 //TL routes
 import TlStart from './pages/TL/Start/Start'
@@ -102,7 +104,7 @@ import TlRecording from './pages/TL/Recording/Recording'
 import TlReport from "./pages/TL/Report/Report";
 import TlInvoice from "./pages/TL/Proposal/Invoice"
 import TlInvoiceTab from "./pages/TL/Proposal/InvoiceTab";
-
+import TlpayDetails from "./pages/TL/PaymentStatus/Paydetails";
 // TP routes
 import TpStart from './pages/TP/Start/Start'
 import TpLogin from './pages/TP/Login/Login'
@@ -127,6 +129,7 @@ import TpViewNotification from './pages/TP/ViewNotification/ViewNotification'
 import TpRecording from './pages/TP/Recording/Recording'
 import TpReport from "./pages/TP/Report/Report";
 import TpInvoice from "./pages/TP/Invoice/Invoice.js";
+import TppayDetails from "./pages/TP/PaymentStatus/Paydetails";
 //private routes
 import PrivateRouteUser from './Service/PrivateRouteUser'
 import PrivateRouteAdmin from './Service/PrivateRouteAdmin'
@@ -213,6 +216,8 @@ function App() {
             <PrivateRouteAdmin exact path="/admin/customers" component={Customer} />
             <PrivateRouteAdmin exact path="/admin/reports" component={adminReport} />
             <PrivateRouteAdmin exact path= "/admin/adinvoice" component={AdminInvoice}/>
+            <PrivateRouteAdmin exact path="/admin/paydetails/:id" component={AdpayDetails} />
+
             <PublicRouteTL exact path="/teamleader/start" component={TlStart} />
             <PublicRouteTL exact path="/teamleader/login" component={TlLogin} />
             <PublicRouteTL exact path="/teamleader/forget-password" component={TlForgetPassword} />
@@ -245,7 +250,7 @@ function App() {
             <PrivateRouteTL exact path="/teamleader/reports" component={TlReport}/>
             <PrivateRouteTL exact path="/teamleader/invoice" component={TlInvoice}/>
             <PrivateRouteTL exact path="/teamleader/tlinvoice" component={TlInvoiceTab}/>
-
+            <PrivateRouteTL exact path="/teamleader/paydetails/:id" component={TlpayDetails} />
 
             <PublicRouteTP exact path="/taxprofessional/start" component={TpStart} />
             <PublicRouteTP exact path="/taxprofessional/login" component={TpLogin} />
@@ -271,6 +276,7 @@ function App() {
             <PrivateRouteTP exact path="/taxprofessional/recording" component={TpRecording} />
             <PrivateRouteTP exact path="/taxprofessional/reports" component={TpReport}/>
             <PrivateRouteTP exact path="/taxprofessional/tpinvoice" component={TpInvoice}/>
+            <PrivateRouteTP exact path="/taxprofessional/paydetails/:id" component={TppayDetails} />
             <Route exact path="/*" component={PageNotFound} />
 
           </Switch>

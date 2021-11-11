@@ -300,11 +300,23 @@ function AllPayment() {
 
 
                         <div style={{ cursor: "pointer" }} title="Payment History">
+                        <Link
+              to={{
+                pathname: `/admin/paydetails/${row.id}`,
+                obj: {
+                  message_type: "5",
+                  query_No: row.assign_no,
+                  query_id: row.id,
+                  routes: `/admin/paymentstatus`
+                }
+              }}
+            >
                             <i
                                 class="fa fa-credit-card"
                                 style={{ color: "green", fontSize: "16px" }}
-                                onClick={() => toggle(row.assign_id)}
+                                // onClick={() => toggle(row.assign_id)}
                             ></i>
+                            </Link>
                         </div>
 
 
