@@ -38,7 +38,8 @@ function QueryDetails({
   tpStatus,
   declined2,
   declinedStatus, 
-  finalDate
+  finalDate, 
+  qstatus
 }) {
  
 
@@ -111,6 +112,7 @@ function QueryDetails({
                     year={year}
                     declined2={declined2}
                     declinedStatus={declinedStatus}
+                    qstatus={qstatus}
                   />
                 </Card>
               </Col>

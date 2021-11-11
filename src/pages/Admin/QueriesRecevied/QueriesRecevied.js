@@ -41,6 +41,7 @@ function QueriesRecevied(props) {
   const [declined2, setDeclined2] = useState();
   const [declinedStatus, setDeclinedStatus] = useState(false)
   const [finalDate, setFinalDate] = useState()
+  const [qstatus, setqStatus] = useState();
   const [diaplayProposal, setDisplayProposal] = useState({
     amount: "",
     accepted_amount: "",
@@ -79,7 +80,7 @@ function QueriesRecevied(props) {
        
         if (res.data.code === 1) {
           
-         
+         setqStatus(res.data.result[0].query_status)
           setTpstatus(res.data.result[0].tp_status);
           setAccept(res.data.result[0].query_status)
           setTlname(res.data.result[0].tlname);
@@ -196,20 +197,25 @@ function QueriesRecevied(props) {
         }
       });
     };
-    getQuery();
+  //  getQuery();
     getSubmittedAssingment();
   }, [assingNo]);
 
-  const getQuery = () => {
-    axios
-      .get(`${baseUrl}/tl/GetAdditionalQueries?assignno=${assingNo}`)
-      .then((res) => {
-       
-        if (res.data.code === 1) {
-          setDisplayQuery(res.data.result);
-        }
-      });
-  };
+  // const getQuery = () => {
+  //  if(assingNo === undefined){
+  //    return false;
+  //  }
+  //  else{
+  //   axios
+  //   .get(`${baseUrl}/tl/GetAdditionalQueries?assignno=${assingNo}`)
+  //   .then((res) => {
+     
+  //     if (res.data.code === 1) {
+  //       setDisplayQuery(res.data.result);
+  //     }
+  //   });
+  //  }
+  // };
 
   return (
     <Layout adminDashboard="adminDashboard" adminUserId={userid}>
@@ -254,7 +260,7 @@ function QueriesRecevied(props) {
                 diaplayHistory={diaplayHistory}
                 diaplayAssignment={diaplayAssignment}
                 displayQuery={displayQuery}
-                getQuery={getQuery}
+                qstatus={qstatus}
                 assingNo={assingNo}
                 queryDocs={queryDocs}
                 paymentDetails={paymentDetails}

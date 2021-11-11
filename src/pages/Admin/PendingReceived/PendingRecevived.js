@@ -39,21 +39,26 @@ function PendingRecevied() {
     };
 
     getSubmittedAssingment();
-    getQuery();
+    // getQuery();
   }, [assingNo]);
 
  
 
-  const getQuery = () => {
-    axios
-      .get(`${baseUrl}/tl/GetAdditionalQueries?assignno=${assingNo}`)
-      .then((res) => {
-        
-        if (res.data.code === 1) {
-          setDisplayQuery(res.data.result);
-        }
-      });
-  };
+  // const getQuery = () => {
+  //  if(assingNo === undefined){
+  //    return false
+  //  }
+  //  else{
+  //   axios
+  //   .get(`${baseUrl}/tl/GetAdditionalQueries?assignno=${assingNo}`)
+  //   .then((res) => {
+      
+  //     if (res.data.code === 1) {
+  //       setDisplayQuery(res.data.result);
+  //     }
+  //   });
+  //  }
+  // };
 
      //change date format
      function ChangeFormateDate(oldDate) {

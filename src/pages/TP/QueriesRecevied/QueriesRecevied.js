@@ -26,6 +26,7 @@ function QueriesRecevied() {
   const [tpStatus, setTpstatus] = useState();
   const [accept, setAccept] = useState();
   const [finalDate, setFinalDate] = useState()
+  const [qstatus, setqStatus] = useState();
   const [diaplayProposal, setDisplayProposal] = useState({
     amount: "",
     accepted_amount: "",
@@ -63,6 +64,7 @@ function QueriesRecevied() {
       axios.get(`${baseUrl}/tl/getQueryDetails?id=${id}`).then((res) => {
 
         if (res.data.code === 1) {
+          setqStatus(res.data.result[0].query_status)
           setTpstatus(res.data.result[0].tp_status);
           setAccept(res.data.result[0].query_status)
           setTlname(res.data.result[0].tlname);
@@ -151,14 +153,19 @@ function QueriesRecevied() {
   }, [assingNo]);
 
   const getQuery = () => {
+  if(assingNo === undefined){
+    return false
+  }
+  else{
     axios
-      .get(`${baseUrl}/tp/GetAdditionalQueries?assignno=${assingNo}`)
-      .then((res) => {
-       
-        if (res.data.code === 1) {
-          setDisplayQuery(res.data.result);
-        }
-      });
+    .get(`${baseUrl}/tp/GetAdditionalQueries?assignno=${assingNo}`)
+    .then((res) => {
+     
+      if (res.data.code === 1) {
+        setDisplayQuery(res.data.result);
+      }
+    });
+  }
   };
 
   return (
@@ -207,6 +214,7 @@ function QueriesRecevied() {
                 tlName2={tlName2}
                 tp22 = {tp22}
                 finalDate={finalDate}
+                qstatus={qstatus}
               />
             ))}
           </div>

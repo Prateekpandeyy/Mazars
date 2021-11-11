@@ -4,7 +4,7 @@ import { ImageUrl } from "../../config/config";
 import { Markup } from 'interweave';
 import './queryStyle.css';
 
-function BasicQuery({ p, diaplaySpecific, queryDocs, year, purpose, declined2,
+function BasicQuery({qstatus, p, diaplaySpecific, queryDocs, year, purpose, declined2,
   declinedStatus }) {
 
 
@@ -119,7 +119,7 @@ function BasicQuery({ p, diaplaySpecific, queryDocs, year, purpose, declined2,
             {declinedStatus === true ? 
             <tr>
               <th scope="row">Date of Declined</th>
-              <td>{declined2}</td>
+              <td>{qstatus == "-1" ? declined2 : ""}</td>
               </tr> : ""}
             {
               p.query_status == "-1" ?

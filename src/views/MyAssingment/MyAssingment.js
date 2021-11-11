@@ -23,6 +23,7 @@ function MyAssingment() {
   const [reports, setReports] = useState([]);
   const [accept, setAccept] = useState();
   const [tlName2, setTlname] = useState();
+  const [qstatus, setqStatus] = useState();
   const[tp22, setTp22] = useState();
     const [diaplayProposal, setDisplayProposal] = useState({
     amount: "",
@@ -63,6 +64,7 @@ function MyAssingment() {
       axios.get(`${baseUrl}/customers/getQueryDetails?id=${id}`).then((res) => {
 
         if (res.data.code === 1) {
+          setqStatus(res.data.result[0].query_status)
           setAccept(res.data.result[0].query_status)
           setTlname(res.data.result[0].tlname);
           setTp22(res.data.result[0].tpname);
@@ -149,14 +151,19 @@ function MyAssingment() {
 
 
   const getQuery = () => {
+  if(assingNo === undefined){
+    return false
+  }
+  else{
     axios
-      .get(`${baseUrl}/tl/GetAdditionalQueries?assignno=${assingNo}`)
-      .then((res) => {
-    
-        if (res.data.code === 1) {
-          setDisplayQuery(res.data.result);
-        }
-      });
+    .get(`${baseUrl}/tl/GetAdditionalQueries?assignno=${assingNo}`)
+    .then((res) => {
+  
+      if (res.data.code === 1) {
+        setDisplayQuery(res.data.result);
+      }
+    });
+  }
   };
 
 
@@ -211,6 +218,7 @@ function MyAssingment() {
                 accept = {accept}
                 tlName2={tlName2}
                 tp22 = {tp22}
+                qstatus={qstatus}
               />
             ))}
           </div>
