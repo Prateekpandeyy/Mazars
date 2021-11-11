@@ -21,12 +21,14 @@ function DiscardReport({
   }, [report]);
 
   const getHistory = () => {
+   if(report != undefined && report.length > 0){
     axios.get(`${baseUrl}/tl/getMessage?id=${JSON.parse(userId)}&q_no=${report}`).then((res) => {
     
       if (res.data.code === 1) {
         setData(res.data.result);
       }
     });
+   }
   };
 
 

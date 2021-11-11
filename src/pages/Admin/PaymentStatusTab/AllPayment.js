@@ -65,7 +65,7 @@ function AllPayment() {
 
         }
        else{
-        fetch(`${baseUrl}//admin/getPaymentDetail?id=${key}&&status=1`, {
+        fetch(`${baseUrl}/admin/getPaymentDetail?id=${key}&&status=1`, {
             method: "GET",
             headers: new Headers({
                 Accept: "application/vnd.github.cloak-preview",

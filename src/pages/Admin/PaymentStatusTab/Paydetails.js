@@ -34,10 +34,10 @@ const PayDetails = () => {
     const [modalData, setModalData] = useState()
     const [showTable, setShowTable] = useState(null);
     const paydetails2 = () => {
-axios.get(`${baseUrl}/admin/getPaymentDetail?id=${id}`)
+axios.get(`${baseUrl}/admin/getPaymentDetail?id=${id}&&status=1`)
 .then((res) => {
     if(res.data.code === 1){
-       
+       console.log("res", res)
         setPaymentDetail(res.data.payment_detail)
         //console.log(res.data.payment_detail.length)
        // setShowTable(res.data.payment_detail[0].invoice_generated)
@@ -270,7 +270,7 @@ return(
          </Row>
           </CardHeader>
           <CardBody>
-   {showTable == true ? 
+  
   
   <BootstrapTable
   bootstrap4
@@ -278,10 +278,7 @@ return(
   data={paymentDetail}
   columns={columns}
   classes="table-responsive"
-/>  : 
-<Container>
-    <p>Invoice not generated</p>
-    </Container>}
+/> 
 
 </CardBody>
 </Card>}

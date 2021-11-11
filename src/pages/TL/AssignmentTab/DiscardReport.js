@@ -22,7 +22,7 @@ function DiscardReport({
   
   const getHistory = () => {
    
-  if(report != undefined && report.length != 0){
+  if(report != undefined && report.length > 0){
    
     axios.get(`${baseUrl}/tl/getMessage?id=${JSON.parse(userId)}&q_no=${report}`).then((res) => {
     

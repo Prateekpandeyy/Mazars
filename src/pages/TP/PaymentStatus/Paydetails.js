@@ -34,7 +34,7 @@ const PayDetails = () => {
     const [modalData, setModalData] = useState()
     const [showTable, setShowTable] = useState(null);
     const paydetails2 = () => {
-axios.get(`${baseUrl}/admin/getPaymentDetail?id=${id}`)
+axios.get(`${baseUrl}//admin/getPaymentDetail?id=${id}&&status=1`)
 .then((res) => {
     if(res.data.code === 1){
        
@@ -270,7 +270,6 @@ return(
          </Row>
           </CardHeader>
           <CardBody>
-   {showTable == true ? 
   
   <BootstrapTable
   bootstrap4
@@ -278,11 +277,7 @@ return(
   data={paymentDetail}
   columns={columns}
   classes="table-responsive"
-/>  : 
-<Container>
-    <p>Invoice not generated</p>
-    </Container>}
-
+/> 
 </CardBody>
 </Card>}
 </Layout>                  

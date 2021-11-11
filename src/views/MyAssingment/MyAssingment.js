@@ -4,7 +4,7 @@ import { Link, useParams, useHistory } from "react-router-dom";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
 import QueryDetails from "../../components/QueryDetails/QueryDetails";
-
+import moment from 'moment';
 function MyAssingment() {
   const { id } = useParams();
   const history = useHistory();
@@ -22,6 +22,7 @@ function MyAssingment() {
   const [feedback, setFeedback] = useState([]);
   const [reports, setReports] = useState([]);
   const [accept, setAccept] = useState();
+  const [finalDate, setFinalDate] = useState()
   const [tlName2, setTlname] = useState();
   const [qstatus, setqStatus] = useState();
   const[tp22, setTp22] = useState();
@@ -69,7 +70,7 @@ function MyAssingment() {
           setTlname(res.data.result[0].tlname);
           setTp22(res.data.result[0].tpname);
           if(res.data.history_queries[0] === undefined){
-           
+
           }
           else{
             setDisplayHistory({
@@ -77,6 +78,12 @@ function MyAssingment() {
               date_of_allocation:
                 res.data.history_queries[0].date_of_allocation,
             });
+            let a = moment(res.data.result[0].final_date);
+            let b = moment(res.data.history_queries[0].acpt_reject_time)
+            let c = a.diff(b)
+            let d = moment.duration(c)
+            let finalDate = d.days() + 1;
+           setFinalDate(finalDate)
           }
          
           setSubmitData(res.data.result);
@@ -219,6 +226,7 @@ function MyAssingment() {
                 tlName2={tlName2}
                 tp22 = {tp22}
                 qstatus={qstatus}
+                finalDate={finalDate}
               />
             ))}
           </div>
