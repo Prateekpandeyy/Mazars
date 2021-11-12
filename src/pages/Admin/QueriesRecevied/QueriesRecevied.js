@@ -233,21 +233,21 @@ function QueriesRecevied(props) {
               style={{ padding: ".5rem .1rem" }}
             >
               <h2 class="mb-0 query ml-3">
-                {/* <Link
+                <Link
                   to={{
                     pathname: `/admin/${props.location.routes}`,
                     index: props.location.index,
                   }}
                 >
                   <button class="btn btn-success ml-3">Go Back</button>
-                </Link> */}
-                 <button
+                </Link>
+                 {/* <button
                 class="btn btn-success ml-3"
                 onClick={() => history.goBack()}
               >
               
                 Go Back
-              </button>
+              </button> */}
               </h2>
             </div>
 

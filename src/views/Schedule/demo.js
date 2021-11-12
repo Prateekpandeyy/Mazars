@@ -237,7 +237,13 @@ if(mm > dd){
 
 }
 else{
-return false
+// return false
+Cookies.set("channel", data.question_id);
+Cookies.set("baseMode", baseMode);
+Cookies.set("transcode", transcode);
+Cookies.set("attendeeMode", attendeeMode);
+Cookies.set("videoProfile", videoProfile);
+history.push("/customer/meeting");
 }
 }
 

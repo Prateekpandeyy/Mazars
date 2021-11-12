@@ -263,7 +263,15 @@ const closeFun = () => {
 
   }
   else{
-  return false
+  // return false
+  setShowVideoIcon(true)
+  Cookies.set("channel_2", data.question_id);
+  Cookies.set("baseMode_2", baseMode);
+  Cookies.set("transcode_2", transcode);
+  Cookies.set("attendeeMode_2", attendeeMode);
+  Cookies.set("videoProfile_2", videoProfile);
+  // history.push("/teamleader/meeting/");
+  history.push(`/admin/meeting/${data.id}`);
   }
   }
 

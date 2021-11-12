@@ -6,7 +6,7 @@ import { baseUrl } from "../../../config/config";
 import { useParams, Link, useHistory } from "react-router-dom";
 import QueryDetails from "../../../components/QueryDetails/QueryDetails";
 import moment from 'moment';
-function QueriesRecevied() {
+function QueriesRecevied(props) {
   const { id } = useParams();
   const history = useHistory();
 
@@ -184,12 +184,14 @@ function QueriesRecevied() {
               style={{ padding: ".5rem .1rem" }}
             >
               <h2 class="mb-0 query ml-3">
-                <button
-                  class="btn btn-success"
-                  onClick={() => history.goBack("4")}
+              <Link
+                  to={{
+                    pathname: `/taxprofessional/${props.location.routes}`,
+                    index: props.location.index,
+                  }}
                 >
-                  Go Back
-                </button>
+                  <button class="btn btn-success ml-3">Go Back</button>
+                </Link>
               </h2>
             </div>
             {submitData.map((p, index) => (

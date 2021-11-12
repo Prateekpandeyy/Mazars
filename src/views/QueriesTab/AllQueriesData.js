@@ -32,17 +32,28 @@ function AllQueriesData() {
     const [queriesCount, setCountQueries] = useState(null);
     const [records, setRecords] = useState([]);
     const [loading, setLoading] = useState(false);
-    
+    const [loading2, setLoading2] = useState(false);
     const [additionalQuery, setAdditionalQuery] = useState(false);
  
     const additionalHandler = (key) => {
+       
+       if(typeof(key) == "object"){
+        setAdditionalQuery(!additionalQuery);
+        
+        setLoading2(false)
+        return false
+       }
+       else{
         setAdditionalQuery(!additionalQuery);
         setAssignNo(key)
+       }
+        
     };
 
     const [assignNo, setAssignNo] = useState('');
     const [ViewDiscussion, setViewDiscussion] = useState(false);
     const ViewDiscussionToggel = (key) => {
+       
         setViewDiscussion(!ViewDiscussion);
         setAssignNo(key)
     }
@@ -467,6 +478,8 @@ function AllQueriesData() {
                         additionalQuery={additionalQuery}
                         assignNo={assignNo}
                         getQueriesData={getQueriesData}
+                        setLoading2={setLoading2}
+                        loading2={loading2}
                     />
 
 

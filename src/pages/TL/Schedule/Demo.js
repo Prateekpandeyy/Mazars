@@ -238,7 +238,15 @@ if(mm > dd){
 
 }
 else{
-return false
+// return false
+Cookies.set("channel_2", data.question_id);
+  Cookies.set("baseMode_2", baseMode);
+  Cookies.set("transcode_2", transcode);
+  Cookies.set("attendeeMode_2", attendeeMode);
+  Cookies.set("videoProfile_2", videoProfile);
+  // history.push("/teamleader/meeting/");
+  history.push(`/teamleader/meeting/${data.id}`);
+
 }
 }
 
