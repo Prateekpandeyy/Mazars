@@ -341,7 +341,7 @@ function AddNew() {
     .then(function (res) {
       if(res.data.code === 1){
         setposError({
-          available : "Post aviable"
+          available : "Post Available"
         })
       }
       else{

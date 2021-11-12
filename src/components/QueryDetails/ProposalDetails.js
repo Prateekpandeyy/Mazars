@@ -10,6 +10,7 @@ function ProposalDetails({
   p,
   accept,
   tlName2,
+  tpStatus,
   tp22
 }) {
 
@@ -129,17 +130,17 @@ function ProposalDetails({
           <tbody>
             <tr>
               <th scope="row">Date of Allocation</th>
-              <td>{CommonServices.changeFormateDate(date_of_allocation)}</td>
+              <td>{accept == "2" || accept > "3" ? CommonServices.changeFormateDate(date_of_allocation) : ""}</td>
             </tr>
             
             
             <tr>
               <th scope="row">Name of Team Leader</th>
-              <td>{accept == 0 ? "" : tlName2}</td>
+              <td>{accept == "2" || accept > "3" ? tlName2 : ""}</td>
             </tr>
             <tr>
               <th scope="row">Name of Tax Professional(s)</th>
-              <td>{tp22}</td>
+              <td>{tpStatus == "2" ? tp22 : ""}</td>
             </tr>
             <tr>
               <th scope="row">Date of Proposal</th>

@@ -5,8 +5,8 @@ import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import { useParams, Link, useHistory } from "react-router-dom";
 import QueryDetails from "../../../components/QueryDetails/QueryDetails";
-
-function QueriesRecevied() {
+import moment from 'moment';
+function QueriesRecevied(props) {
   const { id } = useParams();
   const history = useHistory();
 
@@ -23,7 +23,10 @@ function QueriesRecevied() {
   const [reports, setReports] = useState([]);
   const [tlName2, setTlname] = useState();
   const[tp22, setTp22] = useState();
+  const [tpStatus, setTpstatus] = useState();
   const [accept, setAccept] = useState();
+  const [finalDate, setFinalDate] = useState()
+  const [qstatus, setqStatus] = useState();
   const [diaplayProposal, setDisplayProposal] = useState({
     amount: "",
     accepted_amount: "",
@@ -61,20 +64,34 @@ function QueriesRecevied() {
       axios.get(`${baseUrl}/tl/getQueryDetails?id=${id}`).then((res) => {
 
         if (res.data.code === 1) {
-          setDisplayHistory({
-            tlname: res.data.proposal_queries,
-            date_of_allocation:
-              res.data.history_queries[0].date_of_allocation,
-          });
+          setqStatus(res.data.result[0].query_status)
+          setTpstatus(res.data.result[0].tp_status);
+          setAccept(res.data.result[0].query_status)
           setTlname(res.data.result[0].tlname);
           setTp22(res.data.result[0].tpname);
+          if(res.data.history_queries[0] === undefined){
+
+          }
+          else{
+            setDisplayHistory({
+              tlname: res.data.proposal_queries,
+              date_of_allocation:
+                res.data.history_queries[0].date_of_allocation,
+            });
+            let a = moment(res.data.result[0].final_date);
+            let b = moment(res.data.history_queries[0].acpt_reject_time)
+            let c = a.diff(b)
+            let d = moment.duration(c)
+            let finalDate = d.days() + 1;
+           setFinalDate(finalDate)
+          }
           setSubmitData(res.data.result);
           setDisplaySpecific(res.data.additional_queries);
           setPaymentDetails(res.data.payment_detail);
           setAssingmentNo(res.data.result[0].assign_no);
           setFeedback(res.data.feedback_detail);
           setReports(res.data.reports);
-          setAccept(res.data.result[0].accept)
+
 
           var purposeItem = res.data.result[0].purpose_opinion;
           var assementItem = res.data.result[0].assessment_year;
@@ -136,14 +153,19 @@ function QueriesRecevied() {
   }, [assingNo]);
 
   const getQuery = () => {
+  if(assingNo === undefined){
+    return false
+  }
+  else{
     axios
-      .get(`${baseUrl}/tp/GetAdditionalQueries?assignno=${assingNo}`)
-      .then((res) => {
-       
-        if (res.data.code === 1) {
-          setDisplayQuery(res.data.result);
-        }
-      });
+    .get(`${baseUrl}/tp/GetAdditionalQueries?assignno=${assingNo}`)
+    .then((res) => {
+     
+      if (res.data.code === 1) {
+        setDisplayQuery(res.data.result);
+      }
+    });
+  }
   };
 
   return (
@@ -162,12 +184,14 @@ function QueriesRecevied() {
               style={{ padding: ".5rem .1rem" }}
             >
               <h2 class="mb-0 query ml-3">
-                <button
-                  class="btn btn-success"
-                  onClick={() => history.goBack("4")}
+              <Link
+                  to={{
+                    pathname: `/taxprofessional/${props.location.routes}`,
+                    index: props.location.index,
+                  }}
                 >
-                  Go Back
-                </button>
+                  <button class="btn btn-success ml-3">Go Back</button>
+                </Link>
               </h2>
             </div>
             {submitData.map((p, index) => (
@@ -188,8 +212,11 @@ function QueriesRecevied() {
                 feedback={feedback}
                 reports={reports}
                 accept = {accept}
+                tpStatus={tpStatus}
                 tlName2={tlName2}
                 tp22 = {tp22}
+                finalDate={finalDate}
+                qstatus={qstatus}
               />
             ))}
           </div>

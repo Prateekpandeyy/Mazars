@@ -2,17 +2,11 @@ import React, { useState, useEffect } from "react";
 import CommonServices from "../../common/common";
 import { ImageUrl } from "../../config/config";
 import { Markup } from 'interweave';
+import './queryStyle.css';
 
-
-function BasicQuery({ p, diaplaySpecific, queryDocs, year, purpose, declined2,
+function BasicQuery({qstatus, p, diaplaySpecific, queryDocs, year, purpose, declined2,
   declinedStatus }) {
-//   function htmlDecode(html) {
-//     var parser = new DOMParser;
-//     var dom = parser.parseFromString(
-//         '<!doctype html><body>' + html,
-//         'text/html');
-//      return dom.body.textContent;
-// }
+
 
 
   return (
@@ -27,7 +21,7 @@ function BasicQuery({ p, diaplaySpecific, queryDocs, year, purpose, declined2,
         >
           Basic Query Information
         </p>
-        <table class="table table-bordered">
+        <table class="table table-bordered p-2">
           <thead>
             <tr>
               <th scope="col" style={{ width: "400px" }}>Titles</th>
@@ -69,7 +63,7 @@ function BasicQuery({ p, diaplaySpecific, queryDocs, year, purpose, declined2,
             </tr>
             <tr>
               <th scope="row">Brief fact of the case</th>
-            <Markup content={p.fact_case} />
+           <td className="tableStyle"> <Markup content={p.fact_case} /></td>
             </tr>
             <tr>
               <th scope="row">Uploaded Documents</th>
@@ -125,7 +119,7 @@ function BasicQuery({ p, diaplaySpecific, queryDocs, year, purpose, declined2,
             {declinedStatus === true ? 
             <tr>
               <th scope="row">Date of Declined</th>
-              <td>{declined2}</td>
+              <td>{qstatus == "-1" ? declined2 : ""}</td>
               </tr> : ""}
             {
               p.query_status == "-1" ?

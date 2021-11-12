@@ -41,11 +41,11 @@ function CustomerNotification({ tokenKey, name }) {
                     {countNotification ? (
                      
                            
-                                <a href="#" class="notification">
-                                <Link to ={`/${name}/message`} style={{color : "white"}}>Inbox</Link>
+                                <Link to={`/${name}/message`} style={{color : "white"}} class="notification">
+                                Inbox
                                     <span class="badge">{countNotification}</span>
                                     
-                                </a>
+                                </Link>
                            
                          
                            

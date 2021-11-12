@@ -161,7 +161,7 @@ function Demo() {
       <div style={{ display: "flex" }}>
       <i
             class="fa fa-video-camera"
-            onClick={() => handleJoin(data.question_id)}
+            onClick={() => handleJoin(data)}
             style={{ fontSize: "18px", padding: "5px" , color: "#fff" }}
           ></i>
         <div>{children}</div>
@@ -189,17 +189,66 @@ function Demo() {
     );
   };
 
-  //handleJoin
-  const handleJoin = (id) => {
   
-    Cookies.set("channel", id);
-    Cookies.set("baseMode", baseMode);
-    Cookies.set("transcode", transcode);
-    Cookies.set("attendeeMode", attendeeMode);
-    Cookies.set("videoProfile", videoProfile);
-    history.push("/customer/meeting");
-  };
+  const handleJoin = (data) => {
+    // console.log("data", data);
+//  console.log("data", data)
+// console.log(data.startDate)
+var dt = new Date(data.startDate)
+var dt2 = new Date()
+let ck = dt.getMonth();
 
+let pp = dt2.getMonth();
+let rr = dt2.getHours();
+let ss = dt.getHours()
+let mm = dt2.getMinutes() + 20
+let dd = dt.getMinutes()
+let ee = dt.getDate();
+let eee = dt2.getDate()
+//   console.log("dt", dt)
+//   console.log(dt2.getDate())
+//  console.log(dt.getMinutes())
+//  console.log(dt2.getMinutes() + 20)
+//  console.log("ck", ck)
+//   console.log("dt2", dt2)
+//   console.log("pp", pp)
+//   console.log("mm", mm)
+//   console.log("dd", dd)
+//   console.log("ss", ss)
+//   console.log("rr", rr)
+//   console.log(ck == pp)
+//   console.log(ee === eee)
+//   console.log(ss == rr)
+//   console.log(mm > dd)
+
+
+if(ck == pp && ss == rr && ee == eee){
+
+
+if(mm > dd){
+  console.log("passed")
+  
+  Cookies.set("channel", data.question_id);
+  Cookies.set("baseMode", baseMode);
+  Cookies.set("transcode", transcode);
+  Cookies.set("attendeeMode", attendeeMode);
+  Cookies.set("videoProfile", videoProfile);
+  history.push("/customer/meeting");
+
+}
+else{
+// return false
+Cookies.set("channel", data.question_id);
+Cookies.set("baseMode", baseMode);
+Cookies.set("transcode", transcode);
+Cookies.set("attendeeMode", attendeeMode);
+Cookies.set("videoProfile", videoProfile);
+history.push("/customer/meeting");
+}
+}
+
+
+  };
 
   const messages = {
     moreInformationLabel: ""

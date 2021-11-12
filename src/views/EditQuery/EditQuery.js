@@ -132,36 +132,18 @@ function EditQuery(props) {
       setCheckerror("Please select at least one.")
     }
     else {
-      // const timer = setInterval(() => {
-      //   setUploadOrDownloadCount(
-      //     (beforeValue) => (beforeValue >= 90 ? 90 
-      //                       : beforeValue + 10));
-      // }, 800);
-      // setLoading(true)
-      // let formData = new FormData();
+      const timer = setInterval(() => {
+        setUploadOrDownloadCount(
+          (beforeValue) => (beforeValue >= 90 ? 90 
+                            : beforeValue + 10));
+      }, 800);
+      setLoading(true)
+     
 
-      // var uploadImg = value.upload;
-      // if (uploadImg) {
-      //   for (var i = 0; i < uploadImg.length; i++) {
-
-
-      //     let a = value.upload[i].pics[0];
-      //     formData.append("upload_1[]", a);
-      //   }
-      // }
-      setLoading(true);
       var uploadImg = value.uploadImg;
       if(uploadImg === undefined){
         uploadImg = 0;
       }
-      let t = 100 * uploadImg.length;
-      const timer = setInterval(() => {
-    
-        setUploadOrDownloadCount(
-          (beforeValue) => (beforeValue >= 90 ? 90 
-                            : beforeValue + 10 ));
-      }, t);
-  
       let formData = new FormData();
      
       if (uploadImg) {
@@ -170,6 +152,7 @@ function EditQuery(props) {
           formData.append("upload_1[]", file);
         }
       }
+   
       formData.append("fact", value2);
       formData.append("specific", JSON.stringify(value.users));
       formData.append("timelines", value.p_timelines);
@@ -600,7 +583,7 @@ const ImageUploads = ({ register, control }) => {
         <div className="question_query_field mb-2" key={index}>
         <input
           type="file"
-          name={`upload[${index}].pics`}
+          name= "uploadImg"
           multiple={true}
           ref={register()}
           className="form-control-file manage_file"

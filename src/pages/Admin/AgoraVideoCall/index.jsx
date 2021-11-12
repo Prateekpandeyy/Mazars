@@ -1487,7 +1487,7 @@ this.localStream.disableAudio(),
 }
 else{
   
-  window.location.hash = "/teamleader/schedule";
+  window.location.hash = "/admin/schedule";
 }
   
 };

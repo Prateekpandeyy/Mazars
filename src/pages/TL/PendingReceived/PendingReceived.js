@@ -43,14 +43,19 @@ function PendingRecevied() {
   };
 
   const getAdditionalQuery = () => {
+  if(assingNo === undefined){
+    return false
+  }
+  else{
     axios
-      .get(`${baseUrl}/tl/GetAdditionalQueries?assignno=${assingNo}`)
-      .then((res) => {
-       
-        if (res.data.code === 1) {
-          setDisplayQuery(res.data.result);
-        }
-      });
+    .get(`${baseUrl}/tl/GetAdditionalQueries?assignno=${assingNo}`)
+    .then((res) => {
+     
+      if (res.data.code === 1) {
+        setDisplayQuery(res.data.result);
+      }
+    });
+  }
   };
 
 

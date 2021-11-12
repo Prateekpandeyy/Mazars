@@ -4,7 +4,7 @@ import { Link, useParams, useHistory } from "react-router-dom";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
 import QueryDetails from "../../components/QueryDetails/QueryDetails";
-
+import moment from 'moment';
 function MyAssingment() {
   const { id } = useParams();
   const history = useHistory();
@@ -22,7 +22,9 @@ function MyAssingment() {
   const [feedback, setFeedback] = useState([]);
   const [reports, setReports] = useState([]);
   const [accept, setAccept] = useState();
+  const [finalDate, setFinalDate] = useState()
   const [tlName2, setTlname] = useState();
+  const [qstatus, setqStatus] = useState();
   const[tp22, setTp22] = useState();
     const [diaplayProposal, setDisplayProposal] = useState({
     amount: "",
@@ -63,24 +65,40 @@ function MyAssingment() {
       axios.get(`${baseUrl}/customers/getQueryDetails?id=${id}`).then((res) => {
 
         if (res.data.code === 1) {
+          setqStatus(res.data.result[0].query_status)
+          setAccept(res.data.result[0].query_status)
+          setTlname(res.data.result[0].tlname);
+          setTp22(res.data.result[0].tpname);
+          if(res.data.history_queries[0] === undefined){
+
+          }
+          else{
+            setDisplayHistory({
+              tlname: res.data.proposal_queries,
+              date_of_allocation:
+                res.data.history_queries[0].date_of_allocation,
+            });
+            let a = moment(res.data.result[0].final_date);
+            let b = moment(res.data.history_queries[0].acpt_reject_time)
+            let c = a.diff(b)
+            let d = moment.duration(c)
+            let finalDate = d.days() + 1;
+           setFinalDate(finalDate)
+          }
+         
           setSubmitData(res.data.result);
           setDisplaySpecific(res.data.additional_queries);
           setPaymentDetails(res.data.payment_detail);
           setAssingmentNo(res.data.result[0].assign_no);
           setFeedback(res.data.feedback_detail);
           setReports(res.data.reports);
-         // console.log("done22", res.data.result[0].accept)
-          setAccept(res.data.result[0].accept)
-          setTlname(res.data.result[0].tlname);
-          setTp22(res.data.result[0].tpname);
+    
+         
+       
           var purposeItem = res.data.result[0].purpose_opinion;
           var assementItem = res.data.result[0].assessment_year;
 
-          setDisplayHistory({
-          tlname: res.data.proposal_queries,
-            date_of_allocation:
-              res.data.history_queries[0].date_of_allocation,
-          });
+          
           try {
             var myPurpose = JSON.parse(purposeItem);
             var myYear = JSON.parse(assementItem);
@@ -140,14 +158,19 @@ function MyAssingment() {
 
 
   const getQuery = () => {
+  if(assingNo === undefined){
+    return false
+  }
+  else{
     axios
-      .get(`${baseUrl}/tl/GetAdditionalQueries?assignno=${assingNo}`)
-      .then((res) => {
-    
-        if (res.data.code === 1) {
-          setDisplayQuery(res.data.result);
-        }
-      });
+    .get(`${baseUrl}/tl/GetAdditionalQueries?assignno=${assingNo}`)
+    .then((res) => {
+  
+      if (res.data.code === 1) {
+        setDisplayQuery(res.data.result);
+      }
+    });
+  }
   };
 
 
@@ -202,6 +225,8 @@ function MyAssingment() {
                 accept = {accept}
                 tlName2={tlName2}
                 tp22 = {tp22}
+                qstatus={qstatus}
+                finalDate={finalDate}
               />
             ))}
           </div>

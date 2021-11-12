@@ -41,6 +41,7 @@ function Demo() {
   const [baseMode, SetbaseMode] = useState("avc");
   const [transcode, SetTranscode] = useState("interop");
   const [attendeeMode, SetAttendeeMode] = useState("video");
+  const [showVideoIcon, setShowVideoIcon] = useState(false)
   const [videoProfile, SetVideoProfile] = useState("480p_4");
   var date = new Date();
 
@@ -62,10 +63,29 @@ function Demo() {
     axios
     .get(`${baseUrl}/tl/videoScheduler?tl_id=1`)
       .then((res) => {
-      
+// console.log("myRes", res.data.result.items)
+        var dt = new Date(res.data.result.items[0].created)
+        var dt2 = new Date()
+        let ck = dt.getMonth();
+        
+        let pp = dt2.getMonth();
+        let mm = dt2.getMinutes()
+        if(ck == pp){
+        let dd = dt.getMinutes() - 20
+        if(mm == dd){
+          setShowVideoIcon(true)
+        }
+        }
+   
+    //  //   console.log(dt2.getMinutes())
+    //     console.log(dt.getDate())
+    //     console.log(dt.getMonth())
+    //    // console.log(dt2.getDate())
+    // //  console.log("schedule data", res.data.result.items[0].created.split(" ")[1])
         var a = res.data.result.items;
         if (a) {
           setData(a.map(mapAppointmentData));
+        
         }
       });
   };
@@ -162,11 +182,12 @@ const closeFun = () => {
     <div onDoubleClick={() => B(data.owner)}>
       <Appointments.Appointment {...restProps}>
         <div style={{ display: "flex" }}>
+       {showVideoIcon === false ? 
         <i
-            class="fa fa-video-camera"
-            onClick={() => handleJoin(data)}
-            style={{ fontSize: "18px", padding: "5px" , color: "#fff" }}
-          ></i>
+        class="fa fa-video-camera"
+        onClick={() => handleJoin(data)}
+        style={{ fontSize: "18px", padding: "5px" , color: "#fff" }}
+      ></i> : ""}
           <div>{children}</div>
           
           <div
@@ -196,8 +217,42 @@ const closeFun = () => {
 
   //handleJoin
   const handleJoin = (data) => {
+//  console.log("data", data)
+// console.log(data.startDate)
+  var dt = new Date(data.startDate)
+  var dt2 = new Date()
+  let ck = dt.getMonth();
  
-
+  let pp = dt2.getMonth();
+  let rr = dt2.getHours();
+  let ss = dt.getHours()
+  let mm = dt2.getMinutes() + 20
+  let dd = dt.getMinutes()
+  let ee = dt.getDate();
+  let eee = dt2.getDate()
+//   console.log("dt", dt)
+//   console.log(dt2.getDate())
+//  console.log(dt.getMinutes())
+//  console.log(dt2.getMinutes() + 20)
+//  console.log("ck", ck)
+//   console.log("dt2", dt2)
+//   console.log("pp", pp)
+//   console.log("mm", mm)
+//   console.log("dd", dd)
+//   console.log("ss", ss)
+//   console.log("rr", rr)
+//   console.log(ck == pp)
+//   console.log(ee === eee)
+//   console.log(ss == rr)
+//   console.log(mm > dd)
+  
+ 
+  if(ck == pp && ss == rr && ee == eee){
+ 
+ 
+  if(mm > dd){
+    console.log("passed")
+    setShowVideoIcon(true)
     Cookies.set("channel_2", data.question_id);
     Cookies.set("baseMode_2", baseMode);
     Cookies.set("transcode_2", transcode);
@@ -206,6 +261,21 @@ const closeFun = () => {
     // history.push("/teamleader/meeting/");
     history.push(`/admin/meeting/${data.id}`);
 
+  }
+  else{
+  // return false
+  setShowVideoIcon(true)
+  Cookies.set("channel_2", data.question_id);
+  Cookies.set("baseMode_2", baseMode);
+  Cookies.set("transcode_2", transcode);
+  Cookies.set("attendeeMode_2", attendeeMode);
+  Cookies.set("videoProfile_2", videoProfile);
+  // history.push("/teamleader/meeting/");
+  history.push(`/admin/meeting/${data.id}`);
+  }
+  }
+
+  
   };
 
   const changeFormat = (d) => {

@@ -2,7 +2,7 @@ import React from "react";
 import CommonServices from "../../common/common";
 import { ReportUrl } from "../../config/config";
 
-function AssignmentDetails({ p, submitData, customerQuery , diaplayAssignment, diaplayProposal, reports, assingNo }) {
+function AssignmentDetails({ p, finalDate, submitData, customerQuery , diaplayAssignment, diaplayProposal, reports, assingNo }) {
 
   const {
     assignment_number,
@@ -95,9 +95,9 @@ function AssignmentDetails({ p, submitData, customerQuery , diaplayAssignment, d
                 {p.client_discussion == "completed" &&
                   p.delivery_report == "completed" &&
                   p.draft_report == "completed" &&
-                  p.final_discussion == "completed" &&
-                  p.other_stage == "completed"
-                  ? CommonServices.removeTime(p.final_date)
+                  p.final_discussion == "completed"
+               
+                  ? finalDate + " Days"
                   : null}
               </td>
             </tr>

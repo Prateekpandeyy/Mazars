@@ -5,7 +5,7 @@ import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import { useParams, Link, useHistory } from "react-router-dom";
 import QueryDetails from "../../../components/QueryDetails/QueryDetails";
-
+import moment from 'moment';
 function QueriesRecevied(props) {
   const { id } = useParams();
   const history = useHistory();
@@ -24,8 +24,11 @@ function QueriesRecevied(props) {
   const [accept, setAccept] = useState();
   const [tlName2, setTlname] = useState();
   const[tp22, setTp22] = useState();
+  const [tpStatus, setTpstatus] = useState();
   const [declined2, setDeclined2] = useState();
   const [declinedStatus, setDeclinedStatus] = useState(false)
+  const [finalDate, setFinalDate] = useState()
+  const [qstatus, setqStatus] = useState();
   const [diaplayProposal, setDisplayProposal] = useState({
     amount: "",
     accepted_amount: "",
@@ -63,14 +66,27 @@ function QueriesRecevied(props) {
       axios.get(`${baseUrl}/tl/getQueryDetails?id=${id}`).then((res) => {
       
         if (res.data.code === 1) {
-          setDisplayHistory({
-            tlname: res.data.proposal_queries,
-            date_of_allocation:
-              res.data.history_queries[0].date_of_allocation,
-          });
+          setqStatus(res.data.result[0].query_status)
+          setTpstatus(res.data.result[0].tp_status);
+          setAccept(res.data.result[0].query_status)
           setTlname(res.data.result[0].tlname);
           setTp22(res.data.result[0].tpname);
-          setAccept(res.data.result[0].accept)
+          if(res.data.history_queries[0] === undefined){
+
+          }
+          else{
+            setDisplayHistory({
+              tlname: res.data.proposal_queries,
+              date_of_allocation:
+                res.data.history_queries[0].date_of_allocation,
+            });
+            let a = moment(res.data.result[0].final_date);
+            let b = moment(res.data.history_queries[0].acpt_reject_time)
+            let c = a.diff(b)
+            let d = moment.duration(c)
+            let finalDate = d.days() + 1;
+           setFinalDate(finalDate)
+          }
           if(res.data.result[0].status =="Declined Query"){
           let a = res.data.result[0].declined_date.split(" ")[0].split("-").reverse().join("-")
             setDeclined2(a)
@@ -163,14 +179,19 @@ function QueriesRecevied(props) {
   }, [assingNo]);
 
   const getQuery = () => {
+   if(assingNo === undefined){
+     return false
+   }
+   else{
     axios
-      .get(`${baseUrl}/tl/GetAdditionalQueries?assignno=${assingNo}`)
-      .then((res) => {
+    .get(`${baseUrl}/tl/GetAdditionalQueries?assignno=${assingNo}`)
+    .then((res) => {
 
-        if (res.data.code === 1) {
-          setDisplayQuery(res.data.result);
-        }
-      });
+      if (res.data.code === 1) {
+        setDisplayQuery(res.data.result);
+      }
+    });
+   }
   };
 
   return (
@@ -217,8 +238,11 @@ function QueriesRecevied(props) {
                 feedback={feedback}
                 reports={reports}
                 accept = {accept}
+                tpStatus={tpStatus}
                 tlName2={tlName2}
                 tp22 = {tp22}
+                finalDate={finalDate}
+                qstatus={qstatus}
               />
             ))}
           </div>

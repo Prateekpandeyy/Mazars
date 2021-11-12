@@ -35,8 +35,11 @@ function QueryDetails({
   accept,
   tlName2,
   tp22,
+  tpStatus,
   declined2,
-  declinedStatus
+  declinedStatus, 
+  finalDate, 
+  qstatus
 }) {
  
 
@@ -109,6 +112,7 @@ function QueryDetails({
                     year={year}
                     declined2={declined2}
                     declinedStatus={declinedStatus}
+                    qstatus={qstatus}
                   />
                 </Card>
               </Col>
@@ -127,6 +131,7 @@ function QueryDetails({
                     accept={accept}
                     tlName2={tlName2}
                     tp22 = {tp22}
+                    tpStatus={tpStatus}
                     
                   />
                 </Card>
@@ -146,6 +151,7 @@ function QueryDetails({
                     assingNo={assingNo}
                     submitData = {submitData}
                     customerQuery = {customerQuery}
+                    finalDate={finalDate}
                   />
                 </Card>
               </Col>

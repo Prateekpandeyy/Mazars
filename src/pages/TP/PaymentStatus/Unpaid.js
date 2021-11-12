@@ -77,7 +77,11 @@ function AllPayment() {
       
         setModal(!modal);
 
-        fetch(`${baseUrl}//admin/getPaymentDetail?id=${key}`, {
+       if(typeof(key) == "object"){
+
+       }
+       else{
+        fetch(`${baseUrl}//admin/getPaymentDetail?id=${key}&&status=1`, {
             method: "GET",
             headers: new Headers({
                 Accept: "application/vnd.github.cloak-preview",
@@ -89,6 +93,7 @@ function AllPayment() {
                 setPay(response.payment_detail);
             })
             .catch((error) => console.log(error));
+       }
     };
 
 // Row Style
@@ -335,10 +340,23 @@ rowStyle2 = (row, index) => {
 
                             style={{ color: "green", fontSize: "16px", cursor: "pointer" }}
                         >
+                          <Link
+              to={{
+                pathname: `/taxprofessional/paydetails/${row.id}`,
+                obj: {
+                  message_type: "5",
+                  query_No: row.assign_no,
+                  query_id: row.id,
+                  routes: `/taxprofessional/paymentstatus`
+                }
+              }}
+            >
                             <i
-                           class="fa fa-credit-card"
-                           onClick={() => toggle(row.assign_id)}
-                           style={{ color: "green", fontSize: "16px" }}></i>
+                                class="fa fa-credit-card"
+                                style={{ color: "green", fontSize: "16px" }}
+                                // onClick={() => toggle(row.assign_id)}
+                            ></i>
+                            </Link>
                         </div>
                         <div title="Send Message">
                             <Link
@@ -440,10 +458,11 @@ rowStyle2 = (row, index) => {
                         <ModalBody>
                             <table class="table table-bordered">
                                 <thead>
-                                    <tr>
+                                <tr>
                                         <th scope="row">S.No</th>
-                                        <th scope="row">Date</th>
+                                        <th scope="row">Date of Payment</th>
                                         <th scope="row">Amount</th>
+                                        <th scope="row">Payment Receipt</th>
                                     </tr>
                                 </thead>
                                 {pay.length > 0
@@ -453,6 +472,7 @@ rowStyle2 = (row, index) => {
                                                 <td>{i + 1}</td>
                                                 <td>{CommonServices.removeTime(p.payment_date)}</td>
                                                 <td>{p.paid_amount}</td>
+                                                <td><a href={p.receipt_url} target="_blank">Payment Receipt</a></td>
                                             </tr>
                                         </tbody>
                                     ))
