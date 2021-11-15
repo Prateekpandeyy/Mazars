@@ -228,7 +228,7 @@ function InprogressProposal() {
                }
         },
         {
-            dataField: "accepted_amount",
+            dataField: "",
             text: "Accepted Amount ",
             sort: true,
             style: {
@@ -238,8 +238,16 @@ function InprogressProposal() {
             headerStyle: () => {
                 return { fontSize: "11px", color: "#21a3ce" };
             },
+            formatter: function nameFormatter(cell, row){
+                var nfObject = new Intl.NumberFormat('en-US')
+                 var x = row.accepted_amount;
+                 console.log(nfObject.format(x))
+                 return(
+                   <p>{nfObject.format(x)}</p>
+                 )
+               }
         },
-        {
+           {
             text: "Action",
             dataField: "",
             headerStyle: () => {

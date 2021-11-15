@@ -153,7 +153,7 @@ const Generated = () => {
         }, 
         {
             text: "Invoice amount",
-            dataField: "invoice_amount",
+            dataField: "",
             sort: true,
             style: {
                 fontSize: "11px",
@@ -161,6 +161,14 @@ const Generated = () => {
             headerStyle: () => {
                 return { fontSize: "11px" };
             },
+            formatter: function nameFormatter(cell, row){
+                var nfObject = new Intl.NumberFormat('en-US')
+                 var x = row.invoice_amount;
+                 console.log(nfObject.format(x))
+                 return(
+                   <p>{nfObject.format(x)}</p>
+                 )
+               }
         },
         {
             text: "Tds Deducted",
@@ -172,6 +180,14 @@ const Generated = () => {
             headerStyle: () => {
                 return { fontSize: "11px" };
             },
+            formatter: function nameFormatter(cell, row){
+                var nfObject = new Intl.NumberFormat('en-US')
+                 var x = row.tds_amount;
+                 console.log(nfObject.format(x))
+                 return(
+                   <p>{nfObject.format(x)}</p>
+                 )
+               }
         }, 
         
         {

@@ -237,6 +237,14 @@ rowStyle2 = (row, index) => {
             headerStyle: () => {
               return { fontSize: "11px", color: "#21a3ce" };
             },
+            formatter: function nameFormatter(cell, row){
+                var nfObject = new Intl.NumberFormat('en-US')
+                 var x = row.accepted_amount;
+                 console.log(nfObject.format(x))
+                 return(
+                   <p>{nfObject.format(x)}</p>
+                 )
+               }
         },
         {
             text: "Amount Paid",
@@ -255,6 +263,14 @@ rowStyle2 = (row, index) => {
             headerStyle: () => {
               return { fontSize: "11px", color: "#064606" };
             },
+            formatter: function nameFormatter(cell, row){
+                var nfObject = new Intl.NumberFormat('en-US')
+                 var x = row.paid_amount;
+                 console.log(nfObject.format(x))
+                 return(
+                   <p>{nfObject.format(x)}</p>
+                 )
+               }
         },
 
         {
@@ -274,8 +290,15 @@ rowStyle2 = (row, index) => {
             headerStyle: () => {
               return { fontSize: "11px", color: "darkred" };
             },
-        },
-        {
+            formatter: function nameFormatter(cell, row){
+                var nfObject = new Intl.NumberFormat('en-US')
+                 var x = row.amount_outstanding;
+                 console.log(nfObject.format(x))
+                 return(
+                   <p>{nfObject.format(x)}</p>
+                 )
+               }
+        },     {
             text: "Date of Payment",
             dataField: "cust_paid_date",
             sort: true,
