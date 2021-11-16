@@ -207,7 +207,7 @@ function Unpaid() {
               return { fontSize: "11px", color: "#21a3ce" };
             },
             formatter: function nameFormatter(cell, row){
-                var nfObject = new Intl.NumberFormat('en-US')
+                var nfObject = new Intl.NumberFormat('hi-IN')
                  var x = row.accepted_amount;
                  console.log(nfObject.format(x))
                  return(
@@ -233,7 +233,7 @@ function Unpaid() {
               return { fontSize: "11px", color: "#064606" };
             },
             formatter: function nameFormatter(cell, row){
-                var nfObject = new Intl.NumberFormat('en-US')
+                var nfObject = new Intl.NumberFormat('hi-IN')
                  var x = row.paid_amount;
                  console.log(nfObject.format(x))
                  return(
@@ -260,7 +260,7 @@ function Unpaid() {
               return { fontSize: "11px", color: "darkred" };
             },
             formatter: function nameFormatter(cell, row){
-                var nfObject = new Intl.NumberFormat('en-US')
+                var nfObject = new Intl.NumberFormat('hi-IN')
                  var x = row.amount_outstanding;
                  console.log(nfObject.format(x))
                  return(

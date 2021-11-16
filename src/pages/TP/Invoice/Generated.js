@@ -150,7 +150,7 @@ const Generated = () => {
                 return { fontSize: "11px" };
             },
             formatter: function nameFormatter(cell, row){
-                var nfObject = new Intl.NumberFormat('en-US')
+                var nfObject = new Intl.NumberFormat('hi-IN')
                  var x = row.invoice_amount;
                  console.log(nfObject.format(x))
                  return(
@@ -169,11 +169,14 @@ const Generated = () => {
                 return { fontSize: "11px" };
             },
             formatter: function nameFormatter(cell, row){
-                var nfObject = new Intl.NumberFormat('en-US')
+                var nfObject = new Intl.NumberFormat('hi-IN')
                  var x = row.tds_amount;
                  console.log(nfObject.format(x))
                  return(
-                   <p>{nfObject.format(x)}</p>
+                 <>
+                  {row.paid_status == "0" ?
+                <p>0</p> :  <p>{nfObject.format(x)}</p>}
+                 </>
                  )
                }
         }, 

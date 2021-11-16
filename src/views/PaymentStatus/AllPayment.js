@@ -236,61 +236,85 @@ function Paid() {
           )
       }
   },
-    {
-        dataField: "accepted_amount",
-        text: "Accepted Amount ",
-        sort: true,
-        style: {
-          fontSize: "11px",
-          color: "#21a3ce",
-        },
-        sortFunc: (a, b, order, dataField) => {
-          if (order === 'asc') {
-            return b - a;
-          }
-          return a - b; // desc
-        },
-        headerStyle: () => {
-          return { fontSize: "11px", color: "#21a3ce" };
-        },
+  {
+    dataField: "accepted_amount",
+    text: "Accepted Amount ",
+    sort: true,
+    style: {
+      fontSize: "11px",
+      color: "#21a3ce",
     },
-    {
-        text: "Amount Paid",
-        dataField: "paid_amount",
-        sort: true,
-        style: {
-          fontSize: "11px",
-          color: "#064606",
-        },
-        sortFunc: (a, b, order, dataField) => {
-          if (order === 'asc') {
-            return b - a;
-          }
-          return a - b; // desc
-        },
-        headerStyle: () => {
-          return { fontSize: "11px", color: "#064606" };
-        },
+    sortFunc: (a, b, order, dataField) => {
+      if (order === 'asc') {
+        return b - a;
+      }
+      return a - b; // desc
     },
+    headerStyle: () => {
+      return { fontSize: "11px", color: "#21a3ce" };
+    },
+    formatter: function nameFormatter(cell, row){
+        var nfObject = new Intl.NumberFormat('hi-IN')
+         var x = row.accepted_amount;
+         console.log(nfObject.format(x))
+         return(
+           <p>{nfObject.format(x)}</p>
+         )
+       }
+},
+{
+    text: "Amount Paid",
+    dataField: "paid_amount",
+    sort: true,
+    style: {
+      fontSize: "11px",
+      color: "#064606",
+    },
+    sortFunc: (a, b, order, dataField) => {
+      if (order === 'asc') {
+        return b - a;
+      }
+      return a - b; // desc
+    },
+    headerStyle: () => {
+      return { fontSize: "11px", color: "#064606" };
+    },
+    formatter: function nameFormatter(cell, row){
+        var nfObject = new Intl.NumberFormat('hi-IN')
+         var x = row.paid_amount;
+         console.log(nfObject.format(x))
+         return(
+           <p>{nfObject.format(x)}</p>
+         )
+       }
+},
 
-    {
-        text : "Amount Outstanding",
-        dataField: "amount_outstanding",
-        sort: true,
-        style: {
-          fontSize: "11px",
-          color: "darkred",
-        },
-        sortFunc: (a, b, order, dataField) => {
-          if (order === 'asc') {
-            return b - a;
-          }
-          return a - b; // desc
-        },
-        headerStyle: () => {
-          return { fontSize: "11px", color: "darkred" };
-        },
+{
+    text : "Amount Outstanding",
+    dataField: "amount_outstanding",
+    sort: true,
+    style: {
+      fontSize: "11px",
+      color: "darkred",
     },
+    sortFunc: (a, b, order, dataField) => {
+      if (order === 'asc') {
+        return b - a;
+      }
+      return a - b; // desc
+    },
+    headerStyle: () => {
+      return { fontSize: "11px", color: "darkred" };
+    },
+    formatter: function nameFormatter(cell, row){
+        var nfObject = new Intl.NumberFormat('hi-IN')
+         var x = row.amount_outstanding;
+         console.log(nfObject.format(x))
+         return(
+           <p>{nfObject.format(x)}</p>
+         )
+       }
+},
     {
         text: "Date of Payment",
         dataField: "cust_paid_date",

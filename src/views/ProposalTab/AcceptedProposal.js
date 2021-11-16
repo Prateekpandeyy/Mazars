@@ -201,6 +201,14 @@ function AcceptedProposal() {
             headerStyle: () => {
                 return { fontSize: "11px" };
             },
+            formatter: function nameFormatter(cell, row){
+                var nfObject = new Intl.NumberFormat('hi-IN')
+                 var x = row.ProposedAmount;
+                 console.log(nfObject.format(x))
+                 return(
+                   <p>{nfObject.format(x)}</p>
+                 )
+               }
         },
         {
             text: "Accepted Amount",
@@ -213,6 +221,14 @@ function AcceptedProposal() {
             headerStyle: () => {
                 return { fontSize: "11px", color: "#21a3ce" };
             },
+            formatter: function nameFormatter(cell, row){
+                var nfObject = new Intl.NumberFormat('hi-IN')
+                 var x = row.accepted_amount;
+                 console.log(nfObject.format(x))
+                 return(
+                   <p>{nfObject.format(x)}</p>
+                 )
+               }
         },
         {
             text: "Action",
