@@ -36,7 +36,7 @@ function ProposalDetails({
 
   const { tlname, date_of_allocation } = diaplayHistory;
 
-  var nfObject = new Intl.NumberFormat('en-US')
+  var nfObject = new Intl.NumberFormat('hi-IN')
 
 
   //installment
@@ -123,7 +123,7 @@ function ProposalDetails({
         <table class="table table-bordered">
           <thead>
             <tr>
-              <th scope="col" style={{ width: "400px" }}>Titles</th>
+              <th scope="col" style={{ width: "300px", overflow: "wrap" }}>Titles</th>
               <th scope="col">Data</th>
             </tr>
           </thead>
@@ -176,15 +176,15 @@ function ProposalDetails({
                   <td>
                     {
                       amount_type == "fixed" ?
-                        amount_fixed
+                       nfObject.format(amount_fixed)
                         :
                         amount_type == "hourly" ?
-                          amount_hourly
+                        nfObject.format(amount_hourly) 
                           :
                           amount_type == "mixed" ?
                             <div>
-                              <p>Fixed : {amount_fixed}</p>
-                              <p>Hourly : {amount_hourly}</p>
+                              <p>Fixed : {nfObject.format(amount_fixed)}</p>
+                              <p>Hourly : {nfObject.format(amount_hourly)}</p>
                             </div>
                             :
                             ""

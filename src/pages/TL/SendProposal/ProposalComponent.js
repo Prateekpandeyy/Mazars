@@ -84,6 +84,10 @@ function ProposalComponent(props) {
   const onSubmit = (value) => {
   
 
+   if(diserror.length > 0){
+     return false
+   }
+   else{
     var lumsum = value.p_inst_date
     if (payment.label == "lumpsum") {
       setDate(lumsum)
@@ -200,6 +204,7 @@ function ProposalComponent(props) {
 
 
 
+   }
   };
 
 
@@ -229,6 +234,9 @@ function ProposalComponent(props) {
    
     if (isNaN(e.target.value)) {
       setdiserror("Please enter number only.");
+    }
+    else if(e.target.value == "0"){
+      setdiserror("Amount should be greater than 0")
     }
     else {
       setdiserror("");
@@ -296,7 +304,7 @@ function ProposalComponent(props) {
                     type="text"
                     name="p_fixed"
                     className={classNames("form-control", {
-                      "is-invalid": errors.p_fixed,
+                      "is-invalid": errors.p_fixed || diserror,
                     })}
                     ref={register({ required: true })}
                     placeholder="Enter Fixed Price"

@@ -37,7 +37,7 @@ function AssignmentDetails({ p, finalDate, submitData, customerQuery , diaplayAs
         <table class="table table-bordered">
           <thead>
             <tr>
-              <th scope="col" style={{ width: "400px" }}>Titles</th>
+              <th scope="col" style={{ width: "300px", overflow: "wrap" }}>Titles</th>
               <th scope="col">Data</th>
             </tr>
           </thead>

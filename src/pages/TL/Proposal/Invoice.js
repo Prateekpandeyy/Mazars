@@ -152,6 +152,14 @@ const Invoice = () => {
             headerStyle: () => {
                 return { fontSize: "11px" };
             },
+            formatter: function nameFormatter(cell, row){
+                var nfObject = new Intl.NumberFormat('hi-IN')
+                 var x = row.paid_amount;
+                 console.log(nfObject.format(x))
+                 return(
+                   <p>{nfObject.format(x)}</p>
+                 )
+               }
         }, 
         
        

@@ -26,21 +26,23 @@ class Meeting extends React.Component {
   }
 
   render() {
+   
     return (
       
-      <div className="wrapper meeting">
+      <div className="wrapper meeting" style={{ display : "flex", flexDirection: "column" , height: "100vh" }}>
                  
          {this.state.showmeetingScreen === true ?
-       <div style={{ display : "flex", height: "650px", flexDirection : "column" }}>
+             <div style={{ display : "flex", flexDirection: "column" , height: "100%" }}>
           <div
           className="ag-header"
           style={{ color: "green", fontWeight: "bold" }}
         >
-          
+          <div className="ag-header-lead">
+            <span>Video Call</span>
+          </div>
           <div className="ag-header-msg">
             &nbsp;<span id="room-name">{this.channel}</span>
           </div>
-         
         </div>
         <div className="ag-main">
           <div className="ag-container">

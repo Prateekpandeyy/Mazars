@@ -466,7 +466,7 @@ const checktlPost = (e) => {
   formData.append("id", id )
   axios({
     method: "POST",
-    url : `${baseUrl}/tl/validateTLPost`,
+    url : `${baseUrl}/tl/validateTLEditPost`,
     data: formData,
   })
   .then(function (res) {

@@ -149,6 +149,14 @@ setModal(!modal)
             headerStyle: () => {
                 return { fontSize: "11px", width: "120px" };
             },
+            formatter: function nameFormatter(cell, row){
+                var nfObject = new Intl.NumberFormat('hi-IN')
+                 var x = row.invoice_amount;
+                 console.log(nfObject.format(x))
+                 return(
+                   <p>{nfObject.format(x)}</p>
+                 )
+               }
         },
         {
             dataField : "tds_amount",
@@ -159,14 +167,25 @@ setModal(!modal)
             headerStyle : () => {
                 return { fontSize : "11px", width : "100px"}
             },
-            formatter : function(cell, row){
-                return(
-                    <>
-                    {row.is_paid == "1" ? 
-                    <p>{row.tds_amount}</p> : ""}
-                    </>
-                )
-            }
+            // formatter : function(cell, row){
+            //     return(
+            //         <>
+            //         {row.is_paid == "1" ? 
+            //         <p>{row.tds_amount}</p> : ""}
+            //         </>
+            //     )
+            // }
+            formatter: function nameFormatter(cell, row){
+                var nfObject = new Intl.NumberFormat('hi-IN')
+                 var x = row.tds_amount;
+                 console.log(nfObject.format(x))
+                 return(
+                  <>
+                  {row.is_paid == "1" ?
+                   <p>{nfObject.format(x)}</p> : ""}
+                  </>
+                 )
+               }
         },
         {
             dataField : "amount",
@@ -177,14 +196,17 @@ setModal(!modal)
             headerStyle : () => {
                 return { fontSize : "11px", width : "100px"}
             },
-            formatter: function (cell,row){
-                return(
-                    <>
-                    {row.is_paid == "1" ? 
-                    <p>{row.amount}</p> : ""}
-                    </>
-                )
-            }
+            formatter: function nameFormatter(cell, row){
+                var nfObject = new Intl.NumberFormat('hi-IN')
+                 var x = row.amount;
+                 console.log(nfObject.format(x))
+                 return(
+                  <>
+                  {row.is_paid == "1" ?
+                   <p>{nfObject.format(x)}</p> : ""}
+                  </>
+                 )
+               }
         },
         
         {
