@@ -203,14 +203,14 @@ function EditTP() {
           formData.append("post_name", postValue) :
           formData.append("post_name", data6)}
       {
-        categeryList.length > 1 ? formData.append("cat_id", categeryList) :
+        categeryList.length > 1 ? formData.append("cat_id", mcategory) :
         formData.append("cat_id", data8)
       }
 
 
       {
         categoryData.length === 0 ? formData.append("pcat_id", data9) :
-        formData.append("pcat_id", categoryData.value)
+        formData.append("pcat_id", categeryList)
       }
 
 

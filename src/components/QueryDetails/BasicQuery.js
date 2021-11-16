@@ -7,7 +7,7 @@ import './queryStyle.css';
 function BasicQuery({qstatus, p, diaplaySpecific, queryDocs, year, purpose, declined2,
   declinedStatus }) {
 
-
+console.log("ppp", p)
 
   return (
     <>
@@ -125,6 +125,18 @@ function BasicQuery({qstatus, p, diaplaySpecific, queryDocs, year, purpose, decl
               p.query_status == "-1" ?
                 <tr>
                   <th scope="row">Reasons for Admin Decline Query</th>
+                  <td colspan="1">
+                    {
+                      p.decline_notes
+                    }
+                  </td>
+                </tr>
+                : null
+            }
+             {
+              p.query_status == "6" ?
+                <tr>
+                  <th scope="row">Reasons for proposal Decline</th>
                   <td colspan="1">
                     {
                       p.decline_notes

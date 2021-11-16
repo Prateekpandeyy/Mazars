@@ -42,6 +42,7 @@ function EditComponent() {
   const [diserror, setdiserror] = useState("")
   const history = useHistory();
   const { id } = useParams();
+  const [dateError, setDateError] = useState(false)
   var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
   const [item] = useState(current_date);
   const [proposal, setProposal] = useState({
@@ -114,6 +115,9 @@ function EditComponent() {
 if(diserror.length > 0){
   return false
 }
+else if(dateError === true){
+  Alerts.ErrorNormal("Date must be unique")
+ }
 else{
   var lumsum = value.p_inst_date
     if (payment.label == "lumpsum") {
@@ -260,7 +264,13 @@ else{
     });
 
     setDate(array2.slice(0, installment.value));
-   
+    if(new Set(array2).size !== array2.length){
+      setDateError(true)
+     Alerts.ErrorNormal("Date must be unique")
+    }
+    else{
+      setDateError(false)
+    }
   };
 
   const installmentHandler = (key) => {

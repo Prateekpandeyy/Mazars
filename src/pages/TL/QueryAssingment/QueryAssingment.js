@@ -76,7 +76,7 @@ function QueryAssingment() {
 
   const getTaxProfession = () => {
     axios
-      .get(`${baseUrl}/tp/getTaxProfessional?tl_id=${JSON.parse(userId)}`)
+      .get(`${baseUrl}/tp/getTaxProfessional?tl_id=${JSON.parse(userId)}&&q_id=${id}`)
       .then((res) => {
         
         if (res.data.code === 1) {
@@ -186,7 +186,7 @@ function QueryAssingment() {
               <Link
                 to={{
                   pathname: `/teamleader/queriestab`,
-                  index: 0,
+                  index: 3,
                 }}
               >
                 <button
@@ -241,7 +241,7 @@ function QueryAssingment() {
                                     <option value="">--select--</option>
                                     {taxProfessionDisplay.map((p, index) => (
                                       <option key={index} value={p.id}>
-                                        { p.tl_post_name + "-"   + p.name}
+                                        { p.post_name + "-"   + p.name}
                                       </option>
                                     ))}
                                   </select>

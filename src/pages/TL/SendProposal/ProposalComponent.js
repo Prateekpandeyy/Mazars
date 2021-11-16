@@ -19,6 +19,7 @@ import Select from "react-select";
 import Alerts from "../../../common/Alerts";
 import Mandatory from "../../../components/Common/Mandatory";
 import { Spinner } from 'reactstrap';
+import Swal from "sweetalert2";
 
 
 
@@ -44,7 +45,7 @@ function ProposalComponent(props) {
 
   const [date, setDate] = useState();
   const [amount, setAmount] = useState();
-
+  const [dateError, setDateError] = useState(false)
   var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
   const [item] = useState(current_date);
 
@@ -84,8 +85,11 @@ function ProposalComponent(props) {
   const onSubmit = (value) => {
   
 
-   if(diserror.length > 0){
+   if(diserror.length > 0 ){
      return false
+   }
+   else if(dateError === true){
+    Alerts.ErrorNormal("Date must be unique")
    }
    else{
     var lumsum = value.p_inst_date
@@ -125,8 +129,8 @@ function ProposalComponent(props) {
         if (installment == "") {
           Alerts.ErrorNormal(`Please select no of installment .`)
         
-        } else
-          if (!amount || !date) {
+        } 
+        else if (!amount || !date) {
             Alerts.ErrorNormal(`Please enter all fields.`)
             
           } else if (amount && date) {
@@ -221,12 +225,21 @@ function ProposalComponent(props) {
 
   const paymentDate = (data) => {
   
-
+    console.log("data", data)
     var array2 = []
     Object.entries(data).map(([key, value]) => {
       array2.push(value)
     });
     setDate(array2);
+   
+    if(new Set(array2).size !== array2.length){
+      setDateError(true)
+     Alerts.ErrorNormal("Date must be unique")
+    }
+    else{
+      setDateError(false)
+    }
+   
   };
 
 
@@ -391,6 +404,7 @@ function ProposalComponent(props) {
                       totalAmount={totalAmount}
                       min={item}
                       item={item}
+                      dateError = {dateError}
                     />
                 }
 
