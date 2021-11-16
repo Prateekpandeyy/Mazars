@@ -226,7 +226,7 @@ function AllProposal() {
                 return { fontSize: "11px" };
             },
             formatter: function nameFormatter(cell, row){
-                var nfObject = new Intl.NumberFormat('en-US')
+                var nfObject = new Intl.NumberFormat('hi-IN')
                  var x = row.ProposedAmount;
                  console.log(nfObject.format(x))
                  return(
@@ -246,7 +246,7 @@ function AllProposal() {
                 return { fontSize: "11px", color: "#21a3ce" };
             },
             formatter: function nameFormatter(cell, row){
-                var nfObject = new Intl.NumberFormat('en-US')
+                var nfObject = new Intl.NumberFormat('hi-IN')
                  var x = row.accepted_amount;
                  console.log(nfObject.format(x))
                  return(
