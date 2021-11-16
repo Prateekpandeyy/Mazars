@@ -44,7 +44,8 @@ function ProposalComponent(props) {
 
   const [date, setDate] = useState();
   const [amount, setAmount] = useState();
-
+  
+  const [dateError, setDateError] = useState(false)
   var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
   const [item] = useState(current_date);
 
@@ -82,11 +83,13 @@ function ProposalComponent(props) {
 
 
   const onSubmit = (value) => {
-    console.log(value);
-
-    console.log("amount --", amount)
-    console.log("date --", date)
-
+    if(diserror.length > 0 ){
+      return false
+    }
+    else if(dateError === true){
+     Alerts.ErrorNormal("Date must be unique")
+    }
+    else{
     var lumsum = value.p_inst_date
     if (payment.label == "lumpsum") {
       setDate(lumsum)
@@ -203,7 +206,7 @@ function ProposalComponent(props) {
             console.log("erroror - ", error);
           });
       }
-
+    }
 
 
   };
@@ -228,6 +231,13 @@ function ProposalComponent(props) {
       array2.push(value)
     });
     setDate(array2);
+    if(new Set(array2).size !== array2.length){
+      setDateError(true)
+     Alerts.ErrorNormal("Date must be unique")
+    }
+    else{
+      setDateError(false)
+    }
   };
 
 

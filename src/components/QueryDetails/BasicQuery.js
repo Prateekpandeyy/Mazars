@@ -133,6 +133,18 @@ console.log("ppp", p)
                 </tr>
                 : null
             }
+            {
+              p.is_delete == "1" ?
+                <tr>
+                  <th scope="row">Reasons for customer Decline Query</th>
+                  <td colspan="1">
+                    {
+                      p.decline_notes
+                    }
+                  </td>
+                </tr>
+                : null
+            }
              {
               p.query_status == "6" ?
                 <tr>

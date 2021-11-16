@@ -28,7 +28,7 @@ function EditComponent() {
   const { register, handleSubmit, reset, errors } = useForm();
   const userid = window.localStorage.getItem("tpkey");
   const [loading, setLoading] = useState(false);
-
+  const [dateError, setDateError] = useState(false)
   const [custId, setCustId] = useState("");
   const [store, setStore] = useState(null);
   const [amount, setAmount] = useState();
@@ -253,6 +253,13 @@ function EditComponent() {
       array2.push(value)
     });
     setDate(array2);
+    if(new Set(array2).size !== array2.length){
+      setDateError(true)
+     Alerts.ErrorNormal("Date must be unique")
+    }
+    else{
+      setDateError(false)
+    }
   };
 
   const installmentHandler = (key) => {
