@@ -24,7 +24,7 @@ function BasicQuery({qstatus, p, diaplaySpecific, queryDocs, year, purpose, decl
         <table class="table table-bordered p-2">
           <thead>
             <tr>
-              <th scope="col" style={{ width: "400px" }}>Titles</th>
+              <th scope="col" style={{ width: "300px", overflow: "wrap" }}>Titles</th> 
               <th scope="col">Data</th>
             </tr>
           </thead>

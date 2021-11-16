@@ -340,8 +340,8 @@ schdrularName;
   handleMic = (e) => {
     e.currentTarget.classList.toggle("off");
     this.localStream.isAudioOn()
-      ? this.localStream.disableAudio()
-      : this.localStream.enableAudio();
+      ? this.localStream.muteAudio()
+      : this.localStream.unmuteAudio();
   };
 
   switchDisplay = (e) => {
@@ -423,6 +423,7 @@ schdrularName;
       this.shareStream && this.shareStream.close();
       this.state.stateSharing = false;
     } else {
+     
       this.state.stateSharing = true;
       let $ = this.props;
       // init AgoraRTC local client
@@ -462,9 +463,10 @@ schdrularName;
   streamInitSharing = (uid, attendeeMode, videoProfile, config) => {
     let defaultConfig = {
       streamID: uid,
-      audio: true,
+      audio: false,
       video: false,
       screen: true,
+      control : true
     };
  
     switch (attendeeMode) {

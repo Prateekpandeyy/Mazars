@@ -417,9 +417,10 @@ class AgoraCanvas extends React.Component {
   streamInitSharing = (uid, attendeeMode, videoProfile, config) => {
     let defaultConfig = {
       streamID: uid,
-      audio: true,
+      audio: false,
       video: false,
       screen: true,
+      control : true
     };
 
     switch (attendeeMode) {

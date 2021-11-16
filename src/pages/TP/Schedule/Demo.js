@@ -191,67 +191,73 @@ function Demo() {
 
   //handleJoin
   const handleJoin = (data) => {
-    // console.log("data", data);
-//  console.log("data", data)
-// console.log(data.startDate)
-var dt = new Date(data.startDate)
-var dt2 = new Date()
-let ck = dt.getMonth();
+//     // console.log("data", data);
+// //  console.log("data", data)
+// // console.log(data.startDate)
+// var dt = new Date(data.startDate)
+// var dt2 = new Date()
+// let ck = dt.getMonth();
 
-let pp = dt2.getMonth();
-let rr = dt2.getHours();
-let ss = dt.getHours()
-let mm = dt2.getMinutes() + 20
-let dd = dt.getMinutes()
-let ee = dt.getDate();
-let eee = dt2.getDate()
-//   console.log("dt", dt)
-//   console.log(dt2.getDate())
-//  console.log(dt.getMinutes())
-//  console.log(dt2.getMinutes() + 20)
-//  console.log("ck", ck)
-//   console.log("dt2", dt2)
-//   console.log("pp", pp)
-//   console.log("mm", mm)
-//   console.log("dd", dd)
-//   console.log("ss", ss)
-//   console.log("rr", rr)
-//   console.log(ck == pp)
-//   console.log(ee === eee)
-//   console.log(ss == rr)
-//   console.log(mm > dd)
-
-
-if(ck == pp && ss == rr && ee == eee){
+// let pp = dt2.getMonth();
+// let rr = dt2.getHours();
+// let ss = dt.getHours()
+// let mm = dt2.getMinutes() + 20
+// let dd = dt.getMinutes()
+// let ee = dt.getDate();
+// let eee = dt2.getDate()
+// //   console.log("dt", dt)
+// //   console.log(dt2.getDate())
+// //  console.log(dt.getMinutes())
+// //  console.log(dt2.getMinutes() + 20)
+// //  console.log("ck", ck)
+// //   console.log("dt2", dt2)
+// //   console.log("pp", pp)
+// //   console.log("mm", mm)
+// //   console.log("dd", dd)
+// //   console.log("ss", ss)
+// //   console.log("rr", rr)
+// //   console.log(ck == pp)
+// //   console.log(ee === eee)
+// //   console.log(ss == rr)
+// //   console.log(mm > dd)
 
 
-if(mm > dd){
-  console.log("passed")
+// if(ck == pp && ss == rr && ee == eee){
+
+
+// if(mm > dd){
+//   console.log("passed")
   
-  Cookies.set("channel_2", data.question_id);
+//   Cookies.set("channel_2", data.question_id);
+//   Cookies.set("baseMode_2", baseMode);
+//   Cookies.set("transcode_2", transcode);
+//   Cookies.set("attendeeMode_2", attendeeMode);
+//   Cookies.set("videoProfile_2", videoProfile);
+//   // history.push("/teamleader/meeting/");
+//   history.push(`/taxprofessional/meeting/${data.id}`);
+
+// }
+// else{
+// // return false
+ 
+// Cookies.set("channel_2", data.question_id);
+// Cookies.set("baseMode_2", baseMode);
+// Cookies.set("transcode_2", transcode);
+// Cookies.set("attendeeMode_2", attendeeMode);
+// Cookies.set("videoProfile_2", videoProfile);
+// // history.push("/teamleader/meeting/");
+// history.push(`/taxprofessional/meeting/${data.id}`);
+
+// }
+// }
+
+Cookies.set("channel_2", data.question_id);
   Cookies.set("baseMode_2", baseMode);
   Cookies.set("transcode_2", transcode);
   Cookies.set("attendeeMode_2", attendeeMode);
   Cookies.set("videoProfile_2", videoProfile);
   // history.push("/teamleader/meeting/");
   history.push(`/taxprofessional/meeting/${data.id}`);
-
-}
-else{
-// return false
- 
-Cookies.set("channel_2", data.question_id);
-Cookies.set("baseMode_2", baseMode);
-Cookies.set("transcode_2", transcode);
-Cookies.set("attendeeMode_2", attendeeMode);
-Cookies.set("videoProfile_2", videoProfile);
-// history.push("/teamleader/meeting/");
-history.push(`/taxprofessional/meeting/${data.id}`);
-
-}
-}
-
-
   };
 
   const changeFormat = (d) => {

@@ -30,52 +30,50 @@ class Meeting extends React.Component {
  
 
   render() {
-    console.log("channelid-",this.channel)
-    console.log("render")
-
-      return (
+   
+    return (
       
-        <div className="wrapper meeting">
-                   
-           {this.state.showmeetingScreen === true ?
-         <div>
-            <div
-            className="ag-header"
-            style={{ color: "green", fontWeight: "bold" }}
-          >
-            <div className="ag-header-lead">
-              <span>Video Call</span>
-            </div>
-            <div className="ag-header-msg">
-              &nbsp;<span id="room-name">{this.channel}</span>
-            </div>
+      <div className="wrapper meeting" style={{ display : "flex", flexDirection: "column" , height: "100vh" }}>
+                 
+         {this.state.showmeetingScreen === true ?
+             <div style={{ display : "flex", flexDirection: "column" , height: "100%" }}>
+          <div
+          className="ag-header"
+          style={{ color: "green", fontWeight: "bold" }}
+        >
+          <div className="ag-header-lead">
+            <span>Video Call</span>
           </div>
-          <div className="ag-main">
-            <div className="ag-container">
-              <AgoraVideoCall
-                videoProfile={this.videoProfile}
-                channel={this.channel}
-                transcode={this.transcode}
-                attendeeMode={this.attendeeMode}
-                baseMode={this.baseMode}
-                appId={this.appId}
-                uid={this.uid}
-                id={this.props.id}
-              />
-            </div>
+          <div className="ag-header-msg">
+            &nbsp;<span id="room-name">{this.channel}</span>
           </div>
-           </div> : 
-           <ReactPlayer
-           url="https://www.youtube.com/watch?v=F7mKD2Un65I"
-           controls={true}
-           playing={true}
-           onEnded={() => this.setState({showmeetingScreen : true})}
-           width='100%'
-           height='600px'
-          />}
         </div>
-      );
-    }
+        <div className="ag-main">
+          <div className="ag-container">
+            <AgoraVideoCall
+              videoProfile={this.videoProfile}
+              channel={this.channel}
+              transcode={this.transcode}
+              attendeeMode={this.attendeeMode}
+              baseMode={this.baseMode}
+              appId={this.appId}
+              uid={this.uid}
+              id={this.props.id}
+            />
+          </div>
+        </div>
+         </div> : 
+         <ReactPlayer
+         url="https://www.youtube.com/watch?v=F7mKD2Un65I"
+         controls={true}
+         playing={true}
+         onEnded={() => this.setState({showmeetingScreen : true})}
+         width='100%'
+         height='650px'
+        />}
+      </div>
+    );
   }
-  
-  export default Meeting;
+}
+
+export default Meeting;
