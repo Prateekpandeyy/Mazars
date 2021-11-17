@@ -102,6 +102,7 @@ function ProposalView(props) {
   };
 
   const [addPaymentModal, setPaymentModal] = useState(false);
+  var nfObject = new Intl.NumberFormat('hi-IN')
   const readTerms = () => {
  
     setPaymentModal(!addPaymentModal);
@@ -167,7 +168,9 @@ function ProposalView(props) {
         <p>{CommonServices.removeTime(p)}</p>
       </>
     ))
+   
     return dataItem;
+   
   }
 
 
@@ -236,7 +239,7 @@ function ProposalView(props) {
               </tr>
               <tr>
                 <th scope="row">Proposed Amount</th>
-                <td>{amount}</td>
+                <td>{nfObject.format(amount)}</td>
               </tr>
               <tr>
                 <th scope="row">Scope of Work</th>
@@ -254,15 +257,15 @@ function ProposalView(props) {
                     <td>
                       {
                         amount_type == "fixed" ?
-                          amount
+                          nfObject.format(amount)
                           :
                           amount_type == "hourly" ?
-                            amount_hourly
+                            nfObject.format(amount_hourly)
                             :
                             amount_type == "mixed" ?
                               <div>
-                                <p>Fixed : {amount}</p>
-                                <p>Hourly : {amount_hourly}</p>
+                                <p>Fixed : {nfObject.format(amount)}</p>
+                                <p>Hourly : {nfObject.format(amount_hourly)}</p>
                               </div>
                               :
                               ""

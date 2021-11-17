@@ -112,7 +112,10 @@ function EditTP() {
   var data1 = value.name;
   var data2 = value.personal_email;
   var data3 = value.phone;
-  var data4 = value.allpcat_id;
+  var data4 = {
+    "value" : value.allpcat_id,
+    "label" : value.allpcat_id
+  }
   var data5 = value.allcat_id;
   var data6 = value.post_name;
   var data7 = value.email;
@@ -204,21 +207,26 @@ function EditTP() {
         {postValue.length > 1 ?  
           formData.append("post_name", postValue) :
           formData.append("post_name", data6)}
+      // {
+      //   categeryList.length > 1 ? formData.append("pcat_id", store) :
+      //   formData.append("pcat_id", data8)
+      // }
       {
-        categeryList.length > 1 ? formData.append("pcat_id", categoryData.value) :
-        formData.append("pcat_id", data8)
+        categeryList.length === 0 ? formData.append("pcat_id", data9)
+        : formData.append("pcat_id", store)
       }
+     
 
 
       {
-        categoryData.length === 0 ? formData.append("cat_id", data9) :
+        categoryData.length === 0 ? formData.append("cat_id", data8) :
         formData.append("cat_id", categeryList)
       }
 
 
       {
         categoryData.length === 0 ?
-        formData.append("allpcat_id", data4) :
+        formData.append("allpcat_id", data4.label) :
         formData.append("allpcat_id", categoryData.label)
       }
 
@@ -665,7 +673,7 @@ function EditTP() {
                         <div class="form-group">
 
                           <Select  options={options}
-                            value={categoryData} onChange={category}
+                            defaultValue={data4} onChange={category}
                             styles={{
                               option: (styles, { data }) => {
                                 return {
