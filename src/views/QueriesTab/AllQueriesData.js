@@ -22,13 +22,14 @@ import CommonServices from "../../common/common";
 import Loader from "../../components/Loader/Loader";
 import DiscardReport from "../AssignmentTab/DiscardReport";
 import { date } from "yup";
+import RejectedModal from "./RejectedModal";
 
 
 
 function AllQueriesData() {
     const userId = window.localStorage.getItem("userid");
     const [query, setQuery] = useState([]);
-   
+   const [assignNo2, setAssignNo2] = useState()
     const [queriesCount, setCountQueries] = useState(null);
     const [records, setRecords] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -49,7 +50,7 @@ function AllQueriesData() {
        }
         
     };
-
+    const [rejectedBox, showRejectedBox] = useState(false)
     const [assignNo, setAssignNo] = useState('');
     const [ViewDiscussion, setViewDiscussion] = useState(false);
     const ViewDiscussionToggel = (key) => {
@@ -402,31 +403,10 @@ function AllQueriesData() {
     };
 
     const deleteCliente = (id) => {
-        setLoading(true)
-
-        let formData = new FormData();
-        formData.append("uid", JSON.parse(userId));
-        formData.append("id", id);
-
-        axios({
-            method: "POST",
-            url: `${baseUrl}/customers/deleteQuery`,
-            data: formData,
-        })
-            .then(function (response) {
-              
-                if (response.data.code === 1) {
-                    setLoading(false)
-                    Swal.fire("", "Query deleted successfully.", "success");
-                    getQueriesData();
-                } else if (response.data.code === 0) {
-                    setLoading(false)
-                    Swal.fire("Oops...", "Query not deleted ", "error");
-                }
-            })
-            .catch((error) => {
-               
-            });
+        // setLoading(true)
+        setAssignNo2(id)
+      showRejectedBox(!rejectedBox)
+       
     };
 
     return (
@@ -489,6 +469,12 @@ function AllQueriesData() {
                         report={assignNo}
                         getData={getQueriesData}
                     />
+                    <RejectedModal
+                    showRejectedBox = {showRejectedBox} 
+                    rejectedBox = {rejectedBox}
+                    getQueriesData = {getQueriesData}
+                    assignNo={assignNo2}
+                    deleteCliente = {deleteCliente}/>
 
                 </CardBody>
             </Card>

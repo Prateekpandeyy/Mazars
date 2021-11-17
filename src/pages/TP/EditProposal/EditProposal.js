@@ -28,7 +28,7 @@ function EditComponent() {
   const { register, handleSubmit, reset, errors } = useForm();
   const userid = window.localStorage.getItem("tpkey");
   const [loading, setLoading] = useState(false);
-
+  const [dateError, setDateError] = useState(false)
   const [custId, setCustId] = useState("");
   const [store, setStore] = useState(null);
   const [amount, setAmount] = useState();
@@ -113,7 +113,15 @@ function EditComponent() {
  
   const onSubmit = (value) => {
     console.log(value);
+    if(diserror.length > 0){
+      return false
+    }
+    else if(dateError === true){
+      Alerts.ErrorNormal("Date must be unique")
+     }
+     else{
 
+     
     var lumsum = value.p_inst_date
     if (payment.label == "lumpsum") {
       setDate(lumsum)
@@ -220,7 +228,8 @@ function EditComponent() {
           .catch((error) => {
             console.log("erroror - ", error);
           });
-      }
+        }
+        }
   };
 
 
@@ -253,6 +262,13 @@ function EditComponent() {
       array2.push(value)
     });
     setDate(array2);
+    if(new Set(array2).size !== array2.length){
+      setDateError(true)
+     Alerts.ErrorNormal("Date must be unique")
+    }
+    else{
+      setDateError(false)
+    }
   };
 
   const installmentHandler = (key) => {

@@ -7,7 +7,7 @@ import './queryStyle.css';
 function BasicQuery({qstatus, p, diaplaySpecific, queryDocs, year, purpose, declined2,
   declinedStatus }) {
 
-
+console.log("ppp", p)
 
   return (
     <>
@@ -116,10 +116,10 @@ function BasicQuery({qstatus, p, diaplaySpecific, queryDocs, year, purpose, decl
               <th scope="row">Timelines within which Opinion is Required</th>
               <td colspan="1">{p.Timelines}</td>
             </tr>
-            {declinedStatus === true ? 
+            {qstatus == "-1" || p.is_delete == "1" ? 
             <tr>
               <th scope="row">Date of Declined</th>
-              <td>{qstatus == "-1" ? declined2 : ""}</td>
+              <td>{qstatus == "-1" || p.is_delete == "1" ? declined2 : ""}</td>
               </tr> : ""}
             {
               p.query_status == "-1" ?
@@ -133,6 +133,19 @@ function BasicQuery({qstatus, p, diaplaySpecific, queryDocs, year, purpose, decl
                 </tr>
                 : null
             }
+            {
+              p.is_delete == "1" ?
+                <tr>
+                  <th scope="row">Reasons for customer Decline Query</th>
+                  <td colspan="1">
+                    {
+                      p.decline_notes
+                    }
+                  </td>
+                </tr>
+                : null
+            }
+            
           </tbody>
         </table>
       </div>

@@ -162,8 +162,8 @@ function AddNew() {
       formData.append("tp_id", tl);
       formData.append("email", email2);
       formData.append("post_name", value.post_name)
-      formData.append("cat_id", categeryList);
-      formData.append("pcat_id", categoryData.value);
+      formData.append("cat_id", mcategory);
+      formData.append("pcat_id", categeryList);
       formData.append("allpcat_id", categoryData.label)
       formData.append("allcat_id", categeryName)
       formData.append("type", "tp");

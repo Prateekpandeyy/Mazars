@@ -83,6 +83,7 @@ function EditTP() {
     exits : ''
   });
   const selectInputRef = useRef();
+  const selectInputRef2 = useRef();
   const { handleSubmit, register, reset, errors } = useForm({
     resolver: yupResolver(Schema),
   });
@@ -111,7 +112,10 @@ function EditTP() {
   var data1 = value.name;
   var data2 = value.personal_email;
   var data3 = value.phone;
-  var data4 = value.allpcat_id;
+  var data4 = {
+    "value" : value.allpcat_id,
+    "label" : value.allpcat_id
+  }
   var data5 = value.allcat_id;
   var data6 = value.post_name;
   var data7 = value.email;
@@ -145,6 +149,7 @@ function EditTP() {
           setValue(res.data.result[0]);
           setStore(res.data.result[0].pcat_id);
           setShowDel(res.data.result[0].is_delete)
+          categoryData(res.data.result[0].allcat_id)
         }
       })
       .catch((e) => {
@@ -202,21 +207,26 @@ function EditTP() {
         {postValue.length > 1 ?  
           formData.append("post_name", postValue) :
           formData.append("post_name", data6)}
+      // {
+      //   categeryList.length > 1 ? formData.append("pcat_id", store) :
+      //   formData.append("pcat_id", data8)
+      // }
       {
-        categeryList.length > 1 ? formData.append("cat_id", categeryList) :
-        formData.append("cat_id", data8)
+        categeryList.length === 0 ? formData.append("pcat_id", data9)
+        : formData.append("pcat_id", store)
       }
+     
 
 
       {
-        categoryData.length === 0 ? formData.append("pcat_id", data9) :
-        formData.append("pcat_id", categoryData.value)
+        categoryData.length === 0 ? formData.append("cat_id", data8) :
+        formData.append("cat_id", categeryList)
       }
 
 
       {
         categoryData.length === 0 ?
-        formData.append("allpcat_id", data4) :
+        formData.append("allpcat_id", data4.label) :
         formData.append("allpcat_id", categoryData.label)
       }
 
@@ -319,13 +329,12 @@ function EditTP() {
 
   // Category Function
   const category = (v) => {
+    console.log("vvv", v)
     selectInputRef.current.select.clearValue();
+   
     setCategoryData(v)
     setError("")
     setCustcate(v)
-
-   
-   
     setStore(v.value)
     vv.push(v.value);
     setmcategory(v.value)
@@ -664,7 +673,7 @@ function EditTP() {
                         <div class="form-group">
 
                           <Select  options={options}
-                            defaultInputValue={data4} onChange={category}
+                            defaultValue={data4} onChange={category}
                             styles={{
                               option: (styles, { data }) => {
                                 return {
@@ -681,6 +690,10 @@ function EditTP() {
                                     : "blue"
                               }),
                             }}
+                            ref={selectInputRef2}
+                            // onFocus = {(e) => {
+                            //   selectInputRef2.current.select.clearValue();
+                            // }}
                           >
                           </Select>                  
                         </div>

@@ -20,20 +20,18 @@ import Alerts from "../../common/Alerts";
 import classNames from "classnames";
 import Swal from "sweetalert2";
 import Loader from "../../components/Loader/Loader";
-
+import RejectedModal22 from "./RejectedModal22";
 
 
 function ProposalView(props) {
   const { handleSubmit, register } = useForm();
-
   const [loading, setLoading] = useState(false);
-
   const userId = window.localStorage.getItem("userid");
   const [queryStatus, setQueryStatus] = useState(null);
   const [custcheckError, setCheckerror] = useState(null);
   const [valueCheckBox, setValueCheckBox] = useState(false);
-
-
+  const [rejectedBox, showRejectedBox] = useState(false)
+  const [assignNo2, setAssignNo2] = useState()
   const { id } = useParams();
   const history = useHistory();
 
@@ -104,6 +102,7 @@ function ProposalView(props) {
   };
 
   const [addPaymentModal, setPaymentModal] = useState(false);
+  var nfObject = new Intl.NumberFormat('hi-IN')
   const readTerms = () => {
  
     setPaymentModal(!addPaymentModal);
@@ -169,7 +168,9 @@ function ProposalView(props) {
         <p>{CommonServices.removeTime(p)}</p>
       </>
     ))
+   
     return dataItem;
+   
   }
 
 
@@ -199,33 +200,9 @@ function ProposalView(props) {
 
   // delete data
   const deleteCliente = (key) => {
-    setLoading(true)
-    let formData = new FormData();
-    formData.append("id", key);
-    formData.append("status", 6);
-
-    axios({
-      method: "POST",
-      url: `${baseUrl}/customers/ProposalAccept`,
-      data: formData,
-    })
-      .then(function (response) {
-       
-        if (response.data.code === 1) {
-          setLoading(false)
-          Swal.fire("Rejected!", "Proposal rejected successfully.", "success");
-          history.push({
-            pathname: `/customer/proposal`,
-            index: 0,
-          });
-        } else {
-          setLoading(false)
-          Swal.fire("Oops...", "Errorr ", "error");
-        }
-      })
-      .catch((error) => {
-     
-      });
+    setAssignNo2(id)
+    showRejectedBox(!rejectedBox)
+    
   };
 
 
@@ -262,7 +239,7 @@ function ProposalView(props) {
               </tr>
               <tr>
                 <th scope="row">Proposed Amount</th>
-                <td>{amount}</td>
+                <td>{nfObject.format(amount)}</td>
               </tr>
               <tr>
                 <th scope="row">Scope of Work</th>
@@ -280,15 +257,15 @@ function ProposalView(props) {
                     <td>
                       {
                         amount_type == "fixed" ?
-                          amount
+                          nfObject.format(amount)
                           :
                           amount_type == "hourly" ?
-                            amount_hourly
+                            nfObject.format(amount_hourly)
                             :
                             amount_type == "mixed" ?
                               <div>
-                                <p>Fixed : {amount}</p>
-                                <p>Hourly : {amount_hourly}</p>
+                                <p>Fixed : {nfObject.format(amount)}</p>
+                                <p>Hourly : {nfObject.format(amount_hourly)}</p>
                               </div>
                               :
                               ""
@@ -414,6 +391,12 @@ function ProposalView(props) {
           addPaymentModal={addPaymentModal}
           id={id}
         />
+         <RejectedModal22
+                    showRejectedBox = {showRejectedBox} 
+                    rejectedBox = {rejectedBox}
+                    // getQueriesData = {getQueriesData}
+                    assignNo={assignNo2}
+                    deleteCliente = {deleteCliente}/>
       </Card>
     </Layout>
   );

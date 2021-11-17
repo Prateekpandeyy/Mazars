@@ -301,16 +301,33 @@ function ProposalDetails({
               <th scope="row">Payment Outstanding</th>
               <td>{nfObject.format(accepted_amount - payment_received)}</td>
             </tr>
-            <tr>
+         
+            
+            {
+              p.paid_status == "2" && 
+              <>
+              <tr>
               <th scope="row">Payment declined reason</th>
               <td>{p.notes}</td>
             </tr>
-            {
-              p.paid_status == "2" &&
-              <tr>
+            <tr>
                 <th scope="row">Payment Decline Date</th>
                 <td>{CommonServices.removeTime(p.declined_date)}</td>
               </tr>
+              </>
+             
+            }
+             {
+              p.query_status == "6" ?
+                <tr>
+                  <th scope="row">Reasons for proposal Decline</th>
+                  <td colspan="1">
+                    {
+                      p.decline_notes
+                    }
+                  </td>
+                </tr>
+                : null
             }
           </tbody>
         </table>
