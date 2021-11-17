@@ -113,7 +113,15 @@ function EditComponent() {
  
   const onSubmit = (value) => {
     console.log(value);
+    if(diserror.length > 0){
+      return false
+    }
+    else if(dateError === true){
+      Alerts.ErrorNormal("Date must be unique")
+     }
+     else{
 
+     
     var lumsum = value.p_inst_date
     if (payment.label == "lumpsum") {
       setDate(lumsum)
@@ -220,7 +228,8 @@ function EditComponent() {
           .catch((error) => {
             console.log("erroror - ", error);
           });
-      }
+        }
+        }
   };
 
 

@@ -116,10 +116,10 @@ console.log("ppp", p)
               <th scope="row">Timelines within which Opinion is Required</th>
               <td colspan="1">{p.Timelines}</td>
             </tr>
-            {declinedStatus === true ? 
+            {qstatus == "-1" || p.is_delete == "1" ? 
             <tr>
               <th scope="row">Date of Declined</th>
-              <td>{qstatus == "-1" ? declined2 : ""}</td>
+              <td>{qstatus == "-1" || p.is_delete == "1" ? declined2 : ""}</td>
               </tr> : ""}
             {
               p.query_status == "-1" ?
@@ -145,18 +145,7 @@ console.log("ppp", p)
                 </tr>
                 : null
             }
-             {
-              p.query_status == "6" ?
-                <tr>
-                  <th scope="row">Reasons for proposal Decline</th>
-                  <td colspan="1">
-                    {
-                      p.decline_notes
-                    }
-                  </td>
-                </tr>
-                : null
-            }
+            
           </tbody>
         </table>
       </div>

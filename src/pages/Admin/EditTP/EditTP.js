@@ -83,6 +83,7 @@ function EditTP() {
     exits : ''
   });
   const selectInputRef = useRef();
+  const selectInputRef2 = useRef();
   const { handleSubmit, register, reset, errors } = useForm({
     resolver: yupResolver(Schema),
   });
@@ -145,6 +146,7 @@ function EditTP() {
           setValue(res.data.result[0]);
           setStore(res.data.result[0].pcat_id);
           setShowDel(res.data.result[0].is_delete)
+          categoryData(res.data.result[0].allcat_id)
         }
       })
       .catch((e) => {
@@ -203,14 +205,14 @@ function EditTP() {
           formData.append("post_name", postValue) :
           formData.append("post_name", data6)}
       {
-        categeryList.length > 1 ? formData.append("cat_id", mcategory) :
-        formData.append("cat_id", data8)
+        categeryList.length > 1 ? formData.append("pcat_id", categoryData.value) :
+        formData.append("pcat_id", data8)
       }
 
 
       {
-        categoryData.length === 0 ? formData.append("pcat_id", data9) :
-        formData.append("pcat_id", categeryList)
+        categoryData.length === 0 ? formData.append("cat_id", data9) :
+        formData.append("cat_id", categeryList)
       }
 
 
@@ -319,13 +321,12 @@ function EditTP() {
 
   // Category Function
   const category = (v) => {
+    console.log("vvv", v)
     selectInputRef.current.select.clearValue();
+   
     setCategoryData(v)
     setError("")
     setCustcate(v)
-
-   
-   
     setStore(v.value)
     vv.push(v.value);
     setmcategory(v.value)
@@ -664,7 +665,7 @@ function EditTP() {
                         <div class="form-group">
 
                           <Select  options={options}
-                            defaultInputValue={data4} onChange={category}
+                            value={categoryData} onChange={category}
                             styles={{
                               option: (styles, { data }) => {
                                 return {
@@ -681,6 +682,10 @@ function EditTP() {
                                     : "blue"
                               }),
                             }}
+                            ref={selectInputRef2}
+                            // onFocus = {(e) => {
+                            //   selectInputRef2.current.select.clearValue();
+                            // }}
                           >
                           </Select>                  
                         </div>
