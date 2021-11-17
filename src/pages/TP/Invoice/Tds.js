@@ -81,6 +81,7 @@ const percent = {
     const { handleSubmit, register, errors, getValues, reset } = useForm();
 
 const getDataild = () => {
+ if(props.id){
   axios
   .get(`${baseUrl}/admin/getPaymentDetail?tp_id=${JSON.parse(userid)}&invoice=1&invoice_id=${props.id}`)
 .then((res) => {
@@ -109,6 +110,7 @@ setTds(parseInt(i.tds_amount))
 }
 
 })
+ }
 }
 const cgstFun = (e) => {
   if(e.target.value > 100){

@@ -69,7 +69,7 @@ function AssignmentComponent() {
     getAssignmentData();
   }, []);
 
-  const getAssignmentData = () => {
+  const getAssignmentData = async () =>  {
     axios.get(`${baseUrl}/tl/getAssignments`).then((res) => {
     
       if (res.data.code === 1) {
@@ -83,7 +83,8 @@ function AssignmentComponent() {
   //get category
   useEffect(() => {
     const getSubCategory = () => {
-      axios
+    if(selectedData.length > 0){
+        axios
         .get(`${baseUrl}/customers/getCategory?pid=${selectedData}`)
         .then((res) => {
          
@@ -91,6 +92,7 @@ function AssignmentComponent() {
             setTax2(res.data.result);
           }
         });
+    }
     };
     getSubCategory();
   }, [selectedData]);

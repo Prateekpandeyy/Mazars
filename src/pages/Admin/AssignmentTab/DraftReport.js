@@ -67,14 +67,16 @@ var rowStyle2 = {}
   //get category
   useEffect(() => {
     const getSubCategory = () => {
+     if(selectedData.length > 0){
       axios
-        .get(`${baseUrl}/customers/getCategory?pid=${selectedData}`)
-        .then((res) => {
-       
-          if (res.data.code === 1) {
-            setTax2(res.data.result);
-          }
-        });
+      .get(`${baseUrl}/customers/getCategory?pid=${selectedData}`)
+      .then((res) => {
+     
+        if (res.data.code === 1) {
+          setTax2(res.data.result);
+        }
+      });
+     }
     };
     getSubCategory();
   }, [selectedData]);
