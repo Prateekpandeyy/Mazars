@@ -83,7 +83,9 @@ class AgoraCanvas extends React.Component {
       articleId2 : [],
       showRecBtn : false,
       showButton : '',
-      clickDisable : false
+      clickDisable : false,
+      addRemote : null,
+      participantName : ''
     };
 
     this.toggleModal = this.toggleModal.bind(this);
@@ -93,9 +95,11 @@ class AgoraCanvas extends React.Component {
   // userId = window.localStorage.getItem("tlkey");
   allrecording = [];
   teamKey = window.localStorage.getItem("adminkey");
+  adminEmail2 = window.localStorage.getItem("adminEmail");
   uid = Math.floor((Math.random() * 10000) + 1);
   channelName = this.props.channel
   tempArray = []
+  hostId ;
  vendor = 1
  region = 14;
  bucket = "vride-multitvm";
@@ -105,6 +109,7 @@ allrecording;
 
   componentWillMount() {
     let $ = this.props;
+    console.log("done22")
     // init AgoraRTC local client
     this.client = AgoraRTC.createClient({ mode: $.transcode });
     this.client.init($.appId, () => {
@@ -112,8 +117,22 @@ allrecording;
       this.subscribeStreamEvents();
 
       this.client.join($.appId, $.channel, $.uid, (uid) => {
-        this.state.uid = uid;
        
+        var data_post_api = "https://virtualapi.multitvsolution.com/VstreamApi/index.php/api/vstream/userdata?channel_name="+$.channel+"&rtm_id="+""+"&rtc_id="+uid+"&user_name="+JSON.parse(this.adminEmail2);
+   axios.get(`${data_post_api}`).
+   then((res) => {
+     console.log(res)
+   
+   })
+   console.log("uid", uid)
+        // fetch(data_post_api, {
+        //   method: "GET",
+        //   headers: {"Content-type": "application/json;charset=UTF-8"}
+        // }).then(response => response.json()).then(json => console.log("response after posting user data",json));
+        // this.state.uid = uid;
+       
+        this.setState({ uid : uid})
+       console.log("done64")
         this.localStream = this.streamInit(uid, $.attendeeMode, $.videoProfile);
         this.localStream.init(
           () => {
@@ -182,14 +201,22 @@ schdrularName;
       this.state.streamList.map((item, index) => {
         let id = item.getId();
         let dom = document.querySelector("#ag-item-" + id);
-        if (!dom) {
+        let dom2 ;
+        let meetingName;
+        if (!dom && this.state.participantName != undefined) {
           dom = document.createElement("section");
           dom.setAttribute("id", "ag-item-" + id);
           dom.setAttribute("class", "ag-item");
           canvas.appendChild(dom);
+          var box22 = document.getElementById("ag-item-" + id)
+        
+          var newContent = document.createTextNode(this.state.participantName); 
           item.play("ag-item-" + id);
+      
+         box22.appendChild(newContent)
         }
         if (index === no - 1) {
+        //  document.getElementById("custName").value = "Lucky"
           dom.setAttribute("style", `grid-area: span 12/span 24/13/25`);
         } else {
           dom.setAttribute(
@@ -207,6 +234,7 @@ schdrularName;
       let no = this.state.streamList.length;
       this.state.streamList.map((item, index) => {
         let id = item.getId();
+        let dom2 ;
         let dom = document.querySelector("#ag-item-" + id);
         if (!dom) {
           dom = document.createElement("section");
@@ -214,6 +242,12 @@ schdrularName;
           dom.setAttribute("class", "ag-item");
           canvas.appendChild(dom);
           item.play("ag-item-" + id);
+          var box22 = document.getElementById("ag-item-" + id)
+          
+          var newContent = document.createTextNode(this.state.participantName); 
+          item.play("ag-item-" + id);
+      
+         box22.appendChild(newContent)
         }
         dom.setAttribute("style", `grid-area: ${tile_canvas[no][index]}`);
         item.player.resize && item.player.resize();
@@ -271,29 +305,44 @@ schdrularName;
     let rt = this;
     rt.client.on("stream-added", function (evt) {
       let stream = evt.stream;
-      
+     
       rt.client.subscribe(stream, function (err) {
-        
+        this.setState({ addRemote : true})
+     console.log("one")
       });
     });
 
     rt.client.on("peer-leave", function (evt) {
-     
+     console.log("done2")
       rt.removeStream(evt.uid);
-   
+   console.log("two")
     });
 
     rt.client.on("stream-subscribed", function (evt) {
+    console.log("three")
       let stream = evt.stream;
-    
       rt.addStream(stream);
-    });
+    
+ 
+    
+  var apiData = "https://virtualapi.multitvsolution.com/VstreamApi/index.php/api/vstream/getInfoByRTCId?channel_name="+250+"&rtc_id="+stream.getId()
+  axios.get(`${apiData}`)
+  .then((res) =>{
+    console.log("resLength", res.data.length)
+    this.setState({ participantName : [res.data[0].user_name, ...this.state.participantName]})
+  })
+     
+    }.bind(this));
 
     rt.client.on("stream-removed", function (evt) {
       let stream = evt.stream;
-     
+     console.log("four")
       rt.removeStream(stream.getId());
     });
+    rt.client.on("peer-added", function (evt) {
+      console.log("five")
+     
+    })
   };
 
   removeStream = (uid) => {
@@ -317,6 +366,11 @@ schdrularName;
   };
 
   addStream = (stream, push = false) => {
+  
+ 
+    this.hostId = stream.getId()
+  
+  
     let repeatition = this.state.streamList.some((item) => {
       return item.getId() === stream.getId();
     });

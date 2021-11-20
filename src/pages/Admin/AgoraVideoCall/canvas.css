@@ -11,6 +11,9 @@
   border: 2px #00B6ED solid;
   /* background: url('../../assets/images/avatar.png') center no-repeat; */
   height: 100%;
+  color : green;
+  font-weight: bold;
+  font-size: 20px;
   width: 100%;
 }
 

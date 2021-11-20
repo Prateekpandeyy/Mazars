@@ -30,6 +30,8 @@ import Loader from "../../../components/Loader/Loader";
 
 function Demo() {
   const userId = window.localStorage.getItem("tlkey");
+  const userEmail = window.localStorage.getItem("tlEmail")
+  const em = JSON.parse(userEmail)
   const history = useHistory();
 
   const [loading, setLoading] = useState(false);
@@ -249,11 +251,13 @@ function Demo() {
 
 // }
   //}
+  console.log("data", data.id)
 Cookies.set("channel_2", data.question_id);
 Cookies.set("baseMode_2", baseMode);
 Cookies.set("transcode_2", transcode);
 Cookies.set("attendeeMode_2", attendeeMode);
 Cookies.set("videoProfile_2", videoProfile);
+Cookies.set("tlid", data.id)
 // history.push("/teamleader/meeting/");
 history.push(`/teamleader/meeting/${data.id}`);
 

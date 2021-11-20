@@ -94,6 +94,7 @@ class AgoraCanvas extends React.Component {
   // userId = window.localStorage.getItem("tlkey");
   allrecording = [];
   teamKey = window.localStorage.getItem("tpkey");
+  tpEmail2 = window.localStorage.getItem("tpEmail");
   uid = Math.floor((Math.random() * 10000) + 1);
   channelName = this.props.channel
   tempArray = []
@@ -113,11 +114,14 @@ allrecording;
       this.subscribeStreamEvents();
 
       this.client.join($.appId, $.channel, $.uid, (uid) => {
-        this.state.uid = uid;
-        console.log("User " + uid + " join channel successfully");
-        console.log("At " + new Date().toLocaleTimeString());
-        // create local stream
-        // It is not recommended to setState in function addStream
+       
+        var data_post_api = "https://virtualapi.multitvsolution.com/VstreamApi/index.php/api/vstream/userdata?channel_name="+$.channel+"&rtm_id="+""+"&rtc_id="+uid+"&user_name="+JSON.parse(this.tpEmail2);
+   axios.get(`${data_post_api}`).
+   then((res) => {
+     console.log(res)
+   
+   })
+   this.setState({ uid : uid})
         this.localStream = this.streamInit(uid, $.attendeeMode, $.videoProfile);
         this.localStream.init(
           () => {
@@ -195,7 +199,11 @@ schdrularName;
           dom.setAttribute("id", "ag-item-" + id);
           dom.setAttribute("class", "ag-item");
           canvas.appendChild(dom);
+          var box22 = document.getElementById("ag-item-" + id)
+          var newContent = document.createTextNode(this.state.participantName);  
           item.play("ag-item-" + id);
+      
+         box22.appendChild(newContent)
         }
         if (index === no - 1) {
           dom.setAttribute("style", `grid-area: span 12/span 24/13/25`);
@@ -213,7 +221,8 @@ schdrularName;
     // tile mode
     else if (this.state.displayMode === "tile") {
       let no = this.state.streamList.length;
-      this.state.streamList.map((item, index) => {
+      this.state.streamList.map((item, index) => { 
+        let dom2
         let id = item.getId();
         let dom = document.querySelector("#ag-item-" + id);
         if (!dom) {
@@ -222,6 +231,12 @@ schdrularName;
           dom.setAttribute("class", "ag-item");
           canvas.appendChild(dom);
           item.play("ag-item-" + id);
+          var box22 = document.getElementById("ag-item-" + id)
+          
+          var newContent = document.createTextNode(this.state.participantName);  
+          item.play("ag-item-" + id);
+      
+         box22.appendChild(newContent)
         }
         dom.setAttribute("style", `grid-area: ${tile_canvas[no][index]}`);
         item.player.resize && item.player.resize();
@@ -331,6 +346,14 @@ schdrularName;
   };
 
   addStream = (stream, push = false) => {
+    this.hostId = stream.getId()
+    var apiData = "https://virtualapi.multitvsolution.com/VstreamApi/index.php/api/vstream/getInfoByRTCId?channel_name="+250+"&rtc_id="+stream.getId()
+    axios.get(`${apiData}`)
+    .then((res) =>{
+      console.log("participant", res.data[res.data.length - 1].user_name)
+      this.setState({ participantName : res.data[res.data.length - 1].user_name})
+    })
+    
     let repeatition = this.state.streamList.some((item) => {
       return item.getId() === stream.getId();
     });

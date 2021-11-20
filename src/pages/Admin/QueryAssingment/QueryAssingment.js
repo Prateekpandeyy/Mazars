@@ -21,7 +21,7 @@ import * as yup from "yup";
 import classNames from "classnames";
 import Mandatory from "../../../components/Common/Mandatory";
 import Loader from "../../../components/Loader/Loader";
-
+import { useHistory } from "react-router-dom";
 
 
 const Schema = yup.object().shape({
@@ -31,6 +31,7 @@ const Schema = yup.object().shape({
 
 
 function QueryAssingment(props) {
+  let history22 = useHistory()
   const alert = useAlert();
   const { handleSubmit, register, errors, reset } = useForm({
     resolver: yupResolver(Schema),
@@ -157,11 +158,12 @@ function QueryAssingment(props) {
           setLoading(false)
           var variable = "Query assigned successfully."
           Alerts.SuccessNormal(variable)
-          getQuery();
-          props.history.push({
-            pathname: `/admin/queriestab`,
-            index: 1,
-          });
+        //  getQuery();
+          // props.history.push({
+          //   pathname: `/admin/queriestab`,
+          //   index: 2,
+          // });
+          history22.push("/admin/queriestab")
         } if (response.data.code === 0) {
           setLoading(false)
         }

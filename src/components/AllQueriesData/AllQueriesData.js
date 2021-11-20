@@ -1,6 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
-import axios from "axios";
-import { baseUrl } from "../../config/config";
+import React, { useState,  useContext } from "react";
 import { Link } from "react-router-dom";
 import {
   Card,
@@ -11,11 +9,10 @@ import BootstrapTable from "react-bootstrap-table-next";
 import AdminFilter from "../../components/Search-Filter/AdminFilter";
 import Records from "../../components/Records/Records";
 import DiscardReport from "../../pages/Admin/AssignmentTab/DiscardReport";
-import { DataValue } from "../../pages/Admin/QueriesTab/QueriesTab";
+import { QueryData } from "../../pages/Admin/QueriesTab/QueriesTab";
 
-
-function AllQueriesData(props) {
-
+const AllQueriesData = React.memo((props) => {
+const qda = useContext(QueryData)
   const [allQueriesData, setAllQueriesData] = useState([])
   const [records, setRecords] = useState([]);
   const [assignNo, setAssignNo] = useState('');
@@ -25,26 +22,6 @@ function AllQueriesData(props) {
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key)
   }
-
-
-
-  useEffect(() => {
-    getAllQueriesData();
-  }, [props.allData]);
-
-  const getAllQueriesData = () => {
-    axios.get(`${baseUrl}/admin/getAllQueries`).then((res) => {
-     
-      if (res.data.code === 1) {
-       // setAllQueriesData(res.data.result);
-        setRecords(res.data.result.length);
-      }
-    });
-    setAllQueriesData(props.allData)
-  };
-
-
-
 
   const columns = [
     {
@@ -208,42 +185,42 @@ function AllQueriesData(props) {
 
   return (
     <>
-   
+   {qda.allData === undefined ?  "" :
       <Card>
         <CardHeader>
           <AdminFilter
-            setData={setAllQueriesData}
-            getData={getAllQueriesData}
+            setData={qda.setAllData}
+            getData={qda.CountAllQuery}
             allQueries="allQueries"
-            setRecords={setRecords}
+            setRecords={qda.setAllQueryCount}
             records={records}
           />
 
         </CardHeader>
         <CardBody>
-          <Records records={records} />
-         {allQueriesData != undefined ? 
+          <Records records={qda.allQueriesCount} />
+         
           <BootstrapTable
           bootstrap4
           keyField="id"
-          data={allQueriesData}
+          data={qda.allData}
           columns={columns}
           rowIndex
           wrapperClasses="table-responsive"
-        /> : ""}
+        />
 
 
           <DiscardReport
             ViewDiscussionToggel={ViewDiscussionToggel}
             ViewDiscussion={ViewDiscussion}
             report={assignNo}
-            getData={getAllQueriesData}
+            getData={qda.allData}
           />
 
         </CardBody>
-      </Card>
+      </Card>  }
     </>
   );
-}
+})
 
 export default AllQueriesData;

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
 import {
@@ -24,10 +24,10 @@ import BootstrapTable from "react-bootstrap-table-next";
 import History from "./History";
 import Swal from "sweetalert2";
 import Records from "../../components/Records/Records";
+import { QueryData } from "../../pages/Admin/QueriesTab/QueriesTab";
 
-
-function PendingAllocation({ CountPendingForAllocation }) {
-
+ const PendingAllocation = React.memo(({ CountPendingForAllocation }) => {
+const daq  = useContext(QueryData)
   const [pendingData, setPendingData] = useState([]);
   const [selectedData, setSelectedData] = useState([]);
   const [history, setHistory] = useState([]);
@@ -56,20 +56,20 @@ function PendingAllocation({ CountPendingForAllocation }) {
 
 
 
-  useEffect(() => {
-    getPendingForAllocation();
-  }, []);
+  // useEffect(() => {
+  //   getPendingForAllocation();
+  // }, []);
 
-  const getPendingForAllocation = () => {
-    axios.get(`${baseUrl}/admin/pendingAllocation`).then((res) => {
+  // const getPendingForAllocation = () => {
+  //   axios.get(`${baseUrl}/admin/pendingAllocation`).then((res) => {
     
-      if (res.data.code === 1) {
-        // CountPendingForAllocation(res.data.result.length);
-        setPendingData(res.data.result);
-        setRecords(res.data.result.length);
-      }
-    });
-  };
+  //     if (res.data.code === 1) {
+  //       // CountPendingForAllocation(res.data.result.length);
+  //       setPendingData(res.data.result);
+  //       setRecords(res.data.result.length);
+  //     }
+  //   });
+  // };
 
 
 
@@ -269,19 +269,19 @@ function PendingAllocation({ CountPendingForAllocation }) {
       <Card>
         <CardHeader>
           <AdminFilter
-            setData={setPendingData}
-            getData={getPendingForAllocation}
+            setData={daq.setAllInprogressAllocation}
+            getData={daq.CountInprogressAllocation}
             pendingAlloation="pendingAlloation"
-            setRecords={setRecords}
-            records={records}
+            setRecords={daq.setInprogressAllocation}
+            records={daq.inprogressAllocation}
           />
         </CardHeader>
         <CardBody>
-          <Records records={records} />
+          <Records records={daq.inprogressAllocation} />
           <BootstrapTable
             bootstrap4
             keyField="id"
-            data={pendingData}
+            data={daq.allInprogressAllocation}
             columns={columns}
             rowIndex
           />
@@ -290,6 +290,6 @@ function PendingAllocation({ CountPendingForAllocation }) {
       </Card>
     </>
   );
-}
+})
 
 export default PendingAllocation;
