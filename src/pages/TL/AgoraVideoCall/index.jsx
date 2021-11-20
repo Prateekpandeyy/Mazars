@@ -306,16 +306,18 @@ schdrularName;
 
     rt.client.on("stream-subscribed", function (evt) {
       let stream = evt.stream;
-    
-      rt.addStream(stream);
       var apiData = "https://virtualapi.multitvsolution.com/VstreamApi/index.php/api/vstream/getInfoByRTCId?channel_name="+250+"&rtc_id="+stream.getId()
-      axios.get(`${apiData}`)
-      .then((res) =>{
-  
-        this.setState({ participantName : res.data[0].user_name})
-      })
-         
-        }.bind(this));
+  axios.get(`${apiData}`)
+  .then((res) =>{
+   
+    this.setState({ participantName : res.data[0].user_name })
+    if(res.data != undefined){
+      rt.addStream(stream);
+    }
+  })
+    
+ 
+    }.bind(this));
 
     rt.client.on("stream-removed", function (evt) {
       let stream = evt.stream;

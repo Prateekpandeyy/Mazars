@@ -85,7 +85,7 @@ class AgoraCanvas extends React.Component {
       showButton : '',
       clickDisable : false,
       addRemote : null,
-      participantName : ''
+      participantName : 'participant'
     };
 
     this.toggleModal = this.toggleModal.bind(this);
@@ -109,7 +109,7 @@ allrecording;
 
   componentWillMount() {
     let $ = this.props;
-    console.log("done22")
+  
     // init AgoraRTC local client
     this.client = AgoraRTC.createClient({ mode: $.transcode });
     this.client.init($.appId, () => {
@@ -124,13 +124,7 @@ allrecording;
      console.log(res)
    
    })
-   console.log("uid", uid)
-        // fetch(data_post_api, {
-        //   method: "GET",
-        //   headers: {"Content-type": "application/json;charset=UTF-8"}
-        // }).then(response => response.json()).then(json => console.log("response after posting user data",json));
-        // this.state.uid = uid;
-       
+  
         this.setState({ uid : uid})
        console.log("done64")
         this.localStream = this.streamInit(uid, $.attendeeMode, $.videoProfile);
@@ -166,6 +160,7 @@ allrecording;
         btnGroup.classList.remove("active");
       }, 2000);
     });
+    this.subscribeStreamEvents()
     this.getSchedulerData()
     this.accuire();
     // this.accuire()
@@ -203,7 +198,7 @@ schdrularName;
         let dom = document.querySelector("#ag-item-" + id);
         let dom2 ;
         let meetingName;
-        if (!dom && this.state.participantName != undefined) {
+        if (!dom) {
           dom = document.createElement("section");
           dom.setAttribute("id", "ag-item-" + id);
           dom.setAttribute("class", "ag-item");
@@ -244,7 +239,7 @@ schdrularName;
           item.play("ag-item-" + id);
           var box22 = document.getElementById("ag-item-" + id)
           
-          var newContent = document.createTextNode(this.state.participantName); 
+          var newContent = document.createTextNode("I am Here" +  this.state.participantName); 
           item.play("ag-item-" + id);
       
          box22.appendChild(newContent)
@@ -321,17 +316,17 @@ schdrularName;
     rt.client.on("stream-subscribed", function (evt) {
     console.log("three")
       let stream = evt.stream;
-      rt.addStream(stream);
-    
- 
-    
-  var apiData = "https://virtualapi.multitvsolution.com/VstreamApi/index.php/api/vstream/getInfoByRTCId?channel_name="+250+"&rtc_id="+stream.getId()
+      var apiData = "https://virtualapi.multitvsolution.com/VstreamApi/index.php/api/vstream/getInfoByRTCId?channel_name="+250+"&rtc_id="+stream.getId()
   axios.get(`${apiData}`)
   .then((res) =>{
-    console.log("resLength", res.data.length)
-    this.setState({ participantName : [res.data[0].user_name, ...this.state.participantName]})
+   
+    this.setState({ participantName : res.data[0].user_name })
+    if(res.data != undefined){
+      rt.addStream(stream);
+    }
   })
-     
+    
+ 
     }.bind(this));
 
     rt.client.on("stream-removed", function (evt) {
@@ -346,10 +341,7 @@ schdrularName;
   };
 
   removeStream = (uid) => {
-  
     this.state.streamList.map((item, index) => {
-      console.log("getId", uid)
-      console.log("getItem", item.getId())
       if (item.getId() === uid) {
         item.close();
         let element = document.querySelector("#ag-item-" + uid);
@@ -366,11 +358,7 @@ schdrularName;
   };
 
   addStream = (stream, push = false) => {
-  
- 
     this.hostId = stream.getId()
-  
-  
     let repeatition = this.state.streamList.some((item) => {
       return item.getId() === stream.getId();
     });

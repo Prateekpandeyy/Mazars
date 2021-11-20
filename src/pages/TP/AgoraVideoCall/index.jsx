@@ -84,7 +84,9 @@ class AgoraCanvas extends React.Component {
       articleId2 : [],
       showRecBtn : false,
       showButton : '',
-      clickDisable : false
+      clickDisable : false,
+      addRemote : null,
+      participantName : ''
     };
 
     this.toggleModal = this.toggleModal.bind(this);
@@ -312,13 +314,18 @@ schdrularName;
 
     rt.client.on("stream-subscribed", function (evt) {
       let stream = evt.stream;
-      console.log("Got stream-subscribed event");
-      console.log(new Date().toLocaleTimeString());
-      console.log("Subscribe remote stream successfully: " + stream.getId());
-      console.log(evt);
+      var apiData = "https://virtualapi.multitvsolution.com/VstreamApi/index.php/api/vstream/getInfoByRTCId?channel_name="+250+"&rtc_id="+stream.getId()
+  axios.get(`${apiData}`)
+  .then((res) =>{
+   
+    this.setState({ participantName : res.data[0].user_name })
+    if(res.data != undefined){
       rt.addStream(stream);
-    });
-
+    }
+  })
+    
+ 
+    }.bind(this));
     rt.client.on("stream-removed", function (evt) {
       let stream = evt.stream;
       console.log("Stream removed: " + stream.getId());
@@ -347,12 +354,7 @@ schdrularName;
 
   addStream = (stream, push = false) => {
     this.hostId = stream.getId()
-    var apiData = "https://virtualapi.multitvsolution.com/VstreamApi/index.php/api/vstream/getInfoByRTCId?channel_name="+250+"&rtc_id="+stream.getId()
-    axios.get(`${apiData}`)
-    .then((res) =>{
-      console.log("participant", res.data[res.data.length - 1].user_name)
-      this.setState({ participantName : res.data[res.data.length - 1].user_name})
-    })
+   
     
     let repeatition = this.state.streamList.some((item) => {
       return item.getId() === stream.getId();
