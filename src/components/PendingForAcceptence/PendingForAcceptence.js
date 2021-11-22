@@ -205,7 +205,7 @@ function PendingForAcceptence({ pendingProposal }) {
       formatter: function nameFormatter(cell, row){
         var nfObject = new Intl.NumberFormat('hi-IN')
          var x = row.ProposedAmount;
-         console.log(nfObject.format(x))
+        
          return(
            <p>{nfObject.format(x)}</p>
          )
@@ -225,7 +225,7 @@ function PendingForAcceptence({ pendingProposal }) {
       formatter: function nameFormatter(cell, row){
         var nfObject = new Intl.NumberFormat('hi-IN')
          var x = row.accepted_amount;
-         console.log(nfObject.format(x))
+        
          return(
            <p>{nfObject.format(x)}</p>
          )

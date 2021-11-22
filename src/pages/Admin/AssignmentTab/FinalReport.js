@@ -67,8 +67,7 @@ function FinalReport() {
   //get category
   useEffect(() => {
     const getSubCategory = () => {
-      if(selectedData.length > 0){
-        axios
+      axios
         .get(`${baseUrl}/customers/getCategory?pid=${selectedData}`)
         .then((res) => {
         
@@ -76,7 +75,6 @@ function FinalReport() {
             setTax2(res.data.result);
           }
         });
-      }
     };
     getSubCategory();
   }, [selectedData]);

@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
 import {
@@ -17,27 +17,27 @@ import { Link, useParams } from "react-router-dom";
 import BootstrapTable from "react-bootstrap-table-next";
 import AdminFilter from "../Search-Filter/AdminFilter";
 import Records from "../../components/Records/Records";
-import { QueryData } from "../../pages/Admin/QueriesTab/QueriesTab";
-const DeclinedQueries = React.memo(({ CountPendingForPayment }) => {
-  const qda = useContext(QueryData)
+
+function DeclinedQueries({ CountPendingForPayment }) {
+
   const [pendingData, setPendingData] = useState([]);
   const [records, setRecords] = useState([]);
 
-  // useEffect(() => {
-  //   getPendingForPayment();
-  // }, []);
+  useEffect(() => {
+    getPendingForPayment();
+  }, []);
 
-  // const getPendingForPayment = () => {
-  //   axios.get(`${baseUrl}/admin/declinedQueries`).then((res) => {
+  const getPendingForPayment = () => {
+    axios.get(`${baseUrl}/admin/declinedQueries`).then((res) => {
     
-  //     if (res.data.code === 1) {
-  //       setPendingData(res.data.result);
-  //       setRecords(res.data.result.length);
+      if (res.data.code === 1) {
+        setPendingData(res.data.result);
+        setRecords(res.data.result.length);
 
-  //       // CountPendingForPayment(res.data.result.length);
-  //     }
-  //   });
-  // };
+        // CountPendingForPayment(res.data.result.length);
+      }
+    });
+  };
 
 
 
@@ -162,20 +162,20 @@ const DeclinedQueries = React.memo(({ CountPendingForPayment }) => {
       <Card>
         <CardHeader>
           <AdminFilter
-            setData={qda.setAllDeclinedQuery}
-            getData={qda.CountDeclined}
+            setData={setPendingData}
+            getData={getPendingForPayment}
             declinedQueries="declinedQueries"
-            setRecords={qda.setDeclined}
-            records={qda.declined}
+            setRecords={setRecords}
+            records={records}
           />
 
         </CardHeader>
         <CardBody>
-        <Records records={qda.declined} />
+        <Records records={records} />
           <BootstrapTable
             bootstrap4
             keyField="id"
-            data={qda.allDeclinedQuery}
+            data={pendingData}
             columns={columns}
             rowIndex
             wrapperClasses="table-responsive"
@@ -184,6 +184,6 @@ const DeclinedQueries = React.memo(({ CountPendingForPayment }) => {
       </Card>
     </>
   );
-})
+}
 
 export default DeclinedQueries;

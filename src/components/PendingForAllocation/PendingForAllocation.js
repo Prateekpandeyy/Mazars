@@ -1,5 +1,6 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
+import './Allocation.css';
 import { baseUrl } from "../../config/config";
 import {
   Card,
@@ -24,10 +25,10 @@ import BootstrapTable from "react-bootstrap-table-next";
 import History from "./History";
 import Swal from "sweetalert2";
 import Records from "../../components/Records/Records";
-import { QueryData } from "../../pages/Admin/QueriesTab/QueriesTab";
 
- const PendingAllocation = React.memo(({ CountPendingForAllocation }) => {
-const daq  = useContext(QueryData)
+
+function PendingAllocation({ CountPendingForAllocation }) {
+
   const [pendingData, setPendingData] = useState([]);
   const [selectedData, setSelectedData] = useState([]);
   const [history, setHistory] = useState([]);
@@ -56,20 +57,20 @@ const daq  = useContext(QueryData)
 
 
 
-  // useEffect(() => {
-  //   getPendingForAllocation();
-  // }, []);
+  useEffect(() => {
+    getPendingForAllocation();
+  }, []);
 
-  // const getPendingForAllocation = () => {
-  //   axios.get(`${baseUrl}/admin/pendingAllocation`).then((res) => {
+  const getPendingForAllocation = () => {
+    axios.get(`${baseUrl}/admin/pendingAllocation`).then((res) => {
     
-  //     if (res.data.code === 1) {
-  //       // CountPendingForAllocation(res.data.result.length);
-  //       setPendingData(res.data.result);
-  //       setRecords(res.data.result.length);
-  //     }
-  //   });
-  // };
+      if (res.data.code === 1) {
+        // CountPendingForAllocation(res.data.result.length);
+        setPendingData(res.data.result);
+        setRecords(res.data.result.length);
+      }
+    });
+  };
 
 
 
@@ -269,19 +270,19 @@ const daq  = useContext(QueryData)
       <Card>
         <CardHeader>
           <AdminFilter
-            setData={daq.setAllInprogressAllocation}
-            getData={daq.CountInprogressAllocation}
+            setData={setPendingData}
+            getData={getPendingForAllocation}
             pendingAlloation="pendingAlloation"
-            setRecords={daq.setInprogressAllocation}
-            records={daq.inprogressAllocation}
+            setRecords={setRecords}
+            records={records}
           />
         </CardHeader>
-        <CardBody>
-          <Records records={daq.inprogressAllocation} />
+        <CardBody className = "card-body2">
+          <Records records={records} />
           <BootstrapTable
             bootstrap4
             keyField="id"
-            data={daq.allInprogressAllocation}
+            data={pendingData}
             columns={columns}
             rowIndex
           />
@@ -290,6 +291,6 @@ const daq  = useContext(QueryData)
       </Card>
     </>
   );
-})
+}
 
 export default PendingAllocation;

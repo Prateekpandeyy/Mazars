@@ -77,7 +77,6 @@ const percent = {
     const { handleSubmit, register, errors, getValues, reset } = useForm();
 
 const getDataild = () => {
- if(props.id){
   axios
   .get(`${baseUrl}/admin/getPaymentDetail?tl_id=${JSON.parse(userid)}&invoice=1&invoice_id=${props.id}`)
 .then((res) => {
@@ -105,7 +104,6 @@ setTds(parseInt(i.tds_amount))
 }
 
 })
- }
 }
   // Cgst Tax function
 const cgstFun = (e) => {

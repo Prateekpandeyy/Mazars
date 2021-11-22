@@ -8,19 +8,17 @@ import PendingForProposals from "../../../components/PendingForProposals/Pending
 import DeclinedQueries from "../../../components/DeclinedQueries/DeclinedQueries";
 import AllQueriesData from "../../../components/AllQueriesData/AllQueriesData";
 import { Tab, Tabs, TabPanel, TabList } from "react-tabs";
-const QueryData = createContext()
+
 function QueriesTab(props) {
- 
+  
 
   const userid = window.localStorage.getItem("adminkey");
   const [allData, setAllData] = useState()
-  const [allQueriesCount, setAllQueriesCount] = useState();
+  const [allQueriesCount, setAllQueriesCount] = useState("");
   const [pendingProposalCount, setPendingProposalCount] = useState("");
-  const [allInprogressQuery, setAllInprogressQuery] = useState();
   const [declined, setDeclined] = useState("");
-  const [allDeclinedQuery, setAllDeclinedQuery] = useState()
   const [inprogressAllocation, setInprogressAllocation] = useState();
-  const [allInprogressAllocation, setAllInprogressAllocation] = useState()
+
 
   useEffect(() => {
     CountAllQuery();
@@ -45,7 +43,6 @@ function QueriesTab(props) {
      
       if (res.data.code === 1) {
         setInprogressAllocation(res.data.result.length);
-        setAllInprogressAllocation(res.data.result)
       }
     });
   };
@@ -55,7 +52,6 @@ function QueriesTab(props) {
      
       if (res.data.code === 1) {
         setPendingProposalCount(res.data.result.length);
-        setAllInprogressQuery(res.data.result)
       }
     });
   };
@@ -65,7 +61,6 @@ function QueriesTab(props) {
      
       if (res.data.code === 1) {
         setDeclined(res.data.result.length);
-        setAllDeclinedQuery(res.data.result);
       }
     });
   };
@@ -95,16 +90,11 @@ function QueriesTab(props) {
     color: "white",
     cursor: "pointer",
   };
-const qdata = {allData, allQueriesCount, setAllData, setAllQueriesCount, CountAllQuery,
-  inprogressAllocation, allInprogressAllocation, setInprogressAllocation, setAllInprogressAllocation,  CountInprogressAllocation , 
-  pendingProposalCount ,  allInprogressQuery,  setPendingProposalCount, setAllInprogressQuery, CountInprogressProposal, 
-  allDeclinedQuery, declined, setDeclined, setAllDeclinedQuery, CountDeclined
-}
+
   return (
-    <>
     <Layout adminDashboard="adminDashboard" adminUserId={userid}>
-  <QueryData.Provider value={qdata}>
-  <div>
+    
+      <div>
         <Tabs selectedIndex={tabIndex} onSelect={(index) => setTabIndex(index)}>
           <TabList
             style={{
@@ -129,7 +119,7 @@ const qdata = {allData, allQueriesCount, setAllData, setAllQueriesCount, CountAl
           </TabList>
 
           <TabPanel>
-            <AllQueriesData />
+            <AllQueriesData allData={allData}/>
           </TabPanel>
 
           <TabPanel>
@@ -145,17 +135,9 @@ const qdata = {allData, allQueriesCount, setAllData, setAllQueriesCount, CountAl
           </TabPanel>
         </Tabs>
       </div>
-     </QueryData.Provider>
      
     </Layout>
-    </>
   );
 }
 
-<<<<<<< HEAD
 export default QueriesTab;
-=======
-export default QueriesTab;
-export {QueryData}
-
->>>>>>> 2a49f9fe3ed2879f36f8145c1c04ee5ede6caa70

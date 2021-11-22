@@ -1,4 +1,4 @@
-import React, { useState,  useContext } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
 import { Link } from "react-router-dom";
@@ -22,13 +22,16 @@ import { Select } from "antd";
 import BootstrapTable from "react-bootstrap-table-next";
 import AdminFilter from "../../components/Search-Filter/AdminFilter";
 import Records from "../../components/Records/Records";
-import { QueryData } from "../../pages/Admin/QueriesTab/QueriesTab";
 
 
-const PendingForProposals = React.memo(({ CountPendingProposal }) => {
-  const qda = useContext(QueryData)
+function PendingForProposals({ CountPendingProposal }) {
   const { handleSubmit, register, errors, reset } = useForm();
-  
+  const { Option, OptGroup } = Select;
+
+  const [nonpendingData, setNonPendingData] = useState([]);
+  const [selectedData, setSelectedData] = useState([]);
+  const [records, setRecords] = useState([]);
+
   const [history, setHistory] = useState([]);
   const [modal, setModal] = useState(false);
 
@@ -50,6 +53,20 @@ const PendingForProposals = React.memo(({ CountPendingProposal }) => {
       .catch((error) => console.log(error));
   };
 
+  useEffect(() => {
+    getPendingForProposals();
+  }, []);
+
+  const getPendingForProposals = () => {
+    axios.get(`${baseUrl}/admin/pendingProposal`).then((res) => {
+      
+      if (res.data.code === 1) {
+        setNonPendingData(res.data.result);
+        setRecords(res.data.result.length);
+        // CountPendingProposal(res.data.result.length);
+      }
+    });
+  };
 
 
 
@@ -171,20 +188,20 @@ const PendingForProposals = React.memo(({ CountPendingProposal }) => {
       <Card>
         <CardHeader>
           <AdminFilter
-            setData={qda.setAllInprogressQuery}
-            getData={qda.CountInprogressProposal}
+            setData={setNonPendingData}
+            getData={getPendingForProposals}
             pendingForProposal="pendingForProposal"
-            setRecords={qda.setPendingProposalCount}
-            records={qda.pendingProposalCount}
+            setRecords={setRecords}
+            records={records}
           />
 
         </CardHeader>
         <CardBody>
-          <Records records={qda.pendingProposalCount} />
+          <Records records={records} />
           <BootstrapTable
             bootstrap4
             keyField="id"
-            data={qda.allInprogressQuery}
+            data={nonpendingData}
             columns={columns}
             wrapperClasses="table-responsive"
           />
@@ -227,6 +244,6 @@ const PendingForProposals = React.memo(({ CountPendingProposal }) => {
       </Card>
     </>
   );
-})
+}
 
 export default PendingForProposals;
