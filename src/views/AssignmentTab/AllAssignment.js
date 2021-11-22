@@ -123,15 +123,21 @@ function AllAssignment() {
         return { fontSize: "12px" };
       },
       formatter: function nameFormatter(cell, row) {
-       
+              
         return (
-          <>
-            <Link to={`/customer/my-assingment/${row.id}`}>
-              {row.assign_no}
-            </Link>
-          </>
+            <>
+                <Link
+                    to={{
+                        pathname: `/customer/my-assingment/${row.id}`,
+                        index: 0,
+                        routes: "assignment",
+                    }}
+                >
+                    {row.assign_no}
+                </Link>
+            </>
         );
-      },
+    },
     },
     {
       dataField: "parent_id",

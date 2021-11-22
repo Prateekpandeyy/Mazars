@@ -116,7 +116,13 @@ function ProposalTab() {
               
                 return (
                     <>
-                        <Link to={`/customer/my-assingment/${row.q_id}`}>
+                        <Link
+                            to={{
+                                pathname: `/customer/my-assingment/${row.q_id}`,
+                                index: 0,
+                                routes: "proposal",
+                            }}
+                        >
                             {row.assign_no}
                         </Link>
                     </>

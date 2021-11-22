@@ -109,10 +109,16 @@ function CustomerDeclinedPayment() {
                 return { fontSize: "12px" };
             },
             formatter: function nameFormatter(cell, row) {
-            
+              
                 return (
                     <>
-                        <Link to={`/customer/my-assingment/${row.id}`}>
+                        <Link
+                            to={{
+                                pathname: `/customer/my-assingment/${row.id}`,
+                                index: 3,
+                                routes: "assignment",
+                            }}
+                        >
                             {row.assign_no}
                         </Link>
                     </>

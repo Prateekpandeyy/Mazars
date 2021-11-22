@@ -166,6 +166,7 @@ function Unpaid() {
                         <Link
                             to={{
                                 pathname: `/customer/my-assingment/${row.assign_id}`,
+                                index : 2,
                                 routes: "paymentstatus",
                             }}
                         >

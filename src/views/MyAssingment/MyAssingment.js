@@ -5,7 +5,7 @@ import axios from "axios";
 import { baseUrl } from "../../config/config";
 import QueryDetails from "../../components/QueryDetails/QueryDetails";
 import moment from 'moment';
-function MyAssingment() {
+function MyAssingment(props) {
   const { id } = useParams();
   const history = useHistory();
 
@@ -26,6 +26,8 @@ function MyAssingment() {
   const [tlName2, setTlname] = useState();
   const [qstatus, setqStatus] = useState();
   const[tp22, setTp22] = useState();
+  const [declined2, setDeclined2] = useState();
+  const [declinedStatus, setDeclinedStatus] = useState(false)
     const [diaplayProposal, setDisplayProposal] = useState({
     amount: "",
     accepted_amount: "",
@@ -85,7 +87,12 @@ function MyAssingment() {
             let finalDate = d.days() + 1;
            setFinalDate(finalDate)
           }
-         
+          if(res.data.result[0].status =="Declined Query"){
+        
+            let a = res.data.result[0].declined_date.split(" ")[0].split("-").reverse().join("-")
+              setDeclined2(a)
+             setDeclinedStatus(true)
+            }
           setSubmitData(res.data.result);
           setDisplaySpecific(res.data.additional_queries);
           setPaymentDetails(res.data.payment_detail);
@@ -193,12 +200,19 @@ function MyAssingment() {
             >
               <h2 class="mb-0 query">
                 <div>
+                <Link
+                  to={{
+                    pathname: `/customer/${props.location.routes}`,
+                    index: props.location.index,
+                  }}
+                >
                   <button
                     class="btn btn-success ml-3"
-                    onClick={() => history.goBack()}
+                   
                   >
                     Go Back
                   </button>
+                  </Link>
                 </div>
               </h2>
             </div>
@@ -227,6 +241,7 @@ function MyAssingment() {
                 tp22 = {tp22}
                 qstatus={qstatus}
                 finalDate={finalDate}
+                declined2={declined2}
               />
             ))}
           </div>

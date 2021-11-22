@@ -91,15 +91,21 @@ function DeclinedQueries() {
         return { fontSize: "12px" };
       },
       formatter: function nameFormatter(cell, row) {
-       
+              
         return (
-          <>
-            <Link to={`/customer/my-assingment/${row.id}`}>
-              {row.assign_no}
-            </Link>
-          </>
+            <>
+                <Link
+                    to={{
+                        pathname: `/customer/my-assingment/${row.id}`,
+                        index: 3,
+                        routes: "queries",
+                    }}
+                >
+                    {row.assign_no}
+                </Link>
+            </>
         );
-      },
+    },
     },
     {
       text: "Category",

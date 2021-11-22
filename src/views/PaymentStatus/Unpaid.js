@@ -168,6 +168,7 @@ function Paid() {
             <Link
               to={{
                 pathname: `/customer/my-assingment/${row.assign_id}`,
+                index : 1,
                 routes: "paymentstatus",
               }}
             >

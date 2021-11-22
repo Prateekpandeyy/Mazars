@@ -98,10 +98,16 @@ function InprogressProposal() {
                 return { fontSize: "11px" };
             },
             formatter: function nameFormatter(cell, row) {
-               
+              
                 return (
                     <>
-                        <Link to={`/customer/my-assingment/${row.q_id}`}>
+                        <Link
+                            to={{
+                                pathname: `/customer/my-assingment/${row.q_id}`,
+                                index: 1,
+                                routes: "proposal",
+                            }}
+                        >
                             {row.assign_no}
                         </Link>
                     </>
