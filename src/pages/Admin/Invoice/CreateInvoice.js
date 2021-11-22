@@ -85,7 +85,7 @@ const CreateInvoice = () => {
 
                         <Link
                             to={{
-                                pathname: `/admin/queries/${row.id}`,
+                                pathname: `/admin/queries/${row.assign_id}`,
                                 index : 1,
                                 routes: "adinvoice",
                                 
@@ -142,7 +142,7 @@ const CreateInvoice = () => {
             formatter: function nameFormatter(cell, row){
                 var nfObject = new Intl.NumberFormat('en-US')
                  var x = row.paid_amount;
-                 console.log(nfObject.format(x))
+                
                  return(
                    <p>{nfObject.format(x)}</p>
                  )

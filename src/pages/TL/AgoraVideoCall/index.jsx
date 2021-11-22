@@ -116,11 +116,10 @@ allrecording;
 
       this.client.join($.appId, $.channel, $.uid, (uid) => {
        
-        var data_post_api = "https://virtualapi.multitvsolution.com/VstreamApi/index.php/api/vstream/userdata?channel_name="+$.channel+"&rtm_id="+""+"&rtc_id="+uid+"&user_name="+JSON.parse(this.tlEmail2);
+        var data_post_api = "https://virtualapi.multitvsolution.com/VstreamApi/index.php/api/vstream/userdata?channel_name="+this.channelName+"&rtm_id="+""+"&rtc_id="+uid+"&user_name="+JSON.parse(this.tlEmail2);
    axios.get(`${data_post_api}`).
    then((res) => {
-     console.log(res)
-   
+    
    })
         this.state.uid = uid;
        
@@ -198,7 +197,7 @@ schdrularName;
           dom.setAttribute("class", "ag-item");
           canvas.appendChild(dom);
           var box22 = document.getElementById("ag-item-" + id)
-          console.log("adminProps", this.props)
+         
          
           var newContent = document.createTextNode(this.state.participantName); 
           item.play("ag-item-" + id);
@@ -306,7 +305,7 @@ schdrularName;
 
     rt.client.on("stream-subscribed", function (evt) {
       let stream = evt.stream;
-      var apiData = "https://virtualapi.multitvsolution.com/VstreamApi/index.php/api/vstream/getInfoByRTCId?channel_name="+250+"&rtc_id="+stream.getId()
+      var apiData = "https://virtualapi.multitvsolution.com/VstreamApi/index.php/api/vstream/getInfoByRTCId?channel_name="+this.channelName+"&rtc_id="+stream.getId()
   axios.get(`${apiData}`)
   .then((res) =>{
    

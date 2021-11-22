@@ -37,7 +37,7 @@ function InCompleteData({ CountIncomplete }) {
     axios
       .get(`${baseUrl}/tl/getIncompleteQues?tp_id=${JSON.parse(userid)}&status=1`)
       .then((res) => {
-        console.log(res);
+       
         if (res.data.code === 1) {
           setInCompleteData(res.data.result);
           setRecords(res.data.result.length);
@@ -72,7 +72,7 @@ function InCompleteData({ CountIncomplete }) {
         return { fontSize: "12px" };
       },
       formatter: function nameFormatter(cell, row) {
-        console.log(row);
+
         return (
           <>
             <Link
@@ -120,7 +120,7 @@ function InCompleteData({ CountIncomplete }) {
         return { fontSize: "12px" };
       },
       formatter: function dateFormat(cell, row) {
-        console.log("dt", row.Exp_Delivery_Date);
+     
         var oldDate = row.Exp_Delivery_Date;
         if (oldDate == null) {
           return null;

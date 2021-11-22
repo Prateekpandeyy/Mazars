@@ -99,7 +99,7 @@ const Invoice = () => {
 
                         <Link
                             to={{
-                                pathname: `/teamleader/queries/${row.id}`,
+                                pathname: `/teamleader/queries/${row.assign_id}`,
                                 index : 1,
                                 routes: "tlinvoice",
                             }}
@@ -155,7 +155,7 @@ const Invoice = () => {
             formatter: function nameFormatter(cell, row){
                 var nfObject = new Intl.NumberFormat('hi-IN')
                  var x = row.paid_amount;
-                 console.log(nfObject.format(x))
+                
                  return(
                    <p>{nfObject.format(x)}</p>
                  )

@@ -118,7 +118,7 @@ function EditTL() {
   }, [])
   const getTeamLeader = () => {
     axios.get(`${baseUrl}/tl/getTeamLeader?id=${id}`).then((res) => {
-   console.log(res.data.result[0].is_delete)
+ 
       if (res.data.code === 1) {
         setValue(res.data.result[0]);
         setStore(res.data.result[0].pcat_id);
@@ -379,7 +379,7 @@ function EditTL() {
 
 //email validaation with api
 const emailValidation = (key) => {
-console.log(key.target.value)
+
   var validRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   if (email.match(validRegex)) {
     setWemail("");
@@ -483,7 +483,7 @@ const checktlPost = (e) => {
   })
   }
  const tlName22 = (e) => {
-   console.log(e.target.value)
+   
    data6 = e.target.value
  }
  const del = (e) => {

@@ -34,13 +34,12 @@ const PayDetails = () => {
     const [modalData, setModalData] = useState()
     const [showTable, setShowTable] = useState(null);
     const paydetails2 = () => {
-axios.get(`${baseUrl}/admin/getPaymentDetail?id=${id}&&status=1`)
+axios.get(`${baseUrl}/admin/getPaymentDetail?id=${id}`)
 .then((res) => {
     if(res.data.code === 1){
-       console.log("res", res)
+      
         setPaymentDetail(res.data.payment_detail)
-        //console.log(res.data.payment_detail.length)
-       // setShowTable(res.data.payment_detail[0].invoice_generated)
+       
        if(res.data.payment_detail.length > 0){
            setShowTable(true)
        }

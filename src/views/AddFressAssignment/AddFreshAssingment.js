@@ -337,16 +337,20 @@ function AddFreshAssingment(props) {
                     </div>
 
                     <div className="col-md-6">
-                      <div className="mb-3">
-                        <label className="form-label">Case name</label>
-                        <input
-                          type="text"
-                          name="p_case_name"
-                          ref={register}
-
-                          className="form-control"
+                    <div className="mb-3">
+                        <label className="form-label">
+                        Purpose of the query <span className="declined">*</span>
+                        </label>
+                        <Select
+                          closeMenuOnSelect={false}
+                          className={selectError ? "customError" : ""}
+                          onChange={purPoseQuery}
+                          isMulti
+                          options={purpose}
                         />
+
                       </div>
+                     
                     </div>
 
                     <div className="col-md-6">
@@ -417,7 +421,20 @@ function AddFreshAssingment(props) {
                       </div>
                     </div>
                     <div className="col-md-6">
-                      <div className="mb-3">
+                    <div className="mb-3">
+                        <label className="form-label">Case name</label>
+                        <input
+                          type="text"
+                          name="p_case_name"
+                          ref={register}
+
+                          className="form-control"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="col-md-6">
+                    <div className="mb-3">
                         <label className="form-label">
                           Timelines within which Opinion is Required
                         </label>
@@ -445,22 +462,7 @@ function AddFreshAssingment(props) {
                           <label>Regular (10-12 Working Days)</label>
                         </div>
                       </div>
-                    </div>
-
-                    <div className="col-md-6">
-                      <div className="mb-3">
-                        <label className="form-label">
-                        Purpose of the query <span className="declined">*</span>
-                        </label>
-                        <Select
-                          closeMenuOnSelect={false}
-                          className={selectError ? "customError" : ""}
-                          onChange={purPoseQuery}
-                          isMulti
-                          options={purpose}
-                        />
-
-                      </div>
+                     
                     </div>
                   </div>
 

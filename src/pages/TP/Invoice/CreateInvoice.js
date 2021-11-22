@@ -91,7 +91,7 @@ const CreateInvoice = () => {
 
                         <Link
                             to={{
-                                pathname: `/taxprofessional/queries/${row.id}`,
+                                pathname: `/taxprofessional/queries/${row.assign_id}`,
                                 routes: "proposal",
                             }}
                         >
@@ -146,7 +146,7 @@ const CreateInvoice = () => {
             formatter: function nameFormatter(cell, row){
                 var nfObject = new Intl.NumberFormat('hi-IN')
                  var x = row.paid_amount;
-                 console.log(nfObject.format(x))
+             
                  return(
                    <p>{nfObject.format(x)}</p>
                  )

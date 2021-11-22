@@ -120,7 +120,7 @@ function ProposalComponent(props) {
         formData.append("due_date", "")
 
     if (payment.length < 1) {
-      console.log("please select payments terms --")
+     
       setpaymentError("Please select at lease one")
     } else
       if (payment.value == "installment") {

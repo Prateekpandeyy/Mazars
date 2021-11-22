@@ -51,7 +51,17 @@ function ProposalDetails({
     ))
     return dataItem;
   }
-
+  const installAmount2 = (data) => {
+    var item = data.split(',')
+   
+    const dataItem = item.map((p, i) =>
+    (
+      <>
+        <p>{nfObject.format(p)}</p>
+      </>
+    ))
+    return dataItem;
+  }
   // curent date
   var date = new Date();
   function convert(str) {
@@ -221,9 +231,10 @@ function ProposalDetails({
                       
                       </tr>
                       <tr>
+                       
                         <td>{payment_terms}</td>
                         <td>{no_of_installment}</td>
-                        <td>{installAmount(installment_amount)}</td>
+                        <td>{installAmount2(installment_amount)}</td>
                         <td>{installAmount(due_date)}</td>
                         <td>{}</td>
                       </tr>

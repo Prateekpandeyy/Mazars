@@ -558,7 +558,7 @@ function AssignmentComponent() {
           </form>
         </CardHeader>
 
-        <CardBody>
+        <CardBody className="card-body2">
           <Records records={records} />
           <BootstrapTable
             bootstrap4

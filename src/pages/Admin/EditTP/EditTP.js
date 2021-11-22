@@ -329,7 +329,7 @@ function EditTP() {
 
   // Category Function
   const category = (v) => {
-    console.log("vvv", v)
+    
     selectInputRef.current.select.clearValue();
    
     setCategoryData(v)

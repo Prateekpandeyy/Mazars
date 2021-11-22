@@ -7,11 +7,11 @@ import './queryStyle.css';
 function BasicQuery({qstatus, p, diaplaySpecific, queryDocs, year, purpose, declined2,
   declinedStatus }) {
 
-console.log("ppp", p)
+
 
   return (
     <>
-      <div>
+      <div style={{display : "block", height: "65vh", overflow :"scroll"}}>
         <p
           style={{
             textAlign: "center",

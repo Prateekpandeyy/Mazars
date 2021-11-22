@@ -6,14 +6,12 @@ import { baseUrl } from "../../config/config";
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
+
 import Collapse from '@mui/material/Collapse';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import DraftsIcon from '@mui/icons-material/Drafts';
-import SendIcon from '@mui/icons-material/Send';
+
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
-import StarBorder from '@mui/icons-material/StarBorder';
+import { useHistory } from "react-router";
 import './list.css';
 import ScheduleIcon from '@material-ui/icons/Schedule';
 function Sidebar({ adminDashboard, custDashboard, TLDashboard, TPDashboard , feedbackNumber}) {
@@ -22,9 +20,11 @@ function Sidebar({ adminDashboard, custDashboard, TLDashboard, TPDashboard , fee
   const [feedbackNumbertl, setfeedbackNumbertl] = useState();
   const [feedbackNumbertp, setfeedbackNumbertp] = useState();
   const [open, setOpen] = useState(false)
+  const [logo, setLogo] = useState("customer/dashboard")
   const tlkey= window.localStorage.getItem("tlkey");
   const tpkey = window.localStorage.getItem("tpkey");
   const adminkey = window.localStorage.getItem("adminkey")
+  let history = useHistory()
   const toggleTab = (index) => {
   
     setToggleState(index);
@@ -39,19 +39,27 @@ const feedNumber = {
   padding: "9px 10px",
     borderRadius: "50%"
 }
+useEffect(() => {
+  getFeedback4();
+}, [custDashboard])
+
 
 useEffect(() => {
   getFeedback2();
 }, [adminDashboard])
+
+const getFeedback4 = () => {
+  setLogo("/#/customer/dashboard")
+}
 const getFeedback2 = () => {
   if(adminDashboard != undefined){
     axios.get(`${baseUrl}/admin/getFeedback?uid=${JSON.parse(adminkey)}&&type=total`).then((res) => {
-
+setLogo("admin/dashboard")
       if (res.data.code === 1) {
        
        if(res.data.result != undefined){
          setfeedbackNumber2(res.data.result[0].total)
-       
+         setLogo("/#/admin/dashboard")
        }
       }
     });
@@ -66,10 +74,10 @@ const getFeedbacktl = () => {
   axios
   .get(`${baseUrl}/customers/getFeedback?tl_id=${JSON.parse(tlkey)}&&type=total`)
   .then((res) => {
-
+    setLogo("teamleader/dashboard")
     if(res.data.result != undefined){
       setfeedbackNumbertl(res.data.result[0].total)
-    
+      setLogo("/#/teamleader/dashboard")
     }
   });
  }
@@ -86,10 +94,10 @@ const getFeedbacktp = () => {
     axios
     .get(`${baseUrl}/customers/getFeedback?tp_id=${JSON.parse(tpkey)}&&type=total`)
     .then((res) => {
-
+      setLogo("taxprofessional/dashboard")
       if(res.data.result != undefined){
         setfeedbackNumbertp(res.data.result[0].total)
-      
+        setLogo("/#/taxprofessional/dashboard")
       }
     });
   }
@@ -115,8 +123,9 @@ const handleClick = () => {
         <div class="navbar-header">
           <ul class="nav navbar-nav flex-row">
             <li class="nav-item mr-auto">
-              <a class="navbar-brand" href="questionnaire.html">
+              <a class="navbar-brand" href={logo}>
                 <img
+
                   class="brand-logo"
                   alt="Chameleon admin logo"
                   src="https://themeselection.com/demo/chameleon-free-bootstrap-admin-template/theme-assets/images/logo/logo.png"

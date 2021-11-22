@@ -103,7 +103,7 @@ function QueriesRecevied(props) {
           }
          
          if(res.data.result[0].status =="Declined Query"){
-           console.log(res.data.result[0].declined_date.split(" ")[0].split("-").reverse().join("-"))
+        
          let a = res.data.result[0].declined_date.split(" ")[0].split("-").reverse().join("-")
            setDeclined2(a)
           setDeclinedStatus(true)

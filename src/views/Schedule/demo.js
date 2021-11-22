@@ -193,18 +193,18 @@ function Demo() {
   const handleJoin = (data) => {
     // console.log("data", data);
 //  console.log("data", data)
-// console.log(data.startDate)
-var dt = new Date(data.startDate)
-var dt2 = new Date()
-let ck = dt.getMonth();
+// // console.log(data.startDate)
+// var dt = new Date(data.startDate)
+// var dt2 = new Date()
+// let ck = dt.getMonth();
 
-let pp = dt2.getMonth();
-let rr = dt2.getHours();
-let ss = dt.getHours()
-let mm = dt2.getMinutes() + 20
-let dd = dt.getMinutes()
-let ee = dt.getDate();
-let eee = dt2.getDate()
+// let pp = dt2.getMonth();
+// let rr = dt2.getHours();
+// let ss = dt.getHours()
+// let mm = dt2.getMinutes() + 20
+// let dd = dt.getMinutes()
+// let ee = dt.getDate();
+// let eee = dt2.getDate()
 //   console.log("dt", dt)
 //   console.log(dt2.getDate())
 //  console.log(dt.getMinutes())
@@ -222,30 +222,36 @@ let eee = dt2.getDate()
 //   console.log(mm > dd)
 
 
-if(ck == pp && ss == rr && ee == eee){
+//if(ck == pp && ss == rr && ee == eee){
 
 
-if(mm > dd){
-  console.log("passed")
+// if(mm > dd){
+//   console.log("passed")
   
-  Cookies.set("channel", data.question_id);
-  Cookies.set("baseMode", baseMode);
-  Cookies.set("transcode", transcode);
-  Cookies.set("attendeeMode", attendeeMode);
-  Cookies.set("videoProfile", videoProfile);
-  history.push("/customer/meeting");
+//   Cookies.set("channel", data.question_id);
+//   Cookies.set("baseMode", baseMode);
+//   Cookies.set("transcode", transcode);
+//   Cookies.set("attendeeMode", attendeeMode);
+//   Cookies.set("videoProfile", videoProfile);
+//   history.push("/customer/meeting");
 
-}
-else{
-// return false
+// }
+// else{
+// // return false
+// Cookies.set("channel", data.question_id);
+// Cookies.set("baseMode", baseMode);
+// Cookies.set("transcode", transcode);
+// Cookies.set("attendeeMode", attendeeMode);
+// Cookies.set("videoProfile", videoProfile);
+// history.push("/customer/meeting");
+// }
+// }
 Cookies.set("channel", data.question_id);
 Cookies.set("baseMode", baseMode);
 Cookies.set("transcode", transcode);
 Cookies.set("attendeeMode", attendeeMode);
 Cookies.set("videoProfile", videoProfile);
 history.push("/customer/meeting");
-}
-}
 
 
   };

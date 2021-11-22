@@ -112,15 +112,15 @@ allrecording;
     // init AgoraRTC local client
     this.client = AgoraRTC.createClient({ mode: $.transcode });
     this.client.init($.appId, () => {
-      console.log("AgoraRTC client initialized");
+  
       this.subscribeStreamEvents();
 
       this.client.join($.appId, $.channel, $.uid, (uid) => {
        
-        var data_post_api = "https://virtualapi.multitvsolution.com/VstreamApi/index.php/api/vstream/userdata?channel_name="+$.channel+"&rtm_id="+""+"&rtc_id="+uid+"&user_name="+JSON.parse(this.tpEmail2);
+        var data_post_api = "https://virtualapi.multitvsolution.com/VstreamApi/index.php/api/vstream/userdata?channel_name="+this.channelName+"&rtm_id="+""+"&rtc_id="+uid+"&user_name="+JSON.parse(this.tpEmail2);
    axios.get(`${data_post_api}`).
    then((res) => {
-     console.log(res)
+    
    
    })
    this.setState({ uid : uid})
@@ -130,13 +130,13 @@ allrecording;
             if ($.attendeeMode !== "audience") {
               this.addStream(this.localStream, true);
               this.client.publish(this.localStream, (err) => {
-                console.log("Publish local stream error: " + err);
+               
               });
             }
             this.setState({ readyState: true });
           },
           (err) => {
-            console.log("getUserMedia failed", err);
+         
             this.setState({ readyState: true });
           }
         );
@@ -164,12 +164,12 @@ allrecording;
 schdrularName;
 
   getSchedulerData =() =>{
-    console.log("getSchedulerData--",this.props.id)
+    
 
     axios
     .get(`${baseUrl}/tl/videoScheduler?id=${this.props.id}`)
             .then((res) => {
-                console.log(res);
+              
            
                
                 if (res.data.code === 1) {
@@ -259,10 +259,10 @@ schdrularName;
     this.client &&
       this.client.leave(
         () => {
-          console.log("Client succeed to leave.");
+        
         },
         () => {
-          console.log("Client failed to leave.");
+         
         }
       );
   }
@@ -297,24 +297,20 @@ schdrularName;
     let rt = this;
     rt.client.on("stream-added", function (evt) {
       let stream = evt.stream;
-      console.log("New stream added: " + stream.getId());
-      console.log("At " + new Date().toLocaleTimeString());
-      console.log("Subscribe ", stream);
+     
       rt.client.subscribe(stream, function (err) {
-        console.log("Subscribe stream failed", err);
+       
       });
     });
 
     rt.client.on("peer-leave", function (evt) {
-      console.log("Peer has left: " + evt.uid);
-      console.log(new Date().toLocaleTimeString());
-      console.log(evt);
+   
       rt.removeStream(evt.uid);
     });
 
     rt.client.on("stream-subscribed", function (evt) {
       let stream = evt.stream;
-      var apiData = "https://virtualapi.multitvsolution.com/VstreamApi/index.php/api/vstream/getInfoByRTCId?channel_name="+250+"&rtc_id="+stream.getId()
+      var apiData = "https://virtualapi.multitvsolution.com/VstreamApi/index.php/api/vstream/getInfoByRTCId?channel_name="+this.channelName+"&rtc_id="+stream.getId()
   axios.get(`${apiData}`)
   .then((res) =>{
    
@@ -328,9 +324,7 @@ schdrularName;
     }.bind(this));
     rt.client.on("stream-removed", function (evt) {
       let stream = evt.stream;
-      console.log("Stream removed: " + stream.getId());
-      console.log(new Date().toLocaleTimeString());
-      console.log(evt);
+     
       rt.removeStream(stream.getId());
     });
   };
@@ -475,15 +469,12 @@ schdrularName;
       this.shareClient = AgoraRTC.createClient({ mode: $.transcode });
 
       this.shareClient.init($.appId, () => {
-        console.log("AgoraRTC client initialized");
+     
 
         this.subscribeStreamEvents();
         this.shareClient.join($.appId, $.channel, $.uid, (uid) => {
           this.state.uid = uid;
-          console.log("User " + uid + " join channel successfully");
-          console.log("At " + new Date().toLocaleTimeString());
-          // create local stream
-          // It is not recommended to setState in function addStream
+        
           
           this.shareStream = this.streamInitSharing(
             uid,
@@ -495,13 +486,13 @@ schdrularName;
               if ($.attendeeMode !== "audience") {
                 this.addStream(this.shareStream, true);
                 this.shareClient.publish(this.shareStream, (err) => {
-                  console.log("Publish local stream error: " + err);
+               
                 });
               }
               this.setState({ readyState: true });
             },
             (err) => {
-              console.log("getUserMedia failed", err);
+         
               this.setState({ readyState: true });
             }
           );
@@ -539,11 +530,11 @@ schdrularName;
 
 
   CreateS3Folder = (uid) =>{
-    console.log("CreateS3Folder",uid)
+   
     axios
             .get(`https://virtualapi.multitvsolution.com/s3/createMPObject.php?folder_id=${JSON.parse(uid)}`)
             .then((res) => {
-                console.log(res);    
+                 
             });
   }
 
@@ -594,7 +585,7 @@ async GetRecordingStatus(json){
 
 //start recording
 async startRecording(key){
-    console.log("startRecording - ",key);
+   
     var resourceId = key.data.resourceId 
     
     this.CreateS3Folder(JSON.stringify(this.uid));
@@ -614,14 +605,14 @@ async startRecording(key){
     })
     .then(json => this.GetRecordingStatus(json)) 
       .catch((error) => {
-        console.log("error - ", error);
+       
       });
   };
 
 
   //recording  acquire
    accuire = () =>{
-    console.log("accuire - ");
+   
     var data = "{\n  \"cname\": \"" + this.channelName + "\",\n  \"uid\": \"" + this.uid + "\",\n  \"clientRequest\":{\n  }\n}"
 
     axios({
@@ -636,9 +627,9 @@ async startRecording(key){
     })
       .then(json => 
         this.startRecording(json)) 
-        // console.log("accuire - ",json))
+      
       .catch((error) => {
-        console.log("error - ", error);
+     
       });
   };
 // Start recording button
@@ -670,7 +661,7 @@ this.localStream.disableAudio())
 }
 
 else if(this.state.showButton == JSON.parse(this.teamKey)){
-console.log("done2")
+
   if(resourceId === undefined){
     var resourceId = localStorage.getItem("resourceId");
   var sid = localStorage.getItem("sid");
@@ -710,8 +701,7 @@ window.location.hash = "/taxprofessional/schedule";
 
 render() {
 
-  // console.log("data",this.state.data)
-
+ 
   const style = {
     display: "grid",
     gridGap: "50px 26px",
@@ -826,7 +816,7 @@ const recordingBtnOff = (
   </span>
 );
 
-console.log(this.state.showRecBtn)
+
     return (
       <>
       <div id="ag-canvas" style={style}>   

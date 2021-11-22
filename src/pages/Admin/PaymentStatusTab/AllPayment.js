@@ -219,7 +219,7 @@ function AllPayment() {
             formatter: function nameFormatter(cell, row){
                 var nfObject = new Intl.NumberFormat('hi-IN')
                  var x = row.accepted_amount;
-                 console.log(nfObject.format(x))
+                 
                  return(
                    <p>{nfObject.format(x)}</p>
                  )
@@ -245,7 +245,7 @@ function AllPayment() {
             formatter: function nameFormatter(cell, row){
                 var nfObject = new Intl.NumberFormat('hi-IN')
                  var x = row.paid_amount;
-                 console.log(nfObject.format(x))
+                 
                  return(
                    <p>{nfObject.format(x)}</p>
                  )
@@ -272,7 +272,7 @@ function AllPayment() {
             formatter: function nameFormatter(cell, row){
                 var nfObject = new Intl.NumberFormat('hi-IN')
                  var x = row.amount_outstanding;
-                 console.log(nfObject.format(x))
+                 
                  return(
                    <p>{nfObject.format(x)}</p>
                  )
@@ -311,19 +311,19 @@ function AllPayment() {
         {
             text: "Action",
             style: {
-                fontSize: "11px",
+                fontSize: "11px", diaplay : "flex", justifyContent: "space-between", width: "100px"
             },
             headerStyle: () => {
-                return { fontSize: "11px" };
+                return { fontSize: "11px", width: "110px" };
             },
             formatter: function (cell, row) {
                 return (
                     <>
                        
-                        <div style={{ display: "flex", justifyContent: "space-between", width: "40px" }}>
+                        <div style={{ display: "flex", justifyContent: "space-between", width: "80px"}}>
 
 
-                        <div style={{ cursor: "pointer" }} title="Payment History">
+                        <div style={{ cursor: "pointer" , diaplay :"flex", marginRight : "5px"}} title="Payment History">
                         <Link
               to={{
                 pathname: `/admin/paydetails/${row.id}`,

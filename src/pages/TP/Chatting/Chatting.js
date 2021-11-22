@@ -45,7 +45,7 @@ function Chatting(props) {
 
 
   useEffect(() => {
-    console.log("useEffect", props)
+   
     const dataItem = props.location.obj
 
     if (dataItem) {
@@ -62,7 +62,7 @@ function Chatting(props) {
 
 
   const onSubmit = (value) => {
-    console.log("value :", value);
+  
     setLoading(true)
     let formData = new FormData();
     formData.append("uid", JSON.parse(userId));
@@ -77,7 +77,7 @@ function Chatting(props) {
       data: formData,
     })
       .then(function (response) {
-        console.log("res-", response);
+      
         if (response.data.code === 1) {
           reset();
           setLoading(false)
@@ -87,7 +87,7 @@ function Chatting(props) {
         }
       })
       .catch((error) => {
-        console.log("erroror - ", error);
+       
       });
   };
 

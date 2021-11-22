@@ -89,7 +89,7 @@ function AllPayment() {
         })
             .then((res) => res.json())
             .then((response) => {
-                console.log(response);
+               
                 setPay(response.payment_detail);
             })
             .catch((error) => console.log(error));
@@ -132,7 +132,7 @@ rowStyle2 = (row, index) => {
                 return { fontSize: "11px" };
             },
             formatter: function dateFormat(cell, row) {
-                console.log("dt", row.query_created_date);
+            
                 var oldDate = row.query_created_date;
                 if (oldDate == null) {
                     return null;
@@ -150,12 +150,10 @@ rowStyle2 = (row, index) => {
                 return { fontSize: "11px" };
             },
             formatter: function nameFormatter(cell, row) {
-                console.log(row);
+              
                 return (
                     <>
-                        {/* <Link to={`/teamleader/queries/${row.assign_id}`}>
-              {row.assign_no}
-            </Link> */}
+                 
 
                         <Link
                             to={{
@@ -202,7 +200,7 @@ rowStyle2 = (row, index) => {
                 return { fontSize: "11px" };
             },
             formatter: function dateFormat(cell, row) {
-                console.log("dt", row.cust_accept_date);
+              
                 var oldDate = row.cust_accept_date;
                 if (oldDate == null) {
                     return null;
@@ -240,7 +238,7 @@ rowStyle2 = (row, index) => {
             formatter: function nameFormatter(cell, row){
                 var nfObject = new Intl.NumberFormat('en-US')
                  var x = row.accepted_amount;
-                 console.log(nfObject.format(x))
+               
                  return(
                    <p>{nfObject.format(x)}</p>
                  )
@@ -266,7 +264,7 @@ rowStyle2 = (row, index) => {
             formatter: function nameFormatter(cell, row){
                 var nfObject = new Intl.NumberFormat('en-US')
                  var x = row.paid_amount;
-                 console.log(nfObject.format(x))
+               
                  return(
                    <p>{nfObject.format(x)}</p>
                  )
@@ -293,7 +291,7 @@ rowStyle2 = (row, index) => {
             formatter: function nameFormatter(cell, row){
                 var nfObject = new Intl.NumberFormat('en-US')
                  var x = row.amount_outstanding;
-                 console.log(nfObject.format(x))
+               
                  return(
                    <p>{nfObject.format(x)}</p>
                  )
@@ -309,7 +307,7 @@ rowStyle2 = (row, index) => {
                 return { fontSize: "11px" };
             },
             formatter: function dateFormat(cell, row) {
-                console.log("dt", row.cust_paid_date);
+              
                 var oldDate = row.cust_paid_date;
                 if (oldDate == null) {
                     return null;

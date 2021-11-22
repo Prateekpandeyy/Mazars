@@ -97,7 +97,7 @@ const Generated = () => {
 
                         <Link
                             to={{
-                                pathname: `/teamleader/queries/${row.id}`,
+                                pathname: `/teamleader/queries/${row.assign_id}`,
                                 index : 0,
                                 routes: "tlinvoice",
                             }}
@@ -164,7 +164,7 @@ const Generated = () => {
             formatter: function nameFormatter(cell, row){
                 var nfObject = new Intl.NumberFormat('en-US')
                  var x = row.invoice_amount;
-                 console.log(nfObject.format(x))
+                 
                  return(
                    <p>{nfObject.format(x)}</p>
                  )
@@ -183,7 +183,7 @@ const Generated = () => {
             formatter: function nameFormatter(cell, row){
                 var nfObject = new Intl.NumberFormat('hi-IN')
                  var x = row.tds_amount;
-                 console.log(nfObject.format(x))
+                 
                  return(
                      <>
                      {row.is_paid == "0" ?

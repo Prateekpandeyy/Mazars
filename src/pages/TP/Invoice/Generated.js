@@ -86,7 +86,7 @@ const Generated = () => {
 
                         <Link
                             to={{
-                                pathname: `/taxprofessional/queries/${row.id}`,
+                                pathname: `/taxprofessional/queries/${row.assign_id}`,
                                 routes: "proposal",
                             }}
                         >

@@ -225,7 +225,7 @@ function ProposalComponent(props) {
 
   const paymentDate = (data) => {
   
-    console.log("data", data)
+   
     var array2 = []
     Object.entries(data).map(([key, value]) => {
       array2.push(value)

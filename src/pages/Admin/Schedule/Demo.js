@@ -66,7 +66,7 @@ function Demo() {
     axios
     .get(`${baseUrl}/tl/videoScheduler?tl_id=1`)
       .then((res) => {
-// console.log("myRes", res.data.result.items)
+
    
          var a = res.data.result.items;
         if (a) {

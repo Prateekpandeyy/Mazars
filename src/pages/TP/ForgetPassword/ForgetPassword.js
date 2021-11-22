@@ -26,7 +26,7 @@ function ForgetPassword(props) {
 
 
   const onSubmit = (value) => {
-    console.log("value :", value);
+   
 
     let formData = new FormData();
     formData.append("email", value.p_email);
@@ -38,7 +38,7 @@ function ForgetPassword(props) {
       data: formData,
     })
       .then(function (response) {
-        console.log("res-", response);
+     
         if (response.data.code === 1) {
           Swal.fire({
             "title" : "success", 
@@ -48,20 +48,19 @@ function ForgetPassword(props) {
         
           props.history.push(`/taxprofessional/new-password/${value.p_email}`)
         } else if (response.data.code === 0) {
-          console.log(response.data.result);
+         
           Swal.fire("Oops...", "Errorr : " + response.data.result, "error");
         }
       })
       .catch((error) => {
-        console.log("erroror - ", error);
+     
       });
   };
 
   const valueHandler = () => {
     var item = props.location.email
     if (item == "null") {
-      console.log("item : ", item)
-      // return '';
+    
     } else {
       return item
     }

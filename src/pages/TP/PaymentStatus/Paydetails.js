@@ -39,8 +39,7 @@ axios.get(`${baseUrl}//admin/getPaymentDetail?id=${id}&&status=1`)
     if(res.data.code === 1){
        
         setPaymentDetail(res.data.payment_detail)
-        //console.log(res.data.payment_detail.length)
-       // setShowTable(res.data.payment_detail[0].invoice_generated)
+       
        if(res.data.payment_detail.length > 0){
            setShowTable(true)
        }

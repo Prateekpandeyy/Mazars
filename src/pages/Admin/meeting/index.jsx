@@ -30,7 +30,7 @@ class Meeting extends React.Component {
   }
  
   render() {
-   console.log("meeting", this.userEmail)
+  
     return (
       
       <div className="wrapper meeting" style={{ display : "flex", flexDirection: "column" , height: "100vh" }}>

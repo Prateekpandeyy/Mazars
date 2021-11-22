@@ -56,7 +56,7 @@ function QueriesTab(props) {
       axios
         .get(`${baseUrl}/tl/getIncompleteQues?tp_id=${JSON.parse(userid)}`)
         .then((res) => {
-          console.log(res);
+         
           if (res.data.code === 1) {
             setAllQuery(res.data.result.length);
           }
@@ -67,7 +67,7 @@ function QueriesTab(props) {
       axios
         .get(`${baseUrl}/tl/pendingQues?tp_id=${JSON.parse(userid)}`)
         .then((res) => {
-          console.log(res);
+         
           if (res.data.code === 1) {
             setPendingForAcceptence(res.data.result.length);
           }
@@ -78,7 +78,7 @@ function QueriesTab(props) {
       axios
         .get(`${baseUrl}/tl/getIncompleteQues?tp_id=${JSON.parse(userid)}&status=1`)
         .then((res) => {
-          console.log(res);
+         
           if (res.data.code === 1) {
             setIncomplete(res.data.result.length);
           }
@@ -86,14 +86,14 @@ function QueriesTab(props) {
     };
 
     const getComplete = () => {
-      console.log("userId", userid)
+     
       axios
      
         .get(`${baseUrl}/tl/getIncompleteQues?tp_id=${JSON.parse(userid)}&status=2`)
         .then((res) => {
-          console.log("res", res);
+    
           if (res.data.code === 1) {
-            console.log("result", res.data.result)
+         
             setcomplete(res.data.result.length);
           }
         });
@@ -104,7 +104,7 @@ function QueriesTab(props) {
       axios
         .get(`${baseUrl}/tl/declinedQueries?tp_id=${JSON.parse(userid)}`)
         .then((res) => {
-          console.log(res);
+         
           if (res.data.code === 1) {
             setDeclined(res.data.result.length);
           }

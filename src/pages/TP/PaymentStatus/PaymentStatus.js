@@ -36,7 +36,7 @@ function QueriesTab(props) {
     axios
       .get(`${baseUrl}/tl/getUploadedProposals?tp_id=${JSON.parse(userId)}`)
       .then((res) => {
-        console.log(res);
+        
         setAllPayment(res.data.result.length);
       });
   };
@@ -45,7 +45,7 @@ function QueriesTab(props) {
     axios
       .get(`${baseUrl}/tl/getUploadedProposals?tp_id=${JSON.parse(userId)}&status=1`)
       .then((res) => {
-        console.log(res);
+        
         setPaid(res.data.result.length);
       });
   };
@@ -54,7 +54,7 @@ function QueriesTab(props) {
     axios
       .get(`${baseUrl}/tl/getUploadedProposals?tp_id=${JSON.parse(userId)}&status=2`)
       .then((res) => {
-        console.log(res);
+        
         setUnpaid(res.data.result.length);
       });
   };

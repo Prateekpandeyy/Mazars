@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import Layout from "../../../components/Layout/Layout";
-import ModalVideo from "react-modal-video";
 import {
     Card,
     CardHeader,
@@ -8,24 +7,23 @@ import {
     CardTitle,
     Row,
     Col,
-    Table,
-    Button,
+   
 } from "reactstrap";
 import CloseIcon from '@material-ui/icons/Close';
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import BootstrapTable from "react-bootstrap-table-next";
 import "react-modal-video/scss/modal-video.scss";
-import ReactHlsPlayer from 'react-hls-player'
-import { VideoLibraryRounded } from "@material-ui/icons";
 import ReactPlayer from "react-player";
-import { padEnd } from "lodash";
+import { useParams } from "react-router";
+import {Link} from 'react-router-dom'
 import RecordingFilter from "../../../components/Search-Filter/RecordingFilter";
-// import '../../../../node_modules/react-modal-video/scss/modal-video.scss';
+
 
 
 
 function Recording() {
+    const getId = useParams()
     const userid = window.localStorage.getItem("adminkey");
     const [feedbackData, setFeedBackData] = useState([]);
     const [isOpen, setIsOpen] = useState(false);
@@ -98,10 +96,22 @@ const canBtn = {
         },
         {
             text: "Query No",
-            dataField: "assign_id",
+            dataField: "",
             headerStyle: () => {
                 return { fontSize: "12px", width: "20px" };
             },
+            formatter : function formatter(cell, row){
+                let a = row.assign_id.split("-")[row.assign_id.split("-").length - 1]
+                return <>
+                <Link
+                to = {{
+                    pathname : `/admin/queries/${a}`,
+                    routes : "recording"
+                }}>
+                {row.assign_id}
+                </Link>
+                </>
+            }
         },
         
 

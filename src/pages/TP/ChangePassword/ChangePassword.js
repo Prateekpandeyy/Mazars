@@ -27,7 +27,7 @@ function ChangePassword(props) {
 
   const [error, setError] = useState("");
   const onSubmit = (value) => {
-    console.log("value :", value);
+   
 
     let formData = new FormData();
     formData.append("id", JSON.parse(userid));
@@ -41,19 +41,19 @@ function ChangePassword(props) {
     //   data: formData,
     // })
     //   .then(function (response) {
-    //     console.log("res-", response);
+    //   
     //     if (response.data.code === 1) {
     //       alert.success("change password successfully!");
     //       reset();
     //     } else if (response.data.code === 0) {
-    //       console.log(response.data.result);
+    //       
 
     //       Swal.fire("Oops...", "Errorr : " + response.data.result, "error");
     //       reset();
     //     }
     //   })
     //   .catch((error) => {
-    //     console.log("erroror - ", error);
+    //    
     //   });
   };
 

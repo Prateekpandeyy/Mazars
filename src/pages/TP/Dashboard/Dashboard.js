@@ -77,7 +77,7 @@ function Dashboard() {
       axios
         .get(`${baseUrl}/tp/totalComplete?tp_id=${JSON.parse(userid)}`)
         .then((response) => {
-          console.log("code---", response);
+       
           if (response.data.code === 1) {
             setAllQueries({
               total: response.data.result.total,
@@ -102,7 +102,7 @@ function Dashboard() {
           }
         })
         .catch((error) => {
-          console.log("error", error);
+        
         });
     };
 
@@ -110,7 +110,7 @@ function Dashboard() {
       axios
         .get(`${baseUrl}/admin/getAssignmentsCount?tp_id=${JSON.parse(userid)}`)
         .then((response) => {
-          console.log("code---", response);
+       
           if (response.data.code === 1) {
             setAssignment({
               inprogress: response.data.result.inprogress,
@@ -125,7 +125,7 @@ function Dashboard() {
           }
         })
         .catch((error) => {
-          console.log("error", error);
+        
         });
     };
 
@@ -133,7 +133,7 @@ function Dashboard() {
       axios
         .get(`${baseUrl}/admin/getAssignmentsPaymentCount?tp_id=${JSON.parse(userid)}`)
         .then((response) => {
-          console.log("code---", response);
+       
           if (response.data.code === 1) {
             setPayment({
               paid: response.data.result.paid,
@@ -143,7 +143,7 @@ function Dashboard() {
           }
         })
         .catch((error) => {
-          console.log("error", error);
+         
         });
     };
 
@@ -155,7 +155,7 @@ function Dashboard() {
 
 
   var todaysDate = new Date();
-  console.log(todaysDate);
+  
 
   return (
     <Layout TPDashboard="TPDashboard" TPuserId={userid}>

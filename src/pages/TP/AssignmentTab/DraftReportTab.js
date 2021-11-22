@@ -45,13 +45,13 @@ function AssignmentTab() {
     const [report, setReport] = useState();
   const [reportModal, setReportModal] = useState(false);
     const ViewReport = (key) => {
-        console.log("key - ", key);
+       
         setReportModal(!reportModal);
         setReport(key.assign_no);
         setDataItem(key)
       };
     const uploadDraftReport = (id) => {
-        console.log(id);
+      
         setDraftModal(!draftModal);
         setId(id);
       };
@@ -68,7 +68,7 @@ function AssignmentTab() {
         axios
             .get(`${baseUrl}/tl/getAssignments?tp_id=${JSON.parse(userid)}&assignment_status=Draft_Report&stages_status=1`)
             .then((res) => {
-                console.log(res);
+              
                 if (res.data.code === 1) {
                     setAssignment(res.data.result);
                     setCount(res.data.result.length);
@@ -84,7 +84,7 @@ function AssignmentTab() {
                 axios
                 .get(`${baseUrl}/customers/getCategory?pid=${selectedData}`)
                 .then((res) => {
-                    console.log(res);
+                  
                     if (res.data.code === 1) {
                         setTax2(res.data.result);
                     }
@@ -96,20 +96,20 @@ function AssignmentTab() {
 
     //handleCategory
     const handleCategory = (value) => {
-        console.log(`selected ${value}`);
+       
         setSelectedData(value);
         setStore2([]);
     };
 
     //handleSubCategory
     const handleSubCategory = (value) => {
-        console.log(`selected ${value}`);
+       
         setStore2(value);
     };
 
     //reset category
     const resetCategory = () => {
-        console.log("resetCategory ..");
+     
         setSelectedData([]);
         setStore2([]);
         getAssignmentList();
@@ -117,7 +117,7 @@ function AssignmentTab() {
 
     //reset date
     const resetData = () => {
-        console.log("resetData ..");
+     
         reset();
         setStatus([]);
         setSelectedData([]);
@@ -127,7 +127,7 @@ function AssignmentTab() {
 
     //assingmentStatus
     const assingmentStatus = (value) => {
-        console.log(`selected ${value}`);
+       
         setStatus(value);
     };
 
@@ -152,7 +152,7 @@ function AssignmentTab() {
                 return { fontSize: "12px" };
             },
             formatter: function dateFormat(cell, row) {
-                console.log("dt", row.date_of_query);
+              
                 var oldDate = row.date_of_query;
                 if (oldDate == null) {
                     return null;
@@ -167,7 +167,7 @@ function AssignmentTab() {
                 return { fontSize: "12px" };
             },
             formatter: function nameFormatter(cell, row) {
-                console.log(row);
+              
                 return (
                     <>
                         <Link
@@ -244,7 +244,7 @@ function AssignmentTab() {
                 return { fontSize: "12px" };
             },
             formatter: function dateFormat(cell, row) {
-                console.log("dt", row.Exp_Delivery_Date);
+               
                 var oldDate = row.Exp_Delivery_Date;
                 if (oldDate == null) {
                     return null;
@@ -260,7 +260,7 @@ function AssignmentTab() {
                 return { fontSize: "12px" };
             },
             formatter: function dateFormat(cell, row) {
-                console.log("dt", row.final_date);
+            
                 var oldDate = row.final_date;
                 if (oldDate == null || oldDate == "0000-00-00 00:00:00") {
                     return null;
@@ -409,8 +409,7 @@ function AssignmentTab() {
 
 
     const onSubmit = (data) => {
-        console.log("data :", data);
-        console.log("selectedData :", selectedData);
+       
         axios
             .get(
                 `${baseUrl}/tp/getAssignments?tp_id=${JSON.parse(
@@ -420,7 +419,7 @@ function AssignmentTab() {
                &pcat_id=${selectedData}`
             )
             .then((res) => {
-                console.log(res);
+              
                 if (res.data.code === 1) {
                     if (res.data.result) {
                         setAssignment(res.data.result);

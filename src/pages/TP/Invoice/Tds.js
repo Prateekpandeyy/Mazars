@@ -277,6 +277,7 @@ const sgstFun = (e) => {
         formData.append("netpaid_amount", grandTotal)
         formData.append("gstin_no", gstNum);
         formData.append("bill_no", billNo)
+        formData.append("inovice_by", userid)
         axios({
             method : "POST",
             data : formData,
