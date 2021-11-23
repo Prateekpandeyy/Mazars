@@ -19,7 +19,7 @@ import RecordingModal from "./RecordingModal";
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import { green ,red} from '@material-ui/core/colors';
 import recImg from "../../../loader.gif";
-
+import Cookies from "js-cookie";
 const tile_canvas = {
   "1": ["span 12/span 24"],
   "2": ["span 12/span 12/13/25", "span 12/span 12/13/13"],
@@ -65,6 +65,7 @@ const tile_canvas = {
 class AgoraCanvas extends React.Component {
   constructor(props) {
     super(props);
+    this.adminName = Cookies.get("adminName")
     this.client = {};
     this.localStream = {};
     this.shareClient = {};
@@ -118,7 +119,7 @@ allrecording;
 
       this.client.join($.appId, $.channel, $.uid, (uid) => {
        
-        var data_post_api = "https://virtualapi.multitvsolution.com/VstreamApi/index.php/api/vstream/userdata?channel_name="+this.channelName+"&rtm_id="+""+"&rtc_id="+uid+"&user_name="+JSON.parse(this.adminEmail2);
+        var data_post_api = "https://virtualapi.multitvsolution.com/VstreamApi/index.php/api/vstream/userdata?channel_name="+this.channelName+"&rtm_id="+""+"&rtc_id="+uid+"&user_name="+this.adminName;
    axios.get(`${data_post_api}`).
    then((res) => {
     

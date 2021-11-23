@@ -3,10 +3,9 @@ import { merge } from "lodash";
 import AgoraRTC from "agora-rtc-sdk";
 import RecordVoiceOverIcon from '@material-ui/icons/RecordVoiceOver';
 import axios from "axios";
-
 import "./canvas.css";
 import "../../assets/fonts/css/icons.css";
-
+import Cookies from "js-cookie";
 
 var customer_id = "d339577a294c458c86d8a78b474141fc";
 var customer_secret = "1a61a4bef2144e78be6f671d5cf3fc32";
@@ -57,6 +56,7 @@ const tile_canvas = {
 class AgoraCanvas extends React.Component {
   constructor(props) {
     super(props);
+    this.customerName = Cookies.get("custName")
     this.client = {};
     this.screenTrack = {}
     this.localStream = {};
@@ -72,18 +72,19 @@ class AgoraCanvas extends React.Component {
     };
   }
 channelName = this.props.channel
+
 custEmail2 = window.localStorage.getItem("custEmail");
   componentWillMount() {
     let $ = this.props;
     // init AgoraRTC local client
-
+console.log("customerName", this.customerName)
     this.client = AgoraRTC.createClient({ mode: $.transcode });
     this.client.init($.appId, () => {
       
       this.subscribeStreamEvents();
 
       this.client.join($.appId, $.channel, $.uid, (uid) => {
-        var data_post_api = "https://virtualapi.multitvsolution.com/VstreamApi/index.php/api/vstream/userdata?channel_name="+this.channelName+"&rtm_id="+""+"&rtc_id="+uid+"&user_name="+JSON.parse(this.custEmail2);
+        var data_post_api = "https://virtualapi.multitvsolution.com/VstreamApi/index.php/api/vstream/userdata?channel_name="+this.channelName+"&rtm_id="+""+"&rtc_id="+uid+"&user_name="+this.customerName;
         axios.get(`${data_post_api}`).
         then((res) => {
         
@@ -170,7 +171,9 @@ custEmail2 = window.localStorage.getItem("custEmail");
           );
         }
 
+       if(item.player !== undefined){
         item.player.resize && item.player.resize();
+       }
       });
     }
     // tile mode

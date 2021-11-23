@@ -107,12 +107,20 @@ function MyAssingment(props) {
 
           
           try {
-            var myPurpose = JSON.parse(purposeItem);
+           
             var myYear = JSON.parse(assementItem);
-            setPurpose(myPurpose);
+           
             setYear(myYear);
           } catch (e) {
+           
+          }
+          try {
+            var myPurpose = JSON.parse(purposeItem);
             
+            setPurpose(myPurpose);
+           
+          } catch (e) {
+           
           }
 
           if (res.data.proposal_queries.length > 0) {

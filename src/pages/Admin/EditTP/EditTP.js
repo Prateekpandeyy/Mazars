@@ -647,24 +647,7 @@ function EditTP() {
                     </div>
                   </div>
 
-                  <div class="row">
-                    <div class="col-md-12">
-                      <div class="form-group">
-                        <label>Email <span className="declined">*</span></label>
-                        <Form.Item name="email">
-                          <Input
-                          type="email"
-                            className={classNames("form-control", {
-                              "is-invalid": errors.email || wEmail ,
-                            })}/>
-                        </Form.Item>
-                        {
-                          wEmail ? <p className="declined">{wEmail}</p> : ""
-                           
-                        }
-                      </div>
-                    </div>
-                  </div>
+               
 
                   <div class="row">
                     <div class="col-md-6">
@@ -731,7 +714,24 @@ function EditTP() {
                       </div>
                     </div>
                   </div>
-
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <label>Email <span className="declined">*</span></label>
+                        <Form.Item name="email">
+                          <Input
+                          type="email"
+                            className={classNames("form-control", {
+                              "is-invalid": errors.email || wEmail ,
+                            })}/>
+                        </Form.Item>
+                        {
+                          wEmail ? <p className="declined">{wEmail}</p> : ""
+                           
+                        }
+                      </div>
+                    </div>
+                  </div>
                   <div class="row">
                     <div class="col-md-6">
                       <div class="form-group">

@@ -93,15 +93,24 @@ function EditQuery(props) {
 
 
         try {
-          var myObj = JSON.parse(value);
+         
           var myPurpose = JSON.parse(purposeItem);
 
-          setSelectedOption(myObj);
+         
           setPurposeOption(myPurpose);
         } catch (e) {
-          return false;
+          
         }
-        console.log(<Markup content={res.data.result[0].fact_case}/>)
+        try {
+          var myObj = JSON.parse(value);
+         
+
+          setSelectedOption(myObj);
+        
+        } catch (e) {
+          
+        }
+       
         setValue2(res.data.result[0].fact_case);
      
       //  setValue("fact_case", res.data.result[0].fact_case);

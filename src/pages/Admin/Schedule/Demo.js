@@ -25,10 +25,23 @@ import * as Cookies from "js-cookie";
 import Swal from "sweetalert2";
 import Alerts from "../../../common/Alerts";
 import Loader from "../../../components/Loader/Loader";
+import {makeStyles} from "@material-ui/styles"
+const useStyle = makeStyles(() => ({
+  rchStyle : {
+    color : "green",
+    display : "flex",
+    overflow: "hidden"
+  },
+  OverlayBase : {
+    display : "flex", 
+    width : "670px"
+  }
+}))
 
 
 
 function Demo() {
+  const classes = useStyle()
   const userId = window.localStorage.getItem("adminkey");
    const userEmail = window.localStorage.getItem("adminEmail")
    // const userEmail = null
@@ -479,19 +492,15 @@ history.push(`/admin/meeting/${data.id}`);
 
   return (
     <>
-      {
-        loading ?
-          <Loader />
-          :
-          <>
-            <Paper>
-            <Scheduler data={data} height={570}>
-                <ViewState
+          
+            <Paper >
+            <Scheduler data={data} height={570}  >
+                <ViewState className = {classes.rchStyle}
                   defaultCurrentDate={currentDate}
                   defaultCurrentViewName="Week"
                 />
-                <EditingState onCommitChanges={commitChanges} />
-                <EditRecurrenceMenu />
+                <EditingState  className = {classes.OverlayBase} onCommitChanges={commitChanges}   />
+                <EditRecurrenceMenu  />
 
                 <DayView cellDuration={60} startDayHour={0} endDayHour={24} />
                 <WeekView cellDuration={60} startDayHour={0} endDayHour={24} TimeTableLayoutProps={8} />
@@ -501,33 +510,38 @@ history.push(`/admin/meeting/${data.id}`);
                 <Toolbar />
                 <DateNavigator />
                 <TodayButton />
-                <ViewSwitcher />
+                <ViewSwitcher  />
 
-                <AppointmentTooltip showOpenButton />
+                <AppointmentTooltip showOpenButton  />
                 {
                   read ?
-                    <AppointmentForm
+              
+                    
+                    <AppointmentForm 
                       booleanEditorComponent={BooleanEditor}
                       basicLayoutComponent={BasicLayout}
                       textEditorComponent={TextEditor}
                       onClose= {() => closeFun()}
                       readOnly
                     />
+                    
                     :
+                   
                     <AppointmentForm
                       booleanEditorComponent={BooleanEditor}
                       basicLayoutComponent={BasicLayout}
                       textEditorComponent={TextEditor}
+                    
                     />
+                      
                 }
                 <Resources
                   data={resources}
                 />
               </Scheduler>
             </Paper>
+       
           </>
-      }
-    </>
   );
 }
 export default Demo;

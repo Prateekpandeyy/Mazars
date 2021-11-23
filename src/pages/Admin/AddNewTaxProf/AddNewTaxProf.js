@@ -480,68 +480,7 @@ function AddNew() {
 
                 <div class="row">
 
-
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label>Name <span className="declined">*</span></label>
-                      <input
-                        type="text"
-                        className={classNames("form-control", {
-                          "is-invalid": errors.p_name,
-                        })}
-                        name="p_name"
-                        ref={register}
-                      />
-
-                    </div>
-                  </div>
-
-                  <div class="col-md-6">
-                    <div class="form-group">
-
-
-                      <label> Email <span className="declined">*</span></label>
-                      <input
-                        type="text"
-                        name="personal_email"
-                        ref={register}
-
-
-                        className={classNames("form-control", {
-                          "is-invalid": errors.post_email,
-                        })}
-                      />
-
-                    </div>
-                  </div>
-
-                </div>
-                <div class="row">
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label>Phone Number <span className="declined">*</span></label>
-                      <input
-                        type="text"
-                        className={classNames("form-control", {
-                          "is-invalid": errors.p_phone,
-                        })}
-                        name="p_phone"
-                        ref={register}
-                        onChange={(e) => phoneHandler(e)}
-                        onBlur={phoneValidation}
-                      />
-                      {indNumError ? <p className="declined">{indNumError}</p> : <>
-                        {
-                          numAvail ?
-                            <p className="completed"> {numAvail}
-                            </p>
-                            :
-                            <p className="declined">{numExist}</p>
-                        }
-                      </>}
-                    </div>
-                  </div>
-                  <div class="col-md-6">
+                <div class="col-md-6">
                     <div class="form-group">
                       <label>Category <span className="declined">*</span></label>
                       <Select options={options}
@@ -566,9 +505,6 @@ function AddNew() {
                       </Select>
                     </div>
                   </div>
-
-                </div>
-                <div className="row">
                   <div class="col-md-6">
                     <div class="form-group">
                       <label>Sub Category <span className="declined">*</span></label>
@@ -599,6 +535,73 @@ function AddNew() {
                     </div>
                   </div>
                 </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>Phone Number <span className="declined">*</span></label>
+                      <input
+                        type="text"
+                        className={classNames("form-control", {
+                          "is-invalid": errors.p_phone,
+                        })}
+                        name="p_phone"
+                        ref={register}
+                        onChange={(e) => phoneHandler(e)}
+                        onBlur={phoneValidation}
+                      />
+                      {indNumError ? <p className="declined">{indNumError}</p> : <>
+                        {
+                          numAvail ?
+                            <p className="completed"> {numAvail}
+                            </p>
+                            :
+                            <p className="declined">{numExist}</p>
+                        }
+                      </>}
+                    </div>
+                  </div>
+                 
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>Name <span className="declined">*</span></label>
+                      <input
+                        type="text"
+                        className={classNames("form-control", {
+                          "is-invalid": errors.p_name,
+                        })}
+                        name="p_name"
+                        ref={register}
+                      />
+
+                    </div>
+                  </div>
+
+
+                </div>
+
+                <div className="row">
+
+                <div class="col-md-6">
+                    <div class="form-group">
+
+
+                      <label> Email <span className="declined">*</span></label>
+                      <input
+                        type="text"
+                        name="personal_email"
+                        ref={register}
+
+
+                        className={classNames("form-control", {
+                          "is-invalid": errors.post_email,
+                        })}
+                      />
+
+                    </div>
+                  </div>
+
+
+                                 </div>
                 {
                 loading ?
                   <Spinner color="primary" />

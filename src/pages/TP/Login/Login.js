@@ -15,7 +15,7 @@ import Mandatory from "../../../components/Common/Mandatory";
 import VerifyOtpLogin from "./VerifyOtpLogin";
 import { Spinner } from "reactstrap";
 import {useHistory} from 'react-router-dom';
-
+import Cookies from "js-cookie";
 const Schema = yup.object().shape({
   p_email: yup.string().email("invalid email").required("required email"),
   password: yup
@@ -57,6 +57,7 @@ function Login(props) {
       .then(function (response) {
        
         if (response.data.code === 1) {
+          Cookies.set("tpName", response.data.display_name)
           setLoading(false)
           setShow(true)
           Swal.fire({

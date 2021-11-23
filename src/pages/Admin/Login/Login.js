@@ -15,6 +15,7 @@ import Mandatory from "../../../components/Common/Mandatory";
 import VerifyOtpLogin from "./VerifyOtpLogin";
 import { Spinner } from "reactstrap";
 import {useHistory} from 'react-router-dom';
+import Cookies from "js-cookie"
 
 const Schema = yup.object().shape({
   p_email: yup.string().email("invalid email").required("required email"),
@@ -59,6 +60,7 @@ function Login(props) {
         if (response.data.code === 1) {
           setLoading(false)
           setShow(true)
+          Cookies.set("adminName", response.data.display_name)
           Swal.fire({
             "title" : "success", 
             "html" : "As per your request, OTP has been sent to your registered email address.",

@@ -510,33 +510,7 @@ function AddNew() {
                     </div>
                   </div>
                 </div>
-                <div class="row">
-                  <div class="col-md-12">
-                    <div class="form-group">
-                      <label>Email <span className="declined">*</span></label>
-                      <input
-                        type="email"
-                        className={classNames("form-control", {
-                          "is-invalid": errors.p_email,
-                        })}
-                        name="p_email"
-                        ref={register}
-                        // onChange={(e) => emailHandler(e)}
-                        // onBlur={emailValidation}
-                      />
-                      {/* {
-                        wEmail ? <p className="declined">{wEmail}</p> : <>
-                          {valiEmail ?
-                            <p className="completed">
-                              {valiEmail}
-                            </p>
-                            :
-                            <p className="declined">{invalid}</p>}
-                        </>
-                      } */}
-                    </div>
-                  </div>
-                </div>
+              
                 <div class="row">
                   <div class="col-md-6">
                     <div class="form-group">
@@ -591,6 +565,33 @@ function AddNew() {
 
                         value={subData}>
                       </Select>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label>Email <span className="declined">*</span></label>
+                      <input
+                        type="email"
+                        className={classNames("form-control", {
+                          "is-invalid": errors.p_email,
+                        })}
+                        name="p_email"
+                        ref={register}
+                        // onChange={(e) => emailHandler(e)}
+                        // onBlur={emailValidation}
+                      />
+                      {/* {
+                        wEmail ? <p className="declined">{wEmail}</p> : <>
+                          {valiEmail ?
+                            <p className="completed">
+                              {valiEmail}
+                            </p>
+                            :
+                            <p className="declined">{invalid}</p>}
+                        </>
+                      } */}
                     </div>
                   </div>
                 </div>
