@@ -145,8 +145,29 @@ const mapAppointmentData = ((appiontmentData) => ({
       }))
 
     const onSubmit = (value) => {
+     let basic_info = false
+     let proposal_info = false
+     let assignment_info = false
+     let payment_info = false
+     if(value.assessment || value.purpose_p || value.p_format || value.t_requested || value.spc_que || value.doa){
+      basic_info = true
+     }
+     if(value.dateProposal || value.proposedAmount || value.paymentTerms || value.proposal_status || value.acceptedAmount
+      || value.paymentDeclinedReason || value.date_acceptance || value.amountOutstanding
+      || value.amount_overdue || value.declinedDate){
+        proposal_info = true
+      }
+   if(value.assignDate || value.completionDate || value.assignStatus || value.completionQuery || value.assignTime){
+     assignment_info = true
+   }
+   if(value.receiptDate || value.amountReceived){
+     payment_info = true
+   }
         let formData = new FormData();
-        
+        formData.append("basic_info", Number(basic_info));
+        formData.append("proposal_info", Number(proposal_info));
+        formData.append("assignment_info", Number(assignment_info));
+        formData.append("payment_info", Number(payment_info))
         formData.append("from", value.p_from);
         formData.append("to", value.p_to);
         formData.append("teamleader", teamleader44);
@@ -166,7 +187,7 @@ const mapAppointmentData = ((appiontmentData) => ({
         formData.append("date_allocation", Number(value.doa));
         formData.append("teamleader", Number(value.tl_name));
         formData.append("taxprofessional", Number(value.tp_name));
-        formData.append("date_proposal", Number( value.dateProposal));
+        formData.append("date_proposal", Number(value.dateProposal));
         formData.append("proposed_amount", Number(value.proposedAmount));
         formData.append("payment_terms", Number(value.paymentTerms));
         formData.append("proposal_status", Number(value.proposal_status));
@@ -177,7 +198,7 @@ const mapAppointmentData = ((appiontmentData) => ({
         formData.append("amount_outstanding", Number(value.amountOutstanding));
         formData.append("amount_overdue", Number(value.amount_overdue));
         formData.append("payment_declined", Number(value.declinedDate));
-        formData.append("assignment_number", Number(value.assignNumber));
+        // formData.append("assignment_number", Number(value.assignNumber));
         formData.append("assign_date", Number(value.assignDate));
         formData.append("proposed_completion_date", Number(value.completionDate));
         formData.append("assignment_status", Number(value.assignStatus));
@@ -528,10 +549,7 @@ onChange= {(e) =>teamLeader(e)}/>
        <fieldset className="my-fieldset">
            <legend className="login-legend">Assignment</legend>
             <div className="basicFeild">
-            <span>
-<input type="checkbox" ref={register} name="assignNumber" id="assignNumber"></input>
-<label htmlFor="assignNumber">Assignment Number</label>
-</span>
+           
 <span>
 <input type="checkbox" ref={register} name="assignDate" id="assignDate"></input>
 <label htmlFor="assignDate">Assignment Date</label>
