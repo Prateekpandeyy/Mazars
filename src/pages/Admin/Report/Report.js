@@ -146,44 +146,45 @@ const mapAppointmentData = ((appiontmentData) => ({
 
     const onSubmit = (value) => {
         let formData = new FormData();
+        
         formData.append("from", value.p_from);
         formData.append("to", value.p_to);
         formData.append("teamleader", teamleader44);
         formData.append("taxprofessional", taxprofessional44);
         formData.append("category", mcatname);
         formData.append("subCategory", dd);
-        formData.append("q_no", value.qno);
-        formData.append("date_query", value.dataQuery);
-        formData.append("cust_id", value.cust_id);
-        formData.append("basic_category", value.basicCategory);
-        formData.append("basic_sub_category", value.basic_sub_category);
-        formData.append("assessment", value.assessment);
-        formData.append("purpose", value.purpose_p);
-        formData.append("p_format", value.p_format);
-        formData.append("t_requested", value.t_requested);
-        formData.append("spc_que", value.spc_que);
-        formData.append("date_allocation", value.doa);
-        formData.append("teamleader", value.tl_name);
-        formData.append("taxprofessional", value.tp_name);
-        formData.append("date_proposal", value.dateProposal);
-        formData.append("proposed_amount", value.proposedAmount);
-        formData.append("payment_terms", value.paymentTerms);
-        formData.append("proposal_status", value.proposal_status);
-        formData.append("accepted_amount", value.acceptedAmount);
-        formData.append("payment_declined_reasen", value.paymentDeclinedReason);
-        formData.append("date_of_acceptance", value.date_acceptance);
+        formData.append("q_no", Number(value.qno));
+        formData.append("date_query", Number(value.dataQuery));
+        formData.append("cust_id", Number(value.cust_id));
+        formData.append("basic_category", Number(value.basicCategory));
+        formData.append("basic_sub_category", Number(value.basic_sub_category));
+        formData.append("assessment", Number(value.assessment));
+        formData.append("purpose", Number(value.purpose_p));
+        formData.append("p_format", Number(value.p_format));
+        formData.append("t_requested", Number(value.t_requested));
+        formData.append("spc_que", Number(value.spc_que));
+        formData.append("date_allocation", Number(value.doa));
+        formData.append("teamleader", Number(value.tl_name));
+        formData.append("taxprofessional", Number(value.tp_name));
+        formData.append("date_proposal", Number( value.dateProposal));
+        formData.append("proposed_amount", Number(value.proposedAmount));
+        formData.append("payment_terms", Number(value.paymentTerms));
+        formData.append("proposal_status", Number(value.proposal_status));
+        formData.append("accepted_amount", Number(value.acceptedAmount));
+        formData.append("payment_declined_reasen", Number(value.paymentDeclinedReason));
+        formData.append("date_of_acceptance", Number(value.date_acceptance));
         // formData.append("amount_received", value.amountReceived);
-        formData.append("amount_outstanding", value.amountOutstanding);
-        formData.append("amount_overdue", value.amount_overdue);
-        formData.append("payment_declined", value.declinedDate);
-        formData.append("assignment_number", value.assignNumber);
-        formData.append("assign_date", value.assignDate);
-        formData.append("proposed_completion_date", value.completionDate);
-        formData.append("assignment_status", value.assignStatus);
-        formData.append("date_complation", value.completionQuery);
-        formData.append("assign_time", value.assignTime);
-        formData.append("payment_recived_date", value.receiptDate);
-        formData.append("amount_received", value.amountReceived);
+        formData.append("amount_outstanding", Number(value.amountOutstanding));
+        formData.append("amount_overdue", Number(value.amount_overdue));
+        formData.append("payment_declined", Number(value.declinedDate));
+        formData.append("assignment_number", Number(value.assignNumber));
+        formData.append("assign_date", Number(value.assignDate));
+        formData.append("proposed_completion_date", Number(value.completionDate));
+        formData.append("assignment_status", Number(value.assignStatus));
+        formData.append("date_complation", Number(value.completionQuery));
+        formData.append("assign_time", Number(value.assignTime));
+        formData.append("payment_recived_date", Number(value.receiptDate));
+        formData.append("amount_received", Number(value.amountReceived));
    axios({
      method : "POST",
      url : `${baseUrl}/report/generateReport`,
