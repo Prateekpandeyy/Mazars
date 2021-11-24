@@ -39,7 +39,7 @@ const Report = () => {
   var allData1 = {}
   var dir = []
   var indir = []
-  const [dd, setDd] = useState();
+  const [dd, setDd] = useState([]);
 const history = useHistory()
     const { handleSubmit, register, errors, getValues } = useForm();
     var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
@@ -151,7 +151,7 @@ const mapAppointmentData = ((appiontmentData) => ({
         formData.append("teamleader", teamleader44);
         formData.append("taxprofessional", taxprofessional44);
         formData.append("category", mcatname);
-        formData.append("subCategory", taxId);
+        formData.append("subCategory", dd);
         formData.append("q_no", value.qno);
         formData.append("date_query", value.dataQuery);
         formData.append("cust_id", value.cust_id);
@@ -186,7 +186,7 @@ const mapAppointmentData = ((appiontmentData) => ({
         formData.append("amount_received", value.amountReceived);
    axios({
      method : "POST",
-     url : `${baseUrl}/reports/generateReport`,
+     url : `${baseUrl}/report/generateReport`,
      data : formData
 
    })
@@ -248,17 +248,17 @@ let cc = []
 
     // Sub Category Function 
     const subCategory22 = (e) => {
-  
+  let kk = []
       subCategeryData(e)
       setCustcate2(e)
       setError2("")
      
       e.map((i) => {
   
-        i.value < 8 ? dir.push(i.value) : indir.push(i.value)
+      kk.push(i.value)
       })
-     
-      setDd([dir, indir])
+     setDd(kk)
+      
     }
   const teamLeader = (a) => {
  let tk = []
