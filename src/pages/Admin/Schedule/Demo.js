@@ -493,8 +493,10 @@ history.push(`/admin/meeting/${data.id}`);
   return (
     <>
           
-            <Paper >
-            <Scheduler data={data} height={570}  >
+        <div style ={{display : "flex", height : "700px"}}>
+
+        <Paper >
+            <Scheduler data={data}>
                 <ViewState className = {classes.rchStyle}
                   defaultCurrentDate={currentDate}
                   defaultCurrentViewName="Week"
@@ -540,6 +542,8 @@ history.push(`/admin/meeting/${data.id}`);
                 />
               </Scheduler>
             </Paper>
+        </div>
+        
        
           </>
   );

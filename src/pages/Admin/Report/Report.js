@@ -29,9 +29,9 @@ const Report = () => {
   const [custCate2, setCustcate2] = useState([]);
   const [data, setData] = useState([]);
   const [data2, setData2] = useState([]);
-  const [taxId, setTaxId] = useState();
-  const [teamleader44, setTeamleader44] = useState() 
-  const [taxprofessional44, setTaxprofessional44] = useState()
+  const [taxId, setTaxId] = useState("");
+  const [teamleader44, setTeamleader44] = useState("") 
+  const [taxprofessional44, setTaxprofessional44] = useState("")
   const [custData, setcustData] = useState();
   var kk = []
   var pp = []
@@ -151,7 +151,7 @@ const mapAppointmentData = ((appiontmentData) => ({
         formData.append("teamleader", teamleader44);
         formData.append("taxprofessional", taxprofessional44);
         formData.append("category", mcatname);
-        formData.append("subCategory", dd);
+        formData.append("subCategory", taxId);
         formData.append("q_no", value.qno);
         formData.append("date_query", value.dataQuery);
         formData.append("cust_id", value.cust_id);
@@ -186,7 +186,7 @@ const mapAppointmentData = ((appiontmentData) => ({
         formData.append("amount_received", value.amountReceived);
    axios({
      method : "POST",
-     url : `${baseUrl}/report/generateReport`,
+     url : `${baseUrl}/reports/generateReport`,
      data : formData
 
    })

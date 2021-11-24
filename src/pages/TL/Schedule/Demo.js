@@ -477,8 +477,9 @@ console.log("cancle", cancel)
           <Loader />
           :
           <>
-            <Paper>
-              <Scheduler data={data} height={570}>
+       <div style ={{display : "flex", height : "700px"}}>
+          <Paper>
+              <Scheduler data={data} >
                 <ViewState
                   defaultCurrentDate={currentDate}
                   defaultCurrentViewName="Week"
@@ -519,7 +520,11 @@ console.log("cancle", cancel)
                 />
               </Scheduler>
             </Paper>
+          </div>
+           
+          
           </>
+          
       }
     </>
   );

@@ -470,8 +470,9 @@ Cookies.set("channel_2", data.question_id);
           <Loader />
           :
           <>
+           <div style ={{display : "flex", height : "700px"}}>
             <Paper>
-              <Scheduler data={data} height={570}>
+              <Scheduler data={data} >
                 <ViewState
                   defaultCurrentDate={currentDate}
                   defaultCurrentViewName="Week"
@@ -512,6 +513,7 @@ Cookies.set("channel_2", data.question_id);
                 />
               </Scheduler>
             </Paper>
+            </div>
           </>
       }
     </>
