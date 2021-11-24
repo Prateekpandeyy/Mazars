@@ -191,7 +191,12 @@ const mapAppointmentData = ((appiontmentData) => ({
 
    })
    .then(function (response) {
+ if(response.data.result === 1){
   window.location.assign(`${baseUrl}/report/generateReport`)
+ }
+ else{
+   return false
+ }
    })
    .catch((error) => {
   
