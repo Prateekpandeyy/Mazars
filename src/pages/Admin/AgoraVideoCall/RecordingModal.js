@@ -159,18 +159,3 @@ axios.get(`${baseUrl}/tl/freeslottime?schedule_id=${id}&&uid=${JSON.parse(userId
 
 export default RecordingModal;
 
-
-{/* <Modal isOpen={ViewDiscussion} toggle={ViewDiscussionToggel} size="lg" scrollable>
-        <ModalHeader toggle={ViewDiscussionToggel}>Discussion History </ModalHeader>
-        <ModalBody>
-        
-        </ModalBody>
-        <ModalFooter>
-          <div>
-            <Button color="primary" onClick={ViewDiscussionToggel}>Cancel</Button>
-          </div>
-        </ModalFooter>
-      </Modal > */}
-{/* <ModalFooter>
-                    Modal footer
-                </ModalFooter> */}

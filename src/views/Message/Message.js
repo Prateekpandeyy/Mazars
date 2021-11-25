@@ -110,8 +110,7 @@ function Message(props) {
                                     <div
                                         style={{
                                             cursor: "pointer",
-                                            display: "flex",
-                                            justifyContent: "space-between"
+                                            
                                         }}
                                         onClick={() => readNotification(row.id)}
                                         title="unread"
@@ -124,8 +123,7 @@ function Message(props) {
                                     <div
                                         style={{
                                             cursor: "pointer",
-                                            display: "flex",
-                                            justifyContent: "space-between"
+                                           
                                         }}
                                         title="read"
                                     >
@@ -177,7 +175,7 @@ function Message(props) {
                         </Col>
                     </Row>
                 </CardHeader>
-                <CardBody>
+                <CardBody style={{display : "flex", height : "80vh", overflowY : "scroll"}}>
                     <BootstrapTable
                         bootstrap4
                         keyField="id"

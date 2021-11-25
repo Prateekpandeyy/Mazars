@@ -41,7 +41,7 @@ function AllQueriesData() {
        if(typeof(key) == "object"){
         setAdditionalQuery(!additionalQuery);
         
-        setLoading2(false)
+        setLoading2(!loading2)
         return false
        }
        else{

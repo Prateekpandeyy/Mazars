@@ -412,15 +412,16 @@ function InprogressProposal() {
                 </CardHeader>
                 <CardBody>
                     <Records records={records} />
-
+                    <div className="tableFixHead">
                     <BootstrapTable
                         bootstrap4
                         keyField="id"
                         data={proposalDisplay}
                         columns={columns}
                         classes="table-responsive"
-                    />
-
+                    /> 
+                    </div>
+                
                     <DiscardReport
                         ViewDiscussionToggel={ViewDiscussionToggel}
                         ViewDiscussion={ViewDiscussion}

@@ -13,6 +13,8 @@
   height: 65vh;
 }
 
+.tableFixHead          { overflow: auto; }
+.tableFixHead thead th { position: sticky; color: "white"; top: 0; z-index: 1; border: 0px; background-color: rgb(43, 255, 0);}
 
 /* 
 

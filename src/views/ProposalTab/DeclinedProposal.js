@@ -256,7 +256,7 @@ function DeclinedProposal() {
                 </CardHeader>
                 <CardBody>
                     <Records records={records} />
-
+                    <div className="tableFixHead">
                     <BootstrapTable
                         bootstrap4
                         keyField="id"
@@ -264,6 +264,7 @@ function DeclinedProposal() {
                         columns={columns}
                         classes="table-responsive"
                     />
+                    </div>
                     {/* <ChatComponent
                         chatHandler={chatHandler}
                         addPaymentModal={addPaymentModal}

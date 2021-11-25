@@ -321,7 +321,7 @@ function AcceptedProposal() {
                 </CardHeader>
                 <CardBody>
                     <Records records={records} />
-
+                    <div className="tableFixHead">
                     <BootstrapTable
                         bootstrap4
                         keyField="id"
@@ -329,7 +329,7 @@ function AcceptedProposal() {
                         columns={columns}
                         classes="table-responsive"
                     />
-
+</div>
                     <DiscardReport
                         ViewDiscussionToggel={ViewDiscussionToggel}
                         ViewDiscussion={ViewDiscussion}

@@ -250,6 +250,7 @@ schdrularName;
     }
     // screen share mode (tbd)
     else if (this.state.displayMode === "share") {
+      console.log("share")
     }
   }
 
@@ -308,7 +309,7 @@ schdrularName;
     });
 
     rt.client.on("peer-leave", function (evt) {
-     console.log("done2")
+   
       rt.removeStream(evt.uid);
    console.log("two")
     });
@@ -320,8 +321,12 @@ schdrularName;
   axios.get(`${apiData}`)
   .then((res) =>{
    
-    this.setState({ participantName : res.data[0].user_name })
-    if(res.data != undefined){
+   console.log("response", res.data.length)
+    if(res.data.length === 0 ){
+     
+    }
+    else{
+      this.setState({ participantName : res.data[0].user_name })
       rt.addStream(stream);
     }
   })

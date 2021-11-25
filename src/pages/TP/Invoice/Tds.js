@@ -359,7 +359,7 @@ setServices2(k.service)
             <div className="row my-2">
               {services === undefined ? "" : 
               <div className="col-md-6">
-              <label>Descirption <span className="declined">*</span></label>
+              <label>Description <span className="declined">*</span></label>
           <select 
        //   defaultValue={description}
        value={description}

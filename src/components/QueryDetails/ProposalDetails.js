@@ -140,13 +140,13 @@ function ProposalDetails({
           <tbody>
             <tr>
               <th scope="row">Date of Allocation</th>
-              <td>{accept == "2" || accept > "3" ? CommonServices.changeFormateDate(date_of_allocation) : ""}</td>
+              <td>{accept > "1" ? CommonServices.changeFormateDate(date_of_allocation) : ""}</td>
             </tr>
             
             
             <tr>
               <th scope="row">Name of Team Leader</th>
-              <td>{accept == "2" || accept > "3" ? tlName2 : ""}</td>
+              <td>{accept > "1" ? tlName2 : ""}</td>
             </tr>
             <tr>
               <th scope="row">Name of Tax Professional(s)</th>

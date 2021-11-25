@@ -345,7 +345,7 @@ function Paid() {
                  obj: {
                    message_type: "5",
                    query_No: row.assign_no,
-                   query_id: row.id,
+                   query_id: row.assign_id,
                    routes: `/admin/paymentstatus`
                  }
                }}

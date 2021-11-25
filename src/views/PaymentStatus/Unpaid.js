@@ -410,8 +410,8 @@ function Paid() {
                     obj: {
                       message_type: "5",
                       query_No: row.assign_no,
-                      query_id: row.q_id,
-                      routes: `/customer/payment`
+                      query_id: row.assign_id,
+                      routes: `/customer/paymentstatus`
                     }
                   }}
                 >

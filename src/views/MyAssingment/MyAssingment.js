@@ -7,6 +7,7 @@ import QueryDetails from "../../components/QueryDetails/QueryDetails";
 import moment from 'moment';
 function MyAssingment(props) {
   const { id } = useParams();
+  
   const history = useHistory();
 
   const userId = window.localStorage.getItem("userid");
@@ -189,7 +190,6 @@ function MyAssingment(props) {
   };
 
 
-
   return (
     <Layout custDashboard="custDashboard" custUserId={userId}>
       <div class="row mt-3">
@@ -207,21 +207,14 @@ function MyAssingment(props) {
               style={{ padding: ".5rem .1rem" }}
             >
               <h2 class="mb-0 query">
-                <div>
-                <Link
+              <Link
                   to={{
-                    pathname: `/customer/${props.location.routes}`,
+                    pathname: `/admin/${props.location.routes}`,
                     index: props.location.index,
                   }}
                 >
-                  <button
-                    class="btn btn-success ml-3"
-                   
-                  >
-                    Go Back
-                  </button>
-                  </Link>
-                </div>
+                  <button class="btn btn-success ml-3">Go Back</button>
+                </Link>
               </h2>
             </div>
 
