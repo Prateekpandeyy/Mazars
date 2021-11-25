@@ -209,7 +209,7 @@ function MyAssingment(props) {
               <h2 class="mb-0 query">
               <Link
                   to={{
-                    pathname: `/admin/${props.location.routes}`,
+                    pathname: `/customer/${props.location.routes}`,
                     index: props.location.index,
                   }}
                 >

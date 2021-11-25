@@ -186,6 +186,7 @@ function AssignmentTab() {
             <Link
               to={{
                 pathname: `/taxprofessional/queries/${row.q_id}`,
+                index : 0,
                 routes: "assignment",
               }}
             >

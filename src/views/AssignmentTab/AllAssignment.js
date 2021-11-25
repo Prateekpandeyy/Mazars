@@ -22,7 +22,7 @@ import Records from "../../components/Records/Records";
 import DescriptionOutlinedIcon from '@material-ui/icons/DescriptionOutlined';
 import Alerts from "../../common/Alerts";
 import DiscardReport from "../AssignmentTab/DiscardReport";
-
+import './index.css'
 
 
 function AllAssignment() {
@@ -354,12 +354,15 @@ function AllAssignment() {
 
         <CardBody>
           <Records records={records} />
+          <div className="tableFixHead">
           <BootstrapTable
             bootstrap4
             keyField="id"
             data={assignmentDisplay}
             columns={columns}
+            classes="table-responsive"
           />
+          </div>
 
           <ViewAllReportModal
             ViewReport={ViewReport}

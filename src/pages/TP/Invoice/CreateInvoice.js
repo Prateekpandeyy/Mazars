@@ -92,7 +92,8 @@ const CreateInvoice = () => {
                         <Link
                             to={{
                                 pathname: `/taxprofessional/queries/${row.assign_id}`,
-                                routes: "proposal",
+                                index : 1,
+                                routes: "tpinvoice",
                             }}
                         >
                             {row.assign_no}

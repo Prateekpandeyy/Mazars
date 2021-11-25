@@ -139,9 +139,10 @@ function AllPayment() {
                     <>
                    
 
-                        <Link
+                   <Link
                             to={{
                                 pathname: `/taxprofessional/queries/${row.assign_id}`,
+                                index : 2,
                                 routes: "paymentstatus",
                             }}
                         >

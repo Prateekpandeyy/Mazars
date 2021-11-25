@@ -23,7 +23,7 @@ import Swal from "sweetalert2";
 import CommonServices from "../../common/common";
 import DiscardReport from "../AssignmentTab/DiscardReport";
 import moment from "moment";
-
+import './index.css';
 function InprogressAllocation() {
 
   const alert = useAlert();
@@ -420,15 +420,16 @@ function InprogressAllocation() {
         </CardHeader>
         <CardBody>
           <Records records={records} />
-
+          <div className="tableFixHead">
           <BootstrapTable
             bootstrap4
             keyField="id"
             data={query}
             columns={columns}
             rowIndex
+            classes="table-responsive"
           />
-
+</div>
           <AdditionalQueryModal
             additionalHandler={additionalHandler}
             additionalQuery={additionalQuery}

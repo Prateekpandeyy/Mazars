@@ -20,6 +20,7 @@ import CommonServices from "../../common/common";
 import DiscardReport from "../AssignmentTab/DiscardReport";
 import FeedbackIcon from '@material-ui/icons/Feedback';
 import PublishIcon from '@material-ui/icons/Publish';
+import './index.css';
 
 
 
@@ -205,13 +206,16 @@ function DeclinedQueries() {
         </CardHeader>
         <CardBody>
           <Records records={records} />
+          <div className="tableFixHead">
           <BootstrapTable
             bootstrap4
             keyField="id"
             data={query}
             columns={columns}
             rowIndex
+            classes="table-responsive"
           />
+          </div>
         </CardBody>
       </Card>
     </div>

@@ -25,7 +25,7 @@ import DescriptionOutlinedIcon from '@material-ui/icons/DescriptionOutlined';
 import Alerts from "../../common/Alerts";
 import PaymentIcon from '@material-ui/icons/Payment';
 import DiscardReport from "../AssignmentTab/DiscardReport";
-
+import './index.css';
 
 
 function CustomerDeclinedPayment() {
@@ -343,13 +343,15 @@ function CustomerDeclinedPayment() {
 
                 <CardBody>
                     <Records records={records} />
+                    <div className="tableFixHead">
                     <BootstrapTable
                         bootstrap4
                         keyField="id"
                         data={assignmentDisplay}
                         columns={columns}
+                        classes="table-responsive"
                     />
-
+</div>
 
                     <ViewAllReportModal
                         ViewReport={ViewReport}

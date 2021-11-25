@@ -156,6 +156,7 @@ rowStyle2 = (row, index) => {
                         <Link
                             to={{
                                 pathname: `/taxprofessional/queries/${row.assign_id}`,
+                                index : 0,
                                 routes: "paymentstatus",
                             }}
                         >

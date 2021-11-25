@@ -311,19 +311,26 @@ schdrularName;
     });
 
     rt.client.on("stream-subscribed", function (evt) {
-      let stream = evt.stream;
-      var apiData = "https://virtualapi.multitvsolution.com/VstreamApi/index.php/api/vstream/getInfoByRTCId?channel_name="+this.channelName+"&rtc_id="+stream.getId()
-  axios.get(`${apiData}`)
-  .then((res) =>{
-   
-    this.setState({ participantName : res.data[0].user_name })
-    if(res.data != undefined){
+      console.log("three")
+        let stream = evt.stream;
+        var apiData = "https://virtualapi.multitvsolution.com/VstreamApi/index.php/api/vstream/getInfoByRTCId?channel_name="+this.channelName+"&rtc_id="+stream.getId()
+    axios.get(`${apiData}`)
+    .then((res) =>{
+     
+     console.log("response", res.data.length)
+      if(res.data.length === 0 ){
+       
+      }
+      else{
+        this.setState({ participantName : res.data[0].user_name })
+       
+      }
       rt.addStream(stream);
-    }
-  })
-    
- 
-    }.bind(this));
+    })
+      
+   
+      }.bind(this));
+  
     rt.client.on("stream-removed", function (evt) {
       let stream = evt.stream;
      

@@ -105,6 +105,7 @@ function AllProposal() {
                         <Link
                             to={{
                                 pathname: `/taxprofessional/queries/${row.id}`,
+                                index : 0,
                                 routes: "proposal",
                             }}
                         >

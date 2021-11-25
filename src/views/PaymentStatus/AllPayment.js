@@ -24,7 +24,7 @@ import Records from "../../components/Records/Records";
 import PaymentIcon from '@material-ui/icons/Payment';
 import PaymentComponent from './PaymentComponent';
 import DiscardReport from "../AssignmentTab/DiscardReport";
-
+import './index.css';
 
 
 function Paid() {
@@ -480,6 +480,7 @@ function Paid() {
 
           <CardBody>
             <Records records={records} />
+            <div className="tableFixHead">
             <BootstrapTable
               bootstrap4
               keyField="accepted_amount"
@@ -488,7 +489,7 @@ function Paid() {
               classes="table-responsive"
               defaultSortDirection="asc"
             />
-
+</div>
             <PaymentComponent
               paymentHandler={paymentHandler}
               addPaymentModal={addPaymentModal}

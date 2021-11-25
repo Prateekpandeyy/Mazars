@@ -94,7 +94,7 @@ function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
             <Link
               to={{
                 pathname: `/taxprofessional/queries/${row.id}`,
-                index: 0,
+                index: 1,
                 routes: "queriestab",
               }}
             >

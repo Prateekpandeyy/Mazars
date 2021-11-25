@@ -23,7 +23,7 @@ import Records from "../../components/Records/Records";
 import DiscardReport from "../AssignmentTab/DiscardReport";
 import PaymentIcon from '@material-ui/icons/Payment';
 import PaymentComponent from './PaymentComponent';
-
+import './index.css';
 
 function Unpaid() {
 
@@ -461,6 +461,7 @@ function Unpaid() {
 
                     <CardBody>
                         <Records records={records} />
+                        <div className="tableFixHead">
                         <BootstrapTable
                             bootstrap4
                             keyField="id"
@@ -468,6 +469,7 @@ function Unpaid() {
                             columns={columns}
                             classes="table-responsive"
                         />
+                        </div>
 
                         <PaymentComponent
                             paymentHandler={paymentHandler}

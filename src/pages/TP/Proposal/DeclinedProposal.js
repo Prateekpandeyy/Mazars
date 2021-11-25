@@ -101,6 +101,7 @@ function DeclinedProposal() {
                         <Link
                             to={{
                                 pathname: `/taxprofessional/queries/${row.id}`,
+                                index : 3,
                                 routes: "proposal",
                             }}
                         >

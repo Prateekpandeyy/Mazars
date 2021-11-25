@@ -81,7 +81,7 @@ function AllQuery() {
                         <Link
                             to={{
                                 pathname: `/taxprofessional/queries/${row.id}`,
-                                index: 1,
+                                index: 0,
                                 routes: "queriestab",
                             }}
                         >

@@ -78,7 +78,7 @@ function InCompleteData({ CountIncomplete }) {
             <Link
               to={{
                 pathname: `/taxprofessional/queries/${row.id}`,
-                index: 1,
+                index: 2,
                 routes: "queriestab",
               }}
             >

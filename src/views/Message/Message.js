@@ -110,7 +110,9 @@ function Message(props) {
                                     <div
                                         style={{
                                             cursor: "pointer",
-                                            
+                                            display : "flex",
+                                            justifyContent : "space-between",
+                                            wordBreak : "break-word"
                                         }}
                                         onClick={() => readNotification(row.id)}
                                         title="unread"
@@ -123,7 +125,9 @@ function Message(props) {
                                     <div
                                         style={{
                                             cursor: "pointer",
-                                           
+                                            display :"flex",
+                                            justifyContent : "space-between",
+                                            wordBreak : "break-word"
                                         }}
                                         title="read"
                                     >

@@ -23,7 +23,7 @@ import Loader from "../../components/Loader/Loader";
 import DiscardReport from "../AssignmentTab/DiscardReport";
 import { date } from "yup";
 import RejectedModal from "./RejectedModal";
-
+import './index.css';
 
 
 function AllQueriesData() {
@@ -41,7 +41,7 @@ function AllQueriesData() {
        if(typeof(key) == "object"){
         setAdditionalQuery(!additionalQuery);
         
-        setLoading2(!loading2)
+        setLoading2(false)
         return false
        }
        else{
@@ -443,13 +443,16 @@ function AllQueriesData() {
                             <Loader />
                             :
                             <>
+                               <div className="tableFixHead">
                                 <BootstrapTable
                                     bootstrap4
                                     keyField="id"
                                     data={query}
                                     columns={columns}
                                     rowIndex
+                                    classes="table-responsive"
                                 />
+                                </div>
                             </>
                     }
 

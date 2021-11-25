@@ -154,10 +154,10 @@ rowStyle2 = (row, index) => {
                 return (
                     <>
                  
-
-                        <Link
+                 <Link
                             to={{
-                                pathname: `/teamleader/queries/${row.assign_id}`,
+                                pathname: `/taxprofessional/queries/${row.assign_id}`,
+                                index : 1,
                                 routes: "paymentstatus",
                             }}
                         >
