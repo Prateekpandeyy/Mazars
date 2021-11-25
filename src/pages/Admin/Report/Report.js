@@ -185,8 +185,8 @@ const mapAppointmentData = ((appiontmentData) => ({
         formData.append("t_requested", Number(value.t_requested));
         formData.append("spc_que", Number(value.spc_que));
         formData.append("date_allocation", Number(value.doa));
-        formData.append("teamleader", Number(value.tl_name));
-        formData.append("taxprofessional", Number(value.tp_name));
+        // formData.append("teamleader", Number(value.tl_name));
+        // formData.append("taxprofessional", Number(value.tp_name));
         formData.append("date_proposal", Number(value.dateProposal));
         formData.append("proposed_amount", Number(value.proposedAmount));
         formData.append("payment_terms", Number(value.paymentTerms));

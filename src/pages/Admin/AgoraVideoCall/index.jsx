@@ -494,7 +494,7 @@ schdrularName;
         this.shareClient.join($.appId, $.channel, $.uid, (uid) => {
           // this.state.uid = uid;
           this.setState({uid : uid})
-            this.removeStream(uid)
+          
           this.shareStream = this.streamInitSharing(
             uid,
             $.attendeeMode,
