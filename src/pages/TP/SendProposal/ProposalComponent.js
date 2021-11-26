@@ -246,6 +246,9 @@ function ProposalComponent(props) {
     if (isNaN(e.target.value)) {
       setdiserror("Please enter number only.");
     }
+    else if(e.target.value == "0"){
+      setdiserror("Amount should be greater than 0")
+    }
     else {
       setdiserror("");
     }

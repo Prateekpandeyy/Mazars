@@ -239,7 +239,7 @@ schdrularName;
           item.play("ag-item-" + id);
           var box22 = document.getElementById("ag-item-" + id)
           
-          var newContent = document.createTextNode("I am Here" +  this.state.participantName); 
+          var newContent = document.createTextNode(this.state.participantName); 
           item.play("ag-item-" + id);
       
          box22.appendChild(newContent)
@@ -316,7 +316,6 @@ schdrularName;
 
     rt.client.on("stream-subscribed", function (evt) {
     console.log("three")
-    console.log("evt", evt.RTCPeerConnection.t.peerConnection.onaddstream())
       let stream = evt.stream;
       var apiData = "https://virtualapi.multitvsolution.com/VstreamApi/index.php/api/vstream/getInfoByRTCId?channel_name="+this.channelName+"&rtc_id="+stream.getId()
   axios.get(`${apiData}`)
@@ -494,7 +493,7 @@ schdrularName;
         this.shareClient.join($.appId, $.channel, $.uid, (uid) => {
           // this.state.uid = uid;
           this.setState({uid : uid})
-          
+            this.removeStream(uid)
           this.shareStream = this.streamInitSharing(
             uid,
             $.attendeeMode,

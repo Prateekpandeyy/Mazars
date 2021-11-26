@@ -307,20 +307,33 @@ schdrularName;
 
     rt.client.on("stream-subscribed", function (evt) {
       console.log("three")
+      console.log("evt", evt)
         let stream = evt.stream;
+      
         var apiData = "https://virtualapi.multitvsolution.com/VstreamApi/index.php/api/vstream/getInfoByRTCId?channel_name="+this.channelName+"&rtc_id="+stream.getId()
     axios.get(`${apiData}`)
     .then((res) =>{
      
      console.log("response", res.data.length)
       if(res.data.length === 0 ){
-       
+        
       }
       else{
         this.setState({ participantName : res.data[0].user_name })
        
       }
       rt.addStream(stream);
+//   //  let   pc = new RTCPeerConnection([]);
+//   //  var promise = navigator.mediaDevices.getDisplayMedia();
+//   let stream2 = new MediaStream();
+
+// stream2.addEventListener('addtrack', (event) => {
+//   console.log(`New ${event.track.kind} track added`);
+// });
+      // console.log("pcc", pc.currentLocalDescription)
+      // console.log("promise", promise)
+      // console.log("dd", dd)
+   //   console.log("dd", dd.getTrackById(evt.uid))
     })
       
    
