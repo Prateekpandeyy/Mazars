@@ -279,13 +279,14 @@ function PendingAllocation({ CountPendingForAllocation }) {
         </CardHeader>
         <CardBody className = "card-body2">
           <Records records={records} />
+          <div className="tableFixHead">
           <BootstrapTable
             bootstrap4
             keyField="id"
             data={pendingData}
             columns={columns}
             rowIndex
-          />
+          /> </div>
           <History history={history} toggle={toggle} modal={modal} />
         </CardBody>
       </Card>

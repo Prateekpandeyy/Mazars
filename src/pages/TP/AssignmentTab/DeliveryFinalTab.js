@@ -533,13 +533,16 @@ const ViewReport = (key) => {
                 </CardHeader>
 
                 <CardBody>
+                <div className="tableFixHead">
                     <BootstrapTable
                         bootstrap4
                         keyField="id"
                         data={assignment}
                         columns={columns}
                         rowIndex
+                        classes="table-responsive"
                     />
+                    </div>
   <FinalReportUpload
             fianlModal={fianlModal}
             uploadFinalReport={uploadFinalReport}

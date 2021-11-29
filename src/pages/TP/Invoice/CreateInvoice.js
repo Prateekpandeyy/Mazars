@@ -82,7 +82,7 @@ const CreateInvoice = () => {
                 fontSize: "11px",
             },
             headerStyle: () => {
-                return { fontSize: "11px" };
+                return { fontSize: "11px", width : "200px" };
             },
             formatter: function nameFormatter(cell, row) {
 
@@ -110,7 +110,7 @@ const CreateInvoice = () => {
                 fontSize: "11px",
             },
             headerStyle: () => {
-                return { fontSize: "11px" };
+                return { fontSize: "11px" , width :"200px"};
             },
         }, 
         {
@@ -121,7 +121,7 @@ const CreateInvoice = () => {
                 fontSize: "11px",
             },
             headerStyle: () => {
-                return { fontSize: "11px" };
+                return { fontSize: "11px", width : "200px" };
             },
             formatter : function(cell, row){
                 let dueDate=row.due_date.split("-").reverse().join("-")
@@ -142,7 +142,7 @@ const CreateInvoice = () => {
                 fontSize: "11px",
             },
             headerStyle: () => {
-                return { fontSize: "11px" };
+                return { fontSize: "11px" , width : "200px"};
             },
             formatter: function nameFormatter(cell, row){
                 var nfObject = new Intl.NumberFormat('hi-IN')
@@ -202,14 +202,16 @@ const CreateInvoice = () => {
                     </CardHeader>
 
                 <CardBody>
+                <div className="tableFixHead">
                     <BootstrapTable
                         bootstrap4
                         keyField='id'
                         data={proposal}
                         columns={columns}
                         rowIndex
+                        classes="table-responsive"
                     />
-
+</div>
                    
 
                     <Tds 

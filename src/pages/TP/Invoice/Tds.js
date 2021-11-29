@@ -401,7 +401,7 @@ setServices2(k.service)
                     name="pocket_amount"
                     ref={register}
                     className="form-control"
-                   
+                    step="0.00001"
                     onChange={(e) => pocketExpFun(e)}
                     value={pocketExp}
                     placeholder="Pocket Amount"  />
@@ -416,7 +416,7 @@ setServices2(k.service)
                     type="number"
                     ref={register}
                     className="form-control"
-                    
+                    step="0.00001"
                     placeholder="Rate"
                     value={cgetRate}
                     name="cgst_rate"
@@ -443,7 +443,7 @@ setServices2(k.service)
                     type="number"
                     className="form-control"
                     ref={register}
-                    
+                    step="0.00001"
                     name="sgst_rate"
                     placeholder="Rate" 
                    value = {sgetRate}
@@ -469,7 +469,7 @@ setServices2(k.service)
                 <input 
                     type="number"
                     className="form-control"
-                  
+                    step="0.00001"
                     placeholder="Rate"
                     ref={register}
                     name="igst_rate"
@@ -543,7 +543,7 @@ setServices2(k.service)
                    <input 
                     type="number"
                     className="form-control"
-                   
+                    step="0.00001"
                     placeholder="Rate"
                     name="tds_rate"
                     value={tdsR}

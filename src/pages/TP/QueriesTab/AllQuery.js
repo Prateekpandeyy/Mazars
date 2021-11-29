@@ -64,14 +64,14 @@ function AllQuery() {
             dataField: "created",
             sort: true,
             headerStyle: () => {
-                return { fontSize: "12px" };
+                return { fontSize: "12px", width : "120px" };
             },
         },
         {
             text: "Query No",
             dataField: "assign_no",
             headerStyle: () => {
-                return { fontSize: "12px" };
+                return { fontSize: "12px" , width : "120px"};
             },
             formatter: function nameFormatter(cell, row) {
               
@@ -96,7 +96,7 @@ function AllQuery() {
             dataField: "parent_id",
             sort: true,
             headerStyle: () => {
-                return { fontSize: "12px" };
+                return { fontSize: "12px",width : "80px" };
             },
         },
         {
@@ -112,7 +112,7 @@ function AllQuery() {
             dataField: "name",
             sort: true,
             headerStyle: () => {
-                return { fontSize: "12px" };
+                return { fontSize: "12px", width : "120px" };
             },
         },
         {
@@ -120,7 +120,7 @@ function AllQuery() {
             dataField: "Exp_Delivery_Date",
             sort: true,
             headerStyle: () => {
-                return { fontSize: "12px" };
+                return { fontSize: "12px", width : "120px" };
             },
             formatter: function dateFormat(cell, row) {
               
@@ -134,7 +134,7 @@ function AllQuery() {
         {
             text: "Status",
             headerStyle: () => {
-                return { fontSize: "12px" };
+                return { fontSize: "12px", width : "120px" };
             },
             formatter: function nameFormatter(cell, row) {
                 return (
@@ -169,7 +169,7 @@ function AllQuery() {
             text: "Action",
             dataField: "",
             headerStyle: () => {
-                return { fontSize: "12px" };
+                return { fontSize: "12px" , width : "120px"};
             },
             formatter: function (cell, row) {
               
@@ -195,7 +195,7 @@ function AllQuery() {
                                   message_type: "4",
                                   query_No: row.assign_no,
                                   query_id: row.id,
-                                  routes: `/taxprofessional/proposal`
+                                  routes: `/taxprofessional/queriestab`
                               }
                           }}
                       >
@@ -242,13 +242,16 @@ function AllQuery() {
                     />
                 </CardHeader>
                 <CardBody>
+                <div className="tableFixHead">
                     <BootstrapTable
                         bootstrap4
                         keyField="id"
                         data={incompleteData}
                         columns={columns}
                         rowIndex
+                        classes="table-responsive"
                     />
+                    </div>
                     <DiscardReport
                         ViewDiscussionToggel={ViewDiscussionToggel}
                         ViewDiscussion={ViewDiscussion}

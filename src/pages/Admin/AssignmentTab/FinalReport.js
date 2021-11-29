@@ -488,6 +488,7 @@ function FinalReport() {
 
         <CardBody>
           <Records records={records} />
+          <div className="tableFixHead">
           <BootstrapTable
             bootstrap4
             keyField="id"
@@ -497,6 +498,7 @@ function FinalReport() {
             rowIndex 
            
           />
+          </div>
   <ViewAllReportModal
             ViewReport={ViewReport}
             reportModal={reportModal}

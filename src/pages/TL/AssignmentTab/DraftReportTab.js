@@ -559,6 +559,7 @@ rowStyle2 = (row, index) => {
                 </CardHeader>
 
                 <CardBody>
+                <div className="tableFixHead">
                     <BootstrapTable
                         bootstrap4
                         keyField="id"
@@ -566,7 +567,9 @@ rowStyle2 = (row, index) => {
                         columns={columns}
                         rowStyle={ rowStyle2 }
                         rowIndex
+                        classes="table-responsive"
                     />
+                    </div>
   <DraftReportModal
             draftModal={draftModal}
             uploadDraftReport={uploadDraftReport}

@@ -315,12 +315,13 @@ function Unpaid() {
 <div style={{ cursor: "pointer" }} title="Payment History">
 <Link
               to={{
-                pathname: `/admin/paydetails/${row.id}`,
+                pathname: `/admin/paydetails/${row.assign_id}`,
                 obj: {
                   message_type: "5",
                   query_No: row.assign_no,
                   query_id: row.id,
-                  routes: `/admin/paymentstatus`
+                  routes: `/admin/paymentstatus`,
+                  index : 1
                 }
               }}
             >
@@ -350,12 +351,13 @@ function Unpaid() {
                             <div title="Send Message">
                 <Link
                   to={{
-                    pathname: `/admin/chatting/${row.id}`,
+                    pathname: `/admin/chatting/${row.assign_id}`,
                     obj: {
                       message_type: "5",
                       query_No: row.assign_no,
                       query_id: row.assign_id,
-                      routes: `/admin/paymentstatus`
+                      routes: `/admin/paymentstatus`,
+                      index : 1
                     }
                   }}
                 >
@@ -394,15 +396,16 @@ function Unpaid() {
                 </CardHeader>
                 <CardBody>
                     <Records records={records} />
+                    <div className="tableFixHead">
                     <BootstrapTable
                         bootstrap4
                         keyField="id"
                         data={payment}
                         columns={columns}
-                        classes="table-responsive"
+                        classes="table-responsivepayment"
                         rowIndex
                     />
-
+</div>
                     <Modal isOpen={modal} fade={false} toggle={toggle}>
                         <ModalHeader toggle={toggle}>History</ModalHeader>
                         <ModalBody>

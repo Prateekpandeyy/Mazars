@@ -342,19 +342,17 @@ function AcceptedProposal() {
                     />
                 </CardHeader>
                 <CardBody>
+                <div className="tableFixHead">
                     <BootstrapTable
                         bootstrap4
                         keyField="id"
                         data={proposal}
                         columns={columns}
                         rowIndex
+                        classes="table-responsive"
                     />
-                    {/* <DiscardReport
-                        ViewDiscussionToggel={ViewDiscussionToggel}
-                        ViewDiscussion={ViewDiscussion}
-                        report={assignNo}
-                        getData={getProposalList}
-                    /> */}
+                    </div>
+
                 </CardBody>
             </Card>
         </>

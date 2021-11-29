@@ -35,12 +35,12 @@ function AllQueriesData() {
     const [loading, setLoading] = useState(false);
     const [loading2, setLoading2] = useState(false);
     const [additionalQuery, setAdditionalQuery] = useState(false);
- 
+   const [showData, setShowData] = useState(false)
     const additionalHandler = (key) => {
        
        if(typeof(key) == "object"){
         setAdditionalQuery(!additionalQuery);
-        
+        setShowData(true)
         setLoading2(false)
         return false
        }
@@ -96,7 +96,7 @@ function AllQueriesData() {
             dataField: "created",
             sort: true,
             headerStyle: () => {
-                return { fontSize: "12px" };
+                return { fontSize: "12px" ,  width: "80px"};
             },
            
         },
@@ -104,7 +104,7 @@ function AllQueriesData() {
             text: "Query No",
             dataField: "assign_no",
             headerStyle: () => {
-                return { fontSize: "12px" };
+                return { fontSize: "12px" ,  width: "130px"};
             },
             formatter: function nameFormatter(cell, row) {
               
@@ -128,7 +128,7 @@ function AllQueriesData() {
             dataField: "parent_id",
             sort: true,
             headerStyle: () => {
-                return { fontSize: "12px" };
+                return { fontSize: "12px",  width: "130px" };
             },
         },
         {
@@ -136,14 +136,14 @@ function AllQueriesData() {
             dataField: "cat_name",
             sort: true,
             headerStyle: () => {
-                return { fontSize: "12px" };
+                return { fontSize: "12px" ,  width: "120px"};
             },
         },
         {
             text: "Status",
             dataField: "",
             headerStyle: () => {
-                return { fontSize: "12px" };
+                return { fontSize: "12px" ,  width: "180px" };
             },
             formatter: function nameFormatter(cell, row) {
                 return (
@@ -178,7 +178,7 @@ function AllQueriesData() {
             dataField: "exp_delivery_date",
             sort: true,
             headerStyle: () => {
-                return { fontSize: "12px" };
+                return { fontSize: "12px" ,  width: "180px"};
             },
             formatter: function dateFormat(cell, row) {
                
@@ -438,11 +438,7 @@ function AllQueriesData() {
                 </CardHeader>
                 <CardBody>
                     <Records records={records} />
-                    {
-                        loading ?
-                            <Loader />
-                            :
-                            <>
+                  
                                <div className="tableFixHead">
                                 <BootstrapTable
                                     bootstrap4
@@ -453,9 +449,7 @@ function AllQueriesData() {
                                     classes="table-responsive"
                                 />
                                 </div>
-                            </>
-                    }
-
+                            
                     <AdditionalQueryModal
                         additionalHandler={additionalHandler}
                         additionalQuery={additionalQuery}
@@ -463,6 +457,7 @@ function AllQueriesData() {
                         getQueriesData={getQueriesData}
                         setLoading2={setLoading2}
                         loading2={loading2}
+                        showData = {showData}
                     />
 
 

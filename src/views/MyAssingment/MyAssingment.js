@@ -27,6 +27,7 @@ function MyAssingment(props) {
   const [tlName2, setTlname] = useState();
   const [qstatus, setqStatus] = useState();
   const[tp22, setTp22] = useState();
+  const [tpStatus, setTpstatus] = useState();
   const [declined2, setDeclined2] = useState();
   const [declinedStatus, setDeclinedStatus] = useState(false)
     const [diaplayProposal, setDisplayProposal] = useState({
@@ -72,6 +73,7 @@ function MyAssingment(props) {
           setAccept(res.data.result[0].query_status)
           setTlname(res.data.result[0].tlname);
           setTp22(res.data.result[0].tpname);
+          setTpstatus(res.data.result[0].tp_status);
           if(res.data.history_queries[0] === undefined){
 
           }
@@ -240,6 +242,7 @@ function MyAssingment(props) {
                 accept = {accept}
                 tlName2={tlName2}
                 tp22 = {tp22}
+                tpStatus={tpStatus}
                 qstatus={qstatus}
                 finalDate={finalDate}
                 declined2={declined2}

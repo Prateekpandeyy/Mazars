@@ -319,10 +319,26 @@ function AllPayment() {
                                       
                                         style={{ color: "green", fontSize: "16px", cursor: "pointer" }}
                                     >
-                                        <i
-                           class="fa fa-credit-card"
-                           onClick={() => toggle(row.assign_id)}
-                           style={{ color: "green", fontSize: "16px" }}></i>
+                                         <Link
+                                to={{
+                                    pathname: `/taxprofessional/chatting/${row.assign_id}`,
+                                    obj: {
+                                        message_type: "5",
+                                        query_No: row.assign_no,
+                                        query_id: row.assign_id,
+                                        routes: `/taxprofessional/paymentstatus`
+                                    }
+                                }}
+                            >
+                                <i
+                                    class="fa fa-comments-o"
+                                    style={{
+                                        fontSize: 18,
+                                        cursor: "pointer",
+                                        color: "blue"
+                                    }}
+                                ></i>
+                            </Link>
                                     </div>
                             }
 
@@ -394,14 +410,15 @@ function AllPayment() {
                 </CardHeader>
 
                 <CardBody>
+                <div className="tableFixHead">
                     <BootstrapTable
                         bootstrap4
                         keyField="id"
                         data={payment}
                         columns={columns}
-                        classes="table-responsive"
+                        classes="table-responsivepayment"
                     />
-
+</div>
 
                     <RejectedModal
                         rejectHandler={rejectHandler}

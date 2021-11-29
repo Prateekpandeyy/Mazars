@@ -486,7 +486,7 @@ function Paid() {
               keyField="accepted_amount"
               data={payment}
               columns={columns}
-              classes="table-responsive"
+              classes="table-responsivepayment"
               defaultSortDirection="asc"
             />
 </div>

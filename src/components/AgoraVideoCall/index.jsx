@@ -68,7 +68,8 @@ class AgoraCanvas extends React.Component {
       readyState: false,
       stateSharing: false,
       addRemote : null,
-      participantName : ''
+      participantName : '',
+      disabledVedio : false
     };
   }
 channelName = this.props.channel
@@ -148,6 +149,12 @@ console.log("customerName", this.customerName)
       this.state.streamList.map((item, index) => {
         let id = item.getId();
         let dom = document.querySelector("#ag-item-" + id);
+        if(this.state.disabledVedio === true){
+          dom.setAttribute("class", "ag-item2");
+        }
+        else if (dom && this.state.disabledVedio === false) {
+         dom.setAttribute("class", "ag-item");
+        }
         if (!dom) {
           dom = document.createElement("section");
           dom.setAttribute("id", "ag-item-" + id);
@@ -182,6 +189,12 @@ console.log("customerName", this.customerName)
       this.state.streamList.map((item, index) => {
         let id = item.getId();
         let dom = document.querySelector("#ag-item-" + id);
+        if(this.state.disabledVedio === true){
+          dom.setAttribute("class", "ag-item2");
+        }
+        else if (dom && this.state.disabledVedio === false) {
+         dom.setAttribute("class", "ag-item");
+        }
         if (!dom) {
           dom = document.createElement("section");
           dom.setAttribute("id", "ag-item-" + id);
@@ -321,6 +334,7 @@ console.log("customerName", this.customerName)
   };
 
   handleCamera = (e) => {
+    this.setState({disabledVedio : !this.state.disabledVedio})
     e.currentTarget.classList.toggle("off");
     this.localStream.isVideoOn()
       ? this.localStream.disableVideo()

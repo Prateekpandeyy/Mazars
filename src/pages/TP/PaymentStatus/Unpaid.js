@@ -333,11 +333,26 @@ rowStyle2 = (row, index) => {
                          <div title="Payment History"
  
                              style={{ color: "green", fontSize: "16px", cursor: "pointer" }}
-                         >
-                             <i
-                            class="fa fa-credit-card"
-                            onClick={() => toggle(row.assign_id)}
-                            style={{ color: "green", fontSize: "16px" }}></i>
+                         >   <Link
+                         to={{
+                             pathname: `/taxprofessional/chatting/${row.assign_id}`,
+                             obj: {
+                                 message_type: "5",
+                                 query_No: row.assign_no,
+                                 query_id: row.assign_id,
+                                 routes: `/taxprofessional/paymentstatus`
+                             }
+                         }}
+                     >
+                         <i
+                             class="fa fa-comments-o"
+                             style={{
+                                 fontSize: 18,
+                                 cursor: "pointer",
+                                 color: "blue"
+                             }}
+                         ></i>
+                     </Link>
                          </div>
                         
  
@@ -363,11 +378,11 @@ rowStyle2 = (row, index) => {
                         >
                           <Link
               to={{
-                pathname: `/taxprofessional/paydetails/${row.id}`,
+                pathname: `/taxprofessional/paydetails/${row.assign_id}`,
                 obj: {
                   message_type: "5",
                   query_No: row.assign_no,
-                  query_id: row.id,
+                  query_id: row.assign_id,
                   routes: `/taxprofessional/paymentstatus`
                 }
               }}
@@ -451,16 +466,17 @@ rowStyle2 = (row, index) => {
                 </CardHeader>
 
                 <CardBody>
+                <div className="tableFixHead">
                     <BootstrapTable
                         bootstrap4
                         keyField="id"
                         data={payment}
                         columns={columns}
-                        classes="table-responsive"
+                        classes="table-responsivepayment"
                         rowStyle={rowStyle2}
                         rowIndex
                     />
-
+</div>
 
                     <RejectedModal
                         rejectHandler={rejectHandler}

@@ -172,6 +172,7 @@ function DeclinedQueries({ CountPendingForPayment }) {
         </CardHeader>
         <CardBody>
         <Records records={records} />
+        <div className="tableFixHead">
           <BootstrapTable
             bootstrap4
             keyField="id"
@@ -179,7 +180,8 @@ function DeclinedQueries({ CountPendingForPayment }) {
             columns={columns}
             rowIndex
             wrapperClasses="table-responsive"
-          />
+          /> 
+          </div>
         </CardBody>
       </Card>
     </>

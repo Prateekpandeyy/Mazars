@@ -69,7 +69,7 @@ function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
       dataField: "query_created",
       sort: true,
       headerStyle: () => {
-        return { fontSize: "12px" };
+        return { fontSize: "12px" , width : "100px"};
       },
       formatter: function dateFormat(cell, row) {
       
@@ -239,13 +239,16 @@ function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
             loading ?
               <Spinner color="primary" />
               :
+              <div className="tableFixHead">
               <BootstrapTable
                 bootstrap4
                 keyField="id"
                 data={pendingData}
                 columns={columns}
                 rowIndex
+                classes="table-responsive"
               />
+              </div>
           }
           <RejectedModal
             rejectHandler={rejectHandler}

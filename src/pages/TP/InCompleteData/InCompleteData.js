@@ -62,14 +62,14 @@ function InCompleteData({ CountIncomplete }) {
       dataField: "created",
       sort: true,
       headerStyle: () => {
-        return { fontSize: "12px" };
+        return { fontSize: "12px", width : "100px" };
       },
     },
     {
       text: "Query No",
       dataField: "assign_no",
       headerStyle: () => {
-        return { fontSize: "12px" };
+        return { fontSize: "12px" , width : "100px"};
       },
       formatter: function nameFormatter(cell, row) {
 
@@ -93,7 +93,7 @@ function InCompleteData({ CountIncomplete }) {
       dataField: "parent_id",
       sort: true,
       headerStyle: () => {
-        return { fontSize: "12px" };
+        return { fontSize: "12px" , width : "80px"};
       },
     },
     {
@@ -101,7 +101,7 @@ function InCompleteData({ CountIncomplete }) {
       dataField: "cat_name",
       sort: true,
       headerStyle: () => {
-        return { fontSize: "12px" };
+        return { fontSize: "12px" , width :"150px"};
       },
     },
     {
@@ -109,7 +109,7 @@ function InCompleteData({ CountIncomplete }) {
       dataField: "name",
       sort: true,
       headerStyle: () => {
-        return { fontSize: "12px" };
+        return { fontSize: "12px" , width : "150px"};
       },
     },
     {
@@ -191,7 +191,7 @@ function InCompleteData({ CountIncomplete }) {
                             message_type: "4",
                             query_No: row.assign_no,
                             query_id: row.id,
-                            routes: `/taxprofessional/proposal`
+                            routes: `/taxprofessional/queriestab`
                         }
                     }}
                 >
@@ -238,14 +238,16 @@ function InCompleteData({ CountIncomplete }) {
           />
         </CardHeader>
         <CardBody>
+        <div className="tableFixHead">
           <BootstrapTable
             bootstrap4
             keyField="id"
             data={incompleteData}
             columns={columns}
+            classes="table-responsive"
             rowIndex
           />
-
+</div>
           <DiscardReport
             ViewDiscussionToggel={ViewDiscussionToggel}
             ViewDiscussion={ViewDiscussion}

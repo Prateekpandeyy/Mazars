@@ -14,7 +14,7 @@
     overflow-x : hidden;
   }
   
-  .tableFixHead          { overflow-y: auto; }
+  .tableFixHead          { overflow-y: auto;  }
   .tableFixHead thead th { position: sticky; color: "white"; top: 0; z-index: 1; border: 0px; background-color:rgb(94 150 174) !important; color : #ffffff !important;}
   
   /* 

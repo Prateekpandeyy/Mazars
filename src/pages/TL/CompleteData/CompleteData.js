@@ -329,13 +329,16 @@ Swal.fire({
           />
         </CardHeader>
         <CardBody>
+        <div className="tableFixHead">
           <BootstrapTable
             bootstrap4
             keyField="id"
             data={incompleteData}
             columns={columns}
             rowIndex
+            classes="table-responsive"
           />
+          </div>
             <History history={history} toggle={toggle} modal={modal} />
         </CardBody>
       </Card>

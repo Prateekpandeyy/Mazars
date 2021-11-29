@@ -74,7 +74,7 @@ function DeclinedQueries() {
       dataField: "created",
       sort: true,
       headerStyle: () => {
-        return { fontSize: "12px" };
+        return { fontSize: "12px", width: "150px" };
       },
       formatter: function dateFormat(cell, row) {
 
@@ -89,7 +89,7 @@ function DeclinedQueries() {
       text: "Query No",
       dataField: "assign_no",
       headerStyle: () => {
-        return { fontSize: "12px" };
+        return { fontSize: "12px",   width: "150px" };
       },
       formatter: function nameFormatter(cell, row) {
               
@@ -113,7 +113,7 @@ function DeclinedQueries() {
       dataField: "parent_id",
       sort: true,
       headerStyle: () => {
-        return { fontSize: "12px" };
+        return { fontSize: "12px" , width: "150px" };
       },
     },
     {
@@ -121,14 +121,14 @@ function DeclinedQueries() {
       dataField: "cat_name",
       sort: true,
       headerStyle: () => {
-        return { fontSize: "12px" };
+        return { fontSize: "12px", width: "120px"  };
       },
     },
     {
       text: "Status",
       dataField: "",
       headerStyle: () => {
-        return { fontSize: "12px" };
+        return { fontSize: "12px", width: "120px"  };
       },
       formatter: function nameFormatter(cell, row) {
         return (
@@ -163,7 +163,7 @@ function DeclinedQueries() {
       dataField: "exp_delivery_date",
       sort: true,
       headerStyle: () => {
-        return { fontSize: "12px" };
+        return { fontSize: "12px" , width: "120px" };
       },
       formatter: function dateFormat(cell, row) {
    

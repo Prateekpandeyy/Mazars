@@ -12,7 +12,8 @@ function AdditionalQueryModal({
   assignNo,
   getQueriesData,
   setLoading2,
-  loading2
+  loading2,
+  showData
 }) {
   const { handleSubmit, register } = useForm();
   
@@ -38,7 +39,7 @@ function AdditionalQueryModal({
     })
       .then(function (response) {
     
-        if (response.data.code === 1 && loading2 === true) {
+        if (response.data.code === 1 && showData === false) {
           setLoading2(false)
           var message = response.data.message
           if (message.invalid) {

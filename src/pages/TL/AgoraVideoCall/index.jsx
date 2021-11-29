@@ -87,7 +87,8 @@ class AgoraCanvas extends React.Component {
       showButton : '',
       clickDisable : false,
       addRemote : null,
-      participantName : ''
+      participantName : '',
+      disabledVedio : false
     };
 
     this.toggleModal = this.toggleModal.bind(this);
@@ -193,6 +194,12 @@ schdrularName;
       this.state.streamList.map((item, index) => {
         let id = item.getId();
         let dom = document.querySelector("#ag-item-" + id);
+        if(this.state.disabledVedio === true){
+          dom.setAttribute("class", "ag-item2");
+        }
+        else if (dom && this.state.disabledVedio === false) {
+         dom.setAttribute("class", "ag-item");
+        }
         if (!dom) {
           dom = document.createElement("section");
           dom.setAttribute("id", "ag-item-" + id);
@@ -225,6 +232,12 @@ schdrularName;
       this.state.streamList.map((item, index) => {
         let id = item.getId();
         let dom = document.querySelector("#ag-item-" + id);
+        if(this.state.disabledVedio === true){
+          dom.setAttribute("class", "ag-item2");
+        }
+        else if (dom && this.state.disabledVedio === false) {
+         dom.setAttribute("class", "ag-item");
+        }
         if (!dom) {
           dom = document.createElement("section");
           dom.setAttribute("id", "ag-item-" + id);
@@ -387,6 +400,7 @@ schdrularName;
   };
 
   handleCamera = (e) => {
+    this.setState({disabledVedio : !this.state.disabledVedio})
     e.currentTarget.classList.toggle("off");
     this.localStream.isVideoOn()
       ? this.localStream.disableVideo()
@@ -473,24 +487,28 @@ schdrularName;
      
    }
  
-  sharingScreen = (e) => {
+   sharingScreen = (e) => {
     if (this.state.stateSharing) {
       this.shareClient && this.shareClient.unpublish(this.shareStream);
       this.shareStream && this.shareStream.close();
       this.state.stateSharing = false;
     } else {
-     
       this.state.stateSharing = true;
       let $ = this.props;
       // init AgoraRTC local client
       this.shareClient = AgoraRTC.createClient({ mode: $.transcode });
 
       this.shareClient.init($.appId, () => {
-     
+        console.log("AgoraRTC client initialized");
+
         this.subscribeStreamEvents();
         this.shareClient.join($.appId, $.channel, $.uid, (uid) => {
           this.state.uid = uid;
-         
+          console.log("User " + uid + " join channel successfully");
+          console.log("At " + new Date().toLocaleTimeString());
+          // create local stream
+          // It is not recommended to setState in function addStream
+          
           this.shareStream = this.streamInitSharing(
             uid,
             $.attendeeMode,
@@ -501,13 +519,13 @@ schdrularName;
               if ($.attendeeMode !== "audience") {
                 this.addStream(this.shareStream, true);
                 this.shareClient.publish(this.shareStream, (err) => {
-                 
+                  console.log("Publish local stream error: " + err);
                 });
               }
               this.setState({ readyState: true });
             },
             (err) => {
-            
+              console.log("getUserMedia failed", err);
               this.setState({ readyState: true });
             }
           );

@@ -31,10 +31,14 @@ const PayDetails = () => {
     const { id } = useParams();
     const [paymentDetail, setPaymentDetail] = useState();
     const [modal, setModal] = useState(false);
-    const [modalData, setModalData] = useState()
+    const [modalData, setModalData] = useState(false)
     const [showTable, setShowTable] = useState(null);
+    const [paymentUrlcopy, setPaymentUrlCopy] = useState(false)
+   
     const paydetails2 = () => {
+          console.log("done22")
 axios.get(`${baseUrl}/admin/getPaymentDetail?id=${id}`)
+
 .then((res) => {
     if(res.data.code === 1){
       
@@ -208,7 +212,27 @@ setModal(!modal)
            
         },
         
-       
+       {
+         dataField : "paymenturl",
+         text : "Payment Url",
+         style : {
+             fontSize : "11px"
+         },
+         headerStyle : () => {
+             return { fontSize : "11px", width : "90px"}
+         },
+         formatter : function formatter(cell, row){
+             setPaymentUrlCopy(row.paymenturl);
+             return (
+                 <>
+               {paymentUrlcopy === false ? 
+                <button className = "btn btn-success"   onClick={() => {copyFun(row.paymenturl)}}>copy</button>
+            : 
+            <button className = "btn btn-danger" disabled>copy</button>}
+                 </>
+             )
+         }
+       },
        
         {
             dataField: "",
@@ -242,7 +266,14 @@ setModal(!modal)
         },
            
       ];
-    
+      
+      
+      
+  const copyFun = (e)  =>{
+   
+    navigator.clipboard.writeText(e)
+   
+  }
       const Container = styled.div `
       dispaly : flex;
       width : 100%;

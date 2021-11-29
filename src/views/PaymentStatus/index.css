@@ -8,10 +8,10 @@
     padding: 2px;
   }
   
-  .table-responsive{
+  .table-responsivepayment{
     display: block;
     height: 65vh;
-    overflow: scroll;
+    overflow-x: scroll;
   }
   
   .tableFixHead          { overflow: auto; }

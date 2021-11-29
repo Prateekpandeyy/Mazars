@@ -71,7 +71,7 @@ function TeamLeaderTab() {
       text: "TL post name",
       sort: true,
       headerStyle: () => {
-        return { fontSize: "12px" };
+        return { fontSize: "12px" , width: "50px" };
       },
     },
 
@@ -80,7 +80,7 @@ function TeamLeaderTab() {
       text: "TL post email",
       sort: true,
       headerStyle: () => {
-        return { fontSize: "12px" };
+        return { fontSize: "12px",  width: "50px" };
       },
     },
     {
@@ -88,7 +88,7 @@ function TeamLeaderTab() {
       text: "Name of TL",
       sort: true,
       headerStyle: () => {
-        return { fontSize: "12px" };
+        return { fontSize: "12px" , width: "50px"};
       },
     },
     {
@@ -96,7 +96,7 @@ function TeamLeaderTab() {
       text: "Email",
       sort: true,
       headerStyle: () => {
-        return { fontSize: "12px" };
+        return { fontSize: "12px" , width: "50px"};
       },
     },
     {
@@ -104,7 +104,7 @@ function TeamLeaderTab() {
       text: "Mobile No",
       sort: true,
       headerStyle: () => {
-        return { fontSize: "12px" };
+        return { fontSize: "12px" , width: "50px" };
       },
     },
     {
@@ -112,7 +112,7 @@ function TeamLeaderTab() {
       text: "Category",
       sort: true,
       headerStyle: () => {
-        return { fontSize: "12px" };
+        return { fontSize: "12px"  , width: "50px"};
       },
       formatter: function nameFormatter(cell, row) {
         var digit2 = [];
@@ -139,7 +139,7 @@ function TeamLeaderTab() {
       text: "Sub Category",
       sort: true,
       headerStyle: () => {
-        return { fontSize: "12px" };
+        return { fontSize: "12px" , width: "50px" };
       },
       formatter: function nameFormatter(cell, row) {
         var digit = [];
@@ -295,14 +295,16 @@ else{
           </Row>
         </CardHeader>
         <CardBody>
+        <div className="tableFixHead">
           <BootstrapTable
             bootstrap4
             keyField="id"
             data={data}
-
+            classes="table-responsivepayment"
             columns={columns}
             rowIndex
           />
+          </div>
         </CardBody>
       </Card>
       <History history={history} toggle={toggle} modal={modal} />

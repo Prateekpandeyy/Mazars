@@ -62,7 +62,7 @@ function InCompleteData({ CountIncomplete }) {
       dataField: "created",
       sort: true,
       headerStyle: () => {
-        return { fontSize: "12px" };
+        return { fontSize: "12px", width : "100px" };
       },
       formatter : function(cell, row){
         let dueDate=row.created.split("-").reverse().join("-")
@@ -79,7 +79,7 @@ function InCompleteData({ CountIncomplete }) {
       text: "Query No",
       dataField: "assign_no",
       headerStyle: () => {
-        return { fontSize: "12px" };
+        return { fontSize: "12px" , width : "100px"};
       },
       formatter: function nameFormatter(cell, row) {
        
@@ -196,7 +196,7 @@ function InCompleteData({ CountIncomplete }) {
                     message_type: "4",
                     query_No: row.assign_no,
                     query_id: row.id,
-                    routes: `/teamleader/proposal`
+                    routes: `/teamleader/queriestab`
                   }
                 }}
               >
@@ -243,14 +243,16 @@ function InCompleteData({ CountIncomplete }) {
           />
         </CardHeader>
         <CardBody>
+        <div className="tableFixHead">
           <BootstrapTable
             bootstrap4
             keyField="id"
             data={incompleteData}
             columns={columns}
             rowIndex
+            classes="table-responsive"
           />
-
+</div>
           <DiscardReport
             ViewDiscussionToggel={ViewDiscussionToggel}
             ViewDiscussion={ViewDiscussion}

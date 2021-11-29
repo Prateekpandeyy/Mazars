@@ -223,6 +223,7 @@ function AllQueriesData(props) {
         <CardBody>
           <Records records={records} />
          {allQueriesData != undefined ? 
+          <div className="tableFixHead">
           <BootstrapTable
           bootstrap4
           keyField="id"
@@ -230,7 +231,7 @@ function AllQueriesData(props) {
           columns={columns}
           rowIndex
           wrapperClasses="table-responsive"
-        /> : ""}
+        />  </div> : ""}
 
 
           <DiscardReport

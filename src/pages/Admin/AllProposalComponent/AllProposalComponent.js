@@ -346,13 +346,15 @@ function AllProposalComponent({ allProposal }) {
 
         <CardBody>
           <Records records={records} />
+          <div className="tableFixHead">
           <BootstrapTable
             bootstrap4
             keyField="id"
             data={proposalDisplay}
             columns={columns}
-            classes="table-responsive"
+            classes="table-responsivepayment"
           />
+          </div>
 
           <ViewComponent
             ViewHandler={ViewHandler}

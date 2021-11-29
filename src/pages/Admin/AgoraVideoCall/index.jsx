@@ -86,6 +86,7 @@ class AgoraCanvas extends React.Component {
       showButton : '',
       clickDisable : false,
       addRemote : null,
+      disabledVedio : false,
       participantName : 'participant'
     };
 
@@ -186,6 +187,7 @@ schdrularName;
 
   componentDidUpdate() {
     // rerendering
+    console.log("update", this.state.disabledVedio)
     let canvas = document.querySelector("#ag-canvas");
     // pip mode (can only use when less than 4 people in channel)
     if (this.state.displayMode === "pip") {
@@ -197,14 +199,23 @@ schdrularName;
       this.state.streamList.map((item, index) => {
         let id = item.getId();
         let dom = document.querySelector("#ag-item-" + id);
-      
+        if(this.state.disabledVedio === true){
+          dom.setAttribute("class", "ag-item2");
+        }
+        else if (dom && this.state.disabledVedio === false) {
+         dom.setAttribute("class", "ag-item");
+        }
         if (!dom) {
           dom = document.createElement("section");
           dom.setAttribute("id", "ag-item-" + id);
           dom.setAttribute("class", "ag-item");
-          canvas.appendChild(dom);
-          var box22 = document.getElementById("ag-item-" + id)
+         
         
+          
+          canvas.appendChild(dom);
+          item.play("ag-item-" + id);
+          var box22 = document.getElementById("ag-item-" + id)
+          
           var newContent = document.createTextNode(this.state.participantName); 
           item.play("ag-item-" + id);
       
@@ -231,10 +242,21 @@ schdrularName;
         let id = item.getId();
         let dom2 ;
         let dom = document.querySelector("#ag-item-" + id);
+        if(this.state.disabledVedio === true){
+          dom.setAttribute("class", "ag-item2");
+        }
+        else if (dom && this.state.disabledVedio === false) {
+         dom.setAttribute("class", "ag-item");
+        }
         if (!dom) {
           dom = document.createElement("section");
           dom.setAttribute("id", "ag-item-" + id);
-          dom.setAttribute("class", "ag-item");
+          if(this.state.disabledVedio === true){
+            dom.setAttribute("class", "ag-item2");
+          }
+          else{
+            dom.setAttribute("class", "ag-item");
+          }
           canvas.appendChild(dom);
           item.play("ag-item-" + id);
           var box22 = document.getElementById("ag-item-" + id)
@@ -383,6 +405,7 @@ schdrularName;
   };
 
   handleCamera = (e) => {
+    this.setState({disabledVedio : !this.state.disabledVedio})
     e.currentTarget.classList.toggle("off");
     this.localStream.isVideoOn()
       ? this.localStream.disableVideo()

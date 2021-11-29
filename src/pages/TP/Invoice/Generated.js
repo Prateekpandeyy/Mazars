@@ -77,7 +77,7 @@ const Generated = () => {
                 fontSize: "11px",
             },
             headerStyle: () => {
-                return { fontSize: "11px" };
+                return { fontSize: "11px" , width : "100px"};
             },
             formatter: function nameFormatter(cell, row) {
                 
@@ -105,7 +105,7 @@ const Generated = () => {
                 fontSize: "11px",
             },
             headerStyle: () => {
-                return { fontSize: "11px" };
+                return { fontSize: "11px" , width :"150px"};
             },
         },
         {
@@ -116,7 +116,7 @@ const Generated = () => {
                 fontSize: "11px",
             },
             headerStyle: () => {
-                return { fontSize: "11px" };
+                return { fontSize: "11px" , width : "150px"};
             },
         },
         {
@@ -127,7 +127,7 @@ const Generated = () => {
                 fontSize: "11px",
             },
             headerStyle: () => {
-                return { fontSize: "11px" };
+                return { fontSize: "11px" , width : "100px"};
             },
             formatter : function(cell, row){
                 let dueDate=row.due_date.split("-").reverse().join("-")
@@ -280,6 +280,7 @@ const Generated = () => {
                     </CardHeader>
 
                 <CardBody>
+                <div className="tableFixHead">
                     <BootstrapTable
                         bootstrap4
                         keyField="id"
@@ -287,7 +288,9 @@ const Generated = () => {
                         columns={columns}
                         rowIndex
                         rowStyle={ rowStyle2 }
+                        classes="table-responsive"
                     />
+                    </div>
 
                    
                   

@@ -88,7 +88,8 @@ class AgoraCanvas extends React.Component {
       showButton : '',
       clickDisable : false,
       addRemote : null,
-      participantName : ''
+      participantName : '',
+      disabledVedio : false
     };
 
     this.toggleModal = this.toggleModal.bind(this);
@@ -147,6 +148,7 @@ allrecording;
   }
  
   componentDidMount() {
+    console.log("tpName", this.tpName)
     // add listener to control btn group
     let canvas = document.querySelector("#ag-canvas");
     let btnGroup = document.querySelector(".ag-btn-group");
@@ -198,6 +200,12 @@ schdrularName;
       this.state.streamList.map((item, index) => {
         let id = item.getId();
         let dom = document.querySelector("#ag-item-" + id);
+        if(this.state.disabledVedio === true){
+          dom.setAttribute("class", "ag-item2");
+        }
+        else if (dom && this.state.disabledVedio === false) {
+         dom.setAttribute("class", "ag-item");
+        }
         if (!dom) {
           dom = document.createElement("section");
           dom.setAttribute("id", "ag-item-" + id);
@@ -229,6 +237,12 @@ schdrularName;
         let dom2
         let id = item.getId();
         let dom = document.querySelector("#ag-item-" + id);
+        if(this.state.disabledVedio === true){
+          dom.setAttribute("class", "ag-item2");
+        }
+        else if (dom && this.state.disabledVedio === false) {
+         dom.setAttribute("class", "ag-item");
+        }
         if (!dom) {
           dom = document.createElement("section");
           dom.setAttribute("id", "ag-item-" + id);
@@ -377,6 +391,7 @@ schdrularName;
   };
 
   handleCamera = (e) => {
+    this.setState({disabledVedio : !this.state.disabledVedio})
     e.currentTarget.classList.toggle("off");
     this.localStream.isVideoOn()
       ? this.localStream.disableVideo()
@@ -641,7 +656,7 @@ async startRecording(key){
      
       });
   };
-// Start recording button
+
  // Start recording button
  recStart = () => {
   this.localStream.enableAudio();

@@ -64,7 +64,7 @@ let history = useHistory()
   return (
     <div>
       <Modal isOpen={rejectedBox} toggle={deleteCliente} size="md">
-        <ModalHeader toggle={deleteCliente}>Proposal Declined</ModalHeader>
+        <ModalHeader toggle={deleteCliente}>Please Provide the reason</ModalHeader>
         <ModalBody>
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="mb-3">

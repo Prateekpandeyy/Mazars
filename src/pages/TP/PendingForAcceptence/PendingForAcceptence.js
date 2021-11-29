@@ -70,7 +70,7 @@ function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
       dataField: "query_created",
       sort: true,
       headerStyle: () => {
-        return { fontSize: "12px" };
+        return { fontSize: "12px" , width : "100px"};
       },
       formatter: function dateFormat(cell, row) {
      
@@ -85,7 +85,7 @@ function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
       text: "Query No",
       dataField: "assign_no",
       headerStyle: () => {
-        return { fontSize: "12px" };
+        return { fontSize: "12px" , width : "100px"};
       },
       formatter: function nameFormatter(cell, row) {
 
@@ -109,7 +109,7 @@ function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
       dataField: "parent_id",
       sort: true,
       headerStyle: () => {
-        return { fontSize: "12px" };
+        return { fontSize: "12px" , width : "150px"};
       },
     },
     {
@@ -117,7 +117,7 @@ function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
       dataField: "cat_name",
       sort: true,
       headerStyle: () => {
-        return { fontSize: "12px" };
+        return { fontSize: "12px", width : "150px" };
       },
     },
     {
@@ -125,7 +125,7 @@ function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
       dataField: "name",
       sort: true,
       headerStyle: () => {
-        return { fontSize: "12px" };
+        return { fontSize: "12px" , width : "180px"};
       },
     },
     {
@@ -242,13 +242,16 @@ function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
             loading ?
               <Spinner color="primary" />
               :
+              <div className="tableFixHead">
               <BootstrapTable
                 bootstrap4
                 keyField="id"
                 data={pendingData}
                 columns={columns}
                 rowIndex
+                classes="table-responsive"
               />
+              </div>
           }
           <RejectedModal
             rejectHandler={rejectHandler}

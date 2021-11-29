@@ -343,11 +343,11 @@ rowStyle2 = (row, index) => {
 >
 <Link
               to={{
-                pathname: `/taxprofessional/paydetails/${row.id}`,
+                pathname: `/taxprofessional/paydetails/${row.assign_id}`,
                 obj: {
                   message_type: "5",
                   query_No: row.assign_no,
-                  query_id: row.id,
+                  query_id: row.assign_id,
                   routes: `/taxprofessional/paymentstatus`
                 }
               }}
@@ -379,10 +379,23 @@ rowStyle2 = (row, index) => {
 
                             style={{ color: "green", fontSize: "16px", cursor: "pointer" }}
                         >
+                           <Link
+              to={{
+                pathname: `/taxprofessional/paydetails/${row.assign_id}`,
+                obj: {
+                  message_type: "5",
+                  query_No: row.assign_no,
+                  query_id: row.assign_id,
+                  routes: `/taxprofessional/paymentstatus`
+                }
+              }}
+            >
                             <i
-                           class="fa fa-credit-card"
-                           onClick={() => toggle(row.assign_id)}
-                           style={{ color: "green", fontSize: "16px" }}></i>
+                                class="fa fa-credit-card"
+                                style={{ color: "green", fontSize: "16px" }}
+                                // onClick={() => toggle(row.assign_id)}
+                            ></i>
+                            </Link>
                         </div>
                         <div title="Send Message">
                             <Link
@@ -406,18 +419,7 @@ rowStyle2 = (row, index) => {
                                 ></i>
                             </Link>
                         </div>
-                        {/* <div>
-                            {
-                                row.paid_status == "0" ?
-                                    <div title="Payment decline"
-                                        onClick={() => rejectHandler(row)}
-                                        style={{ color: "red", fontSize: "16px", cursor: "pointer" }}
-                                    >
-                                        <PaymentIcon />
-                                    </div>
-                                    : null
-                            }
-                        </div> */}
+                      
 
 
                         <div title="View Discussion Message">
@@ -454,6 +456,7 @@ rowStyle2 = (row, index) => {
                 </CardHeader>
 
                 <CardBody>
+                <div className="tableFixHead">
                     <BootstrapTable
                         bootstrap4
                         keyField="id"
@@ -461,10 +464,10 @@ rowStyle2 = (row, index) => {
                         columns={columns}
                         rowStyle={rowStyle2}
                         rowIndex
-                        classes="table-responsive"
+                        classes="table-responsivepayment"
                     />
 
-
+</div>
                     <RejectedModal
                         rejectHandler={rejectHandler}
                         addPaymentModal={addPaymentModal}
