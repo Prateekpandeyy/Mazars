@@ -69,7 +69,7 @@ function InprogressProposal() {
       dataField: "created",
       sort: true,
       headerStyle: () => {
-        return { fontSize: "12px" , width: "100px"};
+        return { fontSize: "12px" , width: "180px"};
       },
       formatter: function dateFormat(cell, row) {
        
@@ -84,7 +84,7 @@ function InprogressProposal() {
       text: "Query No",
       dataField: "assign_no",
       headerStyle: () => {
-        return { fontSize: "12px", width: "100px" };
+        return { fontSize: "12px", width: "180px" };
       },
       formatter: function nameFormatter(cell, row) {
        
@@ -108,7 +108,7 @@ function InprogressProposal() {
       dataField: "parent_id",
       sort: true,
       headerStyle: () => {
-        return { fontSize: "12px"};
+        return { fontSize: "12px", width :"180px"};
       },
     },
     {
@@ -116,14 +116,14 @@ function InprogressProposal() {
       dataField: "cat_name",
       sort: true,
       headerStyle: () => {
-        return { fontSize: "12px" , width: "120px"};
+        return { fontSize: "12px" , width: "180px"};
       },
     },
     {
       text: "Status",
       dataField: "",
       headerStyle: () => {
-        return { fontSize: "12px" , width: "150px"};
+        return { fontSize: "12px" , width: "180px"};
       },
       formatter: function nameFormatter(cell, row) {
         return (
@@ -141,7 +141,7 @@ function InprogressProposal() {
       dataField: "exp_delivery_date",
       sort: true,
       headerStyle: () => {
-        return { fontSize: "12px" , width: "200px"};
+        return { fontSize: "12px" , width: "180px"};
       },
       formatter: function dateFormat(cell, row) {
         
@@ -164,7 +164,7 @@ function InprogressProposal() {
     {
       text: "Action",
       headerStyle: () => {
-        return { fontSize: "12px", textAlign: "center", width: "130px" };
+        return { fontSize: "12px", textAlign: "center", width: "180px" };
       },
       formatter: function (cell, row) {
         var dateMnsFive = moment(row.exp_delivery_date).add(15, 'day').format("YYYY-MM-DD");

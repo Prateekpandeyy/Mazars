@@ -84,7 +84,7 @@ const hist = useHistory();
       dataField: "created",
       sort: true,
       headerStyle: () => {
-        return { fontSize: "12px" };
+        return { fontSize: "12px", width : "120px" };
       },
       formatter : function(cell, row){
         let dueDate=row.created.split("-").reverse().join("-")
@@ -101,7 +101,7 @@ const hist = useHistory();
       text: "Query No",
       dataField: "assign_no",
       headerStyle: () => {
-        return { fontSize: "12px" };
+        return { fontSize: "12px" ,  width : "120px" };
       },
       formatter: function nameFormatter(cell, row) {
 

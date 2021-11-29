@@ -64,14 +64,14 @@ function AllQuery() {
             dataField: "created",
             sort: true,
             headerStyle: () => {
-                return { fontSize: "12px", width : "120px" };
+                return { fontSize: "12px", width : "150px" };
             },
         },
         {
             text: "Query No",
             dataField: "assign_no",
             headerStyle: () => {
-                return { fontSize: "12px" , width : "120px"};
+                return { fontSize: "12px" , width : "150px"};
             },
             formatter: function nameFormatter(cell, row) {
               
@@ -96,7 +96,7 @@ function AllQuery() {
             dataField: "parent_id",
             sort: true,
             headerStyle: () => {
-                return { fontSize: "12px",width : "80px" };
+                return { fontSize: "12px",width : "120px" };
             },
         },
         {

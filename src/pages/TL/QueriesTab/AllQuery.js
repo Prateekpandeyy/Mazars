@@ -64,7 +64,7 @@ function AllQuery() {
             dataField: "created",
             sort: true,
             headerStyle: () => {
-                return { fontSize: "12px" , width : "80px"};
+                return { fontSize: "12px" , width : "120px"};
             },
             formatter : function(cell, row){
                 let dueDate=row.created.split("-").reverse().join("-")
@@ -81,7 +81,7 @@ function AllQuery() {
             text: "Query No",
             dataField: "assign_no",
             headerStyle: () => {
-                return { fontSize: "12px" , width :"80px"};
+                return { fontSize: "12px" , width :"120px"};
             },
             formatter: function nameFormatter(cell, row) {
 
@@ -106,7 +106,7 @@ function AllQuery() {
             dataField: "parent_id",
             sort: true,
             headerStyle: () => {
-                return { fontSize: "12px", width :"100px" };
+                return { fontSize: "12px", width :"120px" };
             },
         },
         {
@@ -114,7 +114,7 @@ function AllQuery() {
             dataField: "cat_name",
             sort: true,
             headerStyle: () => {
-                return { fontSize: "12px", width : "100px" };
+                return { fontSize: "12px", width : "120px" };
             },
         },
         {

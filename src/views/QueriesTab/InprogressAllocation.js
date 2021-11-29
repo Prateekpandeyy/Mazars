@@ -81,7 +81,7 @@ function InprogressAllocation() {
       dataField: "created",
       sort: true,
       headerStyle: () => {
-        return { fontSize: "12px" ,  width: "130px" };
+        return { fontSize: "12px" ,  width: "80px" };
       },
       formatter: function dateFormat(cell, row) {
        
@@ -136,7 +136,7 @@ function InprogressAllocation() {
       text: "Status",
       dataField: "",
       headerStyle: () => {
-        return { fontSize: "12px" ,  width: "130px" };
+        return { fontSize: "12px" ,  width: "180px" };
       },
       formatter: function nameFormatter(cell, row) {
         return (
@@ -178,7 +178,7 @@ function InprogressAllocation() {
       dataField: "exp_delivery_date",
       sort: true,
       headerStyle: () => {
-          return { fontSize: "12px" ,  width: "130px"};
+          return { fontSize: "12px" ,  width: "180px"};
       },
       formatter: function dateFormat(cell, row) {
          

@@ -70,7 +70,7 @@ function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
       dataField: "query_created",
       sort: true,
       headerStyle: () => {
-        return { fontSize: "12px" , width : "100px"};
+        return { fontSize: "12px" , width : "120px"};
       },
       formatter: function dateFormat(cell, row) {
      
@@ -85,7 +85,7 @@ function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
       text: "Query No",
       dataField: "assign_no",
       headerStyle: () => {
-        return { fontSize: "12px" , width : "100px"};
+        return { fontSize: "12px" , width : "150px"};
       },
       formatter: function nameFormatter(cell, row) {
 
@@ -125,7 +125,7 @@ function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
       dataField: "name",
       sort: true,
       headerStyle: () => {
-        return { fontSize: "12px" , width : "180px"};
+        return { fontSize: "12px" , width : "150px"};
       },
     },
     {
@@ -133,7 +133,7 @@ function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
       dataField: "Exp_Delivery_Date",
       sort: true,
       headerStyle: () => {
-        return { fontSize: "12px" };
+        return { fontSize: "12px" , width : "150px"};
       },
       formatter: function dateFormat(cell, row) {
      

@@ -63,7 +63,7 @@ function AllQueriesData(props) {
       dataField: "created",
       sort: true,
       headerStyle: () => {
-        return { fontSize: "12px" };
+        return { fontSize: "12px", width : "80px" };
       },
       formatter: function dateFormat(cell, row) {
         var oldDate = row.created;
@@ -77,7 +77,7 @@ function AllQueriesData(props) {
       text: "Query No",
       dataField: "assign_no",
       headerStyle: () => {
-        return { fontSize: "12px" };
+        return { fontSize: "12px", width : "130px" };
       },
       formatter: function nameFormatter(cell, row) {
         return (
@@ -100,7 +100,7 @@ function AllQueriesData(props) {
       dataField: "parent_id",
       sort: true,
       headerStyle: () => {
-        return { fontSize: "12px" };
+        return { fontSize: "12px" , width : "130px"};
       },
     },
     {
@@ -108,7 +108,7 @@ function AllQueriesData(props) {
       dataField: "cat_name",
       sort: true,
       headerStyle: () => {
-        return { fontSize: "12px" };
+        return { fontSize: "12px", width : "120px" };
       },
     },
     {
@@ -116,13 +116,13 @@ function AllQueriesData(props) {
       dataField: "name",
       sort: true,
       headerStyle: () => {
-        return { fontSize: "12px" };
+        return { fontSize: "12px" , width : "180px"};
       },
     },
     {
       text: "Status",
       headerStyle: () => {
-        return { fontSize: "12px" };
+        return { fontSize: "12px", width : "120px" };
       },
       formatter: function nameFormatter(cell, row) {
         return (

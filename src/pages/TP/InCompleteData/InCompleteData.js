@@ -62,14 +62,14 @@ function InCompleteData({ CountIncomplete }) {
       dataField: "created",
       sort: true,
       headerStyle: () => {
-        return { fontSize: "12px", width : "100px" };
+        return { fontSize: "12px", width : "120px" };
       },
     },
     {
       text: "Query No",
       dataField: "assign_no",
       headerStyle: () => {
-        return { fontSize: "12px" , width : "100px"};
+        return { fontSize: "12px" , width : "130px"};
       },
       formatter: function nameFormatter(cell, row) {
 
@@ -93,7 +93,7 @@ function InCompleteData({ CountIncomplete }) {
       dataField: "parent_id",
       sort: true,
       headerStyle: () => {
-        return { fontSize: "12px" , width : "80px"};
+        return { fontSize: "12px" , width : "120px"};
       },
     },
     {
@@ -117,7 +117,7 @@ function InCompleteData({ CountIncomplete }) {
       dataField: "Exp_Delivery_Date",
       sort: true,
       headerStyle: () => {
-        return { fontSize: "12px" };
+        return { fontSize: "12px", width : "150px" };
       },
       formatter: function dateFormat(cell, row) {
      
@@ -131,7 +131,7 @@ function InCompleteData({ CountIncomplete }) {
     {
       text: "Status",
       headerStyle: () => {
-        return { fontSize: "12px" };
+        return { fontSize: "12px" , width : "100px"};
       },
       formatter: function nameFormatter(cell, row) {
         return (

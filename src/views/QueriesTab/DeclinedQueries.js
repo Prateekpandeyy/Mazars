@@ -121,14 +121,14 @@ function DeclinedQueries() {
       dataField: "cat_name",
       sort: true,
       headerStyle: () => {
-        return { fontSize: "12px", width: "120px"  };
+        return { fontSize: "12px", width: "140px"  };
       },
     },
     {
       text: "Status",
       dataField: "",
       headerStyle: () => {
-        return { fontSize: "12px", width: "120px"  };
+        return { fontSize: "12px", width: "140px"  };
       },
       formatter: function nameFormatter(cell, row) {
         return (
@@ -163,7 +163,7 @@ function DeclinedQueries() {
       dataField: "exp_delivery_date",
       sort: true,
       headerStyle: () => {
-        return { fontSize: "12px" , width: "120px" };
+        return { fontSize: "12px" , width: "150px" };
       },
       formatter: function dateFormat(cell, row) {
    
