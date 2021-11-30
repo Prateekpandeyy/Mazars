@@ -18,12 +18,12 @@ import BootstrapTable from "react-bootstrap-table-next";
 import AdminFilter from "../../components/Search-Filter/AdminFilter";
 import Records from "../../components/Records/Records";
 import DiscardReport from "../../pages/Admin/AssignmentTab/DiscardReport";
-
+import RetviewModal from "../../pages/Admin/AllProposalComponent/RetviewModal"
 
 function PendingForAcceptence({ pendingProposal }) {
   const [proposalDisplay, setProposalDisplay] = useState([]);
   const [records, setRecords] = useState([]);
-
+  const [retview, setRetview] = useState(false)
   const [assignNo, setAssignNo] = useState('');
   const [ViewDiscussion, setViewDiscussion] = useState(false);
   const ViewDiscussionToggel = (key) => {
@@ -46,7 +46,10 @@ function PendingForAcceptence({ pendingProposal }) {
     });
   };
 
-
+  const retviewProposal = (e) => {
+    setRetview(!retview);
+    setAssignNo(e)
+  }
   const columns = [
     {
       dataField: "",
@@ -269,7 +272,24 @@ function PendingForAcceptence({ pendingProposal }) {
                 null
               }
 
-
+{
+  row.statuscode == "6" ? 
+  <>
+<div title="Retview Proposal"
+ onClick={(e) => retviewProposal(row.q_id)}> 
+<i
+                    class="fa fa-share"
+                    style={{
+                      fontSize: 16,
+                      cursor: "pointer",
+                      marginLeft: "8px",
+                      color: "red"
+                    }}
+                   
+                  ></i>
+</div>
+  </> : ""
+}
               <div title="Send Message">
                 <Link
                   to={{
@@ -345,6 +365,12 @@ function PendingForAcceptence({ pendingProposal }) {
             report={assignNo}
             getData={getPendingAcceptedProposal}
           />
+           <RetviewModal 
+          retview = {retview}
+          retviewProposal  = {retviewProposal }
+          getProposalData  ={ getPendingAcceptedProposal}
+          assignNo = {assignNo}
+         />
         </CardBody>
       </Card>
     </div>

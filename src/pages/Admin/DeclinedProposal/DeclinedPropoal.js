@@ -18,11 +18,11 @@ import BootstrapTable from "react-bootstrap-table-next";
 import AdminFilter from "../../../components/Search-Filter/AdminFilter";
 import Records from "../../../components/Records/Records";
 import DiscardReport from "../AssignmentTab/DiscardReport";
-
+import RetviewModal from "../AllProposalComponent/RetviewModal";
 function DeclinedProposal({ declinedProposal }) {
   const [proposalDisplay, setProposalDisplay] = useState([]);
   const [records, setRecords] = useState([]);
-
+  const [retview, setRetview] = useState(false)
   const [assignNo, setAssignNo] = useState('');
   const [ViewDiscussion, setViewDiscussion] = useState(false);
   const ViewDiscussionToggel = (key) => {
@@ -45,7 +45,10 @@ function DeclinedProposal({ declinedProposal }) {
     });
   };
 
-
+  const retviewProposal = (e) => {
+    setRetview(!retview);
+    setAssignNo(e)
+  }
 
   const columns = [
     {
@@ -266,6 +269,24 @@ function DeclinedProposal({ declinedProposal }) {
                 :
                 null
               }
+{
+  row.statuscode == "6" ? 
+  <>
+<div title="Retview Proposal"
+ onClick={(e) => retviewProposal(row.q_id)}> 
+<i
+                    class="fa fa-share"
+                    style={{
+                      fontSize: 16,
+                      cursor: "pointer",
+                      marginLeft: "8px",
+                      color: "red"
+                    }}
+                   
+                  ></i>
+</div>
+  </> : ""
+}
 
 
               <div title="Send Message">
@@ -343,6 +364,13 @@ function DeclinedProposal({ declinedProposal }) {
             report={assignNo}
             getData={getDeclinedProposal}
           />
+            <RetviewModal 
+          retview = {retview}
+          retviewProposal  = {retviewProposal }
+          getProposalData  ={ getDeclinedProposal}
+          assignNo = {assignNo}
+         />
+          
 
         </CardBody>
       </Card>

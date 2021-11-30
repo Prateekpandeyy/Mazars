@@ -206,6 +206,7 @@ const mapAppointmentData = ((appiontmentData) => ({
         formData.append("assign_time", Number(value.assignTime));
         formData.append("payment_recived_date", Number(value.receiptDate));
         formData.append("amount_received", Number(value.amountReceived));
+        formData.append("t", Math.floor(Math.random() * 110000))
    axios({
      method : "POST",
      url : `${baseUrl}/report/generateReport`,

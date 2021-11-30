@@ -105,7 +105,7 @@ function Login(props) {
               <div class="heading">
                 <h2>TAX PROFESSIONAL LOGIN</h2>
               </div>
-              <form onSubmit={handleSubmit(onSubmit)}>
+              <form onSubmit={handleSubmit(onSubmit)}  autocomplete="off">
                 <div className="row">
                   <div className="col-md-12">
                     <div className="mb-3">
@@ -118,7 +118,7 @@ function Login(props) {
                         name="p_email"
                         ref={register}
                         placeholder="Enter Email"
-                        autocomplete="off"
+                       
                         onChange={(e) => handleChange(e)}
                       />
                       {errors.p_email && (

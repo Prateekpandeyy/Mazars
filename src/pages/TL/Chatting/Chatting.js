@@ -63,7 +63,11 @@ const [showTl, setShowTl] = useState(false)
   }, [item]);
 
   const checkAssigned = () => {
-    axios
+    if(query_No === undefined){
+
+    }
+    else{
+      axios
     .get(`${baseUrl}/tl/TlCheckIfAssigned?assignno=${query_No}`).then((res) => {
            if(res.data.code === 0){
                 setShowTl(false)
@@ -72,6 +76,7 @@ const [showTl, setShowTl] = useState(false)
              setShowTl(true)
            }
          })
+    }
   };
 
 

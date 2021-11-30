@@ -329,13 +329,13 @@ schdrularName;
      
      console.log("response", res.data.length)
       if(res.data.length === 0 ){
-        
+       // rt.setupLocalVideo() 
       }
       else{
         this.setState({ participantName : res.data[0].user_name })
        
       }
-      rt.addStream(stream);
+      rt.addStream(stream)
 //   //  let   pc = new RTCPeerConnection([]);
 //   //  var promise = navigator.mediaDevices.getDisplayMedia();
 //   let stream2 = new MediaStream();
@@ -493,6 +493,12 @@ schdrularName;
       this.shareStream && this.shareStream.close();
       this.state.stateSharing = false;
     } else {
+      var localTracks = {
+        screenVideoTrack: null,
+        audioTrack: null,
+        screenAudioTrack: null
+      };
+      var remoteUsers = {};
       this.state.stateSharing = true;
       let $ = this.props;
       // init AgoraRTC local client
@@ -540,6 +546,7 @@ schdrularName;
       audio: false,
       video: false,
       screen: true,
+      
       control : true
     };
  

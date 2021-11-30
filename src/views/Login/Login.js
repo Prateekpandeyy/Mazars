@@ -134,7 +134,7 @@ function LoginForm() {
               </div>
                 :
                 <div className="customForm">
-                  <form onSubmit={handleSubmit(onSubmit)} className="signInForm" autoComplete="off">
+                  <form onSubmit={handleSubmit(onSubmit)} className="signInForm"  autocomplete="off">
                     <div className="form-group">
                       <label className="form-label">Email <span className="declined">*</span></label>
                       <input
@@ -143,6 +143,7 @@ function LoginForm() {
                           "is-invalid": errors.p_email,
                         })}
                         name="p_email"
+                        autocomplete="off"
                         ref={register}
                         placeholder="Enter Email"
                         onChange={(e) => handleChange(e)}
@@ -157,6 +158,7 @@ function LoginForm() {
                           "is-invalid": errors.p_password,
                         })}
                         name="p_password"
+                        autocomplete="off"
                         placeholder="Enter Password"
                         ref={register}
                         onCopy={(e) => {

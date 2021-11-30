@@ -187,7 +187,7 @@ schdrularName;
 
   componentDidUpdate() {
     // rerendering
-    console.log("update", this.state.disabledVedio)
+   
     let canvas = document.querySelector("#ag-canvas");
     // pip mode (can only use when less than 4 people in channel)
     if (this.state.displayMode === "pip") {
@@ -209,9 +209,6 @@ schdrularName;
           dom = document.createElement("section");
           dom.setAttribute("id", "ag-item-" + id);
           dom.setAttribute("class", "ag-item");
-         
-        
-          
           canvas.appendChild(dom);
           item.play("ag-item-" + id);
           var box22 = document.getElementById("ag-item-" + id)
@@ -512,11 +509,11 @@ schdrularName;
 
       this.shareClient.init($.appId, () => {
        
-        this.subscribeStreamEvents();
+      //  this.subscribeStreamEvents();
         this.shareClient.join($.appId, $.channel, $.uid, (uid) => {
           // this.state.uid = uid;
           this.setState({uid : uid})
-            this.removeStream(uid)
+            // this.removeStream(uid)
           this.shareStream = this.streamInitSharing(
             uid,
             $.attendeeMode,
@@ -528,7 +525,7 @@ schdrularName;
               if ($.attendeeMode !== "audience") {
                 this.addStream(this.shareStream, true);
                 this.shareClient.publish(this.shareStream, (err) => {
-                 
+             
                 });
                
               }
@@ -550,6 +547,7 @@ schdrularName;
       audio: false,
       video: false,
       screen: true,
+     
       controls : true
     };
  

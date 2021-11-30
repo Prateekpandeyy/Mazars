@@ -104,14 +104,22 @@ function AddAssingmentStages() {
     else{
       setLoading(true)
       let formData = new FormData();
-  
+ 
       formData.append("q_id", id);
       formData.append("user_id", JSON.parse(userid));
       formData.append("stage_1_status", value.client_discussion);
-      formData.append("stage_2_status", value.draft_report);
-      formData.append("stage_3_status", value.final_discussion);
-      formData.append("stage_4_status", value.delivery_report);
-      formData.append("stage_5_status", value.other_stage);
+      {value.draft_report === undefined ?
+        formData.append("stage_2_status", "inprogress") 
+      : formData.append("stage_2_status", value.draft_report);}
+     {value.final_discussion === undefined ? 
+      formData.append("stage_3_status", "inprogress") :
+      formData.append("stage_3_status", value.final_discussion);}
+     {value.delivery_report === undefined ? 
+      formData.append("stage_4_status", "inprogress") 
+    :  formData.append("stage_4_status", value.delivery_report);}
+      {value.other_stage === undefined ? 
+        formData.append("stage_5_status", "inprogress")
+      : formData.append("stage_5_status", value.other_stage);}
   
       axios({
         method: "POST",
@@ -348,21 +356,7 @@ function AddAssingmentStages() {
                           </div>
                         </div>
 
-                        {/* <div class="col-md-4">
-                          <div class="form-group">
-                            <div>
-                              <Link
-                                to={{
-                                  pathname: `/teamleader/assignment-form/${p.assign_id}`,
-                                  clients:`${clientDiscussion}`,
-                                }}
-                              >
-                                View Details
-                              </Link>
-                            
-                            </div>
-                          </div>
-                        </div> */}
+                       
 
                       </div>
 
@@ -380,7 +374,9 @@ function AddAssingmentStages() {
                             </label>
                           </div>
                         </div>
-                        <div class="col-md-4">
+                        {
+                          p.client_discussion == "completed" ?
+                          <div class="col-md-4">
                           <div class="form-group">
                             <select
                               class="form-control"
@@ -392,18 +388,25 @@ function AddAssingmentStages() {
                               
                             </select>
                           </div>
-                        </div>
-                        {/* <div class="col-md-4">
-                          <div class="form-group">
-                            <div>
-                              <Link
-                                to={`/teamleader/view-report/${p.assign_no}`}
-                              >
-                                View Report
-                              </Link>
-                            </div>
-                          </div>
-                        </div> */}
+                        </div> :
+                         <div class="col-md-4">
+                         <div class="form-group">
+                           <select
+                             class="form-control"
+                             ref={register}
+                             disabled
+                             defaultValue = "inprogress"
+                             name="draft_report"
+                           >
+                             <option value="inprogress">Inprogress</option>
+                             <option value="completed">Completed</option>
+                             
+                           </select>
+                         </div>
+                       </div>
+                        }
+                       
+                      
                       </div>
 
                       <div class="row">
@@ -420,19 +423,34 @@ function AddAssingmentStages() {
                             </label>
                           </div>
                         </div>
+                      {p.client_discussion == "completed"  && p.draft_report === "completed" ? 
                         <div class="col-md-4">
-                          <div class="form-group">
-                            <select
-                              class="form-control"
-                              ref={register}
-                              name="final_discussion"
-                            >
-                              <option value="inprogress">Inprogress</option>
-                              <option value="completed">Completed</option>
-                             
-                            </select>
-                          </div>
+                        <div class="form-group">
+                          <select
+                            class="form-control"
+                            ref={register}
+                            name="final_discussion"
+                          >
+                            <option value="inprogress">Inprogress</option>
+                            <option value="completed">Completed</option>
+                           
+                          </select>
                         </div>
+                      </div> : 
+                        <div class="col-md-4">
+                        <div class="form-group">
+                          <select
+                            class="form-control"
+                            ref={register}
+                            name="final_discussion"
+                            disabled
+                          >
+                            <option value="inprogress">Inprogress</option>
+                            <option value="completed">Completed</option>
+                           
+                          </select>
+                        </div>
+                      </div> }
                         <div class="col-md-4">
                           <div class="form-group">
                             <div></div>
@@ -454,19 +472,34 @@ function AddAssingmentStages() {
                             </label>
                           </div>
                         </div>
+                        {p.client_discussion == "completed"  && p.draft_report === "completed" && p.final_discussion === "completed" ?
                         <div class="col-md-4">
-                          <div class="form-group">
-                            <select
-                              class="form-control"
-                              ref={register}
-                              name="delivery_report"
-                            >
-                              <option value="inprogress">Inprogress</option>
-                              <option value="completed">Completed</option>
-                              
-                            </select>
-                          </div>
+                        <div class="form-group">
+                          <select
+                            class="form-control"
+                            ref={register}
+                            name="delivery_report"
+                          >
+                            <option value="inprogress">Inprogress</option>
+                            <option value="completed">Completed</option>
+                            
+                          </select>
                         </div>
+                      </div> :
+                      <div class="col-md-4">
+                      <div class="form-group">
+                        <select
+                          class="form-control"
+                          ref={register}
+                          name="delivery_report"
+                          disabled
+                        >
+                          <option value="inprogress">Inprogress</option>
+                          <option value="completed">Completed</option>
+                          
+                        </select>
+                      </div>
+                    </div>}
                         <div class="col-md-4">
                           <div class="form-group">
                             <div></div>
@@ -489,18 +522,32 @@ function AddAssingmentStages() {
                             </label>
                           </div>
                         </div>
-                        <div class="col-md-4">
-                          <div class="form-group">
-                            <select
-                              class="form-control"
-                              ref={register}
-                              name="other_stage"
-                            >
-                              <option value="inprogress">Inprogress</option>
-                              <option value="completed">Completed</option>
-                            </select>
-                          </div>
+                        {p.client_discussion == "completed"  && p.draft_report === "completed" && p.final_discussion === "completed" && p.delivery_report === "completed" 
+                        ? <div class="col-md-4">
+                        <div class="form-group">
+                          <select
+                            class="form-control"
+                            ref={register}
+                            name="other_stage"
+                          >
+                            <option value="inprogress">Inprogress</option>
+                            <option value="completed">Completed</option>
+                          </select>
                         </div>
+                      </div>
+                      : <div class="col-md-4">
+                      <div class="form-group">
+                        <select
+                          class="form-control"
+                          ref={register}
+                          name="other_stage"
+                          disabled
+                        >
+                          <option value="inprogress">Inprogress</option>
+                          <option value="completed">Completed</option>
+                        </select>
+                      </div>
+                    </div>}
                         <div class="col-md-4">
                           <div class="form-group">
                             <div></div>
