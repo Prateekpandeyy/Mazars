@@ -209,7 +209,7 @@ const mapAppointmentData = ((appiontmentData) => ({
         formData.append("t", Math.floor(Math.random() * 110000))
    axios({
      method : "POST",
-     url : `${baseUrl}/report/generateReport&t=${JSON.stringify(Math.floor(Math.random() * 110000))}`,
+     url : `${baseUrl}/report/generateReport?t=${JSON.stringify(Math.floor(Math.random() * 110000))}`,
      data : formData
 
    })
