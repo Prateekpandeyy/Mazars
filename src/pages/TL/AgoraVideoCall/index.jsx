@@ -316,6 +316,9 @@ schdrularName;
     rt.client.on("peer-leave", function (evt) {
      
       rt.removeStream(evt.uid);
+      if(this.state.uid === evt.uid){
+        this.handleExit()
+      }
     });
 
     rt.client.on("stream-subscribed", function (evt) {
@@ -336,17 +339,7 @@ schdrularName;
        
       }
       rt.addStream(stream)
-//   //  let   pc = new RTCPeerConnection([]);
-//   //  var promise = navigator.mediaDevices.getDisplayMedia();
-//   let stream2 = new MediaStream();
 
-// stream2.addEventListener('addtrack', (event) => {
-//   console.log(`New ${event.track.kind} track added`);
-// });
-      // console.log("pcc", pc.currentLocalDescription)
-      // console.log("promise", promise)
-      // console.log("dd", dd)
-   //   console.log("dd", dd.getTrackById(evt.uid))
     })
       
    

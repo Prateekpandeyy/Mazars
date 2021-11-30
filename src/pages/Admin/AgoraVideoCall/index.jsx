@@ -330,6 +330,9 @@ schdrularName;
     rt.client.on("peer-leave", function (evt) {
    
       rt.removeStream(evt.uid);
+      if(this.state.uid === evt.uid){
+        this.handleExit()
+      }
    console.log("two")
     });
 
