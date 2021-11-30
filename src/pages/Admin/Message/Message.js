@@ -99,6 +99,9 @@ const history = useHistory();
                                     <div
                                         style={{
                                             cursor: "pointer",
+                                            display : "flex",
+                                            justifyContent : "space-between",
+                                            wordBreak : "break-word"
                                           
                                         }}
                                         onClick={() => readNotification(row.id)}
@@ -109,7 +112,12 @@ const history = useHistory();
                                     </div>
                                     :
                                     <div
-                                        style={{ cursor: "pointer"}}
+                                        style={{ 
+                                            cursor: "pointer",
+                                            display :"flex",
+                                            justifyContent : "space-between",
+                                            wordBreak : "break-word"
+                                        }}
                                         title="read"
                                     >
                                         <p>{row.message}</p>

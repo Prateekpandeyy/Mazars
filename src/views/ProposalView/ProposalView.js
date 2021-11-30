@@ -157,7 +157,11 @@ function ProposalView(props) {
 
   };
 
-
+const amountStyle  = {
+  display : "block",
+  textAlign : "right",
+  marginRight : "50px"
+}
   const installAmount = (data) => {
     var item = data.split(',')
    
@@ -175,7 +179,7 @@ function ProposalView(props) {
     const dataItem = item.map((p, i) =>
     (
       <>
-        <p>{nfObject.format(p)}</p>
+        <p style={amountStyle}>{nfObject.format(p)}</p>
       </>
     ))
     return dataItem;
