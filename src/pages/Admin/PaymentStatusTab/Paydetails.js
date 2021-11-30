@@ -212,27 +212,6 @@ setModal(!modal)
            
         },
         
-       {
-         dataField : "paymenturl",
-         text : "Payment Url",
-         style : {
-             fontSize : "11px"
-         },
-         headerStyle : () => {
-             return { fontSize : "11px", width : "90px"}
-         },
-         formatter : function formatter(cell, row){
-             setPaymentUrlCopy(row.paymenturl);
-             return (
-                 <>
-               {paymentUrlcopy === false ? 
-                <button className = "btn btn-success"   onClick={() => {copyFun(row.paymenturl)}}>copy</button>
-            : 
-            <button className = "btn btn-danger" disabled>copy</button>}
-                 </>
-             )
-         }
-       },
        
         {
             dataField: "",

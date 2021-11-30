@@ -14,6 +14,7 @@ import DescriptionOutlinedIcon from "@material-ui/icons/DescriptionOutlined";
 import Tds from "./Tds";
 import InvoiceFilter from "../../../components/Search-Filter/InvoiceFilter"
 import moment from "moment";
+import FileCopyIcon from '@mui/icons-material/FileCopy';
 const Generated = () => {
     var rowStyle2 = {}
     const userid = window.localStorage.getItem("tlkey");
@@ -243,6 +244,12 @@ const Generated = () => {
                        onClick = {() => addTdsToggle(row)} 
                     ></i> : ""
                         }
+                          {row.is_paid == "0" 
+                ?   
+                 <FileCopyIcon onClick={() => {copyFun(row.paymenturl)}} style={noPointer}/>
+                   
+              
+                    : "" }
                         </div>
                       
                     </>
@@ -250,7 +257,12 @@ const Generated = () => {
             },
         },
     ];
-
+    const noPointer = {cursor: 'pointer', color : "blue"};
+    const copyFun = (e)  =>{
+   
+        navigator.clipboard.writeText(e)
+       
+      }
     rowStyle2 = (row, index) => {
         const style = {}
         var warningDate = moment(row.due_date).subtract(5, 'day').toDate();

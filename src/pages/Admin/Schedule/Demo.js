@@ -274,6 +274,7 @@ const closeFun = () => {
 //   history.push(`/admin/meeting/${data.id}`);
 //   }
 //   }
+console.log("data", data)
 Cookies.set("channel_2", data.question_id);
 Cookies.set("baseMode_2", baseMode);
 Cookies.set("transcode_2", transcode);

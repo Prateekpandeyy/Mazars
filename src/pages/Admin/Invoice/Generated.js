@@ -9,6 +9,7 @@ import InvoiceFilter from "../../../components/Search-Filter/InvoiceFilter"
 import moment from "moment";
 import DescriptionOutlinedIcon from "@material-ui/icons/DescriptionOutlined";
 import Records from "../../../components/Records/Records";
+import FileCopyIcon from '@mui/icons-material/FileCopy';
 const Generated = () => {
     var rowStyle2 = {}
     const userid = window.localStorage.getItem("adminkey");
@@ -24,7 +25,7 @@ const Generated = () => {
     const [billNo, setBillNo] = useState()
     const [id2, setId2] = useState()
     const [gstNo, setGstinNo] = useState();
-    
+    const [paymentUrlcopy, setPaymentUrlCopy] = useState(false)
  
     const addTdsToggle = (key) => {
    
@@ -204,7 +205,8 @@ const Generated = () => {
                 )
             }
         }, 
-        
+      
+          
        
         {
             text: "Action",
@@ -222,15 +224,27 @@ const Generated = () => {
                   >
                          <DescriptionOutlinedIcon color="secondary" />
                               </a>
-                             
+                            
+                          
+                              {row.is_paid == "0" 
+                ?   
+                 <FileCopyIcon onClick={() => {copyFun(row.paymenturl)}} style={noPointer}/>
+                   
+              
+                    : "" }
                         </div>
-                      
+                       
                     </>
                 );
             },
         },
     ];
-
+    const noPointer = {cursor: 'pointer', color : "blue"};
+    const copyFun = (e)  =>{
+   
+        navigator.clipboard.writeText(e)
+       
+      }
     rowStyle2 = (row, index) => {
         const style = {}
         var warningDate = moment(row.due_date).subtract(5, 'day').toDate();
