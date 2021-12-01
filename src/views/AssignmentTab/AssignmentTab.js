@@ -114,18 +114,18 @@ function AssignmentTab(props) {
               justifyContent: "space-around",
             }}
           >
-            <Tab style={tabIndex == 0 ? myStyle2 : myStyle1}>
+            <Tab style={tabIndex === 0 ? myStyle2 : myStyle1}>
               All Assignment ({allassignment})
             </Tab>
-            <Tab style={tabIndex == 1 ? myStyle2 : myStyle1}>
+            <Tab style={tabIndex === 1 ? myStyle2 : myStyle1}>
               Inprogress; Assignments ({inprogressAssignmentCount})
             </Tab>
 
-            <Tab style={tabIndex == 2 ? myStyle2 : myStyle1}>
+            <Tab style={tabIndex === 2 ? myStyle2 : myStyle1}>
               Completed; Assignments ({completeAssignment})
             </Tab>
 
-            <Tab style={tabIndex == 3 ? myStyle2 : myStyle1}>
+            <Tab style={tabIndex === 3 ? myStyle2 : myStyle1}>
               Customer Declined; Payment ({declinedAssignment})
             </Tab>
           </TabList>

@@ -314,11 +314,9 @@ schdrularName;
     });
 
     rt.client.on("peer-leave", function (evt) {
-     
+     console.log("two")
       rt.removeStream(evt.uid);
-      if(this.state.uid === evt.uid){
-        this.handleExit()
-      }
+      
     });
 
     rt.client.on("stream-subscribed", function (evt) {

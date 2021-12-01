@@ -1,37 +1,35 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
-import { useAlert } from "react-alert";
 import classNames from "classnames";
 import { Spinner } from "reactstrap";
 import { professionName, country, states } from './data';
 import { cities } from './city';
 import Alerts from "../../common/Alerts";
 import ResendOtp from "./ResendOtp";
-import GetOTP from "./GetOTP";
+
 import Mandatory from "../../components/Common/Mandatory";
 import EmailValidation from "../../components/Common/EmailValidation";
 
 
 
 function SignUp(props) {
-  const phone2 = useRef(null)
-  const alert = useAlert();
+  
   const { handleSubmit, register, errors, getValues } = useForm();
 
 
   const [display, setDisplay] = useState(false);
 
   const [load, setLoad] = useState(false);
-  const [store, setStore] = useState(0);
+
   const [password, setPassword] = useState(false);
   const [passError, setpassError] = useState()
   const [repassword, setRepassword] = useState(false);
   const [show, setShow] = useState(false);
-  const [changeNum, setChangeNum] = useState(false)
+ 
   const [State, setState] = useState([]);
   const [city, setCity] = useState([]);
   const [countryCode, setCountryCode] = useState('')

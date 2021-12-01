@@ -1,13 +1,6 @@
-import React, { useState, useEffect } from "react";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
-import Header from "../../components/Header/Header";
-import Footer from "../../components/Footer/Footer";
+import React from "react";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
-import { useAlert } from "react-alert";
-import classNames from "classnames";
 import Alerts from "../../common/Alerts";
 
 

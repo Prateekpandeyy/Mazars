@@ -1,44 +1,29 @@
 import React, { useState, useEffect } from "react";
-import Layout from "../../components/Layout/Layout";
 import axios from "axios";
-import { baseUrl, ReportUrl } from "../../config/config";
+import { baseUrl} from "../../config/config";
 import {
     Card,
     CardHeader,
     CardBody,
-    CardTitle,
-    Row,
-    Col,
-    Table,
 } from "reactstrap";
 import CustomerFilter from "../../components/Search-Filter/CustomerFilter";
-import { Link, useHistory } from "react-router-dom";
+import { Link} from "react-router-dom";
 import BootstrapTable from "react-bootstrap-table-next";
-import * as Cookies from "js-cookie";
-import { useAlert } from "react-alert";
-import FeedbackIcon from '@material-ui/icons/Feedback';
-import PaymentModal from "./PaymentModal";
-import RejectedModal from "./RejectModal";
 import ViewAllReportModal from "./ViewAllReport";
 import Records from "../../components/Records/Records";
 import DescriptionOutlinedIcon from '@material-ui/icons/DescriptionOutlined';
-import Alerts from "../../common/Alerts";
-import PaymentIcon from '@material-ui/icons/Payment';
 import DiscardReport from "../AssignmentTab/DiscardReport";
 import './index.css';
 
 
 function CustomerDeclinedPayment() {
-    const history = useHistory();
-    const alert = useAlert();
     const userId = window.localStorage.getItem("userid");
     const [assignmentDisplay, setAssignmentDisplay] = useState([]);
-    const [assignmentCount, setAssignmentQueries] = useState("");
     const [records, setRecords] = useState([]);
     const [report, setReport] = useState();
     const [dataItem, setDataItem] = useState({});
-
-
+    const [assignNo, setAssignNo] = useState('');
+    const [ViewDiscussion, setViewDiscussion] = useState(false);
     const [reportModal, setReportModal] = useState(false);
     const ViewReport = (key) => {
       
@@ -48,8 +33,7 @@ function CustomerDeclinedPayment() {
     };
 
 
-    const [assignNo, setAssignNo] = useState('');
-    const [ViewDiscussion, setViewDiscussion] = useState(false);
+   
     const ViewDiscussionToggel = (key) => {
         setViewDiscussion(!ViewDiscussion);
         setAssignNo(key)
@@ -69,7 +53,6 @@ function CustomerDeclinedPayment() {
                
                 if (res.data.code === 1) {
                     setAssignmentDisplay(res.data.result);
-                    setAssignmentQueries(res.data.result.length);
                     setRecords(res.data.result.length);
                 }
             });
@@ -96,7 +79,7 @@ function CustomerDeclinedPayment() {
             formatter: function dateFormat(cell, row) {
               
                 var oldDate = row.created;
-                if (oldDate == null) {
+                if (oldDate === null) {
                     return null;
                 }
                 return oldDate.toString().split("-").reverse().join("-");
@@ -154,7 +137,7 @@ function CustomerDeclinedPayment() {
               return (
                 <>
                   <div>
-                    {row.paid_status == "2" &&
+                    {row.paid_status === "2" &&
                       <p>
                         <span style={{ color: "red" }}>Payment Declined</span>
                       </p>
@@ -194,7 +177,7 @@ function CustomerDeclinedPayment() {
             formatter: function dateFormat(cell, row) {
                
                 var oldDate = row.created;
-                if (oldDate == null) {
+                if (oldDate === null) {
                     return null;
                 }
                 return oldDate.toString().split("-").reverse().join("-");
@@ -210,7 +193,7 @@ function CustomerDeclinedPayment() {
             formatter: function dateFormat(cell, row) {
               
                 var oldDate = row.final_date;
-                if (oldDate == null || oldDate == "0000-00-00") {
+                if (oldDate === null || oldDate === "0000-00-00") {
                     return null;
                 }
                 return oldDate.toString().split("-").reverse().join("-");
@@ -228,7 +211,7 @@ function CustomerDeclinedPayment() {
                     <>
 
 {
-  row.status == "Payment decliend" || row.paid_status == "2" ? null :
+  row.status === "Payment decliend" || row.paid_status === "2" ? null :
     <div>
       {row.assignment_draft_report || row.final_report ?
         <div title="View All Report"

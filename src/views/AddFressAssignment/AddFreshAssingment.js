@@ -1,8 +1,7 @@
-import { useForm, useFieldArray ,  Controller } from "react-hook-form";
+import { useForm, useFieldArray } from "react-hook-form";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
-import { useAlert } from "react-alert";
 import Select from "react-select";
 import './style.css'
 import Swal from "sweetalert2";
@@ -17,7 +16,6 @@ import {
 import { useHistory } from "react-router-dom";
 import Mandatory from "../../components/Common/Mandatory";
 import classNames from "classnames";
-import { Spinner } from 'reactstrap';
 import ShowError from "../../components/LoadingTime/LoadingTime";
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
@@ -25,7 +23,6 @@ import PublishIcon from '@material-ui/icons/Publish';
 import Box from '@material-ui/core/Box';
 import CircularProgress from '@material-ui/core/CircularProgress';
 function AddFreshAssingment(props) {
-  const alert = useAlert();
   const history = useHistory();
   const { handleSubmit, register, errors, reset, control } = useForm({
     defaultValues: {
@@ -43,7 +40,6 @@ function AddFreshAssingment(props) {
   const [custcheckError, setCheckerror] = useState(null);
   const [selectedOption, setSelectedOption] = useState([]);
   const [purposeOption, setPurposeOption] = useState([]);
-  const [custError, setcustError] = useState([])
   const [assessmentYear, setAssessmentYear] = useState([]);
   const [det, addDet] = useState();
 
@@ -80,9 +76,9 @@ function AddFreshAssingment(props) {
   const onSubmit = (value) => {
    
     const a = value.p_fact;
-    const b = value.users;
-    if (a == '') {
-      setcustError("");
+  
+    if (a === '') {
+      
      
     }
     else if (purposeOption < 1) {
@@ -148,7 +144,7 @@ function AddFreshAssingment(props) {
             reset();
             var message = response.data.message
             var query_no = response.data.query_no
-            if (message == "") {
+            if (message === "") {
               Swal.fire({
                 title: 'Success !',
                 html: `<p>Query no.- ${query_no} submitted successfully.
@@ -286,7 +282,8 @@ function AddFreshAssingment(props) {
                 
                     onChange={ ( event, editor ) => {
                       addDet(editor.getData());
-                      setcustError("")
+                     
+
                     
                   } }
 
