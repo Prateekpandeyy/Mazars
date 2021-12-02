@@ -6,7 +6,7 @@ import { baseUrl } from "../../../config/config";
 import CommonServices from "../../../common/common";
 import Alerts from "../../../common/Alerts";
 import { useHistory } from "react-router";
-
+import Swal from "sweetalert2";
 function RecordingModal({
     isOpen,
     toggle,
