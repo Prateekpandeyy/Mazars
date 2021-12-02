@@ -126,6 +126,14 @@ allrecording;
     
    
    })
+   if(this.state.showButton == JSON.parse(this.teamKey)){
+    console.log("donefixed", this.state.showButton)
+    axios.get(`${baseUrl}/tl/setgetschedular?id=${this.props.id}&rtc_id=${uid}&uid=${JSON.parse(this.teamKey)}`)
+   .then((res) =>{
+     console.log(res)
+   })
+  
+  }
    this.setState({ uid : uid})
         this.localStream = this.streamInit(uid, $.attendeeMode, $.videoProfile);
         this.localStream.init(
@@ -367,6 +375,16 @@ schdrularName;
         });
       }
     });
+   
+      axios.get(`${baseUrl}/tl/setgetschedular?id=${this.props.id}&uid=${JSON.parse(this.teamKey)}`)
+      .then((res) => {
+       if(res.data.result.rtc_id == uid){
+        window.location.hash = "/taxprofessional/schedule";
+       }
+      })
+     
+    
+    
   };
 
   addStream = (stream, push = false) => {
@@ -481,42 +499,44 @@ schdrularName;
      
    }
  
-  sharingScreen = (e) => {
+   sharingScreen = (e) => {
     if (this.state.stateSharing) {
       this.shareClient && this.shareClient.unpublish(this.shareStream);
       this.shareStream && this.shareStream.close();
       this.state.stateSharing = false;
     } else {
+    
       this.state.stateSharing = true;
-      let $ = this.props;
-      // init AgoraRTC local client
-      this.shareClient = AgoraRTC.createClient({ mode: $.transcode });
+      let $ = this.props; 
+    
+      this.shareClient = AgoraRTC.createClient({ mode: $.transcode, controls : true});
 
       this.shareClient.init($.appId, () => {
-     
-
-        this.subscribeStreamEvents();
+       
+      //  this.subscribeStreamEvents();
         this.shareClient.join($.appId, $.channel, $.uid, (uid) => {
-          this.state.uid = uid;
-        
-          
+          // this.state.uid = uid;
+          this.setState({uid : uid})
+            // this.removeStream(uid)
           this.shareStream = this.streamInitSharing(
             uid,
             $.attendeeMode,
             $.videoProfile
           );
+         
           this.shareStream.init(
             () => {
               if ($.attendeeMode !== "audience") {
                 this.addStream(this.shareStream, true);
                 this.shareClient.publish(this.shareStream, (err) => {
-               
+             
                 });
+               
               }
               this.setState({ readyState: true });
             },
             (err) => {
-         
+            
               this.setState({ readyState: true });
             }
           );
@@ -524,7 +544,7 @@ schdrularName;
       });
     }
   };
-
+  
   streamInitSharing = (uid, attendeeMode, videoProfile, config) => {
     let defaultConfig = {
       streamID: uid,

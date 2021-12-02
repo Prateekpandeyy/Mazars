@@ -20,6 +20,7 @@ import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import { green ,red} from '@material-ui/core/colors';
 import recImg from "../../../loader.gif";
 import Cookies from "js-cookie";
+import Swal from "sweetalert2";
 const tile_canvas = {
   "1": ["span 12/span 24"],
   "2": ["span 12/span 12/13/25", "span 12/span 12/13/13"],
@@ -126,6 +127,7 @@ allrecording;
     
    
    })
+  
   
         this.setState({ uid : uid})
       
@@ -330,9 +332,10 @@ schdrularName;
     rt.client.on("peer-leave", function (evt) {
    
       rt.removeStream(evt.uid);
-     
+      if(this.state.uid === evt.uid){
+        this.handleExit()
+      }
    console.log("two")
-  
     });
 
     rt.client.on("stream-subscribed", function (evt) {
@@ -382,6 +385,16 @@ schdrularName;
         });
       }
     });
+   
+ 
+      axios.get(`${baseUrl}/tl/setgetschedular?id=${this.props.id}&uid=${this.state.showButton}&chname=${this.channelName}`)
+      .then((res) => {
+       if(res.data.result.rtc_id == uid){
+        window.location.hash = "/admin/schedule";
+       }
+      })
+     
+    
   };
 
   addStream = (stream, push = false) => {
@@ -526,7 +539,6 @@ schdrularName;
             () => {
               if ($.attendeeMode !== "audience") {
                 this.addStream(this.shareStream, true);
-            
                 this.shareClient.publish(this.shareStream, (err) => {
              
                 });
@@ -737,13 +749,39 @@ this.localStream.disableAudio(),
     });
 }
 else{
+  if(this.state.showButton == JSON.parse(this.teamKey)){
+    this.confirmation()
   
-  window.location.hash = "/admin/schedule";
+  }
+ 
 }
   
 };
 
-
+confirmation = () => {
+  Swal.fire({
+   title: "Are you sure?",
+   text: "It will permanently deleted !",
+   type: "warning",
+   showCancelButton : true,
+   confirmButtonColor: "#3085d6",
+   cancelButtonColor: "#d33",
+   confirmButtonText: "Yes, delete it!",
+  }).then((result) => {
+   if (result.value) {
+    console.log("donefixed", this.state.showButton)
+    axios.get(`${baseUrl}/tl/setgetschedular?id=${this.props.id}&rtc_id=${this.uid}&uid=${JSON.parse(this.teamKey)}`)
+   .then((res) =>{
+     if(res){
+      window.location.hash = "/admin/schedule";
+     }
+   })
+   }
+   else{
+    window.location.hash = "/admin/schedule";
+   }
+ });
+}
   render() {
 
     

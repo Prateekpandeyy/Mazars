@@ -124,6 +124,14 @@ allrecording;
    then((res) => {
     
    })
+   if(this.state.showButton == JSON.parse(this.teamKey)){
+    console.log("donefixed", this.state.showButton)
+    axios.get(`${baseUrl}/tl/setgetschedular?id=${this.props.id}&rtc_id=${uid}&uid=${JSON.parse(this.teamKey)}`)
+   .then((res) =>{
+     console.log(res)
+   })
+  
+  }
         this.state.uid = uid;
        
         this.localStream = this.streamInit(uid, $.attendeeMode, $.videoProfile);
@@ -366,6 +374,16 @@ schdrularName;
         });
       }
     });
+    // console.log("showButton", this.state.showButton)
+  
+      axios.get(`${baseUrl}/tl/setgetschedular?id=${this.props.id}&uid=${this.state.showButton}&chname=${this.channelName}`)
+      .then((res) => {
+       if(res.data.result.rtc_id == uid){
+        window.location.hash = "/teamleader/schedule";
+       }
+      })
+     
+    
   };
 
   addStream = (stream, push = false) => {
@@ -484,45 +502,38 @@ schdrularName;
       this.shareStream && this.shareStream.close();
       this.state.stateSharing = false;
     } else {
-      var localTracks = {
-        screenVideoTrack: null,
-        audioTrack: null,
-        screenAudioTrack: null
-      };
-      var remoteUsers = {};
+    
       this.state.stateSharing = true;
-      let $ = this.props;
-      // init AgoraRTC local client
-      this.shareClient = AgoraRTC.createClient({ mode: $.transcode });
+      let $ = this.props; 
+    
+      this.shareClient = AgoraRTC.createClient({ mode: $.transcode, controls : true});
 
       this.shareClient.init($.appId, () => {
-        console.log("AgoraRTC client initialized");
-
-        this.subscribeStreamEvents();
+       
+      //  this.subscribeStreamEvents();
         this.shareClient.join($.appId, $.channel, $.uid, (uid) => {
-          this.state.uid = uid;
-          console.log("User " + uid + " join channel successfully");
-          console.log("At " + new Date().toLocaleTimeString());
-          // create local stream
-          // It is not recommended to setState in function addStream
-          
+          // this.state.uid = uid;
+          this.setState({uid : uid})
+            // this.removeStream(uid)
           this.shareStream = this.streamInitSharing(
             uid,
             $.attendeeMode,
             $.videoProfile
           );
+         
           this.shareStream.init(
             () => {
               if ($.attendeeMode !== "audience") {
                 this.addStream(this.shareStream, true);
                 this.shareClient.publish(this.shareStream, (err) => {
-                  console.log("Publish local stream error: " + err);
+             
                 });
+               
               }
               this.setState({ readyState: true });
             },
             (err) => {
-              console.log("getUserMedia failed", err);
+            
               this.setState({ readyState: true });
             }
           );
@@ -862,6 +873,9 @@ const recordingBtnOff = (
          data={this.state.data}
          item={this.state.item}
          allrecording = {this.tempArray}
+         schId = {this.props.id}
+         uid = {this.uid}
+         ownerId = {this.state.showButton}
          />
                 
           {exitBtn}

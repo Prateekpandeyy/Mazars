@@ -275,9 +275,7 @@ console.log("customerName", this.customerName)
     rt.client.on("peer-leave", function (evt) {
      
       rt.removeStream(evt.uid);
-      if(this.state.uid === evt.uid){
-        this.handleExit()
-      }
+     
     });
 
     rt.client.on("stream-subscribed", function (evt) {
@@ -316,6 +314,13 @@ console.log("customerName", this.customerName)
         });
       }
     });
+    if(this.state.showButton == JSON.parse(this.teamKey)){
+      console.log("donefixed", this.state.showButton)
+
+    }
+    else{
+      window.location.hash = "/teamleader/schedule";
+    }
   };
 
   addStream = (stream, push = false) => {
