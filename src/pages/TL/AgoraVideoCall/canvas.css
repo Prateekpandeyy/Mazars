@@ -18,6 +18,8 @@
   width : 80px;
   position: absolute;
   border : none;
+  color: black;
+  bottom: -20px;
 }
 .ag-item {
   border-radius: 0px;
