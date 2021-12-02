@@ -40,7 +40,7 @@ function AllQuery() {
         axios
             .get(`${baseUrl}/tl/getIncompleteQues?tp_id=${JSON.parse(userid)}`)
             .then((res) => {
-                console.log("resultTP", res.data.result);
+              
                 if (res.data.code === 1) {
                     setInCompleteData(res.data.result);
                     setRecords(res.data.result.length);
@@ -64,24 +64,24 @@ function AllQuery() {
             dataField: "created",
             sort: true,
             headerStyle: () => {
-                return { fontSize: "12px" };
+                return { fontSize: "12px", width : "150px" };
             },
         },
         {
             text: "Query No",
             dataField: "assign_no",
             headerStyle: () => {
-                return { fontSize: "12px" };
+                return { fontSize: "12px" , width : "150px"};
             },
             formatter: function nameFormatter(cell, row) {
-                console.log(row);
+              
                 return (
                     <>
-                        {/* <Link to={`/teamleader/queries/${row.id}`}>{row.assign_no}</Link> */}
+                     
                         <Link
                             to={{
                                 pathname: `/taxprofessional/queries/${row.id}`,
-                                index: 1,
+                                index: 0,
                                 routes: "queriestab",
                             }}
                         >
@@ -96,7 +96,7 @@ function AllQuery() {
             dataField: "parent_id",
             sort: true,
             headerStyle: () => {
-                return { fontSize: "12px" };
+                return { fontSize: "12px",width : "120px" };
             },
         },
         {
@@ -112,7 +112,7 @@ function AllQuery() {
             dataField: "name",
             sort: true,
             headerStyle: () => {
-                return { fontSize: "12px" };
+                return { fontSize: "12px", width : "120px" };
             },
         },
         {
@@ -120,10 +120,10 @@ function AllQuery() {
             dataField: "Exp_Delivery_Date",
             sort: true,
             headerStyle: () => {
-                return { fontSize: "12px" };
+                return { fontSize: "12px", width : "120px" };
             },
             formatter: function dateFormat(cell, row) {
-                console.log("dt", row.Exp_Delivery_Date);
+              
                 var oldDate = row.Exp_Delivery_Date;
                 if (oldDate == null) {
                     return null;
@@ -134,7 +134,7 @@ function AllQuery() {
         {
             text: "Status",
             headerStyle: () => {
-                return { fontSize: "12px" };
+                return { fontSize: "12px", width : "120px" };
             },
             formatter: function nameFormatter(cell, row) {
                 return (
@@ -169,7 +169,7 @@ function AllQuery() {
             text: "Action",
             dataField: "",
             headerStyle: () => {
-                return { fontSize: "12px" };
+                return { fontSize: "12px" , width : "120px"};
             },
             formatter: function (cell, row) {
               
@@ -195,7 +195,7 @@ function AllQuery() {
                                   message_type: "4",
                                   query_No: row.assign_no,
                                   query_id: row.id,
-                                  routes: `/taxprofessional/proposal`
+                                  routes: `/taxprofessional/queriestab`
                               }
                           }}
                       >
@@ -242,13 +242,16 @@ function AllQuery() {
                     />
                 </CardHeader>
                 <CardBody>
+                <div className="tableFixHead">
                     <BootstrapTable
                         bootstrap4
                         keyField="id"
                         data={incompleteData}
                         columns={columns}
                         rowIndex
+                        classes="table-responsive"
                     />
+                    </div>
                     <DiscardReport
                         ViewDiscussionToggel={ViewDiscussionToggel}
                         ViewDiscussion={ViewDiscussion}

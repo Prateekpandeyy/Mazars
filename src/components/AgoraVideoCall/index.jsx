@@ -3,10 +3,9 @@ import { merge } from "lodash";
 import AgoraRTC from "agora-rtc-sdk";
 import RecordVoiceOverIcon from '@material-ui/icons/RecordVoiceOver';
 import axios from "axios";
-
 import "./canvas.css";
 import "../../assets/fonts/css/icons.css";
-
+import Cookies from "js-cookie";
 
 var customer_id = "d339577a294c458c86d8a78b474141fc";
 var customer_secret = "1a61a4bef2144e78be6f671d5cf3fc32";
@@ -57,7 +56,9 @@ const tile_canvas = {
 class AgoraCanvas extends React.Component {
   constructor(props) {
     super(props);
+    this.customerName = Cookies.get("custName")
     this.client = {};
+    this.screenTrack = {}
     this.localStream = {};
     this.shareClient = {};
     this.shareStream = {};
@@ -66,18 +67,30 @@ class AgoraCanvas extends React.Component {
       streamList: [],
       readyState: false,
       stateSharing: false,
+      addRemote : null,
+      participantName : '',
+      disabledVedio : false
     };
   }
+channelName = this.props.channel
 
+custEmail2 = window.localStorage.getItem("custEmail");
   componentWillMount() {
     let $ = this.props;
     // init AgoraRTC local client
+console.log("customerName", this.customerName)
     this.client = AgoraRTC.createClient({ mode: $.transcode });
     this.client.init($.appId, () => {
       
       this.subscribeStreamEvents();
 
       this.client.join($.appId, $.channel, $.uid, (uid) => {
+        var data_post_api = "https://virtualapi.multitvsolution.com/VstreamApi/index.php/api/vstream/userdata?channel_name="+this.channelName+"&rtm_id="+""+"&rtc_id="+uid+"&user_name="+this.customerName;
+        axios.get(`${data_post_api}`).
+        then((res) => {
+        
+        
+        })
         this.state.uid = uid;
        
         // create local stream
@@ -136,12 +149,24 @@ class AgoraCanvas extends React.Component {
       this.state.streamList.map((item, index) => {
         let id = item.getId();
         let dom = document.querySelector("#ag-item-" + id);
+        if(this.state.disabledVedio === true){
+          dom.setAttribute("class", "ag-item2");
+        }
+        else if (dom && this.state.disabledVedio === false) {
+         dom.setAttribute("class", "ag-item");
+        }
         if (!dom) {
           dom = document.createElement("section");
           dom.setAttribute("id", "ag-item-" + id);
           dom.setAttribute("class", "ag-item");
           canvas.appendChild(dom);
+          var box22 = document.getElementById("ag-item-" + id)
+         
+         
+          var newContent = document.createTextNode(this.state.participantName); 
           item.play("ag-item-" + id);
+      
+         box22.appendChild(newContent)
         }
         if (index === no - 1) {
           dom.setAttribute("style", `grid-area: span 12/span 24/13/25`);
@@ -153,7 +178,9 @@ class AgoraCanvas extends React.Component {
           );
         }
 
+       if(item.player !== undefined){
         item.player.resize && item.player.resize();
+       }
       });
     }
     // tile mode
@@ -162,12 +189,24 @@ class AgoraCanvas extends React.Component {
       this.state.streamList.map((item, index) => {
         let id = item.getId();
         let dom = document.querySelector("#ag-item-" + id);
+        if(this.state.disabledVedio === true){
+          dom.setAttribute("class", "ag-item2");
+        }
+        else if (dom && this.state.disabledVedio === false) {
+         dom.setAttribute("class", "ag-item");
+        }
         if (!dom) {
           dom = document.createElement("section");
           dom.setAttribute("id", "ag-item-" + id);
           dom.setAttribute("class", "ag-item");
           canvas.appendChild(dom);
           item.play("ag-item-" + id);
+          var box22 = document.getElementById("ag-item-" + id)
+          
+          var newContent = document.createTextNode(this.state.participantName); 
+          item.play("ag-item-" + id);
+      
+         box22.appendChild(newContent)
         }
         dom.setAttribute("style", `grid-area: ${tile_canvas[no][index]}`);
         item.player.resize && item.player.resize();
@@ -236,14 +275,23 @@ class AgoraCanvas extends React.Component {
     rt.client.on("peer-leave", function (evt) {
      
       rt.removeStream(evt.uid);
+     
     });
 
     rt.client.on("stream-subscribed", function (evt) {
       let stream = evt.stream;
-     
+      var apiData = "https://virtualapi.multitvsolution.com/VstreamApi/index.php/api/vstream/getInfoByRTCId?channel_name="+this.channelName+"&rtc_id="+stream.getId()
+  axios.get(`${apiData}`)
+  .then((res) =>{
+   
+    this.setState({ participantName : res.data[0].user_name })
+    if(res.data != undefined){
       rt.addStream(stream);
-    });
-
+    }
+  })
+    
+ 
+    }.bind(this));
     rt.client.on("stream-removed", function (evt) {
       let stream = evt.stream;
      
@@ -266,6 +314,13 @@ class AgoraCanvas extends React.Component {
         });
       }
     });
+    if(this.state.showButton == JSON.parse(this.teamKey)){
+      console.log("donefixed", this.state.showButton)
+
+    }
+    else{
+      window.location.hash = "/teamleader/schedule";
+    }
   };
 
   addStream = (stream, push = false) => {
@@ -287,6 +342,7 @@ class AgoraCanvas extends React.Component {
   };
 
   handleCamera = (e) => {
+    this.setState({disabledVedio : !this.state.disabledVedio})
     e.currentTarget.classList.toggle("off");
     this.localStream.isVideoOn()
       ? this.localStream.disableVideo()

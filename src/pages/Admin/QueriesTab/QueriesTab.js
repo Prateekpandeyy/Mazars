@@ -141,4 +141,3 @@ function QueriesTab(props) {
 }
 
 export default QueriesTab;
-

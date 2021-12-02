@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import './Allocation.css';
 import { baseUrl } from "../../config/config";
 import {
   Card,
@@ -276,15 +277,16 @@ function PendingAllocation({ CountPendingForAllocation }) {
             records={records}
           />
         </CardHeader>
-        <CardBody>
+        <CardBody className = "card-body2">
           <Records records={records} />
+          <div className="tableFixHead">
           <BootstrapTable
             bootstrap4
             keyField="id"
             data={pendingData}
             columns={columns}
             rowIndex
-          />
+          /> </div>
           <History history={history} toggle={toggle} modal={modal} />
         </CardBody>
       </Card>

@@ -99,10 +99,16 @@ function DeclinedProposal() {
                 return { fontSize: "11px" };
             },
             formatter: function nameFormatter(cell, row) {
-             
+              
                 return (
                     <>
-                        <Link to={`/customer/my-assingment/${row.q_id}`}>
+                        <Link
+                            to={{
+                                pathname: `/customer/my-assingment/${row.q_id}`,
+                                index: 3,
+                                routes: "proposal",
+                            }}
+                        >
                             {row.assign_no}
                         </Link>
                     </>
@@ -250,7 +256,7 @@ function DeclinedProposal() {
                 </CardHeader>
                 <CardBody>
                     <Records records={records} />
-
+                    <div className="tableFixHead">
                     <BootstrapTable
                         bootstrap4
                         keyField="id"
@@ -258,6 +264,7 @@ function DeclinedProposal() {
                         columns={columns}
                         classes="table-responsive"
                     />
+                    </div>
                     {/* <ChatComponent
                         chatHandler={chatHandler}
                         addPaymentModal={addPaymentModal}

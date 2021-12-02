@@ -57,7 +57,7 @@ function ViewReport({
   };
 
   const deleteCliente = (id) => {
-    console.log(id)
+    
     let formData = new FormData();
     formData.append("tp_id", JSON.parse(userId));
     formData.append("id", dataItem.q_id);
@@ -71,14 +71,14 @@ function ViewReport({
       data: formData,
     })
       .then(function (response) {
-        console.log("response-", response);
+       
         if (response.data.code === 1) {
           getData()
           Alerts.SuccessNormal("Discarded Successfully")
         }
       })
       .catch((error) => {
-        console.log("erroror - ", error);
+       
       });
   };
 
@@ -99,13 +99,13 @@ function ViewReport({
       data: formData,
     })
       .then(function (response) {
-        console.log("res-", response);
+     
         if (response.data.code === 1) {
           setData(response.data.result)
         }
       })
       .catch((error) => {
-        console.log("erroror - ", error);
+       
       });
   }
 

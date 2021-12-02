@@ -3,13 +3,14 @@ import Layout from "../../../components/Layout/Layout";
 import "./index1.css";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
-import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 
 
 function Dashboard() {
   const userId = window.localStorage.getItem("adminkey");
-
+  const adminsessionId = window.sessionStorage.getItem("adminIdsession")
+let history = useHistory()
   const [allQueries, setAllQueries] = useState({
     total: '',
     inprogress_queries: '',
@@ -150,10 +151,18 @@ function Dashboard() {
     getAssignment();
   }, []);
 
-  
+  const logout = () => {
+    localStorage.removeItem("adminkey")
+    localStorage.removeItem("adminEmail")
+    history.push("/admin/login")
+    
+  }
 
   return (
-    <Layout adminDashboard="adminDashboard" adminUserId={userId}>
+    <>
+    {
+      adminsessionId ?
+      <Layout adminDashboard="adminDashboard" adminUserId={userId}>
 
       <div className="row">
         <div className="col-md-3 content_header">
@@ -382,7 +391,13 @@ function Dashboard() {
         </div>
       </div>
 
-    </Layout>
+    </Layout> : 
+    <>
+    {logout()}
+    </>
+    }
+    </>
+   
   );
 }
 

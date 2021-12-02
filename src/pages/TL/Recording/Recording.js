@@ -18,6 +18,7 @@ import { baseUrl } from "../../../config/config";
 import BootstrapTable from "react-bootstrap-table-next";
 import "react-modal-video/scss/modal-video.scss";
 import RecordingFilter from "../../../components/Search-Filter/RecordingFilter";
+import {Link} from 'react-router-dom'
 // import '../../../../node_modules/react-modal-video/scss/modal-video.scss';
 
 
@@ -93,10 +94,22 @@ const canBtn = {
         },
         {
             text: "Query No",
-            dataField: "assign_id",
+            dataField: "",
             headerStyle: () => {
                 return { fontSize: "12px", width: "20px" };
             },
+            formatter : function formatter(cell, row){
+                let a = row.assign_id.split("-")[row.assign_id.split("-").length - 1]
+                return <>
+                <Link
+                to = {{
+                    pathname : `/teamleader/queries/${a}`,
+                    routes : "recording"
+                }}>
+                {row.assign_id}
+                </Link>
+                </>
+            }
         },
         
         {

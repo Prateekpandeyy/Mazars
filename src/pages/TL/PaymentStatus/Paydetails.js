@@ -32,15 +32,15 @@ const PayDetails = () => {
     const [paymentDetail, setPaymentDetail] = useState();
     const [modal, setModal] = useState(false);
     const [modalData, setModalData] = useState()
+    const [paymentUrlcopy, setPaymentUrlCopy] = useState(false)
     const [showTable, setShowTable] = useState(null);
     const paydetails2 = () => {
-axios.get(`${baseUrl}//admin/getPaymentDetail?id=${id}&&status=1`)
+axios.get(`${baseUrl}//admin/getPaymentDetail?id=${id}`)
 .then((res) => {
     if(res.data.code === 1){
        
         setPaymentDetail(res.data.payment_detail)
-        //console.log(res.data.payment_detail.length)
-       // setShowTable(res.data.payment_detail[0].invoice_generated)
+        
        if(res.data.payment_detail.length > 0){
            setShowTable(true)
        }
@@ -210,7 +210,29 @@ setModal(!modal)
         },
         
        
-       
+         
+        {
+            dataField : "paymenturl",
+            text : "Payment Url",
+            style : {
+                fontSize : "11px"
+            },
+            headerStyle : () => {
+                return { fontSize : "11px", width : "90px"}
+            },
+            formatter : function formatter(cell, row){
+                setPaymentUrlCopy(row.paymenturl);
+                return (
+                    <>
+                  {paymentUrlcopy === false ? 
+                   <button className = "btn btn-success"   onClick={() => {copyFun(row.paymenturl)}}>copy</button>
+               : 
+               <button className = "btn btn-danger" disabled>copy</button>}
+                    </>
+                )
+            }
+          },
+          
         {
             dataField: "",
             text: "Pay",
@@ -244,6 +266,11 @@ setModal(!modal)
            
       ];
     
+      const copyFun = (e)  =>{
+   
+        navigator.clipboard.writeText(e)
+       
+      }
       const Container = styled.div `
       dispaly : flex;
       width : 100%;
@@ -270,14 +297,15 @@ return(
          </Row>
           </CardHeader>
           <CardBody>
-   
+          <div className="tableFixHead">
   <BootstrapTable
   bootstrap4
   keyField="id"
   data={paymentDetail}
   columns={columns}
-  classes="table-responsive"
+  classes="table-responsivepayment"
 /> 
+</div>
 </CardBody>
 </Card>}
 </Layout>                  

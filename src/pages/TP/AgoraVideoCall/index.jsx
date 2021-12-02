@@ -20,6 +20,7 @@ import RecordingModal from "./RecordingModal";
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import { green ,red} from '@material-ui/core/colors';
 import recImg from "../../../loader.gif";
+import Cookies from "js-cookie";
 
 const tile_canvas = {
   "1": ["span 12/span 24"],
@@ -66,6 +67,7 @@ const tile_canvas = {
 class AgoraCanvas extends React.Component {
   constructor(props) {
     super(props);
+    this.tpName = Cookies.get("tpName")
     this.client = {};
     this.localStream = {};
     this.shareClient = {};
@@ -84,7 +86,10 @@ class AgoraCanvas extends React.Component {
       articleId2 : [],
       showRecBtn : false,
       showButton : '',
-      clickDisable : false
+      clickDisable : false,
+      addRemote : null,
+      participantName : '',
+      disabledVedio : false
     };
 
     this.toggleModal = this.toggleModal.bind(this);
@@ -94,6 +99,7 @@ class AgoraCanvas extends React.Component {
   // userId = window.localStorage.getItem("tlkey");
   allrecording = [];
   teamKey = window.localStorage.getItem("tpkey");
+  tpEmail2 = window.localStorage.getItem("tpEmail");
   uid = Math.floor((Math.random() * 10000) + 1);
   channelName = this.props.channel
   tempArray = []
@@ -109,28 +115,39 @@ allrecording;
     // init AgoraRTC local client
     this.client = AgoraRTC.createClient({ mode: $.transcode });
     this.client.init($.appId, () => {
-      console.log("AgoraRTC client initialized");
+  
       this.subscribeStreamEvents();
 
       this.client.join($.appId, $.channel, $.uid, (uid) => {
-        this.state.uid = uid;
-        console.log("User " + uid + " join channel successfully");
-        console.log("At " + new Date().toLocaleTimeString());
-        // create local stream
-        // It is not recommended to setState in function addStream
+       
+        var data_post_api = "https://virtualapi.multitvsolution.com/VstreamApi/index.php/api/vstream/userdata?channel_name="+this.channelName+"&rtm_id="+""+"&rtc_id="+uid+"&user_name="+this.tpName;
+   axios.get(`${data_post_api}`).
+   then((res) => {
+    
+   
+   })
+   if(this.state.showButton == JSON.parse(this.teamKey)){
+    console.log("donefixed", this.state.showButton)
+    axios.get(`${baseUrl}/tl/setgetschedular?id=${this.props.id}&rtc_id=${uid}&uid=${JSON.parse(this.teamKey)}`)
+   .then((res) =>{
+     console.log(res)
+   })
+  
+  }
+   this.setState({ uid : uid})
         this.localStream = this.streamInit(uid, $.attendeeMode, $.videoProfile);
         this.localStream.init(
           () => {
             if ($.attendeeMode !== "audience") {
               this.addStream(this.localStream, true);
               this.client.publish(this.localStream, (err) => {
-                console.log("Publish local stream error: " + err);
+               
               });
             }
             this.setState({ readyState: true });
           },
           (err) => {
-            console.log("getUserMedia failed", err);
+         
             this.setState({ readyState: true });
           }
         );
@@ -139,6 +156,7 @@ allrecording;
   }
  
   componentDidMount() {
+    console.log("tpName", this.tpName)
     // add listener to control btn group
     let canvas = document.querySelector("#ag-canvas");
     let btnGroup = document.querySelector(".ag-btn-group");
@@ -158,12 +176,12 @@ allrecording;
 schdrularName;
 
   getSchedulerData =() =>{
-    console.log("getSchedulerData--",this.props.id)
+    
 
     axios
     .get(`${baseUrl}/tl/videoScheduler?id=${this.props.id}`)
             .then((res) => {
-                console.log(res);
+              
            
                
                 if (res.data.code === 1) {
@@ -190,12 +208,22 @@ schdrularName;
       this.state.streamList.map((item, index) => {
         let id = item.getId();
         let dom = document.querySelector("#ag-item-" + id);
+        if(this.state.disabledVedio === true){
+          dom.setAttribute("class", "ag-item2");
+        }
+        else if (dom && this.state.disabledVedio === false) {
+         dom.setAttribute("class", "ag-item");
+        }
         if (!dom) {
           dom = document.createElement("section");
           dom.setAttribute("id", "ag-item-" + id);
           dom.setAttribute("class", "ag-item");
           canvas.appendChild(dom);
+          var box22 = document.getElementById("ag-item-" + id)
+          var newContent = document.createTextNode(this.state.participantName);  
           item.play("ag-item-" + id);
+      
+         box22.appendChild(newContent)
         }
         if (index === no - 1) {
           dom.setAttribute("style", `grid-area: span 12/span 24/13/25`);
@@ -213,15 +241,28 @@ schdrularName;
     // tile mode
     else if (this.state.displayMode === "tile") {
       let no = this.state.streamList.length;
-      this.state.streamList.map((item, index) => {
+      this.state.streamList.map((item, index) => { 
+        let dom2
         let id = item.getId();
         let dom = document.querySelector("#ag-item-" + id);
+        if(this.state.disabledVedio === true){
+          dom.setAttribute("class", "ag-item2");
+        }
+        else if (dom && this.state.disabledVedio === false) {
+         dom.setAttribute("class", "ag-item");
+        }
         if (!dom) {
           dom = document.createElement("section");
           dom.setAttribute("id", "ag-item-" + id);
           dom.setAttribute("class", "ag-item");
           canvas.appendChild(dom);
           item.play("ag-item-" + id);
+          var box22 = document.getElementById("ag-item-" + id)
+          
+          var newContent = document.createTextNode(this.state.participantName);  
+          item.play("ag-item-" + id);
+      
+         box22.appendChild(newContent)
         }
         dom.setAttribute("style", `grid-area: ${tile_canvas[no][index]}`);
         item.player.resize && item.player.resize();
@@ -242,10 +283,10 @@ schdrularName;
     this.client &&
       this.client.leave(
         () => {
-          console.log("Client succeed to leave.");
+        
         },
         () => {
-          console.log("Client failed to leave.");
+         
         }
       );
   }
@@ -280,35 +321,41 @@ schdrularName;
     let rt = this;
     rt.client.on("stream-added", function (evt) {
       let stream = evt.stream;
-      console.log("New stream added: " + stream.getId());
-      console.log("At " + new Date().toLocaleTimeString());
-      console.log("Subscribe ", stream);
+     
       rt.client.subscribe(stream, function (err) {
-        console.log("Subscribe stream failed", err);
+       
       });
     });
 
     rt.client.on("peer-leave", function (evt) {
-      console.log("Peer has left: " + evt.uid);
-      console.log(new Date().toLocaleTimeString());
-      console.log(evt);
+   
       rt.removeStream(evt.uid);
     });
 
     rt.client.on("stream-subscribed", function (evt) {
-      let stream = evt.stream;
-      console.log("Got stream-subscribed event");
-      console.log(new Date().toLocaleTimeString());
-      console.log("Subscribe remote stream successfully: " + stream.getId());
-      console.log(evt);
+      console.log("three")
+        let stream = evt.stream;
+        var apiData = "https://virtualapi.multitvsolution.com/VstreamApi/index.php/api/vstream/getInfoByRTCId?channel_name="+this.channelName+"&rtc_id="+stream.getId()
+    axios.get(`${apiData}`)
+    .then((res) =>{
+     
+     console.log("response", res.data.length)
+      if(res.data.length === 0 ){
+       
+      }
+      else{
+        this.setState({ participantName : res.data[0].user_name })
+       
+      }
       rt.addStream(stream);
-    });
-
+    })
+      
+   
+      }.bind(this));
+  
     rt.client.on("stream-removed", function (evt) {
       let stream = evt.stream;
-      console.log("Stream removed: " + stream.getId());
-      console.log(new Date().toLocaleTimeString());
-      console.log(evt);
+     
       rt.removeStream(stream.getId());
     });
   };
@@ -328,9 +375,22 @@ schdrularName;
         });
       }
     });
+   
+      axios.get(`${baseUrl}/tl/setgetschedular?id=${this.props.id}&uid=${JSON.parse(this.teamKey)}`)
+      .then((res) => {
+       if(res.data.result.rtc_id == uid){
+        window.location.hash = "/taxprofessional/schedule";
+       }
+      })
+     
+    
+    
   };
 
   addStream = (stream, push = false) => {
+    this.hostId = stream.getId()
+   
+    
     let repeatition = this.state.streamList.some((item) => {
       return item.getId() === stream.getId();
     });
@@ -349,6 +409,7 @@ schdrularName;
   };
 
   handleCamera = (e) => {
+    this.setState({disabledVedio : !this.state.disabledVedio})
     e.currentTarget.classList.toggle("off");
     this.localStream.isVideoOn()
       ? this.localStream.disableVideo()
@@ -438,45 +499,44 @@ schdrularName;
      
    }
  
-  sharingScreen = (e) => {
+   sharingScreen = (e) => {
     if (this.state.stateSharing) {
       this.shareClient && this.shareClient.unpublish(this.shareStream);
       this.shareStream && this.shareStream.close();
       this.state.stateSharing = false;
     } else {
+    
       this.state.stateSharing = true;
-      let $ = this.props;
-      // init AgoraRTC local client
-      this.shareClient = AgoraRTC.createClient({ mode: $.transcode });
+      let $ = this.props; 
+    
+      this.shareClient = AgoraRTC.createClient({ mode: $.transcode, controls : true});
 
       this.shareClient.init($.appId, () => {
-        console.log("AgoraRTC client initialized");
-
-        this.subscribeStreamEvents();
+       
+      //  this.subscribeStreamEvents();
         this.shareClient.join($.appId, $.channel, $.uid, (uid) => {
-          this.state.uid = uid;
-          console.log("User " + uid + " join channel successfully");
-          console.log("At " + new Date().toLocaleTimeString());
-          // create local stream
-          // It is not recommended to setState in function addStream
-          
+          // this.state.uid = uid;
+          this.setState({uid : uid})
+            // this.removeStream(uid)
           this.shareStream = this.streamInitSharing(
             uid,
             $.attendeeMode,
             $.videoProfile
           );
+         
           this.shareStream.init(
             () => {
               if ($.attendeeMode !== "audience") {
                 this.addStream(this.shareStream, true);
                 this.shareClient.publish(this.shareStream, (err) => {
-                  console.log("Publish local stream error: " + err);
+             
                 });
+               
               }
               this.setState({ readyState: true });
             },
             (err) => {
-              console.log("getUserMedia failed", err);
+            
               this.setState({ readyState: true });
             }
           );
@@ -484,7 +544,7 @@ schdrularName;
       });
     }
   };
-
+  
   streamInitSharing = (uid, attendeeMode, videoProfile, config) => {
     let defaultConfig = {
       streamID: uid,
@@ -514,11 +574,11 @@ schdrularName;
 
 
   CreateS3Folder = (uid) =>{
-    console.log("CreateS3Folder",uid)
+   
     axios
             .get(`https://virtualapi.multitvsolution.com/s3/createMPObject.php?folder_id=${JSON.parse(uid)}`)
             .then((res) => {
-                console.log(res);    
+                 
             });
   }
 
@@ -569,7 +629,7 @@ async GetRecordingStatus(json){
 
 //start recording
 async startRecording(key){
-    console.log("startRecording - ",key);
+   
     var resourceId = key.data.resourceId 
     
     this.CreateS3Folder(JSON.stringify(this.uid));
@@ -589,14 +649,14 @@ async startRecording(key){
     })
     .then(json => this.GetRecordingStatus(json)) 
       .catch((error) => {
-        console.log("error - ", error);
+       
       });
   };
 
 
   //recording  acquire
    accuire = () =>{
-    console.log("accuire - ");
+   
     var data = "{\n  \"cname\": \"" + this.channelName + "\",\n  \"uid\": \"" + this.uid + "\",\n  \"clientRequest\":{\n  }\n}"
 
     axios({
@@ -611,12 +671,12 @@ async startRecording(key){
     })
       .then(json => 
         this.startRecording(json)) 
-        // console.log("accuire - ",json))
+      
       .catch((error) => {
-        console.log("error - ", error);
+     
       });
   };
-// Start recording button
+
  // Start recording button
  recStart = () => {
   this.localStream.enableAudio();
@@ -645,7 +705,7 @@ this.localStream.disableAudio())
 }
 
 else if(this.state.showButton == JSON.parse(this.teamKey)){
-console.log("done2")
+
   if(resourceId === undefined){
     var resourceId = localStorage.getItem("resourceId");
   var sid = localStorage.getItem("sid");
@@ -685,8 +745,7 @@ window.location.hash = "/taxprofessional/schedule";
 
 render() {
 
-  // console.log("data",this.state.data)
-
+ 
   const style = {
     display: "grid",
     gridGap: "50px 26px",
@@ -801,7 +860,7 @@ const recordingBtnOff = (
   </span>
 );
 
-console.log(this.state.showRecBtn)
+
     return (
       <>
       <div id="ag-canvas" style={style}>   

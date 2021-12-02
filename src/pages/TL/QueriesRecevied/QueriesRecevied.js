@@ -122,13 +122,22 @@ function QueriesRecevied(props) {
           var assementItem = res.data.result[0].assessment_year;
 
 
+          
           try {
-            var myPurpose = JSON.parse(purposeItem);
+           
             var myYear = JSON.parse(assementItem);
-            setPurpose(myPurpose);
+           
             setYear(myYear);
           } catch (e) {
-            return false;
+           
+          }
+          try {
+            var myPurpose = JSON.parse(purposeItem);
+            
+            setPurpose(myPurpose);
+           
+          } catch (e) {
+           
           }
 
           if (res.data.proposal_queries.length > 0) {

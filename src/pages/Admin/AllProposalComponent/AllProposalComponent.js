@@ -10,7 +10,7 @@ import {
   Col,
   Table,
 } from "reactstrap";
-
+import RetviewModal from "./RetviewModal";
 import { Link, NavLink } from "react-router-dom";
 import AdminFilter from "../../../components/Search-Filter/AdminFilter";
 import BootstrapTable from "react-bootstrap-table-next";
@@ -22,9 +22,11 @@ import DiscardReport from "../AssignmentTab/DiscardReport";
 function AllProposalComponent({ allProposal }) {
   const [proposalDisplay, setProposalDisplay] = useState([]);
   const [records, setRecords] = useState([]);
-
+  const [assignNo, setAssignNo] = useState('');
   const [viewData, setViewData] = useState({});
   const [viewModal, setViewModal] = useState(false);
+  const [retview, setRetview] = useState(false)
+  
   const ViewHandler = (key) => {
    
     setViewModal(!viewModal);
@@ -32,7 +34,7 @@ function AllProposalComponent({ allProposal }) {
   };
 
 
-  const [assignNo, setAssignNo] = useState('');
+  
 
   const [ViewDiscussion, setViewDiscussion] = useState(false);
   const ViewDiscussionToggel = (key) => {
@@ -54,7 +56,10 @@ function AllProposalComponent({ allProposal }) {
     });
   };
 
-
+const retviewProposal = (e) => {
+  setRetview(!retview);
+  setAssignNo(e)
+}
   const columns = [
     {
       text: "S.No",
@@ -222,7 +227,7 @@ function AllProposalComponent({ allProposal }) {
       formatter: function nameFormatter(cell, row){
        var nfObject = new Intl.NumberFormat('hi-IN')
         var x = row.ProposedAmount;
-        console.log(nfObject.format(x))
+        
         return(
           <p>{nfObject.format(x)}</p>
         )
@@ -242,7 +247,7 @@ function AllProposalComponent({ allProposal }) {
       formatter: function nameFormatter(cell, row){
         var nfObject = new Intl.NumberFormat('hi-IN')
          var x = row.accepted_amount;
-         console.log(nfObject.format(x))
+         
          return(
            <p>{nfObject.format(x)}</p>
          )
@@ -262,7 +267,7 @@ function AllProposalComponent({ allProposal }) {
     {
       text: "Action",
       headerStyle: () => {
-        return { fontSize: "11px", width: "95px" };
+        return { fontSize: "11px", width: "135px" };
       },
       formatter: function (cell, row) {
         return (
@@ -284,7 +289,24 @@ function AllProposalComponent({ allProposal }) {
                 :
                 null
               }
-
+{
+  row.statuscode == "6" ? 
+  <>
+<div title="Retview Proposal"
+ onClick={(e) => retviewProposal(row.q_id)}> 
+<i
+                    class="fa fa-share"
+                    style={{
+                      fontSize: 16,
+                      cursor: "pointer",
+                      marginLeft: "8px",
+                      color: "red"
+                    }}
+                   
+                  ></i>
+</div>
+  </> : ""
+}
 
               <div title="Send Message">
                 <Link
@@ -346,13 +368,15 @@ function AllProposalComponent({ allProposal }) {
 
         <CardBody>
           <Records records={records} />
+          <div className="tableFixHead">
           <BootstrapTable
             bootstrap4
             keyField="id"
             data={proposalDisplay}
             columns={columns}
-            classes="table-responsive"
+            classes="table-responsivepayment"
           />
+          </div>
 
           <ViewComponent
             ViewHandler={ViewHandler}
@@ -367,6 +391,13 @@ function AllProposalComponent({ allProposal }) {
             report={assignNo}
             getData={getProposalData}
           />
+          <RetviewModal 
+          retview = {retview}
+          retviewProposal  = {retviewProposal }
+          getProposalData  ={getProposalData}
+          assignNo = {assignNo}
+         />
+          
         </CardBody>
       </Card>
     </>

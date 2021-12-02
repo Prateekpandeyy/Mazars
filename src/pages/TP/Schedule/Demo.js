@@ -62,7 +62,7 @@ function Demo() {
     axios
       .get(`${baseUrl}/tl/videoScheduler?tl_id=${JSON.parse(userId)}`)
       .then((res) => {
-        console.log("res -", res);
+
         var a = res.data.result.items;
         if (a) {
           setData(a.map(mapAppointmentData));
@@ -88,7 +88,7 @@ function Demo() {
     axios
       .get(`${baseUrl}/admin/getAllQuery?tp_id=${JSON.parse(userId)}`)
       .then((res) => {
-        console.log(res);
+      
         if (res.data.code === 1) {
           var data = res.data.result;
 
@@ -96,7 +96,7 @@ function Demo() {
             text,
             ...rest,
           }));
-          console.log("dt--", newArrayOfObj);
+          
           setAssignmentData(newArrayOfObj);
         }
       });
@@ -104,14 +104,14 @@ function Demo() {
 
   const getUsers = () => {
     axios.get(`${baseUrl}/tl/allAttendees?uid=${JSON.parse(userId)}`).then((res) => {
-      console.log(res);
+  
       if (res.data.code === 1) {
         var data = res.data.result;
         const newOwners = data.map(({ name: text, ...rest }) => ({
           text,
           ...rest,
         }));
-        console.log("dt--", newOwners);
+      
         setOwner(newOwners);
       }
     });
@@ -261,10 +261,10 @@ Cookies.set("channel_2", data.question_id);
   };
 
   const changeFormat = (d) => {
-    console.log("d ---", d);
+    
 
     if (typeof d === 'object') {
-      console.log("GMT");
+
       return (
         d.getFullYear() +
         "-" +
@@ -275,7 +275,7 @@ Cookies.set("channel_2", data.question_id);
         d.toString().split(" ")[4]
       );
     } else {
-      console.log("d");
+   
       return d;
     }
   };
@@ -284,7 +284,7 @@ Cookies.set("channel_2", data.question_id);
 
     if (added) {
       setLoading(true)
-      console.log("added - ", added);
+
 
       var startDate = added.startDate;
       var endDate = added.endDate;
@@ -304,7 +304,7 @@ Cookies.set("channel_2", data.question_id);
         data: formData,
       })
         .then(function (response) {
-          console.log("res post-", response);
+
           if (response.data.code === 1) {
             setLoading(false)
             Alerts.SuccessNormal("New call scheduled successfully.")
@@ -317,22 +317,21 @@ Cookies.set("channel_2", data.question_id);
           getData();
         })
         .catch((error) => {
-          console.log("erroror - ", error);
+      
         });
     }
     if (changed) {
-      console.log("changed", changed);
+    
       setLoading(true)
       const data2 = data.map((appointment) =>
         changed[appointment.id]
           ? { ...appointment, ...changed[appointment.id] }
           : appointment
       );
-      console.log("data2 - ", data2);
-
+    
       let valuesArray = Object.entries(changed);
       let id = valuesArray[0][0];
-      console.log("id -", id);
+    
       let dataIttem;
 
       for (var i = 0; i < data2.length; i++) {
@@ -340,7 +339,7 @@ Cookies.set("channel_2", data.question_id);
           dataIttem = data2[i];
         }
       }
-      console.log("owner", dataIttem.owner);
+    
 
       var a = dataIttem.startDate
       var b = dataIttem.endDate
@@ -367,7 +366,7 @@ Cookies.set("channel_2", data.question_id);
         data: formData,
       })
         .then(function (response) {
-          console.log("res post-", response);
+       
 
           if (response.data.code === 1) {
             setLoading(false)
@@ -376,29 +375,29 @@ Cookies.set("channel_2", data.question_id);
           }
           else if (response.data.code === 0) {
             setLoading(false)
-            console.log("call 0 code")
+
             var msg = response.data.result
             Alerts.ErrorNormal(msg)
           }
           getData();
         })
         .catch((error) => {
-          console.log("erroror - ", error);
+        
         });
     }
 
     if (deleted !== undefined) {
-      console.log("deleted f", deleted);
+   
       setLoading(true)
       var value;
       data.filter((data) => {
         if (data.id == deleted) {
-          console.log("owner", data.owner);
+        
           value = data.owner
         }
       });
 
-      // console.log("value", value);
+   
       if (!value) {
         var variable = "Error"
         Alerts.ErrorDelete(variable)
@@ -416,7 +415,7 @@ Cookies.set("channel_2", data.question_id);
       }).then((result) => {
         if (result.value) {
           axios.get(`${baseUrl}/tl/freeslot?id=${deleted}`).then((res) => {
-            console.log("res -", res);
+        
             if (res.data.code === 1) {
               setLoading(false)
               Swal.fire("Deleted!", "Scheduled call has been deleted.", "success");
@@ -445,7 +444,7 @@ Cookies.set("channel_2", data.question_id);
 
   //basic layout
   const BasicLayout = ({ onFieldChange, appointmentData, ...restProps }) => {
-    console.log("appointmentData", appointmentData);
+   
     return (
       <AppointmentForm.BasicLayout
         appointmentData={appointmentData}
@@ -471,8 +470,9 @@ Cookies.set("channel_2", data.question_id);
           <Loader />
           :
           <>
+           <div style ={{display : "flex", height : "700px"}}>
             <Paper>
-              <Scheduler data={data} height={570}>
+              <Scheduler data={data} >
                 <ViewState
                   defaultCurrentDate={currentDate}
                   defaultCurrentViewName="Week"
@@ -513,6 +513,7 @@ Cookies.set("channel_2", data.question_id);
                 />
               </Scheduler>
             </Paper>
+            </div>
           </>
       }
     </>

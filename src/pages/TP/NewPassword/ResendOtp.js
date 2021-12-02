@@ -22,7 +22,7 @@ function ResendOtp({ id, setLoad, setDisabled, getTime, setLoading }) {
             data: formData,
         })
             .then(function (response) {
-                console.log("res-", response);
+                
                 if (response.data.code === 1) {
                     setLoad(true)
                     setLoading(false)
@@ -35,7 +35,7 @@ function ResendOtp({ id, setLoad, setDisabled, getTime, setLoading }) {
                 }
             })
             .catch((error) => {
-                console.log("erroror - ", error);
+              
             });
     };
 

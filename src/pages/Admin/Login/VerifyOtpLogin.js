@@ -66,6 +66,7 @@ function VerifyOtp({ email, uid, loading, setLoading }) {
           setLoading(false)
           Alerts.SuccessLogin("Logged in successfully.")
           localStorage.setItem("adminkey", JSON.stringify(response.data["user id"]));
+          sessionStorage.setItem("adminIdsession", JSON.stringify(response.data["user id"]));
           localStorage.setItem("adminEmail", JSON.stringify(response.data.name));
           history.push("/admin/dashboard");
 

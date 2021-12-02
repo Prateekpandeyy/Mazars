@@ -307,13 +307,16 @@ function TaxProfessionalsTab() {
           </Row>
         </CardHeader>
         <CardBody>
+        <div className="tableFixHead">
           <BootstrapTable
             bootstrap4
             keyField="id"
             data={data}
             columns={columns}
             rowIndex
+            classes="table-responsivepayment"
           />
+          </div>
         </CardBody>
       </Card>
       <History history={history} toggle={toggle} modal={modal} />

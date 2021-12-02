@@ -15,6 +15,7 @@ import Mandatory from "../../../components/Common/Mandatory";
 import VerifyOtpLogin from "./VerifyOtpLogin";
 import { Spinner } from "reactstrap";
 import {useHistory} from 'react-router-dom';
+import Cookies from "js-cookie"
 
 const Schema = yup.object().shape({
   p_email: yup.string().email("invalid email").required("required email"),
@@ -42,7 +43,7 @@ function Login(props) {
   };
 
   const onSubmit = (value) => {
-    console.log("value :", value);
+    
     setLoading(true)
 
     let formData = new FormData();
@@ -55,10 +56,11 @@ function Login(props) {
         data: formData,
       })
       .then(function (response) {
-        console.log("res-", response);
+        
         if (response.data.code === 1) {
           setLoading(false)
           setShow(true)
+          Cookies.set("adminName", response.data.display_name)
           Swal.fire({
             "title" : "success", 
             "html" : "As per your request, OTP has been sent to your registered email address.",
@@ -73,7 +75,7 @@ function Login(props) {
         }
       })
       .catch((error) => {
-        console.log("erroror - ", error);
+      
       });
   };
   const logout = () => {
@@ -84,7 +86,7 @@ function Login(props) {
     }, 36000000)
   }
   const handleChange = (e) => {
-    console.log("val-", e.target.value);
+  
     setEmail(e.target.value);
   };
 

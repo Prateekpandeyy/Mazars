@@ -116,7 +116,13 @@ function ProposalTab() {
               
                 return (
                     <>
-                        <Link to={`/customer/my-assingment/${row.q_id}`}>
+                        <Link
+                            to={{
+                                pathname: `/customer/my-assingment/${row.q_id}`,
+                                index: 0,
+                                routes: "proposal",
+                            }}
+                        >
                             {row.assign_no}
                         </Link>
                     </>
@@ -248,10 +254,10 @@ function ProposalTab() {
             sort: true,
             style: {
                 fontSize: "11px",
-                color: "#21a3ce",
+                // color: "#21a3ce",
             },
             headerStyle: () => {
-                return { fontSize: "11px", color: "#21a3ce" };
+                return { fontSize: "11px"  };
             },
             formatter: function nameFormatter(cell, row){
                 var nfObject = new Intl.NumberFormat('hi-IN')
@@ -374,13 +380,15 @@ function ProposalTab() {
                 </CardHeader>
                 <CardBody>
                     <Records records={records} />
-                    <BootstrapTable
+                   <div className="tableFixHead">
+                   <BootstrapTable
                         bootstrap4
                         keyField="id"
                         data={proposalDisplay}
                         columns={columns}
                         classes="table-responsive"
                     />
+                       </div>
 
                     <ViewComponent
                         ViewHandler={ViewHandler}

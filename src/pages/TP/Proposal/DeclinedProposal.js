@@ -21,7 +21,7 @@ function DeclinedProposal() {
 
     const [addPaymentModal, setPaymentModal] = useState(false);
     const chatHandler = (key) => {
-        console.log(key);
+      
         setPaymentModal(!addPaymentModal);
         setId(key.assign_no);
     };
@@ -40,7 +40,7 @@ function DeclinedProposal() {
         axios
             .get(`${baseUrl}/tl/getProposalTl?tp_id=${JSON.parse(userid)}&status=3`)
             .then((res) => {
-                console.log(res);
+             
                 if (res.data.code === 1) {
                     setProposal(res.data.result);
                     setCount(res.data.result.length);
@@ -76,7 +76,7 @@ function DeclinedProposal() {
                 return { fontSize: "11px" };
             },
             formatter: function dateFormat(cell, row) {
-                console.log("dt", row.query_date);
+              
                 var oldDate = row.query_date;
                 if (oldDate == null) {
                     return null;
@@ -94,13 +94,14 @@ function DeclinedProposal() {
                 return { fontSize: "11px" };
             },
             formatter: function nameFormatter(cell, row) {
-                console.log(row);
+            
                 return (
                     <>
 
                         <Link
                             to={{
                                 pathname: `/taxprofessional/queries/${row.id}`,
+                                index : 3,
                                 routes: "proposal",
                             }}
                         >
@@ -143,7 +144,7 @@ function DeclinedProposal() {
                 return { fontSize: "11px" };
             },
             formatter: function dateFormat(cell, row) {
-                console.log("dt", row.DateofProposal);
+            
                 var oldDate = row.DateofProposal;
                 if (oldDate == null) {
                     return null;
@@ -162,7 +163,7 @@ function DeclinedProposal() {
                 return { fontSize: "11px" };
             },
             formatter: function dateFormat(cell, row) {
-                console.log("dt", row.cust_accept_date);
+              
                 var oldDate = row.cust_accept_date;
                 if (oldDate == null) {
                     return null;
@@ -208,7 +209,7 @@ function DeclinedProposal() {
             formatter: function nameFormatter(cell, row){
                 var nfObject = new Intl.NumberFormat('hi-IN')
                  var x = row.ProposedAmount;
-                 console.log(nfObject.format(x))
+              
                  return(
                    <p>{nfObject.format(x)}</p>
                  )
@@ -228,7 +229,7 @@ function DeclinedProposal() {
             formatter: function nameFormatter(cell, row){
                 var nfObject = new Intl.NumberFormat('hi-IN')
                  var x = row.accepted_amount;
-                 console.log(nfObject.format(x))
+              
                  return(
                    <p>{nfObject.format(x)}</p>
                  )
@@ -375,13 +376,16 @@ function DeclinedProposal() {
                     />
                 </CardHeader>
                 <CardBody>
+                <div className="tableFixHead">
                     <BootstrapTable
                         bootstrap4
                         keyField="id"
                         data={proposal}
                         columns={columns}
                         rowIndex
+                        classes="table-responsive"
                     />
+                    </div>
                     <DiscardReport
                         ViewDiscussionToggel={ViewDiscussionToggel}
                         ViewDiscussion={ViewDiscussion}

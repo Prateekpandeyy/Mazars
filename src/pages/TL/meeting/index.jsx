@@ -10,7 +10,7 @@ import { AGORA_APP_ID } from "../../../agora.config";
 class Meeting extends React.Component {
   constructor(props) {
     super(props);
-   
+   this.userEmail = Cookies.get("tlid");
     this.videoProfile = Cookies.get("videoProfile_2");
     this.channel = Cookies.get("channel_2") || "test";
     this.transcode = Cookies.get("transcode_2") || "interop";
@@ -29,7 +29,7 @@ class Meeting extends React.Component {
   }
  
   render() {
-   
+  
     return (
       
       <div className="wrapper meeting" style={{ display : "flex", flexDirection: "column" , height: "100vh" }}>
@@ -57,7 +57,9 @@ class Meeting extends React.Component {
               baseMode={this.baseMode}
               appId={this.appId}
               uid={this.uid}
+              name= "teamleader"
               id={this.props.id}
+              tlEmail = {this.userEmail}
             />
           </div>
         </div>

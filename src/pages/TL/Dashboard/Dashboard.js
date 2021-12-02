@@ -3,11 +3,12 @@ import Layout from "../../../components/Layout/Layout";
 import "./index.css";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
-import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 function Dashboard() {
   const userid = window.localStorage.getItem("tlkey");
-
+const sessionTlId = window.sessionStorage.getItem("sessionTlid")
+let history = useHistory()
   const [allQueries, setAllQueries] = useState({
     total: '',
     inprogress_queries: '',
@@ -153,244 +154,255 @@ function Dashboard() {
   }, []);
 
 
+  const logout = () => {
+    localStorage.removeItem("tlkey")
+    localStorage.removeItem("tlEmail")
+    history.push("/teamleader/login")
+    
+  }
 
-  var todaysDate = new Date();
  
 
   return (
+    <>
+    {sessionTlId ? 
     <Layout TLDashboard="TLDashboard" TLuserId={userid}>
 
-      <div className="row">
+    <div className="row">
 
 
-        <div className="col-md-3 content_header">
-          <table className="table table-striped first main_table">
-            <thead className="query_thead">
-              <tr>
-                <th className="left_side">All Queries</th>
-                <th>{total}</th>
-              </tr>
-            </thead>
-          </table>
-          <table className="table table-striped second main_table">
-            <thead className="query_thead">
-              <tr>
-                <th className="left_side">Inprogress; Queries</th>
-                <th>{inprogress_queries}</th>
-              </tr>
-            </thead>
+      <div className="col-md-3 content_header">
+        <table className="table table-striped first main_table">
+          <thead className="query_thead">
+            <tr>
+              <th className="left_side">All Queries</th>
+              <th>{total}</th>
+            </tr>
+          </thead>
+        </table>
+        <table className="table table-striped second main_table">
+          <thead className="query_thead">
+            <tr>
+              <th className="left_side">Inprogress; Queries</th>
+              <th>{inprogress_queries}</th>
+            </tr>
+          </thead>
 
-            <tbody className="table_body">
-              <tr>
-                <td className="left_side">Inprogress; Allocation</td>
-                <td>{inprogress_allocation}</td>
-              </tr>
-              <tr>
-                <td className="left_side">Inprogress; Proposals</td>
-                <td>{inprogress_proposal}</td>
-              </tr>
-              <tr>
-                <td className="left_side">Inprogress; Assignments</td>
-                <td>{inprogress_assignment}</td>
-              </tr>
-            </tbody>
-          </table>
-
-
-          <table className="table table-striped third main_table">
-            <thead className="query_thead">
-              <tr>
-                <th className="left_side">Completed; Queries</th>
-                <th>{complete_query}</th>
-              </tr>
-            </thead>
-            <tbody className="table_body">
-              <tr>
-                <td className="left_side">Completed; Assignments</td>
-                <td>{complete_query}</td>
-              </tr>
-            </tbody>
-          </table>
+          <tbody className="table_body">
+            <tr>
+              <td className="left_side">Inprogress; Allocation</td>
+              <td>{inprogress_allocation}</td>
+            </tr>
+            <tr>
+              <td className="left_side">Inprogress; Proposals</td>
+              <td>{inprogress_proposal}</td>
+            </tr>
+            <tr>
+              <td className="left_side">Inprogress; Assignments</td>
+              <td>{inprogress_assignment}</td>
+            </tr>
+          </tbody>
+        </table>
 
 
-          <table className="table table-striped forth main_table">
-            <thead className="query_thead">
-              <tr>
-                <th className="left_side">Declined; Queries</th>
-                <th>{declined_queries}</th>
-              </tr>
-            </thead>
-
-            <tbody className="table_body">
-              {/* <tr>
-                <td className="left_side">Admin Declined; Queries</td>
-                <td>{admin_declined_query}</td>
-              </tr>
-              <tr>
-                <td className="left_side"> Customer Declined; Queries</td>
-                <td>{customer_declined_Query}</td>
-              </tr> */}
-              <tr>
-                <td className="left_side">Customer Declined; Proposals</td>
-                <td>{customer_declined_proposal}</td>
-              </tr>
-              <tr>
-                <td className="left_side">Customer Declined; Payment</td>
-                <td>{Customer_declined_payment}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div className="col-md-3 content_header">
-
-          <table className="table table-striped fifth main_table">
-            <thead className="proposal_thead">
-              <tr>
-                <th className="left_side">All Proposals</th>
-                <th>{allproposal}</th>
-
-              </tr>
-            </thead>
-          </table>
-
-          <table className="table table-striped sixth main_table">
-            <thead className="proposal_thead">
-              <tr>
-                <th className="left_side">Inprogress; Proposals</th>
-                <th>{InProgress}</th>
-              </tr>
-            </thead>
-            <tbody classNameName="table_body">
-              <tr>
-                <td className="left_side">Inprogress; Preparation</td>
-                <td>{inprogress_preparation}</td>
-              </tr>
-              <tr>
-                <td className="left_side">Inprogress; Acceptance</td>
-                <td>{inprogress_acceptance}</td>
-              </tr>
-            </tbody>
-          </table>
-
-          <table className="table table-striped seventh main_table">
-            <thead className="proposal_thead">
-              <tr>
-                <th className="left_side">Accepted; Proposals </th>
-                <th>{accepted_proposals}</th>
-              </tr>
-            </thead>
-          </table>
-
-          <table className="table table-striped eight main_table">
-            <thead className="proposal_thead">
-              <tr>
-                <th className="left_side">Customer Declined; Proposals</th>
-                <th>{declined}</th>
-              </tr>
-            </thead>
-          </table>
+        <table className="table table-striped third main_table">
+          <thead className="query_thead">
+            <tr>
+              <th className="left_side">Completed; Queries</th>
+              <th>{complete_query}</th>
+            </tr>
+          </thead>
+          <tbody className="table_body">
+            <tr>
+              <td className="left_side">Completed; Assignments</td>
+              <td>{complete_query}</td>
+            </tr>
+          </tbody>
+        </table>
 
 
-        </div>
+        <table className="table table-striped forth main_table">
+          <thead className="query_thead">
+            <tr>
+              <th className="left_side">Declined; Queries</th>
+              <th>{declined_queries}</th>
+            </tr>
+          </thead>
 
-        <div className="col-md-3 content_header">
-          <table className="table table-striped ninth main_table">
-            <thead className="assignment_thead">
-              <tr>
-                <th className="left_side">All Assignments</th>
-                <th>{inprogress + complete + +(customer_declined_payment)}</th>
-              </tr>
-            </thead>
-          </table>
+          <tbody className="table_body">
+            {/* <tr>
+              <td className="left_side">Admin Declined; Queries</td>
+              <td>{admin_declined_query}</td>
+            </tr>
+            <tr>
+              <td className="left_side"> Customer Declined; Queries</td>
+              <td>{customer_declined_Query}</td>
+            </tr> */}
+            <tr>
+              <td className="left_side">Customer Declined; Proposals</td>
+              <td>{customer_declined_proposal}</td>
+            </tr>
+            <tr>
+              <td className="left_side">Customer Declined; Payment</td>
+              <td>{Customer_declined_payment}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
-          <table className="table table-striped tenth main_table">
-            <thead className="assignment_thead">
+      <div className="col-md-3 content_header">
 
-              <tr>
-                <th className="left_side">Inprogress; Assignments</th>
-                <th>{inprogress}</th>
-              </tr>
-            </thead>
+        <table className="table table-striped fifth main_table">
+          <thead className="proposal_thead">
+            <tr>
+              <th className="left_side">All Proposals</th>
+              <th>{allproposal}</th>
 
-            <tbody classNameName="table_body">
-              <tr>
-                <td className="left_side">Client Discussion</td>
-                <td>{client_discussion}</td>
-              </tr>
-              <tr>
-                <td className="left_side">Draft Reports</td>
-                <td>{draft_report}</td>
-              </tr>
-              <tr>
-                <td className="left_side">Final Discussion</td>
-                <td>{final_discussion}</td>
-              </tr>
-              <tr>
-                <td className="left_side">Delivery of Final Reports</td>
-                <td>{final_report}</td>
-              </tr>
-              <tr>
-                <td className="left_side">Awaiting Completion</td>
-                <td>{complete_inprocess}</td>
-              </tr>
-            </tbody>
-          </table>
+            </tr>
+          </thead>
+        </table>
 
-          <table className="table table-striped tenth main_table">
-            <thead className="assignment_thead">
+        <table className="table table-striped sixth main_table">
+          <thead className="proposal_thead">
+            <tr>
+              <th className="left_side">Inprogress; Proposals</th>
+              <th>{InProgress}</th>
+            </tr>
+          </thead>
+          <tbody classNameName="table_body">
+            <tr>
+              <td className="left_side">Inprogress; Preparation</td>
+              <td>{inprogress_preparation}</td>
+            </tr>
+            <tr>
+              <td className="left_side">Inprogress; Acceptance</td>
+              <td>{inprogress_acceptance}</td>
+            </tr>
+          </tbody>
+        </table>
 
-              <tr>
-                <th className="left_side">Completed; Assignments</th>
-                <th>{complete}</th>
-              </tr>
-            </thead>
-          </table>
+        <table className="table table-striped seventh main_table">
+          <thead className="proposal_thead">
+            <tr>
+              <th className="left_side">Accepted; Proposals </th>
+              <th>{accepted_proposals}</th>
+            </tr>
+          </thead>
+        </table>
 
-          <table className="table table-striped tenth main_table">
-            <thead className="assignment_thead">
-
-              <tr>
-                <th className="left_side">Customer Declined; Payment</th>
-                <th>{customer_declined_payment}</th>
-              </tr>
-            </thead>
-          </table>
-        </div>
+        <table className="table table-striped eight main_table">
+          <thead className="proposal_thead">
+            <tr>
+              <th className="left_side">Customer Declined; Proposals</th>
+              <th>{declined}</th>
+            </tr>
+          </thead>
+        </table>
 
 
-        <div className="col-md-3 content_header">
+      </div>
 
-          <table className="table table-striped twelvth main_table">
-            <thead className="payment_thead">
-              <tr>
-                <th className="left_side">All Payments</th>
-                <th>{totalpayment}</th>
-              </tr>
-            </thead>
-          </table>
-          <table className="table table-striped thirteen main_table">
-            <thead className="payment_thead2">
-              <tr>
-                <th className="left_side">Paid</th>
-                <th>{paid}</th>
-              </tr>
-            </thead>
-          </table>
+      <div className="col-md-3 content_header">
+        <table className="table table-striped ninth main_table">
+          <thead className="assignment_thead">
+            <tr>
+              <th className="left_side">All Assignments</th>
+              <th>{inprogress + complete + +(customer_declined_payment)}</th>
+            </tr>
+          </thead>
+        </table>
 
-          <table className="table table-striped thirteen main_table">
-            <thead className="payment_thead2">
-              <tr>
-                <th className="left_side">Unpaid</th>
-                <th>{unpaid}</th>
-              </tr>
-            </thead>
-          </table>
-        </div>
+        <table className="table table-striped tenth main_table">
+          <thead className="assignment_thead">
+
+            <tr>
+              <th className="left_side">Inprogress; Assignments</th>
+              <th>{inprogress}</th>
+            </tr>
+          </thead>
+
+          <tbody classNameName="table_body">
+            <tr>
+              <td className="left_side">Client Discussion</td>
+              <td>{client_discussion}</td>
+            </tr>
+            <tr>
+              <td className="left_side">Draft Reports</td>
+              <td>{draft_report}</td>
+            </tr>
+            <tr>
+              <td className="left_side">Final Discussion</td>
+              <td>{final_discussion}</td>
+            </tr>
+            <tr>
+              <td className="left_side">Delivery of Final Reports</td>
+              <td>{final_report}</td>
+            </tr>
+            <tr>
+              <td className="left_side">Awaiting Completion</td>
+              <td>{complete_inprocess}</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <table className="table table-striped tenth main_table">
+          <thead className="assignment_thead">
+
+            <tr>
+              <th className="left_side">Completed; Assignments</th>
+              <th>{complete}</th>
+            </tr>
+          </thead>
+        </table>
+
+        <table className="table table-striped tenth main_table">
+          <thead className="assignment_thead">
+
+            <tr>
+              <th className="left_side">Customer Declined; Payment</th>
+              <th>{customer_declined_payment}</th>
+            </tr>
+          </thead>
+        </table>
       </div>
 
 
-    </Layout>
+      <div className="col-md-3 content_header">
+
+        <table className="table table-striped twelvth main_table">
+          <thead className="payment_thead">
+            <tr>
+              <th className="left_side">All Payments</th>
+              <th>{totalpayment}</th>
+            </tr>
+          </thead>
+        </table>
+        <table className="table table-striped thirteen main_table">
+          <thead className="payment_thead2">
+            <tr>
+              <th className="left_side">Paid</th>
+              <th>{paid}</th>
+            </tr>
+          </thead>
+        </table>
+
+        <table className="table table-striped thirteen main_table">
+          <thead className="payment_thead2">
+            <tr>
+              <th className="left_side">Unpaid</th>
+              <th>{unpaid}</th>
+            </tr>
+          </thead>
+        </table>
+      </div>
+    </div>
+
+
+  </Layout> : 
+  <>
+  {logout()}
+  </>}
+    </>
   );
 }
 

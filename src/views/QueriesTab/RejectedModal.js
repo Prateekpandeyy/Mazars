@@ -63,7 +63,7 @@ function RejectedModal({
   return (
     <div>
       <Modal isOpen={rejectedBox} toggle={deleteCliente} size="md">
-        <ModalHeader toggle={deleteCliente}>Query Declined</ModalHeader>
+        <ModalHeader toggle={deleteCliente}>Please provide the reason</ModalHeader>
         <ModalBody>
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="mb-3">

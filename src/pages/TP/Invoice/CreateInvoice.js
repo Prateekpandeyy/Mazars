@@ -82,7 +82,7 @@ const CreateInvoice = () => {
                 fontSize: "11px",
             },
             headerStyle: () => {
-                return { fontSize: "11px" };
+                return { fontSize: "11px", width : "200px" };
             },
             formatter: function nameFormatter(cell, row) {
 
@@ -91,8 +91,9 @@ const CreateInvoice = () => {
 
                         <Link
                             to={{
-                                pathname: `/taxprofessional/queries/${row.id}`,
-                                routes: "proposal",
+                                pathname: `/taxprofessional/queries/${row.assign_id}`,
+                                index : 1,
+                                routes: "tpinvoice",
                             }}
                         >
                             {row.assign_no}
@@ -109,7 +110,7 @@ const CreateInvoice = () => {
                 fontSize: "11px",
             },
             headerStyle: () => {
-                return { fontSize: "11px" };
+                return { fontSize: "11px" , width :"200px"};
             },
         }, 
         {
@@ -120,7 +121,7 @@ const CreateInvoice = () => {
                 fontSize: "11px",
             },
             headerStyle: () => {
-                return { fontSize: "11px" };
+                return { fontSize: "11px", width : "200px" };
             },
             formatter : function(cell, row){
                 let dueDate=row.due_date.split("-").reverse().join("-")
@@ -141,12 +142,12 @@ const CreateInvoice = () => {
                 fontSize: "11px",
             },
             headerStyle: () => {
-                return { fontSize: "11px" };
+                return { fontSize: "11px" , width : "200px"};
             },
             formatter: function nameFormatter(cell, row){
                 var nfObject = new Intl.NumberFormat('hi-IN')
                  var x = row.paid_amount;
-                 console.log(nfObject.format(x))
+             
                  return(
                    <p>{nfObject.format(x)}</p>
                  )
@@ -201,14 +202,16 @@ const CreateInvoice = () => {
                     </CardHeader>
 
                 <CardBody>
+                <div className="tableFixHead">
                     <BootstrapTable
                         bootstrap4
                         keyField='id'
                         data={proposal}
                         columns={columns}
                         rowIndex
+                        classes="table-responsive"
                     />
-
+</div>
                    
 
                     <Tds 

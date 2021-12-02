@@ -20,6 +20,7 @@ import CommonServices from "../../common/common";
 import DiscardReport from "../AssignmentTab/DiscardReport";
 import FeedbackIcon from '@material-ui/icons/Feedback';
 import PublishIcon from '@material-ui/icons/Publish';
+import './index.css';
 
 
 
@@ -73,7 +74,7 @@ function DeclinedQueries() {
       dataField: "created",
       sort: true,
       headerStyle: () => {
-        return { fontSize: "12px" };
+        return { fontSize: "12px", width: "150px" };
       },
       formatter: function dateFormat(cell, row) {
 
@@ -88,25 +89,31 @@ function DeclinedQueries() {
       text: "Query No",
       dataField: "assign_no",
       headerStyle: () => {
-        return { fontSize: "12px" };
+        return { fontSize: "12px",   width: "150px" };
       },
       formatter: function nameFormatter(cell, row) {
-       
+              
         return (
-          <>
-            <Link to={`/customer/my-assingment/${row.id}`}>
-              {row.assign_no}
-            </Link>
-          </>
+            <>
+                <Link
+                    to={{
+                        pathname: `/customer/my-assingment/${row.id}`,
+                        index: 3,
+                        routes: "queries",
+                    }}
+                >
+                    {row.assign_no}
+                </Link>
+            </>
         );
-      },
+    },
     },
     {
       text: "Category",
       dataField: "parent_id",
       sort: true,
       headerStyle: () => {
-        return { fontSize: "12px" };
+        return { fontSize: "12px" , width: "150px" };
       },
     },
     {
@@ -114,14 +121,14 @@ function DeclinedQueries() {
       dataField: "cat_name",
       sort: true,
       headerStyle: () => {
-        return { fontSize: "12px" };
+        return { fontSize: "12px", width: "140px"  };
       },
     },
     {
       text: "Status",
       dataField: "",
       headerStyle: () => {
-        return { fontSize: "12px" };
+        return { fontSize: "12px", width: "140px"  };
       },
       formatter: function nameFormatter(cell, row) {
         return (
@@ -156,7 +163,7 @@ function DeclinedQueries() {
       dataField: "exp_delivery_date",
       sort: true,
       headerStyle: () => {
-        return { fontSize: "12px" };
+        return { fontSize: "12px" , width: "150px" };
       },
       formatter: function dateFormat(cell, row) {
    
@@ -199,13 +206,16 @@ function DeclinedQueries() {
         </CardHeader>
         <CardBody>
           <Records records={records} />
+          <div className="tableFixHead">
           <BootstrapTable
             bootstrap4
             keyField="id"
             data={query}
             columns={columns}
             rowIndex
+            classes="table-responsive"
           />
+          </div>
         </CardBody>
       </Card>
     </div>

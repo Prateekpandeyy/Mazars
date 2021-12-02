@@ -120,7 +120,7 @@ function ProposalComponent(props) {
         formData.append("due_date", "")
 
     if (payment.length < 1) {
-      console.log("please select payments terms --")
+     
       setpaymentError("Please select at lease one")
     } else
       if (payment.value == "installment") {
@@ -245,6 +245,9 @@ function ProposalComponent(props) {
     console.log("val-", e.target.value);
     if (isNaN(e.target.value)) {
       setdiserror("Please enter number only.");
+    }
+    else if(e.target.value == "0"){
+      setdiserror("Amount should be greater than 0")
     }
     else {
       setdiserror("");

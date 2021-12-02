@@ -16,6 +16,7 @@ import Mandatory from "../../components/Common/Mandatory";
 import { Spinner } from 'reactstrap';
 import ShowError from "../../components/LoadingTime/LoadingTime";
 import LoadingTime from "../../components/LoadingTime/LoadingTime";
+import Cookies from "js-cookie";
 const Schema = yup.object().shape({
   p_email: yup.string().email("invalid email").required(""),
   p_password: yup.string().required(""),
@@ -70,7 +71,9 @@ function LoginForm() {
           setLoading(false)
           Alerts.SuccessNormal("As per your request, OTP has been sent to your registered email address.")
           setShow(true)
+          console.log(response.data.display_name)
           setLoad(true)
+          Cookies.set("custName", response.data.display_name)
           setUid(response.data.user_id)
         } else if (response.data.code === 0) {
           Alerts.ErrorNormal(response.data.result)
@@ -131,7 +134,7 @@ function LoginForm() {
               </div>
                 :
                 <div className="customForm">
-                  <form onSubmit={handleSubmit(onSubmit)} className="signInForm" autoComplete="off">
+                  <form onSubmit={handleSubmit(onSubmit)} className="signInForm"  autocomplete="off">
                     <div className="form-group">
                       <label className="form-label">Email <span className="declined">*</span></label>
                       <input
@@ -140,6 +143,7 @@ function LoginForm() {
                           "is-invalid": errors.p_email,
                         })}
                         name="p_email"
+                        autocomplete="off"
                         ref={register}
                         placeholder="Enter Email"
                         onChange={(e) => handleChange(e)}
@@ -154,6 +158,7 @@ function LoginForm() {
                           "is-invalid": errors.p_password,
                         })}
                         name="p_password"
+                        autocomplete="off"
                         placeholder="Enter Password"
                         ref={register}
                         onCopy={(e) => {

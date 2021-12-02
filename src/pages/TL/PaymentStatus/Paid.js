@@ -221,7 +221,7 @@ function AllPayment() {
             formatter: function nameFormatter(cell, row){
                 var nfObject = new Intl.NumberFormat('hi-IN')
                  var x = row.accepted_amount;
-                 console.log(nfObject.format(x))
+                 
                  return(
                    <p>{nfObject.format(x)}</p>
                  )
@@ -247,7 +247,7 @@ function AllPayment() {
             formatter: function nameFormatter(cell, row){
                 var nfObject = new Intl.NumberFormat('hi-IN')
                  var x = row.paid_amount;
-                 console.log(nfObject.format(x))
+                 
                  return(
                    <p>{nfObject.format(x)}</p>
                  )
@@ -274,7 +274,7 @@ function AllPayment() {
             formatter: function nameFormatter(cell, row){
                 var nfObject = new Intl.NumberFormat('hi-IN')
                  var x = row.amount_outstanding;
-                 console.log(nfObject.format(x))
+                 
                  return(
                    <p>{nfObject.format(x)}</p>
                  )
@@ -314,13 +314,26 @@ function AllPayment() {
                         <div style={{ display: "flex", justifyContent: "space-between", width: "90px" }}>
 
                             <div title="Payment History"
-                                onClick={() => toggle(row.assign_id)}
+                           
                                 style={{ color: "green", fontSize: "16px", cursor: "pointer" }}
                             >
-                               <i
+                              <Link
+              to={{
+                pathname: `/teamleader/paydetails/${row.assign_id}`,
+                obj: {
+                  message_type: "5",
+                  query_No: row.assign_no,
+                  query_id: row.assign_id,
+                  routes: `/teamleader/paymentstatus`
+                }
+              }}
+            >
+                            <i
                                 class="fa fa-credit-card"
                                 style={{ color: "green", fontSize: "16px" }}
-                                onClick={() => toggle(row.assign_id)}></i>
+                              
+                            ></i>
+                            </Link>
                             </div>
                             <div title="Send Message">
                                 <Link
@@ -393,6 +406,7 @@ function AllPayment() {
                 </CardHeader>
 
                 <CardBody>
+                <div className="tableFixHead">
                     <BootstrapTable
                         bootstrap4
                         keyField="id"
@@ -400,7 +414,7 @@ function AllPayment() {
                         columns={columns}
                         classes="table-responsive"
                     />
-
+</div>
 <DiscardReport
                         ViewDiscussionToggel={ViewDiscussionToggel}
                         ViewDiscussion={ViewDiscussion}

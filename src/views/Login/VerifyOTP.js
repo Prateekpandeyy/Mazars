@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, {useState } from 'react'
 import axios from 'axios'
 import { baseUrl } from "../../config/config";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -50,6 +50,7 @@ function VerifyOTP({ email, uid, time, setLoad,
                 if (response.data.code == 1) {
                     setLoading(false)
                     Alerts.SuccessLogin("Logged in successfully.")
+                    sessionStorage.setItem("userIdsession", JSON.stringify(response.data.user_id));
                     localStorage.setItem("userid", JSON.stringify(response.data.user_id));
                     localStorage.setItem("custEmail", JSON.stringify(response.data.name));
                     history.push("customer/dashboard");

@@ -24,7 +24,7 @@ import Records from "../../components/Records/Records";
 import DiscardReport from "../AssignmentTab/DiscardReport";
 import PaymentIcon from '@material-ui/icons/Payment';
 import PaymentComponent from './PaymentComponent';
-
+import './index.css';
 
 function Paid() {
   const alert = useAlert();
@@ -168,6 +168,7 @@ function Paid() {
             <Link
               to={{
                 pathname: `/customer/my-assingment/${row.assign_id}`,
+                index : 1,
                 routes: "paymentstatus",
               }}
             >
@@ -409,8 +410,8 @@ function Paid() {
                     obj: {
                       message_type: "5",
                       query_No: row.assign_no,
-                      query_id: row.q_id,
-                      routes: `/customer/payment`
+                      query_id: row.assign_id,
+                      routes: `/customer/paymentstatus`
                     }
                   }}
                 >
@@ -465,6 +466,7 @@ function Paid() {
 
           <CardBody>
             <Records records={records} />
+            <div className="tableFixHead">
             <BootstrapTable
               bootstrap4
               keyField="id"
@@ -472,6 +474,7 @@ function Paid() {
               columns={columns}
               classes="table-responsive"
             />
+            </div>
 
             <Modal isOpen={modal} fade={false} toggle={toggle}>
               <ModalHeader toggle={toggle}>History</ModalHeader>

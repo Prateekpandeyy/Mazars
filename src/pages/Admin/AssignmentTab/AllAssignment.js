@@ -558,8 +558,9 @@ function AssignmentComponent() {
           </form>
         </CardHeader>
 
-        <CardBody>
+        <CardBody className="card-body2">
           <Records records={records} />
+          <div className="tableFixHead">
           <BootstrapTable
             bootstrap4
             keyField="id"
@@ -568,7 +569,7 @@ function AssignmentComponent() {
             rowStyle={ rowStyle2 }
             rowIndex
           />
-
+</div>
           <ViewAllReportModal
             ViewReport={ViewReport}
             reportModal={reportModal}

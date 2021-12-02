@@ -9,6 +9,7 @@ import Tds from "./Tds";
 import InvoiceFilter from "../../../components/Search-Filter/InvoiceFilter"
 import moment from "moment";
 import DescriptionOutlinedIcon from "@material-ui/icons/DescriptionOutlined";
+import FileCopyIcon from '@mui/icons-material/FileCopy';
 const Generated = () => {
     var rowStyle2 = {}
     const userid = window.localStorage.getItem("tpkey");
@@ -77,7 +78,7 @@ const Generated = () => {
                 fontSize: "11px",
             },
             headerStyle: () => {
-                return { fontSize: "11px" };
+                return { fontSize: "11px" , width : "100px"};
             },
             formatter: function nameFormatter(cell, row) {
                 
@@ -86,8 +87,9 @@ const Generated = () => {
 
                         <Link
                             to={{
-                                pathname: `/taxprofessional/queries/${row.id}`,
-                                routes: "proposal",
+                                pathname: `/taxprofessional/queries/${row.assign_id}`,
+                                index : 0,
+                                routes: "tpinvoice",
                             }}
                         >
                             {row.assign_no}
@@ -104,7 +106,7 @@ const Generated = () => {
                 fontSize: "11px",
             },
             headerStyle: () => {
-                return { fontSize: "11px" };
+                return { fontSize: "11px" , width :"150px"};
             },
         },
         {
@@ -115,7 +117,7 @@ const Generated = () => {
                 fontSize: "11px",
             },
             headerStyle: () => {
-                return { fontSize: "11px" };
+                return { fontSize: "11px" , width : "150px"};
             },
         },
         {
@@ -126,7 +128,7 @@ const Generated = () => {
                 fontSize: "11px",
             },
             headerStyle: () => {
-                return { fontSize: "11px" };
+                return { fontSize: "11px" , width : "100px"};
             },
             formatter : function(cell, row){
                 let dueDate=row.due_date.split("-").reverse().join("-")
@@ -231,6 +233,12 @@ const Generated = () => {
                        onClick = {() => addTdsToggle(row)} 
                     ></i> : ""
                         }
+                         {row.is_paid == "0" 
+                ?   
+                 <FileCopyIcon onClick={() => {copyFun(row.paymenturl)}} style={noPointer}/>
+                   
+              
+                    : "" }
                         </div>
                       
                     </>
@@ -238,7 +246,12 @@ const Generated = () => {
             },
         },
     ];
-
+    const noPointer = {cursor: 'pointer', color : "blue"};
+    const copyFun = (e)  =>{
+   
+        navigator.clipboard.writeText(e)
+       
+      }
     rowStyle2 = (row, index) => {
         const style = {}
         var warningDate = moment(row.due_date).subtract(5, 'day').toDate();
@@ -279,6 +292,7 @@ const Generated = () => {
                     </CardHeader>
 
                 <CardBody>
+                <div className="tableFixHead">
                     <BootstrapTable
                         bootstrap4
                         keyField="id"
@@ -286,7 +300,9 @@ const Generated = () => {
                         columns={columns}
                         rowIndex
                         rowStyle={ rowStyle2 }
+                        classes="table-responsive"
                     />
+                    </div>
 
                    
                   

@@ -24,7 +24,7 @@ function DiscardReport({
   const getHistory = () => {
    
       if(report != undefined && report.length > 0){
-        axios.get(`${baseUrl}/tl/getMessage?id=${JSON.parse(userId)}&q_no=${report}`).then((res) => {
+        axios.get(`${baseUrl}/admin/getMessage?id=${JSON.parse(userId)}&q_no=${report}`).then((res) => {
         
           if (res.data.code === 1) {
             setData(res.data.result);
@@ -56,7 +56,7 @@ function DiscardReport({
                     <td>{i + 1}</td>
                     <td>{CommonServices.removeTime(p.setdate)}</td>
                     <td>{p.sender}</td>
-                    <td>
+                    <td style={{display : "block", width : "460px", overflow : "wrap"}}>
                       {
                         p.type == "sent" ?
                           <i class="fa fa-mail-forward" style={{ color: "red", marginLeft: "10px", marginRight: "10px" }}></i>

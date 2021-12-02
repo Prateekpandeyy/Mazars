@@ -3,16 +3,17 @@ import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from "reactstrap";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
-import CommonServices from "../../../common/common";
-import Alerts from "../../../common/Alerts";
 import { useHistory } from "react-router";
-
+import Swal from "sweetalert2";
 function RecordingModal({
     isOpen,
     toggle,
     data,
     item, 
-    allrecording
+    allrecording,
+    schId,
+    uid,
+    ownerId
 }) {
     const history = useHistory();
     const { handleSubmit, register, errors } = useForm();
@@ -59,7 +60,8 @@ else{
             .then(function (response) {
                         if (response.data.code === 1) {
                     toggle()
-                    history.push('/teamleader/schedule');
+                    // history.push('/teamleader/schedule');
+                    confirmation()
                 }
                
             })
@@ -67,9 +69,42 @@ else{
                        });
     };
     const exitBtn2 = () => {
-        history.push('/teamleader/schedule');
-    }
+        if(ownerId === JSON.parse(userId)){
+            confirmation()
+        }
+        else{
+            history.push('/teamleader/schedule');
+        }
+       
 
+    }
+const confirmation = () => {
+    console.log("done")
+    Swal.fire({
+     title: "Are you sure?",
+     text: "It will permanently deleted !",
+     type: "warning",
+     showCancelButton : true,
+     confirmButtonColor: "#3085d6",
+     cancelButtonColor: "#d33",
+     confirmButtonText: "End the call",
+     cancelButtonText: "only, just leave the call",
+    }).then((result) => {
+     if (result.value) {
+      console.log("donefixed", result)
+      axios.get(`${baseUrl}/tl/setgetschedular?id=${schId}&rtc_id=${uid}&uid=${JSON.parse(userId)}`)
+     .then((res) =>{
+       if(res){
+        history.push('/teamleader/schedule');
+       }
+     })
+     }
+     else{
+        console.log("donefixed", result)
+      history.push('/teamleader/schedule');
+     }
+   });
+  }
     return (
         <div>
             <Modal isOpen={isOpen} toggle={toggle} size="md">

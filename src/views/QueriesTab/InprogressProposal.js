@@ -19,6 +19,7 @@ import Records from "../../components/Records/Records";
 import CommonServices from "../../common/common";
 import moment from "moment";
 import FeedbackIcon from '@material-ui/icons/Feedback';
+import './index.css';
 function InprogressProposal() {
   const alert = useAlert();
   const userId = window.localStorage.getItem("userid");
@@ -68,7 +69,7 @@ function InprogressProposal() {
       dataField: "created",
       sort: true,
       headerStyle: () => {
-        return { fontSize: "12px" };
+        return { fontSize: "12px" , width: "180px"};
       },
       formatter: function dateFormat(cell, row) {
        
@@ -83,15 +84,21 @@ function InprogressProposal() {
       text: "Query No",
       dataField: "assign_no",
       headerStyle: () => {
-        return { fontSize: "12px" };
+        return { fontSize: "12px", width: "180px" };
       },
       formatter: function nameFormatter(cell, row) {
        
         return (
           <>
-            <Link to={`/customer/my-assingment/${row.q_id}`}>
-              {row.assign_no}
-            </Link>
+             <Link
+                            to={{
+                                pathname: `/customer/my-assingment/${row.id}`,
+                                index: 2,
+                                routes: "queries",
+                            }}
+                        >
+                            {row.assign_no}
+                        </Link>
           </>
         );
       },
@@ -101,7 +108,7 @@ function InprogressProposal() {
       dataField: "parent_id",
       sort: true,
       headerStyle: () => {
-        return { fontSize: "12px" };
+        return { fontSize: "12px", width :"180px"};
       },
     },
     {
@@ -109,14 +116,14 @@ function InprogressProposal() {
       dataField: "cat_name",
       sort: true,
       headerStyle: () => {
-        return { fontSize: "12px" };
+        return { fontSize: "12px" , width: "180px"};
       },
     },
     {
       text: "Status",
       dataField: "",
       headerStyle: () => {
-        return { fontSize: "12px" };
+        return { fontSize: "12px" , width: "180px"};
       },
       formatter: function nameFormatter(cell, row) {
         return (
@@ -134,7 +141,7 @@ function InprogressProposal() {
       dataField: "exp_delivery_date",
       sort: true,
       headerStyle: () => {
-        return { fontSize: "12px" };
+        return { fontSize: "12px" , width: "180px"};
       },
       formatter: function dateFormat(cell, row) {
         
@@ -157,7 +164,7 @@ function InprogressProposal() {
     {
       text: "Action",
       headerStyle: () => {
-        return { fontSize: "12px", textAlign: "center", width: "130px" };
+        return { fontSize: "12px", textAlign: "center", width: "180px" };
       },
       formatter: function (cell, row) {
         var dateMnsFive = moment(row.exp_delivery_date).add(15, 'day').format("YYYY-MM-DD");
@@ -237,13 +244,16 @@ function InprogressProposal() {
         </CardHeader>
         <CardBody>
           <Records records={records} />
+          <div className="tableFixHead">
           <BootstrapTable
             bootstrap4
             keyField="id"
             data={query}
             columns={columns}
             rowIndex
+            classes="table-responsive"
           />
+          </div>
         </CardBody>
       </Card>
     </div>

@@ -29,9 +29,9 @@ const Report = () => {
   const [custCate2, setCustcate2] = useState([]);
   const [data, setData] = useState([]);
   const [data2, setData2] = useState([]);
-  const [taxId, setTaxId] = useState();
-  const [teamleader44, setTeamleader44] = useState() 
-  const [taxprofessional44, setTaxprofessional44] = useState()
+  const [taxId, setTaxId] = useState("");
+  const [teamleader44, setTeamleader44] = useState("") 
+  const [taxprofessional44, setTaxprofessional44] = useState("")
   const [custData, setcustData] = useState();
   var kk = []
   var pp = []
@@ -39,7 +39,7 @@ const Report = () => {
   var allData1 = {}
   var dir = []
   var indir = []
-  const [dd, setDd] = useState();
+  const [dd, setDd] = useState([]);
 const history = useHistory()
     const { handleSubmit, register, errors, getValues } = useForm();
     var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
@@ -145,53 +145,76 @@ const mapAppointmentData = ((appiontmentData) => ({
       }))
 
     const onSubmit = (value) => {
+     let basic_info = false
+     let proposal_info = false
+     let assignment_info = false
+     let payment_info = false
+     if(value.assessment || value.purpose_p || value.p_format || value.t_requested || value.spc_que || value.doa){
+      basic_info = true
+     }
+     if(value.dateProposal || value.proposedAmount || value.paymentTerms || value.proposal_status || value.acceptedAmount
+      || value.paymentDeclinedReason || value.date_acceptance || value.amountOutstanding
+      || value.amount_overdue || value.declinedDate){
+        proposal_info = true
+      }
+   if(value.assignDate || value.completionDate || value.assignStatus || value.completionQuery || value.assignTime){
+     assignment_info = true
+   }
+   if(value.receiptDate || value.amountReceived){
+     payment_info = true
+   }
         let formData = new FormData();
+        formData.append("basic_info", Number(basic_info));
+        formData.append("proposal_info", Number(proposal_info));
+        formData.append("assignment_info", Number(assignment_info));
+        formData.append("payment_info", Number(payment_info))
         formData.append("from", value.p_from);
         formData.append("to", value.p_to);
         formData.append("teamleader", teamleader44);
         formData.append("taxprofessional", taxprofessional44);
         formData.append("category", mcatname);
         formData.append("subCategory", dd);
-        formData.append("q_no", value.qno);
-        formData.append("date_query", value.dataQuery);
-        formData.append("cust_id", value.cust_id);
-        formData.append("basic_category", value.basicCategory);
-        formData.append("basic_sub_category", value.basic_sub_category);
-        formData.append("assessment", value.assessment);
-        formData.append("purpose", value.purpose_p);
-        formData.append("p_format", value.p_format);
-        formData.append("t_requested", value.t_requested);
-        formData.append("spc_que", value.spc_que);
-        formData.append("date_allocation", value.doa);
-        formData.append("teamleader", value.tl_name);
-        formData.append("taxprofessional", value.tp_name);
-        formData.append("date_proposal", value.dateProposal);
-        formData.append("proposed_amount", value.proposedAmount);
-        formData.append("payment_terms", value.paymentTerms);
-        formData.append("proposal_status", value.proposal_status);
-        formData.append("accepted_amount", value.acceptedAmount);
-        formData.append("payment_declined_reasen", value.paymentDeclinedReason);
-        formData.append("date_of_acceptance", value.date_acceptance);
+        formData.append("q_no", Number(value.qno));
+        formData.append("date_query", Number(value.dataQuery));
+        formData.append("cust_id", Number(value.cust_id));
+        formData.append("basic_category", Number(value.basicCategory));
+        formData.append("basic_sub_category", Number(value.basic_sub_category));
+        formData.append("assessment", Number(value.assessment));
+        formData.append("purpose", Number(value.purpose_p));
+        formData.append("p_format", Number(value.p_format));
+        formData.append("t_requested", Number(value.t_requested));
+        formData.append("spc_que", Number(value.spc_que));
+        formData.append("date_allocation", Number(value.doa));
+        // formData.append("teamleader", Number(value.tl_name));
+        // formData.append("taxprofessional", Number(value.tp_name));
+        formData.append("date_proposal", Number(value.dateProposal));
+        formData.append("proposed_amount", Number(value.proposedAmount));
+        formData.append("payment_terms", Number(value.paymentTerms));
+        formData.append("proposal_status", Number(value.proposal_status));
+        formData.append("accepted_amount", Number(value.acceptedAmount));
+        formData.append("payment_declined_reasen", Number(value.paymentDeclinedReason));
+        formData.append("date_of_acceptance", Number(value.date_acceptance));
         // formData.append("amount_received", value.amountReceived);
-        formData.append("amount_outstanding", value.amountOutstanding);
-        formData.append("amount_overdue", value.amount_overdue);
-        formData.append("payment_declined", value.declinedDate);
-        formData.append("assignment_number", value.assignNumber);
-        formData.append("assign_date", value.assignDate);
-        formData.append("proposed_completion_date", value.completionDate);
-        formData.append("assignment_status", value.assignStatus);
-        formData.append("date_complation", value.completionQuery);
-        formData.append("assign_time", value.assignTime);
-        formData.append("payment_recived_date", value.receiptDate);
-        formData.append("amount_received", value.amountReceived);
+        formData.append("amount_outstanding", Number(value.amountOutstanding));
+        formData.append("amount_overdue", Number(value.amount_overdue));
+        formData.append("payment_declined", Number(value.declinedDate));
+        // formData.append("assignment_number", Number(value.assignNumber));
+        formData.append("assign_date", Number(value.assignDate));
+        formData.append("proposed_completion_date", Number(value.completionDate));
+        formData.append("assignment_status", Number(value.assignStatus));
+        formData.append("date_complation", Number(value.completionQuery));
+        formData.append("assign_time", Number(value.assignTime));
+        formData.append("payment_recived_date", Number(value.receiptDate));
+        formData.append("amount_received", Number(value.amountReceived));
+        formData.append("t", Math.floor(Math.random() * 110000))
    axios({
      method : "POST",
-     url : `${baseUrl}/report/generateReport`,
+     url : `${baseUrl}/report/generateReport?t=${JSON.stringify(Math.floor(Math.random() * 110000))}`,
      data : formData
 
    })
    .then(function (response) {
-  window.location.assign(`${baseUrl}/report/generateReport`)
+    window.location.assign(`${baseUrl}/report/generateReport`)
    })
    .catch((error) => {
   
@@ -248,17 +271,17 @@ let cc = []
 
     // Sub Category Function 
     const subCategory22 = (e) => {
-  
+  let kk = []
       subCategeryData(e)
       setCustcate2(e)
       setError2("")
      
       e.map((i) => {
   
-        i.value < 8 ? dir.push(i.value) : indir.push(i.value)
+      kk.push(i.value)
       })
-     
-      setDd([dir, indir])
+     setDd(kk)
+      
     }
   const teamLeader = (a) => {
  let tk = []
@@ -522,10 +545,7 @@ onChange= {(e) =>teamLeader(e)}/>
        <fieldset className="my-fieldset">
            <legend className="login-legend">Assignment</legend>
             <div className="basicFeild">
-            <span>
-<input type="checkbox" ref={register} name="assignNumber" id="assignNumber"></input>
-<label htmlFor="assignNumber">Assignment Number</label>
-</span>
+           
 <span>
 <input type="checkbox" ref={register} name="assignDate" id="assignDate"></input>
 <label htmlFor="assignDate">Assignment Date</label>

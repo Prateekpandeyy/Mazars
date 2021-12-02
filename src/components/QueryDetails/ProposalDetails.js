@@ -51,7 +51,17 @@ function ProposalDetails({
     ))
     return dataItem;
   }
-
+  const installAmount2 = (data) => {
+    var item = data.split(',')
+   
+    const dataItem = item.map((p, i) =>
+    (
+      <>
+        <p>{nfObject.format(p)}</p>
+      </>
+    ))
+    return dataItem;
+  }
   // curent date
   var date = new Date();
   function convert(str) {
@@ -130,13 +140,13 @@ function ProposalDetails({
           <tbody>
             <tr>
               <th scope="row">Date of Allocation</th>
-              <td>{accept == "2" || accept > "3" ? CommonServices.changeFormateDate(date_of_allocation) : ""}</td>
+              <td>{accept > "1" ? CommonServices.changeFormateDate(date_of_allocation) : ""}</td>
             </tr>
             
             
             <tr>
               <th scope="row">Name of Team Leader</th>
-              <td>{accept == "2" || accept > "3" ? tlName2 : ""}</td>
+              <td>{accept > "1" ? tlName2 : ""}</td>
             </tr>
             <tr>
               <th scope="row">Name of Tax Professional(s)</th>
@@ -221,9 +231,10 @@ function ProposalDetails({
                       
                       </tr>
                       <tr>
+                       
                         <td>{payment_terms}</td>
                         <td>{no_of_installment}</td>
-                        <td>{installAmount(installment_amount)}</td>
+                        <td>{installAmount2(installment_amount)}</td>
                         <td>{installAmount(due_date)}</td>
                         <td>{}</td>
                       </tr>

@@ -30,6 +30,8 @@ import Loader from "../../../components/Loader/Loader";
 
 function Demo() {
   const userId = window.localStorage.getItem("tlkey");
+  const userEmail = window.localStorage.getItem("tlEmail")
+  const em = JSON.parse(userEmail)
   const history = useHistory();
 
   const [loading, setLoading] = useState(false);
@@ -62,7 +64,7 @@ function Demo() {
     axios
       .get(`${baseUrl}/tl/videoScheduler?tl_id=${JSON.parse(userId)}`)
       .then((res) => {
-        console.log("res -", res);
+       
         var a = res.data.result.items;
         if (a) {
           setData(a.map(mapAppointmentData));
@@ -88,7 +90,7 @@ function Demo() {
     axios
       .get(`${baseUrl}/admin/getAllQuery?uid=${JSON.parse(userId)}`)
       .then((res) => {
-        console.log(res);
+      
         if (res.data.code === 1) {
           var data = res.data.result;
 
@@ -96,7 +98,7 @@ function Demo() {
             text,
             ...rest,
           }));
-          console.log("dt--", newArrayOfObj);
+         
           setAssignmentData(newArrayOfObj);
         }
       });
@@ -104,14 +106,14 @@ function Demo() {
 
   const getUsers = () => {
     axios.get(`${baseUrl}/tl/allAttendees?uid=${JSON.parse(userId)}`).then((res) => {
-      console.log(res);
+      
       if (res.data.code === 1) {
         var data = res.data.result;
         const newOwners = data.map(({ name: text, ...rest }) => ({
           text,
           ...rest,
         }));
-        console.log("dt---", newOwners);
+       
         setOwner(newOwners);
       }
     });
@@ -158,7 +160,7 @@ function Demo() {
     ...restProps
   }) => (
     <div onDoubleClick={() => B(data.owner)}>
-      {console.log("dataOwner", data.owner)}
+    
       <Appointments.Appointment {...restProps}>
         <div style={{ display: "flex" }}>
         <i
@@ -249,11 +251,13 @@ function Demo() {
 
 // }
   //}
+  console.log("data", data.id)
 Cookies.set("channel_2", data.question_id);
 Cookies.set("baseMode_2", baseMode);
 Cookies.set("transcode_2", transcode);
 Cookies.set("attendeeMode_2", attendeeMode);
 Cookies.set("videoProfile_2", videoProfile);
+Cookies.set("tlid", data.id)
 // history.push("/teamleader/meeting/");
 history.push(`/teamleader/meeting/${data.id}`);
 
@@ -473,8 +477,9 @@ console.log("cancle", cancel)
           <Loader />
           :
           <>
-            <Paper>
-              <Scheduler data={data} height={570}>
+       <div style ={{display : "flex", height : "700px"}}>
+          <Paper>
+              <Scheduler data={data} >
                 <ViewState
                   defaultCurrentDate={currentDate}
                   defaultCurrentViewName="Week"
@@ -515,7 +520,11 @@ console.log("cancle", cancel)
                 />
               </Scheduler>
             </Paper>
+          </div>
+           
+          
           </>
+          
       }
     </>
   );

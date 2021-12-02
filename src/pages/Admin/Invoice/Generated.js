@@ -9,6 +9,7 @@ import InvoiceFilter from "../../../components/Search-Filter/InvoiceFilter"
 import moment from "moment";
 import DescriptionOutlinedIcon from "@material-ui/icons/DescriptionOutlined";
 import Records from "../../../components/Records/Records";
+import FileCopyIcon from '@mui/icons-material/FileCopy';
 const Generated = () => {
     var rowStyle2 = {}
     const userid = window.localStorage.getItem("adminkey");
@@ -24,7 +25,7 @@ const Generated = () => {
     const [billNo, setBillNo] = useState()
     const [id2, setId2] = useState()
     const [gstNo, setGstinNo] = useState();
-    
+    const [paymentUrlcopy, setPaymentUrlCopy] = useState(false)
  
     const addTdsToggle = (key) => {
    
@@ -77,7 +78,7 @@ const Generated = () => {
                 fontSize: "11px",
             },
             headerStyle: () => {
-                return { fontSize: "11px" };
+                return { fontSize: "11px" , width : "80px"};
             },
             formatter: function nameFormatter(cell, row) {
                 
@@ -86,7 +87,7 @@ const Generated = () => {
 
                         <Link
                             to={{
-                                pathname: `/admin/queries/${row.id}`,
+                                pathname: `/admin/queries/${row.assign_id}`,
                                 index : 0,
                                 routes: "adinvoice",
                                 
@@ -117,7 +118,7 @@ const Generated = () => {
                 fontSize: "11px",
             },
             headerStyle: () => {
-                return { fontSize: "11px" };
+                return {fontSize: "11px" ,  width : "150px"};
             },
         },
         {
@@ -128,7 +129,7 @@ const Generated = () => {
                 fontSize: "11px",
             },
             headerStyle: () => {
-                return { fontSize: "11px" };
+                return { fontSize: "11px", width : "150px" };
             },
             formatter : function(cell, row){
                 let dueDate=row.due_date.split("-").reverse().join("-")
@@ -154,7 +155,7 @@ const Generated = () => {
             formatter: function nameFormatter(cell, row){
                 var nfObject = new Intl.NumberFormat('en-US')
                  var x = row.invoice_amount;
-                 console.log(nfObject.format(x))
+                 
                  return(
                    <p>{nfObject.format(x)}</p>
                  )
@@ -173,7 +174,7 @@ const Generated = () => {
             formatter: function nameFormatter(cell, row){
                 var nfObject = new Intl.NumberFormat('hi-IN')
                  var x = row.tds_amount;
-                 console.log(nfObject.format(x))
+                 
                  return(
                      <>
                      {row.is_paid == "0" ?
@@ -204,7 +205,8 @@ const Generated = () => {
                 )
             }
         }, 
-        
+      
+          
        
         {
             text: "Action",
@@ -222,15 +224,27 @@ const Generated = () => {
                   >
                          <DescriptionOutlinedIcon color="secondary" />
                               </a>
-                             
+                            
+                          
+                              {row.is_paid == "0" 
+                ?   
+                 <FileCopyIcon onClick={() => {copyFun(row.paymenturl)}} style={noPointer}/>
+                   
+              
+                    : "" }
                         </div>
-                      
+                       
                     </>
                 );
             },
         },
     ];
-
+    const noPointer = {cursor: 'pointer', color : "blue"};
+    const copyFun = (e)  =>{
+   
+        navigator.clipboard.writeText(e)
+       
+      }
     rowStyle2 = (row, index) => {
         const style = {}
         var warningDate = moment(row.due_date).subtract(5, 'day').toDate();
@@ -273,6 +287,7 @@ const Generated = () => {
 
                 <CardBody>
                 <Records records={records} />
+                <div className="tableFixHead">
                     <BootstrapTable
                         bootstrap4
                         keyField="id"
@@ -280,7 +295,9 @@ const Generated = () => {
                         columns={columns}
                         rowIndex
                         rowStyle={ rowStyle2 }
+                        classes="table-responsive"
                     />
+                    </div>
 
                    
                   

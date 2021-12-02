@@ -31,16 +31,19 @@ const PayDetails = () => {
     const { id } = useParams();
     const [paymentDetail, setPaymentDetail] = useState();
     const [modal, setModal] = useState(false);
-    const [modalData, setModalData] = useState()
+    const [modalData, setModalData] = useState(false)
     const [showTable, setShowTable] = useState(null);
+    const [paymentUrlcopy, setPaymentUrlCopy] = useState(false)
+   
     const paydetails2 = () => {
-axios.get(`${baseUrl}/admin/getPaymentDetail?id=${id}&&status=1`)
+          console.log("done22")
+axios.get(`${baseUrl}/admin/getPaymentDetail?id=${id}`)
+
 .then((res) => {
     if(res.data.code === 1){
-       console.log("res", res)
+      
         setPaymentDetail(res.data.payment_detail)
-        //console.log(res.data.payment_detail.length)
-       // setShowTable(res.data.payment_detail[0].invoice_generated)
+       
        if(res.data.payment_detail.length > 0){
            setShowTable(true)
        }
@@ -210,7 +213,6 @@ setModal(!modal)
         },
         
        
-       
         {
             dataField: "",
             text: "Pay",
@@ -243,7 +245,14 @@ setModal(!modal)
         },
            
       ];
-    
+      
+      
+      
+  const copyFun = (e)  =>{
+   
+    navigator.clipboard.writeText(e)
+   
+  }
       const Container = styled.div `
       dispaly : flex;
       width : 100%;

@@ -1,43 +1,32 @@
 import React, { useState, useEffect } from "react";
-import Layout from "../../components/Layout/Layout";
 import axios from "axios";
-import { baseUrl, ReportUrl } from "../../config/config";
+import { baseUrl } from "../../config/config";
 import {
   Card,
   CardHeader,
   CardBody,
-  CardTitle,
-  Row,
-  Col,
-  Table,
 } from "reactstrap";
 import CustomerFilter from "../../components/Search-Filter/CustomerFilter";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import BootstrapTable from "react-bootstrap-table-next";
-import * as Cookies from "js-cookie";
-import { useAlert } from "react-alert";
-import FeedbackIcon from '@material-ui/icons/Feedback';
-import PaymentModal from "./PaymentModal";
 import RejectedModal from "./RejectModal";
 import ViewAllReportModal from "./ViewAllReport";
 import Records from "../../components/Records/Records";
 import DescriptionOutlinedIcon from '@material-ui/icons/DescriptionOutlined';
-import Alerts from "../../common/Alerts";
-import PaymentIcon from '@material-ui/icons/Payment';
 import DiscardReport from "../AssignmentTab/DiscardReport";
-
+import './index.css';
 
 
 function InprogressAssignment() {
   const userId = window.localStorage.getItem("userid");
   const [assignmentDisplay, setAssignmentDisplay] = useState([]);
-  const [assignmentCount, setAssignmentQueries] = useState("");
   const [records, setRecords] = useState([]);
-
-  const [dataItem, setDataItem] = useState({});
+  const [assignNo, setAssignNo] = useState('');
+  const [ViewDiscussion, setViewDiscussion] = useState(false);
+ 
   const [rejectedItem, setRejectedItem] = useState({});
   const [report, setReport] = useState();
-
+  const [reportModal, setReportModal] = useState(false);
 
   const [rejectModal, setRejectModal] = useState(false);
   const rejectHandler = (key) => {
@@ -46,16 +35,15 @@ function InprogressAssignment() {
   };
 
 
-  const [reportModal, setReportModal] = useState(false);
+  
   const ViewReport = (key) => {
     setReportModal(!reportModal);
     setReport(key.assign_no);
-    setDataItem(key)
+  
   };
 
 
-  const [assignNo, setAssignNo] = useState('');
-  const [ViewDiscussion, setViewDiscussion] = useState(false);
+  
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key)
@@ -75,7 +63,6 @@ function InprogressAssignment() {
        
         if (res.data.code === 1) {
           setAssignmentDisplay(res.data.result);
-          setAssignmentQueries(res.data.result.length);
           setRecords(res.data.result.length);
         }
       });
@@ -102,7 +89,7 @@ function InprogressAssignment() {
       formatter: function dateFormat(cell, row) {
        
         var oldDate = row.created;
-        if (oldDate == null) {
+        if (oldDate === null) {
           return null;
         }
         return oldDate.toString().split("-").reverse().join("-");
@@ -115,15 +102,21 @@ function InprogressAssignment() {
         return { fontSize: "12px" };
       },
       formatter: function nameFormatter(cell, row) {
-      
+              
         return (
-          <>
-            <Link to={`/customer/my-assingment/${row.id}`}>
-              {row.assign_no}
-            </Link>
-          </>
+            <>
+                <Link
+                    to={{
+                        pathname: `/customer/my-assingment/${row.id}`,
+                        index: 1,
+                        routes: "assignment",
+                    }}
+                >
+                    {row.assign_no}
+                </Link>
+            </>
         );
-      },
+    },
     },
     {
       dataField: "parent_id",
@@ -154,7 +147,7 @@ function InprogressAssignment() {
         return (
           <>
             <div>
-              {row.paid_status == "2" &&
+              {row.paid_status === "2" &&
                 <p>
                   <span style={{ color: "red" }}>Payment Declined</span>
                 </p>
@@ -194,7 +187,7 @@ function InprogressAssignment() {
       formatter: function dateFormat(cell, row) {
        
         var oldDate = row.created;
-        if (oldDate == null) {
+        if (oldDate === null) {
           return null;
         }
         return oldDate.toString().split("-").reverse().join("-");
@@ -210,7 +203,7 @@ function InprogressAssignment() {
       formatter: function dateFormat(cell, row) {
     
         var oldDate = row.final_date;
-        if (oldDate == null || oldDate == "0000-00-00") {
+        if (oldDate === null || oldDate === "0000-00-00") {
           return null;
         }
         return oldDate.toString().split("-").reverse().join("-");
@@ -229,7 +222,7 @@ function InprogressAssignment() {
 
         
 {
-  row.status == "Payment decliend" || row.paid_status == "2" ? null :
+  row.status === "Payment decliend" || row.paid_status === "2" ? null :
     <div>
       {row.assignment_draft_report || row.final_report ?
         <div title="View All Report"
@@ -309,33 +302,7 @@ function InprogressAssignment() {
   ];
 
   //accept handler
-  const acceptHandler = (key) => {
-   
-
-    let formData = new FormData();
-    formData.append("uid", JSON.parse(userId));
-    formData.append("id", key.id);
-    formData.append("query_no", key.assign_no);
-    formData.append("type", 1);
-
-    axios({
-      method: "POST",
-      url: `${baseUrl}/customers/draftAccept`,
-      data: formData,
-    })
-      .then(function (response) {
-      
-        if (response.data.code === 1) {
-
-          var variable = "Draft accepted successfully "
-          Alerts.SuccessNormal(variable)
-        }
-      })
-      .catch((error) => {
-       
-      });
-  };
-
+ 
 
   //tl,phone,email
   function priceFormatter(cell, row) {
@@ -373,20 +340,17 @@ function InprogressAssignment() {
 
         <CardBody>
           <Records records={records} />
+          <div className="tableFixHead">
           <BootstrapTable
             bootstrap4
             keyField="id"
             data={assignmentDisplay}
             columns={columns}
+            classes="table-responsive"
           />
+          </div>
 
-          {/* <PaymentModal
-            paymentHandler={paymentHandler}
-            addPaymentModal={addPaymentModal}
-            pay={pay}
-            getProposalData={getAssignmentData}
-          /> */}
-
+        
           <RejectedModal
             rejectHandler={rejectHandler}
             rejectModal={rejectModal}

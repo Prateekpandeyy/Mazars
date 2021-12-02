@@ -198,6 +198,7 @@ function PendingForProposals({ CountPendingProposal }) {
         </CardHeader>
         <CardBody>
           <Records records={records} />
+          <div className="tableFixHead">
           <BootstrapTable
             bootstrap4
             keyField="id"
@@ -205,6 +206,7 @@ function PendingForProposals({ CountPendingProposal }) {
             columns={columns}
             wrapperClasses="table-responsive"
           />
+          </div>
           <Modal isOpen={modal} fade={false} toggle={toggle}>
             <ModalHeader toggle={toggle}>History</ModalHeader>
             <ModalBody>

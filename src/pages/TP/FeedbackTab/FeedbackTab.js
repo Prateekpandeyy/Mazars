@@ -29,7 +29,7 @@ const history = useHistory();
     axios
       .get(`${baseUrl}/customers/getFeedback?tp_id=${JSON.parse(userid)}`)
       .then((res) => {
-        console.log(res);
+     
         if (res.data.code === 1) {
           setFeedBackData(res.data.result);
         }
@@ -53,17 +53,7 @@ const history = useHistory();
       headerStyle: () => {
         return { fontSize: "12px", width: "60px" };
       },
-      // formatter: function nameFormatter(cell, row) {
-      //   console.log(row);
-      //   return (
-      //     <>
-      //       <div style={{ display: "flex" }}>
-      //         <p>{CommonServices.removeTime(row.created)}</p>
-      //         <p style={{ marginLeft: "15px" }}>{CommonServices.removeDate(row.created)}</p>
-      //       </div>
-      //     </>
-      //   );
-      // },
+     
     },
     {
       text: "Query No",
@@ -78,7 +68,7 @@ const history = useHistory();
         return { fontSize: "12px", width: "150px" };
       },
       formatter: function nameFormatter(cell, row) {
-        console.log(row);
+      
         return (
           <>
             <div>
@@ -116,7 +106,7 @@ const history = useHistory();
   // readnotification
   const readNotification = (id) => {
 
-    console.log("call", id)
+    
     let formData = new FormData();
     formData.append("id", id);
     formData.append("type", "tp");
@@ -127,7 +117,7 @@ const history = useHistory();
       data: formData,
     })
       .then(function (response) {
-        console.log("res-", response)
+        
         if (response.data.code === 1) {
           // alert.success("successfully read!");
           getFeedback()
@@ -135,7 +125,7 @@ const history = useHistory();
         }
       })
       .catch((error) => {
-        console.log("erroror - ", error);
+        
       });
   };
 

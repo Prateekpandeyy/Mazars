@@ -250,7 +250,7 @@ rowStyle2 = (row, index) => {
             formatter: function nameFormatter(cell, row){
                 var nfObject = new Intl.NumberFormat('hi-IN')
                  var x = row.accepted_amount;
-                 console.log(nfObject.format(x))
+                 
                  return(
                    <p>{nfObject.format(x)}</p>
                  )
@@ -276,7 +276,7 @@ rowStyle2 = (row, index) => {
             formatter: function nameFormatter(cell, row){
                 var nfObject = new Intl.NumberFormat('hi-IN')
                  var x = row.paid_amount;
-                 console.log(nfObject.format(x))
+                 
                  return(
                    <p>{nfObject.format(x)}</p>
                  )
@@ -303,7 +303,7 @@ rowStyle2 = (row, index) => {
             formatter: function nameFormatter(cell, row){
                 var nfObject = new Intl.NumberFormat('hi-IN')
                  var x = row.amount_outstanding;
-                 console.log(nfObject.format(x))
+                 
                  return(
                    <p>{nfObject.format(x)}</p>
                  )
@@ -342,15 +342,7 @@ rowStyle2 = (row, index) => {
                        {row.paid_status === "2" ? 
                        <div style={{ display: "flex", justifyContent: "space-between", width: "90px" }}>
 
-                       <div title="Payment History"
-                         
-                           style={{ color: "green", fontSize: "16px", cursor: "pointer" }}
-                       >
-                           <i
-                           class="fa fa-credit-card"
-                           onClick={() => toggle(row.assign_id)}
-                           style={{ color: "green", fontSize: "16px" }}></i>
-                       </div>
+                    
                       
 
 
@@ -375,11 +367,11 @@ rowStyle2 = (row, index) => {
                        >
                             <Link
               to={{
-                pathname: `/teamleader/paydetails/${row.id}`,
+                pathname: `/teamleader/paydetails/${row.assign_id}`,
                 obj: {
                   message_type: "5",
                   query_No: row.assign_no,
-                  query_id: row.id,
+                  query_id: row.assign_id,
                   routes: `/teamleader/paymentstatus`
                 }
               }}
@@ -461,6 +453,7 @@ rowStyle2 = (row, index) => {
                 </CardHeader>
 
                 <CardBody>
+                <div className="tableFixHead">
                     <BootstrapTable
                         bootstrap4
                         keyField="id"
@@ -470,6 +463,7 @@ rowStyle2 = (row, index) => {
                         rowIndex
                         classes="table-responsive"
                     />
+                    </div>
  <DiscardReport
                         ViewDiscussionToggel={ViewDiscussionToggel}
                         ViewDiscussion={ViewDiscussion}

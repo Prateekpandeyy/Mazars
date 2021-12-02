@@ -7,11 +7,11 @@ import './queryStyle.css';
 function BasicQuery({qstatus, p, diaplaySpecific, queryDocs, year, purpose, declined2,
   declinedStatus }) {
 
-console.log("ppp", p)
+
 
   return (
     <>
-      <div>
+      <div style={{display : "block", height: "55vh", overflow :"scroll"}}>
         <p
           style={{
             textAlign: "center",
@@ -74,7 +74,7 @@ console.log("ppp", p)
                       href={`${ImageUrl}/${p.assign_no}/${p.name}`}
                       target="_blank"
                     >
-                      <i class="fa fa-photo"></i>
+                    <span>  {i + 1 } </span><i class="fa fa-photo"></i>
                     </a>
                     <p style={{ marginLeft: "15px" }}>{p.name}</p>
                   </p>

@@ -103,7 +103,7 @@ function QueriesRecevied(props) {
           }
          
          if(res.data.result[0].status =="Declined Query"){
-           console.log(res.data.result[0].declined_date.split(" ")[0].split("-").reverse().join("-"))
+        
          let a = res.data.result[0].declined_date.split(" ")[0].split("-").reverse().join("-")
            setDeclined2(a)
           setDeclinedStatus(true)
@@ -140,14 +140,22 @@ function QueriesRecevied(props) {
           var assementItem = res.data.result[0].assessment_year;
          
           
+          
           try {
-            var myPurpose = JSON.parse(purposeItem);
+           
             var myYear = JSON.parse(assementItem);
-            
-            setPurpose(myPurpose);
+           
             setYear(myYear);
           } catch (e) {
+           
+          }
+          try {
+            var myPurpose = JSON.parse(purposeItem);
             
+            setPurpose(myPurpose);
+           
+          } catch (e) {
+           
           }
          
           if (res.data.proposal_queries.length > 0) {

@@ -1,26 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Layout from "../../components/Layout/Layout";
-import axios from "axios";
-import { baseUrl } from "../../config/config";
 import {
   Card,
   CardHeader,
-  CardBody,
+ 
   CardTitle,
   Row,
   Col,
-  Table,
+ 
 } from "reactstrap";
 import Demo from "./demo";
-import Swal from "sweetalert2";
 
-const thankyour = () => {
-  Swal.fire({
-    "title" : "Scuuess",
-    html : `<h1>Thank you </h1>`,
-    icon : "success"
-  })
-}
+
+
 function Schedule() {
   const userId = window.localStorage.getItem("userid");
 

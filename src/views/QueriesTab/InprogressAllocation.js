@@ -23,7 +23,7 @@ import Swal from "sweetalert2";
 import CommonServices from "../../common/common";
 import DiscardReport from "../AssignmentTab/DiscardReport";
 import moment from "moment";
-
+import './index.css';
 function InprogressAllocation() {
 
   const alert = useAlert();
@@ -81,7 +81,7 @@ function InprogressAllocation() {
       dataField: "created",
       sort: true,
       headerStyle: () => {
-        return { fontSize: "12px" };
+        return { fontSize: "12px" ,  width: "80px" };
       },
       formatter: function dateFormat(cell, row) {
        
@@ -96,7 +96,7 @@ function InprogressAllocation() {
       text: "Query No",
       dataField: "assign_no",
       headerStyle: () => {
-        return { fontSize: "12px" };
+        return { fontSize: "12px" ,  width: "130px" };
       },
       formatter: function nameFormatter(cell, row) {
       
@@ -121,7 +121,7 @@ function InprogressAllocation() {
       dataField: "parent_id",
       sort: true,
       headerStyle: () => {
-        return { fontSize: "12px" };
+        return { fontSize: "12px" ,  width: "130px"};
       },
     },
     {
@@ -129,14 +129,14 @@ function InprogressAllocation() {
       dataField: "cat_name",
       sort: true,
       headerStyle: () => {
-        return { fontSize: "12px" };
+        return { fontSize: "12px" ,  width: "130px"};
       },
     },
     {
       text: "Status",
       dataField: "",
       headerStyle: () => {
-        return { fontSize: "12px" };
+        return { fontSize: "12px" ,  width: "180px" };
       },
       formatter: function nameFormatter(cell, row) {
         return (
@@ -178,7 +178,7 @@ function InprogressAllocation() {
       dataField: "exp_delivery_date",
       sort: true,
       headerStyle: () => {
-          return { fontSize: "12px" };
+          return { fontSize: "12px" ,  width: "180px"};
       },
       formatter: function dateFormat(cell, row) {
          
@@ -420,15 +420,16 @@ function InprogressAllocation() {
         </CardHeader>
         <CardBody>
           <Records records={records} />
-
+          <div className="tableFixHead">
           <BootstrapTable
             bootstrap4
             keyField="id"
             data={query}
             columns={columns}
             rowIndex
+            classes="table-responsive"
           />
-
+</div>
           <AdditionalQueryModal
             additionalHandler={additionalHandler}
             additionalQuery={additionalQuery}

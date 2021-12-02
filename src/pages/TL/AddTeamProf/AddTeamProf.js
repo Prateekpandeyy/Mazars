@@ -178,13 +178,16 @@ function AddTeamProf() {
           </Row>
         </CardHeader>
         <CardBody>
+        <div className="tableFixHead">
           <BootstrapTable
             bootstrap4
             keyField="id"
             data={data}
             columns={columns}
             rowIndex
+            classes="table-responsive"
           />
+          </div>
 
           {/* <Table responsive="sm" bordered>
             <thead>

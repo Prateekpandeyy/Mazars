@@ -490,6 +490,7 @@ var rowStyle2 = {}
 
         <CardBody>
           <Records records={records} />
+          <div className="tableFixHead">
           <BootstrapTable
             bootstrap4
             keyField="id"
@@ -498,6 +499,7 @@ var rowStyle2 = {}
             rowStyle={ rowStyle2 }
             rowIndex
           />
+          </div>
   <ViewAllReportModal
             ViewReport={ViewReport}
             reportModal={reportModal}

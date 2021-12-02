@@ -24,7 +24,7 @@ import { useParams, Link, useHistory } from "react-router-dom";
 import styled from "styled-components";
 import PayModal from "./PayModal";
 import { Typography } from "antd";
-
+import './index.css';
 const PayDetails = () => {
     let history = useHistory();
     const userId = window.localStorage.getItem("userid");
@@ -301,14 +301,15 @@ return(
           </CardHeader>
           <CardBody>
    {showTable == true ? 
-  
+     <div className="tableFixHead">
   <BootstrapTable
   bootstrap4
   keyField="id"
   data={paymentDetail}
   columns={columns}
   classes="table-responsive"
-/>  : 
+/>  
+</div> : 
 <Container>
     <p>Invoice not generated</p>
     </Container>}

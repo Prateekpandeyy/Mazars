@@ -1,21 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from "reactstrap";
-import { useForm } from "react-hook-form";
+import { Modal, ModalHeader, ModalBody } from "reactstrap";
 import axios from "axios";
 import { baseUrl, ReportUrl } from "../../config/config";
-import { useAlert } from "react-alert";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
-import classNames from "classnames";
 import CommonServices from "../../common/common";
 import RejectedModal from "./RejectModal";
 import DiscardReport from "./DiscardReport";
 import Assignmodal from "./Assignmodal";
 import PublishIcon from '@material-ui/icons/Publish';
-
-const Schema = yup.object().shape({
-  p_chat: yup.string().required("required discussion"),
-});
 
 
 function ViewReport({
@@ -32,12 +23,12 @@ function ViewReport({
   const [assignNo, setAssignNo] = useState('');
   const [nestedModal, setNestedModal] = useState(false);
   const [modaldoc, setModaldoc] = useState({})
+  const [ViewDiscussion, setViewDiscussion] = useState(false);
   const toggleNested = (key) => {
     setNestedModal(!nestedModal);
     setDocData(key)
   }
 
-  const [ViewDiscussion, setViewDiscussion] = useState(false);
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
   }
@@ -95,8 +86,7 @@ function ViewReport({
    
         if (response.data.code === 1) {
           getData();
-          var variable = "Draft accepted successfully "
-          // Alerts.SuccessNormal(variable)
+         
         }
       })
       .catch((error) => {
@@ -181,15 +171,15 @@ function ViewReport({
                     </td>
                   
                     <td>
-                    <p>  {p.stages_type == 2 && "Draft Report" || p.stages_type == 3 && "Final Report"}</p>
+                    <p>  {(p.stages_type === 2 && "Draft Report" ) || (p.stages_type === 3 && "Final Report")}</p>
                  <br></br> 
                  {p.customer_files === null ?  "" : <p>   Reviewed Report </p> }
                 </td>
                     {
-                      p.stages_type == "2" ?
+                      p.stages_type === "2" ?
                         <td>
                           {
-                            p.status == "0" ?
+                            p.status === "0" ?
                               <div style={{ display: "flex", justifyContent: "space-around" }}>
 
                                 <div style={{ cursor: "pointer" }} title="Accept">
@@ -227,7 +217,7 @@ function ViewReport({
                                                         </div> : ""}
                               </div>
                               :
-                              p.status == "1" ?
+                              p.status === "1" ?
                                 <div style={{ cursor: "pointer" }} title="Customer Accepted">
                                   <i
                                     class="fa fa-check"
@@ -237,7 +227,7 @@ function ViewReport({
                                     }}
                                   ></i>
                                 </div> :
-                                p.status == "2" ?
+                                p.status ==- "2" ?
                                   <div title="Discussion">
                                     <i
                                       class="fa fa-comments-o"

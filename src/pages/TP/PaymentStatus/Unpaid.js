@@ -89,7 +89,7 @@ function AllPayment() {
         })
             .then((res) => res.json())
             .then((response) => {
-                console.log(response);
+               
                 setPay(response.payment_detail);
             })
             .catch((error) => console.log(error));
@@ -132,7 +132,7 @@ rowStyle2 = (row, index) => {
                 return { fontSize: "11px" };
             },
             formatter: function dateFormat(cell, row) {
-                console.log("dt", row.query_created_date);
+            
                 var oldDate = row.query_created_date;
                 if (oldDate == null) {
                     return null;
@@ -150,16 +150,14 @@ rowStyle2 = (row, index) => {
                 return { fontSize: "11px" };
             },
             formatter: function nameFormatter(cell, row) {
-                console.log(row);
+              
                 return (
                     <>
-                        {/* <Link to={`/teamleader/queries/${row.assign_id}`}>
-              {row.assign_no}
-            </Link> */}
-
-                        <Link
+                 
+                 <Link
                             to={{
-                                pathname: `/teamleader/queries/${row.assign_id}`,
+                                pathname: `/taxprofessional/queries/${row.assign_id}`,
+                                index : 1,
                                 routes: "paymentstatus",
                             }}
                         >
@@ -202,7 +200,7 @@ rowStyle2 = (row, index) => {
                 return { fontSize: "11px" };
             },
             formatter: function dateFormat(cell, row) {
-                console.log("dt", row.cust_accept_date);
+              
                 var oldDate = row.cust_accept_date;
                 if (oldDate == null) {
                     return null;
@@ -240,7 +238,7 @@ rowStyle2 = (row, index) => {
             formatter: function nameFormatter(cell, row){
                 var nfObject = new Intl.NumberFormat('en-US')
                  var x = row.accepted_amount;
-                 console.log(nfObject.format(x))
+               
                  return(
                    <p>{nfObject.format(x)}</p>
                  )
@@ -266,7 +264,7 @@ rowStyle2 = (row, index) => {
             formatter: function nameFormatter(cell, row){
                 var nfObject = new Intl.NumberFormat('en-US')
                  var x = row.paid_amount;
-                 console.log(nfObject.format(x))
+               
                  return(
                    <p>{nfObject.format(x)}</p>
                  )
@@ -293,7 +291,7 @@ rowStyle2 = (row, index) => {
             formatter: function nameFormatter(cell, row){
                 var nfObject = new Intl.NumberFormat('en-US')
                  var x = row.amount_outstanding;
-                 console.log(nfObject.format(x))
+               
                  return(
                    <p>{nfObject.format(x)}</p>
                  )
@@ -309,7 +307,7 @@ rowStyle2 = (row, index) => {
                 return { fontSize: "11px" };
             },
             formatter: function dateFormat(cell, row) {
-                console.log("dt", row.cust_paid_date);
+              
                 var oldDate = row.cust_paid_date;
                 if (oldDate == null) {
                     return null;
@@ -335,11 +333,26 @@ rowStyle2 = (row, index) => {
                          <div title="Payment History"
  
                              style={{ color: "green", fontSize: "16px", cursor: "pointer" }}
-                         >
-                             <i
-                            class="fa fa-credit-card"
-                            onClick={() => toggle(row.assign_id)}
-                            style={{ color: "green", fontSize: "16px" }}></i>
+                         >   <Link
+                         to={{
+                             pathname: `/taxprofessional/chatting/${row.assign_id}`,
+                             obj: {
+                                 message_type: "5",
+                                 query_No: row.assign_no,
+                                 query_id: row.assign_id,
+                                 routes: `/taxprofessional/paymentstatus`
+                             }
+                         }}
+                     >
+                         <i
+                             class="fa fa-comments-o"
+                             style={{
+                                 fontSize: 18,
+                                 cursor: "pointer",
+                                 color: "blue"
+                             }}
+                         ></i>
+                     </Link>
                          </div>
                         
  
@@ -365,11 +378,11 @@ rowStyle2 = (row, index) => {
                         >
                           <Link
               to={{
-                pathname: `/taxprofessional/paydetails/${row.id}`,
+                pathname: `/taxprofessional/paydetails/${row.assign_id}`,
                 obj: {
                   message_type: "5",
                   query_No: row.assign_no,
-                  query_id: row.id,
+                  query_id: row.assign_id,
                   routes: `/taxprofessional/paymentstatus`
                 }
               }}
@@ -453,16 +466,17 @@ rowStyle2 = (row, index) => {
                 </CardHeader>
 
                 <CardBody>
+                <div className="tableFixHead">
                     <BootstrapTable
                         bootstrap4
                         keyField="id"
                         data={payment}
                         columns={columns}
-                        classes="table-responsive"
+                        classes="table-responsivepayment"
                         rowStyle={rowStyle2}
                         rowIndex
                     />
-
+</div>
 
                     <RejectedModal
                         rejectHandler={rejectHandler}

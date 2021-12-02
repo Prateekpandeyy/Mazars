@@ -14,24 +14,7 @@ import "../../Admin/AdminStyle/style.css";
 function Schedule() {
     const userid = window.localStorage.getItem("adminkey");
     const [tabIndex, setTabIndex] = useState(0);
-    const myStyle1 = {
-      backgroundColor: "grey",
-      padding: "12px",
-      borderRadius: "50px",
-      width: "200px",
-      textAlign: "center",
-      color: "white",
-      cursor: "pointer",
-    };
-    const myStyle2 = {
-      padding: "12px",
-      borderRadius: "50px",
-      width: "200px",
-      textAlign: "center",
-      backgroundColor: "blue",
-      color: "white",
-      cursor: "pointer",
-    };
+
   
     return (
         <Layout adminDashboard="adminDashboard" adminUserId={userid}>

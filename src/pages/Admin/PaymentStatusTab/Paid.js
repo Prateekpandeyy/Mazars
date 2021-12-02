@@ -212,7 +212,7 @@ function Paid() {
             formatter: function nameFormatter(cell, row){
                 var nfObject = new Intl.NumberFormat('hi-IN')
                  var x = row.accepted_amount;
-                 console.log(nfObject.format(x))
+                
                  return(
                    <p>{nfObject.format(x)}</p>
                  )
@@ -238,7 +238,7 @@ function Paid() {
             formatter: function nameFormatter(cell, row){
                 var nfObject = new Intl.NumberFormat('hi-IN')
                  var x = row.paid_amount;
-                 console.log(nfObject.format(x))
+                
                  return(
                    <p>{nfObject.format(x)}</p>
                  )
@@ -265,7 +265,7 @@ function Paid() {
             formatter: function nameFormatter(cell, row){
                 var nfObject = new Intl.NumberFormat('hi-IN')
                  var x = row.amount_outstanding;
-                 console.log(nfObject.format(x))
+                
                  return(
                    <p>{nfObject.format(x)}</p>
                  )
@@ -304,24 +304,37 @@ function Paid() {
         {
             text: "Action",
             style: {
-                fontSize: "11px",
+                fontSize: "11px", diaplay : "flex", justifyContent: "space-between", width: "100px"
             },
             headerStyle: () => {
-                return { fontSize: "11px" };
+                return { fontSize: "11px", width: "110px" };
             },
             formatter: function (cell, row) {
                 return (
                     <>
                         {row.paid_status == "2" ? 
-                         <div style={{ display: "flex", justifyContent: "space-between", width: "40px" }}>
+                         <div style={{ display: "flex", justifyContent: "space-between", width: "80px" }}>
 
 
-                         <div style={{ cursor: "pointer" }} title="Payment History">
-                             <i
-                                 class="fa fa-credit-card"
-                                 style={{ color: "green", fontSize: "16px" }}
-                                 onClick={() => toggle(row.assign_id)}
-                             ></i>
+                         <div style={{ cursor: "pointer",  diaplay :"flex", marginRight : "5px" }} title="Payment History">
+                         <Link
+              to={{
+                pathname: `/admin/paydetails/${row.assign_id}`,
+                obj: {
+                  message_type: "5",
+                  query_No: row.assign_no,
+                  query_id: row.assign_id,
+                  index: 2,
+                  routes: `/admin/paymentstatus`
+                }
+              }}
+            >
+                            <i
+                                class="fa fa-credit-card"
+                                style={{ color: "green", fontSize: "16px" }}
+                                // onClick={() => toggle(row.assign_id)}
+                            ></i>
+                            </Link>
                          </div>
  
  
@@ -341,12 +354,13 @@ function Paid() {
                          <div title="Send Message">
              <Link
                to={{
-                 pathname: `/admin/chatting/${row.id}`,
+                 pathname: `/admin/chatting/${row.assign_id}`,
                  obj: {
                    message_type: "5",
                    query_No: row.assign_no,
-                   query_id: row.id,
-                   routes: `/admin/paymentstatus`
+                   query_id: row.assign_id,
+                   routes: `/admin/paymentstatus`,
+                   index: 2
                  }
                }}
              >
@@ -367,11 +381,25 @@ function Paid() {
 
 
                         <div style={{ cursor: "pointer" }} title="Payment History">
+                        <Link
+              to={{
+                pathname: `/admin/paydetails/${row.assign_id}`,
+                obj: {
+                  message_type: "5",
+                  query_No: row.assign_no,
+                  query_id: row.assign_id,
+                  index: 2,
+                  routes: `/admin/paymentstatus`
+                }
+              }}
+            >
                             <i
                                 class="fa fa-credit-card"
                                 style={{ color: "green", fontSize: "16px" }}
-                                onClick={() => toggle(row.assign_id)}
+                                // onClick={() => toggle(row.assign_id)}
                             ></i>
+                            </Link>
+                         
                         </div>
 
 
@@ -391,12 +419,13 @@ function Paid() {
                         <div title="Send Message">
             <Link
               to={{
-                pathname: `/admin/chatting/${row.id}`,
+                pathname: `/admin/chatting/${row.assign_id}`,
                 obj: {
                   message_type: "5",
                   query_No: row.assign_no,
                   query_id: row.id,
-                  routes: `/admin/paymentstatus`
+                  routes: `/admin/paymentstatus`,
+                  index : 2
                 }
               }}
             >
@@ -436,15 +465,16 @@ function Paid() {
                 </CardHeader>
                 <CardBody>
                     <Records records={records} />
+                    <div className="tableFixHead">
                     <BootstrapTable
                         bootstrap4
                         keyField="id"
                         data={payment}
                         columns={columns}
-                        classes="table-responsive"
+                        classes="table-responsivepayment"
                         rowIndex
                     />
-
+</div>
                     <Modal isOpen={modal} fade={false} toggle={toggle}>
                         <ModalHeader toggle={toggle}>History</ModalHeader>
                         <ModalBody>

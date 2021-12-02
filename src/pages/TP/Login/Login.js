@@ -15,7 +15,7 @@ import Mandatory from "../../../components/Common/Mandatory";
 import VerifyOtpLogin from "./VerifyOtpLogin";
 import { Spinner } from "reactstrap";
 import {useHistory} from 'react-router-dom';
-
+import Cookies from "js-cookie";
 const Schema = yup.object().shape({
   p_email: yup.string().email("invalid email").required("required email"),
   password: yup
@@ -42,7 +42,7 @@ function Login(props) {
   };
 
   const onSubmit = (value) => {
-    console.log("value :", value);
+  
     setLoading(true)
 
     let formData = new FormData();
@@ -55,8 +55,9 @@ function Login(props) {
       data: formData,
     })
       .then(function (response) {
-        console.log("res-", response);
+       
         if (response.data.code === 1) {
+          Cookies.set("tpName", response.data.display_name)
           setLoading(false)
           setShow(true)
           Swal.fire({
@@ -73,7 +74,7 @@ function Login(props) {
         }
       })
       .catch((error) => {
-        console.log("erroror - ", error);
+       
       });
   };
   const logout = () => {
@@ -84,7 +85,7 @@ function Login(props) {
     }, 36000000)
   }
   const handleChange = (e) => {
-    console.log("val-", e.target.value);
+   
     setEmail(e.target.value);
   };
 
@@ -104,7 +105,7 @@ function Login(props) {
               <div class="heading">
                 <h2>TAX PROFESSIONAL LOGIN</h2>
               </div>
-              <form onSubmit={handleSubmit(onSubmit)}>
+              <form onSubmit={handleSubmit(onSubmit)}  autocomplete="off">
                 <div className="row">
                   <div className="col-md-12">
                     <div className="mb-3">
@@ -117,7 +118,7 @@ function Login(props) {
                         name="p_email"
                         ref={register}
                         placeholder="Enter Email"
-                        autocomplete="off"
+                       
                         onChange={(e) => handleChange(e)}
                       />
                       {errors.p_email && (

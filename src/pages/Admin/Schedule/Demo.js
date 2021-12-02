@@ -25,11 +25,27 @@ import * as Cookies from "js-cookie";
 import Swal from "sweetalert2";
 import Alerts from "../../../common/Alerts";
 import Loader from "../../../components/Loader/Loader";
+import {makeStyles} from "@material-ui/styles"
+const useStyle = makeStyles(() => ({
+  rchStyle : {
+    color : "green",
+    display : "flex",
+    overflow: "hidden"
+  },
+  OverlayBase : {
+    display : "flex", 
+    width : "670px"
+  }
+}))
 
 
 
 function Demo() {
+  const classes = useStyle()
   const userId = window.localStorage.getItem("adminkey");
+   const userEmail = window.localStorage.getItem("adminEmail")
+   // const userEmail = null
+  const em = JSON.parse(userEmail)
   const history = useHistory();
 
   const [loading, setLoading] = useState(false);
@@ -63,7 +79,7 @@ function Demo() {
     axios
     .get(`${baseUrl}/tl/videoScheduler?tl_id=1`)
       .then((res) => {
-// console.log("myRes", res.data.result.items)
+
    
          var a = res.data.result.items;
         if (a) {
@@ -200,6 +216,7 @@ const closeFun = () => {
 
   //handleJoin
   const handleJoin = (data) => {
+    console.log("dtat22", data)
 // //  console.log("data", data)
 // // console.log(data.startDate)
 //   var dt = new Date(data.startDate)
@@ -257,12 +274,14 @@ const closeFun = () => {
 //   history.push(`/admin/meeting/${data.id}`);
 //   }
 //   }
-
+console.log("data", data)
 Cookies.set("channel_2", data.question_id);
 Cookies.set("baseMode_2", baseMode);
 Cookies.set("transcode_2", transcode);
 Cookies.set("attendeeMode_2", attendeeMode);
 Cookies.set("videoProfile_2", videoProfile);
+Cookies.set("adminid", data.id)
+
 // history.push("/teamleader/meeting/");
 history.push(`/admin/meeting/${data.id}`);
   };
@@ -474,19 +493,17 @@ history.push(`/admin/meeting/${data.id}`);
 
   return (
     <>
-      {
-        loading ?
-          <Loader />
-          :
-          <>
-            <Paper>
-            <Scheduler data={data} height={570}>
-                <ViewState
+          
+        <div style ={{display : "flex", height : "700px"}}>
+
+        <Paper >
+            <Scheduler data={data}>
+                <ViewState className = {classes.rchStyle}
                   defaultCurrentDate={currentDate}
                   defaultCurrentViewName="Week"
                 />
-                <EditingState onCommitChanges={commitChanges} />
-                <EditRecurrenceMenu />
+                <EditingState  className = {classes.OverlayBase} onCommitChanges={commitChanges}   />
+                <EditRecurrenceMenu  />
 
                 <DayView cellDuration={60} startDayHour={0} endDayHour={24} />
                 <WeekView cellDuration={60} startDayHour={0} endDayHour={24} TimeTableLayoutProps={8} />
@@ -496,33 +513,40 @@ history.push(`/admin/meeting/${data.id}`);
                 <Toolbar />
                 <DateNavigator />
                 <TodayButton />
-                <ViewSwitcher />
+                <ViewSwitcher  />
 
-                <AppointmentTooltip showOpenButton />
+                <AppointmentTooltip showOpenButton  />
                 {
                   read ?
-                    <AppointmentForm
+              
+                    
+                    <AppointmentForm 
                       booleanEditorComponent={BooleanEditor}
                       basicLayoutComponent={BasicLayout}
                       textEditorComponent={TextEditor}
                       onClose= {() => closeFun()}
                       readOnly
                     />
+                    
                     :
+                   
                     <AppointmentForm
                       booleanEditorComponent={BooleanEditor}
                       basicLayoutComponent={BasicLayout}
                       textEditorComponent={TextEditor}
+                    
                     />
+                      
                 }
                 <Resources
                   data={resources}
                 />
               </Scheduler>
             </Paper>
+        </div>
+        
+       
           </>
-      }
-    </>
   );
 }
 export default Demo;

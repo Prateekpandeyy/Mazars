@@ -201,7 +201,7 @@ function AcceptedProposal({ acceptedProposal }) {
       formatter: function nameFormatter(cell, row){
         var nfObject = new Intl.NumberFormat('hi-IN')
          var x = row.ProposedAmount;
-         console.log(nfObject.format(x))
+         
          return(
            <p>{nfObject.format(x)}</p>
          )
@@ -221,7 +221,7 @@ function AcceptedProposal({ acceptedProposal }) {
       formatter: function nameFormatter(cell, row){
         var nfObject = new Intl.NumberFormat('hi-IN')
          var x = row.accepted_amount;
-         console.log(nfObject.format(x))
+         
          return(
            <p>{nfObject.format(x)}</p>
          )
@@ -325,6 +325,7 @@ function AcceptedProposal({ acceptedProposal }) {
         </CardHeader>
         <CardBody>
           <Records records={records} />
+          <div className="tableFixHead">
           <BootstrapTable
             bootstrap4
             keyField="id"
@@ -332,7 +333,7 @@ function AcceptedProposal({ acceptedProposal }) {
             columns={columns}
             classes="table-responsive"
           />
-
+</div>
           <DiscardReport
             ViewDiscussionToggel={ViewDiscussionToggel}
             ViewDiscussion={ViewDiscussion}

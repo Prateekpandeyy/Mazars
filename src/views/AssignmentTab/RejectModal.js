@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from "react";
-import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from "reactstrap";
+import React, { useState } from "react";
+import { Modal, ModalHeader, ModalBody , Button } from "reactstrap";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
-import { useAlert } from "react-alert";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import classNames from "classnames";
@@ -23,7 +22,7 @@ function RejectedModal({
   getData
 }) {
   const userId = window.localStorage.getItem("userid");
-  const { handleSubmit, register, reset, errors } = useForm({
+  const { handleSubmit, register, errors } = useForm({
     resolver: yupResolver(Schema),
   });
 

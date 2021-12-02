@@ -19,11 +19,10 @@ function RecordingModal({
     const { handleSubmit, register, errors } = useForm();
     const userId = window.localStorage.getItem("tpkey");
 
-    console.log("item", item)
+   
 
     const { assign_no, id, username, start } = item
-    console.log("assign_no", assign_no)
-    //submit
+  
     const onSubmit = (value) => {
         var serverResponse = data.serverResponse.fileList
         var completeRecording;
@@ -54,7 +53,7 @@ function RecordingModal({
             data: formData,
         })
             .then(function (response) {
-                console.log("res-", response);
+              
                 if (response.data.code === 1) {
                     toggle();
                     history.push('/taxprofessional/schedule');
@@ -62,7 +61,7 @@ function RecordingModal({
                 }
             })
             .catch((error) => {
-                console.log("erroror - ", error);
+               
             });
     };
     const exitBtn2 = () => {

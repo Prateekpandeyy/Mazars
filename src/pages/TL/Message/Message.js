@@ -105,7 +105,10 @@ const history = useHistory();
                                     <div
                                         style={{
                                             cursor: "pointer",
-                                            display: "flex", justifyContent: "space-between"
+                                            display : "flex",
+                                            justifyContent : "space-between",
+                                            wordBreak : "break-word"
+                                          
                                         }}
                                         onClick={() => readNotification(row.id)}
                                         title="unread"
@@ -115,7 +118,10 @@ const history = useHistory();
                                     </div>
                                     :
                                     <div
-                                        style={{ cursor: "pointer", display: "flex", justifyContent: "space-between" }}
+                                        style={{ cursor: "pointer",
+                                        display :"flex",
+                                        justifyContent : "space-between",
+                                        wordBreak : "break-word"}}
                                         title="read"
                                     >
                                         <p>{row.message}</p>
@@ -162,7 +168,7 @@ const history = useHistory();
                         </Col>
                     </Row>
                 </CardHeader>
-                <CardBody>
+                <CardBody style={{display : "flex", height : "80vh", overflowY : "scroll"}}>
                     <BootstrapTable
                         bootstrap4
                         keyField="id"

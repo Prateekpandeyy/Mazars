@@ -281,7 +281,8 @@ const basicFun = (e) => {
         formData.append("tds_total", tds2)
         formData.append("netpaid_amount", grandTotal)
         formData.append("gstin_no", gstNum);
-        formData.append("bill_no", billNo)
+        formData.append("bill_no", billNo);
+        formData.append("invoice_by", userid)
         axios({
             method : "POST",
             data : formData,
@@ -364,7 +365,7 @@ setServices2(k.service)
             <div className="row my-2">
               {services === undefined ? "" : 
               <div className="col-md-6">
-              <label>Descirption <span className="declined">*</span></label>
+              <label>Description <span className="declined">*</span></label>
           <select 
       
        value={description}
@@ -404,6 +405,7 @@ setServices2(k.service)
                <input 
                     type="number"
                     name="pocket_amount"
+                    step="0.00001"
                     ref={register}
                     className="form-control"
                     onChange={(e) => pocketExpFun(e)}
@@ -420,7 +422,7 @@ setServices2(k.service)
                     type="number"
                     ref={register}
                     className="form-control"
-                    
+                    step="0.00001"
                     placeholder="Rate"
                     value={cgetRate}
                     name="cgst_rate"
@@ -447,7 +449,7 @@ setServices2(k.service)
                     type="number"
                     className="form-control"
                     ref={register}
-                    
+                    step="0.00001"
                     name="sgst_rate"
                     placeholder="Rate" 
                    value = {sgetRate}
@@ -473,7 +475,7 @@ setServices2(k.service)
                 <input 
                     type="number"
                     className="form-control"
-                  
+                    step="0.00001"
                     placeholder="Rate"
                     ref={register}
                     name="igst_rate"
@@ -547,7 +549,7 @@ setServices2(k.service)
                    <input 
                     type="number"
                     className="form-control"
-                 
+                    step="0.00001"
                     placeholder="Rate"
                     name="tds_rate"
                     value={tdsR}

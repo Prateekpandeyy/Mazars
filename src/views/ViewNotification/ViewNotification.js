@@ -3,16 +3,13 @@ import axios from "axios";
 import { baseUrl } from "../../config/config";
 import Layout from "../../components/Layout/Layout";
 import { useHistory, useParams } from "react-router-dom";
-import { useAlert } from "react-alert";
+
 import {
   Card,
   CardHeader,
   CardBody,
-  CardTitle,
   Row,
   Col,
-  Table,
-  Tooltip,
 } from "reactstrap";
 import CommonServices from "../../common/common";
 

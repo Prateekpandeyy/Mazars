@@ -20,6 +20,7 @@ import BootstrapTable from "react-bootstrap-table-next";
 import "react-modal-video/scss/modal-video.scss";
 import ReactHlsPlayer from 'react-hls-player'
 import RecordingFilter from "../../../components/Search-Filter/RecordingFilter";
+import {Link} from "react-router-dom";
 // import '../../../../node_modules/react-modal-video/scss/modal-video.scss';
 
 
@@ -43,7 +44,7 @@ function Recording() {
         axios
             .get(`${baseUrl}/tl/callRecordingPostlist?uid=${JSON.parse(userid)}`)
             .then((res) => {
-                console.log(res);
+               
                 if (res.data.code === 1) {
                     setFeedBackData(res.data.result);
                     setRecords(res.data.result.length)
@@ -96,10 +97,22 @@ const canBtn = {
         },
         {
             text: "Query No",
-            dataField: "assign_id",
+            dataField: "",
             headerStyle: () => {
                 return { fontSize: "12px", width: "20px" };
             },
+            formatter : function formatter(cell, row){
+                let a = row.assign_id.split("-")[row.assign_id.split("-").length - 1]
+                return <>
+                <Link
+                to = {{
+                    pathname : `/taxprofessional/queries/${a}`,
+                    routes : "recording"
+                }}>
+                {row.assign_id}
+                </Link>
+                </>
+            }
         },
         
 

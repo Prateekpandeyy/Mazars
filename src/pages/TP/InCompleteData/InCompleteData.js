@@ -37,7 +37,7 @@ function InCompleteData({ CountIncomplete }) {
     axios
       .get(`${baseUrl}/tl/getIncompleteQues?tp_id=${JSON.parse(userid)}&status=1`)
       .then((res) => {
-        console.log(res);
+       
         if (res.data.code === 1) {
           setInCompleteData(res.data.result);
           setRecords(res.data.result.length);
@@ -62,23 +62,23 @@ function InCompleteData({ CountIncomplete }) {
       dataField: "created",
       sort: true,
       headerStyle: () => {
-        return { fontSize: "12px" };
+        return { fontSize: "12px", width : "120px" };
       },
     },
     {
       text: "Query No",
       dataField: "assign_no",
       headerStyle: () => {
-        return { fontSize: "12px" };
+        return { fontSize: "12px" , width : "130px"};
       },
       formatter: function nameFormatter(cell, row) {
-        console.log(row);
+
         return (
           <>
             <Link
               to={{
                 pathname: `/taxprofessional/queries/${row.id}`,
-                index: 1,
+                index: 2,
                 routes: "queriestab",
               }}
             >
@@ -93,7 +93,7 @@ function InCompleteData({ CountIncomplete }) {
       dataField: "parent_id",
       sort: true,
       headerStyle: () => {
-        return { fontSize: "12px" };
+        return { fontSize: "12px" , width : "120px"};
       },
     },
     {
@@ -101,7 +101,7 @@ function InCompleteData({ CountIncomplete }) {
       dataField: "cat_name",
       sort: true,
       headerStyle: () => {
-        return { fontSize: "12px" };
+        return { fontSize: "12px" , width :"150px"};
       },
     },
     {
@@ -109,7 +109,7 @@ function InCompleteData({ CountIncomplete }) {
       dataField: "name",
       sort: true,
       headerStyle: () => {
-        return { fontSize: "12px" };
+        return { fontSize: "12px" , width : "150px"};
       },
     },
     {
@@ -117,10 +117,10 @@ function InCompleteData({ CountIncomplete }) {
       dataField: "Exp_Delivery_Date",
       sort: true,
       headerStyle: () => {
-        return { fontSize: "12px" };
+        return { fontSize: "12px", width : "150px" };
       },
       formatter: function dateFormat(cell, row) {
-        console.log("dt", row.Exp_Delivery_Date);
+     
         var oldDate = row.Exp_Delivery_Date;
         if (oldDate == null) {
           return null;
@@ -131,7 +131,7 @@ function InCompleteData({ CountIncomplete }) {
     {
       text: "Status",
       headerStyle: () => {
-        return { fontSize: "12px" };
+        return { fontSize: "12px" , width : "100px"};
       },
       formatter: function nameFormatter(cell, row) {
         return (
@@ -191,7 +191,7 @@ function InCompleteData({ CountIncomplete }) {
                             message_type: "4",
                             query_No: row.assign_no,
                             query_id: row.id,
-                            routes: `/taxprofessional/proposal`
+                            routes: `/taxprofessional/queriestab`
                         }
                     }}
                 >
@@ -238,14 +238,16 @@ function InCompleteData({ CountIncomplete }) {
           />
         </CardHeader>
         <CardBody>
+        <div className="tableFixHead">
           <BootstrapTable
             bootstrap4
             keyField="id"
             data={incompleteData}
             columns={columns}
+            classes="table-responsive"
             rowIndex
           />
-
+</div>
           <DiscardReport
             ViewDiscussionToggel={ViewDiscussionToggel}
             ViewDiscussion={ViewDiscussion}

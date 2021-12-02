@@ -43,7 +43,7 @@ function EditQuery(props) {
   const [loading, setLoading] = useState(false);
   const [custcheckError, setCheckerror] = useState(null);
   const [queryDocs, setQueryDocs] = useState([]);
- 
+ const [qno, setQno] = useState()
   const [selectedOption, setSelectedOption] = useState([]);
   const [purposeOption, setPurposeOption] = useState([]);
   const [selectError, setSelectError] = useState()
@@ -87,21 +87,30 @@ function EditQuery(props) {
         reset({
           users: sepData,
         });
-
+         setQno(res.data.result[0].assign_no)
         var value = res.data.result[0].assessment_year;
         var purposeItem = res.data.result[0].purpose_opinion;
 
 
         try {
-          var myObj = JSON.parse(value);
+         
           var myPurpose = JSON.parse(purposeItem);
 
-          setSelectedOption(myObj);
+         
           setPurposeOption(myPurpose);
         } catch (e) {
-          return false;
+          
         }
-        console.log(<Markup content={res.data.result[0].fact_case}/>)
+        try {
+          var myObj = JSON.parse(value);
+         
+
+          setSelectedOption(myObj);
+        
+        } catch (e) {
+          
+        }
+       
         setValue2(res.data.result[0].fact_case);
      
       //  setValue("fact_case", res.data.result[0].fact_case);
@@ -228,7 +237,7 @@ function EditQuery(props) {
               </button>
             </Col>
             <Col md="4" style={{ display: "flex", justifyContent: "center" }}>
-              <p style={{ fontSize: "20px" }}>Update Query</p>
+              <p style={{ fontSize: "20px" }}>Update Query - {qno}</p>
             </Col>
             <Col md="4" style={{ display: "flex", justifyContent: "flex-end" }}>
               <DeleteQuery id={id} setLoading={setLoading}/>
@@ -367,15 +376,20 @@ function EditQuery(props) {
                     </div>
 
                     <div className="col-md-6">
-                      <div className="mb-3">
-                        <label className="form-label">Case name</label>
-                        <input
-                          type="text"
-                          name="case_name"
-                          ref={register}
-                          className="form-control"
+                    <div className="mb-3">
+                        <label className="form-label">
+                          Purpose for which Opinion is sought <span className="declined">*</span>
+                        </label>
+                        <Select
+                          closeMenuOnSelect={false}
+                          className={selectError ? "customError" : ""}
+                          onChange={purPoseQuery}
+                          value={purposeOption}
+                          isMulti
+                          options={purpose}
                         />
                       </div>
+                     
                     </div>
                     <div className="col-md-6">
                       <div className="mb-3">
@@ -507,17 +521,13 @@ function EditQuery(props) {
                     </div>
 
                     <div className="col-md-6">
-                      <div className="mb-3">
-                        <label className="form-label">
-                          Purpose for which Opinion is sought <span className="declined">*</span>
-                        </label>
-                        <Select
-                          closeMenuOnSelect={false}
-                          className={selectError ? "customError" : ""}
-                          onChange={purPoseQuery}
-                          value={purposeOption}
-                          isMulti
-                          options={purpose}
+                    <div className="mb-3">
+                        <label className="form-label">Case name</label>
+                        <input
+                          type="text"
+                          name="case_name"
+                          ref={register}
+                          className="form-control"
                         />
                       </div>
                     </div>

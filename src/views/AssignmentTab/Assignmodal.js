@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+import React, { useState } from "react";
+import { Modal, ModalHeader, ModalBody} from "reactstrap";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
@@ -12,8 +12,7 @@ function Assignmodal({
   additionalHandler,
   assignNo,
   modaldoc,
-  getData,
-  getQueriesData,
+
 }) {
   const { handleSubmit, register } = useForm();
   

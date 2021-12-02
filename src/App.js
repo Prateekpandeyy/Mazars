@@ -150,6 +150,8 @@ const options = {
 };
 
 function App() {
+ 
+
   return (
     <div>
       <Provider template={AlertTemplate} {...options}>

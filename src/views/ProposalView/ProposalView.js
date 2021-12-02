@@ -157,20 +157,40 @@ function ProposalView(props) {
 
   };
 
-
+const amountStyle  = {
+  display : "block",
+  textAlign : "right",
+  marginRight : "50px"
+}
   const installAmount = (data) => {
     var item = data.split(',')
    
-
     const dataItem = item.map((p, i) =>
     (
       <>
         <p>{CommonServices.removeTime(p)}</p>
       </>
     ))
-   
     return dataItem;
+  }
+  const installAmount2 = (data) => {
+    var item = data.split(',')
    
+    const dataItem = item.map((p, i) =>
+    (
+      <>
+        <p style={amountStyle}>{nfObject.format(p)}</p>
+      </>
+    ))
+    return dataItem;
+  }
+  // curent date
+  var date = new Date();
+  function convert(str) {
+    var date = new Date(str),
+      mnth = ("0" + (date.getMonth() + 1)).slice(-2),
+      day = ("0" + date.getDate()).slice(-2);
+    return [date.getFullYear(), mnth, day].join("-");
   }
 
 
@@ -303,8 +323,8 @@ function ProposalView(props) {
                         <tr>
                           <td>{payment_terms}</td>
                           <td>{no_of_installment}</td>
-                          <td>{installAmount(installment_amount)}</td>
-                          <td>{installAmount(due_date)}</td>
+                          <td>{installAmount2(installment_amount)}</td>
+                        <td>{installAmount(due_date)}</td>
                         </tr>
                       </td>
                       :

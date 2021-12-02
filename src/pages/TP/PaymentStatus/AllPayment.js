@@ -63,7 +63,7 @@ function AllPayment() {
 
     const getPaymentStatus = () => {
         axios.get(`${baseUrl}/tl/getUploadedProposals?tp_id=${JSON.parse(userid)}`).then((res) => {
-            console.log(res);
+          
             if (res.data.code === 1) {
                 setPayment(res.data.result);
                 setCount(res.data.result.length);
@@ -133,7 +133,7 @@ rowStyle2 = (row, index) => {
                 return { fontSize: "11px" };
             },
             formatter: function dateFormat(cell, row) {
-                console.log("dt", row.query_created_date);
+
                 var oldDate = row.query_created_date;
                 if (oldDate == null) {
                     return null;
@@ -151,12 +151,12 @@ rowStyle2 = (row, index) => {
                 return { fontSize: "11px" };
             },
             formatter: function nameFormatter(cell, row) {
-                console.log(row);
                 return (
                     <>
                         <Link
                             to={{
                                 pathname: `/taxprofessional/queries/${row.assign_id}`,
+                                index : 0,
                                 routes: "paymentstatus",
                             }}
                         >
@@ -199,7 +199,7 @@ rowStyle2 = (row, index) => {
                 return { fontSize: "11px" };
             },
             formatter: function dateFormat(cell, row) {
-                console.log("dt", row.cust_accept_date);
+              
                 var oldDate = row.cust_accept_date;
                 if (oldDate == null) {
                     return null;
@@ -246,7 +246,7 @@ rowStyle2 = (row, index) => {
             formatter: function nameFormatter(cell, row){
                 var nfObject = new Intl.NumberFormat('hi-IN')
                  var x = row.accepted_amount;
-                 console.log(nfObject.format(x))
+                 
                  return(
                    <p>{nfObject.format(x)}</p>
                  )
@@ -272,7 +272,7 @@ rowStyle2 = (row, index) => {
             formatter: function nameFormatter(cell, row){
                 var nfObject = new Intl.NumberFormat('hi-IN')
                  var x = row.paid_amount;
-                 console.log(nfObject.format(x))
+                 
                  return(
                    <p>{nfObject.format(x)}</p>
                  )
@@ -299,7 +299,7 @@ rowStyle2 = (row, index) => {
             formatter: function nameFormatter(cell, row){
                 var nfObject = new Intl.NumberFormat('hi-IN')
                  var x = row.amount_outstanding;
-                 console.log(nfObject.format(x))
+                 
                  return(
                    <p>{nfObject.format(x)}</p>
                  )
@@ -315,7 +315,7 @@ rowStyle2 = (row, index) => {
                 return { fontSize: "11px" };
             },
             formatter: function dateFormat(cell, row) {
-                console.log("dt", row.cust_paid_date);
+            
                 var oldDate = row.cust_paid_date;
                 if (oldDate == null) {
                     return null;
@@ -343,11 +343,11 @@ rowStyle2 = (row, index) => {
 >
 <Link
               to={{
-                pathname: `/taxprofessional/paydetails/${row.id}`,
+                pathname: `/taxprofessional/paydetails/${row.assign_id}`,
                 obj: {
                   message_type: "5",
                   query_No: row.assign_no,
-                  query_id: row.id,
+                  query_id: row.assign_id,
                   routes: `/taxprofessional/paymentstatus`
                 }
               }}
@@ -379,10 +379,23 @@ rowStyle2 = (row, index) => {
 
                             style={{ color: "green", fontSize: "16px", cursor: "pointer" }}
                         >
+                           <Link
+              to={{
+                pathname: `/taxprofessional/paydetails/${row.assign_id}`,
+                obj: {
+                  message_type: "5",
+                  query_No: row.assign_no,
+                  query_id: row.assign_id,
+                  routes: `/taxprofessional/paymentstatus`
+                }
+              }}
+            >
                             <i
-                           class="fa fa-credit-card"
-                           onClick={() => toggle(row.assign_id)}
-                           style={{ color: "green", fontSize: "16px" }}></i>
+                                class="fa fa-credit-card"
+                                style={{ color: "green", fontSize: "16px" }}
+                                // onClick={() => toggle(row.assign_id)}
+                            ></i>
+                            </Link>
                         </div>
                         <div title="Send Message">
                             <Link
@@ -406,18 +419,7 @@ rowStyle2 = (row, index) => {
                                 ></i>
                             </Link>
                         </div>
-                        {/* <div>
-                            {
-                                row.paid_status == "0" ?
-                                    <div title="Payment decline"
-                                        onClick={() => rejectHandler(row)}
-                                        style={{ color: "red", fontSize: "16px", cursor: "pointer" }}
-                                    >
-                                        <PaymentIcon />
-                                    </div>
-                                    : null
-                            }
-                        </div> */}
+                      
 
 
                         <div title="View Discussion Message">
@@ -454,6 +456,7 @@ rowStyle2 = (row, index) => {
                 </CardHeader>
 
                 <CardBody>
+                <div className="tableFixHead">
                     <BootstrapTable
                         bootstrap4
                         keyField="id"
@@ -461,10 +464,10 @@ rowStyle2 = (row, index) => {
                         columns={columns}
                         rowStyle={rowStyle2}
                         rowIndex
-                        classes="table-responsive"
+                        classes="table-responsivepayment"
                     />
 
-
+</div>
                     <RejectedModal
                         rejectHandler={rejectHandler}
                         addPaymentModal={addPaymentModal}

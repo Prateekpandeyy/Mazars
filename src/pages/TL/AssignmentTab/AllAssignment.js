@@ -673,6 +673,7 @@ function AssignmentTab() {
         </CardHeader>
 
         <CardBody>
+        <div className="tableFixHead">
           <BootstrapTable
             bootstrap4
             keyField="id"
@@ -680,8 +681,9 @@ function AssignmentTab() {
             columns={columns}
             rowStyle={ rowStyle2 }
             rowIndex
+            classes="table-responsive"
           />
-
+</div>
           <DraftReportModal
             draftModal={draftModal}
             uploadDraftReport={uploadDraftReport}
