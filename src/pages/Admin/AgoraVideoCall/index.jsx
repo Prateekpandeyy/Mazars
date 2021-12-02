@@ -128,7 +128,7 @@ allrecording;
     
    
    })
-  
+   this.setState({getAdId : uid})
   
         this.setState({ uid : uid})
       
@@ -386,14 +386,13 @@ schdrularName;
         });
       }
     });
-   
- 
-      axios.get(`${baseUrl}/tl/setgetschedular?id=${this.props.id}&uid=${this.state.showButton}&chname=${this.channelName}`)
+    axios.get(`${baseUrl}/tl/setgetschedular?id=${this.props.id}&uid=${this.state.showButton}&chname=${this.channelName}`)
       .then((res) => {
        if(res.data.result.rtc_id == uid){
         window.location.hash = "/admin/schedule";
        }
       })
+     
      
     
   };

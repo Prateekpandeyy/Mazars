@@ -7,7 +7,7 @@ function MeetingComponent(props) {
 
   return (
     
-      <Meeting />
+      <Meeting id={props.match.params.id}/>
    
   );
 }

@@ -175,7 +175,7 @@ function App() {
             <PrivateRouteUser exact path="/customer/change-password" component={ChangePassword} />
             <PrivateRouteUser exact path="/customer/edit-query/:id" component={EditQuery} />
             <PrivateRouteUser exact path="/customer/video-call" component={VideoCall} />
-            <PrivateRouteUser exact path="/customer/meeting" component={MeetingComponent} />
+            <PrivateRouteUser exact path="/customer/meeting/:id" component={MeetingComponent} />
             <PrivateRouteUser exact path="/customer/schedule" component={schedule} />
             <PrivateRouteUser exact path="/customer/view-notification/:id" component={ViewNotification} />
             <PrivateRouteUser exact path="/customer/proposal_view/:id" component={ProposalView} />

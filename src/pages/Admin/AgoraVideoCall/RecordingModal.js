@@ -1,10 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from "reactstrap";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
-import CommonServices from "../../../common/common";
-import Alerts from "../../../common/Alerts";
 import { useHistory } from "react-router";
 import Swal from "sweetalert2";
 function RecordingModal({
@@ -97,13 +95,13 @@ axios.get(`${baseUrl}/tl/freeslottime?schedule_id=${id}&&uid=${JSON.parse(userId
           axios.get(`${baseUrl}/tl/setgetschedular?id=${schId}&rtc_id=${uid}&uid=${JSON.parse(userId)}`)
          .then((res) =>{
            if(res){
-            history.push('/teamleader/schedule');
+            history.push('/admin/schedule');
            }
          })
          }
          else{
             console.log("donefixed", result)
-          history.push('/teamleader/schedule');
+          history.push('/admin/schedule');
          }
        });
       }

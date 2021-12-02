@@ -6,7 +6,7 @@ import axios from "axios";
 import "./canvas.css";
 import "../../assets/fonts/css/icons.css";
 import Cookies from "js-cookie";
-
+import {baseUrl} from "../../config/config";
 var customer_id = "d339577a294c458c86d8a78b474141fc";
 var customer_secret = "1a61a4bef2144e78be6f671d5cf3fc32";
 
@@ -73,10 +73,11 @@ class AgoraCanvas extends React.Component {
     };
   }
 channelName = this.props.channel
-
+userId = window.localStorage.getItem("userid");
 custEmail2 = window.localStorage.getItem("custEmail");
   componentWillMount() {
     let $ = this.props;
+    console.log("props", this.props)
     // init AgoraRTC local client
 console.log("customerName", this.customerName)
     this.client = AgoraRTC.createClient({ mode: $.transcode });
@@ -314,13 +315,12 @@ console.log("customerName", this.customerName)
         });
       }
     });
-    if(this.state.showButton == JSON.parse(this.teamKey)){
-      console.log("donefixed", this.state.showButton)
-
-    }
-    else{
-      window.location.hash = "/teamleader/schedule";
-    }
+    axios.get(`${baseUrl}/tl/setgetschedular?id=${this.props.id}&uid=${JSON.parse(this.userId)}&chname=${this.channelName}`)
+    .then((res) => {
+     if(res.data.result.rtc_id == uid){
+      window.location.hash = "/customer/schedule";
+     }
+    })
   };
 
   addStream = (stream, push = false) => {
