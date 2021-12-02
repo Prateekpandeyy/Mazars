@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useState , useEffect} from 'react';
 import classNames from "classnames";
-import { baseUrl } from "../../../config/config";
+import { baseUrl, baseUrl3 } from "../../../config/config";
 import './Admin.css';
 import Select from 'react-select';
 import Layout from "../../../components/Layout/Layout";
@@ -214,7 +214,8 @@ const mapAppointmentData = ((appiontmentData) => ({
 
    })
    .then(function (response) {
-    window.location.assign(`${baseUrl}/report/generateReport`)
+     window.open(`${baseUrl3}/${response.data.result}`)
+   // window.location.assign(`${baseUrl}/report/generateReport`)
    })
    .catch((error) => {
   

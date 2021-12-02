@@ -69,6 +69,7 @@ class AgoraCanvas extends React.Component {
       stateSharing: false,
       addRemote : null,
       participantName : '',
+      atCustId: '',
       disabledVedio : false
     };
   }
@@ -93,7 +94,7 @@ console.log("customerName", this.customerName)
         
         })
         this.state.uid = uid;
-       
+       this.setState({atCustId : uid})
         // create local stream
         // It is not recommended to setState in function addStream
         this.localStream = this.streamInit(uid, $.attendeeMode, $.videoProfile);
@@ -285,7 +286,13 @@ console.log("customerName", this.customerName)
   axios.get(`${apiData}`)
   .then((res) =>{
    
-    this.setState({ participantName : res.data[0].user_name })
+    if(res.data.length === 0 ){
+      // rt.setupLocalVideo() 
+     }
+     else{
+       this.setState({ participantName : res.data[0].user_name })
+      
+     }
     if(res.data != undefined){
       rt.addStream(stream);
     }
@@ -419,8 +426,6 @@ console.log("customerName", this.customerName)
       this.setState({ readyState: false });
       this.client = null;
       this.localStream = null;
-      // redirect to index
-      // window.location.hash = "/customer/schedule";
       window.location.assign("/#/customer/schedule")
     }
   };
@@ -430,7 +435,9 @@ console.log("customerName", this.customerName)
       this.shareClient && this.shareClient.unpublish(this.shareStream);
       this.shareStream && this.shareStream.close();
       this.state.stateSharing = false;
+      
     } else {
+      
       this.state.stateSharing = true;
       let $ = this.props;
       // init AgoraRTC local client
@@ -455,7 +462,7 @@ console.log("customerName", this.customerName)
               if ($.attendeeMode !== "audience") {
                 this.addStream(this.shareStream, true);
                 this.shareClient.publish(this.shareStream, (err) => {
-                
+                // this.localStream = this.shareStream;
                 });
               }
               this.setState({ readyState: true });
@@ -476,7 +483,7 @@ console.log("customerName", this.customerName)
       audio: false,
       video: false,
       screen: true,
-      control : true
+     
     };
 
     switch (attendeeMode) {
@@ -651,7 +658,3 @@ encodedString = "ZDMzOTU3N2EyOTRjNDU4Yzg2ZDhhNzhiNDc0MTQxZmM6MWE2MWE0YmVmMjE0NGU
 }
 
 export default AgoraCanvas;
-
-
-// https://mazars.multitvsolution.com/#/customer/dashboard
-

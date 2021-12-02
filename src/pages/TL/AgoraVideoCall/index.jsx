@@ -210,6 +210,7 @@ schdrularName;
         else if (dom && this.state.disabledVedio === false) {
          dom.setAttribute("class", "ag-item");
         }
+        let dd, kk;
         if (!dom) {
           dom = document.createElement("section");
           dom.setAttribute("id", "ag-item-" + id);
@@ -218,10 +219,14 @@ schdrularName;
           var box22 = document.getElementById("ag-item-" + id)
          
          
+          dd = document.createElement("input")
+          dd.setAttribute("id", "myPartName")
           var newContent = document.createTextNode(this.state.participantName); 
           item.play("ag-item-" + id);
-      
-         box22.appendChild(newContent)
+         dd.setAttribute("value", this.state.participantName)
+         dd.setAttribute("disabled", true)
+         kk =   dd.appendChild(newContent)
+         box22.appendChild(dd)
         }
         if (index === no - 1) {
           dom.setAttribute("style", `grid-area: span 12/span 24/13/25`);
@@ -233,12 +238,18 @@ schdrularName;
           );
         }
 
-        item.player.resize && item.player.resize();
+        if(item.player === undefined){
+
+        }
+               else{
+                item.player.resize && item.player.resize();
+               }
       });
     }
     // tile mode
     else if (this.state.displayMode === "tile") {
       let no = this.state.streamList.length;
+      
       this.state.streamList.map((item, index) => {
         let id = item.getId();
         let dom = document.querySelector("#ag-item-" + id);
@@ -338,7 +349,7 @@ schdrularName;
     axios.get(`${apiData}`)
     .then((res) =>{
      
-     console.log("response", res.data.length)
+  
       if(res.data.length === 0 ){
        // rt.setupLocalVideo() 
       }

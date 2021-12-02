@@ -13,7 +13,12 @@
   height: 100%;
   width: 100%;
 }
-
+#myPartName{
+  background:none;
+  width : 80px;
+  position: absolute;
+  border : none;
+}
 .ag-item {
   border-radius: 0px;
   border: 2px #00B6ED solid;

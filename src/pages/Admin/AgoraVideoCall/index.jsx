@@ -231,8 +231,12 @@ schdrularName;
                     z-index:1;width:calc(100% - 20px);height:calc(100% - 20px)`
           );
         }
+if(item.player === undefined){
 
+}
+       else{
         item.player.resize && item.player.resize();
+       }
       });
     }
     // tile mode
