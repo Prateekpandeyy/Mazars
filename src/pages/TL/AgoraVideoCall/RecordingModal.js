@@ -3,8 +3,6 @@ import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from "reactstrap";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
-import CommonServices from "../../../common/common";
-import Alerts from "../../../common/Alerts";
 import { useHistory } from "react-router";
 import Swal from "sweetalert2";
 function RecordingModal({
@@ -71,7 +69,7 @@ else{
                        });
     };
     const exitBtn2 = () => {
-        if(ownerId === userId){
+        if(ownerId === JSON.parse(userId)){
             confirmation()
         }
         else{
@@ -81,6 +79,7 @@ else{
 
     }
 const confirmation = () => {
+    console.log("done")
     Swal.fire({
      title: "Are you sure?",
      text: "It will permanently deleted !",
@@ -88,10 +87,11 @@ const confirmation = () => {
      showCancelButton : true,
      confirmButtonColor: "#3085d6",
      cancelButtonColor: "#d33",
-     confirmButtonText: "Yes, delete it!",
+     confirmButtonText: "End the call",
+     cancelButtonText: "only, just leave the call",
     }).then((result) => {
      if (result.value) {
-      console.log("donefixed", this.state.showButton)
+      console.log("donefixed", result)
       axios.get(`${baseUrl}/tl/setgetschedular?id=${schId}&rtc_id=${uid}&uid=${JSON.parse(userId)}`)
      .then((res) =>{
        if(res){
@@ -100,6 +100,7 @@ const confirmation = () => {
      })
      }
      else{
+        console.log("donefixed", result)
       history.push('/teamleader/schedule');
      }
    });

@@ -88,6 +88,7 @@ class AgoraCanvas extends React.Component {
       clickDisable : false,
       addRemote : null,
       disabledVedio : false,
+      getAdId :'',
       participantName : 'participant'
     };
 
@@ -758,30 +759,7 @@ else{
   
 };
 
-confirmation = () => {
-  Swal.fire({
-   title: "Are you sure?",
-   text: "It will permanently deleted !",
-   type: "warning",
-   showCancelButton : true,
-   confirmButtonColor: "#3085d6",
-   cancelButtonColor: "#d33",
-   confirmButtonText: "Yes, delete it!",
-  }).then((result) => {
-   if (result.value) {
-    console.log("donefixed", this.state.showButton)
-    axios.get(`${baseUrl}/tl/setgetschedular?id=${this.props.id}&rtc_id=${this.uid}&uid=${JSON.parse(this.teamKey)}`)
-   .then((res) =>{
-     if(res){
-      window.location.hash = "/admin/schedule";
-     }
-   })
-   }
-   else{
-    window.location.hash = "/admin/schedule";
-   }
- });
-}
+
   render() {
 
     
@@ -913,6 +891,9 @@ const recordingBtnOff = (
          data={this.state.data}
          item={this.state.item}
          allrecording = {this.tempArray}
+         schId = {this.props.id}
+         uid = {this.state.getAdId}
+         ownerId = {this.state.showButton}
          />
                 
           {exitBtn}

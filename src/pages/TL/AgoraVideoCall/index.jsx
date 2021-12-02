@@ -88,7 +88,8 @@ class AgoraCanvas extends React.Component {
       clickDisable : false,
       addRemote : null,
       participantName : '',
-      disabledVedio : false
+      disabledVedio : false,
+      getAdId :''
     };
 
     this.toggleModal = this.toggleModal.bind(this);
@@ -124,14 +125,15 @@ allrecording;
    then((res) => {
     
    })
-   if(this.state.showButton == JSON.parse(this.teamKey)){
-    console.log("donefixed", this.state.showButton)
-    axios.get(`${baseUrl}/tl/setgetschedular?id=${this.props.id}&rtc_id=${uid}&uid=${JSON.parse(this.teamKey)}`)
-   .then((res) =>{
-     console.log(res)
-   })
+  //  if(this.state.showButton == JSON.parse(this.teamKey)){
+  //   console.log("donefixed", this.state.showButton)
+  //   axios.get(`${baseUrl}/tl/setgetschedular?id=${this.props.id}&rtc_id=${uid}&uid=${JSON.parse(this.teamKey)}`)
+  //  .then((res) =>{
+  //    console.log(res)
+  //  })
   
-  }
+  //}
+  this.setState({getAdId : uid})
         this.state.uid = uid;
        
         this.localStream = this.streamInit(uid, $.attendeeMode, $.videoProfile);
@@ -874,7 +876,7 @@ const recordingBtnOff = (
          item={this.state.item}
          allrecording = {this.tempArray}
          schId = {this.props.id}
-         uid = {this.uid}
+         uid = {this.state.getAdId}
          ownerId = {this.state.showButton}
          />
                 
