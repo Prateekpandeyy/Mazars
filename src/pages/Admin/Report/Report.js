@@ -33,6 +33,7 @@ const Report = () => {
   const [teamleader44, setTeamleader44] = useState("") 
   const [taxprofessional44, setTaxprofessional44] = useState("")
   const [custData, setcustData] = useState();
+  const [cname, setcName] = useState()
   var kk = []
   var pp = []
   var vv = []
@@ -42,8 +43,9 @@ const Report = () => {
   const [dd, setDd] = useState([]);
 const history = useHistory()
     const { handleSubmit, register, errors, getValues } = useForm();
+    let date = new Date()
     var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
- 
+ const firstDay = new Date(date.getFullYear() + + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2));
   const [item] = useState(current_date);
 
   useEffect(() => {
@@ -109,10 +111,10 @@ const history = useHistory()
 
   const getData = () => {
     axios
-    .get(`${baseUrl}/tl/videoScheduler?tl_id=1`)
+    .get(`${baseUrl}//admin/getAllList`)
       .then((res) => {
        
-        var a = res.data.result.items;
+        var a = res.data.result;
         if (a) {
           setcustData(a.map(mapAppointmentData));
         }
@@ -120,8 +122,8 @@ const history = useHistory()
   };
 
 const mapAppointmentData = ((appiontmentData) => ({
-"label" : appiontmentData.id,
-"value" : appiontmentData.id
+"label" : appiontmentData.name,
+"value" : appiontmentData.name
 }))
   const options = tax.map(d => (
     {
@@ -164,12 +166,14 @@ const mapAppointmentData = ((appiontmentData) => ({
      payment_info = true
    }
         let formData = new FormData();
+        formData.append("report_name", value.report_name)
         formData.append("basic_info", Number(basic_info));
         formData.append("proposal_info", Number(proposal_info));
         formData.append("assignment_info", Number(assignment_info));
         formData.append("payment_info", Number(payment_info))
         formData.append("from", value.p_from);
         formData.append("to", value.p_to);
+        formData.append("customer_name", cname)
         formData.append("teamleader", teamleader44);
         formData.append("taxprofessional", taxprofessional44);
         formData.append("category", mcatname);
@@ -205,6 +209,15 @@ const mapAppointmentData = ((appiontmentData) => ({
         formData.append("date_complation", Number(value.completionQuery));
         formData.append("assign_time", Number(value.assignTime));
         formData.append("payment_recived_date", Number(value.receiptDate));
+        formData.append("basic_amount", Number(value.basic_amount));
+        formData.append("pocket_expensive", Number(value.pocket_expensive));
+        formData.append("cget_tax", Number(value.cget_tax));
+        formData.append("igst_tax", Number(value.igst_tax));
+        formData.append("sgst_tax", Number(value.sgst_tax));
+        formData.append("total_gst", Number(value.total_gst));
+        formData.append("total_invoice", Number(value.total_invoice));
+        formData.append("tds", Number(value.tds));
+        formData.append("net_amount", Number(value.net_amount));
         formData.append("amount_received", Number(value.amountReceived));
         formData.append("t", Math.floor(Math.random() * 110000))
    axios({
@@ -284,6 +297,13 @@ let cc = []
      setDd(kk)
       
     }
+    const custName = (a) => {
+      let pk = []
+      a.map((r) => {
+        pk.push(r.value)
+      })
+      setcName(pk)
+    }
   const teamLeader = (a) => {
  let tk = []
     a.map((i) => {
@@ -346,12 +366,27 @@ let cc = []
       <div className="col-md-3">
       <div className="mb-3">
           <label className="form-label">Customer Id</label>
-         <Select isMulti options={custData}>
+         <Select isMulti options={custData} onChange={(e) => custName()}>
 
          </Select>
         </div>
           </div>
-    
+          <div className="col-md-3">
+        <div className="mb-3">
+          <label className="form-label">Report Name</label>
+          <input
+            type="text"
+            name="report_name"
+            className={classNames("form-control", {
+              "is-invalid": errors.report_name,
+            })}
+           
+            placeholder="Enter report name"
+            ref={register({ required: true })}
+          />
+        </div>
+       
+      </div>
    </div> 
    <div className="row">
    <div className="col-md-3">
@@ -587,7 +622,43 @@ onChange= {(e) =>teamLeader(e)}/>
 <input type="checkbox" ref={register} name="amountReceived" id="amountReceived"></input>
 <label htmlFor="amountReceived">Amount Received</label>
 </span>
-            </div>
+<span>
+<input type="checkbox" ref={register} name="basic_amount" id="basic_amount"></input>
+<label htmlFor="basic_amount">Basic Amount</label>
+</span>
+<span>
+<input type="checkbox" ref={register} name="pocket_expensive" id="pocket_expensive"></input>
+<label htmlFor="pocket_expensive">Out of pocket </label>
+</span>
+<span>
+<input type="checkbox" ref={register} name="cget_tax" id="cget_tax"></input>
+<label htmlFor="cget_tax">Cgst Tax</label>
+</span>
+<span>
+<input type="checkbox" ref={register} name="igst_tax" id="igst_tax"></input>
+<label htmlFor="igst_tax">Igst Tax </label>
+</span>
+<span>
+<input type="checkbox" ref={register} name="sgst_tax" id="sgst_tax"></input>
+<label htmlFor="sgst_tax">Sgst Tax</label>
+</span>
+<span>
+<input type="checkbox" ref={register} name="total_gst" id="total_gst"></input>
+<label htmlFor="total_gst">Total Gst </label>
+</span>
+<span>
+<input type="checkbox" ref={register} name="total_inovice" id="total_invoice"></input>
+<label htmlFor="total_invoice">Invoice Amount</label>
+</span>
+          
+<span>
+<input type="checkbox" ref={register} name="tds" id="tds"></input>
+<label htmlFor="tds">TDS Deducted</label>
+</span> 
+<span>
+<input type="checkbox" ref={register} name="net_amount" id="net_amount"></input>
+<label htmlFor="net_amount">Net Amount </label>
+</span> </div>
            </fieldset>
            </div>
    </div>
