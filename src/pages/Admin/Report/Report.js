@@ -123,7 +123,7 @@ const history = useHistory()
 
 const mapAppointmentData = ((appiontmentData) => ({
 "label" : appiontmentData.name,
-"value" : appiontmentData.name
+"value" : appiontmentData.id
 }))
   const options = tax.map(d => (
     {
@@ -332,8 +332,8 @@ let cc = []
            <Typography variant="h4">Admin Report</Typography>
          
              </div>
-             <div className="col-md-6">
-             <Button variant = "contained" color="primary" onClick = {() => history.goBack()}>Go Back </Button>
+             <div className="col-md-6" style={{display : "flex", justifyContent : "flex-end"}}>
+             <button  className="btn btn-lg btn btn-success" onClick = {() => history.goBack()}>Go Back </button>
                </div>
            </div>
   <form onSubmit={handleSubmit(onSubmit)} autocomplete="off">

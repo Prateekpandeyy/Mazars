@@ -107,7 +107,10 @@ function AddAssingmentStages() {
  
       formData.append("q_id", id);
       formData.append("user_id", JSON.parse(userid));
-      formData.append("stage_1_status", value.client_discussion);
+      {value.client_discussion === undefined ?
+        formData.append("stage_1_status", "completed")
+      :
+      formData.append("stage_1_status", value.client_discussion);}
       {value.draft_report === undefined ?
         formData.append("stage_2_status", "inprogress") 
       : formData.append("stage_2_status", value.draft_report);}
@@ -342,19 +345,34 @@ function AddAssingmentStages() {
                             </label>
                           </div>
                         </div>
+{p.client_discussion === "completed"
+?                         <div class="col-md-4">
+<div class="form-group">
+  <select
+    class="form-control"
+    ref={register}
+    name="client_discussion"
+    disabled
+  >
+    <option value="inprogress">Inprogress</option>
+    <option value="completed">Completed</option>
+    
+  </select>
+</div>
+</div> : 
                         <div class="col-md-4">
-                          <div class="form-group">
-                            <select
-                              class="form-control"
-                              ref={register}
-                              name="client_discussion"
-                            >
-                              <option value="inprogress">Inprogress</option>
-                              <option value="completed">Completed</option>
-                              
-                            </select>
-                          </div>
+                        <div class="form-group">
+                          <select
+                            class="form-control"
+                            ref={register}
+                            name="client_discussion"
+                          >
+                            <option value="inprogress">Inprogress</option>
+                            <option value="completed">Completed</option>
+                            
+                          </select>
                         </div>
+                      </div>}
 
                        
 
@@ -375,7 +393,7 @@ function AddAssingmentStages() {
                           </div>
                         </div>
                         {
-                          p.client_discussion == "completed" ?
+                          p.client_discussion === "completed" && p.draft_report === "inprogress"?
                           <div class="col-md-4">
                           <div class="form-group">
                             <select
@@ -423,7 +441,7 @@ function AddAssingmentStages() {
                             </label>
                           </div>
                         </div>
-                      {p.client_discussion == "completed"  && p.draft_report === "completed" ? 
+                      {p.client_discussion == "completed"  && p.draft_report === "completed" && p.final_discussion === "inprogress"? 
                         <div class="col-md-4">
                         <div class="form-group">
                           <select
@@ -472,7 +490,7 @@ function AddAssingmentStages() {
                             </label>
                           </div>
                         </div>
-                        {p.client_discussion == "completed"  && p.draft_report === "completed" && p.final_discussion === "completed" ?
+                        {p.client_discussion == "completed"  && p.draft_report === "completed" && p.final_discussion === "completed" && p.delivery_report === "inprogress"?
                         <div class="col-md-4">
                         <div class="form-group">
                           <select
@@ -522,7 +540,7 @@ function AddAssingmentStages() {
                             </label>
                           </div>
                         </div>
-                        {p.client_discussion == "completed"  && p.draft_report === "completed" && p.final_discussion === "completed" && p.delivery_report === "completed" 
+                        {p.client_discussion == "completed"  && p.other_stage === "inprogress" && p.draft_report === "completed" && p.final_discussion === "completed" && p.delivery_report === "completed" 
                         ? <div class="col-md-4">
                         <div class="form-group">
                           <select

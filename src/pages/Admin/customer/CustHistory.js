@@ -27,7 +27,7 @@ function CustHistory({ history, toggle,modal }) {
   return (
     <div>
        <Modal isOpen={modal} fade={false} toggle={toggle}>
-        <ModalHeader toggle={toggle}>Customer Details</ModalHeader>
+        <ModalHeader toggle={toggle}>Query Details</ModalHeader>
         <ModalBody>
           <table class="table table-bordered">
             <thead>

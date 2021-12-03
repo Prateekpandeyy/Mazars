@@ -211,7 +211,7 @@ schdrularName;
         let txtColor = "myPartName";
         let id = item.getId();
         let dom = document.querySelector("#ag-item-" + id);
-        if(this.state.disabledVedio === true){
+        if(dom && this.state.disabledVedio === true){
           dom.setAttribute("class", "ag-item2");
         }
         else if (dom && this.state.disabledVedio === false) {
@@ -256,7 +256,7 @@ schdrularName;
         let dom2
         let id = item.getId();
         let dom = document.querySelector("#ag-item-" + id);
-        if(this.state.disabledVedio === true){
+        if(dom && this.state.disabledVedio === true){
           dom.setAttribute("class", "ag-item2");
         }
         else if (dom && this.state.disabledVedio === false) {
