@@ -151,7 +151,7 @@ console.log("customerName", this.customerName)
       this.state.streamList.map((item, index) => {
         let id = item.getId();
         let dom = document.querySelector("#ag-item-" + id);
-        if(this.state.disabledVedio === true){
+        if(dom && this.state.disabledVedio === true){
           dom.setAttribute("class", "ag-item2");
         }
         else if (dom && this.state.disabledVedio === false) {

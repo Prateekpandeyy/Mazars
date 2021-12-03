@@ -14,12 +14,28 @@
   width: 100%;
 }
 #myPartName{
-  background:none;
-  width : 80px;
-  position: absolute;
-  border : none;
-  color: black;
-  bottom: -20px;
+  background: none;
+  width: 80px;
+  border: none;
+
+  position: relative;
+  bottom: 50%;
+  color: #fff;
+  left: 50%;
+  right: 50%;
+  transform: translate(-50%, -50%);
+}
+#myPartName2{
+  background: none;
+  width: 80px;
+  border: none;
+
+  position: relative;
+  bottom: 50%;
+  color: #000;
+  left: 50%;
+  right: 50%;
+  transform: translate(-50%, -50%);
 }
 .ag-item {
   border-radius: 0px;

@@ -202,13 +202,16 @@ schdrularName;
         return;
       }
       this.state.streamList.map((item, index) => {
+        let txtColor = "myPartName";
         let id = item.getId();
         let dom = document.querySelector("#ag-item-" + id);
         if(dom && this.state.disabledVedio === true){
           dom.setAttribute("class", "ag-item2");
+          txtColor = "myPartName2"
         }
         else if (dom && this.state.disabledVedio === false) {
          dom.setAttribute("class", "ag-item");
+         txtColor = "myPartName"
         }
         let dd, kk;
         if (!dom) {
@@ -220,7 +223,7 @@ schdrularName;
          
          
           dd = document.createElement("input")
-          dd.setAttribute("id", "myPartName")
+          dd.setAttribute("id", txtColor)
           var newContent = document.createTextNode(this.state.participantName); 
           item.play("ag-item-" + id);
          dd.setAttribute("value", this.state.participantName)
