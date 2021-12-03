@@ -219,6 +219,7 @@ const mapAppointmentData = ((appiontmentData) => ({
         formData.append("tds", Number(value.tds));
         formData.append("net_amount", Number(value.net_amount));
         formData.append("amount_received", Number(value.amountReceived));
+        formData.append("uid", userid)
         formData.append("t", Math.floor(Math.random() * 110000))
    axios({
      method : "POST",
@@ -366,7 +367,7 @@ let cc = []
       <div className="col-md-3">
       <div className="mb-3">
           <label className="form-label">Customer Id</label>
-         <Select isMulti options={custData} onChange={(e) => custName()}>
+         <Select isMulti options={custData} onChange={(e) => custName(e)}>
 
          </Select>
         </div>
@@ -380,7 +381,7 @@ let cc = []
             className={classNames("form-control", {
               "is-invalid": errors.report_name,
             })}
-           
+           defaultValue="Report"
             placeholder="Enter report name"
             ref={register({ required: true })}
           />
