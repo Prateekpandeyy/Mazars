@@ -6,7 +6,7 @@ import { baseUrl } from "../../config/config";
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
-
+import ima from "../../logo.jpeg"
 import Collapse from '@mui/material/Collapse';
 
 import ExpandLess from '@mui/icons-material/ExpandLess';
@@ -125,12 +125,12 @@ const handleClick = () => {
             <li class="nav-item mr-auto">
               <a class="navbar-brand" href={logo}>
                 <img
-
+                style={{display : "flex", margin: "auto", width : "50%", justifyContent : "center", alignItems : "center"}}
                   class="brand-logo"
                   alt="Chameleon admin logo"
-                  src="https://themeselection.com/demo/chameleon-free-bootstrap-admin-template/theme-assets/images/logo/logo.png"
+                  src={`${ima}`}
                 />
-                <h3 class="brand-text">Mazars</h3>
+               
               </a>
             </li>
             <li class="nav-item d-md-none">
@@ -345,7 +345,7 @@ const handleClick = () => {
                  </NavLink>
                </li>
                <li class ="nav-item">
-                 <NavLink to={"/admin/reports"}>
+                 <NavLink to={"/admin/reportlist"}>
                    <i class="fa fa-users"></i>
                    <span class="menu-title" data-i18n="">
                    Report

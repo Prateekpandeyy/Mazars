@@ -200,6 +200,7 @@ schdrularName;
         return;
       }
       this.state.streamList.map((item, index) => {
+        let txtColor = "myPartName";
         let id = item.getId();
         let dom = document.querySelector("#ag-item-" + id);
         if(dom && this.state.disabledVedio === true){
@@ -208,19 +209,25 @@ schdrularName;
         else if (dom && this.state.disabledVedio === false) {
          dom.setAttribute("class", "ag-item");
         }
+        let dd, kk;
         if (!dom) {
           dom = document.createElement("section");
           dom.setAttribute("id", "ag-item-" + id);
           dom.setAttribute("class", "ag-item");
           canvas.appendChild(dom);
-          item.play("ag-item-" + id);
           var box22 = document.getElementById("ag-item-" + id)
-          
+         
+         
+          dd = document.createElement("input")
+          dd.setAttribute("id", txtColor)
           var newContent = document.createTextNode(this.state.participantName); 
           item.play("ag-item-" + id);
-      
-         box22.appendChild(newContent)
+         dd.setAttribute("value", this.state.participantName)
+         dd.setAttribute("disabled", true)
+         kk =   dd.appendChild(newContent)
+         box22.appendChild(dd)
         }
+       
         if (index === no - 1) {
         //  document.getElementById("custName").value = "Lucky"
           dom.setAttribute("style", `grid-area: span 12/span 24/13/25`);
@@ -241,6 +248,7 @@ if(item.player === undefined){
     }
     // tile mode
     else if (this.state.displayMode === "tile") {
+      let txtColor = "myPartName";
       let no = this.state.streamList.length;
       this.state.streamList.map((item, index) => {
         let id = item.getId();
@@ -252,23 +260,23 @@ if(item.player === undefined){
         else if (dom && this.state.disabledVedio === false) {
          dom.setAttribute("class", "ag-item");
         }
+        let dd, kk;
         if (!dom) {
           dom = document.createElement("section");
           dom.setAttribute("id", "ag-item-" + id);
-          if(this.state.disabledVedio === true){
-            dom.setAttribute("class", "ag-item2");
-          }
-          else{
-            dom.setAttribute("class", "ag-item");
-          }
+          dom.setAttribute("class", "ag-item");
           canvas.appendChild(dom);
-          item.play("ag-item-" + id);
           var box22 = document.getElementById("ag-item-" + id)
-          
+         
+         
+          dd = document.createElement("input")
+          dd.setAttribute("id", txtColor)
           var newContent = document.createTextNode(this.state.participantName); 
           item.play("ag-item-" + id);
-      
-         box22.appendChild(newContent)
+         dd.setAttribute("value", this.state.participantName)
+         dd.setAttribute("disabled", true)
+         kk =   dd.appendChild(newContent)
+         box22.appendChild(dd)
         }
         dom.setAttribute("style", `grid-area: ${tile_canvas[no][index]}`);
         item.player.resize && item.player.resize();
@@ -753,10 +761,7 @@ this.localStream.disableAudio(),
     });
 }
 else{
-  if(this.state.showButton == JSON.parse(this.teamKey)){
-    this.confirmation()
-  
-  }
+  window.location.hash = "/admin/schedule";
  
 }
   

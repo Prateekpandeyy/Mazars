@@ -71,7 +71,7 @@ import Customer from "./pages/Admin/customer/Customer";
 import adminReport from "./pages/Admin/Report/Report";
 import AdminInvoice from "./pages/Admin/Invoice/Invoice";
 import AdpayDetails from "./pages/Admin/PaymentStatusTab/Paydetails";
-
+import ReportList from "./pages/Admin/Report/ReportList"
 import LoginFun from "./components/LoginForm/LoginFun";
 //TL routes
 import TlStart from './pages/TL/Start/Start'
@@ -219,7 +219,7 @@ function App() {
             <PrivateRouteAdmin exact path="/admin/reports" component={adminReport} />
             <PrivateRouteAdmin exact path= "/admin/adinvoice" component={AdminInvoice}/>
             <PrivateRouteAdmin exact path="/admin/paydetails/:id" component={AdpayDetails} />
-
+            <PrivateRouteAdmin exact path = "/admin/reportlist" component = {ReportList} />
             <PublicRouteTL exact path="/teamleader/start" component={TlStart} />
             <PublicRouteTL exact path="/teamleader/login" component={TlLogin} />
             <PublicRouteTL exact path="/teamleader/forget-password" component={TlForgetPassword} />

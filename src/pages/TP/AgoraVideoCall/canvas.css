@@ -3,9 +3,9 @@
 }
 
 .ag-item :first-child {
-  border-radius: 6px;
+  border-radius: 0px !important;
 }
-.ag-item {
+.ag-item2 {
   border-radius: 0px;
   border: 2px #00B6ED solid;
   color : white !important;
@@ -13,11 +13,34 @@
   height: 100%;
   width: 100%;
 }
+#myPartName{
+  background: none;
+  width: 80px;
+  border: none;
 
+  position: relative;
+  bottom: 50%;
+  color: #fff;
+  left: 50%;
+  right: 50%;
+  transform: translate(-50%, -50%);
+}
+#myPartName2{
+  background: none;
+  width: 80px;
+  border: none;
+
+  position: relative;
+  bottom: 50%;
+  color: #000;
+  left: 50%;
+  right: 50%;
+  transform: translate(-50%, -50%);
+}
 .ag-item {
-  border-radius: 6px;
+  border-radius: 0px;
   border: 2px #00B6ED solid;
-  color :black !important;
+  color : black !important;
   /* background: url('../../assets/images/avatar.png') center no-repeat; */
   height: 100%;
   width: 100%;

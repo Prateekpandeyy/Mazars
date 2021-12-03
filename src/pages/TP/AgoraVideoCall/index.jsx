@@ -208,6 +208,7 @@ schdrularName;
         return;
       }
       this.state.streamList.map((item, index) => {
+        let txtColor = "myPartName";
         let id = item.getId();
         let dom = document.querySelector("#ag-item-" + id);
         if(this.state.disabledVedio === true){
@@ -216,16 +217,23 @@ schdrularName;
         else if (dom && this.state.disabledVedio === false) {
          dom.setAttribute("class", "ag-item");
         }
+        let dd, kk;
         if (!dom) {
           dom = document.createElement("section");
           dom.setAttribute("id", "ag-item-" + id);
           dom.setAttribute("class", "ag-item");
           canvas.appendChild(dom);
           var box22 = document.getElementById("ag-item-" + id)
-          var newContent = document.createTextNode(this.state.participantName);  
+         
+         
+          dd = document.createElement("input")
+          dd.setAttribute("id", txtColor)
+          var newContent = document.createTextNode(this.state.participantName); 
           item.play("ag-item-" + id);
-      
-         box22.appendChild(newContent)
+         dd.setAttribute("value", this.state.participantName)
+         dd.setAttribute("disabled", true)
+         kk =   dd.appendChild(newContent)
+         box22.appendChild(dd)
         }
         if (index === no - 1) {
           dom.setAttribute("style", `grid-area: span 12/span 24/13/25`);
@@ -242,6 +250,7 @@ schdrularName;
     }
     // tile mode
     else if (this.state.displayMode === "tile") {
+      let txtColor = "myPartName";
       let no = this.state.streamList.length;
       this.state.streamList.map((item, index) => { 
         let dom2
@@ -253,18 +262,23 @@ schdrularName;
         else if (dom && this.state.disabledVedio === false) {
          dom.setAttribute("class", "ag-item");
         }
+        let dd, kk;
         if (!dom) {
           dom = document.createElement("section");
           dom.setAttribute("id", "ag-item-" + id);
           dom.setAttribute("class", "ag-item");
           canvas.appendChild(dom);
-          item.play("ag-item-" + id);
           var box22 = document.getElementById("ag-item-" + id)
-          
-          var newContent = document.createTextNode(this.state.participantName);  
+         
+         
+          dd = document.createElement("input")
+          dd.setAttribute("id", txtColor)
+          var newContent = document.createTextNode(this.state.participantName); 
           item.play("ag-item-" + id);
-      
-         box22.appendChild(newContent)
+         dd.setAttribute("value", this.state.participantName)
+         dd.setAttribute("disabled", true)
+         kk =   dd.appendChild(newContent)
+         box22.appendChild(dd)
         }
         dom.setAttribute("style", `grid-area: ${tile_canvas[no][index]}`);
         item.player.resize && item.player.resize();

@@ -7,7 +7,7 @@ import { baseUrl, baseUrl3 } from "../../../config/config";
 import './Admin.css';
 import Select from 'react-select';
 import Layout from "../../../components/Layout/Layout";
-import { Typography } from '@material-ui/core';
+import { Typography, Button } from '@material-ui/core';
 import Mandatory from '../../../components/Common/Mandatory';
 import { useHistory } from 'react-router';
 const Report = () => {
@@ -219,7 +219,7 @@ const mapAppointmentData = ((appiontmentData) => ({
         formData.append("tds", Number(value.tds));
         formData.append("net_amount", Number(value.net_amount));
         formData.append("amount_received", Number(value.amountReceived));
-        formData.append("uid", userid)
+        formData.append("uid", JSON.parse(userid))
         formData.append("t", Math.floor(Math.random() * 110000))
    axios({
      method : "POST",
@@ -327,7 +327,15 @@ let cc = []
         <>
           <Layout adminDashboard="adminDashboard" adminUserId={userid}>
           <div className="adminForm">
-          <Typography variant="h4">Admin Report</Typography>
+         <div className="row">
+           <div className="col-md-6">
+           <Typography variant="h4">Admin Report</Typography>
+         
+             </div>
+             <div className="col-md-6">
+             <Button variant = "contained" color="primary" onClick = {() => history.goBack()}>Go Back </Button>
+               </div>
+           </div>
   <form onSubmit={handleSubmit(onSubmit)} autocomplete="off">
     <div className="row">
       <div className="col-md-3">
