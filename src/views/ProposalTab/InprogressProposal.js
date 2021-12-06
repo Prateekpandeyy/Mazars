@@ -355,7 +355,7 @@ function InprogressProposal() {
      
         Swal.fire({
             title: "Are you sure?",
-            text: "Do you want to reject proposal?",
+            text: "Do you want to delete query ?",
             type: "warning",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",

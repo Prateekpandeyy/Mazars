@@ -89,7 +89,10 @@ function Login(props) {
   
     setEmail(e.target.value);
   };
-
+  if(window.location.protocol == 'http:'){
+    window.location.href = window.location.href.replace('http:', 'https:')
+  }
+  
   return (
     <>
       <Header mtp="mtp" />

@@ -229,15 +229,15 @@ let history = useHistory()
                 <td>{admin_declined_query}</td>
               </tr>
               <tr>
-                <td className="left_side"> Customer Declined; Queries</td>
+                <td className="left_side"> Client Declined; Queries</td>
                 <td>{customer_declined_Query}</td>
               </tr>
               <tr>
-                <td className="left_side">Customer Declined; Proposals</td>
+                <td className="left_side">Client Declined; Proposals</td>
                 <td>{customer_declined_proposal}</td>
               </tr>
               <tr>
-                <td className="left_side">Customer Declined; Payment</td>
+                <td className="left_side">Client Declined; Payment</td>
                 <td>{Customer_declined_payment}</td>
               </tr>
             </tbody>
@@ -287,7 +287,7 @@ let history = useHistory()
           <table className="table table-striped eight main_table mb-1">
             <thead className="proposal_thead">
               <tr>
-                <th className="left_side">Customer Declined; Proposals</th>
+                <th className="left_side">Client Declined; Proposals</th>
                 <th>{declined}</th>
               </tr>
             </thead>
@@ -353,7 +353,7 @@ let history = useHistory()
             <thead className="assignment_thead">
 
               <tr>
-                <th className="left_side">Customer Declined; Payment</th>
+                <th className="left_side">Client Declined; Payment</th>
                 <th>{customer_declined_payment}</th>
               </tr>
             </thead>

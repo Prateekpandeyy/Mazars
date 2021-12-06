@@ -159,27 +159,7 @@ function Chatting(props) {
                         )}
 
                       </div>
-                      {/* <div class="form-group">
-                        <label>To<span className="declined">*</span></label>
-                        <select
-                          className={classNames("form-control", {
-                            "is-invalid": errors.p_to,
-                          })}
-                          name="p_to"
-                          ref={register}
-                          style={{ height: "33px" }}
-                        >
-                          <option value="">--select--</option>
-                          <option value="customer">Customer</option>
-                          <option value="tl">Team Leader</option>
-                          <option value="both">Both</option>
-                        </select>
-                        {errors.p_to && (
-                          <div className="invalid-feedback">
-                            {errors.p_to.message}
-                          </div>
-                        )}
-                      </div> */}
+                     
 
                       <div class="form-group">
                         <label>Message<span className="declined">*</span></label>

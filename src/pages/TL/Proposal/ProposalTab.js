@@ -126,7 +126,7 @@ function ProposalTab(props) {
                             Accepted; Proposals ({acceptedProposal})
                         </Tab>
                         <Tab style={tabIndex == 3 ? myStyle2 : myStyle1}>
-                            Customer Declined; Proposals ({declinedProposal})
+                            Client Declined; Proposals ({declinedProposal})
                         </Tab>
                     </TabList>
 

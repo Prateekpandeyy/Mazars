@@ -68,42 +68,23 @@ else{
             .catch((error) => {
                        });
     };
-    const exitBtn2 = () => {
-        if(ownerId === JSON.parse(userId)){
-            confirmation()
-        }
-        else{
-            history.push('/teamleader/schedule');
-        }
+    // const exitBtn2 = () => {
+    //     if(ownerId === JSON.parse(userId)){
+    //         confirmation()
+    //     }
+    //     else{
+    //         history.push('/teamleader/schedule');
+    //     }
        
 
-    }
+    // }
 const confirmation = () => {
-    console.log("done")
-    Swal.fire({
-     title: "Are you sure?",
-     text: "It will permanently deleted !",
-     type: "warning",
-     showCancelButton : true,
-     confirmButtonColor: "#3085d6",
-     cancelButtonColor: "#d33",
-     confirmButtonText: "End the call",
-     cancelButtonText: "only, just leave the call",
-    }).then((result) => {
-     if (result.value) {
-      console.log("donefixed", result)
-      axios.get(`${baseUrl}/tl/setgetschedular?id=${schId}&rtc_id=${uid}&uid=${JSON.parse(userId)}`)
+    axios.get(`${baseUrl}/tl/setgetschedular?id=${schId}&rtc_id=${uid}&uid=${JSON.parse(userId)}`)
      .then((res) =>{
        if(res){
         history.push('/teamleader/schedule');
        }
      })
-     }
-     else{
-        console.log("donefixed", result)
-      history.push('/teamleader/schedule');
-     }
-   });
   }
     return (
         <div>
@@ -169,7 +150,7 @@ const confirmation = () => {
                                         name="p_message"
                                     ></textarea>
                                 </div>
-                                <button type="button" className="btn btn-danger" onClick={() => exitBtn2()}>Cancel </button>
+                                {/* <button type="button" className="btn btn-danger" onClick={() => exitBtn2()}>Cancel </button> */}
                                 <button type="submit" className="btn btn-primary mx-2">
                                     Submit
                                 </button>

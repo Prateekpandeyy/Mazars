@@ -115,7 +115,7 @@ function InCompleteData({ CountIncomplete }) {
       },
     },
     {
-      text: "Customer Name",
+      text: "Client Name",
       dataField: "name",
       sort: true,
       headerStyle: () => {

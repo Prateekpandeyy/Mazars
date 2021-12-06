@@ -95,7 +95,7 @@ function QueriesRecevied(props) {
                 res.data.history_queries[0].date_of_allocation,
             });
             let a = moment(res.data.result[0].final_date);
-            let b = moment(res.data.history_queries[0].acpt_reject_time)
+            let b = moment(res.data.proposal_queries[0].cust_accept_date)
             let c = a.diff(b)
             let d = moment.duration(c)
             let finalDate = d.days() + 1;

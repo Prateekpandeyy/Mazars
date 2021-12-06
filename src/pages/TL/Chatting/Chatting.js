@@ -194,7 +194,7 @@ const [showTl, setShowTl] = useState(false)
                           style={{ height: "33px" }}
                         >
                           <option value="">--select--</option>
-                          <option value="customer">Customer</option>
+                          <option value="customer">Client</option>
                         
                           <>
                           <option value="tp">Tax Professional</option>

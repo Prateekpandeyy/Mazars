@@ -397,7 +397,7 @@ const [email2, setEmail2] = useState();
 
         <div className="form">
           <div className="heading">
-            <h2>Customer Register</h2>
+            <h2>Client Register</h2>
           </div>
           <>
             <div>

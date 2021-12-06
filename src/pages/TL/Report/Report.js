@@ -142,7 +142,7 @@ const Report = () => {
                </span>
                <span>
                <input type="checkbox" ref={register} name="cust_id" id="cust_id" checked disabled></input>
-               <label htmlFor="cust_id">Customer Id</label>
+               <label htmlFor="cust_id">Client Id</label>
             </span>
             <span>
                <input type="checkbox" ref={register} name="basicCategory" id="basicCategory" checked disabled></input>

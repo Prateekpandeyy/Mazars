@@ -1,26 +1,16 @@
 import React from "react";
 import { merge } from "lodash";
 import AgoraRTC from "agora-rtc-sdk";
-import MicNoneIcon from '@material-ui/icons/MicNone';
-import MicOffIcon from '@material-ui/icons/MicOff';
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import "./canvas.css";
 import "../../../assets/fonts/css/icons.css";
-import {
-  Modal,
-  ModalTitle,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  Button,
-} from "reactstrap";
 import RecordingModal from "./RecordingModal";
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import { green ,red} from '@material-ui/core/colors';
 import recImg from "../../../loader.gif";
 import Cookies from "js-cookie"
-
+import Swal from "sweetalert2";
 const tile_canvas = {
   "1": ["span 12/span 24"],
   "2": ["span 12/span 12/13/25", "span 12/span 12/13/13"],
@@ -232,15 +222,41 @@ schdrularName;
          box22.appendChild(dd)
         }
         if (index === no - 1) {
-          dom.setAttribute("style", `grid-area: span 12/span 24/13/25`);
-        } else {
-          dom.setAttribute(
-            "style",
-            `grid-area: span 3/span 4/${4 + 3 * index}/25;
-                    z-index:1;width:calc(100% - 20px);height:calc(100% - 20px)`
-          );
-        }
-
+          
+          //  document.getElementById("custName").value = "Lucky"
+            dom.setAttribute("style", `grid-area: span 12/span 24/13/25`);
+            
+          } else {
+            let f = false;
+            let share22;
+           if(this.state.stateSharing === true){
+             share22 = true;
+           }
+           else{
+             share22 = false;
+           }
+            dom.setAttribute(
+              "style",
+              `grid-area: span 3/span 4/${4 + 3 * index}/25;
+                      z-index:1;width:calc(100% - 20px);height:calc(100% - 20px)`
+            );
+            dom.addEventListener('click', function (e){
+            
+              if(f === false){
+                f = true
+                dom.setAttribute("style", `grid-area: span 12/span 24/13/25`);
+              }
+              else{
+                f = false
+                dom.setAttribute(
+                  "style",
+                  `grid-area: span 3/span 4/${4 + 3 * index}/25;
+                          z-index:1;width:calc(100% - 20px);height:calc(100% - 20px)`
+                );
+              }
+            
+            })
+          }
         if(item.player === undefined){
 
         }
@@ -399,9 +415,18 @@ schdrularName;
   
       axios.get(`${baseUrl}/tl/setgetschedular?id=${this.props.id}&uid=${this.state.showButton}&chname=${this.channelName}`)
       .then((res) => {
-       if(res.data.result.rtc_id == uid){
-        window.location.hash = "/teamleader/schedule";
-       }
+        if(res.data.result.rtc_id == uid){
+          Swal.fire({
+            title: "success",
+            html : "Thank you for attending this meeting, this meeting is going to be ended by host",
+            icon : "success"
+          })
+            setTimeout((e) => {
+              window.location.hash = "/teamleader/schedule";
+            }, 500)
+           
+           }
+          
       })
      
     
@@ -521,10 +546,10 @@ schdrularName;
     if (this.state.stateSharing) {
       this.shareClient && this.shareClient.unpublish(this.shareStream);
       this.shareStream && this.shareStream.close();
-      this.state.stateSharing = false;
+     this.setState({stateSharing : false})
     } else {
-    
-      this.state.stateSharing = true;
+      
+      this.setState({stateSharing : true})
       let $ = this.props; 
     
       this.shareClient = AgoraRTC.createClient({ mode: $.transcode, controls : true});
@@ -547,7 +572,7 @@ schdrularName;
               if ($.attendeeMode !== "audience") {
                 this.addStream(this.shareStream, true);
                 this.shareClient.publish(this.shareStream, (err) => {
-             
+                  this.localStream = this.shareStream;
                 });
                
               }

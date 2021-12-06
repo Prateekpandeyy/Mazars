@@ -15,12 +15,14 @@ import {
   ModalFooter,
   Button,
 } from "reactstrap";
+
 import RecordingModal from "./RecordingModal";
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import { green ,red} from '@material-ui/core/colors';
 import recImg from "../../../loader.gif";
 import Cookies from "js-cookie";
 import Swal from "sweetalert2";
+import { icons } from "antd/lib/image/PreviewGroup";
 const tile_canvas = {
   "1": ["span 12/span 24"],
   "2": ["span 12/span 12/13/25", "span 12/span 12/13/13"],
@@ -89,6 +91,7 @@ class AgoraCanvas extends React.Component {
       addRemote : null,
       disabledVedio : false,
       getAdId :'',
+      remoteRemove22: false,
       participantName : 'participant'
     };
 
@@ -228,16 +231,34 @@ schdrularName;
          box22.appendChild(dd)
         }
        
+         
         if (index === no - 1) {
-        //  document.getElementById("custName").value = "Lucky"
-          dom.setAttribute("style", `grid-area: span 12/span 24/13/25`);
-        } else {
-          dom.setAttribute(
-            "style",
-            `grid-area: span 3/span 4/${4 + 3 * index}/25;
-                    z-index:1;width:calc(100% - 20px);height:calc(100% - 20px)`
-          );
-        }
+          
+          //  document.getElementById("custName").value = "Lucky"
+            dom.setAttribute("style", `grid-area: span 12/span 24/13/25`);
+            
+          } else {
+            let f = false;
+            dom.setAttribute(
+              "style",
+              `grid-area: span 3/span 4/${4 + 3 * index}/25;
+                      z-index:1;width:calc(100% - 20px);height:calc(100% - 20px)`
+            );
+            dom.addEventListener('click', function (e){
+              if(f === false){
+                f = true
+                dom.setAttribute("style", `grid-area: span 12/span 24/13/25`);
+              }
+              else{
+                f = false
+                dom.setAttribute(
+                  "style",
+                  `grid-area: span 3/span 4/${4 + 3 * index}/25;
+                          z-index:1;width:calc(100% - 20px);height:calc(100% - 20px)`
+                );
+              }
+            })
+          }
 if(item.player === undefined){
 
 }
@@ -401,7 +422,15 @@ if(item.player === undefined){
     axios.get(`${baseUrl}/tl/setgetschedular?id=${this.props.id}&uid=${this.state.showButton}&chname=${this.channelName}`)
       .then((res) => {
        if(res.data.result.rtc_id == uid){
-        window.location.hash = "/admin/schedule";
+      Swal.fire({
+        title: "success",
+        html : "Thank you for attending this meeting, this meeting is going to be ended by host",
+        icon : "success"
+      })
+        setTimeout((e) => {
+          window.location.hash = "/admin/schedule";
+        }, 3000)
+       
        }
       })
      
@@ -527,8 +556,9 @@ if(item.player === undefined){
       this.shareClient && this.shareClient.unpublish(this.shareStream);
       this.shareStream && this.shareStream.close();
       this.state.stateSharing = false;
+      
     } else {
-    
+           
       this.state.stateSharing = true;
       let $ = this.props; 
     
@@ -552,7 +582,7 @@ if(item.player === undefined){
               if ($.attendeeMode !== "audience") {
                 this.addStream(this.shareStream, true);
                 this.shareClient.publish(this.shareStream, (err) => {
-             
+             this.localStream = this.shareStream;
                 });
                
               }
@@ -903,6 +933,7 @@ const recordingBtnOff = (
          uid = {this.state.getAdId}
          ownerId = {this.state.showButton}
          />
+
                 
           {exitBtn}
           {videoControlBtn}

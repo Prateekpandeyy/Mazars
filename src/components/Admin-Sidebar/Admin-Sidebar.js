@@ -340,7 +340,7 @@ const handleClick = () => {
                  <NavLink to={"/admin/customers"}>
                    <i class="fa fa-users"></i>
                    <span class="menu-title" data-i18n="">
-                   Customers
+                  Client
                   </span>
                  </NavLink>
                </li>

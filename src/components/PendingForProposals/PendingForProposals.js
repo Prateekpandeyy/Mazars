@@ -123,7 +123,7 @@ function PendingForProposals({ CountPendingProposal }) {
       sort: true,
     },
     {
-      text: "Customer Name",
+      text: "Client Name",
       dataField: "name",
       sort: true,
       headerStyle: () => {

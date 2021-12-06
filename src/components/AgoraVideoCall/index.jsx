@@ -7,6 +7,7 @@ import "./canvas.css";
 import "../../assets/fonts/css/icons.css";
 import Cookies from "js-cookie";
 import {baseUrl} from "../../config/config";
+import Swal from "sweetalert2";
 var customer_id = "d339577a294c458c86d8a78b474141fc";
 var customer_secret = "1a61a4bef2144e78be6f671d5cf3fc32";
 
@@ -177,14 +178,32 @@ console.log("customerName", this.customerName)
          box22.appendChild(dd)
         }
         if (index === no - 1) {
-          dom.setAttribute("style", `grid-area: span 12/span 24/13/25`);
-        } else {
-          dom.setAttribute(
-            "style",
-            `grid-area: span 3/span 4/${4 + 3 * index}/25;
-                    z-index:1;width:calc(100% - 20px);height:calc(100% - 20px)`
-          );
-        }
+          
+          //  document.getElementById("custName").value = "Lucky"
+            dom.setAttribute("style", `grid-area: span 12/span 24/13/25`);
+            
+          } else {
+            let f = false;
+            dom.setAttribute(
+              "style",
+              `grid-area: span 3/span 4/${4 + 3 * index}/25;
+                      z-index:1;width:calc(100% - 20px);height:calc(100% - 20px)`
+            );
+            dom.addEventListener('click', function (e){
+              if(f === false){
+                f = true
+                dom.setAttribute("style", `grid-area: span 12/span 24/13/25`);
+              }
+              else{
+                f = false
+                dom.setAttribute(
+                  "style",
+                  `grid-area: span 3/span 4/${4 + 3 * index}/25;
+                          z-index:1;width:calc(100% - 20px);height:calc(100% - 20px)`
+                );
+              }
+            })
+          }
 
        if(item.player !== undefined){
         item.player.resize && item.player.resize();
@@ -337,7 +356,15 @@ console.log("customerName", this.customerName)
     axios.get(`${baseUrl}/tl/setgetschedular?id=${this.props.id}&uid=${JSON.parse(this.userId)}&chname=${this.channelName}`)
     .then((res) => {
      if(res.data.result.rtc_id == uid){
-      window.location.hash = "/customer/schedule";
+      Swal.fire({
+        title: "success",
+        html : "Thank you for attending this meeting, this meeting is going to be ended by host",
+        icon : "success"
+      })
+      setTimeout((e) =>{
+        window.location.hash = "/customer/schedule";
+      })
+   
      }
     })
   };
