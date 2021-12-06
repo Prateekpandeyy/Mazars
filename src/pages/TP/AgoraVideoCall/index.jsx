@@ -8,6 +8,7 @@ import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import "./canvas.css";
 import "../../../assets/fonts/css/icons.css";
+import Swal from "sweetalert2";
 import {
   Modal,
   ModalTitle,

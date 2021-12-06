@@ -52,9 +52,14 @@ function LoginForm() {
     }
 
   }
-if(window.location.protocol == 'http:'){
-  window.location.href = window.location.href.replace()
-}
+  if(window.location.origin === "http://localhost:3000"){
+    console.log("its local server")
+  }
+  else if(window.location.protocol == 'http:'){
+    window.location.href = window.location.href.replace('http:', 'https:')
+  }
+  
+
   const onSubmit = (value) => {
 
     setLoading(true)
