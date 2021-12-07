@@ -90,14 +90,9 @@ function Login(props) {
     setEmail(e.target.value);
   };
  
-  if(window.location.origin === "http://localhost:3000"){
-    console.log("its local server")
+  if(window.location.origin === "http://mazars.multitvsolution.com" && window.location.protocol == 'http:'){
+    window.location.href = window.location.href.replace('http:', 'https:')
   }
-  else if(window.location.protocol == 'http:'){
-      console.log("done", window.location)
-      window.location.href = window.location.href.replace('http:', 'https:')
-    }
- 
   
   return (
     <>

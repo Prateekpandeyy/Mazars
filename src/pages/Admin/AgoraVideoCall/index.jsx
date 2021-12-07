@@ -92,7 +92,9 @@ class AgoraCanvas extends React.Component {
       disabledVedio : false,
       getAdId :'',
       remoteRemove22: false,
-      participantName : 'participant'
+      participantName : 'participant',
+      shareValue : false,
+      vedTrack : null
     };
 
     this.toggleModal = this.toggleModal.bind(this);
@@ -113,7 +115,7 @@ class AgoraCanvas extends React.Component {
  accessKey = "AKIASTLI4S4OJH3WGMFM";
  secretKey = "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";
 allrecording;
-
+localVedioTrack;
   componentWillMount() {
     let $ = this.props;
   
@@ -168,9 +170,11 @@ allrecording;
         btnGroup.classList.remove("active");
       }, 2000);
     });
+   
     this.subscribeStreamEvents()
     this.getSchedulerData()
     this.accuire();
+  
     // this.accuire()
   }
 schdrularName;
@@ -305,7 +309,7 @@ if(item.player === undefined){
     }
     // screen share mode (tbd)
     else if (this.state.displayMode === "share") {
-      console.log("share")
+    
     }
   }
 
@@ -379,7 +383,7 @@ if(item.player === undefined){
   axios.get(`${apiData}`)
   .then((res) =>{
    
-   console.log("response", res.data.length)
+  
     if(res.data.length === 0 ){
      
     }
@@ -458,18 +462,28 @@ if(item.player === undefined){
   };
 
   handleCamera = (e) => {
+   if(this.state.readyState === false){
+     return false
+   }
+   else{
     this.setState({disabledVedio : !this.state.disabledVedio})
     e.currentTarget.classList.toggle("off");
     this.localStream.isVideoOn()
       ? this.localStream.disableVideo()
       : this.localStream.enableVideo();
+   }
   };
 
   handleMic = (e) => {
+   if(this.state.readyState === false){
+
+   }
+   else{
     e.currentTarget.classList.toggle("off");
     this.localStream.isAudioOn()
       ? this.localStream.disableAudio()
       : this.localStream.enableAudio();
+   }
   };
 
   switchDisplay = (e) => {
@@ -552,23 +566,32 @@ if(item.player === undefined){
    }
  
   sharingScreen = (e) => {
-    if (this.state.stateSharing) {
-      this.shareClient && this.shareClient.unpublish(this.shareStream);
-      this.shareStream && this.shareStream.close();
-      this.state.stateSharing = false;
-      
-    } else {
-           
+    let cc
+    var dd;
+    var kk;
+    if (this.state.shareValue === true) {
+     
+      this.setState({shareValue : false})
+    
+                this.shareStream.replaceTrack(this.state.vedTrack)
+  
+    } else if(this.state.shareValue === false) {
+      kk = this.localStream.getVideoTrack()
+     this.setState({vedTrack : kk})
+     
+    
+           this.setState({shareValue : true})
       this.state.stateSharing = true;
       let $ = this.props; 
     
-      this.shareClient = AgoraRTC.createClient({ mode: $.transcode, controls : true});
+      this.shareClient = AgoraRTC.createClient({ mode: $.transcode});
 
       this.shareClient.init($.appId, () => {
        
       //  this.subscribeStreamEvents();
         this.shareClient.join($.appId, $.channel, $.uid, (uid) => {
           // this.state.uid = uid;
+          
           this.setState({uid : uid})
             // this.removeStream(uid)
           this.shareStream = this.streamInitSharing(
@@ -578,15 +601,19 @@ if(item.player === undefined){
           );
          
           this.shareStream.init(
+            
             () => {
+              
               if ($.attendeeMode !== "audience") {
-                this.addStream(this.shareStream, true);
-                this.shareClient.publish(this.shareStream, (err) => {
-             this.localStream = this.shareStream;
-                });
+                 cc = this.shareStream.getVideoTrack();
+                  dd = this.localStream.getVideoTrack();
+               
+                this.localStream.replaceTrack(cc)
+             
                
               }
               this.setState({ readyState: true });
+              console.log("final", this.localStream.getVideoTrack())
             },
             (err) => {
             
@@ -814,7 +841,8 @@ else{
       this.props.attendeeMode === "video" ? (
         <span
           onClick={this.handleCamera}
-          className="ag-btn videoControlBtn"
+          className={this.state.readyState ? "ag-btn videoControlBtn" : "ag-btn videoControlBtn disabled"}
+         
           title="Enable/Disable Video"
         >
           <i className="ag-icon ag-icon-camera"></i>
