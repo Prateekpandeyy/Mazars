@@ -92,7 +92,7 @@ class AgoraCanvas extends React.Component {
       disabledVedio : false,
       getAdId :'',
       remoteRemove22: false,
-      participantName : 'participant',
+      participantName : '',
       shareValue : false,
       vedTrack : null
     };
@@ -573,7 +573,7 @@ if(item.player === undefined){
      
       this.setState({shareValue : false})
     
-                this.shareStream.replaceTrack(this.state.vedTrack)
+                this.localStream.replaceTrack(this.state.vedTrack)
   
     } else if(this.state.shareValue === false) {
       kk = this.localStream.getVideoTrack()

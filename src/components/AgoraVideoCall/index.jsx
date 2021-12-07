@@ -207,9 +207,12 @@ console.log("customerName", this.customerName)
             })
           }
 
-       if(item.player !== undefined){
-        item.player.resize && item.player.resize();
-       }
+          if(item.player === undefined){
+
+          }
+                 else{
+                  item.player.resize && item.player.resize();
+                 }
       });
     }
     // tile mode
@@ -479,7 +482,7 @@ console.log("customerName", this.customerName)
      
       this.setState({shareValue : false})
     
-                this.shareStream.replaceTrack(this.state.vedTrack)
+      this.localStream.replaceTrack(this.state.vedTrack)
   
     } else if(this.state.shareValue === false) {
       kk = this.localStream.getVideoTrack()

@@ -23,15 +23,15 @@
 }
 #myPartName{
   background: none;
-  width: 80px;
+  width: 100px;
   border: none;
 
   position: relative;
-  bottom: 50%;
+  bottom: 20%;
   color: #fff;
-  left: 50%;
-  right: 50%;
-  transform: translate(-50%, -50%);
+  left: 20%;
+ 
+  transform: translate(-20%, -20%);
 }
 #myPartName2{
   background: none;
@@ -39,11 +39,11 @@
   border: none;
 
   position: relative;
-  bottom: 50%;
+  bottom: 20%;
   color: #000;
-  left: 50%;
-  right: 50%;
-  transform: translate(-50%, -50%);
+  left: 20%;
+
+  transform: translate(-20%, -20%);
 }
 .ag-item {
   border-radius: 0px;

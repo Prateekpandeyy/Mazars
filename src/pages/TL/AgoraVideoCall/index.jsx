@@ -562,7 +562,7 @@ schdrularName;
      
       this.setState({shareValue : false})
     
-                this.shareStream.replaceTrack(this.state.vedTrack)
+                this.localStream.replaceTrack(this.state.vedTrack)
   
     } else if(this.state.shareValue === false) {
       kk = this.localStream.getVideoTrack()

@@ -266,7 +266,12 @@ schdrularName;
             })
           }
 
-        item.player.resize && item.player.resize();
+          if(item.player === undefined){
+
+          }
+                 else{
+                  item.player.resize && item.player.resize();
+                 }
       });
     }
     // tile mode
@@ -561,7 +566,7 @@ schdrularName;
      
       this.setState({shareValue : false})
     
-                this.shareStream.replaceTrack(this.state.vedTrack)
+                this.localStream.replaceTrack(this.state.vedTrack)
   
     } else if(this.state.shareValue === false) {
       kk = this.localStream.getVideoTrack()
