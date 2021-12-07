@@ -455,20 +455,28 @@ schdrularName;
   };
 
   handleCamera = (e) => {
+    if(this.state.readyState === false){
+
+    }
+    else{
     this.setState({disabledVedio : !this.state.disabledVedio})
     e.currentTarget.classList.toggle("off");
     this.localStream.isVideoOn()
       ? this.localStream.disableVideo()
       : this.localStream.enableVideo();
   };
-
+  }
   handleMic = (e) => {
+    if(this.state.readyState === false){
+
+    }
+    else{
     e.currentTarget.classList.toggle("off");
     this.localStream.isAudioOn()
       ? this.localStream.disableAudio()
       : this.localStream.enableAudio();
   };
-
+  }
   switchDisplay = (e) => {
     if (
       e.currentTarget.classList.contains("disabled") ||
