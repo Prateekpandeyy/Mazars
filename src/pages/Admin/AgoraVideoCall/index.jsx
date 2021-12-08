@@ -226,8 +226,6 @@ schdrularName;
           dom.setAttribute("class", "ag-item");
           canvas.appendChild(dom);
           var box22 = document.getElementById("ag-item-" + id)
-         
-         
           dd = document.createElement("input")
           dd.setAttribute("id", txtColor)
           var newContent = document.createTextNode(CommonServices.capitalizeFirstLetter(this.state.participantName)); 
