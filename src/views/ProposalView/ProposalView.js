@@ -139,7 +139,7 @@ function ProposalView(props) {
        
           if (response.data.code === 1) {
             setLoading(false)
-            var variable = "Proposal accepted successfully."
+            var variable = ""
             Alerts.SuccessNormal(variable)
             history.push({
               pathname: `/customer/proposal`,
@@ -203,12 +203,13 @@ const amountStyle  = {
     } else {
       Swal.fire({
         title: "Are you sure",
-         text: "Want to reject proposal ?",
+         text: "to reject proposal ?",
         type: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
         confirmButtonText: "Yes, rejected it!",
+       
       }).then((result) => {
         if (result.value) {
           deleteCliente(id);

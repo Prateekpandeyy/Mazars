@@ -15,14 +15,14 @@ import {
   ModalFooter,
   Button,
 } from "reactstrap";
-
+import Swal from "sweetalert2";
 import RecordingModal from "./RecordingModal";
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import { green ,red} from '@material-ui/core/colors';
 import recImg from "../../../loader.gif";
 import Cookies from "js-cookie";
-import Swal from "sweetalert2";
 import { icons } from "antd/lib/image/PreviewGroup";
+import CommonServices from "../../../common/common"
 const tile_canvas = {
   "1": ["span 12/span 24"],
   "2": ["span 12/span 12/13/25", "span 12/span 12/13/13"],
@@ -94,7 +94,8 @@ class AgoraCanvas extends React.Component {
       remoteRemove22: false,
       participantName : '',
       shareValue : false,
-      vedTrack : null
+      vedTrack : null,
+      vedOffer : ''
     };
 
     this.toggleModal = this.toggleModal.bind(this);
@@ -229,9 +230,9 @@ schdrularName;
          
           dd = document.createElement("input")
           dd.setAttribute("id", txtColor)
-          var newContent = document.createTextNode(this.state.participantName); 
+          var newContent = document.createTextNode(CommonServices.capitalizeFirstLetter(this.state.participantName)); 
           item.play("ag-item-" + id);
-         dd.setAttribute("value", this.state.participantName)
+         dd.setAttribute("value", CommonServices.capitalizeFirstLetter(this.state.participantName))
          dd.setAttribute("disabled", true)
          kk =   dd.appendChild(newContent)
          box22.appendChild(dd)
@@ -795,12 +796,12 @@ this.localStream.disableAudio())
     data: data,
   })
   .then(json => 
-   
-    this.toggleModal(json) ,
-   
+  
+    this.setState({vedOffer : json}),
      this.setState({showRecBtn : true}),
      this.localStream.disableVideo(),
 this.localStream.disableAudio(),
+this.del(),
     ) 
     .catch((error) => {
       
@@ -813,7 +814,25 @@ else{
   
 };
 
-
+ del = (e) => {
+  Swal.fire({
+  title: "End this vedio call for everyone?",
+  // text: "End this vedio call for everyone",
+   type: "warning",
+   showCancelButton : true,
+   confirmButtonColor: "#3085d6",
+   cancelButtonColor: "#d33",
+   confirmButtonText: "End the call",
+   cancelButtonText : "Just leave the meeting"
+  }).then((result) => {
+   if (result.value) {
+    this.toggleModal()
+   }
+   else{
+    window.location.hash = "/admin/schedule";
+   }
+ });
+}
   render() {
 
     

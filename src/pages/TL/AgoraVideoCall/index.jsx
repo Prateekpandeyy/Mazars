@@ -11,6 +11,7 @@ import { green ,red} from '@material-ui/core/colors';
 import recImg from "../../../loader.gif";
 import Cookies from "js-cookie"
 import Swal from "sweetalert2";
+import CommonServices from "../../../common/common"
 const tile_canvas = {
   "1": ["span 12/span 24"],
   "2": ["span 12/span 12/13/25", "span 12/span 12/13/13"],
@@ -82,6 +83,7 @@ class AgoraCanvas extends React.Component {
       getAdId :'', 
       vedTrack : null,
       shareValue : false,
+      vedOffer : ''
     };
 
     this.toggleModal = this.toggleModal.bind(this);
@@ -220,7 +222,7 @@ schdrularName;
           dd.setAttribute("id", txtColor)
           var newContent = document.createTextNode(this.state.participantName); 
           item.play("ag-item-" + id);
-         dd.setAttribute("value", this.state.participantName)
+          dd.setAttribute("value", CommonServices.capitalizeFirstLetter(this.state.participantName))
          dd.setAttribute("disabled", true)
          kk =   dd.appendChild(newContent)
          box22.appendChild(dd)
@@ -554,9 +556,8 @@ schdrularName;
        });
     
     }
- 
-     
    }
+
    sharingScreen = (e) => {
     if (this.state.stateSharing) {
       this.shareClient && this.shareClient.unpublish(this.shareStream);
@@ -602,6 +603,8 @@ schdrularName;
       });
     }
   };
+
+
   streamInitSharing = (uid, attendeeMode, videoProfile, config) => {
     let defaultConfig = {
       streamID: uid,
@@ -632,7 +635,6 @@ schdrularName;
 
 
   CreateS3Folder = (uid) =>{
-   
     axios
             .get(`https://virtualapi.multitvsolution.com/s3/createMPObject.php?folder_id=${JSON.parse(uid)}`)
             .then((res) => {
@@ -642,17 +644,12 @@ schdrularName;
 
 
 encodedString = "ZDMzOTU3N2EyOTRjNDU4Yzg2ZDhhNzhiNDc0MTQxZmM6MWE2MWE0YmVmMjE0NGU3OGJlNmY2NzFkNWNmM2ZjMzI=";
-
-
-
-
 sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 //get recording status
 async GetRecordingStatus(json){
-    
 
   await this.sleep(3000); 
   var resourceId = json.data.resourceId;
@@ -682,7 +679,6 @@ async GetRecordingStatus(json){
     })
     .catch((error) => console.log(error));
 }
-
 
 
 //start recording
@@ -751,8 +747,6 @@ async startRecording(key){
     recordDisplay:false
   })
 }
-
-
  //stop recording 
  stopRecording = () => {
   if(this.state.showRecBtn === true){
@@ -784,12 +778,13 @@ this.localStream.disableAudio())
     data: data,
   })
   .then(json => 
-    
-    this.toggleModal(json) ,
+    this.setState({vedOffer : json}),
+   
    
      this.setState({showRecBtn : true}),
      this.localStream.disableVideo(),
 this.localStream.disableAudio(),
+this.del(),
     ) 
     .catch((error) => {
       
@@ -801,11 +796,26 @@ else{
 }
   
 };
-
-
-  render() {
-
-    
+del = (e) => {
+  Swal.fire({
+    title: "End this vedio call for everyone?",
+    // text: "End this vedio call for everyone",
+     type: "warning",
+     showCancelButton : true,
+     confirmButtonColor: "#3085d6",
+     cancelButtonColor: "#d33",
+     confirmButtonText: "End the call",
+     cancelButtonText : "Just leave the meeting"
+    }).then((result) => {
+     if (result.value) {
+      this.toggleModal()
+     }
+   else{
+    window.location.hash = "/teamleader/schedule";
+   }
+ });
+}
+  render() {    
     const style = {
       display: "grid",
       gridGap: "50px 26px",
@@ -921,9 +931,7 @@ const recordingBtnOff = (
             
   </span>
 );
-
-
-    return (
+     return (
       <>
       <div id="ag-canvas" style={style}>   
         <div className="ag-btn-group">

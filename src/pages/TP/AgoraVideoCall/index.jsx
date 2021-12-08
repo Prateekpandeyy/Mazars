@@ -9,6 +9,7 @@ import { baseUrl } from "../../../config/config";
 import "./canvas.css";
 import "../../../assets/fonts/css/icons.css";
 import Swal from "sweetalert2";
+import CommonServices from "../../../common/common"
 import {
   Modal,
   ModalTitle,
@@ -94,6 +95,7 @@ class AgoraCanvas extends React.Component {
       getAdId :'', 
       vedTrack : null,
       shareValue : false,
+      vedOffer: ''
     };
 
     this.toggleModal = this.toggleModal.bind(this);
@@ -234,7 +236,7 @@ schdrularName;
           dd.setAttribute("id", txtColor)
           var newContent = document.createTextNode(this.state.participantName); 
           item.play("ag-item-" + id);
-         dd.setAttribute("value", this.state.participantName)
+          dd.setAttribute("value", CommonServices.capitalizeFirstLetter(this.state.participantName))
          dd.setAttribute("disabled", true)
          kk =   dd.appendChild(newContent)
          box22.appendChild(dd)
@@ -786,10 +788,12 @@ axios({
   data: data,
 })
 .then(json => 
-  this.toggleModal(json) ,
-   this.setState({showRecBtn : true}),
-   this.localStream.disableVideo(),
-   this.localStream.disableAudio(),
+  this.setState({vedOffer : json}),
+   
+   
+     this.setState({showRecBtn : true}),
+     this.localStream.disableVideo(),
+this.localStream.disableAudio(),
   ) 
   .catch((error) => {
     
@@ -801,7 +805,25 @@ window.location.hash = "/taxprofessional/schedule";
 }
 
 };
-
+del = (e) => {
+  Swal.fire({
+    title: "End this vedio call for everyone?",
+    // text: "End this vedio call for everyone",
+   type: "warning",
+   showCancelButton : true,
+   confirmButtonColor: "#3085d6",
+   cancelButtonColor: "#d33",
+   confirmButtonText: "End the call",
+   cancelButtonText : "Just leave the meeting"
+  }).then((result) => {
+   if (result.value) {
+    this.toggleModal()
+   }
+   else{
+    window.location.hash = "/teamleader/schedule";
+   }
+ });
+}
 
 render() {
 

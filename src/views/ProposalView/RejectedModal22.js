@@ -46,7 +46,7 @@ let history = useHistory()
        
         if (response.data.code === 1) {
           setLoading(false)
-          Swal.fire("Rejected!", "Proposal rejected successfully.", "success");
+          Swal.fire("Rejected!", "", "success");
           history.push({
             pathname: `/customer/proposal`,
             index: 0,

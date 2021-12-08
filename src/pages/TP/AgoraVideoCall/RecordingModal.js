@@ -89,8 +89,8 @@ function RecordingModal({
       }
     return (
         <div>
-            <Modal isOpen={isOpen} toggle={toggle} size="md">
-                <ModalHeader toggle={toggle}>
+            <Modal isOpen={isOpen}  size="md">
+                <ModalHeader>
                 Minutes of meeting
                 </ModalHeader>
                 <ModalBody>
