@@ -96,7 +96,7 @@ function PendingForAllocation() {
       },
     },
     {
-      text: "Customer Name",
+      text: "Clinet Name",
       dataField: "name",
       sort: true,
       headerStyle: () => {

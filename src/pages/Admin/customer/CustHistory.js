@@ -27,19 +27,18 @@ function CustHistory({ history, toggle,modal }) {
   return (
     <div>
        <Modal isOpen={modal} fade={false} toggle={toggle}>
-        <ModalHeader toggle={toggle}>Customer Details</ModalHeader>
+        <ModalHeader toggle={toggle}>Query Details</ModalHeader>
         <ModalBody>
           <table class="table table-bordered">
-            {/* <thead>
+            <thead>
               <tr>
                
-                <th scope="row">Query Raised</th>
-                <th scope="row">Query Completed</th>
+             
                 
-                <th scope="row">Query Inprogress</th>
-                <th scope="row">Query Declined</th>
+                <th scope="row">Query Stages</th>
+                <th scope="row">Total</th>
               </tr>
-            </thead> */}
+            </thead>
 
             {history != undefined 
               ? 

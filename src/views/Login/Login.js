@@ -52,6 +52,11 @@ function LoginForm() {
     }
 
   }
+  if(window.location.origin === "http://mazars.multitvsolution.com" && window.location.protocol == 'http:'){
+    window.location.href = window.location.href.replace('http:', 'https:')
+  }
+  
+  
 
   const onSubmit = (value) => {
 
@@ -107,7 +112,7 @@ function LoginForm() {
             <div className="signBtn">
               <div className="boxOverlay">
                 <Typography variant="h4" style={{ "margin": "5px auto", "color": "#fff" }}>
-                  For new customers
+                  For new Client
                 </Typography>
                 <button className="btn btn-success">
                   <Link className="SignUpLink"
@@ -123,7 +128,7 @@ function LoginForm() {
           </div>
           <div className="signUp">
             <Typography variant="h4" style={{ "margin": "5px auto", "color": "#2b345f" }}>
-              For existing customers
+              For existing Client
             </Typography>
             {
               show ? <div className="customForm">

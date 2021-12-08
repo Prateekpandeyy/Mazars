@@ -277,7 +277,7 @@ function AllQueriesData() {
                                         }}
                                     >
                                         <i
-                                            class="fa fa-comments-o"
+                                            className="fa fa-comments-o"
                                             style={{
                                                 fontSize: 16,
                                                 cursor: "pointer",
@@ -288,7 +288,7 @@ function AllQueriesData() {
                                 </div>
                                 <div title="View Discussion Message">
                                     <i
-                                        class="fa fa-comments-o"
+                                        className="fa fa-comments-o"
                                         style={{
                                             fontSize: 16,
                                             cursor: "pointer",
@@ -347,7 +347,7 @@ function AllQueriesData() {
                                     }}
                                 >
                                     <i
-                                        class="fa fa-comments-o"
+                                        className="fa fa-comments-o"
                                         style={{
                                             fontSize: 16,
                                             cursor: "pointer",
@@ -359,7 +359,7 @@ function AllQueriesData() {
 }
                                 <div title="View Discussion Message">
                                     <i
-                                        class="fa fa-comments-o"
+                                        className="fa fa-comments-o"
                                         style={{
                                             fontSize: 16,
                                             cursor: "pointer",
@@ -419,7 +419,7 @@ function AllQueriesData() {
                         </Col>
                         <Col md="3">
                             <div style={{ display: "flex", justifyContent: "space-around" }}>
-                                <Link to="/customer/select-category" class="btn btn-primary">
+                                <Link to="/customer/select-category" className="btn btn-primary">
                                     Fresh Query
                                 </Link>
                             </div>
@@ -442,12 +442,13 @@ function AllQueriesData() {
                                <div className="tableFixHead">
                                 <BootstrapTable
                                     bootstrap4
-                                    keyField="id"
+                                    keyField="assign_no"
                                     data={query}
                                     columns={columns}
-                                    rowIndex
+                                  rowIndex
                                     classes="table-responsive"
                                 />
+                               
                                 </div>
                             
                     <AdditionalQueryModal

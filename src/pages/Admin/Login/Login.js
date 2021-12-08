@@ -89,7 +89,11 @@ function Login(props) {
   
     setEmail(e.target.value);
   };
-
+ 
+  if(window.location.origin === "http://mazars.multitvsolution.com" && window.location.protocol == 'http:'){
+    window.location.href = window.location.href.replace('http:', 'https:')
+  }
+  
   return (
     <>
       <Header mtp="mtp" />

@@ -202,8 +202,8 @@ const amountStyle  = {
       setCheckerror("Please , You have to select")
     } else {
       Swal.fire({
-        title: "Are you sure to reject proposal?",
-        // text: "Want to reject proposal ?",
+        title: "Are you sure",
+         text: "Want to reject proposal ?",
         type: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",

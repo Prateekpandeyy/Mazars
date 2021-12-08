@@ -424,8 +424,8 @@ function TaxProfessionalFilter(props) {
                       style={{ height: "33px" }}
                     >
                       <option value="">--select--</option>
-                      <option value="3">Customer Declined; Proposals</option>
-                      <option value="4">Customer Declined; Payment</option>
+                      <option value="3">Client Declined; Proposals</option>
+                      <option value="4">Client Declined; Payment</option>
                     </select>
                   )}
 
@@ -439,7 +439,7 @@ function TaxProfessionalFilter(props) {
                       <option value="">--select--</option>
                       <option value="1">Inprogress; Proposals</option>
                       <option value="2">Accepted; Proposals</option>
-                      <option value="3">Customer Declined; Proposals</option>
+                      <option value="3">Client Declined; Proposals</option>
                     </select>
                   )}
 

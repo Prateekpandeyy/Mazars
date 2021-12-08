@@ -38,7 +38,7 @@ function BasicQuery({qstatus, p, diaplaySpecific, queryDocs, year, purpose, decl
               <td>{CommonServices.changeFormateDate(p.created)}</td>
             </tr>
             <tr>
-              <th scope="row">Customer ID</th>
+              <th scope="row">Client ID</th>
               <td>{p.email}</td>
             </tr>
             <tr>
@@ -136,7 +136,7 @@ function BasicQuery({qstatus, p, diaplaySpecific, queryDocs, year, purpose, decl
             {
               p.is_delete == "1" ?
                 <tr>
-                  <th scope="row">Reasons for customer Decline Query</th>
+                  <th scope="row">Reasons for client Decline Query</th>
                   <td colspan="1">
                     {
                       p.decline_notes

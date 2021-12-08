@@ -6,13 +6,16 @@ import { baseUrl } from "../../../config/config";
 import CommonServices from "../../../common/common";
 import Alerts from "../../../common/Alerts";
 import { useHistory } from "react-router";
-
+import Swal from "sweetalert2";
 function RecordingModal({
-     isOpen,
+    isOpen,
     toggle,
     data,
     item, 
-    allrecording
+    allrecording,
+    schId,
+    uid,
+    ownerId
 }) {
    
     const history = useHistory();
@@ -56,7 +59,9 @@ function RecordingModal({
               
                 if (response.data.code === 1) {
                     toggle();
-                    history.push('/taxprofessional/schedule');
+                    if(ownerId === JSON.parse(userId)){
+                        confirmation()
+                    }
                    
                 }
             })
@@ -64,14 +69,29 @@ function RecordingModal({
                
             });
     };
-    const exitBtn2 = () => {
-        history.push('/taxprofessional/schedule');
-    }
+    // const exitBtn2 = () => {
+    //     if(ownerId === JSON.parse(userId)){
+    //         confirmation()
+    //     }
+    //     else{
+    //         history.push('/teamleader/schedule');
+    //     }
+       
+
+    // }
+    const confirmation = () => {
+        axios.get(`${baseUrl}/tl/setgetschedular?id=${schId}&rtc_id=${uid}&uid=${JSON.parse(userId)}`)
+        .then((res) =>{
+          if(res){
+           history.push('/taxprofessional/schedule');
+          }
+        })
+      }
     return (
         <div>
             <Modal isOpen={isOpen} toggle={toggle} size="md">
                 <ModalHeader toggle={toggle}>
-                    Form
+                Minutes of meeting
                 </ModalHeader>
                 <ModalBody>
                     <form onSubmit={handleSubmit(onSubmit)}>
@@ -131,7 +151,7 @@ function RecordingModal({
                                         name="p_message"
                                     ></textarea>
                                 </div>
-                                <button type="button" className="btn btn-danger mx-2" onClick={() => exitBtn2()}>Cancel </button>
+                             
                                 <button type="submit" className="btn btn-primary">
                                     Submit
                                 </button>

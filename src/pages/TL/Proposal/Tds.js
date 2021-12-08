@@ -91,19 +91,19 @@ if(res.data.payment_detail){
      setGstNum(i.gstin_no)
  setBillNo(i.billno)
  setDiscription(i.description)
-setTdsR(i.tds_rate)
+setTdsR(parseFloat(i.tds_rate))
  setBasicAmount(parseInt(i.paid_amount))
- setPocketExp(parseInt(i.opt_expenses));
- setCgstTotal(parseInt(i.cgst_amount));
- setIgstTotal(parseInt(i.igst_amount));
- setSgstTotal(parseInt(i.sgst_amount));
- setCgetRate(parseInt(i.cgst_rate));
- setIgetRate(parseInt(i.igst_rate));
- setSgetRate(parseInt(i.sgst_rate));
-setTds(parseInt(i.tds_amount))
- setgrandTotal(parseInt(i.payable_amount))
- setTotal(parseInt(i.invoice_amount))
- setGst(parseInt(i.gst));
+ setPocketExp(parseFloat(i.opt_expenses));
+ setCgstTotal(parseFloat(i.cgst_amount));
+ setIgstTotal(parseFloat(i.igst_amount));
+ setSgstTotal(parseFloat(i.sgst_amount));
+ setCgetRate(parseFloat(i.cgst_rate));
+ setIgetRate(parseFloat(i.igst_rate));
+ setSgetRate(parseFloat(i.sgst_rate));
+setTds(parseFloat(i.tds_amount))
+ setgrandTotal(parseFloat(i.payable_amount))
+ setTotal(parseFloat(i.invoice_amount))
+ setGst(parseFloat(i.gst));
  setDisabled(true);
   })
 }

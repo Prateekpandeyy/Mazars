@@ -13,7 +13,30 @@
   height: 100%;
   width: 100%;
 }
+#myPartName{
+  background: none;
+  width: 80px;
+  border: none;
 
+  position: relative;
+  bottom: 20%;
+  color: #fff;
+  left: 20%;
+ 
+  transform: translate(-20%, -20%);
+}
+#myPartName2{
+  background: none;
+  width: 80px;
+  border: none;
+
+  position: relative;
+  bottom: 20%;
+  color: #000;
+  left: 20%;
+
+  transform: translate(-20%, -20%);
+}
 .ag-item {
   border-radius: 0px;
   border: 2px #00B6ED solid;
@@ -39,7 +62,7 @@
 
 
 .ag-btn-group {
-  height: 70px;
+  height: 45px;
   width: calc(100% - 60px);
   margin: 0 auto;
   position: absolute;
@@ -61,7 +84,7 @@
   opacity: 0;
   color: white;
   cursor: pointer;
-  font-size: 60px;
+  font-size: 40px;
   display: inline-flex;
   justify-content: center;
   align-items: center;

@@ -178,7 +178,7 @@ function Chatting(props) {
                           style={{ height: "33px" }}
                         >
                           <option value="">--select--</option>
-                          <option value="customer">Customer</option>
+                          <option value="customer">Client</option>
                           <option value="tl">Team Leader</option>
                           <option value="both">Both</option>
                         </select>

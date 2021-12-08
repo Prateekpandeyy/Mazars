@@ -491,9 +491,9 @@ const [loading, setLoading] = useState(false)
                     >
                       <option value="">--select--</option>
                       <option value="1">Admin Declined; Queries</option>
-                      <option value="2">Customer Declined; Queries</option>
-                      <option value="3">Customer Declined; Proposals</option>
-                      <option value="4">Customer Declined; Payment</option>
+                      <option value="2">Client Declined; Queries</option>
+                      <option value="3">Client Declined; Proposals</option>
+                      <option value="4">Client Declined; Payment</option>
                     </select>
                   )}
 

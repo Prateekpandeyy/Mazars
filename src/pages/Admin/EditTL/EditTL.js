@@ -47,7 +47,7 @@ function EditTL() {
   const [tax, setTax] = useState([]);
   const [tax2, setTax2] = useState([]);
 
-  const [store, setStore] = useState("");
+  const [store, setStore] = useState(null);
   const [store2, setStore2] = useState(null);
   const [value, setValue] = useState({});
   const [mcategory, setmcategory] = useState([]);
@@ -106,16 +106,7 @@ function EditTL() {
     getTeamLeader();
   }, [id]);
 
-  useEffect(() => {
-    axios.get(`${baseUrl}/tl/AddTeamLead`).then((res) => {
-      if (res.data.code === 1) {
-       
-      }
-      else {
-       
-      }
-    })
-  }, [])
+ 
   const getTeamLeader = () => {
     axios.get(`${baseUrl}/tl/getTeamLeader?id=${id}`).then((res) => {
  
@@ -153,18 +144,20 @@ function EditTL() {
   }, []);
 
   useEffect(() => {
-    const getSubCategory = () => {
-      axios.get(`${baseUrl}/customers/getCategory?pid=${store}`).then((res) => {
-       
-        if (res.data.code === 1) {
-          setTax2(res.data.result);
-        }
-      });
-    };
+    
     getSubCategory();
   }, [store]);
 
-
+  const getSubCategory = () => {
+  if(store !== null){
+    axios.get(`${baseUrl}/customers/getCategory?pid=${store}`).then((res) => {
+     
+      if (res.data.code === 1) {
+        setTax2(res.data.result);
+      }
+    });
+  }
+  };
 
   const onFinish = (value) => {
 

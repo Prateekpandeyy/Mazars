@@ -126,7 +126,7 @@ function AssignmentTab(props) {
             </Tab>
 
             <Tab style={tabIndex === 3 ? myStyle2 : myStyle1}>
-              Customer Declined; Payment ({declinedAssignment})
+              Client Declined; Payment ({declinedAssignment})
             </Tab>
           </TabList>
 

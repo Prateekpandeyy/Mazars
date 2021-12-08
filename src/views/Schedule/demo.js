@@ -251,7 +251,7 @@ Cookies.set("baseMode", baseMode);
 Cookies.set("transcode", transcode);
 Cookies.set("attendeeMode", attendeeMode);
 Cookies.set("videoProfile", videoProfile);
-history.push("/customer/meeting");
+history.push(`/customer/meeting/${data.id}`);
 
 
   };

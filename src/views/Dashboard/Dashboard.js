@@ -58,13 +58,12 @@ let history= useHistory()
     paid, unpaid, totalpayment,
   } = allQueries;
 
-
 const logout = () => {
   localStorage.removeItem("userid")
   localStorage.removeItem("custEmail")
   history.push("/")
-  
 }
+console.log("sessionStorage", window.sessionStorage)
   useEffect(() => {
     const getAllQueries = () => {
       axios

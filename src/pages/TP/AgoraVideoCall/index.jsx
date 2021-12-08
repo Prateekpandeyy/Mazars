@@ -8,6 +8,7 @@ import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import "./canvas.css";
 import "../../../assets/fonts/css/icons.css";
+import Swal from "sweetalert2";
 import {
   Modal,
   ModalTitle,
@@ -89,7 +90,10 @@ class AgoraCanvas extends React.Component {
       clickDisable : false,
       addRemote : null,
       participantName : '',
-      disabledVedio : false
+      disabledVedio : false,
+      getAdId :'', 
+      vedTrack : null,
+      shareValue : false,
     };
 
     this.toggleModal = this.toggleModal.bind(this);
@@ -126,14 +130,15 @@ allrecording;
     
    
    })
-   if(this.state.showButton == JSON.parse(this.teamKey)){
-    console.log("donefixed", this.state.showButton)
-    axios.get(`${baseUrl}/tl/setgetschedular?id=${this.props.id}&rtc_id=${uid}&uid=${JSON.parse(this.teamKey)}`)
-   .then((res) =>{
-     console.log(res)
-   })
+  //  if(this.state.showButton == JSON.parse(this.teamKey)){
+  //   console.log("donefixed", this.state.showButton)
+  //   axios.get(`${baseUrl}/tl/setgetschedular?id=${this.props.id}&rtc_id=${uid}&uid=${JSON.parse(this.teamKey)}`)
+  //  .then((res) =>{
+  //    console.log(res)
+  //  })
   
-  }
+  // }
+  this.setState({getAdId : uid})
    this.setState({ uid : uid})
         this.localStream = this.streamInit(uid, $.attendeeMode, $.videoProfile);
         this.localStream.init(
@@ -184,16 +189,17 @@ schdrularName;
               
            
                
-                if (res.data.code === 1) {
-                  this.setState({
-                    item:res.data.result.items[0],
-                   showButton : res.data.result.items[0].owner_id
-                  })  
-                        
+              if (res.data.code === 1) {
+                if(res.data.result.items){
+                 this.setState({
+                   item:res.data.result.items[0],
+                  showButton : res.data.result.items[0].owner_id
+                 })  
                 }
-            });
-  }
-
+                       
+               }
+           });
+ }
 
   componentDidUpdate() {
     // rerendering
@@ -206,63 +212,100 @@ schdrularName;
         return;
       }
       this.state.streamList.map((item, index) => {
+        let txtColor = "myPartName";
         let id = item.getId();
         let dom = document.querySelector("#ag-item-" + id);
-        if(this.state.disabledVedio === true){
+        if(dom && this.state.disabledVedio === true){
           dom.setAttribute("class", "ag-item2");
         }
         else if (dom && this.state.disabledVedio === false) {
          dom.setAttribute("class", "ag-item");
         }
+        let dd, kk;
         if (!dom) {
           dom = document.createElement("section");
           dom.setAttribute("id", "ag-item-" + id);
           dom.setAttribute("class", "ag-item");
           canvas.appendChild(dom);
           var box22 = document.getElementById("ag-item-" + id)
-          var newContent = document.createTextNode(this.state.participantName);  
+         
+         
+          dd = document.createElement("input")
+          dd.setAttribute("id", txtColor)
+          var newContent = document.createTextNode(this.state.participantName); 
           item.play("ag-item-" + id);
-      
-         box22.appendChild(newContent)
+         dd.setAttribute("value", this.state.participantName)
+         dd.setAttribute("disabled", true)
+         kk =   dd.appendChild(newContent)
+         box22.appendChild(dd)
         }
         if (index === no - 1) {
-          dom.setAttribute("style", `grid-area: span 12/span 24/13/25`);
-        } else {
-          dom.setAttribute(
-            "style",
-            `grid-area: span 3/span 4/${4 + 3 * index}/25;
-                    z-index:1;width:calc(100% - 20px);height:calc(100% - 20px)`
-          );
-        }
+          
+          //  document.getElementById("custName").value = "Lucky"
+            dom.setAttribute("style", `grid-area: span 12/span 24/13/25`);
+            
+          } else {
+            let f = false;
+            dom.setAttribute(
+              "style",
+              `grid-area: span 3/span 4/${4 + 3 * index}/25;
+                      z-index:1;width:calc(100% - 20px);height:calc(100% - 20px)`
+            );
+            dom.addEventListener('click', function (e){
+              if(f === false){
+                f = true
+                dom.setAttribute("style", `grid-area: span 12/span 24/13/25`);
+              }
+              else{
+                f = false
+                dom.setAttribute(
+                  "style",
+                  `grid-area: span 3/span 4/${4 + 3 * index}/25;
+                          z-index:1;width:calc(100% - 20px);height:calc(100% - 20px)`
+                );
+              }
+            })
+          }
 
-        item.player.resize && item.player.resize();
+          if(item.player === undefined){
+
+          }
+                 else{
+                  item.player.resize && item.player.resize();
+                 }
       });
     }
     // tile mode
     else if (this.state.displayMode === "tile") {
+      let txtColor = "myPartName";
       let no = this.state.streamList.length;
       this.state.streamList.map((item, index) => { 
         let dom2
         let id = item.getId();
         let dom = document.querySelector("#ag-item-" + id);
-        if(this.state.disabledVedio === true){
+        if(dom && this.state.disabledVedio === true){
           dom.setAttribute("class", "ag-item2");
         }
         else if (dom && this.state.disabledVedio === false) {
          dom.setAttribute("class", "ag-item");
         }
+        let dd, kk;
         if (!dom) {
           dom = document.createElement("section");
           dom.setAttribute("id", "ag-item-" + id);
           dom.setAttribute("class", "ag-item");
           canvas.appendChild(dom);
-          item.play("ag-item-" + id);
           var box22 = document.getElementById("ag-item-" + id)
-          
-          var newContent = document.createTextNode(this.state.participantName);  
+         
+         
+          dd = document.createElement("input")
+          dd.setAttribute("id", txtColor)
+          var newContent = document.createTextNode(this.state.participantName); 
           item.play("ag-item-" + id);
-      
-         box22.appendChild(newContent)
+         dd.setAttribute("value", this.state.participantName)
+         dd.setAttribute("disabled", true)
+         kk =   dd.appendChild(newContent)
+         box22.appendChild(dd)
         }
         dom.setAttribute("style", `grid-area: ${tile_canvas[no][index]}`);
         item.player.resize && item.player.resize();
@@ -376,12 +419,21 @@ schdrularName;
       }
     });
    
-      axios.get(`${baseUrl}/tl/setgetschedular?id=${this.props.id}&uid=${JSON.parse(this.teamKey)}`)
-      .then((res) => {
-       if(res.data.result.rtc_id == uid){
-        window.location.hash = "/taxprofessional/schedule";
-       }
-      })
+    axios.get(`${baseUrl}/tl/setgetschedular?id=${this.props.id}&uid=${this.state.showButton}&chname=${this.channelName}`)
+    .then((res) => {
+      if(res.data.result.rtc_id == uid){
+        Swal.fire({
+          title: "success",
+          html : "Thank you for attending this meeting, this meeting is going to be ended by host",
+          icon : "success"
+        })
+          setTimeout((e) => {
+            window.location.hash = "/taxprofessional/schedule";
+          }, 3000)
+         
+         }
+        
+    })
      
     
     
@@ -409,20 +461,28 @@ schdrularName;
   };
 
   handleCamera = (e) => {
+    if(this.state.readyState === false){
+
+    }
+    else{
     this.setState({disabledVedio : !this.state.disabledVedio})
     e.currentTarget.classList.toggle("off");
     this.localStream.isVideoOn()
       ? this.localStream.disableVideo()
       : this.localStream.enableVideo();
   };
-
+  }
   handleMic = (e) => {
+    if(this.state.readyState === false){
+
+    }
+    else{
     e.currentTarget.classList.toggle("off");
     this.localStream.isAudioOn()
       ? this.localStream.disableAudio()
       : this.localStream.enableAudio();
   };
-
+  }
   switchDisplay = (e) => {
     if (
       e.currentTarget.classList.contains("disabled") ||
@@ -500,22 +560,46 @@ schdrularName;
    }
  
    sharingScreen = (e) => {
-    if (this.state.stateSharing) {
-      this.shareClient && this.shareClient.unpublish(this.shareStream);
-      this.shareStream && this.shareStream.close();
-      this.state.stateSharing = false;
-    } else {
+    let cc
+    var dd;
+    var kk;
+    if (this.state.shareValue === true) {
+      if(this.localStream.isVideoOn()){
+      
+      }
+      else{
+        this.localStream.enableVideo()
+      }
+      console.log("myAttribute", this.localStream)
+      this.setState({shareValue : false})
     
+          
+  
+    } else if(this.state.shareValue === false) {
+      if(this.localStream.isVideoOn()){
+       
+      }
+      else{
+        this.localStream.enableVideo()
+      }
+      
+      
+      kk = this.localStream.getVideoTrack()
+     this.setState({vedTrack : kk})
+     
+    
+           this.setState({shareValue : true})
       this.state.stateSharing = true;
       let $ = this.props; 
     
-      this.shareClient = AgoraRTC.createClient({ mode: $.transcode, controls : true});
+      this.shareClient = AgoraRTC.createClient({ mode: $.transcode});
 
       this.shareClient.init($.appId, () => {
        
       //  this.subscribeStreamEvents();
         this.shareClient.join($.appId, $.channel, $.uid, (uid) => {
           // this.state.uid = uid;
+          
           this.setState({uid : uid})
             // this.removeStream(uid)
           this.shareStream = this.streamInitSharing(
@@ -525,15 +609,19 @@ schdrularName;
           );
          
           this.shareStream.init(
+            
             () => {
+              
               if ($.attendeeMode !== "audience") {
-                this.addStream(this.shareStream, true);
-                this.shareClient.publish(this.shareStream, (err) => {
+                 cc = this.shareStream.getVideoTrack();
+                  dd = this.localStream.getVideoTrack();
+               
+                this.localStream.replaceTrack(cc)
              
-                });
                
               }
               this.setState({ readyState: true });
+              console.log("final", this.localStream.getVideoTrack())
             },
             (err) => {
             
@@ -544,6 +632,7 @@ schdrularName;
       });
     }
   };
+
   
   streamInitSharing = (uid, attendeeMode, videoProfile, config) => {
     let defaultConfig = {
@@ -872,6 +961,9 @@ const recordingBtnOff = (
          data={this.state.data}
          item={this.state.item}
          allrecording = {this.tempArray}
+         schId = {this.props.id}
+         uid = {this.state.getAdId}
+         ownerId = {this.state.showButton}
          />
                 
           {exitBtn}

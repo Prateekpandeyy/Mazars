@@ -6,7 +6,8 @@ import axios from "axios";
 import "./canvas.css";
 import "../../assets/fonts/css/icons.css";
 import Cookies from "js-cookie";
-
+import {baseUrl} from "../../config/config";
+import Swal from "sweetalert2";
 var customer_id = "d339577a294c458c86d8a78b474141fc";
 var customer_secret = "1a61a4bef2144e78be6f671d5cf3fc32";
 
@@ -69,14 +70,18 @@ class AgoraCanvas extends React.Component {
       stateSharing: false,
       addRemote : null,
       participantName : '',
-      disabledVedio : false
+      atCustId: '',
+      disabledVedio : false,
+      vedTrack : null,
+      shareValue : false,
     };
   }
 channelName = this.props.channel
-
+userId = window.localStorage.getItem("userid");
 custEmail2 = window.localStorage.getItem("custEmail");
   componentWillMount() {
     let $ = this.props;
+    console.log("props", this.props)
     // init AgoraRTC local client
 console.log("customerName", this.customerName)
     this.client = AgoraRTC.createClient({ mode: $.transcode });
@@ -92,7 +97,7 @@ console.log("customerName", this.customerName)
         
         })
         this.state.uid = uid;
-       
+       this.setState({atCustId : uid})
         // create local stream
         // It is not recommended to setState in function addStream
         this.localStream = this.streamInit(uid, $.attendeeMode, $.videoProfile);
@@ -148,13 +153,15 @@ console.log("customerName", this.customerName)
       }
       this.state.streamList.map((item, index) => {
         let id = item.getId();
+        let txtColor = "myPartName";
         let dom = document.querySelector("#ag-item-" + id);
-        if(this.state.disabledVedio === true){
+        if(dom && this.state.disabledVedio === true){
           dom.setAttribute("class", "ag-item2");
         }
         else if (dom && this.state.disabledVedio === false) {
          dom.setAttribute("class", "ag-item");
         }
+        let dd, kk;
         if (!dom) {
           dom = document.createElement("section");
           dom.setAttribute("id", "ag-item-" + id);
@@ -163,28 +170,54 @@ console.log("customerName", this.customerName)
           var box22 = document.getElementById("ag-item-" + id)
          
          
+          dd = document.createElement("input")
+          dd.setAttribute("id", txtColor)
           var newContent = document.createTextNode(this.state.participantName); 
           item.play("ag-item-" + id);
-      
-         box22.appendChild(newContent)
+         dd.setAttribute("value", this.state.participantName)
+         dd.setAttribute("disabled", true)
+         kk =   dd.appendChild(newContent)
+         box22.appendChild(dd)
         }
         if (index === no - 1) {
-          dom.setAttribute("style", `grid-area: span 12/span 24/13/25`);
-        } else {
-          dom.setAttribute(
-            "style",
-            `grid-area: span 3/span 4/${4 + 3 * index}/25;
-                    z-index:1;width:calc(100% - 20px);height:calc(100% - 20px)`
-          );
-        }
+          
+          //  document.getElementById("custName").value = "Lucky"
+            dom.setAttribute("style", `grid-area: span 12/span 24/13/25`);
+            
+          } else {
+            let f = false;
+            dom.setAttribute(
+              "style",
+              `grid-area: span 3/span 4/${4 + 3 * index}/25;
+                      z-index:1;width:calc(100% - 20px);height:calc(100% - 20px)`
+            );
+            dom.addEventListener('click', function (e){
+              if(f === false){
+                f = true
+                dom.setAttribute("style", `grid-area: span 12/span 24/13/25`);
+              }
+              else{
+                f = false
+                dom.setAttribute(
+                  "style",
+                  `grid-area: span 3/span 4/${4 + 3 * index}/25;
+                          z-index:1;width:calc(100% - 20px);height:calc(100% - 20px)`
+                );
+              }
+            })
+          }
 
-       if(item.player !== undefined){
-        item.player.resize && item.player.resize();
-       }
+          if(item.player === undefined){
+
+          }
+                 else{
+                  item.player.resize && item.player.resize();
+                 }
       });
     }
     // tile mode
     else if (this.state.displayMode === "tile") {
+      let txtColor = "myPartName";
       let no = this.state.streamList.length;
       this.state.streamList.map((item, index) => {
         let id = item.getId();
@@ -195,18 +228,23 @@ console.log("customerName", this.customerName)
         else if (dom && this.state.disabledVedio === false) {
          dom.setAttribute("class", "ag-item");
         }
+        let dd, kk;
         if (!dom) {
           dom = document.createElement("section");
           dom.setAttribute("id", "ag-item-" + id);
           dom.setAttribute("class", "ag-item");
           canvas.appendChild(dom);
-          item.play("ag-item-" + id);
           var box22 = document.getElementById("ag-item-" + id)
-          
+         
+         
+          dd = document.createElement("input")
+          dd.setAttribute("id", txtColor)
           var newContent = document.createTextNode(this.state.participantName); 
           item.play("ag-item-" + id);
-      
-         box22.appendChild(newContent)
+         dd.setAttribute("value", this.state.participantName)
+         dd.setAttribute("disabled", true)
+         kk =   dd.appendChild(newContent)
+         box22.appendChild(dd)
         }
         dom.setAttribute("style", `grid-area: ${tile_canvas[no][index]}`);
         item.player.resize && item.player.resize();
@@ -284,7 +322,13 @@ console.log("customerName", this.customerName)
   axios.get(`${apiData}`)
   .then((res) =>{
    
-    this.setState({ participantName : res.data[0].user_name })
+    if(res.data.length === 0 ){
+      // rt.setupLocalVideo() 
+     }
+     else{
+       this.setState({ participantName : res.data[0].user_name })
+      
+     }
     if(res.data != undefined){
       rt.addStream(stream);
     }
@@ -314,13 +358,20 @@ console.log("customerName", this.customerName)
         });
       }
     });
-    if(this.state.showButton == JSON.parse(this.teamKey)){
-      console.log("donefixed", this.state.showButton)
-
-    }
-    else{
-      window.location.hash = "/teamleader/schedule";
-    }
+    axios.get(`${baseUrl}/tl/setgetschedular?id=${this.props.id}&uid=${JSON.parse(this.userId)}&chname=${this.channelName}`)
+    .then((res) => {
+     if(res.data.result.rtc_id == uid){
+      Swal.fire({
+        title: "success",
+        html : "Thank you for attending this meeting, this meeting is going to be ended by host",
+        icon : "success"
+      })
+      setTimeout((e) =>{
+        window.location.hash = "/customer/schedule";
+      })
+   
+     }
+    })
   };
 
   addStream = (stream, push = false) => {
@@ -419,49 +470,76 @@ console.log("customerName", this.customerName)
       this.setState({ readyState: false });
       this.client = null;
       this.localStream = null;
-      // redirect to index
-      // window.location.hash = "/customer/schedule";
       window.location.assign("/#/customer/schedule")
     }
   };
 
   sharingScreen = (e) => {
-    if (this.state.stateSharing) {
-      this.shareClient && this.shareClient.unpublish(this.shareStream);
-      this.shareStream && this.shareStream.close();
-      this.state.stateSharing = false;
-    } else {
+    let cc
+    var dd;
+    var kk;
+    if (this.state.shareValue === true) {
+      if(this.localStream.isVideoOn()){
+      
+      }
+      else{
+        this.localStream.enableVideo()
+      }
+      console.log("myAttribute", this.localStream)
+      this.setState({shareValue : false})
+    
+          
+  
+    } else if(this.state.shareValue === false) {
+      if(this.localStream.isVideoOn()){
+       
+      }
+      else{
+        this.localStream.enableVideo()
+      }
+      
+      
+      kk = this.localStream.getVideoTrack()
+     this.setState({vedTrack : kk})
+     
+    
+           this.setState({shareValue : true})
       this.state.stateSharing = true;
-      let $ = this.props;
-      // init AgoraRTC local client
-      this.shareClient = AgoraRTC.createClient({ mode: $.transcode });
+      let $ = this.props; 
+    
+      this.shareClient = AgoraRTC.createClient({ mode: $.transcode});
 
       this.shareClient.init($.appId, () => {
-      
-        this.subscribeStreamEvents();
+       
+      //  this.subscribeStreamEvents();
         this.shareClient.join($.appId, $.channel, $.uid, (uid) => {
-          this.state.uid = uid;
-         
-          // create local stream
-          // It is not recommended to setState in function addStream
+          // this.state.uid = uid;
           
+          this.setState({uid : uid})
+            // this.removeStream(uid)
           this.shareStream = this.streamInitSharing(
             uid,
             $.attendeeMode,
             $.videoProfile
           );
+         
           this.shareStream.init(
+            
             () => {
+              
               if ($.attendeeMode !== "audience") {
-                this.addStream(this.shareStream, true);
-                this.shareClient.publish(this.shareStream, (err) => {
-                
-                });
+                 cc = this.shareStream.getVideoTrack();
+                  dd = this.localStream.getVideoTrack();
+               
+                this.localStream.replaceTrack(cc)
+             
+               
               }
               this.setState({ readyState: true });
+              console.log("final", this.localStream.getVideoTrack())
             },
             (err) => {
-             
+            
               this.setState({ readyState: true });
             }
           );
@@ -470,13 +548,15 @@ console.log("customerName", this.customerName)
     }
   };
 
+
+
   streamInitSharing = (uid, attendeeMode, videoProfile, config) => {
     let defaultConfig = {
       streamID: uid,
       audio: false,
       video: false,
       screen: true,
-      control : true
+     
     };
 
     switch (attendeeMode) {
@@ -651,7 +731,3 @@ encodedString = "ZDMzOTU3N2EyOTRjNDU4Yzg2ZDhhNzhiNDc0MTQxZmM6MWE2MWE0YmVmMjE0NGU
 }
 
 export default AgoraCanvas;
-
-
-// https://mazars.multitvsolution.com/#/customer/dashboard
-

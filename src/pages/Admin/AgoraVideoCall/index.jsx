@@ -15,12 +15,14 @@ import {
   ModalFooter,
   Button,
 } from "reactstrap";
+
 import RecordingModal from "./RecordingModal";
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import { green ,red} from '@material-ui/core/colors';
 import recImg from "../../../loader.gif";
 import Cookies from "js-cookie";
 import Swal from "sweetalert2";
+import { icons } from "antd/lib/image/PreviewGroup";
 const tile_canvas = {
   "1": ["span 12/span 24"],
   "2": ["span 12/span 12/13/25", "span 12/span 12/13/13"],
@@ -89,7 +91,10 @@ class AgoraCanvas extends React.Component {
       addRemote : null,
       disabledVedio : false,
       getAdId :'',
-      participantName : 'participant'
+      remoteRemove22: false,
+      participantName : '',
+      shareValue : false,
+      vedTrack : null
     };
 
     this.toggleModal = this.toggleModal.bind(this);
@@ -110,7 +115,7 @@ class AgoraCanvas extends React.Component {
  accessKey = "AKIASTLI4S4OJH3WGMFM";
  secretKey = "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";
 allrecording;
-
+localVedioTrack;
   componentWillMount() {
     let $ = this.props;
   
@@ -128,7 +133,7 @@ allrecording;
     
    
    })
-  
+   this.setState({getAdId : uid})
   
         this.setState({ uid : uid})
       
@@ -165,9 +170,11 @@ allrecording;
         btnGroup.classList.remove("active");
       }, 2000);
     });
+   
     this.subscribeStreamEvents()
     this.getSchedulerData()
     this.accuire();
+  
     // this.accuire()
   }
 schdrularName;
@@ -178,10 +185,12 @@ schdrularName;
             .then((res) => {
                        
                 if (res.data.code === 1) {
+                 if(res.data.result.items){
                   this.setState({
                     item:res.data.result.items[0],
                    showButton : res.data.result.items[0].owner_id
                   })  
+                 }
                         
                 }
             });
@@ -200,6 +209,7 @@ schdrularName;
         return;
       }
       this.state.streamList.map((item, index) => {
+        let txtColor = "myPartName";
         let id = item.getId();
         let dom = document.querySelector("#ag-item-" + id);
         if(dom && this.state.disabledVedio === true){
@@ -208,35 +218,64 @@ schdrularName;
         else if (dom && this.state.disabledVedio === false) {
          dom.setAttribute("class", "ag-item");
         }
+        let dd, kk;
         if (!dom) {
           dom = document.createElement("section");
           dom.setAttribute("id", "ag-item-" + id);
           dom.setAttribute("class", "ag-item");
           canvas.appendChild(dom);
-          item.play("ag-item-" + id);
           var box22 = document.getElementById("ag-item-" + id)
-          
+         
+         
+          dd = document.createElement("input")
+          dd.setAttribute("id", txtColor)
           var newContent = document.createTextNode(this.state.participantName); 
           item.play("ag-item-" + id);
-      
-         box22.appendChild(newContent)
+         dd.setAttribute("value", this.state.participantName)
+         dd.setAttribute("disabled", true)
+         kk =   dd.appendChild(newContent)
+         box22.appendChild(dd)
         }
+       
+         
         if (index === no - 1) {
-        //  document.getElementById("custName").value = "Lucky"
-          dom.setAttribute("style", `grid-area: span 12/span 24/13/25`);
-        } else {
-          dom.setAttribute(
-            "style",
-            `grid-area: span 3/span 4/${4 + 3 * index}/25;
-                    z-index:1;width:calc(100% - 20px);height:calc(100% - 20px)`
-          );
-        }
+          
+          //  document.getElementById("custName").value = "Lucky"
+            dom.setAttribute("style", `grid-area: span 12/span 24/13/25`);
+            
+          } else {
+            let f = false;
+            dom.setAttribute(
+              "style",
+              `grid-area: span 3/span 4/${4 + 3 * index}/25;
+                      z-index:1;width:calc(100% - 20px);height:calc(100% - 20px)`
+            );
+            dom.addEventListener('click', function (e){
+              if(f === false){
+                f = true
+                dom.setAttribute("style", `grid-area: span 12/span 24/13/25`);
+              }
+              else{
+                f = false
+                dom.setAttribute(
+                  "style",
+                  `grid-area: span 3/span 4/${4 + 3 * index}/25;
+                          z-index:1;width:calc(100% - 20px);height:calc(100% - 20px)`
+                );
+              }
+            })
+          }
+if(item.player === undefined){
 
+}
+       else{
         item.player.resize && item.player.resize();
+       }
       });
     }
     // tile mode
     else if (this.state.displayMode === "tile") {
+      let txtColor = "myPartName";
       let no = this.state.streamList.length;
       this.state.streamList.map((item, index) => {
         let id = item.getId();
@@ -248,23 +287,23 @@ schdrularName;
         else if (dom && this.state.disabledVedio === false) {
          dom.setAttribute("class", "ag-item");
         }
+        let dd, kk;
         if (!dom) {
           dom = document.createElement("section");
           dom.setAttribute("id", "ag-item-" + id);
-          if(this.state.disabledVedio === true){
-            dom.setAttribute("class", "ag-item2");
-          }
-          else{
-            dom.setAttribute("class", "ag-item");
-          }
+          dom.setAttribute("class", "ag-item");
           canvas.appendChild(dom);
-          item.play("ag-item-" + id);
           var box22 = document.getElementById("ag-item-" + id)
-          
+         
+         
+          dd = document.createElement("input")
+          dd.setAttribute("id", txtColor)
           var newContent = document.createTextNode(this.state.participantName); 
           item.play("ag-item-" + id);
-      
-         box22.appendChild(newContent)
+         dd.setAttribute("value", this.state.participantName)
+         dd.setAttribute("disabled", true)
+         kk =   dd.appendChild(newContent)
+         box22.appendChild(dd)
         }
         dom.setAttribute("style", `grid-area: ${tile_canvas[no][index]}`);
         item.player.resize && item.player.resize();
@@ -272,7 +311,7 @@ schdrularName;
     }
     // screen share mode (tbd)
     else if (this.state.displayMode === "share") {
-      console.log("share")
+    
     }
   }
 
@@ -333,9 +372,7 @@ schdrularName;
     rt.client.on("peer-leave", function (evt) {
    
       rt.removeStream(evt.uid);
-      if(this.state.uid === evt.uid){
-        this.handleExit()
-      }
+     
    console.log("two")
     });
 
@@ -346,7 +383,7 @@ schdrularName;
   axios.get(`${apiData}`)
   .then((res) =>{
    
-   console.log("response", res.data.length)
+  
     if(res.data.length === 0 ){
      
     }
@@ -363,6 +400,7 @@ schdrularName;
     rt.client.on("stream-removed", function (evt) {
       let stream = evt.stream;
      console.log("four")
+     console.log("evt id", stream.getId())
       rt.removeStream(stream.getId());
     });
     rt.client.on("peer-added", function (evt) {
@@ -386,14 +424,23 @@ schdrularName;
         });
       }
     });
-   
- 
-      axios.get(`${baseUrl}/tl/setgetschedular?id=${this.props.id}&uid=${this.state.showButton}&chname=${this.channelName}`)
+    axios.get(`${baseUrl}/tl/setgetschedular?id=${this.props.id}&uid=${this.state.showButton}&chname=${this.channelName}`)
       .then((res) => {
+       
        if(res.data.result.rtc_id == uid){
-        window.location.hash = "/admin/schedule";
+       
+      Swal.fire({
+        title: "success",
+        html : "Thank you for attending this meeting, this meeting is going to be ended by host",
+        icon : "success"
+      })
+        setTimeout((e) => {
+          window.location.hash = "/admin/schedule";
+        }, 3000)
+       
        }
       })
+     
      
     
   };
@@ -418,18 +465,28 @@ schdrularName;
   };
 
   handleCamera = (e) => {
+   if(this.state.readyState === false){
+     return false
+   }
+   else{
     this.setState({disabledVedio : !this.state.disabledVedio})
     e.currentTarget.classList.toggle("off");
     this.localStream.isVideoOn()
       ? this.localStream.disableVideo()
       : this.localStream.enableVideo();
+   }
   };
 
   handleMic = (e) => {
+   if(this.state.readyState === false){
+
+   }
+   else{
     e.currentTarget.classList.toggle("off");
     this.localStream.isAudioOn()
       ? this.localStream.disableAudio()
       : this.localStream.enableAudio();
+   }
   };
 
   switchDisplay = (e) => {
@@ -512,22 +569,46 @@ schdrularName;
    }
  
   sharingScreen = (e) => {
-    if (this.state.stateSharing) {
-      this.shareClient && this.shareClient.unpublish(this.shareStream);
-      this.shareStream && this.shareStream.close();
-      this.state.stateSharing = false;
-    } else {
+    let cc
+    var dd;
+    var kk;
+    if (this.state.shareValue === true) {
+      if(this.localStream.isVideoOn()){
+      
+      }
+      else{
+        this.localStream.enableVideo()
+      }
+      console.log("myAttribute", this.localStream)
+      this.setState({shareValue : false})
     
+          
+  
+    } else if(this.state.shareValue === false) {
+      if(this.localStream.isVideoOn()){
+       
+      }
+      else{
+        this.localStream.enableVideo()
+      }
+      
+      
+      kk = this.localStream.getVideoTrack()
+     this.setState({vedTrack : kk})
+     
+    
+           this.setState({shareValue : true})
       this.state.stateSharing = true;
       let $ = this.props; 
     
-      this.shareClient = AgoraRTC.createClient({ mode: $.transcode, controls : true});
+      this.shareClient = AgoraRTC.createClient({ mode: $.transcode});
 
       this.shareClient.init($.appId, () => {
        
       //  this.subscribeStreamEvents();
         this.shareClient.join($.appId, $.channel, $.uid, (uid) => {
           // this.state.uid = uid;
+          
           this.setState({uid : uid})
             // this.removeStream(uid)
           this.shareStream = this.streamInitSharing(
@@ -537,15 +618,19 @@ schdrularName;
           );
          
           this.shareStream.init(
+            
             () => {
+              
               if ($.attendeeMode !== "audience") {
-                this.addStream(this.shareStream, true);
-                this.shareClient.publish(this.shareStream, (err) => {
+                 cc = this.shareStream.getVideoTrack();
+                  dd = this.localStream.getVideoTrack();
+               
+                this.localStream.replaceTrack(cc)
              
-                });
                
               }
               this.setState({ readyState: true });
+              console.log("final", this.localStream.getVideoTrack())
             },
             (err) => {
             
@@ -739,8 +824,9 @@ this.localStream.disableAudio())
     data: data,
   })
   .then(json => 
-    
+   
     this.toggleModal(json) ,
+   
      this.setState({showRecBtn : true}),
      this.localStream.disableVideo(),
 this.localStream.disableAudio(),
@@ -750,10 +836,7 @@ this.localStream.disableAudio(),
     });
 }
 else{
-  if(this.state.showButton == JSON.parse(this.teamKey)){
-    this.confirmation()
-  
-  }
+  window.location.hash = "/admin/schedule";
  
 }
   
@@ -776,7 +859,8 @@ else{
       this.props.attendeeMode === "video" ? (
         <span
           onClick={this.handleCamera}
-          className="ag-btn videoControlBtn"
+          className={this.state.readyState ? "ag-btn videoControlBtn" : "ag-btn videoControlBtn disabled"}
+         
           title="Enable/Disable Video"
         >
           <i className="ag-icon ag-icon-camera"></i>
@@ -895,6 +979,7 @@ const recordingBtnOff = (
          uid = {this.state.getAdId}
          ownerId = {this.state.showButton}
          />
+
                 
           {exitBtn}
           {videoControlBtn}

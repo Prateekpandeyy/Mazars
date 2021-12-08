@@ -239,11 +239,11 @@ let history = useHistory()
               <td>{customer_declined_Query}</td>
             </tr> */}
             <tr>
-              <td className="left_side">Customer Declined; Proposals</td>
+              <td className="left_side">Client Declined; Proposals</td>
               <td>{customer_declined_proposal}</td>
             </tr>
             <tr>
-              <td className="left_side">Customer Declined; Payment</td>
+              <td className="left_side">Client Declined; Payment</td>
               <td>{Customer_declined_payment}</td>
             </tr>
           </tbody>
