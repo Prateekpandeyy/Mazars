@@ -475,71 +475,43 @@ console.log("customerName", this.customerName)
   };
 
   sharingScreen = (e) => {
-    let cc
-    var dd;
-    var kk;
-    if (this.state.shareValue === true) {
-      if(this.localStream.isVideoOn()){
-      
-      }
-      else{
-        this.localStream.enableVideo()
-      }
-      console.log("myAttribute", this.localStream)
-      this.setState({shareValue : false})
-    
-          
-  
-    } else if(this.state.shareValue === false) {
-      if(this.localStream.isVideoOn()){
-       
-      }
-      else{
-        this.localStream.enableVideo()
-      }
-      
-      
-      kk = this.localStream.getVideoTrack()
-     this.setState({vedTrack : kk})
-     
-    
-           this.setState({shareValue : true})
+    if (this.state.stateSharing) {
+      this.shareClient && this.shareClient.unpublish(this.shareStream);
+      this.shareStream && this.shareStream.close();
+      this.state.stateSharing = false;
+    } else {
       this.state.stateSharing = true;
-      let $ = this.props; 
-    
-      this.shareClient = AgoraRTC.createClient({ mode: $.transcode});
+      let $ = this.props;
+      // init AgoraRTC local client
+      this.shareClient = AgoraRTC.createClient({ mode: $.transcode });
 
       this.shareClient.init($.appId, () => {
-       
-      //  this.subscribeStreamEvents();
+      
+
+        this.subscribeStreamEvents();
         this.shareClient.join($.appId, $.channel, $.uid, (uid) => {
-          // this.state.uid = uid;
+          this.state.uid = uid;
+         
+          // create local stream
+          // It is not recommended to setState in function addStream
           
-          this.setState({uid : uid})
-            // this.removeStream(uid)
           this.shareStream = this.streamInitSharing(
             uid,
             $.attendeeMode,
             $.videoProfile
           );
-         
           this.shareStream.init(
-            
             () => {
-              
               if ($.attendeeMode !== "audience") {
-                 cc = this.shareStream.getVideoTrack();
-                  dd = this.localStream.getVideoTrack();
-               
-                this.localStream.replaceTrack(cc)
-             
-               
+                this.addStream(this.shareStream, true);
+                this.shareClient.publish(this.shareStream, (err) => {
+                  
+                });
               }
               this.setState({ readyState: true });
-              console.log("final", this.localStream.getVideoTrack())
             },
             (err) => {
-            
+             
               this.setState({ readyState: true });
             }
           );
