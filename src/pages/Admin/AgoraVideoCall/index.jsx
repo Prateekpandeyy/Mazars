@@ -185,10 +185,12 @@ schdrularName;
             .then((res) => {
                        
                 if (res.data.code === 1) {
+                 if(res.data.result.items){
                   this.setState({
                     item:res.data.result.items[0],
                    showButton : res.data.result.items[0].owner_id
                   })  
+                 }
                         
                 }
             });
@@ -370,9 +372,7 @@ if(item.player === undefined){
     rt.client.on("peer-leave", function (evt) {
    
       rt.removeStream(evt.uid);
-      if(this.state.uid === evt.uid){
-        this.handleExit()
-      }
+     
    console.log("two")
     });
 
@@ -400,6 +400,7 @@ if(item.player === undefined){
     rt.client.on("stream-removed", function (evt) {
       let stream = evt.stream;
      console.log("four")
+     console.log("evt id", stream.getId())
       rt.removeStream(stream.getId());
     });
     rt.client.on("peer-added", function (evt) {
@@ -425,7 +426,9 @@ if(item.player === undefined){
     });
     axios.get(`${baseUrl}/tl/setgetschedular?id=${this.props.id}&uid=${this.state.showButton}&chname=${this.channelName}`)
       .then((res) => {
+       
        if(res.data.result.rtc_id == uid){
+       
       Swal.fire({
         title: "success",
         html : "Thank you for attending this meeting, this meeting is going to be ended by host",
@@ -570,12 +573,26 @@ if(item.player === undefined){
     var dd;
     var kk;
     if (this.state.shareValue === true) {
-     
+      if(this.localStream.isVideoOn()){
+      
+      }
+      else{
+        this.localStream.enableVideo()
+      }
+      console.log("myAttribute", this.localStream)
       this.setState({shareValue : false})
     
-                this.localStream.replaceTrack(this.state.vedTrack)
+          
   
     } else if(this.state.shareValue === false) {
+      if(this.localStream.isVideoOn()){
+       
+      }
+      else{
+        this.localStream.enableVideo()
+      }
+      
+      
       kk = this.localStream.getVideoTrack()
      this.setState({vedTrack : kk})
      
@@ -807,8 +824,9 @@ this.localStream.disableAudio())
     data: data,
   })
   .then(json => 
-    
+   
     this.toggleModal(json) ,
+   
      this.setState({showRecBtn : true}),
      this.localStream.disableVideo(),
 this.localStream.disableAudio(),

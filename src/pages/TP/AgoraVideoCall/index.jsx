@@ -189,16 +189,17 @@ schdrularName;
               
            
                
-                if (res.data.code === 1) {
-                  this.setState({
-                    item:res.data.result.items[0],
-                   showButton : res.data.result.items[0].owner_id
-                  })  
-                        
+              if (res.data.code === 1) {
+                if(res.data.result.items){
+                 this.setState({
+                   item:res.data.result.items[0],
+                  showButton : res.data.result.items[0].owner_id
+                 })  
                 }
-            });
-  }
-
+                       
+               }
+           });
+ }
 
   componentDidUpdate() {
     // rerendering

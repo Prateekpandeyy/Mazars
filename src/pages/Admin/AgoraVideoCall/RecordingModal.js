@@ -92,7 +92,7 @@ axios.get(`${baseUrl}/tl/freeslottime?schedule_id=${id}&&uid=${JSON.parse(userId
         <div>
             <Modal isOpen={isOpen} toggle={toggle} size="md">
                 <ModalHeader toggle={toggle}>
-                    Form
+                 Minutes of meeting
                 </ModalHeader>
                 <ModalBody>
                     <form onSubmit={handleSubmit(onSubmit)}>

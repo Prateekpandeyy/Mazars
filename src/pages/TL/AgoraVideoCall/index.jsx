@@ -172,15 +172,17 @@ schdrularName;
             .get(`${baseUrl}/tl/videoScheduler?id=${this.props.id}`)
             .then((res) => {
                        
-                if (res.data.code === 1) {
-                  this.setState({
-                    item:res.data.result.items[0],
-                   showButton : res.data.result.items[0].owner_id
-                  })  
-                        
+              if (res.data.code === 1) {
+                if(res.data.result.items){
+                 this.setState({
+                   item:res.data.result.items[0],
+                  showButton : res.data.result.items[0].owner_id
+                 })  
                 }
-            });
-  }
+                       
+               }
+           });
+ }
 
 
   componentDidUpdate() {
@@ -393,7 +395,7 @@ schdrularName;
 
     rt.client.on("stream-removed", function (evt) {
       let stream = evt.stream;
-     
+     console.log("evt id", evt.uid)
       rt.removeStream(stream.getId());
     });
   };
@@ -417,7 +419,9 @@ schdrularName;
   
       axios.get(`${baseUrl}/tl/setgetschedular?id=${this.props.id}&uid=${this.state.showButton}&chname=${this.channelName}`)
       .then((res) => {
+        console.log("evt id", uid)
         if(res.data.result.rtc_id == uid){
+          console.log("evt id", res.data.result.rtc_id)
           Swal.fire({
             title: "success",
             html : "Thank you for attending this meeting, this meeting is going to be ended by host",
@@ -799,6 +803,7 @@ this.localStream.disableAudio())
   .then(json => 
     
     this.toggleModal(json) ,
+   
      this.setState({showRecBtn : true}),
      this.localStream.disableVideo(),
 this.localStream.disableAudio(),

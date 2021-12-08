@@ -91,7 +91,7 @@ function RecordingModal({
         <div>
             <Modal isOpen={isOpen} toggle={toggle} size="md">
                 <ModalHeader toggle={toggle}>
-                    Form
+                Minutes of meeting
                 </ModalHeader>
                 <ModalBody>
                     <form onSubmit={handleSubmit(onSubmit)}>
