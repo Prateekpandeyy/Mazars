@@ -564,12 +564,26 @@ schdrularName;
     var dd;
     var kk;
     if (this.state.shareValue === true) {
-     
+      if(this.localStream.isVideoOn()){
+      
+      }
+      else{
+        this.localStream.enableVideo()
+      }
+      console.log("myAttribute", this.localStream)
       this.setState({shareValue : false})
     
-                this.localStream.replaceTrack(this.state.vedTrack)
+          
   
     } else if(this.state.shareValue === false) {
+      if(this.localStream.isVideoOn()){
+       
+      }
+      else{
+        this.localStream.enableVideo()
+      }
+      
+      
       kk = this.localStream.getVideoTrack()
      this.setState({vedTrack : kk})
      
@@ -601,8 +615,7 @@ schdrularName;
               if ($.attendeeMode !== "audience") {
                  cc = this.shareStream.getVideoTrack();
                   dd = this.localStream.getVideoTrack();
-                console.log("share", cc)
-                console.log("share", dd)
+               
                 this.localStream.replaceTrack(cc)
              
                
