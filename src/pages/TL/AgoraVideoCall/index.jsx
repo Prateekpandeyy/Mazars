@@ -772,8 +772,7 @@ async startRecording(key){
  stopRecording = () => {
   if(this.state.showRecBtn === true){
    
-    this.localStream.disableVideo();
-this.localStream.disableAudio();
+    
 this.del()
 
   }
@@ -804,8 +803,7 @@ this.del()
    
    
      this.setState({showRecBtn : true}),
-     this.localStream.disableVideo(),
-this.localStream.disableAudio(),
+    
 this.del(),
     ) 
     .catch((error) => {
@@ -823,6 +821,7 @@ del = (e) => {
     title: "End this vedio call for everyone?",
     // text: "End this vedio call for everyone",
      type: "warning",
+     showCloseButton:true,
      showCancelButton : true,
      confirmButtonColor: "#3085d6",
      cancelButtonColor: "#d33",

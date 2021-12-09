@@ -782,8 +782,6 @@ async startRecording(key){
  stopRecording = () => {
   if(this.state.showRecBtn === true){
     
-    this.localStream.disableVideo();
-this.localStream.disableAudio();
 this.del();
   }
   
@@ -812,8 +810,7 @@ this.del();
   
     this.setState({vedOffer : json}),
      this.setState({showRecBtn : true}),
-     this.localStream.disableVideo(),
-this.localStream.disableAudio(),
+   
 this.del(),
     ) 
     .catch((error) => {
@@ -832,6 +829,7 @@ else{
   Swal.fire({
   title: "End this vedio call for everyone?",
   // text: "End this vedio call for everyone",
+  showCloseButton:true,
    type: "warning",
    showCancelButton : true,
    confirmButtonColor: "#3085d6",
