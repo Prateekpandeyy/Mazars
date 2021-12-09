@@ -776,9 +776,10 @@ this.setState({
 //stop recording 
 stopRecording = () => {
 if(this.state.showRecBtn === true){
-  return(this.toggleModal("stop"),
-  this.localStream.disableVideo(),
-this.localStream.disableAudio())
+ 
+  this.localStream.disableVideo();
+this.localStream.disableAudio();
+this.del()
 }
 
 else if(this.state.showButton == JSON.parse(this.teamKey)){
@@ -834,6 +835,9 @@ del = (e) => {
    if (result.value) {
     this.toggleModal()
    }
+   else if(result.dismiss === "backdrop"){
+    return false
+  }
    else{
     window.location.hash = "/teamleader/schedule";
    }
