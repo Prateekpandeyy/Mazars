@@ -217,12 +217,13 @@ console.log("customerName", this.customerName)
     }
     // tile mode
     else if (this.state.displayMode === "tile") {
-      let txtColor = "myPartName";
+      let f = false;
       let no = this.state.streamList.length;
+      let txtColor = "myPartName";
       this.state.streamList.map((item, index) => {
         let id = item.getId();
         let dom = document.querySelector("#ag-item-" + id);
-        if(this.state.disabledVedio === true){
+        if(dom && this.state.disabledVedio === true){
           dom.setAttribute("class", "ag-item2");
         }
         else if (dom && this.state.disabledVedio === false) {
@@ -247,6 +248,21 @@ console.log("customerName", this.customerName)
          box22.appendChild(dd)
         }
         dom.setAttribute("style", `grid-area: ${tile_canvas[no][index]}`);
+        dom.addEventListener('click', function (e){
+            
+          if(f === false){
+            f = true
+            dom.setAttribute("style", `grid-area: span 12/span 24/13/25`);
+          }
+          else{
+            f = false
+            dom.setAttribute(
+              "style",
+              `grid-area: span 3/span 4/${4 + 3 * index}/25;
+                      z-index:1;width:calc(100% - 20px);height:calc(100% - 20px)`
+            );
+          }
+        })
         item.player.resize && item.player.resize();
       });
     }
@@ -367,8 +383,9 @@ console.log("customerName", this.customerName)
         icon : "success"
       })
       setTimeout((e) =>{
-        window.location.hash = "/customer/schedule";
-      })
+      this.handleExit("exit");
+        window.location.assign("/#/customer/schedule")
+      }, 3000)
    
      }
     })
@@ -447,9 +464,10 @@ console.log("customerName", this.customerName)
   };
 
   handleExit = (e) => {
-    if (e.currentTarget.classList.contains("disabled")) {
-      return;
+    if(this.state.readyState === false){
+
     }
+    else{
     try {
       this.client && this.client.unpublish(this.localStream);
       this.localStream && this.localStream.close();
@@ -472,6 +490,7 @@ console.log("customerName", this.customerName)
       this.localStream = null;
       window.location.assign("/#/customer/schedule")
     }
+  }
   };
 
   sharingScreen = (e) => {
@@ -555,30 +574,30 @@ console.log("customerName", this.customerName)
 
 encodedString = "ZDMzOTU3N2EyOTRjNDU4Yzg2ZDhhNzhiNDc0MTQxZmM6MWE2MWE0YmVmMjE0NGU3OGJlNmY2NzFkNWNmM2ZjMzI=";
 
-  recordStream = () => {
+  // recordStream = () => {
 
-    var data = JSON.stringify({
-      "cname":"demo",
-      "uid":"527841",
-      "clientRequest":{ "resourceExpiredHour": 24}});
+  //   var data = JSON.stringify({
+  //     "cname":"demo",
+  //     "uid":"527841",
+  //     "clientRequest":{ "resourceExpiredHour": 24}});
 
-      var config = {
-      method: 'post',
-      url: `https://api.agora.io/v1/apps/${this.props.appId}/cloud_recording/acquire`,
-      headers: { 
-        'Content-Type': 'application/json', 
-        'Authorization': 'Basic '+this.encodedString,
-      },
-      data : data
-      };
-        axios(config)
-        .then(function (response) {
+  //     var config = {
+  //     method: 'post',
+  //     url: `https://api.agora.io/v1/apps/${this.props.appId}/cloud_recording/acquire`,
+  //     headers: { 
+  //       'Content-Type': 'application/json', 
+  //       'Authorization': 'Basic '+this.encodedString,
+  //     },
+  //     data : data
+  //     };
+  //       axios(config)
+  //       .then(function (response) {
         
-        })
-        .catch(function (error) {
+  //       })
+  //       .catch(function (error) {
 
-        });
-  };
+  //       });
+  // };
 
 
   render() {
@@ -665,17 +684,17 @@ encodedString = "ZDMzOTU3N2EyOTRjNDU4Yzg2ZDhhNzhiNDc0MTQxZmM6MWE2MWE0YmVmMjE0NGU
 
 
 
-    const recordingBtn = (
-      <span
-        onClick={this.recordStream}
-        className={
-          this.state.readyState ? "ag-btn exitBtn" : "ag-btn exitBtn disabled"
-        }
-        title="Record"
-      >
-        <RecordVoiceOverIcon />
-      </span>
-    );
+    // const recordingBtn = (
+    //   <span
+    //     onClick={this.recordStream}
+    //     className={
+    //       this.state.readyState ? "ag-btn exitBtn" : "ag-btn exitBtn disabled"
+    //     }
+    //     title="Record"
+    //   >
+    //     <RecordVoiceOverIcon />
+    //   </span>
+    // );
 
 
     return (
@@ -695,7 +714,7 @@ encodedString = "ZDMzOTU3N2EyOTRjNDU4Yzg2ZDhhNzhiNDc0MTQxZmM6MWE2MWE0YmVmMjE0NGU
           }
           {switchDisplayBtn}
           {hideRemoteBtn}
-          {recordingBtn}
+          {/* {recordingBtn} */}
         </div>
       </div>
     );

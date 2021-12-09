@@ -274,11 +274,11 @@ if(item.player === undefined){
     }
     // tile mode
     else if (this.state.displayMode === "tile") {
-      let txtColor = "myPartName";
+      let f = false;
       let no = this.state.streamList.length;
+      let txtColor = "myPartName";
       this.state.streamList.map((item, index) => {
         let id = item.getId();
-        let dom2 ;
         let dom = document.querySelector("#ag-item-" + id);
         if(dom && this.state.disabledVedio === true){
           dom.setAttribute("class", "ag-item2");
@@ -305,6 +305,21 @@ if(item.player === undefined){
          box22.appendChild(dd)
         }
         dom.setAttribute("style", `grid-area: ${tile_canvas[no][index]}`);
+        dom.addEventListener('click', function (e){
+            
+          if(f === false){
+            f = true
+            dom.setAttribute("style", `grid-area: span 12/span 24/13/25`);
+          }
+          else{
+            f = false
+            dom.setAttribute(
+              "style",
+              `grid-area: span 3/span 4/${4 + 3 * index}/25;
+                      z-index:1;width:calc(100% - 20px);height:calc(100% - 20px)`
+            );
+          }
+        })
         item.player.resize && item.player.resize();
       });
     }
@@ -806,6 +821,7 @@ this.del(),
     });
 }
 else{
+  this.localStream.disableVideo()
   window.location.hash = "/admin/schedule";
  
 }

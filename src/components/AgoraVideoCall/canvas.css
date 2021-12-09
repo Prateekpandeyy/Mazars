@@ -21,9 +21,9 @@
   position: relative;
   bottom: 20%;
   color: #fff;
-  left: 20%;
+  left: 10px;
  
-  transform: translate(-20%, -20%);
+  /* transform: translate(-20%, -20%); */
 }
 #myPartName2{
   background: none;
@@ -33,9 +33,9 @@
   position: relative;
   bottom: 20%;
   color: #000;
-  left: 20%;
+  left: 10px;
 
-  transform: translate(-20%, -20%);
+  /* transform: translate(-20%, -20%); */
 }
 .ag-item {
   border-radius: 0px;
