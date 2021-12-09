@@ -263,7 +263,12 @@ console.log("customerName", this.customerName)
             );
           }
         })
-        item.player.resize && item.player.resize();
+        if(item.player === undefined){
+
+        }
+               else{
+                item.player.resize && item.player.resize();
+               }
       });
     }
     // screen share mode (tbd)
