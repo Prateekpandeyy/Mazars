@@ -334,11 +334,7 @@ schdrularName;
           }
           else{
             f = false
-            dom.setAttribute(
-              "style",
-              `grid-area: span 3/span 4/${4 + 3 * index}/25;
-                      z-index:1;width:calc(100% - 20px);height:calc(100% - 20px)`
-            );
+            dom.setAttribute("style", `grid-area: ${tile_canvas[no][index]}`);
           }
         })
         if(item.player === undefined){
