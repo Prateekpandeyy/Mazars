@@ -1,27 +1,16 @@
 import React from "react";
 import { merge } from "lodash";
 import AgoraRTC from "agora-rtc-sdk";
-import MicNoneIcon from '@material-ui/icons/MicNone';
-import MicOffIcon from '@material-ui/icons/MicOff';
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import "./canvas.css";
 import "../../../assets/fonts/css/icons.css";
-import {
-  Modal,
-  ModalTitle,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  Button,
-} from "reactstrap";
 import Swal from "sweetalert2";
 import RecordingModal from "./RecordingModal";
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import { green ,red} from '@material-ui/core/colors';
 import recImg from "../../../loader.gif";
 import Cookies from "js-cookie";
-import { icons } from "antd/lib/image/PreviewGroup";
 import CommonServices from "../../../common/common"
 const tile_canvas = {
   "1": ["span 12/span 24"],
@@ -57,6 +46,28 @@ const tile_canvas = {
     "span 3/span 4/13/25",
     "span 9/span 16/10/21",
   ],
+  "8": [
+    "span 3/span 4/13/3",
+    "span 3/span 4/13/7",
+    "span 3/span 4/13/11",
+    "span 3/span 4/13/15",
+    "span 3/span 4/13/19",
+    "span 3/span 4/13/23",
+    "span 3/span 4/13/27",
+    "span 9/span 16/10/21",
+  ],
+  "8": [
+    "span 3/span 4/13/1",
+    "span 3/span 4/13/5",
+    "span 3/span 4/13/9",
+    "span 3/span 4/13/13",
+    "span 3/span 4/13/17",
+    "span 3/span 4/13/21",
+    "span 3/span 4/13/25",
+    "span 3/span 4/13/29",
+    "span 9/span 16/10/21",
+  ],
+  
 };
 
 /**
@@ -379,7 +390,7 @@ if(item.player === undefined){
      
       rt.client.subscribe(stream, function (err) {
         this.setState({ addRemote : true})
-     console.log("one")
+   
       });
     });
 
@@ -387,11 +398,11 @@ if(item.player === undefined){
    
       rt.removeStream(evt.uid);
      
-   console.log("two")
+  
     });
 
     rt.client.on("stream-subscribed", function (evt) {
-    console.log("three")
+   
       let stream = evt.stream;
       var apiData = "https://virtualapi.multitvsolution.com/VstreamApi/index.php/api/vstream/getInfoByRTCId?channel_name="+this.channelName+"&rtc_id="+stream.getId()
   axios.get(`${apiData}`)
@@ -413,12 +424,10 @@ if(item.player === undefined){
 
     rt.client.on("stream-removed", function (evt) {
       let stream = evt.stream;
-     console.log("four")
-     console.log("evt id", stream.getId())
       rt.removeStream(stream.getId());
     });
     rt.client.on("peer-added", function (evt) {
-      console.log("five")
+    
      
     })
   };
@@ -840,7 +849,7 @@ else{
    if (result.value) {
     this.toggleModal()
    }
-   else if(result.dismiss === "backdrop"){
+   else if(result.dismiss === "backdrop" || result.dismiss === "close"){
      return false
    }
    else{

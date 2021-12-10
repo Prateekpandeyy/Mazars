@@ -46,6 +46,28 @@ const tile_canvas = {
     "span 3/span 4/13/25",
     "span 9/span 16/10/21",
   ],
+  "8": [
+    "span 3/span 4/13/3",
+    "span 3/span 4/13/7",
+    "span 3/span 4/13/11",
+    "span 3/span 4/13/15",
+    "span 3/span 4/13/19",
+    "span 3/span 4/13/23",
+    "span 3/span 4/13/27",
+    "span 9/span 16/10/21",
+  ],
+  "8": [
+    "span 3/span 4/13/1",
+    "span 3/span 4/13/5",
+    "span 3/span 4/13/9",
+    "span 3/span 4/13/13",
+    "span 3/span 4/13/17",
+    "span 3/span 4/13/21",
+    "span 3/span 4/13/25",
+    "span 3/span 4/13/29",
+    "span 9/span 16/10/21",
+  ],
+  
 };
 
 /**
@@ -828,15 +850,18 @@ del = (e) => {
      confirmButtonText: "End the call",
      cancelButtonText : "Just leave the meeting"
     }).then((result) => {
+    
      if (result.value) {
       this.toggleModal()
      }
-     else if(result.dismiss === "backdrop"){
-      return false
+     else if(result.dismiss === "backdrop" || result.dismiss === "close"){
+     
+     return false
     }
    else{
     window.location.hash = "/teamleader/schedule";
    }
+   
  });
 }
   render() {    

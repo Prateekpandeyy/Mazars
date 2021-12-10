@@ -304,9 +304,7 @@ function AllProposal() {
 
 
                             <div>
-                            {
-                                    row.status == "Customer Declined; Proposal" ?
-                                        null :
+                          
                                         <div title="Send Message">
                                             <Link
                                                 to={{
@@ -330,7 +328,7 @@ function AllProposal() {
                                                 ></i>
                                             </Link>
                                         </div>
-            }
+            
                             </div>
 
                             <div title="View Discussion Message">

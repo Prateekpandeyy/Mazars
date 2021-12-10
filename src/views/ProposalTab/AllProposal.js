@@ -36,14 +36,15 @@ function ProposalTab() {
 
     const [viewData, setViewData] = useState({});
     const [viewModal, setViewModal] = useState(false);
+    const [assignNo, setAssignNo] = useState('');
+    const [ViewDiscussion, setViewDiscussion] = useState(false);
     const ViewHandler = (key) => {
 
         setViewModal(!viewModal);
         setViewData(key);
     };
 
-    const [assignNo, setAssignNo] = useState('');
-    const [ViewDiscussion, setViewDiscussion] = useState(false);
+
     const ViewDiscussionToggel = (key) => {
         setViewDiscussion(!ViewDiscussion);
         setAssignNo(key)
@@ -280,7 +281,43 @@ function ProposalTab() {
             formatter: function (cell, row) {
                 return (
                     <>
-                        {row.statuscode === "6" ? null : (
+                        {row.statuscode === "6" ? <div style={{display : "flex", justifyContent : "space-between"}}>
+                        <div title="Send Message">
+                                    <Link
+                                        to={{
+                                            pathname: `/customer/chatting/${row.q_id}&type=2`,
+                                            obj: {
+                                                message_type: "3",
+                                                query_No: row.assign_no,
+                                                query_id: row.q_id,
+                                                routes: `/customer/proposal`
+                                            }
+                                        }}
+                                    >
+                                        <i
+                                            class="fa fa-comments-o"
+                                            style={{
+                                                fontSize: 16,
+                                                cursor: "pointer",
+                                                color: "blue"
+                                            }}
+                                        ></i>
+                                    </Link>
+                                </div>
+
+                                <div title="View Discussion Message">
+                                    <i
+                                        class="fa fa-comments-o"
+                                        style={{
+                                            fontSize: 16,
+                                            cursor: "pointer",
+                                            color: "orange"
+                                        }}
+                                        onClick={() => ViewDiscussionToggel(row.assign_no)}
+                                    ></i>
+                                </div>
+
+                        </div> : (
                             <div style={{ display: "flex", justifyContent: "space-between", width: "80px" }}>
                                 <div title="Send Message">
                                     <Link
