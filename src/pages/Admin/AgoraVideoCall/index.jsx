@@ -56,7 +56,7 @@ const tile_canvas = {
     "span 3/span 4/13/27",
     "span 9/span 16/10/21",
   ],
-  "8": [
+  "9": [
     "span 3/span 4/13/1",
     "span 3/span 4/13/5",
     "span 3/span 4/13/9",

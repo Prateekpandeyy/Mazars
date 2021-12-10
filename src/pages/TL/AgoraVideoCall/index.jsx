@@ -56,7 +56,7 @@ const tile_canvas = {
     "span 3/span 4/13/27",
     "span 9/span 16/10/21",
   ],
-  "8": [
+  "9": [
     "span 3/span 4/13/1",
     "span 3/span 4/13/5",
     "span 3/span 4/13/9",
@@ -209,147 +209,132 @@ schdrularName;
  }
 
 
-  componentDidUpdate() {
-    // rerendering
-    let canvas = document.querySelector("#ag-canvas");
-    // pip mode (can only use when less than 4 people in channel)
-    if (this.state.displayMode === "pip") {
-      let no = this.state.streamList.length;
-      if (no > 4) {
-        this.setState({ displayMode: "tile" });
-        return;
-      }
-      this.state.streamList.map((item, index) => {
-        let txtColor = "myPartName";
-        let id = item.getId();
-        let dom = document.querySelector("#ag-item-" + id);
-        if(dom && this.state.disabledVedio === true){
-          dom.setAttribute("class", "ag-item2");
-          txtColor = "myPartName2"
-        }
-        else if (dom && this.state.disabledVedio === false) {
-         dom.setAttribute("class", "ag-item");
-         txtColor = "myPartName"
-        }
-        let dd, kk;
-        if (!dom) {
-          dom = document.createElement("section");
-          dom.setAttribute("id", "ag-item-" + id);
-          dom.setAttribute("class", "ag-item");
-          canvas.appendChild(dom);
-          var box22 = document.getElementById("ag-item-" + id)
-         
-         
-          dd = document.createElement("input")
-          dd.setAttribute("id", txtColor)
-          var newContent = document.createTextNode(this.state.participantName); 
-          item.play("ag-item-" + id);
-          dd.setAttribute("value", CommonServices.capitalizeFirstLetter(this.state.participantName))
-         dd.setAttribute("disabled", true)
-         kk =   dd.appendChild(newContent)
-         box22.appendChild(dd)
-        }
-        if (index === no - 1) {
-          
-          //  document.getElementById("custName").value = "Lucky"
-            dom.setAttribute("style", `grid-area: span 12/span 24/13/25`);
-            
-          } else {
-            let f = false;
-            let share22;
-           if(this.state.stateSharing === true){
-             share22 = true;
-           }
-           else{
-             share22 = false;
-           }
-            dom.setAttribute(
-              "style",
-              `grid-area: span 3/span 4/${4 + 3 * index}/25;
-                      z-index:1;width:calc(100% - 20px);height:calc(100% - 20px)`
-            );
-            dom.addEventListener('click', function (e){
-            
-              if(f === false){
-                f = true
-                dom.setAttribute("style", `grid-area: span 12/span 24/13/25`);
-              }
-              else{
-                f = false
-                dom.setAttribute(
-                  "style",
-                  `grid-area: span 3/span 4/${4 + 3 * index}/25;
-                          z-index:1;width:calc(100% - 20px);height:calc(100% - 20px)`
-                );
-              }
-            
-            })
-          }
-        if(item.player === undefined){
-
-        }
-               else{
-                item.player.resize && item.player.resize();
-               }
-      });
+ componentDidUpdate() {
+  // rerendering
+ 
+  let canvas = document.querySelector("#ag-canvas");
+  // pip mode (can only use when less than 4 people in channel)
+  if (this.state.displayMode === "pip") {
+    let no = this.state.streamList.length;
+    if (no > 4) {
+      this.setState({ displayMode: "tile" });
+      return;
     }
-    // tile mode
-    else if (this.state.displayMode === "tile") {
-      let f = false;
-      let no = this.state.streamList.length;
+    this.state.streamList.map((item, index) => {
       let txtColor = "myPartName";
-      this.state.streamList.map((item, index) => {
-        let id = item.getId();
-        let dom = document.querySelector("#ag-item-" + id);
-        if(dom && this.state.disabledVedio === true){
-          dom.setAttribute("class", "ag-item2");
+      let id = item.getId();
+      let dom = document.querySelector("#ag-item-" + id);
+      if(dom && this.state.disabledVedio === true){
+        dom.setAttribute("class", "ag-item2");
+      }
+      else if (dom && this.state.disabledVedio === false) {
+       dom.setAttribute("class", "ag-item");
+      }
+      let dd, kk;
+      if (!dom) {
+        dom = document.createElement("section");
+        dom.setAttribute("id", "ag-item-" + id);
+        dom.setAttribute("class", "ag-item");
+        canvas.appendChild(dom);
+        var box22 = document.getElementById("ag-item-" + id)
+        dd = document.createElement("input")
+        dd.setAttribute("id", txtColor)
+        var newContent = document.createTextNode(CommonServices.capitalizeFirstLetter(this.state.participantName)); 
+        item.play("ag-item-" + id);
+       dd.setAttribute("value", CommonServices.capitalizeFirstLetter(this.state.participantName))
+       dd.setAttribute("disabled", true)
+       kk =   dd.appendChild(newContent)
+       box22.appendChild(dd)
+      }
+     
+       
+      if (index === no - 1) {
+        
+        //  document.getElementById("custName").value = "Lucky"
+          dom.setAttribute("style", `grid-area: span 12/span 24/13/25`);
+          
+        } else {
+          let f = false;
+          dom.setAttribute(
+            "style",
+            `grid-area: span 3/span 4/${4 + 3 * index}/25;
+                    z-index:1;width:calc(100% - 20px);height:calc(100% - 20px)`
+          );
+          dom.addEventListener('click', function (e){
+            if(f === false){
+              f = true
+              dom.setAttribute("style", `grid-area: span 12/span 24/13/25`);
+            }
+            else{
+              f = false
+              dom.setAttribute(
+                "style",
+                `grid-area: span 3/span 4/${4 + 3 * index}/25;
+                        z-index:1;width:calc(100% - 20px);height:calc(100% - 20px)`
+              );
+            }
+          })
         }
-        else if (dom && this.state.disabledVedio === false) {
-         dom.setAttribute("class", "ag-item");
-        }
-        let dd, kk;
-        if (!dom) {
-          dom = document.createElement("section");
-          dom.setAttribute("id", "ag-item-" + id);
-          dom.setAttribute("class", "ag-item");
-          canvas.appendChild(dom);
-          var box22 = document.getElementById("ag-item-" + id)
-         
-         
-          dd = document.createElement("input")
-          dd.setAttribute("id", txtColor)
-          var newContent = document.createTextNode(this.state.participantName); 
-          item.play("ag-item-" + id);
-         dd.setAttribute("value", this.state.participantName)
-         dd.setAttribute("disabled", true)
-         kk =   dd.appendChild(newContent)
-         box22.appendChild(dd)
-        }
-        dom.setAttribute("style", `grid-area: ${tile_canvas[no][index]}`);
-        dom.addEventListener('click', function (e){
-            
-          if(f === false){
-            f = true
-            dom.setAttribute("style", `grid-area: span 12/span 24/13/25`);
-          }
-          else{
-            f = false
-            dom.setAttribute("style", `grid-area: ${tile_canvas[no][index]}`);
-          }
-        })
-        if(item.player === undefined){
+if(item.player === undefined){
 
-        }
-               else{
-                item.player.resize && item.player.resize();
-               }
-      });
-    }
-    // screen share mode (tbd)
-    else if (this.state.displayMode === "share") {
-    }
+}
+     else{
+      item.player.resize && item.player.resize();
+     }
+    });
   }
-
+  // tile mode
+  else if (this.state.displayMode === "tile") {
+    let f = false;
+    let no = this.state.streamList.length;
+    let txtColor = "myPartName";
+    this.state.streamList.map((item, index) => {
+      let id = item.getId();
+      let dom = document.querySelector("#ag-item-" + id);
+      if(dom && this.state.disabledVedio === true){
+        dom.setAttribute("class", "ag-item2");
+      }
+      else if (dom && this.state.disabledVedio === false) {
+       dom.setAttribute("class", "ag-item");
+      }
+      let dd, kk;
+      if (!dom) {
+        dom = document.createElement("section");
+        dom.setAttribute("id", "ag-item-" + id);
+        dom.setAttribute("class", "ag-item");
+        canvas.appendChild(dom);
+        var box22 = document.getElementById("ag-item-" + id)
+       
+       
+        dd = document.createElement("input")
+        dd.setAttribute("id", txtColor)
+        var newContent = document.createTextNode(this.state.participantName); 
+        item.play("ag-item-" + id);
+       dd.setAttribute("value", this.state.participantName)
+       dd.setAttribute("disabled", true)
+       kk =   dd.appendChild(newContent)
+       box22.appendChild(dd)
+      }
+      dom.setAttribute("style", `grid-area: ${tile_canvas[no][index]}`);
+      dom.addEventListener('click', function (e){
+          
+        if(f === false){
+          f = true
+          dom.setAttribute("style", `grid-area: span 12/span 24/13/25`);
+        }
+        else{
+          f = false
+          dom.setAttribute("style", `grid-area: ${tile_canvas[no][index]}`);
+        }
+      })
+      item.player.resize && item.player.resize();
+    });
+  }
+  // screen share mode (tbd)
+  else if (this.state.displayMode === "share") {
+  
+  }
+}
   componentWillUnmount() {
     this.client && this.client.unpublish(this.localStream);
     this.localStream && this.localStream.close();

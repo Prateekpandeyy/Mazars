@@ -159,6 +159,7 @@ console.log("customerName", this.customerName)
 
   componentDidUpdate() {
     // rerendering
+   
     let canvas = document.querySelector("#ag-canvas");
     // pip mode (can only use when less than 4 people in channel)
     if (this.state.displayMode === "pip") {
@@ -168,8 +169,8 @@ console.log("customerName", this.customerName)
         return;
       }
       this.state.streamList.map((item, index) => {
-        let id = item.getId();
         let txtColor = "myPartName";
+        let id = item.getId();
         let dom = document.querySelector("#ag-item-" + id);
         if(dom && this.state.disabledVedio === true){
           dom.setAttribute("class", "ag-item2");
@@ -184,17 +185,17 @@ console.log("customerName", this.customerName)
           dom.setAttribute("class", "ag-item");
           canvas.appendChild(dom);
           var box22 = document.getElementById("ag-item-" + id)
-         
-         
           dd = document.createElement("input")
           dd.setAttribute("id", txtColor)
-          var newContent = document.createTextNode(this.state.participantName); 
+          var newContent = document.createTextNode(CommonServices.capitalizeFirstLetter(this.state.participantName)); 
           item.play("ag-item-" + id);
-         dd.setAttribute("value", this.state.participantName)
+         dd.setAttribute("value", CommonServices.capitalizeFirstLetter(this.state.participantName))
          dd.setAttribute("disabled", true)
          kk =   dd.appendChild(newContent)
          box22.appendChild(dd)
         }
+       
+         
         if (index === no - 1) {
           
           //  document.getElementById("custName").value = "Lucky"
@@ -222,13 +223,12 @@ console.log("customerName", this.customerName)
               }
             })
           }
+if(item.player === undefined){
 
-          if(item.player === undefined){
-
-          }
-                 else{
-                  item.player.resize && item.player.resize();
-                 }
+}
+       else{
+        item.player.resize && item.player.resize();
+       }
       });
     }
     // tile mode
@@ -275,19 +275,14 @@ console.log("customerName", this.customerName)
             dom.setAttribute("style", `grid-area: ${tile_canvas[no][index]}`);
           }
         })
-        if(item.player === undefined){
-
-        }
-               else{
-                item.player.resize && item.player.resize();
-               }
+        item.player.resize && item.player.resize();
       });
     }
     // screen share mode (tbd)
     else if (this.state.displayMode === "share") {
+    
     }
   }
-
   componentWillUnmount() {
     this.client && this.client.unpublish(this.localStream);
      this.localStream && this.localStream.close();
