@@ -8,6 +8,7 @@ import "../../assets/fonts/css/icons.css";
 import Cookies from "js-cookie";
 import {baseUrl} from "../../config/config";
 import Swal from "sweetalert2";
+import CommonServices from "../../common/common";
 var customer_id = "d339577a294c458c86d8a78b474141fc";
 var customer_secret = "1a61a4bef2144e78be6f671d5cf3fc32";
 
