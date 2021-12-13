@@ -83,12 +83,7 @@ function MyAssingment(props) {
               date_of_allocation:
                 res.data.history_queries[0].date_of_allocation,
             });
-            let a = moment(res.data.result[0].final_date);
-            let b = moment(res.data.proposal_queries[0].cust_accept_date)
-            let c = a.diff(b)
-            let d = moment.duration(c)
-            let finalDate = d.days() + 1;
-           setFinalDate(finalDate)
+          
           }
           if(res.data.result[0].status =="Declined Query"){
         
@@ -145,7 +140,12 @@ function MyAssingment(props) {
               accept : res.data.result[0].accept
             
             });
-            
+            let a = moment(res.data.result[0].final_date);
+            let b = moment(res.data.proposal_queries[0].cust_accept_date)
+            let c = a.diff(b)
+            let d = moment.duration(c)
+            let finalDate = d.days() + 1;
+           setFinalDate(finalDate)
           }
 
           if (res.data.assignment.length > 0) {

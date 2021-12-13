@@ -327,7 +327,12 @@ if(item.player === undefined){
           dom.setAttribute("style", `grid-area: ${tile_canvas[no][index]}`);
         }
       })
-      item.player.resize && item.player.resize();
+      if(item.player === undefined){
+
+      }
+             else{
+              item.player.resize && item.player.resize();
+             }
     });
   }
   // screen share mode (tbd)

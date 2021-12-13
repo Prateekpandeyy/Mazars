@@ -11,13 +11,7 @@ import { useParams, useHistory } from "react-router-dom";
 import classNames from "classnames";
 import {
   Card,
-  CardHeader,
-  CardBody,
-  CardTitle,
-  Row,
-  Col,
-  Table,
-  Tooltip,
+  CardHeader
 } from "reactstrap";
 import Reset from "./Reset";
 import { Form, Input, Button } from "antd";

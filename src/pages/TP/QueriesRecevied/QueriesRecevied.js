@@ -78,12 +78,7 @@ function QueriesRecevied(props) {
               date_of_allocation:
                 res.data.history_queries[0].date_of_allocation,
             });
-            let a = moment(res.data.result[0].final_date);
-            let b = moment(res.data.proposal_queries[0].cust_accept_date)
-            let c = a.diff(b)
-            let d = moment.duration(c)
-            let finalDate = d.days() + 1;
-           setFinalDate(finalDate)
+          
           }
           setSubmitData(res.data.result);
           setDisplaySpecific(res.data.additional_queries);
@@ -132,7 +127,12 @@ function QueriesRecevied(props) {
               installment_amount: res.data.proposal_queries[0].installment_amount,
               due_date: res.data.proposal_queries[0].due_date,
             });
-            
+            let a = moment(res.data.result[0].final_date);
+            let b = moment(res.data.proposal_queries[0].cust_accept_date)
+            let c = a.diff(b)
+            let d = moment.duration(c)
+            let finalDate = d.days() + 1;
+           setFinalDate(finalDate)
           }
 
           if (res.data.assignment.length > 0) {

@@ -58,7 +58,7 @@ function Demo() {
   const [transcode, SetTranscode] = useState("interop");
   const [attendeeMode, SetAttendeeMode] = useState("video");
   const [showVideoIcon, setShowVideoIcon] = useState(false)
-  const [videoProfile, SetVideoProfile] = useState("480p_4");
+  const [videoProfile, SetVideoProfile] = useState("240p_4");
   var date = new Date();
 
   function convert(str) {

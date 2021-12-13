@@ -1,4 +1,4 @@
- import axios from "axios";
+import axios from "axios";
 export default axios.create({
   baseURL: "http://13.232.121.233/mazarsapi/v1",
   headers: {
@@ -6,9 +6,7 @@ export default axios.create({
   },
 });
 
-
-// for server 
-
+ // for server 
 // export default axios.create({
 //   baseURL: "https://mazarsapi.multitvsolution.com/mazarapi/v1",
 //   headers: {

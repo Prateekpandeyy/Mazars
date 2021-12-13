@@ -327,7 +327,12 @@ if(item.player === undefined){
             dom.setAttribute("style", `grid-area: ${tile_canvas[no][index]}`);
           }
         })
-        item.player.resize && item.player.resize();
+        if(item.player === undefined){
+
+        }
+               else{
+                item.player.resize && item.player.resize();
+               }
       });
     }
     // screen share mode (tbd)
@@ -444,10 +449,8 @@ if(item.player === undefined){
       }
     });
     axios.get(`${baseUrl}/tl/setgetschedular?id=${this.props.id}&uid=${this.state.showButton}&chname=${this.channelName}`)
-      .then((res) => {
-       
+      .then((res) => {  
        if(res.data.result.rtc_id == uid){
-       
       Swal.fire({
         title: "success",
         html : "Thank you for attending this meeting, this meeting is going to be ended by host",
@@ -456,12 +459,8 @@ if(item.player === undefined){
         setTimeout((e) => {
           window.location.hash = "/admin/schedule";
         }, 3000)
-       
        }
       })
-     
-     
-    
   };
 
   addStream = (stream, push = false) => {
@@ -597,17 +596,12 @@ if(item.player === undefined){
       let $ = this.props;
       // init AgoraRTC local client
       this.shareClient = AgoraRTC.createClient({ mode: $.transcode });
-
       this.shareClient.init($.appId, () => {
-      
-
         this.subscribeStreamEvents();
         this.shareClient.join($.appId, $.channel, $.uid, (uid) => {
           this.state.uid = uid;
-         
           // create local stream
           // It is not recommended to setState in function addStream
-          
           this.shareStream = this.streamInitSharing(
             uid,
             $.attendeeMode,
@@ -618,13 +612,11 @@ if(item.player === undefined){
               if ($.attendeeMode !== "audience") {
                 this.addStream(this.shareStream, true);
                 this.shareClient.publish(this.shareStream, (err) => {
-                  
                 });
               }
               this.setState({ readyState: true });
             },
             (err) => {
-             
               this.setState({ readyState: true });
             }
           );
@@ -638,8 +630,6 @@ if(item.player === undefined){
       audio: false,
       video:  false,
       screen: true,
-     
-    
     };
  
     switch (attendeeMode) {
@@ -654,7 +644,6 @@ if(item.player === undefined){
       case "video":
         break;
     }
-   
     let stream = AgoraRTC.createStream(merge(defaultConfig, config));
     stream.setVideoProfile("1080p_2");
     return stream;
@@ -662,7 +651,6 @@ if(item.player === undefined){
 
 
   CreateS3Folder = (uid) =>{
-   
     axios
             .get(`https://virtualapi.multitvsolution.com/s3/createMPObject.php?folder_id=${JSON.parse(uid)}`)
             .then((res) => {
@@ -672,25 +660,17 @@ if(item.player === undefined){
 
 
 encodedString = "ZDMzOTU3N2EyOTRjNDU4Yzg2ZDhhNzhiNDc0MTQxZmM6MWE2MWE0YmVmMjE0NGU3OGJlNmY2NzFkNWNmM2ZjMzI=";
-
-
-
-
 sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 //get recording status
 async GetRecordingStatus(json){
-    
-
   await this.sleep(3000); 
   var resourceId = json.data.resourceId;
   var sid = json.data.sid;
-
   localStorage.setItem("resourceId", resourceId);
   localStorage.setItem("sid", sid);
-
   fetch(`https://api.agora.io/v1/apps/${this.props.appId}/cloud_recording/resourceid/${resourceId}/sid/${sid}/mode/mix/query`, {
     method: "GET",
     headers: {
@@ -701,7 +681,6 @@ async GetRecordingStatus(json){
 })
     .then((res) => res.json())
     .then((response) => {
-       
         this.setState({
           data:response,
           recordDisplay:!this.state.recordDisplay
@@ -713,18 +692,11 @@ async GetRecordingStatus(json){
     .catch((error) => console.log(error));
 }
 
-
-
 //start recording
-async startRecording(key){
-   
+async startRecording(key){   
     var resourceId = key.data.resourceId 
-    
     this.CreateS3Folder(JSON.stringify(this.uid));
-
     var data =  "{\n\t\"cname\":\""+this.channelName+"\",\n\t\"uid\":\""+this.uid+"\",\n\t\"clientRequest\":{\n\t\t\"recordingConfig\":{\n\t\t\t\"maxIdleTime\":60,\n\t\t\t\"channelType\":1,\n\t\t\t\"transcodingConfig\":{\n\t\t\t\t\"width\":1280,\n\t\t\t\t\"height\":720,\n\t\t\t\t\"fps\":30,\n\t\t\t\t\"bitrate\":3420,\n\t\t\t\t\"mixedVideoLayout\":1,\n\t\t\t\t\"maxResolutionUid\":\""+this.uid+"\"\n\t\t\t\t}\n\t\t\t},\n\t\t\"storageConfig\":{\n\t\t\t\"vendor\":"+this.vendor+",\n\t\t\t\"region\":"+this.region+",\n\t\t\t\"bucket\":\""+this.bucket+"\",\n\t\t\t\"accessKey\":\""+this.accessKey+"\",\n\"fileNamePrefix\": [\"recordings\",\"mp\",\""+this.uid+"\"],\n\t\t\t\"secretKey\":\""+this.secretKey+"\"\n\t\t}\t\n\t}\n} \n"
- 
-
   await axios({
       method: "POST",
       headers: {
@@ -737,16 +709,12 @@ async startRecording(key){
     })
     .then(json => this.GetRecordingStatus(json)) 
       .catch((error) => {
-      
       });
   };
 
-
   //recording  acquire
   accuire = () =>{
-   
     var data = "{\n  \"cname\": \"" + this.channelName + "\",\n  \"uid\": \"" + this.uid + "\",\n  \"clientRequest\":{\n  }\n}"
-
     axios({
       method: "POST",
       headers: {
@@ -759,9 +727,7 @@ async startRecording(key){
     })
       .then(json => 
         this.startRecording(json)) 
-       
       .catch((error) => {
-       
       });
   };
 // Start recording button
@@ -786,17 +752,13 @@ async startRecording(key){
  //stop recording 
  stopRecording = () => {
   if(this.state.showRecBtn === true){
-    
 this.del();
   }
-  
   else if(this.state.showButton == JSON.parse(this.teamKey)){
- 
     if(resourceId === undefined){
       var resourceId = localStorage.getItem("resourceId");
     var sid = localStorage.getItem("sid");
     }
-
   var data = JSON.stringify({
     "cname":this.channelName,
     "uid":JSON.stringify(this.uid),
@@ -818,16 +780,13 @@ this.del();
    
 this.del(),
     ) 
-    .catch((error) => {
-      
+    .catch((error) => {   
     });
 }
 else{
   this.localStream.disableVideo()
   window.location.hash = "/admin/schedule";
- 
 }
-  
 };
 
  del = (e) => {
