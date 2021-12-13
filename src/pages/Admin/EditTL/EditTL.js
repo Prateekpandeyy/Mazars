@@ -16,7 +16,6 @@ import {
 import Reset from "./Reset";
 import { Form, Input, Button } from "antd";
 import Select from "react-select";
-import Alerts from "../../../common/Alerts";
 import { Spinner } from "reactstrap";
 const Schema = yup.object().shape({
   p_name: yup.string().required("required name"),
@@ -133,13 +132,18 @@ function EditTL() {
         }
       });
     };
-
+   defValue()
+   
     getCategory();
-  }, []);
+    if(data5) {
+      defSubValue();
+    }
+  }, [showDel]);
 
   useEffect(() => {
-    
+
     getSubCategory();
+   
   }, [store]);
 
   const getSubCategory = () => {
@@ -152,7 +156,7 @@ function EditTL() {
     });
   }
   };
-
+  
   const onFinish = (value) => {
 
 
@@ -285,7 +289,7 @@ function EditTL() {
       
     }
   }
-  var allData1 = {}
+
   var dir = []
   var indir = []
 
@@ -307,14 +311,15 @@ function EditTL() {
 
   // Category Function
   const category = (v) => {
-   
-    setCategoryData(v)
+
+     setCategoryData(v)
 
     setError("")
     setCustcate(v)
 
     v.map((val) => {
       vv.push(val.value)
+
       setmcategory((oldData) => {
         return [...oldData, val.value]
       })
@@ -326,6 +331,7 @@ function EditTL() {
 
 
     if (vv.length > 0) {
+      console.log("value", vv)
       if (vv.includes("1") && vv.includes("2")) {
       
       }
@@ -397,18 +403,30 @@ const emailValidation = (key) => {
     setWemail("invalid email")
   }
 }
-var e = 1;
+
+
+var e = 0;
 const defValue = () => {
+ if(data4){
   const data55 = data4.split(",")
- 
-   a = data55.map((i => ({
-    "value" : ++e,
-    "label" : i
-  }) ))
 
+  if(data55[0].includes("Direct tax")){
+    e = 1;
+  }
+  else if(data55[0].includes("Indirect tax")){
+    e = 2;
+  }
+    a = data55.map((i => ({
+      "value" : String(e++),
+      "label" : i
+    }) ))
+  
+}
 
+  setCategoryData(a)
 }
 const defSubValue = () => {
+console.log("data")
  var dir1;
  var dir2;
  var kk = []
@@ -426,7 +444,7 @@ const defSubValue = () => {
  })
  
  dir1 = subcatgerydefvalue.direct.map((i => ({
-  "value" : ++d,
+  "value" : String(d++),
   "label" : i
 }) ))
 dir2 = subcatgerydefvalue.indirect.map((i => ({
@@ -434,16 +452,11 @@ dir2 = subcatgerydefvalue.indirect.map((i => ({
   "label" : i
 }) ))
 subdefval = [...dir1, ...dir2]
-
+subCategeryData(subdefval)
 }
 
 
-if(data4 != undefined){
-  defValue();
-}
-if(data5 != undefined){
-  defSubValue();
-}
+
 const checktlPost = (e) => {
   setPostName(e.target.value)
   data6 = e.target.value;
@@ -647,27 +660,29 @@ const checktlPost = (e) => {
                         <label>Category <span className="declined">*</span></label>
                         <div class="form-group">
 
-                          <Select isMulti options={options}
-                            defaultValue={a} onChange={category}
-                            styles={{
-                              option: (styles, { data }) => {
-                                return {
-                                  ...styles,
-                                  color: data.value == 2
-                                    ? "blue"
-                                    : "green"
-                                };
-                              },
-                              multiValueLabel: (styles, { data }) => ({
-                                ...styles,
-                                color: data.value  == 2
-                                    ? "blue"
-                                    : "green"
-                              }),
-                            }}
-                           
-                          >
-                          </Select>
+                        <Select isMulti options={options}
+                        value = {categoryData}
+                        className={error ? "customError" : ""}
+                        styles={{
+                          option: (styles, { data }) => {
+                            return {
+                              ...styles,
+                              color: data.value == 2
+                                ? "green"
+                                : "blue"
+                            };
+                          },
+                          multiValueLabel: (styles, { data }) => ({
+                            ...styles,
+                            color: data.value == 2
+                              ? "green"
+                              : "blue"
+                          }),
+                        }}
+                        
+                        onChange={category}>
+                      </Select>
+
                          
 
                         </div>
@@ -679,7 +694,7 @@ const checktlPost = (e) => {
                         <label>Sub Category <span className="declined">*</span></label>
                         <Select isMulti options={options2}
                       onChange={subCategory}
-                            defaultValue = {subdefval}
+                            value = {subData}
                             styles={{
                               option: (styles, { data }) => {
                                 return {
