@@ -104,9 +104,11 @@ function EditTL() {
     axios.get(`${baseUrl}/tl/getTeamLeader?id=${id}`).then((res) => {
  
       if (res.data.code === 1) {
+       if(JSON.parse(res.data.result[0].allcat_id)){
         setValue(res.data.result[0]);
         setStore(res.data.result[0].pcat_id);
         setShowDel(res.data.result[0].is_delete)
+       }
        
       }
     });
@@ -151,7 +153,7 @@ function EditTL() {
     axios.get(`${baseUrl}/customers/getCategory?pid=${store}`).then((res) => {
      
       if (res.data.code === 1) {
-        setTax2(res.data.result);
+       setTax2(res.data.result);
       }
     });
   }
@@ -196,16 +198,17 @@ function EditTL() {
         formData.append("post_name", postValue) :
         formData.append("post_name", data6)}
      {categeryList.length > 1 ?  formData.append("cat_id", categeryList) : 
-     formData.append("cat_id", data8) }
+     formData.append("cat_id", categeryList) }
      {kk.length === 0 ?  formData.append("pcat_id", data9) : 
      formData.append("pcat_id", kk) }
       { parentCategoryName.length > 0 ?
       formData.append("allpcat_id", parentCategoryName) : 
       formData.append("allpcat_id", data4) } 
-     { categeryName.length > 0 ? formData.append("allcat_id", JSON.stringify(dd)) : 
-     formData.append("allcat_id", data5) }
+      
+    
+      formData.append("allcat_id", JSON.stringify(dd)) 
       formData.append("id", id);
-
+console.log("value", categeryList)
       axios({
         method: "POST",
         url: `${baseUrl}/tl/updateTeamLeader`,
@@ -336,21 +339,34 @@ function EditTL() {
       
       }
       else if (vv.includes("1")) {
-
+let dkkk = []
+let pkk = []
         for (let i = 0; i < subData.length; i++) {
           if (subData[i].value < 9) {
             kk.push(subData[i])
+            dkkk.push(subData[i].label)
           }
         }
+        console.log(subData)
+        setDd({
+          "direct" : dkkk,
+          "indirect" : pkk
+        })
         subCategeryData(kk)
       }
       else if (vv.includes("2")) {
-
+        let pkk = []
+        let dkkk = []
         for (let i = 0; i < subData.length; i++) {
           if (subData[i].value > 8) {
             kk.push(subData[i])
+            dkkk.push(subData[i].label)
           }
         }
+        setDd({
+          "direct" : pkk,
+          "indirect" : dkkk
+        })
         subCategeryData(kk)
       }
     }
@@ -426,34 +442,52 @@ const defValue = () => {
   setCategoryData(a)
 }
 const defSubValue = () => {
-console.log("data")
- var dir1;
- var dir2;
- var kk = []
- var d = 3;
- var ind = 9;
-
- var subcatgerydefvalue = JSON.parse(value.allcat_id);
- indirvalue = subcatgerydefvalue.indirect;
- dirvalue = subcatgerydefvalue.direct;
- dirvalue.map((i) => {
-   allsubcatvalue.push(i)
- })
- indirvalue.map((o) => {
-   allsubcatvalue.push(o)
- })
- 
- dir1 = subcatgerydefvalue.direct.map((i => ({
-  "value" : String(d++),
-  "label" : i
-}) ))
-dir2 = subcatgerydefvalue.indirect.map((i => ({
-  "value" : ++ind,
-  "label" : i
-}) ))
-subdefval = [...dir1, ...dir2]
-subCategeryData(subdefval)
-}
+  console.log("data")
+   var dir1;
+   var dir2;
+   var kk = []
+   var d = 3;
+   var ind = 9;
+  
+   var subcatgerydefvalue = JSON.parse(value.allcat_id);
+   indirvalue = subcatgerydefvalue.indirect;
+   dirvalue = subcatgerydefvalue.direct;
+   if(Array.isArray(dirvalue)){
+    dirvalue.map((i) => {
+      allsubcatvalue.push(i)
+    })
+    dir1 = subcatgerydefvalue.direct.map((i => ({
+      "value" : String(d++),
+      "label" : i
+    }) ))
+   }
+   else{
+     return false
+   }
+  if(Array.isArray(indirvalue)){
+    indirvalue.map((o) => {
+      allsubcatvalue.push(o)
+    })
+    dir2 = subcatgerydefvalue.indirect.map((i => ({
+      "value" : String(ind++),
+      "label" : i
+    }) ))
+  }
+  else{
+    return false
+  }
+   
+   
+  
+  subdefval = [...dir1, ...dir2]
+  let dircat = [subcatgerydefvalue.direct[0]]
+  let indircat = [subcatgerydefvalue.indirect[0]]
+  subCategeryData(subdefval)
+  setDd({
+    "direct" : dircat,
+    "indirect" : indircat
+  })
+  }
 
 
 

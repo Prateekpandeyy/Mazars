@@ -18,10 +18,10 @@ const tile_canvas = {
   "2": ["span 12/span 12/13/25", "span 12/span 12/13/13"],
   "3": ["span 6/span 12", "span 6/span 12", "span 6/span 12/7/19"],
   "4": [
-    "span 6/span 12",
-    "span 6/span 12",
-    "span 6/span 12",
-    "span 6/span 12/7/13",
+    "span 3/span 4/13/11",
+    "span 3/span 4/13/15",
+    "span 3/span 4/13/19",
+    "span 9/span 16/10/21",
   ],
   "5": [
     "span 3/span 4/13/9",
