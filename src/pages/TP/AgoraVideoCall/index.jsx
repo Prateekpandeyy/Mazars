@@ -847,6 +847,8 @@ del = (e) => {
   let formData = new FormData()
   formData.append("fileList", this.state.data.serverResponse.fileList)
   formData.append("schedule_id", this.props.id);
+  formData.append("uid", JSON.parse(this.teamKey));
+  formData.append("assign_id", this.state.item.assign_no);
  axios({
    method: "POST",
    url: `${baseUrl}/tl/callRecordingPost`,
