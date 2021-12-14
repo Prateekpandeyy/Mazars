@@ -819,6 +819,11 @@ else{
      return false
    }
    else{
+    axios({
+      method: "POST",
+      url: `${baseUrl}/tl/callRecordingPost`,
+      data: formData,
+   })
     window.location.hash = "/admin/schedule";
    }
  });

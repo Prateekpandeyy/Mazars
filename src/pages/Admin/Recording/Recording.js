@@ -18,7 +18,7 @@ import ReactPlayer from "react-player";
 import { useParams } from "react-router";
 import {Link} from 'react-router-dom'
 import RecordingFilter from "../../../components/Search-Filter/RecordingFilter";
-
+import RecordingEdit from './RecordingEdit';
 
 
 
@@ -29,6 +29,13 @@ function Recording() {
     const [isOpen, setIsOpen] = useState(false);
     const [videoid, setVideoId] = useState(null);
     const [records, setRecords] = useState([]);
+    const [showEditModal, setShowEditModal] = useState(false)
+    const [editData, setEditData] = useState({
+        participant : '',
+        editMessage : '',
+        assignid : '',
+        id : ''
+    })
     const openModal = (videoContent) => {
       
         setIsOpen(true);
@@ -54,6 +61,17 @@ function Recording() {
                 }
             });
     };
+
+    const editRecording = (participants, assign_id, message, id) => {
+   
+        setShowEditModal(!showEditModal)
+        setEditData({
+            participant : participants,
+            editMessage : message,
+            assignid : assign_id,
+            id : id
+        })
+    }
     const modalBox = {
         display : "flex",
         position : "absolute",
@@ -142,6 +160,18 @@ const canBtn = {
                 let a = 1;
                 return (
                     <>
+                   <div>
+                    {row.record_by === JSON.parse(userid) && row.message === null ?
+                             <i
+                             className="fa fa-edit"
+                             style={{
+                               fontSize: 18,
+                               cursor: "pointer",
+                               marginLeft: "8px",
+                             }}
+                             onClick = {() => editRecording(row.participants, row.assign_id, row.message, row.id)}
+                           ></i> : ""}
+                    </div>
                         <div>
                             {
                                 recording.map((record) => {
@@ -230,6 +260,14 @@ const canBtn = {
             
            </div>
          : ""}
+          <RecordingEdit 
+          isOpen = {showEditModal}
+          recordingHandler = {editRecording}
+          participants = {editData.participant}
+          message = {editData.editMessage}
+          assignid = {editData.assignid}
+          editId = {editData.id}
+          recList = {getRecording}/>
          </Layout>
            </>
 

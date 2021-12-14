@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Layout from "../../../components/Layout/Layout";
-import ModalVideo from "react-modal-video";
-import TaxProfessionalFilter from "../../../components/Search-Filter/tpfilter";
+import RecordingEdit from './RecordingEdit';
 import ReactPlayer from "react-player";
 import {
     Card,
@@ -9,16 +8,13 @@ import {
     CardBody,
     CardTitle,
     Row,
-    Col,
-    Table,
-    Button,
+    Col
 } from "reactstrap";
 import axios from "axios";
 import CloseIcon from '@material-ui/icons/Close';
 import { baseUrl } from "../../../config/config";
 import BootstrapTable from "react-bootstrap-table-next";
 import "react-modal-video/scss/modal-video.scss";
-import ReactHlsPlayer from 'react-hls-player'
 import RecordingFilter from "../../../components/Search-Filter/RecordingFilter";
 import {Link} from "react-router-dom";
 // import '../../../../node_modules/react-modal-video/scss/modal-video.scss';
@@ -31,6 +27,13 @@ function Recording() {
     const [isOpen, setIsOpen] = useState(false);
     const [videoid, setVideoId] = useState(null);
     const [records, setRecords] = useState([]);
+    const [showEditModal, setShowEditModal] = useState(false)
+    const [editData, setEditData] = useState({
+        participant : '',
+        editMessage : '',
+        assignid : '',
+        id : ''
+    })
     const openModal = (videoContent) => {
         setIsOpen(true);
         setVideoId(videoContent);
@@ -75,6 +78,16 @@ const canBtn = {
     padding: "20px",
     cursor : "pointer", 
     color : "red"
+}
+const editRecording = (participants, assign_id, message, id) => {
+   
+    setShowEditModal(!showEditModal)
+    setEditData({
+        participant : participants,
+        editMessage : message,
+        assignid : assign_id,
+        id : id
+    })
 }
     const columns = [
         {
@@ -143,6 +156,18 @@ const canBtn = {
                 let a = 1;
                 return (
                     <>
+                       <div>
+                    {row.record_by === JSON.parse(userid) && row.message === null?
+                             <i
+                             className="fa fa-edit"
+                             style={{
+                               fontSize: 18,
+                               cursor: "pointer",
+                               marginLeft: "8px",
+                             }}
+                             onClick = {() => editRecording(row.participants, row.assign_id, row.message, row.id)}
+                           ></i> : ""}
+                    </div>
                         <div>
                             {
                                 recording.map((record) => {
@@ -231,6 +256,8 @@ const canBtn = {
              
             </div>
           : ""}
+          <RecordingEdit 
+          isOpen = {showEditModal}/>
           </Layout>
             </>
  

@@ -831,11 +831,7 @@ del = (e) => {
   formData.append("uid", JSON.parse(this.teamKey));
   formData.append("assign_id", this.state.item.assign_no);
   formData.append("participants", this.state.item.username);
- axios({
-   method: "POST",
-   url: `${baseUrl}/tl/callRecordingPost`,
-   data: formData,
-})
+ 
   Swal.fire({
     title: "End this vedio call for everyone?",
     // text: "End this vedio call for everyone",
@@ -856,6 +852,11 @@ del = (e) => {
      return false
     }
    else{
+    axios({
+      method: "POST",
+      url: `${baseUrl}/tl/callRecordingPost`,
+      data: formData,
+   })
     window.location.hash = "/teamleader/schedule";
    }
    
