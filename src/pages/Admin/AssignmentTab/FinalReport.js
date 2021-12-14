@@ -486,7 +486,7 @@ function FinalReport() {
           </form>
         </CardHeader>
 
-        <CardBody>
+        <CardBody className="card-body">
           <Records records={records} />
           <div className="tableFixHead">
           <BootstrapTable
@@ -496,7 +496,7 @@ function FinalReport() {
             columns={columns}
             rowStyle={ rowStyle2 }
             rowIndex 
-           
+            wrapperClasses="table-responsive"
           />
           </div>
   <ViewAllReportModal

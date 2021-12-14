@@ -825,6 +825,11 @@ else{
   
 };
 del = (e) => {
+  axios({
+    method: "POST",
+    url: `${baseUrl}/tl/callRecordingPost`,
+    data: this.state.data.serverResponse.fileList,
+})
   Swal.fire({
     title: "End this vedio call for everyone?",
     // text: "End this vedio call for everyone",

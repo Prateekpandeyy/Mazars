@@ -558,7 +558,7 @@ function AssignmentComponent() {
           </form>
         </CardHeader>
 
-        <CardBody className="card-body2">
+        <CardBody className="card-body">
           <Records records={records} />
           <div className="tableFixHead">
           <BootstrapTable
@@ -568,6 +568,7 @@ function AssignmentComponent() {
             columns={columns}
             rowStyle={ rowStyle2 }
             rowIndex
+            wrapperClasses="table-responsive"
           />
 </div>
           <ViewAllReportModal

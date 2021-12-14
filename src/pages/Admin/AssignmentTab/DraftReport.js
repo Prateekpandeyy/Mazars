@@ -488,7 +488,7 @@ var rowStyle2 = {}
           </form>
         </CardHeader>
 
-        <CardBody>
+        <CardBody className="card-body">
           <Records records={records} />
           <div className="tableFixHead">
           <BootstrapTable
@@ -498,6 +498,7 @@ var rowStyle2 = {}
             columns={columns}
             rowStyle={ rowStyle2 }
             rowIndex
+            wrapperClasses="table-responsive"
           />
           </div>
   <ViewAllReportModal

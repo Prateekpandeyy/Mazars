@@ -277,7 +277,7 @@ function PendingAllocation({ CountPendingForAllocation }) {
             records={records}
           />
         </CardHeader>
-        <CardBody className = "card-body2">
+        <CardBody className = "card-body">
           <Records records={records} />
           <div className="tableFixHead">
           <BootstrapTable
@@ -286,6 +286,7 @@ function PendingAllocation({ CountPendingForAllocation }) {
             data={pendingData}
             columns={columns}
             rowIndex
+            wrapperClasses="table-responsive"
           /> </div>
           <History history={history} toggle={toggle} modal={modal} />
         </CardBody>
