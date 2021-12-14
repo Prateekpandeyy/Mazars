@@ -790,10 +790,13 @@ else{
 };
 
  del = (e) => {
+   let formData = new FormData()
+   formData.append("fileList", this.state.data.serverResponse.fileList)
+   formData.append("schedule_id", this.props.id);
   axios({
     method: "POST",
     url: `${baseUrl}/tl/callRecordingPost`,
-    data: this.state.data.serverResponse.fileList,
+    data: formData,
 })
   Swal.fire({
   title: "End this vedio call for everyone?",

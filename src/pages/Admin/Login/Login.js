@@ -96,7 +96,7 @@ function Login(props) {
   
   return (
     <>
-      <Header admin="admin" />
+      <Header admin="admin" noAdminSign = "adminSign"/>
       <div class="container">
 
         {

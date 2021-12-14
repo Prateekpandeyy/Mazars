@@ -93,7 +93,7 @@ function Login(props) {
   }
   return (
     <>
-      <Header mtp="mtp" />
+      <Header mtp="mtp" noTpSign = "noTpSign"/>
       <div class="container">
 
         {

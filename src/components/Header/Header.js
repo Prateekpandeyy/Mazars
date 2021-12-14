@@ -2,7 +2,7 @@ import { Link, useHistory } from "react-router-dom";
 import "../../assets/css/style.css";
 import mazars from "../../assets/images/mazars-logo.png";
 
-function Header({ id, cust_sign, admin, mtl, mtp, noSign, loginOTP }) {
+function Header({ id, cust_sign, noAdminSign, noTlSign, noTpSign, admin, mtl, mtp, noSign, loginOTP }) {
   let history = useHistory();
 
   const custLogout = () => {
@@ -93,7 +93,7 @@ function Header({ id, cust_sign, admin, mtl, mtp, noSign, loginOTP }) {
             </div>
           )}
          
-          {admin && (
+          {admin && !noAdminSign && (
             <ul class="menu">
               <li>
                 <Link to="/admin/login">Signin</Link>
@@ -101,7 +101,7 @@ function Header({ id, cust_sign, admin, mtl, mtp, noSign, loginOTP }) {
             </ul>
           )}
 
-          {mtl && (
+          {mtl && !noTlSign && (
             <ul class="menu">
               <li>
                 <Link to="/teamleader/login">Signin</Link>
@@ -109,7 +109,7 @@ function Header({ id, cust_sign, admin, mtl, mtp, noSign, loginOTP }) {
             </ul>
           )}
 
-          {mtp && (
+          {mtp && !noTpSign && (
             <ul class="menu">
               <li>
                 <Link to="/taxprofessional/login">Signin</Link>
