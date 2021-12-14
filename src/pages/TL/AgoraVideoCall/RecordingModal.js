@@ -60,7 +60,7 @@ else{
             .then(function (response) {
                         if (response.data.code === 1) {
                     toggle()
-                
+                history.push("/teamleader/schedule")
                 }
                
             })

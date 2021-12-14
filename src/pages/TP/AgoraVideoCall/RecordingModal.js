@@ -59,7 +59,7 @@ function RecordingModal({
               
                 if (response.data.code === 1) {
                     toggle();
-                   
+                    history.push("/taxprofessional/schedule")
                    
                 }
             })

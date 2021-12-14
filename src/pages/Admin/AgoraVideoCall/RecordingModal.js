@@ -62,7 +62,7 @@ axios.get(`${baseUrl}/tl/freeslottime?schedule_id=${id}&&uid=${JSON.parse(userId
               
                 if (response.data.code === 1) {
                     toggle()
-                   
+                    history.push("/admin/schedule")
                 }
             })
             .catch((error) => {
