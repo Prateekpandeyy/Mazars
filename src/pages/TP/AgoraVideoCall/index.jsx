@@ -874,7 +874,7 @@ del = (e) => {
       url: `${baseUrl}/tl/callRecordingPost`,
       data: formData,
    })
-    window.location.hash = "/teamleader/schedule";
+    window.location.hash = "/taxprofessional/schedule";
    }
  });
 }

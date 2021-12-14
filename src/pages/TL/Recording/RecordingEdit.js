@@ -22,7 +22,7 @@ const RecordingEdit = ({isOpen, recordingHandler, participants, message, assigni
             data: formData,
         })
         .then((res) => {
-            if( res.data.code === 1){
+            if(res.data.code === 1){
                 recordingHandler()
                 Swal.fire({
                     title : "success",
@@ -82,6 +82,7 @@ return (
     <div className="col-md-12">
         <label>Message</label>
         <textarea 
+           style={{height : "100px"}}
         className="form-control"
         name="p_message"
         ref = {register}

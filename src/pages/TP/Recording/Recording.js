@@ -257,7 +257,13 @@ const editRecording = (participants, assign_id, message, id) => {
             </div>
           : ""}
           <RecordingEdit 
-          isOpen = {showEditModal}/>
+          isOpen = {showEditModal}
+          recordingHandler = {editRecording}
+          participants = {editData.participant}
+          message = {editData.editMessage}
+          assignid = {editData.assignid}
+          editId = {editData.id}
+          recList = {getRecording}/>
           </Layout>
             </>
  
