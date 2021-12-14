@@ -830,6 +830,7 @@ del = (e) => {
   formData.append("schedule_id", this.props.id);
   formData.append("uid", JSON.parse(this.teamKey));
   formData.append("assign_id", this.state.item.assign_no);
+  formData.append("participants", this.state.item.username);
  axios({
    method: "POST",
    url: `${baseUrl}/tl/callRecordingPost`,
