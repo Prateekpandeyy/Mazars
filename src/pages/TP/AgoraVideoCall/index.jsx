@@ -863,7 +863,15 @@ del = (e) => {
    cancelButtonText : "Just leave the meeting"
   }).then((result) => {
    if (result.value) {
-    this.toggleModal()
+    axios.get(`${baseUrl}/tl/setgetschedular?id=${this.props.id}&rtc_id=${this.state.getAdId}&uid=${JSON.parse(this.teamKey)}`)
+    .then((res) =>{
+      if(res){
+        this.client && this.client.unpublish(this.localStream);
+        this.localStream && this.localStream.close();
+        this.toggleModal()
+      }
+    })
+   
    }
    else if(result.dismiss === "backdrop" || result.dismiss === "close"){
     return false

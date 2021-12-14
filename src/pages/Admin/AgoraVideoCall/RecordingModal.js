@@ -62,32 +62,14 @@ axios.get(`${baseUrl}/tl/freeslottime?schedule_id=${id}&&uid=${JSON.parse(userId
               
                 if (response.data.code === 1) {
                     toggle()
-                    if(ownerId === JSON.parse(userId)){
-                        confirmation()
-                    }
+                   
                 }
             })
             .catch((error) => {
                
             });
     };
-    // const exitBtn2 = () => {
-    //     if(ownerId === JSON.parse(userId)){
-    //         confirmation()
-    //     }
-    //     else{
-    //         history.push('/teamleader/schedule');
-    //     }
-       
-    // }
-    const confirmation = () => {
-        axios.get(`${baseUrl}/tl/setgetschedular?id=${schId}&rtc_id=${uid}&uid=${JSON.parse(userId)}`)
-        .then((res) =>{
-          if(res){
-           history.push('/admin/schedule');
-          }
-        })
-      }
+ 
     return (
         <div>
             <Modal isOpen={isOpen} toggle={toggle} size="md">

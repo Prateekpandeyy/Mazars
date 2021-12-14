@@ -448,9 +448,12 @@ if(item.player === undefined){
         });
       }
     });
+    console.log("get22", uid)
     axios.get(`${baseUrl}/tl/setgetschedular?id=${this.props.id}&uid=${this.state.showButton}&chname=${this.channelName}`)
       .then((res) => {  
+        console.log("get222", res.data.result.rtc_id)
        if(res.data.result.rtc_id == uid){
+         
       Swal.fire({
         title: "success",
         html : "Thank you for attending this meeting, this meeting is going to be ended by host",
@@ -812,9 +815,17 @@ else{
    confirmButtonText: "End the call",
    cancelButtonText : "Just leave the meeting"
   }).then((result) => {
-   if (result.value) {
-    this.toggleModal()
-   }
+    if (result.value) {
+      axios.get(`${baseUrl}/tl/setgetschedular?id=${this.props.id}&rtc_id=${this.state.getAdId}&uid=${JSON.parse(this.teamKey)}`)
+      .then((res) =>{
+        if(res){
+          this.client && this.client.unpublish(this.localStream);
+          this.localStream && this.localStream.close();
+          this.toggleModal()
+        }
+      })
+     
+     }
    else if(result.dismiss === "backdrop" || result.dismiss === "close"){
      return false
    }

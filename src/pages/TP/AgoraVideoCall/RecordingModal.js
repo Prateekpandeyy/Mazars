@@ -59,9 +59,7 @@ function RecordingModal({
               
                 if (response.data.code === 1) {
                     toggle();
-                    if(ownerId === JSON.parse(userId)){
-                        confirmation()
-                    }
+                   
                    
                 }
             })
@@ -69,24 +67,7 @@ function RecordingModal({
                
             });
     };
-    // const exitBtn2 = () => {
-    //     if(ownerId === JSON.parse(userId)){
-    //         confirmation()
-    //     }
-    //     else{
-    //         history.push('/teamleader/schedule');
-    //     }
-       
-
-    // }
-    const confirmation = () => {
-        axios.get(`${baseUrl}/tl/setgetschedular?id=${schId}&rtc_id=${uid}&uid=${JSON.parse(userId)}`)
-        .then((res) =>{
-          if(res){
-           history.push('/taxprofessional/schedule');
-          }
-        })
-      }
+  
     return (
         <div>
             <Modal isOpen={isOpen}  size="md">

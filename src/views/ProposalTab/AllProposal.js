@@ -375,7 +375,7 @@ function ProposalTab() {
                                     {
                                         row.statuscode == 4
                                             ?
-                                            <div style={{ cursor: "pointer" }} title="Dicision on Proposal">
+                                            <div style={{ cursor: "pointer" }} title="Decision on Proposal">
                                                 <Link to={`/customer/proposal_view/${row.q_id}`}>
                                                     <i
                                                         class="fa fa-share"

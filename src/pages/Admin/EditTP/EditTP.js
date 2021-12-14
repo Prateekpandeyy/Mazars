@@ -329,7 +329,7 @@ function EditTP() {
 
   // Category Function
   const category = (v) => {
-    
+    console.log("vvv", v)
     selectInputRef.current.select.clearValue();
    
     setCategoryData(v)
@@ -491,6 +491,7 @@ function EditTP() {
        
      });
  };
+
   return (
     <Layout adminDashboard="adminDashboard" adminUserId={userid}>
       <Card>
@@ -666,9 +667,9 @@ function EditTP() {
                                     : "blue"
                                 };
                               },
-                              multiValueLabel: (styles, { data }) => ({
+                              singleValue: (styles, { data }) => ({
                                 ...styles,
-                                color: data.value  == 2
+                                color: data.label  == "Indirect tax"
                                     ? "green"
                                     : "blue"
                               }),

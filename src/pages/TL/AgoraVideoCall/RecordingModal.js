@@ -60,32 +60,14 @@ else{
             .then(function (response) {
                         if (response.data.code === 1) {
                     toggle()
-                    // history.push('/teamleader/schedule');
-                    confirmation()
+                
                 }
                
             })
             .catch((error) => {
                        });
     };
-    // const exitBtn2 = () => {
-    //     if(ownerId === JSON.parse(userId)){
-    //         confirmation()
-    //     }
-    //     else{
-    //         history.push('/teamleader/schedule');
-    //     }
-       
-
-    // }
-const confirmation = () => {
-    axios.get(`${baseUrl}/tl/setgetschedular?id=${schId}&rtc_id=${uid}&uid=${JSON.parse(userId)}`)
-     .then((res) =>{
-       if(res){
-        history.push('/teamleader/schedule');
-       }
-     })
-  }
+  
     return (
         <div>
             <Modal isOpen={isOpen} size="md">

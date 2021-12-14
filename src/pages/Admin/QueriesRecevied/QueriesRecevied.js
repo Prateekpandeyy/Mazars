@@ -117,6 +117,7 @@ function QueriesRecevied(props) {
             setDisplaySpecific(res.data.additional_queries);
           }
           if (res.data.payment_detail) {
+            console.log("payDetails", res.data.payment_detail)
             setPaymentDetails(res.data.payment_detail);
           }
           if (res.data.feedback_detail) {
@@ -188,13 +189,7 @@ function QueriesRecevied(props) {
               date_of_delivery: res.data.assignment[0].date_of_delivery,
             });
           }
-          // if (res.data.history_queries.length > 0) {
-          //   setDisplayHistory({
-          //     tlname: res.data.history_queries[0].tlname,
-          //     date_of_allocation:
-          //       res.data.history_queries[0].date_of_allocation,
-          //   });
-          // }
+       
           if (res.data.queries_document) {
             if (res.data.queries_document.length > 0) {
               setQueryDocs(res.data.queries_document);
@@ -209,21 +204,7 @@ function QueriesRecevied(props) {
     getSubmittedAssingment();
   }, [assingNo]);
 
-  // const getQuery = () => {
-  //  if(assingNo === undefined){
-  //    return false;
-  //  }
-  //  else{
-  //   axios
-  //   .get(`${baseUrl}/tl/GetAdditionalQueries?assignno=${assingNo}`)
-  //   .then((res) => {
-     
-  //     if (res.data.code === 1) {
-  //       setDisplayQuery(res.data.result);
-  //     }
-  //   });
-  //  }
-  // };
+
 
   return (
     <Layout adminDashboard="adminDashboard" adminUserId={userid}>
@@ -249,13 +230,7 @@ function QueriesRecevied(props) {
                 >
                   <button class="btn btn-success ml-3">Go Back</button>
                 </Link>
-                 {/* <button
-                class="btn btn-success ml-3"
-                onClick={() => history.goBack()}
-              >
-              
-                Go Back
-              </button> */}
+                
               </h2>
             </div>
 
