@@ -411,9 +411,9 @@ if(item.player === undefined){
    
   
     if(res.data.length === 0 ){
-     
+      this.setState({ participantName : "" })
     }
-    else{
+    else if(res.data.length === 1){
       this.setState({ participantName : res.data[0].user_name })
      
     }
@@ -600,7 +600,7 @@ if(item.player === undefined){
       // init AgoraRTC local client
       this.shareClient = AgoraRTC.createClient({ mode: $.transcode });
       this.shareClient.init($.appId, () => {
-        this.subscribeStreamEvents();
+      // this.subscribeStreamEvents();
         this.shareClient.join($.appId, $.channel, $.uid, (uid) => {
           this.state.uid = uid;
           // create local stream

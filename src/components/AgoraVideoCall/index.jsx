@@ -57,7 +57,7 @@ const tile_canvas = {
     "span 3/span 4/13/27",
     "span 9/span 16/10/21",
   ],
-  "8": [
+  "9": [
     "span 3/span 4/13/1",
     "span 3/span 4/13/5",
     "span 3/span 4/13/9",
@@ -68,6 +68,7 @@ const tile_canvas = {
     "span 3/span 4/13/29",
     "span 9/span 16/10/21",
   ],
+  
   
 };
 
@@ -357,12 +358,12 @@ if(item.player === undefined){
   .then((res) =>{
    
     if(res.data.length === 0 ){
-      // rt.setupLocalVideo() 
-     }
-     else{
-       this.setState({ participantName : res.data[0].user_name })
-      
-     }
+      this.setState({ participantName : "" })
+    }
+    else if(res.data.length > 0){
+      this.setState({ participantName : res.data[0].user_name })
+     
+    }
     if(res.data != undefined){
       rt.addStream(stream);
     }

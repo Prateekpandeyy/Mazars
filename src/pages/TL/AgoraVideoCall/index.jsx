@@ -408,21 +408,22 @@ if(item.player === undefined){
     axios.get(`${apiData}`)
     .then((res) =>{
      
-  
-      if(res.data.length === 0 ){
-       // rt.setupLocalVideo() 
-      }
-      else{
-        this.setState({ participantName : res.data[0].user_name })
-       
-      }
-      rt.addStream(stream)
-
-    })
+  console.log("res", res.data.length)
       
+  if(res.data.length === 0 ){
+    this.setState({ participantName : "" })
+  }
+  else if(res.data.length > 0){
+    this.setState({ participantName : res.data[0].user_name })
    
-      }.bind(this));
-  
+  }
+      
+       rt.addStream(stream)
+ 
+     })
+       
+    
+       }.bind(this));
 
     rt.client.on("stream-removed", function (evt) {
       let stream = evt.stream;
@@ -593,6 +594,7 @@ if(item.player === undefined){
       this.shareStream && this.shareStream.close();
       this.state.stateSharing = false;
     } else {
+  
       this.state.stateSharing = true;
       let $ = this.props;
       // init AgoraRTC local client
@@ -601,7 +603,7 @@ if(item.player === undefined){
       this.shareClient.init($.appId, () => {
       
 
-        this.subscribeStreamEvents();
+       //  this.subscribeStreamEvents();
         this.shareClient.join($.appId, $.channel, $.uid, (uid) => {
           this.state.uid = uid;
          

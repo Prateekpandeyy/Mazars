@@ -424,11 +424,11 @@ if(item.player === undefined){
     axios.get(`${apiData}`)
     .then((res) =>{
      
-     console.log("response", res.data.length)
+     
       if(res.data.length === 0 ){
-       
+        this.setState({ participantName : "" })
       }
-      else{
+      else if(res.data.length > 0){
         this.setState({ participantName : res.data[0].user_name })
        
       }

@@ -20,6 +20,7 @@ const ConsaltSearch = ({setData}) => {
     
       var dd = []
       if (res.data.code === 1) {
+          console.log("res", res.data.result)
         pp.push(res.data.result)
         setData2((res.data.result));
        
@@ -31,7 +32,7 @@ const ConsaltSearch = ({setData}) => {
   }, [])
     const options3 = data2.map(d => (
         {
-          "value": d.id,
+          "value": d.post_name,
           "label": d.name
         }))
         const teamLeader = (a) => {
@@ -47,7 +48,7 @@ const ConsaltSearch = ({setData}) => {
     const onSubmit = (value) => {
        let formData = new FormData();
        formData.append("to_date", value.to_date);
-       formData.append("form_date", value.form_date);
+       formData.append("form_date", value.from_date);
        formData.append("tl_post", teamleader44)
        formData.append("uid", userid);
        axios({
@@ -104,7 +105,7 @@ const ConsaltSearch = ({setData}) => {
                  <label>From Date </label>
              <input
           type="date"
-          name="to_date" 
+          name="from_date" 
           ref = {register}
           onChange= {(e) => toDate(e)}
           defaultValue={today}
@@ -117,7 +118,7 @@ const ConsaltSearch = ({setData}) => {
           ref = {register}
           onChange= {(e) => fromDate(e)}
           defaultValue={today}
-          name="form_date"
+          name="to_date"
           className="form-control" />
                  </div>
                  <div className="col-md-4" style={{zIndex : "10000"}}>
@@ -133,7 +134,7 @@ onChange= {(e) =>teamLeader(e)}/>
            <div className="col-md-6">
            <button className="btn btn-primary">Search</button>
              <button type="button" onClick={() => downloadReport()} className="btn btn-success mx-2">Download</button>
-             <button type="button" onClick={() => refrehData()} className="btn btn-secondary mx-2">Refresh</button>
+             <button type="button" onClick={() => refrehData()} className="btn btn-secondary mx-2">latest pull data</button>
              </div>
          </div>
       </form>
