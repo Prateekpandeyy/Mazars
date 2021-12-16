@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import Select from 'react-select';
 import axios from 'axios';
 import { baseUrl, baseUrl3 } from '../../../config/config';
-const ConsaltSearch = ({setData}) => {
+const ConsaltSearch = ({setData, getData}) => {
     const [data2, setData2] = useState([]);
     const [teamleader44, setTeamleader44] = useState("")
     const [date, setDate] = useState({
@@ -33,7 +33,7 @@ const ConsaltSearch = ({setData}) => {
     const options3 = data2.map(d => (
         {
           "value": d.post_name,
-          "label": d.name
+          "label": d.postname
         }))
         const teamLeader = (a) => {
             let tk = []
@@ -94,7 +94,7 @@ const ConsaltSearch = ({setData}) => {
      axios.get(`${baseUrl}/tl/mobilpayTodayCall`)
      .then((res) => {
          if(res.data.code === 1) {
-             setData(res.data.result)
+            getData()
          }
      })   
     }
@@ -109,6 +109,7 @@ const ConsaltSearch = ({setData}) => {
           ref = {register}
           onChange= {(e) => toDate(e)}
           defaultValue={today}
+          max= {today}
           className="form-control"/>
                  </div>
                  <div className="col-md-4">
@@ -118,6 +119,7 @@ const ConsaltSearch = ({setData}) => {
           ref = {register}
           onChange= {(e) => fromDate(e)}
           defaultValue={today}
+          max= {today}
           name="to_date"
           className="form-control" />
                  </div>

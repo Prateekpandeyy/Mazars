@@ -188,7 +188,8 @@ const Consalation = () => {
         <Layout adminDashboard="adminDashboard" adminUserId={userid}>
  <Card>
      <CardHeader>
-<ConsaltSearch  setData = {setData}/>
+<ConsaltSearch  setData = {setData}
+getData = {getData} />
      </CardHeader>
      <CardBody>
  
