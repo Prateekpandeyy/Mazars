@@ -357,6 +357,7 @@ if(item.player === undefined){
   }
 }
 
+
   componentWillUnmount() {
     this.client && this.client.unpublish(this.localStream);
     this.localStream && this.localStream.close();
