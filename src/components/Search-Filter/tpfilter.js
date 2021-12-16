@@ -85,6 +85,7 @@ function TaxProfessionalFilter(props) {
     setSelectedData([]);
     setStore2([]);
     setStatus1(1)
+    setTax2([])
     getData();
   };
 

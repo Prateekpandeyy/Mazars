@@ -273,7 +273,7 @@ function ProposalDetails({
                     <th>Invoice Amount</th>
                     <th>Tds Deducted</th>
                     <th>Amount Paid </th>
-                    <th>Action</th>
+                    <th>Payment Receipt</th>
                 </tr>
                 {paymentDetails.map((pay, i) => (
                   <tr>

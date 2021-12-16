@@ -280,7 +280,7 @@ function DeclinedProposal({ declinedProposal }) {
                       fontSize: 16,
                       cursor: "pointer",
                       marginLeft: "8px",
-                      color: "red"
+                      color: "blue"
                     }}
                    
                   ></i>

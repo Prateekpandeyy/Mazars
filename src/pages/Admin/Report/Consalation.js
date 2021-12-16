@@ -14,7 +14,12 @@ const Consalation = () => {
     const userid = window.localStorage.getItem("adminkey")
     const [data, setData] = useState();
 
-  
+  const proc = {
+      color : "green"
+  }
+  const unproc = {
+    color : "red"
+}
     const getData = () => {
         axios.get(`${baseUrl}/report/paymentReport`)
         .then((res) => {
@@ -81,6 +86,12 @@ const Consalation = () => {
               },
               headerStyle : () => {
                   return { fontSize : "11px"}
+              },
+              formatter : function formatterD (cell ,row) {
+                  let a = row.txn_date.split("-").reverse().join("-")
+                return(
+                  <p>{a}</p>
+                )
               }
           },
           {
@@ -159,6 +170,29 @@ const Consalation = () => {
             },
             headerStyle : () => {
                 return { fontSize : "11px"}
+            }
+        },
+        {
+            dataField : "",
+            text : "Status",
+            sort : true,
+            style : {
+                fontSize : "11px"
+            },
+            headerStyle : () => {
+                return { fontSize : "11px"}
+            },
+            formatter : function formatterD (cell ,row) {
+              let a ;
+              if(row.status === "2"){
+                  a = "Process"
+              }
+              else if(row.status === "1"){
+                a = "unProcess"
+            }
+              return(
+                <p style= {row.status === "2" ? proc : unproc}>{a}</p>
+              )
             }
         },
         {

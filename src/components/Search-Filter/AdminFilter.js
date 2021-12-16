@@ -81,6 +81,7 @@ function AdminFilter(props) {
     reset();
     setSelectedData([]);
     setStore2([]);
+    setTax2([])
     getData();
   };
 

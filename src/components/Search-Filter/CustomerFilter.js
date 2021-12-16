@@ -80,6 +80,7 @@ const [loading, setLoading] = useState(false)
     reset();
     setSelectedData([]);
     setStore2([]);
+    setTax2([])
     getData();
   };
 

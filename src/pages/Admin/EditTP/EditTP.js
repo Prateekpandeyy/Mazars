@@ -162,6 +162,7 @@ function EditTP() {
         
         if (res.data.code === 1) {
           setTax2(res.data.result);
+          console.log("tax2", res.data.result)
         }
       });
     };
@@ -423,7 +424,7 @@ function EditTP() {
    value.allpcat_id.includes("Indirect") === true  ? k = 8 : k = 2
  
   subdefval = subcatgerydefvalue.map((i => ({
-   "value" : ++k,
+   "value" : String(++k),
    "label" : i
  }) ))
  

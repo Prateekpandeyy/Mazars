@@ -300,7 +300,7 @@ const retviewProposal = (e) => {
                       fontSize: 16,
                       cursor: "pointer",
                       marginLeft: "8px",
-                      color: "red"
+                      color: "blue"
                     }}
                    
                   ></i>
