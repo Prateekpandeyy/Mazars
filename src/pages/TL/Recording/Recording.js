@@ -179,9 +179,11 @@ const editRecording = (participants, assign_id, message, id) => {
                             {
                                 recording.map((record) => {
                                    return(
-                                <>
+<>
                                 <p style={videoIcon}>
-                                <span>{a++}</span>   <i
+                               {record.length === 0 ? "" : 
+                               <>
+                                 <span>{a++}</span>   <i
                                     className="material-icons"
                                     style={{
                                         cursor: "pointer",
@@ -193,6 +195,9 @@ const editRecording = (participants, assign_id, message, id) => {
                                     play_circle_outline
                                  
                                 </i>
+                              
+                               </>}
+                              
                                 </p>
                                 </>
                                    )

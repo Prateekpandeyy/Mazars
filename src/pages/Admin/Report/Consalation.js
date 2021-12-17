@@ -45,8 +45,19 @@ const Consalation = () => {
               },
         },
         {
+            dataField: "",
+            text: "Query No",
+            sort: true,
+            style: {
+              fontSize: "11px",
+            },
+            headerStyle: () => {
+              return { fontSize: "11px" };
+            },
+          },
+        {
             dataField: "first_name",
-            text: "Name",
+            text: "Client Name",
             sort: true,
             style: {
               fontSize: "11px",
@@ -56,8 +67,30 @@ const Consalation = () => {
             },
           },
           {
+            dataField: "customer_id",
+            text: "Client Id",
+            sort: true,
+            style: {
+              fontSize: "11px",
+            },
+            headerStyle: () => {
+              return { fontSize: "11px" };
+            },
+          },
+          {
+            dataField : "mobile",
+            text : "Mobile Number",
+            sort : true,
+            style : {
+                fontSize : "11px"
+            },
+            headerStyle : () => {
+                return { fontSize : "11px"}
+            }
+        },
+          {
            dataField : "Invoice_Number",
-           text : "Bill No",
+           text : "Invoice No",
            sort : true,
            style : {
                 fontSize : "11px"
@@ -66,20 +99,10 @@ const Consalation = () => {
                return {fontSize : "11px"}
            }
           },
-          {
-            dataField: "Invoice_Amount",
-            text: "Amount Paid",
-            sort: true,
-            style: {
-              fontSize: "11px",
-            },
-            headerStyle: () => {
-              return { fontSize: "11px" };
-            },
-          },
+         
           {
               dataField : "txn_date",
-              text : "Date",
+              text : "Payment Date",
               sort : true,
               style : {
                   fontSize : "11px"
@@ -105,17 +128,7 @@ const Consalation = () => {
                 return { fontSize : "11px"}
             }
         },
-        {
-            dataField : "mobile",
-            text : "Mobile Number",
-            sort : true,
-            style : {
-                fontSize : "11px"
-            },
-            headerStyle : () => {
-                return { fontSize : "11px"}
-            }
-        },
+        
         // {
         //    dataField : "bill_due_date",
         //     text : "Due Date",
@@ -152,7 +165,7 @@ const Consalation = () => {
         },
         {
             dataField : "Tds_Deducted",
-            text : "Tds Deducted",
+            text : "TDS Deducted",
             sort : true,
             style : {
                 fontSize : "11px"
@@ -161,6 +174,17 @@ const Consalation = () => {
                 return { fontSize : "11px"}
             }
         },
+        {
+            dataField: "Amt_Collected",
+            text: "Amount Paid",
+            sort: true,
+            style: {
+              fontSize: "11px",
+            },
+            headerStyle: () => {
+              return { fontSize: "11px" };
+            },
+          },
         {
             dataField : "delay",
             text : "Delay Days",
@@ -184,14 +208,14 @@ const Consalation = () => {
             },
             formatter : function formatterD (cell ,row) {
               let a ;
-              if(row.status === "2"){
+              if(row.status === "1"){
                   a = "Process"
               }
-              else if(row.status === "1"){
+              else if(row.status === "2"){
                 a = "unProcess"
             }
               return(
-                <p style= {row.status === "2" ? proc : unproc}>{a}</p>
+                <p style= {row.status === "1" ? proc : unproc}>{a}</p>
               )
             }
         },

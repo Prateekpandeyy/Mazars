@@ -172,22 +172,27 @@ const editRecording = (participants, assign_id, message, id) => {
                             {
                                 recording.map((record) => {
                                    return(
-                                <>
-                                <p style={videoIcon}>
-                                <span>{a++}</span>   <i
-                                    className="material-icons"
-                                    style={{
-                                        cursor: "pointer",
-                                        color: "red",
-                                        fontSize: "25px",
-                                    }}
-                                    onClick={() => openModal(record)}
-                                >
-                                    play_circle_outline
-                                 
-                                </i>
-                                </p>
-                                </>
+                                    <>
+                                    <p style={videoIcon}>
+                                   {record.length === 0 ? "" : 
+                                   <>
+                                     <span>{a++}</span>   <i
+                                        className="material-icons"
+                                        style={{
+                                            cursor: "pointer",
+                                            color: "red",
+                                            fontSize: "25px",
+                                        }}
+                                        onClick={() => openModal(record)}
+                                    >
+                                        play_circle_outline
+                                     
+                                    </i>
+                                  
+                                   </>}
+                                  
+                                    </p>
+                                    </>
                                    )
                                 })
                             }

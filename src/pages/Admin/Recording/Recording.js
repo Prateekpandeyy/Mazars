@@ -158,6 +158,7 @@ const canBtn = {
              
                 var recording = row.file.split(",");
                 let a = 1;
+                console.log(row.file.split(","))
                 return (
                     <>
                    <div>
@@ -178,7 +179,9 @@ const canBtn = {
                                    return(
                                 <>
                                 <p style={videoIcon}>
-                                <span>{a++}</span>   <i
+                               {record.length === 0 ? "" : 
+                               <>
+                                 <span>{a++}</span>   <i
                                     className="material-icons"
                                     style={{
                                         cursor: "pointer",
@@ -190,6 +193,9 @@ const canBtn = {
                                     play_circle_outline
                                  
                                 </i>
+                              
+                               </>}
+                              
                                 </p>
                                 </>
                                    )
