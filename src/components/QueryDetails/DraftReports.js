@@ -39,7 +39,7 @@ function DraftReports({ id }) {
                 >
                     Draft Reports
                 </p>
-                <table class="table table-bordered">
+                <table className="table table-bordered">
                     <thead>
                         <tr>
                             <th scope="col" style={{ width: "400px" }}>Titles</th>

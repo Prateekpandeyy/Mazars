@@ -6,13 +6,13 @@ import { baseUrl, baseUrl3 } from '../../../config/config';
 const ConsaltSearch = ({setData, getData}) => {
     const [data2, setData2] = useState([]);
     const [teamleader44, setTeamleader44] = useState("")
-    const [date, setDate] = useState({
-        fromDate : "",
-        toDate : ""
-    })
+   
+    const today = new Date().getFullYear() + "-" + ('0' + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
+    const [fDate, setFdate] = useState(today)
+    const [tDate, settdate] = useState(today)
     const userid = window.localStorage.getItem("adminkey")
     var pp = []
-    const today = new Date().getFullYear() + "-" + ('0' + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
+   
     const { handleSubmit, register, errors, reset } = useForm()
  
   const getTeamLeader = () => {
@@ -46,11 +46,11 @@ const ConsaltSearch = ({setData, getData}) => {
              
              }
     const onSubmit = (value) => {
-       let formData = new FormData();
+        let formData = new FormData();
        formData.append("to_date", value.to_date);
        formData.append("form_date", value.from_date);
        formData.append("tl_post", teamleader44)
-       formData.append("uid", userid);
+       formData.append("uid", JSON.parse(userid));
        axios({
            method : "POST",
            url : `${baseUrl}/report/paymentReport`,
@@ -65,10 +65,10 @@ const ConsaltSearch = ({setData, getData}) => {
     }
     const downloadReport = () => {
         let formData = new FormData();
-        formData.append("to_date", date.toDate);
-        formData.append("form_date", date.fromDate);
+        formData.append("to_date", tDate);
+        formData.append("form_date", fDate);
         formData.append("tl_post", teamleader44 )
-        formData.append("uid", userid);
+        formData.append("uid", JSON.parse(userid));
         axios({
             method : "POST",
             url : `${baseUrl}/report/downloadpaymentReport`,
@@ -80,14 +80,13 @@ const ConsaltSearch = ({setData, getData}) => {
           })
     }
     const fromDate = (e) => {
-        setDate({
-            fromDate : e.target.value
-        })
+        setFdate(e.target.value)
+      
     }
     const toDate = (e) => {
-        setDate({
-            toDate  : e.target.value
-        })
+    
+      
+      settdate(e.target.value)
     }
     const refrehData = () => {
      
@@ -103,21 +102,21 @@ const ConsaltSearch = ({setData, getData}) => {
          <div className="row">
              <div className="col-md-4">
                  <label>From Date </label>
-             <input
+                 <input
           type="date"
-          name="from_date" 
           ref = {register}
-          onChange= {(e) => toDate(e)}
+          onChange= {(e) => fromDate(e)}
           defaultValue={today}
           max= {today}
-          className="form-control"/>
+          name="form_date"
+          className="form-control" />
                  </div>
                  <div className="col-md-4">
                      <label>To Date </label>
              <input
           type="date"
           ref = {register}
-          onChange= {(e) => fromDate(e)}
+          onChange= {(e) => toDate(e)}
           defaultValue={today}
           max= {today}
           name="to_date"

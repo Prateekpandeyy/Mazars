@@ -169,7 +169,7 @@ function PendingForProposals({ CountPendingProposal }) {
           <>
             <button
               type="button"
-              class="btn btn-info btn-sm"
+              className="btn btn-info btn-sm"
               onClick={() => toggle(row.id)}
             >
               History
@@ -210,7 +210,7 @@ function PendingForProposals({ CountPendingProposal }) {
           <Modal isOpen={modal} fade={false} toggle={toggle}>
             <ModalHeader toggle={toggle}>History</ModalHeader>
             <ModalBody>
-              <table class="table table-bordered">
+              <table className="table table-bordered">
                 <thead>
                   <tr>
                     <th scope="row">S.No</th>

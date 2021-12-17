@@ -175,16 +175,16 @@ console.log("customerName", this.customerName)
         let id = item.getId();
         let dom = document.querySelector("#ag-item-" + id);
         if(dom && this.state.disabledVedio === true){
-          dom.setAttribute("class", "ag-item2");
+          dom.setAttribute("className", "ag-item2");
         }
         else if (dom && this.state.disabledVedio === false) {
-         dom.setAttribute("class", "ag-item");
+         dom.setAttribute("className", "ag-item");
         }
         let dd, kk;
         if (!dom) {
           dom = document.createElement("section");
           dom.setAttribute("id", "ag-item-" + id);
-          dom.setAttribute("class", "ag-item");
+          dom.setAttribute("className", "ag-item");
           canvas.appendChild(dom);
           var box22 = document.getElementById("ag-item-" + id)
           dd = document.createElement("input")
@@ -242,16 +242,16 @@ if(item.player === undefined){
         let id = item.getId();
         let dom = document.querySelector("#ag-item-" + id);
         if(dom && this.state.disabledVedio === true){
-          dom.setAttribute("class", "ag-item2");
+          dom.setAttribute("className", "ag-item2");
         }
         else if (dom && this.state.disabledVedio === false) {
-         dom.setAttribute("class", "ag-item");
+         dom.setAttribute("className", "ag-item");
         }
         let dd, kk;
         if (!dom) {
           dom = document.createElement("section");
           dom.setAttribute("id", "ag-item-" + id);
-          dom.setAttribute("class", "ag-item");
+          dom.setAttribute("className", "ag-item");
           canvas.appendChild(dom);
           var box22 = document.getElementById("ag-item-" + id)
          

@@ -73,7 +73,7 @@ if(SearchQuery == "SearchQuery") {
       <>
         <button
           type="submit"
-          class="btn btn-primary mx-sm-1 mb-2"
+          className="btn btn-primary mx-sm-1 mb-2"
           onClick={() => resetData()}
         >
           Reset
@@ -91,7 +91,7 @@ if(SearchQuery == "SearchQuery") {
         <div className="col-sm-12 d-flex">
           <div>
             <form onSubmit={handleSubmit(onSubmit)}>
-              <div class="form-inline">
+              <div className="form-inline">
           
              <input
                     type="text"
@@ -100,11 +100,11 @@ if(SearchQuery == "SearchQuery") {
                     className="form-select form-control"
                     
                   />
-                <button type="submit" class="btn btn-primary mx-sm-1 mb-2">
+                <button type="submit" className="btn btn-primary mx-sm-1 mb-2">
                   Search
                 </button>
                 <Reset />
-                <div class="form-group mx-sm-1  mb-2">
+                <div className="form-group mx-sm-1  mb-2">
                   <label className="form-select form-control"
                   >Total Records : {records}</label>
                 </div>

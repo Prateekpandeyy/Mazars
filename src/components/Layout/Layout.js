@@ -29,9 +29,9 @@ function Layout(props) {
         feedbackNumber = {feedbackNumber}
       />
 
-      <div class="app-content content" style={{ marginTop: "75px" }}>
-        <div class="content-wrapper">
-          <div class="content-body">
+      <div className="app-content content" style={{ marginTop: "75px" }}>
+        <div className="content-wrapper">
+          <div className="content-body">
             {props.children}
           </div>
         </div>

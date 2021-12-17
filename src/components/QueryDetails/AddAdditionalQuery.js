@@ -68,7 +68,7 @@ function AddAdditionalQuery({ addHandler, addModal, assingNo, getQuery }) {
               />
             </div>
 
-            <div class="modal-footer">
+            <div className="modal-footer">
               {
                 loading ?
                   <Spinner color="primary" />

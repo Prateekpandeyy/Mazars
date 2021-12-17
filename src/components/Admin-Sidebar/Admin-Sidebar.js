@@ -116,97 +116,97 @@ const handleClick = () => {
   return (
     <>
       <div
-        class="main-menu menu-fixed menu-light menu-accordion  menu-shadow "
+        className="main-menu menu-fixed menu-light menu-accordion  menu-shadow "
         data-scroll-to-active="true"
         data-img="https://themeselection.com/demo/ chameleon-free-bootstrap-admin-template/theme-assets/images/backgrounds/02.jpg"
       >
-        <div class="navbar-header">
-          <ul class="nav navbar-nav flex-row">
-            <li class="nav-item mr-auto">
-              <a class="navbar-brand" href={logo}>
+        <div className="navbar-header">
+          <ul className="nav navbar-nav flex-row">
+            <li className="nav-item mr-auto">
+              <a className="navbar-brand" href={logo}>
                 <img
                 style={{display : "flex", margin: "auto", width : "50%", justifyContent : "center", alignItems : "center"}}
-                  class="brand-logo"
+                  className="brand-logo"
                   alt="Chameleon admin logo"
                   src={`${ima}`}
                 />
                
               </a>
             </li>
-            <li class="nav-item d-md-none">
-              <a class="nav-link close-navbar">
-                <i class="fa fa-times"></i>
+            <li className="nav-item d-md-none">
+              <a className="nav-link close-navbar">
+                <i className="fa fa-times"></i>
               </a>
             </li>
           </ul>
         </div>
 
-        <div class="main-menu-content">
+        <div className="main-menu-content">
           {custDashboard && (
             <ul
-              class="navigation navigation-main"
+              className="navigation navigation-main"
               id="main-menu-navigation"
               data-menu="menu-navigation"
             >
-              <li class="nav-item active">
+              <li className="nav-item active">
                 <NavLink to={"/customer/dashboard"}>
-                  <i class="fa fa-home"></i>
-                  <span class="menu-title" data-i18n="">
+                  <i className="fa fa-home"></i>
+                  <span className="menu-title" data-i18n="">
                     Dashboard
                   </span>
                 </NavLink>
               </li>
 
-              <li class={toggleState && ""} onClick={() => toggleTab("active")}>
+              <li className={toggleState && ""} onClick={() => toggleTab("active")}>
                 <NavLink to={"/customer/queries"}>
-                  <i class="fa fa-clone"></i>
-                  <span class="menu-title" data-i18n="">
+                  <i className="fa fa-clone"></i>
+                  <span className="menu-title" data-i18n="">
                     Queries
                   </span>
                 </NavLink>
               </li>
 
-              <li class="nav-item">
+              <li className="nav-item">
                 <NavLink to={"/customer/proposal"}>
-                  <i class="fa fa-envelope"></i>
-                  <span class="menu-title" data-i18n="">
+                  <i className="fa fa-envelope"></i>
+                  <span className="menu-title" data-i18n="">
                     Proposal
                   </span>
                 </NavLink>
               </li>
 
-              <li class="nav-item">
+              <li className="nav-item">
                 <NavLink to={"/customer/paymentstatus"}>
-                  <i class="fa fa-file-text"></i>
-                  <span class="menu-title" data-i18n="">
+                  <i className="fa fa-file-text"></i>
+                  <span className="menu-title" data-i18n="">
                     Payment Status
                   </span>
                 </NavLink>
               </li>
 
-              <li class="nav-item">
+              <li className="nav-item">
                 <NavLink to={"/customer/assignment"}>
-                  <i class="fa fa-file"></i>
-                  <span class="menu-title" data-i18n="">
+                  <i className="fa fa-file"></i>
+                  <span className="menu-title" data-i18n="">
                     Assignments
                   </span>
                 </NavLink>
               </li>
 
-              <li class="nav-item">
+              <li className="nav-item">
                 <NavLink to={"/customer/schedule"}>
-                  <i class="fa fa-rss-square"></i>
-                  <span class="menu-title" data-i18n="">
+                  <i className="fa fa-rss-square"></i>
+                  <span className="menu-title" data-i18n="">
                     Schedule
                   </span>
                 </NavLink>
               </li>
 
 
-              <li class="nav-item">
+              <li className="nav-item">
                 <NavLink to={"/customer/feedback-data"}>
-                  <i class="fa fa-rss-square"></i>
-                  <span class="menu-title" data-i18n="">
+                  <i className="fa fa-rss-square"></i>
+                  <span className="menu-title" data-i18n="">
                     Feedback
                   </span>
                 </NavLink>
@@ -217,63 +217,63 @@ const handleClick = () => {
 
           {adminDashboard && (
             <ul
-              class="navigation navigation-main"
+              className="navigation navigation-main"
               id="main-menu-navigation"
               data-menu="menu-navigation"
             >
-              <li class="nav-item">
+              <li className="nav-item">
                 <NavLink to={"/admin/dashboard"}>
-                  <i class="fa fa-home"></i>
-                  <span class="menu-title" data-i18n="">
+                  <i className="fa fa-home"></i>
+                  <span className="menu-title" data-i18n="">
                     Dashboard
                   </span>
                 </NavLink>
               </li>
 
-              <li class="nav-item">
+              <li className="nav-item">
                 <NavLink to={"/admin/queriestab"}>
-                  <i class="fa fa-clone"></i>
-                  <span class="menu-title" data-i18n="">
+                  <i className="fa fa-clone"></i>
+                  <span className="menu-title" data-i18n="">
                     Queries
                   </span>
                 </NavLink>
               </li>
 
-              <li class="nav-item">
+              <li className="nav-item">
                 <NavLink to={"/admin/proposal"}>
-                  <i class="fa fa-envelope"></i>
-                  <span class="menu-title" data-i18n="">
+                  <i className="fa fa-envelope"></i>
+                  <span className="menu-title" data-i18n="">
                     Proposals
                   </span>
                 </NavLink>
               </li>
-              <li class="nav-item">
+              <li className="nav-item">
                 <NavLink to={"/admin/adinvoice"}>
-                  <i class="fa fa-file-text"></i>
-                  <span class="menu-title" data-i18n="">
+                  <i className="fa fa-file-text"></i>
+                  <span className="menu-title" data-i18n="">
                    Invoice
                   </span>
                 </NavLink>
               </li>
-              <li class="nav-item">
+              <li className="nav-item">
                 <NavLink to={"/admin/paymentstatus"}>
-                  <i class="fa fa-file-text"></i>
-                  <span class="menu-title" data-i18n="">
+                  <i className="fa fa-file-text"></i>
+                  <span className="menu-title" data-i18n="">
                     Payment Status
                   </span>
                 </NavLink>
               </li>
 
-              <li class="nav-item">
+              <li className="nav-item">
                 <NavLink to={"/admin/assignment"}>
-                  <i class="fa fa-file"></i>
-                  <span class="menu-title" data-i18n="">
+                  <i className="fa fa-file"></i>
+                  <span className="menu-title" data-i18n="">
                     Assignments
                   </span>
                 </NavLink>
               </li>
 
-              <li class="nav-item">
+              <li className="nav-item">
                  
               <ListItemButton  onMouseEnter={() => handleClick()}>
         
@@ -283,7 +283,7 @@ const handleClick = () => {
         </ListItemIcon>
 
 
-                <span class="menu-title" data-i18n="">
+                <span className="menu-title" data-i18n="">
                   Schedule
                 </span>
                 {open ? <ExpandLess /> : <ExpandMore />}
@@ -299,7 +299,7 @@ const handleClick = () => {
                   <li>
                   <NavLink to={"/admin/schedule"}>
                   
-                <span class="menu-title" data-i18n="">
+                <span className="menu-title" data-i18n="">
                   Schedule
                 </span>
                 </NavLink>
@@ -307,7 +307,7 @@ const handleClick = () => {
                   <li>
                   <NavLink to={"/admin/recording"}>
                   
-                <span class="menu-title" data-i18n="">
+                <span className="menu-title" data-i18n="">
                 Recording
                 </span>
                 </NavLink>
@@ -319,47 +319,47 @@ const handleClick = () => {
 
             
 
-              <li class="nav-item">
+              <li className="nav-item">
                 <NavLink to={"/admin/teamleaders"}>
-                  <i class="fa fa-users"></i>
-                  <span class="menu-title" data-i18n="">
+                  <i className="fa fa-users"></i>
+                  <span className="menu-title" data-i18n="">
                     Team Leaders
                   </span>
                 </NavLink>
               </li>
 
-              <li class="nav-item">
+              <li className="nav-item">
                 <NavLink to={"/admin/taxprofessionals"}>
-                  <i class="fa fa-users"></i>
-                  <span class="menu-title" data-i18n="">
+                  <i className="fa fa-users"></i>
+                  <span className="menu-title" data-i18n="">
                     Tax Professionals
                   </span>
                 </NavLink>
               </li>
-               <li class ="nav-item">
+               <li className ="nav-item">
                  <NavLink to={"/admin/customers"}>
-                   <i class="fa fa-users"></i>
-                   <span class="menu-title" data-i18n="">
+                   <i className="fa fa-users"></i>
+                   <span className="menu-title" data-i18n="">
                   Client
                   </span>
                  </NavLink>
                </li>
-               <li class ="nav-item">
+               <li className ="nav-item">
                  <NavLink to={"/admin/reportlist"}>
-                   <i class="fa fa-users"></i>
-                   <span class="menu-title" data-i18n="">
+                   <i className="fa fa-users"></i>
+                   <span className="menu-title" data-i18n="">
                    Report
                   </span>
                  </NavLink>
                </li>
-              <li class="nav-item">
+              <li className="nav-item">
                 <NavLink to={"/admin/feedback"}>
-                  <i class="fa fa-file-text"></i>
-                  <span class="menu-title" data-i18n="">
+                  <i className="fa fa-file-text"></i>
+                  <span className="menu-title" data-i18n="">
                  Feedback <sup style={feedNumber}>{feedbackNumber2}</sup> 
           
                   </span>
-                  {/* Feedback  <span class="badge">{feedbackNumber2}</span> */}
+                  {/* Feedback  <span className="badge">{feedbackNumber2}</span> */}
                 </NavLink>
               </li>
             </ul>
@@ -367,63 +367,63 @@ const handleClick = () => {
 
           {TLDashboard && (
             <ul
-              class="navigation navigation-main"
+              className="navigation navigation-main"
               id="main-menu-navigation"
               data-menu="menu-navigation"
             >
-              <li class="active nav-item">
+              <li className="active nav-item">
                 <NavLink to={"/teamleader/dashboard"}>
-                  <i class="fa fa-home"></i>
-                  <span class="menu-title" data-i18n="">
+                  <i className="fa fa-home"></i>
+                  <span className="menu-title" data-i18n="">
                     Dashboard
                   </span>
                 </NavLink>
               </li>
 
-              <li class="nav-item">
+              <li className="nav-item">
                 <NavLink to={"/teamleader/queriestab"}>
-                  <i class="fa fa-clone"></i>
-                  <span class="menu-title" data-i18n="">
+                  <i className="fa fa-clone"></i>
+                  <span className="menu-title" data-i18n="">
                     Queries
                   </span>
                 </NavLink>
               </li>
 
-              <li class="nav-item">
+              <li className="nav-item">
                 <NavLink to={"/teamleader/proposal"}>
-                  <i class="fa fa-envelope"></i>
-                  <span class="menu-title" data-i18n="">
+                  <i className="fa fa-envelope"></i>
+                  <span className="menu-title" data-i18n="">
                     Proposal
                   </span>
                 </NavLink>
               </li>
-              <li class="nav-item">
+              <li className="nav-item">
                 <NavLink to={"/teamleader/tlinvoice"}>
-                  <i class="fa fa-file-text"></i>
-                  <span class="menu-title" data-i18n="">
+                  <i className="fa fa-file-text"></i>
+                  <span className="menu-title" data-i18n="">
                    Invoice
                   </span>
                 </NavLink>
               </li>
-              <li class="nav-item">
+              <li className="nav-item">
                 <NavLink to={"/teamleader/paymentstatus"}>
-                  <i class="fa fa-file-text"></i>
-                  <span class="menu-title" data-i18n="">
+                  <i className="fa fa-file-text"></i>
+                  <span className="menu-title" data-i18n="">
                     Payment Status
                   </span>
                 </NavLink>
               </li>
 
-              <li class="nav-item">
+              <li className="nav-item">
                 <NavLink to={"/teamleader/assignment"}>
-                  <i class="fa fa-file"></i>
-                  <span class="menu-title" data-i18n="">
+                  <i className="fa fa-file"></i>
+                  <span className="menu-title" data-i18n="">
                     Assignments
                   </span>
                 </NavLink>
               </li>
 
-              <li class="nav-item">
+              <li className="nav-item">
                  
               <ListItemButton onMouseEnter={() => handleClick()}>
         
@@ -433,7 +433,7 @@ const handleClick = () => {
           </ListItemIcon>
   
   
-                  <span class="menu-title" data-i18n="">
+                  <span className="menu-title" data-i18n="">
                     Schedule
                   </span>
                   {open ? <ExpandLess /> : <ExpandMore />}
@@ -449,7 +449,7 @@ const handleClick = () => {
                   <li>
                   <NavLink to={"/teamleader/schedule"}>
                  
-                <span class="menu-title" data-i18n="">
+                <span className="menu-title" data-i18n="">
                   Schedule
                 </span>
                 </NavLink>
@@ -457,7 +457,7 @@ const handleClick = () => {
                   <li>
                   <NavLink to={"/teamleader/recording"}>
                  
-                <span class="menu-title" data-i18n="">
+                <span className="menu-title" data-i18n="">
                 Recording
                 </span>
                 </NavLink>
@@ -466,27 +466,27 @@ const handleClick = () => {
         </List>
       </Collapse>
               </li>
-              <li class="nav-item">
+              <li className="nav-item">
                 <NavLink to={"/teamleader/reports"}>
-                  <i class="fa fa-users"></i>
-                  <span class="menu-title" data-i18n="">
+                  <i className="fa fa-users"></i>
+                  <span className="menu-title" data-i18n="">
                     Reports
                   </span>
                 </NavLink>
               </li>
-              <li class="nav-item">
+              <li className="nav-item">
                 <NavLink to={"/teamleader/addteamprof"}>
-                  <i class="fa fa-users"></i>
-                  <span class="menu-title" data-i18n="">
+                  <i className="fa fa-users"></i>
+                  <span className="menu-title" data-i18n="">
                     View T.P
                   </span>
                 </NavLink>
               </li>
 
-              <li class="nav-item">
+              <li className="nav-item">
                 <NavLink to={"/teamleader/feedback"}>
-                  <i class="fa fa-file-text"></i>
-                  <span class="menu-title" data-i18n="">
+                  <i className="fa fa-file-text"></i>
+                  <span className="menu-title" data-i18n="">
                   Feedback <sup style={feedNumber}>{feedbackNumbertl}</sup>
                   </span>
                 </NavLink>
@@ -498,63 +498,63 @@ const handleClick = () => {
 
           {TPDashboard && (
             <ul
-              class="navigation navigation-main"
+              className="navigation navigation-main"
               id="main-menu-navigation"
               data-menu="menu-navigation"
             >
-              <li class="nav-item">
+              <li className="nav-item">
                 <NavLink to={"/taxprofessional/dashboard"}>
-                  <i class="fa fa-clone"></i>
-                  <span class="menu-title" data-i18n="">
+                  <i className="fa fa-clone"></i>
+                  <span className="menu-title" data-i18n="">
                     Dashboard
                   </span>
                 </NavLink>
               </li>
 
-              <li class="nav-item">
+              <li className="nav-item">
                 <NavLink to={"/taxprofessional/queriestab"}>
-                  <i class="fa fa-clone"></i>
-                  <span class="menu-title" data-i18n="">
+                  <i className="fa fa-clone"></i>
+                  <span className="menu-title" data-i18n="">
                     Queries
                   </span>
                 </NavLink>
               </li>
 
-              <li class="nav-item">
+              <li className="nav-item">
                 <NavLink to={"/taxprofessional/proposal"}>
-                  <i class="fa fa-envelope"></i>
-                  <span class="menu-title" data-i18n="">
+                  <i className="fa fa-envelope"></i>
+                  <span className="menu-title" data-i18n="">
                     Proposal
                   </span>
                 </NavLink>
               </li>
-              <li class="nav-item">
+              <li className="nav-item">
                 <NavLink to={"/taxprofessional/tpinvoice"}>
-                  <i class="fa fa-file-text"></i>
-                  <span class="menu-title" data-i18n="">
+                  <i className="fa fa-file-text"></i>
+                  <span className="menu-title" data-i18n="">
                    Invoice
                   </span>
                 </NavLink>
               </li>
-              <li class="nav-item">
+              <li className="nav-item">
                 <NavLink to={"/taxprofessional/paymentstatus"}>
-                  <i class="fa fa-file-text"></i>
-                  <span class="menu-title" data-i18n="">
+                  <i className="fa fa-file-text"></i>
+                  <span className="menu-title" data-i18n="">
                     Payment Status
                   </span>
                 </NavLink>
               </li>
 
-              <li class="nav-item">
+              <li className="nav-item">
                 <NavLink to={"/taxprofessional/assignment"}>
-                  <i class="fa fa-file"></i>
-                  <span class="menu-title" data-i18n="">
+                  <i className="fa fa-file"></i>
+                  <span className="menu-title" data-i18n="">
                     Assignments
                   </span>
                 </NavLink>
               </li>
 
-              <li class="nav-item">
+              <li className="nav-item">
                  
               <ListItemButton onMouseEnter={() => handleClick()}>
         
@@ -564,7 +564,7 @@ const handleClick = () => {
           </ListItemIcon>
   
   
-                  <span class="menu-title" data-i18n="">
+                  <span className="menu-title" data-i18n="">
                     Schedule
                   </span>
                   {open ? <ExpandLess /> : <ExpandMore />}
@@ -580,7 +580,7 @@ const handleClick = () => {
                   <li>
                   <NavLink to={"/taxprofessional/schedule"}>
                  
-                <span class="menu-title" data-i18n="">
+                <span className="menu-title" data-i18n="">
                   Schedule
                 </span>
                 </NavLink>
@@ -588,7 +588,7 @@ const handleClick = () => {
                   <li>
                   <NavLink to={"/taxprofessional/recording"}>
 
-                <span class="menu-title" data-i18n="">
+                <span className="menu-title" data-i18n="">
                 Recording
                 </span>
                 </NavLink>
@@ -597,18 +597,18 @@ const handleClick = () => {
         </List>
       </Collapse>
               </li>
-              <li class="nav-item">
+              <li className="nav-item">
                 <NavLink to={"/taxprofessional/reports"}>
-                  <i class="fa fa-users"></i>
-                  <span class="menu-title" data-i18n="">
+                  <i className="fa fa-users"></i>
+                  <span className="menu-title" data-i18n="">
                     Reports
                   </span>
                 </NavLink>
               </li>
-              <li class="nav-item">
+              <li className="nav-item">
                 <NavLink to={"/taxprofessional/feedback"}>
-                  <i class="fa fa-file-text"></i>
-                  <span class="menu-title" data-i18n="">
+                  <i className="fa fa-file-text"></i>
+                  <span className="menu-title" data-i18n="">
                   Feedback <sup style={feedNumber}>{feedbackNumbertp}</sup> 
                   </span>
                 </NavLink>
@@ -616,7 +616,7 @@ const handleClick = () => {
             </ul>
           )}
         </div>
-        <div class="navigation-background"></div>
+        <div className="navigation-background"></div>
       </div>
     </>
   );

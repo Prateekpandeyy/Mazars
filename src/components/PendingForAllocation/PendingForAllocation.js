@@ -194,7 +194,7 @@ function PendingAllocation({ CountPendingForAllocation }) {
                   <Link
                     to={`/admin/queryassing/${row.id}`}
                   >
-                    <i class="fa fa-share"></i>
+                    <i className="fa fa-share"></i>
                   </Link>
 
                 </div>
@@ -208,29 +208,7 @@ function PendingAllocation({ CountPendingForAllocation }) {
                   </Link>
                 </div>
 
-                {/* <div title="Send Message">
-                  <Link
-                    to={{
-                      pathname: `/admin/chatting/${row.id}`,
-                      obj: {
-                        message_type: "4",
-                        query_No: row.assign_no,
-                        query_id: row.id,
-                        routes: `/admin/queriestab`
-                      }
-                    }}
-                  >
-                    <i
-                      class="fa fa-comments-o"
-                      style={{
-                        fontSize: 16,
-                        cursor: "pointer",
-                        marginLeft: "8px",
-                        color: "blue"
-                      }}
-                    ></i>
-                  </Link>
-                </div> */}
+
 
               </div>
 
@@ -252,7 +230,7 @@ function PendingAllocation({ CountPendingForAllocation }) {
           <>
             <button
               type="button"
-              class="btn btn-info btn-sm"
+              className="btn btn-info btn-sm"
               onClick={() => toggle(row.id)}
             >
               History
@@ -282,7 +260,7 @@ function PendingAllocation({ CountPendingForAllocation }) {
           <div className="tableFixHead">
           <BootstrapTable
             bootstrap4
-            keyField="id"
+            keyField="assign_no"
             data={pendingData}
             columns={columns}
             rowIndex
@@ -295,4 +273,4 @@ function PendingAllocation({ CountPendingForAllocation }) {
   );
 }
 
-export default PendingAllocation;
+export default React.memo(PendingAllocation);

@@ -363,7 +363,7 @@ const [loading, setLoading] = useState(false)
       <>
         <button
           type="submit"
-          class="btn btn-primary mx-sm-1 mb-2"
+          className="btn btn-primary mx-sm-1 mb-2"
           onClick={() => resetData()}
         >
           Reset
@@ -378,8 +378,8 @@ const [loading, setLoading] = useState(false)
         <div className="col-sm-12 d-flex">
           <div>
             <form onSubmit={handleSubmit(onSubmit)}>
-              <div class="form-inline">
-                <div class="form-group mb-2">
+              <div className="form-inline">
+                <div className="form-group mb-2">
                   <Select
                     style={{ width: 130 }}
                     placeholder="Select Category"
@@ -396,7 +396,7 @@ const [loading, setLoading] = useState(false)
                   </Select>
                 </div>
 
-                <div class="form-group mx-sm-1  mb-2">
+                <div className="form-group mx-sm-1  mb-2">
                   <Select
                     mode="multiple"
                     style={{ width: 250 }}
@@ -417,18 +417,18 @@ const [loading, setLoading] = useState(false)
                 <div>
                   <button
                     type="submit"
-                    class="btn btn-primary mb-2 ml-3"
+                    className="btn btn-primary mb-2 ml-3"
                     onClick={resetCategory}
                   >
                     X
                   </button>
                 </div>
 
-                <div class="form-group mx-sm-1  mb-2">
+                <div className="form-group mx-sm-1  mb-2">
                   <label className="form-select form-control">From</label>
                 </div>
 
-                <div class="form-group mx-sm-1  mb-2">
+                <div className="form-group mx-sm-1  mb-2">
                   <input
                     type="date"
                     name="p_dateFrom"
@@ -438,11 +438,11 @@ const [loading, setLoading] = useState(false)
                   />
                 </div>
 
-                <div class="form-group mx-sm-1  mb-2">
+                <div className="form-group mx-sm-1  mb-2">
                   <label className="form-select form-control">To</label>
                 </div>
 
-                <div class="form-group mx-sm-1  mb-2">
+                <div className="form-group mx-sm-1  mb-2">
                   <input
                     type="date"
                     name="p_dateTo"
@@ -453,7 +453,7 @@ const [loading, setLoading] = useState(false)
                   />
                 </div>
 
-                <div class="form-group mx-sm-1  mb-2">
+                <div className="form-group mx-sm-1  mb-2">
                   {query == "query" && (
                     <select
                       className="form-select form-control"
@@ -559,7 +559,7 @@ const [loading, setLoading] = useState(false)
                       loading ?
                         <Spinner color="primary" />
                         :
-                        <button type="submit" class="btn btn-primary mx-sm-1 mb-2">
+                        <button type="submit" className="btn btn-primary mx-sm-1 mb-2">
                         Search
                       </button>
                     }

@@ -21,7 +21,7 @@ function BasicQuery({qstatus, p, diaplaySpecific, queryDocs, year, purpose, decl
         >
           Basic Query Information
         </p>
-        <table class="table table-bordered p-2">
+        <table className="table table-bordered p-2">
           <thead>
             <tr>
               <th scope="col" style={{ width: "300px", overflow: "wrap" }}>Titles</th> 
@@ -74,7 +74,7 @@ function BasicQuery({qstatus, p, diaplaySpecific, queryDocs, year, purpose, decl
                       href={`${ImageUrl}/${p.assign_no}/${p.name}`}
                       target="_blank"
                     >
-                    <span>  {i + 1 } </span><i class="fa fa-photo"></i>
+                    <span>  {i + 1 } </span><i className="fa fa-photo"></i>
                     </a>
                     <p style={{ marginLeft: "15px" }}>{p.name}</p>
                   </p>

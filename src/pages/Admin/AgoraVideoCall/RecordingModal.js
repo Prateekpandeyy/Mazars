@@ -78,11 +78,11 @@ axios.get(`${baseUrl}/tl/freeslottime?schedule_id=${id}&&uid=${JSON.parse(userId
                 </ModalHeader>
                 <ModalBody>
                     <form onSubmit={handleSubmit(onSubmit)}>
-                        <div class="row" style={{ display: "flex", justifyContent: "center" }}>
-                            <div class="col-md-10">
-                                <div class="form-group">
+                        <div className="row" style={{ display: "flex", justifyContent: "center" }}>
+                            <div className="col-md-10">
+                                <div className="form-group">
 
-                                    <div class="form-group">
+                                    <div className="form-group">
                                         <label>Query No.</label>
                                         <input
                                             type="text"
@@ -94,7 +94,7 @@ axios.get(`${baseUrl}/tl/freeslottime?schedule_id=${id}&&uid=${JSON.parse(userId
                                         />
                                     </div>
 
-                                    <div class="form-group">
+                                    <div className="form-group">
                                         <label>Participants</label>
                                         <input
                                             type="text"
@@ -124,7 +124,7 @@ axios.get(`${baseUrl}/tl/freeslottime?schedule_id=${id}&&uid=${JSON.parse(userId
 
                                 </div>
 
-                                <div class="form-group">
+                                <div className="form-group">
                                     <label>Summary of Discussion<span className="declined">*</span></label>
                                     <textarea
                                         className="form-control"

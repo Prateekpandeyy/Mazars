@@ -63,14 +63,14 @@ const viewStyle = {
           <div style={{ display: "flex", justifyContent: "space-between", width: "55vw" }}>
             <span>View All Reports</span>
             <span>
-              <button class="btn btn-success" onClick={() => ViewDiscussionToggel()}>
+              <button className="btn btn-success" onClick={() => ViewDiscussionToggel()}>
                 View Discussion
               </button>
             </span>
           </div>
         </ModalHeader>
         <ModalBody>
-          <table class="table table-bordered">
+          <table className="table table-bordered">
             <thead>
               <tr>
                 <th scope="row">S.No</th>
@@ -85,11 +85,11 @@ const viewStyle = {
             {data.length > 0
               ? data.map((p, i) => (
                 <tbody>
-                  <tr class="modalTable">
+                  <tr className="modalTable">
                     <td>{i + 1}</td>
                     <td>{CommonServices.removeTime(p.created_date)}</td>
                     <td>
-                    <td class="table2">
+                    <td className="table2">
                       <tr>
                       {p.document && (
                         <p style={{ display: "flex" }}>
@@ -97,7 +97,7 @@ const viewStyle = {
                             href={`${ReportUrl}/${report}/${p.document}`}
                             target="_blank"
                           >
-                            <i class="fa fa-photo"></i>
+                            <i className="fa fa-photo"></i>
                           </a>
                           <p style={{ marginLeft: "15px" }}>{p.document}</p>
                         </p>
@@ -110,7 +110,7 @@ const viewStyle = {
                             href={`${ReportUrl}/${report}/${p.customer_files}`}
                             target="_blank"
                           >
-                            <i class="fa fa-photo"></i> 
+                            <i className="fa fa-photo"></i> 
                           </a> &nbsp; &nbsp; &nbsp;{p.customer_files}
                     </tr> }
                     </td>
@@ -136,7 +136,7 @@ const viewStyle = {
                                 p.status == "1" ?
                                   <div style={{ cursor: "pointer" }} title="Customer Accepted">
                                     <i
-                                      class="fa fa-check"
+                                      className="fa fa-check"
                                       style={{
                                         color: "blue",
                                         fontSize: "16px",
@@ -148,7 +148,7 @@ const viewStyle = {
                                     <div style={{ display: "flex", justifyContent: "space-around" }}>
                                       <div title="Discussion">
                                         <i
-                                          class="fa fa-comments-o"
+                                          className="fa fa-comments-o"
                                           style={{
                                             fontSize: 16,
                                             cursor: "pointer",
@@ -160,7 +160,7 @@ const viewStyle = {
                                       </div>
                                       <div title="Discard">
                                         <i
-                                          class="fa fa-times"
+                                          className="fa fa-times"
                                           style={{
                                             fontSize: 16,
                                             cursor: "pointer",

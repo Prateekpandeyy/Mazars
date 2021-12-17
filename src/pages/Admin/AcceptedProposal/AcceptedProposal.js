@@ -255,7 +255,7 @@ function AcceptedProposal({ acceptedProposal }) {
                     target="_blank"
                   >
                     <i
-                      class="fa fa-eye"
+                      className="fa fa-eye"
                       style={{ color: "green", fontSize: "16px" }}
                     />
                   </a>
@@ -278,7 +278,7 @@ function AcceptedProposal({ acceptedProposal }) {
                   }}
                 >
                   <i
-                    class="fa fa-comments-o"
+                    className="fa fa-comments-o"
                     style={{
                       fontSize: 16,
                       cursor: "pointer",
@@ -291,7 +291,7 @@ function AcceptedProposal({ acceptedProposal }) {
 
               <div title="View Discussion Message">
                 <i
-                  class="fa fa-comments-o"
+                  className="fa fa-comments-o"
                   style={{
                     fontSize: 16,
                     cursor: "pointer",

@@ -281,7 +281,7 @@ const retviewProposal = (e) => {
                     target="_blank"
                   >
                     <i
-                      class="fa fa-eye"
+                      className="fa fa-eye"
                       style={{ color: "green", fontSize: "16px" }}
                     />
                   </a>
@@ -295,7 +295,7 @@ const retviewProposal = (e) => {
 <div title="Retview Proposal"
  onClick={(e) => retviewProposal(row.q_id)}> 
 <i
-                    class="fa fa-share"
+                    className="fa fa-share"
                     style={{
                       fontSize: 16,
                       cursor: "pointer",
@@ -321,7 +321,7 @@ const retviewProposal = (e) => {
                   }}
                 >
                   <i
-                    class="fa fa-comments-o"
+                    className="fa fa-comments-o"
                     style={{
                       fontSize: 16,
                       cursor: "pointer",
@@ -334,7 +334,7 @@ const retviewProposal = (e) => {
 
               <div title="View Discussion Message">
                 <i
-                  class="fa fa-comments-o"
+                  className="fa fa-comments-o"
                   style={{
                     fontSize: 16,
                     cursor: "pointer",

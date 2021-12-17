@@ -2,11 +2,11 @@ import React from 'react';
 
 function Records({records}) {
     return (
-        <div class="row">
+        <div className="row">
             <div className="col-9">
             </div>
             <div className="col-3">
-                <div class="form-group">
+                <div className="form-group">
                     <label className="form-select form-control"
                     >Total Records : {records}</label>
                 </div>

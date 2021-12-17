@@ -130,14 +130,14 @@ const InvoiceFilter = (props) => {
                   </select>
                        </div>
                   <div className="col-md-7">
-                  <div class="form-inline">
+                  <div className="form-inline">
              
 
-             <div class="form-group mx-sm-1  mb-2">
+             <div className="form-group mx-sm-1  mb-2">
                <label className="form-select form-control">From</label>
              </div>
 
-             <div class="form-group mx-sm-1  mb-2">
+             <div className="form-group mx-sm-1  mb-2">
                <input
                  type="date"
                  name="p_dateFrom"
@@ -147,11 +147,11 @@ const InvoiceFilter = (props) => {
                />
              </div>
 
-             <div class="form-group mx-sm-1  mb-2">
+             <div className="form-group mx-sm-1  mb-2">
                <label className="form-select form-control">To</label>
              </div>
 
-             <div class="form-group mx-sm-1  mb-2">
+             <div className="form-group mx-sm-1  mb-2">
                <input
                  type="date"
                  name="p_dateTo"
@@ -169,7 +169,7 @@ const InvoiceFilter = (props) => {
            </div>
           <div className="mt-3">
         
-           <div class="form-group mx-sm-1  mb-2">
+           <div className="form-group mx-sm-1  mb-2">
          <div className="row">
       {props.invoice =="tpcreate" || props.invoice == "admincreate" || props.invoice == "create" ? "" :
         <div className="col-md-2">

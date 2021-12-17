@@ -29,7 +29,7 @@ function CustHistory({ history, toggle,modal }) {
        <Modal isOpen={modal} fade={false} toggle={toggle}>
         <ModalHeader toggle={toggle}>Query Details</ModalHeader>
         <ModalBody>
-          <table class="table table-bordered">
+          <table className="table table-bordered">
             <thead>
               <tr>
                

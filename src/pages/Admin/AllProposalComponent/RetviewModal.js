@@ -82,7 +82,7 @@ placeholder="Enter text here..."
 rows="6">
 </textarea>
 </div>
-<div class="modal-footer">
+<div className="modal-footer">
               {
                 loading ?
                   <Spinner color="primary" />

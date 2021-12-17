@@ -51,7 +51,7 @@ axios
         <div>
           <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
           <div className="row my-3">
-        <div class="col-sm-3">
+        <div className="col-sm-3">
             
           <input 
           placeholder="Name"
@@ -61,7 +61,7 @@ axios
           ref={register}
           />
       </div>
-      <div class="col-sm-3">
+      <div className="col-sm-3">
             
             <input 
             placeholder="Country"
@@ -71,7 +71,7 @@ axios
             ref={register}
             />
         </div>
-        <div class="col-sm-3">
+        <div className="col-sm-3">
             
             <input 
             placeholder="City"
@@ -81,7 +81,7 @@ axios
             ref={register}
             />
         </div>
-              <div class="col-sm-3">
+              <div className="col-sm-3">
                   
                   <input 
                   placeholder="State"
@@ -94,8 +94,8 @@ axios
               
           
           </div>
-          <div class="row my-3">
-          <div class="col-sm-3">
+          <div className="row my-3">
+          <div className="col-sm-3">
                 
                 <input 
                 placeholder="Email"
@@ -104,7 +104,7 @@ axios
                 className="form-control"
                 ref={register}/>
             </div>
-            <div class="col-sm-3">
+            <div className="col-sm-3">
               
               <input 
               placeholder="Occupation"
@@ -113,14 +113,14 @@ axios
               className="form-control"
               ref={register}/>
           </div>
-          <div class="form-inline">
+          <div className="form-inline">
              
 
-             <div class="form-group mx-sm-1  mb-2">
+             <div className="form-group mx-sm-1  mb-2">
                <label className="form-select form-control">From</label>
              </div>
 
-             <div class="form-group mx-sm-1  mb-2">
+             <div className="form-group mx-sm-1  mb-2">
                <input
                  type="date"
                  name="p_dateFrom"
@@ -130,11 +130,11 @@ axios
                />
              </div>
 
-             <div class="form-group mx-sm-1  mb-2">
+             <div className="form-group mx-sm-1  mb-2">
                <label className="form-select form-control">To</label>
              </div>
 
-             <div class="form-group mx-sm-1  mb-2">
+             <div className="form-group mx-sm-1  mb-2">
                <input
                  type="date"
                  name="p_dateTo"
@@ -147,20 +147,20 @@ axios
 </div>
           </div>
              
-              <div class="row my-3">
+              <div className="row my-3">
              
-             <div class="col-sm-6">
+             <div className="col-sm-6">
              <button type="submit" class="btn btn-primary mx-sm-1 mb-2">
                 Search
               </button>
               <button
           type="submit"
-          class="btn btn-primary mx-sm-1 mb-2"
+          className="btn btn-primary mx-sm-1 mb-2"
           onClick={() => resetData()}
         >
           Reset
         </button>
-        <div class="form-group d-inline-block">
+        <div className="form-group d-inline-block">
                   <label className="form-select form-control"
                   >Total Records : {records}</label>
                 </div>

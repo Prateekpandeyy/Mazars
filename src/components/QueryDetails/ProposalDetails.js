@@ -130,7 +130,7 @@ function ProposalDetails({
           Proposal and Payment Details
         </p>
 
-        <table class="table table-bordered">
+        <table className="table table-bordered">
           <thead>
             <tr>
               <th scope="col" style={{ width: "300px", overflow: "wrap" }}>Titles</th>
@@ -159,7 +159,7 @@ function ProposalDetails({
                   {CommonServices.removeTime(proposal_date)}
                   {proposal_date && (
                     <a
-                      class="btn btn-primary btn-sm"
+                      className="btn btn-primary btn-sm"
                       href={`${baseUrl}/customers/dounloadpdf?id=${p.id}`}
                       role="button"
                     >

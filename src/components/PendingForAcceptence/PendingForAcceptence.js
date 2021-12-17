@@ -263,7 +263,7 @@ function PendingForAcceptence({ pendingProposal }) {
                     target="_blank"
                   >
                     <i
-                      class="fa fa-eye"
+                      className="fa fa-eye"
                       style={{ color: "green", fontSize: "16px" }}
                     />
                   </a>
@@ -278,7 +278,7 @@ function PendingForAcceptence({ pendingProposal }) {
 <div title="Retview Proposal"
  onClick={(e) => retviewProposal(row.q_id)}> 
 <i
-                    class="fa fa-share"
+                    className="fa fa-share"
                     style={{
                       fontSize: 16,
                       cursor: "pointer",
@@ -303,7 +303,7 @@ function PendingForAcceptence({ pendingProposal }) {
                   }}
                 >
                   <i
-                    class="fa fa-comments-o"
+                    className="fa fa-comments-o"
                     style={{
                       fontSize: 16,
                       cursor: "pointer",
@@ -316,7 +316,7 @@ function PendingForAcceptence({ pendingProposal }) {
 
               <div title="View Discussion Message">
                 <i
-                  class="fa fa-comments-o"
+                  className="fa fa-comments-o"
                   style={{
                     fontSize: 16,
                     cursor: "pointer",

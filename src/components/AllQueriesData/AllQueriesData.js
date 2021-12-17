@@ -14,7 +14,7 @@ import DiscardReport from "../../pages/Admin/AssignmentTab/DiscardReport";
 import { DataValue } from "../../pages/Admin/QueriesTab/QueriesTab";
 
 
-function AllQueriesData(props) {
+function AllQueriesData({allData}) {
 
   const [allQueriesData, setAllQueriesData] = useState([])
   const [records, setRecords] = useState([]);
@@ -30,7 +30,7 @@ function AllQueriesData(props) {
 
   useEffect(() => {
     getAllQueriesData();
-  }, [props.allData]);
+  }, [allData]);
 
   const getAllQueriesData = () => {
     axios.get(`${baseUrl}/admin/getAllQueries`).then((res) => {
@@ -40,7 +40,7 @@ function AllQueriesData(props) {
         setRecords(res.data.result.length);
       }
     });
-    setAllQueriesData(props.allData)
+    setAllQueriesData(allData)
   };
 
 
@@ -176,7 +176,7 @@ function AllQueriesData(props) {
                 }}
               >
                 <i
-                  class="fa fa-comments-o"
+                  className="fa fa-comments-o"
                   style={{
                     fontSize: 16,
                     cursor: "pointer",
@@ -189,7 +189,7 @@ function AllQueriesData(props) {
 
             <div title="View Discussion Message">
               <i
-                class="fa fa-comments-o"
+                className="fa fa-comments-o"
                 style={{
                   fontSize: 16,
                   cursor: "pointer",
@@ -247,4 +247,4 @@ function AllQueriesData(props) {
   );
 }
 
-export default AllQueriesData;
+export default React.memo(AllQueriesData);
