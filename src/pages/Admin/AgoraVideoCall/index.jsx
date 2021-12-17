@@ -596,6 +596,7 @@ if(item.player === undefined){
       this.state.stateSharing = false;
     } else {
       this.state.stateSharing = true;
+      this.setState({participantName : ""})
       let $ = this.props;
       // init AgoraRTC local client
       this.shareClient = AgoraRTC.createClient({ mode: $.transcode });
