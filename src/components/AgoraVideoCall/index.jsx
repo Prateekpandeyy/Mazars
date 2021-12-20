@@ -175,16 +175,16 @@ console.log("customerName", this.customerName)
         let id = item.getId();
         let dom = document.querySelector("#ag-item-" + id);
         if(dom && this.state.disabledVedio === true){
-          dom.setAttribute("className", "ag-item2");
+          dom.setAttribute("class", "ag-item2");
         }
         else if (dom && this.state.disabledVedio === false) {
-         dom.setAttribute("className", "ag-item");
+         dom.setAttribute("class", "ag-item");
         }
         let dd, kk;
         if (!dom) {
           dom = document.createElement("section");
           dom.setAttribute("id", "ag-item-" + id);
-          dom.setAttribute("className", "ag-item");
+          dom.setAttribute("class", "ag-item");
           canvas.appendChild(dom);
           var box22 = document.getElementById("ag-item-" + id)
           dd = document.createElement("input")
@@ -242,16 +242,16 @@ if(item.player === undefined){
         let id = item.getId();
         let dom = document.querySelector("#ag-item-" + id);
         if(dom && this.state.disabledVedio === true){
-          dom.setAttribute("className", "ag-item2");
+          dom.setAttribute("class", "ag-item2");
         }
         else if (dom && this.state.disabledVedio === false) {
-         dom.setAttribute("className", "ag-item");
+         dom.setAttribute("class", "ag-item");
         }
         let dd, kk;
         if (!dom) {
           dom = document.createElement("section");
           dom.setAttribute("id", "ag-item-" + id);
-          dom.setAttribute("className", "ag-item");
+          dom.setAttribute("class", "ag-item");
           canvas.appendChild(dom);
           var box22 = document.getElementById("ag-item-" + id)
          
@@ -512,28 +512,24 @@ if(item.player === undefined){
   }
   };
 
+  
   sharingScreen = (e) => {
     if (this.state.stateSharing) {
       this.shareClient && this.shareClient.unpublish(this.shareStream);
       this.shareStream && this.shareStream.close();
       this.state.stateSharing = false;
     } else {
-      this.setState({participantName : ""})
       this.state.stateSharing = true;
+      this.setState({participantName : ""})
       let $ = this.props;
       // init AgoraRTC local client
       this.shareClient = AgoraRTC.createClient({ mode: $.transcode });
-
       this.shareClient.init($.appId, () => {
-      
-
-        this.subscribeStreamEvents();
+      // this.subscribeStreamEvents();
         this.shareClient.join($.appId, $.channel, $.uid, (uid) => {
           this.state.uid = uid;
-         
           // create local stream
           // It is not recommended to setState in function addStream
-          
           this.shareStream = this.streamInitSharing(
             uid,
             $.attendeeMode,
@@ -544,13 +540,11 @@ if(item.player === undefined){
               if ($.attendeeMode !== "audience") {
                 this.addStream(this.shareStream, true);
                 this.shareClient.publish(this.shareStream, (err) => {
-                  
                 });
               }
               this.setState({ readyState: true });
             },
             (err) => {
-             
               this.setState({ readyState: true });
             }
           );
@@ -558,8 +552,6 @@ if(item.player === undefined){
       });
     }
   };
-
-
 
   streamInitSharing = (uid, attendeeMode, videoProfile, config) => {
     let defaultConfig = {

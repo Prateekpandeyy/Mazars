@@ -182,11 +182,8 @@ localVedioTrack;
         btnGroup.classList.remove("active");
       }, 2000);
     });
-   
-    this.subscribeStreamEvents()
     this.getSchedulerData()
     this.accuire();
-  
     // this.accuire()
   }
 schdrularName;
@@ -275,9 +272,9 @@ schdrularName;
               }
             })
           }
-if(item.player === undefined){
-
-}
+  if(item.player === undefined){
+  
+  }
        else{
         item.player.resize && item.player.resize();
        }
@@ -328,7 +325,7 @@ if(item.player === undefined){
           }
         })
         if(item.player === undefined){
-
+  
         }
                else{
                 item.player.resize && item.player.resize();
@@ -340,23 +337,23 @@ if(item.player === undefined){
     
     }
   }
-
-  componentWillUnmount() {
-    this.client && this.client.unpublish(this.localStream);
-    this.localStream && this.localStream.close();
-    if (this.state.stateSharing) {
-      this.shareClient && this.shareClient.unpublish(this.shareStream);
-      this.shareStream && this.shareStream.close();
+    componentWillUnmount() {
+      this.client && this.client.unpublish(this.localStream);
+      this.localStream && this.localStream.close();
+      if (this.state.stateSharing) {
+        this.shareClient && this.shareClient.unpublish(this.shareStream);
+        this.shareStream && this.shareStream.close();
+      }
+      this.client &&
+        this.client.leave(
+          () => {
+            
+          },
+          () => {
+                    }
+        );
     }
-    this.client &&
-      this.client.leave(
-        () => {
-          
-        },
-        () => {
-                  }
-      );
-  }
+  
 
   streamInit = (uid, attendeeMode, videoProfile, config) => {
     let defaultConfig = {
@@ -384,53 +381,54 @@ if(item.player === undefined){
     return stream;
   };
 
+ 
   subscribeStreamEvents = () => {
     let rt = this;
     rt.client.on("stream-added", function (evt) {
       let stream = evt.stream;
-     
+      
       rt.client.subscribe(stream, function (err) {
-        this.setState({ addRemote : true})
-   
+        
       });
     });
 
     rt.client.on("peer-leave", function (evt) {
-   
+     console.log("two")
       rt.removeStream(evt.uid);
-     
-  
+      
     });
 
     rt.client.on("stream-subscribed", function (evt) {
-   
-      let stream = evt.stream;
-      var apiData = "https://virtualapi.multitvsolution.com/VstreamApi/index.php/api/vstream/getInfoByRTCId?channel_name="+this.channelName+"&rtc_id="+stream.getId()
-  axios.get(`${apiData}`)
-  .then((res) =>{
-   
-  
-    if(res.data.length === 0 ){
-      this.setState({ participantName : "" })
-    }
-    else if(res.data.length === 1){
-      this.setState({ participantName : res.data[0].user_name })
+      console.log("three")
+      console.log("evt", evt)
+        let stream = evt.stream;
+      
+        var apiData = "https://virtualapi.multitvsolution.com/VstreamApi/index.php/api/vstream/getInfoByRTCId?channel_name="+this.channelName+"&rtc_id="+stream.getId()
+    axios.get(`${apiData}`)
+    .then((res) =>{
      
-    }
-    rt.addStream(stream);
-  })
-    
+  console.log("res", res.data.length)
+      
+  if(res.data.length === 0 ){
+    this.setState({ participantName : "" })
+  }
+  else if(res.data.length > 0){
+    this.setState({ participantName : res.data[0].user_name })
+   
+  }
+      
+       rt.addStream(stream)
  
-    }.bind(this));
+     })
+       
+    
+       }.bind(this));
 
     rt.client.on("stream-removed", function (evt) {
       let stream = evt.stream;
+     console.log("evt id", evt.uid)
       rt.removeStream(stream.getId());
     });
-    rt.client.on("peer-added", function (evt) {
-    
-     
-    })
   };
 
   removeStream = (uid) => {
@@ -448,22 +446,27 @@ if(item.player === undefined){
         });
       }
     });
-    console.log("get22", uid)
-    axios.get(`${baseUrl}/tl/setgetschedular?id=${this.props.id}&uid=${this.state.showButton}&chname=${this.channelName}`)
-      .then((res) => {  
-        console.log("get222", res.data.result.rtc_id)
-       if(res.data.result.rtc_id == uid){
-         
-      Swal.fire({
-        title: "success",
-        html : "Thank you for attending this meeting, this meeting is going to be ended by host",
-        icon : "success"
+    // console.log("showButton", this.state.showButton)
+  
+      axios.get(`${baseUrl}/tl/setgetschedular?id=${this.props.id}&uid=${this.state.showButton}&chname=${this.channelName}`)
+      .then((res) => {
+        console.log("evt id", uid)
+        if(res.data.result.rtc_id == uid){
+          console.log("evt id", res.data.result.rtc_id)
+          Swal.fire({
+            title: "success",
+            html : "Thank you for attending this meeting, this meeting is going to be ended by host",
+            icon : "success"
+          })
+            setTimeout((e) => {
+              window.location.hash = "/admin/schedule";
+            }, 500)
+           
+           }
+          
       })
-        setTimeout((e) => {
-          window.location.hash = "/admin/schedule";
-        }, 3000)
-       }
-      })
+     
+    
   };
 
   addStream = (stream, push = false) => {
@@ -588,24 +591,28 @@ if(item.player === undefined){
  
      
    }
- 
    sharingScreen = (e) => {
     if (this.state.stateSharing) {
       this.shareClient && this.shareClient.unpublish(this.shareStream);
       this.shareStream && this.shareStream.close();
       this.state.stateSharing = false;
     } else {
-      this.state.stateSharing = true;
       this.setState({participantName : ""})
+      this.state.stateSharing = true;
       let $ = this.props;
       // init AgoraRTC local client
       this.shareClient = AgoraRTC.createClient({ mode: $.transcode });
+
       this.shareClient.init($.appId, () => {
-      // this.subscribeStreamEvents();
+      
+
+       //  this.subscribeStreamEvents();
         this.shareClient.join($.appId, $.channel, $.uid, (uid) => {
           this.state.uid = uid;
+         
           // create local stream
           // It is not recommended to setState in function addStream
+          
           this.shareStream = this.streamInitSharing(
             uid,
             $.attendeeMode,
@@ -616,11 +623,13 @@ if(item.player === undefined){
               if ($.attendeeMode !== "audience") {
                 this.addStream(this.shareStream, true);
                 this.shareClient.publish(this.shareStream, (err) => {
+                  
                 });
               }
               this.setState({ readyState: true });
             },
             (err) => {
+             
               this.setState({ readyState: true });
             }
           );
@@ -628,6 +637,7 @@ if(item.player === undefined){
       });
     }
   };
+
   streamInitSharing = (uid, attendeeMode, videoProfile, config) => {
     let defaultConfig = {
       streamID: uid,

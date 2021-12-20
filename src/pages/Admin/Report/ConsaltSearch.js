@@ -48,7 +48,7 @@ const ConsaltSearch = ({setData, getData}) => {
     const onSubmit = (value) => {
         let formData = new FormData();
        formData.append("to_date", value.to_date);
-       formData.append("form_date", value.from_date);
+       formData.append("form_date", value.form_date);
        formData.append("tl_post", teamleader44)
        formData.append("uid", JSON.parse(userid));
        axios({
