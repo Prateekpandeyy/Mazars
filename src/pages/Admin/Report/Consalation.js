@@ -45,16 +45,27 @@ const Consalation = () => {
               },
         },
         {
-            dataField: "",
-            text: "Query No",
-            sort: true,
-            style: {
-              fontSize: "11px",
-            },
-            headerStyle: () => {
-              return { fontSize: "11px" };
-            },
+          text: "Query No",
+          dataField: "assign_no",
+          headerStyle: () => {
+            return { fontSize: "12px" };
           },
+          formatter: function nameFormatter(cell, row) {
+            return (
+              <>
+                <Link
+                  to={{
+                    pathname: `/admin/queries/${row.id}`,
+                  
+                    routes: "consalation",
+                  }}
+                >
+                  {row.assign_no}
+                </Link>
+              </>
+            );
+          },
+        },
         {
             dataField: "first_name",
             text: "Client Name",
