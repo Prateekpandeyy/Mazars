@@ -44,6 +44,8 @@ function QueriesRecevied(props) {
     no_of_installment: "",
     installment_amount: "",
     due_date: "",
+    proposal_reactive_dates: "",
+    proposal_reactive_notes: ""
   });
 
   const [diaplayAssignment, setDisplayAssignment] = useState([
@@ -151,6 +153,8 @@ function QueriesRecevied(props) {
               no_of_installment: res.data.proposal_queries[0].no_of_installment,
               installment_amount: res.data.proposal_queries[0].installment_amount,
               due_date: res.data.proposal_queries[0].due_date,
+              proposal_reactive_dates : res.data.proposal_queries[0].re_active_date.split(" ")[0].split("-").reverse().join("-"),
+              proposal_reactive_notes : res.data.proposal_queries[0].notes
             });
             let a = moment(res.data.result[0].final_date);
             let b = moment(res.data.proposal_queries[0].cust_accept_date)

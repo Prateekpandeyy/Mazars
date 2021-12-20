@@ -8,8 +8,11 @@ const ConsaltSearch = ({setData, getData}) => {
     const [teamleader44, setTeamleader44] = useState("")
    
     const today = new Date().getFullYear() + "-" + ('0' + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
-    const [fDate, setFdate] = useState(today)
+    const prevDay = new Date().getFullYear() + "-" + ('0' + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + (new Date().getDate() - 1 )).slice(-2)
+    const [fDate, setFdate] = useState(prevDay)
     const [tDate, settdate] = useState(today)
+    const [clientId, setClientId] = useState();
+    const [invoiceNum, setInvoiceNum] = useState()
     const userid = window.localStorage.getItem("adminkey")
     var pp = []
    
@@ -49,6 +52,8 @@ const ConsaltSearch = ({setData, getData}) => {
         let formData = new FormData();
        formData.append("to_date", value.to_date);
        formData.append("form_date", value.form_date);
+       formData.append("client_id", value.client_id);
+       formData.append("invoice_number", value.invoice_number);
        formData.append("tl_post", teamleader44)
        formData.append("uid", JSON.parse(userid));
        axios({
@@ -68,6 +73,8 @@ const ConsaltSearch = ({setData, getData}) => {
         formData.append("to_date", tDate);
         formData.append("form_date", fDate);
         formData.append("tl_post", teamleader44 )
+        formData.append("client_id", clientId);
+        formData.append("invoice_number", invoiceNum);
         formData.append("uid", JSON.parse(userid));
         axios({
             method : "POST",
@@ -75,7 +82,9 @@ const ConsaltSearch = ({setData, getData}) => {
             data : formData
         })
         .then(function (response) {
+           if(response.data.code === 1){
             window.open(`${baseUrl3}/${response.data.result}`)
+           }
           // window.location.assign(`${baseUrl}/report/generateReport`)
           })
     }
@@ -97,21 +106,27 @@ const ConsaltSearch = ({setData, getData}) => {
          }
      })   
     }
+    const clientFun = (e) => {
+  setClientId(e.target.value)    
+    }
+    const invoiceFun = (e) => {
+      setInvoiceNum(e.target.value)
+    }
     return (
       <form onSubmit = {handleSubmit(onSubmit)}>
          <div className="row">
-             <div className="col-md-4">
+             <div className="col-md-3">
                  <label>From Date </label>
                  <input
           type="date"
           ref = {register}
           onChange= {(e) => fromDate(e)}
-          defaultValue={today}
+          defaultValue={prevDay}
           max= {today}
           name="form_date"
           className="form-control" />
                  </div>
-                 <div className="col-md-4">
+                 <div className="col-md-3">
                      <label>To Date </label>
              <input
           type="date"
@@ -122,7 +137,24 @@ const ConsaltSearch = ({setData, getData}) => {
           name="to_date"
           className="form-control" />
                  </div>
-                 <div className="col-md-4" style={{zIndex : "10000"}}>
+                 <div className="col-md-2">
+                 <label>Client Id </label>
+                 <input
+          type="text"
+          ref = {register}
+          onChange = {(e) => clientFun(e)}
+          name="client_id"
+          className="form-control" />
+                 </div> <div className="col-md-2">
+                 <label>Invoice Number </label>
+                 <input
+          type="text"
+          onChange = {(e) => invoiceFun(e)}
+          ref = {register}
+          name="invoice_number"
+          className="form-control" />
+                 </div>
+                 <div className="col-md-2" style={{zIndex : "10000"}}>
 <label className="form-label">Teamleader</label>
 <Select  isMulti={true}
 options={options3}
@@ -134,8 +166,11 @@ onChange= {(e) =>teamLeader(e)}/>
          <div className="row">
            <div className="col-md-6">
            <button className="btn btn-primary">Search</button>
+           
+             </div>
+             <div className="col-md-6 my-2" style={{display : "flex", justifyContent : "flex-end"}}>
              <button type="button" onClick={() => downloadReport()} className="btn btn-success mx-2">Download</button>
-             <button type="button" onClick={() => refrehData()} className="btn btn-secondary mx-2">latest pull data</button>
+             <button type="button" onClick={() => refrehData()} className="btn btn-secondary mx-2">Pull latest data</button>
              </div>
          </div>
       </form>

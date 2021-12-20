@@ -8,12 +8,13 @@ import {
     CardHeader,
     CardBody,
   } from "reactstrap";
-  import { Link } from 'react-router-dom';
+  import { Link , useHistory} from 'react-router-dom';
   import BootstrapTable from 'react-bootstrap-table-next';
+  import { Typography, Button } from '@material-ui/core';
 const Consalation = () => {
     const userid = window.localStorage.getItem("adminkey")
     const [data, setData] = useState();
-
+let history  = useHistory()
   const proc = {
       color : "green"
   }
@@ -257,8 +258,18 @@ const Consalation = () => {
         <Layout adminDashboard="adminDashboard" adminUserId={userid}>
  <Card>
      <CardHeader>
-<ConsaltSearch  setData = {setData}
-getData = {getData} />
+       <>
+       <div className="row">
+           <div className="col-md-6">
+           <Typography variant="h4">Report Constellation</Typography>
+         
+             </div>
+             <div className="col-md-6" style={{display : "flex", justifyContent : "flex-end"}}>
+             <button  className="btn btn-lg btn btn-success" onClick = {() => history.goBack()}>Go Back </button>
+               </div>
+           </div>
+<ConsaltSearch  setData = {setData} />
+</>
      </CardHeader>
      <CardBody>
  

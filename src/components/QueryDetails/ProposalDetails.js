@@ -30,7 +30,8 @@ function ProposalDetails({
     no_of_installment,
     installment_amount,
     due_date,
-    
+    proposal_reactive_dates,
+    proposal_reactive_notes
     
   } = diaplayProposal;
 
@@ -350,12 +351,24 @@ function ProposalDetails({
              
             }
              {
-              p.query_status == "6" ?
+              proposal_reactive_notes !== null ?
                 <tr>
                   <th scope="row">Reasons for proposal Decline</th>
                   <td colspan="1">
                     {
-                      p.decline_notes
+                     proposal_reactive_dates
+                    }
+                  </td>
+                </tr>
+                : null
+            }
+                         {
+              proposal_reactive_notes !== null ?
+                <tr>
+                  <th scope="row">Reasons for proposal Decline</th>
+                  <td colspan="1">
+                    {
+                      proposal_reactive_notes
                     }
                   </td>
                 </tr>

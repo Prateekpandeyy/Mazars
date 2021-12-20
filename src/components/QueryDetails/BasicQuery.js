@@ -145,18 +145,7 @@ function BasicQuery({qstatus, p, diaplaySpecific, queryDocs, year, purpose, decl
                 </tr>
                 : null
             }
-             {
-              p.query_status !== "6" ?
-                <tr>
-                  <th scope="row">Reasons for Proposal Reactive</th>
-                  <td colspan="1">
-                    {
-                      p.notes
-                    }
-                  </td>
-                </tr>
-                : null
-            }
+             
             
           </tbody>
         </table>
