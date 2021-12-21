@@ -208,7 +208,7 @@ const amountStyle  = {
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, reject it!",
+        confirmButtonText: "Yes, reject it",
        
       }).then((result) => {
         if (result.value) {

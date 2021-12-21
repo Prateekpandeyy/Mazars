@@ -185,21 +185,21 @@ const [email2, setEmail2] = useState();
    
       setNumAvail("")
       setNumExist("")
-      setIndNumError("Maximum 10 value should be enter")
+      setIndNumError("Maximum 10 value should be entered.")
       setPhoneError(true)
     }
     else if (countryId && phone.length < 10) {
      
       setNumAvail("")
       setNumExist("")
-      setIndNumError("Minimum 10 value should be enter")
+      setIndNumError("Minimum 10 value should be entered.")
       setPhoneError(true)
     }
     else if (!countryId && phone.length > 15) {
       setNumAvail("")
       setNumExist("")
       setPhoneError(true)
-      setIndNumError("Maximum 15 value should be enter")
+      setIndNumError("Maximum 15 value should be entered.")
     }
 
     else {
@@ -628,7 +628,7 @@ const [email2, setEmail2] = useState();
                           pattern: {
                             value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,15}$/,
                             message:
-                              "Password should be of minimum 8 Characters, including at least 1 upper case, lower case, special character and number.",
+                              "Password should be of minimum 8 characters, including at least 1 upper case, lower case, special character and number.",
                           },
                         })}
 
@@ -668,7 +668,7 @@ const [email2, setEmail2] = useState();
                           required: true,
                           validate: (value) =>
                             value === getValues("p_password") ||
-                            "password doesn 't match",
+                            "Password doesn 't match.",
                         })}
                         autocomplete="off"
                       />

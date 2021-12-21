@@ -49,7 +49,7 @@ function VerifyOTP({ email, uid, time, setLoad,
 
                 if (response.data.code == 1) {
                     setLoading(false)
-                    Alerts.SuccessLogin("Logged in successfully.")
+                    Alerts.SuccessLogin("Login successfully.")
                     sessionStorage.setItem("userIdsession", JSON.stringify(response.data.user_id));
                     localStorage.setItem("userid", JSON.stringify(response.data.user_id));
                     localStorage.setItem("custEmail", JSON.stringify(response.data.name));

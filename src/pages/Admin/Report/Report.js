@@ -374,7 +374,7 @@ let cc = []
       </div>
       <div className="col-md-3">
       <div className="mb-3">
-          <label className="form-label">Customer Id</label>
+          <label className="form-label">Client Id</label>
          <Select isMulti options={custData} onChange={(e) => custName(e)}>
 
          </Select>

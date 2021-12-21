@@ -162,8 +162,8 @@ function AddNew() {
       formData.append("tp_id", tl);
       formData.append("email", email2);
       formData.append("post_name", value.post_name)
-      formData.append("cat_id", mcategory);
-      formData.append("pcat_id", categeryList);
+      formData.append("pcat_id", mcategory);
+      formData.append("cat_id", categeryList);
       formData.append("allpcat_id", categoryData.label)
       formData.append("allcat_id", categeryName)
       formData.append("type", "tp");
@@ -183,7 +183,7 @@ function AddNew() {
 
             Swal.fire({
               "title": "success",
-              "html": "Tax Professional Created Successfully",
+              "html": "Tax Professional created successfully",
               "icon": "success"
             })
  
@@ -287,7 +287,7 @@ function AddNew() {
     
       setNumAvail("")
       setNumExist("")
-      setIndNumError("Maximum 10 digit should be enter")
+      setIndNumError("Maximum 10 digits can be entered")
     }
     else if (phone.length < 10) {
      
@@ -341,7 +341,7 @@ function AddNew() {
     .then(function (res) {
       if(res.data.code === 1){
         setposError({
-          available : "Post Available"
+          available : "Post available"
         })
       }
       else{

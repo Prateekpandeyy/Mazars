@@ -171,7 +171,7 @@ function ProposalComponent(props) {
                     console.log("res-", response);
                     if (response.data.code === 1) {
                       setLoading(false)
-                      Alerts.SuccessNormal("Proposal sent successfully.")
+                      Alerts.SuccessNormal("Proposal created successfully")
                       history.push("/taxprofessional/proposal");
                     } else if (response.data.code === 0) {
                       setLoading(false)
@@ -244,10 +244,10 @@ function ProposalComponent(props) {
   const handleChange = (e) => {
     console.log("val-", e.target.value);
     if (isNaN(e.target.value)) {
-      setdiserror("Please enter number only.");
+      setdiserror("Please enter number only");
     }
     else if(e.target.value == "0"){
-      setdiserror("Amount should be greater than 0")
+      setdiserror("Amount should be greater than zero")
     }
     else {
       setdiserror("");

@@ -224,7 +224,7 @@ let history  = useHistory()
                   a = "Process"
               }
               else if(row.status === "2"){
-                a = "unProcess"
+                a = "Unprocess"
             }
               return(
                 <p style= {row.status === "1" ? proc : unproc}>{a}</p>

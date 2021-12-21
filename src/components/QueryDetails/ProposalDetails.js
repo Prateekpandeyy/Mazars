@@ -117,7 +117,6 @@ function ProposalDetails({
       return amount
     }
   }
-
   return (
     <>
       <div>
@@ -351,29 +350,41 @@ function ProposalDetails({
              
             }
              {
-              proposal_reactive_notes !== null ?
+              p.query_status == "6" ?
                 <tr>
                   <th scope="row">Reasons for proposal Decline</th>
                   <td colspan="1">
                     {
-                     proposal_reactive_dates
+                      p.decline_notes
                     }
                   </td>
                 </tr>
                 : null
             }
-                         {
-              proposal_reactive_notes !== null ?
-                <tr>
-                  <th scope="row">Reasons for proposal Decline</th>
-                  <td colspan="1">
-                    {
-                      proposal_reactive_notes
-                    }
-                  </td>
-                </tr>
-                : null
-            }
+             {
+               proposal_reactive_notes.length > 0 ?
+                 <tr>
+                   <th scope="row"> Date of proposal reactive</th>
+                   <td colspan="1">
+                     {
+                      proposal_reactive_dates
+                     }
+                   </td>
+                 </tr>
+                 : null
+             }
+                          {
+               proposal_reactive_notes.length > 0  ?
+                 <tr>
+                   <th scope="row">Reason of proposal reactive</th>
+                   <td colspan="1">
+                     {
+                       proposal_reactive_notes
+                     }
+                   </td>
+                 </tr>
+                 : null
+             }
           </tbody>
         </table>
       </div>
@@ -382,6 +393,7 @@ function ProposalDetails({
 }
 
 export default ProposalDetails;
+
 
 
 

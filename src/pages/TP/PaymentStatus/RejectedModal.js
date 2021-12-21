@@ -46,7 +46,7 @@ function RejectedModal({
        
         if (response.data.code === 1) {
           setLoading(false)
-          Alerts.SuccessNormal("Marked as customer declined payment.")
+          Alerts.SuccessNormal("Marked as client declined payment.")
           getPaymentStatus();
           rejectHandler();
         } else if (response.data.code === 0) {

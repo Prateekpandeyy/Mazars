@@ -430,7 +430,7 @@ history.push(`/admin/meeting/${data.id}`);
 
       Swal.fire({
         title: "Are you sure?",
-        text: "It will be permanently deleted !",
+        text: "It will be permanently deleted",
         type: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",

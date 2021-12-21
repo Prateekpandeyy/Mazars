@@ -69,7 +69,11 @@ function ProposalTab() {
     };
 
 
-
+const rightAli = {
+    display : "flex", 
+    justifyContent : "flex-end", 
+    Border : "0px"
+}
 
     const columns = [
         {
@@ -243,9 +247,9 @@ function ProposalTab() {
             formatter: function nameFormatter(cell, row){
                 var nfObject = new Intl.NumberFormat('hi-IN')
                  var x = row.ProposedAmount;
-                 console.log(nfObject.format(x))
+
                  return(
-                   <p>{nfObject.format(x)}</p>
+                   <p className="rightAli">{nfObject.format(x)}</p>
                  )
                }
         },
@@ -255,7 +259,7 @@ function ProposalTab() {
             sort: true,
             style: {
                 fontSize: "11px",
-                // color: "#21a3ce",
+
             },
             headerStyle: () => {
                 return { fontSize: "11px"  };
@@ -265,7 +269,7 @@ function ProposalTab() {
                  var x = row.accepted_amount;
                  console.log(nfObject.format(x))
                  return(
-                   <p>{nfObject.format(x)}</p>
+                   <p className="rightAli">{nfObject.format(x)}</p>
                  )
                }
         },

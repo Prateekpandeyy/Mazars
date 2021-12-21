@@ -182,7 +182,7 @@ function AddNew() {
             setLoading(false)
             Swal.fire({
               "title": "Success",
-              "html": "Team Leader created successfully.",
+              "html": "Teamleader created successfully.",
               "icon": "success"
             })
 

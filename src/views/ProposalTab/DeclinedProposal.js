@@ -212,7 +212,7 @@ function DeclinedProposal() {
                  var x = row.ProposedAmount;
                  console.log(nfObject.format(x))
                  return(
-                   <p>{nfObject.format(x)}</p>
+                   <p className="rightAli">{nfObject.format(x)}</p>
                  )
                }
         },
@@ -232,7 +232,7 @@ function DeclinedProposal() {
                  var x = row.accepted_amount;
                  console.log(nfObject.format(x))
                  return(
-                   <p>{nfObject.format(x)}</p>
+                   <p className="rightAli">{nfObject.format(x)}</p>
                  )
                }
         },

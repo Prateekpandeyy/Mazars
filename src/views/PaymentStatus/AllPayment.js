@@ -259,7 +259,7 @@ function Paid() {
          var x = row.accepted_amount;
          console.log(nfObject.format(x))
          return(
-           <p>{nfObject.format(x)}</p>
+           <p className="rightAli">{nfObject.format(x)}</p>
          )
        }
 },
@@ -285,7 +285,7 @@ function Paid() {
          var x = row.paid_amount;
          console.log(nfObject.format(x))
          return(
-           <p>{nfObject.format(x)}</p>
+           <p className="rightAli">{nfObject.format(x)}</p>
          )
        }
 },
@@ -312,7 +312,7 @@ function Paid() {
          var x = row.amount_outstanding;
          console.log(nfObject.format(x))
          return(
-           <p>{nfObject.format(x)}</p>
+           <p className="rightAli">{nfObject.format(x)}</p>
          )
        }
 },

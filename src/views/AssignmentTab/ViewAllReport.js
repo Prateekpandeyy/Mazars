@@ -218,7 +218,7 @@ function ViewReport({
                               </div>
                               :
                               p.status === "1" ?
-                                <div style={{ cursor: "pointer" }} title="Customer Accepted">
+                                <div style={{ cursor: "pointer" }} title="Client Accepted">
                                   <i
                                     class="fa fa-check"
                                     style={{

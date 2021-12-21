@@ -54,7 +54,7 @@ function AddAssingmentStages() {
     {    
     Swal.fire({
       title: "Are you sure?",
-      text: "Query no- "+assignmentStages[0].assign_no+" payment is due,Do you still want to process to complete this query !",
+      text: "Query no- "+assignmentStages[0].assign_no+" payment is outstanding , Do you still want to proceed to complete this query?",
       type: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
@@ -82,7 +82,7 @@ function AddAssingmentStages() {
            
             if (response.data.code === 1) {
               setLoading(false)
-              Alerts.SuccessNormal("Assignment Stage updated successfully.")
+              Alerts.SuccessNormal("Assignment status updated successfully.")
               getAssignmentList();
               history.push("/teamleader/assignment");
             } else if (response.data.code === 0) {
