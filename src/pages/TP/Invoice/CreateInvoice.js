@@ -108,6 +108,9 @@ const CreateInvoice = () => {
             sort: true,
             style: {
                 fontSize: "11px",
+                display : "flex",
+                justifyContent : "center",
+                border : "0px"
             },
             headerStyle: () => {
                 return { fontSize: "11px" , width :"200px"};
@@ -149,7 +152,7 @@ const CreateInvoice = () => {
                  var x = row.paid_amount;
              
                  return(
-                   <p>{nfObject.format(x)}</p>
+                   <p className="rightAli">{nfObject.format(x)}</p>
                  )
                }
         }, 
