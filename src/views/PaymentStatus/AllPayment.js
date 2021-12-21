@@ -310,7 +310,7 @@ function Paid() {
     formatter: function nameFormatter(cell, row){
         var nfObject = new Intl.NumberFormat('hi-IN')
          var x = row.amount_outstanding;
-         console.log(nfObject.format(x))
+         
          return(
            <p className="rightAli">{nfObject.format(x)}</p>
          )

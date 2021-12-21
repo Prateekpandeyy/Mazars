@@ -255,7 +255,7 @@ const basicFun = (e) => {
         formData.append("netpaid_amount", grandTotal)
         formData.append("gstin_no", gstNum);
         formData.append("bill_no", billNo);
-        formData.append("invoice_by", userid)
+        formData.append("invoice_by", JSON.parse(userid))
         axios({
             method : "POST",
             data : formData,

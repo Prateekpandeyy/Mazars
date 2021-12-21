@@ -258,7 +258,7 @@ function Unpaid() {
              var x = row.accepted_amount;
              console.log(nfObject.format(x))
              return(
-               <p>{nfObject.format(x)}</p>
+               <p className="rightAli">{nfObject.format(x)}</p>
              )
            }
     },
@@ -282,9 +282,9 @@ function Unpaid() {
         formatter: function nameFormatter(cell, row){
             var nfObject = new Intl.NumberFormat('hi-IN')
              var x = row.paid_amount;
-             console.log(nfObject.format(x))
+            
              return(
-               <p>{nfObject.format(x)}</p>
+               <p className="rightAli">{nfObject.format(x)}</p>
              )
            }
     },
@@ -309,9 +309,9 @@ function Unpaid() {
         formatter: function nameFormatter(cell, row){
             var nfObject = new Intl.NumberFormat('hi-IN')
              var x = row.amount_outstanding;
-             console.log(nfObject.format(x))
+         
              return(
-               <p>{nfObject.format(x)}</p>
+               <p className="rightAli">{nfObject.format(x)}</p>
              )
            }
     },

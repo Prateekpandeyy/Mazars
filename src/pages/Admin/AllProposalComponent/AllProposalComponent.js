@@ -229,7 +229,7 @@ const retviewProposal = (e) => {
         var x = row.ProposedAmount;
         
         return(
-          <p>{nfObject.format(x)}</p>
+          <p className="rightAli">{nfObject.format(x)}</p>
         )
       }
     },
@@ -249,7 +249,7 @@ const retviewProposal = (e) => {
          var x = row.accepted_amount;
          
          return(
-           <p>{nfObject.format(x)}</p>
+           <p className="rightAli">{nfObject.format(x)}</p>
          )
        }
     },

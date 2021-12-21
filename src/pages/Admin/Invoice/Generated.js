@@ -105,6 +105,9 @@ const Generated = () => {
             sort: true,
             style: {
                 fontSize: "11px",
+                display : "flex",
+                justifyContent : "center",
+                border: "0px"
             },
             headerStyle: () => {
                 return { fontSize: "11px" };
@@ -157,7 +160,7 @@ const Generated = () => {
                  var x = row.invoice_amount;
                  
                  return(
-                   <p>{nfObject.format(x)}</p>
+                   <p className="rightAli">{nfObject.format(x)}</p>
                  )
                }
         },
@@ -178,7 +181,7 @@ const Generated = () => {
                  return(
                      <>
                      {row.is_paid == "0" ?
-                     <p>0</p> :   <p>{nfObject.format(x)}</p>}
+                     <p className="rightAli">0</p> :   <p className="rightAli">{nfObject.format(x)}</p>}
                      </>
                  
                  )
