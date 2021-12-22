@@ -32,15 +32,16 @@ function AllQueriesData() {
    const [assignNo2, setAssignNo2] = useState()
     const [queriesCount, setCountQueries] = useState(null);
     const [records, setRecords] = useState([]);
-    const [loading, setLoading] = useState(false);
+   
     const [loading2, setLoading2] = useState(false);
-    const [additionalQuery, setAdditionalQuery] = useState(false);
-   const [showData, setShowData] = useState(false)
+    const [additionalQuery, setAdditionalQuery] = useState(false)
+   let des = false;
     const additionalHandler = (key) => {
        
        if(typeof(key) == "object"){
         setAdditionalQuery(!additionalQuery);
-        setShowData(true)
+
+        des = true
         setLoading2(false)
         return false
        }
@@ -458,7 +459,8 @@ function AllQueriesData() {
                         getQueriesData={getQueriesData}
                         setLoading2={setLoading2}
                         loading2={loading2}
-                        showData = {showData}
+                       
+                        des = {des}
                     />
 
 

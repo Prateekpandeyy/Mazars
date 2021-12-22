@@ -8,15 +8,14 @@ import Swal from "sweetalert2";
 import { Spinner } from 'reactstrap';
 
 
-function DraftReport({ fianlModal, uploadFinalReport, id, getAssignmentList }) {
+function DraftReport({ des, loading, setLoading, fianlModal, uploadFinalReport, id, getAssignmentList }) {
   const alert = useAlert();
   const { handleSubmit, register, reset } = useForm();
 
-  const [loading, setLoading] = useState(false);
 
 
   const onSubmit = (value) => {
-  
+    des = false;
     setLoading(true)
 
     let formData = new FormData();
@@ -40,9 +39,9 @@ function DraftReport({ fianlModal, uploadFinalReport, id, getAssignmentList }) {
       })
       .then((response) => {
    
-        if (response.data.code === 1) {
+        if (response.data.code === 1  && des === false) {
           setLoading(false)
-
+          des = true
           var message = response.data.message
           if (message.invalid) {
             Swal.fire({

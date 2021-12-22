@@ -51,14 +51,14 @@ function AssignmentTab() {
   const [item] = useState(current_date);
 
   const [baseMode, SetbaseMode] = useState("avc");
-  const [transcode, SetTranscode] = useState("interop");
-  const [attendeeMode, SetAttendeeMode] = useState("video");
-  const [videoProfile, SetVideoProfile] = useState("480p_4");
-  const [dataItem, setDataItem] = useState({});
 
+  const [dataItem, setDataItem] = useState({});
+  const [showData, setShowData] = useState(false)
   const [report, setReport] = useState();
   const [reportModal, setReportModal] = useState(false);
   const [assignNo, setAssignNo] = useState('');
+  const [loading, setLoading] = useState(false)
+  let des = false;
   var rowStyle2 = {}
   const ViewReport = (key) => {
    
@@ -468,19 +468,31 @@ function AssignmentTab() {
   // draft modal
   const [draftModal, setDraftModal] = useState(false);
   const uploadDraftReport = (id) => {
-    
-    setDraftModal(!draftModal);
-    setId(id);
+    if(typeof(id) == "object"){
+      console.log("object")
+      let des = true;
+      setLoading(false)
+      setDraftModal(!draftModal);
+    }
+    else{
+      setDraftModal(!draftModal);
+      setId(id);
+    }
+  
   };
 
 
   // final modal
   const [fianlModal, setFianlModal] = useState(false);
-  const uploadFinalReport = (id) => {
+
+    const uploadFinalReport = (id) => {
+   
+      setFianlModal(!fianlModal);
+      setFinalId(id);
+    };
+  
     
-    setFianlModal(!fianlModal);
-    setFinalId(id);
-  };
+  
 
 
   const onSubmit = (data) => {
@@ -689,6 +701,9 @@ function AssignmentTab() {
             uploadDraftReport={uploadDraftReport}
             getAssignmentList={getAssignmentList}
             id={id}
+            loading = {loading}
+            setLoading = {setLoading}
+            des = {des}
           />
 
           <FinalReportUpload
@@ -696,6 +711,9 @@ function AssignmentTab() {
             uploadFinalReport={uploadFinalReport}
             getAssignmentList={getAssignmentList}
             id={finalId}
+            loading = {loading}
+            setLoading = {setLoading}
+            des = {des}
           />
 
 
@@ -719,14 +737,3 @@ function AssignmentTab() {
 }
 
 export default AssignmentTab;
-
-
-
-
-
-
-
-
-
-
-

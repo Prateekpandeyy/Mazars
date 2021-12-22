@@ -527,7 +527,6 @@ const ImageUploads = ({ register, control }) => {
      
        <input
             type="file"
-            // name={`upload[${index}].pics`}
             name= "uploadImg"
             ref={register}
             className="form-control-file manage_file"

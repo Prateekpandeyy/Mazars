@@ -240,7 +240,7 @@ function ViewReport({
                                       onClick={() => toggleNested(p)}
                                     ></i>
                                   </div> :
-                                  null
+                                  <p style={{ color: "red" }}>Pending</p>
                           }
                         </td>
                         :
