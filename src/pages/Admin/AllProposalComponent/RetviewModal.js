@@ -45,7 +45,7 @@ const RetviewModal = ({
              getProposalData()
              Swal.fire({
                  "title" : "success",
-                 "html" : "Proposal Reactive successfully",
+                 "html" : "Proposal restored successfully",
                  "icon" : "success"
              })
          }
@@ -65,7 +65,7 @@ const RetviewModal = ({
         <Modal isOpen={retview} toggle={retviewProposal}>
             <ModalHeader toggle={retviewProposal }>
 <Typography variant="h6">
-    Please Provide the reason
+    Please provide the reason
 </Typography>
             </ModalHeader>
             <ModalBody>

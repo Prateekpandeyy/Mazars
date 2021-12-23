@@ -40,6 +40,7 @@ function DraftReport({ des, loading, setLoading, fianlModal, uploadFinalReport, 
       .then((response) => {
    
         if (response.data.code === 1  && des === false) {
+          
           setLoading(false)
           des = true
           var message = response.data.message

@@ -26,6 +26,7 @@ const Generated = () => {
     const [id2, setId2] = useState()
     const [gstNo, setGstinNo] = useState();
     const [paymentUrlcopy, setPaymentUrlCopy] = useState(false)
+    const [copyTitle, setCopytitle] = useState("Copy");
  
     const addTdsToggle = (key) => {
    
@@ -231,7 +232,10 @@ const Generated = () => {
                           
                               {row.is_paid == "0" 
                 ?   
-                 <FileCopyIcon onClick={() => {copyFun(row.paymenturl)}} style={noPointer}/>
+                <span title={copyTitle}>
+ <FileCopyIcon onClick={() => {copyFun(row.paymenturl)}} style={noPointer} />
+                </span>
+                
                    
               
                     : "" }
@@ -246,7 +250,7 @@ const Generated = () => {
     const copyFun = (e)  =>{
    
         navigator.clipboard.writeText(e)
-       
+       setCopytitle("Copied")
       }
     rowStyle2 = (row, index) => {
         const style = {}

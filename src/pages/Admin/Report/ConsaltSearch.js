@@ -102,7 +102,7 @@ const ConsaltSearch = ({setData, getData}) => {
      axios.get(`${baseUrl}/tl/mobilpayTodayCall`)
      .then((res) => {
          if(res.data.code === 1) {
-            getData()
+            // getData()
          }
      })   
     }
@@ -170,7 +170,7 @@ onChange= {(e) =>teamLeader(e)}/>
              </div>
              <div className="col-md-6 my-2" style={{display : "flex", justifyContent : "flex-end"}}>
              <button type="button" onClick={() => downloadReport()} className="btn btn-success mx-2">Download</button>
-             <button type="button" onClick={() => refrehData()} className="btn btn-secondary mx-2">Pull latest data</button>
+             <button type="button" onClick={() => refrehData()} className="btn btn-secondary mx-2">Pull payment data</button>
              </div>
          </div>
       </form>

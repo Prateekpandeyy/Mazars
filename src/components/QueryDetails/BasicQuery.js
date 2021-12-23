@@ -118,7 +118,7 @@ function BasicQuery({qstatus, p, diaplaySpecific, queryDocs, year, purpose, decl
             </tr>
             {qstatus == "-1" || p.is_delete == "1" ? 
             <tr>
-              <th scope="row">Date of Declined</th>
+              <th scope="row">Date of Decline</th>
               <td>{qstatus == "-1" || p.is_delete == "1" ? declined2 : ""}</td>
               </tr> : ""}
             {

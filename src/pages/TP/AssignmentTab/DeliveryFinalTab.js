@@ -42,15 +42,28 @@ function AssignmentTab() {
     const [report, setReport] = useState();
     const [reportModal, setReportModal] = useState(false);
     const [dataItem, setDataItem] = useState({});
+    const [loading, setLoading] = useState(false);
+
+  let des = false;
     const ViewDiscussionToggel = (key) => {
         setViewDiscussion(!ViewDiscussion);
         setAssignNo(key)
     }
+   
     const uploadFinalReport = (id) => {
-       
-        setFianlModal(!fianlModal);
-        setFinalId(id);
-      };
+        if(id && id.id === undefined){
+            
+          let des = true;
+          setLoading(false)
+          setFianlModal(!fianlModal);
+        }
+        else{
+          setFianlModal(!fianlModal);
+              setFinalId(id);
+        }
+            
+            };
+        
     useEffect(() => {
         getAssignmentList();
     }, []);
@@ -548,6 +561,9 @@ const ViewReport = (key) => {
             uploadFinalReport={uploadFinalReport}
             getAssignmentList={getAssignmentList}
             id={finalId}
+            loading = {loading}
+            setLoading = {setLoading}
+            des = {des}
           />
           <ViewAllReportModal
             ViewReport={ViewReport}

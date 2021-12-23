@@ -11,7 +11,7 @@ import BootstrapTable from "react-bootstrap-table-next";
 import AdminFilter from "../../components/Search-Filter/AdminFilter";
 import Records from "../../components/Records/Records";
 import DiscardReport from "../../pages/Admin/AssignmentTab/DiscardReport";
-import { DataValue } from "../../pages/Admin/QueriesTab/QueriesTab";
+
 
 
 function AllQueriesData({allData}) {
@@ -161,7 +161,18 @@ function AllQueriesData({allData}) {
       formatter: function (cell, row) {
         return (
           <>
-           {row.status == "Declined Query"  ? null : 
+           {row.status == "Declined Query"  ? 
+           <div title="View Discussion Message">
+           <i
+             className="fa fa-comments-o"
+             style={{
+               fontSize: 16,
+               cursor: "pointer",
+               color: "orange"
+             }}
+             onClick={() => ViewDiscussionToggel(row.assign_no)}
+           ></i>
+         </div> : 
             <div style={{ display: "flex", justifyContent: "space-between" }}>
             <div title="Send Message">
               <Link

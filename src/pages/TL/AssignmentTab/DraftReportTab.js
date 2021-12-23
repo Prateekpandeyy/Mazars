@@ -26,15 +26,13 @@ function AssignmentTab() {
     const [count, setCount] = useState("");
     const [assignment, setAssignment] = useState([]);
     const [id, setId] = useState("");
-    const [finalId, setFinalId] = useState("");
-
+    const [loading, setLoading] = useState(false)
     const [records, setRecords] = useState([]);
     const [selectedData, setSelectedData] = useState([]);
     const [status, setStatus] = useState([]);
     const [tax2, setTax2] = useState([]);
     const [store2, setStore2] = useState([]);
-    const [hide, setHide] = useState();
-
+   
     var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
    
     const [item] = useState(current_date);
@@ -45,10 +43,19 @@ function AssignmentTab() {
     const [report, setReport] = useState();
     const [reportModal, setReportModal] = useState(false);
     var rowStyle2 = {}
+    let des = false;
     const uploadDraftReport = (id) => {
     
-      setDraftModal(!draftModal);
-      setId(id);
+        if(typeof(id) == "object"){
+      
+            let des = true;
+            setLoading(false)
+            setDraftModal(!draftModal);
+          }
+          else{
+            setDraftModal(!draftModal);
+            setId(id);
+          }
     };
     const ViewDiscussionToggel = (key) => {
         setViewDiscussion(!ViewDiscussion);
@@ -120,10 +127,7 @@ function AssignmentTab() {
     };
 
     //assingmentStatus
-    const assingmentStatus = (value) => {
-        
-        setStatus(value);
-    };
+  
 // view report 
 const ViewReport = (key) => {
    
@@ -575,6 +579,9 @@ rowStyle2 = (row, index) => {
             uploadDraftReport={uploadDraftReport}
             getAssignmentList={getAssignmentList}
             id={id}
+            loading = {loading}
+            setLoading = {setLoading}
+            des = {des}
           />
  <ViewAllReportModal
             ViewReport={ViewReport}

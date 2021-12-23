@@ -272,7 +272,7 @@ function DeclinedProposal({ declinedProposal }) {
 {
   row.statuscode == "6" ? 
   <>
-<div title="Retview Proposal"
+<div title="Restore Proposal"
  onClick={(e) => retviewProposal(row.q_id)}> 
 <i
                     class="fa fa-share"

@@ -131,7 +131,7 @@ const ReportList = () => {
            <div className="col-md-4">
      
      <Link to="/admin/consalation" class="btn btn-primary">
-                              Constellation Payment
+                              Consolidate Payment
                            </Link>
       </div>
        </div>

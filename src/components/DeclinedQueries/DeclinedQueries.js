@@ -17,12 +17,13 @@ import { Link, useParams } from "react-router-dom";
 import BootstrapTable from "react-bootstrap-table-next";
 import AdminFilter from "../Search-Filter/AdminFilter";
 import Records from "../../components/Records/Records";
-
+import DiscardReport from "../../pages/TL/AssignmentTab/DiscardReport";
 function DeclinedQueries({ CountPendingForPayment }) {
 
   const [pendingData, setPendingData] = useState([]);
   const [records, setRecords] = useState([]);
-
+  const [ViewDiscussion, setViewDiscussion] = useState(false);
+  const [assignNo, setAssignNo] = useState('');
   useEffect(() => {
     getPendingForPayment();
   }, []);
@@ -39,7 +40,10 @@ function DeclinedQueries({ CountPendingForPayment }) {
     });
   };
 
-
+  const ViewDiscussionToggel = (key) => {
+    setViewDiscussion(!ViewDiscussion);
+    setAssignNo(key)
+  }
 
   const columns = [
     {
@@ -153,6 +157,23 @@ function DeclinedQueries({ CountPendingForPayment }) {
       headerStyle: () => {
         return { fontSize: "12px" };
       },
+      formatter : function forma(cell, row) {
+        return(
+          <>
+           <div title="View Discussion Message">
+                          <i
+                              class="fa fa-comments-o"
+                              style={{
+                                  fontSize: 16,
+                                  cursor: "pointer",
+                                  color: "orange"
+                              }}
+                              onClick={() => ViewDiscussionToggel(row.assign_no)}
+                          ></i>
+                      </div>
+          </>
+        )
+      }
     },
   ];
 
@@ -182,6 +203,12 @@ function DeclinedQueries({ CountPendingForPayment }) {
             wrapperClasses="table-responsive"
           /> 
           </div>
+          <DiscardReport
+            ViewDiscussionToggel={ViewDiscussionToggel}
+            ViewDiscussion={ViewDiscussion}
+            report={assignNo}
+            getData={getPendingForPayment}
+          />
         </CardBody>
       </Card>
     </>

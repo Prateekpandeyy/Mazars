@@ -292,7 +292,7 @@ const retviewProposal = (e) => {
 {
   row.statuscode == "6" ? 
   <>
-<div title="Retview Proposal"
+<div title="Restore Proposal"
  onClick={(e) => retviewProposal(row.q_id)}> 
 <i
                     className="fa fa-share"

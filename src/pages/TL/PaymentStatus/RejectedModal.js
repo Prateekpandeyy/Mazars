@@ -61,7 +61,7 @@ function RejectedModal({
   return (
     <div>
       <Modal isOpen={addPaymentModal} toggle={rejectHandler} size="md">
-        <ModalHeader toggle={rejectHandler}>Please Provide the reason</ModalHeader>
+        <ModalHeader toggle={rejectHandler}>Please provide the reason</ModalHeader>
         <ModalBody>
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="mb-3">

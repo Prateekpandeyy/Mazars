@@ -233,10 +233,10 @@ function ProposalDetails({
                       <tr>
                        
                         <td>{payment_terms}</td>
-                        <td>{no_of_installment}</td>
-                        <td>{installAmount2(installment_amount)}</td>
+                        <td style={{display : "flex", justifyContent : "center", border : "0px"}}>{no_of_installment}</td>
+                        <td >{installAmount2(installment_amount)}</td>
                         <td>{installAmount(due_date)}</td>
-                        <td>{}</td>
+                        
                       </tr>
                     </td>
                     :
@@ -277,9 +277,10 @@ function ProposalDetails({
                 </tr>
                 {paymentDetails.map((pay, i) => (
                   <tr>
-                    {pay.is_paid == "0" ?
-                    <td></td> :
-                    <> <td>{CommonServices.removeTime(pay.payment_date)}</td> 
+                    {pay.is_paid == "1" ?
+                  
+                    <>
+                     <td>{CommonServices.removeTime(pay.payment_date)}</td> 
                     <td>{pay.invoice_amount}</td>
                     <td>{pay.tds_amount}</td>
                     <td>{pay.amount}</td>
@@ -294,29 +295,10 @@ function ProposalDetails({
                    pointer : "cursor"}}>
                      </i></span></a>
                     </td>
-                    </>
+                    </> :
+                      <td></td> 
                     }
-                   {/* {pay.is_paid == "0" ? <td></td> : 
-                   <td>{CommonServices.removeTime(pay.payment_date)}</td>}
-                  {pay.is_paid == "0" ? <td></td> :
-                    <td>{nfObject.format(pay.payable_amount)}</td> }
-                   {pay.is_paid == "0" ? <td></td> : <td>{nfObject.format(pay.tds_amount)}</td> }
-                  {pay.is_paid == "0" ? <td> </td> : 
-                    <td>
-                    <a href={`${baseUrl3}/${pay.invoice}`} target="_blank"> <span title="View Invoice">
-                    <DescriptionOutlinedIcon color="secondary" />
-                    </span></a>
-                   {pay.is_paid == "0" ? 
-                   "": <>
                   
-                      <a href={pay.paymenturl} target="_blank">
-                    <span title="view receipt" style={{margin: "0 2px"}}>
-                    <i 
-                   className="fa fa-eye"
-                   style={{color : "green", 
-                   fontSize : "16px", 
-                   pointer : "cursor"}}>
-                     </i></span></a> </>} </td>} */}
                   </tr>
                 ))}
               </td>
@@ -364,7 +346,7 @@ function ProposalDetails({
              {
                proposal_reactive_notes.length > 0 ?
                  <tr>
-                   <th scope="row"> Date of proposal reactive</th>
+                   <th scope="row"> date of restoring proposal</th>
                    <td colspan="1">
                      {
                       proposal_reactive_dates
@@ -376,7 +358,7 @@ function ProposalDetails({
                           {
                proposal_reactive_notes.length > 0  ?
                  <tr>
-                   <th scope="row">Reason of proposal reactive</th>
+                   <th scope="row"> reason of restoring proposal </th>
                    <td colspan="1">
                      {
                        proposal_reactive_notes

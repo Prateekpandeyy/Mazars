@@ -6,11 +6,6 @@ import {
   Card,
   CardHeader,
   CardBody,
-  CardTitle,
-  Row,
-  Col,
-  Table,
-  Tooltip,
 } from "reactstrap";
 import DraftReportModal from "./DraftReportUpload";
 import FinalReportUpload from "./FinalReportUpload";
@@ -19,8 +14,6 @@ import { useForm } from "react-hook-form";
 import "antd/dist/antd.css";
 import { Select } from "antd";
 import BootstrapTable from "react-bootstrap-table-next";
-import TeamFilter from "../../../components/Search-Filter/tlFilter";
-import * as Cookies from "js-cookie";
 import DescriptionOutlinedIcon from '@material-ui/icons/DescriptionOutlined';
 import ViewAllReportModal from "./ViewAllReport";
 import DiscardReport from "../AssignmentTab/DiscardReport";
@@ -31,33 +24,28 @@ function AssignmentTab() {
 
   const history = useHistory();
   const userid = window.localStorage.getItem("tlkey");
-
   const { handleSubmit, register, errors, reset } = useForm();
   const { Option, OptGroup } = Select;
   const [count, setCount] = useState("");
   const [assignment, setAssignment] = useState([]);
   const [id, setId] = useState("");
   const [finalId, setFinalId] = useState("");
-
   const [records, setRecords] = useState([]);
   const [selectedData, setSelectedData] = useState([]);
   const [status, setStatus] = useState([]);
   const [tax2, setTax2] = useState([]);
   const [store2, setStore2] = useState([]);
   const [hide, setHide] = useState();
-
-  var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
-
-  const [item] = useState(current_date);
-
-  const [baseMode, SetbaseMode] = useState("avc");
-
+  const [fianlModal, setFianlModal] = useState(false);
+  const [draftModal, setDraftModal] = useState(false);
   const [dataItem, setDataItem] = useState({});
-  const [showData, setShowData] = useState(false)
   const [report, setReport] = useState();
   const [reportModal, setReportModal] = useState(false);
   const [assignNo, setAssignNo] = useState('');
   const [loading, setLoading] = useState(false)
+  var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
+
+  const [item] = useState(current_date);
   let des = false;
   var rowStyle2 = {}
   const ViewReport = (key) => {
@@ -466,10 +454,10 @@ function AssignmentTab() {
   }
 
   // draft modal
-  const [draftModal, setDraftModal] = useState(false);
+ 
   const uploadDraftReport = (id) => {
     if(typeof(id) == "object"){
-      console.log("object")
+      
       let des = true;
       setLoading(false)
       setDraftModal(!draftModal);
@@ -483,17 +471,22 @@ function AssignmentTab() {
 
 
   // final modal
-  const [fianlModal, setFianlModal] = useState(false);
-
+  
     const uploadFinalReport = (id) => {
-   
-      setFianlModal(!fianlModal);
+if(id && id.id === undefined){
+    
+  let des = true;
+  setLoading(false)
+  setFianlModal(!fianlModal);
+}
+else{
+  setFianlModal(!fianlModal);
       setFinalId(id);
+}
+    
     };
   
     
-  
-
 
   const onSubmit = (data) => {
   
