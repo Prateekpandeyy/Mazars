@@ -76,7 +76,7 @@ const history = useHistory();
                 row.tp_read == "0" ?
                   <div
                     style={{
-                      cursor: "pointer",
+                      cursor: "pointer", wordBreak : "break-word",
                       display: "flex", justifyContent: "space-between"
                     }}
                     onClick={() => readNotification(row.id)}
@@ -88,7 +88,7 @@ const history = useHistory();
 
                   :
                   <div
-                    style={{ cursor: "pointer", display: "flex", justifyContent: "space-between" }}
+                    style={{ cursor: "pointer", wordBreak : "break-word", display: "flex", justifyContent: "space-between" }}
                     title="read"
                   >
                     <p>{row.feedback}  - By {row.name}</p>

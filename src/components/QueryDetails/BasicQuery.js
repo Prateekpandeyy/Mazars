@@ -11,7 +11,7 @@ function BasicQuery({qstatus, p, diaplaySpecific, queryDocs, year, purpose, decl
 
   return (
     <>
-      <div style={{display : "block", height: "55vh", overflow :"scroll"}}>
+      <div className="queryBox">
         <p
           style={{
             textAlign: "center",

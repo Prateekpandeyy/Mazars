@@ -6,7 +6,7 @@ function Feedback({ feedback }) {
   
 
     return (
-        <div>
+        <div className="queryBox">
             <p
                 style={{
                     textAlign: "center",

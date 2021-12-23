@@ -154,7 +154,7 @@ const ConsaltSearch = ({setData, getData}) => {
           name="invoice_number"
           className="form-control" />
                  </div>
-                 <div className="col-md-2" style={{zIndex : "10000"}}>
+                 <div className="col-md-2" style={{zIndex : "1000"}}>
 <label className="form-label">Teamleader</label>
 <Select  isMulti={true}
 options={options3}

@@ -24,7 +24,7 @@ function AssignmentDetails({ p, finalDate, submitData, customerQuery , diaplayAs
 
   return (
     <>
-      <div>
+      <div className="queryBox">
         <p
           style={{
             textAlign: "center",

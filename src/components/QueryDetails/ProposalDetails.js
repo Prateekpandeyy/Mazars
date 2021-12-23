@@ -119,7 +119,7 @@ function ProposalDetails({
   }
   return (
     <>
-      <div>
+      <div className="queryBox">
         <p
           style={{
             textAlign: "center",
@@ -357,7 +357,8 @@ function ProposalDetails({
              }
                           {
                proposal_reactive_notes.length > 0  ?
-                 <tr>
+           
+           <tr>
                    <th scope="row"> reason of restoring proposal </th>
                    <td colspan="1">
                      {

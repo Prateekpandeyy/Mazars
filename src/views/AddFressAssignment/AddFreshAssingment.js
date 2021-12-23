@@ -74,7 +74,7 @@ function AddFreshAssingment(props) {
 
 
   const onSubmit = (value) => {
-   
+   let timer;
     const a = value.p_fact;
   
     if (a === '') {
@@ -93,16 +93,24 @@ function AddFreshAssingment(props) {
       setLoading(true);
       var uploadImg = value.uploadImg;
       if(uploadImg === undefined){
-        uploadImg = 0;
+        
+       timer = setInterval(() => {
+    
+        setUploadOrDownloadCount(
+          (beforeValue) => (beforeValue >= 90 ? 90 
+                            : beforeValue + 10 ));
+      }, 1000);
       }
+     else{
       let t = 100 * uploadImg.length;
-      const timer = setInterval(() => {
+       timer = setInterval(() => {
     
         setUploadOrDownloadCount(
           (beforeValue) => (beforeValue >= 90 ? 90 
                             : beforeValue + 10 ));
       }, t);
-  
+     }
+ 
       let formData = new FormData();
      
       if (uploadImg) {
@@ -144,7 +152,8 @@ function AddFreshAssingment(props) {
             reset();
             var message = response.data.message
             var query_no = response.data.query_no
-            if (message === "") {
+            console.log("message", message.length)
+            if (message.length === 0) {
               Swal.fire({
                 title: 'Success !',
                 html: `<p>Query no.- ${query_no} submitted successfully.
