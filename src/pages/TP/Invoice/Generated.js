@@ -217,7 +217,7 @@ const Generated = () => {
             formatter: function (cell, row) {
                 return (
                     <>
-                       <div style={{ display: "flex", alignItems:"center" }}>
+                       <div style={{ display: "flex", justifyContent : "flex-start", alignItems:"center" }}>
                         <a
                     href={`${baseUrl3}/${row.invoice}`}
                     target="_blank"

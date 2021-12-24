@@ -25,9 +25,9 @@ const Generated = () => {
     const [billNo, setBillNo] = useState()
     const [id2, setId2] = useState()
     const [gstNo, setGstinNo] = useState();
-    const [paymentUrlcopy, setPaymentUrlCopy] = useState(false)
-    const [copyTitle, setCopytitle] = useState("Copy");
- 
+    const [showCopyUrl, setShowCopyUrl] = useState("click")
+ let copyTitle = ""
+ let copied = true
     const addTdsToggle = (key) => {
    
       setGstinNo(key.gstin_no);
@@ -157,7 +157,7 @@ const Generated = () => {
                 return { fontSize: "11px" };
             },
             formatter: function nameFormatter(cell, row){
-                var nfObject = new Intl.NumberFormat('en-US')
+                var nfObject = new Intl.NumberFormat('hi-IN')
                  var x = row.invoice_amount;
                  
                  return(
@@ -177,7 +177,8 @@ const Generated = () => {
             },
             formatter: function nameFormatter(cell, row){
                 var nfObject = new Intl.NumberFormat('hi-IN')
-                 var x = row.tds_amount;
+                var x = row.tds_amount;
+                
                  
                  return(
                      <>
@@ -219,9 +220,11 @@ const Generated = () => {
                 return { fontSize: "12px", width: "110px" };
             },
             formatter: function (cell, row) {
+                copyTitle = row.paymenturl
                 return (
                     <>
-                        <div style={{ display: "flex", justifyContent: "space-evenly" }}>
+                       {showCopyUrl === "click" ? 
+                        <div style={{ display: "flex", justifyContent: "flex-start" }}>
                         <a
                     href={`${baseUrl3}/${row.invoice}`}
                     target="_blank"
@@ -232,25 +235,29 @@ const Generated = () => {
                           
                               {row.is_paid == "0" 
                 ?   
-                <span title={copyTitle}>
- <FileCopyIcon onClick={() => {copyFun(row.paymenturl)}} style={noPointer} />
-                </span>
+               
+                  
+                    <span title={copyTitle}>
+                    <FileCopyIcon onClick={() => {copyFun(row.paymenturl)}}  style={noPointer} />
+                                   </span> 
+                  
                 
                    
               
                     : "" }
-                        </div>
+                        </div> : ""}
                        
                     </>
                 );
             },
         },
     ];
+    
     const noPointer = {cursor: 'pointer', color : "blue"};
     const copyFun = (e)  =>{
    
         navigator.clipboard.writeText(e)
-       setCopytitle("Copied")
+    setShowCopyUrl("clicked")
       }
     rowStyle2 = (row, index) => {
         const style = {}

@@ -143,7 +143,7 @@ const CreateInvoice = () => {
                 return { fontSize: "11px", width: "200px" };
             },
             formatter: function nameFormatter(cell, row){
-                var nfObject = new Intl.NumberFormat('en-US')
+                var nfObject = new Intl.NumberFormat('hi-IN')
                  var x = row.paid_amount;
                 
                  return(
