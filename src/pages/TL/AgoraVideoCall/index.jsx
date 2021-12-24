@@ -400,7 +400,7 @@ if(item.player === undefined){
 
     rt.client.on("stream-subscribed", function (evt) {
     
-      if(this.state.readyState === true){
+    
         let stream = evt.stream;
       
         var apiData = "https://virtualapi.multitvsolution.com/VstreamApi/index.php/api/vstream/getInfoByRTCId?channel_name="+this.channelName+"&rtc_id="+stream.getId()
@@ -419,7 +419,7 @@ if(item.player === undefined){
        rt.addStream(stream)
  
      })
-      }
+      
        
     
        }.bind(this));
