@@ -8,7 +8,7 @@ import { useHistory } from "react-router";
 
 function Dashboard() {
   const userId = window.localStorage.getItem("userid");
-const sessionId = window.sessionStorage.getItem("userIdsession")
+const sessionId =  window.sessionStorage.getItem("userIdsession")
 let history= useHistory()
   const [allQueries, setAllQueries] = useState({
     total: '',
@@ -57,7 +57,7 @@ let history= useHistory()
     customer_declined_Pay,
     paid, unpaid, totalpayment,
   } = allQueries;
-
+const [dash, setDash] = useState(true)
 const logout = () => {
   localStorage.removeItem("userid")
   localStorage.removeItem("custEmail")
@@ -69,7 +69,12 @@ console.log("sessionStorage", window.sessionStorage)
       axios
         .get(`${baseUrl}/customers/totalComplete?uid=${JSON.parse(userId)}`)
         .then((response) => {
-
+if(sessionId){
+  setDash(true)
+}
+else{
+  setDash(false)
+}
           if (response.data.code === 1) {
             setAllQueries({
               total: response.data.result.total,
@@ -119,7 +124,7 @@ console.log("sessionStorage", window.sessionStorage)
 
   return (
   <>
-  {sessionId ? 
+  {dash ? 
   <Layout custDashboard="custDashboard" custUserId={userId}>
 
   <div className="row">

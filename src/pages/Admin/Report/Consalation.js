@@ -221,10 +221,10 @@ let history  = useHistory()
             formatter : function formatterD (cell ,row) {
               let a ;
               if(row.status === "1"){
-                  a = "Process"
+                  a = "Matched"
               }
               else if(row.status === "2"){
-                a = "Unprocess"
+                a = "Unmatched"
             }
               return(
                 <p style= {row.status === "1" ? proc : unproc}>{a}</p>
@@ -261,7 +261,7 @@ let history  = useHistory()
        <>
        <div className="row">
            <div className="col-md-6">
-           <Typography variant="h4">Report Constellation</Typography>
+           <Typography variant="h4">Report Consolidate</Typography>
          
              </div>
              <div className="col-md-6" style={{display : "flex", justifyContent : "flex-end"}}>

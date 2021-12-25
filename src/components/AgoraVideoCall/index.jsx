@@ -358,24 +358,24 @@ if(item.player === undefined){
     });
 
     rt.client.on("stream-subscribed", function (evt) {
-    
+    if(this.state.readyState === true){
       let stream = evt.stream;
       var apiData = "https://virtualapi.multitvsolution.com/VstreamApi/index.php/api/vstream/getInfoByRTCId?channel_name="+this.channelName+"&rtc_id="+stream.getId()
   axios.get(`${apiData}`)
   .then((res) =>{
    
-    if(res.data.length === 0 ){
+    if(stream.getId() == this.uid || res.data.length === 0) {
       this.setState({ participantName : "" })
     }
     else if(res.data.length > 0){
       this.setState({ participantName : res.data[0].user_name })
      
     }
-    if(res.data != undefined){
+  
       rt.addStream(stream);
-    }
-  })
     
+  })
+    }
     
  
     }.bind(this));

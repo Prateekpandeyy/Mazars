@@ -407,16 +407,16 @@ schdrularName;
 
     rt.client.on("stream-subscribed", function (evt) {
      
-     
+      if(this.state.readyState === true){
         let stream = evt.stream;
       
         var apiData = "https://virtualapi.multitvsolution.com/VstreamApi/index.php/api/vstream/getInfoByRTCId?channel_name="+this.channelName+"&rtc_id="+stream.getId()
     axios.get(`${apiData}`)
     .then((res) =>{
-     
+    
 
       
-  if(res.data.length === 0 ){
+  if(stream.getId === this.uid || res.data.length === 0){
     this.setState({ participantName : "" })
   }
   else if(res.data.length > 0){
@@ -428,7 +428,7 @@ schdrularName;
  
      })
        
-      
+      }
     
        }.bind(this));
 

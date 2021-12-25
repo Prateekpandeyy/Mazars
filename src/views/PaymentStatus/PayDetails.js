@@ -167,14 +167,7 @@ setModal(!modal)
             headerStyle : () => {
                 return { fontSize : "11px", width : "100px"}
             },
-            // formatter : function(cell, row){
-            //     return(
-            //         <>
-            //         {row.is_paid == "1" ? 
-            //         <p>{row.tds_amount}</p> : ""}
-            //         </>
-            //     )
-            // }
+           
             formatter: function nameFormatter(cell, row){
                 var nfObject = new Intl.NumberFormat('hi-IN')
                  var x = row.tds_amount;

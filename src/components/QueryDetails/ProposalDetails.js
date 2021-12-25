@@ -183,7 +183,7 @@ function ProposalDetails({
                 </tr>
                 <tr>
                   <td>{CommonServices.capitalizeFirstLetter(amount_type)}</td>
-                  <td>
+                  <td align="right">
                     {
                       amount_type == "fixed" ?
                        nfObject.format(amount_fixed)
@@ -234,7 +234,7 @@ function ProposalDetails({
                        
                         <td>{payment_terms}</td>
                         <td style={{display : "flex", justifyContent : "center", border : "0px"}}>{no_of_installment}</td>
-                        <td >{installAmount2(installment_amount)}</td>
+                        <td align="right">{installAmount2(installment_amount)}</td>
                         <td>{installAmount(due_date)}</td>
                         
                       </tr>
@@ -281,9 +281,9 @@ function ProposalDetails({
                   
                     <>
                      <td>{CommonServices.removeTime(pay.payment_date)}</td> 
-                    <td>{pay.invoice_amount}</td>
-                    <td>{pay.tds_amount}</td>
-                    <td>{pay.amount}</td>
+                    <td align="right">{pay.invoice_amount}</td>
+                    <td align="right">{pay.tds_amount}</td>
+                    <td align="right">{pay.amount}</td>
                     <td>
 
                     <a href={pay.paymenturl} target="_blank">
@@ -296,7 +296,7 @@ function ProposalDetails({
                      </i></span></a>
                     </td>
                     </> :
-                      <td></td> 
+                      "" 
                     }
                   
                   </tr>

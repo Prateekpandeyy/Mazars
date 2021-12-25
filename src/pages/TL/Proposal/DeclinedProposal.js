@@ -184,7 +184,7 @@ function DeclinedProposal() {
                     <>
                         <div>
                             {
-                                row.status == "Customer Declined; Proposal" ?
+                                row.status == "Client Declined; Proposal" ?
                                     <p className="declined">
                                         {row.status}
                                     </p> :
