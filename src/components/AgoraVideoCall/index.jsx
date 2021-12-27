@@ -81,7 +81,7 @@ const tile_canvas = {
 class AgoraCanvas extends React.Component {
   constructor(props) {
     super(props);
-    
+    this.customerName = Cookies.get("custName")
     this.client = {};
     this.screenTrack = {}
     this.localStream = {};
@@ -100,7 +100,6 @@ class AgoraCanvas extends React.Component {
       shareValue : false,
     };
   }
-  customerName = Cookies.get("custName")
 channelName = this.props.channel
 userId = window.localStorage.getItem("userid");
 custEmail2 = window.localStorage.getItem("custEmail");
@@ -236,13 +235,8 @@ if(item.player === undefined){
     }
     // tile mode
     else if (this.state.displayMode === "tile") {
-      let no = this.state.streamList.length;
-      if(no < 5){
-        this.setState({ displayMode: "pip" });
-        return;
-      }
       let f = false;
-    
+      let no = this.state.streamList.length;
       let txtColor = "myPartName";
       this.state.streamList.map((item, index) => {
         let id = item.getId();
@@ -358,24 +352,22 @@ if(item.player === undefined){
     });
 
     rt.client.on("stream-subscribed", function (evt) {
-    if(this.state.readyState === true){
       let stream = evt.stream;
       var apiData = "https://virtualapi.multitvsolution.com/VstreamApi/index.php/api/vstream/getInfoByRTCId?channel_name="+this.channelName+"&rtc_id="+stream.getId()
   axios.get(`${apiData}`)
   .then((res) =>{
    
-    if(stream.getId() == this.uid || res.data.length === 0) {
+    if(res.data.length === 0 || stream.getId() == this.uid ){
       this.setState({ participantName : "" })
     }
     else if(res.data.length > 0){
       this.setState({ participantName : res.data[0].user_name })
      
     }
-  
+    if(res.data != undefined){
       rt.addStream(stream);
-    
-  })
     }
+  })
     
  
     }.bind(this));

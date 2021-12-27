@@ -79,7 +79,7 @@ const tile_canvas = {
 class AgoraCanvas extends React.Component {
   constructor(props) {
     super(props);
-    
+    this.adminName = Cookies.get("adminName")
     this.client = {};
     this.localStream = {};
     this.shareClient = {};
@@ -115,7 +115,6 @@ class AgoraCanvas extends React.Component {
 
   // userId = window.localStorage.getItem("tlkey");
   allrecording = [];
-  adminName = Cookies.get("adminName")
   teamKey = window.localStorage.getItem("adminkey");
   adminEmail2 = window.localStorage.getItem("adminEmail");
   uid = Math.floor((Math.random() * 10000) + 1);
@@ -218,7 +217,6 @@ schdrularName;
         this.setState({ displayMode: "tile" });
         return;
       }
-    
       this.state.streamList.map((item, index) => {
         let txtColor = "myPartName";
         let id = item.getId();
@@ -284,13 +282,8 @@ schdrularName;
     }
     // tile mode
     else if (this.state.displayMode === "tile") {
-      let no = this.state.streamList.length;
-      if(no < 5){
-        this.setState({ displayMode: "pip" });
-        return;
-      }
       let f = false;
-    
+      let no = this.state.streamList.length;
       let txtColor = "myPartName";
       this.state.streamList.map((item, index) => {
         let id = item.getId();
@@ -406,17 +399,17 @@ schdrularName;
     });
 
     rt.client.on("stream-subscribed", function (evt) {
-     
-      if(this.state.readyState === true){
+      console.log("three")
+      console.log("evt", evt)
         let stream = evt.stream;
       
         var apiData = "https://virtualapi.multitvsolution.com/VstreamApi/index.php/api/vstream/getInfoByRTCId?channel_name="+this.channelName+"&rtc_id="+stream.getId()
     axios.get(`${apiData}`)
     .then((res) =>{
-    
-
+     
+  console.log("res", res.data.length)
       
-  if(stream.getId === this.uid || res.data.length === 0){
+  if(stream.getId() === this.uid || res.data.length == 0){
     this.setState({ participantName : "" })
   }
   else if(res.data.length > 0){
@@ -428,7 +421,6 @@ schdrularName;
  
      })
        
-      }
     
        }.bind(this));
 

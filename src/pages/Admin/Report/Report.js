@@ -506,7 +506,7 @@ onChange= {(e) =>teamLeader(e)}/>
 </span> 
                <span>
 <input type="checkbox" name="assessment" ref={register} id="assessment"></input>
-<label htmlFor="assessment">Assignment Year(s)</label>
+<label htmlFor="assessment">Assessment Year(s)</label>
 </span>
            
 <span>
@@ -588,7 +588,7 @@ onChange= {(e) =>teamLeader(e)}/>
    <div className="row">
        <div className="col-md-12">
        <fieldset className="my-fieldset">
-           <legend className="login-legend">Assignment</legend>
+           <legend className="login-legend">Assessnment</legend>
             <div className="basicFeild">
            
 <span>

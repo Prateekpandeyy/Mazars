@@ -90,7 +90,7 @@ const tile_canvas = {
 class AgoraCanvas extends React.Component {
   constructor(props) {
     super(props);
-  
+    this.tpName = Cookies.get("tpName")
     this.client = {};
     this.localStream = {};
     this.shareClient = {};
@@ -123,7 +123,7 @@ class AgoraCanvas extends React.Component {
     this.startRecording = this.startRecording.bind(this);
   }
 
-  tpName = Cookies.get("tpName")
+  // userId = window.localStorage.getItem("tlkey");
   allrecording = [];
   teamKey = window.localStorage.getItem("tpkey");
   tpEmail2 = window.localStorage.getItem("tpEmail");
@@ -153,7 +153,14 @@ allrecording;
     
    
    })
-
+  //  if(this.state.showButton == JSON.parse(this.teamKey)){
+  //   console.log("donefixed", this.state.showButton)
+  //   axios.get(`${baseUrl}/tl/setgetschedular?id=${this.props.id}&rtc_id=${uid}&uid=${JSON.parse(this.teamKey)}`)
+  //  .then((res) =>{
+  //    console.log(res)
+  //  })
+  
+  // }
   this.setState({getAdId : uid})
    this.setState({ uid : uid})
         this.localStream = this.streamInit(uid, $.attendeeMode, $.videoProfile);
@@ -293,13 +300,8 @@ if(item.player === undefined){
   }
   // tile mode
   else if (this.state.displayMode === "tile") {
-    let no = this.state.streamList.length;
-    if(no < 5){
-      this.setState({ displayMode: "pip" });
-      return;
-    }
     let f = false;
-   
+    let no = this.state.streamList.length;
     let txtColor = "myPartName";
     this.state.streamList.map((item, index) => {
       let id = item.getId();
@@ -415,15 +417,14 @@ if(item.player === undefined){
     });
 
     rt.client.on("stream-subscribed", function (evt) {
-   
-      if(this.state.readyState === true){
+      console.log("three")
         let stream = evt.stream;
         var apiData = "https://virtualapi.multitvsolution.com/VstreamApi/index.php/api/vstream/getInfoByRTCId?channel_name="+this.channelName+"&rtc_id="+stream.getId()
     axios.get(`${apiData}`)
     .then((res) =>{
      
      
-      if(stream.getId() == this.uid || res.data.length === 0){
+      if(res.data.length === 0 || stream.getId() == this.uid){
         this.setState({ participantName : "" })
       }
       else if(res.data.length > 0){
@@ -433,7 +434,6 @@ if(item.player === undefined){
       rt.addStream(stream);
     })
       
-      }
    
       }.bind(this));
   

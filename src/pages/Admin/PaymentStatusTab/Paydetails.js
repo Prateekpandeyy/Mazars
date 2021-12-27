@@ -248,11 +248,7 @@ setModal(!modal)
       
       
       
-  const copyFun = (e)  =>{
-   
-    navigator.clipboard.writeText(e)
-   
-  }
+  
       const Container = styled.div `
       dispaly : flex;
       width : 100%;

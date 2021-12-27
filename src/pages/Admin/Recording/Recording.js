@@ -74,20 +74,22 @@ function Recording() {
     }
     const modalBox = {
         display : "flex",
-        position : "absolute",
-        top : "10%",
-        left : "0%",
-        botttom: "0%", 
-        right: "0%",
-       
+        position : "fixed",
+        top: "50%",
+        left : "50%",
+        transform : "translate(-50%, -50%)",
+      justifyContent : "center",
+      alignItems : "center",
         width : "100%", 
-        height: "auto"
+        height: "auto",
+        flexDirection : "column"
     }
 const canBtn = {
-    position: "absolute",
-    top: "0",
-    right: "10px",
-    left: "90%",
+   
+    display : "flex",
+    width : "50vw",
+    alignItems : "flex-end",
+    justifyContent : "flex-end",
     padding: "20px",
     cursor : "pointer", 
     color : "red"
@@ -247,25 +249,7 @@ const canBtn = {
           
            </div>
             
-           {isOpen === true ?
           
-                 
-                 <div style={modalBox}>
-                 <span style={canBtn} onClick= {() => setIsOpen(false)}> <CloseIcon color="red" /> </span>
-                
-       
-          <div style={{margin: "50px 0 0 0"}}>
-          <ReactPlayer
-            url={videoid}
-            controls={true}
-            playing={true}
-            width='100%'
-            height='100%'
-           />
-              </div>
-            
-           </div>
-         : ""}
           <RecordingEdit 
           isOpen = {showEditModal}
           recordingHandler = {editRecording}
@@ -274,7 +258,27 @@ const canBtn = {
           assignid = {editData.assignid}
           editId = {editData.id}
           recList = {getRecording}/>
+                   {isOpen === true ?
+          
+                 
+          <div style={modalBox}>
+          <div style={canBtn}  title="cancle" onClick= {() => setIsOpen(false)}> <CloseIcon color="red" /> </div>
+         
+
+   <div style={{display : "flex", width : "50vw", height : "50vh"}}>
+   <ReactPlayer
+     url={videoid}
+     controls={true}
+     playing={true}
+     width='100%'
+     height='100%'
+    />
+       </div>
+     
+    </div>
+  : ""}
          </Layout>
+
            </>
 
     );

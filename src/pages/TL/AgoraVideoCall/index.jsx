@@ -79,7 +79,7 @@ const tile_canvas = {
 class AgoraCanvas extends React.Component {
   constructor(props) {
     super(props);
-    
+    this.tlName = Cookies.get("tlName")
     this.client = {};
     this.localStream = {};
     this.shareClient = {};
@@ -114,7 +114,6 @@ class AgoraCanvas extends React.Component {
 
   // userId = window.localStorage.getItem("tlkey");
   allrecording = [];
-  tlName = Cookies.get("tlName")
   teamKey = window.localStorage.getItem("tlkey");
   tlEmail2 = window.localStorage.getItem("tlEmail");
   uid = Math.floor((Math.random() * 10000) + 1);
@@ -142,9 +141,16 @@ allrecording;
    then((res) => {
     
    })
- 
+  //  if(this.state.showButton == JSON.parse(this.teamKey)){
+  //   console.log("donefixed", this.state.showButton)
+  //   axios.get(`${baseUrl}/tl/setgetschedular?id=${this.props.id}&rtc_id=${uid}&uid=${JSON.parse(this.teamKey)}`)
+  //  .then((res) =>{
+  //    console.log(res)
+  //  })
+  
+  //}
   this.setState({getAdId : uid})
-      
+        this.state.uid = uid;
        
         this.localStream = this.streamInit(uid, $.attendeeMode, $.videoProfile);
         this.localStream.init(
@@ -279,13 +285,8 @@ if(item.player === undefined){
   }
   // tile mode
   else if (this.state.displayMode === "tile") {
-    let no = this.state.streamList.length;
-    if(no < 5){
-      this.setState({ displayMode: "pip" });
-      return;
-    }
     let f = false;
-    
+    let no = this.state.streamList.length;
     let txtColor = "myPartName";
     this.state.streamList.map((item, index) => {
       let id = item.getId();
@@ -393,22 +394,23 @@ if(item.player === undefined){
     });
 
     rt.client.on("peer-leave", function (evt) {
-    
+     console.log("two")
       rt.removeStream(evt.uid);
       
     });
 
     rt.client.on("stream-subscribed", function (evt) {
-    
-      if(this.state.readyState === true){
+      console.log("three")
+      console.log("evt", evt)
         let stream = evt.stream;
       
         var apiData = "https://virtualapi.multitvsolution.com/VstreamApi/index.php/api/vstream/getInfoByRTCId?channel_name="+this.channelName+"&rtc_id="+stream.getId()
     axios.get(`${apiData}`)
     .then((res) =>{
-  
+     
+  console.log("res", res.data.length)
       
-  if(stream.getId() == this.uid || res.data.length === 0){
+  if(res.data.length === 0 || stream.getId() == this.uid){
     this.setState({ participantName : "" })
   }
   else if(res.data.length > 0){
@@ -419,14 +421,13 @@ if(item.player === undefined){
        rt.addStream(stream)
  
      })
-      }
        
     
        }.bind(this));
 
     rt.client.on("stream-removed", function (evt) {
       let stream = evt.stream;
-    
+     console.log("evt id", evt.uid)
       rt.removeStream(stream.getId());
     });
   };
