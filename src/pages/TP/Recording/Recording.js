@@ -61,20 +61,22 @@ function Recording() {
     }
     const modalBox = {
         display : "flex",
-        position : "absolute",
-        top : "10%",
-        left : "0%",
-        botttom: "0%", 
-        right: "0%",
-       
+        position : "fixed",
+        top: "50%",
+        left : "50%",
+        transform : "translate(-50%, -50%)",
+      justifyContent : "center",
+      alignItems : "center",
         width : "100%", 
-        height: "auto"
+        height: "auto",
+        flexDirection : "column"
     }
 const canBtn = {
-    position: "absolute",
-    top: "0",
-    right: "10px",
-    left: "90%",
+   
+    display : "flex",
+    width : "50vw",
+    alignItems : "flex-end",
+    justifyContent : "flex-end",
     padding: "20px",
     cursor : "pointer", 
     color : "red"
@@ -209,58 +211,40 @@ const editRecording = (participants, assign_id, message, id) => {
     return (
         <>
      <Layout TPDashboard="TPDashboard" TPuserId={userid}>
-            <div style={{position:"relative", height : "100vh", overflow : "scroll"}}>
-                 <Card>
-                 <CardHeader>
-                     <Row>
-                         <Col md="7">
-                             <CardTitle tag="h4">Recording of Discussion</CardTitle>
-                         </Col>
-                         <Col md="5"></Col>
-                     </Row>
-                 </CardHeader>
-                 <CardBody>
-                 <RecordingFilter
-                        setData={setFeedBackData}
-                     //    getData={getInCompleteAssingment}
-                        SearchQuery="SearchQuery"
-                       setRecords={setRecords}
-                        records={records} 
-                        userid = {userid}
-                        getRecording = {getRecording}
-                     /> 
-                     <BootstrapTable
-                         bootstrap4
-                         keyField="id"
-                         data={feedbackData}
-                         columns={columns}
-                         rowIndex
-                     />
-                 </CardBody>
- 
-             </Card>
-           
-            </div>
-             
-            {isOpen === true ?
-           
-                  
-                  <div style={modalBox}>
-                  <span style={canBtn} onClick= {() => setIsOpen(false)}> <CloseIcon color="red" /> </span>
-                 
-        
-           <div style={{margin: "50px 0 0 0"}}>
-           <ReactPlayer
-             url={videoid}
-             controls={true}
-             playing={true}
-             width='100%'
-             height='100%'
-            />
-               </div>
-             
-            </div>
-          : ""}
+     <div style={{position:"relative", height : "100vh", overflow : "scroll"}}>
+                <Card>
+                <CardHeader>
+                    <Row>
+                        <Col md="7">
+                            <CardTitle tag="h4">Recording of Discussion</CardTitle>
+                        </Col>
+                        <Col md="5"></Col>
+                    </Row>
+                </CardHeader>
+                <CardBody>
+                <RecordingFilter
+                       setData={setFeedBackData}
+                    //    getData={getInCompleteAssingment}
+                       SearchQuery="SearchQuery"
+                      setRecords={setRecords}
+                       records={records} 
+                       userid = {userid}
+                       getRecording = {getRecording}
+                    /> 
+                    <BootstrapTable
+                        bootstrap4
+                        keyField="id"
+                        data={feedbackData}
+                        columns={columns}
+                        rowIndex
+                    />
+                </CardBody>
+
+            </Card>
+          
+           </div>
+            
+          
           <RecordingEdit 
           isOpen = {showEditModal}
           recordingHandler = {editRecording}
@@ -269,9 +253,30 @@ const editRecording = (participants, assign_id, message, id) => {
           assignid = {editData.assignid}
           editId = {editData.id}
           recList = {getRecording}/>
-          </Layout>
-            </>
- 
-     );
- }
- export default Recording;
+                   {isOpen === true ?
+          
+                 
+          <div style={modalBox}>
+          <div style={canBtn}  title="cancle" onClick= {() => setIsOpen(false)}> <CloseIcon color="red" /> </div>
+         
+
+   <div style={{display : "flex", width : "50vw", height : "50vh"}}>
+   <ReactPlayer
+     url={videoid}
+     controls={true}
+     playing={true}
+     width='100%'
+     height='100%'
+    />
+       </div>
+     
+    </div>
+  : ""}
+         </Layout>
+
+           </>
+
+    );
+}
+
+export default Recording;
