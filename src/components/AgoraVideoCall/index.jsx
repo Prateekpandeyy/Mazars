@@ -167,6 +167,7 @@ console.log("customerName", this.customerName)
     // pip mode (can only use when less than 4 people in channel)
     if (this.state.displayMode === "pip") {
       let no = this.state.streamList.length;
+     
       if (no > 4) {
         this.setState({ displayMode: "tile" });
         return;

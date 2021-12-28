@@ -141,14 +141,7 @@ remoteShare2 = false
    then((res) => {
     
    })
-  //  if(this.state.showButton == JSON.parse(this.teamKey)){
-  //   console.log("donefixed", this.state.showButton)
-  //   axios.get(`${baseUrl}/tl/setgetschedular?id=${this.props.id}&rtc_id=${uid}&uid=${JSON.parse(this.teamKey)}`)
-  //  .then((res) =>{
-  //    console.log(res)
-  //  })
-  
-  //}
+
   this.setState({getAdId : uid})
         this.state.uid = uid;
        
@@ -216,6 +209,7 @@ schdrularName;
   // pip mode (can only use when less than 4 people in channel)
   if (this.state.displayMode === "pip") {
     let no = this.state.streamList.length;
+   
     if (no > 4) {
       this.setState({ displayMode: "tile" });
       return;
