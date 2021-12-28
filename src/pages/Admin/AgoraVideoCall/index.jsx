@@ -106,7 +106,8 @@ class AgoraCanvas extends React.Component {
       participantName : '',
       shareValue : false,
       vedTrack : null,
-      vedOffer : ''
+      vedOffer : '',
+     
     };
 
     this.toggleModal = this.toggleModal.bind(this);
@@ -128,6 +129,7 @@ class AgoraCanvas extends React.Component {
  secretKey = "7RBzqc6Sf5rvlhkrEGRxs80nB7U/Ulu8PoLlH8wd";
 allrecording;
 localVedioTrack;
+remoteShare2 = false
   componentWillMount() {
     let $ = this.props;
   
@@ -394,7 +396,9 @@ schdrularName;
 
     rt.client.on("peer-leave", function (evt) {
      console.log("two")
+  
       rt.removeStream(evt.uid);
+     
       
     });
 
@@ -409,8 +413,12 @@ schdrularName;
      
   console.log("res", res.data.length)
       
-  if(stream.getId() === this.uid || res.data.length == 0){
+  if(stream.getId() === this.uid){
     this.setState({ participantName : "" })
+  }
+  else if(res.data.length == 0){
+    this.setState({ participantName : "" })
+  this.remoteShare2 = true
   }
   else if(res.data.length > 0){
     this.setState({ participantName : res.data[0].user_name })
@@ -432,6 +440,7 @@ schdrularName;
   };
 
   removeStream = (uid) => {
+    console.log("remote", this.remoteShare2)
     this.state.streamList.map((item, index) => {
       if (item.getId() === uid) {
         item.close();
@@ -447,7 +456,7 @@ schdrularName;
       }
     });
     // console.log("showButton", this.state.showButton)
-  
+ 
       axios.get(`${baseUrl}/tl/setgetschedular?id=${this.props.id}&uid=${this.state.showButton}&chname=${this.channelName}`)
       .then((res) => {
         console.log("evt id", uid)
@@ -464,9 +473,12 @@ schdrularName;
            
            }
           
+          
       })
      
-    
+   if(this.remoteShare2 === true){
+     this.remoteShare2 = false
+   }   
   };
 
   addStream = (stream, push = false) => {
@@ -592,6 +604,14 @@ schdrularName;
      
    }
    sharingScreen = (e) => {
+   if(this.remoteShare2 === true && this.state.stateSharing === false){
+     Swal.fire({
+       title : "error",
+       html : "Only one screen can be share at a time",
+       icon : "error"
+     })
+   }
+   else{
     if (this.state.stateSharing) {
       this.shareClient && this.shareClient.unpublish(this.shareStream);
       this.shareStream && this.shareStream.close();
@@ -636,6 +656,7 @@ schdrularName;
         });
       });
     }
+   }
   };
 
   streamInitSharing = (uid, attendeeMode, videoProfile, config) => {

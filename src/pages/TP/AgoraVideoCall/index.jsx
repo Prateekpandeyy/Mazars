@@ -136,7 +136,7 @@ class AgoraCanvas extends React.Component {
  accessKey = "AKIASTLI4S4OJH3WGMFM";
  secretKey = "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";
 allrecording;
-
+remoteShare2 = false
   componentWillMount() {
     let $ = this.props;
     // init AgoraRTC local client
@@ -424,8 +424,12 @@ if(item.player === undefined){
     .then((res) =>{
      
      
-      if(res.data.length === 0 || stream.getId() == this.uid){
+      if(stream.getId() === this.uid){
         this.setState({ participantName : "" })
+      }
+      else if(res.data.length == 0){
+        this.setState({ participantName : "" })
+      this.remoteShare2 = true
       }
       else if(res.data.length > 0){
         this.setState({ participantName : res.data[0].user_name })
@@ -476,7 +480,9 @@ if(item.player === undefined){
         
     })
      
-    
+    if(this.remoteShare2 === true){
+      this.remoteShare2 = false
+    }  
     
   };
 
@@ -601,6 +607,14 @@ if(item.player === undefined){
    }
  
    sharingScreen = (e) => {
+    if(this.remoteShare2 === true && this.state.stateSharing === false){
+      Swal.fire({
+        title : "error",
+        html : "Only one screen can be share at a time",
+        icon : "error"
+      })
+    }
+    else{
     if (this.state.stateSharing) {
       this.shareClient && this.shareClient.unpublish(this.shareStream);
       this.shareStream && this.shareStream.close();
@@ -645,6 +659,7 @@ if(item.player === undefined){
         });
       });
     }
+  }
   };
   
   streamInitSharing = (uid, attendeeMode, videoProfile, config) => {

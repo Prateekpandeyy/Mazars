@@ -103,6 +103,7 @@ class AgoraCanvas extends React.Component {
 channelName = this.props.channel
 userId = window.localStorage.getItem("userid");
 custEmail2 = window.localStorage.getItem("custEmail");
+remoteShare2 = false
   componentWillMount() {
     let $ = this.props;
     console.log("props", this.props)
@@ -356,17 +357,20 @@ if(item.player === undefined){
       var apiData = "https://virtualapi.multitvsolution.com/VstreamApi/index.php/api/vstream/getInfoByRTCId?channel_name="+this.channelName+"&rtc_id="+stream.getId()
   axios.get(`${apiData}`)
   .then((res) =>{
-   
-    if(res.data.length === 0 || stream.getId() == this.uid ){
+    if(stream.getId() === this.uid){
       this.setState({ participantName : "" })
+    }
+    else if(res.data.length == 0){
+      this.setState({ participantName : "" })
+    this.remoteShare2 = true
     }
     else if(res.data.length > 0){
       this.setState({ participantName : res.data[0].user_name })
      
     }
-    if(res.data != undefined){
+   
       rt.addStream(stream);
-    }
+    
   })
     
  
@@ -408,6 +412,9 @@ if(item.player === undefined){
    
      }
     })
+    if(this.remoteShare2 === true){
+      this.remoteShare2 = false
+    } 
   };
 
   addStream = (stream, push = false) => {
@@ -514,6 +521,14 @@ if(item.player === undefined){
 
   
   sharingScreen = (e) => {
+    if(this.remoteShare2 === true && this.state.stateSharing === false){
+      Swal.fire({
+        title : "error",
+        html : "Only one screen can be share at a time",
+        icon : "error"
+      })
+    }
+    else{
     if (this.state.stateSharing) {
       this.shareClient && this.shareClient.unpublish(this.shareStream);
       this.shareStream && this.shareStream.close();
@@ -551,6 +566,7 @@ if(item.player === undefined){
         });
       });
     }
+  }
   };
 
   streamInitSharing = (uid, attendeeMode, videoProfile, config) => {

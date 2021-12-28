@@ -38,8 +38,8 @@ const PayModal = (props) => {
         })
         .then((res) => {
             if(res.data.code === 1){
-             
-                window.location.assign(res.data.result)
+             props.modalToggle()
+                window.open(res.data.result, "_blank")
             }
         })
        

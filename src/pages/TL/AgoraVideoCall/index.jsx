@@ -125,7 +125,7 @@ class AgoraCanvas extends React.Component {
  accessKey = "AKIASTLI4S4OJH3WGMFM";
  secretKey = "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";
 allrecording;
-
+remoteShare2 = false
   componentWillMount() {
     let $ = this.props;
     // init AgoraRTC local client
@@ -410,8 +410,13 @@ if(item.player === undefined){
      
   console.log("res", res.data.length)
       
-  if(res.data.length === 0 || stream.getId() == this.uid){
+      
+  if(stream.getId() === this.uid){
     this.setState({ participantName : "" })
+  }
+  else if(res.data.length == 0){
+    this.setState({ participantName : "" })
+  this.remoteShare2 = true
   }
   else if(res.data.length > 0){
     this.setState({ participantName : res.data[0].user_name })
@@ -467,7 +472,9 @@ if(item.player === undefined){
           
       })
      
-    
+      if(this.remoteShare2 === true){
+        this.remoteShare2 = false
+      } 
   };
 
   addStream = (stream, push = false) => {
@@ -589,51 +596,61 @@ if(item.player === undefined){
    }
 
    sharingScreen = (e) => {
-    if (this.state.stateSharing) {
-      this.shareClient && this.shareClient.unpublish(this.shareStream);
-      this.shareStream && this.shareStream.close();
-      this.state.stateSharing = false;
-    } else {
-      this.setState({participantName : ""})
-      this.state.stateSharing = true;
-      let $ = this.props;
-      // init AgoraRTC local client
-      this.shareClient = AgoraRTC.createClient({ mode: $.transcode });
-
-      this.shareClient.init($.appId, () => {
-      
-
-       //  this.subscribeStreamEvents();
-        this.shareClient.join($.appId, $.channel, $.uid, (uid) => {
-          this.state.uid = uid;
-         
-          // create local stream
-          // It is not recommended to setState in function addStream
-          
-          this.shareStream = this.streamInitSharing(
-            uid,
-            $.attendeeMode,
-            $.videoProfile
-          );
-          this.shareStream.init(
-            () => {
-              if ($.attendeeMode !== "audience") {
-                this.addStream(this.shareStream, true);
-                this.shareClient.publish(this.shareStream, (err) => {
-                  
-                });
-              }
-              this.setState({ readyState: true });
-            },
-            (err) => {
-             
-              this.setState({ readyState: true });
-            }
-          );
-        });
-      });
+    if(this.remoteShare2 === true && this.state.stateSharing === false){
+      Swal.fire({
+        title : "error",
+        html : "Only one screen can be share at a time",
+        icon : "error"
+      })
     }
-  };
+    else{
+      if (this.state.stateSharing) {
+        this.shareClient && this.shareClient.unpublish(this.shareStream);
+        this.shareStream && this.shareStream.close();
+        this.state.stateSharing = false;
+      } else {
+        this.setState({participantName : ""})
+        this.state.stateSharing = true;
+        let $ = this.props;
+        // init AgoraRTC local client
+        this.shareClient = AgoraRTC.createClient({ mode: $.transcode });
+  
+        this.shareClient.init($.appId, () => {
+        
+  
+         //  this.subscribeStreamEvents();
+          this.shareClient.join($.appId, $.channel, $.uid, (uid) => {
+            this.state.uid = uid;
+           
+            // create local stream
+            // It is not recommended to setState in function addStream
+            
+            this.shareStream = this.streamInitSharing(
+              uid,
+              $.attendeeMode,
+              $.videoProfile
+            );
+            this.shareStream.init(
+              () => {
+                if ($.attendeeMode !== "audience") {
+                  this.addStream(this.shareStream, true);
+                  this.shareClient.publish(this.shareStream, (err) => {
+                    
+                  });
+                }
+                this.setState({ readyState: true });
+              },
+              (err) => {
+               
+                this.setState({ readyState: true });
+              }
+            );
+          });
+        });
+      }
+  
+    }
+     };
 
 
   streamInitSharing = (uid, attendeeMode, videoProfile, config) => {

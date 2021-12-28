@@ -48,7 +48,7 @@ function ViewReport({
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, discarded it!",
+      confirmButtonText: "Yes, discard it!",
     }).then((result) => {
       if (result.value) {
         deleteCliente(id);

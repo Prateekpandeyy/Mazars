@@ -57,7 +57,7 @@ let history= useHistory()
     customer_declined_Pay,
     paid, unpaid, totalpayment,
   } = allQueries;
-const [dash, setDash] = useState(true)
+
 const logout = () => {
   localStorage.removeItem("userid")
   localStorage.removeItem("custEmail")
@@ -69,12 +69,7 @@ console.log("sessionStorage", window.sessionStorage)
       axios
         .get(`${baseUrl}/customers/totalComplete?uid=${JSON.parse(userId)}`)
         .then((response) => {
-if(sessionId){
-  setDash(true)
-}
-else{
-  setDash(false)
-}
+
           if (response.data.code === 1) {
             setAllQueries({
               total: response.data.result.total,
@@ -124,7 +119,7 @@ else{
 
   return (
   <>
-  {dash ? 
+  {sessionId ? 
   <Layout custDashboard="custDashboard" custUserId={userId}>
 
   <div className="row">
