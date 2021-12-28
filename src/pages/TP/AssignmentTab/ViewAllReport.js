@@ -180,7 +180,7 @@ function ViewReport({
                                 <p style={{ color: "red" }}>Pending</p>
                                 :
                                 p.status == "1" ?
-                                  <div style={{ cursor: "pointer" }} title="Customer Accepted">
+                                  <div style={{ cursor: "pointer" }} title="Client Accepted">
                                     <i
                                       class="fa fa-check"
                                       style={{

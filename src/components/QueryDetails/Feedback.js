@@ -6,7 +6,7 @@ function Feedback({ feedback }) {
   
 
     return (
-        <div>
+        <div className="queryBox">
             <p
                 style={{
                     textAlign: "center",
@@ -16,7 +16,7 @@ function Feedback({ feedback }) {
             >
                 Feedback
             </p>
-            <table class="table table-bordered">
+            <table className="table table-bordered">
                 <thead>
                     <tr>
                         <th style={{ width: "80px" }}>S.No</th>

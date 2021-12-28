@@ -199,7 +199,7 @@ const retviewProposal = (e) => {
                     </p>
                   </div>
                   :
-                  row.status == "Customer Declined; Proposal" ?
+                  row.status == "Client Declined; Proposal" ?
                     <p className="declined">
                       {row.status}
                     </p> :
@@ -229,7 +229,7 @@ const retviewProposal = (e) => {
         var x = row.ProposedAmount;
         
         return(
-          <p>{nfObject.format(x)}</p>
+          <p className="rightAli">{nfObject.format(x)}</p>
         )
       }
     },
@@ -249,7 +249,7 @@ const retviewProposal = (e) => {
          var x = row.accepted_amount;
          
          return(
-           <p>{nfObject.format(x)}</p>
+           <p className="rightAli">{nfObject.format(x)}</p>
          )
        }
     },
@@ -281,7 +281,7 @@ const retviewProposal = (e) => {
                     target="_blank"
                   >
                     <i
-                      class="fa fa-eye"
+                      className="fa fa-eye"
                       style={{ color: "green", fontSize: "16px" }}
                     />
                   </a>
@@ -292,15 +292,15 @@ const retviewProposal = (e) => {
 {
   row.statuscode == "6" ? 
   <>
-<div title="Retview Proposal"
+<div title="Restore Proposal"
  onClick={(e) => retviewProposal(row.q_id)}> 
 <i
-                    class="fa fa-share"
+                    className="fa fa-share"
                     style={{
                       fontSize: 16,
                       cursor: "pointer",
                       marginLeft: "8px",
-                      color: "red"
+                      color: "blue"
                     }}
                    
                   ></i>
@@ -321,7 +321,7 @@ const retviewProposal = (e) => {
                   }}
                 >
                   <i
-                    class="fa fa-comments-o"
+                    className="fa fa-comments-o"
                     style={{
                       fontSize: 16,
                       cursor: "pointer",
@@ -334,7 +334,7 @@ const retviewProposal = (e) => {
 
               <div title="View Discussion Message">
                 <i
-                  class="fa fa-comments-o"
+                  className="fa fa-comments-o"
                   style={{
                     fontSize: 16,
                     cursor: "pointer",

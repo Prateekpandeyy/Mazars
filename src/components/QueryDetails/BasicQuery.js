@@ -11,7 +11,7 @@ function BasicQuery({qstatus, p, diaplaySpecific, queryDocs, year, purpose, decl
 
   return (
     <>
-      <div style={{display : "block", height: "55vh", overflow :"scroll"}}>
+      <div className="queryBox">
         <p
           style={{
             textAlign: "center",
@@ -21,7 +21,7 @@ function BasicQuery({qstatus, p, diaplaySpecific, queryDocs, year, purpose, decl
         >
           Basic Query Information
         </p>
-        <table class="table table-bordered p-2">
+        <table className="table table-bordered p-2">
           <thead>
             <tr>
               <th scope="col" style={{ width: "300px", overflow: "wrap" }}>Titles</th> 
@@ -74,7 +74,7 @@ function BasicQuery({qstatus, p, diaplaySpecific, queryDocs, year, purpose, decl
                       href={`${ImageUrl}/${p.assign_no}/${p.name}`}
                       target="_blank"
                     >
-                    <span>  {i + 1 } </span><i class="fa fa-photo"></i>
+                    <span>  {i + 1 } </span><i className="fa fa-photo"></i>
                     </a>
                     <p style={{ marginLeft: "15px" }}>{p.name}</p>
                   </p>
@@ -118,7 +118,7 @@ function BasicQuery({qstatus, p, diaplaySpecific, queryDocs, year, purpose, decl
             </tr>
             {qstatus == "-1" || p.is_delete == "1" ? 
             <tr>
-              <th scope="row">Date of Declined</th>
+              <th scope="row">Date of Decline</th>
               <td>{qstatus == "-1" || p.is_delete == "1" ? declined2 : ""}</td>
               </tr> : ""}
             {
@@ -145,6 +145,7 @@ function BasicQuery({qstatus, p, diaplaySpecific, queryDocs, year, purpose, decl
                 </tr>
                 : null
             }
+             
             
           </tbody>
         </table>

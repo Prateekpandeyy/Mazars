@@ -164,7 +164,7 @@ const canBtn = {
    
     return (
      
-           <div>
+           <div className="queryBox">
                 <Card>
                 <CardHeader>
                     <Row>

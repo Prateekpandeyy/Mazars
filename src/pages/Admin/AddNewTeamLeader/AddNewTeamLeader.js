@@ -182,7 +182,7 @@ function AddNew() {
             setLoading(false)
             Swal.fire({
               "title": "Success",
-              "html": "Team Leader created successfully.",
+              "html": "Teamleader created successfully.",
               "icon": "success"
             })
 
@@ -397,30 +397,30 @@ function AddNew() {
     <Layout adminDashboard="adminDashboard" adminUserId={userid}>
       <Card>
         <CardHeader>
-          <div class="col-md-12 d-flex">
+          <div className="col-md-12 d-flex">
             <div>
               <button
-                class="btn btn-success ml-3"
+                className="btn btn-success ml-3"
                 onClick={() => history.goBack()}
               >
-                <i class="fas fa-arrow-left mr-2"></i>
+                <i className="fas fa-arrow-left mr-2"></i>
                 Go Back
               </button>
             </div>
-            <div class="text-center ml-5">
+            <div className="text-center ml-5">
               <h4>Add New Team Leader</h4>
             </div>
           </div>
         </CardHeader>
 
         <CardHeader>
-          <div class="row mt-3">
-            <div class="col-lg-2 col-xl-2 col-md-12"></div>
-            <div class="col-lg-8 col-xl-8 col-md-12">
+          <div className="row mt-3">
+            <div className="col-lg-2 col-xl-2 col-md-12"></div>
+            <div className="col-lg-8 col-xl-8 col-md-12">
               <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
-                <div class="row">
-                                    <div class="col-md-6">
-                    <div class="form-group">
+                <div className="row">
+                                    <div className="col-md-6">
+                    <div className="form-group">
                     <label>Teamleader Post Name <span className="declined">*</span></label>
                       
                       <input
@@ -438,8 +438,8 @@ function AddNew() {
 
                     </div>
                   </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
+                  <div className="col-md-6">
+                    <div className="form-group">
                     <label>Teamleader Post Email <span className="declined">*</span></label>
                     
                    
@@ -469,9 +469,9 @@ function AddNew() {
                   </div>
                 </div>
 
-                <div class="row">
-                  <div class="col-md-6">
-                    <div class="form-group">
+                <div className="row">
+                  <div className="col-md-6">
+                    <div className="form-group">
                       <label>Name <span className="declined">*</span></label>
                       <input
                         type="text"
@@ -485,8 +485,8 @@ function AddNew() {
                     </div>
                   </div>
 
-                  <div class="col-md-6">
-                    <div class="form-group">
+                  <div className="col-md-6">
+                    <div className="form-group">
                       <label>Phone Number <span className="declined">*</span></label>
                       <input
                         type="text"
@@ -511,9 +511,9 @@ function AddNew() {
                   </div>
                 </div>
               
-                <div class="row">
-                  <div class="col-md-6">
-                    <div class="form-group">
+                <div className="row">
+                  <div className="col-md-6">
+                    <div className="form-group">
                       <label>Category <span className="declined">*</span></label>
                       <Select isMulti options={options}
                         className={error ? "customError" : ""}
@@ -540,8 +540,8 @@ function AddNew() {
 
                     </div>
                   </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
+                  <div className="col-md-6">
+                    <div className="form-group">
                       <label>Sub Category <span className="declined">*</span></label>
                       <Select isMulti options={options2}
                         className={error2 ? "customError" : ""}
@@ -568,9 +568,9 @@ function AddNew() {
                     </div>
                   </div>
                 </div>
-                <div class="row">
-                  <div class="col-md-12">
-                    <div class="form-group">
+                <div className="row">
+                  <div className="col-md-12">
+                    <div className="form-group">
                       <label>Email <span className="declined">*</span></label>
                       <input
                         type="email"
@@ -579,19 +579,9 @@ function AddNew() {
                         })}
                         name="p_email"
                         ref={register}
-                        // onChange={(e) => emailHandler(e)}
-                        // onBlur={emailValidation}
+                       
                       />
-                      {/* {
-                        wEmail ? <p className="declined">{wEmail}</p> : <>
-                          {valiEmail ?
-                            <p className="completed">
-                              {valiEmail}
-                            </p>
-                            :
-                            <p className="declined">{invalid}</p>}
-                        </>
-                      } */}
+                     
                     </div>
                   </div>
                 </div>
@@ -604,7 +594,7 @@ function AddNew() {
                 </button> }
               </form>
             </div>
-            <div class="col-lg-2 col-xl-2 col-md-12">
+            <div className="col-lg-2 col-xl-2 col-md-12">
 
             </div>
 

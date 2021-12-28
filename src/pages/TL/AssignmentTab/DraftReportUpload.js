@@ -10,17 +10,17 @@ import { Spinner } from 'reactstrap';
 
 
 
-function DraftReport({ draftModal, uploadDraftReport, id, getAssignmentList }) {
+function DraftReport({ loading, setLoading, draftModal, uploadDraftReport, id, getAssignmentList , des}) {
   const alert = useAlert();
   const { handleSubmit, register, reset } = useForm();
-  const [loading, setLoading] = useState(false);
+ 
 
 
 
   const onSubmit = (value) => {
   
     setLoading(true)
-
+des = false;
     let formData = new FormData();
     var uploadImg = value.p_draft;
    
@@ -39,7 +39,8 @@ function DraftReport({ draftModal, uploadDraftReport, id, getAssignmentList }) {
       }
     }).then(response => {
     
-      if (response.data.code === 1) {
+      if (response.data.code === 1 && des === false) {
+        des = true
         setLoading(false)
         var message = response.data.message
         if (message.invalid) {

@@ -25,8 +25,9 @@ const Generated = () => {
     const [billNo, setBillNo] = useState()
     const [id2, setId2] = useState()
     const [gstNo, setGstinNo] = useState();
-    const [paymentUrlcopy, setPaymentUrlCopy] = useState(false)
- 
+    const [showCopyUrl, setShowCopyUrl] = useState("click")
+ let copyTitle = ""
+ let copied = true
     const addTdsToggle = (key) => {
    
       setGstinNo(key.gstin_no);
@@ -105,6 +106,9 @@ const Generated = () => {
             sort: true,
             style: {
                 fontSize: "11px",
+                display : "flex",
+                justifyContent : "center",
+                border: "0px"
             },
             headerStyle: () => {
                 return { fontSize: "11px" };
@@ -153,11 +157,11 @@ const Generated = () => {
                 return { fontSize: "11px" };
             },
             formatter: function nameFormatter(cell, row){
-                var nfObject = new Intl.NumberFormat('en-US')
+                var nfObject = new Intl.NumberFormat('hi-IN')
                  var x = row.invoice_amount;
                  
                  return(
-                   <p>{nfObject.format(x)}</p>
+                   <p className="rightAli">{nfObject.format(x)}</p>
                  )
                }
         },
@@ -173,12 +177,13 @@ const Generated = () => {
             },
             formatter: function nameFormatter(cell, row){
                 var nfObject = new Intl.NumberFormat('hi-IN')
-                 var x = row.tds_amount;
+                var x = row.tds_amount;
+                
                  
                  return(
                      <>
                      {row.is_paid == "0" ?
-                     <p>0</p> :   <p>{nfObject.format(x)}</p>}
+                     <p className="rightAli">0</p> :   <p className="rightAli">{nfObject.format(x)}</p>}
                      </>
                  
                  )
@@ -215,9 +220,11 @@ const Generated = () => {
                 return { fontSize: "12px", width: "110px" };
             },
             formatter: function (cell, row) {
+                copyTitle = row.paymenturl
                 return (
                     <>
-                        <div style={{ display: "flex", justifyContent: "space-evenly" }}>
+                       {showCopyUrl === "click" ? 
+                        <div style={{ display: "flex", justifyContent: "flex-start" }}>
                         <a
                     href={`${baseUrl3}/${row.invoice}`}
                     target="_blank"
@@ -228,22 +235,29 @@ const Generated = () => {
                           
                               {row.is_paid == "0" 
                 ?   
-                 <FileCopyIcon onClick={() => {copyFun(row.paymenturl)}} style={noPointer}/>
+               
+                  
+                    <span title={copyTitle}>
+                    <FileCopyIcon onClick={() => {copyFun(row.paymenturl)}}  style={noPointer} />
+                                   </span> 
+                  
+                
                    
               
                     : "" }
-                        </div>
+                        </div> : ""}
                        
                     </>
                 );
             },
         },
     ];
+    
     const noPointer = {cursor: 'pointer', color : "blue"};
     const copyFun = (e)  =>{
    
         navigator.clipboard.writeText(e)
-       
+    setShowCopyUrl("clicked")
       }
     rowStyle2 = (row, index) => {
         const style = {}

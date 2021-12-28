@@ -1,7 +1,7 @@
 import React from 'react';
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import { useState , useEffect} from 'react';
+import { useState , useEffect, useRef} from 'react';
 import classNames from "classnames";
 import { baseUrl, baseUrl3 } from "../../../config/config";
 import './Admin.css';
@@ -12,8 +12,12 @@ import Mandatory from '../../../components/Common/Mandatory';
 import { useHistory } from 'react-router';
 const Report = () => {
     const userid = window.localStorage.getItem("adminkey");
-  
-  
+    const selectInputRef = useRef();
+    const selectInputRef2 = useRef();
+    const selectInputRef3 = useRef();
+    const selectInputRef4 = useRef();
+    const selectInputRef5 = useRef();
+   
     const [subCategory, setSubCategory] = useState([]);
     const [subData, subCategeryData] = useState([])
     const [custCate, setCustcate] = useState([])
@@ -37,12 +41,13 @@ const Report = () => {
   var kk = []
   var pp = []
   var vv = []
+
   var allData1 = {}
   var dir = []
   var indir = []
   const [dd, setDd] = useState([]);
 const history = useHistory()
-    const { handleSubmit, register, errors, getValues } = useForm();
+    const { handleSubmit, register, errors, getValues , reset} = useForm();
     let date = new Date()
     var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
  const firstDay = new Date(date.getFullYear() + + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2));
@@ -147,6 +152,15 @@ const mapAppointmentData = ((appiontmentData) => ({
       }))
 
     const onSubmit = (value) => {
+      console.log(selectInputRef)
+      selectInputRef.current.select.clearValue();
+      selectInputRef2.current.select.clearValue();
+      selectInputRef3.current.select.clearValue();
+      selectInputRef4.current.select.clearValue();
+      selectInputRef5.current.select.clearValue();
+    
+      reset()
+
      let basic_info = false
      let proposal_info = false
      let assignment_info = false
@@ -228,8 +242,9 @@ const mapAppointmentData = ((appiontmentData) => ({
 
    })
    .then(function (response) {
-     window.open(`${baseUrl3}/${response.data.result}`)
-   // window.location.assign(`${baseUrl}/report/generateReport`)
+   if(response.data.code === 1){
+    window.open(`${baseUrl3}/${response.data.result}`)
+   }
    })
    .catch((error) => {
   
@@ -374,8 +389,8 @@ let cc = []
       </div>
       <div className="col-md-3">
       <div className="mb-3">
-          <label className="form-label">Customer Id</label>
-         <Select isMulti options={custData} onChange={(e) => custName(e)}>
+          <label className="form-label">Client Id</label>
+         <Select isMulti options={custData} ref={selectInputRef5} onChange={(e) => custName(e)}>
 
          </Select>
         </div>
@@ -404,6 +419,7 @@ let cc = []
 <label className="form-label">Teamleader</label>
 <Select  isMulti={true}
 options={options3}
+ref={selectInputRef}
 onChange= {(e) =>teamLeader(e)}/>
 </div>
 </div>
@@ -412,6 +428,7 @@ onChange= {(e) =>teamLeader(e)}/>
 <div className="mb-3">
 <label className="form-label">Taxprofessional</label>
 <Select isMulti = {true} 
+ref={selectInputRef2}
  options={options4} onChange={(e) => taxProfessional(e)}/>
 
 </div>
@@ -420,6 +437,7 @@ onChange= {(e) =>teamLeader(e)}/>
            <label className="form-label">Category</label>
            <Select isMulti options={options}
                         className={error ? "customError" : ""}
+                        ref={selectInputRef3}
                         styles={{
                           option: (styles, { data }) => {
                             return {
@@ -444,6 +462,7 @@ onChange= {(e) =>teamLeader(e)}/>
             <label className="form-label">Sub Category</label>
             <Select isMulti options={options2}
                         className={error2 ? "customError" : ""}
+                        ref={selectInputRef4}
                         onChange={subCategory22}
                         styles={{
                           option: (styles, { data }) => {
@@ -506,7 +525,7 @@ onChange= {(e) =>teamLeader(e)}/>
 </span> 
                <span>
 <input type="checkbox" name="assessment" ref={register} id="assessment"></input>
-<label htmlFor="assessment">Assignment Year(s)</label>
+<label htmlFor="assessment">Assessment Year(s)</label>
 </span>
            
 <span>
@@ -588,7 +607,7 @@ onChange= {(e) =>teamLeader(e)}/>
    <div className="row">
        <div className="col-md-12">
        <fieldset className="my-fieldset">
-           <legend className="login-legend">Assignment</legend>
+           <legend className="login-legend">Assessnment</legend>
             <div className="basicFeild">
            
 <span>

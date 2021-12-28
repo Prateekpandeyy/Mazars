@@ -19,7 +19,7 @@ import CustomerFilter from "../../components/Search-Filter/CustomerFilter";
 import BootstrapTable from "react-bootstrap-table-next";
 import FeedbackIcon from '@material-ui/icons/Feedback';
 import Records from "../../components/Records/Records";
-
+import DiscardReport from "../AssignmentTab/DiscardReport";
 
 
 function DeclinedProposal() {
@@ -29,7 +29,8 @@ function DeclinedProposal() {
     const [proposalDisplay, setProposalDisplay] = useState([]);
     const [proposalCount, setCountProposal] = useState("");
     const [records, setRecords] = useState([]);
-
+    const [assignNo, setAssignNo] = useState('');
+    const [ViewDiscussion, setViewDiscussion] = useState(false);
     const [id, setId] = useState(null);
     const [reject, setRejected] = useState(true);
 
@@ -53,7 +54,10 @@ function DeclinedProposal() {
             });
     };
 
-
+    const ViewDiscussionToggel = (key) => {
+        setViewDiscussion(!ViewDiscussion);
+        setAssignNo(key)
+    }
 
 
     const columns = [
@@ -208,7 +212,7 @@ function DeclinedProposal() {
                  var x = row.ProposedAmount;
                  console.log(nfObject.format(x))
                  return(
-                   <p>{nfObject.format(x)}</p>
+                   <p className="rightAli">{nfObject.format(x)}</p>
                  )
                }
         },
@@ -228,7 +232,7 @@ function DeclinedProposal() {
                  var x = row.accepted_amount;
                  console.log(nfObject.format(x))
                  return(
-                   <p>{nfObject.format(x)}</p>
+                   <p className="rightAli">{nfObject.format(x)}</p>
                  )
                }
         },
@@ -238,6 +242,45 @@ function DeclinedProposal() {
             headerStyle: () => {
                 return { fontSize: "11px" };
             },
+            formatter : function formatterFun(cell, row) {
+<div style={{display : "flex", justifyContent : "space-between"}}>
+<div title="Send Message">
+                                    <Link
+                                        to={{
+                                            pathname: `/customer/chatting/${row.q_id}&type=2`,
+                                            obj: {
+                                                message_type: "3",
+                                                query_No: row.assign_no,
+                                                query_id: row.q_id,
+                                                routes: `/customer/proposal`
+                                            }
+                                        }}
+                                    >
+                                        <i
+                                            class="fa fa-comments-o"
+                                            style={{
+                                                fontSize: 16,
+                                                cursor: "pointer",
+                                                color: "blue"
+                                            }}
+                                        ></i>
+                                    </Link>
+                                </div>
+
+                                <div title="View Discussion Message">
+                                    <i
+                                        class="fa fa-comments-o"
+                                        style={{
+                                            fontSize: 16,
+                                            cursor: "pointer",
+                                            color: "orange"
+                                        }}
+                                        onClick={() => ViewDiscussionToggel(row.assign_no)}
+                                    ></i>
+                                </div>
+
+</div>
+            }
         }
     ];
 
@@ -265,6 +308,12 @@ function DeclinedProposal() {
                         classes="table-responsive"
                     />
                     </div>
+                    <DiscardReport
+                        ViewDiscussionToggel={ViewDiscussionToggel}
+                        ViewDiscussion={ViewDiscussion}
+                        report={assignNo}
+                        getData={getProposalData}
+                    />
                     {/* <ChatComponent
                         chatHandler={chatHandler}
                         addPaymentModal={addPaymentModal}

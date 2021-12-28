@@ -8,6 +8,7 @@ import "../../assets/fonts/css/icons.css";
 import Cookies from "js-cookie";
 import {baseUrl} from "../../config/config";
 import Swal from "sweetalert2";
+import CommonServices from "../../common/common";
 var customer_id = "d339577a294c458c86d8a78b474141fc";
 var customer_secret = "1a61a4bef2144e78be6f671d5cf3fc32";
 
@@ -17,10 +18,10 @@ const tile_canvas = {
   "2": ["span 12/span 12/13/25", "span 12/span 12/13/13"],
   "3": ["span 6/span 12", "span 6/span 12", "span 6/span 12/7/19"],
   "4": [
-    "span 6/span 12",
-    "span 6/span 12",
-    "span 6/span 12",
-    "span 6/span 12/7/13",
+    "span 3/span 4/13/11",
+    "span 3/span 4/13/15",
+    "span 3/span 4/13/19",
+    "span 9/span 16/10/21",
   ],
   "5": [
     "span 3/span 4/13/9",
@@ -46,6 +47,29 @@ const tile_canvas = {
     "span 3/span 4/13/25",
     "span 9/span 16/10/21",
   ],
+  "8": [
+    "span 3/span 4/13/3",
+    "span 3/span 4/13/7",
+    "span 3/span 4/13/11",
+    "span 3/span 4/13/15",
+    "span 3/span 4/13/19",
+    "span 3/span 4/13/23",
+    "span 3/span 4/13/27",
+    "span 9/span 16/10/21",
+  ],
+  "9": [
+    "span 3/span 4/13/1",
+    "span 3/span 4/13/5",
+    "span 3/span 4/13/9",
+    "span 3/span 4/13/13",
+    "span 3/span 4/13/17",
+    "span 3/span 4/13/21",
+    "span 3/span 4/13/25",
+    "span 3/span 4/13/29",
+    "span 9/span 16/10/21",
+  ],
+  
+  
 };
 
 /**
@@ -79,6 +103,7 @@ class AgoraCanvas extends React.Component {
 channelName = this.props.channel
 userId = window.localStorage.getItem("userid");
 custEmail2 = window.localStorage.getItem("custEmail");
+remoteShare2 = false
   componentWillMount() {
     let $ = this.props;
     console.log("props", this.props)
@@ -135,25 +160,21 @@ console.log("customerName", this.customerName)
     });
   }
 
-  // componentWillUnmount () {
-  //     // remove listener
-  //     let canvas = document.querySelector('#ag-canvas')
-  //     canvas.removeEventListener('mousemove')
-  // }
-
   componentDidUpdate() {
     // rerendering
+   
     let canvas = document.querySelector("#ag-canvas");
     // pip mode (can only use when less than 4 people in channel)
     if (this.state.displayMode === "pip") {
       let no = this.state.streamList.length;
+     
       if (no > 4) {
         this.setState({ displayMode: "tile" });
         return;
       }
       this.state.streamList.map((item, index) => {
-        let id = item.getId();
         let txtColor = "myPartName";
+        let id = item.getId();
         let dom = document.querySelector("#ag-item-" + id);
         if(dom && this.state.disabledVedio === true){
           dom.setAttribute("class", "ag-item2");
@@ -168,17 +189,17 @@ console.log("customerName", this.customerName)
           dom.setAttribute("class", "ag-item");
           canvas.appendChild(dom);
           var box22 = document.getElementById("ag-item-" + id)
-         
-         
           dd = document.createElement("input")
           dd.setAttribute("id", txtColor)
-          var newContent = document.createTextNode(this.state.participantName); 
+          var newContent = document.createTextNode(CommonServices.capitalizeFirstLetter(this.state.participantName)); 
           item.play("ag-item-" + id);
-         dd.setAttribute("value", this.state.participantName)
+         dd.setAttribute("value", CommonServices.capitalizeFirstLetter(this.state.participantName))
          dd.setAttribute("disabled", true)
          kk =   dd.appendChild(newContent)
          box22.appendChild(dd)
         }
+       
+         
         if (index === no - 1) {
           
           //  document.getElementById("custName").value = "Lucky"
@@ -206,23 +227,23 @@ console.log("customerName", this.customerName)
               }
             })
           }
+if(item.player === undefined){
 
-          if(item.player === undefined){
-
-          }
-                 else{
-                  item.player.resize && item.player.resize();
-                 }
+}
+       else{
+        item.player.resize && item.player.resize();
+       }
       });
     }
     // tile mode
     else if (this.state.displayMode === "tile") {
-      let txtColor = "myPartName";
+      let f = false;
       let no = this.state.streamList.length;
+      let txtColor = "myPartName";
       this.state.streamList.map((item, index) => {
         let id = item.getId();
         let dom = document.querySelector("#ag-item-" + id);
-        if(this.state.disabledVedio === true){
+        if(dom && this.state.disabledVedio === true){
           dom.setAttribute("class", "ag-item2");
         }
         else if (dom && this.state.disabledVedio === false) {
@@ -247,17 +268,33 @@ console.log("customerName", this.customerName)
          box22.appendChild(dd)
         }
         dom.setAttribute("style", `grid-area: ${tile_canvas[no][index]}`);
-        item.player.resize && item.player.resize();
+        dom.addEventListener('click', function (e){
+            
+          if(f === false){
+            f = true
+            dom.setAttribute("style", `grid-area: span 12/span 24/13/25`);
+          }
+          else{
+            f = false
+            dom.setAttribute("style", `grid-area: ${tile_canvas[no][index]}`);
+          }
+        })
+        if(item.player === undefined){
+
+        }
+               else{
+                item.player.resize && item.player.resize();
+               }
       });
     }
     // screen share mode (tbd)
     else if (this.state.displayMode === "share") {
+    
     }
   }
-
   componentWillUnmount() {
     this.client && this.client.unpublish(this.localStream);
-    // this.localStream && this.localStream.close();
+     this.localStream && this.localStream.close();
     if (this.state.stateSharing) {
       this.shareClient && this.shareClient.unpublish(this.shareStream);
       this.shareStream && this.shareStream.close();
@@ -321,17 +358,20 @@ console.log("customerName", this.customerName)
       var apiData = "https://virtualapi.multitvsolution.com/VstreamApi/index.php/api/vstream/getInfoByRTCId?channel_name="+this.channelName+"&rtc_id="+stream.getId()
   axios.get(`${apiData}`)
   .then((res) =>{
-   
-    if(res.data.length === 0 ){
-      // rt.setupLocalVideo() 
-     }
-     else{
-       this.setState({ participantName : res.data[0].user_name })
-      
-     }
-    if(res.data != undefined){
-      rt.addStream(stream);
+    if(stream.getId() === this.uid){
+      this.setState({ participantName : "" })
     }
+    else if(res.data.length == 0){
+      this.setState({ participantName : "" })
+    this.remoteShare2 = true
+    }
+    else if(res.data.length > 0){
+      this.setState({ participantName : res.data[0].user_name })
+     
+    }
+   
+      rt.addStream(stream);
+    
   })
     
  
@@ -367,11 +407,15 @@ console.log("customerName", this.customerName)
         icon : "success"
       })
       setTimeout((e) =>{
-        window.location.hash = "/customer/schedule";
-      })
+      this.handleExit("exit");
+        window.location.assign("/#/customer/schedule")
+      }, 3000)
    
      }
     })
+    if(this.remoteShare2 === true){
+      this.remoteShare2 = false
+    } 
   };
 
   addStream = (stream, push = false) => {
@@ -447,9 +491,10 @@ console.log("customerName", this.customerName)
   };
 
   handleExit = (e) => {
-    if (e.currentTarget.classList.contains("disabled")) {
-      return;
+    if(this.state.readyState === false){
+
     }
+    else{
     try {
       this.client && this.client.unpublish(this.localStream);
       this.localStream && this.localStream.close();
@@ -472,29 +517,35 @@ console.log("customerName", this.customerName)
       this.localStream = null;
       window.location.assign("/#/customer/schedule")
     }
+  }
   };
 
+  
   sharingScreen = (e) => {
+    if(this.remoteShare2 === true && this.state.stateSharing === false){
+      Swal.fire({
+        title : "error",
+        html : "Only one screen can be share at a time",
+        icon : "error"
+      })
+    }
+    else{
     if (this.state.stateSharing) {
       this.shareClient && this.shareClient.unpublish(this.shareStream);
       this.shareStream && this.shareStream.close();
       this.state.stateSharing = false;
     } else {
       this.state.stateSharing = true;
+      this.setState({participantName : ""})
       let $ = this.props;
       // init AgoraRTC local client
       this.shareClient = AgoraRTC.createClient({ mode: $.transcode });
-
       this.shareClient.init($.appId, () => {
-      
-
-        this.subscribeStreamEvents();
+      // this.subscribeStreamEvents();
         this.shareClient.join($.appId, $.channel, $.uid, (uid) => {
           this.state.uid = uid;
-         
           // create local stream
           // It is not recommended to setState in function addStream
-          
           this.shareStream = this.streamInitSharing(
             uid,
             $.attendeeMode,
@@ -505,22 +556,19 @@ console.log("customerName", this.customerName)
               if ($.attendeeMode !== "audience") {
                 this.addStream(this.shareStream, true);
                 this.shareClient.publish(this.shareStream, (err) => {
-                  
                 });
               }
               this.setState({ readyState: true });
             },
             (err) => {
-             
               this.setState({ readyState: true });
             }
           );
         });
       });
     }
+  }
   };
-
-
 
   streamInitSharing = (uid, attendeeMode, videoProfile, config) => {
     let defaultConfig = {
@@ -555,30 +603,30 @@ console.log("customerName", this.customerName)
 
 encodedString = "ZDMzOTU3N2EyOTRjNDU4Yzg2ZDhhNzhiNDc0MTQxZmM6MWE2MWE0YmVmMjE0NGU3OGJlNmY2NzFkNWNmM2ZjMzI=";
 
-  recordStream = () => {
+  // recordStream = () => {
 
-    var data = JSON.stringify({
-      "cname":"demo",
-      "uid":"527841",
-      "clientRequest":{ "resourceExpiredHour": 24}});
+  //   var data = JSON.stringify({
+  //     "cname":"demo",
+  //     "uid":"527841",
+  //     "clientRequest":{ "resourceExpiredHour": 24}});
 
-      var config = {
-      method: 'post',
-      url: `https://api.agora.io/v1/apps/${this.props.appId}/cloud_recording/acquire`,
-      headers: { 
-        'Content-Type': 'application/json', 
-        'Authorization': 'Basic '+this.encodedString,
-      },
-      data : data
-      };
-        axios(config)
-        .then(function (response) {
+  //     var config = {
+  //     method: 'post',
+  //     url: `https://api.agora.io/v1/apps/${this.props.appId}/cloud_recording/acquire`,
+  //     headers: { 
+  //       'Content-Type': 'application/json', 
+  //       'Authorization': 'Basic '+this.encodedString,
+  //     },
+  //     data : data
+  //     };
+  //       axios(config)
+  //       .then(function (response) {
         
-        })
-        .catch(function (error) {
+  //       })
+  //       .catch(function (error) {
 
-        });
-  };
+  //       });
+  // };
 
 
   render() {
@@ -665,17 +713,17 @@ encodedString = "ZDMzOTU3N2EyOTRjNDU4Yzg2ZDhhNzhiNDc0MTQxZmM6MWE2MWE0YmVmMjE0NGU
 
 
 
-    const recordingBtn = (
-      <span
-        onClick={this.recordStream}
-        className={
-          this.state.readyState ? "ag-btn exitBtn" : "ag-btn exitBtn disabled"
-        }
-        title="Record"
-      >
-        <RecordVoiceOverIcon />
-      </span>
-    );
+    // const recordingBtn = (
+    //   <span
+    //     onClick={this.recordStream}
+    //     className={
+    //       this.state.readyState ? "ag-btn exitBtn" : "ag-btn exitBtn disabled"
+    //     }
+    //     title="Record"
+    //   >
+    //     <RecordVoiceOverIcon />
+    //   </span>
+    // );
 
 
     return (
@@ -695,7 +743,7 @@ encodedString = "ZDMzOTU3N2EyOTRjNDU4Yzg2ZDhhNzhiNDc0MTQxZmM6MWE2MWE0YmVmMjE0NGU
           }
           {switchDisplayBtn}
           {hideRemoteBtn}
-          {recordingBtn}
+          {/* {recordingBtn} */}
         </div>
       </div>
     );

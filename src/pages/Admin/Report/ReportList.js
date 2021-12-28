@@ -117,18 +117,23 @@ const ReportList = () => {
         <>
         <Layout adminDashboard="adminDashboard" adminUserId={userid}>
        <div className = "row">
-           <div className="col-md-6">
+           <div className="col-md-4">
            <Typography variant = "h4">
             Report List
         </Typography>
        </div>
-       <div className="col-md-6">
+       <div className="col-md-4">
      
           <Link to="/admin/reports" class="btn btn-primary">
                                    Generate Report
                                 </Link>
            </div>
-
+           <div className="col-md-4">
+     
+     <Link to="/admin/consalation" class="btn btn-primary">
+                              Consolidate Payment
+                           </Link>
+      </div>
        </div>
 {data === undefined ? "" : 
        <div className="tableFixHead">

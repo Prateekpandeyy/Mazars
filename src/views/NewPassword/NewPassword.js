@@ -158,7 +158,7 @@ function NewPassword(props) {
                       pattern: {
                         value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,15}$/,
                         message:
-                          "Password should be of minimum 8 Characters, including at least 1 upper case, lower case, special character and number.",
+                          "Password should be of minimum 8 characters, including at least 1 upper case, lower case, special character and number.",
                       },
                     })}
                     onPaste={((e) => {

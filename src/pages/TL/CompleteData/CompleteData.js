@@ -300,6 +300,7 @@ Swal.fire({
         confirmButtonText: 'Yes, assign it!',
         cancelButtonText: 'No'
     }).then(function(result){
+      console.log("resutl", result)
         if(result.value){
           hist.push(`/teamleader/queryassing/${id}`)
         }else if(result.dismiss == 'cancel'){

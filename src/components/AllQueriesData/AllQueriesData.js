@@ -11,10 +11,10 @@ import BootstrapTable from "react-bootstrap-table-next";
 import AdminFilter from "../../components/Search-Filter/AdminFilter";
 import Records from "../../components/Records/Records";
 import DiscardReport from "../../pages/Admin/AssignmentTab/DiscardReport";
-import { DataValue } from "../../pages/Admin/QueriesTab/QueriesTab";
 
 
-function AllQueriesData(props) {
+
+function AllQueriesData({allData}) {
 
   const [allQueriesData, setAllQueriesData] = useState([])
   const [records, setRecords] = useState([]);
@@ -30,7 +30,7 @@ function AllQueriesData(props) {
 
   useEffect(() => {
     getAllQueriesData();
-  }, [props.allData]);
+  }, [allData]);
 
   const getAllQueriesData = () => {
     axios.get(`${baseUrl}/admin/getAllQueries`).then((res) => {
@@ -40,7 +40,7 @@ function AllQueriesData(props) {
         setRecords(res.data.result.length);
       }
     });
-    setAllQueriesData(props.allData)
+    setAllQueriesData(allData)
   };
 
 
@@ -161,7 +161,18 @@ function AllQueriesData(props) {
       formatter: function (cell, row) {
         return (
           <>
-           {row.status == "Declined Query"  ? null : 
+           {row.status == "Declined Query"  ? 
+           <div title="View Discussion Message">
+           <i
+             className="fa fa-comments-o"
+             style={{
+               fontSize: 16,
+               cursor: "pointer",
+               color: "orange"
+             }}
+             onClick={() => ViewDiscussionToggel(row.assign_no)}
+           ></i>
+         </div> : 
             <div style={{ display: "flex", justifyContent: "space-between" }}>
             <div title="Send Message">
               <Link
@@ -176,7 +187,7 @@ function AllQueriesData(props) {
                 }}
               >
                 <i
-                  class="fa fa-comments-o"
+                  className="fa fa-comments-o"
                   style={{
                     fontSize: 16,
                     cursor: "pointer",
@@ -189,7 +200,7 @@ function AllQueriesData(props) {
 
             <div title="View Discussion Message">
               <i
-                class="fa fa-comments-o"
+                className="fa fa-comments-o"
                 style={{
                   fontSize: 16,
                   cursor: "pointer",
@@ -247,4 +258,4 @@ function AllQueriesData(props) {
   );
 }
 
-export default AllQueriesData;
+export default React.memo(AllQueriesData);

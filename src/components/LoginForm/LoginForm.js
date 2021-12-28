@@ -24,8 +24,8 @@ const LoginForm = (props) => {
       });
  
 return(
-    <div class="form">
-    <div class="heading">
+    <div className="form">
+    <div className="heading">
       <h2>ADMIN LOGIN</h2>
     </div>
     <form onSubmit={handleSubmit(data3.onSubmit)} autoComplete="off">
@@ -86,7 +86,7 @@ return(
 
       {
         data3.loading ?
-          <div class="col-md-12">
+          <div className="col-md-12">
             <Spinner color="primary" />
           </div>
           :

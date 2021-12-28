@@ -32,15 +32,16 @@ function AllQueriesData() {
    const [assignNo2, setAssignNo2] = useState()
     const [queriesCount, setCountQueries] = useState(null);
     const [records, setRecords] = useState([]);
-    const [loading, setLoading] = useState(false);
+   
     const [loading2, setLoading2] = useState(false);
-    const [additionalQuery, setAdditionalQuery] = useState(false);
-   const [showData, setShowData] = useState(false)
+    const [additionalQuery, setAdditionalQuery] = useState(false)
+   let des = false;
     const additionalHandler = (key) => {
        
        if(typeof(key) == "object"){
         setAdditionalQuery(!additionalQuery);
-        setShowData(true)
+
+        des = true
         setLoading2(false)
         return false
        }
@@ -389,12 +390,12 @@ function AllQueriesData() {
 
         Swal.fire({
             title: "Are you sure?",
-            text: "Want to delete query ?",
+            text: "Want to delete query? Yes, delete it!",
             type: "warning",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, deleted it!",
+            confirmButtonText: "Yes, delete it!",
         }).then((result) => {
             if (result.value) {
                 deleteCliente(id);
@@ -458,7 +459,8 @@ function AllQueriesData() {
                         getQueriesData={getQueriesData}
                         setLoading2={setLoading2}
                         loading2={loading2}
-                        showData = {showData}
+                       
+                        des = {des}
                     />
 
 

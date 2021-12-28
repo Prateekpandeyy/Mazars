@@ -1,22 +1,16 @@
-
-
 import React, { useState, useEffect } from "react";
 import Layout from "../../components/Layout/Layout";
 import { useHistory, useParams } from "react-router-dom";
 import { useForm, useFieldArray } from "react-hook-form";
 import axios from "axios";
 import { baseUrl, ImageUrl } from "../../config/config";
-import { useAlert } from "react-alert";
 import { Card, CardHeader, Row, Col } from "reactstrap";
 import Select from "react-select";
 import DeleteQuery from "./DeleteQuery";
 import Swal from "sweetalert2";
 import Mandatory from "../../components/Common/Mandatory";
 import classNames from "classnames";
-import Loader from "../../components/Loader/Loader";
-import { Spinner } from 'reactstrap';
 import ShowError from "../../components/LoadingTime/LoadingTime";
-import { Markup } from 'interweave';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import PublishIcon from '@material-ui/icons/Publish';

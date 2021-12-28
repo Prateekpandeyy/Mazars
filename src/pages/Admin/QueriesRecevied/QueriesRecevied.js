@@ -57,6 +57,8 @@ function QueriesRecevied(props) {
     no_of_installment: "",
     installment_amount: "",
     due_date: "",
+    proposal_reactive_dates: "",
+    proposal_reactive_notes: ""
   });
 
   const [diaplayAssignment, setDisplayAssignment] = useState([
@@ -94,12 +96,7 @@ function QueriesRecevied(props) {
               date_of_allocation:
                 res.data.history_queries[0].date_of_allocation,
             });
-            let a = moment(res.data.result[0].final_date);
-            let b = moment(res.data.proposal_queries[0].cust_accept_date)
-            let c = a.diff(b)
-            let d = moment.duration(c)
-            let finalDate = d.days() + 1;
-           setFinalDate(finalDate)
+          
           }
          
          if(res.data.result[0].status =="Declined Query"){
@@ -122,6 +119,7 @@ function QueriesRecevied(props) {
             setDisplaySpecific(res.data.additional_queries);
           }
           if (res.data.payment_detail) {
+            console.log("payDetails", res.data.payment_detail)
             setPaymentDetails(res.data.payment_detail);
           }
           if (res.data.feedback_detail) {
@@ -175,8 +173,15 @@ function QueriesRecevied(props) {
               no_of_installment: res.data.proposal_queries[0].no_of_installment,
               installment_amount: res.data.proposal_queries[0].installment_amount,
               due_date: res.data.proposal_queries[0].due_date,
+              proposal_reactive_dates : res.data.proposal_queries[0].re_active_date.split(" ")[0].split("-").reverse().join("-"),
+              proposal_reactive_notes : res.data.proposal_queries[0].notes
             });
-          
+            let a = moment(res.data.result[0].final_date);
+            let b = moment(res.data.proposal_queries[0].cust_accept_date)
+            let c = a.diff(b)
+            let d = moment.duration(c)
+            let finalDate = d.days() + 1;
+           setFinalDate(finalDate)
            
           }
 
@@ -188,13 +193,7 @@ function QueriesRecevied(props) {
               date_of_delivery: res.data.assignment[0].date_of_delivery,
             });
           }
-          // if (res.data.history_queries.length > 0) {
-          //   setDisplayHistory({
-          //     tlname: res.data.history_queries[0].tlname,
-          //     date_of_allocation:
-          //       res.data.history_queries[0].date_of_allocation,
-          //   });
-          // }
+       
           if (res.data.queries_document) {
             if (res.data.queries_document.length > 0) {
               setQueryDocs(res.data.queries_document);
@@ -209,21 +208,7 @@ function QueriesRecevied(props) {
     getSubmittedAssingment();
   }, [assingNo]);
 
-  // const getQuery = () => {
-  //  if(assingNo === undefined){
-  //    return false;
-  //  }
-  //  else{
-  //   axios
-  //   .get(`${baseUrl}/tl/GetAdditionalQueries?assignno=${assingNo}`)
-  //   .then((res) => {
-     
-  //     if (res.data.code === 1) {
-  //       setDisplayQuery(res.data.result);
-  //     }
-  //   });
-  //  }
-  // };
+
 
   return (
     <Layout adminDashboard="adminDashboard" adminUserId={userid}>
@@ -249,13 +234,7 @@ function QueriesRecevied(props) {
                 >
                   <button class="btn btn-success ml-3">Go Back</button>
                 </Link>
-                 {/* <button
-                class="btn btn-success ml-3"
-                onClick={() => history.goBack()}
-              >
-              
-                Go Back
-              </button> */}
+                
               </h2>
             </div>
 

@@ -44,17 +44,30 @@ function AssignmentTab() {
     const [assignNo, setAssignNo] = useState('');
     const [report, setReport] = useState();
   const [reportModal, setReportModal] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  let des = false;
     const ViewReport = (key) => {
        
         setReportModal(!reportModal);
         setReport(key.assign_no);
         setDataItem(key)
       };
-    const uploadDraftReport = (id) => {
+ // draft modal
+ const uploadDraftReport = (id) => {
+    if(typeof(id) == "object"){
       
-        setDraftModal(!draftModal);
-        setId(id);
-      };
+      let des = true;
+      setLoading(false)
+      setDraftModal(!draftModal);
+    }
+    else{
+      setDraftModal(!draftModal);
+      setId(id);
+    }
+  
+  };
+
     const [ViewDiscussion, setViewDiscussion] = useState(false);
     const ViewDiscussionToggel = (key) => {
         setViewDiscussion(!ViewDiscussion);
@@ -126,10 +139,7 @@ function AssignmentTab() {
     };
 
     //assingmentStatus
-    const assingmentStatus = (value) => {
-       
-        setStatus(value);
-    };
+   
 
 
     //columns
@@ -557,6 +567,9 @@ function AssignmentTab() {
             uploadDraftReport={uploadDraftReport}
             getAssignmentList={getAssignmentList}
             id={id}
+            loading = {loading}
+            setLoading = {setLoading}
+            des = {des}
           />
            <ViewAllReportModal
             ViewReport={ViewReport}

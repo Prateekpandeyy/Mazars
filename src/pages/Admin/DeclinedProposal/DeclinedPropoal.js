@@ -182,7 +182,7 @@ function DeclinedProposal({ declinedProposal }) {
           <>
             <div>
               {
-                row.status == "Customer Declined; Proposal" ?
+                row.status == "Client Declined; Proposal" ?
                   <p className="declined">
                     {row.status}
                   </p> :
@@ -209,7 +209,7 @@ function DeclinedProposal({ declinedProposal }) {
          var x = row.ProposedAmount;
         
          return(
-           <p>{nfObject.format(x)}</p>
+           <p className="rightAli">{nfObject.format(x)}</p>
          )
        }
     },
@@ -229,7 +229,7 @@ function DeclinedProposal({ declinedProposal }) {
          var x = row.accepted_amount;
        
          return(
-           <p>{nfObject.format(x)}</p>
+           <p className="rightAli">{nfObject.format(x)}</p>
          )
        }
     },
@@ -272,7 +272,7 @@ function DeclinedProposal({ declinedProposal }) {
 {
   row.statuscode == "6" ? 
   <>
-<div title="Retview Proposal"
+<div title="Restore Proposal"
  onClick={(e) => retviewProposal(row.q_id)}> 
 <i
                     class="fa fa-share"
@@ -280,7 +280,7 @@ function DeclinedProposal({ declinedProposal }) {
                       fontSize: 16,
                       cursor: "pointer",
                       marginLeft: "8px",
-                      color: "red"
+                      color: "blue"
                     }}
                    
                   ></i>

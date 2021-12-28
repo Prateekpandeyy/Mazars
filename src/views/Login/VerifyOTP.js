@@ -49,9 +49,9 @@ function VerifyOTP({ email, uid, time, setLoad,
 
                 if (response.data.code == 1) {
                     setLoading(false)
-                    Alerts.SuccessLogin("Logged in successfully.")
-                    sessionStorage.setItem("userIdsession", JSON.stringify(response.data.user_id));
+                    Alerts.SuccessLogin("Login successfully.")
                     localStorage.setItem("userid", JSON.stringify(response.data.user_id));
+                    sessionStorage.setItem("userIdsession", JSON.stringify(response.data.user_id));
                     localStorage.setItem("custEmail", JSON.stringify(response.data.name));
                     history.push("customer/dashboard");
                 } else {

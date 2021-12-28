@@ -18,7 +18,7 @@ import ReactPlayer from "react-player";
 import { useParams } from "react-router";
 import {Link} from 'react-router-dom'
 import RecordingFilter from "../../../components/Search-Filter/RecordingFilter";
-
+import RecordingEdit from './RecordingEdit';
 
 
 
@@ -29,6 +29,13 @@ function Recording() {
     const [isOpen, setIsOpen] = useState(false);
     const [videoid, setVideoId] = useState(null);
     const [records, setRecords] = useState([]);
+    const [showEditModal, setShowEditModal] = useState(false)
+    const [editData, setEditData] = useState({
+        participant : '',
+        editMessage : '',
+        assignid : '',
+        id : ''
+    })
     const openModal = (videoContent) => {
       
         setIsOpen(true);
@@ -54,22 +61,35 @@ function Recording() {
                 }
             });
     };
+
+    const editRecording = (participants, assign_id, message, id) => {
+   
+        setShowEditModal(!showEditModal)
+        setEditData({
+            participant : participants,
+            editMessage : message,
+            assignid : assign_id,
+            id : id
+        })
+    }
     const modalBox = {
         display : "flex",
-        position : "absolute",
-        top : "10%",
-        left : "0%",
-        botttom: "0%", 
-        right: "0%",
-       
+        position : "fixed",
+        top: "50%",
+        left : "50%",
+        transform : "translate(-50%, -50%)",
+      justifyContent : "center",
+      alignItems : "center",
         width : "100%", 
-        height: "auto"
+        height: "auto",
+        flexDirection : "column"
     }
 const canBtn = {
-    position: "absolute",
-    top: "0",
-    right: "10px",
-    left: "90%",
+   
+    display : "flex",
+    width : "50vw",
+    alignItems : "flex-end",
+    justifyContent : "flex-end",
     padding: "20px",
     cursor : "pointer", 
     color : "red"
@@ -140,15 +160,30 @@ const canBtn = {
              
                 var recording = row.file.split(",");
                 let a = 1;
+                console.log(row.file.split(","))
                 return (
                     <>
+                   <div>
+                    {row.record_by === JSON.parse(userid) && row.message === null ?
+                             <i
+                             className="fa fa-edit"
+                             style={{
+                               fontSize: 18,
+                               cursor: "pointer",
+                               marginLeft: "8px",
+                             }}
+                             onClick = {() => editRecording(row.participants, row.assign_id, row.message, row.id)}
+                           ></i> : ""}
+                    </div>
                         <div>
                             {
                                 recording.map((record) => {
                                    return(
                                 <>
                                 <p style={videoIcon}>
-                                <span>{a++}</span>   <i
+                               {record.length === 0 ? "" : 
+                               <>
+                                 <span>{a++}</span>   <i
                                     className="material-icons"
                                     style={{
                                         cursor: "pointer",
@@ -160,6 +195,9 @@ const canBtn = {
                                     play_circle_outline
                                  
                                 </i>
+                              
+                               </>}
+                              
                                 </p>
                                 </>
                                    )
@@ -211,26 +249,36 @@ const canBtn = {
           
            </div>
             
-           {isOpen === true ?
+          
+          <RecordingEdit 
+          isOpen = {showEditModal}
+          recordingHandler = {editRecording}
+          participants = {editData.participant}
+          message = {editData.editMessage}
+          assignid = {editData.assignid}
+          editId = {editData.id}
+          recList = {getRecording}/>
+                   {isOpen === true ?
           
                  
-                 <div style={modalBox}>
-                 <span style={canBtn} onClick= {() => setIsOpen(false)}> <CloseIcon color="red" /> </span>
-                
-       
-          <div style={{margin: "50px 0 0 0"}}>
-          <ReactPlayer
-            url={videoid}
-            controls={true}
-            playing={true}
-            width='100%'
-            height='100%'
-           />
-              </div>
-            
-           </div>
-         : ""}
+          <div style={modalBox}>
+          <div style={canBtn}  title="cancle" onClick= {() => setIsOpen(false)}> <CloseIcon color="red" /> </div>
+         
+
+   <div style={{display : "flex", width : "50vw", height : "50vh"}}>
+   <ReactPlayer
+     url={videoid}
+     controls={true}
+     playing={true}
+     width='100%'
+     height='100%'
+    />
+       </div>
+     
+    </div>
+  : ""}
          </Layout>
+
            </>
 
     );

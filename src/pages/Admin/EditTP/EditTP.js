@@ -162,6 +162,7 @@ function EditTP() {
         
         if (res.data.code === 1) {
           setTax2(res.data.result);
+          console.log("tax2", res.data.result)
         }
       });
     };
@@ -329,7 +330,7 @@ function EditTP() {
 
   // Category Function
   const category = (v) => {
-    
+    console.log("vvv", v)
     selectInputRef.current.select.clearValue();
    
     setCategoryData(v)
@@ -423,7 +424,7 @@ function EditTP() {
    value.allpcat_id.includes("Indirect") === true  ? k = 8 : k = 2
  
   subdefval = subcatgerydefvalue.map((i => ({
-   "value" : ++k,
+   "value" : String(++k),
    "label" : i
  }) ))
  
@@ -491,6 +492,7 @@ function EditTP() {
        
      });
  };
+
   return (
     <Layout adminDashboard="adminDashboard" adminUserId={userid}>
       <Card>
@@ -666,9 +668,9 @@ function EditTP() {
                                     : "blue"
                                 };
                               },
-                              multiValueLabel: (styles, { data }) => ({
+                              singleValue: (styles, { data }) => ({
                                 ...styles,
-                                color: data.value  == 2
+                                color: data.label  == "Indirect tax"
                                     ? "green"
                                     : "blue"
                               }),

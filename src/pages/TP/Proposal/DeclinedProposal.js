@@ -184,7 +184,7 @@ function DeclinedProposal() {
                     <>
                         <div>
                             {
-                                row.status == "Customer Declined; Proposal" ?
+                                row.status == "Client Declined; Proposal" ?
                                     <p className="declined">
                                         {row.status}
                                     </p> :
@@ -211,7 +211,7 @@ function DeclinedProposal() {
                  var x = row.ProposedAmount;
               
                  return(
-                   <p>{nfObject.format(x)}</p>
+                   <p className="rightAli">{nfObject.format(x)}</p>
                  )
                }
         },
@@ -231,7 +231,7 @@ function DeclinedProposal() {
                  var x = row.accepted_amount;
               
                  return(
-                   <p>{nfObject.format(x)}</p>
+                   <p className="rightAli">{nfObject.format(x)}</p>
                  )
                }
         },
@@ -245,30 +245,7 @@ function DeclinedProposal() {
                 return (
                     <>
                         <div style={{ display: "flex", justifyContent: "space-between" }}>
-                            <div>
-                                {row.status_code == "4" ? (
-                                    <Link to={`/taxprofessional/edit-proposal/${row.id}`}>
-                                        <i
-                                            className="fa fa-edit"
-                                            style={{
-                                                fontSize: "16px",
-                                                cursor: "pointer",
-                                                color: "green",
-                                            }}
-                                        ></i>
-                                    </Link>
-                                ) : row.status_code == "2" ? (
-                                    <Link to={`/taxprofessional/sendproposal/${row.id}`}>
-                                        <i
-                                            class="fa fa-mail-forward"
-                                            style={{
-                                                fontSize: "14px",
-                                                cursor: "pointer",
-                                            }}
-                                        ></i>
-                                    </Link>
-                                ) : null}
-                            </div>
+                           
 
                             {row.status_code > "3" ?
                                 <div style={{ cursor: "pointer", marginLeft: "8px" }} title="View Proposal">
@@ -289,10 +266,7 @@ function DeclinedProposal() {
 
 
                             <div>
-                                {
-                                    row.status == "Customer Declined; Proposal" ?
-                                        null
-                                        :
+                               
                                         <div title="Send Message">
                                             <Link
                                                 to={{
@@ -316,7 +290,7 @@ function DeclinedProposal() {
                                                 ></i>
                                             </Link>
                                         </div>
-                                }
+                                
                             </div>
                             {
                                     row.status == "Customer Declined; Proposal" ?

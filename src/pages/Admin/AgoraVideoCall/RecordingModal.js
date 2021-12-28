@@ -62,45 +62,27 @@ axios.get(`${baseUrl}/tl/freeslottime?schedule_id=${id}&&uid=${JSON.parse(userId
               
                 if (response.data.code === 1) {
                     toggle()
-                    if(ownerId === JSON.parse(userId)){
-                        confirmation()
-                    }
+                    history.push("/admin/schedule")
                 }
             })
             .catch((error) => {
                
             });
     };
-    // const exitBtn2 = () => {
-    //     if(ownerId === JSON.parse(userId)){
-    //         confirmation()
-    //     }
-    //     else{
-    //         history.push('/teamleader/schedule');
-    //     }
-       
-    // }
-    const confirmation = () => {
-        axios.get(`${baseUrl}/tl/setgetschedular?id=${schId}&rtc_id=${uid}&uid=${JSON.parse(userId)}`)
-        .then((res) =>{
-          if(res){
-           history.push('/admin/schedule');
-          }
-        })
-      }
+ 
     return (
         <div>
             <Modal isOpen={isOpen} toggle={toggle} size="md">
-                <ModalHeader toggle={toggle}>
+                <ModalHeader >
                  Minutes of meeting
                 </ModalHeader>
                 <ModalBody>
                     <form onSubmit={handleSubmit(onSubmit)}>
-                        <div class="row" style={{ display: "flex", justifyContent: "center" }}>
-                            <div class="col-md-10">
-                                <div class="form-group">
+                        <div className="row" style={{ display: "flex", justifyContent: "center" }}>
+                            <div className="col-md-10">
+                                <div className="form-group">
 
-                                    <div class="form-group">
+                                    <div className="form-group">
                                         <label>Query No.</label>
                                         <input
                                             type="text"
@@ -112,7 +94,7 @@ axios.get(`${baseUrl}/tl/freeslottime?schedule_id=${id}&&uid=${JSON.parse(userId
                                         />
                                     </div>
 
-                                    <div class="form-group">
+                                    <div className="form-group">
                                         <label>Participants</label>
                                         <input
                                             type="text"
@@ -142,7 +124,7 @@ axios.get(`${baseUrl}/tl/freeslottime?schedule_id=${id}&&uid=${JSON.parse(userId
 
                                 </div>
 
-                                <div class="form-group">
+                                <div className="form-group">
                                     <label>Summary of Discussion<span className="declined">*</span></label>
                                     <textarea
                                         className="form-control"

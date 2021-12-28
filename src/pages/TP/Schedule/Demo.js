@@ -41,7 +41,7 @@ function Demo() {
   const [baseMode, SetbaseMode] = useState("avc");
   const [transcode, SetTranscode] = useState("interop");
   const [attendeeMode, SetAttendeeMode] = useState("video");
-  const [videoProfile, SetVideoProfile] = useState("480p_4");
+  const [videoProfile, SetVideoProfile] = useState("240p_4");
   var date = new Date();
 
   function convert(str) {
@@ -406,7 +406,7 @@ Cookies.set("channel_2", data.question_id);
 
       Swal.fire({
         title: "Are you sure?",
-        text: "It will be permanently deleted !",
+        text: "It will be permanently deleted",
         type: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",

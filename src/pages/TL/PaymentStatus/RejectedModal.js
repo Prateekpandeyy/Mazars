@@ -46,7 +46,7 @@ function RejectedModal({
        
         if (response.data.code === 1) {
           setLoading(false)
-          Alerts.SuccessNormal("Marked as customer declined payment.")
+          Alerts.SuccessNormal("Marked as client declined payment.")
           getPaymentStatus();
           rejectHandler();
         } else if (response.data.code === 0) {
@@ -61,7 +61,7 @@ function RejectedModal({
   return (
     <div>
       <Modal isOpen={addPaymentModal} toggle={rejectHandler} size="md">
-        <ModalHeader toggle={rejectHandler}>Please Provide the reason</ModalHeader>
+        <ModalHeader toggle={rejectHandler}>Please provide the reason</ModalHeader>
         <ModalBody>
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="mb-3">

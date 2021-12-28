@@ -211,7 +211,7 @@ function Unpaid() {
                  var x = row.accepted_amount;
                  
                  return(
-                   <p>{nfObject.format(x)}</p>
+                   <p className="rightAli">{nfObject.format(x)}</p>
                  )
                }
         },
@@ -237,7 +237,7 @@ function Unpaid() {
                  var x = row.paid_amount;
                  
                  return(
-                   <p>{nfObject.format(x)}</p>
+                   <p className="rightAli">{nfObject.format(x)}</p>
                  )
                }
         },
@@ -264,7 +264,7 @@ function Unpaid() {
                  var x = row.amount_outstanding;
                  
                  return(
-                   <p>{nfObject.format(x)}</p>
+                   <p className="rightAli">{nfObject.format(x)}</p>
                  )
                }
         },

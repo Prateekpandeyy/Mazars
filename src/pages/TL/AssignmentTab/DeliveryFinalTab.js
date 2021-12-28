@@ -27,7 +27,7 @@ function AssignmentTab() {
     const [assignment, setAssignment] = useState([]);
     const [id, setId] = useState("");
     const [finalId, setFinalId] = useState("");
-
+    const [loading, setLoading] = useState(false)
     const [records, setRecords] = useState([]);
     const [selectedData, setSelectedData] = useState([]);
     const [status, setStatus] = useState([]);
@@ -47,6 +47,7 @@ function AssignmentTab() {
     const [report, setReport] = useState();
     const [reportModal, setReportModal] = useState(false);
     var rowStyle2 = {}
+    let des = false;
     const ViewDiscussionToggel = (key) => {
         setViewDiscussion(!ViewDiscussion);
         setAssignNo(key)
@@ -117,15 +118,20 @@ function AssignmentTab() {
     };
 
     //assingmentStatus
-    const assingmentStatus = (value) => {
-       
-        setStatus(value);
-    };
+   
     const uploadFinalReport = (id) => {
-       
-        setFianlModal(!fianlModal);
-        setFinalId(id);
-      };
+        if(id && id.id === undefined){
+            
+          let des = true;
+          setLoading(false)
+          setFianlModal(!fianlModal);
+        }
+        else{
+          setFianlModal(!fianlModal);
+              setFinalId(id);
+        }
+            
+            };
 // view report 
 const ViewReport = (key) => {
    
@@ -585,6 +591,9 @@ const ViewReport = (key) => {
             uploadFinalReport={uploadFinalReport}
             getAssignmentList={getAssignmentList}
             id={finalId}
+            loading = {loading}
+            setLoading = {setLoading}
+            des = {des}
           />
                 </CardBody>
             </Card>

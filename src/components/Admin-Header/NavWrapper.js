@@ -18,33 +18,33 @@ function NavWrapper(props) {
 
   return (
     <>
-      <div class="navbar-wrapper">
-        <div class="navbar-container" style={{ background: color }}>
-          <div class="collapse navbar-collapse show" id="navbar-mobile">
-            <ul class="nav navbar-nav mr-auto float-left">
-              <li class="nav-item d-block d-md-none">
+      <div className="navbar-wrapper">
+        <div className="navbar-container" style={{ background: color }}>
+          <div className="collapse navbar-collapse show" id="navbar-mobile">
+            <ul className="nav navbar-nav mr-auto float-left">
+              <li className="nav-item d-block d-md-none">
                 <a
-                  class="nav-link nav-menu-main menu-toggle hidden-xs is-active"
+                  className="nav-link nav-menu-main menu-toggle hidden-xs is-active"
                   href="#"
                 >
-                  <i class="fa fa-bars"></i>
+                  <i className="fa fa-bars"></i>
                 </a>
               </li>
 
-              <li class="nav-item dropdown navbar-search">
-                <ul class="dropdown-menu">
-                  <li class="arrow_box">
+              <li className="nav-item dropdown navbar-search">
+                <ul className="dropdown-menu">
+                  <li className="arrow_box">
                     <form>
-                      <div class="input-group search-box">
-                        <div class="position-relative has-icon-right full-width">
+                      <div className="input-group search-box">
+                        <div className="position-relative has-icon-right full-width">
                           <input
-                            class="form-control"
+                            className="form-control"
                             id="search"
                             type="text"
                             placeholder="Search here..."
                           />
-                          <div class="form-control-position navbar-search-close">
-                            <i class="fa fa-times"> </i>
+                          <div className="form-control-position navbar-search-close">
+                            <i className="fa fa-times"> </i>
                           </div>
                         </div>
                       </div>
@@ -54,12 +54,12 @@ function NavWrapper(props) {
               </li>
 
               <li>
-                <h4 class="brand-text text-white">{name == "customer" ? CommonServices.capitalizeFirstLetter("client") : CommonServices.capitalizeFirstLetter(name)}: {JSON.parse(email)} </h4>
+                <h4 className="brand-text text-white">{name == "customer" ? CommonServices.capitalizeFirstLetter("client") : CommonServices.capitalizeFirstLetter(name)}: {JSON.parse(email)} </h4>
               </li>
              
             </ul>
 
-            <ul class="nav navbar-nav float-right">
+            <ul className="nav navbar-nav float-right">
 
               {name == "customer" && (
                 <CustomerNotification tokenKey={userId} name={name} />
@@ -77,14 +77,14 @@ function NavWrapper(props) {
               )}
 
 
-              <li class="dropdown dropdown-user nav-item">
+              <li className="dropdown dropdown-user nav-item">
                 <a
-                  class="dropdown-toggle nav-link dropdown-user-link"
+                  className="dropdown-toggle nav-link dropdown-user-link"
                   href="#"
                   data-toggle="dropdown"
                   aria-expanded="false"
                 >
-                  <span class="avatar avatar-online">
+                  <span className="avatar avatar-online">
                     <img
                       src="https://cdn1.vectorstock.com/i/1000x1000/40/30/user-glyph-icon-web-and-mobile-admin-sign-vector-18444030.jpg"
                       alt="avatar"
@@ -93,12 +93,12 @@ function NavWrapper(props) {
                   </span>
                 </a>
 
-                <div class="dropdown-menu dropdown-menu-right">
-                  <div class="arrow_box_right">
+                <div className="dropdown-menu dropdown-menu-right">
+                  <div className="arrow_box_right">
 
                     {name == "customer" && (
                       <Link to="/customer/change-password">
-                        <div class="dropdown-item"
+                        <div className="dropdown-item"
                           style={{ cursor: "pointer" }}>
                           <VpnKeyIcon />
                           <span style={{ marginLeft: "3px" }}>Change Password</span>
@@ -107,7 +107,7 @@ function NavWrapper(props) {
                     )}
 
                     <div
-                      class="dropdown-item"
+                      className="dropdown-item"
                       onClick={logout}
                       style={{ cursor: "pointer" }}
                     >

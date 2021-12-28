@@ -2,7 +2,7 @@ import { Link, useHistory } from "react-router-dom";
 import "../../assets/css/style.css";
 import mazars from "../../assets/images/mazars-logo.png";
 
-function Header({ id, cust_sign, admin, mtl, mtp, noSign, loginOTP }) {
+function Header({ id, cust_sign, noAdminSign, noTlSign, noTpSign, admin, mtl, mtp, noSign, loginOTP }) {
   let history = useHistory();
 
   const custLogout = () => {
@@ -17,11 +17,11 @@ function Header({ id, cust_sign, admin, mtl, mtp, noSign, loginOTP }) {
 
   return (
     <>
-      <div class="header">
+      <div className="header">
         {id && (
           <div>
             <Link to="/customer/questionnaire-page">
-              <img src={mazars} class="logo" alt="mazar" />
+              <img src={mazars} className="logo" alt="mazar" />
             </Link>
           </div>
         )}
@@ -29,7 +29,7 @@ function Header({ id, cust_sign, admin, mtl, mtp, noSign, loginOTP }) {
         {cust_sign && (
           <div>
             <Link to="/">
-              <img src={mazars} class="logo" alt="mazar" />
+              <img src={mazars} className="logo" alt="mazar" />
             </Link>
           </div>
         )}
@@ -37,7 +37,7 @@ function Header({ id, cust_sign, admin, mtl, mtp, noSign, loginOTP }) {
         {noSign && (
           <div>
             <Link to="/">
-              <img src={mazars} class="logo" alt="mazar" style={{ marginBottom: "12px" }} />
+              <img src={mazars} className="logo" alt="mazar" style={{ marginBottom: "12px" }} />
             </Link>
           </div>
         )}
@@ -45,14 +45,14 @@ function Header({ id, cust_sign, admin, mtl, mtp, noSign, loginOTP }) {
 
         {loginOTP && (
           <div>
-            <img src={mazars} class="logo" alt="mazar" style={{ marginBottom: "12px" }} />
+            <img src={mazars} className="logo" alt="mazar" style={{ marginBottom: "12px" }} />
           </div>
         )}
 
         {admin && (
           <div>
             <Link to="/admin/start">
-              <img src={mazars} class="logo" alt="mazar" />
+              <img src={mazars} className="logo" alt="mazar" />
             </Link>
           </div>
         )}
@@ -60,7 +60,7 @@ function Header({ id, cust_sign, admin, mtl, mtp, noSign, loginOTP }) {
         {mtl && (
           <div>
             <Link to="/teamleader/start">
-              <img src={mazars} class="logo" alt="mazar" />
+              <img src={mazars} className="logo" alt="mazar" />
             </Link>
           </div>
         )}
@@ -68,24 +68,24 @@ function Header({ id, cust_sign, admin, mtl, mtp, noSign, loginOTP }) {
         {mtp && (
           <div>
             <Link to="/taxprofessional/start">
-              <img src={mazars} class="logo" alt="mazar" />
+              <img src={mazars} className="logo" alt="mazar" />
             </Link>
           </div>
         )}
 
         <div>
           {id && (
-            <ul class="menu">
+            <ul className="menu">
               <li style={{ color: "#fff" }}>{id}</li>
               <li onClick={custLogout} style={{ color: "#fff" }}>
-                <i class="fa fa-sign-out">logout</i>
+                <i className="fa fa-sign-out">logout</i>
               </li>
             </ul>
           )}
 
           {cust_sign && (
             <div>
-              <ul class="menu">
+              <ul className="menu">
                 <li>
                   <Link to="/">Signin</Link>
                 </li>             
@@ -93,24 +93,24 @@ function Header({ id, cust_sign, admin, mtl, mtp, noSign, loginOTP }) {
             </div>
           )}
          
-          {admin && (
-            <ul class="menu">
+          {admin && !noAdminSign && (
+            <ul className="menu">
               <li>
                 <Link to="/admin/login">Signin</Link>
               </li>
             </ul>
           )}
 
-          {mtl && (
-            <ul class="menu">
+          {mtl && !noTlSign && (
+            <ul className="menu">
               <li>
                 <Link to="/teamleader/login">Signin</Link>
               </li>
             </ul>
           )}
 
-          {mtp && (
-            <ul class="menu">
+          {mtp && !noTpSign && (
+            <ul className="menu">
               <li>
                 <Link to="/taxprofessional/login">Signin</Link>
               </li>

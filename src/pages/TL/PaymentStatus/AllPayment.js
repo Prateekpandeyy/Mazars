@@ -251,7 +251,7 @@ rowStyle2 = (row, index) => {
                  var x = row.accepted_amount;
                 
                  return(
-                   <p>{nfObject.format(x)}</p>
+                   <p className="rightAli">{nfObject.format(x)}</p>
                  )
                }
         },
@@ -277,7 +277,7 @@ rowStyle2 = (row, index) => {
                  var x = row.paid_amount;
                 
                  return(
-                   <p>{nfObject.format(x)}</p>
+                   <p className="rightAli">{nfObject.format(x)}</p>
                  )
                }
         },
@@ -304,7 +304,7 @@ rowStyle2 = (row, index) => {
                  var x = row.amount_outstanding;
                 
                  return(
-                   <p>{nfObject.format(x)}</p>
+                   <p className="rightAli">{nfObject.format(x)}</p>
                  )
                }
         },

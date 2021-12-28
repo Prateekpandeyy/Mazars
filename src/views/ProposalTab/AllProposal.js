@@ -36,14 +36,15 @@ function ProposalTab() {
 
     const [viewData, setViewData] = useState({});
     const [viewModal, setViewModal] = useState(false);
+    const [assignNo, setAssignNo] = useState('');
+    const [ViewDiscussion, setViewDiscussion] = useState(false);
     const ViewHandler = (key) => {
 
         setViewModal(!viewModal);
         setViewData(key);
     };
 
-    const [assignNo, setAssignNo] = useState('');
-    const [ViewDiscussion, setViewDiscussion] = useState(false);
+
     const ViewDiscussionToggel = (key) => {
         setViewDiscussion(!ViewDiscussion);
         setAssignNo(key)
@@ -68,7 +69,11 @@ function ProposalTab() {
     };
 
 
-
+const rightAli = {
+    display : "flex", 
+    justifyContent : "flex-end", 
+    Border : "0px"
+}
 
     const columns = [
         {
@@ -242,9 +247,9 @@ function ProposalTab() {
             formatter: function nameFormatter(cell, row){
                 var nfObject = new Intl.NumberFormat('hi-IN')
                  var x = row.ProposedAmount;
-                 console.log(nfObject.format(x))
+
                  return(
-                   <p>{nfObject.format(x)}</p>
+                   <p className="rightAli">{nfObject.format(x)}</p>
                  )
                }
         },
@@ -254,7 +259,7 @@ function ProposalTab() {
             sort: true,
             style: {
                 fontSize: "11px",
-                // color: "#21a3ce",
+
             },
             headerStyle: () => {
                 return { fontSize: "11px"  };
@@ -264,7 +269,7 @@ function ProposalTab() {
                  var x = row.accepted_amount;
                  console.log(nfObject.format(x))
                  return(
-                   <p>{nfObject.format(x)}</p>
+                   <p className="rightAli">{nfObject.format(x)}</p>
                  )
                }
         },
@@ -280,7 +285,43 @@ function ProposalTab() {
             formatter: function (cell, row) {
                 return (
                     <>
-                        {row.statuscode === "6" ? null : (
+                        {row.statuscode === "6" ? <div style={{display : "flex", justifyContent : "space-between"}}>
+                        <div title="Send Message">
+                                    <Link
+                                        to={{
+                                            pathname: `/customer/chatting/${row.q_id}&type=2`,
+                                            obj: {
+                                                message_type: "3",
+                                                query_No: row.assign_no,
+                                                query_id: row.q_id,
+                                                routes: `/customer/proposal`
+                                            }
+                                        }}
+                                    >
+                                        <i
+                                            class="fa fa-comments-o"
+                                            style={{
+                                                fontSize: 16,
+                                                cursor: "pointer",
+                                                color: "blue"
+                                            }}
+                                        ></i>
+                                    </Link>
+                                </div>
+
+                                <div title="View Discussion Message">
+                                    <i
+                                        class="fa fa-comments-o"
+                                        style={{
+                                            fontSize: 16,
+                                            cursor: "pointer",
+                                            color: "orange"
+                                        }}
+                                        onClick={() => ViewDiscussionToggel(row.assign_no)}
+                                    ></i>
+                                </div>
+
+                        </div> : (
                             <div style={{ display: "flex", justifyContent: "space-between", width: "80px" }}>
                                 <div title="Send Message">
                                     <Link
@@ -338,7 +379,7 @@ function ProposalTab() {
                                     {
                                         row.statuscode == 4
                                             ?
-                                            <div style={{ cursor: "pointer" }} title="Dicision on Proposal">
+                                            <div style={{ cursor: "pointer" }} title="Decision on Proposal">
                                                 <Link to={`/customer/proposal_view/${row.q_id}`}>
                                                     <i
                                                         class="fa fa-share"

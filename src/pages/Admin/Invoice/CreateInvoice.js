@@ -103,6 +103,9 @@ const CreateInvoice = () => {
             sort: true,
             style: {
                 fontSize: "11px",
+                display : "flex",
+                border: "0px",
+                justifyContent : "center"
             },
             headerStyle: () => {
                 return { fontSize: "11px" , width: "200px"};
@@ -140,11 +143,11 @@ const CreateInvoice = () => {
                 return { fontSize: "11px", width: "200px" };
             },
             formatter: function nameFormatter(cell, row){
-                var nfObject = new Intl.NumberFormat('en-US')
+                var nfObject = new Intl.NumberFormat('hi-IN')
                  var x = row.paid_amount;
                 
                  return(
-                   <p>{nfObject.format(x)}</p>
+                   <p className="rightAli">{nfObject.format(x)}</p>
                  )
                }
         }, 

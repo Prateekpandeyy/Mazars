@@ -293,7 +293,7 @@ let history = useHistory()
         <table className="table table-striped eight main_table">
           <thead className="proposal_thead">
             <tr>
-              <th className="left_side">Customer Declined; Proposals</th>
+              <th className="left_side">Client Declined; Proposals</th>
               <th>{declined}</th>
             </tr>
           </thead>
@@ -359,7 +359,7 @@ let history = useHistory()
           <thead className="assignment_thead">
 
             <tr>
-              <th className="left_side">Customer Declined; Payment</th>
+              <th className="left_side">Client Declined; Payment</th>
               <th>{customer_declined_payment}</th>
             </tr>
           </thead>

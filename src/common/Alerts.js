@@ -5,7 +5,7 @@ const SuccessLogin = () => {
     return (
         Swal.fire(
             'Success',
-            'Login Successfully',
+            'Login successfully',
             'success'
         )
     )

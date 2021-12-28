@@ -115,6 +115,9 @@ const Generated = () => {
             sort: true,
             style: {
                 fontSize: "11px",
+                display : "flex",
+                justifyContent : "center",
+                border : "0px"
             },
             headerStyle: () => {
                 return { fontSize: "11px" };
@@ -163,11 +166,11 @@ const Generated = () => {
                 return { fontSize: "11px" };
             },
             formatter: function nameFormatter(cell, row){
-                var nfObject = new Intl.NumberFormat('en-US')
+                var nfObject = new Intl.NumberFormat('hi-IN')
                  var x = row.invoice_amount;
                  
                  return(
-                   <p>{nfObject.format(x)}</p>
+                   <p className="rightAli">{nfObject.format(x)}</p>
                  )
                }
         },
@@ -188,7 +191,7 @@ const Generated = () => {
                  return(
                      <>
                      {row.is_paid == "0" ?
-                     <p>0</p> :   <p>{nfObject.format(x)}</p>}
+                     <p className="rightAli">0</p> :   <p className="rightAli">{nfObject.format(x)}</p>}
                      </>
                  
                  )
@@ -225,7 +228,7 @@ const Generated = () => {
             formatter: function (cell, row) {
                 return (
                     <>
-                       <div style={{ display: "flex", alignItems:"center" }}>
+                       <div style={{ display: "flex", justifyContent: "flex-start", alignItems : "center" }}>
                         <a
                     href={`${baseUrl3}/${row.invoice}`}
                     target="_blank"

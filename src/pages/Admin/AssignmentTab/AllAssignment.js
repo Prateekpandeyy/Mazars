@@ -335,7 +335,7 @@ function AssignmentComponent() {
                   }}
                 >
                   <i
-                    class="fa fa-comments-o"
+                    className="fa fa-comments-o"
                     style={{
                       fontSize: 16,
                       cursor: "pointer",
@@ -348,7 +348,7 @@ function AssignmentComponent() {
 
               <div title="View Discussion Message">
                 <i
-                  class="fa fa-comments-o"
+                  className="fa fa-comments-o"
                   style={{
                     fontSize: 16,
                     cursor: "pointer",
@@ -399,7 +399,7 @@ function AssignmentComponent() {
       <>
         <button
           type="submit"
-          class="btn btn-primary mx-sm-1 mb-2"
+          className="btn btn-primary mx-sm-1 mb-2"
           onClick={() => resetData()}
         >
           Reset
@@ -418,8 +418,8 @@ function AssignmentComponent() {
       <Card>
         <CardHeader>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <div class="form-inline">
-              <div class="form-group mb-2">
+            <div className="form-inline">
+              <div className="form-group mb-2">
                 <Select
                   style={{ width: 130 }}
                   placeholder="Select Category"
@@ -436,7 +436,7 @@ function AssignmentComponent() {
                 </Select>
               </div>
 
-              <div class="form-group mx-sm-1  mb-2">
+              <div className="form-group mx-sm-1  mb-2">
                 <Select
                   mode="multiple"
                   style={{ width: 250 }}
@@ -456,18 +456,18 @@ function AssignmentComponent() {
               <div>
                 <button
                   type="submit"
-                  class="btn btn-primary mb-2 ml-3"
+                  className="btn btn-primary mb-2 ml-3"
                   onClick={resetCategory}
                 >
                   X
                 </button>
               </div>
 
-              <div class="form-group mx-sm-1  mb-2">
+              <div className="form-group mx-sm-1  mb-2">
                 <label className="form-select form-control">From</label>
               </div>
 
-              <div class="form-group mx-sm-1  mb-2">
+              <div className="form-group mx-sm-1  mb-2">
                 <input
                   type="date"
                   name="p_dateFrom"
@@ -477,11 +477,11 @@ function AssignmentComponent() {
                 />
               </div>
 
-              <div class="form-group mx-sm-1  mb-2">
+              <div className="form-group mx-sm-1  mb-2">
                 <label className="form-select form-control">To</label>
               </div>
 
-              <div class="form-group mx-sm-1  mb-2">
+              <div className="form-group mx-sm-1  mb-2">
                 <input
                   type="date"
                   name="p_dateTo"
@@ -492,7 +492,7 @@ function AssignmentComponent() {
                 />
               </div>
 
-              <div class="form-group mx-sm-1  mb-2">
+              <div className="form-group mx-sm-1  mb-2">
                 <select
                   className="form-select form-control"
                   name="p_status"
@@ -511,7 +511,7 @@ function AssignmentComponent() {
                 hide == "3" ?
                   ""
                   :
-                  <div class="form-group mx-sm-1  mb-2">
+                  <div className="form-group mx-sm-1  mb-2">
                     <Select
                       mode="multiple"
                       style={{ width: 210 }}
@@ -549,7 +549,7 @@ function AssignmentComponent() {
 
               }
 
-              <button type="submit" class="btn btn-primary mx-sm-1 mb-2">
+              <button type="submit" className="btn btn-primary mx-sm-1 mb-2">
                 Search
               </button>
 
@@ -558,7 +558,7 @@ function AssignmentComponent() {
           </form>
         </CardHeader>
 
-        <CardBody className="card-body2">
+        <CardBody className="card-body">
           <Records records={records} />
           <div className="tableFixHead">
           <BootstrapTable
@@ -568,6 +568,7 @@ function AssignmentComponent() {
             columns={columns}
             rowStyle={ rowStyle2 }
             rowIndex
+            wrapperClasses="table-responsive"
           />
 </div>
           <ViewAllReportModal

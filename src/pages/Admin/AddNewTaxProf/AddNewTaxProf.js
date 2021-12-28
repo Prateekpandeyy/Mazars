@@ -162,8 +162,8 @@ function AddNew() {
       formData.append("tp_id", tl);
       formData.append("email", email2);
       formData.append("post_name", value.post_name)
-      formData.append("cat_id", mcategory);
-      formData.append("pcat_id", categeryList);
+      formData.append("pcat_id", mcategory);
+      formData.append("cat_id", categeryList);
       formData.append("allpcat_id", categoryData.label)
       formData.append("allcat_id", categeryName)
       formData.append("type", "tp");
@@ -183,7 +183,7 @@ function AddNew() {
 
             Swal.fire({
               "title": "success",
-              "html": "Tax Professional Created Successfully",
+              "html": "Tax Professional created successfully",
               "icon": "success"
             })
  
@@ -287,7 +287,7 @@ function AddNew() {
     
       setNumAvail("")
       setNumExist("")
-      setIndNumError("Maximum 10 digit should be enter")
+      setIndNumError("Maximum 10 digits can be entered")
     }
     else if (phone.length < 10) {
      
@@ -341,7 +341,7 @@ function AddNew() {
     .then(function (res) {
       if(res.data.code === 1){
         setposError({
-          available : "Post Available"
+          available : "Post available"
         })
       }
       else{
@@ -355,31 +355,31 @@ function AddNew() {
     <Layout adminDashboard="adminDashboard" adminUserId={userid}>
       <Card>
         <CardHeader>
-          <div class="col-md-12 d-flex">
+          <div className="col-md-12 d-flex">
             <div>
               <button
-                class="btn btn-success ml-3"
+                className="btn btn-success ml-3"
                 onClick={() => history.goBack()}
               >
-                <i class="fas fa-arrow-left mr-2"></i>
+                <i className="fas fa-arrow-left mr-2"></i>
                 Go Back
               </button>
             </div>
-            <div class="text-center ml-5">
+            <div className="text-center ml-5">
               <h4>Add New Tax Professionals</h4>
             </div>
           </div>
         </CardHeader>
 
         <CardHeader>
-          <div class="row mt-3">
-            <div class="col-lg-2 col-xl-2 col-md-12"></div>
-            <div class="col-lg-8 col-xl-8 col-md-12">
+          <div className="row mt-3">
+            <div className="col-lg-2 col-xl-2 col-md-12"></div>
+            <div className="col-lg-8 col-xl-8 col-md-12">
               <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
 
-                <div class="row">
-                  <div class="col-md-6">
-                    <div class="form-group">
+                <div className="row">
+                  <div className="col-md-6">
+                    <div className="form-group">
                       <label>Teamleader post name <span className="declined">*</span></label>
 
                       <select
@@ -409,8 +409,8 @@ function AddNew() {
 
                   </div>
 
-                  <div class="col-md-6">
-                    <div class="form-group">
+                  <div className="col-md-6">
+                    <div className="form-group">
                       <label> Teamleader post email <span className="declined">*</span></label>
                       <input
                         type="email"
@@ -429,9 +429,9 @@ function AddNew() {
                     </div>
                   </div>
                 </div>
-                <div class="row">
-                  <div class="col-md-6">
-                    <div class="form-group">
+                <div className="row">
+                  <div className="col-md-6">
+                    <div className="form-group">
                       <label>TP post name <span className="declined">*</span></label>
                       <input
                         type="text"
@@ -448,8 +448,8 @@ function AddNew() {
                     </div>
                   </div>
 
-                  <div class="col-md-6">
-                    <div class="form-group">
+                  <div className="col-md-6">
+                    <div className="form-group">
 
 
                       <label> TP post email <span className="declined">*</span></label>
@@ -478,10 +478,10 @@ function AddNew() {
                   </div>
                 </div>
 
-                <div class="row">
+                <div className="row">
 
-                <div class="col-md-6">
-                    <div class="form-group">
+                <div className="col-md-6">
+                    <div className="form-group">
                       <label>Category <span className="declined">*</span></label>
                       <Select options={options}
                         className={error ? "customError" : ""}
@@ -505,8 +505,8 @@ function AddNew() {
                       </Select>
                     </div>
                   </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
+                  <div className="col-md-6">
+                    <div className="form-group">
                       <label>Sub Category <span className="declined">*</span></label>
                       <Select isMulti options={options2}
                         className={error2 ? "customError" : ""}
@@ -535,9 +535,9 @@ function AddNew() {
                     </div>
                   </div>
                 </div>
-                <div class="row">
-                  <div class="col-md-6">
-                    <div class="form-group">
+                <div className="row">
+                  <div className="col-md-6">
+                    <div className="form-group">
                       <label>Phone Number <span className="declined">*</span></label>
                       <input
                         type="text"
@@ -561,8 +561,8 @@ function AddNew() {
                     </div>
                   </div>
                  
-                  <div class="col-md-6">
-                    <div class="form-group">
+                  <div className="col-md-6">
+                    <div className="form-group">
                       <label>Name <span className="declined">*</span></label>
                       <input
                         type="text"
@@ -581,8 +581,8 @@ function AddNew() {
 
                 <div className="row">
 
-                <div class="col-md-6">
-                    <div class="form-group">
+                <div className="col-md-6">
+                    <div className="form-group">
 
 
                       <label> Email <span className="declined">*</span></label>
@@ -611,7 +611,7 @@ function AddNew() {
                 </button> }
               </form>
             </div>
-            <div class="col-lg-2 col-xl-2 col-md-12">
+            <div className="col-lg-2 col-xl-2 col-md-12">
             </div>
 
             <Mandatory />

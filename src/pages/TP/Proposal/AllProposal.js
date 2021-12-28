@@ -196,7 +196,7 @@ function AllProposal() {
                                         </p>
                                     </div>
                                     :
-                                    row.status == "Customer Declined; Proposal" ?
+                                    row.status == "Client Declined; Proposal" ?
                                         <p className="declined">
                                             {row.status}
                                         </p> :
@@ -226,7 +226,7 @@ function AllProposal() {
                  var x = row.ProposedAmount;
                  
                  return(
-                   <p>{nfObject.format(x)}</p>
+                   <p className="rightAli">{nfObject.format(x)}</p>
                  )
                }
         },
@@ -246,7 +246,7 @@ function AllProposal() {
                  var x = row.accepted_amount;
                  
                  return(
-                   <p>{nfObject.format(x)}</p>
+                   <p className="rightAli">{nfObject.format(x)}</p>
                  )
                }
         },
@@ -304,9 +304,7 @@ function AllProposal() {
 
 
                             <div>
-                            {
-                                    row.status == "Customer Declined; Proposal" ?
-                                        null :
+                          
                                         <div title="Send Message">
                                             <Link
                                                 to={{
@@ -330,7 +328,7 @@ function AllProposal() {
                                                 ></i>
                                             </Link>
                                         </div>
-            }
+            
                             </div>
 
                             <div title="View Discussion Message">

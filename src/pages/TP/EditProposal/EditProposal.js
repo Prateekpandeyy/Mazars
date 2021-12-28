@@ -218,7 +218,7 @@ function EditComponent() {
            
             if (response.data.code === 1) {
               setLoading(false)
-              var variable = "Proposal Updated Successfully "
+              var variable = "Proposal updated successfully"
               Alerts.SuccessNormal(variable)
               history.push("/taxprofessional/proposal");
             } else if (response.data.code === 0) {
@@ -236,10 +236,10 @@ function EditComponent() {
   const handleChange = (e) => {
    
     if (isNaN(e.target.value)) {
-      setdiserror("Please enter digit only");
+      setdiserror("It will be permanently deleted !");
     }
     else if(e.target.value == "0"){
-      setdiserror("Amount should be greater than 0")
+      setdiserror("Amount should be greater than zero")
     }
     else {
       setdiserror("");

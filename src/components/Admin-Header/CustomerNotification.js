@@ -37,13 +37,13 @@ function CustomerNotification({ tokenKey, name }) {
     return (
         <>
             <div style={{display : "flex", justifyContent : "center", alignItems : "center"}}>
-                <li class="dropdown dropdown-notification nav-item">
+                <li className="dropdown dropdown-notification nav-item">
                     {countNotification ? (
                      
                            
-                                <Link to={`/${name}/message`} style={{color : "white"}} class="notification">
+                                <Link to={`/${name}/message`} style={{color : "white"}} className="notification">
                                 Inbox
-                                    <span class="badge">{countNotification}</span>
+                                    <span className="badge">{countNotification}</span>
                                     
                                 </Link>
                            

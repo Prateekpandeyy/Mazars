@@ -24,7 +24,7 @@ function AssignmentDetails({ p, finalDate, submitData, customerQuery , diaplayAs
 
   return (
     <>
-      <div>
+      <div className="queryBox">
         <p
           style={{
             textAlign: "center",
@@ -34,7 +34,7 @@ function AssignmentDetails({ p, finalDate, submitData, customerQuery , diaplayAs
         >
           Assignment Details
         </p>
-        <table class="table table-bordered">
+        <table className="table table-bordered">
           <thead>
             <tr>
               <th scope="col" style={{ width: "300px", overflow: "wrap" }}>Titles</th>
@@ -117,7 +117,7 @@ function AssignmentDetails({ p, finalDate, submitData, customerQuery , diaplayAs
                             href={`${ReportUrl}/${assingNo}/${p.document}`}
                             target="_blank"
                           >
-                            <i class="fa fa-photo"></i> {p.document}
+                            <i className="fa fa-photo"></i> {p.document}
                           </a>
                         </td>
                         <td style={{ marginLeft: "15px", color: "green" }}>

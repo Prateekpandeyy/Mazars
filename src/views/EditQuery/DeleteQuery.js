@@ -21,7 +21,7 @@ function DeleteQuery({ id, setLoading }) {
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, deleted it!",
+      confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.value) {
         deleteCliente(id);

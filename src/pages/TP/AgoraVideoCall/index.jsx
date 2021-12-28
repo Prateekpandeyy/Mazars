@@ -1,4 +1,3 @@
-
 import React from "react";
 import { merge } from "lodash";
 import AgoraRTC from "agora-rtc-sdk";
@@ -9,6 +8,7 @@ import { baseUrl } from "../../../config/config";
 import "./canvas.css";
 import "../../../assets/fonts/css/icons.css";
 import Swal from "sweetalert2";
+import CommonServices from "../../../common/common"
 import {
   Modal,
   ModalTitle,
@@ -28,10 +28,10 @@ const tile_canvas = {
   "2": ["span 12/span 12/13/25", "span 12/span 12/13/13"],
   "3": ["span 6/span 12", "span 6/span 12", "span 6/span 12/7/19"],
   "4": [
-    "span 6/span 12",
-    "span 6/span 12",
-    "span 6/span 12",
-    "span 6/span 12/7/13",
+    "span 3/span 4/13/11",
+    "span 3/span 4/13/15",
+    "span 3/span 4/13/19",
+    "span 9/span 16/10/21",
   ],
   "5": [
     "span 3/span 4/13/9",
@@ -57,6 +57,28 @@ const tile_canvas = {
     "span 3/span 4/13/25",
     "span 9/span 16/10/21",
   ],
+  "8": [
+    "span 3/span 4/13/3",
+    "span 3/span 4/13/7",
+    "span 3/span 4/13/11",
+    "span 3/span 4/13/15",
+    "span 3/span 4/13/19",
+    "span 3/span 4/13/23",
+    "span 3/span 4/13/27",
+    "span 9/span 16/10/21",
+  ],
+  "9": [
+    "span 3/span 4/13/1",
+    "span 3/span 4/13/5",
+    "span 3/span 4/13/9",
+    "span 3/span 4/13/13",
+    "span 3/span 4/13/17",
+    "span 3/span 4/13/21",
+    "span 3/span 4/13/25",
+    "span 3/span 4/13/29",
+    "span 9/span 16/10/21",
+  ],
+  
 };
 
 /**
@@ -94,6 +116,7 @@ class AgoraCanvas extends React.Component {
       getAdId :'', 
       vedTrack : null,
       shareValue : false,
+      vedOffer: ''
     };
 
     this.toggleModal = this.toggleModal.bind(this);
@@ -113,7 +136,7 @@ class AgoraCanvas extends React.Component {
  accessKey = "AKIASTLI4S4OJH3WGMFM";
  secretKey = "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";
 allrecording;
-
+remoteShare2 = false
   componentWillMount() {
     let $ = this.props;
     // init AgoraRTC local client
@@ -130,14 +153,7 @@ allrecording;
     
    
    })
-  //  if(this.state.showButton == JSON.parse(this.teamKey)){
-  //   console.log("donefixed", this.state.showButton)
-  //   axios.get(`${baseUrl}/tl/setgetschedular?id=${this.props.id}&rtc_id=${uid}&uid=${JSON.parse(this.teamKey)}`)
-  //  .then((res) =>{
-  //    console.log(res)
-  //  })
-  
-  // }
+ 
   this.setState({getAdId : uid})
    this.setState({ uid : uid})
         this.localStream = this.streamInit(uid, $.attendeeMode, $.videoProfile);
@@ -201,120 +217,139 @@ schdrularName;
            });
  }
 
-  componentDidUpdate() {
-    // rerendering
-    let canvas = document.querySelector("#ag-canvas");
-    // pip mode (can only use when less than 4 people in channel)
-    if (this.state.displayMode === "pip") {
-      let no = this.state.streamList.length;
-      if (no > 4) {
-        this.setState({ displayMode: "tile" });
-        return;
-      }
-      this.state.streamList.map((item, index) => {
-        let txtColor = "myPartName";
-        let id = item.getId();
-        let dom = document.querySelector("#ag-item-" + id);
-        if(dom && this.state.disabledVedio === true){
-          dom.setAttribute("class", "ag-item2");
-        }
-        else if (dom && this.state.disabledVedio === false) {
-         dom.setAttribute("class", "ag-item");
-        }
-        let dd, kk;
-        if (!dom) {
-          dom = document.createElement("section");
-          dom.setAttribute("id", "ag-item-" + id);
-          dom.setAttribute("class", "ag-item");
-          canvas.appendChild(dom);
-          var box22 = document.getElementById("ag-item-" + id)
-         
-         
-          dd = document.createElement("input")
-          dd.setAttribute("id", txtColor)
-          var newContent = document.createTextNode(this.state.participantName); 
-          item.play("ag-item-" + id);
-         dd.setAttribute("value", this.state.participantName)
-         dd.setAttribute("disabled", true)
-         kk =   dd.appendChild(newContent)
-         box22.appendChild(dd)
-        }
-        if (index === no - 1) {
-          
-          //  document.getElementById("custName").value = "Lucky"
-            dom.setAttribute("style", `grid-area: span 12/span 24/13/25`);
-            
-          } else {
-            let f = false;
-            dom.setAttribute(
-              "style",
-              `grid-area: span 3/span 4/${4 + 3 * index}/25;
-                      z-index:1;width:calc(100% - 20px);height:calc(100% - 20px)`
-            );
-            dom.addEventListener('click', function (e){
-              if(f === false){
-                f = true
-                dom.setAttribute("style", `grid-area: span 12/span 24/13/25`);
-              }
-              else{
-                f = false
-                dom.setAttribute(
-                  "style",
-                  `grid-area: span 3/span 4/${4 + 3 * index}/25;
-                          z-index:1;width:calc(100% - 20px);height:calc(100% - 20px)`
-                );
-              }
-            })
-          }
-
-          if(item.player === undefined){
-
-          }
-                 else{
-                  item.player.resize && item.player.resize();
-                 }
-      });
+ componentDidUpdate() {
+  // rerendering
+ 
+  let canvas = document.querySelector("#ag-canvas");
+  // pip mode (can only use when less than 4 people in channel)
+  if (this.state.displayMode === "pip") {
+    let no = this.state.streamList.length;
+   
+    if (no > 4) {
+      this.setState({ displayMode: "tile" });
+      return;
     }
-    // tile mode
-    else if (this.state.displayMode === "tile") {
+    this.state.streamList.map((item, index) => {
       let txtColor = "myPartName";
-      let no = this.state.streamList.length;
-      this.state.streamList.map((item, index) => { 
-        let dom2
-        let id = item.getId();
-        let dom = document.querySelector("#ag-item-" + id);
-        if(dom && this.state.disabledVedio === true){
-          dom.setAttribute("class", "ag-item2");
+      let id = item.getId();
+      let dom = document.querySelector("#ag-item-" + id);
+      if(dom && this.state.disabledVedio === true){
+        dom.setAttribute("class", "ag-item2");
+      }
+      else if (dom && this.state.disabledVedio === false) {
+       dom.setAttribute("class", "ag-item");
+      }
+      let dd, kk;
+      if (!dom) {
+        dom = document.createElement("section");
+        dom.setAttribute("id", "ag-item-" + id);
+        dom.setAttribute("class", "ag-item");
+        canvas.appendChild(dom);
+        var box22 = document.getElementById("ag-item-" + id)
+        dd = document.createElement("input")
+        dd.setAttribute("id", txtColor)
+        var newContent = document.createTextNode(CommonServices.capitalizeFirstLetter(this.state.participantName)); 
+        item.play("ag-item-" + id);
+       dd.setAttribute("value", CommonServices.capitalizeFirstLetter(this.state.participantName))
+       dd.setAttribute("disabled", true)
+       kk =   dd.appendChild(newContent)
+       box22.appendChild(dd)
+      }
+     
+       
+      if (index === no - 1) {
+        
+        //  document.getElementById("custName").value = "Lucky"
+          dom.setAttribute("style", `grid-area: span 12/span 24/13/25`);
+          
+        } else {
+          let f = false;
+          dom.setAttribute(
+            "style",
+            `grid-area: span 3/span 4/${4 + 3 * index}/25;
+                    z-index:1;width:calc(100% - 20px);height:calc(100% - 20px)`
+          );
+          dom.addEventListener('click', function (e){
+            if(f === false){
+              f = true
+              dom.setAttribute("style", `grid-area: span 12/span 24/13/25`);
+            }
+            else{
+              f = false
+              dom.setAttribute(
+                "style",
+                `grid-area: span 3/span 4/${4 + 3 * index}/25;
+                        z-index:1;width:calc(100% - 20px);height:calc(100% - 20px)`
+              );
+            }
+          })
         }
-        else if (dom && this.state.disabledVedio === false) {
-         dom.setAttribute("class", "ag-item");
-        }
-        let dd, kk;
-        if (!dom) {
-          dom = document.createElement("section");
-          dom.setAttribute("id", "ag-item-" + id);
-          dom.setAttribute("class", "ag-item");
-          canvas.appendChild(dom);
-          var box22 = document.getElementById("ag-item-" + id)
-         
-         
-          dd = document.createElement("input")
-          dd.setAttribute("id", txtColor)
-          var newContent = document.createTextNode(this.state.participantName); 
-          item.play("ag-item-" + id);
-         dd.setAttribute("value", this.state.participantName)
-         dd.setAttribute("disabled", true)
-         kk =   dd.appendChild(newContent)
-         box22.appendChild(dd)
-        }
-        dom.setAttribute("style", `grid-area: ${tile_canvas[no][index]}`);
-        item.player.resize && item.player.resize();
-      });
-    }
-    // screen share mode (tbd)
-    else if (this.state.displayMode === "share") {
-    }
+if(item.player === undefined){
+
+}
+     else{
+      item.player.resize && item.player.resize();
+     }
+    });
   }
+  // tile mode
+  else if (this.state.displayMode === "tile") {
+    let f = false;
+    let no = this.state.streamList.length;
+    let txtColor = "myPartName";
+    this.state.streamList.map((item, index) => {
+      let id = item.getId();
+      let dom = document.querySelector("#ag-item-" + id);
+      if(dom && this.state.disabledVedio === true){
+        dom.setAttribute("class", "ag-item2");
+      }
+      else if (dom && this.state.disabledVedio === false) {
+       dom.setAttribute("class", "ag-item");
+      }
+      let dd, kk;
+      if (!dom) {
+        dom = document.createElement("section");
+        dom.setAttribute("id", "ag-item-" + id);
+        dom.setAttribute("class", "ag-item");
+        canvas.appendChild(dom);
+        var box22 = document.getElementById("ag-item-" + id)
+       
+       
+        dd = document.createElement("input")
+        dd.setAttribute("id", txtColor)
+        var newContent = document.createTextNode(this.state.participantName); 
+        item.play("ag-item-" + id);
+       dd.setAttribute("value", this.state.participantName)
+       dd.setAttribute("disabled", true)
+       kk =   dd.appendChild(newContent)
+       box22.appendChild(dd)
+      }
+      dom.setAttribute("style", `grid-area: ${tile_canvas[no][index]}`);
+      dom.addEventListener('click', function (e){
+          
+        if(f === false){
+          f = true
+          dom.setAttribute("style", `grid-area: span 12/span 24/13/25`);
+        }
+        else{
+          f = false
+          dom.setAttribute("style", `grid-area: ${tile_canvas[no][index]}`);
+        }
+      })
+      if(item.player === undefined){
+
+      }
+             else{
+              item.player.resize && item.player.resize();
+             }
+    });
+  }
+  // screen share mode (tbd)
+  else if (this.state.displayMode === "share") {
+  
+  }
+}
+
 
   componentWillUnmount() {
     this.client && this.client.unpublish(this.localStream);
@@ -382,11 +417,15 @@ schdrularName;
     axios.get(`${apiData}`)
     .then((res) =>{
      
-     console.log("response", res.data.length)
-      if(res.data.length === 0 ){
-       
+     
+      if(stream.getId() === this.uid){
+        this.setState({ participantName : "" })
       }
-      else{
+      else if(res.data.length == 0){
+        this.setState({ participantName : "" })
+      this.remoteShare2 = true
+      }
+      else if(res.data.length > 0){
         this.setState({ participantName : res.data[0].user_name })
        
       }
@@ -435,7 +474,9 @@ schdrularName;
         
     })
      
-    
+    if(this.remoteShare2 === true){
+      this.remoteShare2 = false
+    }  
     
   };
 
@@ -560,11 +601,20 @@ schdrularName;
    }
  
    sharingScreen = (e) => {
+    if(this.remoteShare2 === true && this.state.stateSharing === false){
+      Swal.fire({
+        title : "error",
+        html : "Only one screen can be share at a time",
+        icon : "error"
+      })
+    }
+    else{
     if (this.state.stateSharing) {
       this.shareClient && this.shareClient.unpublish(this.shareStream);
       this.shareStream && this.shareStream.close();
       this.state.stateSharing = false;
     } else {
+      this.setState({participantName : ""})
       this.state.stateSharing = true;
       let $ = this.props;
       // init AgoraRTC local client
@@ -603,6 +653,7 @@ schdrularName;
         });
       });
     }
+  }
   };
   
   streamInitSharing = (uid, attendeeMode, videoProfile, config) => {
@@ -759,9 +810,8 @@ this.setState({
 //stop recording 
 stopRecording = () => {
 if(this.state.showRecBtn === true){
-  return(this.toggleModal("stop"),
-  this.localStream.disableVideo(),
-this.localStream.disableAudio())
+
+this.del()
 }
 
 else if(this.state.showButton == JSON.parse(this.teamKey)){
@@ -786,10 +836,12 @@ axios({
   data: data,
 })
 .then(json => 
-  this.toggleModal(json) ,
-   this.setState({showRecBtn : true}),
-   this.localStream.disableVideo(),
-   this.localStream.disableAudio(),
+  this.setState({vedOffer : json}),
+   
+   
+     this.setState({showRecBtn : true}),
+     this.localStream.disableVideo(),
+this.localStream.disableAudio(),
   ) 
   .catch((error) => {
     
@@ -801,7 +853,49 @@ window.location.hash = "/taxprofessional/schedule";
 }
 
 };
-
+del = (e) => {
+  let formData = new FormData()
+  formData.append("fileList", this.state.data.serverResponse.fileList)
+  formData.append("schedule_id", this.props.id);
+  formData.append("uid", JSON.parse(this.teamKey));
+  formData.append("assign_id", this.state.item.assign_no);
+  formData.append("participants", this.state.item.username);
+ 
+  Swal.fire({
+    title: "End this vedio call for everyone?",
+    // text: "End this vedio call for everyone",
+   type: "warning",
+   showCloseButton:true,
+   showCancelButton : true,
+   confirmButtonColor: "#3085d6",
+   cancelButtonColor: "#d33",
+   confirmButtonText: "End the call",
+   cancelButtonText : "Just leave the meeting"
+  }).then((result) => {
+   if (result.value) {
+    axios.get(`${baseUrl}/tl/setgetschedular?id=${this.props.id}&rtc_id=${this.state.getAdId}&uid=${JSON.parse(this.teamKey)}`)
+    .then((res) =>{
+      if(res){
+        this.client && this.client.unpublish(this.localStream);
+        this.localStream && this.localStream.close();
+        this.toggleModal()
+      }
+    })
+   
+   }
+   else if(result.dismiss === "backdrop" || result.dismiss === "close"){
+    return false
+  }
+   else{
+    axios({
+      method: "POST",
+      url: `${baseUrl}/tl/callRecordingPost`,
+      data: formData,
+   })
+    window.location.hash = "/taxprofessional/schedule";
+   }
+ });
+}
 
 render() {
 

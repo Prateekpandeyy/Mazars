@@ -319,7 +319,7 @@ var rowStyle2 = {}
                   }}
                 >
                   <i
-                    class="fa fa-comments-o"
+                    className="fa fa-comments-o"
                     style={{
                       fontSize: 16,
                       cursor: "pointer",
@@ -332,7 +332,7 @@ var rowStyle2 = {}
 
               <div title="View Discussion Message">
                 <i
-                  class="fa fa-comments-o"
+                  className="fa fa-comments-o"
                   style={{
                     fontSize: 16,
                     cursor: "pointer",
@@ -388,7 +388,7 @@ var rowStyle2 = {}
       <>
         <button
           type="submit"
-          class="btn btn-primary mx-sm-1 mb-2"
+          className="btn btn-primary mx-sm-1 mb-2"
           onClick={() => resetData()}
         >
           Reset
@@ -402,8 +402,8 @@ var rowStyle2 = {}
       <Card>
         <CardHeader>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <div class="form-inline">
-              <div class="form-group mb-2">
+            <div className="form-inline">
+              <div className="form-group mb-2">
                 <Select
                   style={{ width: 130 }}
                   placeholder="Select Category"
@@ -420,7 +420,7 @@ var rowStyle2 = {}
                 </Select>
               </div>
 
-              <div class="form-group mx-sm-1  mb-2">
+              <div className="form-group mx-sm-1  mb-2">
                 <Select
                   mode="multiple"
                   style={{ width: 250 }}
@@ -440,18 +440,18 @@ var rowStyle2 = {}
               <div>
                 <button
                   type="submit"
-                  class="btn btn-primary mb-2 ml-3"
+                  className="btn btn-primary mb-2 ml-3"
                   onClick={resetCategory}
                 >
                   X
                 </button>
               </div>
 
-              <div class="form-group mx-sm-1  mb-2">
+              <div className="form-group mx-sm-1  mb-2">
                 <label className="form-select form-control">From</label>
               </div>
 
-              <div class="form-group mx-sm-1  mb-2">
+              <div className="form-group mx-sm-1  mb-2">
                 <input
                   type="date"
                   name="p_dateFrom"
@@ -461,11 +461,11 @@ var rowStyle2 = {}
                 />
               </div>
 
-              <div class="form-group mx-sm-1  mb-2">
+              <div className="form-group mx-sm-1  mb-2">
                 <label className="form-select form-control">To</label>
               </div>
 
-              <div class="form-group mx-sm-1  mb-2">
+              <div className="form-group mx-sm-1  mb-2">
                 <input
                   type="date"
                   name="p_dateTo"
@@ -479,7 +479,7 @@ var rowStyle2 = {}
 
 
 
-              <button type="submit" class="btn btn-primary mx-sm-1 mb-2">
+              <button type="submit" className="btn btn-primary mx-sm-1 mb-2">
                 Search
               </button>
 
@@ -488,7 +488,7 @@ var rowStyle2 = {}
           </form>
         </CardHeader>
 
-        <CardBody>
+        <CardBody className="card-body">
           <Records records={records} />
           <div className="tableFixHead">
           <BootstrapTable
@@ -498,6 +498,7 @@ var rowStyle2 = {}
             columns={columns}
             rowStyle={ rowStyle2 }
             rowIndex
+            wrapperClasses="table-responsive"
           />
           </div>
   <ViewAllReportModal

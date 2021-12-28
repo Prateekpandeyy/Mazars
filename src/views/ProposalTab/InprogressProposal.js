@@ -231,7 +231,7 @@ function InprogressProposal() {
                  var x = row.ProposedAmount;
                  console.log(nfObject.format(x))
                  return(
-                   <p>{nfObject.format(x)}</p>
+                   <p className="rightAli">{nfObject.format(x)}</p>
                  )
                }
         },
@@ -251,7 +251,7 @@ function InprogressProposal() {
                  var x = row.accepted_amount;
                  console.log(nfObject.format(x))
                  return(
-                   <p>{nfObject.format(x)}</p>
+                   <p className="rightAli">{nfObject.format(x)}</p>
                  )
                }
         },
@@ -360,7 +360,7 @@ function InprogressProposal() {
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, rejected it!",
+            confirmButtonText: "Yes, reject it!",
         }).then((result) => {
             if (result.value) {
                 deleteCliente(id);
@@ -385,7 +385,7 @@ function InprogressProposal() {
                 
                 if (response.data.code === 1) {
                     setRejected(false);
-                    Swal.fire("Rejected!", "Proposal rejected successfully.", "success");
+                    Swal.fire("Rejected", "Proposal rejected successfully.", "success");
                     getProposalData();
                 } else {
                     Swal.fire("Oops...", "Errorr ", "error");

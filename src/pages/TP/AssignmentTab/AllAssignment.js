@@ -1,16 +1,10 @@
 import React, { useState, useEffect } from "react";
-import Layout from "../../../components/Layout/Layout";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import {
   Card,
   CardHeader,
   CardBody,
-  CardTitle,
-  Row,
-  Col,
-  Table,
-  Tooltip,
 } from "reactstrap";
 import DraftReportModal from "./DraftReportUpload";
 import FinalReportUpload from "./FinalReportUpload";
@@ -20,7 +14,6 @@ import "antd/dist/antd.css";
 import { Select } from "antd";
 import BootstrapTable from "react-bootstrap-table-next";
 import TaxProfessionalFilter from "../../../components/Search-Filter/tpfilter";
-import * as Cookies from "js-cookie";
 import DescriptionOutlinedIcon from '@material-ui/icons/DescriptionOutlined';
 import ViewAllReportModal from "./ViewAllReport";
 import DiscardReport from "../AssignmentTab/DiscardReport";
@@ -49,16 +42,16 @@ function AssignmentTab() {
   var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
  
   const [item] = useState(current_date);
-
-  const [baseMode, SetbaseMode] = useState("avc");
-  const [transcode, SetTranscode] = useState("interop");
-  const [attendeeMode, SetAttendeeMode] = useState("video");
-  const [videoProfile, SetVideoProfile] = useState("480p_4");
   const [dataItem, setDataItem] = useState({});
   const [report, setReport] = useState();
   const [reportModal, setReportModal] = useState(false);
   const [assignNo, setAssignNo] = useState('');
   const [ViewDiscussion, setViewDiscussion] = useState(false);
+  const [draftModal, setDraftModal] = useState(false);
+  const [fianlModal, setFianlModal] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  let des = false;
   var rowStyle2 = {}
   const ViewReport = (key) => {
   
@@ -463,23 +456,38 @@ function AssignmentTab() {
   }
 
   // draft modal
-  const [draftModal, setDraftModal] = useState(false);
   const uploadDraftReport = (id) => {
-   
-    setDraftModal(!draftModal);
-    setId(id);
+    if(typeof(id) == "object"){
+      
+      let des = true;
+      setLoading(false)
+      setDraftModal(!draftModal);
+    }
+    else{
+      setDraftModal(!draftModal);
+      setId(id);
+    }
+  
   };
 
 
   // final modal
-  const [fianlModal, setFianlModal] = useState(false);
-  const uploadFinalReport = (id) => {
-   
-    setFianlModal(!fianlModal);
-    setFinalId(id);
-  };
+  
+    const uploadFinalReport = (id) => {
+if(id && id.id === undefined){
+    
+  let des = true;
+  setLoading(false)
+  setFianlModal(!fianlModal);
+}
+else{
+  setFianlModal(!fianlModal);
+      setFinalId(id);
+}
+    
+    };
 
-
+ 
   const onSubmit = (data) => {
    
     axios
@@ -687,6 +695,9 @@ function AssignmentTab() {
             uploadDraftReport={uploadDraftReport}
             getAssignmentList={getAssignmentList}
             id={id}
+            loading = {loading}
+            setLoading = {setLoading}
+            des = {des}
           />
 
           <FinalReportUpload
@@ -694,6 +705,9 @@ function AssignmentTab() {
             uploadFinalReport={uploadFinalReport}
             getAssignmentList={getAssignmentList}
             id={finalId}
+            loading = {loading}
+            setLoading = {setLoading}
+            des = {des}
           />
 
 
