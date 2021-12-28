@@ -361,7 +361,8 @@ if(item.player === undefined){
     if(stream.getId() === this.uid){
       this.setState({ participantName : "" })
     }
-    else if(res.data.length == 0){
+   else{
+    if(res.data.length == 0){
       this.setState({ participantName : "" })
     this.remoteShare2 = true
     }
@@ -369,7 +370,8 @@ if(item.player === undefined){
       this.setState({ participantName : res.data[0].user_name })
      
     }
-   
+       
+   } 
       rt.addStream(stream);
     
   })
