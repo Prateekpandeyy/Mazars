@@ -389,14 +389,14 @@ schdrularName;
     let rt = this;
     rt.client.on("stream-added", function (evt) {
       let stream = evt.stream;
-      
+     
       rt.client.subscribe(stream, function (err) {
-        
+        console.log("one")
       });
     });
 
     rt.client.on("peer-leave", function (evt) {
-     console.log("two")
+      console.log("onee")
   
       rt.removeStream(evt.uid);
      
@@ -404,15 +404,14 @@ schdrularName;
     });
 
     rt.client.on("stream-subscribed", function (evt) {
-      console.log("three")
-      console.log("evt", evt)
+      console.log("oneee")
         let stream = evt.stream;
       
         var apiData = "https://virtualapi.multitvsolution.com/VstreamApi/index.php/api/vstream/getInfoByRTCId?channel_name="+this.channelName+"&rtc_id="+stream.getId()
     axios.get(`${apiData}`)
     .then((res) =>{
      
-  console.log("res", res.data.length)
+ 
       
   if(stream.getId() === this.uid){
     this.setState({ participantName : "" })
@@ -437,7 +436,7 @@ schdrularName;
 
     rt.client.on("stream-removed", function (evt) {
       let stream = evt.stream;
-     console.log("evt id", evt.uid)
+      console.log("oneeee")
       rt.removeStream(stream.getId());
     });
   };
@@ -485,6 +484,9 @@ schdrularName;
   };
 
   addStream = (stream, push = false) => {
+   if(this.uid === stream.getId()){
+     this.setState({participantName : ""})
+   }
     this.hostId = stream.getId()
     let repeatition = this.state.streamList.some((item) => {
       return item.getId() === stream.getId();

@@ -17,6 +17,7 @@ import BootstrapTable from "react-bootstrap-table-next";
 import "react-modal-video/scss/modal-video.scss";
 import RecordingFilter from "../../../components/Search-Filter/RecordingFilter";
 import {Link} from "react-router-dom";
+import './recording.css';
 // import '../../../../node_modules/react-modal-video/scss/modal-video.scss';
 
 
@@ -253,22 +254,26 @@ const editRecording = (participants, assign_id, message, id) => {
           assignid = {editData.assignid}
           editId = {editData.id}
           recList = {getRecording}/>
-                   {isOpen === true ?
+                     {isOpen === true ?
           
                  
-          <div style={modalBox}>
-          <div style={canBtn}  title="cancle" onClick= {() => setIsOpen(false)}> <CloseIcon color="red" /> </div>
+          <div className="modalBox">
+          <div className="boxContainer">
+          <div className="canBtn"  title="cancel">
+              <h4>Recording Player</h4>
+              <CloseIcon  onClick= {() => setIsOpen(false)} id="myBtn"/> </div>
          
 
-   <div style={{display : "flex", width : "50vw", height : "50vh"}}>
-   <ReactPlayer
-     url={videoid}
-     controls={true}
-     playing={true}
-     width='100%'
-     height='100%'
-    />
-       </div>
+         <div className="my2">
+         <ReactPlayer
+           url={videoid}
+           controls={true}
+           playing={true}
+           width='100%'
+           height='100%'
+          />
+             </div>
+          </div>
      
     </div>
   : ""}

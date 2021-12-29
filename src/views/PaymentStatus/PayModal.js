@@ -13,8 +13,22 @@ const PayModal = (props) => {
     
  
     useEffect(() => {
-       if(props.modalData){
-           setTdsRate(props.modalData.tds_rate)
+       if(props.modalData !== undefined){
+           let per, per2;
+           if(props.modalData.tds_rate !== undefined){
+            per = props.modalData.tds_rate.split(".")[1]
+            per2 = props.modalData.tds_rate.split(".")[0]
+           }
+          
+          
+          if(per === "0000"){
+            setTdsRate(per2)
+          }
+          else{
+            setTdsRate(props.modalData.tds_rate)
+          }
+          
+           
            setTdsAmount(props.modalData.tds_amount)
            setpayValue(parseInt(props.modalData.invoice_amount) - parseInt(props.modalData.tds_amount))
 
@@ -38,12 +52,12 @@ const PayModal = (props) => {
         })
         .then((res) => {
             if(res.data.code === 1){
-             props.modalToggle()
+             
                 window.open(res.data.result, "_blank")
             }
         })
        
-       
+    window.location.hash="customer/paymentstatus"
     }
     const inVal = (e) => {
        if(e.target.value.length > 7){

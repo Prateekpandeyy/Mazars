@@ -245,13 +245,7 @@ const [email2, setEmail2] = useState();
   //zip oncahnge
   const zipValue = (e) => {
    
-    if (isNaN(e.target.value)) {
-
-      setZipError("Please enter number only")
-      setZipError1(true)
-      e.target.value = ""
-    }
-    else if (e.target.value.length == 0) {
+   if (e.target.value.length == 0) {
       setZipError1(true)
     }
     else {

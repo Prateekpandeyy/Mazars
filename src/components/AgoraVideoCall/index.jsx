@@ -421,6 +421,9 @@ if(item.player === undefined){
   };
 
   addStream = (stream, push = false) => {
+    if(this.uid === stream.getId()){
+      this.setState({participantName : ""})
+    }
     let repeatition = this.state.streamList.some((item) => {
       return item.getId() === stream.getId();
     });

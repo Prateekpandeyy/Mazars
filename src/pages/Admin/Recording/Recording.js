@@ -19,6 +19,7 @@ import { useParams } from "react-router";
 import {Link} from 'react-router-dom'
 import RecordingFilter from "../../../components/Search-Filter/RecordingFilter";
 import RecordingEdit from './RecordingEdit';
+import './recording.css';
 
 
 
@@ -72,28 +73,8 @@ function Recording() {
             id : id
         })
     }
-    const modalBox = {
-        display : "flex",
-        position : "fixed",
-        top: "50%",
-        left : "50%",
-        transform : "translate(-50%, -50%)",
-      justifyContent : "center",
-      alignItems : "center",
-        width : "100%", 
-        height: "auto",
-        flexDirection : "column"
-    }
-const canBtn = {
    
-    display : "flex",
-    width : "50vw",
-    alignItems : "flex-end",
-    justifyContent : "flex-end",
-    padding: "20px",
-    cursor : "pointer", 
-    color : "red"
-}
+
 
     const columns = [
         {
@@ -261,19 +242,23 @@ const canBtn = {
                    {isOpen === true ?
           
                  
-          <div style={modalBox}>
-          <div style={canBtn}  title="cancle" onClick= {() => setIsOpen(false)}> <CloseIcon color="red" /> </div>
+          <div className="modalBox">
+          <div className="boxContainer">
+          <div className="canBtn"  title="cancel">
+              <h4>Recording Player</h4>
+              <CloseIcon  onClick= {() => setIsOpen(false)} id="myBtn"/> </div>
          
 
-   <div style={{display : "flex", width : "50vw", height : "50vh"}}>
-   <ReactPlayer
-     url={videoid}
-     controls={true}
-     playing={true}
-     width='100%'
-     height='100%'
-    />
-       </div>
+         <div className="my2">
+         <ReactPlayer
+           url={videoid}
+           controls={true}
+           playing={true}
+           width='100%'
+           height='100%'
+          />
+             </div>
+          </div>
      
     </div>
   : ""}

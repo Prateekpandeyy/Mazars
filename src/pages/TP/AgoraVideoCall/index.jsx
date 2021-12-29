@@ -484,6 +484,9 @@ if(item.player === undefined){
   };
 
   addStream = (stream, push = false) => {
+    if(this.uid === stream.getId()){
+      this.setState({participantName : ""})
+    }
     this.hostId = stream.getId()
    
     

@@ -302,8 +302,7 @@ console.log("value", categeryList)
     setCustcate2(e)
     setError2("")
     e.map((i) => {
-
-      i.value < 8 ? dir.push(i.label) : indir.push(i.label)
+      i.value < 9 ? dir.push(i.label) : indir.push(i.label)
     })
     setDd({
       direct: dir,
@@ -446,7 +445,7 @@ const defSubValue = () => {
    var dir1;
    var dir2;
    var kk = []
-   var d = 3;
+   var d = 2;
    var ind = 9;
   
    var subcatgerydefvalue = JSON.parse(value.allcat_id);
