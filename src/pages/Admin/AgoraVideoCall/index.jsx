@@ -149,7 +149,7 @@ remoteShare2 = false
    })
    this.setState({getAdId : uid})
   
-        this.setState({ uid : uid})
+     
       
         this.localStream = this.streamInit(uid, $.attendeeMode, $.videoProfile);
         this.localStream.init(
@@ -188,7 +188,6 @@ remoteShare2 = false
     this.accuire();
     // this.accuire()
   }
-schdrularName;
 
   getSchedulerData =() =>{
        axios
@@ -221,6 +220,7 @@ schdrularName;
         return;
       }
       this.state.streamList.map((item, index) => {
+     
         let txtColor = "myPartName";
         let id = item.getId();
         let dom = document.querySelector("#ag-item-" + id);
@@ -230,8 +230,9 @@ schdrularName;
         else if (dom && this.state.disabledVedio === false) {
          dom.setAttribute("class", "ag-item");
         }
-        let dd, kk;
+        let dd;
         if (!dom) {
+         
           dom = document.createElement("section");
           dom.setAttribute("id", "ag-item-" + id);
           dom.setAttribute("class", "ag-item");
@@ -239,21 +240,27 @@ schdrularName;
           var box22 = document.getElementById("ag-item-" + id)
           dd = document.createElement("input")
           dd.setAttribute("id", txtColor)
-          var newContent = document.createTextNode(CommonServices.capitalizeFirstLetter(this.state.participantName)); 
           item.play("ag-item-" + id);
-         dd.setAttribute("value", CommonServices.capitalizeFirstLetter(this.state.participantName))
+          dd.setAttribute("value", CommonServices.capitalizeFirstLetter(this.state.participantName))
          dd.setAttribute("disabled", true)
-         kk =   dd.appendChild(newContent)
          box22.appendChild(dd)
+         if(item.getId() === this.state.getAdId && index === 0){
+        
+          let invis = document.getElementById(txtColor);
+          invis.setAttribute("value", "You")
+        }
         }
        
-         
+       
         if (index === no - 1) {
-          
+         
           //  document.getElementById("custName").value = "Lucky"
             dom.setAttribute("style", `grid-area: span 12/span 24/13/25`);
-            
+          //  let invis = document.getElementById(txtColor);
+          //  invis.setAttribute("value", "You")
+         
           } else {
+           
             let f = false;
             dom.setAttribute(
               "style",
@@ -264,6 +271,15 @@ schdrularName;
               if(f === false){
                 f = true
                 dom.setAttribute("style", `grid-area: span 12/span 24/13/25`);
+                let list;
+             
+                list = Array.from(
+                  document.querySelectorAll(`.ag-item:not(#ag-item-${id})`)
+                );
+                list.map((item) => {
+                  
+                    item.style.display = "none"
+                  }) 
               }
               else{
                 f = false
@@ -272,6 +288,15 @@ schdrularName;
                   `grid-area: span 3/span 4/${4 + 3 * index}/25;
                           z-index:1;width:calc(100% - 20px);height:calc(100% - 20px)`
                 );
+                let list;
+             
+                list = Array.from(
+                  document.querySelectorAll(`.ag-item:not(#ag-item-${id})`)
+                );
+                list.map((item) => {
+                  
+                    item.style.display = "block"
+                  }) 
               }
             })
           }
@@ -297,7 +322,7 @@ schdrularName;
         else if (dom && this.state.disabledVedio === false) {
          dom.setAttribute("class", "ag-item");
         }
-        let dd, kk;
+        let dd;
         if (!dom) {
           dom = document.createElement("section");
           dom.setAttribute("id", "ag-item-" + id);
@@ -308,12 +333,17 @@ schdrularName;
          
           dd = document.createElement("input")
           dd.setAttribute("id", txtColor)
-          var newContent = document.createTextNode(this.state.participantName); 
+       
           item.play("ag-item-" + id);
          dd.setAttribute("value", this.state.participantName)
          dd.setAttribute("disabled", true)
-         kk =   dd.appendChild(newContent)
+        
          box22.appendChild(dd)
+         if(item.getId() === this.state.getAdId && index === 0){
+        
+          let invis = document.getElementById(txtColor);
+          invis.setAttribute("value", "You")
+        }
         }
         dom.setAttribute("style", `grid-area: ${tile_canvas[no][index]}`);
         dom.addEventListener('click', function (e){
@@ -321,10 +351,28 @@ schdrularName;
           if(f === false){
             f = true
             dom.setAttribute("style", `grid-area: span 12/span 24/13/25`);
+            let list;
+             
+            list = Array.from(
+              document.querySelectorAll(`.ag-item:not(#ag-item-${id})`)
+            );
+            list.map((item) => {
+              
+                item.style.display = "none"
+              }) 
           }
           else{
             f = false
             dom.setAttribute("style", `grid-area: ${tile_canvas[no][index]}`);
+            let list;
+             
+            list = Array.from(
+              document.querySelectorAll(`.ag-item:not(#ag-item-${id})`)
+            );
+            list.map((item) => {
+              
+                item.style.display = "block"
+              }) 
           }
         })
         if(item.player === undefined){
@@ -413,10 +461,7 @@ schdrularName;
      
  
       
-  if(stream.getId() === this.uid){
-    this.setState({ participantName : "" })
-  }
- else{
+ 
   if(res.data.length == 0){
     this.setState({ participantName : "" })
   this.remoteShare2 = true
@@ -424,7 +469,7 @@ schdrularName;
   else if(res.data.length > 0){
     this.setState({ participantName : res.data[0].user_name })
    
-  }
+  
      
  } 
        rt.addStream(stream)
@@ -484,9 +529,7 @@ schdrularName;
   };
 
   addStream = (stream, push = false) => {
-   if(this.uid === stream.getId()){
-     this.setState({participantName : ""})
-   }
+  
     this.hostId = stream.getId()
     let repeatition = this.state.streamList.some((item) => {
       return item.getId() === stream.getId();

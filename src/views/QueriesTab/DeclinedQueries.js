@@ -19,8 +19,8 @@ import Records from "../../components/Records/Records";
 import CommonServices from "../../common/common";
 import DiscardReport from "../AssignmentTab/DiscardReport";
 import FeedbackIcon from '@material-ui/icons/Feedback';
-import PublishIcon from '@material-ui/icons/Publish';
 import './index.css';
+import moment from "moment";
 
 
 
@@ -186,10 +186,86 @@ function DeclinedQueries() {
     {
       text: "Action",
       headerStyle: () => {
-        return { fontSize: "12px", textAlign: "center", width: "130px" };
-      }
-    },
-  ];
+          return { fontSize: "12px", textAlign: "center", width: "130px" };
+      },
+      formatter: function (cell, row) {
+          var dateMnsFive = moment(row.exp_delivery_date).add(15, 'day').format("YYYY-MM-DD");
+        
+         
+          var curDate = moment().format("YYYY-MM-DD")
+       
+         
+        
+          
+       
+          return (
+              <>
+                  {   
+                      row.status == "Declined Query" ?
+                      <>
+                     <div className="declinedPayment">
+                     {dateMnsFive > curDate === true ?
+                          <div title="Send Feedback"
+                          style={{
+                              cursor: "pointer",
+                          }}>
+                          <Link
+                              to={{
+                                  pathname: `/customer/feedback/${row.assign_no}`,
+                                  obj: {
+                                      routes: `/customer/queries`,
+                                      index: 3
+                                  }
+                              }}
+                          >
+                              <FeedbackIcon />
+                          </Link>
+                      </div>
+                       : ""} 
+                       <div title="Send Message">
+                              <Link
+                                  to={{
+                                      pathname: `/customer/chatting/${row.id}&type=4`,
+                                      obj: {
+                                          message_type: "4",
+                                          query_No: row.assign_no,
+                                          query_id: row.id,
+                                          routes: `/customer/queries`
+                                      }
+                                  }}
+                              >
+                                  <i
+                                      className="fa fa-comments-o"
+                                      style={{
+                                          fontSize: 16,
+                                          cursor: "pointer",
+                                          color: "blue"
+                                      }}
+                                  ></i>
+                              </Link>
+                          </div>
+                          <div title="View Discussion Message">
+                              <i
+                                  className="fa fa-comments-o"
+                                  style={{
+                                      fontSize: 16,
+                                      cursor: "pointer",
+                                      color: "orange"
+                                  }}
+                                  onClick={() => ViewDiscussionToggel(row.assign_no)}
+                              ></i>
+                          </div>
+
+                     </div>
+                      </>
+                          :
+                       ""}
+                       
+              </>
+          );
+      },
+  },
+];
 
   return (
     <div>
@@ -216,6 +292,12 @@ function DeclinedQueries() {
             classes="table-responsive"
           />
           </div>
+          <DiscardReport
+                        ViewDiscussionToggel={ViewDiscussionToggel}
+                        ViewDiscussion={ViewDiscussion}
+                        report={assignNo}
+                        getData={getQueriesData}
+                    />
         </CardBody>
       </Card>
     </div>

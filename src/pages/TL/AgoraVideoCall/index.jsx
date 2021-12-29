@@ -143,7 +143,7 @@ remoteShare2 = false
    })
 
   this.setState({getAdId : uid})
-        this.state.uid = uid;
+      
        
         this.localStream = this.streamInit(uid, $.attendeeMode, $.videoProfile);
         this.localStream.init(
@@ -182,7 +182,6 @@ remoteShare2 = false
     this.accuire();
     // this.accuire()
   }
-schdrularName;
 
   getSchedulerData =() =>{
        axios
@@ -224,7 +223,7 @@ schdrularName;
       else if (dom && this.state.disabledVedio === false) {
        dom.setAttribute("class", "ag-item");
       }
-      let dd, kk;
+      let dd;
       if (!dom) {
         dom = document.createElement("section");
         dom.setAttribute("id", "ag-item-" + id);
@@ -233,22 +232,29 @@ schdrularName;
         var box22 = document.getElementById("ag-item-" + id)
         dd = document.createElement("input")
         dd.setAttribute("id", txtColor)
-        var newContent = document.createTextNode(CommonServices.capitalizeFirstLetter(this.state.participantName)); 
+        
         item.play("ag-item-" + id);
        dd.setAttribute("value", CommonServices.capitalizeFirstLetter(this.state.participantName))
        dd.setAttribute("disabled", true)
-       kk =   dd.appendChild(newContent)
+
        box22.appendChild(dd)
+       if(item.getId() === this.state.getAdId && index === 0){
+        
+        let invis = document.getElementById(txtColor);
+        invis.setAttribute("value", "You")
+      }
       }
      
        
       if (index === no - 1) {
-        
+      
         //  document.getElementById("custName").value = "Lucky"
           dom.setAttribute("style", `grid-area: span 12/span 24/13/25`);
-          
+         
         } else {
+          
           let f = false;
+        
           dom.setAttribute(
             "style",
             `grid-area: span 3/span 4/${4 + 3 * index}/25;
@@ -256,16 +262,37 @@ schdrularName;
           );
           dom.addEventListener('click', function (e){
             if(f === false){
+             
+              
               f = true
               dom.setAttribute("style", `grid-area: span 12/span 24/13/25`);
+              let list;
+             
+              list = Array.from(
+                document.querySelectorAll(`.ag-item:not(#ag-item-${id})`)
+              );
+              list.map((item) => {
+                
+                  item.style.display = "none"
+                }) 
             }
             else{
               f = false
+           
               dom.setAttribute(
                 "style",
                 `grid-area: span 3/span 4/${4 + 3 * index}/25;
                         z-index:1;width:calc(100% - 20px);height:calc(100% - 20px)`
               );
+              let list;
+             
+              list = Array.from(
+                document.querySelectorAll(`.ag-item:not(#ag-item-${id})`)
+              );
+              list.map((item) => {
+                
+                  item.style.display = "block"
+                })
             }
           })
         }
@@ -291,7 +318,7 @@ if(item.player === undefined){
       else if (dom && this.state.disabledVedio === false) {
        dom.setAttribute("class", "ag-item");
       }
-      let dd, kk;
+      let dd;
       if (!dom) {
         dom = document.createElement("section");
         dom.setAttribute("id", "ag-item-" + id);
@@ -302,12 +329,17 @@ if(item.player === undefined){
        
         dd = document.createElement("input")
         dd.setAttribute("id", txtColor)
-        var newContent = document.createTextNode(this.state.participantName); 
+      
         item.play("ag-item-" + id);
        dd.setAttribute("value", this.state.participantName)
        dd.setAttribute("disabled", true)
-       kk =   dd.appendChild(newContent)
+      
        box22.appendChild(dd)
+       if(item.getId() === this.state.getAdId && index === 0){
+        
+        let invis = document.getElementById(txtColor);
+        invis.setAttribute("value", "You")
+      }
       }
       dom.setAttribute("style", `grid-area: ${tile_canvas[no][index]}`);
       dom.addEventListener('click', function (e){
@@ -315,10 +347,28 @@ if(item.player === undefined){
         if(f === false){
           f = true
           dom.setAttribute("style", `grid-area: span 12/span 24/13/25`);
+          let list;
+             
+          list = Array.from(
+            document.querySelectorAll(`.ag-item:not(#ag-item-${id})`)
+          );
+          list.map((item) => {
+            
+              item.style.display = "none"
+            }) 
         }
         else{
           f = false
           dom.setAttribute("style", `grid-area: ${tile_canvas[no][index]}`);
+          let list;
+             
+          list = Array.from(
+            document.querySelectorAll(`.ag-item:not(#ag-item-${id})`)
+          );
+          list.map((item) => {
+            
+              item.style.display = "block"
+            }) 
         }
       })
       if(item.player === undefined){
@@ -404,10 +454,7 @@ if(item.player === undefined){
      
   console.log("res", res.data.length)
       
-  if(stream.getId() === this.uid){
-    this.setState({ participantName : "" })
-  }
- else{
+ 
   if(res.data.length == 0){
     this.setState({ participantName : "" })
   this.remoteShare2 = true
@@ -417,7 +464,7 @@ if(item.player === undefined){
    
   }
      
- }  
+ 
        rt.addStream(stream)
  
      })
@@ -473,9 +520,7 @@ if(item.player === undefined){
   };
 
   addStream = (stream, push = false) => {
-    if(this.uid === stream.getId()){
-      this.setState({participantName : ""})
-    }
+   
     this.hostId = stream.getId()
  
   
