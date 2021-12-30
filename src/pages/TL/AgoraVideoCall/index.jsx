@@ -132,8 +132,7 @@ remoteShare2 = false
     this.client = AgoraRTC.createClient({ mode: $.transcode });
     this.client.init($.appId, () => {
      
-      this.subscribeStreamEvents();
-
+   
       this.client.join($.appId, $.channel, $.uid, (uid) => {
        
         var data_post_api = "https://virtualapi.multitvsolution.com/VstreamApi/index.php/api/vstream/userdata?channel_name="+this.channelName+"&rtm_id="+""+"&rtc_id="+uid+"&user_name="+this.tlName;
@@ -143,13 +142,16 @@ remoteShare2 = false
    })
 
   this.setState({getAdId : uid})
-      
+  this.subscribeStreamEvents();
        
         this.localStream = this.streamInit(uid, $.attendeeMode, $.videoProfile);
         this.localStream.init(
+        
           () => {
             if ($.attendeeMode !== "audience") {
               this.addStream(this.localStream, true);
+              
+
               this.client.publish(this.localStream, (err) => {
                
               });
@@ -233,21 +235,29 @@ remoteShare2 = false
         dd = document.createElement("input")
         dd.setAttribute("id", txtColor)
         
-        item.play("ag-item-" + id);
-       dd.setAttribute("value", CommonServices.capitalizeFirstLetter(this.state.participantName))
-       dd.setAttribute("disabled", true)
+     
+      
 
-       box22.appendChild(dd)
        if(item.getId() === this.state.getAdId && index === 0){
-        
-        let invis = document.getElementById(txtColor);
-        invis.setAttribute("value", "You")
+     
+        dd.setAttribute("value", CommonServices.capitalizeFirstLetter("You"))
+        dd.setAttribute("disabled", true)
       }
+      else{
+        if(this.state.readyState === true){
+          alert(index)
+          dd.setAttribute("value", CommonServices.capitalizeFirstLetter(this.state.participantName))
+          dd.setAttribute("disabled", true)
+        }
+        
+      }
+      box22.appendChild(dd)
+      item.play("ag-item-" + id);
       }
      
        
       if (index === no - 1) {
-      
+    
         //  document.getElementById("custName").value = "Lucky"
           dom.setAttribute("style", `grid-area: span 12/span 24/13/25`);
          
@@ -649,10 +659,10 @@ if(item.player === undefined){
       if (this.state.stateSharing) {
         this.shareClient && this.shareClient.unpublish(this.shareStream);
         this.shareStream && this.shareStream.close();
-        this.state.stateSharing = false;
+        this.setState({stateSharing : false})
       } else {
         this.setState({participantName : ""})
-        this.state.stateSharing = true;
+        this.setState({stateSharing : true})
         let $ = this.props;
         // init AgoraRTC local client
         this.shareClient = AgoraRTC.createClient({ mode: $.transcode });

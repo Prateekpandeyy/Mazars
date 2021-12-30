@@ -232,7 +232,6 @@ remoteShare2 = false
         }
         let dd;
         if (!dom) {
-         
           dom = document.createElement("section");
           dom.setAttribute("id", "ag-item-" + id);
           dom.setAttribute("class", "ag-item");
@@ -240,16 +239,27 @@ remoteShare2 = false
           var box22 = document.getElementById("ag-item-" + id)
           dd = document.createElement("input")
           dd.setAttribute("id", txtColor)
-          item.play("ag-item-" + id);
-          dd.setAttribute("value", CommonServices.capitalizeFirstLetter(this.state.participantName))
-         dd.setAttribute("disabled", true)
-         box22.appendChild(dd)
-         if(item.getId() === this.state.getAdId && index === 0){
+          
+       
         
-          let invis = document.getElementById(txtColor);
-          invis.setAttribute("value", "You")
+  
+         if(item.getId() === this.state.getAdId && index === 0){
+       
+          dd.setAttribute("value", CommonServices.capitalizeFirstLetter("You"))
+          dd.setAttribute("disabled", true)
         }
+        else{
+          if(this.state.readyState === true){
+            dd.setAttribute("value", CommonServices.capitalizeFirstLetter(this.state.participantName))
+            dd.setAttribute("disabled", true)
+          }
+          
         }
+        box22.appendChild(dd)
+        item.play("ag-item-" + id);
+        }
+       
+         
        
        
         if (index === no - 1) {
@@ -663,10 +673,11 @@ remoteShare2 = false
     if (this.state.stateSharing) {
       this.shareClient && this.shareClient.unpublish(this.shareStream);
       this.shareStream && this.shareStream.close();
-      this.state.stateSharing = false;
+      // this.state.stateSharing = false;
+      this.setState({stateSharing : false})
     } else {
       this.setState({participantName : ""})
-      this.state.stateSharing = true;
+      this.setState({stateSharing : true})
       let $ = this.props;
       // init AgoraRTC local client
       this.shareClient = AgoraRTC.createClient({ mode: $.transcode });
@@ -676,7 +687,7 @@ remoteShare2 = false
 
        //  this.subscribeStreamEvents();
         this.shareClient.join($.appId, $.channel, $.uid, (uid) => {
-          this.state.uid = uid;
+         
          
           // create local stream
           // It is not recommended to setState in function addStream

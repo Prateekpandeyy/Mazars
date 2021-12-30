@@ -112,7 +112,7 @@ console.log("customerName", this.customerName)
     this.client = AgoraRTC.createClient({ mode: $.transcode });
     this.client.init($.appId, () => {
       
-      this.subscribeStreamEvents();
+     
 
       this.client.join($.appId, $.channel, $.uid, (uid) => {
         var data_post_api = "https://virtualapi.multitvsolution.com/VstreamApi/index.php/api/vstream/userdata?channel_name="+this.channelName+"&rtm_id="+""+"&rtc_id="+uid+"&user_name="+this.customerName;
@@ -158,6 +158,7 @@ console.log("customerName", this.customerName)
         btnGroup.classList.remove("active");
       }, 2000);
     });
+    this.subscribeStreamEvents();
   }
 
   componentDidUpdate() {
@@ -191,19 +192,27 @@ console.log("customerName", this.customerName)
           var box22 = document.getElementById("ag-item-" + id)
           dd = document.createElement("input")
           dd.setAttribute("id", txtColor)
-         
-          item.play("ag-item-" + id);
-         dd.setAttribute("value", CommonServices.capitalizeFirstLetter(this.state.participantName))
-         dd.setAttribute("disabled", true)
+          
        
-         box22.appendChild(dd)
-         if(item.getId() === this.state.atCustId && index === 0){
         
-          let invis = document.getElementById(txtColor);
-          invis.setAttribute("value", "You")
+  
+         if(item.getId() === this.state.getAdId && index === 0){
+       
+          dd.setAttribute("value", CommonServices.capitalizeFirstLetter("You"))
+          dd.setAttribute("disabled", true)
         }
+        else{
+          if(this.state.readyState === true){
+            dd.setAttribute("value", CommonServices.capitalizeFirstLetter(this.state.participantName))
+            dd.setAttribute("disabled", true)
+          }
+          
+        }
+        box22.appendChild(dd)
+        item.play("ag-item-" + id);
         }
        
+         
          
         if (index === no - 1) {
           
@@ -279,25 +288,19 @@ if(item.player === undefined){
           dom.setAttribute("class", "ag-item");
           canvas.appendChild(dom);
           var box22 = document.getElementById("ag-item-" + id)
-         
-         
           dd = document.createElement("input")
           dd.setAttribute("id", txtColor)
-         
           item.play("ag-item-" + id);
          dd.setAttribute("value", this.state.participantName)
          dd.setAttribute("disabled", true)
-       
          box22.appendChild(dd)
          if(item.getId() === this.state.getAdId && index === 0){
-        
           let invis = document.getElementById(txtColor);
           invis.setAttribute("value", "You")
         }
         }
         dom.setAttribute("style", `grid-area: ${tile_canvas[no][index]}`);
         dom.addEventListener('click', function (e){
-            
           if(f === false){
             f = true
             dom.setAttribute("style", `grid-area: span 12/span 24/13/25`);
@@ -579,9 +582,9 @@ if(item.player === undefined){
     if (this.state.stateSharing) {
       this.shareClient && this.shareClient.unpublish(this.shareStream);
       this.shareStream && this.shareStream.close();
-      this.state.stateSharing = false;
+      this.setState({stateSharing : false})
     } else {
-      this.state.stateSharing = true;
+      this.setState({stateSharing : true})
       this.setState({participantName : ""})
       let $ = this.props;
       // init AgoraRTC local client
