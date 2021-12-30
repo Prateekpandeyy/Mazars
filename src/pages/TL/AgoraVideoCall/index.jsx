@@ -211,7 +211,7 @@ remoteShare2 = false
   if (this.state.displayMode === "pip") {
     let no = this.state.streamList.length;
    
-    if (no > 0) {
+    if (no > 4) {
       this.setState({ displayMode: "tile" });
       return;
     }
@@ -465,25 +465,7 @@ if(item.player === undefined){
     
         let stream = evt.stream;
       
-        var apiData = "https://virtualapi.multitvsolution.com/VstreamApi/index.php/api/vstream/getInfoByRTCId?channel_name="+this.channelName+"&rtc_id="+stream.getId()
-    axios.get(`${apiData}`)
-    .then((res) =>{
-     
-
- 
-  if(res.data.length == 0){
-    this.setState({ participantName : "" })
-  this.remoteShare2 = true
-  }
-  else if(res.data.length > 0){
-    this.setState({ participantName : res.data[0].user_name })
-   
-  }
-     
- 
-     
-     })
-     rt.addStream(stream)
+         rt.addStream(stream)
  
     
        }.bind(this));
@@ -555,11 +537,29 @@ if(item.player === undefined){
         streamList: [stream].concat(this.state.streamList),
       });
     }
+    var apiData = "https://virtualapi.multitvsolution.com/VstreamApi/index.php/api/vstream/getInfoByRTCId?channel_name="+this.channelName+"&rtc_id="+stream.getId()
+    axios.get(`${apiData}`)
+    .then((res) =>{
+     
+
+ 
+  if(res.data.length == 0){
+    this.setState({ participantName : "" })
+  this.remoteShare2 = true
+  }
+  else if(res.data.length > 0 && this.state.getAdId !== stream.getId()){
+   // this.setState({ participantName : res.data[0].user_name })
     var praticipantVar = document.getElementById("name" + stream.getId())
-    praticipantVar.setAttribute("value", this.state.participantName);
+    praticipantVar.setAttribute("value", res.data[0].user_name);
     praticipantVar.setAttribute("disabled", true)
-   
-  };
+  }
+  else if(res.data.length > 0 && this.state.getAdId === stream.getId()){
+    // this.setState({ participantName : res.data[0].user_name })
+     var praticipantVar = document.getElementById("name" + stream.getId())
+     praticipantVar.setAttribute("value", "You");
+     praticipantVar.setAttribute("disabled", true)
+   }
+     })};
 
   handleCamera = (e) => {
     if(this.state.readyState === false){

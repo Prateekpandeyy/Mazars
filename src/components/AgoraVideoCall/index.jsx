@@ -416,23 +416,7 @@ if(item.player === undefined){
 
     rt.client.on("stream-subscribed", function (evt) {
       let stream = evt.stream;
-      var apiData = "https://virtualapi.multitvsolution.com/VstreamApi/index.php/api/vstream/getInfoByRTCId?channel_name="+this.channelName+"&rtc_id="+stream.getId()
-  axios.get(`${apiData}`)
-  .then((res) =>{
-   
-    if(res.data.length == 0){
-      this.setState({ participantName : "" })
-    this.remoteShare2 = true
-    }
-    else if(res.data.length > 0){
-      this.setState({ participantName : res.data[0].user_name })
-     
     
-       
-   } 
-      
-    
-  })
     
   rt.addStream(stream);
     }.bind(this));
@@ -480,6 +464,9 @@ if(item.player === undefined){
 
   addStream = (stream, push = false) => {
    
+    this.hostId = stream.getId()
+ 
+  
     let repeatition = this.state.streamList.some((item) => {
       return item.getId() === stream.getId();
     });
@@ -495,12 +482,30 @@ if(item.player === undefined){
         streamList: [stream].concat(this.state.streamList),
       });
     }
-    var praticipantVar = document.getElementById("name" + stream.getId())
-    praticipantVar.setAttribute("value", this.state.participantName);
-    praticipantVar.setAttribute("disabled", true)
-    console.log("participant", praticipantVar, stream.getId())
-  };
+    var apiData = "https://virtualapi.multitvsolution.com/VstreamApi/index.php/api/vstream/getInfoByRTCId?channel_name="+this.channelName+"&rtc_id="+stream.getId()
+    axios.get(`${apiData}`)
+    .then((res) =>{
+     
 
+ 
+  if(res.data.length == 0){
+    this.setState({ participantName : "" })
+  this.remoteShare2 = true
+  }
+  else if(res.data.length > 0 && this.state.getAdId !== stream.getId()){
+   // this.setState({ participantName : res.data[0].user_name })
+    var praticipantVar = document.getElementById("name" + stream.getId())
+    praticipantVar.setAttribute("value", res.data[0].user_name);
+    praticipantVar.setAttribute("disabled", true)
+  }
+  else if(res.data.length > 0 && this.state.getAdId === stream.getId()){
+    // this.setState({ participantName : res.data[0].user_name })
+     var praticipantVar = document.getElementById("name" + stream.getId())
+     praticipantVar.setAttribute("value", "You");
+     praticipantVar.setAttribute("disabled", true)
+   }
+     })
+  };
   handleCamera = (e) => {
     this.setState({disabledVedio : !this.state.disabledVedio})
     e.currentTarget.classList.toggle("off");
