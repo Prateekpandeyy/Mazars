@@ -160,8 +160,7 @@ function EditTL() {
   };
   
   const onFinish = (value) => {
-
-
+   
     var categeryList = []
     var categeryName = []
     var kk = []
@@ -174,17 +173,48 @@ function EditTL() {
       kk.push(i.value)
       parentCategoryName.push(i.label)
     })
+   
 
     if (custCate.length < 1 && data4.length < 1) {
       setError("Please select at least one value")
+     
     }
     else if (subData.length < 1 && data5.length < 1) {
       setError2("Please select at least one value")
+     
     }
     else if (invalid || wEmail || indNumError || posError.exits) {
       setDisplay(false)
+    
+    }
+    else if(parentCategoryName.includes("Direct tax") && dd.direct.length === 0){
+      Swal.fire({
+        title : "error",
+        html : "direct"
+      })
+    }
+    else if(parentCategoryName.includes("Indirect tax") && dd.indirect.length === 0){
+      Swal.fire({
+        title : "error",
+        html : "indirect"
+      })
+    }
+    else if(parentCategoryName.includes("Indirect tax") && dd.indirect === undefined){
+      Swal.fire({
+        title : "error",
+        html : "indirect"
+      })
+    }
+    else if(parentCategoryName.includes("Direct tax") && dd.direct === undefined){
+      Swal.fire({
+        title : "error",
+        html : "direct"
+      })
     }
     else {
+      console.log("dd", dd.direct)
+      console.log("dd", dd.indirect.length, dd.indirect)
+      console.log("ddd", parentCategoryName.includes("Indirect tax"))
       setLoading(true)
       setDisplay(true)
       let formData = new FormData();
@@ -308,6 +338,26 @@ console.log("value", categeryList)
       direct: dir,
       indirect: indir
     })
+    let pk = []
+    if(indir.length === 0 && dir.length === 0){
+      setCategoryData("")
+    }
+   else if(dir.length === 0){
+      let bb = {
+        value : "2",
+        label : "Indirect tax"
+      }
+      pk.push(bb)
+      setCategoryData(pk)
+    }
+    else if(indir.length === 0){
+      let bb = {
+        value : "1",
+        label : "Direct tax"
+      }
+      pk.push(bb)
+      setCategoryData(pk)
+    }
   }
 
 
@@ -335,7 +385,8 @@ console.log("value", categeryList)
     if (vv.length > 0) {
       console.log("value", vv)
       if (vv.includes("1") && vv.includes("2")) {
-      
+        console.log("one")
+      return;
       }
       else if (vv.includes("1")) {
 let dkkk = []

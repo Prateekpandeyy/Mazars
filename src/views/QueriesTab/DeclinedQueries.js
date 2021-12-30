@@ -186,7 +186,7 @@ function DeclinedQueries() {
     {
       text: "Action",
       headerStyle: () => {
-          return { fontSize: "12px", textAlign: "center", width: "130px" };
+          return { fontSize: "12px", textAlign: "center" };
       },
       formatter: function (cell, row) {
           var dateMnsFive = moment(row.exp_delivery_date).add(15, 'day').format("YYYY-MM-DD");
@@ -222,28 +222,7 @@ function DeclinedQueries() {
                           </Link>
                       </div>
                        : ""} 
-                       <div title="Send Message">
-                              <Link
-                                  to={{
-                                      pathname: `/customer/chatting/${row.id}&type=4`,
-                                      obj: {
-                                          message_type: "4",
-                                          query_No: row.assign_no,
-                                          query_id: row.id,
-                                          routes: `/customer/queries`
-                                      }
-                                  }}
-                              >
-                                  <i
-                                      className="fa fa-comments-o"
-                                      style={{
-                                          fontSize: 16,
-                                          cursor: "pointer",
-                                          color: "blue"
-                                      }}
-                                  ></i>
-                              </Link>
-                          </div>
+                      
                           <div title="View Discussion Message">
                               <i
                                   className="fa fa-comments-o"
