@@ -238,23 +238,24 @@ remoteShare2 = false
           canvas.appendChild(dom);
           var box22 = document.getElementById("ag-item-" + id)
           dd = document.createElement("input")
-          dd.setAttribute("id", txtColor)
+          dd.setAttribute("id", "name" + id)
+          dd.setAttribute("class", txtColor)
           
        
         
   
-         if(item.getId() === this.state.getAdId && index === 0){
+        //  if(item.getId() === this.state.getAdId && index === 0){
        
-          dd.setAttribute("value", CommonServices.capitalizeFirstLetter("You"))
-          dd.setAttribute("disabled", true)
-        }
-        else{
-          if(this.state.readyState === true){
-            dd.setAttribute("value", CommonServices.capitalizeFirstLetter(this.state.participantName))
-            dd.setAttribute("disabled", true)
-          }
+        //   dd.setAttribute("value", CommonServices.capitalizeFirstLetter("You"))
+        //   dd.setAttribute("disabled", true)
+        // }
+        // else{
+        //   if(this.state.readyState === true){
+        //     dd.setAttribute("value", CommonServices.capitalizeFirstLetter(this.state.participantName))
+        //     dd.setAttribute("disabled", true)
+        //   }
           
-        }
+        // }
         box22.appendChild(dd)
         item.play("ag-item-" + id);
         }
@@ -345,15 +346,15 @@ remoteShare2 = false
           dd.setAttribute("id", txtColor)
        
           item.play("ag-item-" + id);
-         dd.setAttribute("value", this.state.participantName)
+        //  dd.setAttribute("value", this.state.participantName)
          dd.setAttribute("disabled", true)
         
          box22.appendChild(dd)
-         if(item.getId() === this.state.getAdId && index === 0){
+        //  if(item.getId() === this.state.getAdId && index === 0){
         
-          let invis = document.getElementById(txtColor);
-          invis.setAttribute("value", "You")
-        }
+        //   let invis = document.getElementById(txtColor);
+        //   invis.setAttribute("value", "You")
+        // }
         }
         dom.setAttribute("style", `grid-area: ${tile_canvas[no][index]}`);
         dom.addEventListener('click', function (e){
@@ -477,8 +478,9 @@ remoteShare2 = false
   this.remoteShare2 = true
   }
   else if(res.data.length > 0){
-    this.setState({ participantName : res.data[0].user_name })
    
+    this.setState({ participantName : res.data[0].user_name })
+ 
   
      
  } 
@@ -556,6 +558,10 @@ remoteShare2 = false
         streamList: [stream].concat(this.state.streamList),
       });
     }
+    var praticipantVar = document.getElementById("name" + stream.getId())
+    praticipantVar.setAttribute("value", this.state.participantName);
+    praticipantVar.setAttribute("disabled", true)
+    console.log("participant", praticipantVar, stream.getId())
   };
 
   handleCamera = (e) => {

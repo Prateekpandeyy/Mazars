@@ -233,27 +233,29 @@ remoteShare2 = false
         canvas.appendChild(dom);
         var box22 = document.getElementById("ag-item-" + id)
         dd = document.createElement("input")
-        dd.setAttribute("id", txtColor)
+        dd.setAttribute("id", "name" + id)
+        dd.setAttribute("class", txtColor)
         
      
       
 
-       if(item.getId() === this.state.getAdId && index === 0){
+      //  if(item.getId() === this.state.getAdId && index === 0){
      
-        dd.setAttribute("value", CommonServices.capitalizeFirstLetter("You"))
-        dd.setAttribute("disabled", true)
-      }
-      else{
-        if(this.state.readyState === true){
-          alert(index)
-          dd.setAttribute("value", CommonServices.capitalizeFirstLetter(this.state.participantName))
-          dd.setAttribute("disabled", true)
-        }
+      //   dd.setAttribute("value", CommonServices.capitalizeFirstLetter("You"))
+      //   dd.setAttribute("disabled", true)
+      // }
+      // else{
+      //   if(this.state.readyState === true){
+      //     dd.setAttribute("value", CommonServices.capitalizeFirstLetter(this.state.participantName))
+      //     dd.setAttribute("disabled", true)
+      //   }
         
-      }
+      // }
       box22.appendChild(dd)
       item.play("ag-item-" + id);
       }
+     
+       
      
        
       if (index === no - 1) {
@@ -454,16 +456,14 @@ if(item.player === undefined){
     });
 
     rt.client.on("stream-subscribed", function (evt) {
-      console.log("three")
-      console.log("evt", evt)
+    
         let stream = evt.stream;
       
         var apiData = "https://virtualapi.multitvsolution.com/VstreamApi/index.php/api/vstream/getInfoByRTCId?channel_name="+this.channelName+"&rtc_id="+stream.getId()
     axios.get(`${apiData}`)
     .then((res) =>{
      
-  console.log("res", res.data.length)
-      
+
  
   if(res.data.length == 0){
     this.setState({ participantName : "" })
@@ -549,6 +549,10 @@ if(item.player === undefined){
         streamList: [stream].concat(this.state.streamList),
       });
     }
+    var praticipantVar = document.getElementById("name" + stream.getId())
+    praticipantVar.setAttribute("value", this.state.participantName);
+    praticipantVar.setAttribute("disabled", true)
+    console.log("participant", praticipantVar, stream.getId())
   };
 
   handleCamera = (e) => {
