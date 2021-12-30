@@ -405,10 +405,8 @@ if(item.player === undefined){
   console.log("res", res.data.length)
       
       
-  if(stream.getId() === this.uid){
-    this.setState({ participantName : "" })
-  }
-  else if(res.data.length == 0){
+  
+   if(stream.getId() === this.uid || res.data.length == 0){
     this.setState({ participantName : "" })
   this.remoteShare2 = true
   }
@@ -472,7 +470,9 @@ if(item.player === undefined){
   };
 
   addStream = (stream, push = false) => {
-
+if(stream.getId() == this.uid){
+  this.setState({participantName : "name"})
+}
     this.hostId = stream.getId()
  
   
