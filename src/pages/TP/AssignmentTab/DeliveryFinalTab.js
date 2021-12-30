@@ -237,7 +237,7 @@ const ViewReport = (key) => {
                                 {row.delivery_report}
                             </p>
                             <p>
-                                <span style={{ fontWeight: "bold" }}>Complete :</span>
+                                <span style={{ fontWeight: "bold" }}>Awaiting Completion :</span>
                                 {row.other_stage}
                             </p>
                         </div>

@@ -225,7 +225,7 @@ remoteShare2 = false
   if (this.state.displayMode === "pip") {
     let no = this.state.streamList.length;
    
-    if (no > 4) {
+    if (no > 0) {
       this.setState({ displayMode: "tile" });
       return;
     }
@@ -350,23 +350,28 @@ if(item.player === undefined){
         dom.setAttribute("class", "ag-item");
         canvas.appendChild(dom);
         var box22 = document.getElementById("ag-item-" + id)
-       
-       
         dd = document.createElement("input")
-        dd.setAttribute("id", txtColor)
-       
-        item.play("ag-item-" + id);
-       dd.setAttribute("value", this.state.participantName)
-       dd.setAttribute("disabled", true)
-     
-       box22.appendChild(dd)
-       if(item.getId() === this.state.getAdId && index === 0){
+        dd.setAttribute("id", "name" + id)
+        dd.setAttribute("class", txtColor)
         
-        let invis = document.getElementById(txtColor);
-        invis.setAttribute("value", "You")
-      }
-      }
-      dom.setAttribute("style", `grid-area: ${tile_canvas[no][index]}`);
+     
+      
+
+      //  if(item.getId() === this.state.getAdId && index === 0){
+     
+      //   dd.setAttribute("value", CommonServices.capitalizeFirstLetter("You"))
+      //   dd.setAttribute("disabled", true)
+      // }
+      // else{
+      //   if(this.state.readyState === true){
+      //     dd.setAttribute("value", CommonServices.capitalizeFirstLetter(this.state.participantName))
+      //     dd.setAttribute("disabled", true)
+      //   }
+        
+      // }
+      box22.appendChild(dd)
+      item.play("ag-item-" + id);
+      } dom.setAttribute("style", `grid-area: ${tile_canvas[no][index]}`);
       dom.addEventListener('click', function (e){
           
         if(f === false){
@@ -489,9 +494,9 @@ if(item.player === undefined){
       }
          
      
-      rt.addStream(stream);
+   
     })
-      
+    rt.addStream(stream);
    
       }.bind(this));
   
@@ -563,7 +568,7 @@ if(item.player === undefined){
     var praticipantVar = document.getElementById("name" + stream.getId())
     praticipantVar.setAttribute("value", this.state.participantName);
     praticipantVar.setAttribute("disabled", true)
-    console.log("participant", praticipantVar, stream.getId())
+   
   };
 
   handleCamera = (e) => {
