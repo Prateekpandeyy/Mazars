@@ -470,7 +470,7 @@ remoteShare2 = false
 
     rt.client.on("stream-subscribed", function (evt) {
      
-      
+      let stream = evt.stream;
  
        
      rt.addStream(stream)

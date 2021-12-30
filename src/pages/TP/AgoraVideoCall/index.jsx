@@ -476,7 +476,7 @@ if(item.player === undefined){
     });
 
     rt.client.on("stream-subscribed", function (evt) {
-    
+      let stream = evt.stream;
     rt.addStream(stream);
    
       }.bind(this));
