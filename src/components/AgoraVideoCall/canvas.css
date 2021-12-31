@@ -14,12 +14,12 @@
   width: 100%;
 }
 #myPartName{
-  background: none;
+background-color: rgba((0,0,255, 0.6));
   width: 150px;
   border: none;
 
   position: relative;
-  bottom: 20%;
+  bottom : 0px;
   color: #fff;
   left: 10px;
  
@@ -31,13 +31,15 @@
   border: none;
 
   position: relative;
-  bottom: 20%;
+  
   color: #000;
   left: 10px;
 
   /* transform: translate(-20%, -20%); */
 }
 .ag-item {
+  display: flex;
+  flex-direction: column-reverse;
   border-radius: 0px;
   border: 2px #00B6ED solid;
   color : black !important;

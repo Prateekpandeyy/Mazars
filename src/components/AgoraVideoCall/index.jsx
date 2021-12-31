@@ -112,7 +112,7 @@ console.log("customerName", this.customerName)
     this.client = AgoraRTC.createClient({ mode: $.transcode });
     this.client.init($.appId, () => {
       
-      this.subscribeStreamEvents();
+     
 
       this.client.join($.appId, $.channel, $.uid, (uid) => {
         var data_post_api = "https://virtualapi.multitvsolution.com/VstreamApi/index.php/api/vstream/userdata?channel_name="+this.channelName+"&rtm_id="+""+"&rtc_id="+uid+"&user_name="+this.customerName;
@@ -121,7 +121,7 @@ console.log("customerName", this.customerName)
         
         
         })
-        this.state.uid = uid;
+       
        this.setState({atCustId : uid})
         // create local stream
         // It is not recommended to setState in function addStream
@@ -158,6 +158,7 @@ console.log("customerName", this.customerName)
         btnGroup.classList.remove("active");
       }, 2000);
     });
+    this.subscribeStreamEvents();
   }
 
   componentDidUpdate() {
@@ -182,7 +183,7 @@ console.log("customerName", this.customerName)
         else if (dom && this.state.disabledVedio === false) {
          dom.setAttribute("class", "ag-item");
         }
-        let dd, kk;
+        let dd;
         if (!dom) {
           dom = document.createElement("section");
           dom.setAttribute("id", "ag-item-" + id);
@@ -191,20 +192,33 @@ console.log("customerName", this.customerName)
           var box22 = document.getElementById("ag-item-" + id)
           dd = document.createElement("input")
           dd.setAttribute("id", txtColor)
-          var newContent = document.createTextNode(CommonServices.capitalizeFirstLetter(this.state.participantName)); 
-          item.play("ag-item-" + id);
-         dd.setAttribute("value", CommonServices.capitalizeFirstLetter(this.state.participantName))
-         dd.setAttribute("disabled", true)
-         kk =   dd.appendChild(newContent)
-         box22.appendChild(dd)
+          
+       
+        
+  
+         if(item.getId() === this.state.getAdId && index === 0){
+       
+          dd.setAttribute("value", CommonServices.capitalizeFirstLetter("You"))
+          dd.setAttribute("disabled", true)
+        }
+        else{
+          if(this.state.readyState === true){
+            dd.setAttribute("value", CommonServices.capitalizeFirstLetter(this.state.participantName))
+            dd.setAttribute("disabled", true)
+          }
+          
+        }
+        box22.appendChild(dd)
+        item.play("ag-item-" + id);
         }
        
+         
          
         if (index === no - 1) {
           
           //  document.getElementById("custName").value = "Lucky"
             dom.setAttribute("style", `grid-area: span 12/span 24/13/25`);
-            
+           
           } else {
             let f = false;
             dom.setAttribute(
@@ -216,6 +230,15 @@ console.log("customerName", this.customerName)
               if(f === false){
                 f = true
                 dom.setAttribute("style", `grid-area: span 12/span 24/13/25`);
+                let list;
+             
+                list = Array.from(
+                  document.querySelectorAll(`.ag-item:not(#ag-item-${id})`)
+                );
+                list.map((item) => {
+                  
+                    item.style.display = "none"
+                  }) 
               }
               else{
                 f = false
@@ -224,6 +247,15 @@ console.log("customerName", this.customerName)
                   `grid-area: span 3/span 4/${4 + 3 * index}/25;
                           z-index:1;width:calc(100% - 20px);height:calc(100% - 20px)`
                 );
+                let list;
+             
+                list = Array.from(
+                  document.querySelectorAll(`.ag-item:not(#ag-item-${id})`)
+                );
+                list.map((item) => {
+                  
+                    item.style.display = "block"
+                  }) 
               }
             })
           }
@@ -249,34 +281,51 @@ if(item.player === undefined){
         else if (dom && this.state.disabledVedio === false) {
          dom.setAttribute("class", "ag-item");
         }
-        let dd, kk;
+        let dd;
         if (!dom) {
           dom = document.createElement("section");
           dom.setAttribute("id", "ag-item-" + id);
           dom.setAttribute("class", "ag-item");
           canvas.appendChild(dom);
           var box22 = document.getElementById("ag-item-" + id)
-         
-         
           dd = document.createElement("input")
           dd.setAttribute("id", txtColor)
-          var newContent = document.createTextNode(this.state.participantName); 
           item.play("ag-item-" + id);
          dd.setAttribute("value", this.state.participantName)
          dd.setAttribute("disabled", true)
-         kk =   dd.appendChild(newContent)
          box22.appendChild(dd)
+         if(item.getId() === this.state.getAdId && index === 0){
+          let invis = document.getElementById(txtColor);
+          invis.setAttribute("value", "You")
+        }
         }
         dom.setAttribute("style", `grid-area: ${tile_canvas[no][index]}`);
         dom.addEventListener('click', function (e){
-            
           if(f === false){
             f = true
             dom.setAttribute("style", `grid-area: span 12/span 24/13/25`);
+            let list;
+             
+            list = Array.from(
+              document.querySelectorAll(`.ag-item:not(#ag-item-${id})`)
+            );
+            list.map((item) => {
+              
+                item.style.display = "none"
+              }) 
           }
           else{
             f = false
             dom.setAttribute("style", `grid-area: ${tile_canvas[no][index]}`);
+            let list;
+             
+            list = Array.from(
+              document.querySelectorAll(`.ag-item:not(#ag-item-${id})`)
+            );
+            list.map((item) => {
+              
+                item.style.display = "block"
+              }) 
           }
         })
         if(item.player === undefined){
@@ -358,18 +407,17 @@ if(item.player === undefined){
       var apiData = "https://virtualapi.multitvsolution.com/VstreamApi/index.php/api/vstream/getInfoByRTCId?channel_name="+this.channelName+"&rtc_id="+stream.getId()
   axios.get(`${apiData}`)
   .then((res) =>{
-    if(stream.getId() === this.uid){
-      this.setState({ participantName : "" })
-    }
-    else if(res.data.length == 0){
+   
+    if(res.data.length == 0){
       this.setState({ participantName : "" })
     this.remoteShare2 = true
     }
     else if(res.data.length > 0){
       this.setState({ participantName : res.data[0].user_name })
      
-    }
-   
+    
+       
+   } 
       rt.addStream(stream);
     
   })
@@ -419,6 +467,7 @@ if(item.player === undefined){
   };
 
   addStream = (stream, push = false) => {
+   
     let repeatition = this.state.streamList.some((item) => {
       return item.getId() === stream.getId();
     });
@@ -533,9 +582,9 @@ if(item.player === undefined){
     if (this.state.stateSharing) {
       this.shareClient && this.shareClient.unpublish(this.shareStream);
       this.shareStream && this.shareStream.close();
-      this.state.stateSharing = false;
+      this.setState({stateSharing : false})
     } else {
-      this.state.stateSharing = true;
+      this.setState({stateSharing : true})
       this.setState({participantName : ""})
       let $ = this.props;
       // init AgoraRTC local client

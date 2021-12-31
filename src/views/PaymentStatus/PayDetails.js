@@ -204,7 +204,7 @@ setModal(!modal)
         
         {
             dataField: "invoice",
-            text: "Invoice",
+            text: "Invoice / Pay",
            
             style: {
                 fontSize: "11px",
@@ -215,9 +215,22 @@ setModal(!modal)
             formatter: function dateFormat(cell, row) {
                 return(
                    <>
-                   {row.invoice_generated == "1" ? 
+                  <div style={{display : "flex", alignItems: "center", justifyContent : "space-between"}}>
+                  {row.invoice_generated == "1" ? 
                     <a href={`${baseUrl3}/${row.invoice}`} target="_blank">
                           <DescriptionOutlinedIcon color="secondary" /></a> : ""}
+                          
+                          {row.is_paid == "0" ? 
+                <i
+                class="fa fa-mail-forward"
+                style={{
+                    fontSize: "14px",
+                    cursor: "pointer",
+                    color: "blue"
+                }}
+                onClick={() => openModal(row)}
+            ></i> : ""}
+                  </div>
                    </>
                 )
             },
@@ -241,23 +254,12 @@ setModal(!modal)
            
                return(
                 <>
-                {row.invoice_generated == "1" ? 
-              <>
-              {row.is_paid == "0" ? 
-                <i
-                class="fa fa-mail-forward"
-                style={{
-                    fontSize: "14px",
-                    cursor: "pointer",
-                    color: "blue"
-                }}
-                onClick={() => openModal(row)}
-            ></i> :   <>
+                
+             
             {row.is_paid == "1" ?  <a href={row.receipt_url} target="_blank">Payment receipt</a> 
-            : <p style={{fontWieght: "800", fontSize: "16px", padding: "5px", color : "red"}}>Declined</p> }
-            </>}
-              </>
-               : ""}
+            : ""}
+           {row.is_paid == "2" ? 
+           <p style={{fontWieght: "800", fontSize: "16px", padding: "5px", color : "red"}}>Declined</p>  : ""}
                 </>
                   
                    

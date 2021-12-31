@@ -49,11 +49,12 @@ function CustHistory({ history, toggle,modal }) {
                       </tr>
                       <tr>
                       <th scope="row">Query Completed</th>
-                     <td>{history.inprogress_queries}</td>
+                      <td>{history.complete_query}</td>
                      </tr>
                      <tr>
                      <th scope="row">Query Inprogress</th>
-                     <td>{history.complete_query}</td>
+                     <td>{history.inprogress_queries}</td>
+                   
                      </tr>
                      <tr>
                      <th scope="row">Query Declined</th>

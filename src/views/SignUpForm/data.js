@@ -2,7 +2,7 @@
 
 export const professionName = [
     { city: "CA" },
-    { city: "NON-CA" },
+    { city: "ADVOCATE" },
     { city: "CFO" },
     { city: "CEO" },
     { city: "FINANCE HEAD" },

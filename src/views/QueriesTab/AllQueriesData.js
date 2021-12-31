@@ -203,7 +203,7 @@ function AllQueriesData() {
         {
             text: "Action",
             headerStyle: () => {
-                return { fontSize: "12px", textAlign: "center", width: "130px" };
+                return { fontSize: "12px", textAlign: "center" };
             },
             formatter: function (cell, row) {
                 var dateMnsFive = moment(row.exp_delivery_date).add(15, 'day').format("YYYY-MM-DD");
@@ -220,7 +220,8 @@ function AllQueriesData() {
                         {   
                             row.status == "Declined Query" ?
                             <>
-                            {dateMnsFive > curDate === true ?
+                           <div className="declinedPayment">
+                           {dateMnsFive > curDate === true ?
                                 <div title="Send Feedback"
                                 style={{
                                     cursor: "pointer",
@@ -235,7 +236,22 @@ function AllQueriesData() {
                                 >
                                     <FeedbackIcon />
                                 </Link>
-                            </div> : ""} 
+                            </div>
+                             : ""} 
+                            
+                                <div title="View Discussion Message">
+                                    <i
+                                        className="fa fa-comments-o"
+                                        style={{
+                                            fontSize: 16,
+                                            cursor: "pointer",
+                                            color: "orange"
+                                        }}
+                                        onClick={() => ViewDiscussionToggel(row.assign_no)}
+                                    ></i>
+                                </div>
+
+                           </div>
                             </>
                                 :
                                 <div>
