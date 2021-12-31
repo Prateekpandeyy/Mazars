@@ -221,7 +221,8 @@ setModal(!modal)
                           <DescriptionOutlinedIcon color="secondary" /></a> : ""}
                           
                           {row.is_paid == "0" ? 
-                <i
+            <div title="Pay">
+                    <i
                 class="fa fa-mail-forward"
                 style={{
                     fontSize: "14px",
@@ -229,7 +230,8 @@ setModal(!modal)
                     color: "blue"
                 }}
                 onClick={() => openModal(row)}
-            ></i> : ""}
+            ></i> 
+                </div>: ""}
                   </div>
                    </>
                 )
@@ -241,7 +243,7 @@ setModal(!modal)
        
         {
             dataField: "",
-            text: "Pay",
+            text: "Pay Receipt",
            
             style: {
                 fontSize: "11px",

@@ -150,7 +150,12 @@ function AddNew() {
     else if (invalid || wEmail || indNumError || posError.exits) {
       setDisplay(false)
     }
-
+    else if(parentCategoryName.includes("Direct tax") && dd.direct.length === 0){
+    
+    }
+    else if(parentCategoryName.includes("Indirect tax") && dd.indirect.length === 0){
+     
+    }
     else {
       setDisplay(true)
       setLoading(true)
@@ -221,14 +226,32 @@ function AddNew() {
 
       i.value < 8 ? dir.push(i.label) : indir.push(i.label)
     })
-    // allData1 = e.map(v => ({
-    //   "direct Tax" : dir,
-    //   "indirect Tax" : indir
-    // }))
+   
     setDd({
       direct: dir,
       indirect: indir
     })
+    let pk = []
+    if(indir.length === 0 && dir.length === 0){
+      setCategoryData("")
+    }
+   else if(dir.length === 0){
+      let bb = {
+        value : "2",
+        label : "Indirect tax"
+      }
+      pk.push(bb)
+      setCategoryData(pk)
+    }
+    else if(indir.length === 0){
+      let bb = {
+        value : "1",
+        label : "Direct tax"
+      }
+      pk.push(bb)
+      setCategoryData(pk)
+    }
+  
   }
 
 
@@ -253,7 +276,19 @@ function AddNew() {
 
     if (vv.length > 0) {
       if (vv.includes("1") && vv.includes("2")) {
-       
+        let dkkk = []
+        let pkk = []
+                for (let i = 0; i < subData.length; i++) {
+                                     kk.push(subData[i])
+                    dkkk.push(subData[i].label)
+                  
+                }
+                console.log(subData)
+                setDd({
+                  "direct" : dkkk,
+                  "indirect" : pkk
+                })
+                subCategeryData(kk)
       }
       else if (vv.includes("1")) {
 
@@ -516,6 +551,7 @@ function AddNew() {
                     <div className="form-group">
                       <label>Category <span className="declined">*</span></label>
                       <Select isMulti options={options}
+                        value = {categoryData}
                         className={error ? "customError" : ""}
                         styles={{
                           option: (styles, { data }) => {
@@ -546,6 +582,7 @@ function AddNew() {
                       <Select isMulti options={options2}
                         className={error2 ? "customError" : ""}
                         onChange={subCategory}
+                        value = {subData}
                         styles={{
                           option: (styles, { data }) => {
                             return {

@@ -93,7 +93,6 @@ class AgoraCanvas extends React.Component {
       readyState: false,
       stateSharing: false,
       addRemote : null,
-      participantName : '',
       atCustId: '',
       disabledVedio : false,
       vedTrack : null,
@@ -169,7 +168,7 @@ console.log("customerName", this.customerName)
     if (this.state.displayMode === "pip") {
       let no = this.state.streamList.length;
      
-      if (no > 0) {
+      if (no > 4) {
         this.setState({ displayMode: "tile" });
         return;
       }
@@ -193,22 +192,6 @@ console.log("customerName", this.customerName)
           dd = document.createElement("input")
           dd.setAttribute("id", "name" + id)
           dd.setAttribute("class", txtColor)
-          
-       
-        
-  
-        //  if(item.getId() === this.state.getAdId && index === 0){
-       
-        //   dd.setAttribute("value", CommonServices.capitalizeFirstLetter("You"))
-        //   dd.setAttribute("disabled", true)
-        // }
-        // else{
-        //   if(this.state.readyState === true){
-        //     dd.setAttribute("value", CommonServices.capitalizeFirstLetter(this.state.participantName))
-        //     dd.setAttribute("disabled", true)
-        //   }
-          
-        // }
         box22.appendChild(dd)
         item.play("ag-item-" + id);
         }
@@ -217,7 +200,7 @@ console.log("customerName", this.customerName)
          
         if (index === no - 1) {
           
-          //  document.getElementById("custName").value = "Lucky"
+        
             dom.setAttribute("style", `grid-area: span 12/span 24/13/25`);
            
           } else {
@@ -292,22 +275,6 @@ if(item.player === undefined){
           dd = document.createElement("input")
           dd.setAttribute("id", "name" + id)
           dd.setAttribute("class", txtColor)
-          
-       
-        
-  
-        //  if(item.getId() === this.state.getAdId && index === 0){
-       
-        //   dd.setAttribute("value", CommonServices.capitalizeFirstLetter("You"))
-        //   dd.setAttribute("disabled", true)
-        // }
-        // else{
-        //   if(this.state.readyState === true){
-        //     dd.setAttribute("value", CommonServices.capitalizeFirstLetter(this.state.participantName))
-        //     dd.setAttribute("disabled", true)
-        //   }
-          
-        // }
         box22.appendChild(dd)
         item.play("ag-item-" + id);
         }
@@ -420,6 +387,7 @@ if(item.player === undefined){
     
   rt.addStream(stream);
     }.bind(this));
+
     rt.client.on("stream-removed", function (evt) {
       let stream = evt.stream;
      
@@ -488,22 +456,23 @@ if(item.player === undefined){
      
 
  
-  if(res.data.length == 0){
-    this.setState({ participantName : "" })
-  this.remoteShare2 = true
-  }
-  else if(res.data.length > 0 && this.state.getAdId !== stream.getId()){
-   // this.setState({ participantName : res.data[0].user_name })
+  if(res.data.length > 0 && this.state.atCustId !== stream.getId()){
     var praticipantVar = document.getElementById("name" + stream.getId())
     praticipantVar.setAttribute("value", res.data[0].user_name);
     praticipantVar.setAttribute("disabled", true)
   }
-  else if(res.data.length > 0 && this.state.getAdId === stream.getId()){
-    // this.setState({ participantName : res.data[0].user_name })
+  else if(res.data.length > 0 && this.state.atCustId === stream.getId()){
      var praticipantVar = document.getElementById("name" + stream.getId())
      praticipantVar.setAttribute("value", "You");
      praticipantVar.setAttribute("disabled", true)
    }
+   
+  else{
+    this.remoteShare2 = true
+    var praticipantVar = document.getElementById("name" + stream.getId())
+    praticipantVar.setAttribute("value", "Sharing");
+    praticipantVar.setAttribute("disabled", true)
+    }
      })
   };
   handleCamera = (e) => {
@@ -599,14 +568,13 @@ if(item.player === undefined){
         icon : "error"
       })
     }
-    else{
-    if (this.state.stateSharing) {
-      this.shareClient && this.shareClient.unpublish(this.shareStream);
-      this.shareStream && this.shareStream.close();
-      this.setState({stateSharing : false})
-    } else {
+    else if(this.state.stateSharing) {
+       this.shareClient && this.shareClient.unpublish(this.shareStream);
+       this.shareStream && this.shareStream.close();
+       this.setState({stateSharing : false})
+     }
+      else {
       this.setState({stateSharing : true})
-      this.setState({participantName : ""})
       let $ = this.props;
       // init AgoraRTC local client
       this.shareClient = AgoraRTC.createClient({ mode: $.transcode });
@@ -637,7 +605,6 @@ if(item.player === undefined){
         });
       });
     }
-  }
   };
 
   streamInitSharing = (uid, attendeeMode, videoProfile, config) => {

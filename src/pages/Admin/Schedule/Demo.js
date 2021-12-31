@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Paper from "@material-ui/core/Paper";
 import axios from "axios";
 import { Link, useHistory } from "react-router-dom";
+import Select from "react-select";
 import { baseUrl } from "../../../config/config";
 import { ViewState, EditingState } from "@devexpress/dx-react-scheduler";
 import {
@@ -146,6 +147,7 @@ function Demo() {
       fieldName: "user",
       title: "Users",
       instances: owner,
+      search: true,
       allowMultiple: true,
     },
   ];
@@ -514,7 +516,9 @@ history.push(`/admin/meeting/${data.id}`);
                 <DateNavigator />
                 <TodayButton />
                 <ViewSwitcher  />
-
+                <table>
+                <th>Testing</th>
+              </table>
                 <AppointmentTooltip showOpenButton  />
                 {
                   read ?
@@ -542,6 +546,7 @@ history.push(`/admin/meeting/${data.id}`);
                   data={resources}
                 />
               </Scheduler>
+            
             </Paper>
         </div>
         

@@ -17,12 +17,12 @@
   position: relative;
 }
 .myPartName{
-background-color: rgba((0,0,255, 0.6));
+  background-color: rgba(0,0,0,0);
+  border:0px;
   width: 150px;
   border: none;
   bottom : 0px;
   color: #fff;
- font-weight: 1000;
  position: absolute;
  z-index: 99999;
 }

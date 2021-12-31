@@ -111,7 +111,7 @@ class AgoraCanvas extends React.Component {
       showButton : '',
       clickDisable : false,
       addRemote : null,
-      participantName : '',
+    
       disabledVedio : false,
       getAdId :'', 
       vedTrack : null,
@@ -249,22 +249,6 @@ remoteShare2 = false
         dd = document.createElement("input")
         dd.setAttribute("id", "name" + id)
         dd.setAttribute("class", txtColor)
-        
-     
-      
-
-      //  if(item.getId() === this.state.getAdId && index === 0){
-     
-      //   dd.setAttribute("value", CommonServices.capitalizeFirstLetter("You"))
-      //   dd.setAttribute("disabled", true)
-      // }
-      // else{
-      //   if(this.state.readyState === true){
-      //     dd.setAttribute("value", CommonServices.capitalizeFirstLetter(this.state.participantName))
-      //     dd.setAttribute("disabled", true)
-      //   }
-        
-      // }
       box22.appendChild(dd)
       item.play("ag-item-" + id);
       }
@@ -353,22 +337,6 @@ if(item.player === undefined){
         dd = document.createElement("input")
         dd.setAttribute("id", "name" + id)
         dd.setAttribute("class", txtColor)
-        
-     
-      
-
-      //  if(item.getId() === this.state.getAdId && index === 0){
-     
-      //   dd.setAttribute("value", CommonServices.capitalizeFirstLetter("You"))
-      //   dd.setAttribute("disabled", true)
-      // }
-      // else{
-      //   if(this.state.readyState === true){
-      //     dd.setAttribute("value", CommonServices.capitalizeFirstLetter(this.state.participantName))
-      //     dd.setAttribute("disabled", true)
-      //   }
-        
-      // }
       box22.appendChild(dd)
       item.play("ag-item-" + id);
       } dom.setAttribute("style", `grid-area: ${tile_canvas[no][index]}`);
@@ -550,24 +518,25 @@ if(item.player === undefined){
     axios.get(`${apiData}`)
     .then((res) =>{
      
-
+      if(res.data.length > 0 && this.state.getAdId !== stream.getId()){
+        var praticipantVar = document.getElementById("name" + stream.getId())
+        praticipantVar.setAttribute("value", res.data[0].user_name);
+        praticipantVar.setAttribute("disabled", true)
+      }
+      else if(res.data.length > 0 && this.state.getAdId === stream.getId()){
+         var praticipantVar = document.getElementById("name" + stream.getId())
+         praticipantVar.setAttribute("value", "You");
+         praticipantVar.setAttribute("disabled", true)
+       }
+       
+      else{
+        this.remoteShare2 = true
+        var praticipantVar = document.getElementById("name" + stream.getId())
+        praticipantVar.setAttribute("value", "Sharing");
+        praticipantVar.setAttribute("disabled", true)
+        }
  
-  if(res.data.length == 0){
-    this.setState({ participantName : "" })
-  this.remoteShare2 = true
-  }
-  else if(res.data.length > 0 && this.state.getAdId !== stream.getId()){
-   // this.setState({ participantName : res.data[0].user_name })
-    var praticipantVar = document.getElementById("name" + stream.getId())
-    praticipantVar.setAttribute("value", res.data[0].user_name);
-    praticipantVar.setAttribute("disabled", true)
-  }
-  else if(res.data.length > 0 && this.state.getAdId === stream.getId()){
-    // this.setState({ participantName : res.data[0].user_name })
-     var praticipantVar = document.getElementById("name" + stream.getId())
-     praticipantVar.setAttribute("value", "You");
-     praticipantVar.setAttribute("disabled", true)
-   } })
+    })
   };
   handleCamera = (e) => {
     if(this.state.readyState === false){
@@ -676,13 +645,13 @@ if(item.player === undefined){
         icon : "error"
       })
     }
-    else{
-    if (this.state.stateSharing) {
-      this.shareClient && this.shareClient.unpublish(this.shareStream);
-      this.shareStream && this.shareStream.close();
-      this.setState({stateSharing : false})
-    } else {
-      this.setState({participantName : ""})
+    else if(this.state.stateSharing) {
+       this.shareClient && this.shareClient.unpublish(this.shareStream);
+       this.shareStream && this.shareStream.close();
+       this.setState({stateSharing : false})
+     }
+      else {
+    
       this.setState({stateSharing : true})
       let $ = this.props;
       // init AgoraRTC local client
@@ -721,7 +690,6 @@ if(item.player === undefined){
         });
       });
     }
-  }
   };
   
   streamInitSharing = (uid, attendeeMode, videoProfile, config) => {
@@ -922,8 +890,19 @@ window.location.hash = "/taxprofessional/schedule";
 
 };
 del = (e) => {
-  let formData = new FormData()
-  formData.append("fileList", this.state.data.serverResponse.fileList)
+  var serverResponse = this.state.data.serverResponse.fileList
+  var completeRecording;
+  if(this.tempArray === undefined || this.tempArray.length === 0){
+      completeRecording =  serverResponse;
+  }
+  else if(this.tempArray != undefined || this.tempArray.length > 0){
+      completeRecording = this.tempArray + "," + serverResponse;
+  }
+  else{
+      completeRecording = serverResponse;
+  }
+   let formData = new FormData()
+   formData.append("fileList", completeRecording)
   formData.append("schedule_id", this.props.id);
   formData.append("uid", JSON.parse(this.teamKey));
   formData.append("assign_id", this.state.item.assign_no);

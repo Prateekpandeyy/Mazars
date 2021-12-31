@@ -332,7 +332,7 @@ function ProposalDetails({
              
             }
              {
-              p.query_status == "6" ?
+             p.decline_notes !== null && p.decline_notes.length > 0 ?
                 <tr>
                   <th scope="row">Reasons for proposal Decline</th>
                   <td colspan="1">
@@ -346,7 +346,7 @@ function ProposalDetails({
              {
                proposal_reactive_notes.length > 0 ?
                  <tr>
-                   <th scope="row"> date of restoring proposal</th>
+                   <th scope="row"> Date of restoring proposal</th>
                    <td colspan="1">
                      {
                       proposal_reactive_dates
@@ -359,7 +359,7 @@ function ProposalDetails({
                proposal_reactive_notes.length > 0  ?
            
            <tr>
-                   <th scope="row"> reason of restoring proposal </th>
+                   <th scope="row"> Reason of restoring proposal </th>
                    <td colspan="1">
                      {
                        proposal_reactive_notes

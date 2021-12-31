@@ -116,16 +116,24 @@ function TeamLeaderTab() {
       },
       formatter: function nameFormatter(cell, row) {
         var digit2 = [];
+        var digit3 = []
         digit2 = row.allpcat_id.split(",")
+        if(row.allpcat_id.split(",")[0] === "Indirect tax"){
         
+          digit3 = row.allpcat_id.split(",")
+        }
+        else{
+          digit3 =  row.allpcat_id.split(",").reverse()
+        }
+      
         return (
           <>
-
             {
-              digit2.map((e) => {
+              digit3.map((e) => {
                 return (
                   <>
-                    <p className={e.includes("Indirect") === true ? "dirCla" : "indirCla"}> {e}</p>
+                 
+                 <p className={e.includes("Indirect") === true ? "dirCla" : "indirCla"}> {e}</p>
                   </>
                 )
               })
@@ -161,10 +169,11 @@ else{
 }
         return (
           <>
-           {digit.direct.length == "0" ? "" : 
-            <p style={{ "color": "blue", "diplay": "block" }}>{digit.direct + k} </p> }
+           
            {digit.indirect.length == "0" ? "" :
             <p style={{ "color": "green", "display": "block" }}>{digit.indirect + pp}</p>}
+         {digit.direct.length == "0" ? "" : 
+            <p style={{ "color": "blue", "diplay": "block" }}>{digit.direct + k} </p> }
           </>
 
         )

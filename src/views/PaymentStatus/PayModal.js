@@ -14,19 +14,9 @@ const PayModal = (props) => {
  
     useEffect(() => {
        if(props.modalData !== undefined){
-           let per, per2;
-           if(props.modalData.tds_rate !== undefined){
-            per = props.modalData.tds_rate.split(".")[1]
-            per2 = props.modalData.tds_rate.split(".")[0]
-           }
           
-          
-          if(per === "0000"){
-            setTdsRate(per2)
-          }
-          else{
-            setTdsRate(props.modalData.tds_rate)
-          }
+
+            setTdsRate(parseFloat(props.modalData.tds_rate))
           
            
            setTdsAmount(props.modalData.tds_amount)
