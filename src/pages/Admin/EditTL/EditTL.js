@@ -188,6 +188,7 @@ function EditTL() {
     
     }
     else if(parentCategoryName.includes("Direct tax") && dd.direct.length === 0){
+<<<<<<< HEAD
       Swal.fire({
         title : "error",
         html : "direct"
@@ -210,7 +211,14 @@ function EditTL() {
         title : "error",
         html : "direct"
       })
+=======
+    
     }
+    else if(parentCategoryName.includes("Indirect tax") && dd.indirect.length === 0){
+     
+>>>>>>> 523bf48a4d8a0c81be0e1b204294c433056c2020
+    }
+    
     else {
       console.log("dd", dd.direct)
       console.log("dd", dd.indirect.length, dd.indirect)
@@ -385,8 +393,24 @@ console.log("value", categeryList)
     if (vv.length > 0) {
       console.log("value", vv)
       if (vv.includes("1") && vv.includes("2")) {
+<<<<<<< HEAD
         console.log("one")
       return;
+=======
+        let dkkk = []
+        let pkk = []
+                for (let i = 0; i < subData.length; i++) {
+                                     kk.push(subData[i])
+                    dkkk.push(subData[i].label)
+                  
+                }
+                console.log(subData)
+                setDd({
+                  "direct" : dkkk,
+                  "indirect" : pkk
+                })
+                subCategeryData(kk)
+>>>>>>> 523bf48a4d8a0c81be0e1b204294c433056c2020
       }
       else if (vv.includes("1")) {
 let dkkk = []

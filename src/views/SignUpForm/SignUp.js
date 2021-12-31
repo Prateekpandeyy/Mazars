@@ -245,7 +245,13 @@ const [email2, setEmail2] = useState();
   //zip oncahnge
   const zipValue = (e) => {
    
-   if (e.target.value.length == 0) {
+    if (isNaN(e.target.value) && countryId.length > 0) {
+
+      setZipError("Please enter number only")
+      setZipError1(true)
+      e.target.value = ""
+    }
+    else if (e.target.value.length == 0) {
       setZipError1(true)
     }
     else {
@@ -259,13 +265,13 @@ const [email2, setEmail2] = useState();
   // onblur
   const zipVali2 = (e) => {
 
-    if (countryId && zipCode && zipCode.length < 6) {
+    if (countryId && zipCode && zipCode.length < 6 && countryId.length > 0) {
       setZipError1(true)
       setZipError("Minumum 6 digit should be there")
 
     }
 
-    else if (countryId && zipCode && zipCode.length > 6) {
+    else if (countryId && zipCode && zipCode.length > 6 && countryId.length > 0) {
       setZipError1(true)
       setZipError("Maximum 6 digit allowed")
     

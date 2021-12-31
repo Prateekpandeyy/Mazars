@@ -500,6 +500,3 @@ function AllQueriesData() {
 }
 
 export default AllQueriesData;
-
-
-

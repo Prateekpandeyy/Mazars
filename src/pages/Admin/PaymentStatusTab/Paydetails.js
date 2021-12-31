@@ -215,7 +215,7 @@ setModal(!modal)
        
         {
             dataField: "",
-            text: "Pay",
+            text: "Payment Receipt",
            
             style: {
                 fontSize: "11px",
