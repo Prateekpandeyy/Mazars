@@ -188,41 +188,14 @@ function EditTL() {
     
     }
     else if(parentCategoryName.includes("Direct tax") && dd.direct.length === 0){
-<<<<<<< HEAD
-      Swal.fire({
-        title : "error",
-        html : "direct"
-      })
-    }
-    else if(parentCategoryName.includes("Indirect tax") && dd.indirect.length === 0){
-      Swal.fire({
-        title : "error",
-        html : "indirect"
-      })
-    }
-    else if(parentCategoryName.includes("Indirect tax") && dd.indirect === undefined){
-      Swal.fire({
-        title : "error",
-        html : "indirect"
-      })
-    }
-    else if(parentCategoryName.includes("Direct tax") && dd.direct === undefined){
-      Swal.fire({
-        title : "error",
-        html : "direct"
-      })
-=======
     
     }
     else if(parentCategoryName.includes("Indirect tax") && dd.indirect.length === 0){
      
->>>>>>> 523bf48a4d8a0c81be0e1b204294c433056c2020
     }
     
     else {
-      console.log("dd", dd.direct)
-      console.log("dd", dd.indirect.length, dd.indirect)
-      console.log("ddd", parentCategoryName.includes("Indirect tax"))
+   
       setLoading(true)
       setDisplay(true)
       let formData = new FormData();
@@ -393,10 +366,6 @@ console.log("value", categeryList)
     if (vv.length > 0) {
       console.log("value", vv)
       if (vv.includes("1") && vv.includes("2")) {
-<<<<<<< HEAD
-        console.log("one")
-      return;
-=======
         let dkkk = []
         let pkk = []
                 for (let i = 0; i < subData.length; i++) {
@@ -410,7 +379,6 @@ console.log("value", categeryList)
                   "indirect" : pkk
                 })
                 subCategeryData(kk)
->>>>>>> 523bf48a4d8a0c81be0e1b204294c433056c2020
       }
       else if (vv.includes("1")) {
 let dkkk = []
@@ -821,11 +789,7 @@ const checktlPost = (e) => {
                             }}
                           >
                           </Select>
-                        {/* <Select isMulti options={options2}
-                          onChange={subCategory} 
-                          value={subData}  
-                          defaultValue={subdefval}>
-                        </Select> */}
+                       
                       </div>
                     </div>
                   </div>
@@ -838,20 +802,10 @@ const checktlPost = (e) => {
                           className={classNames("form-control", {
                             "is-invalid": errors.email,
                           })}
-                        //  onBlur={emailValidation} 
-                       //  onChange={(e) => emailHandler(e)}
+                      
                           />
                         </Form.Item>
-                        {/* {
-                        wEmail ? <p className="declined">{wEmail}</p> : <>
-                          {valiEmail ?
-                            <p className="completed">
-                              {valiEmail}
-                            </p>
-                            :
-                            <p className="declined">{invalid}</p>}
-                        </>
-                      } */}
+                       
                       </div>
                     </div>
                   </div>

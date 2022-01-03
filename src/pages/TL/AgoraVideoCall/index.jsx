@@ -142,9 +142,24 @@ remoteShare2 = false
    })
 
   this.setState({getAdId : uid})
+  let show;
   this.subscribeStreamEvents();
-       
-        this.localStream = this.streamInit(uid, $.attendeeMode, $.videoProfile);
+  AgoraRTC.getDevices(function(dev){
+    dev.map((e) => {
+     
+      if(e.kind === "videoinput"){
+     show = true
+      }
+      else{
+      show = false
+      }
+    })})
+        if(show){
+          this.localStream = this.streamInit(uid, $.attendeeMode, $.videoProfile);
+        }
+        else{
+          this.localStream = this.streamInit22(uid, $.attendeeMode, $.videoProfile);
+        }
         this.localStream.init(
         
           () => {
@@ -387,8 +402,34 @@ if(item.player === undefined){
       );
   }
 
-  streamInit = (uid, attendeeMode, videoProfile, config) => {
+  streamInit22 = (uid, attendeeMode, videoProfile, config) => {
     let defaultConfig = {
+       streamID: uid,
+       audio: true,
+       video: false,
+       screen: false,
+     };
+ 
+     switch (attendeeMode) {
+       case "audio-only":
+         defaultConfig.video = false;
+         break;
+       case "audience":
+         defaultConfig.video = false;
+         defaultConfig.audio = false;
+         break;
+       default:
+       case "video":
+         break;
+     }
+ 
+     let stream = AgoraRTC.createStream(merge(defaultConfig, config));
+     stream.setVideoProfile(videoProfile);
+     return stream;
+   };
+  
+  streamInit = (uid, attendeeMode, videoProfile, config) => {
+   let defaultConfig = {
       streamID: uid,
       audio: true,
       video: true,
@@ -412,7 +453,7 @@ if(item.player === undefined){
     stream.setVideoProfile(videoProfile);
     return stream;
   };
-
+ 
   subscribeStreamEvents = () => {
     let rt = this;
     rt.client.on("stream-added", function (evt) {

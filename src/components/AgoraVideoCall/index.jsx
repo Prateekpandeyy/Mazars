@@ -124,14 +124,19 @@ console.log("customerName", this.customerName)
        this.setState({atCustId : uid})
         // create local stream
         // It is not recommended to setState in function addStream
-        this.localStream = this.streamInit(uid, $.attendeeMode, $.videoProfile);
+        let videoProfile="480_p"
+        this.localStream = this.streamInit(uid, $.attendeeMode, videoProfile);
         this.localStream.init(
           () => {
             if ($.attendeeMode !== "audience") {
+              alert("done")
               this.addStream(this.localStream, true);
               this.client.publish(this.localStream, (err) => {
              
               });
+            }
+            else{
+              alert("done2")
             }
             this.setState({ readyState: true });
           },
