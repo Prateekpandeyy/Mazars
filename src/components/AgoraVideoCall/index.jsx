@@ -467,7 +467,7 @@ if(item.player === undefined){
      praticipantVar.setAttribute("disabled", true)
    }
    
-  else{
+   else if(res.data.length == 0){
     this.remoteShare2 = true
     var praticipantVar = document.getElementById("name" + stream.getId())
     praticipantVar.setAttribute("value", "Sharing");

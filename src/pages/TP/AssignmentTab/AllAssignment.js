@@ -658,7 +658,7 @@ else{
                         </div>
                       </Option>
                       <Option value="Completed" label="Compilance">
-                        <div className="demo-option-label-item">Completed</div>
+                        <div className="demo-option-label-item">Awaiting Completion</div>
                       </Option>
                     </Select>
                   </div>

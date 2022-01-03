@@ -130,7 +130,7 @@ const viewStyle = {
                         p.stages_type == "2" ?
                           <div>
                             {
-                              p.status == "0" ?
+                              p.status == "0" && p.customer_files === null ?
                                 <p style={{ color: "red" }}>Pending</p>
                                 :
                                 p.status == "1" ?

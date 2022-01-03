@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { baseUrl } from "../../config/config";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import axios from "axios";
+import Swal from "sweetalert2";
 const PayModal = (props) => {
     const userid = window.localStorage.getItem("userid")
     const [payValue, setpayValue] = useState()
@@ -43,7 +44,16 @@ const PayModal = (props) => {
         .then((res) => {
             if(res.data.code === 1){
              
-                window.open(res.data.result, "_blank")
+                if(res.data.length > 1){
+                    window.open(res.data.result, "_blank")
+                }
+                else{
+                    Swal.fire({
+                        title : "error", 
+                        html : "Something went wrong",
+                        icon : "error"
+                    })
+                }
             }
         })
        

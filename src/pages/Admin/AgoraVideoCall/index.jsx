@@ -149,7 +149,7 @@ remoteShare2 = false
    })
    this.setState({getAdId : uid})
   
-     
+  
       
         this.localStream = this.streamInit(uid, $.attendeeMode, $.videoProfile);
         this.localStream.init(
@@ -264,7 +264,7 @@ remoteShare2 = false
             dom.addEventListener('click', function (e){
               if(f === false){
                 f = true
-                dom.setAttribute("style", `grid-area: span 12/span 24/13/25`);
+                dom.setAttribute("style", `grid-area: span 14/span 24/13/25`);
                 let list;
              
                 list = Array.from(
@@ -334,7 +334,7 @@ remoteShare2 = false
             
           if(f === false){
             f = true
-            dom.setAttribute("style", `grid-area: span 12/span 24/13/25`);
+            dom.setAttribute("style", `grid-area: span 14/span 24/13/25`);
             let list;
              
             list = Array.from(
@@ -391,6 +391,17 @@ remoteShare2 = false
   
 
   streamInit = (uid, attendeeMode, videoProfile, config) => {
+    let vv = true;
+   AgoraRTC.getDevices(function(dev){
+    dev.map((i) => {
+     if(i.kind == "videoinput"){
+       vv = true
+     }
+     else{
+       vv = false
+     }
+    })
+   })
     let defaultConfig = {
       streamID: uid,
       audio: true,
@@ -497,7 +508,7 @@ remoteShare2 = false
    
     this.hostId = stream.getId()
  
-  
+    console.log("two", push)
     let repeatition = this.state.streamList.some((item) => {
       return item.getId() === stream.getId();
     });
@@ -530,7 +541,7 @@ remoteShare2 = false
          praticipantVar.setAttribute("disabled", true)
        }
        
-      else{
+      else if(res.data.length == 0){
         this.remoteShare2 = true
         var praticipantVar = document.getElementById("name" + stream.getId())
         praticipantVar.setAttribute("value", "Sharing");
@@ -804,7 +815,7 @@ async startRecording(key){
   };
 // Start recording button
   recStart = () => {
-    this.localStream.enableAudio();
+   
     this.localStream.enableVideo();
     this.accuire();
     this.setState({ showRecBtn: false  });
