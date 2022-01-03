@@ -143,7 +143,6 @@ remoteShare2 = false
 
   this.setState({getAdId : uid})
   this.subscribeStreamEvents();
-       
   let show;
   AgoraRTC.getDevices(function(dev){
     dev.map((e) => {
@@ -405,17 +404,7 @@ if(item.player === undefined){
   }
 
   streamInit = (uid, attendeeMode, videoProfile, config) => {
-    let vv = true;
-   AgoraRTC.getDevices(function(dev){
-    dev.map((i) => {
-     if(i.kind == "videoinput"){
-       vv = true
-     }
-     else{
-       vv = false
-     }
-    })
-   })
+  
     let defaultConfig = {
       streamID: uid,
       audio: true,
@@ -440,12 +429,13 @@ if(item.player === undefined){
     stream.setVideoProfile(videoProfile);
     return stream;
   };
+
   streamInit22 = (uid, attendeeMode, videoProfile, config) => {
   
     let defaultConfig = {
       streamID: uid,
       audio: true,
-      video: true,
+      video: false,
       screen: false,
     };
 

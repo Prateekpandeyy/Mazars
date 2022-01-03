@@ -450,7 +450,7 @@ if(item.player === undefined){
     let defaultConfig = {
       streamID: uid,
       audio: true,
-      video: true,
+      video: false,
       screen: false,
     };
 

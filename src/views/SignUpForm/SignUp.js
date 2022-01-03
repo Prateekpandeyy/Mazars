@@ -10,7 +10,7 @@ import { professionName, country, states } from './data';
 import { cities } from './city';
 import Alerts from "../../common/Alerts";
 import ResendOtp from "./ResendOtp";
-import Select from "react-select";
+
 import Mandatory from "../../components/Common/Mandatory";
 import EmailValidation from "../../components/Common/EmailValidation";
 
@@ -56,10 +56,9 @@ function SignUp(props) {
   const [phoneError, setPhoneError] = useState(null)
   const [zipError1, setZipError1] = useState(null);
   const [subm, setSub] = useState(false)
-  const [dstate, setDstate] = useState()
 const [email2, setEmail2] = useState();
   const [loading, setLoading] = useState(false);
-const [estate, setEstate] = useState("")
+
   //Css
   const CountryNumStyle = {
     "display": "flex",
@@ -123,14 +122,9 @@ const [estate, setEstate] = useState("")
     }
 
     var arrayState = []
-    let sta = {}
     states.filter((data) => {
       if (data.country_id == key) {
-        sta = {
-          "value" : data.id,
-          "label" : data.name
-        }
-        arrayState.push(sta)
+        arrayState.push(data)
       }
     });
     setState(arrayState)
@@ -146,9 +140,6 @@ const [estate, setEstate] = useState("")
 
   //get city
   const getCity = (key) => {
-    console.log(key)
-   setDstate(key)
-    let sta = {}
     states.filter((p) => {
       if (p.id == key) {
         setStateName(p.name)
@@ -157,13 +148,8 @@ const [estate, setEstate] = useState("")
 
     var arrayCity = []
     cities.filter((data) => {
-      if (data.state_id === key.value) {
-       
-        sta = {
-          "value" : data.id,
-          "label" : data.name
-        }
-        arrayCity.push(sta)
+      if (data.state_id === key) {
+        arrayCity.push(data)
       }
     });
     setCity(arrayCity)
@@ -259,7 +245,13 @@ const [estate, setEstate] = useState("")
   //zip oncahnge
   const zipValue = (e) => {
    
-   if (e.target.value.length == 0) {
+    if (isNaN(e.target.value) && countryId.length > 0) {
+
+      setZipError("Please enter number only")
+      setZipError1(true)
+      e.target.value = ""
+    }
+    else if (e.target.value.length == 0) {
       setZipError1(true)
     }
     else {
@@ -273,13 +265,13 @@ const [estate, setEstate] = useState("")
   // onblur
   const zipVali2 = (e) => {
 
-    if (countryId && zipCode && zipCode.length < 6) {
+    if (countryId && zipCode && zipCode.length < 6 && countryId.length > 0) {
       setZipError1(true)
       setZipError("Minumum 6 digit should be there")
 
     }
 
-    else if (countryId && zipCode && zipCode.length > 6) {
+    else if (countryId && zipCode && zipCode.length > 6 && countryId.length > 0) {
       setZipError1(true)
       setZipError("Maximum 6 digit allowed")
     
@@ -301,13 +293,7 @@ const [estate, setEstate] = useState("")
     }
   }
 
-const getStateValue = (e) => {
-  console.log(e)
-setDstate([{
-  label : "e",
-  value : "e"
-}])
-}
+
 
   const onSubmit = (value) => {
 
@@ -507,7 +493,7 @@ setDstate([{
                   <div className="col-md-6">
                     <div className="mb-3">
                       <label className="form-label">State<span className="declined">*</span></label>
-                      {/* <select
+                      <select
                         id="state"
                         name="p_state"
                         className={classNames("form-control", {
@@ -522,26 +508,7 @@ setDstate([{
                             {p.name}
                           </option>
                         ))}
-                      </select> */}
-                      {/* <Select options={State}
-                     
-                       onChange={(e) => getCity(e)}
-                       onInputChange = {(e) => getStateValue(e)}
-                       inputValue={estate}
-                       value={dstate}
-                     >
-
-                      </Select> */}
-                       <Select
-          options={State}
-          onChange={(e) => getCity(e)}
-          onInputChange={(e) => getStateValue(e)}
-          inputValue={dstate}
-          value={dstate}
-          onSelectResetsInput={false} 
-          onBlurResetsInput={false}
-          
-        />
+                      </select>
                     </div>
                   </div>
 
@@ -549,7 +516,7 @@ setDstate([{
                   <div className="col-md-6">
                     <div className="mb-3">
                       <label className="form-label">City<span className="declined">*</span></label>
-                      {/* <select
+                      <select
                         className={classNames("form-control", {
                           "is-invalid": errors.p_city,
                         })}
@@ -562,9 +529,7 @@ setDstate([{
                             {p.name}
                           </option>
                         ))}
-                      </select> */}
-                      <Select options={city}>
-                        </Select>
+                      </select>
                     </div>
                   </div>
 

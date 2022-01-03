@@ -193,7 +193,8 @@ function ViewReport({
               <>
                {p.status === "2" ? null :
                <>
-               <div style={{ cursor: "pointer" }} title="Accept">
+              <div style={{display : "flex", flexDirection: "row"}}>
+              <div style={{ cursor: "pointer" }} title="Accept">
 <i
   class="fa fa-check"
   style={{
@@ -215,10 +216,11 @@ function ViewReport({
                   onClick={() => toggleNested(p)}
                 ></i>
               </div>
+                </div>
               </> }
                 {p.customer_files === null ?
 <div title="Upload Additional Documents"
-        style={{ cursor: "pointer" }}
+        style={{ cursor: "pointer", display : "flex" }}
         onClick={() => additionalHandler(p)}
        
     >

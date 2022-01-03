@@ -124,7 +124,24 @@ console.log("customerName", this.customerName)
        this.setState({atCustId : uid})
         // create local stream
         // It is not recommended to setState in function addStream
-        this.localStream = this.streamInit(uid, $.attendeeMode, $.videoProfile);
+        let show;
+        AgoraRTC.getDevices(function(dev){
+          dev.map((e) => {
+            if(e.kind === "videoinput"){
+            show = true
+            }
+            else{
+              show = false
+            }
+          })
+        })
+        if(show){
+          this.localStream = this.streamInit(uid, $.attendeeMode, $.videoProfile)
+        }
+      else{
+        this.localStream = this.streamInit22(uid, $.attendeeMode, $.videoProfile);
+      
+      }
         this.localStream.init(
           () => {
             if ($.attendeeMode !== "audience") {
@@ -339,6 +356,7 @@ if(item.player === undefined){
   }
 
   streamInit = (uid, attendeeMode, videoProfile, config) => {
+  
     let defaultConfig = {
       streamID: uid,
       audio: true,
@@ -364,6 +382,32 @@ if(item.player === undefined){
     return stream;
   };
 
+  streamInit22 = (uid, attendeeMode, videoProfile, config) => {
+  
+    let defaultConfig = {
+      streamID: uid,
+      audio: true,
+      video: false,
+      screen: false,
+    };
+
+    switch (attendeeMode) {
+      case "audio-only":
+        defaultConfig.video = false;
+        break;
+      case "audience":
+        defaultConfig.video = false;
+        defaultConfig.audio = false;
+        break;
+      default:
+      case "video":
+        break;
+    }
+
+    let stream = AgoraRTC.createStream(merge(defaultConfig, config));
+    stream.setVideoProfile(videoProfile);
+    return stream;
+  };
 
   subscribeStreamEvents = () => {
     let rt = this;
