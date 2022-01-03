@@ -130,6 +130,19 @@ remoteShare2 = false
     let $ = this.props;
     // init AgoraRTC local client
     this.client = AgoraRTC.createClient({ mode: $.transcode });
+    let show;
+  AgoraRTC.getDevices(function(dev){
+    var cameras = dev.filter((e) => {
+      return e.kind === "videoinput"
+    })
+   
+    if(cameras.length > 0){
+      show = true
+    }
+    else{
+      show = false
+    }
+  })
     this.client.init($.appId, () => {
      
    
@@ -143,42 +156,50 @@ remoteShare2 = false
 
   this.setState({getAdId : uid})
   this.subscribeStreamEvents();
-  let show;
-  AgoraRTC.getDevices(function(dev){
-    dev.map((e) => {
-      if(e.kind === "videoinput"){
-      show = true
-      }
-      else{
-        show = false
-      }
-    })
-  })
-  if(show){
+  
+  if(show === true){
     this.localStream = this.streamInit(uid, $.attendeeMode, $.videoProfile)
-  }
-else{
-  this.localStream = this.streamInit22(uid, $.attendeeMode, $.videoProfile);
-
-}
-        this.localStream.init(
+    this.localStream.init(
         
-          () => {
-            if ($.attendeeMode !== "audience") {
-              this.addStream(this.localStream, true);
-              
-
-              this.client.publish(this.localStream, (err) => {
-               
-              });
-            }
-            this.setState({ readyState: true });
-          },
-          (err) => {
+      () => {
+        if ($.attendeeMode !== "audience") {
+          this.addStream(this.localStream, true);
           
-            this.setState({ readyState: true });
-          }
-        );
+
+          this.client.publish(this.localStream, (err) => {
+           
+          });
+        }
+        this.setState({ readyState: true });
+      },
+      (err) => {
+      
+        this.setState({ readyState: true });
+      }
+    );
+  }
+else if(show === false){
+  this.localStream = this.streamInit22(uid, $.attendeeMode, $.videoProfile);
+  this.localStream.init(
+        
+    () => {
+      if ($.attendeeMode !== "audience") {
+        this.addStream(this.localStream, true);
+        
+
+        this.client.publish(this.localStream, (err) => {
+         
+        });
+      }
+      this.setState({ readyState: true });
+    },
+    (err) => {
+    
+      this.setState({ readyState: true });
+    }
+  );
+}
+        
       });
     });
   }
@@ -277,7 +298,7 @@ else{
              
               
               f = true
-              dom.setAttribute("style", `grid-area: span 12/span 24/13/25`);
+              dom.setAttribute("style", `grid-area: span 14/span 24/13/25`);
               let list;
              
               list = Array.from(
@@ -348,7 +369,7 @@ if(item.player === undefined){
           
         if(f === false){
           f = true
-          dom.setAttribute("style", `grid-area: span 12/span 24/13/25`);
+          dom.setAttribute("style", `grid-area: span 14/span 24/13/25`);
           let list;
              
           list = Array.from(

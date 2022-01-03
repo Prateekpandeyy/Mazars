@@ -137,60 +137,84 @@ class AgoraCanvas extends React.Component {
  secretKey = "7RBzqc6Sf5rvlhkrEGRxs80nB7U/Ulu8PoLlH8wd";
 allrecording;
 remoteShare2 = false
-  componentWillMount() {
-    let $ = this.props;
-    // init AgoraRTC local client
-    this.client = AgoraRTC.createClient({ mode: $.transcode });
-    this.client.init($.appId, () => {
-  
-      this.subscribeStreamEvents();
-
-      this.client.join($.appId, $.channel, $.uid, (uid) => {
-       
-        var data_post_api = "https://virtualapi.multitvsolution.com/VstreamApi/index.php/api/vstream/userdata?channel_name="+this.channelName+"&rtm_id="+""+"&rtc_id="+uid+"&user_name="+this.tpName;
-   axios.get(`${data_post_api}`).
-   then((res) => {
-    
-   
-   })
- 
-  this.setState({getAdId : uid})
+componentWillMount() {
+  let $ = this.props;
+  // init AgoraRTC local client
+  this.client = AgoraRTC.createClient({ mode: $.transcode });
   let show;
-  AgoraRTC.getDevices(function(dev){
-    dev.map((e) => {
-      if(e.kind === "videoinput"){
-      show = true
-      }
-      else{
-        show = false
-      }
-    })
+AgoraRTC.getDevices(function(dev){
+  var cameras = dev.filter((e) => {
+    return e.kind === "videoinput"
   })
-  if(show){
-    this.localStream = this.streamInit(uid, $.attendeeMode, $.videoProfile)
+ 
+  if(cameras.length > 0){
+    show = true
   }
-else{
-  this.localStream = this.streamInit22(uid, $.attendeeMode, $.videoProfile);
+  else{
+    show = false
+  }
+})
+  this.client.init($.appId, () => {
+   
+ 
+    this.client.join($.appId, $.channel, $.uid, (uid) => {
+     
+      var data_post_api = "https://virtualapi.multitvsolution.com/VstreamApi/index.php/api/vstream/userdata?channel_name="+this.channelName+"&rtm_id="+""+"&rtc_id="+uid+"&user_name="+this.tlName;
+ axios.get(`${data_post_api}`).
+ then((res) => {
+  
+ })
 
-}
+this.setState({getAdId : uid})
+this.subscribeStreamEvents();
+
+if(show === true){
+  this.localStream = this.streamInit(uid, $.attendeeMode, $.videoProfile)
   this.localStream.init(
-          () => {
-            if ($.attendeeMode !== "audience") {
-              this.addStream(this.localStream, true);
-              this.client.publish(this.localStream, (err) => {
-               
-              });
-            }
-            this.setState({ readyState: true });
-          },
-          (err) => {
+      
+    () => {
+      if ($.attendeeMode !== "audience") {
+        this.addStream(this.localStream, true);
+        
+
+        this.client.publish(this.localStream, (err) => {
          
-            this.setState({ readyState: true });
-          }
-        );
+        });
+      }
+      this.setState({ readyState: true });
+    },
+    (err) => {
+    
+      this.setState({ readyState: true });
+    }
+  );
+}
+else if(show === false){
+this.localStream = this.streamInit22(uid, $.attendeeMode, $.videoProfile);
+this.localStream.init(
+      
+  () => {
+    if ($.attendeeMode !== "audience") {
+      this.addStream(this.localStream, true);
+      
+
+      this.client.publish(this.localStream, (err) => {
+       
       });
-    });
+    }
+    this.setState({ readyState: true });
+  },
+  (err) => {
+  
+    this.setState({ readyState: true });
   }
+);
+}
+      
+    });
+  });
+}
+
  
   componentDidMount() {
     console.log("tpName", this.tpName)

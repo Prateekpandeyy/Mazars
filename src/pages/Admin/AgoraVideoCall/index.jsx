@@ -130,62 +130,84 @@ class AgoraCanvas extends React.Component {
 allrecording;
 localVedioTrack;
 remoteShare2 = false
-  componentWillMount() {
-    let $ = this.props;
-  
-    // init AgoraRTC local client
-    this.client = AgoraRTC.createClient({ mode: $.transcode });
-    this.client.init($.appId, () => {
-     
-      this.subscribeStreamEvents();
-
-      this.client.join($.appId, $.channel, $.uid, (uid) => {
-       
-        var data_post_api = "https://virtualapi.multitvsolution.com/VstreamApi/index.php/api/vstream/userdata?channel_name="+this.channelName+"&rtm_id="+""+"&rtc_id="+uid+"&user_name="+this.adminName;
-   axios.get(`${data_post_api}`).
-   then((res) => {
-    
-   
-   })
-   this.setState({getAdId : uid})
-  
-   let show;
-   AgoraRTC.getDevices(function(dev){
-     dev.map((e) => {
-       if(e.kind === "videoinput"){
-       show = true
-       }
-       else{
-         show = false
-       }
-     })
-   })
-   if(show){
-     this.localStream = this.streamInit(uid, $.attendeeMode, $.videoProfile)
-   }
- else{
-   this.localStream = this.streamInit22(uid, $.attendeeMode, $.videoProfile);
+componentWillMount() {
+  let $ = this.props;
+  // init AgoraRTC local client
+  this.client = AgoraRTC.createClient({ mode: $.transcode });
+  let show;
+AgoraRTC.getDevices(function(dev){
+  var cameras = dev.filter((e) => {
+    return e.kind === "videoinput"
+  })
  
- }
-        this.localStream.init(
-          () => {
-            if ($.attendeeMode !== "audience") {
-              this.addStream(this.localStream, true);
-              this.client.publish(this.localStream, (err) => {
-               
-              });
-            }
-            this.setState({ readyState: true });
-          },
-          (err) => {
-          
-            this.setState({ readyState: true });
-          }
-        );
-      });
-    });
+  if(cameras.length > 0){
+    show = true
   }
+  else{
+    show = false
+  }
+})
+  this.client.init($.appId, () => {
+   
  
+    this.client.join($.appId, $.channel, $.uid, (uid) => {
+     
+      var data_post_api = "https://virtualapi.multitvsolution.com/VstreamApi/index.php/api/vstream/userdata?channel_name="+this.channelName+"&rtm_id="+""+"&rtc_id="+uid+"&user_name="+this.tlName;
+ axios.get(`${data_post_api}`).
+ then((res) => {
+  
+ })
+
+this.setState({getAdId : uid})
+this.subscribeStreamEvents();
+
+if(show === true){
+  this.localStream = this.streamInit(uid, $.attendeeMode, $.videoProfile)
+  this.localStream.init(
+      
+    () => {
+      if ($.attendeeMode !== "audience") {
+        this.addStream(this.localStream, true);
+        
+
+        this.client.publish(this.localStream, (err) => {
+         
+        });
+      }
+      this.setState({ readyState: true });
+    },
+    (err) => {
+    
+      this.setState({ readyState: true });
+    }
+  );
+}
+else if(show === false){
+this.localStream = this.streamInit22(uid, $.attendeeMode, $.videoProfile);
+this.localStream.init(
+      
+  () => {
+    if ($.attendeeMode !== "audience") {
+      this.addStream(this.localStream, true);
+      
+
+      this.client.publish(this.localStream, (err) => {
+       
+      });
+    }
+    this.setState({ readyState: true });
+  },
+  (err) => {
+  
+    this.setState({ readyState: true });
+  }
+);
+}
+      
+    });
+  });
+}
+
   componentDidMount() {
     // add listener to control btn group
     let canvas = document.querySelector("#ag-canvas");
@@ -279,7 +301,7 @@ remoteShare2 = false
             dom.addEventListener('click', function (e){
               if(f === false){
                 f = true
-                dom.setAttribute("style", `grid-area: span 14/span 24/13/25`);
+                dom.setAttribute("style", `grid-area: span 12/span 24/13/25`);
                 let list;
              
                 list = Array.from(
@@ -349,7 +371,7 @@ remoteShare2 = false
             
           if(f === false){
             f = true
-            dom.setAttribute("style", `grid-area: span 14/span 24/13/25`);
+            dom.setAttribute("style", `grid-area: span 12/span 24/13/25`);
             let list;
              
             list = Array.from(

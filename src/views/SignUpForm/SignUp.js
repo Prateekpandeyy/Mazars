@@ -10,7 +10,7 @@ import { professionName, country, states } from './data';
 import { cities } from './city';
 import Alerts from "../../common/Alerts";
 import ResendOtp from "./ResendOtp";
-
+import Select from "react-select";
 import Mandatory from "../../components/Common/Mandatory";
 import EmailValidation from "../../components/Common/EmailValidation";
 
@@ -56,9 +56,10 @@ function SignUp(props) {
   const [phoneError, setPhoneError] = useState(null)
   const [zipError1, setZipError1] = useState(null);
   const [subm, setSub] = useState(false)
+  const [dstate, setDstate] = useState()
 const [email2, setEmail2] = useState();
   const [loading, setLoading] = useState(false);
-
+const [estate, setEstate] = useState();
   //Css
   const CountryNumStyle = {
     "display": "flex",
@@ -122,9 +123,14 @@ const [email2, setEmail2] = useState();
     }
 
     var arrayState = []
+    let sta = {}
     states.filter((data) => {
       if (data.country_id == key) {
-        arrayState.push(data)
+        sta = {
+          "value" : data.id,
+          "label" : data.name
+        }
+        arrayState.push(sta)
       }
     });
     setState(arrayState)
@@ -140,6 +146,8 @@ const [email2, setEmail2] = useState();
 
   //get city
   const getCity = (key) => {
+   setDstate(key.value)
+    let sta = {}
     states.filter((p) => {
       if (p.id == key) {
         setStateName(p.name)
@@ -148,8 +156,14 @@ const [email2, setEmail2] = useState();
 
     var arrayCity = []
     cities.filter((data) => {
-      if (data.state_id === key) {
-        arrayCity.push(data)
+      if (data.state_id === key.value) {
+        console.log("value", data.id)
+        console.log("label", data.name)
+        sta = {
+          "value" : data.id,
+          "label" : data.name
+        }
+        arrayCity.push(sta)
       }
     });
     setCity(arrayCity)
@@ -245,13 +259,7 @@ const [email2, setEmail2] = useState();
   //zip oncahnge
   const zipValue = (e) => {
    
-    if (isNaN(e.target.value) && countryId.length > 0) {
-
-      setZipError("Please enter number only")
-      setZipError1(true)
-      e.target.value = ""
-    }
-    else if (e.target.value.length == 0) {
+   if (e.target.value.length == 0) {
       setZipError1(true)
     }
     else {
@@ -265,13 +273,13 @@ const [email2, setEmail2] = useState();
   // onblur
   const zipVali2 = (e) => {
 
-    if (countryId && zipCode && zipCode.length < 6 && countryId.length > 0) {
+    if (countryId && zipCode && zipCode.length < 6) {
       setZipError1(true)
       setZipError("Minumum 6 digit should be there")
 
     }
 
-    else if (countryId && zipCode && zipCode.length > 6 && countryId.length > 0) {
+    else if (countryId && zipCode && zipCode.length > 6) {
       setZipError1(true)
       setZipError("Maximum 6 digit allowed")
     
@@ -293,7 +301,9 @@ const [email2, setEmail2] = useState();
     }
   }
 
-
+const getStateValue = (e) => {
+ setEstate(e)
+}
 
   const onSubmit = (value) => {
 
@@ -493,7 +503,7 @@ const [email2, setEmail2] = useState();
                   <div className="col-md-6">
                     <div className="mb-3">
                       <label className="form-label">State<span className="declined">*</span></label>
-                      <select
+                      {/* <select
                         id="state"
                         name="p_state"
                         className={classNames("form-control", {
@@ -508,7 +518,13 @@ const [email2, setEmail2] = useState();
                             {p.name}
                           </option>
                         ))}
-                      </select>
+                      </select> */}
+                      <Select options={State}
+                      onInputValue = {estate}
+                       onChange={(e) => getCity(e)}
+                       onInputChange = {(e) => getStateValue(e)}>
+
+                      </Select>
                     </div>
                   </div>
 
@@ -516,7 +532,7 @@ const [email2, setEmail2] = useState();
                   <div className="col-md-6">
                     <div className="mb-3">
                       <label className="form-label">City<span className="declined">*</span></label>
-                      <select
+                      {/* <select
                         className={classNames("form-control", {
                           "is-invalid": errors.p_city,
                         })}
@@ -529,7 +545,9 @@ const [email2, setEmail2] = useState();
                             {p.name}
                           </option>
                         ))}
-                      </select>
+                      </select> */}
+                      <Select options={city}>
+                        </Select>
                     </div>
                   </div>
 
