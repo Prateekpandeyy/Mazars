@@ -59,7 +59,9 @@ function SignUp(props) {
   const [dstate, setDstate] = useState()
 const [email2, setEmail2] = useState();
   const [loading, setLoading] = useState(false);
-const [estate, setEstate] = useState();
+const [estate, setEstate] = useState("");
+const [cityState2, setCityValue2] = useState("")
+const [dstate2, setDstate2] = useState("")
   //Css
   const CountryNumStyle = {
     "display": "flex",
@@ -146,7 +148,8 @@ const [estate, setEstate] = useState();
 
   //get city
   const getCity = (key) => {
-   setDstate(key.value)
+  setDstate(key)
+   console.log(key)
     let sta = {}
     states.filter((p) => {
       if (p.id == key) {
@@ -301,9 +304,30 @@ const [estate, setEstate] = useState();
     }
   }
 
-const getStateValue = (e) => {
- setEstate(e)
-}
+  const getStateValue = (input, reason) => {
+    if (
+      reason.action === "set-value" ||
+      reason.action === "input-blur" ||
+      reason.action === "menu-close"
+    ) {
+      return;
+    }
+   console.log(input)
+   setEstate(input)
+  }
+
+  const getCityValu2 = (input, reason) => {
+    if (
+      reason.action === "set-value" ||
+      reason.action === "input-blur" ||
+      reason.action === "menu-close"
+    ) {
+      return;
+    }
+   console.log(input)
+   setCityValue2(input)
+  }
+
 
   const onSubmit = (value) => {
 
@@ -313,13 +337,16 @@ const getStateValue = (e) => {
     formData.append("email", email2);
     formData.append("phone", value.p_phone);
     formData.append("occupation", value.p_profession);
-    formData.append("city", value.p_city)
+ {cityState2 && cityState2.length > 0 ?    formData.append("city", cityState2) :
+ formData.append("city", dstate2.label)}
     formData.append("pincode", value.p_zipCode);
     formData.append("password", value.p_password);
     formData.append("rpassword", value.p_confirm_password);
     formData.append("otp", value.p_otp);
     formData.append("country", countryName);
-    formData.append("state", stateName);
+    {estate && estate.length > 0 ?  formData.append("state", estate) :
+    formData.append("state", dstate.label)}
+   
     formData.append("stdcode", countryCode);
     formData.append("gstin_no", value.p_gstIn);
 
@@ -396,6 +423,9 @@ const getStateValue = (e) => {
     else {
       setDisplay(true)
     }
+  }
+  const getCity22 = (key) => {
+    setDstate2(key)
   }
 
 // getEmailValue 
@@ -519,12 +549,25 @@ const getStateValue = (e) => {
                           </option>
                         ))}
                       </select> */}
-                      <Select options={State}
+                      {/* <Select options={State}
                       onInputValue = {estate}
                        onChange={(e) => getCity(e)}
-                       onInputChange = {(e) => getStateValue(e)}>
-
-                      </Select>
+                       onInputChange = {getStateValue}
+                       value={estate}>
+             
+                      </Select> */}
+                    <Select
+        closeMenuOnSelect={true}
+        onSelectResetsInput={false}
+        blurInputOnSelect={false}
+        options={State}
+        inputValue={estate}
+        onInputChange={getStateValue}
+     
+        onChange={(e) => getCity(e)}
+        value={dstate}
+      />
+     
                     </div>
                   </div>
 
@@ -532,22 +575,18 @@ const getStateValue = (e) => {
                   <div className="col-md-6">
                     <div className="mb-3">
                       <label className="form-label">City<span className="declined">*</span></label>
-                      {/* <select
-                        className={classNames("form-control", {
-                          "is-invalid": errors.p_city,
-                        })}
-                        name="p_city"
-                        ref={register({ required: true })}
-                      >
-                        <option value="">--select--</option>
-                        {city.map((p, index) => (
-                          <option key={index} value={p.city}>
-                            {p.name}
-                          </option>
-                        ))}
-                      </select> */}
-                      <Select options={city}>
-                        </Select>
+                     
+                      <Select
+        closeMenuOnSelect={true}
+        onSelectResetsInput={false}
+        blurInputOnSelect={false}
+        options={city}
+        inputValue={cityState2}
+        onInputChange={getCityValu2}
+     
+        onChange={(e) => getCity22(e)}
+        value={dstate2}
+      />
                     </div>
                   </div>
 

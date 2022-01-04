@@ -171,13 +171,13 @@ function ViewReport({
                      <p> {p.stages_type == 2 && "Draft Report" || p.stages_type == 3 && "Final Report"}</p>
                  <br></br> 
                  {p.customer_files === null ?  "" : <p>   Reviewed Report </p> } </td>
-                    <td>
+                 <td>
                       {
                         p.stages_type == "2" ?
                           <div>
                             {
-                              p.status == "0" ?
-                                <p style={{ color: "red" }}>Pending</p>
+                              p.status == "0"  && p.customer_files === null ?
+                                <p style={{ color: "red" }}> Pending </p>
                                 :
                                 p.status == "1" ?
                                   <div style={{ cursor: "pointer" }} title="Client Accepted">
@@ -190,7 +190,7 @@ function ViewReport({
                                       }}
                                     ></i>
                                   </div> :
-                                  p.status == "2" ?
+                                  p.status == "2" || p.customer_files !== null ?
                                     <div style={{ display: "flex", justifyContent: "space-around" }}>
                                       <div title="Discussion">
                                         <i
