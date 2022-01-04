@@ -73,7 +73,9 @@ function ViewReport({
        
         if (response.data.code === 1) {
           getData()
+         
           Alerts.SuccessNormal("Discarded Successfully")
+          ViewReport()
         }
       })
       .catch((error) => {
@@ -190,7 +192,7 @@ function ViewReport({
                                       }}
                                     ></i>
                                   </div> :
-                                  p.status == "2" || p.customer_files !== null ?
+                                  p.status == "2" && p.customer_files !== null ?
                                     <div style={{ display: "flex", justifyContent: "space-around" }}>
                                       <div title="Discussion">
                                         <i
@@ -218,10 +220,11 @@ function ViewReport({
                                       </div>
                                     </div>
                                     :
-                                    p.status == "3" ?
-                                      <p style={{ color: "red" }}>Discarded</p> :
-                                      null
+                                 ""
                             }
+                            {   p.status == "3" ?
+                                      <p style={{ color: "red" }}>Discarded</p> :
+                                      null}
                           </div>
                           :
                           null

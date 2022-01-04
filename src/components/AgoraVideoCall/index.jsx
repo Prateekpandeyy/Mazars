@@ -125,7 +125,7 @@ AgoraRTC.getDevices(function(dev){
  
     this.client.join($.appId, $.channel, $.uid, (uid) => {
      
-      var data_post_api = "https://virtualapi.multitvsolution.com/VstreamApi/index.php/api/vstream/userdata?channel_name="+this.channelName+"&rtm_id="+""+"&rtc_id="+uid+"&user_name="+this.tlName;
+      var data_post_api = "https://virtualapi.multitvsolution.com/VstreamApi/index.php/api/vstream/userdata?channel_name="+this.channelName+"&rtm_id="+""+"&rtc_id="+uid+"&user_name="+this.customerName;
  axios.get(`${data_post_api}`).
  then((res) => {
   
@@ -214,12 +214,7 @@ this.localStream.init(
         let txtColor = "myPartName";
         let id = item.getId();
         let dom = document.querySelector("#ag-item-" + id);
-        if(dom && this.state.disabledVedio === true){
-          dom.setAttribute("class", "ag-item2");
-        }
-        else if (dom && this.state.disabledVedio === false) {
-         dom.setAttribute("class", "ag-item");
-        }
+        
         let dd;
         if (!dom) {
           dom = document.createElement("section");
@@ -518,28 +513,27 @@ if(item.player === undefined){
     var apiData = "https://virtualapi.multitvsolution.com/VstreamApi/index.php/api/vstream/getInfoByRTCId?channel_name="+this.channelName+"&rtc_id="+stream.getId()
     axios.get(`${apiData}`)
     .then((res) =>{
-     
+      if(res.data.length > 0 && this.state.getAdId !== stream.getId()){
+        var praticipantVar = document.getElementById("name" + stream.getId())
+        praticipantVar.setAttribute("value", res.data[0].user_name);
+        praticipantVar.setAttribute("disabled", true)
+      }
+      else if(res.data.length > 0 && this.state.getAdId === stream.getId()){
+         var praticipantVar = document.getElementById("name" + stream.getId())
+         praticipantVar.setAttribute("value", "You");
+         praticipantVar.setAttribute("disabled", true)
+       }
+       
+      else if(res.data.length == 0){
+        this.remoteShare2 = true
+        var praticipantVar = document.getElementById("name" + stream.getId())
+        praticipantVar.setAttribute("value", "Sharing");
+        praticipantVar.setAttribute("disabled", true)
+        }
+     })};   
 
  
-  if(res.data.length > 0 && this.state.atCustId !== stream.getId()){
-    var praticipantVar = document.getElementById("name" + stream.getId())
-    praticipantVar.setAttribute("value", res.data[0].user_name);
-    praticipantVar.setAttribute("disabled", true)
-  }
-  else if(res.data.length > 0 && this.state.atCustId === stream.getId()){
-     var praticipantVar = document.getElementById("name" + stream.getId())
-     praticipantVar.setAttribute("value", "You");
-     praticipantVar.setAttribute("disabled", true)
-   }
-   
-   else if(res.data.length == 0){
-    this.remoteShare2 = true
-    var praticipantVar = document.getElementById("name" + stream.getId())
-    praticipantVar.setAttribute("value", "Sharing");
-    praticipantVar.setAttribute("disabled", true)
-    }
-     })
-  };
+  
   handleCamera = (e) => {
     this.setState({disabledVedio : !this.state.disabledVedio})
     e.currentTarget.classList.toggle("off");

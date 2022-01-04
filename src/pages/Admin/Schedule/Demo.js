@@ -517,9 +517,7 @@ history.push(`/admin/meeting/${data.id}`);
                 <DateNavigator />
                 <TodayButton />
                 <ViewSwitcher  />
-                <table>
-                <th>Testing</th>
-              </table>
+                
                 <AppointmentTooltip showOpenButton  />
                 {
                   read ?

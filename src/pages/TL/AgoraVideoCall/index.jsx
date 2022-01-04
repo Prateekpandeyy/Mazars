@@ -256,12 +256,7 @@ else if(show === false){
       let txtColor = "myPartName";
       let id = item.getId();
       let dom = document.querySelector("#ag-item-" + id);
-      if(dom && this.state.disabledVedio === true){
-        dom.setAttribute("class", "ag-item2");
-      }
-      else if (dom && this.state.disabledVedio === false) {
-       dom.setAttribute("class", "ag-item");
-      }
+     
       let dd;
       if (!dom) {
         dom = document.createElement("section");
@@ -410,6 +405,13 @@ if(item.player === undefined){
   componentWillUnmount() {
     this.client && this.client.unpublish(this.localStream);
     this.localStream && this.localStream.close();
+  //   document.addEventListener( 'visibilitychange' , function() {
+  //     if (document.hidden) {
+  //       this.del()
+  //     } else {
+  //         console.log('well back');
+  //     }
+  // }, false );
     if (this.state.stateSharing) {
       this.shareClient && this.shareClient.unpublish(this.shareStream);
       this.shareStream && this.shareStream.close();
@@ -547,6 +549,9 @@ if(item.player === undefined){
       if(this.remoteShare2 === true){
         this.remoteShare2 = false
       } 
+      if(uid === this.state.getAdId){
+        this.del()
+      }
   };
 
   addStream = (stream, push = false) => {
