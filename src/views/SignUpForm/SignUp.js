@@ -148,7 +148,11 @@ const [dstate2, setDstate2] = useState("")
 
   //get city
   const getCity = (key) => {
+    if(estate.length > 0){
+      setEstate("")
+    }
   setDstate(key)
+  
    console.log(key)
     let sta = {}
     states.filter((p) => {
@@ -425,6 +429,9 @@ const [dstate2, setDstate2] = useState("")
     }
   }
   const getCity22 = (key) => {
+    if(cityState2.length > 0){
+    setCityValue2("")
+    }
     setDstate2(key)
   }
 
@@ -533,29 +540,7 @@ const [dstate2, setDstate2] = useState("")
                   <div className="col-md-6">
                     <div className="mb-3">
                       <label className="form-label">State<span className="declined">*</span></label>
-                      {/* <select
-                        id="state"
-                        name="p_state"
-                        className={classNames("form-control", {
-                          "is-invalid": errors.p_state,
-                        })}
-                        ref={register({ required: true })}
-                        onChange={(e) => getCity(e.target.value)}
-                      >
-                        <option value="">--select--</option>
-                        {State.map((p) => (
-                          <option key={p.id} value={p.id}>
-                            {p.name}
-                          </option>
-                        ))}
-                      </select> */}
-                      {/* <Select options={State}
-                      onInputValue = {estate}
-                       onChange={(e) => getCity(e)}
-                       onInputChange = {getStateValue}
-                       value={estate}>
-             
-                      </Select> */}
+                     
                     <Select
         closeMenuOnSelect={true}
         onSelectResetsInput={false}

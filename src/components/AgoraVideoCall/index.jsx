@@ -251,7 +251,7 @@ this.localStream.init(
             dom.addEventListener('click', function (e){
               if(f === false){
                 f = true
-                dom.setAttribute("style", `grid-area: span 12/span 24/13/25`);
+                dom.setAttribute("style", `grid-area: span 14/span 24/13/25`);
                 let list;
              
                 list = Array.from(
@@ -320,7 +320,7 @@ if(item.player === undefined){
         dom.addEventListener('click', function (e){
           if(f === false){
             f = true
-            dom.setAttribute("style", `grid-area: span 12/span 24/13/25`);
+            dom.setAttribute("style", `grid-area: span 14/span 24/13/25`);
             let list;
              
             list = Array.from(
