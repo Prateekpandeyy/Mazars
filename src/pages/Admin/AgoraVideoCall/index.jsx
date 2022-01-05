@@ -149,9 +149,24 @@ remoteShare2 = false
    })
    this.setState({getAdId : uid})
   
-     
-      
-        this.localStream = this.streamInit(uid, $.attendeeMode, $.videoProfile);
+   let show;
+   AgoraRTC.getDevices(function(dev){
+     dev.map((e) => {
+       if(e.kind === "videoinput"){
+       show = true
+       }
+       else{
+         show = false
+       }
+     })
+   })
+   if(show){
+     this.localStream = this.streamInit(uid, $.attendeeMode, $.videoProfile)
+   }
+ else{
+   this.localStream = this.streamInit22(uid, $.attendeeMode, $.videoProfile);
+ 
+ }
         this.localStream.init(
           () => {
             if ($.attendeeMode !== "audience") {
@@ -264,7 +279,7 @@ remoteShare2 = false
             dom.addEventListener('click', function (e){
               if(f === false){
                 f = true
-                dom.setAttribute("style", `grid-area: span 12/span 24/13/25`);
+                dom.setAttribute("style", `grid-area: span 14/span 24/13/25`);
                 let list;
              
                 list = Array.from(
@@ -334,7 +349,7 @@ remoteShare2 = false
             
           if(f === false){
             f = true
-            dom.setAttribute("style", `grid-area: span 12/span 24/13/25`);
+            dom.setAttribute("style", `grid-area: span 14/span 24/13/25`);
             let list;
              
             list = Array.from(
@@ -390,33 +405,59 @@ remoteShare2 = false
     }
   
 
-  streamInit = (uid, attendeeMode, videoProfile, config) => {
-    let defaultConfig = {
-      streamID: uid,
-      audio: true,
-      video: true,
-      screen: false,
+    streamInit = (uid, attendeeMode, videoProfile, config) => {
+  
+      let defaultConfig = {
+        streamID: uid,
+        audio: true,
+        video: true,
+        screen: false,
+      };
+  
+      switch (attendeeMode) {
+        case "audio-only":
+          defaultConfig.video = false;
+          break;
+        case "audience":
+          defaultConfig.video = false;
+          defaultConfig.audio = false;
+          break;
+        default:
+        case "video":
+          break;
+      }
+  
+      let stream = AgoraRTC.createStream(merge(defaultConfig, config));
+      stream.setVideoProfile(videoProfile);
+      return stream;
     };
-
-    switch (attendeeMode) {
-      case "audio-only":
-        defaultConfig.video = false;
-        break;
-      case "audience":
-        defaultConfig.video = false;
-        defaultConfig.audio = false;
-        break;
-      default:
-      case "video":
-        break;
-    }
-
-    let stream = AgoraRTC.createStream(merge(defaultConfig, config));
-    stream.setVideoProfile(videoProfile);
-    return stream;
-  };
-
- 
+  
+    streamInit22 = (uid, attendeeMode, videoProfile, config) => {
+    
+      let defaultConfig = {
+        streamID: uid,
+        audio: true,
+        video: false,
+        screen: false,
+      };
+  
+      switch (attendeeMode) {
+        case "audio-only":
+          defaultConfig.video = false;
+          break;
+        case "audience":
+          defaultConfig.video = false;
+          defaultConfig.audio = false;
+          break;
+        default:
+        case "video":
+          break;
+      }
+  
+      let stream = AgoraRTC.createStream(merge(defaultConfig, config));
+      stream.setVideoProfile(videoProfile);
+      return stream;
+    };
   subscribeStreamEvents = () => {
     let rt = this;
     rt.client.on("stream-added", function (evt) {
@@ -497,7 +538,7 @@ remoteShare2 = false
    
     this.hostId = stream.getId()
  
-  
+    console.log("two", push)
     let repeatition = this.state.streamList.some((item) => {
       return item.getId() === stream.getId();
     });
@@ -530,7 +571,7 @@ remoteShare2 = false
          praticipantVar.setAttribute("disabled", true)
        }
        
-      else{
+      else if(res.data.length == 0){
         this.remoteShare2 = true
         var praticipantVar = document.getElementById("name" + stream.getId())
         praticipantVar.setAttribute("value", "Sharing");
@@ -721,6 +762,7 @@ remoteShare2 = false
     return stream;
   };
 
+  
 
   CreateS3Folder = (uid) =>{
     axios
@@ -804,7 +846,7 @@ async startRecording(key){
   };
 // Start recording button
   recStart = () => {
-    this.localStream.enableAudio();
+   
     this.localStream.enableVideo();
     this.accuire();
     this.setState({ showRecBtn: false  });

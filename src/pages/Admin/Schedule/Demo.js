@@ -141,13 +141,14 @@ function Demo() {
     {
       fieldName: "question_id",
       title: "Query No",
+      colorField: "green",
       instances: assignmentdata,
     },
     {
       fieldName: "user",
       title: "Users",
       instances: owner,
-      search: true,
+    
       allowMultiple: true,
     },
   ];

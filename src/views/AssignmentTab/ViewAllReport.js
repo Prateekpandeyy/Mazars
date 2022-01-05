@@ -175,78 +175,59 @@ function ViewReport({
                  <br></br> 
                  {p.customer_files === null ?  "" : <p>   Reviewed Report </p> }
                 </td>
-                    {
-                      p.stages_type === "2" ?
-                        <td>
-                          {
-                            p.status === "0" ?
-                              <div style={{ display: "flex", justifyContent: "space-around" }}>
-
-                                <div style={{ cursor: "pointer" }} title="Accept">
-                                  <i
-                                    class="fa fa-check"
-                                    style={{
-                                      color: "green",
-                                      fontSize: "16px",
-                                    }}
-                                    onClick={() => acceptHandler(p)}
-                                  ></i>
-                                </div>
-                              
-                                                      
-                                                
-                                <div title="Discussion">
-                                  <i
-                                    class="fa fa-comments-o"
-                                    style={{
-                                      fontSize: 16,
-                                      cursor: "pointer",
-                                      marginLeft: "8px",
-                                      color: "green"
-                                    }}
-                                    onClick={() => toggleNested(p)}
-                                  ></i>
-                                </div>
-                                {p.customer_files === null ?
-                                <div title="Upload Additional Documents"
-                                                            style={{ cursor: "pointer" }}
-                                                            onClick={() => additionalHandler(p)}
-                                                           
-                                                        >
-                                                            <PublishIcon color="secondary" />
-                                                        </div> : ""}
-                              </div>
-                              :
-                              p.status === "1" ?
-                                <div style={{ cursor: "pointer" }} title="Client Accepted">
-                                  <i
-                                    class="fa fa-check"
-                                    style={{
-                                      color: "blue",
-                                      fontSize: "16px",
-                                    }}
-                                  ></i>
-                                </div> :
-                                p.status ==- "2" ?
-                                  <div title="Discussion">
-                                    <i
-                                      class="fa fa-comments-o"
-                                      style={{
-                                        fontSize: 16,
-                                        cursor: "pointer",
-                                        marginLeft: "8px",
-                                        color: "green"
-                                      }}
-                                      onClick={() => toggleNested(p)}
-                                    ></i>
-                                  </div> :
-                                  <p style={{ color: "red" }}>Pending</p>
-                          }
-                        </td>
-                        :
-                        null
-                    }
-
+                {
+        
+        p.status === "1" ?
+          <div style={{ cursor: "pointer" }} title="Client Accepted">
+            <i
+              class="fa fa-check"
+              style={{
+                color: "blue",
+                fontSize: "16px",
+              }}
+            ></i>
+          </div> :""}
+          {p.status === "2" && p.customer_files !== null ?
+          <p style={{color : "red"}}>Pending </p> : ""}
+         { p.status === "2" || p.status === "0" ?
+              <>
+               {p.status === "2" ? null :
+               <>
+              <div style={{display : "flex", flexDirection: "row"}}>
+              <div style={{ cursor: "pointer" }} title="Accept">
+<i
+  class="fa fa-check"
+  style={{
+    color: "green",
+    fontSize: "16px",
+  }}
+  onClick={() => acceptHandler(p)}
+></i>
+</div>
+                <div title="Discussion">
+                <i
+                  class="fa fa-comments-o"
+                  style={{
+                    fontSize: 16,
+                    cursor: "pointer",
+                    marginLeft: "8px",
+                    color: "green"
+                  }}
+                  onClick={() => toggleNested(p)}
+                ></i>
+              </div>
+                </div>
+              </> }
+                {p.customer_files === null ?
+<div title="Upload Additional Documents"
+        style={{ cursor: "pointer", display : "flex" }}
+        onClick={() => additionalHandler(p)}
+       
+    >
+        <PublishIcon color="secondary" />
+    </div> : ""}
+    </> :""}
+  
                   </tr>
                 </tbody>
               ))
