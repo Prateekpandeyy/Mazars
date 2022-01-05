@@ -131,114 +131,55 @@ AgoraRTC.getDevices(function(dev){
   
  })
 
-<<<<<<< HEAD
-      this.client.join($.appId, $.channel, $.uid, (uid) => {
-        var data_post_api = "https://virtualapi.multitvsolution.com/VstreamApi/index.php/api/vstream/userdata?channel_name="+this.channelName+"&rtm_id="+""+"&rtc_id="+uid+"&user_name="+this.customerName;
-        axios.get(`${data_post_api}`).
-        then((res) => {
-        
-        
-        })
+ this.setState({getAdId : uid})
+ this.subscribeStreamEvents();
+ 
+ if(show === true){
+   this.localStream = this.streamInit(uid, $.attendeeMode, $.videoProfile)
+   this.localStream.init(
        
-       this.setState({atCustId : uid})
-        // create local stream
-        // It is not recommended to setState in function addStream
-<<<<<<< HEAD
-        let videoProfile="480_p"
-        this.localStream = this.streamInit(uid, $.attendeeMode, videoProfile);
-=======
-        let show;
-        AgoraRTC.getDevices(function(dev){
-          dev.map((e) => {
-            if(e.kind === "videoinput"){
-            show = true
-            }
-            else{
-              show = false
-            }
-          })
-        })
-        if(show){
-          this.localStream = this.streamInit(uid, $.attendeeMode, $.videoProfile)
-        }
-      else{
-        this.localStream = this.streamInit22(uid, $.attendeeMode, $.videoProfile);
-=======
-this.setState({getAdId : uid})
-this.subscribeStreamEvents();
-
-if(show === true){
-  this.localStream = this.streamInit(uid, $.attendeeMode, $.videoProfile)
-  this.localStream.init(
->>>>>>> f2e329f52197c04a061e5e63aea8239daeff8621
-      
-    () => {
-      if ($.attendeeMode !== "audience") {
-        this.addStream(this.localStream, true);
-        
-
-        this.client.publish(this.localStream, (err) => {
+     () => {
+       if ($.attendeeMode !== "audience") {
+         this.addStream(this.localStream, true);
          
-        });
-      }
-<<<<<<< HEAD
->>>>>>> 05f9875472b9da7565b53a0d0e85aa0178386113
-        this.localStream.init(
-          () => {
-            if ($.attendeeMode !== "audience") {
-              alert("done")
-              this.addStream(this.localStream, true);
-              this.client.publish(this.localStream, (err) => {
-             
-              });
-            }
-            else{
-              alert("done2")
-            }
-            this.setState({ readyState: true });
-          },
-          (err) => {
-           
-            this.setState({ readyState: true });
-          }
-        );
-=======
-      this.setState({ readyState: true });
-    },
-    (err) => {
-    
-      this.setState({ readyState: true });
-    }
-  );
-}
-else if(show === false){
-this.localStream = this.streamInit22(uid, $.attendeeMode, $.videoProfile);
-this.localStream.init(
-      
-  () => {
-    if ($.attendeeMode !== "audience") {
-      this.addStream(this.localStream, true);
-      
-
-      this.client.publish(this.localStream, (err) => {
+ 
+         this.client.publish(this.localStream, (err) => {
+          
+         });
+       }
+       this.setState({ readyState: true });
+     },
+     (err) => {
+     
+       this.setState({ readyState: true });
+     }
+   );
+ }
+ else if(show === false){
+ this.localStream = this.streamInit22(uid, $.attendeeMode, $.videoProfile);
+ this.localStream.init(
        
->>>>>>> f2e329f52197c04a061e5e63aea8239daeff8621
-      });
-    }
-    this.setState({ readyState: true });
-  },
-  (err) => {
-  
-    this.setState({ readyState: true });
-  }
-);
-}
-      
-    });
-  });
-}
-
-
+   () => {
+     if ($.attendeeMode !== "audience") {
+       this.addStream(this.localStream, true);
+       
+ 
+       this.client.publish(this.localStream, (err) => {
+        
+       });
+     }
+     this.setState({ readyState: true });
+   },
+   (err) => {
+   
+     this.setState({ readyState: true });
+   }
+ );
+ }
+       
+     });
+   });
+ }
   componentDidMount() {
     // add listener to control btn group
     let canvas = document.querySelector("#ag-canvas");

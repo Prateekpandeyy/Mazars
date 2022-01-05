@@ -130,14 +130,6 @@ class AgoraCanvas extends React.Component {
 allrecording;
 localVedioTrack;
 remoteShare2 = false
-<<<<<<< HEAD
-  componentWillMount() {
-    let $ = this.props;
-    console.log("join", $)
-    // init AgoraRTC local client
-    this.client = AgoraRTC.createClient({ mode: $.transcode });
-    this.client.init($.appId, () => {
-=======
 componentWillMount() {
   let $ = this.props;
   // init AgoraRTC local client
@@ -159,7 +151,6 @@ AgoraRTC.getDevices(function(dev){
    
  
     this.client.join($.appId, $.channel, $.uid, (uid) => {
->>>>>>> f2e329f52197c04a061e5e63aea8239daeff8621
      
       var data_post_api = "https://virtualapi.multitvsolution.com/VstreamApi/index.php/api/vstream/userdata?channel_name="+this.channelName+"&rtm_id="+""+"&rtc_id="+uid+"&user_name="+this.adminName;
  axios.get(`${data_post_api}`).
@@ -167,13 +158,6 @@ AgoraRTC.getDevices(function(dev){
   
  })
 
-<<<<<<< HEAD
-      this.client.join($.appId, $.channel, $.uid, (uid) => {
-      
-        var data_post_api = "https://virtualapi.multitvsolution.com/VstreamApi/index.php/api/vstream/userdata?channel_name="+this.channelName+"&rtm_id="+""+"&rtc_id="+uid+"&user_name="+this.adminName;
-   axios.get(`${data_post_api}`).
-   then((res) => {
-=======
 this.setState({getAdId : uid})
 this.subscribeStreamEvents();
 
@@ -193,7 +177,6 @@ if(show === true){
       this.setState({ readyState: true });
     },
     (err) => {
->>>>>>> f2e329f52197c04a061e5e63aea8239daeff8621
     
       this.setState({ readyState: true });
     }

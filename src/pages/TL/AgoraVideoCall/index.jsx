@@ -154,95 +154,55 @@ remoteShare2 = false
     
    })
 
-  this.setState({getAdId : uid})
-  let show;
-  this.subscribeStreamEvents();
-<<<<<<< HEAD
-<<<<<<< HEAD
-  AgoraRTC.getDevices(function(dev){
-    dev.map((e) => {
-     
-      if(e.kind === "videoinput"){
-     show = true
-      }
-      else{
-      show = false
-      }
-    })})
-        if(show){
-          this.localStream = this.streamInit(uid, $.attendeeMode, $.videoProfile);
-        }
-        else{
-          this.localStream = this.streamInit22(uid, $.attendeeMode, $.videoProfile);
-        }
-=======
-  let show;
-  AgoraRTC.getDevices(function(dev){
-    dev.map((e) => {
-      if(e.kind === "videoinput"){
-      show = true
-      }
-      else{
-        show = false
-      }
-    })
-  })
-  if(show){
-=======
-  
-  if(show === true){
->>>>>>> f2e329f52197c04a061e5e63aea8239daeff8621
-    this.localStream = this.streamInit(uid, $.attendeeMode, $.videoProfile)
-    this.localStream.init(
-        
-      () => {
-        if ($.attendeeMode !== "audience") {
-          this.addStream(this.localStream, true);
-          
-
-          this.client.publish(this.localStream, (err) => {
-           
-          });
-        }
-        this.setState({ readyState: true });
-      },
-      (err) => {
-      
-        this.setState({ readyState: true });
-      }
-    );
-  }
-else if(show === false){
-  this.localStream = this.streamInit22(uid, $.attendeeMode, $.videoProfile);
-  this.localStream.init(
-        
-    () => {
-      if ($.attendeeMode !== "audience") {
-        this.addStream(this.localStream, true);
-        
-
-        this.client.publish(this.localStream, (err) => {
+   this.setState({getAdId : uid})
+   this.subscribeStreamEvents();
+   
+   if(show === true){
+     this.localStream = this.streamInit(uid, $.attendeeMode, $.videoProfile)
+     this.localStream.init(
          
-        });
-      }
-      this.setState({ readyState: true });
-    },
-    (err) => {
-    
-      this.setState({ readyState: true });
-    }
-  );
-}
-<<<<<<< HEAD
->>>>>>> 05f9875472b9da7565b53a0d0e85aa0178386113
-        this.localStream.init(
-=======
->>>>>>> f2e329f52197c04a061e5e63aea8239daeff8621
-        
-      });
-    });
-  }
- 
+       () => {
+         if ($.attendeeMode !== "audience") {
+           this.addStream(this.localStream, true);
+           
+   
+           this.client.publish(this.localStream, (err) => {
+            
+           });
+         }
+         this.setState({ readyState: true });
+       },
+       (err) => {
+       
+         this.setState({ readyState: true });
+       }
+     );
+   }
+   else if(show === false){
+   this.localStream = this.streamInit22(uid, $.attendeeMode, $.videoProfile);
+   this.localStream.init(
+         
+     () => {
+       if ($.attendeeMode !== "audience") {
+         this.addStream(this.localStream, true);
+         
+   
+         this.client.publish(this.localStream, (err) => {
+          
+         });
+       }
+       this.setState({ readyState: true });
+     },
+     (err) => {
+     
+       this.setState({ readyState: true });
+     }
+   );
+   }
+         
+       });
+     });
+   }
   componentDidMount() {
     // add listener to control btn group
     let canvas = document.querySelector("#ag-canvas");
@@ -460,12 +420,7 @@ if(item.player === undefined){
       );
   }
 
-<<<<<<< HEAD
   streamInit22 = (uid, attendeeMode, videoProfile, config) => {
-=======
-  streamInit = (uid, attendeeMode, videoProfile, config) => {
-  
->>>>>>> 05f9875472b9da7565b53a0d0e85aa0178386113
     let defaultConfig = {
        streamID: uid,
        audio: true,
@@ -516,37 +471,7 @@ if(item.player === undefined){
     stream.setVideoProfile(videoProfile);
     return stream;
   };
-<<<<<<< HEAD
  
-=======
-
-  streamInit22 = (uid, attendeeMode, videoProfile, config) => {
-  
-    let defaultConfig = {
-      streamID: uid,
-      audio: true,
-      video: false,
-      screen: false,
-    };
-
-    switch (attendeeMode) {
-      case "audio-only":
-        defaultConfig.video = false;
-        break;
-      case "audience":
-        defaultConfig.video = false;
-        defaultConfig.audio = false;
-        break;
-      default:
-      case "video":
-        break;
-    }
-
-    let stream = AgoraRTC.createStream(merge(defaultConfig, config));
-    stream.setVideoProfile(videoProfile);
-    return stream;
-  };
->>>>>>> 05f9875472b9da7565b53a0d0e85aa0178386113
   subscribeStreamEvents = () => {
     let rt = this;
     rt.client.on("stream-added", function (evt) {

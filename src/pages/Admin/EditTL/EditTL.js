@@ -123,7 +123,7 @@ function EditTL() {
   var data7 = value.email;
   const data8 = value.cat_id;
   const data9 = value.pcat_id;
-   
+  const data10 = value.cat_value;
 
   useEffect(() => {
     const getCategory = () => {
@@ -484,24 +484,28 @@ const defValue = () => {
   setCategoryData(a)
 }
 const defSubValue = () => {
-  console.log("data")
+  console.log("data", data10.split(","))
    var dir1;
    var dir2;
    var kk = []
    var d = 2;
    var ind = 9;
+   let kkk = data10.split(",")
   // let aaa = data8.filter((i) => {
   //   return i < 9
   // })
+  let ooo = -1;
+  console.log("kkk", kkk)
    var subcatgerydefvalue = JSON.parse(value.allcat_id);
    indirvalue = subcatgerydefvalue.indirect;
    dirvalue = subcatgerydefvalue.direct;
    if(Array.isArray(dirvalue)){
     dirvalue.map((i) => {
+      ooo++;
       allsubcatvalue.push(i)
     })
     dir1 = subcatgerydefvalue.direct.map((i => ({
-      "value" : String(d++),
+      "value" : String(kkk[ooo]),
       "label" : i
     }) ))
    }
