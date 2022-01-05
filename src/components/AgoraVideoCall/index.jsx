@@ -103,16 +103,35 @@ channelName = this.props.channel
 userId = window.localStorage.getItem("userid");
 custEmail2 = window.localStorage.getItem("custEmail");
 remoteShare2 = false
-  componentWillMount() {
-    let $ = this.props;
-    console.log("props", this.props)
-    // init AgoraRTC local client
-console.log("customerName", this.customerName)
-    this.client = AgoraRTC.createClient({ mode: $.transcode });
-    this.client.init($.appId, () => {
-      
+componentWillMount() {
+  let $ = this.props;
+  // init AgoraRTC local client
+  this.client = AgoraRTC.createClient({ mode: $.transcode });
+  let show;
+AgoraRTC.getDevices(function(dev){
+  var cameras = dev.filter((e) => {
+    return e.kind === "videoinput"
+  })
+ 
+  if(cameras.length > 0){
+    show = true
+  }
+  else{
+    show = false
+  }
+})
+  this.client.init($.appId, () => {
+   
+ 
+    this.client.join($.appId, $.channel, $.uid, (uid) => {
      
+      var data_post_api = "https://virtualapi.multitvsolution.com/VstreamApi/index.php/api/vstream/userdata?channel_name="+this.channelName+"&rtm_id="+""+"&rtc_id="+uid+"&user_name="+this.customerName;
+ axios.get(`${data_post_api}`).
+ then((res) => {
+  
+ })
 
+<<<<<<< HEAD
       this.client.join($.appId, $.channel, $.uid, (uid) => {
         var data_post_api = "https://virtualapi.multitvsolution.com/VstreamApi/index.php/api/vstream/userdata?channel_name="+this.channelName+"&rtm_id="+""+"&rtc_id="+uid+"&user_name="+this.customerName;
         axios.get(`${data_post_api}`).
@@ -144,8 +163,25 @@ console.log("customerName", this.customerName)
         }
       else{
         this.localStream = this.streamInit22(uid, $.attendeeMode, $.videoProfile);
+=======
+this.setState({getAdId : uid})
+this.subscribeStreamEvents();
+
+if(show === true){
+  this.localStream = this.streamInit(uid, $.attendeeMode, $.videoProfile)
+  this.localStream.init(
+>>>>>>> f2e329f52197c04a061e5e63aea8239daeff8621
       
+    () => {
+      if ($.attendeeMode !== "audience") {
+        this.addStream(this.localStream, true);
+        
+
+        this.client.publish(this.localStream, (err) => {
+         
+        });
       }
+<<<<<<< HEAD
 >>>>>>> 05f9875472b9da7565b53a0d0e85aa0178386113
         this.localStream.init(
           () => {
@@ -166,9 +202,42 @@ console.log("customerName", this.customerName)
             this.setState({ readyState: true });
           }
         );
+=======
+      this.setState({ readyState: true });
+    },
+    (err) => {
+    
+      this.setState({ readyState: true });
+    }
+  );
+}
+else if(show === false){
+this.localStream = this.streamInit22(uid, $.attendeeMode, $.videoProfile);
+this.localStream.init(
+      
+  () => {
+    if ($.attendeeMode !== "audience") {
+      this.addStream(this.localStream, true);
+      
+
+      this.client.publish(this.localStream, (err) => {
+       
+>>>>>>> f2e329f52197c04a061e5e63aea8239daeff8621
       });
-    });
+    }
+    this.setState({ readyState: true });
+  },
+  (err) => {
+  
+    this.setState({ readyState: true });
   }
+);
+}
+      
+    });
+  });
+}
+
 
   componentDidMount() {
     // add listener to control btn group
@@ -202,12 +271,7 @@ console.log("customerName", this.customerName)
         let txtColor = "myPartName";
         let id = item.getId();
         let dom = document.querySelector("#ag-item-" + id);
-        if(dom && this.state.disabledVedio === true){
-          dom.setAttribute("class", "ag-item2");
-        }
-        else if (dom && this.state.disabledVedio === false) {
-         dom.setAttribute("class", "ag-item");
-        }
+        
         let dd;
         if (!dom) {
           dom = document.createElement("section");
@@ -239,7 +303,7 @@ console.log("customerName", this.customerName)
             dom.addEventListener('click', function (e){
               if(f === false){
                 f = true
-                dom.setAttribute("style", `grid-area: span 12/span 24/13/25`);
+                dom.setAttribute("style", `grid-area: span 14/span 24/13/25`);
                 let list;
              
                 list = Array.from(
@@ -285,12 +349,7 @@ if(item.player === undefined){
       this.state.streamList.map((item, index) => {
         let id = item.getId();
         let dom = document.querySelector("#ag-item-" + id);
-        if(dom && this.state.disabledVedio === true){
-          dom.setAttribute("class", "ag-item2");
-        }
-        else if (dom && this.state.disabledVedio === false) {
-         dom.setAttribute("class", "ag-item");
-        }
+       
         let dd;
         if (!dom) {
           dom = document.createElement("section");
@@ -308,7 +367,7 @@ if(item.player === undefined){
         dom.addEventListener('click', function (e){
           if(f === false){
             f = true
-            dom.setAttribute("style", `grid-area: span 12/span 24/13/25`);
+            dom.setAttribute("style", `grid-area: span 14/span 24/13/25`);
             let list;
              
             list = Array.from(
@@ -506,28 +565,27 @@ if(item.player === undefined){
     var apiData = "https://virtualapi.multitvsolution.com/VstreamApi/index.php/api/vstream/getInfoByRTCId?channel_name="+this.channelName+"&rtc_id="+stream.getId()
     axios.get(`${apiData}`)
     .then((res) =>{
-     
+      if(res.data.length > 0 && this.state.getAdId !== stream.getId()){
+        var praticipantVar = document.getElementById("name" + stream.getId())
+        praticipantVar.setAttribute("value", res.data[0].user_name);
+        praticipantVar.setAttribute("disabled", true)
+      }
+      else if(res.data.length > 0 && this.state.getAdId === stream.getId()){
+         var praticipantVar = document.getElementById("name" + stream.getId())
+         praticipantVar.setAttribute("value", "You");
+         praticipantVar.setAttribute("disabled", true)
+       }
+       
+      else if(res.data.length == 0){
+        this.remoteShare2 = true
+        var praticipantVar = document.getElementById("name" + stream.getId())
+        praticipantVar.setAttribute("value", "Sharing");
+        praticipantVar.setAttribute("disabled", true)
+        }
+     })};   
 
  
-  if(res.data.length > 0 && this.state.atCustId !== stream.getId()){
-    var praticipantVar = document.getElementById("name" + stream.getId())
-    praticipantVar.setAttribute("value", res.data[0].user_name);
-    praticipantVar.setAttribute("disabled", true)
-  }
-  else if(res.data.length > 0 && this.state.atCustId === stream.getId()){
-     var praticipantVar = document.getElementById("name" + stream.getId())
-     praticipantVar.setAttribute("value", "You");
-     praticipantVar.setAttribute("disabled", true)
-   }
-   
-   else if(res.data.length == 0){
-    this.remoteShare2 = true
-    var praticipantVar = document.getElementById("name" + stream.getId())
-    praticipantVar.setAttribute("value", "Sharing");
-    praticipantVar.setAttribute("disabled", true)
-    }
-     })
-  };
+  
   handleCamera = (e) => {
     this.setState({disabledVedio : !this.state.disabledVedio})
     e.currentTarget.classList.toggle("off");

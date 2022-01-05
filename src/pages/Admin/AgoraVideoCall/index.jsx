@@ -130,62 +130,101 @@ class AgoraCanvas extends React.Component {
 allrecording;
 localVedioTrack;
 remoteShare2 = false
+<<<<<<< HEAD
   componentWillMount() {
     let $ = this.props;
     console.log("join", $)
     // init AgoraRTC local client
     this.client = AgoraRTC.createClient({ mode: $.transcode });
     this.client.init($.appId, () => {
+=======
+componentWillMount() {
+  let $ = this.props;
+  // init AgoraRTC local client
+  this.client = AgoraRTC.createClient({ mode: $.transcode });
+  let show;
+AgoraRTC.getDevices(function(dev){
+  var cameras = dev.filter((e) => {
+    return e.kind === "videoinput"
+  })
+ 
+  if(cameras.length > 0){
+    show = true
+  }
+  else{
+    show = false
+  }
+})
+  this.client.init($.appId, () => {
+   
+ 
+    this.client.join($.appId, $.channel, $.uid, (uid) => {
+>>>>>>> f2e329f52197c04a061e5e63aea8239daeff8621
      
-      this.subscribeStreamEvents();
+      var data_post_api = "https://virtualapi.multitvsolution.com/VstreamApi/index.php/api/vstream/userdata?channel_name="+this.channelName+"&rtm_id="+""+"&rtc_id="+uid+"&user_name="+this.adminName;
+ axios.get(`${data_post_api}`).
+ then((res) => {
+  
+ })
 
+<<<<<<< HEAD
       this.client.join($.appId, $.channel, $.uid, (uid) => {
       
         var data_post_api = "https://virtualapi.multitvsolution.com/VstreamApi/index.php/api/vstream/userdata?channel_name="+this.channelName+"&rtm_id="+""+"&rtc_id="+uid+"&user_name="+this.adminName;
    axios.get(`${data_post_api}`).
    then((res) => {
+=======
+this.setState({getAdId : uid})
+this.subscribeStreamEvents();
+
+if(show === true){
+  this.localStream = this.streamInit(uid, $.attendeeMode, $.videoProfile)
+  this.localStream.init(
+      
+    () => {
+      if ($.attendeeMode !== "audience") {
+        this.addStream(this.localStream, true);
+        
+
+        this.client.publish(this.localStream, (err) => {
+         
+        });
+      }
+      this.setState({ readyState: true });
+    },
+    (err) => {
+>>>>>>> f2e329f52197c04a061e5e63aea8239daeff8621
     
-   
-   })
-   this.setState({getAdId : uid})
-  
-   let show;
-   AgoraRTC.getDevices(function(dev){
-     dev.map((e) => {
-       if(e.kind === "videoinput"){
-       show = true
-       }
-       else{
-         show = false
-       }
-     })
-   })
-   if(show){
-     this.localStream = this.streamInit(uid, $.attendeeMode, $.videoProfile)
-   }
- else{
-   this.localStream = this.streamInit22(uid, $.attendeeMode, $.videoProfile);
- 
- }
-        this.localStream.init(
-          () => {
-            if ($.attendeeMode !== "audience") {
-              this.addStream(this.localStream, true);
-              this.client.publish(this.localStream, (err) => {
-               
-              });
-            }
-            this.setState({ readyState: true });
-          },
-          (err) => {
-          
-            this.setState({ readyState: true });
-          }
-        );
+      this.setState({ readyState: true });
+    }
+  );
+}
+else if(show === false){
+this.localStream = this.streamInit22(uid, $.attendeeMode, $.videoProfile);
+this.localStream.init(
+      
+  () => {
+    if ($.attendeeMode !== "audience") {
+      this.addStream(this.localStream, true);
+      
+
+      this.client.publish(this.localStream, (err) => {
+       
       });
-    });
+    }
+    this.setState({ readyState: true });
+  },
+  (err) => {
+  
+    this.setState({ readyState: true });
   }
- 
+);
+}
+      
+    });
+  });
+}
+
   componentDidMount() {
     // add listener to control btn group
     let canvas = document.querySelector("#ag-canvas");
@@ -239,12 +278,7 @@ remoteShare2 = false
         let txtColor = "myPartName";
         let id = item.getId();
         let dom = document.querySelector("#ag-item-" + id);
-        if(dom && this.state.disabledVedio === true){
-          dom.setAttribute("class", "ag-item2");
-        }
-        else if (dom && this.state.disabledVedio === false) {
-         dom.setAttribute("class", "ag-item");
-        }
+      
         let dd;
         if (!dom) {
           dom = document.createElement("section");
@@ -325,12 +359,7 @@ remoteShare2 = false
       this.state.streamList.map((item, index) => {
         let id = item.getId();
         let dom = document.querySelector("#ag-item-" + id);
-        if(dom && this.state.disabledVedio === true){
-          dom.setAttribute("class", "ag-item2");
-        }
-        else if (dom && this.state.disabledVedio === false) {
-         dom.setAttribute("class", "ag-item");
-        }
+        
         let dd;
         if (!dom) {
           dom = document.createElement("section");
@@ -390,6 +419,7 @@ remoteShare2 = false
     componentWillUnmount() {
       this.client && this.client.unpublish(this.localStream);
       this.localStream && this.localStream.close();
+     
       if (this.state.stateSharing) {
         this.shareClient && this.shareClient.unpublish(this.shareStream);
         this.shareStream && this.shareStream.close();
@@ -538,7 +568,7 @@ remoteShare2 = false
    
     this.hostId = stream.getId()
  
-    console.log("two", push)
+  
     let repeatition = this.state.streamList.some((item) => {
       return item.getId() === stream.getId();
     });

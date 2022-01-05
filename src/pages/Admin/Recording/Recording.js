@@ -139,7 +139,7 @@ function Recording() {
             },
             formatter: function nameFormatter(cell, row) {
              
-                var recording = row.file.split(",");
+                var recording = row.file.split(",").reverse();
                 let a = 1;
                 console.log(row.file.split(","))
                 return (

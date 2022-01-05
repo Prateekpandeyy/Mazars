@@ -490,7 +490,9 @@ const defSubValue = () => {
    var kk = []
    var d = 2;
    var ind = 9;
-  
+  // let aaa = data8.filter((i) => {
+  //   return i < 9
+  // })
    var subcatgerydefvalue = JSON.parse(value.allcat_id);
    indirvalue = subcatgerydefvalue.indirect;
    dirvalue = subcatgerydefvalue.direct;

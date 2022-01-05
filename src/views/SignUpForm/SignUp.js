@@ -10,7 +10,7 @@ import { professionName, country, states } from './data';
 import { cities } from './city';
 import Alerts from "../../common/Alerts";
 import ResendOtp from "./ResendOtp";
-
+import Select from "react-select";
 import Mandatory from "../../components/Common/Mandatory";
 import EmailValidation from "../../components/Common/EmailValidation";
 
@@ -56,9 +56,12 @@ function SignUp(props) {
   const [phoneError, setPhoneError] = useState(null)
   const [zipError1, setZipError1] = useState(null);
   const [subm, setSub] = useState(false)
+  const [dstate, setDstate] = useState()
 const [email2, setEmail2] = useState();
   const [loading, setLoading] = useState(false);
-
+const [estate, setEstate] = useState("");
+const [cityState2, setCityValue2] = useState("")
+const [dstate2, setDstate2] = useState("")
   //Css
   const CountryNumStyle = {
     "display": "flex",
@@ -122,9 +125,14 @@ const [email2, setEmail2] = useState();
     }
 
     var arrayState = []
+    let sta = {}
     states.filter((data) => {
       if (data.country_id == key) {
-        arrayState.push(data)
+        sta = {
+          "value" : data.id,
+          "label" : data.name
+        }
+        arrayState.push(sta)
       }
     });
     setState(arrayState)
@@ -140,6 +148,13 @@ const [email2, setEmail2] = useState();
 
   //get city
   const getCity = (key) => {
+    if(estate.length > 0){
+      setEstate("")
+    }
+  setDstate(key)
+  
+   console.log(key)
+    let sta = {}
     states.filter((p) => {
       if (p.id == key) {
         setStateName(p.name)
@@ -148,8 +163,14 @@ const [email2, setEmail2] = useState();
 
     var arrayCity = []
     cities.filter((data) => {
-      if (data.state_id === key) {
-        arrayCity.push(data)
+      if (data.state_id === key.value) {
+        console.log("value", data.id)
+        console.log("label", data.name)
+        sta = {
+          "value" : data.id,
+          "label" : data.name
+        }
+        arrayCity.push(sta)
       }
     });
     setCity(arrayCity)
@@ -245,13 +266,7 @@ const [email2, setEmail2] = useState();
   //zip oncahnge
   const zipValue = (e) => {
    
-    if (isNaN(e.target.value) && countryId.length > 0) {
-
-      setZipError("Please enter number only")
-      setZipError1(true)
-      e.target.value = ""
-    }
-    else if (e.target.value.length == 0) {
+   if (e.target.value.length == 0) {
       setZipError1(true)
     }
     else {
@@ -265,13 +280,13 @@ const [email2, setEmail2] = useState();
   // onblur
   const zipVali2 = (e) => {
 
-    if (countryId && zipCode && zipCode.length < 6 && countryId.length > 0) {
+    if (countryId && zipCode && zipCode.length < 6) {
       setZipError1(true)
       setZipError("Minumum 6 digit should be there")
 
     }
 
-    else if (countryId && zipCode && zipCode.length > 6 && countryId.length > 0) {
+    else if (countryId && zipCode && zipCode.length > 6) {
       setZipError1(true)
       setZipError("Maximum 6 digit allowed")
     
@@ -293,6 +308,29 @@ const [email2, setEmail2] = useState();
     }
   }
 
+  const getStateValue = (input, reason) => {
+    if (
+      reason.action === "set-value" ||
+      reason.action === "input-blur" ||
+      reason.action === "menu-close"
+    ) {
+      return;
+    }
+   console.log(input)
+   setEstate(input)
+  }
+
+  const getCityValu2 = (input, reason) => {
+    if (
+      reason.action === "set-value" ||
+      reason.action === "input-blur" ||
+      reason.action === "menu-close"
+    ) {
+      return;
+    }
+   console.log(input)
+   setCityValue2(input)
+  }
 
 
   const onSubmit = (value) => {
@@ -303,13 +341,16 @@ const [email2, setEmail2] = useState();
     formData.append("email", email2);
     formData.append("phone", value.p_phone);
     formData.append("occupation", value.p_profession);
-    formData.append("city", value.p_city)
+ {cityState2 && cityState2.length > 0 ?    formData.append("city", cityState2) :
+ formData.append("city", dstate2.label)}
     formData.append("pincode", value.p_zipCode);
     formData.append("password", value.p_password);
     formData.append("rpassword", value.p_confirm_password);
     formData.append("otp", value.p_otp);
     formData.append("country", countryName);
-    formData.append("state", stateName);
+    {estate && estate.length > 0 ?  formData.append("state", estate) :
+    formData.append("state", dstate.label)}
+   
     formData.append("stdcode", countryCode);
     formData.append("gstin_no", value.p_gstIn);
 
@@ -386,6 +427,12 @@ const [email2, setEmail2] = useState();
     else {
       setDisplay(true)
     }
+  }
+  const getCity22 = (key) => {
+    if(cityState2.length > 0){
+    setCityValue2("")
+    }
+    setDstate2(key)
   }
 
 // getEmailValue 
@@ -493,22 +540,19 @@ const [email2, setEmail2] = useState();
                   <div className="col-md-6">
                     <div className="mb-3">
                       <label className="form-label">State<span className="declined">*</span></label>
-                      <select
-                        id="state"
-                        name="p_state"
-                        className={classNames("form-control", {
-                          "is-invalid": errors.p_state,
-                        })}
-                        ref={register({ required: true })}
-                        onChange={(e) => getCity(e.target.value)}
-                      >
-                        <option value="">--select--</option>
-                        {State.map((p) => (
-                          <option key={p.id} value={p.id}>
-                            {p.name}
-                          </option>
-                        ))}
-                      </select>
+                     
+                    <Select
+        closeMenuOnSelect={true}
+        onSelectResetsInput={false}
+        blurInputOnSelect={false}
+        options={State}
+        inputValue={estate}
+        onInputChange={getStateValue}
+     
+        onChange={(e) => getCity(e)}
+        value={dstate}
+      />
+     
                     </div>
                   </div>
 
@@ -516,20 +560,18 @@ const [email2, setEmail2] = useState();
                   <div className="col-md-6">
                     <div className="mb-3">
                       <label className="form-label">City<span className="declined">*</span></label>
-                      <select
-                        className={classNames("form-control", {
-                          "is-invalid": errors.p_city,
-                        })}
-                        name="p_city"
-                        ref={register({ required: true })}
-                      >
-                        <option value="">--select--</option>
-                        {city.map((p, index) => (
-                          <option key={index} value={p.city}>
-                            {p.name}
-                          </option>
-                        ))}
-                      </select>
+                     
+                      <Select
+        closeMenuOnSelect={true}
+        onSelectResetsInput={false}
+        blurInputOnSelect={false}
+        options={city}
+        inputValue={cityState2}
+        onInputChange={getCityValu2}
+     
+        onChange={(e) => getCity22(e)}
+        value={dstate2}
+      />
                     </div>
                   </div>
 

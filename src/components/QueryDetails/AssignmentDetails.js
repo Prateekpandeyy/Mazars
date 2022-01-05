@@ -121,7 +121,7 @@ function AssignmentDetails({ p, finalDate, submitData, customerQuery , diaplayAs
                           </a>
                         </td>
                         <td style={{ marginLeft: "15px", color: "green" }}>
-                          {p.stages_type == 2 && p.revise_report == null && "Draft Report" || p.stages_type == 3 && p.revise_report == null && "Final Report" || p.revise_report != null && "Reviewed Report"}
+                          {p.stages_type == 2 && p.revise_report == null && "Draft Report" || p.stages_type == 3 && p.revise_report == null && "Final Report" || p.revise_report != null && "Draft Report"}
                         </td>
                         <td>
                           {p.status == "3"

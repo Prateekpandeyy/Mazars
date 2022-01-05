@@ -130,13 +130,13 @@ const viewStyle = {
                         p.stages_type == "2" ?
                           <div>
                             {
-                              p.status == "0" && p.customer_files === null ?
-                                <p style={{ color: "red" }}>Pending</p>
+                              p.status == "0"  && p.customer_files === null ?
+                                <p style={{ color: "red" }}> Pending </p>
                                 :
                                 p.status == "1" ?
-                                  <div style={{ cursor: "pointer" }} title="Customer Accepted">
+                                  <div style={{ cursor: "pointer" }} title="Client Accepted">
                                     <i
-                                      className="fa fa-check"
+                                      class="fa fa-check"
                                       style={{
                                         color: "blue",
                                         fontSize: "16px",
@@ -144,30 +144,30 @@ const viewStyle = {
                                       }}
                                     ></i>
                                   </div> :
-                                  p.status == "2" ?
+                                  p.status == "2" || p.customer_files !== null ?
                                     <div style={{ display: "flex", justifyContent: "space-around" }}>
                                       <div title="Discussion">
                                         <i
-                                          className="fa fa-comments-o"
+                                          class="fa fa-comments-o"
                                           style={{
                                             fontSize: 16,
                                             cursor: "pointer",
                                             marginLeft: "8px",
                                             color: "green"
                                           }}
-                                          // onClick={() => toggleNested(p)}
+                                        
                                         ></i>
                                       </div>
                                       <div title="Discard">
                                         <i
-                                          className="fa fa-times"
+                                          class="fa fa-times"
                                           style={{
                                             fontSize: 16,
                                             cursor: "pointer",
                                             marginLeft: "8px",
                                             color: "red"
                                           }}
-                                          // onClick={() => toggleDiscard(p)}
+                                         
                                         ></i>
                                       </div>
                                     </div>

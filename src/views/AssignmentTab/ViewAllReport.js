@@ -191,9 +191,10 @@ function ViewReport({
           <p style={{color : "red"}}>Pending </p> : ""}
          { p.status === "2" || p.status === "0" ?
               <>
+              <div style={{display : "flex", flexDirection: "row"}}>
                {p.status === "2" ? null :
                <>
-              <div style={{display : "flex", flexDirection: "row"}}>
+             
               <div style={{ cursor: "pointer" }} title="Accept">
 <i
   class="fa fa-check"
@@ -216,16 +217,17 @@ function ViewReport({
                   onClick={() => toggleNested(p)}
                 ></i>
               </div>
-                </div>
+              
               </> }
                 {p.customer_files === null ?
 <div title="Upload Additional Documents"
-        style={{ cursor: "pointer", display : "flex" }}
+        style={{ cursor: "pointer", display : "inline-flex" }}
         onClick={() => additionalHandler(p)}
        
     >
         <PublishIcon color="secondary" />
     </div> : ""}
+    </div>
     </> :""}
   
                   </tr>
