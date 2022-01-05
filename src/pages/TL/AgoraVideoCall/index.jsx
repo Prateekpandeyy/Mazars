@@ -11,6 +11,7 @@ import { green ,red} from '@material-ui/core/colors';
 import recImg from "../../../loader.gif";
 import Cookies from "js-cookie"
 import Swal from "sweetalert2";
+import $ from 'jquery';
 import CommonServices from "../../../common/common"
 const tile_canvas = {
   "1": ["span 12/span 24"],
@@ -79,6 +80,18 @@ const tile_canvas = {
 class AgoraCanvas extends React.Component {
   constructor(props) {
     super(props);
+   
+    // window.onbeforeunload = (event) => {
+    //   this.stopRecording()
+    //   const e = event || window.event;
+    //   // Cancel the event
+    //   e.preventDefault();
+    //   if (e) {
+       
+    //     e.returnValue = ''; // Legacy method for cross browser support
+    //   }
+    //   return ''; // Legacy method for cross browser support
+    //};
     this.tlName = Cookies.get("tlName")
     this.client = {};
     this.localStream = {};
@@ -126,7 +139,10 @@ class AgoraCanvas extends React.Component {
  secretKey = "7RBzqc6Sf5rvlhkrEGRxs80nB7U/Ulu8PoLlH8wd";
 allrecording;
 remoteShare2 = false
+
+
   componentWillMount() {
+ 
     let $ = this.props;
     // init AgoraRTC local client
     this.client = AgoraRTC.createClient({ mode: $.transcode });
@@ -219,6 +235,7 @@ else if(show === false){
     });
     this.getSchedulerData()
     this.accuire();
+   
     // this.accuire()
   }
 
@@ -242,7 +259,7 @@ else if(show === false){
 
  componentDidUpdate() {
   // rerendering
- 
+  
   let canvas = document.querySelector("#ag-canvas");
   // pip mode (can only use when less than 4 people in channel)
   if (this.state.displayMode === "pip") {
@@ -397,17 +414,13 @@ if(item.player === undefined){
   
   }
 }
+
+
   componentWillUnmount() {
+   
     this.client && this.client.unpublish(this.localStream);
     this.localStream && this.localStream.close();
-  //   document.addEventListener( 'visibilitychange' , function() {
-  //     if (document.hidden) {
-  //       this.del()
-  //     } else {
-  //         console.log('well back');
-  //     }
-  // }, false );
-    if (this.state.stateSharing) {
+  if (this.state.stateSharing) {
       this.shareClient && this.shareClient.unpublish(this.shareStream);
       this.shareStream && this.shareStream.close();
     }
@@ -892,13 +905,13 @@ async startRecording(key){
  stopRecording = () => {
   if(this.state.showRecBtn === true){
    
-    
+    console.log("done3")
 this.del()
 
   }
   
   else if(this.state.showButton == JSON.parse(this.teamKey)){
- 
+ console.log("done33")
     if(resourceId === undefined){
       var resourceId = localStorage.getItem("resourceId");
     var sid = localStorage.getItem("sid");
@@ -931,7 +944,7 @@ this.del(),
     });
 }
 else{
-  
+  console.log("done333")
   window.location.hash = "/teamleader/schedule";
 }
   
@@ -995,6 +1008,7 @@ del = (e) => {
    
  });
 }
+
   render() {    
     const style = {
       display: "grid",
