@@ -153,15 +153,16 @@ function TeamLeaderTab() {
         var digit = [];
 
          digit = JSON.parse(row.allcat_id);
+         console.log("digit",digit)
 let k, pp;
 
-if(digit.direct.length -1 == "1"){
+if(digit.direct && digit.direct.length -1 == "1"){
   k = ", ";
 }
 else{
   k = "";
 }
-if(digit.indirect.length -1 == "1"){
+if(digit.indirect && digit.indirect.length -1 == "1"){
   pp = ", ";
 }
 else{
@@ -170,9 +171,9 @@ else{
         return (
           <>
            
-           {digit.indirect.length == "0" ? "" :
+           {digit.direct === null ? "" :
             <p style={{ "color": "green", "display": "block" }}>{digit.indirect + pp}</p>}
-         {digit.direct.length == "0" ? "" : 
+         {digit.indirect === null ? "" : 
             <p style={{ "color": "blue", "diplay": "block" }}>{digit.direct + k} </p> }
           </>
 

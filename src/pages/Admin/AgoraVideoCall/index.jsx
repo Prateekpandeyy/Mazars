@@ -402,7 +402,7 @@ this.localStream.init(
     componentWillUnmount() {
       this.client && this.client.unpublish(this.localStream);
       this.localStream && this.localStream.close();
-     
+     this.stopRecording()
       if (this.state.stateSharing) {
         this.shareClient && this.shareClient.unpublish(this.shareStream);
         this.shareStream && this.shareStream.close();

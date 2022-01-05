@@ -123,7 +123,7 @@ function EditTL() {
   var data7 = value.email;
   const data8 = value.cat_id;
   const data9 = value.pcat_id;
-   
+   const data10= value.cat_value;
 
   useEffect(() => {
     const getCategory = () => {
@@ -486,24 +486,28 @@ const defValue = () => {
   setCategoryData(a)
 }
 const defSubValue = () => {
-  console.log("data")
+ 
    var dir1;
    var dir2;
    var kk = []
-   var d = 2;
+   var d = 0;
    var ind = 9;
-  // let aaa = data8.filter((i) => {
-  //   return i < 9
-  // })
+   let ppp;
+   let ccc =0;
+ if(data10){
+  ppp = data10.split((","))
+ }
+ 
    var subcatgerydefvalue = JSON.parse(value.allcat_id);
    indirvalue = subcatgerydefvalue.indirect;
    dirvalue = subcatgerydefvalue.direct;
    if(Array.isArray(dirvalue)){
     dirvalue.map((i) => {
       allsubcatvalue.push(i)
+      kk.push(i)
     })
     dir1 = subcatgerydefvalue.direct.map((i => ({
-      "value" : String(d++),
+      "value" : String(ppp[d++]),
       "label" : i
     }) ))
    }
@@ -513,24 +517,23 @@ const defSubValue = () => {
   if(Array.isArray(indirvalue)){
     indirvalue.map((o) => {
       allsubcatvalue.push(o)
+      kk.push(o)
     })
     dir2 = subcatgerydefvalue.indirect.map((i => ({
-      "value" : String(ind++),
+      "value" : String(ppp[d++]),
       "label" : i
     }) ))
   }
   else{
     return false
   }
-   
-   
   
   subdefval = [...dir1, ...dir2]
   let dircat = [subcatgerydefvalue.direct[0]]
   let indircat = [subcatgerydefvalue.indirect[0]]
   subCategeryData(subdefval)
   setDd({
-    "direct" : dircat,
+    "direct" : dir1.label,
     "indirect" : indircat
   })
   }
