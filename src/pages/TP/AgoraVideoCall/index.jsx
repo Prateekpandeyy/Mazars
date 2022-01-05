@@ -273,12 +273,7 @@ this.localStream.init(
       let txtColor = "myPartName";
       let id = item.getId();
       let dom = document.querySelector("#ag-item-" + id);
-      if(dom && this.state.disabledVedio === true){
-        dom.setAttribute("class", "ag-item2");
-      }
-      else if (dom && this.state.disabledVedio === false) {
-       dom.setAttribute("class", "ag-item");
-      }
+     
       let dd;
       if (!dom) {
         dom = document.createElement("section");
