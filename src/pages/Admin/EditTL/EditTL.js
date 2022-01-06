@@ -477,14 +477,17 @@ const defValue = () => {
  if(data4){
   const data55 = data4.split(",")
 
-let b = value.pcat_value.split(",");
+let b;
+if(value.pcat_value){
+  b = value.pcat_value.split(",");
+
  
     a = data55.map((i => ({
       "value" : String(b[e++]),
       "label" : i
     }) ))
   
-}
+}}
 
   setCategoryData(a)
 }
@@ -497,9 +500,9 @@ const defSubValue = () => {
    var ind = 9;
    let ppp;
    let ccc =0;
- if(data10){
-  ppp = data10.split((","))
- }
+ if(value.cat_value !== null){
+  ppp = value.cat_value.split((","))
+ 
  
    var subcatgerydefvalue = JSON.parse(value.allcat_id);
    indirvalue = subcatgerydefvalue.indirect;
@@ -552,7 +555,7 @@ const defSubValue = () => {
   })
   console.log("dir22", subdefval)
   }
-
+}
 
 
 const checktlPost = (e) => {
