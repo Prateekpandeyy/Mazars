@@ -94,6 +94,9 @@ function TaxProfessionalsTab() {
       headerStyle: () => {
         return { fontSize: "12px" };
       },
+      style : {
+        wordBreak : "break-word"
+        }
     },
     {
       dataField: "post_name",
@@ -111,6 +114,9 @@ function TaxProfessionalsTab() {
       headerStyle: () => {
         return { fontSize: "12px" };
       },
+      style : {
+        wordBreak : "break-word"
+        }
     },
     {
       dataField: "name",
@@ -127,6 +133,9 @@ function TaxProfessionalsTab() {
       headerStyle: () => {
         return { fontSize: "12px" };
       },
+      style : {
+        wordBreak : "break-word"
+        }
     },
     {
       dataField: "phone",
@@ -314,7 +323,7 @@ function TaxProfessionalsTab() {
             data={data}
             columns={columns}
             rowIndex
-            classes="table-responsivepayment"
+            classes="table-responsive"
           />
           </div>
         </CardBody>

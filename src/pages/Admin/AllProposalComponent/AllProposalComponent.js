@@ -17,7 +17,7 @@ import BootstrapTable from "react-bootstrap-table-next";
 import Records from "../../../components/Records/Records";
 import ViewComponent from "../ViewProposal/ViewComponent";
 import DiscardReport from "../AssignmentTab/DiscardReport";
-
+import ShowProposal from "./ShowProposal";
 
 function AllProposalComponent({ allProposal }) {
   const [proposalDisplay, setProposalDisplay] = useState([]);
@@ -26,14 +26,17 @@ function AllProposalComponent({ allProposal }) {
   const [viewData, setViewData] = useState({});
   const [viewModal, setViewModal] = useState(false);
   const [retview, setRetview] = useState(false)
-  
+  const [viewProposalModal, setViewProposalModal] = useState(false)
   const ViewHandler = (key) => {
    
     setViewModal(!viewModal);
     setViewData(key);
   };
 
-
+const showProposalModal2 = (e) => {
+  console.log("eeee")
+  setViewProposalModal(true);
+}
   
 
   const [ViewDiscussion, setViewDiscussion] = useState(false);
@@ -276,15 +279,13 @@ const retviewProposal = (e) => {
 
               {row.statuscode > "3" || row.statuscode == "10" ?
                 <div style={{ cursor: "pointer" }} title="View Proposal">
-                  <a
-                    href={`${baseUrl}/customers/dounloadpdf?id=${row.q_id}&viewpdf=1`}
-                    target="_blank"
-                  >
+                
                     <i
                       className="fa fa-eye"
                       style={{ color: "green", fontSize: "16px" }}
+                      onClick={(e) => showProposalModal2(row.q_id)}
                     />
-                  </a>
+                  
                 </div>
                 :
                 null
@@ -397,7 +398,10 @@ const retviewProposal = (e) => {
           getProposalData  ={getProposalData}
           assignNo = {assignNo}
          />
-          
+          <ShowProposal 
+          setViewProposalModal = {setViewProposalModal}
+          viewProposalModal = {viewProposalModal}
+          showProposalModal2 = {showProposalModal2}/>
         </CardBody>
       </Card>
     </>

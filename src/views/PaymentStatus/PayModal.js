@@ -44,7 +44,7 @@ const PayModal = (props) => {
         .then((res) => {
             if(res.data.code === 1){
              
-                if(res.data.length > 1){
+                if(res.data.result.length > 1){
                     window.open(res.data.result, "_blank")
                 }
                 else{

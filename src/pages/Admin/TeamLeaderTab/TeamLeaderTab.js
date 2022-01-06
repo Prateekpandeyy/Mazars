@@ -63,7 +63,7 @@ function TeamLeaderTab() {
         return rowIndex + 1;
       },
       headerStyle: () => {
-        return { fontSize: "12px", width: "50px" };
+        return { fontSize: "12px" };
       },
     },
     {
@@ -71,7 +71,7 @@ function TeamLeaderTab() {
       text: "TL post name",
       sort: true,
       headerStyle: () => {
-        return { fontSize: "12px" , width: "50px" };
+        return { fontSize: "12px" };
       },
     },
 
@@ -80,15 +80,18 @@ function TeamLeaderTab() {
       text: "TL post email",
       sort: true,
       headerStyle: () => {
-        return { fontSize: "12px",  width: "50px" };
+        return { fontSize: "12px" };
       },
+      style : {
+         wordBreak : "break-word"
+         },
     },
     {
       dataField: "name",
       text: "Name of TL",
       sort: true,
       headerStyle: () => {
-        return { fontSize: "12px" , width: "50px"};
+        return { fontSize: "12px"};
       },
     },
     {
@@ -96,15 +99,18 @@ function TeamLeaderTab() {
       text: "Email",
       sort: true,
       headerStyle: () => {
-        return { fontSize: "12px" , width: "50px"};
+        return { fontSize: "12px"};
       },
+      style : {
+        wordBreak : "break-word"
+        },
     },
     {
       dataField: "phone",
       text: "Mobile No",
       sort: true,
       headerStyle: () => {
-        return { fontSize: "12px" , width: "50px" };
+        return { fontSize: "12px"};
       },
     },
     {
@@ -112,8 +118,12 @@ function TeamLeaderTab() {
       text: "Category",
       sort: true,
       headerStyle: () => {
-        return { fontSize: "12px"  , width: "50px"};
+        return { fontSize: "12px", width : "80px"};
       },
+      style : {
+        wordBreak : "nowrap"
+        },
+     
       formatter: function nameFormatter(cell, row) {
         var digit2 = [];
         var digit3 = []
@@ -147,21 +157,25 @@ function TeamLeaderTab() {
       text: "Sub Category",
       sort: true,
       headerStyle: () => {
-        return { fontSize: "12px" , width: "50px" };
+        return { fontSize: "12px"};
       },
+      style : {
+        wordBreak : "break-word"
+        },
       formatter: function nameFormatter(cell, row) {
         var digit = [];
 
          digit = JSON.parse(row.allcat_id);
+         console.log("digit",digit)
 let k, pp;
 
-if(digit.direct.length -1 == "1"){
+if(digit.direct && digit.direct.length -1 == "1"){
   k = ", ";
 }
 else{
   k = "";
 }
-if(digit.indirect.length -1 == "1"){
+if(digit.indirect && digit.indirect.length -1 == "1"){
   pp = ", ";
 }
 else{
@@ -170,9 +184,9 @@ else{
         return (
           <>
            
-           {digit.indirect.length == "0" ? "" :
+           {digit.direct === null ? "" :
             <p style={{ "color": "green", "display": "block" }}>{digit.indirect + pp}</p>}
-         {digit.direct.length == "0" ? "" : 
+         {digit.indirect === null ? "" : 
             <p style={{ "color": "blue", "diplay": "block" }}>{digit.direct + k} </p> }
           </>
 
@@ -309,7 +323,7 @@ else{
             bootstrap4
             keyField="id"
             data={data}
-            classes="table-responsivepayment"
+            classes="table-responsive"
             columns={columns}
             rowIndex
           />
