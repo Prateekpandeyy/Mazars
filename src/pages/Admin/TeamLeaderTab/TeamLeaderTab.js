@@ -63,7 +63,7 @@ function TeamLeaderTab() {
         return rowIndex + 1;
       },
       headerStyle: () => {
-        return { fontSize: "12px", width: "50px" };
+        return { fontSize: "12px" };
       },
     },
     {
@@ -71,7 +71,7 @@ function TeamLeaderTab() {
       text: "TL post name",
       sort: true,
       headerStyle: () => {
-        return { fontSize: "12px" , width: "50px" };
+        return { fontSize: "12px" };
       },
     },
 
@@ -80,15 +80,18 @@ function TeamLeaderTab() {
       text: "TL post email",
       sort: true,
       headerStyle: () => {
-        return { fontSize: "12px",  width: "50px" };
+        return { fontSize: "12px" };
       },
+      style : {
+         wordBreak : "break-word"
+         },
     },
     {
       dataField: "name",
       text: "Name of TL",
       sort: true,
       headerStyle: () => {
-        return { fontSize: "12px" , width: "50px"};
+        return { fontSize: "12px"};
       },
     },
     {
@@ -96,15 +99,18 @@ function TeamLeaderTab() {
       text: "Email",
       sort: true,
       headerStyle: () => {
-        return { fontSize: "12px" , width: "50px"};
+        return { fontSize: "12px"};
       },
+      style : {
+        wordBreak : "break-word"
+        },
     },
     {
       dataField: "phone",
       text: "Mobile No",
       sort: true,
       headerStyle: () => {
-        return { fontSize: "12px" , width: "50px" };
+        return { fontSize: "12px"};
       },
     },
     {
@@ -115,8 +121,12 @@ function TeamLeaderTab() {
          
       },
       headerStyle: () => {
-        return { fontSize: "12px"  , width: "50px"};
+        return { fontSize: "12px", width : "80px"};
       },
+      style : {
+        wordBreak : "nowrap"
+        },
+     
       formatter: function nameFormatter(cell, row) {
         var digit2 = [];
         var digit3 = []
@@ -150,8 +160,11 @@ function TeamLeaderTab() {
       text: "Sub Category",
       sort: true,
       headerStyle: () => {
-        return { fontSize: "12px" , width: "50px" };
+        return { fontSize: "12px"};
       },
+      style : {
+        wordBreak : "break-word"
+        },
       formatter: function nameFormatter(cell, row) {
         var digit = [];
 
@@ -313,7 +326,7 @@ else{
             bootstrap4
             keyField="id"
             data={data}
-            classes="table-responsivepayment"
+            classes="table-responsive"
             columns={columns}
             rowIndex
           />
