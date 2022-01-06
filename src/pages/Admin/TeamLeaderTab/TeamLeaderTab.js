@@ -117,6 +117,9 @@ function TeamLeaderTab() {
       dataField: "parent_id",
       text: "Category",
       sort: true,
+      style : {
+         
+      },
       headerStyle: () => {
         return { fontSize: "12px", width : "80px"};
       },
