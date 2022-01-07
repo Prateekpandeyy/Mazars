@@ -5,10 +5,7 @@ import {
   Card,
   CardHeader,
   CardBody,
-  CardTitle,
-  Row,
-  Col,
-  Table,
+ 
 } from "reactstrap";
 import RetviewModal from "./RetviewModal";
 import { Link, NavLink } from "react-router-dom";
@@ -66,9 +63,9 @@ const retviewProposal = (e) => {
       formatter: (cellContent, row, rowIndex) => {
         return rowIndex + 1;
       },
-      style: {
-        fontSize: "11px",
-      },
+      style : {
+        wordBreak : "break-word"
+        },
       headerStyle: () => {
         return { fontSize: "11px" };
       },
@@ -77,9 +74,9 @@ const retviewProposal = (e) => {
       dataField: "created",
       text: "Date",
       sort: true,
-      style: {
-        fontSize: "11px",
-      },
+      style : {
+        wordBreak : "break-word"
+        },
       headerStyle: () => {
         return { fontSize: "11px" };
       },
@@ -95,9 +92,9 @@ const retviewProposal = (e) => {
     {
       dataField: "assign_no",
       text: "Query No",
-      style: {
-        fontSize: "11px",
-      },
+      style : {
+        wordBreak : "break-word"
+        },
       headerStyle: () => {
         return { fontSize: "11px" };
       },
@@ -122,9 +119,9 @@ const retviewProposal = (e) => {
       dataField: "parent_id",
       text: "Category",
       sort: true,
-      style: {
-        fontSize: "11px",
-      },
+      style : {
+         wordBreak : "break-word"
+         },
       headerStyle: () => {
         return { fontSize: "11px" };
       },
@@ -133,9 +130,9 @@ const retviewProposal = (e) => {
       dataField: "cat_name",
       text: "Sub Category",
       sort: true,
-      style: {
-        fontSize: "11px",
-      },
+      style : {
+         wordBreak : "break-word"
+         },
       headerStyle: () => {
         return { fontSize: "11px" };
       },
@@ -144,9 +141,9 @@ const retviewProposal = (e) => {
       text: "Date of Proposal",
       dataField: "DateofProposal",
       sort: true,
-      style: {
-        fontSize: "11px",
-      },
+      style : {
+         wordBreak : "break-word"
+         },
       headerStyle: () => {
         return { fontSize: "11px" };
       },
@@ -163,9 +160,9 @@ const retviewProposal = (e) => {
       text: "Date of acceptance / decline of Proposal",
       dataField: "cust_accept_date",
       sort: true,
-      style: {
-        fontSize: "11px",
-      },
+      style : {
+         wordBreak : "break-word"
+         },
       headerStyle: () => {
         return { fontSize: "11px" };
       },
@@ -180,9 +177,9 @@ const retviewProposal = (e) => {
     },
     {
       text: "Status",
-      style: {
-        fontSize: "11px",
-      },
+      style : {
+         wordBreak : "break-word"
+         },
       headerStyle: () => {
         return { fontSize: "11px" };
       },
@@ -218,9 +215,9 @@ const retviewProposal = (e) => {
       dataField: "",
       text: "Proposed Amount",
       sort: true,
-      style: {
-        fontSize: "11px",
-      },
+      style : {
+         wordBreak : "break-word"
+         },
       headerStyle: () => {
         return { fontSize: "11px" };
       },
@@ -257,9 +254,9 @@ const retviewProposal = (e) => {
       dataField: "tl_name",
       text: "TL name",
       sort: true,
-      style: {
-        fontSize: "11px",
-      },
+      style : {
+         wordBreak : "break-word"
+         },
       headerStyle: () => {
         return { fontSize: "11px" };
       },
@@ -267,7 +264,7 @@ const retviewProposal = (e) => {
     {
       text: "Action",
       headerStyle: () => {
-        return { fontSize: "11px", width: "135px" };
+        return { fontSize: "11px" };
       },
       formatter: function (cell, row) {
         return (
@@ -374,7 +371,7 @@ const retviewProposal = (e) => {
             keyField="id"
             data={proposalDisplay}
             columns={columns}
-            classes="table-responsivepayment"
+            classes="table-responsive"
           />
           </div>
 

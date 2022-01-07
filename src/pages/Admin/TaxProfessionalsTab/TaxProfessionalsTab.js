@@ -76,7 +76,7 @@ function TaxProfessionalsTab() {
         return rowIndex + 1;
       },
       headerStyle: () => {
-        return { fontSize: "12px", width: "50px" };
+        return { fontSize: "11px"};
       },
     },
     {
@@ -84,24 +84,33 @@ function TaxProfessionalsTab() {
       text: "TL post name",
       sort: true,
       headerStyle: () => {
-        return { fontSize: "12px" };
+        return { fontSize: "11px" };
       },
+      style : {
+        wordBreak : "break-word"
+        },
     },
     {
       dataField: "tl_post_email",
       text: "TL post email",
       sort: true,
       headerStyle: () => {
-        return { fontSize: "12px" };
+        return { fontSize: "11px" };
       },
+      style : {
+        wordBreak : "break-word"
+        },
     },
     {
       dataField: "post_name",
       text: "TP post name",
       sort: true,
       headerStyle: () => {
-        return { fontSize: "12px" };
+        return { fontSize: "11px" };
       },
+      style : {
+        wordBreak : "break-word"
+        },
     },
 
     {
@@ -109,40 +118,55 @@ function TaxProfessionalsTab() {
       text: "TP post email",
       sort: true,
       headerStyle: () => {
-        return { fontSize: "12px" };
+        return { fontSize: "11px" };
       },
+      style : {
+        wordBreak : "break-word"
+        },
     },
     {
       dataField: "name",
       text: "Name of TP",
       sort: true,
       headerStyle: () => {
-        return { fontSize: "12px" };
+        return { fontSize: "11px" };
       },
+      style : {
+        wordBreak : "break-word"
+        },
     },
     {
       dataField: "personal_email",
       text: "Email",
       sort: true,
       headerStyle: () => {
-        return { fontSize: "12px" };
+        return { fontSize: "11px" };
       },
+      style : {
+        wordBreak : "break-word"
+        },
     },
     {
       dataField: "phone",
       text: "Mobile No",
       sort: true,
       headerStyle: () => {
-        return { fontSize: "12px" };
+        return { fontSize: "11px" };
       },
+      style : {
+        wordBreak : "break-word"
+        },
     },
     {
       // dataField: "parent_id",
       text: "Category",
       sort: true,
       headerStyle: () => {
-        return { fontSize: "12px" };
+        return { fontSize: "11px" };
       },
+      style : {
+        wordBreak : "break-word"
+        },
       formatter : function nameFormatter(cell, row) {
        
         digit2 = row.allpcat_id.split(",")
@@ -171,8 +195,11 @@ function TaxProfessionalsTab() {
       text: "Sub Category",
       sort: true,
       headerStyle: () => {
-        return { fontSize: "12px" };
+        return { fontSize: "11px" };
       },
+      style : {
+        wordBreak : "break-word"
+        },
       formatter : function nameFormatter(cell, row) {
         var digit = [];
          
@@ -314,7 +341,7 @@ function TaxProfessionalsTab() {
             data={data}
             columns={columns}
             rowIndex
-            classes="table-responsivepayment"
+            classes="table-responsive"
           />
           </div>
         </CardBody>

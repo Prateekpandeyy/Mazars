@@ -57,9 +57,9 @@ function PendingForAcceptence({ pendingProposal }) {
       formatter: (cellContent, row, rowIndex) => {
         return rowIndex + 1;
       },
-      style: {
-        fontSize: "11px",
-      },
+      style : {
+        wordBreak : "break-word"
+        },
       headerStyle: () => {
         return { fontSize: "11px" };
       },
@@ -68,9 +68,9 @@ function PendingForAcceptence({ pendingProposal }) {
       dataField: "created",
       text: "Date",
       sort: true,
-      style: {
-        fontSize: "11px",
-      },
+      style : {
+        wordBreak : "break-word"
+        },
       headerStyle: () => {
         return { fontSize: "11px" };
       },
@@ -86,9 +86,9 @@ function PendingForAcceptence({ pendingProposal }) {
     {
       dataField: "assign_no",
       text: "Query No",
-      style: {
-        fontSize: "11px",
-      },
+      style : {
+        wordBreak : "break-word"
+        },
       headerStyle: () => {
         return { fontSize: "11px" };
       },
@@ -113,9 +113,9 @@ function PendingForAcceptence({ pendingProposal }) {
       dataField: "parent_id",
       text: "Category",
       sort: true,
-      style: {
-        fontSize: "11px",
-      },
+      style : {
+        wordBreak : "break-word"
+        },
       headerStyle: () => {
         return { fontSize: "11px" };
       },
@@ -124,9 +124,9 @@ function PendingForAcceptence({ pendingProposal }) {
       dataField: "cat_name",
       text: "Sub Category",
       sort: true,
-      style: {
-        fontSize: "11px",
-      },
+      style : {
+        wordBreak : "break-word"
+        },
       headerStyle: () => {
         return { fontSize: "11px" };
       },
@@ -135,9 +135,9 @@ function PendingForAcceptence({ pendingProposal }) {
       text: "Date of Proposal",
       dataField: "DateofProposal",
       sort: true,
-      style: {
-        fontSize: "11px",
-      },
+      style : {
+        wordBreak : "break-word"
+        },
       headerStyle: () => {
         return { fontSize: "11px" };
       },
@@ -154,9 +154,9 @@ function PendingForAcceptence({ pendingProposal }) {
       text: "Date of acceptance of Proposal",
       dataField: "cust_accept_date",
       sort: true,
-      style: {
-        fontSize: "11px",
-      },
+      style : {
+        wordBreak : "break-word"
+        },
       headerStyle: () => {
         return { fontSize: "11px" };
       },
@@ -171,9 +171,9 @@ function PendingForAcceptence({ pendingProposal }) {
     },
     {
       text: "Status",
-      style: {
-        fontSize: "11px",
-      },
+      style : {
+        wordBreak : "break-word"
+        },
       headerStyle: () => {
         return { fontSize: "11px" };
       },
@@ -199,9 +199,9 @@ function PendingForAcceptence({ pendingProposal }) {
       dataField: "",
       text: "Proposed Amount",
       sort: true,
-      style: {
-        fontSize: "11px",
-      },
+      style : {
+        wordBreak : "break-word"
+        },
       headerStyle: () => {
         return { fontSize: "11px" };
       },
@@ -221,6 +221,7 @@ function PendingForAcceptence({ pendingProposal }) {
       style: {
         fontSize: "11px",
         color: "#21a3ce",
+        wordBreak : "break-word"
       },
       headerStyle: () => {
         return { fontSize: "11px", color: "#21a3ce" };
@@ -238,9 +239,9 @@ function PendingForAcceptence({ pendingProposal }) {
       dataField: "tl_name",
       text: "TL name",
       sort: true,
-      style: {
-        fontSize: "11px",
-      },
+      style : {
+        wordBreak : "break-word"
+        },
       headerStyle: () => {
         return { fontSize: "11px" };
       },
@@ -250,6 +251,9 @@ function PendingForAcceptence({ pendingProposal }) {
       headerStyle: () => {
         return { fontSize: "11px", width: "95px" };
       },
+      style : {
+        wordBreak : "break-word"
+        },
       formatter: function (cell, row) {
         return (
           <>

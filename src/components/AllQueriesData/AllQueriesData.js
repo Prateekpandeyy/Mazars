@@ -51,8 +51,11 @@ function AllQueriesData({allData}) {
       text: "S.No",
       dataField: "",
       headerStyle: () => {
-        return { fontSize: "12px", width: "50px" };
+        return { fontSize: "12px"};
       },
+      style : {
+        wordBreak : "break-word"
+        },
       formatter: (cellContent, row, rowIndex, index) => {
 
         return <div>{rowIndex + 1}</div>;
@@ -63,8 +66,11 @@ function AllQueriesData({allData}) {
       dataField: "created",
       sort: true,
       headerStyle: () => {
-        return { fontSize: "12px", width : "80px" };
+        return { fontSize: "12px"};
       },
+      style : {
+        wordBreak : "break-word"
+        },
       formatter: function dateFormat(cell, row) {
         var oldDate = row.created;
         if (oldDate == null) {
@@ -77,8 +83,11 @@ function AllQueriesData({allData}) {
       text: "Query No",
       dataField: "assign_no",
       headerStyle: () => {
-        return { fontSize: "12px", width : "130px" };
+        return { fontSize: "12px"};
       },
+      style : {
+        wordBreak : "break-word"
+        },
       formatter: function nameFormatter(cell, row) {
         return (
           <>
@@ -100,30 +109,42 @@ function AllQueriesData({allData}) {
       dataField: "parent_id",
       sort: true,
       headerStyle: () => {
-        return { fontSize: "12px" , width : "130px"};
+        return { fontSize: "12px"};
       },
+      style : {
+        wordBreak : "break-word"
+        },
     },
     {
       text: "Sub Category",
       dataField: "cat_name",
       sort: true,
       headerStyle: () => {
-        return { fontSize: "12px", width : "120px" };
+        return { fontSize: "12px"};
       },
+      style : {
+        wordBreak : "break-word"
+        },
     },
     {
       text: "Client Name",
       dataField: "name",
       sort: true,
       headerStyle: () => {
-        return { fontSize: "12px" , width : "180px"};
+        return { fontSize: "12px"};
       },
+      style : {
+        wordBreak : "break-word"
+        },
     },
     {
       text: "Status",
       headerStyle: () => {
-        return { fontSize: "12px", width : "120px" };
+        return { fontSize: "12px"};
       },
+      style : {
+        wordBreak : "break-word"
+        },
       formatter: function nameFormatter(cell, row) {
         return (
           <>
@@ -156,8 +177,11 @@ function AllQueriesData({allData}) {
     {
       text: "Action",
       headerStyle: () => {
-        return { fontSize: "12px", width: "85px" };
+        return { fontSize: "12px"};
       },
+      style : {
+        wordBreak : "break-word"
+        },
       formatter: function (cell, row) {
         return (
           <>

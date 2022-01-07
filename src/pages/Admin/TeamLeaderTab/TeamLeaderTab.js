@@ -121,7 +121,7 @@ function TeamLeaderTab() {
          
       },
       headerStyle: () => {
-        return { fontSize: "12px", width : "80px"};
+        return { fontSize: "12px"};
       },
       style : {
         wordBreak : "nowrap"

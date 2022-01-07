@@ -6,31 +6,19 @@ import {
   Card,
   CardHeader,
   CardBody,
-  CardTitle,
-  Row,
-  Col,
-  Table,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  Button,
+  
 } from "reactstrap";
 import { Link } from "react-router-dom";
-import { useForm } from "react-hook-form";
-import "antd/dist/antd.css";
-import { Select } from "antd";
+
 import AdminFilter from "../../components/Search-Filter/AdminFilter";
 import BootstrapTable from "react-bootstrap-table-next";
 import History from "./History";
-import Swal from "sweetalert2";
 import Records from "../../components/Records/Records";
 
 
 function PendingAllocation({ CountPendingForAllocation }) {
 
-  const [pendingData, setPendingData] = useState([]);
-  const [selectedData, setSelectedData] = useState([]);
+  const [pendingData, setPendingData] = useState([])
   const [history, setHistory] = useState([]);
   const [records, setRecords] = useState([]);
 
