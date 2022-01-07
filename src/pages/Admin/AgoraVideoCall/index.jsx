@@ -152,7 +152,7 @@ AgoraRTC.getDevices(function(dev){
  
     this.client.join($.appId, $.channel, $.uid, (uid) => {
      
-      var data_post_api = "https://virtualapi.multitvsolution.com/VstreamApi/index.php/api/vstream/userdata?channel_name="+this.channelName+"&rtm_id="+""+"&rtc_id="+uid+"&user_name="+this.adminName;
+      var data_post_api = "https://virtualapi.multitvsolution.com/VstreamApi/index.php/api/vstream/userdata?channel_name="+this.channelName+"&rtm_id="+""+"&rtc_id="+uid+"&user_name="+this.tlName;
  axios.get(`${data_post_api}`).
  then((res) => {
   
@@ -261,7 +261,12 @@ this.localStream.init(
         let txtColor = "myPartName";
         let id = item.getId();
         let dom = document.querySelector("#ag-item-" + id);
-      
+        if(dom && this.state.disabledVedio === true){
+          dom.setAttribute("class", "ag-item2");
+        }
+        else if (dom && this.state.disabledVedio === false) {
+         dom.setAttribute("class", "ag-item");
+        }
         let dd;
         if (!dom) {
           dom = document.createElement("section");
@@ -296,7 +301,7 @@ this.localStream.init(
             dom.addEventListener('click', function (e){
               if(f === false){
                 f = true
-                dom.setAttribute("style", `grid-area: span 14/span 24/13/25`);
+                dom.setAttribute("style", `grid-area: span 12/span 24/13/25`);
                 let list;
              
                 list = Array.from(
@@ -342,7 +347,12 @@ this.localStream.init(
       this.state.streamList.map((item, index) => {
         let id = item.getId();
         let dom = document.querySelector("#ag-item-" + id);
-        
+        if(dom && this.state.disabledVedio === true){
+          dom.setAttribute("class", "ag-item2");
+        }
+        else if (dom && this.state.disabledVedio === false) {
+         dom.setAttribute("class", "ag-item");
+        }
         let dd;
         if (!dom) {
           dom = document.createElement("section");
@@ -361,7 +371,7 @@ this.localStream.init(
             
           if(f === false){
             f = true
-            dom.setAttribute("style", `grid-area: span 14/span 24/13/25`);
+            dom.setAttribute("style", `grid-area: span 12/span 24/13/25`);
             let list;
              
             list = Array.from(
@@ -402,7 +412,6 @@ this.localStream.init(
     componentWillUnmount() {
       this.client && this.client.unpublish(this.localStream);
       this.localStream && this.localStream.close();
-    
       if (this.state.stateSharing) {
         this.shareClient && this.shareClient.unpublish(this.shareStream);
         this.shareStream && this.shareStream.close();
@@ -551,7 +560,7 @@ this.localStream.init(
    
     this.hostId = stream.getId()
  
-  
+    console.log("two", push)
     let repeatition = this.state.streamList.some((item) => {
       return item.getId() === stream.getId();
     });

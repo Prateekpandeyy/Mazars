@@ -6,7 +6,7 @@ export default axios.create({
   },
 });
 
- //for server 
+// for server 
 // export default axios.create({
 //   baseURL: "https://mazarsapi.multitvsolution.com/mazarapi/v1",
 //   headers: {

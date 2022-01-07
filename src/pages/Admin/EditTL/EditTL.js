@@ -463,19 +463,21 @@ const emailValidation = (key) => {
 }
 
 
-var e = 0;
+
 const defValue = () => {
+  let e = 0;
  if(data4){
   const data55 = data4.split(",")
-
-  if(data55[0].includes("Direct tax")){
-    e = 1;
-  }
-  else if(data55[0].includes("Indirect tax")){
-    e = 2;
-  }
+console.log("dta", value.pcat_value.split(","))
+let b = value.pcat_value.split(",");
+  // if(data55[0].includes("Direct tax")){
+  //   e = 1;
+  // }
+  // else if(data55[0].includes("Indirect tax")){
+  //   e = 2;
+  // }
     a = data55.map((i => ({
-      "value" : String(e++),
+      "value" : String(b[e++]),
       "label" : i
     }) ))
   
