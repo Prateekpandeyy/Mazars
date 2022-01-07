@@ -5,15 +5,10 @@ import {
   Card,
   CardHeader,
   CardBody,
-  CardTitle,
-  Row,
-  Col,
-  Table,
+ 
 } from "reactstrap";
-import { useForm } from "react-hook-form";
-import "antd/dist/antd.css";
-import { Select } from "antd";
-import { Link, useParams } from "react-router-dom";
+
+import { Link } from "react-router-dom";
 import BootstrapTable from "react-bootstrap-table-next";
 import AdminFilter from "../Search-Filter/AdminFilter";
 import Records from "../../components/Records/Records";
@@ -50,8 +45,11 @@ function DeclinedQueries({ CountPendingForPayment }) {
       text: "S.No",
       dataField: "",
       headerStyle: () => {
-        return { fontSize: "12px", width: "50px" };
+        return { fontSize: "12px"};
       },
+      style : {
+        wordBreak : "break-word"
+        },
       formatter: (cellContent, row, rowIndex, index) => {
      
         return <div>{rowIndex + 1}</div>;
@@ -64,6 +62,9 @@ function DeclinedQueries({ CountPendingForPayment }) {
       headerStyle: () => {
         return { fontSize: "12px" };
       },
+      style : {
+        wordBreak : "break-word"
+        },
       formatter: function dateFormat(cell, row) {
         var oldDate = row.created;
         if (oldDate == null) {
@@ -78,6 +79,9 @@ function DeclinedQueries({ CountPendingForPayment }) {
       headerStyle: () => {
         return { fontSize: "12px" };
       },
+      style : {
+        wordBreak : "break-word"
+        },
       formatter: function nameFormatter(cell, row) {
         return (
           <>
@@ -101,6 +105,9 @@ function DeclinedQueries({ CountPendingForPayment }) {
       headerStyle: () => {
         return { fontSize: "12px" };
       },
+      style : {
+        wordBreak : "break-word"
+        },
     },
     {
       text: "Sub Category",
@@ -109,6 +116,9 @@ function DeclinedQueries({ CountPendingForPayment }) {
       headerStyle: () => {
         return { fontSize: "12px" };
       },
+      style : {
+        wordBreak : "break-word"
+        },
     },
     {
       text: "Client Name",
@@ -117,6 +127,9 @@ function DeclinedQueries({ CountPendingForPayment }) {
       headerStyle: () => {
         return { fontSize: "12px" };
       },
+      style : {
+        wordBreak : "break-word"
+        },
     },
    
     {
@@ -124,6 +137,9 @@ function DeclinedQueries({ CountPendingForPayment }) {
       headerStyle: () => {
         return { fontSize: "12px" };
       },
+      style : {
+        wordBreak : "break-word"
+        },
       formatter: function nameFormatter(cell, row) {
         return (
           <>
@@ -157,6 +173,9 @@ function DeclinedQueries({ CountPendingForPayment }) {
       headerStyle: () => {
         return { fontSize: "12px" };
       },
+      style : {
+        wordBreak : "break-word"
+        },
       formatter : function forma(cell, row) {
         return(
           <>

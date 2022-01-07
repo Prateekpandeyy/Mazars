@@ -124,6 +124,7 @@ function EditTL() {
   const data8 = value.cat_id;
   const data9 = value.pcat_id;
    const data10= value.cat_value;
+   const data11 = value.pcat_value;
 
   useEffect(() => {
     const getCategory = () => {
@@ -150,6 +151,7 @@ function EditTL() {
 
   const getSubCategory = () => {
   if(store !== null){
+    console.log("store", store)
     axios.get(`${baseUrl}/customers/getCategory?pid=${store}`).then((res) => {
      
       if (res.data.code === 1) {
@@ -177,21 +179,22 @@ function EditTL() {
 
     if (custCate.length < 1 && data4.length < 1) {
       setError("Please select at least one value")
+      console.log("one", 1)
      
     }
     else if (subData.length < 1 && data5.length < 1) {
       setError2("Please select at least one value")
-     
+      console.log("one", 11)
     }
     else if (invalid || wEmail || indNumError || posError.exits) {
       setDisplay(false)
-    
+      console.log("one", 111)
     }
     else if(parentCategoryName.includes("Direct tax") && dd.direct.length === 0){
-    
+      console.log("one", 1111)
     }
     else if(parentCategoryName.includes("Indirect tax") && dd.indirect.length === 0){
-     
+      console.log("one", 11111)
     }
     
     else {
@@ -366,6 +369,7 @@ console.log("value", categeryList)
     if (vv.length > 0) {
       console.log("value", vv)
       if (vv.includes("1") && vv.includes("2")) {
+        console.log("dd", vv)
         let dkkk = []
         let pkk = []
                 for (let i = 0; i < subData.length; i++) {
@@ -381,6 +385,7 @@ console.log("value", categeryList)
                 subCategeryData(kk)
       }
       else if (vv.includes("1")) {
+        console.log("dd1", vv)
 let dkkk = []
 let pkk = []
         for (let i = 0; i < subData.length; i++) {
@@ -397,6 +402,7 @@ let pkk = []
         subCategeryData(kk)
       }
       else if (vv.includes("2")) {
+        console.log("dd2", vv)
         let pkk = []
         let dkkk = []
         for (let i = 0; i < subData.length; i++) {
@@ -468,20 +474,18 @@ const defValue = () => {
   let e = 0;
  if(data4){
   const data55 = data4.split(",")
-console.log("dta", value.pcat_value.split(","))
-let b = value.pcat_value.split(",");
-  // if(data55[0].includes("Direct tax")){
-  //   e = 1;
-  // }
-  // else if(data55[0].includes("Indirect tax")){
-  //   e = 2;
-  // }
+console.log("done22")
+let b;
+if(value.pcat_value){
+  b = value.pcat_value.split(",");
+
+ 
     a = data55.map((i => ({
       "value" : String(b[e++]),
       "label" : i
     }) ))
   
-}
+}}
 
   setCategoryData(a)
 }
@@ -494,9 +498,9 @@ const defSubValue = () => {
    var ind = 9;
    let ppp;
    let ccc =0;
- if(data10){
-  ppp = data10.split((","))
- }
+ if(value.cat_value !== null){
+  ppp = value.cat_value.split((","))
+ 
  
    var subcatgerydefvalue = JSON.parse(value.allcat_id);
    indirvalue = subcatgerydefvalue.indirect;
@@ -528,17 +532,29 @@ const defSubValue = () => {
   else{
     return false
   }
+  console.log("dir1", dir1)
+  console.log("dir2", dir2)
+ 
+   subdefval = [...dir1, ...dir2]
+  // let dircat = [dir1.label]
+  // let indircat = [dir2.label]
+  let oo = []
+  let pp = []
+  dir1.map((i) => {
+    oo.push(i.label)
+  })
+  dir2.map((i) => {
+    pp.push(i.label)
+  })
   
-  subdefval = [...dir1, ...dir2]
-  let dircat = [subcatgerydefvalue.direct[0]]
-  let indircat = [subcatgerydefvalue.indirect[0]]
   subCategeryData(subdefval)
   setDd({
-    "direct" : dir1.label,
-    "indirect" : indircat
+    "direct" : oo,
+    "indirect" : pp
   })
+  console.log("dir22", subdefval)
   }
-
+}
 
 
 const checktlPost = (e) => {

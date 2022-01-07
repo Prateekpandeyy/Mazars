@@ -300,7 +300,7 @@ const Generated = () => {
                     </CardHeader>
 
                 <CardBody>
-                <Records records={records} />
+              
                 <div className="tableFixHead">
                     <BootstrapTable
                         bootstrap4
