@@ -139,10 +139,44 @@ class AgoraCanvas extends React.Component {
  secretKey = "7RBzqc6Sf5rvlhkrEGRxs80nB7U/Ulu8PoLlH8wd";
 allrecording;
 remoteShare2 = false
-
+prevFile;
 
   componentWillMount() {
- 
+ let a = localStorage.getItem("chName");
+ let bb = localStorage.getItem("adminUid")
+ let b = JSON.parse(bb)
+ console.log("bbb", b)
+ let c = localStorage.getItem("resourceId")
+ let d = localStorage.getItem("sid");
+ this.prevFile = localStorage.getItem("prevFile")
+ console.log("ddd", b, c)
+ if(a && b && c && d){
+  var data = JSON.stringify({
+    "cname":a,
+    "uid" : JSON.stringify(b),
+    "clientRequest":{ }});
+  axios({
+    method: "POST",
+    headers: {
+      "content-type": "application/json;charset=utf-8",
+      "authorization": "Basic "+this.encodedString,
+      "cache-control": "no-cache",
+    },
+    url: `https://api.agora.io/v1/apps/${this.props.appId}/cloud_recording/resourceid/${c}/sid/${d}/mode/mix/stop`,
+    data: data,
+  })
+  .then(json => 
+    this.setState({vedOffer : json}),
+  localStorage.removeItem("resourceId"),
+  localStorage.removeItem("sid"),
+  localStorage.removeItem("chName"),
+  localStorage.removeItem("adminUid")
+    
+    ) 
+    .catch((error) => {
+      
+    });
+ }
     let $ = this.props;
     // init AgoraRTC local client
     this.client = AgoraRTC.createClient({ mode: $.transcode });
@@ -825,6 +859,7 @@ async GetRecordingStatus(json){
           data:response,
           recordDisplay:!this.state.recordDisplay
         })
+        localStorage.setItem("prevFile", response.serverResponse.fileList)
         setTimeout(() => {
           this.setState({clickDisable : false})
         }, 1000)
@@ -841,7 +876,11 @@ async startRecording(key){
     this.CreateS3Folder(JSON.stringify(this.uid));
 
     var data =  "{\n\t\"cname\":\""+this.channelName+"\",\n\t\"uid\":\""+this.uid+"\",\n\t\"clientRequest\":{\n\t\t\"recordingConfig\":{\n\t\t\t\"maxIdleTime\":60,\n\t\t\t\"channelType\":1,\n\t\t\t\"transcodingConfig\":{\n\t\t\t\t\"width\":1280,\n\t\t\t\t\"height\":720,\n\t\t\t\t\"fps\":30,\n\t\t\t\t\"bitrate\":3420,\n\t\t\t\t\"mixedVideoLayout\":1,\n\t\t\t\t\"maxResolutionUid\":\""+this.uid+"\"\n\t\t\t\t}\n\t\t\t},\n\t\t\"storageConfig\":{\n\t\t\t\"vendor\":"+this.vendor+",\n\t\t\t\"region\":"+this.region+",\n\t\t\t\"bucket\":\""+this.bucket+"\",\n\t\t\t\"accessKey\":\""+this.accessKey+"\",\n\"fileNamePrefix\": [\"recordings\",\"mp\",\""+this.uid+"\"],\n\t\t\t\"secretKey\":\""+this.secretKey+"\"\n\t\t}\t\n\t}\n} \n"
- 
+    localStorage.setItem("recBoxtl", data)
+    localStorage.setItem("chName",this.channelName )
+    localStorage.setItem("adminUid", this.uid)
+    localStorage.setItem("resourceId", resourceId)
+    console.log("data", data)
 
   await axios({
       method: "POST",
@@ -877,7 +916,7 @@ async startRecording(key){
     })
       .then(json => 
         this.startRecording(json)) 
-       
+     
       .catch((error) => {
        
       });
@@ -948,6 +987,7 @@ else{
   
 };
 del = (e) => {
+  localStorage.removeItem("prevFile")
   var serverResponse = this.state.data.serverResponse.fileList
   var completeRecording;
   if(this.tempArray === undefined || this.tempArray.length === 0){
@@ -958,6 +998,9 @@ del = (e) => {
   }
   else{
       completeRecording = serverResponse;
+  }
+  if(this.prevFile){
+    completeRecording = completeRecording + "," + this.prevFile
   }
    let formData = new FormData()
    formData.append("fileList", completeRecording)
