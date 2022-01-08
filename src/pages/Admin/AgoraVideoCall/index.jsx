@@ -704,7 +704,7 @@ if(item.player === undefined){
   };  
   
   handleExit = async() => {
-  if(this.state.readyState === true){
+ 
     if(this.state.clickDisable === false){
       this.setState({clickDisable : true})
      var resourceId = localStorage.getItem("resourceId");
@@ -734,10 +734,7 @@ if(item.player === undefined){
        });
     
     }
-  }
-  else {
-    return false;
-  }
+ 
    }
 
    sharingScreen = (e) => {

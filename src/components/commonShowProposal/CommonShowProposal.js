@@ -1,6 +1,6 @@
 import React from 'react';
 import {Modal, ModalHeader, ModalBody, ModalFooter, Button} from 'reactstrap';
-import { baseUrl } from '../../../config/config';
+import { baseUrl } from "../../config/config";
 import { Typography } from '@mui/material';
 const ShowProposal = ({setViewProposal, viewProposalModal, showProposalModal2 , proposalId}) => {
   

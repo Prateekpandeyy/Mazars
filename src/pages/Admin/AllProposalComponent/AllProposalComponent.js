@@ -24,6 +24,7 @@ function AllProposalComponent({ allProposal }) {
   const [viewModal, setViewModal] = useState(false);
   const [retview, setRetview] = useState(false)
   const [viewProposalModal, setViewProposalModal] = useState(false)
+  const [proposalId, setProposalId] = useState()
   const ViewHandler = (key) => {
    
     setViewModal(!viewModal);
@@ -32,7 +33,8 @@ function AllProposalComponent({ allProposal }) {
 
 const showProposalModal2 = (e) => {
   console.log("eeee")
-  setViewProposalModal(true);
+  setViewProposalModal(!viewProposalModal);
+  setProposalId(e)
 }
   
 
@@ -398,7 +400,8 @@ const retviewProposal = (e) => {
           <ShowProposal 
           setViewProposalModal = {setViewProposalModal}
           viewProposalModal = {viewProposalModal}
-          showProposalModal2 = {showProposalModal2}/>
+          showProposalModal2 = {showProposalModal2}
+          proposalId = {proposalId}/>
         </CardBody>
       </Card>
     </>

@@ -8,6 +8,7 @@ import "antd/dist/antd.css";
 import BootstrapTable from "react-bootstrap-table-next";
 import TeamFilter from "../../../components/Search-Filter/tlFilter";
 import DiscardReport from "../AssignmentTab/DiscardReport";
+import CommonShowProposal from "../../../components/commonShowProposal/CommonShowProposal";
 
 
 
@@ -20,6 +21,8 @@ function DeclinedProposal() {
     const [id, setId] = useState(null);
 
     const [addPaymentModal, setPaymentModal] = useState(false);
+    const [viewProposalModal, setViewProposalModal] = useState(false)
+    const [proposalId, setProposalId] = useState()
     const chatHandler = (key) => {
 
         setPaymentModal(!addPaymentModal);
@@ -32,6 +35,12 @@ function DeclinedProposal() {
         setViewDiscussion(!ViewDiscussion);
         setAssignNo(key)
     }
+    const showProposalModal2 = (e) => {
+        console.log("eeee")
+        setViewProposalModal(!viewProposalModal);
+        setProposalId(e)
+      }
+
     useEffect(() => {
         getProposalList();
     }, []);
@@ -248,18 +257,15 @@ function DeclinedProposal() {
                           
 
                             {row.status_code > "3" ?
-                                <div style={{ cursor: "pointer", marginLeft: "8px" }} title="View Proposal">
-
-                                    <a
-                                        href={`${baseUrl}/customers/dounloadpdf?id=${row.id}&viewpdf=1`}
-                                        target="_blank"
-                                    >
-                                        <i
-                                            class="fa fa-eye"
-                                            style={{ color: "green", fontSize: "16px" }}
-                                        />
-                                    </a>
-                                </div>
+   <div style={{ cursor: "pointer", marginLeft : "8px" }} title="View Proposal">
+                
+   <i
+     className="fa fa-eye"
+     style={{ color: "green", fontSize: "16px" }}
+     onClick={(e) => showProposalModal2(row.id)}
+   />
+ 
+</div>
                                 :
                                 null
                             }
@@ -341,6 +347,11 @@ function DeclinedProposal() {
                         report={assignNo}
                         getData={getProposalList}
                     />
+                      <CommonShowProposal
+          setViewProposalModal = {setViewProposalModal}
+          viewProposalModal = {viewProposalModal}
+          showProposalModal2 = {showProposalModal2}
+          proposalId = {proposalId}/>
                 </CardBody>
             </Card>
         </>

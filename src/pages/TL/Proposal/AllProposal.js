@@ -11,6 +11,7 @@ import ChatHistory from "./ChatHistory";
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import DiscardReport from "../AssignmentTab/DiscardReport";
 import Tds from "./Tds";
+import CommonShowProposal from "../../../components/commonShowProposal/CommonShowProposal";
 
 
 
@@ -28,6 +29,8 @@ function AllProposal() {
     const [assignNo, setAssignNo] = useState('');  
     const [ViewDiscussion, setViewDiscussion] = useState(false);
     const [tdsForm , setTdsForm] = useState(false)
+    const [viewProposalModal, setViewProposalModal] = useState(false)
+    const [proposalId, setProposalId] = useState()
     const chatHandler = (key) => {
          setPaymentModal(!addPaymentModal);
         setId(key.assign_no);
@@ -36,6 +39,11 @@ function AllProposal() {
      
        setTdsForm(!tdsForm)
    }
+   const showProposalModal2 = (e) => {
+    console.log("eeee")
+    setViewProposalModal(!viewProposalModal);
+    setProposalId(e)
+  }
     const ViewDiscussionToggel = (key) => {
       
         setViewDiscussion(!ViewDiscussion);
@@ -291,19 +299,15 @@ function AllProposal() {
 
                             {row.status_code > "3" || row.status_code == "10" ?
                             <>
-                                <div style={{ cursor: "pointer", marginLeft: "8px" }} title="View Proposal">
-
-                                    <a
-                                        href={`${baseUrl}/customers/dounloadpdf?id=${row.id}&viewpdf=1`}
-                                        target="_blank"
-                                    >
-                                        <i
-                                            class="fa fa-eye"
-                                            style={{ color: "green", fontSize: "16px" }}
-                                        />
-                                    </a>
-                                  
-                                </div>
+                                 <div style={{ cursor: "pointer", marginLeft : "8px" }} title="View Proposal">
+                
+                <i
+                  className="fa fa-eye"
+                  style={{ color: "green", fontSize: "16px" }}
+                  onClick={(e) => showProposalModal2(row.id)}
+                />
+              
+            </div>
                               
                                 </>
                                 :
@@ -395,6 +399,12 @@ function AllProposal() {
                     tdsForm = {tdsForm}
                     addTdsToggle = {addTdsToggle}
                     />
+                     <CommonShowProposal
+          setViewProposalModal = {setViewProposalModal}
+          viewProposalModal = {viewProposalModal}
+          showProposalModal2 = {showProposalModal2}
+          proposalId = {proposalId}/>
+
                 </CardBody>
             </Card>
         </>

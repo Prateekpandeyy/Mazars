@@ -315,6 +315,7 @@ console.log("value", categeryList)
     subCategeryData(e)
     setCustcate2(e)
     setError2("")
+    console.log("ee", e)
     e.map((i) => {
       i.value < 9 ? dir.push(i.label) : indir.push(i.label)
     })
@@ -497,7 +498,7 @@ const defSubValue = () => {
    var d = 0;
    var ind = 9;
    let ppp;
-   let ccc =0;
+   let c =0;
  if(value.cat_value !== null){
   ppp = value.cat_value.split((","))
  
@@ -532,7 +533,7 @@ const defSubValue = () => {
       kk.push(o)
     })
     dir2 = subcatgerydefvalue.indirect.map((i => ({
-      "value" : String(ooo[d++]),
+      "value" : String(ooo[c++]),
       "label" : i
     }) ))
   }

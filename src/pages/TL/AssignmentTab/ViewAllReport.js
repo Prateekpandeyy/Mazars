@@ -174,7 +174,12 @@ function ViewReport({
                  </br> 
                  {p.customer_files === null ?  "" : <p>   Reviewed Report </p> } </td>
                  <td>
+                     
                       {
+                         p.status == "3" ?
+                         <p style={{ color: "red" }}>Discarded</p> :
+                         <>
+                         {
                         p.stages_type == "2" ?
                           <div>
                             {
@@ -227,6 +232,8 @@ function ViewReport({
                           </div>
                           :
                           null
+                      } 
+                         </> 
                       }
                     </td>                </tr>
                 </tbody>
