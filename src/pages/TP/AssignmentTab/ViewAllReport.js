@@ -191,7 +191,7 @@ function ViewReport({
                                       }}
                                     ></i>
                                   </div> :
-                                  p.status == "2" && p.customer_files !== null ?
+                                  p.status == "2" || p.customer_files !== null ?
                                     <div style={{ display: "flex", justifyContent: "space-around" }}>
                                       <div title="Discussion">
                                         <i
@@ -202,7 +202,7 @@ function ViewReport({
                                             marginLeft: "8px",
                                             color: "green"
                                           }}
-                                          onClick={() => toggleNested(p)}
+                                        onClick = {() => toggleNested(p)}
                                         ></i>
                                       </div>
                                       <div title="Discard">
@@ -214,16 +214,15 @@ function ViewReport({
                                             marginLeft: "8px",
                                             color: "red"
                                           }}
-                                          onClick={() => toggleDiscard(p)}
+                                         onClick={() => toggleDiscard(p)}
                                         ></i>
                                       </div>
                                     </div>
                                     :
-                                 ""
-                            }
-                            {   p.status == "3" ?
+                                    p.status == "3" ?
                                       <p style={{ color: "red" }}>Discarded</p> :
-                                      null}
+                                      null
+                            }
                           </div>
                           :
                           null

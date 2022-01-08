@@ -111,6 +111,8 @@ const [dstate2, setDstate2] = useState("")
 
   //get country
   const getcountry = (key) => {
+    setZipCode("")
+    setZipError("")
     setDstate("");
     setEstate("")
     setCityValue2("")
@@ -120,6 +122,7 @@ const [dstate2, setDstate2] = useState("")
     setPhone("")
     setIndNumError("")
     setNumAvail("")
+    
     // setInvalid("")
     if (key == 101) {
       setCountryId(key)
@@ -270,7 +273,14 @@ const [dstate2, setDstate2] = useState("")
   //zip oncahnge
   const zipValue = (e) => {
    
-   if (e.target.value.length == 0) {
+    if (isNaN(e.target.value) && countryId.length > 0) {
+
+      setZipError("Please enter number only")
+      setZipCode("")
+      setZipError1(true)
+      e.target.value = ""
+    }
+    else if (e.target.value.length == 0) {
       setZipError1(true)
     }
     else {
@@ -632,6 +642,7 @@ const [dstate2, setDstate2] = useState("")
                         placeholder="Enter Zipcode"
                         onChange={(e) => zipValue(e)}
                         onBlur={zipVali2}
+                        value={zipCode}
                       />
                     </div>
                     <p className="declined">{zipError}</p>

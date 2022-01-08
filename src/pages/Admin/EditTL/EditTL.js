@@ -501,7 +501,14 @@ const defSubValue = () => {
  if(value.cat_value !== null){
   ppp = value.cat_value.split((","))
  
- 
+ let ooo = ppp.filter((i) => {
+   return i > 8
+ })
+ let nnn = ppp.filter((i) => {
+   return i < 9
+ })
+ console.log("nnn", nnn);
+ console.log("nnnn", ooo);
    var subcatgerydefvalue = JSON.parse(value.allcat_id);
    indirvalue = subcatgerydefvalue.indirect;
    dirvalue = subcatgerydefvalue.direct;
@@ -512,7 +519,7 @@ const defSubValue = () => {
       kk.push(i)
     })
     dir1 = subcatgerydefvalue.direct.map((i => ({
-      "value" : String(ppp[d++]),
+      "value" : String(nnn[d++]),
       "label" : i
     }) ))
    }
@@ -525,7 +532,7 @@ const defSubValue = () => {
       kk.push(o)
     })
     dir2 = subcatgerydefvalue.indirect.map((i => ({
-      "value" : String(ppp[d++]),
+      "value" : String(ooo[d++]),
       "label" : i
     }) ))
   }
@@ -806,9 +813,9 @@ const checktlPost = (e) => {
                               },
                               multiValueLabel: (styles, { data }) => ({
                                 ...styles,
-                                color: data.value > 8
-                                    ? "green"
-                                    : "blue"
+                                color: data.value < 9
+                                    ? "blue"
+                                    : "green"
                               }),
                             }}
                           >
