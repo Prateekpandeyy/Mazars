@@ -111,6 +111,10 @@ const [dstate2, setDstate2] = useState("")
 
   //get country
   const getcountry = (key) => {
+    setDstate("");
+    setEstate("")
+    setCityValue2("")
+    setDstate2("")
     setCountryName(key)
     setShowPlus(true)
     setPhone("")
