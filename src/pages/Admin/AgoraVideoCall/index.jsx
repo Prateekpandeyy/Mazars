@@ -142,14 +142,14 @@ remoteShare2 = false
 prevFile;
 
   componentWillMount() {
- let a = localStorage.getItem("chName");
- let bb = localStorage.getItem("tlid")
+ let a = localStorage.getItem("chNameadmin");
+ let bb = localStorage.getItem("adminid")
  let b = JSON.parse(bb)
  console.log("bbb", b)
- let c = localStorage.getItem("resourceId")
- let d = localStorage.getItem("sid");
+ let c = localStorage.getItem("resourceIdadmin")
+ let d = localStorage.getItem("sidadmin");
  this.prevFile = localStorage.getItem("prevFile")
- console.log("ddd", b, c)
+
  if(a && b && c && d){
   var data = JSON.stringify({
     "cname":a,
@@ -167,10 +167,10 @@ prevFile;
   })
   .then(json => 
     this.setState({vedOffer : json}),
-  localStorage.removeItem("resourceId"),
-  localStorage.removeItem("sid"),
-  localStorage.removeItem("chName"),
-  localStorage.removeItem("tlid")
+  localStorage.removeItem("resourceIdadmin"),
+  localStorage.removeItem("sidadmin"),
+  localStorage.removeItem("chNameadmin"),
+  localStorage.removeItem("adminid")
     
     ) 
     .catch((error) => {
@@ -845,7 +845,9 @@ async GetRecordingStatus(json){
 
   localStorage.setItem("resourceId", resourceId);
   localStorage.setItem("sid", sid);
-
+if(this.state.showButton === JSON.parse(this.teamKey)){
+  localStorage.setItem("sidadmin", sid);
+}
   fetch(`https://api.agora.io/v1/apps/${this.props.appId}/cloud_recording/resourceid/${resourceId}/sid/${sid}/mode/mix/query`, {
     method: "GET",
     headers: {
@@ -861,7 +863,9 @@ async GetRecordingStatus(json){
           data:response,
           recordDisplay:!this.state.recordDisplay
         })
+      if(this.state.showButton === JSON.parse(this.teamKey)){
         localStorage.setItem("prevFile", response.serverResponse.fileList)
+      }
         setTimeout(() => {
           this.setState({clickDisable : false})
         }, 1000)
@@ -879,10 +883,12 @@ async startRecording(key){
 
     var data =  "{\n\t\"cname\":\""+this.channelName+"\",\n\t\"uid\":\""+this.uid+"\",\n\t\"clientRequest\":{\n\t\t\"recordingConfig\":{\n\t\t\t\"maxIdleTime\":60,\n\t\t\t\"channelType\":1,\n\t\t\t\"transcodingConfig\":{\n\t\t\t\t\"width\":1280,\n\t\t\t\t\"height\":720,\n\t\t\t\t\"fps\":30,\n\t\t\t\t\"bitrate\":3420,\n\t\t\t\t\"mixedVideoLayout\":1,\n\t\t\t\t\"maxResolutionUid\":\""+this.uid+"\"\n\t\t\t\t}\n\t\t\t},\n\t\t\"storageConfig\":{\n\t\t\t\"vendor\":"+this.vendor+",\n\t\t\t\"region\":"+this.region+",\n\t\t\t\"bucket\":\""+this.bucket+"\",\n\t\t\t\"accessKey\":\""+this.accessKey+"\",\n\"fileNamePrefix\": [\"recordings\",\"mp\",\""+this.uid+"\"],\n\t\t\t\"secretKey\":\""+this.secretKey+"\"\n\t\t}\t\n\t}\n} \n"
    
-    localStorage.setItem("chName",this.channelName )
-    localStorage.setItem("tlid", this.uid)
-    localStorage.setItem("resourceId", resourceId)
-   
+   if(this.state.showButton === JSON.parse(this.teamKey)){
+    localStorage.setItem("chNameadmin",this.channelName )
+    localStorage.setItem("adminid", this.uid)
+    localStorage.setItem("resourceIdadmin", resourceId)
+
+   }   
   await axios({
       method: "POST",
       headers: {
@@ -989,7 +995,11 @@ else{
 };
 del = (e) => {
   if(this.state.recordDisplay === true){
-    localStorage.removeItem("prevFile")
+    localStorage.removeItem("resourceIdadmin");
+  localStorage.removeItem("sidadmin");
+  localStorage.removeItem("chNameadmin");
+  localStorage.removeItem("adminid");
+    localStorage.removeItem("prevFile");
   var serverResponse = this.state.data.serverResponse.fileList
   var completeRecording;
   if(this.tempArray === undefined || this.tempArray.length === 0){

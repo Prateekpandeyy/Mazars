@@ -142,13 +142,13 @@ remoteShare2 = false
 prevFile;
 
   componentWillMount() {
- let a = localStorage.getItem("chName");
+ let a = localStorage.getItem("chNametl");
  let bb = localStorage.getItem("tlid")
  let b = JSON.parse(bb)
  console.log("bbb", b)
- let c = localStorage.getItem("resourceId")
- let d = localStorage.getItem("sid");
- this.prevFile = localStorage.getItem("prevFile")
+ let c = localStorage.getItem("resourceIdtl")
+ let d = localStorage.getItem("sidtl");
+ this.prevFile = localStorage.getItem("prevFiletl")
  console.log("ddd", b, c)
  if(a && b && c && d){
   var data = JSON.stringify({
@@ -167,9 +167,9 @@ prevFile;
   })
   .then(json => 
     this.setState({vedOffer : json}),
-  localStorage.removeItem("resourceId"),
-  localStorage.removeItem("sid"),
-  localStorage.removeItem("chName"),
+  localStorage.removeItem("resourceIdtl"),
+  localStorage.removeItem("sidtl"),
+  localStorage.removeItem("chNametl"),
   localStorage.removeItem("tlid")
     
     ) 
@@ -704,7 +704,7 @@ if(item.player === undefined){
   };  
   
   handleExit = async() => {
-  if(this.state.readyState === true){
+  
     if(this.state.clickDisable === false){
       this.setState({clickDisable : true})
      var resourceId = localStorage.getItem("resourceId");
@@ -735,10 +735,7 @@ if(item.player === undefined){
     
     }
   }
-  else {
-    return false;
-  }
-   }
+ 
 
    sharingScreen = (e) => {
     if(this.remoteShare2 === true && this.state.stateSharing === false){
@@ -848,7 +845,9 @@ async GetRecordingStatus(json){
 
   localStorage.setItem("resourceId", resourceId);
   localStorage.setItem("sid", sid);
-
+if(this.state.showButton === JSON.parse(this.teamKey)){
+  localStorage.setItem("sidtl", sid)
+}
   fetch(`https://api.agora.io/v1/apps/${this.props.appId}/cloud_recording/resourceid/${resourceId}/sid/${sid}/mode/mix/query`, {
     method: "GET",
     headers: {
@@ -864,7 +863,9 @@ async GetRecordingStatus(json){
           data:response,
           recordDisplay:!this.state.recordDisplay
         })
-        localStorage.setItem("prevFile", response.serverResponse.fileList)
+        if(this.state.showButton === JSON.parse(this.teamKey)){
+          localStorage.setItem("prevFiletl", response.serverResponse.fileList)
+        }
         setTimeout(() => {
           this.setState({clickDisable : false})
         }, 1000)
@@ -881,10 +882,11 @@ async startRecording(key){
     this.CreateS3Folder(JSON.stringify(this.uid));
 
     var data =  "{\n\t\"cname\":\""+this.channelName+"\",\n\t\"uid\":\""+this.uid+"\",\n\t\"clientRequest\":{\n\t\t\"recordingConfig\":{\n\t\t\t\"maxIdleTime\":60,\n\t\t\t\"channelType\":1,\n\t\t\t\"transcodingConfig\":{\n\t\t\t\t\"width\":1280,\n\t\t\t\t\"height\":720,\n\t\t\t\t\"fps\":30,\n\t\t\t\t\"bitrate\":3420,\n\t\t\t\t\"mixedVideoLayout\":1,\n\t\t\t\t\"maxResolutionUid\":\""+this.uid+"\"\n\t\t\t\t}\n\t\t\t},\n\t\t\"storageConfig\":{\n\t\t\t\"vendor\":"+this.vendor+",\n\t\t\t\"region\":"+this.region+",\n\t\t\t\"bucket\":\""+this.bucket+"\",\n\t\t\t\"accessKey\":\""+this.accessKey+"\",\n\"fileNamePrefix\": [\"recordings\",\"mp\",\""+this.uid+"\"],\n\t\t\t\"secretKey\":\""+this.secretKey+"\"\n\t\t}\t\n\t}\n} \n"
-   
-    localStorage.setItem("chName",this.channelName )
+   if(this.state.showButton === JSON.parse(this.teamKey)){
+    localStorage.setItem("chNametl",this.channelName )
     localStorage.setItem("tlid", this.uid)
-    localStorage.setItem("resourceId", resourceId)
+    localStorage.setItem("resourceIdtl", resourceId)
+   }
    
   await axios({
       method: "POST",
@@ -992,7 +994,11 @@ else{
 };
 del = (e) => {
   if(this.state.recordDisplay === true){
-    localStorage.removeItem("prevFile")
+    localStorage.removeItem("resourceIdtl");
+  localStorage.removeItem("sidtl");
+  localStorage.removeItem("chNametl");
+  localStorage.removeItem("tlid");
+    localStorage.removeItem("prevFiletl");
   var serverResponse = this.state.data.serverResponse.fileList
   var completeRecording;
   if(this.tempArray === undefined || this.tempArray.length === 0){
