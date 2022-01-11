@@ -340,8 +340,9 @@ function ProposalComponent(props) {
                   ></textarea> */}
                   <CKEditor
                      editor={ ClassicEditor }
+                     height  = "600px"
                      config = {{
-
+                    
                       highlight: {
                         options: [
                             {

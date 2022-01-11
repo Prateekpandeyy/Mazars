@@ -22,7 +22,7 @@ import Mandatory from "../../../components/Common/Mandatory";
 import { Spinner } from 'reactstrap';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-
+import { Markup } from 'interweave';
 
 function EditComponent() {
 
@@ -281,7 +281,7 @@ else{
     setInstallment(key)
     setClearValue(false)
   }
-
+let a = <Markup content= {description} />
 
   return (
     <Layout TLDashboard="TLDashboard" TLuserId={userid}>
@@ -354,6 +354,7 @@ else{
                   <label>Scope of Work<span className="declined">*</span></label>
                   <CKEditor
                      editor={ ClassicEditor }
+                     height = "400px"
                      config = {{
 
                       highlight: {

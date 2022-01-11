@@ -172,7 +172,7 @@ function ProposalDetails({
             </tr>
             <tr>
               <th scope="row">Scope of Work</th>
-              <td style={{padding : "0 0 0 28px"}}><Markup content={description}/></td>
+              <td className="tableStyle"> <Markup content={description} /></td>
             </tr>
 
             <tr>
