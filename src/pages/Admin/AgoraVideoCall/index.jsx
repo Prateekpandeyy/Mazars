@@ -148,8 +148,8 @@ prevFile;
  console.log("bbb", b)
  let c = localStorage.getItem("resourceIdadmin")
  let d = localStorage.getItem("sidadmin");
- this.prevFile = localStorage.getItem("prevFile")
-
+ this.prevFile = localStorage.getItem("prevFileadmin")
+ console.log("ddd", b, c)
  if(a && b && c && d){
   var data = JSON.stringify({
     "cname":a,
@@ -704,7 +704,7 @@ if(item.player === undefined){
   };  
   
   handleExit = async() => {
- 
+  if(this.state.readyState === true){
     if(this.state.clickDisable === false){
       this.setState({clickDisable : true})
      var resourceId = localStorage.getItem("resourceId");
@@ -734,7 +734,10 @@ if(item.player === undefined){
        });
     
     }
- 
+  }
+  else {
+    return false;
+  }
    }
 
    sharingScreen = (e) => {
@@ -846,7 +849,7 @@ async GetRecordingStatus(json){
   localStorage.setItem("resourceId", resourceId);
   localStorage.setItem("sid", sid);
 if(this.state.showButton === JSON.parse(this.teamKey)){
-  localStorage.setItem("sidadmin", sid);
+  localStorage.setItem("sidadmin", sid)
 }
   fetch(`https://api.agora.io/v1/apps/${this.props.appId}/cloud_recording/resourceid/${resourceId}/sid/${sid}/mode/mix/query`, {
     method: "GET",
@@ -863,9 +866,9 @@ if(this.state.showButton === JSON.parse(this.teamKey)){
           data:response,
           recordDisplay:!this.state.recordDisplay
         })
-      if(this.state.showButton === JSON.parse(this.teamKey)){
-        localStorage.setItem("prevFile", response.serverResponse.fileList)
-      }
+        if(this.state.showButton === JSON.parse(this.teamKey)){
+          localStorage.setItem("prevFileadmin", response.serverResponse.fileList)
+        }
         setTimeout(() => {
           this.setState({clickDisable : false})
         }, 1000)
@@ -883,12 +886,12 @@ async startRecording(key){
 
     var data =  "{\n\t\"cname\":\""+this.channelName+"\",\n\t\"uid\":\""+this.uid+"\",\n\t\"clientRequest\":{\n\t\t\"recordingConfig\":{\n\t\t\t\"maxIdleTime\":60,\n\t\t\t\"channelType\":1,\n\t\t\t\"transcodingConfig\":{\n\t\t\t\t\"width\":1280,\n\t\t\t\t\"height\":720,\n\t\t\t\t\"fps\":30,\n\t\t\t\t\"bitrate\":3420,\n\t\t\t\t\"mixedVideoLayout\":1,\n\t\t\t\t\"maxResolutionUid\":\""+this.uid+"\"\n\t\t\t\t}\n\t\t\t},\n\t\t\"storageConfig\":{\n\t\t\t\"vendor\":"+this.vendor+",\n\t\t\t\"region\":"+this.region+",\n\t\t\t\"bucket\":\""+this.bucket+"\",\n\t\t\t\"accessKey\":\""+this.accessKey+"\",\n\"fileNamePrefix\": [\"recordings\",\"mp\",\""+this.uid+"\"],\n\t\t\t\"secretKey\":\""+this.secretKey+"\"\n\t\t}\t\n\t}\n} \n"
    
-   if(this.state.showButton === JSON.parse(this.teamKey)){
-    localStorage.setItem("chNameadmin",this.channelName )
-    localStorage.setItem("adminid", this.uid)
-    localStorage.setItem("resourceIdadmin", resourceId)
-
-   }   
+    if(this.state.showButton === JSON.parse(this.teamKey)){
+      localStorage.setItem("chNameadmin",this.channelName )
+      localStorage.setItem("adminid", this.uid)
+      localStorage.setItem("resourceIdadmin", resourceId)
+     }
+   
   await axios({
       method: "POST",
       headers: {
@@ -994,12 +997,12 @@ else{
   
 };
 del = (e) => {
-  if(this.state.recordDisplay === true){
+ 
     localStorage.removeItem("resourceIdadmin");
-  localStorage.removeItem("sidadmin");
-  localStorage.removeItem("chNameadmin");
-  localStorage.removeItem("adminid");
-    localStorage.removeItem("prevFile");
+    localStorage.removeItem("sidadmin");
+    localStorage.removeItem("chNameadmin");
+    localStorage.removeItem("adminid");
+      localStorage.removeItem("prevFileadmin");
   var serverResponse = this.state.data.serverResponse.fileList
   var completeRecording;
   if(this.tempArray === undefined || this.tempArray.length === 0){
@@ -1061,10 +1064,7 @@ del = (e) => {
    
  });
   }
-  else{
-    return false;
-  }
-}
+
 
   render() {    
     const style = {

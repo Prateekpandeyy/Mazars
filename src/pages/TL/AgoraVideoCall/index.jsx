@@ -704,7 +704,7 @@ if(item.player === undefined){
   };  
   
   handleExit = async() => {
-  
+  if(this.state.readyState === true){
     if(this.state.clickDisable === false){
       this.setState({clickDisable : true})
      var resourceId = localStorage.getItem("resourceId");
@@ -735,7 +735,10 @@ if(item.player === undefined){
     
     }
   }
- 
+  else {
+    return false;
+  }
+   }
 
    sharingScreen = (e) => {
     if(this.remoteShare2 === true && this.state.stateSharing === false){
@@ -882,11 +885,12 @@ async startRecording(key){
     this.CreateS3Folder(JSON.stringify(this.uid));
 
     var data =  "{\n\t\"cname\":\""+this.channelName+"\",\n\t\"uid\":\""+this.uid+"\",\n\t\"clientRequest\":{\n\t\t\"recordingConfig\":{\n\t\t\t\"maxIdleTime\":60,\n\t\t\t\"channelType\":1,\n\t\t\t\"transcodingConfig\":{\n\t\t\t\t\"width\":1280,\n\t\t\t\t\"height\":720,\n\t\t\t\t\"fps\":30,\n\t\t\t\t\"bitrate\":3420,\n\t\t\t\t\"mixedVideoLayout\":1,\n\t\t\t\t\"maxResolutionUid\":\""+this.uid+"\"\n\t\t\t\t}\n\t\t\t},\n\t\t\"storageConfig\":{\n\t\t\t\"vendor\":"+this.vendor+",\n\t\t\t\"region\":"+this.region+",\n\t\t\t\"bucket\":\""+this.bucket+"\",\n\t\t\t\"accessKey\":\""+this.accessKey+"\",\n\"fileNamePrefix\": [\"recordings\",\"mp\",\""+this.uid+"\"],\n\t\t\t\"secretKey\":\""+this.secretKey+"\"\n\t\t}\t\n\t}\n} \n"
-   if(this.state.showButton === JSON.parse(this.teamKey)){
-    localStorage.setItem("chNametl",this.channelName )
-    localStorage.setItem("tlid", this.uid)
-    localStorage.setItem("resourceIdtl", resourceId)
-   }
+   
+    if(this.state.showButton === JSON.parse(this.teamKey)){
+      localStorage.setItem("chNametl",this.channelName )
+      localStorage.setItem("tlid", this.uid)
+      localStorage.setItem("resourceIdtl", resourceId)
+     }
    
   await axios({
       method: "POST",
@@ -993,12 +997,12 @@ else{
   
 };
 del = (e) => {
-  if(this.state.recordDisplay === true){
+ 
     localStorage.removeItem("resourceIdtl");
-  localStorage.removeItem("sidtl");
-  localStorage.removeItem("chNametl");
-  localStorage.removeItem("tlid");
-    localStorage.removeItem("prevFiletl");
+    localStorage.removeItem("sidtl");
+    localStorage.removeItem("chNametl");
+    localStorage.removeItem("tlid");
+      localStorage.removeItem("prevFiletl");
   var serverResponse = this.state.data.serverResponse.fileList
   var completeRecording;
   if(this.tempArray === undefined || this.tempArray.length === 0){
@@ -1060,10 +1064,7 @@ del = (e) => {
    
  });
   }
-  else{
-    return false;
-  }
-}
+
 
   render() {    
     const style = {

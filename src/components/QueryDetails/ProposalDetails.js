@@ -3,6 +3,7 @@ import CommonServices from "../../common/common";
 import { baseUrl, baseUrl3 } from "../../config/config";
 import DescriptionOutlinedIcon from "@material-ui/icons/DescriptionOutlined";
 
+import { Markup } from 'interweave';
 function ProposalDetails({
   diaplayProposal,
   diaplayHistory,
@@ -171,7 +172,7 @@ function ProposalDetails({
             </tr>
             <tr>
               <th scope="row">Scope of Work</th>
-              <td>{description}</td>
+              <td style={{padding : "0 0 0 28px"}}><Markup content={description}/></td>
             </tr>
 
             <tr>

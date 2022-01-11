@@ -116,9 +116,7 @@ const Invoice = () => {
             sort: true,
             style: {
                 fontSize: "11px",
-                display : "flex",
-                justifyContent : "center",
-                border : "0px"
+               textAlign : "center"
             },
             headerStyle: () => {
                 return { fontSize: "11px" , width : "150px"};

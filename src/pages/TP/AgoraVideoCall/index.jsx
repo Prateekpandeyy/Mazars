@@ -997,7 +997,7 @@ else{
   
 };
 del = (e) => {
-  if(this.state.recordDisplay === true){
+ 
     localStorage.removeItem("resourceIdtp");
     localStorage.removeItem("sidtp");
     localStorage.removeItem("chNametp");
@@ -1064,10 +1064,7 @@ del = (e) => {
    
  });
   }
-  else{
-    return false;
-  }
-}
+
 
   render() {    
     const style = {

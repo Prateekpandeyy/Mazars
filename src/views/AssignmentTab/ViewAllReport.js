@@ -171,11 +171,17 @@ function ViewReport({
                     </td>
                   
                     <td>
-                    <p>  {(p.stages_type === 2 && "Draft Report" ) || (p.stages_type === 3 && "Final Report")}</p>
+                   {p.stages_type === "2" ?
+                   <p>Draft Report</p> : null}
+                   {p.stages_type === "3" ?
+                   <p>Final Report</p> : null}
                  <br></br> 
                  {p.customer_files === null ?  "" : <p>   Reviewed Report </p> }
                 </td>
-                {
+               
+  {p.stages_type === "2" ?
+  <>
+   {
         
         p.status === "1" ?
           <div style={{ cursor: "pointer" }} title="Client Accepted">
@@ -228,8 +234,7 @@ function ViewReport({
         <PublishIcon color="secondary" />
     </div> : ""}
     </div>
-    </> :""}
-  
+    </> :""}</> : null}
                   </tr>
                 </tbody>
               ))

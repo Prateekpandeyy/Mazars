@@ -173,68 +173,56 @@ function ViewReport({
                  <br></br> 
                  {p.customer_files === null ?  "" : <p>   Reviewed Report </p> } </td>
                  <td>
-                     
-                      {
-                         p.status == "3" ?
-                         <p style={{ color: "red" }}>Discarded</p> :
-                         <>
-                         {
-                        p.stages_type == "2" ?
-                          <div>
-                            {
-                              p.status == "0"  && p.customer_files === null ?
-                                <p style={{ color: "red" }}> Pending </p>
-                                :
-                                p.status == "1" ?
-                                  <div style={{ cursor: "pointer" }} title="Client Accepted">
-                                    <i
-                                      class="fa fa-check"
-                                      style={{
-                                        color: "blue",
-                                        fontSize: "16px",
-                                        marginLeft: "10px"
-                                      }}
-                                    ></i>
-                                  </div> :
-                                  p.status == "2" || p.customer_files !== null ?
-                                    <div style={{ display: "flex", justifyContent: "space-around" }}>
-                                      <div title="Discussion">
-                                        <i
-                                          class="fa fa-comments-o"
-                                          style={{
-                                            fontSize: 16,
-                                            cursor: "pointer",
-                                            marginLeft: "8px",
-                                            color: "green"
-                                          }}
-                                        onClick = {() => toggleNested(p)}
-                                        ></i>
-                                      </div>
-                                      <div title="Discard">
-                                        <i
-                                          class="fa fa-times"
-                                          style={{
-                                            fontSize: 16,
-                                            cursor: "pointer",
-                                            marginLeft: "8px",
-                                            color: "red"
-                                          }}
-                                         onClick={() => toggleDiscard(p)}
-                                        ></i>
-                                      </div>
-                                    </div>
-                                    :
-                                    p.status == "3" ?
-                                      <p style={{ color: "red" }}>Discarded</p> :
-                                      null
-                            }
-                          </div>
-                          :
-                          null
-                      } 
-                         </> 
-                      }
-                    </td>    
+                  {p.stages_type === "2" ?
+                  <>
+                   {p.status === "3" ? 
+                   <p style={{ color: "red" }}> Discarded</p> : 
+                   null}
+                   {
+                     p.status === "1" ?
+                     <div style={{ cursor: "pointer" }} title="Client Accepted">
+                     <i
+                       class="fa fa-check"
+                       style={{
+                         color: "blue",
+                         fontSize: "16px",
+                         marginLeft: "10px"
+                       }}
+                     ></i>
+                   </div> : null
+                   }
+                   {p.status === "0" || p.status === "2" ?
+                   <>
+                   {p.tlstatus === "0" ?
+                   <p style={{ color: "red" }}>Pending</p> :
+                   <div style={{ display: "flex", justifyContent: "space-around" }}>
+                    <div title="Discussion">
+                      <i
+                        class="fa fa-comments-o"
+                        style={{
+                          fontSize: 16,
+                          cursor: "pointer",
+                          marginLeft: "8px",
+                          color: "green"
+                        }}
+                      onClick = {() => toggleNested(p)}
+                      ></i>
+                    </div>
+                    <div title="Discard">
+                      <i
+                        class="fa fa-times"
+                        style={{
+                          fontSize: 16,
+                          cursor: "pointer",
+                          marginLeft: "8px",
+                          color: "red"
+                        }}
+                       onClick={() => toggleDiscard(p)}
+                      ></i>
+                    </div>
+                  </div>}
+                   </> : null}</> : null}
+                 </td>   
                   </tr>
                 </tbody>
               ))
