@@ -135,48 +135,48 @@ class AgoraCanvas extends React.Component {
  vendor = 1
  region = 14;
  bucket = "vride-multitvm";
- accessKey = "AKIASTLI4S4OJH3WGMFM";
- secretKey = "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";
+ accessKey = "7ef0f888862841aab05f571c43931897"
+ secretKey = "654d5bac9d564f8cba92f72d8c67acc2";
 allrecording;
 remoteShare2 = false
 prevFile;
 
   componentWillMount() {
- let a = localStorage.getItem("chNametl");
- let bb = localStorage.getItem("tlid")
- let b = JSON.parse(bb)
- console.log("bbb", b)
- let c = localStorage.getItem("resourceIdtl")
- let d = localStorage.getItem("sidtl");
- this.prevFile = localStorage.getItem("prevFiletl")
- console.log("ddd", b, c)
- if(a && b && c && d){
-  var data = JSON.stringify({
-    "cname":a,
-    "uid" : JSON.stringify(b),
-    "clientRequest":{ }});
-  axios({
-    method: "POST",
-    headers: {
-      "content-type": "application/json;charset=utf-8",
-      "authorization": "Basic "+this.encodedString,
-      "cache-control": "no-cache",
-    },
-    url: `https://api.agora.io/v1/apps/${this.props.appId}/cloud_recording/resourceid/${c}/sid/${d}/mode/mix/stop`,
-    data: data,
-  })
-  .then(json => 
-    this.setState({vedOffer : json}),
-  localStorage.removeItem("resourceIdtl"),
-  localStorage.removeItem("sidtl"),
-  localStorage.removeItem("chNametl"),
-  localStorage.removeItem("tlid")
+//  let a = localStorage.getItem("chNametl");
+//  let bb = localStorage.getItem("tlid")
+//  let b = JSON.parse(bb)
+//  console.log("bbb", b)
+//  let c = localStorage.getItem("resourceIdtl")
+//  let d = localStorage.getItem("sidtl");
+//  this.prevFile = localStorage.getItem("prevFiletl")
+//  console.log("ddd", b, c)
+//  if(a && b && c && d){
+//   var data = JSON.stringify({
+//     "cname":a,
+//     "uid" : JSON.stringify(b),
+//     "clientRequest":{ }});
+//   axios({
+//     method: "POST",
+//     headers: {
+//       "content-type": "application/json;charset=utf-8",
+//       "authorization": "Basic "+this.encodedString,
+//       "cache-control": "no-cache",
+//     },
+//     url: `https://api.agora.io/v1/apps/${this.props.appId}/cloud_recording/resourceid/${c}/sid/${d}/mode/mix/stop`,
+//     data: data,
+//   })
+//   .then(json => 
+//     this.setState({vedOffer : json}),
+//   localStorage.removeItem("resourceIdtl"),
+//   localStorage.removeItem("sidtl"),
+//   localStorage.removeItem("chNametl"),
+//   localStorage.removeItem("tlid")
     
-    ) 
-    .catch((error) => {
+//     ) 
+//     .catch((error) => {
       
-    });
- }
+//     });
+//  }
     let $ = this.props;
     // init AgoraRTC local client
     this.client = AgoraRTC.createClient({ mode: $.transcode });
@@ -704,7 +704,7 @@ if(item.player === undefined){
   };  
   
   handleExit = async() => {
-  if(this.state.readyState === true){
+  
     if(this.state.clickDisable === false){
       this.setState({clickDisable : true})
      var resourceId = localStorage.getItem("resourceId");
@@ -735,10 +735,7 @@ if(item.player === undefined){
     
     }
   }
-  else {
-    return false;
-  }
-   }
+ 
 
    sharingScreen = (e) => {
     if(this.remoteShare2 === true && this.state.stateSharing === false){
@@ -823,7 +820,9 @@ if(item.player === undefined){
     stream.setVideoProfile(videoProfile);
     return stream;
   };
-
+  b = this.accessKey + ":" + this.secretKey;
+    bb = Buffer.from(this.b).toString('base64')
+   
 
   CreateS3Folder = (uid) =>{
     axios
@@ -832,9 +831,9 @@ if(item.player === undefined){
                 
             });
   }
+ 
 
-
-encodedString = "ZDMzOTU3N2EyOTRjNDU4Yzg2ZDhhNzhiNDc0MTQxZmM6MWE2MWE0YmVmMjE0NGU3OGJlNmY2NzFkNWNmM2ZjMzI=";
+encodedString = this.bb;
 sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
@@ -842,7 +841,7 @@ sleep(ms) {
 //get recording status
 async GetRecordingStatus(json){
 
-  await this.sleep(3000); 
+  await this.sleep(2000); 
   var resourceId = json.data.resourceId;
   var sid = json.data.sid;
 
@@ -884,13 +883,12 @@ async startRecording(key){
     
     this.CreateS3Folder(JSON.stringify(this.uid));
 
-    var data =  "{\n\t\"cname\":\""+this.channelName+"\",\n\t\"uid\":\""+this.uid+"\",\n\t\"clientRequest\":{\n\t\t\"recordingConfig\":{\n\t\t\t\"maxIdleTime\":60,\n\t\t\t\"channelType\":1,\n\t\t\t\"transcodingConfig\":{\n\t\t\t\t\"width\":1280,\n\t\t\t\t\"height\":720,\n\t\t\t\t\"fps\":30,\n\t\t\t\t\"bitrate\":3420,\n\t\t\t\t\"mixedVideoLayout\":1,\n\t\t\t\t\"maxResolutionUid\":\""+this.uid+"\"\n\t\t\t\t}\n\t\t\t},\n\t\t\"storageConfig\":{\n\t\t\t\"vendor\":"+this.vendor+",\n\t\t\t\"region\":"+this.region+",\n\t\t\t\"bucket\":\""+this.bucket+"\",\n\t\t\t\"accessKey\":\""+this.accessKey+"\",\n\"fileNamePrefix\": [\"recordings\",\"mp\",\""+this.uid+"\"],\n\t\t\t\"secretKey\":\""+this.secretKey+"\"\n\t\t}\t\n\t}\n} \n"
-   
-    if(this.state.showButton === JSON.parse(this.teamKey)){
-      localStorage.setItem("chNametl",this.channelName )
-      localStorage.setItem("tlid", this.uid)
-      localStorage.setItem("resourceIdtl", resourceId)
-     }
+    var data =  "{\n\t\"cname\":\""+this.channelName+"\",\n\t\"uid\":\""+this.uid+"\",\n\t\"clientRequest\":{\n\t\t\"recordingConfig\":{\n\t\t\t\"maxIdleTime\":60,\n\t\t\t\"channelType\":1,\n\t\t\t\"transcodingConfig\":{\n\t\t\t\t\"width\":1280,\n\t\t\t\t\"height\":720,\n\t\t\t\t\"fps\":15,\n\t\t\t\t\"bitrate\":1230,\n\t\t\t\t\"mixedVideoLayout\":1,\n\t\t\t\t\"maxResolutionUid\":\""+this.uid+"\"\n\t\t\t\t}\n\t\t\t},\n\t\t\"storageConfig\":{\n\t\t\t\"vendor\":"+this.vendor+",\n\t\t\t\"region\":"+this.region+",\n\t\t\t\"bucket\":\""+this.bucket+"\",\n\t\t\t\"accessKey\":\""+this.accessKey+"\",\n\"fileNamePrefix\": [\"recordings\",\"mp\",\""+this.uid+"\"],\n\t\t\t\"secretKey\":\""+this.secretKey+"\"\n\t\t}\t\n\t}\n} \n"
+   if(this.state.showButton === JSON.parse(this.teamKey)){
+    localStorage.setItem("chNametl",this.channelName )
+    localStorage.setItem("tlid", this.uid)
+    localStorage.setItem("resourceIdtl", resourceId)
+   }
    
   await axios({
       method: "POST",
@@ -997,12 +995,12 @@ else{
   
 };
 del = (e) => {
- 
+  if(this.state.recordDisplay === true){
     localStorage.removeItem("resourceIdtl");
-    localStorage.removeItem("sidtl");
-    localStorage.removeItem("chNametl");
-    localStorage.removeItem("tlid");
-      localStorage.removeItem("prevFiletl");
+  localStorage.removeItem("sidtl");
+  localStorage.removeItem("chNametl");
+  localStorage.removeItem("tlid");
+    localStorage.removeItem("prevFiletl");
   var serverResponse = this.state.data.serverResponse.fileList
   var completeRecording;
   if(this.tempArray === undefined || this.tempArray.length === 0){
@@ -1064,7 +1062,10 @@ del = (e) => {
    
  });
   }
-
+  else{
+    return false;
+  }
+}
 
   render() {    
     const style = {

@@ -135,8 +135,8 @@ class AgoraCanvas extends React.Component {
  vendor = 1
  region = 14;
  bucket = "vride-multitvm";
- accessKey = "AKIASTLI4S4OJH3WGMFM";
- secretKey = "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";
+ accessKey = "7ef0f888862841aab05f571c43931897";
+ secretKey = "654d5bac9d564f8cba92f72d8c67acc2";
 allrecording;
 remoteShare2 = false
 prevFile;
@@ -998,71 +998,76 @@ else{
 };
 del = (e) => {
  
-    localStorage.removeItem("resourceIdadmin");
-    localStorage.removeItem("sidadmin");
-    localStorage.removeItem("chNameadmin");
-    localStorage.removeItem("adminid");
-      localStorage.removeItem("prevFileadmin");
-  var serverResponse = this.state.data.serverResponse.fileList
-  var completeRecording;
-  if(this.tempArray === undefined || this.tempArray.length === 0){
-      completeRecording =  serverResponse;
-  }
-  else if(this.tempArray != undefined || this.tempArray.length > 0){
-      completeRecording = this.tempArray + "," + serverResponse;
-  }
-  else{
-      completeRecording = serverResponse;
-  }
-  if(this.prevFile){
-    completeRecording = completeRecording + "," + this.prevFile
-  }
-   let formData = new FormData()
-   formData.append("fileList", completeRecording)
-  formData.append("schedule_id", this.props.id);
-  formData.append("uid", JSON.parse(this.teamKey));
-  formData.append("assign_id", this.state.item.assign_no);
-  formData.append("participants", this.state.item.username);
- 
-  Swal.fire({
-    title: "End this vedio call for everyone?",
-    // text: "End this vedio call for everyone",
-     type: "warning",
-     showCloseButton:true,
-     showCancelButton : true,
-     confirmButtonColor: "#3085d6",
-     cancelButtonColor: "#d33",
-     confirmButtonText: "End the call",
-     cancelButtonText : "Just leave the meeting"
-    }).then((result) => {
-    
-     if (result.value) {
-      if (result.value) {
-        axios.get(`${baseUrl}/tl/setgetschedular?id=${this.props.id}&rtc_id=${this.state.getAdId}&uid=${JSON.parse(this.teamKey)}`)
-        .then((res) =>{
-          if(res){
-            this.client && this.client.unpublish(this.localStream);
-            this.localStream && this.localStream.close();
-            this.toggleModal()
-          }
-        })
-       
-       }
-     }
-     else if(result.dismiss === "backdrop" || result.dismiss === "close"){
+ if(this.state.recordDisplay === true){
+  localStorage.removeItem("resourceIdadmin");
+  localStorage.removeItem("sidadmin");
+  localStorage.removeItem("chNameadmin");
+  localStorage.removeItem("adminid");
+    localStorage.removeItem("prevFileadmin");
+var serverResponse = this.state.data.serverResponse.fileList
+var completeRecording;
+if(this.tempArray === undefined || this.tempArray.length === 0){
+    completeRecording =  serverResponse;
+}
+else if(this.tempArray != undefined || this.tempArray.length > 0){
+    completeRecording = this.tempArray + "," + serverResponse;
+}
+else{
+    completeRecording = serverResponse;
+}
+if(this.prevFile){
+  completeRecording = completeRecording + "," + this.prevFile
+}
+ let formData = new FormData()
+ formData.append("fileList", completeRecording)
+formData.append("schedule_id", this.props.id);
+formData.append("uid", JSON.parse(this.teamKey));
+formData.append("assign_id", this.state.item.assign_no);
+formData.append("participants", this.state.item.username);
+
+Swal.fire({
+  title: "End this vedio call for everyone?",
+  // text: "End this vedio call for everyone",
+   type: "warning",
+   showCloseButton:true,
+   showCancelButton : true,
+   confirmButtonColor: "#3085d6",
+   cancelButtonColor: "#d33",
+   confirmButtonText: "End the call",
+   cancelButtonText : "Just leave the meeting"
+  }).then((result) => {
+  
+   if (result.value) {
+    if (result.value) {
+      axios.get(`${baseUrl}/tl/setgetschedular?id=${this.props.id}&rtc_id=${this.state.getAdId}&uid=${JSON.parse(this.teamKey)}`)
+      .then((res) =>{
+        if(res){
+          this.client && this.client.unpublish(this.localStream);
+          this.localStream && this.localStream.close();
+          this.toggleModal()
+        }
+      })
      
-     return false
-    }
-   else{
-    axios({
-      method: "POST",
-      url: `${baseUrl}/tl/callRecordingPost`,
-      data: formData,
-   })
-    window.location.hash = "/admin/schedule";
+     }
    }
+   else if(result.dismiss === "backdrop" || result.dismiss === "close"){
    
- });
+   return false
+  }
+ else{
+  axios({
+    method: "POST",
+    url: `${baseUrl}/tl/callRecordingPost`,
+    data: formData,
+ })
+  window.location.hash = "/admin/schedule";
+ }
+ 
+});
+ }
+ else{
+   return false
+ }
   }
 
 
