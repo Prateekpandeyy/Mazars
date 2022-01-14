@@ -135,7 +135,7 @@ axios.get(`${baseUrl}/tl/freeslottime?schedule_id=${id}&&uid=${JSON.parse(userId
                                     ></textarea>
                                 </div>
                               
-                                <button type="submit" className="btn btn-primary mx-3">
+                                <button type="submit" className="btn btn-primary">
                                     Submit
                                 </button>
                             </div>

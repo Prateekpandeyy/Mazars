@@ -19,6 +19,7 @@ import BootstrapTable from "react-bootstrap-table-next";
 import FeedbackIcon from '@material-ui/icons/Feedback';
 import Records from "../../components/Records/Records";
 import DiscardReport from "../AssignmentTab/DiscardReport";
+import CommonShowProposal from "../../components/commonShowProposal/CommonShowProposal";
 
 
 function AcceptedProposal() {
@@ -34,6 +35,8 @@ function AcceptedProposal() {
 
     const [assignNo, setAssignNo] = useState('');
     const [ViewDiscussion, setViewDiscussion] = useState(false);
+     const [viewProposalModal, setViewProposalModal] = useState(false)
+    const [proposalId, setProposalId] = useState()
     const ViewDiscussionToggel = (key) => {
         setViewDiscussion(!ViewDiscussion);
         setAssignNo(key)
@@ -42,7 +45,11 @@ function AcceptedProposal() {
     useEffect(() => {
         getProposalData();
     }, []);
-
+  const showProposalModal2 = (e) => {
+    console.log("eeee")
+    setViewProposalModal(!viewProposalModal);
+    setProposalId(e)
+  }
     const getProposalData = () => {
         axios
             .get(`${baseUrl}/customers/getProposals?uid=${JSON.parse(userId)}&status=2`)
@@ -286,18 +293,18 @@ function AcceptedProposal() {
                                     ></i>
                                 </div>
 
-                                <div style={{ cursor: "pointer" }} title="View Proposal">
-                                    <a
-                                        href={`${baseUrl}/customers/dounloadpdf?id=${row.q_id}&viewpdf=1`}
-                                        target="_blank"
-                                    >
-                                        <i
-                                            class="fa fa-eye"
-                                            style={{ color: "green", fontSize: "16px" }}
-                                        />
-                                    </a>
-                                </div>
-
+                                 <>
+                                 <div style={{ cursor: "pointer", marginLeft : "8px" }} title="View Proposal">
+                
+                <i
+                  className="fa fa-eye"
+                  style={{ color: "green", fontSize: "16px" }}
+                  onClick={(e) => showProposalModal2(row.q_id)}
+                />
+              
+            </div>
+                              
+                                </>
                             </div>
                         )}
                     </>
@@ -337,6 +344,11 @@ function AcceptedProposal() {
                         getData={getProposalData}
                     />
                 </CardBody>
+                <CommonShowProposal
+          setViewProposalModal = {setViewProposalModal}
+          viewProposalModal = {viewProposalModal}
+          showProposalModal2 = {showProposalModal2}
+          proposalId = {proposalId}/>
             </Card>
         </div>
     );

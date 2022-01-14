@@ -134,7 +134,7 @@ function ProposalDetails({
         <table className="table table-bordered">
           <thead>
             <tr>
-              <th scope="col" style={{ width: "300px", overflow: "wrap" }}>Titles</th>
+              <th scope="col">Titles</th>
               <th scope="col">Data</th>
             </tr>
           </thead>
@@ -179,8 +179,8 @@ function ProposalDetails({
               <th scope="row">Amount</th>
               <td>
                 <tr>
-                  <th>Amount Type</th>
-                  <th>Price</th>
+                  <th style={{display : "flex", width : "50%"}}>Amount Type</th>
+                  <th style={{display : "flex", width : "50%"}}>Price</th>
                 </tr>
                 <tr>
                   <td>{CommonServices.capitalizeFirstLetter(amount_type)}</td>

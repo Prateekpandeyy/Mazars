@@ -202,7 +202,7 @@ const Generated = () => {
                     <>
                     {row.is_paid == "0" ? <p>Unpaid</p> : 
                     <>
-                    {row.is_paid == "1" ? <p>Paid</p> : <p>Declined</p>}
+                    {row.is_paid == "1" ? <p>Paid</p> : <p style={{color : "red"}}>Declined</p>}
                     </>}
                     </>
                 )
@@ -235,7 +235,7 @@ const Generated = () => {
                 ?   
                
                   
-                    <span title={copyTitle}>
+                    <span title={row.paymenturl}>
                     <FileCopyIcon onClick={() => {copyFun(row.paymenturl)}}  style={noPointer} />
                                    </span> 
                   

@@ -7,7 +7,7 @@ import RejectedModal from "./RejectModal";
 import DiscardReport from "./DiscardReport";
 import Assignmodal from "./Assignmodal";
 import PublishIcon from '@material-ui/icons/Publish';
-
+import {Typography} from "@material-ui/core";
 
 function ViewReport({
   reportModal,
@@ -100,16 +100,14 @@ function ViewReport({
     <div>
       <Modal isOpen={reportModal} toggle={ViewReport} size="lg" scrollable>
         <ModalHeader toggle={ViewReport}>
-          <div style={{ display: "flex", justifyContent: "space-between", width: "55vw" }}>
-            <span>View All Reports</span>
-            <span>
-              <button class="btn btn-success"
-              onClick={() => ViewDiscussionToggel()}
-              >
+          
+           <Typography variant="h6">
+           View All Report 
+           </Typography>
+           <button class="btn btn-success" onClick={() => ViewDiscussionToggel()}>
                 View Discussion
               </button>
-            </span>
-          </div>
+           
         </ModalHeader>
         <ModalBody>
           <table class="table table-bordered">
@@ -182,7 +180,6 @@ function ViewReport({
   {p.stages_type === "2" ?
   <>
    {
-        
         p.status === "1" ?
           <div style={{ cursor: "pointer" }} title="Client Accepted">
             <i
@@ -193,14 +190,20 @@ function ViewReport({
               }}
             ></i>
           </div> :""}
+
           {p.status === "2" && p.customer_files !== null ?
           <p style={{color : "red"}}>Pending </p> : ""}
+
+
+
+
          { p.status === "2" || p.status === "0" ?
               <>
               <div style={{display : "flex", flexDirection: "row"}}>
                {p.status === "2" ? null :
                <>
              
+              {p.tlstatus ===  "0" ?
               <div style={{ cursor: "pointer" }} title="Accept">
 <i
   class="fa fa-check"
@@ -210,7 +213,7 @@ function ViewReport({
   }}
   onClick={() => acceptHandler(p)}
 ></i>
-</div>
+</div> : null}
                 <div title="Discussion">
                 <i
                   class="fa fa-comments-o"

@@ -7,6 +7,7 @@ import CommonServices from "../../../common/common";
 import DiscardReport from "./DiscardReport";
 import './modalSty.css';
 import { makeStyles } from '@material-ui/core';
+import {Typography} from "@material-ui/core"
 const Schema = yup.object().shape({
   p_chat: yup.string().required(""),
 });
@@ -65,15 +66,15 @@ const viewStyle = {
   return (
     <>
       <Modal isOpen={reportModal} toggle={ViewReport} size="lg" scrollable>
-        <ModalHeader toggle={ViewReport} className={classes.modalHeaderStyle}>
-         
-            <span>View All Reports</span>
-          
-              <button className="btn btn-success" onClick={() => ViewDiscussionToggel()}>
+       <ModalHeader toggle={ViewReport} className = {classes.modalHeaderStyle}>
+           
+           <Typography variant="h6">
+           View All Report 
+           </Typography>
+           <button class="btn btn-success" onClick={() => ViewDiscussionToggel()}>
                 View Discussion
               </button>
            
-          
         </ModalHeader>
         <ModalBody>
           <table className="table table-bordered">

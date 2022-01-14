@@ -132,52 +132,51 @@ class AgoraCanvas extends React.Component {
   uid = Math.floor((Math.random() * 10000) + 1);
   channelName = this.props.channel
   tempArray = []
- vendor = 1
- vendor = 1
+  vendor = 1
  region = 14;
- bucket = "vride-multitvm";
- accessKey = "7ef0f888862841aab05f571c43931897";
- secretKey = "654d5bac9d564f8cba92f72d8c67acc2";
+ bucket  = "vride-multitvm";
+ accessKey = "AKIASTLI4S4OJH3WGMFM";
+ secretKey = "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";
 allrecording;
 remoteShare2 = false
 prevFile;
 
   componentWillMount() {
- let a = localStorage.getItem("chNametp");
- let bb = localStorage.getItem("tpid")
- let b = JSON.parse(bb)
- console.log("bbb", b)
- let c = localStorage.getItem("resourceIdtp")
- let d = localStorage.getItem("sidtp");
- this.prevFile = localStorage.getItem("prevFiletp")
- console.log("ddd", b, c)
- if(a && b && c && d){
-  var data = JSON.stringify({
-    "cname":a,
-    "uid" : JSON.stringify(b),
-    "clientRequest":{ }});
-  axios({
-    method: "POST",
-    headers: {
-      "content-type": "application/json;charset=utf-8",
-      "authorization": "Basic "+this.encodedString,
-      "cache-control": "no-cache",
-    },
-    url: `https://api.agora.io/v1/apps/${this.props.appId}/cloud_recording/resourceid/${c}/sid/${d}/mode/mix/stop`,
-    data: data,
-  })
-  .then(json => 
-    this.setState({vedOffer : json}),
-  localStorage.removeItem("resourceIdtp"),
-  localStorage.removeItem("sidtp"),
-  localStorage.removeItem("chNametp"),
-  localStorage.removeItem("tpid")
+//  let a = localStorage.getItem("chNametp");
+//  let bb = localStorage.getItem("tpid")
+//  let b = JSON.parse(bb)
+//  console.log("bbb", b)
+//  let c = localStorage.getItem("resourceIdtp")
+//  let d = localStorage.getItem("sidtp");
+//  this.prevFile = localStorage.getItem("prevFiletp")
+//  console.log("ddd", b, c)
+//  if(a && b && c && d){
+//   var data = JSON.stringify({
+//     "cname":a,
+//     "uid" : JSON.stringify(b),
+//     "clientRequest":{ }});
+//   axios({
+//     method: "POST",
+//     headers: {
+//       "content-type": "application/json;charset=utf-8",
+//       "authorization": "Basic "+this.encodedString,
+//       "cache-control": "no-cache",
+//     },
+//     url: `https://api.agora.io/v1/apps/${this.props.appId}/cloud_recording/resourceid/${c}/sid/${d}/mode/mix/stop`,
+//     data: data,
+//   })
+//   .then(json => 
+//     this.setState({vedOffer : json}),
+//   localStorage.removeItem("resourceIdtp"),
+//   localStorage.removeItem("sidtp"),
+//   localStorage.removeItem("chNametp"),
+//   localStorage.removeItem("tpid")
     
-    ) 
-    .catch((error) => {
+//     ) 
+//     .catch((error) => {
       
-    });
- }
+//     });
+//  }
     let $ = this.props;
     // init AgoraRTC local client
     this.client = AgoraRTC.createClient({ mode: $.transcode });
@@ -835,7 +834,7 @@ if(item.player === undefined){
   }
 
 
-encodedString = "ZDMzOTU3N2EyOTRjNDU4Yzg2ZDhhNzhiNDc0MTQxZmM6MWE2MWE0YmVmMjE0NGU3OGJlNmY2NzFkNWNmM2ZjMzI=";
+encodedString = "N2VmMGY4ODg4NjI4NDFhYWIwNWY1NzFjNDM5MzE4OTc6NjU0ZDViYWM5ZDU2NGY4Y2JhOTJmNzJkOGM2N2FjYzI=";
 sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
@@ -849,9 +848,9 @@ async GetRecordingStatus(json){
 
   localStorage.setItem("resourceId", resourceId);
   localStorage.setItem("sid", sid);
-if(this.state.showButton === JSON.parse(this.teamKey)){
-  localStorage.setItem("sidtp", sid)
-}
+// if(this.state.showButton === JSON.parse(this.teamKey)){
+//   localStorage.setItem("sidtp", sid)
+// }
   fetch(`https://api.agora.io/v1/apps/${this.props.appId}/cloud_recording/resourceid/${resourceId}/sid/${sid}/mode/mix/query`, {
     method: "GET",
     headers: {
@@ -867,9 +866,9 @@ if(this.state.showButton === JSON.parse(this.teamKey)){
           data:response,
           recordDisplay:!this.state.recordDisplay
         })
-        if(this.state.showButton === JSON.parse(this.teamKey)){
-          localStorage.setItem("prevFiletp", response.serverResponse.fileList)
-        }
+        // if(this.state.showButton === JSON.parse(this.teamKey)){
+        //   localStorage.setItem("prevFiletp", response.serverResponse.fileList)
+        // }
         setTimeout(() => {
           this.setState({clickDisable : false})
         }, 1000)
@@ -887,11 +886,11 @@ async startRecording(key){
 
     var data =  "{\n\t\"cname\":\""+this.channelName+"\",\n\t\"uid\":\""+this.uid+"\",\n\t\"clientRequest\":{\n\t\t\"recordingConfig\":{\n\t\t\t\"maxIdleTime\":60,\n\t\t\t\"channelType\":1,\n\t\t\t\"transcodingConfig\":{\n\t\t\t\t\"width\":1280,\n\t\t\t\t\"height\":720,\n\t\t\t\t\"fps\":30,\n\t\t\t\t\"bitrate\":3420,\n\t\t\t\t\"mixedVideoLayout\":1,\n\t\t\t\t\"maxResolutionUid\":\""+this.uid+"\"\n\t\t\t\t}\n\t\t\t},\n\t\t\"storageConfig\":{\n\t\t\t\"vendor\":"+this.vendor+",\n\t\t\t\"region\":"+this.region+",\n\t\t\t\"bucket\":\""+this.bucket+"\",\n\t\t\t\"accessKey\":\""+this.accessKey+"\",\n\"fileNamePrefix\": [\"recordings\",\"mp\",\""+this.uid+"\"],\n\t\t\t\"secretKey\":\""+this.secretKey+"\"\n\t\t}\t\n\t}\n} \n"
    
-    if(this.state.showButton === JSON.parse(this.teamKey)){
-      localStorage.setItem("chNametp",this.channelName )
-      localStorage.setItem("tpid", this.uid)
-      localStorage.setItem("resourceIdtp", resourceId)
-     }
+    // if(this.state.showButton === JSON.parse(this.teamKey)){
+    //   localStorage.setItem("chNametp",this.channelName )
+    //   localStorage.setItem("tpid", this.uid)
+    //   localStorage.setItem("resourceIdtp", resourceId)
+    //  }
    
   await axios({
       method: "POST",
@@ -999,20 +998,27 @@ else{
 };
 del = (e) => {
  
-    if(this.state.recordDisplay === true){
-      localStorage.removeItem("resourceIdtp");
-      localStorage.removeItem("sidtp");
-      localStorage.removeItem("chNametp");
-      localStorage.removeItem("tpid");
-        localStorage.removeItem("prevFiletp");
+    
+      // localStorage.removeItem("resourceId");
+      // localStorage.removeItem("sid");
+      // localStorage.removeItem("resourceIdtp");
+      // localStorage.removeItem("sidtp");
+      // localStorage.removeItem("chNametp");
+      // localStorage.removeItem("tpid");
+      //   localStorage.removeItem("prevFiletp");
     var serverResponse = this.state.data.serverResponse.fileList
     var completeRecording;
     if(this.tempArray === undefined || this.tempArray.length === 0){
         completeRecording =  serverResponse;
     }
     else if(this.tempArray != undefined || this.tempArray.length > 0){
+   if(this.state.showRecBtn === true){
+        completeRecording = this.tempArray 
+   }
+   else{
         completeRecording = this.tempArray + "," + serverResponse;
-    }
+   }
+  }
     else{
         completeRecording = serverResponse;
     }
@@ -1066,10 +1072,7 @@ del = (e) => {
      
    });
     }
-    else{
-      return false
-    }
-  }
+  
 
 
   render() {    

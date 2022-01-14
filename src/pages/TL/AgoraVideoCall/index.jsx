@@ -132,22 +132,22 @@ class AgoraCanvas extends React.Component {
   uid = Math.floor((Math.random() * 10000) + 1);
   channelName = this.props.channel
   tempArray = []
- vendor = 1
+  vendor = 1
  region = 14;
- bucket = "vride-multitvm";
- accessKey = "7ef0f888862841aab05f571c43931897"
- secretKey = "654d5bac9d564f8cba92f72d8c67acc2";
+ bucket  = "vride-multitvm";
+ accessKey = "AKIASTLI4S4OJH3WGMFM";
+ secretKey = "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";
 allrecording;
 remoteShare2 = false
 prevFile;
 
   componentWillMount() {
 //  let a = localStorage.getItem("chNametl");
-//  let bb = localStorage.getItem("tlid")
+//  let bb = localStorage.getItem("tlUid")
 //  let b = JSON.parse(bb)
 //  console.log("bbb", b)
 //  let c = localStorage.getItem("resourceIdtl")
-//  let d = localStorage.getItem("sidtl");
+//  let d = localStorage.getItem("sid");
 //  this.prevFile = localStorage.getItem("prevFiletl")
 //  console.log("ddd", b, c)
 //  if(a && b && c && d){
@@ -168,9 +168,9 @@ prevFile;
 //   .then(json => 
 //     this.setState({vedOffer : json}),
 //   localStorage.removeItem("resourceIdtl"),
-//   localStorage.removeItem("sidtl"),
+//   localStorage.removeItem("sid"),
 //   localStorage.removeItem("chNametl"),
-//   localStorage.removeItem("tlid")
+//   localStorage.removeItem("tlUid")
     
 //     ) 
 //     .catch((error) => {
@@ -704,7 +704,6 @@ if(item.player === undefined){
   };  
   
   handleExit = async() => {
-  
     if(this.state.clickDisable === false){
       this.setState({clickDisable : true})
      var resourceId = localStorage.getItem("resourceId");
@@ -734,8 +733,7 @@ if(item.player === undefined){
        });
     
     }
-  }
- 
+   }
 
    sharingScreen = (e) => {
     if(this.remoteShare2 === true && this.state.stateSharing === false){
@@ -820,9 +818,7 @@ if(item.player === undefined){
     stream.setVideoProfile(videoProfile);
     return stream;
   };
-  b = this.accessKey + ":" + this.secretKey;
-    bb = Buffer.from(this.b).toString('base64')
-   
+
 
   CreateS3Folder = (uid) =>{
     axios
@@ -831,9 +827,9 @@ if(item.player === undefined){
                 
             });
   }
- 
 
-encodedString = this.bb;
+
+encodedString = "N2VmMGY4ODg4NjI4NDFhYWIwNWY1NzFjNDM5MzE4OTc6NjU0ZDViYWM5ZDU2NGY4Y2JhOTJmNzJkOGM2N2FjYzI=";
 sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
@@ -841,15 +837,13 @@ sleep(ms) {
 //get recording status
 async GetRecordingStatus(json){
 
-  await this.sleep(2000); 
+  await this.sleep(3000); 
   var resourceId = json.data.resourceId;
   var sid = json.data.sid;
 
   localStorage.setItem("resourceId", resourceId);
   localStorage.setItem("sid", sid);
-if(this.state.showButton === JSON.parse(this.teamKey)){
-  localStorage.setItem("sidtl", sid)
-}
+
   fetch(`https://api.agora.io/v1/apps/${this.props.appId}/cloud_recording/resourceid/${resourceId}/sid/${sid}/mode/mix/query`, {
     method: "GET",
     headers: {
@@ -865,9 +859,7 @@ if(this.state.showButton === JSON.parse(this.teamKey)){
           data:response,
           recordDisplay:!this.state.recordDisplay
         })
-        if(this.state.showButton === JSON.parse(this.teamKey)){
-          localStorage.setItem("prevFiletl", response.serverResponse.fileList)
-        }
+       // localStorage.setItem("prevFiletl", response.serverResponse.fileList)
         setTimeout(() => {
           this.setState({clickDisable : false})
         }, 1000)
@@ -883,13 +875,13 @@ async startRecording(key){
     
     this.CreateS3Folder(JSON.stringify(this.uid));
 
-    var data =  "{\n\t\"cname\":\""+this.channelName+"\",\n\t\"uid\":\""+this.uid+"\",\n\t\"clientRequest\":{\n\t\t\"recordingConfig\":{\n\t\t\t\"maxIdleTime\":60,\n\t\t\t\"channelType\":1,\n\t\t\t\"transcodingConfig\":{\n\t\t\t\t\"width\":1280,\n\t\t\t\t\"height\":720,\n\t\t\t\t\"fps\":15,\n\t\t\t\t\"bitrate\":1230,\n\t\t\t\t\"mixedVideoLayout\":1,\n\t\t\t\t\"maxResolutionUid\":\""+this.uid+"\"\n\t\t\t\t}\n\t\t\t},\n\t\t\"storageConfig\":{\n\t\t\t\"vendor\":"+this.vendor+",\n\t\t\t\"region\":"+this.region+",\n\t\t\t\"bucket\":\""+this.bucket+"\",\n\t\t\t\"accessKey\":\""+this.accessKey+"\",\n\"fileNamePrefix\": [\"recordings\",\"mp\",\""+this.uid+"\"],\n\t\t\t\"secretKey\":\""+this.secretKey+"\"\n\t\t}\t\n\t}\n} \n"
-   if(this.state.showButton === JSON.parse(this.teamKey)){
-    localStorage.setItem("chNametl",this.channelName )
-    localStorage.setItem("tlid", this.uid)
-    localStorage.setItem("resourceIdtl", resourceId)
-   }
-   
+    var data =  "{\n\t\"cname\":\""+this.channelName+"\",\n\t\"uid\":\""+this.uid+"\",\n\t\"clientRequest\":{\n\t\t\"recordingConfig\":{\n\t\t\t\"maxIdleTime\":60,\n\t\t\t\"channelType\":1,\n\t\t\t\"transcodingConfig\":{\n\t\t\t\t\"width\":1280,\n\t\t\t\t\"height\":720,\n\t\t\t\t\"fps\":30,\n\t\t\t\t\"bitrate\":3420,\n\t\t\t\t\"mixedVideoLayout\":1,\n\t\t\t\t\"maxResolutionUid\":\""+this.uid+"\"\n\t\t\t\t}\n\t\t\t},\n\t\t\"storageConfig\":{\n\t\t\t\"vendor\":"+this.vendor+",\n\t\t\t\"region\":"+this.region+",\n\t\t\t\"bucket\":\""+this.bucket+"\",\n\t\t\t\"accessKey\":\""+this.accessKey+"\",\n\"fileNamePrefix\": [\"recordings\",\"mp\",\""+this.uid+"\"],\n\t\t\t\"secretKey\":\""+this.secretKey+"\"\n\t\t}\t\n\t}\n} \n"
+    // localStorage.setItem("recBoxtl", data)
+    // localStorage.setItem("chNametl",this.channelName )
+    // localStorage.setItem("tlUid", this.uid)
+    // localStorage.setItem("resourceIdtl", resourceId)
+    // console.log("data", data)
+
   await axios({
       method: "POST",
       headers: {
@@ -995,19 +987,25 @@ else{
   
 };
 del = (e) => {
-  if(this.state.recordDisplay === true){
-    localStorage.removeItem("resourceIdtl");
-  localStorage.removeItem("sidtl");
-  localStorage.removeItem("chNametl");
-  localStorage.removeItem("tlid");
-    localStorage.removeItem("prevFiletl");
+//  console.log("tempArray", this.tempArray)
+//  localStorage.removeItem("prevFiletl")
+//  localStorage.removeItem("sid");
+//  localStorage.removeItem("tlUid");
+//  localStorage.removeItem("resourceIdtl")
+//  localStorage.removeItem("resourceId");
+//  localStorage.removeItem("chNametl");
   var serverResponse = this.state.data.serverResponse.fileList
   var completeRecording;
   if(this.tempArray === undefined || this.tempArray.length === 0){
       completeRecording =  serverResponse;
   }
   else if(this.tempArray != undefined || this.tempArray.length > 0){
-      completeRecording = this.tempArray + "," + serverResponse;
+   if(this.state.showRecBtn === true){
+        completeRecording = this.tempArray 
+   }
+   else{
+        completeRecording = this.tempArray + "," + serverResponse;
+   }
   }
   else{
       completeRecording = serverResponse;
@@ -1061,10 +1059,7 @@ del = (e) => {
    }
    
  });
-  }
-  else{
-    return false;
-  }
+ 
 }
 
   render() {    

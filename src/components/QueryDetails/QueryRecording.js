@@ -186,33 +186,25 @@ const canBtn = {
             </Card>
             {isOpen === true ?
           
-                 
-          <div style={modalBox}>
-          <span style={canBtn} onClick= {() => setIsOpen(false)}> <CloseIcon color="red" /> </span>
-         {/* <ReactHlsPlayer
-     src={videoid}    autoPlay={false}
-     controls={true}
-     width="100%"
-     height="100%"
-     hlsConfig={{
-         maxLoadingDelay: 4,
-         minAutoBitrate: 0,
-         lowLatencyMode: true,
-       }}
-   /> */}
+          <div className="modalBox">
+          <div className="boxContainer">
+          <div className="canBtn"  title="cancel">
+              <h4>Recording Player</h4>
+              <CloseIcon  onClick= {() => setIsOpen(false)} id="myBtn"/> </div>
+         
 
-   <div style={{margin: "50px 0 0 0"}}>
-   <ReactPlayer
-     url={videoid}
-     controls={true}
-     playing={true}
-     width='100%'
-     height='100%'
-    />
-       </div>
+         <div className="my2">
+         <ReactPlayer
+           url={videoid}
+           controls={true}
+           playing={true}
+           width='100%'
+           height='100%'
+          />
+             </div>
+          </div>
      
-    </div>
-  : ""}
+    </div>  : ""}
            
            </div>
 

@@ -248,6 +248,7 @@ const amountStyle  = {
           </Row>
         </CardHeader>
         <CardBody>
+         <div className="queryBox">
           <table class="table table-bordered">
             <tbody>
               <tr>
@@ -346,6 +347,7 @@ const amountStyle  = {
 
           </table>
 
+         </div>
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="col-md-6">
               <div className="mb-3">

@@ -9,7 +9,7 @@ import RejectedModal from "./RejectModal";
 import Alerts from "../../../common/Alerts";
 import Swal from "sweetalert2";
 import DiscardReport from "./DiscardReport";
-
+import {Typography} from "@material-ui/core";
 
 const Schema = yup.object().shape({
   p_chat: yup.string().required("required discussion"),
@@ -115,14 +115,12 @@ function ViewReport({
     <div>
       <Modal isOpen={reportModal} toggle={ViewReport} size="lg" scrollable>
         <ModalHeader toggle={ViewReport}>
-          <div style={{display:"flex",justifyContent:"space-between",width:"55vw"}}>
-            <span>View All Reports</span>
-            <span>
-              <button class="btn btn-success" onClick={() => ViewDiscussionToggel()}>
+           <Typography variant="h6">
+           View All Report 
+           </Typography>
+           <button class="btn btn-success" onClick={() => ViewDiscussionToggel()}>
                 View Discussion
               </button>
-            </span>
-          </div>
         </ModalHeader>
         <ModalBody>
           <table class="table table-bordered">

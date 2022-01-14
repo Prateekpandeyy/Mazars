@@ -9,6 +9,7 @@ import classNames from "classnames";
 import { useHistory } from "react-router";
 import { parseInt } from "lodash";
 import Swal from "sweetalert2";
+import {Spinner} from "reactstrap";
 import './porposalStyle.css';
 
 function Tds (props)  {
@@ -35,6 +36,7 @@ function Tds (props)  {
    const [tdsR, setTdsR] = useState();
    const [disabled, setDisabled] = useState(false)
   const [description, setDiscription] = useState()
+  const [loading, setLoading] = useState(false);
 
 var tdsRate = 10;
 const percent = {
@@ -226,7 +228,7 @@ const sgstFun = (e) => {
  }
  }
     const onSubmit= (value) => {
-      
+        setLoading(true);
         let formData = new FormData();
        formData.append("tp_id", JSON.parse(userid));
          formData.append("id", props.id)
@@ -257,15 +259,24 @@ const sgstFun = (e) => {
             url : `${baseUrl}/tl/generateInvoive`
         })
         .then((res) => {
+            setLoading(false);
             if(res.data.code === 1){
               Swal.fire({
                 title : "success", 
                 html : "Invoice generated successfully",
                 icon : "success"
               })
+             
                 history.push("/taxprofessional/tpinvoice")
             }
-          
+           else{
+                 Swal.fire({
+                title : "error", 
+                html : "Something went wrong",
+                icon : "error"
+              })
+               
+              }
         })
       
     }
@@ -341,8 +352,7 @@ setServices2(k.service)
         style={{height : "33.5px"}}
           onChange = {(e) => serviceFun(e.target.value)}
           className={classNames("form-control", {
-            "is-invalid": errors.p_name,
-            
+            "is-invalid": errors.description,
           })}>
                <option value="">please select value</option>
           {services.map((i) => (
@@ -560,10 +570,18 @@ setServices2(k.service)
             </div>
         <ModalFooter>
        
-             <>
-             <button  type="submit" className="btn btn-success">submit</button>
+            <>
+             {
+                loading ?
+                  <Spinner color="primary" />
+                  :
+                 <>
+                  <button  type="submit" className="btn btn-success">submit</button>
           
-             <button  type="button" className="btn btn-danger mx-3" onClick={props.addTdsToggle}>Cancel</button> 
+             <button  type="button" className="btn btn-danger mx-3" onClick={props.addTdsToggle}>Cancel</button>
+                 </>
+              }
+             
              </>
         </ModalFooter>
           </div>
