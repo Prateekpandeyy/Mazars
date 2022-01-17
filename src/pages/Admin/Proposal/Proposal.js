@@ -157,19 +157,3 @@ function Proposal(props) {
 
 export default Proposal;
 
-
-// const allProposal = (data) => {
-//   setAllProposalCount(data);
-// };
-
-// const pendingProposal = (data) => {
-//   setPendingProposalCount(data);
-// };
-
-// const acceptedProposal = (data) => {
-//   setAcceptedProposalCount(data);
-// };
-
-// const declinedProposal = (data) => {
-//   setDeclinedProposalCount(data);
-// };

@@ -332,7 +332,7 @@ function InprogressAssignment() {
             setData={setAssignmentDisplay}
             getData={getAssignmentData}
             id={userId}
-            assignment="assignment"
+            assignment="assignmentInprogress"
             records={records}
             setRecords={setRecords}
           />

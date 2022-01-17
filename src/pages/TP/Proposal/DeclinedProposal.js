@@ -295,33 +295,7 @@ function DeclinedProposal() {
                                         </div>
                                 
                             </div>
-                            {
-                                    row.status == "Customer Declined; Proposal" ?
-                                        null :
-                            <div title="Send Message">
-                                            <Link
-                                                to={{
-                                                    pathname: `/taxprofessional/chatting/${row.id}`,
-                                                    obj: {
-                                                        message_type: "2",
-                                                        query_No: row.assign_no,
-                                                        query_id: row.id,
-                                                        routes: `/taxprofessional/proposal`
-                                                    }
-                                                }}
-                                            >
-                                                <i
-                                                    class="fa fa-comments-o"
-                                                    style={{
-                                                        fontSize: 16,
-                                                        cursor: "pointer",
-                                                        marginLeft: "8px",
-                                                        color: "blue"
-                                                    }}
-                                                ></i>
-                                            </Link>
-                                        </div>
-            }
+                            
                             <div title="View Discussion Message">
                                 <i
                                     class="fa fa-comments-o"

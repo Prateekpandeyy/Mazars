@@ -217,7 +217,7 @@ const retviewProposal = (e) => {
       },
     },
     {
-      dataField: "",
+      dataField: "ProposedAmount",
       text: "Proposed Amount",
       sort: true,
       style : {
@@ -225,6 +225,12 @@ const retviewProposal = (e) => {
          },
       headerStyle: () => {
         return { fontSize: "11px" };
+      },
+      sortFunc: (a, b, order, dataField) => {
+        if (order === 'asc') {
+          return b - a;
+        }
+        return a - b; // desc
       },
       formatter: function nameFormatter(cell, row){
        var nfObject = new Intl.NumberFormat('hi-IN')
@@ -245,6 +251,12 @@ const retviewProposal = (e) => {
       },
       headerStyle: () => {
         return { fontSize: "11px", color: "#21a3ce" };
+      },
+      sortFunc: (a, b, order, dataField) => {
+        if (order === 'asc') {
+          return b - a;
+        }
+        return a - b; // desc
       },
       formatter: function nameFormatter(cell, row){
         var nfObject = new Intl.NumberFormat('hi-IN')
@@ -371,7 +383,7 @@ const retviewProposal = (e) => {
           <div className="tableFixHead">
           <BootstrapTable
             bootstrap4
-            keyField="id"
+            keyField= {"assign_no"}
             data={proposalDisplay}
             columns={columns}
             classes="table-responsive"

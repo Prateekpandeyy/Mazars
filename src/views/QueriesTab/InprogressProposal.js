@@ -7,10 +7,7 @@ import {
   Card,
   CardHeader,
   CardBody,
-  CardTitle,
-  Row,
-  Col,
-  Table,
+ 
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import CustomerFilter from "../../components/Search-Filter/CustomerFilter";
@@ -20,6 +17,7 @@ import CommonServices from "../../common/common";
 import moment from "moment";
 import FeedbackIcon from '@material-ui/icons/Feedback';
 import './index.css';
+import DiscardReport from "../AssignmentTab/DiscardReport";
 function InprogressProposal() {
   const alert = useAlert();
   const userId = window.localStorage.getItem("userid");
@@ -137,8 +135,8 @@ function InprogressProposal() {
       },
     },
     {
-      text: "Expected Delivery Date",
-      dataField: "exp_delivery_date",
+      text: "Actual Delivery Date",
+      dataField: "final_date",
       sort: true,
       headerStyle: () => {
         return { fontSize: "12px" , width: "180px"};
@@ -153,7 +151,7 @@ function InprogressProposal() {
                 ? null
                 :
                 row.status_code >= "1" ?
-                  CommonServices.removeTime(row.exp_delivery_date)
+                  CommonServices.removeTime(row.final_date)
                   :
                   null
             }
@@ -205,7 +203,7 @@ function InprogressProposal() {
                                       
                     
                     
-                    {/* <div title="View Discussion Message">
+                     <div title="View Discussion Message">
                       <i
                         class="fa fa-comments-o"
                         style={{
@@ -215,7 +213,7 @@ function InprogressProposal() {
                         }}
                         onClick={() => ViewDiscussionToggel(row.assign_no)}
                       ></i>
-                    </div> */}
+                    </div> 
                   </div>
                   :
                   null
@@ -247,12 +245,18 @@ function InprogressProposal() {
           <div className="tableFixHead">
           <BootstrapTable
             bootstrap4
-            keyField="id"
+            keyField= {"assign_no"}
             data={query}
             columns={columns}
             rowIndex
             classes="table-responsive"
           />
+                              <DiscardReport
+                        ViewDiscussionToggel={ViewDiscussionToggel}
+                        ViewDiscussion={ViewDiscussion}
+                        report={assignNo}
+                        getData={getQueriesData}
+                    />
           </div>
         </CardBody>
       </Card>

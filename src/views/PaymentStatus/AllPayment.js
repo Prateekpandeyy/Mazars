@@ -358,7 +358,28 @@ function Paid() {
       formatter: function (cell, row) {
         return (
           <>
-          {row.paid_status === "2" ?  <div title="View Discussion Message" style={{pointer : "cursor", margin: "0 5px"}}>
+          {row.paid_status === "2" ?
+          <>
+       <div style={{display : "flex"}}>
+       <div
+                  style={{ cursor: "pointer", margin: "0 3px" }}
+                  title="Pay Amount"
+                 >
+                    <Link
+              to={{
+                pathname: `/customer/paydetails/${row.assign_id}`,
+                obj: {
+                  message_type: "5",
+                  query_No: row.assign_no,
+                  query_id: row.q_id,
+                  routes: `/customer/payment`
+                }
+              }}
+            >
+                                      <PaymentIcon color="primary" />
+                  </Link>
+                </div>
+            <div title="View Discussion Message" style={{pointer : "cursor", margin: "0 5px"}}>
             <i
               class="fa fa-comments-o"
               style={{
@@ -369,6 +390,8 @@ function Paid() {
               onClick={() => ViewDiscussionToggel(row.assign_no)}
             ></i>
           </div>
+       
+         </div>   </>
           :  <div style={{display : "flex"}}>
           <div>
             {
@@ -494,7 +517,7 @@ function Paid() {
             <div className="tableFixHead">
             <BootstrapTable
               bootstrap4
-              keyField="accepted_amount"
+              keyField={"assign_no"}
               data={payment}
               columns={columns}
               classes="table-responsivepayment"

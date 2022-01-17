@@ -393,7 +393,7 @@ function CompleteAssignment() {
             setData={setAssignmentDisplay}
             getData={getAssignmentData}
             id={userId}
-            assignment="assignment"
+            assignment="completeAssignment"
             records={records}
             setRecords={setRecords}
           />

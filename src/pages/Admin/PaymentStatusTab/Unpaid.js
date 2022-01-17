@@ -399,7 +399,7 @@ function Unpaid() {
                     <div className="tableFixHead">
                     <BootstrapTable
                         bootstrap4
-                        keyField="id"
+                        keyField= {"assign_no"}
                         data={payment}
                         columns={columns}
                         classes="table-responsivepayment"

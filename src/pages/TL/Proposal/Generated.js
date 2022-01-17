@@ -15,6 +15,7 @@ import Tds from "./Tds";
 import InvoiceFilter from "../../../components/Search-Filter/InvoiceFilter"
 import moment from "moment";
 import FileCopyIcon from '@mui/icons-material/FileCopy';
+
 const Generated = () => {
     var rowStyle2 = {}
     const userid = window.localStorage.getItem("tlkey");

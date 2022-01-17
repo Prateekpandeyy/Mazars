@@ -114,31 +114,41 @@ setTds(parseFloat(i.tds_amount))
   // Cgst Tax function
 const cgstFun = (e) => {
  
+  if(e.target.value.length < 8){
     setCgetRate(e.target.value);
-  let a = parseInt(basicAmount) + parseInt(pocketExp);
-   let cget = Math.round(a * e.target.value / 100)
-   setCgstTotal(parseInt(cget));
-   setGst(parseInt(Math.round(cget) + Math.round(igetTotal) + Math.round(sgetTotal)))
-   setTotal(parseInt(cget + igetTotal + sgetTotal + a))
-   setgrandTotal(parseInt(cget + sgetTotal + igetTotal + a - tds2))
-  
-
+    let a = parseInt(basicAmount) + parseInt(pocketExp);
+     let cget = Math.round(a * e.target.value / 100)
+     setCgstTotal(parseInt(cget));
+     setGst(parseInt(Math.round(cget) + Math.round(igetTotal) + Math.round(sgetTotal)))
+     setTotal(parseInt(cget + igetTotal + sgetTotal + a))
+     setgrandTotal(parseInt(cget + sgetTotal + igetTotal + a - tds2))
+    
+  }
+else{
+  return false;
+}
 }
 // Sgst tax function
 const sgstFun = (e) => {
  
+   if(e.target.value.length < 8){
     setSgetRate(e.target.value)
-  let a = parseInt(basicAmount) + parseInt(pocketExp);
-        let cget = Math.round(a * e.target.value / 100)
-        setSgstTotal(parseInt(cget))
-        setTotal(parseInt(cget + igetTotal + cgetTotal + a))
-        setGst(parseInt(Math.round(cget) + Math.round(igetTotal) + Math.round(cgetTotal)))
-        setgrandTotal(parseInt(cget + igetTotal + cgetTotal + a - tds2))
-  
+    let a = parseInt(basicAmount) + parseInt(pocketExp);
+          let cget = Math.round(a * e.target.value / 100)
+          setSgstTotal(parseInt(cget))
+          setTotal(parseInt(cget + igetTotal + cgetTotal + a))
+          setGst(parseInt(Math.round(cget) + Math.round(igetTotal) + Math.round(cgetTotal)))
+          setgrandTotal(parseInt(cget + igetTotal + cgetTotal + a - tds2))
+    
+   }
+   else{
+     return false;
+   }
  }
 // Igst tax function
  const igstFun = (e) => {
  
+   if(e.target.value.length < 8){
     setIgetRate(e.target.value)
     let a = parseInt(basicAmount) + parseInt(pocketExp);
         let cget = Math.round(a * e.target.value / 100) 
@@ -147,24 +157,33 @@ const sgstFun = (e) => {
            setTotal(parseInt(cget + sgetTotal + cgetTotal + a))
            setgrandTotal(parseInt(cget + cgetTotal + sgetTotal + a - tds2))
   
-        
+   
+   }
+   else{
+     return false;
+   }     
  }
  // Tds function
  const tdsFun = (e) => {
- if(e.target.value > 100){
-   setTdsR(100);
+ if(e.target.value.length < 8){
+  if(e.target.value > 100){
+    setTdsR(100);
+    let a = parseInt(basicAmount) + parseInt(pocketExp);
+    let cget = Math.round((a * 100 / 100))
+       setTds(cget)
+     setgrandTotal(parseInt(total) - parseInt(cget))
+   
+  }  
+  else{
+   setTdsR(e.target.value)
    let a = parseInt(basicAmount) + parseInt(pocketExp);
-   let cget = Math.round((a * 100 / 100))
-      setTds(cget)
-    setgrandTotal(parseInt(total) - parseInt(cget))
-  
- }  
+    let cget = Math.round((a * e.target.value / 100))
+       setTds(cget)
+     setgrandTotal(parseInt(total) - parseInt(cget))  
+  }
+ }
  else{
-  setTdsR(e.target.value)
-  let a = parseInt(basicAmount) + parseInt(pocketExp);
-   let cget = Math.round((a * e.target.value / 100))
-      setTds(cget)
-    setgrandTotal(parseInt(total) - parseInt(cget))  
+   return false;
  }
  } 
 

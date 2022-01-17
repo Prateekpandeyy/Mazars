@@ -206,7 +206,7 @@ function DeclinedProposal() {
             },
         },
         {
-            dataField: "",
+            dataField: "ProposedAmount",
             text: "Proposed Amount",
             sort: true,
             style: {
@@ -215,6 +215,12 @@ function DeclinedProposal() {
             headerStyle: () => {
                 return { fontSize: "11px" };
             },
+            sortFunc: (a, b, order, dataField) => {
+                if (order === 'asc') {
+                  return b - a;
+                }
+                return a - b; // desc
+              },
             formatter: function nameFormatter(cell, row){
                 var nfObject = new Intl.NumberFormat('hi-IN')
                  var x = row.ProposedAmount;
@@ -225,7 +231,7 @@ function DeclinedProposal() {
                }
         },
         {
-            dataField: "",
+            dataField: "accepted_amount",
             text: "Accepted Amount ",
             sort: true,
             style: {
@@ -235,6 +241,12 @@ function DeclinedProposal() {
             headerStyle: () => {
                 return { fontSize: "11px", color: "#21a3ce" };
             },
+            sortFunc: (a, b, order, dataField) => {
+                if (order === 'asc') {
+                  return b - a;
+                }
+                return a - b; // desc
+              },
             formatter: function nameFormatter(cell, row){
                 var nfObject = new Intl.NumberFormat('hi-IN')
                  var x = row.accepted_amount;
@@ -334,7 +346,7 @@ function DeclinedProposal() {
                 <div className="tableFixHead">
                     <BootstrapTable
                         bootstrap4
-                        keyField="id"
+                        keyField={"assign_no"}
                         data={proposal}
                         columns={columns}
                         rowIndex
