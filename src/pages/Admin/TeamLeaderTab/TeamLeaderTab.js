@@ -118,14 +118,12 @@ function TeamLeaderTab() {
       text: "Category",
       sort: true,
       style : {
-         
+         whiteSpace : "nowrap"
       },
       headerStyle: () => {
         return { fontSize: "12px"};
       },
-      style : {
-        wordBreak : "nowrap"
-        },
+    
      
       formatter: function nameFormatter(cell, row) {
         var digit2 = [];

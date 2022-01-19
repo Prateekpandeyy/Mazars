@@ -175,6 +175,7 @@ function ProposalComponent(props) {
                       history.push("/teamleader/proposal");
                     } else if (response.data.code === 0) {
                       setLoading(false)
+                      Alerts.ErrorNormal(`${response.data.result}`)
                     }
                   })
                   .catch((error) => {

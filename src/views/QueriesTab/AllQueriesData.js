@@ -193,9 +193,9 @@ function AllQueriesData() {
                                 :
                                 row.status_code != "3" && row.status_code > "1" ?
                                   <>
-                                  {row.final_date === null ?
-                                    CommonServices.removeTime(row.exp_delivery_date) : 
-                                    CommonServices.removeTime(row.final_date)}
+                                  {row.final_discussion === "completed" ?
+                                    CommonServices.removeTime(row.final_date) : 
+                                    CommonServices.removeTime(row.exp_delivery_date)}
                                   </>
                                     :
                                     null

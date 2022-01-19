@@ -153,6 +153,12 @@ const Invoice = () => {
             headerStyle: () => {
                 return { fontSize: "11px" , width : "200px"};
             },
+            sortFunc: (a, b, order, dataField) => {
+                if (order === 'asc') {
+                  return b - a;
+                }
+                return a - b; // desc
+              },
             formatter: function nameFormatter(cell, row){
                 var nfObject = new Intl.NumberFormat('hi-IN')
                  var x = row.paid_amount;
@@ -214,7 +220,7 @@ const Invoice = () => {
                 <div className="tableFixHead">
                     <BootstrapTable
                         bootstrap4
-                        keyField='id'
+                        keyField= {"id"}
                         data={proposal}
                         columns={columns}
                         rowIndex

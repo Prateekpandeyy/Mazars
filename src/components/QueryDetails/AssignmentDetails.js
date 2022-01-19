@@ -111,7 +111,7 @@ function AssignmentDetails({ p, finalDate, submitData, customerQuery , diaplayAs
                     <div>
                       {customerQuery == "customerQuery" && submitData[0].paid_status == "2" ? null :
                       <tr>
-                        <td>{i + 1}</td>
+                        <p style={{display : "flex", padding : "0 20px"}}>{i + 1}</p>
                         <td>
                           <a
                             href={`${ReportUrl}/${assingNo}/${p.document}`}
@@ -120,15 +120,16 @@ function AssignmentDetails({ p, finalDate, submitData, customerQuery , diaplayAs
                             <i className="fa fa-photo"></i> {p.document}
                           </a>
                         </td>
-                        <td style={{ marginLeft: "15px", color: "green" }}>
+                        <td style={{color: "green" }}>
                           {p.stages_type == 2 && p.revise_report == null && "Draft Report" || p.stages_type == 3 && p.revise_report == null && "Final Report" || p.revise_report != null && "Draft Report"}
                         </td>
-                        <td>
-                          {p.status == "3"
+                        {p.status == "3"
                             ?
+                        <td>
+                         
                             <p className="declined">Discarded</p>
-                            : null}
-                        </td>
+                            
+                        </td> : null}
                       </tr> }
                     </div>
                   ))

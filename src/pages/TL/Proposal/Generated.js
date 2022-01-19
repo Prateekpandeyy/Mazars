@@ -156,7 +156,7 @@ const Generated = () => {
         }, 
         {
             text: "Invoice amount",
-            dataField: "",
+            dataField: "invoice_amount",
             sort: true,
             style: {
                 fontSize: "11px",
@@ -164,6 +164,12 @@ const Generated = () => {
             headerStyle: () => {
                 return { fontSize: "11px" };
             },
+            sortFunc: (a, b, order, dataField) => {
+                if (order === 'asc') {
+                  return b - a;
+                }
+                return a - b; // desc
+              },
             formatter: function nameFormatter(cell, row){
                 var nfObject = new Intl.NumberFormat('hi-IN')
                  var x = row.invoice_amount;
@@ -183,6 +189,12 @@ const Generated = () => {
             headerStyle: () => {
                 return { fontSize: "11px" };
             },
+            sortFunc: (a, b, order, dataField) => {
+                if (order === 'asc') {
+                  return b - a;
+                }
+                return a - b; // desc
+              },
             formatter: function nameFormatter(cell, row){
                 var nfObject = new Intl.NumberFormat('hi-IN')
                  var x = row.tds_amount;
@@ -190,7 +202,7 @@ const Generated = () => {
                  return(
                      <>
                      {row.is_paid == "0" ?
-                     <p className="rightAli">0</p> :   <p className="rightAli">{nfObject.format(x)}</p>}
+                     <p className="rightAli"></p> :   <p className="rightAli">{nfObject.format(x)}</p>}
                      </>
                  
                  )
@@ -312,7 +324,7 @@ const Generated = () => {
                 <div className="tableFixHead">
                     <BootstrapTable
                         bootstrap4
-                        keyField="id"
+                        keyField= {"id"}
                         data={proposal}
                         columns={columns}
                         rowIndex

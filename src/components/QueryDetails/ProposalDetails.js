@@ -235,7 +235,7 @@ function ProposalDetails({
                        
                         <td>{payment_terms}</td>
                         <td style={{display : "flex", justifyContent : "center", border : "0px"}}>{no_of_installment}</td>
-                        <td align="right">{installAmount2(installment_amount)}</td>
+                        <td style={{textAlign : "right"}}>{installAmount2(installment_amount)}</td>
                         <td>{installAmount(due_date)}</td>
                         
                       </tr>

@@ -356,7 +356,7 @@ function AcceptedProposal() {
                     <TeamFilter
                         setData={setProposal}
                         getData={getProposalList}
-                        proposal="proposal"
+                        proposal="acceptedProposal"
                         setRecords={setRecords}
                         records={records}
                     />

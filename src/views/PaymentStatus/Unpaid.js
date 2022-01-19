@@ -401,11 +401,7 @@ function Paid() {
                 }
               }}
             >
-                               <i
-                    class="fa fa-credit-card"
-                    style={{ color: "green", fontSize: "16px" }}
-                   
-                  ></i>
+                               <PaymentIcon color="primary" />
                   </Link>    
                 </div>
                 :
