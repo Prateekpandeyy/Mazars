@@ -81,17 +81,18 @@ class AgoraCanvas extends React.Component {
   constructor(props) {
     super(props);
    
-    // window.onbeforeunload = (event) => {
-    //   this.stopRecording()
-    //   const e = event || window.event;
-    //   // Cancel the event
-    //   e.preventDefault();
-    //   if (e) {
+    window.onbeforeunload = (event) => {
+      console.log("closed browser")
+      this.stopRecording()
+      const e = event || window.event;
+      // Cancel the event
+      e.preventDefault();
+      if (e) {
        
-    //     e.returnValue = ''; // Legacy method for cross browser support
-    //   }
-    //   return ''; // Legacy method for cross browser support
-    //};
+        e.returnValue = ''; // Legacy method for cross browser support
+      }
+      return ''; // Legacy method for cross browser support
+    };
     this.tlName = Cookies.get("tlName")
     this.client = {};
     this.localStream = {};
@@ -844,7 +845,7 @@ async startRecording(key){
 
     var data =  "{\n\t\"cname\":\""+this.channelName+"\",\n\t\"uid\":\""+this.uid+"\",\n\t\"clientRequest\":{\n\t\t\"recordingConfig\":{\n\t\t\t\"maxIdleTime\":60,\n\t\t\t\"channelType\":1,\n\t\t\t\"transcodingConfig\":{\n\t\t\t\t\"width\":1280,\n\t\t\t\t\"height\":720,\n\t\t\t\t\"fps\":30,\n\t\t\t\t\"bitrate\":3420,\n\t\t\t\t\"mixedVideoLayout\":1,\n\t\t\t\t\"maxResolutionUid\":\""+this.uid+"\"\n\t\t\t\t}\n\t\t\t},\n\t\t\"storageConfig\":{\n\t\t\t\"vendor\":"+this.vendor+",\n\t\t\t\"region\":"+this.region+",\n\t\t\t\"bucket\":\""+this.bucket+"\",\n\t\t\t\"accessKey\":\""+this.accessKey+"\",\n\"fileNamePrefix\": [\"recordings\",\"mp\",\""+this.uid+"\"],\n\t\t\t\"secretKey\":\""+this.secretKey+"\"\n\t\t}\t\n\t}\n} \n"
  
-
+    localStorage.setItem("recDataadmin", data)
   await axios({
       method: "POST",
       headers: {
