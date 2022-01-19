@@ -21,7 +21,7 @@ import classNames from "classnames";
 import Swal from "sweetalert2";
 import Loader from "../../components/Loader/Loader";
 import RejectedModal22 from "./RejectedModal22";
-
+import {Markup} from "interweave";
 
 function ProposalView(props) {
   const { handleSubmit, register } = useForm();
@@ -248,6 +248,7 @@ const amountStyle  = {
           </Row>
         </CardHeader>
         <CardBody>
+         <div className="queryBox">
           <table class="table table-bordered">
             <tbody>
               <tr>
@@ -264,7 +265,7 @@ const amountStyle  = {
               </tr>
               <tr>
                 <th scope="row">Scope of Work</th>
-                <td>{description}</td>
+                <td><Markup content={description} /></td>
               </tr>
               <tr>
                 <th scope="row">Amount</th>
@@ -346,6 +347,7 @@ const amountStyle  = {
 
           </table>
 
+         </div>
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="col-md-6">
               <div className="mb-3">

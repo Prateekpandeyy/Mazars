@@ -356,7 +356,28 @@ rowStyle2 = (row, index) => {
                                onClick={() => ViewDiscussionToggel(row.assign_no)}
                            ></i>
                        </div>
-
+ <div title="Payment History"
+                         
+                           style={{ color: "green", fontSize: "16px", cursor: "pointer" }}
+                       >
+                          <Link
+              to={{
+                pathname: `/teamleader/paydetails/${row.assign_id}`,
+                obj: {
+                  message_type: "5",
+                  query_No: row.assign_no,
+                  query_id: row.assign_id,
+                  routes: `/teamleader/paymentstatus`
+                }
+              }}
+            >
+                            <i
+                                class="fa fa-credit-card"
+                                style={{ color: "green", fontSize: "16px" }}
+                              
+                            ></i>
+                            </Link>
+                       </div>
                    </div>
                        :  <div style={{ display: "flex", justifyContent: "space-between", width: "90px" }}>
 

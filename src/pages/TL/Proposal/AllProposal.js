@@ -11,6 +11,7 @@ import ChatHistory from "./ChatHistory";
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import DiscardReport from "../AssignmentTab/DiscardReport";
 import Tds from "./Tds";
+import CommonShowProposal from "../../../components/commonShowProposal/CommonShowProposal";
 
 
 
@@ -28,6 +29,8 @@ function AllProposal() {
     const [assignNo, setAssignNo] = useState('');  
     const [ViewDiscussion, setViewDiscussion] = useState(false);
     const [tdsForm , setTdsForm] = useState(false)
+    const [viewProposalModal, setViewProposalModal] = useState(false)
+    const [proposalId, setProposalId] = useState()
     const chatHandler = (key) => {
          setPaymentModal(!addPaymentModal);
         setId(key.assign_no);
@@ -36,6 +39,11 @@ function AllProposal() {
      
        setTdsForm(!tdsForm)
    }
+   const showProposalModal2 = (e) => {
+    console.log("eeee")
+    setViewProposalModal(!viewProposalModal);
+    setProposalId(e)
+  }
     const ViewDiscussionToggel = (key) => {
       
         setViewDiscussion(!ViewDiscussion);
@@ -216,7 +224,7 @@ function AllProposal() {
             },
         },
         {
-            dataField: "",
+            dataField: "ProposedAmount",
             text: "Proposed Amount",
             sort: true,
             style: {
@@ -225,6 +233,12 @@ function AllProposal() {
             headerStyle: () => {
                 return { fontSize: "11px" };
             },
+            sortFunc: (a, b, order, dataField) => {
+                if (order === 'asc') {
+                  return b - a;
+                }
+                return a - b; // desc
+              },
             formatter: function nameFormatter(cell, row){
                 var nfObject = new Intl.NumberFormat('hi-IN')
                  var x = row.ProposedAmount;
@@ -235,7 +249,7 @@ function AllProposal() {
                }
         },
         {
-            dataField: "",
+            dataField: "accepted_amount",
             text: "Accepted Amount ",
             sort: true,
             style: {
@@ -245,6 +259,12 @@ function AllProposal() {
             headerStyle: () => {
                 return { fontSize: "11px", color: "#21a3ce" };
             },
+            sortFunc: (a, b, order, dataField) => {
+                if (order === 'asc') {
+                  return b - a;
+                }
+                return a - b; // desc
+              },
             formatter: function nameFormatter(cell, row){
                 var nfObject = new Intl.NumberFormat('hi-IN')
                  var x = row.accepted_amount;
@@ -291,19 +311,15 @@ function AllProposal() {
 
                             {row.status_code > "3" || row.status_code == "10" ?
                             <>
-                                <div style={{ cursor: "pointer", marginLeft: "8px" }} title="View Proposal">
-
-                                    <a
-                                        href={`${baseUrl}/customers/dounloadpdf?id=${row.id}&viewpdf=1`}
-                                        target="_blank"
-                                    >
-                                        <i
-                                            class="fa fa-eye"
-                                            style={{ color: "green", fontSize: "16px" }}
-                                        />
-                                    </a>
-                                  
-                                </div>
+                                 <div style={{ cursor: "pointer", marginLeft : "8px" }} title="View Proposal">
+                
+                <i
+                  className="fa fa-eye"
+                  style={{ color: "green", fontSize: "16px" }}
+                  onClick={(e) => showProposalModal2(row.id)}
+                />
+              
+            </div>
                               
                                 </>
                                 :
@@ -373,7 +389,7 @@ function AllProposal() {
                 <div className="tableFixHead">
                     <BootstrapTable
                         bootstrap4
-                        keyField="id"
+                        keyField= {"assign_no"}
                         data={proposal}
                         columns={columns}
                         rowIndex
@@ -395,6 +411,12 @@ function AllProposal() {
                     tdsForm = {tdsForm}
                     addTdsToggle = {addTdsToggle}
                     />
+                     <CommonShowProposal
+          setViewProposalModal = {setViewProposalModal}
+          viewProposalModal = {viewProposalModal}
+          showProposalModal2 = {showProposalModal2}
+          proposalId = {proposalId}/>
+
                 </CardBody>
             </Card>
         </>

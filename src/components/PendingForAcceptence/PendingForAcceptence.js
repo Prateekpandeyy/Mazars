@@ -19,18 +19,25 @@ import AdminFilter from "../../components/Search-Filter/AdminFilter";
 import Records from "../../components/Records/Records";
 import DiscardReport from "../../pages/Admin/AssignmentTab/DiscardReport";
 import RetviewModal from "../../pages/Admin/AllProposalComponent/RetviewModal"
-
+import ShowProposal from "../../pages/Admin/AllProposalComponent/ShowProposal";
 function PendingForAcceptence({ pendingProposal }) {
   const [proposalDisplay, setProposalDisplay] = useState([]);
   const [records, setRecords] = useState([]);
   const [retview, setRetview] = useState(false)
   const [assignNo, setAssignNo] = useState('');
   const [ViewDiscussion, setViewDiscussion] = useState(false);
+  const [viewProposalModal, setViewProposalModal] = useState(false)
+  const [proposalId, setProposalId] = useState()
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key)
   }
 
+  const showProposalModal2 = (e) => {
+    console.log("eeee")
+    setViewProposalModal(!viewProposalModal);
+    setProposalId(e)
+  }
   useEffect(() => {
     getPendingAcceptedProposal();
   }, []);
@@ -205,6 +212,12 @@ function PendingForAcceptence({ pendingProposal }) {
       headerStyle: () => {
         return { fontSize: "11px" };
       },
+      sortFunc: (a, b, order, dataField) => {
+        if (order === 'asc') {
+          return b - a;
+        }
+        return a - b; // desc
+      },
       formatter: function nameFormatter(cell, row){
         var nfObject = new Intl.NumberFormat('hi-IN')
          var x = row.ProposedAmount;
@@ -225,6 +238,12 @@ function PendingForAcceptence({ pendingProposal }) {
       },
       headerStyle: () => {
         return { fontSize: "11px", color: "#21a3ce" };
+      },
+      sortFunc: (a, b, order, dataField) => {
+        if (order === 'asc') {
+          return b - a;
+        }
+        return a - b; // desc
       },
       formatter: function nameFormatter(cell, row){
         var nfObject = new Intl.NumberFormat('hi-IN')
@@ -261,17 +280,15 @@ function PendingForAcceptence({ pendingProposal }) {
 
 
               {row.statuscode > "3" ?
-                <div style={{ cursor: "pointer" }} title="View Proposal">
-                  <a
-                    href={`${baseUrl}/customers/dounloadpdf?id=${row.q_id}&viewpdf=1`}
-                    target="_blank"
-                  >
-                    <i
-                      className="fa fa-eye"
-                      style={{ color: "green", fontSize: "16px" }}
-                    />
-                  </a>
-                </div>
+                 <div style={{ cursor: "pointer" }} title="View Proposal">
+                
+                 <i
+                   className="fa fa-eye"
+                   style={{ color: "green", fontSize: "16px" }}
+                   onClick={(e) => showProposalModal2(row.q_id)}
+                 />
+               
+             </div>
                 :
                 null
               }
@@ -357,7 +374,7 @@ function PendingForAcceptence({ pendingProposal }) {
           <div className="tableFixHead">
           <BootstrapTable
             bootstrap4
-            keyField="id"
+            keyField= {"assign_no"}
             data={proposalDisplay}
             columns={columns}
             classes="table-responsive"
@@ -375,6 +392,11 @@ function PendingForAcceptence({ pendingProposal }) {
           getProposalData  ={ getPendingAcceptedProposal}
           assignNo = {assignNo}
          />
+         <ShowProposal 
+          setViewProposalModal = {setViewProposalModal}
+          viewProposalModal = {viewProposalModal}
+          showProposalModal2 = {showProposalModal2}
+          proposalId = {proposalId}/>
         </CardBody>
       </Card>
     </div>

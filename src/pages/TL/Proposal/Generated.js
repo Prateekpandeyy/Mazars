@@ -15,6 +15,7 @@ import Tds from "./Tds";
 import InvoiceFilter from "../../../components/Search-Filter/InvoiceFilter"
 import moment from "moment";
 import FileCopyIcon from '@mui/icons-material/FileCopy';
+
 const Generated = () => {
     var rowStyle2 = {}
     const userid = window.localStorage.getItem("tlkey");
@@ -115,9 +116,7 @@ const Generated = () => {
             sort: true,
             style: {
                 fontSize: "11px",
-                display : "flex",
-                justifyContent : "center",
-                border : "0px"
+                textAlign : "center"
             },
             headerStyle: () => {
                 return { fontSize: "11px" };
@@ -157,7 +156,7 @@ const Generated = () => {
         }, 
         {
             text: "Invoice amount",
-            dataField: "",
+            dataField: "invoice_amount",
             sort: true,
             style: {
                 fontSize: "11px",
@@ -165,6 +164,12 @@ const Generated = () => {
             headerStyle: () => {
                 return { fontSize: "11px" };
             },
+            sortFunc: (a, b, order, dataField) => {
+                if (order === 'asc') {
+                  return b - a;
+                }
+                return a - b; // desc
+              },
             formatter: function nameFormatter(cell, row){
                 var nfObject = new Intl.NumberFormat('hi-IN')
                  var x = row.invoice_amount;
@@ -184,6 +189,12 @@ const Generated = () => {
             headerStyle: () => {
                 return { fontSize: "11px" };
             },
+            sortFunc: (a, b, order, dataField) => {
+                if (order === 'asc') {
+                  return b - a;
+                }
+                return a - b; // desc
+              },
             formatter: function nameFormatter(cell, row){
                 var nfObject = new Intl.NumberFormat('hi-IN')
                  var x = row.tds_amount;
@@ -191,7 +202,7 @@ const Generated = () => {
                  return(
                      <>
                      {row.is_paid == "0" ?
-                     <p className="rightAli">0</p> :   <p className="rightAli">{nfObject.format(x)}</p>}
+                     <p className="rightAli"></p> :   <p className="rightAli">{nfObject.format(x)}</p>}
                      </>
                  
                  )
@@ -213,7 +224,7 @@ const Generated = () => {
                     <>
                     {row.is_paid == "0" ? <p>Unpaid</p> : 
                     <>
-                    {row.is_paid == "1" ? <p>Paid</p> : <p>Declined</p>}
+                    {row.is_paid == "1" ? <p>Paid</p> : <p style={{color : "red"}}>Declined</p>}
                     </>}
                     </>
                 )
@@ -249,8 +260,9 @@ const Generated = () => {
                         }
                           {row.is_paid == "0" 
                 ?   
+                <span title={row.paymenturl}>
                  <FileCopyIcon onClick={() => {copyFun(row.paymenturl)}} style={noPointer}/>
-                   
+                   </span>
               
                     : "" }
                         </div>
@@ -312,7 +324,7 @@ const Generated = () => {
                 <div className="tableFixHead">
                     <BootstrapTable
                         bootstrap4
-                        keyField="id"
+                        keyField= {"id"}
                         data={proposal}
                         columns={columns}
                         rowIndex

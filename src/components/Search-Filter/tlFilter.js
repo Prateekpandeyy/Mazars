@@ -204,12 +204,51 @@ function TeamFilter(props) {
     }
 
     if (InprogressProposal == "InprogressProposal") {
+    if(data.p_status.length > 0){
       axios
+      .get(
+        `${baseUrl}/tl/getProposalTl?id=${JSON.parse(
+          userid
+        )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
+        }&status=${data.p_status}&pcat_id=${selectedData}`
+      )
+      .then((res) => {
+       
+        if (res.data.code === 1) {
+          if (res.data.result) {
+            setData(res.data.result);
+            setRecords(res.data.result.length);
+          }
+        }
+      });
+    }
+    else{
+      axios
+      .get(
+        `${baseUrl}/tl/getProposalTl?id=${JSON.parse(
+          userid
+        )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
+        }&status=1&pcat_id=${selectedData}`
+      )
+      .then((res) => {
+       
+        if (res.data.code === 1) {
+          if (res.data.result) {
+            setData(res.data.result);
+            setRecords(res.data.result.length);
+          }
+        }
+      });
+    }
+    }
+    if (proposal === "acceptedProposal") {
+      
+        axios
         .get(
           `${baseUrl}/tl/getProposalTl?id=${JSON.parse(
             userid
           )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
-          }&status=${data.p_status}&pcat_id=${selectedData}`
+          }&status=2&pcat_id=${selectedData}`
         )
         .then((res) => {
          
@@ -220,8 +259,9 @@ function TeamFilter(props) {
             }
           }
         });
-    }
-
+      }
+      
+  
     if(proposal == "proposal"){
       axios
       .get(

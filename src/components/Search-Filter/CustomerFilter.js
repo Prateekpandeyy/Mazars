@@ -101,6 +101,7 @@ const [loading, setLoading] = useState(false)
           if (res.data.code === 1) {
             setLoading(false)
             if (res.data.result) {
+           
               setData(res.data.result);
               setRecords(res.data.result.length);
             }
@@ -112,26 +113,52 @@ const [loading, setLoading] = useState(false)
     }
 
     if (InprogressAllocation == "InprogressAllocation") {
+      console.log("done", data.p_status)
+      console.log("done")
+     if(data.p_status.length > 0){
       axios
-        .get(
-          `${baseUrl}/customers/incompleteAssignments?user=${JSON.parse(
-            id
-          )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
-          }&status=${data.p_status}&pcat_id=${selectedData}`
-        )
-        .then((res) => {
+      .get(
+        `${baseUrl}/customers/incompleteAssignments?user=${JSON.parse(
+          id
+        )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
+        }&status=${data.p_status}&pcat_id=${selectedData}`
+      )
+      .then((res) => {
 
-          if (res.data.code === 1) {
-            setLoading(false)
-            if (res.data.result) {
-              setData(res.data.result);
-              setRecords(res.data.result.length);
-            }
+        if (res.data.code === 1) {
+          setLoading(false)
+          if (res.data.result) {
+            setData(res.data.result);
+            setRecords(res.data.result.length);
           }
-        })
-        .catch((error) => {
-          ShowError.LoadingError(setLoading)
-         });
+        }
+      })
+      .catch((error) => {
+        ShowError.LoadingError(setLoading)
+       });
+     }
+     else{
+      axios
+      .get(
+        `${baseUrl}/customers/incompleteAssignments?user=${JSON.parse(
+          id
+        )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
+        }&status=1&pcat_id=${selectedData}`
+      )
+      .then((res) => {
+
+        if (res.data.code === 1) {
+          setLoading(false)
+          if (res.data.result) {
+            setData(res.data.result);
+            setRecords(res.data.result.length);
+          }
+        }
+      })
+      .catch((error) => {
+        ShowError.LoadingError(setLoading)
+       });
+     }
     }
 
     if (InprogressQueryProposal == "InprogressQueryProposal") {
@@ -296,6 +323,72 @@ const [loading, setLoading] = useState(false)
           ShowError.LoadingError(setLoading)
          });
     }
+    if (assignment == "assignmentInprogress") {
+      axios
+        .get(
+          `${baseUrl}/customers/completeAssignments?user=${JSON.parse(
+            id
+          )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
+          }&status=1&pcat_id=${selectedData}`
+        )
+        .then((res) => {
+       
+          if (res.data.code === 1) {
+            setLoading(false)
+            if (res.data.result) {
+              setData(res.data.result);
+              setRecords(res.data.result.length);
+            }
+          }
+        })
+        .catch((error) => {
+          ShowError.LoadingError(setLoading)
+         });
+    }
+    if (assignment == "completeAssignment") {
+      axios
+        .get(
+          `${baseUrl}/customers/completeAssignments?user=${JSON.parse(
+            id
+          )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
+          }&status=2&pcat_id=${selectedData}`
+        )
+        .then((res) => {
+       
+          if (res.data.code === 1) {
+            setLoading(false)
+            if (res.data.result) {
+              setData(res.data.result);
+              setRecords(res.data.result.length);
+            }
+          }
+        })
+        .catch((error) => {
+          ShowError.LoadingError(setLoading)
+         });
+    }
+    if (assignment == "declinedAssignment") {
+      axios
+        .get(
+          `${baseUrl}/customers/completeAssignments?user=${JSON.parse(
+            id
+          )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
+          }&status=3&pcat_id=${selectedData}`
+        )
+        .then((res) => {
+       
+          if (res.data.code === 1) {
+            setLoading(false)
+            if (res.data.result) {
+              setData(res.data.result);
+              setRecords(res.data.result.length);
+            }
+          }
+        })
+        .catch((error) => {
+          ShowError.LoadingError(setLoading)
+         });
+    }
 
     if (allPayment == "allPayment") {
       axios
@@ -319,7 +412,7 @@ const [loading, setLoading] = useState(false)
     if (unpaid == "unpaid") {
       axios
         .get(
-          `${baseUrl}/tl/getUploadedProposals?cid=${JSON.parse(id)}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=1&pcat_id=${selectedData}`
+          `${baseUrl}/tl/getUploadedProposals?cid=${JSON.parse(id)}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=2&pcat_id=${selectedData}`
         )
         .then((res) => {
         
@@ -338,7 +431,7 @@ const [loading, setLoading] = useState(false)
     if (paid == "paid") {
       axios
         .get(
-          `${baseUrl}/tl/getUploadedProposals?cid=${JSON.parse(id)}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=2&pcat_id=${selectedData}`
+          `${baseUrl}/tl/getUploadedProposals?cid=${JSON.parse(id)}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=1&pcat_id=${selectedData}`
         )
         .then((res) => {
       

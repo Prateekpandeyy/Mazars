@@ -388,11 +388,7 @@ function Unpaid() {
                           }
                         }}
                       >
-                                         <i
-                              class="fa fa-credit-card"
-                              style={{ color: "green", fontSize: "16px" }}
-                             
-                            ></i>
+                                         <PaymentIcon color="primary" />
                             </Link>    
                           </div>
                           :
@@ -464,7 +460,7 @@ function Unpaid() {
                         <div className="tableFixHead">
                         <BootstrapTable
                             bootstrap4
-                            keyField="id"
+                            keyField={"assign_no"}
                             data={payment}
                             columns={columns}
                             classes="table-responsive"

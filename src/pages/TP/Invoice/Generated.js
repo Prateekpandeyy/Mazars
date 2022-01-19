@@ -104,9 +104,7 @@ const Generated = () => {
             sort: true,
             style: {
                 fontSize: "11px",
-                display : "flex",
-                justifyContent : "center",
-                border : "0px"
+                textAlign : "center"
             },
             headerStyle: () => {
                 return { fontSize: "11px" , width :"150px"};
@@ -201,7 +199,7 @@ const Generated = () => {
                     <>
                     {row.is_paid == "0" ? <p>Unpaid</p> : 
                     <>
-                    {row.is_paid == "1" ? <p>Paid</p> : <p>Declined</p>}
+                    {row.is_paid == "1" ? <p>Paid</p> : <p style={{color : "red"}}>Declined</p>}
                     </>}
                     </>
                 )
@@ -238,7 +236,9 @@ const Generated = () => {
                         }
                          {row.is_paid == "0" 
                 ?   
+                 <span title={row.paymenturl}>
                  <FileCopyIcon onClick={() => {copyFun(row.paymenturl)}} style={noPointer}/>
+                   </span>  
                    
               
                     : "" }

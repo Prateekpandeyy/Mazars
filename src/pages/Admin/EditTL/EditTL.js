@@ -198,9 +198,7 @@ function EditTL() {
     }
     
     else {
-      console.log("dd", dd.direct)
-      console.log("dd", dd.indirect.length, dd.indirect)
-      console.log("ddd", parentCategoryName.includes("Indirect tax"))
+   
       setLoading(true)
       setDisplay(true)
       let formData = new FormData();
@@ -317,6 +315,7 @@ console.log("value", categeryList)
     subCategeryData(e)
     setCustcate2(e)
     setError2("")
+    console.log("ee", e)
     e.map((i) => {
       i.value < 9 ? dir.push(i.label) : indir.push(i.label)
     })
@@ -476,7 +475,7 @@ const defValue = () => {
   let e = 0;
  if(data4){
   const data55 = data4.split(",")
-
+console.log("done22")
 let b;
 if(value.pcat_value){
   b = value.pcat_value.split(",");
@@ -499,21 +498,29 @@ const defSubValue = () => {
    var d = 0;
    var ind = 9;
    let ppp;
-   let ccc =0;
+   let c =0;
  if(value.cat_value !== null){
   ppp = value.cat_value.split((","))
  
- 
+ let ooo = ppp.filter((i) => {
+   return i > 8
+ })
+ let nnn = ppp.filter((i) => {
+   return i < 9
+ })
+ console.log("nnn", nnn);
+ console.log("nnnn", ooo);
    var subcatgerydefvalue = JSON.parse(value.allcat_id);
    indirvalue = subcatgerydefvalue.indirect;
    dirvalue = subcatgerydefvalue.direct;
    if(Array.isArray(dirvalue)){
     dirvalue.map((i) => {
+     
       allsubcatvalue.push(i)
       kk.push(i)
     })
     dir1 = subcatgerydefvalue.direct.map((i => ({
-      "value" : String(ppp[d++]),
+      "value" : String(nnn[d++]),
       "label" : i
     }) ))
    }
@@ -526,7 +533,7 @@ const defSubValue = () => {
       kk.push(o)
     })
     dir2 = subcatgerydefvalue.indirect.map((i => ({
-      "value" : String(ppp[d++]),
+      "value" : String(ooo[c++]),
       "label" : i
     }) ))
   }
@@ -807,18 +814,14 @@ const checktlPost = (e) => {
                               },
                               multiValueLabel: (styles, { data }) => ({
                                 ...styles,
-                                color: data.value > 8
-                                    ? "green"
-                                    : "blue"
+                                color: data.value < 9
+                                    ? "blue"
+                                    : "green"
                               }),
                             }}
                           >
                           </Select>
-                        {/* <Select isMulti options={options2}
-                          onChange={subCategory} 
-                          value={subData}  
-                          defaultValue={subdefval}>
-                        </Select> */}
+                       
                       </div>
                     </div>
                   </div>
@@ -831,20 +834,10 @@ const checktlPost = (e) => {
                           className={classNames("form-control", {
                             "is-invalid": errors.email,
                           })}
-                        //  onBlur={emailValidation} 
-                       //  onChange={(e) => emailHandler(e)}
+                      
                           />
                         </Form.Item>
-                        {/* {
-                        wEmail ? <p className="declined">{wEmail}</p> : <>
-                          {valiEmail ?
-                            <p className="completed">
-                              {valiEmail}
-                            </p>
-                            :
-                            <p className="declined">{invalid}</p>}
-                        </>
-                      } */}
+                       
                       </div>
                     </div>
                   </div>

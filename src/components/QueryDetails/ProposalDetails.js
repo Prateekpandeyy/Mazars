@@ -3,6 +3,7 @@ import CommonServices from "../../common/common";
 import { baseUrl, baseUrl3 } from "../../config/config";
 import DescriptionOutlinedIcon from "@material-ui/icons/DescriptionOutlined";
 
+import { Markup } from 'interweave';
 function ProposalDetails({
   diaplayProposal,
   diaplayHistory,
@@ -133,7 +134,7 @@ function ProposalDetails({
         <table className="table table-bordered">
           <thead>
             <tr>
-              <th scope="col" style={{ width: "300px", overflow: "wrap" }}>Titles</th>
+              <th scope="col">Titles</th>
               <th scope="col">Data</th>
             </tr>
           </thead>
@@ -171,15 +172,15 @@ function ProposalDetails({
             </tr>
             <tr>
               <th scope="row">Scope of Work</th>
-              <td>{description}</td>
+              <td className="tableStyle"> <Markup content={description} /></td>
             </tr>
 
             <tr>
               <th scope="row">Amount</th>
               <td>
                 <tr>
-                  <th>Amount Type</th>
-                  <th>Price</th>
+                  <th style={{display : "flex", width : "50%"}}>Amount Type</th>
+                  <th style={{display : "flex", width : "50%"}}>Price</th>
                 </tr>
                 <tr>
                   <td>{CommonServices.capitalizeFirstLetter(amount_type)}</td>
@@ -234,7 +235,7 @@ function ProposalDetails({
                        
                         <td>{payment_terms}</td>
                         <td style={{display : "flex", justifyContent : "center", border : "0px"}}>{no_of_installment}</td>
-                        <td align="right">{installAmount2(installment_amount)}</td>
+                        <td style={{textAlign : "right"}}>{installAmount2(installment_amount)}</td>
                         <td>{installAmount(due_date)}</td>
                         
                       </tr>

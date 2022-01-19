@@ -118,14 +118,12 @@ function TeamLeaderTab() {
       text: "Category",
       sort: true,
       style : {
-         
+         whiteSpace : "nowrap"
       },
       headerStyle: () => {
         return { fontSize: "12px"};
       },
-      style : {
-        wordBreak : "nowrap"
-        },
+    
      
       formatter: function nameFormatter(cell, row) {
         var digit2 = [];
@@ -186,11 +184,26 @@ else{
 }
         return (
           <>
-           
-           {digit.direct === null ? "" :
+           {digit.direct.length > 0 && digit.indirect.length > 0 ?
+           <>
+            <div style={{display : "block", height : "65px"}}>
+            <p style={{ "color": "green", "display": "block" }}>{digit.indirect + pp}</p>
+            </div>
+            <div style={{display : "block", height : "70px"}}>
+            <p style={{ "color": "blue", "diplay": "block" }}>{digit.direct + k} </p> 
+            </div>
+           </> : <>
+           {digit.direct.length > 0 ?
+            <p style={{ "color": "blue", "diplay": "block" }}>{digit.direct + k} </p> :
+            <p style={{ "color": "green", "display": "block" }}>{digit.indirect + pp}</p>
+           }
+           </>
+           }
+          
+           {/* {digit.direct === null ? null :
             <p style={{ "color": "green", "display": "block" }}>{digit.indirect + pp}</p>}
-         {digit.indirect === null ? "" : 
-            <p style={{ "color": "blue", "diplay": "block" }}>{digit.direct + k} </p> }
+         {digit.indirect === null ? null : 
+            <p style={{ "color": "blue", "diplay": "block" }}>{digit.direct + k} </p> } */}
           </>
 
         )

@@ -106,9 +106,7 @@ const Generated = () => {
             sort: true,
             style: {
                 fontSize: "11px",
-                display : "flex",
-                justifyContent : "center",
-                border: "0px"
+             textAlign : "center"
             },
             headerStyle: () => {
                 return { fontSize: "11px" };
@@ -156,6 +154,12 @@ const Generated = () => {
             headerStyle: () => {
                 return { fontSize: "11px" };
             },
+            sortFunc: (a, b, order, dataField) => {
+                if (order === 'asc') {
+                  return b - a;
+                }
+                return a - b; // desc
+              },
             formatter: function nameFormatter(cell, row){
                 var nfObject = new Intl.NumberFormat('hi-IN')
                  var x = row.invoice_amount;
@@ -175,6 +179,12 @@ const Generated = () => {
             headerStyle: () => {
                 return { fontSize: "11px" };
             },
+            sortFunc: (a, b, order, dataField) => {
+                if (order === 'asc') {
+                  return b - a;
+                }
+                return a - b; // desc
+              },
             formatter: function nameFormatter(cell, row){
                 var nfObject = new Intl.NumberFormat('hi-IN')
                 var x = row.tds_amount;
@@ -204,7 +214,7 @@ const Generated = () => {
                     <>
                     {row.is_paid == "0" ? <p>Unpaid</p> : 
                     <>
-                    {row.is_paid == "1" ? <p>Paid</p> : <p>Declined</p>}
+                    {row.is_paid == "1" ? <p>Paid</p> : <p style={{color : "red"}}>Declined</p>}
                     </>}
                     </>
                 )
@@ -237,7 +247,7 @@ const Generated = () => {
                 ?   
                
                   
-                    <span title={copyTitle}>
+                    <span title={row.paymenturl}>
                     <FileCopyIcon onClick={() => {copyFun(row.paymenturl)}}  style={noPointer} />
                                    </span> 
                   
@@ -304,7 +314,7 @@ const Generated = () => {
                 <div className="tableFixHead">
                     <BootstrapTable
                         bootstrap4
-                        keyField="id"
+                        keyField= {"id"}
                         data={proposal}
                         columns={columns}
                         rowIndex

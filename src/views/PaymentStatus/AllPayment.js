@@ -358,97 +358,127 @@ function Paid() {
       formatter: function (cell, row) {
         return (
           <>
-           <div style={{display : "flex"}}>
-              <div>
-                {
-                  row.paid_status == "0" ?
-                    <div
-                      style={{ cursor: "pointer", margin: "0 3px" }}
-                      title="Pay Amount"
-                     >
-                        <Link
-                  to={{
-                    pathname: `/customer/paydetails/${row.assign_id}`,
-                    obj: {
-                      message_type: "5",
-                      query_No: row.assign_no,
-                      query_id: row.q_id,
-                      routes: `/customer/payment`
-                    }
-                  }}
-                >
-                                          <PaymentIcon color="primary" />
-                      </Link>
-                    </div>
-                    :
-                    null
+          {row.paid_status === "2" ?
+          <>
+       <div style={{display : "flex"}}>
+       <div
+                  style={{ cursor: "pointer", margin: "0 3px" }}
+                  title="Pay Amount"
+                 >
+                    <Link
+              to={{
+                pathname: `/customer/paydetails/${row.assign_id}`,
+                obj: {
+                  message_type: "5",
+                  query_No: row.assign_no,
+                  query_id: row.q_id,
+                  routes: `/customer/payment`
                 }
-              </div>
-
-              <div>
-                {
-                  row.paid_amount > 0 && row.paid_status > 0 ?
-                    <div style={{ cursor: "pointer", margin: "0 5px" }} title="Payment History">
-                   <Link
-                  to={{
-                    pathname: `/customer/paydetails/${row.assign_id}`,
-                    obj: {
-                      message_type: "5",
-                      query_No: row.assign_no,
-                      query_id: row.q_id,
-                      routes: `/customer/payment`
-                    }
-                  }}
-                >
-                                   <i
-                        class="fa fa-credit-card"
-                        style={{ color: "green", fontSize: "16px" }}
-                       
-                      ></i>
-                      </Link>    
-                    </div>
-                    :
-                    null
+              }}
+            >
+                                      <PaymentIcon color="primary" />
+                  </Link>
+                </div>
+            <div title="View Discussion Message" style={{pointer : "cursor", margin: "0 5px"}}>
+            <i
+              class="fa fa-comments-o"
+              style={{
+                fontSize: 16,
+                cursor: "pointer",
+                color: "orange"
+              }}
+              onClick={() => ViewDiscussionToggel(row.assign_no)}
+            ></i>
+          </div>
+       
+         </div>   </>
+          :  <div style={{display : "flex"}}>
+          <div>
+            {
+              row.paid_status == "0" ?
+                <div
+                  style={{ cursor: "pointer", margin: "0 3px" }}
+                  title="Pay Amount"
+                 >
+                    <Link
+              to={{
+                pathname: `/customer/paydetails/${row.assign_id}`,
+                obj: {
+                  message_type: "5",
+                  query_No: row.assign_no,
+                  query_id: row.q_id,
+                  routes: `/customer/payment`
                 }
-              </div>
+              }}
+            >
+                                      <PaymentIcon color="primary" />
+                  </Link>
+                </div>
+                :
+                null
+            }
+          </div>
+
+          <div>
+            {
+              row.paid_amount > 0 && row.paid_status > 0 ?
+                <div style={{ cursor: "pointer", margin: "0 5px" }} title="Payment History">
+               <Link
+              to={{
+                pathname: `/customer/paydetails/${row.assign_id}`,
+                obj: {
+                  message_type: "5",
+                  query_No: row.assign_no,
+                  query_id: row.q_id,
+                  routes: `/customer/payment`
+                }
+              }}
+            >
+                              <PaymentIcon color="primary" />
+                  </Link>    
+                </div>
+                :
+                null
+            }
+          </div>
 
 
-              <div title="Send Message" style={{pointer : "cursor", margin: "0 5px"}}>
-                <Link
-                  to={{
-                    pathname: `/customer/chatting/${row.assign_id}`,
-                    obj: {
-                      message_type: "5",
-                      query_No: row.assign_no,
-                      query_id: row.assign_id,
-                      routes: `/customer/paymentstatus`
-                    }
-                  }}
-                >
-                  <i
-                    class="fa fa-comments-o"
-                    style={{
-                      fontSize: 16,
-                      cursor: "pointer",
-                      color: "blue"
-                    }}
-                  ></i>
-                </Link>
-              </div>
-              <div title="View Discussion Message" style={{pointer : "cursor", margin: "0 5px"}}>
-                <i
-                  class="fa fa-comments-o"
-                  style={{
-                    fontSize: 16,
-                    cursor: "pointer",
-                    color: "orange"
-                  }}
-                  onClick={() => ViewDiscussionToggel(row.assign_no)}
-                ></i>
-              </div>
+          <div title="Send Message" style={{pointer : "cursor", margin: "0 5px"}}>
+            <Link
+              to={{
+                pathname: `/customer/chatting/${row.assign_id}`,
+                obj: {
+                  message_type: "5",
+                  query_No: row.assign_no,
+                  query_id: row.assign_id,
+                  routes: `/customer/paymentstatus`
+                }
+              }}
+            >
+              <i
+                class="fa fa-comments-o"
+                style={{
+                  fontSize: 16,
+                  cursor: "pointer",
+                  color: "blue"
+                }}
+              ></i>
+            </Link>
+          </div>
+          <div title="View Discussion Message" style={{pointer : "cursor", margin: "0 5px"}}>
+            <i
+              class="fa fa-comments-o"
+              style={{
+                fontSize: 16,
+                cursor: "pointer",
+                color: "orange"
+              }}
+              onClick={() => ViewDiscussionToggel(row.assign_no)}
+            ></i>
+          </div>
 
-              </div>
-          
+          </div>
+      }
           </>
         );
       },
@@ -483,7 +513,7 @@ function Paid() {
             <div className="tableFixHead">
             <BootstrapTable
               bootstrap4
-              keyField="accepted_amount"
+              keyField={"assign_no"}
               data={payment}
               columns={columns}
               classes="table-responsivepayment"

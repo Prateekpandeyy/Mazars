@@ -318,7 +318,7 @@ function CustomerDeclinedPayment() {
                         setData={setAssignmentDisplay}
                         getData={getAssignmentData}
                         id={userId}
-                        assignment="assignment"
+                        assignment="declinedAssignment"
                         records={records}
                         setRecords={setRecords}
                     />

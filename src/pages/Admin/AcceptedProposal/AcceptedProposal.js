@@ -18,7 +18,7 @@ import BootstrapTable from "react-bootstrap-table-next";
 import AdminFilter from "../../../components/Search-Filter/AdminFilter";
 import Records from "../../../components/Records/Records";
 import DiscardReport from "../AssignmentTab/DiscardReport";
-
+import ShowProposal from "../AllProposalComponent/ShowProposal";
 
 function AcceptedProposal({ acceptedProposal }) {
   const [proposalDisplay, setProposalDisplay] = useState([]);
@@ -26,9 +26,16 @@ function AcceptedProposal({ acceptedProposal }) {
 
   const [assignNo, setAssignNo] = useState('');
   const [ViewDiscussion, setViewDiscussion] = useState(false);
+  const [viewProposalModal, setViewProposalModal] = useState(false)
+  const [proposalId, setProposalId] = useState()
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key)
+  }
+  const showProposalModal2 = (e) => {
+    console.log("eeee")
+    setViewProposalModal(!viewProposalModal);
+    setProposalId(e)
   }
 
   useEffect(() => {
@@ -189,7 +196,7 @@ function AcceptedProposal({ acceptedProposal }) {
       },
     },
     {
-      dataField: "",
+      dataField: "ProposedAmount",
       text: "Proposed Amount",
       sort: true,
       style: {
@@ -197,6 +204,12 @@ function AcceptedProposal({ acceptedProposal }) {
       },
       headerStyle: () => {
         return { fontSize: "11px" };
+      },
+      sortFunc: (a, b, order, dataField) => {
+        if (order === 'asc') {
+          return b - a;
+        }
+        return a - b; // desc
       },
       formatter: function nameFormatter(cell, row){
         var nfObject = new Intl.NumberFormat('hi-IN')
@@ -208,7 +221,7 @@ function AcceptedProposal({ acceptedProposal }) {
        }
     },
     {
-      dataField: "",
+      dataField: "accepted_amount",
       text: "Accepted Amount ",
       sort: true,
       style: {
@@ -217,6 +230,12 @@ function AcceptedProposal({ acceptedProposal }) {
       },
       headerStyle: () => {
         return { fontSize: "11px", color: "#21a3ce" };
+      },
+      sortFunc: (a, b, order, dataField) => {
+        if (order === 'asc') {
+          return b - a;
+        }
+        return a - b; // desc
       },
       formatter: function nameFormatter(cell, row){
         var nfObject = new Intl.NumberFormat('hi-IN')
@@ -250,16 +269,14 @@ function AcceptedProposal({ acceptedProposal }) {
 
               {row.statuscode > "3" || row.statuscode == "10" ?
                 <div style={{ cursor: "pointer" }} title="View Proposal">
-                  <a
-                    href={`${baseUrl}/customers/dounloadpdf?id=${row.q_id}&viewpdf=1`}
-                    target="_blank"
-                  >
-                    <i
-                      className="fa fa-eye"
-                      style={{ color: "green", fontSize: "16px" }}
-                    />
-                  </a>
-                </div>
+                
+                <i
+                  className="fa fa-eye"
+                  style={{ color: "green", fontSize: "16px" }}
+                  onClick={(e) => showProposalModal2(row.q_id)}
+                />
+              
+            </div>
                 :
                 null
               }
@@ -328,7 +345,7 @@ function AcceptedProposal({ acceptedProposal }) {
           <div className="tableFixHead">
           <BootstrapTable
             bootstrap4
-            keyField="id"
+            keyField= {"assign_no"}
             data={proposalDisplay}
             columns={columns}
             classes="table-responsive"
@@ -340,6 +357,11 @@ function AcceptedProposal({ acceptedProposal }) {
             report={assignNo}
             getData={getAcceptedProposal}
           />
+           <ShowProposal 
+          setViewProposalModal = {setViewProposalModal}
+          viewProposalModal = {viewProposalModal}
+          showProposalModal2 = {showProposalModal2}
+          proposalId = {proposalId}/>
         </CardBody>
       </Card>
     </>

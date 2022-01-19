@@ -19,6 +19,9 @@ import Select from "react-select";
 import Alerts from "../../../common/Alerts";
 import Mandatory from "../../../components/Common/Mandatory";
 import { Spinner } from 'reactstrap';
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+
 
 
 
@@ -41,7 +44,7 @@ function ProposalComponent(props) {
   const [error, setError] = useState('');
   const [totalAmount, setTotalAmount] = useState(null);
   const [paymentError, setpaymentError] = useState();
-
+  const [det, addDet] = useState()
   const [date, setDate] = useState();
   const [amount, setAmount] = useState();
   
@@ -105,7 +108,7 @@ function ProposalComponent(props) {
     formData.append("id", JSON.parse(userid));
     formData.append("assign_id", assignId);
     formData.append("customer_id", custId);
-    formData.append("description", value.description);
+    formData.append("description", det);
     formData.append("amount_type", "fixed");
     formData.append("amount", value.p_fixed);
     formData.append("installment_amount", amount);
@@ -175,6 +178,8 @@ function ProposalComponent(props) {
                       history.push("/taxprofessional/proposal");
                     } else if (response.data.code === 0) {
                       setLoading(false)
+                      Alerts.ErrorNormal(`${response.data.result}`)
+                      
                     }
                   })
                   .catch((error) => {
@@ -325,16 +330,85 @@ function ProposalComponent(props) {
                 <p style={{ "color": "red" }}>{diserror}</p>
                 <div class="form-group">
                   <label>Scope of Work<span className="declined">*</span></label>
-                  <textarea
+                  <CKEditor
+                     editor={ ClassicEditor }
+                     config = {{
+
+                      highlight: {
+                        options: [
+                            {
+                                model: 'greenMarker',
+                                class: 'marker-green',
+                                title: 'Green marker',
+                                color: 'var(--ck-highlight-marker-green)',
+                                type: 'marker'
+                            },
+                            {
+                                model: 'redPen',
+                                class: 'pen-red',
+                                title: 'Red pen',
+                                color: 'var(--ck-highlight-pen-red)',
+                                type: 'pen'
+                            }
+                        ]
+                    },
+                      fontFamily: {
+                        options: [
+                            'default',
+                            'Ubuntu, Arial, sans-serif',
+                            'Ubuntu Mono, Courier New, Courier, monospace'
+                        ]
+                    },
+                    fontColor: {
+                      colors: [
+                          {
+                              color: 'hsl(0, 0%, 0%)',
+                              label: 'Black'
+                          },
+                          {
+                              color: 'hsl(0, 0%, 30%)',
+                              label: 'Dim grey'
+                          },
+                          {
+                              color: 'hsl(0, 0%, 60%)',
+                              label: 'Grey'
+                          },
+                          {
+                              color: 'hsl(0, 0%, 90%)',
+                              label: 'Light grey'
+                          },
+                          {
+                              color: 'hsl(0, 0%, 100%)',
+                              label: 'White',
+                              hasBorder: true
+                          },
+
+                          // ...
+                      ]
+                  },
+                    toolbar: [
+                   ' highlight', 'heading',  'bold', 'fontColor', 'italic',  'bulletedList', 'numberedList', 'undo', 'redo'
+                    ],
+                  
+                    }}
+                    
+                    
                     className={classNames("form-control", {
-                      "is-invalid": errors.description,
+                      "is-invalid": errors.p_fact,
                     })}
-                    id="textarea"
-                    rows="3"
-                    name="description"
-                    ref={register({ required: true })}
-                    placeholder="Enter Proposal Description"
-                  ></textarea>
+                    id="textarea22"
+                    rows="6"
+                   
+                
+                    onChange={ ( event, editor ) => {
+                      addDet(editor.getData());
+                     
+
+                    
+                  } }
+
+                ></CKEditor>
+                   
                 </div>
               </div>
 

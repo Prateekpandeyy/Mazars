@@ -264,7 +264,7 @@ function DeclinedQueries() {
           <div className="tableFixHead">
           <BootstrapTable
             bootstrap4
-            keyField="id"
+            keyField= {"assign_no"}
             data={query}
             columns={columns}
             rowIndex

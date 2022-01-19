@@ -1,28 +1,18 @@
 import React from "react";
 import { merge } from "lodash";
 import AgoraRTC from "agora-rtc-sdk";
-import MicNoneIcon from '@material-ui/icons/MicNone';
-import MicOffIcon from '@material-ui/icons/MicOff';
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import "./canvas.css";
 import "../../../assets/fonts/css/icons.css";
-import Swal from "sweetalert2";
-import CommonServices from "../../../common/common"
-import {
-  Modal,
-  ModalTitle,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  Button,
-} from "reactstrap";
 import RecordingModal from "./RecordingModal";
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import { green ,red} from '@material-ui/core/colors';
 import recImg from "../../../loader.gif";
-import Cookies from "js-cookie";
-
+import Cookies from "js-cookie"
+import Swal from "sweetalert2";
+import $ from 'jquery';
+import CommonServices from "../../../common/common"
 const tile_canvas = {
   "1": ["span 12/span 24"],
   "2": ["span 12/span 12/13/25", "span 12/span 12/13/13"],
@@ -90,7 +80,19 @@ const tile_canvas = {
 class AgoraCanvas extends React.Component {
   constructor(props) {
     super(props);
-    this.tpName = Cookies.get("tpName")
+   
+    // window.onbeforeunload = (event) => {
+    //   this.stopRecording()
+    //   const e = event || window.event;
+    //   // Cancel the event
+    //   e.preventDefault();
+    //   if (e) {
+       
+    //     e.returnValue = ''; // Legacy method for cross browser support
+    //   }
+    //   return ''; // Legacy method for cross browser support
+    //};
+    this.tlName = Cookies.get("tpName")
     this.client = {};
     this.localStream = {};
     this.shareClient = {};
@@ -111,12 +113,12 @@ class AgoraCanvas extends React.Component {
       showButton : '',
       clickDisable : false,
       addRemote : null,
-    
+     
       disabledVedio : false,
       getAdId :'', 
       vedTrack : null,
       shareValue : false,
-      vedOffer: ''
+      vedOffer : ''
     };
 
     this.toggleModal = this.toggleModal.bind(this);
@@ -126,98 +128,132 @@ class AgoraCanvas extends React.Component {
   // userId = window.localStorage.getItem("tlkey");
   allrecording = [];
   teamKey = window.localStorage.getItem("tpkey");
-  tpEmail2 = window.localStorage.getItem("tpEmail");
+  tlEmail2 = window.localStorage.getItem("tpEmail");
   uid = Math.floor((Math.random() * 10000) + 1);
   channelName = this.props.channel
   tempArray = []
- vendor = 1
+  vendor = 1
  region = 14;
- bucket = "vride-multitvm";
+ bucket  = "vride-multitvm";
  accessKey = "AKIASTLI4S4OJH3WGMFM";
  secretKey = "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";
 allrecording;
 remoteShare2 = false
-componentWillMount() {
-  let $ = this.props;
-  // init AgoraRTC local client
-  this.client = AgoraRTC.createClient({ mode: $.transcode });
-  let show;
-AgoraRTC.getDevices(function(dev){
-  var cameras = dev.filter((e) => {
-    return e.kind === "videoinput"
-  })
- 
-  if(cameras.length > 0){
-    show = true
-  }
-  else{
-    show = false
-  }
-})
-  this.client.init($.appId, () => {
-   
- 
-    this.client.join($.appId, $.channel, $.uid, (uid) => {
-     
-      var data_post_api = "https://virtualapi.multitvsolution.com/VstreamApi/index.php/api/vstream/userdata?channel_name="+this.channelName+"&rtm_id="+""+"&rtc_id="+uid+"&user_name="+this.tpName;
- axios.get(`${data_post_api}`).
- then((res) => {
-  
- })
+prevFile;
 
-this.setState({getAdId : uid})
-this.subscribeStreamEvents();
-
-if(show === true){
-  this.localStream = this.streamInit(uid, $.attendeeMode, $.videoProfile)
-  this.localStream.init(
-      
-    () => {
-      if ($.attendeeMode !== "audience") {
-        this.addStream(this.localStream, true);
-        
-
-        this.client.publish(this.localStream, (err) => {
-         
-        });
-      }
-      this.setState({ readyState: true });
-    },
-    (err) => {
+  componentWillMount() {
+//  let a = localStorage.getItem("chNametp");
+//  let bb = localStorage.getItem("tpid")
+//  let b = JSON.parse(bb)
+//  console.log("bbb", b)
+//  let c = localStorage.getItem("resourceIdtp")
+//  let d = localStorage.getItem("sidtp");
+//  this.prevFile = localStorage.getItem("prevFiletp")
+//  console.log("ddd", b, c)
+//  if(a && b && c && d){
+//   var data = JSON.stringify({
+//     "cname":a,
+//     "uid" : JSON.stringify(b),
+//     "clientRequest":{ }});
+//   axios({
+//     method: "POST",
+//     headers: {
+//       "content-type": "application/json;charset=utf-8",
+//       "authorization": "Basic "+this.encodedString,
+//       "cache-control": "no-cache",
+//     },
+//     url: `https://api.agora.io/v1/apps/${this.props.appId}/cloud_recording/resourceid/${c}/sid/${d}/mode/mix/stop`,
+//     data: data,
+//   })
+//   .then(json => 
+//     this.setState({vedOffer : json}),
+//   localStorage.removeItem("resourceIdtp"),
+//   localStorage.removeItem("sidtp"),
+//   localStorage.removeItem("chNametp"),
+//   localStorage.removeItem("tpid")
     
-      this.setState({ readyState: true });
+//     ) 
+//     .catch((error) => {
+      
+//     });
+//  }
+    let $ = this.props;
+    // init AgoraRTC local client
+    this.client = AgoraRTC.createClient({ mode: $.transcode });
+    let show;
+  AgoraRTC.getDevices(function(dev){
+    var cameras = dev.filter((e) => {
+      return e.kind === "videoinput"
+    })
+   
+    if(cameras.length > 0){
+      show = true
     }
-  );
-}
-else if(show === false){
-this.localStream = this.streamInit22(uid, $.attendeeMode, $.videoProfile);
-this.localStream.init(
-      
-  () => {
-    if ($.attendeeMode !== "audience") {
-      this.addStream(this.localStream, true);
-      
-
-      this.client.publish(this.localStream, (err) => {
+    else{
+      show = false
+    }
+  })
+    this.client.init($.appId, () => {
+     
+   
+      this.client.join($.appId, $.channel, $.uid, (uid) => {
        
-      });
-    }
-    this.setState({ readyState: true });
-  },
-  (err) => {
-  
-    this.setState({ readyState: true });
-  }
-);
-}
-      
-    });
-  });
-}
+        var data_post_api = "https://virtualapi.multitvsolution.com/VstreamApi/index.php/api/vstream/userdata?channel_name="+this.channelName+"&rtm_id="+""+"&rtc_id="+uid+"&user_name="+this.tlName;
+   axios.get(`${data_post_api}`).
+   then((res) => {
+    
+   })
 
- 
+   this.setState({getAdId : uid})
+   this.subscribeStreamEvents();
+   
+   if(show === true){
+     this.localStream = this.streamInit(uid, $.attendeeMode, $.videoProfile)
+     this.localStream.init(
+         
+       () => {
+         if ($.attendeeMode !== "audience") {
+           this.addStream(this.localStream, true);
+           
+   
+           this.client.publish(this.localStream, (err) => {
+            
+           });
+         }
+         this.setState({ readyState: true });
+       },
+       (err) => {
+       
+         this.setState({ readyState: true });
+       }
+     );
+   }
+   else if(show === false){
+   this.localStream = this.streamInit22(uid, $.attendeeMode, $.videoProfile);
+   this.localStream.init(
+         
+     () => {
+       if ($.attendeeMode !== "audience") {
+         this.addStream(this.localStream, true);
+         
+   
+         this.client.publish(this.localStream, (err) => {
+          
+         });
+       }
+       this.setState({ readyState: true });
+     },
+     (err) => {
+     
+       this.setState({ readyState: true });
+     }
+   );
+   }
+         
+       });
+     });
+   }
   componentDidMount() {
-    console.log("tpName", this.tpName)
     // add listener to control btn group
     let canvas = document.querySelector("#ag-canvas");
     let btnGroup = document.querySelector(".ag-btn-group");
@@ -232,19 +268,15 @@ this.localStream.init(
     });
     this.getSchedulerData()
     this.accuire();
+   
     // this.accuire()
   }
 
-
   getSchedulerData =() =>{
-    
-
-    axios
-    .get(`${baseUrl}/tl/videoScheduler?id=${this.props.id}`)
+       axios
+            .get(`${baseUrl}/tl/videoScheduler?id=${this.props.id}`)
             .then((res) => {
-              
-           
-               
+                       
               if (res.data.code === 1) {
                 if(res.data.result.items){
                  this.setState({
@@ -257,9 +289,10 @@ this.localStream.init(
            });
  }
 
+
  componentDidUpdate() {
   // rerendering
- 
+  
   let canvas = document.querySelector("#ag-canvas");
   // pip mode (can only use when less than 4 people in channel)
   if (this.state.displayMode === "pip") {
@@ -290,18 +323,16 @@ this.localStream.init(
      
        
      
-     
-       
-     
        
       if (index === no - 1) {
-        
+    
         //  document.getElementById("custName").value = "Lucky"
           dom.setAttribute("style", `grid-area: span 12/span 24/13/25`);
-        
-        } else {
          
+        } else {
+          
           let f = false;
+        
           dom.setAttribute(
             "style",
             `grid-area: span 3/span 4/${4 + 3 * index}/25;
@@ -309,6 +340,8 @@ this.localStream.init(
           );
           dom.addEventListener('click', function (e){
             if(f === false){
+             
+              
               f = true
               dom.setAttribute("style", `grid-area: span 14/span 24/13/25`);
               let list;
@@ -323,6 +356,7 @@ this.localStream.init(
             }
             else{
               f = false
+           
               dom.setAttribute(
                 "style",
                 `grid-area: span 3/span 4/${4 + 3 * index}/25;
@@ -336,7 +370,7 @@ this.localStream.init(
               list.map((item) => {
                 
                   item.style.display = "block"
-                }) 
+                })
             }
           })
         }
@@ -356,7 +390,7 @@ if(item.player === undefined){
     this.state.streamList.map((item, index) => {
       let id = item.getId();
       let dom = document.querySelector("#ag-item-" + id);
-     
+      
       let dd;
       if (!dom) {
         dom = document.createElement("section");
@@ -369,7 +403,8 @@ if(item.player === undefined){
         dd.setAttribute("class", txtColor)
       box22.appendChild(dd)
       item.play("ag-item-" + id);
-      } dom.setAttribute("style", `grid-area: ${tile_canvas[no][index]}`);
+      }
+      dom.setAttribute("style", `grid-area: ${tile_canvas[no][index]}`);
       dom.addEventListener('click', function (e){
           
         if(f === false){
@@ -415,26 +450,51 @@ if(item.player === undefined){
 
 
   componentWillUnmount() {
+   
     this.client && this.client.unpublish(this.localStream);
     this.localStream && this.localStream.close();
-    if (this.state.stateSharing) {
+  if (this.state.stateSharing) {
       this.shareClient && this.shareClient.unpublish(this.shareStream);
       this.shareStream && this.shareStream.close();
     }
     this.client &&
       this.client.leave(
         () => {
-        
+          
         },
         () => {
-         
-        }
+                  }
       );
   }
 
-  streamInit = (uid, attendeeMode, videoProfile, config) => {
-  
+  streamInit22 = (uid, attendeeMode, videoProfile, config) => {
     let defaultConfig = {
+       streamID: uid,
+       audio: true,
+       video: false,
+       screen: false,
+     };
+ 
+     switch (attendeeMode) {
+       case "audio-only":
+         defaultConfig.video = false;
+         break;
+       case "audience":
+         defaultConfig.video = false;
+         defaultConfig.audio = false;
+         break;
+       default:
+       case "video":
+         break;
+     }
+ 
+     let stream = AgoraRTC.createStream(merge(defaultConfig, config));
+     stream.setVideoProfile(videoProfile);
+     return stream;
+   };
+  
+  streamInit = (uid, attendeeMode, videoProfile, config) => {
+   let defaultConfig = {
       streamID: uid,
       audio: true,
       video: true,
@@ -458,57 +518,35 @@ if(item.player === undefined){
     stream.setVideoProfile(videoProfile);
     return stream;
   };
-
-  streamInit22 = (uid, attendeeMode, videoProfile, config) => {
-  
-    let defaultConfig = {
-      streamID: uid,
-      audio: true,
-      video: false,
-      screen: false,
-    };
-
-    switch (attendeeMode) {
-      case "audio-only":
-        defaultConfig.video = false;
-        break;
-      case "audience":
-        defaultConfig.video = false;
-        defaultConfig.audio = false;
-        break;
-      default:
-      case "video":
-        break;
-    }
-
-    let stream = AgoraRTC.createStream(merge(defaultConfig, config));
-    stream.setVideoProfile(videoProfile);
-    return stream;
-  };
+ 
   subscribeStreamEvents = () => {
     let rt = this;
     rt.client.on("stream-added", function (evt) {
       let stream = evt.stream;
-     
+      
       rt.client.subscribe(stream, function (err) {
-       
+        
       });
     });
 
     rt.client.on("peer-leave", function (evt) {
-   
+     console.log("two")
       rt.removeStream(evt.uid);
+      
     });
 
     rt.client.on("stream-subscribed", function (evt) {
-      let stream = evt.stream;
-    rt.addStream(stream);
-   
-      }.bind(this));
-  
+    
+        let stream = evt.stream;
+      
+         rt.addStream(stream)
+ 
+    
+       }.bind(this));
+
     rt.client.on("stream-removed", function (evt) {
       let stream = evt.stream;
-     
+     console.log("evt id", evt.uid)
       rt.removeStream(stream.getId());
     });
   };
@@ -528,27 +566,32 @@ if(item.player === undefined){
         });
       }
     });
-   
-    axios.get(`${baseUrl}/tl/setgetschedular?id=${this.props.id}&uid=${this.state.showButton}&chname=${this.channelName}`)
-    .then((res) => {
-      if(res.data.result.rtc_id == uid){
-        Swal.fire({
-          title: "success",
-          html : "Thank you for attending this meeting, this meeting is going to be ended by host",
-          icon : "success"
-        })
-          setTimeout((e) => {
-            window.location.hash = "/taxprofessional/schedule";
-          }, 3000)
-         
-         }
-        
-    })
+    // console.log("showButton", this.state.showButton)
+  
+      axios.get(`${baseUrl}/tl/setgetschedular?id=${this.props.id}&uid=${this.state.showButton}&chname=${this.channelName}`)
+      .then((res) => {
+        console.log("evt id", uid)
+        if(res.data.result.rtc_id == uid){
+          console.log("evt id", res.data.result.rtc_id)
+          Swal.fire({
+            title: "success",
+            html : "Thank you for attending this meeting, this meeting is going to be ended by host",
+            icon : "success"
+          })
+            setTimeout((e) => {
+              window.location.hash = "/taxprofessional/schedule";
+            }, 500)
+           
+           }
+          
+      })
      
-    if(this.remoteShare2 === true){
-      this.remoteShare2 = false
-    }  
-    
+      if(this.remoteShare2 === true){
+        this.remoteShare2 = false
+      } 
+      if(uid === this.state.getAdId){
+        this.del()
+      }
   };
 
   addStream = (stream, push = false) => {
@@ -575,6 +618,8 @@ if(item.player === undefined){
     axios.get(`${apiData}`)
     .then((res) =>{
      
+
+ 
       if(res.data.length > 0 && this.state.getAdId !== stream.getId()){
         var praticipantVar = document.getElementById("name" + stream.getId())
         praticipantVar.setAttribute("value", res.data[0].user_name);
@@ -588,13 +633,12 @@ if(item.player === undefined){
        
        else if(res.data.length == 0){
         this.remoteShare2 = true
-        var praticipantVar = document.getElementById("name" + stream.getId())
+         var praticipantVar = document.getElementById("name" + stream.getId())
         praticipantVar.setAttribute("value", "Sharing");
         praticipantVar.setAttribute("disabled", true)
         }
- 
-    })
-  };
+     })};
+
   handleCamera = (e) => {
     if(this.state.readyState === false){
 
@@ -612,12 +656,14 @@ if(item.player === undefined){
 
     }
     else{
-    e.currentTarget.classList.toggle("off");
-    this.localStream.isAudioOn()
-      ? this.localStream.disableAudio()
-      : this.localStream.enableAudio();
+      e.currentTarget.classList.toggle("off");
+      this.localStream.isAudioOn()
+        ? this.localStream.muteAudio()
+        : this.localStream.unmuteAudio();
+    }
+   
   };
-  }
+
   switchDisplay = (e) => {
     if (
       e.currentTarget.classList.contains("disabled") ||
@@ -655,12 +701,10 @@ if(item.player === undefined){
         item.style.display = "block";
       }
     });
-  };
-
+  };  
   
-
-
   handleExit = async() => {
+  if(this.state.readyState === true){
     if(this.state.clickDisable === false){
       this.setState({clickDisable : true})
      var resourceId = localStorage.getItem("resourceId");
@@ -690,10 +734,12 @@ if(item.player === undefined){
        });
     
     }
- 
-     
+  }
+  else {
+    return false;
+  }
    }
- 
+
    sharingScreen = (e) => {
     if(this.remoteShare2 === true && this.state.stateSharing === false){
       Swal.fire({
@@ -707,54 +753,56 @@ if(item.player === undefined){
        this.shareStream && this.shareStream.close();
        this.setState({stateSharing : false})
      }
-      else {
-    
-      this.setState({stateSharing : true})
-      let $ = this.props;
-      // init AgoraRTC local client
-      this.shareClient = AgoraRTC.createClient({ mode: $.transcode });
-
-      this.shareClient.init($.appId, () => {
-      
-
-        this.subscribeStreamEvents();
-        this.shareClient.join($.appId, $.channel, $.uid, (uid) => {
-          this.state.uid = uid;
-         
-          // create local stream
-          // It is not recommended to setState in function addStream
-          
-          this.shareStream = this.streamInitSharing(
-            uid,
-            $.attendeeMode,
-            $.videoProfile
-          );
-          this.shareStream.init(
-            () => {
-              if ($.attendeeMode !== "audience") {
-                this.addStream(this.shareStream, true);
-                this.shareClient.publish(this.shareStream, (err) => {
-                  
-                });
-              }
-              this.setState({ readyState: true });
-            },
-            (err) => {
-             
-              this.setState({ readyState: true });
-            }
-          );
-        });
-      });
-    }
-  };
+     else {
+       
+        this.setState({stateSharing : true})
+        let $ = this.props;
+        // init AgoraRTC local client
+        this.shareClient = AgoraRTC.createClient({ mode: $.transcode });
   
+        this.shareClient.init($.appId, () => {
+        
+  
+         //  this.subscribeStreamEvents();
+          this.shareClient.join($.appId, $.channel, $.uid, (uid) => {
+            this.state.uid = uid;
+           
+            // create local stream
+            // It is not recommended to setState in function addStream
+            
+            this.shareStream = this.streamInitSharing(
+              uid,
+              $.attendeeMode,
+              $.videoProfile
+            );
+            this.shareStream.init(
+              () => {
+                if ($.attendeeMode !== "audience") {
+                  this.addStream(this.shareStream, true);
+                  this.shareClient.publish(this.shareStream, (err) => {
+                    
+                  });
+                }
+                this.setState({ readyState: true });
+              },
+              (err) => {
+               
+                this.setState({ readyState: true });
+              }
+            );
+          });
+        });
+      }
+     };
+
+
   streamInitSharing = (uid, attendeeMode, videoProfile, config) => {
     let defaultConfig = {
       streamID: uid,
       audio: false,
       video: false,
       screen: true,
+      
       control : true
     };
  
@@ -778,27 +826,21 @@ if(item.player === undefined){
 
 
   CreateS3Folder = (uid) =>{
-   
     axios
             .get(`https://virtualapi.multitvsolution.com/s3/createMPObject.php?folder_id=${JSON.parse(uid)}`)
             .then((res) => {
-                 
+                
             });
   }
 
 
-encodedString = "ZDMzOTU3N2EyOTRjNDU4Yzg2ZDhhNzhiNDc0MTQxZmM6MWE2MWE0YmVmMjE0NGU3OGJlNmY2NzFkNWNmM2ZjMzI=";
-
-
-
-
+encodedString = "N2VmMGY4ODg4NjI4NDFhYWIwNWY1NzFjNDM5MzE4OTc6NjU0ZDViYWM5ZDU2NGY4Y2JhOTJmNzJkOGM2N2FjYzI=";
 sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 //get recording status
 async GetRecordingStatus(json){
-    
 
   await this.sleep(3000); 
   var resourceId = json.data.resourceId;
@@ -806,7 +848,9 @@ async GetRecordingStatus(json){
 
   localStorage.setItem("resourceId", resourceId);
   localStorage.setItem("sid", sid);
-
+// if(this.state.showButton === JSON.parse(this.teamKey)){
+//   localStorage.setItem("sidtp", sid)
+// }
   fetch(`https://api.agora.io/v1/apps/${this.props.appId}/cloud_recording/resourceid/${resourceId}/sid/${sid}/mode/mix/query`, {
     method: "GET",
     headers: {
@@ -822,13 +866,15 @@ async GetRecordingStatus(json){
           data:response,
           recordDisplay:!this.state.recordDisplay
         })
+        // if(this.state.showButton === JSON.parse(this.teamKey)){
+        //   localStorage.setItem("prevFiletp", response.serverResponse.fileList)
+        // }
         setTimeout(() => {
           this.setState({clickDisable : false})
         }, 1000)
     })
     .catch((error) => console.log(error));
 }
-
 
 
 //start recording
@@ -839,8 +885,13 @@ async startRecording(key){
     this.CreateS3Folder(JSON.stringify(this.uid));
 
     var data =  "{\n\t\"cname\":\""+this.channelName+"\",\n\t\"uid\":\""+this.uid+"\",\n\t\"clientRequest\":{\n\t\t\"recordingConfig\":{\n\t\t\t\"maxIdleTime\":60,\n\t\t\t\"channelType\":1,\n\t\t\t\"transcodingConfig\":{\n\t\t\t\t\"width\":1280,\n\t\t\t\t\"height\":720,\n\t\t\t\t\"fps\":30,\n\t\t\t\t\"bitrate\":3420,\n\t\t\t\t\"mixedVideoLayout\":1,\n\t\t\t\t\"maxResolutionUid\":\""+this.uid+"\"\n\t\t\t\t}\n\t\t\t},\n\t\t\"storageConfig\":{\n\t\t\t\"vendor\":"+this.vendor+",\n\t\t\t\"region\":"+this.region+",\n\t\t\t\"bucket\":\""+this.bucket+"\",\n\t\t\t\"accessKey\":\""+this.accessKey+"\",\n\"fileNamePrefix\": [\"recordings\",\"mp\",\""+this.uid+"\"],\n\t\t\t\"secretKey\":\""+this.secretKey+"\"\n\t\t}\t\n\t}\n} \n"
- 
-
+   
+    // if(this.state.showButton === JSON.parse(this.teamKey)){
+    //   localStorage.setItem("chNametp",this.channelName )
+    //   localStorage.setItem("tpid", this.uid)
+    //   localStorage.setItem("resourceIdtp", resourceId)
+    //  }
+   
   await axios({
       method: "POST",
       headers: {
@@ -853,13 +904,13 @@ async startRecording(key){
     })
     .then(json => this.GetRecordingStatus(json)) 
       .catch((error) => {
-       
+      
       });
   };
 
 
   //recording  acquire
-   accuire = () =>{
+  accuire = () =>{
    
     var data = "{\n  \"cname\": \"" + this.channelName + "\",\n  \"uid\": \"" + this.uid + "\",\n  \"clientRequest\":{\n  }\n}"
 
@@ -875,188 +926,208 @@ async startRecording(key){
     })
       .then(json => 
         this.startRecording(json)) 
-      
-      .catch((error) => {
      
+      .catch((error) => {
+       
       });
   };
-
- // Start recording button
- recStart = () => {
- 
-  this.localStream.enableVideo();
-  this.accuire();
-  this.setState({ showRecBtn: false  });
-  
-}
-
-//toggelStop
-toggleModal = (key) =>{
-
-this.setState({
-  showModal: !this.state.showModal,
-  recordDisplay:false
-})
-}
-
-
-//stop recording 
-stopRecording = () => {
-if(this.state.showRecBtn === true){
-
-this.del()
-}
-
-else if(this.state.showButton == JSON.parse(this.teamKey)){
-
-  if(resourceId === undefined){
-    var resourceId = localStorage.getItem("resourceId");
-  var sid = localStorage.getItem("sid");
+// Start recording button
+  recStart = () => {
+   
+    this.localStream.enableVideo();
+    this.accuire();
+    this.setState({ showRecBtn: false  });
+    
   }
 
-var data = JSON.stringify({
-  "cname":this.channelName,
-  "uid":JSON.stringify(this.uid),
-  "clientRequest":{ }});
-axios({
-  method: "POST",
-  headers: {
-    "content-type": "application/json;charset=utf-8",
-    "authorization": "Basic "+this.encodedString,
-    "cache-control": "no-cache",
-  },
-  url: `https://api.agora.io/v1/apps/${this.props.appId}/cloud_recording/resourceid/${resourceId}/sid/${sid}/mode/mix/stop`,
-  data: data,
-})
-.then(json => 
-  this.setState({vedOffer : json}),
+  //toggelStop
+  toggleModal = (key) =>{
+  
+  this.setState({
+    showModal: !this.state.showModal,
+    recordDisplay:false
+  })
+}
+ //stop recording 
+ stopRecording = () => {
+  if(this.state.showRecBtn === true){
+   
+    console.log("done3")
+this.del()
+
+  }
+  
+  else if(this.state.showButton == JSON.parse(this.teamKey)){
+ console.log("done33")
+    if(resourceId === undefined){
+      var resourceId = localStorage.getItem("resourceId");
+    var sid = localStorage.getItem("sid");
+    }
+
+  var data = JSON.stringify({
+    "cname":this.channelName,
+    "uid":JSON.stringify(this.uid),
+    "clientRequest":{ }});
+  axios({
+    method: "POST",
+    headers: {
+      "content-type": "application/json;charset=utf-8",
+      "authorization": "Basic "+this.encodedString,
+      "cache-control": "no-cache",
+    },
+    url: `https://api.agora.io/v1/apps/${this.props.appId}/cloud_recording/resourceid/${resourceId}/sid/${sid}/mode/mix/stop`,
+    data: data,
+  })
+  .then(json => 
+    this.setState({vedOffer : json}),
    
    
      this.setState({showRecBtn : true}),
-     this.localStream.disableVideo(),
-this.localStream.disableAudio(),
-  ) 
-  .catch((error) => {
     
-  });
+this.del(),
+    ) 
+    .catch((error) => {
+      
+    });
 }
 else{
-
-window.location.hash = "/taxprofessional/schedule";
+  console.log("done333")
+  window.location.hash = "/taxprofessional/schedule";
 }
-
+  
 };
 del = (e) => {
-  var serverResponse = this.state.data.serverResponse.fileList
-  var completeRecording;
-  if(this.tempArray === undefined || this.tempArray.length === 0){
-      completeRecording =  serverResponse;
-  }
-  else if(this.tempArray != undefined || this.tempArray.length > 0){
-      completeRecording = this.tempArray + "," + serverResponse;
-  }
-  else{
-      completeRecording = serverResponse;
-  }
-   let formData = new FormData()
-   formData.append("fileList", completeRecording)
-  formData.append("schedule_id", this.props.id);
-  formData.append("uid", JSON.parse(this.teamKey));
-  formData.append("assign_id", this.state.item.assign_no);
-  formData.append("participants", this.state.item.username);
  
-  Swal.fire({
-    title: "End this vedio call for everyone?",
-    // text: "End this vedio call for everyone",
-   type: "warning",
-   showCloseButton:true,
-   showCancelButton : true,
-   confirmButtonColor: "#3085d6",
-   cancelButtonColor: "#d33",
-   confirmButtonText: "End the call",
-   cancelButtonText : "Just leave the meeting"
-  }).then((result) => {
-   if (result.value) {
-    axios.get(`${baseUrl}/tl/setgetschedular?id=${this.props.id}&rtc_id=${this.state.getAdId}&uid=${JSON.parse(this.teamKey)}`)
-    .then((res) =>{
-      if(res){
-        this.client && this.client.unpublish(this.localStream);
-        this.localStream && this.localStream.close();
-        this.toggleModal()
-      }
-    })
-   
+    
+      // localStorage.removeItem("resourceId");
+      // localStorage.removeItem("sid");
+      // localStorage.removeItem("resourceIdtp");
+      // localStorage.removeItem("sidtp");
+      // localStorage.removeItem("chNametp");
+      // localStorage.removeItem("tpid");
+      //   localStorage.removeItem("prevFiletp");
+    var serverResponse = this.state.data.serverResponse.fileList
+    var completeRecording;
+    if(this.tempArray === undefined || this.tempArray.length === 0){
+        completeRecording =  serverResponse;
+    }
+    else if(this.tempArray != undefined || this.tempArray.length > 0){
+   if(this.state.showRecBtn === true){
+        completeRecording = this.tempArray 
    }
-   else if(result.dismiss === "backdrop" || result.dismiss === "close"){
-    return false
-  }
    else{
-    axios({
-      method: "POST",
-      url: `${baseUrl}/tl/callRecordingPost`,
-      data: formData,
-   })
-    window.location.hash = "/taxprofessional/schedule";
+        completeRecording = this.tempArray + "," + serverResponse;
    }
- });
-}
-
-render() {
-
- 
-  const style = {
-    display: "grid",
-    gridGap: "50px 26px",
-    alignItems: "center",
-    justifyItems: "center",
-    gridTemplateRows: "repeat(12, auto)",
-    gridTemplateColumns: "repeat(24, auto)",
-  };
-  
-  const videoControlBtn =
-    this.props.attendeeMode === "video" ? (
-      <span
-        onClick={this.handleCamera}
-        className="ag-btn videoControlBtn"
-        title="Enable/Disable Video"
-      >
-        <i className="ag-icon ag-icon-camera"></i>
-        <i className="ag-icon ag-icon-camera-off"></i>
-      </span>
-    ) : (
-      ""
-    );
-
-
-  const audioControlBtn =
-    this.props.attendeeMode !== "audience" ? (
-      <span
-        onClick={this.handleMic}
-        className="ag-btn audioControlBtn"
-        title="Enable/Disable Audio"
-      >
-        <i className="ag-icon ag-icon-mic"></i>
-        <i className="ag-icon ag-icon-mic-off"></i>
-      </span>
-    ) : (
-      ""
-    );
-
-  const switchDisplayBtn = (
-    <span
-      onClick={this.switchDisplay}
-      className={
-        this.state.streamList.length > 4
-          ? "ag-btn displayModeBtn disabled"
-          : "ag-btn displayModeBtn"
-      }
-      title="Switch Display Mode"
-    >
-      <i className="ag-icon ag-icon-switch-display"></i>
-    </span>
-  );
-
+  }
+    else{
+        completeRecording = serverResponse;
+    }
+    if(this.prevFile){
+      completeRecording = completeRecording + "," + this.prevFile
+    }
+     let formData = new FormData()
+     formData.append("fileList", completeRecording)
+    formData.append("schedule_id", this.props.id);
+    formData.append("uid", JSON.parse(this.teamKey));
+    formData.append("assign_id", this.state.item.assign_no);
+    formData.append("participants", this.state.item.username);
    
+    Swal.fire({
+      title: "End this vedio call for everyone?",
+      // text: "End this vedio call for everyone",
+       type: "warning",
+       showCloseButton:true,
+       showCancelButton : true,
+       confirmButtonColor: "#3085d6",
+       cancelButtonColor: "#d33",
+       confirmButtonText: "End the call",
+       cancelButtonText : "Just leave the meeting"
+      }).then((result) => {
+      
+       if (result.value) {
+        if (result.value) {
+          axios.get(`${baseUrl}/tl/setgetschedular?id=${this.props.id}&rtc_id=${this.state.getAdId}&uid=${JSON.parse(this.teamKey)}`)
+          .then((res) =>{
+            if(res){
+              this.client && this.client.unpublish(this.localStream);
+              this.localStream && this.localStream.close();
+              this.toggleModal()
+            }
+          })
+         
+         }
+       }
+       else if(result.dismiss === "backdrop" || result.dismiss === "close"){
+       
+       return false
+      }
+     else{
+      axios({
+        method: "POST",
+        url: `${baseUrl}/tl/callRecordingPost`,
+        data: formData,
+     })
+      window.location.hash = "/taxprofessional/schedule";
+     }
+     
+   });
+    }
+  
+
+
+  render() {    
+    const style = {
+      display: "grid",
+      gridGap: "50px 26px",
+      alignItems: "center",
+      justifyItems: "center",
+      gridTemplateRows: "repeat(12, auto)",
+      gridTemplateColumns: "repeat(24, auto)",
+    };
+    
+    const videoControlBtn =
+      this.props.attendeeMode === "video" ? (
+        <span
+          onClick={this.handleCamera}
+          className="ag-btn videoControlBtn"
+          title="Enable/Disable Video"
+        >
+          <i className="ag-icon ag-icon-camera"></i>
+          <i className="ag-icon ag-icon-camera-off"></i>
+        </span>
+      ) : (
+        ""
+      );
+
+
+    const audioControlBtn =
+      this.props.attendeeMode !== "audience" ? (
+        <span
+          onClick={this.handleMic}
+          className="ag-btn audioControlBtn"
+          title="Enable/Disable Audio"
+        >
+          <i className="ag-icon ag-icon-mic"></i>
+          <i className="ag-icon ag-icon-mic-off"></i>
+        </span>
+      ) : (
+        ""
+      );
+
+    const switchDisplayBtn = (
+      <span
+        onClick={this.switchDisplay}
+        className={
+          this.state.streamList.length > 4
+            ? "ag-btn displayModeBtn disabled"
+            : "ag-btn displayModeBtn"
+        }
+        title="Switch Display Mode"
+      >
+        <i className="ag-icon ag-icon-switch-display"></i>
+      </span>
+    );
+
     const hideRemoteBtn = (
       <span
         className={
@@ -1083,6 +1154,9 @@ render() {
      <i className="ag-icon ag-icon-leave"></i> 
       </span>
     );
+
+//recording btn on
+
     const recordingBtn = (
       <span
         onClick={this.recStart}
@@ -1117,9 +1191,7 @@ const recordingBtnOff = (
             
   </span>
 );
-
-
-    return (
+     return (
       <>
       <div id="ag-canvas" style={style}>   
         <div className="ag-btn-group">

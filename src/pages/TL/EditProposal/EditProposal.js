@@ -20,7 +20,9 @@ import Alerts from "../../../common/Alerts";
 import classNames from "classnames";
 import Mandatory from "../../../components/Common/Mandatory";
 import { Spinner } from 'reactstrap';
-
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { Markup } from 'interweave';
 
 function EditComponent() {
 
@@ -38,10 +40,11 @@ function EditComponent() {
   const[clearValue, setClearValue] = useState(true)
   const [payment, setPayment] = useState([]);
   const [installment, setInstallment] = useState([]);
-  const [error, setError] = useState('');
+  const [value2, setValue2] = useState('');
   const [diserror, setdiserror] = useState("")
   const history = useHistory();
   const { id } = useParams();
+
   const [dateError, setDateError] = useState(false)
   var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
   const [item] = useState(current_date);
@@ -78,7 +81,7 @@ function EditComponent() {
           due_date: res.data.result.due_date,
           payment : res.data.result.installment_amount
         });
-
+setValue2(res.data.result.description)
         var payment_terms = res.data.result.payment_terms
         var no_of_installment = res.data.result.no_of_installment
 
@@ -131,7 +134,7 @@ else{
     formData.append("id", JSON.parse(userid));
     formData.append("assign_id", id);
     formData.append("customer_id", custId);
-    formData.append("description", value.description);
+    formData.append("description", value2);
     formData.append("amount_type", "fixed");
     formData.append("amount", value.p_fixed);
     formData.append("installment_amount", amount);
@@ -278,7 +281,7 @@ else{
     setInstallment(key)
     setClearValue(false)
   }
-
+let a = <Markup content= {description} />
 
   return (
     <Layout TLDashboard="TLDashboard" TLuserId={userid}>
@@ -349,7 +352,86 @@ else{
 
                 <div class="form-group">
                   <label>Scope of Work<span className="declined">*</span></label>
-                  <textarea
+                  <CKEditor
+                     editor={ ClassicEditor }
+                     height = "400px"
+                     config = {{
+
+                      highlight: {
+                        options: [
+                            {
+                                model: 'greenMarker',
+                                class: 'marker-green',
+                                title: 'Green marker',
+                                color: 'var(--ck-highlight-marker-green)',
+                                type: 'marker'
+                            },
+                            {
+                                model: 'redPen',
+                                class: 'pen-red',
+                                title: 'Red pen',
+                                color: 'var(--ck-highlight-pen-red)',
+                                type: 'pen'
+                            }
+                        ]
+                    },
+                      fontFamily: {
+                        options: [
+                            'default',
+                            'Ubuntu, Arial, sans-serif',
+                            'Ubuntu Mono, Courier New, Courier, monospace'
+                        ]
+                    },
+                    fontColor: {
+                      colors: [
+                          {
+                              color: 'hsl(0, 0%, 0%)',
+                              label: 'Black'
+                          },
+                          {
+                              color: 'hsl(0, 0%, 30%)',
+                              label: 'Dim grey'
+                          },
+                          {
+                              color: 'hsl(0, 0%, 60%)',
+                              label: 'Grey'
+                          },
+                          {
+                              color: 'hsl(0, 0%, 90%)',
+                              label: 'Light grey'
+                          },
+                          {
+                              color: 'hsl(0, 0%, 100%)',
+                              label: 'White',
+                              hasBorder: true
+                          },
+
+                          // ...
+                      ]
+                  },
+                    toolbar: [
+                   ' highlight', 'heading',  'bold', 'fontColor', 'italic',  'bulletedList', 'numberedList', 'undo', 'redo'
+                    ],
+                  
+                    }}
+                    
+                    className={classNames("form-control", {
+                      "is-invalid": errors.description,
+                    })}
+                    id="textarea"
+                    rows="3"
+                    name="description"
+                    data={description}
+                    onChange={ ( event, editor ) => {
+                      setValue2(editor.getData())
+                      // setcustError("")
+                    
+                  } }
+                    //ref={register({ required: true })}
+                >
+                  
+                  </CKEditor>
+                  {/* <textarea
                     className={classNames("form-control", {
                       "is-invalid": errors.description,
                     })}
@@ -358,7 +440,7 @@ else{
                     name="description"
                     defaultValue={description}
                     ref={register({ required: true })}
-                  ></textarea>
+                  ></textarea> */}
                 </div>
               </div>
 

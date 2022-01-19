@@ -8,8 +8,7 @@ import "antd/dist/antd.css";
 import BootstrapTable from "react-bootstrap-table-next";
 import TeamFilter from "../../../components/Search-Filter/tlFilter";
 import DiscardReport from "../AssignmentTab/DiscardReport";
-
-
+import CommonShowProposal from "../../../components/commonShowProposal/CommonShowProposal";
 
 function AcceptedProposal() {
     const userid = window.localStorage.getItem("tlkey");
@@ -19,6 +18,8 @@ function AcceptedProposal() {
     const [id, setId] = useState(null);
 
     const [addPaymentModal, setPaymentModal] = useState(false);
+    const [viewProposalModal, setViewProposalModal] = useState(false)
+    const [proposalId, setProposalId] = useState()
     const chatHandler = (key) => {
     
         setPaymentModal(!addPaymentModal);
@@ -31,6 +32,11 @@ function AcceptedProposal() {
         setViewDiscussion(!ViewDiscussion);
         setAssignNo(key)
     }
+    const showProposalModal2 = (e) => {
+        console.log("eeee")
+        setViewProposalModal(!viewProposalModal);
+        setProposalId(e)
+      }
 
     useEffect(() => {
         getProposalList();
@@ -92,6 +98,7 @@ function AcceptedProposal() {
             headerStyle: () => {
                 return { fontSize: "11px" };
             },
+            
             formatter: function nameFormatter(cell, row) {
               
                 return (
@@ -196,7 +203,7 @@ function AcceptedProposal() {
             },
         },
         {
-            dataField: "",
+            dataField: "ProposedAmount",
             text: "Proposed Amount",
             sort: true,
             style: {
@@ -205,6 +212,12 @@ function AcceptedProposal() {
             headerStyle: () => {
                 return { fontSize: "11px" };
             },
+            sortFunc: (a, b, order, dataField) => {
+                if (order === 'asc') {
+                  return b - a;
+                }
+                return a - b; // desc
+              },
             formatter: function nameFormatter(cell, row){
                 var nfObject = new Intl.NumberFormat('hi-IN')
                  var x = row.ProposedAmount;
@@ -215,7 +228,7 @@ function AcceptedProposal() {
                }
         },
         {
-            dataField: "",
+            dataField: "accepted_amount",
             text: "Accepted Amount ",
             sort: true,
             style: {
@@ -225,6 +238,12 @@ function AcceptedProposal() {
             headerStyle: () => {
                 return { fontSize: "11px", color: "#21a3ce" };
             },
+            sortFunc: (a, b, order, dataField) => {
+                if (order === 'asc') {
+                  return b - a;
+                }
+                return a - b; // desc
+              },
             formatter: function nameFormatter(cell, row){
                 var nfObject = new Intl.NumberFormat('hi-IN')
                  var x = row.accepted_amount;
@@ -270,18 +289,15 @@ function AcceptedProposal() {
                             </div>
 
                             {row.status_code > "3" || row.status_code == "10" ?
-                                <div style={{ cursor: "pointer", marginLeft: "8px" }} title="View Proposal">
-
-                                    <a
-                                        href={`${baseUrl}/customers/dounloadpdf?id=${row.id}&viewpdf=1`}
-                                        target="_blank"
-                                    >
-                                        <i
-                                            class="fa fa-eye"
-                                            style={{ color: "green", fontSize: "16px" }}
-                                        />
-                                    </a>
-                                </div>
+                                  <div style={{ cursor: "pointer", marginLeft : "8px" }} title="View Proposal">
+                
+                                  <i
+                                    className="fa fa-eye"
+                                    style={{ color: "green", fontSize: "16px" }}
+                                    onClick={(e) => showProposalModal2(row.id)}
+                                  />
+                                
+                              </div>
                                 :
                                 null
                             }
@@ -340,7 +356,7 @@ function AcceptedProposal() {
                     <TeamFilter
                         setData={setProposal}
                         getData={getProposalList}
-                        proposal="proposal"
+                        proposal="acceptedProposal"
                         setRecords={setRecords}
                         records={records}
                     />
@@ -349,7 +365,7 @@ function AcceptedProposal() {
                 <div className="tableFixHead">
                     <BootstrapTable
                         bootstrap4
-                        keyField="id"
+                        keyField= {"assign_no"}
                         data={proposal}
                         columns={columns}
                         rowIndex
@@ -362,6 +378,11 @@ function AcceptedProposal() {
                         report={assignNo}
                         getData={getProposalList}
                     />
+                     <CommonShowProposal
+          setViewProposalModal = {setViewProposalModal}
+          viewProposalModal = {viewProposalModal}
+          showProposalModal2 = {showProposalModal2}
+          proposalId = {proposalId}/>
                 </CardBody>
             </Card>
         </>

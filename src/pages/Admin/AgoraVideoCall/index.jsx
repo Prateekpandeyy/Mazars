@@ -122,9 +122,9 @@ class AgoraCanvas extends React.Component {
   channelName = this.props.channel
   tempArray = []
   hostId ;
- vendor = 1
+  vendor = 1
  region = 14;
- bucket = "vride-multitvm";
+ bucket  = "vride-multitvm";
  accessKey = "AKIASTLI4S4OJH3WGMFM";
  secretKey = "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";
 allrecording;
@@ -261,7 +261,12 @@ this.localStream.init(
         let txtColor = "myPartName";
         let id = item.getId();
         let dom = document.querySelector("#ag-item-" + id);
-      
+        if(dom && this.state.disabledVedio === true){
+          dom.setAttribute("class", "ag-item2");
+        }
+        else if (dom && this.state.disabledVedio === false) {
+         dom.setAttribute("class", "ag-item");
+        }
         let dd;
         if (!dom) {
           dom = document.createElement("section");
@@ -296,7 +301,7 @@ this.localStream.init(
             dom.addEventListener('click', function (e){
               if(f === false){
                 f = true
-                dom.setAttribute("style", `grid-area: span 14/span 24/13/25`);
+                dom.setAttribute("style", `grid-area: span 12/span 24/13/25`);
                 let list;
              
                 list = Array.from(
@@ -342,7 +347,12 @@ this.localStream.init(
       this.state.streamList.map((item, index) => {
         let id = item.getId();
         let dom = document.querySelector("#ag-item-" + id);
-        
+        if(dom && this.state.disabledVedio === true){
+          dom.setAttribute("class", "ag-item2");
+        }
+        else if (dom && this.state.disabledVedio === false) {
+         dom.setAttribute("class", "ag-item");
+        }
         let dd;
         if (!dom) {
           dom = document.createElement("section");
@@ -361,7 +371,7 @@ this.localStream.init(
             
           if(f === false){
             f = true
-            dom.setAttribute("style", `grid-area: span 14/span 24/13/25`);
+            dom.setAttribute("style", `grid-area: span 12/span 24/13/25`);
             let list;
              
             list = Array.from(
@@ -402,7 +412,6 @@ this.localStream.init(
     componentWillUnmount() {
       this.client && this.client.unpublish(this.localStream);
       this.localStream && this.localStream.close();
-    
       if (this.state.stateSharing) {
         this.shareClient && this.shareClient.unpublish(this.shareStream);
         this.shareStream && this.shareStream.close();
@@ -551,7 +560,7 @@ this.localStream.init(
    
     this.hostId = stream.getId()
  
-  
+    console.log("two", push)
     let repeatition = this.state.streamList.some((item) => {
       return item.getId() === stream.getId();
     });
@@ -786,7 +795,7 @@ this.localStream.init(
   }
 
 
-encodedString = "ZDMzOTU3N2EyOTRjNDU4Yzg2ZDhhNzhiNDc0MTQxZmM6MWE2MWE0YmVmMjE0NGU3OGJlNmY2NzFkNWNmM2ZjMzI=";
+encodedString = "N2VmMGY4ODg4NjI4NDFhYWIwNWY1NzFjNDM5MzE4OTc6NjU0ZDViYWM5ZDU2NGY4Y2JhOTJmNzJkOGM2N2FjYzI=";
 sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
@@ -824,7 +833,12 @@ async startRecording(key){
     var resourceId = key.data.resourceId 
     this.CreateS3Folder(JSON.stringify(this.uid));
     var data =  "{\n\t\"cname\":\""+this.channelName+"\",\n\t\"uid\":\""+this.uid+"\",\n\t\"clientRequest\":{\n\t\t\"recordingConfig\":{\n\t\t\t\"maxIdleTime\":60,\n\t\t\t\"channelType\":1,\n\t\t\t\"transcodingConfig\":{\n\t\t\t\t\"width\":1280,\n\t\t\t\t\"height\":720,\n\t\t\t\t\"fps\":30,\n\t\t\t\t\"bitrate\":3420,\n\t\t\t\t\"mixedVideoLayout\":1,\n\t\t\t\t\"maxResolutionUid\":\""+this.uid+"\"\n\t\t\t\t}\n\t\t\t},\n\t\t\"storageConfig\":{\n\t\t\t\"vendor\":"+this.vendor+",\n\t\t\t\"region\":"+this.region+",\n\t\t\t\"bucket\":\""+this.bucket+"\",\n\t\t\t\"accessKey\":\""+this.accessKey+"\",\n\"fileNamePrefix\": [\"recordings\",\"mp\",\""+this.uid+"\"],\n\t\t\t\"secretKey\":\""+this.secretKey+"\"\n\t\t}\t\n\t}\n} \n"
+<<<<<<< HEAD
 localStorage.setItem("recData", data)
+=======
+
+
+>>>>>>> af40ef4c5ba04f91828d5ed217878265bc3d2f0b
     await axios({
       method: "POST",
       headers: {
@@ -863,6 +877,7 @@ localStorage.setItem("recData", data)
    
     this.localStream.enableVideo();
     this.accuire();
+   
     this.setState({ showRecBtn: false  });
     
   }
@@ -883,6 +898,7 @@ localStorage.setItem("recData", data)
 this.del();
   }
   else if(this.state.showButton == JSON.parse(this.teamKey)){
+    console.log("done222")
     if(resourceId === undefined){
       var resourceId = localStorage.getItem("resourceId");
     var sid = localStorage.getItem("sid");
@@ -918,18 +934,24 @@ else{
 };
 
  del = (e) => {
-  
-  var serverResponse = this.state.data.serverResponse.fileList
+ 
+    var serverResponse = this.state.data.serverResponse.fileList
   var completeRecording;
   if(this.tempArray === undefined || this.tempArray.length === 0){
       completeRecording =  serverResponse;
   }
   else if(this.tempArray != undefined || this.tempArray.length > 0){
-      completeRecording = this.tempArray + "," + serverResponse;
+   if(this.state.showRecBtn === true){
+        completeRecording = this.tempArray 
+   }
+   else{
+        completeRecording = this.tempArray + "," + serverResponse;
+   }
   }
   else{
       completeRecording = serverResponse;
   }
+ 
    let formData = new FormData()
    formData.append("fileList", completeRecording)
   formData.append("schedule_id", this.props.id);
@@ -975,7 +997,8 @@ else{
     window.location.hash = "/admin/schedule";
    }
  });
-}
+ }
+ 
   render() {
 
     

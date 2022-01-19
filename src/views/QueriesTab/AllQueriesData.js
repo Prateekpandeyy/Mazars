@@ -192,7 +192,11 @@ function AllQueriesData() {
                                 ? null
                                 :
                                 row.status_code != "3" && row.status_code > "1" ?
-                                    CommonServices.removeTime(row.exp_delivery_date)
+                                  <>
+                                  {row.final_discussion === "completed" ?
+                                    CommonServices.removeTime(row.final_date) : 
+                                    CommonServices.removeTime(row.exp_delivery_date)}
+                                  </>
                                     :
                                     null
                         }
@@ -459,7 +463,7 @@ function AllQueriesData() {
                                <div className="tableFixHead">
                                 <BootstrapTable
                                     bootstrap4
-                                    keyField="assign_no"
+                                    keyField= {"assign_no"}
                                     data={query}
                                     columns={columns}
                                   rowIndex

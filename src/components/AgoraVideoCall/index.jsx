@@ -131,57 +131,55 @@ AgoraRTC.getDevices(function(dev){
   
  })
 
-this.setState({getAdId : uid})
-this.subscribeStreamEvents();
-
-if(show === true){
-  this.localStream = this.streamInit(uid, $.attendeeMode, $.videoProfile)
-  this.localStream.init(
-      
-    () => {
-      if ($.attendeeMode !== "audience") {
-        this.addStream(this.localStream, true);
-        
-
-        this.client.publish(this.localStream, (err) => {
-         
-        });
-      }
-      this.setState({ readyState: true });
-    },
-    (err) => {
-    
-      this.setState({ readyState: true });
-    }
-  );
-}
-else if(show === false){
-this.localStream = this.streamInit22(uid, $.attendeeMode, $.videoProfile);
-this.localStream.init(
-      
-  () => {
-    if ($.attendeeMode !== "audience") {
-      this.addStream(this.localStream, true);
-      
-
-      this.client.publish(this.localStream, (err) => {
+ this.setState({getAdId : uid})
+ this.subscribeStreamEvents();
+ 
+ if(show === true){
+   this.localStream = this.streamInit(uid, $.attendeeMode, $.videoProfile)
+   this.localStream.init(
        
-      });
-    }
-    this.setState({ readyState: true });
-  },
-  (err) => {
-  
-    this.setState({ readyState: true });
-  }
-);
-}
-      
-    });
-  });
-}
-
-
+     () => {
+       if ($.attendeeMode !== "audience") {
+         this.addStream(this.localStream, true);
+         
+ 
+         this.client.publish(this.localStream, (err) => {
+          
+         });
+       }
+       this.setState({ readyState: true });
+     },
+     (err) => {
+     
+       this.setState({ readyState: true });
+     }
+   );
+ }
+ else if(show === false){
+ this.localStream = this.streamInit22(uid, $.attendeeMode, $.videoProfile);
+ this.localStream.init(
+       
+   () => {
+     if ($.attendeeMode !== "audience") {
+       this.addStream(this.localStream, true);
+       
+ 
+       this.client.publish(this.localStream, (err) => {
+        
+       });
+     }
+     this.setState({ readyState: true });
+   },
+   (err) => {
+   
+     this.setState({ readyState: true });
+   }
+ );
+ }
+       
+     });
+   });
+ }
   componentDidMount() {
     // add listener to control btn group
     let canvas = document.querySelector("#ag-canvas");
@@ -692,7 +690,7 @@ if(item.player === undefined){
 
 
 
-encodedString = "ZDMzOTU3N2EyOTRjNDU4Yzg2ZDhhNzhiNDc0MTQxZmM6MWE2MWE0YmVmMjE0NGU3OGJlNmY2NzFkNWNmM2ZjMzI=";
+encodedString = "N2VmMGY4ODg4NjI4NDFhYWIwNWY1NzFjNDM5MzE4OTc6NjU0ZDViYWM5ZDU2NGY4Y2JhOTJmNzJkOGM2N2FjYzI=";
 
   // recordStream = () => {
 

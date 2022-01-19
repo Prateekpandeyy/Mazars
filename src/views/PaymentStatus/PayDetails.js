@@ -93,6 +93,7 @@ setModal(!modal)
            
             style: {
                 fontSize: "11px",
+                textAlign : "center"
             },
             headerStyle: () => {
                 return { fontSize: "11px", width: "80px" };
@@ -145,6 +146,7 @@ setModal(!modal)
            
             style: {
                 fontSize: "11px",
+                textAlign : "right"
             },
             headerStyle: () => {
                 return { fontSize: "11px", width: "120px" };
@@ -161,8 +163,9 @@ setModal(!modal)
         {
             dataField : "tds_amount",
             text : "Tds Deducted",
-            style : {
-                fontSize : "11px"
+            style: {
+                fontSize: "11px",
+                textAlign : "right"
             }, 
             headerStyle : () => {
                 return { fontSize : "11px", width : "100px"}
@@ -183,8 +186,9 @@ setModal(!modal)
         {
             dataField : "amount",
             text : "Amount Paid",
-            style : {
-                fontSize : "11px"
+            style: {
+                fontSize: "11px",
+                textAlign : "right"
             }, 
             headerStyle : () => {
                 return { fontSize : "11px", width : "100px"}
@@ -261,7 +265,7 @@ setModal(!modal)
             {row.is_paid == "1" ?  <a href={row.receipt_url} target="_blank">Payment receipt</a> 
             : ""}
            {row.is_paid == "2" ? 
-           <p style={{fontWieght: "800", fontSize: "16px", padding: "5px", color : "red"}}>Declined</p>  : ""}
+           <p style={{ fontSize: "11px", padding: "5px", color : "red"}}>Declined</p>  : ""}
                 </>
                   
                    

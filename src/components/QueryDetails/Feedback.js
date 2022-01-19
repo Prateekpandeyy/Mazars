@@ -6,7 +6,7 @@ function Feedback({ feedback }) {
   
 
     return (
-        <div className="queryBox">
+        <div>
             <p
                 style={{
                     textAlign: "center",
@@ -29,7 +29,7 @@ function Feedback({ feedback }) {
                         feedback.map((p, i) => (
                             <tr>
                                 <td>{i + 1}</td>
-                                <td style={{ display: "flex" }}>
+                                <td style={{ display: "flex" , border : "0px"}}>
                                     <p>{CommonServices.removeTime(p.created)}</p>
                                     <p style={{ marginLeft: "15px" }}>{CommonServices.removeDate(p.created)}</p>
                                 </td>

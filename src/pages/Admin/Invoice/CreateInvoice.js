@@ -103,9 +103,7 @@ const CreateInvoice = () => {
             sort: true,
             style: {
                 fontSize: "11px",
-                display : "flex",
-                border: "0px",
-                justifyContent : "center"
+               textAlign : "center"
             },
             headerStyle: () => {
                 return { fontSize: "11px" , width: "200px"};
@@ -142,6 +140,12 @@ const CreateInvoice = () => {
             headerStyle: () => {
                 return { fontSize: "11px", width: "200px" };
             },
+            sortFunc: (a, b, order, dataField) => {
+                if (order === 'asc') {
+                  return b - a;
+                }
+                return a - b; // desc
+              },
             formatter: function nameFormatter(cell, row){
                 var nfObject = new Intl.NumberFormat('hi-IN')
                  var x = row.paid_amount;
@@ -177,7 +181,7 @@ const CreateInvoice = () => {
                 <div className="tableFixHead">
                     <BootstrapTable
                         bootstrap4
-                        keyField='id'
+                        keyField=  {"id"}
                         data={proposal}
                         columns={columns}
                         rowIndex
