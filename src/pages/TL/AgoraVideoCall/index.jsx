@@ -877,17 +877,12 @@ async startRecording(key){
     this.CreateS3Folder(JSON.stringify(this.uid));
 
     var data =  "{\n\t\"cname\":\""+this.channelName+"\",\n\t\"uid\":\""+this.uid+"\",\n\t\"clientRequest\":{\n\t\t\"recordingConfig\":{\n\t\t\t\"maxIdleTime\":60,\n\t\t\t\"channelType\":1,\n\t\t\t\"transcodingConfig\":{\n\t\t\t\t\"width\":1280,\n\t\t\t\t\"height\":720,\n\t\t\t\t\"fps\":30,\n\t\t\t\t\"bitrate\":3420,\n\t\t\t\t\"mixedVideoLayout\":1,\n\t\t\t\t\"maxResolutionUid\":\""+this.uid+"\"\n\t\t\t\t}\n\t\t\t},\n\t\t\"storageConfig\":{\n\t\t\t\"vendor\":"+this.vendor+",\n\t\t\t\"region\":"+this.region+",\n\t\t\t\"bucket\":\""+this.bucket+"\",\n\t\t\t\"accessKey\":\""+this.accessKey+"\",\n\"fileNamePrefix\": [\"recordings\",\"mp\",\""+this.uid+"\"],\n\t\t\t\"secretKey\":\""+this.secretKey+"\"\n\t\t}\t\n\t}\n} \n"
-<<<<<<< HEAD
- 
-    localStorage.setItem("recDataadmin", data)
-=======
     // localStorage.setItem("recBoxtl", data)
     // localStorage.setItem("chNametl",this.channelName )
     // localStorage.setItem("tlUid", this.uid)
     // localStorage.setItem("resourceIdtl", resourceId)
     // console.log("data", data)
 
->>>>>>> af40ef4c5ba04f91828d5ed217878265bc3d2f0b
   await axios({
       method: "POST",
       headers: {
