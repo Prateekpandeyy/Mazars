@@ -43,6 +43,7 @@ function AssignmentTab() {
   const [reportModal, setReportModal] = useState(false);
   const [assignNo, setAssignNo] = useState('');
   const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(false);
   var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
 
   const [item] = useState(current_date);
@@ -99,38 +100,43 @@ function AssignmentTab() {
 
   //handleCategory
   const handleCategory = (value) => {
-    
+    setError(false)
     setSelectedData(value);
     setStore2([]);
   };
 
   //handleSubCategory
   const handleSubCategory = (value) => {
-    
+    setError(false)
     setStore2(value);
   };
 
   //reset category
-  const resetCategory = () => {
- 
-    setSelectedData([]);
-    setStore2([]);
-    getAssignmentList();
-  };
+   const resetCategory = () => {
+  setSelectedData([]);
+  setStore2([]);
+  getAssignmentList()
+  setError(false)
+  setTax2([])
+   };
 
-  //reset date
-  const resetData = () => {
-  
-    reset();
-    setStatus([]);
-    setSelectedData([]);
-    setStore2([]);
-    getAssignmentList();
-  };
+
+//reset date
+const resetData = () => {
+
+  reset();
+   setTax2([])
+  setError(false)
+  setHide("")
+  setStatus([]);
+  setSelectedData([]);
+  setStore2([]);
+  getAssignmentList();
+};
 
   //assingmentStatus
   const assingmentStatus = (value) => {
-    
+    setError(false)
     setStatus(value);
   };
 
@@ -489,8 +495,9 @@ else{
     
 
   const onSubmit = (data) => {
-  
-    axios
+  if(hide == 1 || hide == 2){
+    if(status.length > 0){
+      axios
       .get(
         `${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(
           userid
@@ -508,7 +515,35 @@ else{
           }
         }
       });
-  };
+
+    }
+    else{
+      setError(true)
+      return false;
+    }
+  }
+  else{
+    axios
+    .get(
+      `${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(
+        userid
+      )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
+      }&assignment_status=${status}&stages_status=${data.p_status
+      }&pcat_id=${selectedData}`
+    )
+    .then((res) => {
+    
+      if (res.data.code === 1) {
+        if (res.data.result) {
+          setAssignment(res.data.result);
+          setRecords(res.data.result.length);
+
+        }
+      }
+    });
+
+  }
+     };
 
 
   const Reset = () => {
@@ -527,6 +562,8 @@ else{
 
 
   const disabledHandler = (e) => {
+    setStatus([])
+    setError(false)
     setHide(e.target.value);
   };
 
@@ -626,10 +663,9 @@ else{
               </div>
 
               {
-                hide == "3" ?
-                  ""
-                  :
-                  <div class="form-group mx-sm-1  mb-2">
+                hide == "1" || hide == "2" ?
+                 
+                  <div className="form-group mx-sm-1  mb-2">
                     <Select
                       mode="multiple"
                       style={{ width: 210 }}
@@ -638,6 +674,7 @@ else{
                       onChange={assingmentStatus}
                       value={status}
                       allowClear
+                      className={error ? "customError" : ""}
                     >
                       <Option value="Client_Discussion" label="Compilance">
                         <div className="demo-option-label-item">
@@ -645,7 +682,9 @@ else{
                         </div>
                       </Option>
                       <Option value="Draft_Report" label="Compilance">
-                        <div className="demo-option-label-item">Draft report</div>
+                        <div className="demo-option-label-item">
+                          Draft reports
+                        </div>
                       </Option>
                       <Option value="Final_Discussion" label="Compilance">
                         <div className="demo-option-label-item">
@@ -654,16 +693,16 @@ else{
                       </Option>
                       <Option value="Delivery_of_report" label="Compilance">
                         <div className="demo-option-label-item">
-                          Delivery of report
+                          Delivery of Final Reports
                         </div>
                       </Option>
                       <Option value="Completed" label="Compilance">
                         <div className="demo-option-label-item">Awaiting Completion</div>
                       </Option>
                     </Select>
-                  </div>
-              }
+                  </div> : ""
 
+              }
 
               <div class="form-group mx-sm-1  mb-2">
                 <label className="form-select form-control">Total Records : {records}</label>

@@ -244,6 +244,7 @@ const Invoice = () => {
                     billNo = {billNo}
                     id = {id2}
                     gstNo = {gstNo}
+                    tabIndex22 = {1}
                     />
                 </CardBody>
             </Card>

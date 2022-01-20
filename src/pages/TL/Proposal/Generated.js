@@ -284,8 +284,11 @@ const Generated = () => {
         // var warnformat = warningDate.format("YYYY-MM-DD");
         var aa = moment().toDate();
          var cc = moment(row.due_date).toDate();
-        
-         if(row.paid_status != "2" && row.is_paid != "1" && cc < aa){
+         if(row.is_paid === "2"){
+            style.backgroundColor = "#fff";
+            style.color = "#000"
+        }
+        else if(row.paid_status != "2" && row.is_paid != "1" && cc < aa){
             style.backgroundColor = "#bfdfd2";
           style.color = "#000111"
         }

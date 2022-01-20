@@ -115,7 +115,7 @@ setModal(!modal)
                 return(
                     <>
                     {row.invoice_generated == "0" ? "" : 
-                    <p>{row.billno}</p>}
+                    <p style={{fontSize : "11px"}}>{row.billno}</p>}
                     </>
                 )
             }
@@ -147,7 +147,7 @@ setModal(!modal)
             text: "Invoice Amount",
            
             style: {
-                fontSize: "11px",
+                fontSize: "11px", textAlign : "right"
             },
             headerStyle: () => {
                 return { fontSize: "11px", width: "120px" };
@@ -157,7 +157,7 @@ setModal(!modal)
             dataField : "tds_amount",
             text : "Tds Deducted",
             style : {
-                fontSize : "11px"
+                fontSize : "11px", textAlign : "right"
             }, 
             headerStyle : () => {
                 return { fontSize : "11px", width : "100px"}
@@ -175,7 +175,7 @@ setModal(!modal)
             dataField : "amount",
             text : "Amount Paid",
             style : {
-                fontSize : "11px"
+                fontSize : "11px", textAlign : "right"
             }, 
             headerStyle : () => {
                 return { fontSize : "11px", width : "100px"}

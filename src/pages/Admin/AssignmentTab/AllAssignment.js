@@ -38,7 +38,7 @@ function AssignmentComponent() {
   const [store2, setStore2] = useState([]);
   const [hide, setHide] = useState();
   const [report, setReport] = useState();
-
+  const [error, setError] = useState(false);
   var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
   
   const [item] = useState(current_date);
@@ -97,29 +97,35 @@ function AssignmentComponent() {
 
   //handleCategory
   const handleCategory = (value) => {
-  
+  setError(false)
     setSelectedData(value);
     setStore2([]);
   };
 
   //handleSubCategory
   const handleSubCategory = (value) => {
-  
+  setError(false)
     setStore2(value);
   };
 
   //reset category
   const resetCategory = () => {
+    console.log(error)
   
     setSelectedData([]);
     setStore2([]);
     getAssignmentData();
+    setError(false)
+    setTax2([])
   };
 
   //reset date
   const resetData = () => {
   
     reset();
+     setTax2([])
+    setError(false)
+    setHide("")
     setStatus([]);
     setSelectedData([]);
     setStore2([]);
@@ -128,7 +134,8 @@ function AssignmentComponent() {
 
   //assingmentStatus
   const assingmentStatus = (value) => {
-  
+  setError(false)
+ 
     setStatus(value);
   };
 
@@ -378,19 +385,42 @@ function AssignmentComponent() {
   }
   const onSubmit = (data) => {
    
+   if(hide == 1 || hide == 2){
+if(status.length > 0){
+  axios
+  .get(
+    `${baseUrl}/tl/getAssignments?cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&assignment_status=${status}&stages_status=${data.p_status}&pcat_id=${selectedData}`
+  )
+  .then((res) => {
+   
+    if (res.data.code === 1) {
+      if (res.data.result) {
+        setAssignmentDisplay(res.data.result);
+        setRecords(res.data.result.length);
+      }
+    }
+  });
+}
+else{
+setError(true)
+  return false
+}
+   }
+   else{
     axios
-      .get(
-        `${baseUrl}/tl/getAssignments?cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&assignment_status=${status}&stages_status=${data.p_status}&pcat_id=${selectedData}`
-      )
-      .then((res) => {
-       
-        if (res.data.code === 1) {
-          if (res.data.result) {
-            setAssignmentDisplay(res.data.result);
-            setRecords(res.data.result.length);
-          }
+    .get(
+      `${baseUrl}/tl/getAssignments?cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&assignment_status=${status}&stages_status=${data.p_status}&pcat_id=${selectedData}`
+    )
+    .then((res) => {
+     
+      if (res.data.code === 1) {
+        if (res.data.result) {
+          setAssignmentDisplay(res.data.result);
+          setRecords(res.data.result.length);
         }
-      });
+      }
+    });
+   }
   };
 
 
@@ -409,7 +439,9 @@ function AssignmentComponent() {
   };
 
   const disabledHandler = (e) => {
+    setStatus([])
     setHide(e.target.value);
+    setError(false)
   };
 
 
@@ -508,9 +540,8 @@ function AssignmentComponent() {
               </div>
 
               {
-                hide == "3" ?
-                  ""
-                  :
+                hide == "1" || hide == "2" ?
+                 
                   <div className="form-group mx-sm-1  mb-2">
                     <Select
                       mode="multiple"
@@ -520,6 +551,7 @@ function AssignmentComponent() {
                       onChange={assingmentStatus}
                       value={status}
                       allowClear
+                      className={error ? "customError" : ""}
                     >
                       <Option value="Client_Discussion" label="Compilance">
                         <div className="demo-option-label-item">
@@ -545,7 +577,7 @@ function AssignmentComponent() {
                         <div className="demo-option-label-item">Awaiting Completion</div>
                       </Option>
                     </Select>
-                  </div>
+                  </div> : ""
 
               }
 

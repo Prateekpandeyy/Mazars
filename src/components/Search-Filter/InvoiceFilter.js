@@ -121,12 +121,12 @@ const InvoiceFilter = (props) => {
                     style={{ height: "33px" }}
                     name="installment_no">
                       <option value="">Please select installment</option>
-                     <option value="1">1</option>
-                     <option value="2">2</option>
-                     <option value="3">3</option>
-                     <option value="4">4</option>
-                     <option value="5">5</option>
-                     <option value="6">6</option>
+                      <option value="0">Lumpsum</option>
+                     <option value="1">1st installment</option>
+                     <option value="2">2nd installment</option>
+                     <option value="3">3rd installment</option>
+                     <option value="4">4th installment</option>
+                    
                   </select>
                        </div>
                   <div className="col-md-7">
