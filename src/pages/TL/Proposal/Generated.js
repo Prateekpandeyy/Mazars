@@ -211,7 +211,7 @@ const Generated = () => {
         
         {
             text: "Status",
-            dataField: "",
+            dataField: "is_paid",
             sort: true,
             style: {
                 fontSize: "11px",
@@ -230,6 +230,7 @@ const Generated = () => {
                 )
             }
         }, 
+        
         {
             text: "Action",
             dataField: "",

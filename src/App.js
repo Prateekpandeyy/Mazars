@@ -36,7 +36,7 @@ import PaymentStatus from './views/PaymentStatus/PaymentStatus'
 import PaymentGateway from "./views/PaymentGateway.js/PaymentGateway";
 import ThankYou from "./views/ThankYou/Thankyou";
 import payDetails from "./views/PaymentStatus/PayDetails";
-
+import Contact from "./views/Contact/Contact";
 
 
 //admin routes
@@ -188,6 +188,7 @@ function App() {
             <PrivateRouteUser exact path="/customer/payment" component={PaymentGateway} />
             <PrivateRouteUser exact path="/customer/thankyou" component={ThankYou} />  
             <PrivateRouteUser exact path="/customer/paydetails/:id" component={payDetails} />
+            <PrivateRouteUser exact path = "/customer/contact" component = {Contact} />
             <PublicRouteAdmin exact path="/admin/start" component={AdminStart} />
             <PublicRouteAdmin exact path="/admin/login" component={AdminLogin} />
             <PublicRouteAdmin exact path="/admin/forget-password" component={AdminForgetPassword} />

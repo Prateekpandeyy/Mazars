@@ -160,7 +160,7 @@ function ProposalView(props) {
 const amountStyle  = {
   display : "block",
   textAlign : "right",
-  marginRight : "50px"
+ 
 }
   const installAmount = (data) => {
     var item = data.split(',')
@@ -270,13 +270,13 @@ const amountStyle  = {
               <tr>
                 <th scope="row">Amount</th>
                 <td>
-                  <tr>
-                    <th>Amount Type</th>
-                    <th>Price</th>
+                  <tr style={{display : "flex", width : "100%"}}>
+                    <th style={{display : "flex", width : "50%"}}>Amount Type</th>
+                    <th style={{display : "flex", width : "50%"}}>Price</th>
                   </tr>
-                  <tr>
-                    <td>{CommonServices.capitalizeFirstLetter(amount_type)}</td>
-                    <td>
+                  <tr style={{display : "flex", width : "100%"}}>
+                    <td style={{display : "flex", width : "50%"}}>{CommonServices.capitalizeFirstLetter(amount_type)}</td>
+                    <td style={{display : "flex", width : "50%"}}>
                       {
                         amount_type == "fixed" ?
                           nfObject.format(amount)
