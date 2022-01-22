@@ -16,7 +16,7 @@ overflow-y: auto;
     display : flex;
     width : 100%;
 }
-.queryBox > .table > thead > tr{
+.queryBox > .table >  thead > tr{
     display : flex;
     width : 100%;
     justify-content: start;

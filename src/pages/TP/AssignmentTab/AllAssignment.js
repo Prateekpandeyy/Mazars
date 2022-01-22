@@ -50,7 +50,11 @@ function AssignmentTab() {
   const [draftModal, setDraftModal] = useState(false);
   const [fianlModal, setFianlModal] = useState(false);
   const [loading, setLoading] = useState(false);
+<<<<<<< HEAD
   const [error, setError] = useState(false);
+=======
+  const [error, setError] = useState(false)
+>>>>>>> 899400d56831383894ad6b75d7cec85aa1f06ffd
   let des = false;
   var rowStyle2 = {}
   const ViewReport = (key) => {
@@ -102,35 +106,48 @@ function AssignmentTab() {
 
   //handleCategory
   const handleCategory = (value) => {
-   
+   setError(false)
     setSelectedData(value);
     setStore2([]);
   };
 
   //handleSubCategory
   const handleSubCategory = (value) => {
+<<<<<<< HEAD
    setError("")
+=======
+   setError(false)
+>>>>>>> 899400d56831383894ad6b75d7cec85aa1f06ffd
     setStore2(value);
   };
 
   //reset category
-  const resetCategory = () => {
+   const resetCategory = () => {
+    console.log(error)
   
     setSelectedData([]);
     setStore2([]);
-    getAssignmentList();
+   getAssignmentList()
+    setError(false)
+    setTax2([])
   };
 
   //reset date
   const resetData = () => {
-   
+  
     reset();
+<<<<<<< HEAD
     setHide("")
     setError("")
+=======
+     setTax2([])
+    setError(false)
+    setHide("")
+>>>>>>> 899400d56831383894ad6b75d7cec85aa1f06ffd
     setStatus([]);
     setSelectedData([]);
     setStore2([]);
-    getAssignmentList();
+   getAssignmentList()
   };
 
   //assingmentStatus
@@ -491,6 +508,7 @@ else{
 
  
   const onSubmit = (data) => {
+<<<<<<< HEAD
   
    if(hide == 1 || hide == 2){
    if(status.length > 0){
@@ -508,8 +526,53 @@ else{
         if (res.data.result) {
           setAssignment(res.data.result);
           setRecords(res.data.result.length);
+=======
+   
+    if(hide == 1 || hide == 2){
+if(status.length > 0){
+  axios
+      .get(
+        `${baseUrl}/tl/getAssignments?tp_id=${JSON.parse(
+          userid
+        )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
+        }&assignment_status=${status}&stages_status=${data.p_status
+        }&pcat_id=${selectedData}`
+      )
+      .then((res) => {
+        
+        if (res.data.code === 1) {
+          if (res.data.result) {
+            setAssignment(res.data.result);
+            setRecords(res.data.result.length);
+
+          }
+        }
+      });
+}
+else{
+  setError(true);
+  return false
+}
+    }
+    else{
+      axios
+      .get(
+        `${baseUrl}/tl/getAssignments?tp_id=${JSON.parse(
+          userid
+        )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
+        }&assignment_status=${status}&stages_status=${data.p_status
+        }&pcat_id=${selectedData}`
+      )
+      .then((res) => {
+        
+        if (res.data.code === 1) {
+          if (res.data.result) {
+            setAssignment(res.data.result);
+            setRecords(res.data.result.length);
+>>>>>>> 899400d56831383894ad6b75d7cec85aa1f06ffd
 
         }
+<<<<<<< HEAD
       }
     });
    }
@@ -538,6 +601,10 @@ else{
       }
     });
    }
+=======
+      });
+    }
+>>>>>>> 899400d56831383894ad6b75d7cec85aa1f06ffd
   };
 
 
@@ -557,7 +624,12 @@ else{
 
 
   const disabledHandler = (e) => {
+<<<<<<< HEAD
     setError("")
+=======
+    setStatus([])
+    setError(false)
+>>>>>>> 899400d56831383894ad6b75d7cec85aa1f06ffd
     setHide(e.target.value);
   };
 
@@ -657,10 +729,9 @@ else{
               </div>
 
               {
-                hide == "3" ?
-                  ""
-                  :
-                  <div class="form-group mx-sm-1  mb-2">
+                hide == "1" || hide == "2" ?
+                 
+                  <div className="form-group mx-sm-1  mb-2">
                     <Select
                       mode="multiple"
                       style={{ width: 210 }}
@@ -677,7 +748,9 @@ else{
                         </div>
                       </Option>
                       <Option value="Draft_Report" label="Compilance">
-                        <div className="demo-option-label-item">Draft report</div>
+                        <div className="demo-option-label-item">
+                          Draft reports
+                        </div>
                       </Option>
                       <Option value="Final_Discussion" label="Compilance">
                         <div className="demo-option-label-item">
@@ -686,15 +759,17 @@ else{
                       </Option>
                       <Option value="Delivery_of_report" label="Compilance">
                         <div className="demo-option-label-item">
-                          Delivery of report
+                          Delivery of Final Reports
                         </div>
                       </Option>
                       <Option value="Completed" label="Compilance">
                         <div className="demo-option-label-item">Awaiting Completion</div>
                       </Option>
                     </Select>
-                  </div>
+                  </div> : ""
+
               }
+
 
 
               <div class="form-group mx-sm-1  mb-2">

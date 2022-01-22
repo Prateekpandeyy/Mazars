@@ -144,9 +144,9 @@ function TeamLeaderTab() {
                 return (
                   <>
                  
-                <div style={{display : "flex", height : "65px"}}>
-                <p className={e.includes("Indirect") === true ? "dirCla" : "indirCla"}> {e}</p>
-                </div>
+                 <div style={{display : "flex", height : "80px"}}>
+                 <p className={e.includes("Indirect") === true ? "dirCla" : "indirCla"}> {e}</p>
+                 </div>
                   </>
                 )
               })
@@ -189,7 +189,7 @@ else{
           <>
            {digit.direct.length > 0 && digit.indirect.length > 0 ?
            <>
-            <div style={{display : "block", height : "65px"}}>
+            <div style={{display : "block", height : "80px"}}>
             <p style={{ "color": "green", "display": "block" }}>{digit.indirect + pp}</p>
             </div>
             <div style={{display : "block", height : "90px"}}>

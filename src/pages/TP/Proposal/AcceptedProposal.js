@@ -8,8 +8,7 @@ import "antd/dist/antd.css";
 import BootstrapTable from "react-bootstrap-table-next";
 import TaxProfessionalFilter from "../../../components/Search-Filter/tpfilter";
 import CommonShowProposal from "../../../components/commonShowProposal/CommonShowProposal";
-
-// import DiscardReport from "../AssignmentTab/DiscardReport";
+import DiscardReport from "../AssignmentTab/DiscardReport";
 
 
 
@@ -22,17 +21,19 @@ function AcceptedProposal() {
     const [addPaymentModal, setPaymentModal] = useState(false);
     const [viewProposalModal, setViewProposalModal] = useState(false)
     const [proposalId, setProposalId] = useState()
-    const chatHandler = (key) => {
-       
-        setPaymentModal(!addPaymentModal);
-        setId(key.assign_no);
-    };
+    const [ViewDiscussion, setViewDiscussion] = useState(false);
+    const [assignNo, setAssignNo] = useState('');
     const showProposalModal2 = (e) => {
         console.log("eeee")
         setViewProposalModal(!viewProposalModal);
         setProposalId(e)
       }
    
+      const ViewDiscussionToggel = (key) => {
+      
+        setViewDiscussion(!ViewDiscussion);
+        setAssignNo(key)
+    }
 
     useEffect(() => {
         getProposalList();
@@ -323,7 +324,7 @@ function AcceptedProposal() {
                                         cursor: "pointer",
                                         color: "orange"
                                     }}
-                                    // onClick={() => ViewDiscussionToggel(row.assign_no)}
+                                     onClick={() => ViewDiscussionToggel(row.assign_no)}
                                 ></i>
                             </div>
                         </div>
@@ -361,6 +362,12 @@ function AcceptedProposal() {
           viewProposalModal = {viewProposalModal}
           showProposalModal2 = {showProposalModal2}
           proposalId = {proposalId}/>
+           <DiscardReport
+                        ViewDiscussionToggel={ViewDiscussionToggel}
+                        ViewDiscussion={ViewDiscussion}
+                        report={assignNo}
+                        getData={getProposalList}
+                    />
                 </CardBody>
             </Card>
         </>

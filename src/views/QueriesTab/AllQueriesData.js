@@ -23,6 +23,7 @@ import Loader from "../../components/Loader/Loader";
 import DiscardReport from "../AssignmentTab/DiscardReport";
 import { date } from "yup";
 import RejectedModal from "./RejectedModal";
+import ModalManual from "../ModalManual/ModalManual";
 import './index.css';
 
 
@@ -32,9 +33,9 @@ function AllQueriesData() {
    const [assignNo2, setAssignNo2] = useState()
     const [queriesCount, setCountQueries] = useState(null);
     const [records, setRecords] = useState([]);
-   
     const [loading2, setLoading2] = useState(false);
     const [additionalQuery, setAdditionalQuery] = useState(false)
+    const [openManual, setManual] = useState(false)
    let des = false;
     const additionalHandler = (key) => {
        
@@ -88,24 +89,39 @@ function AllQueriesData() {
             formatter: (cellContent, row, rowIndex) => {
                 return rowIndex + 1;
             },
+            style : {
+                wordBreak : "break-word"
+                },
             headerStyle: () => {
-                return { fontSize: "12px", width: "50px" };
+                return { fontSize: "12px"};
             },
         },
         {
             text: "Date",
             dataField: "created",
             sort: true,
+            style : {
+                wordBreak : "break-word"
+                },
             headerStyle: () => {
-                return { fontSize: "12px" ,  width: "80px"};
+                return { fontSize: "12px"};
             },
-           
+           formatter : function dateFormatter(cell, row) {
+               return(
+                   <>
+                   {CommonServices.changeFormateDate(row.created)}
+                   </>
+               )
+           }
         },
         {
             text: "Query No",
             dataField: "assign_no",
+            style : {
+                wordBreak : "break-word"
+                },
             headerStyle: () => {
-                return { fontSize: "12px" ,  width: "130px"};
+                return { fontSize: "12px"};
             },
             formatter: function nameFormatter(cell, row) {
               
@@ -128,23 +144,32 @@ function AllQueriesData() {
             text: "Category",
             dataField: "parent_id",
             sort: true,
+            style : {
+                wordBreak : "break-word"
+                },
             headerStyle: () => {
-                return { fontSize: "12px",  width: "130px" };
+                return { fontSize: "12px"};
             },
         },
         {
             text: "Sub Category",
             dataField: "cat_name",
             sort: true,
+            style : {
+                wordBreak : "break-word"
+                },
             headerStyle: () => {
-                return { fontSize: "12px" ,  width: "120px"};
+                return { fontSize: "12px"};
             },
         },
         {
             text: "Status",
             dataField: "",
+            style : {
+                wordBreak : "break-word"
+                },
             headerStyle: () => {
-                return { fontSize: "12px" ,  width: "180px" };
+                return { fontSize: "12px"};
             },
             formatter: function nameFormatter(cell, row) {
                 return (
@@ -178,8 +203,11 @@ function AllQueriesData() {
             text: "Expected / Actual Delivery Date",
             dataField: "exp_delivery_date",
             sort: true,
+            style : {
+                wordBreak : "break-word"
+                },
             headerStyle: () => {
-                return { fontSize: "12px" ,  width: "180px"};
+                return { fontSize: "12px"};
             },
             formatter: function dateFormat(cell, row) {
                
@@ -209,6 +237,9 @@ function AllQueriesData() {
             headerStyle: () => {
                 return { fontSize: "12px", textAlign: "center" };
             },
+            style : {
+                wordBreak : "break-word"
+                },
             formatter: function (cell, row) {
                 var dateMnsFive = moment(row.exp_delivery_date).add(15, 'day').format("YYYY-MM-DD");
               
@@ -429,14 +460,16 @@ function AllQueriesData() {
       showRejectedBox(!rejectedBox)
        
     };
-
+const showManual = () => {
+    setManual(!openManual)
+}
     return (
         <div>
             <Card>
                 <CardHeader>
                     <Row>
                         <Col md="9">
-
+<button onClick={() => showManual()} className="btn btn-success">Need help?</button>
                         </Col>
                         <Col md="3">
                             <div style={{ display: "flex", justifyContent: "space-around" }}>
@@ -496,7 +529,10 @@ function AllQueriesData() {
                     getQueriesData = {getQueriesData}
                     assignNo={assignNo2}
                     deleteCliente = {deleteCliente}/>
-
+                    <ModalManual
+                    openManual = {openManual} 
+                    showManual={showManual}
+                    />
                 </CardBody>
             </Card>
         </div>

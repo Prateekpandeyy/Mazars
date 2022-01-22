@@ -43,7 +43,10 @@ function AssignmentTab() {
   const [reportModal, setReportModal] = useState(false);
   const [assignNo, setAssignNo] = useState('');
   const [loading, setLoading] = useState(false)
+<<<<<<< HEAD
   const [ViewDiscussion, setViewDiscussion] = useState(false);
+=======
+>>>>>>> 899400d56831383894ad6b75d7cec85aa1f06ffd
   const [error, setError] = useState(false);
   var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
 
@@ -108,11 +111,12 @@ function AssignmentTab() {
 
   //handleSubCategory
   const handleSubCategory = (value) => {
-    
+    setError(false)
     setStore2(value);
   };
 
   //reset category
+<<<<<<< HEAD
   const resetCategory = () => {
  
     setSelectedData([]);
@@ -131,6 +135,29 @@ function AssignmentTab() {
     setStore2([]);
     getAssignmentList();
   };
+=======
+   const resetCategory = () => {
+  setSelectedData([]);
+  setStore2([]);
+  getAssignmentList()
+  setError(false)
+  setTax2([])
+   };
+
+
+//reset date
+const resetData = () => {
+
+  reset();
+   setTax2([])
+  setError(false)
+  setHide("")
+  setStatus([]);
+  setSelectedData([]);
+  setStore2([]);
+  getAssignmentList();
+};
+>>>>>>> 899400d56831383894ad6b75d7cec85aa1f06ffd
 
   //assingmentStatus
   const assingmentStatus = (value) => {
@@ -493,9 +520,14 @@ else{
     
 
   const onSubmit = (data) => {
+<<<<<<< HEAD
  console.log("hide", hide)
    if(hide == 1 || hide == 2){
      if(status.length > 0){
+=======
+  if(hide == 1 || hide == 2){
+    if(status.length > 0){
+>>>>>>> 899400d56831383894ad6b75d7cec85aa1f06ffd
       axios
       .get(
         `${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(
@@ -514,6 +546,7 @@ else{
           }
         }
       });
+<<<<<<< HEAD
      }
      else{
        setError(true);
@@ -521,6 +554,16 @@ else{
      }
    }
    else{
+=======
+
+    }
+    else{
+      setError(true)
+      return false;
+    }
+  }
+  else{
+>>>>>>> 899400d56831383894ad6b75d7cec85aa1f06ffd
     axios
     .get(
       `${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(
@@ -539,8 +582,14 @@ else{
         }
       }
     });
+<<<<<<< HEAD
    }
   };
+=======
+
+  }
+     };
+>>>>>>> 899400d56831383894ad6b75d7cec85aa1f06ffd
 
 
   const Reset = () => {
@@ -559,7 +608,12 @@ else{
 
 
   const disabledHandler = (e) => {
+<<<<<<< HEAD
    setError(false)
+=======
+    setStatus([])
+    setError(false)
+>>>>>>> 899400d56831383894ad6b75d7cec85aa1f06ffd
     setHide(e.target.value);
   };
 
@@ -659,10 +713,9 @@ else{
               </div>
 
               {
-                hide == "3" ?
-                  ""
-                  :
-                  <div class="form-group mx-sm-1  mb-2">
+                hide == "1" || hide == "2" ?
+                 
+                  <div className="form-group mx-sm-1  mb-2">
                     <Select
                       mode="multiple"
                       style={{ width: 210 }}
@@ -679,7 +732,9 @@ else{
                         </div>
                       </Option>
                       <Option value="Draft_Report" label="Compilance">
-                        <div className="demo-option-label-item">Draft report</div>
+                        <div className="demo-option-label-item">
+                          Draft reports
+                        </div>
                       </Option>
                       <Option value="Final_Discussion" label="Compilance">
                         <div className="demo-option-label-item">
@@ -688,16 +743,16 @@ else{
                       </Option>
                       <Option value="Delivery_of_report" label="Compilance">
                         <div className="demo-option-label-item">
-                          Delivery of report
+                          Delivery of Final Reports
                         </div>
                       </Option>
                       <Option value="Completed" label="Compilance">
                         <div className="demo-option-label-item">Awaiting Completion</div>
                       </Option>
                     </Select>
-                  </div>
-              }
+                  </div> : ""
 
+              }
 
               <div class="form-group mx-sm-1  mb-2">
                 <label className="form-select form-control">Total Records : {records}</label>

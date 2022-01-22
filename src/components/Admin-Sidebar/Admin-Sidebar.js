@@ -211,7 +211,14 @@ const handleClick = () => {
                   </span>
                 </NavLink>
               </li>
-
+              <li className="nav-item">
+                <NavLink to={"/customer/contact"}>
+                  <i className="fa fa-rss-square"></i>
+                  <span className="menu-title" data-i18n="">
+                   Contact Us
+                  </span>
+                </NavLink>
+              </li>
             </ul>
           )}
 

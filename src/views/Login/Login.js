@@ -16,6 +16,7 @@ import Mandatory from "../../components/Common/Mandatory";
 import { Spinner } from 'reactstrap';
 import ShowError from "../../components/LoadingTime/LoadingTime";
 import LoadingTime from "../../components/LoadingTime/LoadingTime";
+import MyPDF from '../dFile/LoginManual.pdf';
 import Cookies from "js-cookie";
 const Schema = yup.object().shape({
   p_email: yup.string().email("invalid email").required(""),
@@ -103,8 +104,7 @@ function LoginForm() {
       <h1 style={{ "textAlign": "center", "margin": "55px 0 30px 0" }}>
         Would you like to post a query
       </h1>
-
-
+      
       <div className="StartPage">
         <div className="mainContent">
 

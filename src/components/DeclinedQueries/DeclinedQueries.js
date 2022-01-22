@@ -12,7 +12,7 @@ import { Link } from "react-router-dom";
 import BootstrapTable from "react-bootstrap-table-next";
 import AdminFilter from "../Search-Filter/AdminFilter";
 import Records from "../../components/Records/Records";
-import DiscardReport from "../../pages/TL/AssignmentTab/DiscardReport";
+import DiscardReport from "../../pages/Admin/AssignmentTab/DiscardReport";
 function DeclinedQueries({ CountPendingForPayment }) {
 
   const [pendingData, setPendingData] = useState([]);
@@ -36,6 +36,7 @@ function DeclinedQueries({ CountPendingForPayment }) {
   };
 
   const ViewDiscussionToggel = (key) => {
+
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key)
   }

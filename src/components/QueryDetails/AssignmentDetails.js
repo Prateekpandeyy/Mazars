@@ -62,29 +62,29 @@ function AssignmentDetails({ p, finalDate, submitData, customerQuery , diaplayAs
             <tr>
               <th scope="row">Assignment Status</th>
               <td>
-                <tr style = {{display : "flex", width : "500px"}}>
-                  <th style = {{display : "flex", width : "250px"}}>Assignment Stage</th>
-                  <th style = {{display : "flex", width : "250px"}}>Status</th>
+                <tr style={{display : "flex"}}>
+                  <th  style={{display : "flex", width : "200px"}}>Assignment Stage</th>
+                  <th  style={{display : "flex", width : "200px"}}>Status</th>
                 </tr>
-                <tr style = {{display : "flex", width : "500px"}}>
-                  <td style = {{display : "flex", width : "250px"}}>Client Discussion</td>
-                  <td style = {{display : "flex", width : "250px"}}>{CommonServices.capitalizeFirstLetter(p.client_discussion)}</td>
+               <tr style={{display : "flex"}}>
+                  <td  style={{display : "flex", width : "200px"}}>Client Discussion</td>
+                  <td  style={{display : "flex", width : "200px"}}>{CommonServices.capitalizeFirstLetter(p.client_discussion)}</td>
                 </tr>
-                 <tr style = {{display : "flex", width : "500px"}}>
-                  <td style = {{display : "flex", width : "250px"}}>Draft Reports</td>
-                  <td style = {{display : "flex", width : "250px"}}>{CommonServices.capitalizeFirstLetter(p.draft_report)}</td>
+               <tr style={{display : "flex"}}>
+                  <td  style={{display : "flex", width : "200px"}}>Draft Reports</td>
+                  <td  style={{display : "flex", width : "200px"}}>{CommonServices.capitalizeFirstLetter(p.draft_report)}</td>
                 </tr>
-                 <tr style = {{display : "flex", width : "500px"}}>
-                  <td style = {{display : "flex", width : "250px"}}>Final Discussion</td>
-                  <td style = {{display : "flex", width : "250px"}}>{CommonServices.capitalizeFirstLetter(p.final_discussion)}</td>
+               <tr style={{display : "flex"}}>
+                  <td  style={{display : "flex", width : "200px"}}>Final Discussion</td>
+                  <td  style={{display : "flex", width : "200px"}}>{CommonServices.capitalizeFirstLetter(p.final_discussion)}</td>
                 </tr>
-                 <tr style = {{display : "flex", width : "500px"}}>
-                  <td style = {{display : "flex", width : "250px"}}>Delivery of Final Reports</td>
-                  <td style = {{display : "flex", width : "250px"}}>{CommonServices.capitalizeFirstLetter(p.delivery_report)}</td>
+               <tr style={{display : "flex"}}>
+                  <td  style={{display : "flex", width : "200px"}}>Delivery of Final Reports</td>
+                  <td  style={{display : "flex", width : "200px"}}>{CommonServices.capitalizeFirstLetter(p.delivery_report)}</td>
                 </tr>
-                 <tr style = {{display : "flex", width : "500px"}}>
-                  <td style = {{display : "flex", width : "250px"}}>Awaiting Completion</td>
-                  <td style = {{display : "flex", width : "250px"}}>{CommonServices.capitalizeFirstLetter(p.other_stage)}</td>
+               <tr style={{display : "flex"}}>
+                  <td  style={{display : "flex", width : "200px"}}>Awaiting Completion</td>
+                  <td  style={{display : "flex", width : "200px"}}>{CommonServices.capitalizeFirstLetter(p.other_stage)}</td>
                 </tr>
               </td>
             </tr>
@@ -110,9 +110,9 @@ function AssignmentDetails({ p, finalDate, submitData, customerQuery , diaplayAs
                     
                     <>
                       {customerQuery == "customerQuery" && submitData[0].paid_status == "2" ? null :
-                      <tr style ={{display : "flex", width : "550px"}}>
-                        <td style ={{display : "flex", width : "50px"}}><p>{i + 1}</p></td>
-                        <td style ={{display : "flex", width : "200px"}}>
+                      <tr style={{display : "flex", width : "700px"}}>
+                        <td style={{display : "flex", width : "50px"}}>{i + 1}</td>
+                        <td style={{display : "flex", width : "300px"}}>
                           <a
                             href={`${ReportUrl}/${assingNo}/${p.document}`}
                             target="_blank"
@@ -120,16 +120,16 @@ function AssignmentDetails({ p, finalDate, submitData, customerQuery , diaplayAs
                             <i className="fa fa-photo"></i> {p.document}
                           </a>
                         </td>
-                        <td style ={{display : "flex", width : "150px", color : "green"}}>
+                        <td style={{display : "flex", width: "150px", color: "green" }}>
                           {p.stages_type == 2 && p.revise_report == null && "Draft Report" || p.stages_type == 3 && p.revise_report == null && "Final Report" || p.revise_report != null && "Draft Report"}
                         </td>
                         {p.status == "3"
                             ?
-                        <td style ={{display : "flex", width : "150px"}}>
+                        <td style={{display : "flex", width : "200px"}}>
                          
                             <p className="declined">Discarded</p>
                             
-                        </td> : null}
+                        </td> : <td style={{display : "flex", width : "200px"}}></td>}
                       </tr> }
                     </>
                   ))

@@ -255,7 +255,9 @@ function DeclinedProposal() {
                 return { fontSize: "11px" };
             },
             formatter : function formatterFun(cell, row) {
-<div style={{display : "flex", justifyContent : "space-between"}}>
+                return(
+                    <>
+                    <div style={{display : "flex", justifyContent : "space-between"}}>
 <div title="Send Message">
                                     <Link
                                         to={{
@@ -292,6 +294,9 @@ function DeclinedProposal() {
                                 </div>
 
 </div>
+
+                    </>
+                )
             }
         }
     ];

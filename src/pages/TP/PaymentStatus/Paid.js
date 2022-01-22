@@ -312,14 +312,70 @@ function AllPayment() {
                 return (
                     <>
 
-                        <div style={{ display: "flex", justifyContent: "space-between", width: "60px" }}>
-                            {
-                                row.paid_status == "0" ? null :
-                                    <div title="Payment History"
-                                      
-                                        style={{ color: "green", fontSize: "16px", cursor: "pointer" }}
-                                    >
-                                         <Link
+                        {row.paid_status === "2" ?  <div style={{ display: "flex", justifyContent: "space-between", width: "90px" }}>
+
+<div title="Payment History"
+
+    style={{ color: "green", fontSize: "16px", cursor: "pointer" }}
+>
+<Link
+              to={{
+                pathname: `/taxprofessional/paydetails/${row.assign_id}`,
+                obj: {
+                  message_type: "5",
+                  query_No: row.assign_no,
+                  query_id: row.assign_id,
+                  routes: `/taxprofessional/paymentstatus`
+                }
+              }}
+            >
+                            <i
+                                class="fa fa-credit-card"
+                                style={{ color: "green", fontSize: "16px" }}
+                                // onClick={() => toggle(row.assign_id)}
+                            ></i>
+                            </Link>
+</div>
+
+<div title="View Discussion Message">
+    <i
+        class="fa fa-comments-o"
+        style={{
+            fontSize: 16,
+            cursor: "pointer",
+            color: "orange"
+        }}
+        onClick={() => ViewDiscussionToggel(row.assign_no)}
+    ></i>
+</div>
+
+</div> : 
+                        <div style={{ display: "flex", justifyContent: "space-between", width: "90px" }}>
+
+                        <div title="Payment History"
+
+                            style={{ color: "green", fontSize: "16px", cursor: "pointer" }}
+                        >
+                           <Link
+              to={{
+                pathname: `/taxprofessional/paydetails/${row.assign_id}`,
+                obj: {
+                  message_type: "5",
+                  query_No: row.assign_no,
+                  query_id: row.assign_id,
+                  routes: `/taxprofessional/paymentstatus`
+                }
+              }}
+            >
+                            <i
+                                class="fa fa-credit-card"
+                                style={{ color: "green", fontSize: "16px" }}
+                                // onClick={() => toggle(row.assign_id)}
+                            ></i>
+                            </Link>
+                        </div>
+                        <div title="Send Message">
+                            <Link
                                 to={{
                                     pathname: `/taxprofessional/chatting/${row.assign_id}`,
                                     obj: {
@@ -339,45 +395,11 @@ function AllPayment() {
                                     }}
                                 ></i>
                             </Link>
-                                    </div>
-                            }
+                        </div>
+                      
 
-                            {
-                                (row.paid_status == "0") ?
-                                    <div title="Payment decline"
-                                        onClick={() => rejectHandler(row)}
-                                        style={{ color: "red", fontSize: "16px", cursor: "pointer" }}
-                                    >
-                                        <PaymentIcon />
-                                    </div>
-                                    :
-                                    null
-                            }
 
-                            <div title="Send Message">
-                                <Link
-                                    to={{
-                                        pathname: `/teamleader/chatting/${row.assign_id}`,
-                                        obj: {
-                                            message_type: "5",
-                                            query_No: row.assign_no,
-                                            query_id: row.assign_id,
-                                            routes: `/teamleader/proposal`
-                                        }
-                                    }}
-                                >
-                                    <i
-                                        class="fa fa-comments-o"
-                                        style={{
-                                            fontSize: 16,
-                                            cursor: "pointer",
-                                            marginLeft: "8px",
-                                            color: "blue"
-                                        }}
-                                    ></i>
-                                </Link>
-                            </div>
-                            <div title="View Discussion Message">
+                        <div title="View Discussion Message">
                             <i
                                 class="fa fa-comments-o"
                                 style={{
@@ -388,7 +410,8 @@ function AllPayment() {
                                 onClick={() => ViewDiscussionToggel(row.assign_no)}
                             ></i>
                         </div>
-                        </div>
+
+                    </div>}
                     </>
                 );
             },

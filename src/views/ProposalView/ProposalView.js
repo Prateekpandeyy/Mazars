@@ -160,7 +160,7 @@ function ProposalView(props) {
 const amountStyle  = {
   display : "block",
   textAlign : "right",
-  marginRight : "50px"
+ 
 }
   const installAmount = (data) => {
     var item = data.split(',')
@@ -270,13 +270,13 @@ const amountStyle  = {
               <tr>
                 <th scope="row">Amount</th>
                 <td>
-                  <tr>
-                    <th>Amount Type</th>
-                    <th>Price</th>
+                  <tr style={{display : "flex", width : "100%"}}>
+                    <th style={{display : "flex", width : "50%"}}>Amount Type</th>
+                    <th style={{display : "flex", width : "50%"}}>Price</th>
                   </tr>
-                  <tr>
-                    <td>{CommonServices.capitalizeFirstLetter(amount_type)}</td>
-                    <td>
+                  <tr style={{display : "flex", width : "100%"}}>
+                    <td style={{display : "flex", width : "50%"}}>{CommonServices.capitalizeFirstLetter(amount_type)}</td>
+                    <td style={{display : "flex", width : "50%"}}>
                       {
                         amount_type == "fixed" ?
                           nfObject.format(amount)
@@ -316,17 +316,17 @@ const amountStyle  = {
                     :
                     payment_terms == "installment" ?
                       <td>
-                        <tr>
-                          <th>Payment Type</th>
-                          <th>No of Installments</th>
-                          <th>Installment Amount</th>
-                          <th>Due Dates</th>
+                        <tr style={{display : "flex", width : "100%"}}>
+                          <th style={{display : "flex", width : "25%"}}>Payment Type</th>
+                          <th style={{display : "flex", width : "25%"}}>No of Installments</th>
+                          <th style={{display : "flex", width : "25%"}}>Installment Amount</th>
+                          <th style={{display : "flex", width : "25%"}}>Due Dates</th>
                         </tr>
-                        <tr>
-                          <td>{payment_terms}</td>
-                          <td>{no_of_installment}</td>
-                          <td>{installAmount2(installment_amount)}</td>
-                        <td>{installAmount(due_date)}</td>
+                        <tr style={{display : "flex", width : "100%"}}>
+                          <td style={{display : "flex", width : "25%"}}>{CommonServices.capitalizeFirstLetter(payment_terms)}</td>
+                          <td style={{display : "flex", width : "25%", justifyContent : "center"}}>{no_of_installment}</td>
+                          <td style={{display : "flex", width : "25%", flexDirection : "column", textAlign : "right"}}>{installAmount2(installment_amount)}</td>
+                        <td style={{display : "flex", width : "25%", flexDirection : "column"}}>{installAmount(due_date)}</td>
                         </tr>
                       </td>
                       :

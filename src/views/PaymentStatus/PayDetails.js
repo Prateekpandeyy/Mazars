@@ -113,7 +113,7 @@ setModal(!modal)
                 return(
                     <>
                     {row.invoice_generated == "0" ? "" : 
-                    <p>{row.billno}</p>}
+                    <p style={{fontSize : "11px"}}>{row.billno}</p>}
                     </>
                 )
             }

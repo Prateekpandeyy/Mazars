@@ -177,12 +177,12 @@ function ProposalDetails({
 
             <tr>
               <th scope="row">Amount</th>
-              <td style ={{display : "flex", width : "50%"}}>
-                <tr style ={{display : "flex", width : "100%", flexDirection : "row"}}>
+              <td>
+                <tr style={{display : "flex", width : "100%"}}>
                   <th style={{display : "flex", width : "50%"}}>Amount Type</th>
                   <th style={{display : "flex", width : "50%"}}>Price</th>
                 </tr>
-                <tr style ={{display : "flex", width : "100%", flexDirection : "row"}}>
+                <tr style={{display : "flex", width : "100%"}}>
                   <td style={{display : "flex", width : "50%"}}>{CommonServices.capitalizeFirstLetter(amount_type)}</td>
                   <td style={{display : "flex", width : "50%", justifyContent : "flex-end"}}>
                     {
@@ -224,19 +224,19 @@ function ProposalDetails({
                   :
                   payment_terms == "installment" ?
                     <td>
-                      <tr style = {{display : "flex", width : "100%"}}>
-                        <th  style = {{display : "flex", width : "25%"}}>Payment Type</th>
-                        <th  style = {{display : "flex", width : "25%"}}>No of Installments</th>
-                        <th  style = {{display : "flex", width : "25%"}}>Installment Amount</th>
-                        <th  style = {{display : "flex", width : "25%"}}>Due Dates</th>
+                      <tr style={{display : "flex", width : "100%"}}>
+                        <th style={{display : "flex", width : "25%"}}>Payment Type</th>
+                        <th style={{display : "flex", width : "25%"}}>No of Installments</th>
+                        <th style={{display : "flex", width : "25%"}}>Installment Amount</th>
+                        <th style={{display : "flex", width : "25%"}}>Due Dates</th>
                       
                       </tr>
-                      <tr style = {{display : "flex", width : "100%"}}>
+                      <tr style={{display : "flex", width : "100%"}}>
                        
-                        <td style = {{display : "flex", width : "25%"}}>{payment_terms}</td>
-                        <td style = {{display : "flex", width : "25%" , justifyContent : "center"}}>{no_of_installment}</td>
-                        <td style = {{display : "flex", flexDirection: "column",  width : "25%", textAlign : "right"}}>{installAmount2(installment_amount)}</td>
-                        <td style = {{display : "flex", flexDirection: "column", width : "25%"}}>{installAmount(due_date)}</td>
+                        <td style={{display : "flex", width : "25%"}}>{CommonServices.capitalizeFirstLetter(payment_terms)}</td>
+                        <td style={{display : "flex", width : "25%", justifyContent : "center"}}>{no_of_installment}</td>
+                        <td style={{display : "flex", width : "25%", flexDirection : "column", textAlign : "right"}}>{installAmount2(installment_amount)}</td>
+                        <td style={{display : "flex", width : "25%", flexDirection : "column"}}>{installAmount(due_date)}</td>
                         
                       </tr>
                     </td>
@@ -268,26 +268,26 @@ function ProposalDetails({
             <tr>
               <th scope="row">Payment History</th>
               <td>
-                <tr>
-                  <th>Date</th>
+                <tr style={{display : "flex", width : "100%"}}>
+                  <th style={{display : "flex", width :"20%"}}>Date</th>
                  
-                    <th>Invoice Amount</th>
-                    <th>Tds Deducted</th>
-                    <th>Amount Paid </th>
-                    <th>Payment Receipt</th>
+                    <th style={{display : "flex", width : "20%"}}>Invoice Amount</th>
+                    <th style={{display : "flex", width : "20%"}}>Tds Deducted</th>
+                    <th style={{display : "flex", width : "20%"}}>Amount Paid </th>
+                    <th style={{display : "flex", width : "20%"}}>Payment Receipt</th>
                 </tr>
                 {paymentDetails.map((pay, i) => (
-                  <tr>
+                  <tr style={{display : "flex", width : "100%"}}>
                     {pay.is_paid == "1" ?
                   
                     <>
-                     <td>{CommonServices.removeTime(pay.payment_date)}</td> 
-                    <td align="right">{pay.invoice_amount}</td>
-                    <td align="right">{pay.tds_amount}</td>
-                    <td align="right">{pay.amount}</td>
-                    <td>
+                     <td style={{display : "flex", width : "20%"}}>{CommonServices.removeTime(pay.payment_date)}</td> 
+                    <td style={{display : "flex", width : "20%", justifyContent : "flex-end"}}>{pay.invoice_amount}</td>
+                    <td style={{display : "flex", width : "20%", justifyContent : "flex-end"}}>{pay.tds_amount}</td>
+                    <td style={{display : "flex", width : "20%", justifyContent : "flex-end"}}>{pay.amount}</td>
+                    <td style={{display : "flex", width : "20%"}}>
 
-                    <a href={pay.paymenturl} target="_blank">
+                    <a href={pay.receipt_url} target="_blank">
                     <span title="view receipt" style={{margin: "0 2px"}}>
                     <i 
                    className="fa fa-eye"

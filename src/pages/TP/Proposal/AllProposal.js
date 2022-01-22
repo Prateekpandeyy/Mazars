@@ -31,7 +31,7 @@ function AllProposal() {
         setId(key.assign_no);
     };
     const showProposalModal2 = (e) => {
-        console.log("eeee")
+      
         setViewProposalModal(!viewProposalModal);
         setProposalId(e)
       }
