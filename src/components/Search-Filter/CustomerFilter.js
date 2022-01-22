@@ -164,7 +164,7 @@ const [loading, setLoading] = useState(false)
     if (InprogressQueryProposal == "InprogressQueryProposal") {
       axios
         .get(
-          `${baseUrl}/customers/incompleteAssignments?uid=${JSON.parse(id)}&status=2&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
+          `${baseUrl}/customers/incompleteAssignments?user=${JSON.parse(id)}&status=2&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
           }&pcat_id=${selectedData}`
         )
         .then((res) => {
@@ -232,26 +232,50 @@ const [loading, setLoading] = useState(false)
     }
 
     if (inprogressProposal == "inprogressProposal") {
+     if(data.p_status){
       axios
-        .get(
-          `${baseUrl}/customers/getProposals?uid=${JSON.parse(
-            id
-          )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
-          }&status=${data.p_status}&pcat_id=${selectedData}`
-        )
-        .then((res) => {
-        
-          if (res.data.code === 1) {
-            setLoading(false)
-            if (res.data.result) {
-              setData(res.data.result);
-              setRecords(res.data.result.length);
-            }
+      .get(
+        `${baseUrl}/customers/getProposals?uid=${JSON.parse(
+          id
+        )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
+        }&status=${data.p_status}&pcat_id=${selectedData}`
+      )
+      .then((res) => {
+      
+        if (res.data.code === 1) {
+          setLoading(false)
+          if (res.data.result) {
+            setData(res.data.result);
+            setRecords(res.data.result.length);
           }
-        })
-        .catch((error) => {
-          ShowError.LoadingError(setLoading)
-         });
+        }
+      })
+      .catch((error) => {
+        ShowError.LoadingError(setLoading)
+       });
+     }
+     else{
+      axios
+      .get(
+        `${baseUrl}/customers/getProposals?uid=${JSON.parse(
+          id
+        )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
+        }&status=2&pcat_id=${selectedData}`
+      )
+      .then((res) => {
+      
+        if (res.data.code === 1) {
+          setLoading(false)
+          if (res.data.result) {
+            setData(res.data.result);
+            setRecords(res.data.result.length);
+          }
+        }
+      })
+      .catch((error) => {
+        ShowError.LoadingError(setLoading)
+       });
+     }
     }
 
     if (acceptedProposal == "acceptedProposal") {
@@ -283,7 +307,7 @@ const [loading, setLoading] = useState(false)
           `${baseUrl}/customers/getProposals?uid=${JSON.parse(
             id
           )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
-          }&status=3pcat_id=${selectedData}`
+          }&status=3&pcat_id=${selectedData}`
         )
         .then((res) => {
        
