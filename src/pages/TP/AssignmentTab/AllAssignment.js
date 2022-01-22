@@ -50,11 +50,7 @@ function AssignmentTab() {
   const [draftModal, setDraftModal] = useState(false);
   const [fianlModal, setFianlModal] = useState(false);
   const [loading, setLoading] = useState(false);
-<<<<<<< HEAD
-  const [error, setError] = useState(false);
-=======
   const [error, setError] = useState(false)
->>>>>>> 899400d56831383894ad6b75d7cec85aa1f06ffd
   let des = false;
   var rowStyle2 = {}
   const ViewReport = (key) => {
@@ -113,11 +109,7 @@ function AssignmentTab() {
 
   //handleSubCategory
   const handleSubCategory = (value) => {
-<<<<<<< HEAD
-   setError("")
-=======
    setError(false)
->>>>>>> 899400d56831383894ad6b75d7cec85aa1f06ffd
     setStore2(value);
   };
 
@@ -136,14 +128,9 @@ function AssignmentTab() {
   const resetData = () => {
   
     reset();
-<<<<<<< HEAD
-    setHide("")
-    setError("")
-=======
      setTax2([])
     setError(false)
     setHide("")
->>>>>>> 899400d56831383894ad6b75d7cec85aa1f06ffd
     setStatus([]);
     setSelectedData([]);
     setStore2([]);
@@ -508,25 +495,6 @@ else{
 
  
   const onSubmit = (data) => {
-<<<<<<< HEAD
-  
-   if(hide == 1 || hide == 2){
-   if(status.length > 0){
-    axios
-    .get(
-      `${baseUrl}/tl/getAssignments?tp_id=${JSON.parse(
-        userid
-      )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
-      }&assignment_status=${status}&stages_status=${data.p_status
-      }&pcat_id=${selectedData}`
-    )
-    .then((res) => {
-      
-      if (res.data.code === 1) {
-        if (res.data.result) {
-          setAssignment(res.data.result);
-          setRecords(res.data.result.length);
-=======
    
     if(hide == 1 || hide == 2){
 if(status.length > 0){
@@ -569,42 +537,11 @@ else{
           if (res.data.result) {
             setAssignment(res.data.result);
             setRecords(res.data.result.length);
->>>>>>> 899400d56831383894ad6b75d7cec85aa1f06ffd
-
-        }
-<<<<<<< HEAD
-      }
-    });
-   }
-   else{
-    setError(true);
-    return false;
-   }
-   }
-   else{
-    axios
-    .get(
-      `${baseUrl}/tl/getAssignments?tp_id=${JSON.parse(
-        userid
-      )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
-      }&assignment_status=${status}&stages_status=${data.p_status
-      }&pcat_id=${selectedData}`
-    )
-    .then((res) => {
-      
-      if (res.data.code === 1) {
-        if (res.data.result) {
-          setAssignment(res.data.result);
-          setRecords(res.data.result.length);
 
         }
       }
-    });
-   }
-=======
       });
     }
->>>>>>> 899400d56831383894ad6b75d7cec85aa1f06ffd
   };
 
 
@@ -624,12 +561,8 @@ else{
 
 
   const disabledHandler = (e) => {
-<<<<<<< HEAD
-    setError("")
-=======
     setStatus([])
     setError(false)
->>>>>>> 899400d56831383894ad6b75d7cec85aa1f06ffd
     setHide(e.target.value);
   };
 

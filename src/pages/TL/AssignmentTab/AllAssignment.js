@@ -43,10 +43,6 @@ function AssignmentTab() {
   const [reportModal, setReportModal] = useState(false);
   const [assignNo, setAssignNo] = useState('');
   const [loading, setLoading] = useState(false)
-<<<<<<< HEAD
-  const [ViewDiscussion, setViewDiscussion] = useState(false);
-=======
->>>>>>> 899400d56831383894ad6b75d7cec85aa1f06ffd
   const [error, setError] = useState(false);
   var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
 
@@ -116,26 +112,6 @@ function AssignmentTab() {
   };
 
   //reset category
-<<<<<<< HEAD
-  const resetCategory = () => {
- 
-    setSelectedData([]);
-    setStore2([]);
-    getAssignmentList();
-  };
-
-  //reset date
-  const resetData = () => {
-  
-    reset();
-    setHide("")
-    setError(false)
-    setStatus([]);
-    setSelectedData([]);
-    setStore2([]);
-    getAssignmentList();
-  };
-=======
    const resetCategory = () => {
   setSelectedData([]);
   setStore2([]);
@@ -157,7 +133,6 @@ const resetData = () => {
   setStore2([]);
   getAssignmentList();
 };
->>>>>>> 899400d56831383894ad6b75d7cec85aa1f06ffd
 
   //assingmentStatus
   const assingmentStatus = (value) => {
@@ -520,14 +495,8 @@ else{
     
 
   const onSubmit = (data) => {
-<<<<<<< HEAD
- console.log("hide", hide)
-   if(hide == 1 || hide == 2){
-     if(status.length > 0){
-=======
   if(hide == 1 || hide == 2){
     if(status.length > 0){
->>>>>>> 899400d56831383894ad6b75d7cec85aa1f06ffd
       axios
       .get(
         `${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(
@@ -546,15 +515,6 @@ else{
           }
         }
       });
-<<<<<<< HEAD
-     }
-     else{
-       setError(true);
-       return false;
-     }
-   }
-   else{
-=======
 
     }
     else{
@@ -563,7 +523,6 @@ else{
     }
   }
   else{
->>>>>>> 899400d56831383894ad6b75d7cec85aa1f06ffd
     axios
     .get(
       `${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(
@@ -582,14 +541,9 @@ else{
         }
       }
     });
-<<<<<<< HEAD
-   }
-  };
-=======
 
   }
      };
->>>>>>> 899400d56831383894ad6b75d7cec85aa1f06ffd
 
 
   const Reset = () => {
@@ -608,12 +562,8 @@ else{
 
 
   const disabledHandler = (e) => {
-<<<<<<< HEAD
-   setError(false)
-=======
     setStatus([])
     setError(false)
->>>>>>> 899400d56831383894ad6b75d7cec85aa1f06ffd
     setHide(e.target.value);
   };
 

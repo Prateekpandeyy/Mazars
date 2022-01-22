@@ -8,15 +8,9 @@ export const ReportUrl = "http://13.232.121.233/mazarsapi/assets/upload/report";
 
 
 // // //for server
-<<<<<<< HEAD
- export const baseUrl = "https://mazarsapi.multitvsolution.com/mazarapi/v1";
-export const ImageUrl = "https://mazarsapi.multitvsolution.com/mazarapi/assets/image";
-export const ReportUrl = "https://mazarsapi.multitvsolution.com/mazarapi/assets/upload/report";
-=======
 // export const baseUrl = "https://mazarsapi.multitvsolution.com/mazarapi/v1";
 // export const ImageUrl = "https://mazarsapi.multitvsolution.com/mazarapi/assets/image";
 // export const ReportUrl = "https://mazarsapi.multitvsolution.com/mazarapi/assets/upload/report";
->>>>>>> 899400d56831383894ad6b75d7cec85aa1f06ffd
 
 // //for local
  export const baseUrl2 = "http://13.232.121.233";
