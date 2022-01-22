@@ -117,7 +117,7 @@ const cgstFun = (e) => {
  
   let kkk = e.target.value.split(".")[1]
    if(kkk)
-    if(kkk.length < 5){
+    if(kkk.length < 3){
       
      setCgetRate(e.target.value);
      let a = parseInt(basicAmount) + parseInt(pocketExp);
@@ -146,7 +146,7 @@ const cgstFun = (e) => {
  const sgstFun = (e) => {
    let kkk = e.target.value.split(".")[1]
    if(kkk){
-     if(kkk.length < 5){
+     if(kkk.length < 3){
        setSgetRate(e.target.value)
        let a = parseInt(basicAmount) + parseInt(pocketExp);
              let cget = Math.round(a * e.target.value / 100)
@@ -179,7 +179,7 @@ const cgstFun = (e) => {
   
    let kkk = e.target.value.split(".")[1]
    if(kkk){
- if(kkk.length < 5){
+ if(kkk.length < 3){
    setIgetRate(e.target.value)
    let a = parseInt(basicAmount) + parseInt(pocketExp);
        let cget = Math.round(a * e.target.value / 100) 
@@ -211,7 +211,7 @@ const cgstFun = (e) => {
   const tdsFun = (e) => {
    let kkk = e.target.value.split(".")[1]
   if(kkk){
-    if(kkk.length < 5){
+    if(kkk.length < 3){
      if(e.target.value > 100){
        setTdsR(100);
        let a = parseInt(basicAmount) + parseInt(pocketExp);

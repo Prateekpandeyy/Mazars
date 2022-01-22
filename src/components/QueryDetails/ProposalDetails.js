@@ -177,14 +177,14 @@ function ProposalDetails({
 
             <tr>
               <th scope="row">Amount</th>
-              <td>
-                <tr>
+              <td style ={{display : "flex", width : "50%"}}>
+                <tr style ={{display : "flex", width : "100%", flexDirection : "row"}}>
                   <th style={{display : "flex", width : "50%"}}>Amount Type</th>
                   <th style={{display : "flex", width : "50%"}}>Price</th>
                 </tr>
-                <tr>
-                  <td>{CommonServices.capitalizeFirstLetter(amount_type)}</td>
-                  <td align="right">
+                <tr style ={{display : "flex", width : "100%", flexDirection : "row"}}>
+                  <td style={{display : "flex", width : "50%"}}>{CommonServices.capitalizeFirstLetter(amount_type)}</td>
+                  <td style={{display : "flex", width : "50%", justifyContent : "flex-end"}}>
                     {
                       amount_type == "fixed" ?
                        nfObject.format(amount_fixed)
@@ -224,19 +224,19 @@ function ProposalDetails({
                   :
                   payment_terms == "installment" ?
                     <td>
-                      <tr>
-                        <th>Payment Type</th>
-                        <th>No of Installments</th>
-                        <th>Installment Amount</th>
-                        <th>Due Dates</th>
+                      <tr style = {{display : "flex", width : "100%"}}>
+                        <th  style = {{display : "flex", width : "25%"}}>Payment Type</th>
+                        <th  style = {{display : "flex", width : "25%"}}>No of Installments</th>
+                        <th  style = {{display : "flex", width : "25%"}}>Installment Amount</th>
+                        <th  style = {{display : "flex", width : "25%"}}>Due Dates</th>
                       
                       </tr>
-                      <tr>
+                      <tr style = {{display : "flex", width : "100%"}}>
                        
-                        <td>{payment_terms}</td>
-                        <td style={{display : "flex", justifyContent : "center", border : "0px"}}>{no_of_installment}</td>
-                        <td style={{textAlign : "right"}}>{installAmount2(installment_amount)}</td>
-                        <td>{installAmount(due_date)}</td>
+                        <td style = {{display : "flex", width : "25%"}}>{payment_terms}</td>
+                        <td style = {{display : "flex", width : "25%" , justifyContent : "center"}}>{no_of_installment}</td>
+                        <td style = {{display : "flex", flexDirection: "column",  width : "25%", textAlign : "right"}}>{installAmount2(installment_amount)}</td>
+                        <td style = {{display : "flex", flexDirection: "column", width : "25%"}}>{installAmount(due_date)}</td>
                         
                       </tr>
                     </td>

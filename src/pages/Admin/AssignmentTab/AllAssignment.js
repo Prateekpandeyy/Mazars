@@ -25,40 +25,41 @@ import moment from "moment";
 
 function AssignmentComponent() {
   const userid = window.localStorage.getItem("adminkey");
-
+  const [assignNo, setAssignNo] = useState(null);
+  const [ViewDiscussion, setViewDiscussion] = useState(false);
   const [assignmentDisplay, setAssignmentDisplay] = useState([]);
   const { handleSubmit, register, errors, reset } = useForm();
   const { Option, OptGroup } = Select;
   const [assignmentCount, setCountAssignment] = useState("");
   const [records, setRecords] = useState([]);
-
+  const [reportModal, setReportModal] = useState(false);
   const [selectedData, setSelectedData] = useState([]);
   const [status, setStatus] = useState([]);
   const [tax2, setTax2] = useState([]);
   const [store2, setStore2] = useState([]);
   const [hide, setHide] = useState();
   const [report, setReport] = useState();
-
+  const [viewData, setViewData] = useState({});
+  const [viewModal, setViewModal] = useState(false);
+  const [error, setError] = useState(false);
   var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
   
   const [item] = useState(current_date);
    var rowStyle2 = {}
-  const [reportModal, setReportModal] = useState(false);
+
   const ViewReport = (key) => {
   
     setReportModal(!reportModal);
     setReport(key);
   };
 
-  const [assignNo, setAssignNo] = useState(null);
-  const [ViewDiscussion, setViewDiscussion] = useState(false);
+  
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key)
   }
 
-  const [viewData, setViewData] = useState({});
-  const [viewModal, setViewModal] = useState(false);
+  
   const ViewHandler = (key) => {
   
     setViewModal(!viewModal);
@@ -97,7 +98,7 @@ function AssignmentComponent() {
 
   //handleCategory
   const handleCategory = (value) => {
-  
+    setError(false)
     setSelectedData(value);
     setStore2([]);
   };
@@ -120,6 +121,8 @@ function AssignmentComponent() {
   const resetData = () => {
   
     reset();
+    setHide("")
+    setError(false)
     setStatus([]);
     setSelectedData([]);
     setStore2([]);
@@ -128,7 +131,7 @@ function AssignmentComponent() {
 
   //assingmentStatus
   const assingmentStatus = (value) => {
-  
+    setError(false)
     setStatus(value);
   };
 
@@ -377,8 +380,9 @@ function AssignmentComponent() {
     return style;
   }
   const onSubmit = (data) => {
-   
-    axios
+    if(hide == 1 || hide == 2){
+      if(status.length > 0){
+        axios
       .get(
         `${baseUrl}/tl/getAssignments?cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&assignment_status=${status}&stages_status=${data.p_status}&pcat_id=${selectedData}`
       )
@@ -391,6 +395,27 @@ function AssignmentComponent() {
           }
         }
       });
+      }
+      else{
+        setError(true);
+        return false;
+      }
+    }
+    else{
+      axios
+      .get(
+        `${baseUrl}/tl/getAssignments?cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&assignment_status=${status}&stages_status=${data.p_status}&pcat_id=${selectedData}`
+      )
+      .then((res) => {
+       
+        if (res.data.code === 1) {
+          if (res.data.result) {
+            setAssignmentDisplay(res.data.result);
+            setRecords(res.data.result.length);
+          }
+        }
+      });
+    }
   };
 
 
@@ -409,6 +434,7 @@ function AssignmentComponent() {
   };
 
   const disabledHandler = (e) => {
+    setError(false)
     setHide(e.target.value);
   };
 
@@ -520,6 +546,7 @@ function AssignmentComponent() {
                       onChange={assingmentStatus}
                       value={status}
                       allowClear
+                      className={error ? "customError" : ""}
                     >
                       <Option value="Client_Discussion" label="Compilance">
                         <div className="demo-option-label-item">

@@ -50,7 +50,7 @@ function AssignmentTab() {
   const [draftModal, setDraftModal] = useState(false);
   const [fianlModal, setFianlModal] = useState(false);
   const [loading, setLoading] = useState(false);
-
+  const [error, setError] = useState(false);
   let des = false;
   var rowStyle2 = {}
   const ViewReport = (key) => {
@@ -109,7 +109,7 @@ function AssignmentTab() {
 
   //handleSubCategory
   const handleSubCategory = (value) => {
-   
+   setError("")
     setStore2(value);
   };
 
@@ -125,6 +125,8 @@ function AssignmentTab() {
   const resetData = () => {
    
     reset();
+    setHide("")
+    setError("")
     setStatus([]);
     setSelectedData([]);
     setStore2([]);
@@ -133,7 +135,7 @@ function AssignmentTab() {
 
   //assingmentStatus
   const assingmentStatus = (value) => {
-   
+   setError(false)
     setStatus(value);
   };
 
@@ -489,25 +491,53 @@ else{
 
  
   const onSubmit = (data) => {
-   
+  
+   if(hide == 1 || hide == 2){
+   if(status.length > 0){
     axios
-      .get(
-        `${baseUrl}/tl/getAssignments?tp_id=${JSON.parse(
-          userid
-        )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
-        }&assignment_status=${status}&stages_status=${data.p_status
-        }&pcat_id=${selectedData}`
-      )
-      .then((res) => {
-        
-        if (res.data.code === 1) {
-          if (res.data.result) {
-            setAssignment(res.data.result);
-            setRecords(res.data.result.length);
+    .get(
+      `${baseUrl}/tl/getAssignments?tp_id=${JSON.parse(
+        userid
+      )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
+      }&assignment_status=${status}&stages_status=${data.p_status
+      }&pcat_id=${selectedData}`
+    )
+    .then((res) => {
+      
+      if (res.data.code === 1) {
+        if (res.data.result) {
+          setAssignment(res.data.result);
+          setRecords(res.data.result.length);
 
-          }
         }
-      });
+      }
+    });
+   }
+   else{
+    setError(true);
+    return false;
+   }
+   }
+   else{
+    axios
+    .get(
+      `${baseUrl}/tl/getAssignments?tp_id=${JSON.parse(
+        userid
+      )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
+      }&assignment_status=${status}&stages_status=${data.p_status
+      }&pcat_id=${selectedData}`
+    )
+    .then((res) => {
+      
+      if (res.data.code === 1) {
+        if (res.data.result) {
+          setAssignment(res.data.result);
+          setRecords(res.data.result.length);
+
+        }
+      }
+    });
+   }
   };
 
 
@@ -527,6 +557,7 @@ else{
 
 
   const disabledHandler = (e) => {
+    setError("")
     setHide(e.target.value);
   };
 
@@ -638,6 +669,7 @@ else{
                       onChange={assingmentStatus}
                       value={status}
                       allowClear
+                      className={error ? "customError" : ""}
                     >
                       <Option value="Client_Discussion" label="Compilance">
                         <div className="demo-option-label-item">

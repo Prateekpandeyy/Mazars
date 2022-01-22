@@ -144,7 +144,9 @@ function TeamLeaderTab() {
                 return (
                   <>
                  
-                 <p className={e.includes("Indirect") === true ? "dirCla" : "indirCla"}> {e}</p>
+                <div style={{display : "flex", height : "65px"}}>
+                <p className={e.includes("Indirect") === true ? "dirCla" : "indirCla"}> {e}</p>
+                </div>
                   </>
                 )
               })
@@ -161,7 +163,8 @@ function TeamLeaderTab() {
         return { fontSize: "12px"};
       },
       style : {
-        wordBreak : "break-word"
+        wordBreak : "break-word",
+      
         },
       formatter: function nameFormatter(cell, row) {
         var digit = [];
@@ -189,7 +192,7 @@ else{
             <div style={{display : "block", height : "65px"}}>
             <p style={{ "color": "green", "display": "block" }}>{digit.indirect + pp}</p>
             </div>
-            <div style={{display : "block", height : "70px"}}>
+            <div style={{display : "block", height : "90px"}}>
             <p style={{ "color": "blue", "diplay": "block" }}>{digit.direct + k} </p> 
             </div>
            </> : <>

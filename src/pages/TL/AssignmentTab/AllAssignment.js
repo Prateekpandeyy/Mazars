@@ -43,6 +43,8 @@ function AssignmentTab() {
   const [reportModal, setReportModal] = useState(false);
   const [assignNo, setAssignNo] = useState('');
   const [loading, setLoading] = useState(false)
+  const [ViewDiscussion, setViewDiscussion] = useState(false);
+  const [error, setError] = useState(false);
   var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
 
   const [item] = useState(current_date);
@@ -57,7 +59,7 @@ function AssignmentTab() {
 
   
   
-  const [ViewDiscussion, setViewDiscussion] = useState(false);
+  
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key)
@@ -99,7 +101,7 @@ function AssignmentTab() {
 
   //handleCategory
   const handleCategory = (value) => {
-    
+    setError(false)
     setSelectedData(value);
     setStore2([]);
   };
@@ -122,6 +124,8 @@ function AssignmentTab() {
   const resetData = () => {
   
     reset();
+    setHide("")
+    setError(false)
     setStatus([]);
     setSelectedData([]);
     setStore2([]);
@@ -130,7 +134,7 @@ function AssignmentTab() {
 
   //assingmentStatus
   const assingmentStatus = (value) => {
-    
+    setError(false)
     setStatus(value);
   };
 
@@ -489,8 +493,10 @@ else{
     
 
   const onSubmit = (data) => {
-  
-    axios
+ console.log("hide", hide)
+   if(hide == 1 || hide == 2){
+     if(status.length > 0){
+      axios
       .get(
         `${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(
           userid
@@ -508,6 +514,32 @@ else{
           }
         }
       });
+     }
+     else{
+       setError(true);
+       return false;
+     }
+   }
+   else{
+    axios
+    .get(
+      `${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(
+        userid
+      )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
+      }&assignment_status=${status}&stages_status=${data.p_status
+      }&pcat_id=${selectedData}`
+    )
+    .then((res) => {
+    
+      if (res.data.code === 1) {
+        if (res.data.result) {
+          setAssignment(res.data.result);
+          setRecords(res.data.result.length);
+
+        }
+      }
+    });
+   }
   };
 
 
@@ -527,6 +559,7 @@ else{
 
 
   const disabledHandler = (e) => {
+   setError(false)
     setHide(e.target.value);
   };
 
@@ -638,6 +671,7 @@ else{
                       onChange={assingmentStatus}
                       value={status}
                       allowClear
+                      className={error ? "customError" : ""}
                     >
                       <Option value="Client_Discussion" label="Compilance">
                         <div className="demo-option-label-item">

@@ -8,7 +8,7 @@
 
 
 // // //for server
-export const baseUrl = "https://mazarsapi.multitvsolution.com/mazarapi/v1";
+ export const baseUrl = "https://mazarsapi.multitvsolution.com/mazarapi/v1";
 export const ImageUrl = "https://mazarsapi.multitvsolution.com/mazarapi/assets/image";
 export const ReportUrl = "https://mazarsapi.multitvsolution.com/mazarapi/assets/upload/report";
 
