@@ -435,14 +435,10 @@ rowStyle2 = (row, index) => {
         console.log("data", data)
         axios
             .get(
-                `${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(
-                    userid
-                )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
-                }&assignment_status="Draft_Report"&stages_status=1
-               &pcat_id=${selectedData}`
-            )
+                `${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(userid)}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&assignment_status=Draft_Report&stages_status=1&pcat_id=${selectedData}`)
             .then((res) => {
-                
+              
+          
                 if (res.data.code === 1) {
                     if (res.data.result) {
                         setAssignment(res.data.result);
