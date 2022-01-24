@@ -108,7 +108,7 @@ function QueriesTab(props) {
               Inprogress; Draft Reports ({draft})
             </Tab>
             <Tab style={tabIndex == 2 ? myStyle2 : myStyle1}>
-              Inprogress; Delivery of Final ({final})
+              Inprogress; Delivery of Final Report({final})
             </Tab>
           </TabList>
 

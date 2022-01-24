@@ -309,7 +309,7 @@ function ProposalDetails({
               <td>{nfObject.format(payment_received)}</td>
             </tr>
             <tr>
-              <th scope="row">Payment Due</th>
+              <th scope="row">Payment Overdue</th>
               <td>{dueDate(installment_amount, due_date)}</td>
             </tr>
             <tr>
