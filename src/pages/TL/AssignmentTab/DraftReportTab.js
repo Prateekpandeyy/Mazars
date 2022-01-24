@@ -432,7 +432,7 @@ rowStyle2 = (row, index) => {
 
 
     const onSubmit = (data) => {
-      
+        console.log("data", data)
         axios
             .get(
                 `${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(

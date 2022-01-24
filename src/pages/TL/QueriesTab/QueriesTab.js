@@ -26,23 +26,22 @@ function QueriesTab(props) {
 
   const myStyle1 = {
     backgroundColor: "grey",
-    padding: "12px",
+    padding: "12px 24px",
     borderRadius: "50px",
-    width: "200px",
+    width: "auto",
     textAlign: "center",
     color: "white",
     cursor: "pointer",
   };
   const myStyle2 = {
-    padding: "12px",
+    padding: "12px 24px",
     borderRadius: "50px",
-    width: "200px",
+    width: "auto",
     textAlign: "center",
     backgroundColor: "blue",
     color: "white",
     cursor: "pointer",
   };
-
 
   useLayoutEffect(() => {
     setTabIndex(props.location.index || 0);
@@ -139,7 +138,7 @@ function QueriesTab(props) {
               Pending For Acceptence ({pendindForAccepttence})
             </Tab>
             <Tab style={tabIndex == 3 ? myStyle2 : myStyle1}>
-            Pending for assignment ({complete})
+            Inprogress Assignment to Tp ({complete})
             </Tab>
             
           </TabList>
