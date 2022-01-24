@@ -58,11 +58,11 @@ function AssignmentComponent() {
   }
 
   
-  const ViewHandler = (key) => {
+  // const ViewHandler = (key) => {
   
-    setViewModal(!viewModal);
-    setViewData(key);
-  };
+  //   setViewModal(!viewModal);
+  //   setViewData(key);
+  // };
 
   useEffect(() => {
     getAssignmentData();

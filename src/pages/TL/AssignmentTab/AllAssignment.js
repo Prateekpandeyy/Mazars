@@ -44,6 +44,8 @@ function AssignmentTab() {
   const [assignNo, setAssignNo] = useState('');
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(false);
+ 
+  const [ViewDiscussion, setViewDiscussion] = useState(false);
   var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
 
   const [item] = useState(current_date);
