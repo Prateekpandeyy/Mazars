@@ -260,7 +260,7 @@ const [loading, setLoading] = useState(false)
         `${baseUrl}/customers/getProposals?uid=${JSON.parse(
           id
         )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
-        }&status=2&pcat_id=${selectedData}`
+        }&status=1&pcat_id=${selectedData}`
       )
       .then((res) => {
       
