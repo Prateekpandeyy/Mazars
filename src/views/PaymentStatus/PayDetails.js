@@ -287,21 +287,28 @@ return(
     <Layout custDashboard="custDashboard" custUserId={userId}>
     {paymentDetail === undefined ? "" : 
   <Card>
-      <CardHeader>
-        
-
-             
-            
-      <Link
+             <CardHeader>
+          <Row>
+          <Col md="4">
+            <Link
                   to={{
                     pathname: `/customer/${props.location.routes}`,
                     index: props.location.index,
                   }}
                 >
-                  <button class="btn btn-success">Go Back</button>
+                  <button class="btn btn-success ml-3">Go Back</button>
                 </Link>
-              <h4>Payment Details</h4>
-          </CardHeader>
+              
+            </Col>
+            <Col md="4" style={{ display: "flex", justifyContent: "center" }}>
+              <p style={{ fontSize: "20px" }}>Payment Details</p>
+            </Col>
+            <Col
+              md="4"
+              style={{ display: "flex", justifyContent: "flex-end" }}
+            ></Col>
+          </Row>
+        </CardHeader>
           <CardBody>
    {showTable == true ? 
      <div className="tableFixHead">

@@ -68,6 +68,9 @@ function DeclinedQueries() {
       headerStyle: () => {
         return { fontSize: "12px", width: "50px" };
       },
+      style : {
+       fontSize : "11px"
+        },
     },
     {
       text: "Date",
@@ -76,6 +79,9 @@ function DeclinedQueries() {
       headerStyle: () => {
         return { fontSize: "12px", width: "150px" };
       },
+      style : {
+        wordBreak : "break-word", fontSize : "11px"
+        },
       formatter: function dateFormat(cell, row) {
 
         var oldDate = row.created;
@@ -91,6 +97,9 @@ function DeclinedQueries() {
       headerStyle: () => {
         return { fontSize: "12px",   width: "150px" };
       },
+      style : {
+        wordBreak : "break-word", fontSize : "11px"
+        },
       formatter: function nameFormatter(cell, row) {
               
         return (
@@ -115,6 +124,9 @@ function DeclinedQueries() {
       headerStyle: () => {
         return { fontSize: "12px" , width: "150px" };
       },
+      style : {
+        wordBreak : "break-word", fontSize : "11px"
+        },
     },
     {
       text: "Sub Category",
@@ -123,6 +135,9 @@ function DeclinedQueries() {
       headerStyle: () => {
         return { fontSize: "12px", width: "140px"  };
       },
+      style : {
+        wordBreak : "break-word", fontSize : "11px"
+        },
     },
     {
       text: "Status",
@@ -130,6 +145,9 @@ function DeclinedQueries() {
       headerStyle: () => {
         return { fontSize: "12px", width: "140px"  };
       },
+      style : {
+        wordBreak : "break-word", fontSize : "11px"
+        },
       formatter: function nameFormatter(cell, row) {
         return (
           <>
@@ -165,6 +183,9 @@ function DeclinedQueries() {
       headerStyle: () => {
         return { fontSize: "12px" , width: "150px" };
       },
+      style : {
+        wordBreak : "break-word", fontSize : "11px"
+        },
       formatter: function dateFormat(cell, row) {
    
 
@@ -188,6 +209,9 @@ function DeclinedQueries() {
       headerStyle: () => {
           return { fontSize: "12px", textAlign: "center" };
       },
+      style : {
+        wordBreak : "break-word", fontSize : "11px"
+        },
       formatter: function (cell, row) {
           var dateMnsFive = moment(row.exp_delivery_date).add(15, 'day').format("YYYY-MM-DD");
         
@@ -254,7 +278,7 @@ function DeclinedQueries() {
                               <Link 
                                  to={{
                                     pathname: `/customer/feedback/${row.assign_no}`,
-                                    index: 2,
+                                    index: 3,
                                     routes: "queries",
                                 }}>
                                       <FeedbackIcon />

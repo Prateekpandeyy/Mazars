@@ -66,6 +66,9 @@ function AllAssignment() {
       formatter: (cellContent, row, rowIndex) => {
         return rowIndex + 1;
       },
+      style: {
+        fontSize: "11px",
+    },
       headerStyle: () => {
         return { fontSize: "12px", width: "50px" };
       },
@@ -120,6 +123,9 @@ function AllAssignment() {
       dataField: "parent_id",
       text: "Category",
       sort: true,
+      style: {
+        fontSize: "11px",
+    },
       headerStyle: () => {
         return { fontSize: "12px" };
       },
@@ -128,6 +134,9 @@ function AllAssignment() {
       dataField: "cat_name",
       text: "Sub Category",
       sort: true,
+      style: {
+        fontSize: "11px",
+    },
       headerStyle: () => {
         return { fontSize: "12px" };
       },
@@ -179,6 +188,9 @@ function AllAssignment() {
       dataField: "Exp_Delivery_Date",
       text: "Expected date of delivery",
       sort: true,
+      style: {
+        fontSize: "11px",
+    },
       headerStyle: () => {
         return { fontSize: "12px", width : "120px" , padding: "10px 20px"};
       },
@@ -195,6 +207,9 @@ function AllAssignment() {
       dataField: "final_date",
       text: "Actual date of delivery",
       sort: true,
+      style: {
+        fontSize: "11px",
+    },
       headerStyle: () => {
         return { fontSize: "12px", width : "120px" , padding: "10px 20px"};
       },
@@ -243,6 +258,9 @@ function AllAssignment() {
       headerStyle: () => {
         return { fontSize: "12px" };
       },
+      style: {
+        fontSize: "11px",
+    },
       formatter: priceFormatter,
     },
     {
@@ -250,6 +268,9 @@ function AllAssignment() {
       headerStyle: () => {
         return { fontSize: "12px", textAlign: "center", width: "70px" };
       },
+      style: {
+        fontSize: "11px",
+    },
       formatter: function (cell, row) {
         return (
           <>
@@ -259,7 +280,10 @@ function AllAssignment() {
             <div title="Send Message">
               <Link
                 to={{
-                  pathname: `/customer/chatting/${row.id}`,
+                  pathname: `/customer/chatting/${row.assign_id}`,
+                  index : 0,
+                  routes: "assignment",
+                 
                   obj: {
                     message_type: "4",
                     query_No: row.assign_no,

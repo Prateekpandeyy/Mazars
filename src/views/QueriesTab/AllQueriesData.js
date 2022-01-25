@@ -89,9 +89,9 @@ function AllQueriesData() {
             formatter: (cellContent, row, rowIndex) => {
                 return rowIndex + 1;
             },
-            style : {
-                wordBreak : "break-word"
-                },
+            style: {
+                fontSize: "11px",
+            },
             headerStyle: () => {
                 return { fontSize: "12px"};
             },
@@ -100,7 +100,9 @@ function AllQueriesData() {
             text: "Date",
             dataField: "created",
             sort: true,
-           
+            style: {
+                fontSize: "11px",
+            },
             headerStyle: () => {
               return { fontSize: "11px", width:"120px", padding: "10px 20px", whiteSpace: "nowrap" };
           },
@@ -118,6 +120,9 @@ function AllQueriesData() {
             
             headerStyle: () => {
                 return { fontSize: "12px", width: "120px"};
+            },
+            style: {
+                fontSize: "11px",
             },
             formatter: function nameFormatter(cell, row) {
               
@@ -141,7 +146,7 @@ function AllQueriesData() {
             dataField: "parent_id",
             sort: true,
             style : {
-                wordBreak : "break-word"
+                wordBreak : "break-word", fontSize : "11px"
                 },
             headerStyle: () => {
                 return { fontSize: "12px"};
@@ -152,7 +157,7 @@ function AllQueriesData() {
             dataField: "cat_name",
             sort: true,
             style : {
-                wordBreak : "break-word"
+                wordBreak : "break-word", fontSize : "11px"
                 },
             headerStyle: () => {
                 return { fontSize: "12px"};
@@ -162,7 +167,7 @@ function AllQueriesData() {
             text: "Status",
             dataField: "",
             style : {
-                wordBreak : "break-word"
+                wordBreak : "break-word", fontSize : "11px"
                 },
             headerStyle: () => {
                 return { fontSize: "12px"};
@@ -200,7 +205,7 @@ function AllQueriesData() {
             dataField: "exp_delivery_date",
             sort: true,
             style : {
-                wordBreak : "break-word"
+                wordBreak : "break-word", fontSize : "11px"
                 },
             headerStyle: () => {
                 return { fontSize: "12px"};
@@ -233,6 +238,9 @@ function AllQueriesData() {
             headerStyle: () => {
               return { fontSize: "12px", textAlign: "center", width: "130px"};
             },
+            style : {
+                wordBreak : "break-word", fontSize : "11px"
+                },
           formatter: function (cell, row) {
                 var dateMnsFive = moment(row.exp_delivery_date).add(15, 'day').format("YYYY-MM-DD");
               
@@ -379,17 +387,19 @@ function AllQueriesData() {
                                 {row.status_code == "10" ? null 
                                 : 
                                 <span title="Send Message" className="ml-2">
-                                <Link
-                                    to={{
-                                        pathname: `/customer/chatting/${row.id}&type=4`,
-                                        obj: {
-                                            message_type: "4",
-                                            query_No: row.assign_no,
-                                            query_id: row.id,
-                                            routes: `/customer/queries`
-                                        }
-                                    }}
-                                >
+                                 <Link
+                                        to={{
+                                            pathname: `/customer/chatting/${row.id}&type=4`,
+                                            index: 0,
+                                    routes: "queries",
+                                            obj: {
+                                                message_type: "4",
+                                                query_No: row.assign_no,
+                                                query_id: row.id,
+                                                routes: `/customer/queries`
+                                            }
+                                        }}
+                                    >
                                     <i
                                         className="fa fa-comments-o"
                                         style={{

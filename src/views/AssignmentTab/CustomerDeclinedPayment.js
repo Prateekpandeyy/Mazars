@@ -68,6 +68,9 @@ function CustomerDeclinedPayment() {
             headerStyle: () => {
                 return { fontSize: "12px", width: "50px" };
             },
+            style: {
+                fontSize: "11px",
+            },
         },
         {
             dataField: "created",
@@ -119,6 +122,9 @@ function CustomerDeclinedPayment() {
             dataField: "parent_id",
             text: "Category",
             sort: true,
+            style: {
+                fontSize: "11px",
+            },
             headerStyle: () => {
                 return { fontSize: "12px" };
             },
@@ -127,6 +133,9 @@ function CustomerDeclinedPayment() {
             dataField: "cat_name",
             text: "Sub Category",
             sort: true,
+            style: {
+                fontSize: "11px",
+            },
             headerStyle: () => {
                 return { fontSize: "12px" };
             },
@@ -178,6 +187,9 @@ function CustomerDeclinedPayment() {
             dataField: "Exp_Delivery_Date",
             text: "Expected date of delivery",
             sort: true,
+            style: {
+                fontSize: "11px",
+            },
             headerStyle: () => {
         return { fontSize: "12px", width : "120px" , padding: "10px 20px"};
       },            formatter: function dateFormat(cell, row) {
@@ -193,6 +205,9 @@ function CustomerDeclinedPayment() {
             dataField: "final_date",
             text: "Actual date of delivery",
             sort: true,
+            style: {
+                fontSize: "11px",
+            },
             headerStyle: () => {
         return { fontSize: "12px", width : "120px" , padding: "10px 20px"};
       },            formatter: function dateFormat(cell, row) {
@@ -240,12 +255,18 @@ function CustomerDeclinedPayment() {
             headerStyle: () => {
                 return { fontSize: "12px" };
             },
+            style: {
+                fontSize: "11px",
+            },
             formatter: priceFormatter,
         },
         {
             text: "Action",
             headerStyle: () => {
                 return { fontSize: "12px", textAlign: "center", width: "70px" };
+            },
+            style: {
+                fontSize: "11px",
             },
             formatter: function (cell, row) {
                 return (
@@ -255,8 +276,11 @@ function CustomerDeclinedPayment() {
 
                         <div title="Send Message">
                             <Link
-                                to={{
-                                    pathname: `/customer/chatting/${row.id}`,
+                               
+                                    to={{
+                                        pathname: `/customer/chatting/${row.assign_id}`,
+                                        index : 3,
+                                        routes: "assignment",
                                     obj: {
                                         message_type: "4",
                                         query_No: row.assign_no,

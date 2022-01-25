@@ -75,6 +75,9 @@ function InprogressAssignment() {
       formatter: (cellContent, row, rowIndex) => {
         return rowIndex + 1;
       },
+      style: {
+        fontSize: "11px",
+    },
       headerStyle: () => {
         return { fontSize: "12px", width: "50px" };
       },
@@ -129,6 +132,9 @@ function InprogressAssignment() {
       dataField: "parent_id",
       text: "Category",
       sort: true,
+      style: {
+        fontSize: "11px",
+    },
       headerStyle: () => {
         return { fontSize: "12px" };
       },
@@ -137,6 +143,9 @@ function InprogressAssignment() {
       dataField: "cat_name",
       text: "Sub Category",
       sort: true,
+      style: {
+        fontSize: "11px",
+    },
       headerStyle: () => {
         return { fontSize: "12px" };
       },
@@ -191,6 +200,9 @@ function InprogressAssignment() {
       headerStyle: () => {
         return { fontSize: "12px", width : "120px" , padding: "10px 20px"};
       },
+      style: {
+        fontSize: "11px",
+    },
       formatter: function dateFormat(cell, row) {
        
         var oldDate = row.created;
@@ -207,6 +219,9 @@ function InprogressAssignment() {
       headerStyle: () => {
         return { fontSize: "12px", width : "120px" , padding: "10px 20px"};
       },
+      style: {
+        fontSize: "11px",
+    },
       formatter: function dateFormat(cell, row) {
     
         var oldDate = row.final_date;
@@ -253,6 +268,9 @@ function InprogressAssignment() {
       headerStyle: () => {
         return { fontSize: "12px" };
       },
+      style: {
+        fontSize: "11px",
+    },
       formatter: priceFormatter,
     },
     {
@@ -260,6 +278,9 @@ function InprogressAssignment() {
       headerStyle: () => {
         return { fontSize: "12px", textAlign: "center", width: "70px" };
       },
+      style: {
+        fontSize: "11px",
+    },
       formatter: function (cell, row) {
         return (
           <>
@@ -268,8 +289,11 @@ function InprogressAssignment() {
 
               <div title="Send Message">
                 <Link
-                  to={{
-                    pathname: `/customer/chatting/${row.id}`,
+                
+                    to={{
+                      pathname: `/customer/chatting/${row.assign_id}`,
+                      index : 1,
+                      routes: "assignment",
                     obj: {
                       message_type: "4",
                       query_No: row.assign_no,

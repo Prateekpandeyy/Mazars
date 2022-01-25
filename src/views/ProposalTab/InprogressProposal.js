@@ -111,7 +111,7 @@ function InprogressProposal() {
                         <Link
                             to={{
                                 pathname: `/customer/my-assingment/${row.q_id}`,
-                                index: 0,
+                                index: 1,
                                 routes: "proposal",
                             }}
                         >
@@ -289,8 +289,11 @@ function InprogressProposal() {
                         {row.statuscode === "6" ? <div style={{display : "flex", justifyContent : "flex-start"}}>
                         <div title="Send Message">
                                     <Link
-                                        to={{
-                                            pathname: `/customer/chatting/${row.q_id}&type=2`,
+                                       
+                                            to={{
+                                                pathname: `/customer/chatting/${row.q_id}&type=2`,
+                                                index: 1,
+                                                routes: "proposal",
                                             obj: {
                                                 message_type: "3",
                                                 query_No: row.assign_no,
@@ -326,8 +329,10 @@ function InprogressProposal() {
                             <div style={{ display: "flex", justifyContent: "flex-start"}}>
                                 <div title="Send Message">
                                     <Link
-                                        to={{
-                                            pathname: `/customer/chatting/${row.q_id}&type=2`,
+ to={{
+    pathname: `/customer/chatting/${row.q_id}&type=2`,
+    index: 1,
+    routes: "proposal",
                                             obj: {
                                                 message_type: "3",
                                                 query_No: row.assign_no,
@@ -382,7 +387,14 @@ function InprogressProposal() {
                                         row.statuscode == 4
                                             ?
                                             <div style={{ cursor: "pointer" }} title="Decision on Proposal" className="ml-2">
-                                                <Link to={`/customer/proposal_view/${row.q_id}`}>
+                                                 <Link
+                                      to={{
+                                        pathname: `/customer/proposal_view/${row.q_id}`,
+                                        index: 1,
+                                        routes: "proposal",     
+                                            
+                                        }}
+                                    >
                                                     <i
                                                         class="fa fa-share"
                                                         style={{

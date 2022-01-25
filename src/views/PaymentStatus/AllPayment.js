@@ -432,8 +432,12 @@ function Paid() {
 
           <div title="Send Message" style={{pointer : "cursor", margin: "0 5px"}}>
             <Link
-              to={{
-                pathname: `/customer/chatting/${row.assign_id}`,
+            to={{
+              pathname: `/customer/chatting/${row.assign_id}`,
+              index : 0,
+              routes: "paymentstatus",
+             
+              
                 obj: {
                   message_type: "5",
                   query_No: row.assign_no,

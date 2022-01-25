@@ -425,6 +425,10 @@ function Paid() {
             <Link
               to={{
                 pathname: `/customer/chatting/${row.assign_id}`,
+                index : 1,
+                routes: "paymentstatus",
+               
+                
                 obj: {
                   message_type: "5",
                   query_No: row.assign_no,

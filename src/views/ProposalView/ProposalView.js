@@ -232,11 +232,16 @@ const amountStyle  = {
       <Card>
         <CardHeader>
           <Row>
-            <Col md="4">
-              <button class="btn btn-success" onClick={() => history.goBack()}>
-                <i class="fas fa-arrow-left mr-2"></i>
-                Go Back
-              </button>
+          <Col md="4">
+            <Link
+                  to={{
+                    pathname: `/customer/${props.location.routes}`,
+                    index: props.location.index,
+                  }}
+                >
+                  <button class="btn btn-success ml-3">Go Back</button>
+                </Link>
+              
             </Col>
             <Col md="4" style={{ display: "flex", justifyContent: "center" }}>
               <p style={{ fontSize: "20px" }}>Proposal Details</p>

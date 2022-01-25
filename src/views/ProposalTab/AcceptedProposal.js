@@ -274,6 +274,8 @@ function AcceptedProposal() {
                                     <Link
                                         to={{
                                             pathname: `/customer/chatting/${row.q_id}&type=2`,
+                                            index: 2,
+                                            routes: "proposal",
                                             obj: {
                                                 message_type: "3",
                                                 query_No: row.assign_no,

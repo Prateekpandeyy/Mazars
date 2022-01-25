@@ -72,9 +72,9 @@ function InprogressAllocation() {
         formatter: (cellContent, row, rowIndex) => {
             return rowIndex + 1;
         },
-        style : {
-            wordBreak : "break-word"
-            },
+         style : {
+               fontSize : "11px"
+                },
         headerStyle: () => {
             return { fontSize: "12px"};
         },
@@ -83,7 +83,9 @@ function InprogressAllocation() {
         text: "Date",
         dataField: "created",
         sort: true,
-       
+        style : {
+          fontSize : "11px"
+          },
         headerStyle: () => {
           return { fontSize: "11px", width:"120px", padding: "10px 20px", whiteSpace: "nowrap" };
       },
@@ -98,7 +100,9 @@ function InprogressAllocation() {
     {
         text: "Query No",
         dataField: "assign_no",
-        
+        style : {
+          wordBreak : "break-word", fontSize : "11px"
+          }, 
         headerStyle: () => {
             return { fontSize: "12px", width: "120px"};
         },
@@ -123,9 +127,9 @@ function InprogressAllocation() {
         text: "Category",
         dataField: "parent_id",
         sort: true,
-        style : {
-            wordBreak : "break-word"
-            },
+         style : {
+                wordBreak : "break-word", fontSize : "11px"
+                },
         headerStyle: () => {
             return { fontSize: "12px"};
         },
@@ -134,9 +138,9 @@ function InprogressAllocation() {
         text: "Sub Category",
         dataField: "cat_name",
         sort: true,
-        style : {
-            wordBreak : "break-word"
-            },
+         style : {
+                wordBreak : "break-word", fontSize : "11px"
+                },
         headerStyle: () => {
             return { fontSize: "12px"};
         },
@@ -144,9 +148,9 @@ function InprogressAllocation() {
     {
         text: "Status",
         dataField: "",
-        style : {
-            wordBreak : "break-word"
-            },
+         style : {
+                wordBreak : "break-word", fontSize : "11px"
+                },
         headerStyle: () => {
             return { fontSize: "12px"};
         },
@@ -182,9 +186,9 @@ function InprogressAllocation() {
         text: "Expected / Actual Delivery Date",
         dataField: "exp_delivery_date",
         sort: true,
-        style : {
-            wordBreak : "break-word"
-            },
+         style : {
+                wordBreak : "break-word", fontSize : "11px"
+                },
         headerStyle: () => {
             return { fontSize: "12px"};
         },
@@ -216,6 +220,9 @@ function InprogressAllocation() {
       headerStyle: () => {
         return { fontSize: "12px", textAlign: "center", width: "130px" };
       },
+      style : {
+        wordBreak : "break-word", fontSize : "11px"
+        },
       formatter: function (cell, row) {
         var dateMnsFive = moment(row.exp_delivery_date).add(15, 'day').format("YYYY-MM-DD");
               
@@ -258,7 +265,9 @@ function InprogressAllocation() {
                         <div title="Send Message">
                           <Link
                             to={{
-                              pathname: `/customer/chatting/${row.id}&type=4`,
+                              pathname: `/customer/chatting/${row.id}&type=4`,  
+                                index: 1,
+                                routes: "queries",
                               obj: {
                                 message_type: "4",
                                 query_No: row.assign_no,
@@ -324,8 +333,11 @@ function InprogressAllocation() {
                         }
                         <div title="Send Message">
                           <Link
-                            to={{
-                              pathname: `/customer/chatting/${row.id}&type=4`,
+                             to={{
+                             
+                              pathname: `/customer/chatting/${row.id}&type=4`,  
+                                index: 1,
+                                routes: "queries",
                               obj: {
                                 message_type: "4",
                                 query_No: row.assign_no,

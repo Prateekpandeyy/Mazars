@@ -58,6 +58,9 @@ function InprogressProposal() {
       formatter: (cellContent, row, rowIndex) => {
         return rowIndex + 1;
       },
+      style : {
+      fontSize : "11px"
+        },
       headerStyle: () => {
         return { fontSize: "12px", width: "50px" };
       },
@@ -66,7 +69,9 @@ function InprogressProposal() {
       text: "Date",
       dataField: "created",
       sort: true,
-     
+      style : {
+        wordBreak : "break-word", fontSize : "11px"
+        },
       headerStyle: () => {
           return { fontSize: "12px", width: "170px"};
       },
@@ -85,6 +90,9 @@ function InprogressProposal() {
       headerStyle: () => {
           return { fontSize: "12px", width: "100px"};
       },
+      style : {
+        wordBreak : "break-word", fontSize : "11px"
+        },
       formatter: function nameFormatter(cell, row) {
         
           return (
@@ -109,6 +117,9 @@ function InprogressProposal() {
       headerStyle: () => {
         return { fontSize: "12px"};
       },
+      style : {
+        wordBreak : "break-word", fontSize : "11px"
+        },
     },
     {
       text: "Sub Category",
@@ -117,6 +128,9 @@ function InprogressProposal() {
       headerStyle: () => {
         return { fontSize: "12px"};
       },
+      style : {
+        wordBreak : "break-word", fontSize : "11px"
+        },
     },
     {
       text: "Status",
@@ -124,6 +138,9 @@ function InprogressProposal() {
       headerStyle: () => {
         return { fontSize: "12px"};
       },
+      style : {
+        wordBreak : "break-word", fontSize : "11px"
+        },
       formatter: function nameFormatter(cell, row) {
         return (
           <>
@@ -142,6 +159,9 @@ function InprogressProposal() {
       headerStyle: () => {
         return { fontSize: "12px"};
       },
+      style : {
+        wordBreak : "break-word", fontSize : "11px"
+        },
       formatter: function dateFormat(cell, row) {
         
 
@@ -165,6 +185,9 @@ function InprogressProposal() {
       headerStyle: () => {
         return { fontSize: "12px", textAlign: "center", width: "130px"};
       },
+      style : {
+        wordBreak : "break-word", fontSize : "11px"
+        },
       formatter: function (cell, row) {
         var dateMnsFive = moment(row.exp_delivery_date).add(15, 'day').format("YYYY-MM-DD");
               
@@ -204,7 +227,10 @@ function InprogressProposal() {
                         <div title="Send Message">
                           <Link
                             to={{
-                              pathname: `/customer/chatting/${row.id}&type=4`,
+                             
+                                pathname: `/customer/chatting/${row.id}&type=4`,  
+                                  index: 2,
+                                  routes: "queries",
                               obj: {
                                 message_type: "4",
                                 query_No: row.assign_no,

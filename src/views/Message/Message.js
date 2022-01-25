@@ -163,7 +163,8 @@ function Message(props) {
     return (
         <Layout custDashboard="custDashboard" custUserId={userId}>
             <Card>
-                <CardHeader>
+                
+                {/* <CardHeader>
                     <Row>
                         <Col md="9">
                             <CardTitle tag="h4">Message</CardTitle>
@@ -178,7 +179,28 @@ function Message(props) {
               </button>
                         </Col>
                     </Row>
-                </CardHeader>
+                </CardHeader> */}
+                        <CardHeader>
+          <Row>
+          <Col md="4">
+          <button
+                class="btn btn-success" 
+                onClick={() => history.goBack()}
+              >
+                <i class="fas fa-arrow-left mr-2"></i>
+                Go Back
+              </button>
+              
+            </Col>
+            <Col md="4" style={{ display: "flex", justifyContent: "center" }}>
+              <p style={{ fontSize: "20px" }}>Proposal Details</p>
+            </Col>
+            <Col
+              md="4"
+              style={{ display: "flex", justifyContent: "flex-end" }}
+            ></Col>
+          </Row>
+        </CardHeader>
                 <CardBody style={{display : "flex", height : "80vh", overflowY : "scroll"}}>
                     <BootstrapTable
                         bootstrap4
