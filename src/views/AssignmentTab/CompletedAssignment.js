@@ -14,7 +14,6 @@ import Records from "../../components/Records/Records";
 import DescriptionOutlinedIcon from '@material-ui/icons/DescriptionOutlined';
 import Alerts from "../../common/Alerts";
 import DiscardReport from "../AssignmentTab/DiscardReport";
-import './index.css';
 
 
 function CompleteAssignment() {
@@ -67,7 +66,7 @@ function CompleteAssignment() {
         return rowIndex + 1;
       },
       headerStyle: () => {
-        return { fontSize: "12px", width: "50px" };
+        return { fontSize: "12px"};
       },
     },
     {
@@ -132,7 +131,7 @@ function CompleteAssignment() {
         fontSize: "11px",
       },
       headerStyle: () => {
-        return { fontSize: "12px", width: "200px" };
+        return { fontSize: "12px"};
       },
       formatter: function (cell, row) {
         return (
@@ -287,7 +286,7 @@ function CompleteAssignment() {
     {
       text: "Action",
       headerStyle: () => {
-        return { fontSize: "12px", textAlign: "center", width: "70px" };
+        return { fontSize: "12px", textAlign: "center"};
       },
       formatter: function (cell, row) {
         return (

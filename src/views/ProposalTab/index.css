@@ -1,4 +1,4 @@
-.table_head_Proposal th {
+/* .table_head_Proposal th {
   font-size: 11px;
   padding: 3.5px;
 }
@@ -20,7 +20,7 @@
   display:  flex;
   justify-content:  flex-end;
   border:  0px;
-}
+} */
 /* 
 
 .tableFixHead          { overflow-y: auto; height: 100px; }

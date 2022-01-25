@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useMemo } from "react";
-import Layout from "../../components/Layout/Layout";
+import React, { useState, useEffect} from "react";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
 import { useAlert } from "react-alert";
@@ -16,7 +15,6 @@ import Records from "../../components/Records/Records";
 import CommonServices from "../../common/common";
 import moment from "moment";
 import FeedbackIcon from '@material-ui/icons/Feedback';
-import './index.css';
 import DiscardReport from "../AssignmentTab/DiscardReport";
 function InprogressProposal() {
   const alert = useAlert();
@@ -58,17 +56,13 @@ function InprogressProposal() {
       formatter: (cellContent, row, rowIndex) => {
         return rowIndex + 1;
       },
-      headerStyle: () => {
-        return { fontSize: "12px", width: "50px" };
-      },
+     
     },
     {
       text: "Date",
       dataField: "created",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" , width: "180px"};
-      },
+     
       formatter: function dateFormat(cell, row) {
        
         var oldDate = row.created;
@@ -81,9 +75,7 @@ function InprogressProposal() {
     {
       text: "Query No",
       dataField: "assign_no",
-      headerStyle: () => {
-        return { fontSize: "12px", width: "180px" };
-      },
+     
       formatter: function nameFormatter(cell, row) {
        
         return (
@@ -105,24 +97,18 @@ function InprogressProposal() {
       text: "Category",
       dataField: "parent_id",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px", width :"180px"};
-      },
+     
     },
     {
       text: "Sub Category",
       dataField: "cat_name",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" , width: "180px"};
-      },
+     
     },
     {
       text: "Status",
       dataField: "",
-      headerStyle: () => {
-        return { fontSize: "12px" , width: "180px"};
-      },
+     
       formatter: function nameFormatter(cell, row) {
         return (
           <>
@@ -138,9 +124,7 @@ function InprogressProposal() {
       text: "Actual Delivery Date",
       dataField: "final_date",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" , width: "180px"};
-      },
+     
       formatter: function dateFormat(cell, row) {
         
 
@@ -162,7 +146,7 @@ function InprogressProposal() {
     {
       text: "Action",
       headerStyle: () => {
-        return { fontSize: "12px", textAlign: "center", width: "180px" };
+        return { fontSize: "12px", textAlign: "center" };
       },
       formatter: function (cell, row) {
         var dateMnsFive = moment(row.exp_delivery_date).add(15, 'day').format("YYYY-MM-DD");
@@ -251,13 +235,14 @@ function InprogressProposal() {
             rowIndex
             classes="table-responsive"
           />
-                              <DiscardReport
+                            
+          </div>
+          <DiscardReport
                         ViewDiscussionToggel={ViewDiscussionToggel}
                         ViewDiscussion={ViewDiscussion}
                         report={assignNo}
                         getData={getQueriesData}
                     />
-          </div>
         </CardBody>
       </Card>
     </div>

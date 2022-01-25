@@ -2,14 +2,12 @@ import React, { useState, useEffect, useLayoutEffect } from "react";
 import Layout from "../../components/Layout/Layout";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
-import { useAlert } from "react-alert";
 import { Tab, Tabs, TabPanel, TabList } from "react-tabs";
-
 import AllQueriesData from "./AllQueriesData";
 import InprogressAllocation from "./InprogressAllocation";
 import InprogressProposal from "./InprogressProposal";
 import DeclinedQueries from "./DeclinedQueries";
-
+import style from './QueryStyle.module.css';
 
 
 
@@ -76,18 +74,22 @@ function QueriesTab(props) {
   };
 
   const myStyle1 = {
+    display : "flex",
     backgroundColor: "grey",
-    padding: "12px",
+    padding: "12px 24px",
+    margin : "10px auto",
     borderRadius: "50px",
-    width: "200px",
+    width: "auto",
     textAlign: "center",
     color: "white",
     cursor: "pointer",
   };
   const myStyle2 = {
-    padding: "12px",
+    display : "flex",
+    padding: "12px 24px",
+    margin : "10px auto",
     borderRadius: "50px",
-    width: "200px",
+    width: "auto",
     textAlign: "center",
     backgroundColor: "blue",
     color: "white",
@@ -96,8 +98,8 @@ function QueriesTab(props) {
 
   return (
     <Layout custDashboard="custDashboard" custUserId={userId}>
-      <div>
-        <Tabs selectedIndex={tabIndex} onSelect={(index) => setTabIndex(index)}>
+      <div className={style.tabDivStyle}>
+        <Tabs selectedIndex={tabIndex} onSelect={(index) => setTabIndex(index)} className={style.tabStyle}>
           <TabList
             style={{
               listStyleType: "none",

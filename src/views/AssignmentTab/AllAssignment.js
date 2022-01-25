@@ -13,7 +13,6 @@ import ViewAllReportModal from "./ViewAllReport";
 import Records from "../../components/Records/Records";
 import DescriptionOutlinedIcon from '@material-ui/icons/DescriptionOutlined';
 import DiscardReport from "../AssignmentTab/DiscardReport";
-import './index.css'
 
 
 function AllAssignment() {
@@ -66,17 +65,13 @@ function AllAssignment() {
       formatter: (cellContent, row, rowIndex) => {
         return rowIndex + 1;
       },
-      headerStyle: () => {
-        return { fontSize: "12px", width: "50px" };
-      },
+     
     },
     {
       dataField: "created",
       text: "Date",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
+     
       formatter: function dateFormat(cell, row) {
        
         var oldDate = row.created;
@@ -89,9 +84,7 @@ function AllAssignment() {
     {
       dataField: "assign_no",
       text: "Query No",
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
+     
       formatter: function nameFormatter(cell, row) {
               
         return (
@@ -113,27 +106,18 @@ function AllAssignment() {
       dataField: "parent_id",
       text: "Category",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
+     
     },
     {
       dataField: "cat_name",
       text: "Sub Category",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
+     
     },
     {
       dataField: "status",
       text: "Status",
-      style: {
-        fontSize: "11px",
-      },
-      headerStyle: () => {
-        return { fontSize: "12px", width: "200px" };
-      },
+     
       formatter: function (cell, row) {
         return (
           <>
@@ -172,9 +156,7 @@ function AllAssignment() {
       dataField: "Exp_Delivery_Date",
       text: "Expected date of delivery",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
+     
       formatter: function dateFormat(cell, row) {
       
         var oldDate = row.created;
@@ -188,9 +170,7 @@ function AllAssignment() {
       dataField: "final_date",
       text: "Actual date of delivery",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
+     
       formatter: function dateFormat(cell, row) {
        
         var oldDate = row.final_date;
@@ -203,9 +183,7 @@ function AllAssignment() {
     {
       dataField: "",
       text: "Deliverable",
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
+     
       formatter: function (cell, row) {
      
         return (
@@ -233,16 +211,12 @@ function AllAssignment() {
     {
       dataField: "",
       text: "Team Leader name and contact number, email",
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
+      
       formatter: priceFormatter,
     },
     {
       text: "Action",
-      headerStyle: () => {
-        return { fontSize: "12px", textAlign: "center", width: "70px" };
-      },
+     
       formatter: function (cell, row) {
         return (
           <>

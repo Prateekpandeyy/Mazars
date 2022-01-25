@@ -44,9 +44,9 @@ function AdminHeader({ custUserId, adminUserId, TLuserId, TPuserId , feedbackNum
  
   
   return (
-    <div>
+   
       <nav
-        className="header-navbar navbar-expand-md navbar navbar-with-menu navbar-without-dd-arrow fixed-top navbar-semi-light"
+        className="header-navbar navbar-expand-md navbar navbar-with-menu navbar-without-dd-arrow  navbar-semi-light"
         sty
       >
         {custUserId && (
@@ -72,7 +72,7 @@ function AdminHeader({ custUserId, adminUserId, TLuserId, TPuserId , feedbackNum
           name="taxprofessional" email={tpEmail}
         />}
       </nav>
-    </div>
+  
   );
 }
 

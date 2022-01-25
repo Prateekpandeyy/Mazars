@@ -3,13 +3,11 @@ import Layout from "../../components/Layout/Layout";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
 import { Tab, Tabs, TabPanel, TabList } from "react-tabs";
-
-
 import AllAssignment from "./AllAssignment";
 import InprogressAssignment from "./InprogressAssignment";
 import CompletedAssignment from "./CompletedAssignment";
 import CustomerDeclinedPayment from "./CustomerDeclinedPayment";
-
+import style from './Assignment.module.css';
 
 
 function AssignmentTab(props) {
@@ -105,8 +103,8 @@ function AssignmentTab(props) {
 
   return (
     <Layout custDashboard="custDashboard" custUserId={userId}>
-      <div>
-        <Tabs selectedIndex={tabIndex} onSelect={(index) => setTabIndex(index)}>
+     <div className={style.tabDivStyle}>
+        <Tabs selectedIndex={tabIndex} onSelect={(index) => setTabIndex(index)} className={style.tabStyle}>
           <TabList
             style={{
               listStyleType: "none",

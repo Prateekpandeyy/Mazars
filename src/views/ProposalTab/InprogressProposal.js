@@ -73,7 +73,7 @@ function InprogressProposal() {
                 return rowIndex + 1;
             },
             headerStyle: () => {
-                return { fontSize: "11px", width: "50px" };
+                return { fontSize: "11px"};
             },
         },
         {
