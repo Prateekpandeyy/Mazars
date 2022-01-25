@@ -130,7 +130,7 @@ rowStyle2 = (row, index) => {
                 fontSize: "11px",
             },
             headerStyle: () => {
-                return { fontSize: "11px" };
+                return { fontSize: "11px" , width : "120px"};
             },
             formatter: function dateFormat(cell, row) {
 
@@ -148,7 +148,7 @@ rowStyle2 = (row, index) => {
                 fontSize: "11px",
             },
             headerStyle: () => {
-                return { fontSize: "11px" };
+                return { fontSize: "11px" , width : "100px"};
             },
             formatter: function nameFormatter(cell, row) {
                 return (
@@ -196,7 +196,7 @@ rowStyle2 = (row, index) => {
                 fontSize: "11px",
             },
             headerStyle: () => {
-                return { fontSize: "11px" };
+                return { fontSize: "11px", width : "100px" };
             },
             formatter: function dateFormat(cell, row) {
               
@@ -312,7 +312,7 @@ rowStyle2 = (row, index) => {
                 fontSize: "11px",
             },
             headerStyle: () => {
-                return { fontSize: "11px" };
+                return { fontSize: "11px" , width : "80px"};
             },
             formatter: function dateFormat(cell, row) {
             
@@ -342,15 +342,12 @@ rowStyle2 = (row, index) => {
     style={{ color: "green", fontSize: "16px", cursor: "pointer" }}
 >
 <Link
-              to={{
+          
+            to={{
                 pathname: `/taxprofessional/paydetails/${row.assign_id}`,
-                obj: {
-                  message_type: "5",
-                  query_No: row.assign_no,
-                  query_id: row.assign_id,
-                  routes: `/taxprofessional/paymentstatus`
-                }
-              }}
+                index : 0,
+                routes: "paymentstatus",
+            }}
             >
                             <i
                                 class="fa fa-credit-card"
@@ -379,23 +376,20 @@ rowStyle2 = (row, index) => {
 
                             style={{ color: "green", fontSize: "16px", cursor: "pointer" }}
                         >
-                           <Link
-              to={{
-                pathname: `/taxprofessional/paydetails/${row.assign_id}`,
-                obj: {
-                  message_type: "5",
-                  query_No: row.assign_no,
-                  query_id: row.assign_id,
-                  routes: `/taxprofessional/paymentstatus`
-                }
-              }}
-            >
-                            <i
-                                class="fa fa-credit-card"
-                                style={{ color: "green", fontSize: "16px" }}
-                                // onClick={() => toggle(row.assign_id)}
-                            ></i>
-                            </Link>
+                          <Link
+          
+          to={{
+              pathname: `/taxprofessional/paydetails/${row.assign_id}`,
+              index : 0,
+              routes: "paymentstatus",
+          }}
+          >
+                          <i
+                              class="fa fa-credit-card"
+                              style={{ color: "green", fontSize: "16px" }}
+                              // onClick={() => toggle(row.assign_id)}
+                          ></i>
+                          </Link>
                         </div>
                         <div title="Send Message">
                             <Link

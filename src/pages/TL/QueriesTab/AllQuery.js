@@ -126,7 +126,7 @@ function AllQuery() {
             },
         },
         {
-            text: "	Exp. Delivery Date",
+            text: "Delivery Due Date   / Acutal Delivery Date",
             dataField: "Exp_Delivery_Date",
             sort: true,
             headerStyle: () => {

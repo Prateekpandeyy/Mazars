@@ -161,7 +161,7 @@ const CreateInvoice = () => {
             text: "Action",
             dataField: "",
             headerStyle: () => {
-                return { fontSize: "12px", width: "110px" };
+                return { fontSize: "11px", width: "110px" };
             },
             formatter: function (cell, row) {
 

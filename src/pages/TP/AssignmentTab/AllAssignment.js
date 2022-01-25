@@ -538,8 +538,8 @@ else{
             setAssignment(res.data.result);
             setRecords(res.data.result.length);
 
-          }
         }
+      }
       });
     }
   };
@@ -655,9 +655,9 @@ else{
                   onChange={(e) => disabledHandler(e)}
                 >
                   <option value="">--select--</option>
-                  <option value="1">Pending</option>
-                  <option value="2">Complete</option>
-                  <option value="3">Payment Decline</option>
+                  <option value="1">Inprogress</option>
+                  <option value="2">Completed</option>
+                  <option value="3">Payment Declined</option>
                 </select>
               </div>
 
@@ -771,7 +771,6 @@ else{
 }
 
 export default AssignmentTab;
-
 
 
 

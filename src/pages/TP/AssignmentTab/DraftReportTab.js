@@ -423,12 +423,7 @@ function AssignmentTab() {
        
         axios
             .get(
-                `${baseUrl}/tp/getAssignments?tp_id=${JSON.parse(
-                    userid
-                )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
-                }&assignment_status="Draft_Report"&stages_status=1
-               &pcat_id=${selectedData}`
-            )
+                `${baseUrl}/tl/getAssignments?tp_id=${JSON.parse(userid)}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&assignment_status=Draft_Report&stages_status=1&pcat_id=${selectedData}`)
             .then((res) => {
               
                 if (res.data.code === 1) {

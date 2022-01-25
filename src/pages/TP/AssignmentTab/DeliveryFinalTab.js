@@ -418,14 +418,10 @@ const ViewReport = (key) => {
     const onSubmit = (data) => {
       
         axios
-            .get(
-                `${baseUrl}/tl/getAssignments?tp_id=${JSON.parse(
-                    userid
-                )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
-                }&assignment_status=${status}&stages_status=${data.p_status
-                }&pcat_id=${selectedData}`
-            )
-            .then((res) => {
+        .get(
+            `${baseUrl}/tl/getAssignments?tp_id=${JSON.parse(userid)}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&assignment_status=Delivery_of_report&stages_status=1&pcat_id=${selectedData}`)
+        .then((res) => {
+          
                
                 if (res.data.code === 1) {
                     if (res.data.result) {

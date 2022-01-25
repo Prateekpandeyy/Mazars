@@ -129,7 +129,7 @@ rowStyle2 = (row, index) => {
                 fontSize: "11px",
             },
             headerStyle: () => {
-                return { fontSize: "11px" };
+                return { fontSize: "11px" , width : "120px"};
             },
             formatter: function dateFormat(cell, row) {
             
@@ -147,7 +147,7 @@ rowStyle2 = (row, index) => {
                 fontSize: "11px",
             },
             headerStyle: () => {
-                return { fontSize: "11px" };
+                return { fontSize: "11px" , width : "100px"};
             },
             formatter: function nameFormatter(cell, row) {
               
@@ -197,7 +197,7 @@ rowStyle2 = (row, index) => {
                 fontSize: "11px",
             },
             headerStyle: () => {
-                return { fontSize: "11px" };
+                return { fontSize: "11px", width : "100px" };
             },
             formatter: function dateFormat(cell, row) {
               
@@ -210,13 +210,22 @@ rowStyle2 = (row, index) => {
         },
         {
             text: "Status",
-            dataField: "status",
+            dataField: "",
             style: {
                 fontSize: "11px",
             },
             headerStyle: () => {
                 return { fontSize: "11px" };
             },
+            formatter : function (cell, row) {
+                return(
+                    <>
+                    {row.paid_status == "2"  ?
+                    <p style={{color : "red"}}>{row.status} </p> : 
+                    <p>{row.status}</p>}
+                    </>
+                )
+            }
         },
         {
             dataField: "accepted_amount",
@@ -304,7 +313,7 @@ rowStyle2 = (row, index) => {
                 fontSize: "11px",
             },
             headerStyle: () => {
-                return { fontSize: "11px" };
+                return { fontSize: "11px", width : "100px" };
             },
             formatter: function dateFormat(cell, row) {
               
@@ -333,26 +342,21 @@ rowStyle2 = (row, index) => {
                          <div title="Payment History"
  
                              style={{ color: "green", fontSize: "16px", cursor: "pointer" }}
-                         >   <Link
-                         to={{
-                             pathname: `/taxprofessional/chatting/${row.assign_id}`,
-                             obj: {
-                                 message_type: "5",
-                                 query_No: row.assign_no,
-                                 query_id: row.assign_id,
-                                 routes: `/taxprofessional/paymentstatus`
-                             }
-                         }}
-                     >
-                         <i
-                             class="fa fa-comments-o"
-                             style={{
-                                 fontSize: 18,
-                                 cursor: "pointer",
-                                 color: "blue"
-                             }}
-                         ></i>
-                     </Link>
+                         >  
+                         <Link
+          
+          to={{
+              pathname: `/taxprofessional/paydetails/${row.assign_id}`,
+              index : 1,
+              routes: "paymentstatus",
+          }}
+          >
+                          <i
+                              class="fa fa-credit-card"
+                              style={{ color: "green", fontSize: "16px" }}
+                              // onClick={() => toggle(row.assign_id)}
+                          ></i>
+                          </Link>
                          </div>
                         
  
@@ -376,23 +380,20 @@ rowStyle2 = (row, index) => {
 
                             style={{ color: "green", fontSize: "16px", cursor: "pointer" }}
                         >
-                          <Link
-              to={{
-                pathname: `/taxprofessional/paydetails/${row.assign_id}`,
-                obj: {
-                  message_type: "5",
-                  query_No: row.assign_no,
-                  query_id: row.assign_id,
-                  routes: `/taxprofessional/paymentstatus`
-                }
-              }}
-            >
-                            <i
-                                class="fa fa-credit-card"
-                                style={{ color: "green", fontSize: "16px" }}
-                                // onClick={() => toggle(row.assign_id)}
-                            ></i>
-                            </Link>
+<Link
+          
+          to={{
+              pathname: `/taxprofessional/paydetails/${row.assign_id}`,
+              index : 1,
+              routes: "paymentstatus",
+          }}
+          >
+                          <i
+                              class="fa fa-credit-card"
+                              style={{ color: "green", fontSize: "16px" }}
+                              // onClick={() => toggle(row.assign_id)}
+                          ></i>
+                          </Link>
                         </div>
                         <div title="Send Message">
                             <Link

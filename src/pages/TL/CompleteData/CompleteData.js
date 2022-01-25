@@ -145,7 +145,7 @@ const hist = useHistory();
       },
     },
     {
-      text: "	Exp. Delivery Date / Actual Delivery Date",
+      text: "Delivery Due Date ",
       dataField: "Exp_Delivery_Date",
       sort: true,
       headerStyle: () => {

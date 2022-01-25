@@ -89,7 +89,7 @@ function AllProposal() {
                 fontSize: "11px",
             },
             headerStyle: () => {
-                return { fontSize: "11px" };
+                return { fontSize: "11px" , width : "120px"};
             },
             formatter: function dateFormat(cell, row) {
            
@@ -107,7 +107,7 @@ function AllProposal() {
                 fontSize: "11px",
             },
             headerStyle: () => {
-                return { fontSize: "11px" };
+                return { fontSize: "11px", width: "120px" };
             },
             formatter: function nameFormatter(cell, row) {
               
@@ -283,8 +283,43 @@ function AllProposal() {
             formatter: function (cell, row) {
                 return (
                     <>
-                        <div style={{ display: "flex", justifyContent: "space-between" }}>
-                            <div>
+                        <div style={{ display: "flex", justifyContent: "flex-start" }}>
+                        <div title="View Discussion Message">
+                                <i
+                                    class="fa fa-comments-o"
+                                    style={{
+                                        fontSize: 16,
+                                        cursor: "pointer",
+                                        color: "orange"
+                                    }}
+                                    onClick={() => ViewDiscussionToggel(row.assign_no)}
+                                ></i>
+                            </div>
+                        <div title="Send Message" className="ml-2">
+                                            <Link
+                                                to={{
+                                                    pathname: `/teamleader/chatting/${row.id}`,
+                                                    obj: {
+                                                        message_type: "2",
+                                                        query_No: row.assign_no,
+                                                        query_id: row.id,
+                                                        routes: `/teamleader/proposal`
+                                                    }
+                                                }}
+                                            >
+                                                <i
+                                                    class="fa fa-comments-o"
+                                                    style={{
+                                                        fontSize: 16,
+                                                        cursor: "pointer",
+                                                        marginLeft: "8px",
+                                                        color: "blue"
+                                                    }}
+                                                ></i>
+                                            </Link>
+                                        </div>
+                                
+                            <div className="ml-2">
                                 {row.status_code == "4" ? (
                                     <Link to={`/teamleader/edit-proposal/${row.id}`}>
                                         <i
@@ -311,7 +346,7 @@ function AllProposal() {
 
                             {row.status_code > "3" || row.status_code == "10" ?
                             <>
-                                 <div style={{ cursor: "pointer", marginLeft : "8px" }} title="View Proposal">
+                                 <div style={{ cursor: "pointer", marginLeft : "2px" }} title="View Proposal">
                 
                 <i
                   className="fa fa-eye"
@@ -327,45 +362,8 @@ function AllProposal() {
                             }
 
 
-                            <div>
-                              
-                                        <div title="Send Message">
-                                            <Link
-                                                to={{
-                                                    pathname: `/teamleader/chatting/${row.id}`,
-                                                    obj: {
-                                                        message_type: "2",
-                                                        query_No: row.assign_no,
-                                                        query_id: row.id,
-                                                        routes: `/teamleader/proposal`
-                                                    }
-                                                }}
-                                            >
-                                                <i
-                                                    class="fa fa-comments-o"
-                                                    style={{
-                                                        fontSize: 16,
-                                                        cursor: "pointer",
-                                                        marginLeft: "8px",
-                                                        color: "blue"
-                                                    }}
-                                                ></i>
-                                            </Link>
-                                        </div>
-                                
-                            </div>
-
-                            <div title="View Discussion Message">
-                                <i
-                                    class="fa fa-comments-o"
-                                    style={{
-                                        fontSize: 16,
-                                        cursor: "pointer",
-                                        color: "orange"
-                                    }}
-                                    onClick={() => ViewDiscussionToggel(row.assign_no)}
-                                ></i>
-                            </div>
+                          
+                           
                         </div>
                     </>
                 );

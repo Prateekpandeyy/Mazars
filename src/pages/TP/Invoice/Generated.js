@@ -199,7 +199,7 @@ const Generated = () => {
                     <>
                     {row.is_paid == "0" ? <p>Unpaid</p> : 
                     <>
-                    {row.is_paid == "1" ? <p>Paid</p> : <p style={{color : "red"}}>Declined</p>}
+                    {row.is_paid == "1" ? <p>Paid</p> : <p style={{color : "red", fontSize: "11px"}}>Declined</p>}
                     </>}
                     </>
                 )
@@ -210,7 +210,7 @@ const Generated = () => {
             text: "Action",
             dataField: "",
             headerStyle: () => {
-                return { fontSize: "12px", width: "110px" };
+                return { fontSize: "11px", width: "110px" };
             },
             formatter: function (cell, row) {
                 return (

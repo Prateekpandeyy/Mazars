@@ -469,7 +469,7 @@ const showManual = () => {
                 <CardHeader>
                     <Row>
                         <Col md="9">
-<button onClick={() => showManual()} className="btn btn-success">Need help?</button>
+{/* <button onClick={() => showManual()} className="btn btn-success">Need help?</button> */}
                         </Col>
                         <Col md="3">
                             <div style={{ display: "flex", justifyContent: "space-around" }}>
