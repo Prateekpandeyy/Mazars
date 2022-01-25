@@ -17,6 +17,7 @@ import {  baseUrl3 } from "../../config/config";
 import { useParams,  useHistory } from "react-router-dom";
 import styled from "styled-components";
 import PayModal from "./PayModal";
+import {Link} from "react-router-dom"
 const PayDetails = (props) => {
     let history = useHistory();
     const userId = window.localStorage.getItem("userid");
