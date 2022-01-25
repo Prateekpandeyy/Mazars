@@ -78,6 +78,9 @@ const hist = useHistory();
       headerStyle: () => {
         return { fontSize: "12px", width: "50px" };
       },
+      style: {
+        fontSize: "11px",
+    },
     },
     {
       text: "Date",
@@ -86,6 +89,9 @@ const hist = useHistory();
       headerStyle: () => {
         return { fontSize: "12px", width : "120px" };
       },
+      style: {
+        fontSize: "11px",
+    },
       formatter : function(cell, row){
         let dueDate=row.created.split("-").reverse().join("-")
      
@@ -103,6 +109,9 @@ const hist = useHistory();
       headerStyle: () => {
         return { fontSize: "12px" ,  width : "120px" };
       },
+      style: {
+        fontSize: "11px",
+    },
       formatter: function nameFormatter(cell, row) {
 
         return (
@@ -127,6 +136,9 @@ const hist = useHistory();
       headerStyle: () => {
         return { fontSize: "12px" };
       },
+      style: {
+        fontSize: "11px",
+    },
     },
     {
       text: "Sub Category",
@@ -135,6 +147,9 @@ const hist = useHistory();
       headerStyle: () => {
         return { fontSize: "12px" };
       },
+      style: {
+        fontSize: "11px",
+    },
     },
     {
       text: "Client Name",
@@ -143,6 +158,9 @@ const hist = useHistory();
       headerStyle: () => {
         return { fontSize: "12px" };
       },
+      style: {
+        fontSize: "11px",
+    },
     },
     {
       text: "Delivery Due Date ",
@@ -151,6 +169,9 @@ const hist = useHistory();
       headerStyle: () => {
         return { fontSize: "12px" , width : "140px"};
     },
+    style: {
+      fontSize: "11px",
+  },
       formatter: function dateFormat(cell, row) {
        
         var oldDate = row.Exp_Delivery_Date;
@@ -165,6 +186,9 @@ const hist = useHistory();
       headerStyle: () => {
           return { fontSize: "12px" };
       },
+      style: {
+        fontSize: "11px",
+    },
       formatter: function nameFormatter(cell, row) {
           return (
               <>
@@ -203,6 +227,9 @@ const hist = useHistory();
     headerStyle: () => {
       return { fontSize: "12px" };
     },
+    style: {
+      fontSize: "11px",
+  },
     formatter: function (cell, row) {
       return (
         <>

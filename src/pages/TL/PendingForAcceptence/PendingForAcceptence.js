@@ -60,6 +60,9 @@ function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
       formatter: (cellContent, row, rowIndex) => {
         return rowIndex + 1;
       },
+      style: {
+        fontSize: "11px",
+    },
       headerStyle: () => {
         return { fontSize: "12px", width: "50px" };
       },
@@ -68,6 +71,10 @@ function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
       text: "Date",
       dataField: "query_created",
       sort: true,
+      
+      style: {
+        fontSize: "11px",
+    },
       headerStyle: () => {
         return { fontSize: "12px" , width : "150px"};
       },
@@ -86,6 +93,9 @@ function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
       headerStyle: () => {
         return { fontSize: "12px", width : "150px" };
       },
+      style: {
+        fontSize: "11px",
+    },
       formatter: function nameFormatter(cell, row) {
        
         return (
@@ -107,6 +117,9 @@ function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
       text: "Category",
       dataField: "parent_id",
       sort: true,
+      style: {
+        fontSize: "11px",
+    },
       headerStyle: () => {
         return { fontSize: "12px" , width : "150px"};
       },
@@ -115,6 +128,9 @@ function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
       text: "Sub Category",
       dataField: "cat_name",
       sort: true,
+      style: {
+        fontSize: "11px",
+    },
       headerStyle: () => {
         return { fontSize: "12px" , width  : "100px"};
       },
@@ -123,6 +139,9 @@ function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
       text: "Client Name",
       dataField: "name",
       sort: true,
+      style: {
+        fontSize: "11px",
+    },
       headerStyle: () => {
         return { fontSize: "12px" };
       },
@@ -131,6 +150,9 @@ function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
       text: "Delivery Due Date ",
       dataField: "Exp_Delivery_Date",
       sort: true,
+      style: {
+        fontSize: "11px",
+    },
       headerStyle: () => {
         return { fontSize: "12px" };
       },
@@ -149,6 +171,9 @@ function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
       headerStyle: () => {
         return { fontSize: "12px" };
       },
+      style: {
+        fontSize: "11px",
+    },
       formatter: function (cell, row) {
         return (
           <>

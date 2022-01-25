@@ -312,6 +312,8 @@ function AllQueriesData() {
                                     <Link
                                         to={{
                                             pathname: `/customer/chatting/${row.id}&type=4`,
+                                            index: 0,
+                                    routes: "queries",
                                             obj: {
                                                 message_type: "4",
                                                 query_No: row.assign_no,

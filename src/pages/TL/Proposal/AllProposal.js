@@ -74,7 +74,9 @@ function AllProposal() {
             formatter: (cellContent, row, rowIndex) => {
                 return rowIndex + 1;
             },
-           
+            style: {
+                fontSize: "11px",
+            },
             headerStyle: () => {
                 return { fontSize: "11px", width: "60px" };
             },
@@ -83,7 +85,9 @@ function AllProposal() {
             dataField: "query_date",
             text: "Date",
             sort: true,
-            
+            style: {
+                fontSize: "11px",
+            },
  headerStyle: () => {
                 return { fontSize: "11px" , width : "120px", whiteSpace : "nowrap", padding: "10px 20px"};
             },
@@ -102,6 +106,9 @@ function AllProposal() {
            
             headerStyle: () => {
                 return { fontSize: "11px", width: "120px" };
+            },
+            style: {
+                fontSize: "11px",
             },
             formatter: function nameFormatter(cell, row) {
               
@@ -129,6 +136,9 @@ function AllProposal() {
             headerStyle: () => {
                 return { fontSize: "11px" };
             },
+            style: {
+                fontSize: "11px",
+            },
         },
         {
             text: "Sub Category",
@@ -138,6 +148,9 @@ function AllProposal() {
             headerStyle: () => {
                 return { fontSize: "11px" };
             },
+            style: {
+                fontSize: "11px",
+            },
         },
         {
             text: "Date of Proposal",
@@ -146,6 +159,9 @@ function AllProposal() {
            
             headerStyle: () => {
                 return { fontSize: "11px" };
+            },
+            style: {
+                fontSize: "11px",
             },
             formatter: function dateFormat(cell, row) {
               
@@ -163,6 +179,9 @@ function AllProposal() {
            
             headerStyle: () => {
                 return { fontSize: "11px" };
+            },
+            style: {
+                fontSize: "11px",
             },
             formatter: function dateFormat(cell, row) {
               
@@ -217,6 +236,9 @@ function AllProposal() {
             headerStyle: () => {
                 return { fontSize: "11px" };
             },
+            style: {
+                fontSize: "11px",
+            },
             sortFunc: (a, b, order, dataField) => {
                 if (order === 'asc') {
                   return b - a;
@@ -237,7 +259,7 @@ function AllProposal() {
             text: "Accepted Amount ",
             sort: true,
             style: {
-               
+               fontSize :"11px",
                 color: "#21a3ce",
             },
             headerStyle: () => {
@@ -263,6 +285,9 @@ function AllProposal() {
             dataField: "",
             headerStyle: () => {
                 return { fontSize: "12px", width: "110px" };
+            },
+            style: {
+                fontSize: "11px",
             },
             formatter: function (cell, row) {
                 return (

@@ -435,12 +435,9 @@ const ViewReport = (key) => {
       
         axios
         .get(
-            `${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(
-                userid
-            )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
-            }&assignment_status="Final_Report"&stages_status=2
-           &pcat_id=${selectedData}`
-        )
+            `${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(userid)}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&assignment_status=Delivery_of_report&stages_status=1&pcat_id=${selectedData}`)
+      
+          
             .then((res) => {
                 
                 if (res.data.code === 1) {

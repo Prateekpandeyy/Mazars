@@ -212,10 +212,10 @@ function DeclinedQueries() {
                                     cursor: "pointer",
                                 }}>
                                
-                                <Link 
+                               <Link 
                                  to={{
                                     pathname: `/customer/feedback/${row.assign_no}`,
-                                    index: 0,
+                                    index: 3,
                                     routes: "queries",
                                 }}>
                                       <FeedbackIcon />
@@ -251,10 +251,10 @@ function DeclinedQueries() {
                                 style={{
                                     cursor: "pointer",
                                 }}>
-                                <Link 
+                              <Link 
                                  to={{
                                     pathname: `/customer/feedback/${row.assign_no}`,
-                                    index: 0,
+                                    index: 2,
                                     routes: "queries",
                                 }}>
                                       <FeedbackIcon />

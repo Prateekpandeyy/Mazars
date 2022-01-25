@@ -20,8 +20,7 @@ import Mandatory from "../../components/Common/Mandatory";
 import Loader from "../../components/Loader/Loader";
 import { Spinner } from 'reactstrap';
 import ShowError from "../../components/LoadingTime/LoadingTime";
-
-
+import { Link } from "react-router-dom";
 
 const Schema = yup.object().shape({
   p_feedback: yup.string().required(""),
@@ -29,7 +28,7 @@ const Schema = yup.object().shape({
 
 
 
-function Feedback() {
+function Feedback(props) {
 
   const { handleSubmit, register, errors, reset } = useForm({
     resolver: yupResolver(Schema),
@@ -79,14 +78,16 @@ function Feedback() {
       <Card>
         <CardHeader>
           <Row>
-            <Col md="4">
-              <button
-                class="btn btn-success ml-3"
-                onClick={() => history.goBack()}
-              >
-                <ArrowBackIcon />
-                Go Back
-              </button>
+          <Col md="4">
+            <Link
+                  to={{
+                    pathname: `/customer/${props.location.routes}`,
+                    index: props.location.index,
+                  }}
+                >
+                  <button class="btn btn-success ml-3">Go Back</button>
+                </Link>
+              
             </Col>
             <Col md="8">
               <h4>Feedback</h4>

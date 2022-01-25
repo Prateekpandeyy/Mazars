@@ -78,7 +78,7 @@ function AcceptedProposal() {
                 fontSize: "11px",
             },
             headerStyle: () => {
-                return { fontSize: "11px" };
+                return { fontSize: "11px" , width : "120px", whiteSpace : "nowrap", padding: "10px 20px"};
             },
             formatter: function dateFormat(cell, row) {
               
@@ -96,7 +96,7 @@ function AcceptedProposal() {
                 fontSize: "11px",
             },
             headerStyle: () => {
-                return { fontSize: "11px" };
+                return { fontSize: "11px", width: "120px" };
             },
             
             formatter: function nameFormatter(cell, row) {

@@ -148,7 +148,7 @@ const handleClick = () => {
               id="main-menu-navigation"
               data-menu="menu-navigation"
             >
-              <li className="nav-item active">
+              <li className="nav-item">
                 <NavLink to={"/customer/dashboard"}>
                   <i className="fa fa-home"></i>
                   <span className="menu-title" data-i18n="">
@@ -378,7 +378,7 @@ const handleClick = () => {
               id="main-menu-navigation"
               data-menu="menu-navigation"
             >
-              <li className="active nav-item">
+              <li className="nav-item">
                 <NavLink to={"/teamleader/dashboard"}>
                   <i className="fa fa-home"></i>
                   <span className="menu-title" data-i18n="">

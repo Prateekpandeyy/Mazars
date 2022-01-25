@@ -92,7 +92,7 @@ function InprogressProposal() {
                   <Link
                       to={{
                           pathname: `/customer/my-assingment/${row.id}`,
-                          index: 0,
+                          index: 2,
                           routes: "queries",
                       }}
                   >
@@ -190,16 +190,14 @@ function InprogressProposal() {
                                                 style={{
                                                     cursor: "pointer",
                                                 }}>
-                                                <Link
-                                                    to={{
-                                                        pathname: `/customer/feedback/${row.assign_no}`,
-                                                        obj: {
-                                                            routes: `/customer/queries`
-                                                        }
-                                                    }}
-                                                >
-                                                    <FeedbackIcon />
-                                                </Link>
+                                              <Link 
+                                 to={{
+                                    pathname: `/customer/feedback/${row.assign_no}`,
+                                    index: 2,
+                                    routes: "queries",
+                                }}>
+                                      <FeedbackIcon />
+                                </Link>
                                             </div> : ""}
                                           
                        

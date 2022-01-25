@@ -109,7 +109,7 @@ function InprogressAllocation() {
                     <Link
                         to={{
                             pathname: `/customer/my-assingment/${row.id}`,
-                            index: 0,
+                            index: 1,
                             routes: "queries",
                         }}
                     >
@@ -303,16 +303,14 @@ function InprogressAllocation() {
                                                 style={{
                                                     cursor: "pointer",
                                                 }}>
-                                                <Link
-                                                    to={{
-                                                        pathname: `/customer/feedback/${row.assign_no}`,
-                                                        obj: {
-                                                            routes: `/customer/queries`
-                                                        }
-                                                    }}
-                                                >
-                                                    <FeedbackIcon />
-                                                </Link>
+                                               <Link 
+                                 to={{
+                                    pathname: `/customer/feedback/${row.assign_no}`,
+                                    index: 1,
+                                    routes: "queries",
+                                }}>
+                                      <FeedbackIcon />
+                                </Link>
                                             </div> : ""}
                                           
                         {

@@ -249,7 +249,7 @@ function EditQuery(props) {
                   <div className="row">
                     <div className="col-md-12">
                       <div className="mb-3">
-                        <label className="form-label">Facts of the case <span className="declined">*</span></label>
+                        <label className="form-label">Brief facts of the case<span className="declined">*</span></label>
                      
                         <CKEditor
                      editor={ ClassicEditor }
@@ -455,7 +455,7 @@ function EditQuery(props) {
                     <div className="col-md-6">
                       <div className="mb-3">
                         <label className="form-label">
-                          Timelines within which Opinion is Required
+                          Timelines within which Opinion is required
                         </label>
                         <br />
                         <div className="form-check">

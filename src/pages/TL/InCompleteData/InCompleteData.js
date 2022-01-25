@@ -56,6 +56,9 @@ function InCompleteData({ CountIncomplete }) {
       headerStyle: () => {
         return { fontSize: "12px", width: "50px" };
       },
+      style: {
+        fontSize: "11px",
+    },
     },
     {
       text: "Date",
@@ -64,6 +67,9 @@ function InCompleteData({ CountIncomplete }) {
       headerStyle: () => {
         return { fontSize: "12px", width : "150px" };
       },
+      style: {
+        fontSize: "11px",
+    },
       formatter : function(cell, row){
         let dueDate=row.created.split("-").reverse().join("-")
       
@@ -81,6 +87,9 @@ function InCompleteData({ CountIncomplete }) {
       headerStyle: () => {
         return { fontSize: "12px" , width : "150px"};
       },
+      style: {
+        fontSize: "11px",
+    },
       formatter: function nameFormatter(cell, row) {
        
         return (
@@ -105,6 +114,9 @@ function InCompleteData({ CountIncomplete }) {
       headerStyle: () => {
         return { fontSize: "12px", width : "100px" };
       },
+      style: {
+        fontSize: "11px",
+    },
     },
     {
       text: "Sub Category",
@@ -113,6 +125,9 @@ function InCompleteData({ CountIncomplete }) {
       headerStyle: () => {
         return { fontSize: "12px" , width : "100px"};
       },
+      style: {
+        fontSize: "11px",
+    },
     },
     {
       text: "Client Name",
@@ -121,6 +136,9 @@ function InCompleteData({ CountIncomplete }) {
       headerStyle: () => {
         return { fontSize: "12px" , width : "150px"};
       },
+      style: {
+        fontSize: "11px",
+    },
     },
     {
       text: "Delivery Due Date   / Acutal Delivery Date",
@@ -129,6 +147,9 @@ function InCompleteData({ CountIncomplete }) {
       headerStyle: () => {
         return { fontSize: "12px" , width : "140px"};
     },
+    style: {
+      fontSize: "11px",
+  },
       formatter: function dateFormat(cell, row) {
 
         var oldDate = row.Exp_Delivery_Date;
@@ -143,6 +164,9 @@ function InCompleteData({ CountIncomplete }) {
       headerStyle: () => {
         return { fontSize: "12px" };
       },
+      style: {
+        fontSize: "11px",
+    },
       formatter: function nameFormatter(cell, row) {
         return (
           <>
@@ -177,6 +201,9 @@ function InCompleteData({ CountIncomplete }) {
       headerStyle: () => {
           return { fontSize: "12px" , width : "100px"};
       },
+      style: {
+        fontSize: "11px",
+    },
       formatter: function (cell, row) {
         
           return (
