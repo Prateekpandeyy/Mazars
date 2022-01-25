@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Layout from "../../components/Layout/Layout";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
 import { useAlert } from "react-alert";
@@ -7,17 +6,12 @@ import {
     Card,
     CardHeader,
     CardBody,
-    CardTitle,
-    Row,
-    Col,
-    Table,
 } from "reactstrap";
 import { Link } from "react-router-dom";
 // import ChatComponent from "./ChatComponent";
 import "./index.css";
 import CustomerFilter from "../../components/Search-Filter/CustomerFilter";
 import BootstrapTable from "react-bootstrap-table-next";
-import FeedbackIcon from '@material-ui/icons/Feedback';
 import Records from "../../components/Records/Records";
 import DiscardReport from "../AssignmentTab/DiscardReport";
 
@@ -71,7 +65,7 @@ function DeclinedProposal() {
                 return rowIndex + 1;
             },
             headerStyle: () => {
-                return { fontSize: "11px", width: "50px" };
+                return { fontSize: "11px"};
             },
         },
         {
@@ -331,12 +325,7 @@ function DeclinedProposal() {
                         report={assignNo}
                         getData={getProposalData}
                     />
-                    {/* <ChatComponent
-                        chatHandler={chatHandler}
-                        addPaymentModal={addPaymentModal}
-                        id={id}
-                        getProposalData={getProposalData}
-                    /> */}
+                  
                 </CardBody>
             </Card>
         </div>

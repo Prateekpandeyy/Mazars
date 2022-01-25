@@ -3,28 +3,20 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
 import Layout from "../../components/Layout/Layout";
-import PaymentIcon from '@mui/icons-material/Payment';
 import DescriptionOutlinedIcon from "@material-ui/icons/DescriptionOutlined";
 import {
   Card,
   CardHeader,
   CardBody,
-  CardTitle,
   Row,
   Col,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  Button,
 } from "reactstrap";
+import style from './Payment.module.css';
 import BootstrapTable from "react-bootstrap-table-next";
-import { baseUrl2, baseUrl3 } from "../../config/config";
-import { useParams, Link, useHistory } from "react-router-dom";
+import {  baseUrl3 } from "../../config/config";
+import { useParams,  useHistory } from "react-router-dom";
 import styled from "styled-components";
 import PayModal from "./PayModal";
-import { Typography } from "antd";
-import './index.css';
 const PayDetails = () => {
     let history = useHistory();
     const userId = window.localStorage.getItem("userid");
@@ -73,7 +65,7 @@ setModal(!modal)
                 fontSize: "11px",
             },
             headerStyle: () => {
-                return { fontSize: "11px", width: "90px" };
+                return { fontSize: "11px" };
             },
         },
         {
@@ -84,7 +76,7 @@ setModal(!modal)
                 fontSize: "11px",
             },
             headerStyle: () => {
-                return { fontSize: "11px", width: "120px" };
+                return { fontSize: "11px"};
             },
         },
         {
@@ -96,7 +88,7 @@ setModal(!modal)
                 textAlign : "center"
             },
             headerStyle: () => {
-                return { fontSize: "11px", width: "80px" };
+                return { fontSize: "11px"};
             },
            
            
@@ -107,7 +99,7 @@ setModal(!modal)
            
             
             headerStyle: () => {
-                return { fontSize: "11px", width: "150px" };
+                return { fontSize: "11px"};
             },
             formatter : function(cell, row){
                 return(
@@ -126,7 +118,7 @@ setModal(!modal)
                 fontSize: "11px",
             },
             headerStyle: () => {
-                return { fontSize: "11px", width: "120px" };
+                return { fontSize: "11px"};
             },
             formatter : function(cell, row){
                 let dueDate=row.due_date.split("-").reverse().join("-")
@@ -149,7 +141,7 @@ setModal(!modal)
                 textAlign : "right"
             },
             headerStyle: () => {
-                return { fontSize: "11px", width: "120px" };
+                return { fontSize: "11px"};
             },
             formatter: function nameFormatter(cell, row){
                 var nfObject = new Intl.NumberFormat('hi-IN')
@@ -168,7 +160,7 @@ setModal(!modal)
                 textAlign : "right"
             }, 
             headerStyle : () => {
-                return { fontSize : "11px", width : "100px"}
+                return { fontSize : "11px"}
             },
            
             formatter: function nameFormatter(cell, row){
@@ -191,7 +183,7 @@ setModal(!modal)
                 textAlign : "right"
             }, 
             headerStyle : () => {
-                return { fontSize : "11px", width : "100px"}
+                return { fontSize : "11px"}
             },
             formatter: function nameFormatter(cell, row){
                 var nfObject = new Intl.NumberFormat('hi-IN')
@@ -214,7 +206,7 @@ setModal(!modal)
                 fontSize: "11px",
             },
             headerStyle: () => {
-                return { fontSize: "11px", width: "90px" };
+                return { fontSize: "11px" };
             },
             formatter: function dateFormat(cell, row) {
                 return(
@@ -253,7 +245,7 @@ setModal(!modal)
                 fontSize: "11px",
             },
             headerStyle: () => {
-                return { fontSize: "11px", width: "90px" };
+                return { fontSize: "11px"};
             },
            
            formatter: function dateFormat(cell, row){
@@ -286,7 +278,7 @@ return(
    <>
     <Layout custDashboard="custDashboard" custUserId={userId}>
     {paymentDetail === undefined ? "" : 
-  <Card>
+  <Card className={style.tabDivStyle}>
       <CardHeader>
          <Row>
          <Col md="8">
@@ -306,6 +298,7 @@ return(
   <BootstrapTable
   bootstrap4
   keyField="id"
+  rowIndex
   data={paymentDetail}
   columns={columns}
   classes="table-responsive"

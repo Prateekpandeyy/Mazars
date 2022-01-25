@@ -9,7 +9,7 @@ import AllProposal from "./AllProposal";
 import InprogressProposal from "./InprogressProposal";
 import AcceptedProposal from "./AcceptedProposal";
 import DeclinedProposal from "./DeclinedProposal";
-
+import style from './ProposalStyle.module.css';
 
 
 
@@ -105,8 +105,8 @@ function Proposal(props) {
 
   return (
     <Layout custDashboard="custDashboard" custUserId={userId}>
-      <div>
-        <Tabs selectedIndex={tabIndex} onSelect={(index) => setTabIndex(index)}>
+      <div className={style.tabDivStyle}>
+        <Tabs selectedIndex={tabIndex} onSelect={(index) => setTabIndex(index)} className={style.tabStyle}>
           <TabList
             style={{
               listStyleType: "none",

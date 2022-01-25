@@ -8,6 +8,8 @@ import { Tab, Tabs, TabPanel, TabList } from "react-tabs";
 import Unpaid from "./Unpaid";
 import Paid from "./Paid";
 import AllPayment from "./AllPayment";
+import style from  './Payment.module.css';
+
 
 
 
@@ -63,18 +65,18 @@ function PaymentStatus(props) {
 
   const myStyle1 = {
     backgroundColor: "grey",
-    padding: "12px",
+    padding: "12px 24px",
     borderRadius: "50px",
-    width: "200px",
+    width: "auto",
     textAlign: "center",
     color: "white",
     cursor: "pointer",
   };
 
   const myStyle2 = {
-    padding: "12px",
+    padding: "12px 24px",
     borderRadius: "50px",
-    width: "200px",
+    width: "auto",
     textAlign: "center",
     backgroundColor: "blue",
     color: "white",
@@ -87,8 +89,8 @@ function PaymentStatus(props) {
 
   return (
     <Layout custDashboard="custDashboard" custUserId={userId}>
-      <div>
-        <Tabs selectedIndex={tabIndex} onSelect={(index) => setTabIndex(index)}>
+     <div className={style.tabDivStyle}>
+        <Tabs selectedIndex={tabIndex} onSelect={(index) => setTabIndex(index)} className={style.tabStyle}>
           <TabList
             style={{
               listStyleType: "none",

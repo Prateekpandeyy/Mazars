@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useMemo } from "react";
-import Layout from "../../components/Layout/Layout";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
 import { useAlert } from "react-alert";
@@ -7,10 +6,6 @@ import {
   Card,
   CardHeader,
   CardBody,
-  CardTitle,
-  Row,
-  Col,
-  Table,
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import CustomerFilter from "../../components/Search-Filter/CustomerFilter";
@@ -19,7 +14,7 @@ import Records from "../../components/Records/Records";
 import CommonServices from "../../common/common";
 import DiscardReport from "../AssignmentTab/DiscardReport";
 import FeedbackIcon from '@material-ui/icons/Feedback';
-import './index.css';
+
 import moment from "moment";
 
 
@@ -65,17 +60,13 @@ function DeclinedQueries() {
       formatter: (cellContent, row, rowIndex) => {
         return rowIndex + 1;
       },
-      headerStyle: () => {
-        return { fontSize: "12px", width: "50px" };
-      },
+     
     },
     {
       text: "Date",
       dataField: "created",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px", width: "150px" };
-      },
+     
       formatter: function dateFormat(cell, row) {
 
         var oldDate = row.created;
@@ -88,9 +79,7 @@ function DeclinedQueries() {
     {
       text: "Query No",
       dataField: "assign_no",
-      headerStyle: () => {
-        return { fontSize: "12px",   width: "150px" };
-      },
+     
       formatter: function nameFormatter(cell, row) {
               
         return (
@@ -112,24 +101,18 @@ function DeclinedQueries() {
       text: "Category",
       dataField: "parent_id",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" , width: "150px" };
-      },
+     
     },
     {
       text: "Sub Category",
       dataField: "cat_name",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px", width: "140px"  };
-      },
+     
     },
     {
       text: "Status",
       dataField: "",
-      headerStyle: () => {
-        return { fontSize: "12px", width: "140px"  };
-      },
+     
       formatter: function nameFormatter(cell, row) {
         return (
           <>
@@ -162,9 +145,7 @@ function DeclinedQueries() {
       text: "Expected Delivery Date",
       dataField: "exp_delivery_date",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" , width: "150px" };
-      },
+     
       formatter: function dateFormat(cell, row) {
    
 

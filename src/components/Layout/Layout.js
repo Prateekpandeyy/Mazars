@@ -1,6 +1,6 @@
 import Sidebar from "../Admin-Sidebar/Admin-Sidebar";
 import Header from "../Admin-Header/Admin-Header";
-import Footer from "../Admin-Footer/Admin-Footer";
+import styleLayout from './LayoutWrapper.module.css';
 
 
 
@@ -21,6 +21,7 @@ function Layout(props) {
         feedbackNumber = {feedbackNumber}
       />
 
+      <div className={styleLayout.layoutCssDashboard}>
       <Sidebar
         custDashboard={custDashboard}
         adminDashboard={adminDashboard}
@@ -29,15 +30,15 @@ function Layout(props) {
         feedbackNumber = {feedbackNumber}
       />
 
-      <div className="app-content content" style={{ marginTop: "75px" }}>
-        <div className="content-wrapper">
-          <div className="content-body">
+      <div className={`${styleLayout.content_width} app-content content`}>
+        <div className={`${styleLayout.content_width} content-wrapper`}>
+          <div className={`${styleLayout.content_width} content-body`}>
             {props.children}
           </div>
         </div>
       </div>
+      </div>
 
-      {/* <Footer /> */}
     </>
   );
 }

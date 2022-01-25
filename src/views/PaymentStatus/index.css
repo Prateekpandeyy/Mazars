@@ -1,4 +1,4 @@
-.table_head_Proposal th {
+/* .table_head_Proposal th {
     font-size: 11px;
     padding: 3.5px;
   }
@@ -16,7 +16,7 @@
   
   .tableFixHead          { overflow: auto; }
   .tableFixHead thead th { position: sticky; color: "white"; top: 0; z-index: 1; border: 0px; background-color: rgb(94 150 174) !important; color : #ffffff !important;}
-  
+   */
   /* 
   
   .tableFixHead          { overflow-y: auto; height: 100px; }

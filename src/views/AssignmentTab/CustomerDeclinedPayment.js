@@ -13,7 +13,7 @@ import ViewAllReportModal from "./ViewAllReport";
 import Records from "../../components/Records/Records";
 import DescriptionOutlinedIcon from '@material-ui/icons/DescriptionOutlined';
 import DiscardReport from "../AssignmentTab/DiscardReport";
-import './index.css';
+
 
 
 function CustomerDeclinedPayment() {
@@ -66,7 +66,7 @@ function CustomerDeclinedPayment() {
                 return rowIndex + 1;
             },
             headerStyle: () => {
-                return { fontSize: "12px", width: "50px" };
+                return { fontSize: "12px"};
             },
         },
         {
@@ -131,7 +131,7 @@ function CustomerDeclinedPayment() {
               fontSize: "11px",
             },
             headerStyle: () => {
-              return { fontSize: "12px", width: "200px" };
+              return { fontSize: "12px"};
             },
             formatter: function (cell, row) {
               return (
@@ -240,7 +240,7 @@ function CustomerDeclinedPayment() {
         {
             text: "Action",
             headerStyle: () => {
-                return { fontSize: "12px", textAlign: "center", width: "70px" };
+                return { fontSize: "12px", textAlign: "center" };
             },
             formatter: function (cell, row) {
                 return (

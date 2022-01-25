@@ -24,7 +24,6 @@ import Records from "../../components/Records/Records";
 import PaymentIcon from '@material-ui/icons/Payment';
 import PaymentComponent from './PaymentComponent';
 import DiscardReport from "../AssignmentTab/DiscardReport";
-import './index.css';
 
 
 function Paid() {

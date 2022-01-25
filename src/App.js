@@ -149,12 +149,16 @@ const options = {
   offset: "80px",
   transition: transitions.SCALE,
 };
-
+const initialWrapper = {
+  display : "flex", 
+  height: "100vh",
+  flexDirection : "column"
+}
 function App() {
  
 
   return (
-    <div>
+    <div style={initialWrapper}>
       <Provider template={AlertTemplate} {...options}>
         <Router>
           <Switch>

@@ -1,14 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
-import Layout from "../../components/Layout/Layout";
 import {
   Card,
   CardHeader,
   CardBody,
-  CardTitle,
-  Row,
-  Col,
   Modal,
   ModalHeader,
   ModalBody,

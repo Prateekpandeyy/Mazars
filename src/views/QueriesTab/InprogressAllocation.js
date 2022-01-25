@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useMemo } from "react";
-import Layout from "../../components/Layout/Layout";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
 import { useAlert } from "react-alert";
@@ -7,10 +6,7 @@ import {
   Card,
   CardHeader,
   CardBody,
-  CardTitle,
-  Row,
-  Col,
-  Table,
+ 
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import CustomerFilter from "../../components/Search-Filter/CustomerFilter";
@@ -23,7 +19,6 @@ import Swal from "sweetalert2";
 import CommonServices from "../../common/common";
 import DiscardReport from "../AssignmentTab/DiscardReport";
 import moment from "moment";
-import './index.css';
 function InprogressAllocation() {
 
   const alert = useAlert();
@@ -72,17 +67,13 @@ function InprogressAllocation() {
       formatter: (cellContent, row, rowIndex) => {
         return rowIndex + 1;
       },
-      headerStyle: () => {
-        return { fontSize: "12px", width: "50px" };
-      },
+     
     },
     {
       text: "Date",
       dataField: "created",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" ,  width: "80px" };
-      },
+     
       formatter: function dateFormat(cell, row) {
        
         var oldDate = row.created;
@@ -95,9 +86,7 @@ function InprogressAllocation() {
     {
       text: "Query No",
       dataField: "assign_no",
-      headerStyle: () => {
-        return { fontSize: "12px" ,  width: "130px" };
-      },
+     
       formatter: function nameFormatter(cell, row) {
       
         return (
@@ -120,28 +109,22 @@ function InprogressAllocation() {
       text: "Category",
       dataField: "parent_id",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" ,  width: "130px"};
-      },
+     
     },
     {
       text: "Sub Category",
       dataField: "cat_name",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" ,  width: "130px"};
-      },
+     
     },
     {
       text: "Status",
       dataField: "",
-      headerStyle: () => {
-        return { fontSize: "12px" ,  width: "180px" };
-      },
+     
       formatter: function nameFormatter(cell, row) {
         return (
           <>
-            <div>
+            <>
               {
                 row.status == "Inprogress Query" ?
                   <div>
@@ -168,7 +151,7 @@ function InprogressAllocation() {
                         :
                         null
               }
-            </div>
+            </>
           </>
         );
       },
@@ -178,7 +161,7 @@ function InprogressAllocation() {
       dataField: "exp_delivery_date",
       sort: true,
       headerStyle: () => {
-          return { fontSize: "12px" ,  width: "180px"};
+          return { fontSize: "12px"};
       },
       formatter: function dateFormat(cell, row) {
          
@@ -202,7 +185,7 @@ function InprogressAllocation() {
     {
       text: "Action",
       headerStyle: () => {
-        return { fontSize: "12px", textAlign: "center", width: "130px" };
+        return { fontSize: "12px", textAlign: "center"};
       },
       formatter: function (cell, row) {
         var dateMnsFive = moment(row.exp_delivery_date).add(15, 'day').format("YYYY-MM-DD");
@@ -451,15 +434,3 @@ function InprogressAllocation() {
 }
 
 export default InprogressAllocation;
-
-
-const arr = [
-  { name: "nitin", add: "noida" },
-  { name: "nitin", add: "noida" },
-  { name: "nitin", add: "noida" },
-  { name: "nitin", add: "noida" },
-  { name: "nitin", add: "noida" },
-  { name: "nitin", add: "noida" },
-
-  { name: "nitin", add: "noida" },
-]
