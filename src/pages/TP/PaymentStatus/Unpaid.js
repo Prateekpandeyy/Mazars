@@ -333,16 +333,13 @@ rowStyle2 = (row, index) => {
                          <div title="Payment History"
  
                              style={{ color: "green", fontSize: "16px", cursor: "pointer" }}
-                         >   <Link
-                         to={{
-                             pathname: `/taxprofessional/chatting/${row.assign_id}`,
-                             obj: {
-                                 message_type: "5",
-                                 query_No: row.assign_no,
-                                 query_id: row.assign_id,
-                                 routes: `/taxprofessional/paymentstatus`
-                             }
-                         }}
+                         >   
+                         <Link
+                        to={{
+                            pathname: `/taxprofessional/paydetails/${row.assign_id}`,
+                            index : 1,
+                            routes: "paymentstatus",
+                        }}
                      >
                          <i
                              class="fa fa-comments-o"
@@ -377,15 +374,11 @@ rowStyle2 = (row, index) => {
                             style={{ color: "green", fontSize: "16px", cursor: "pointer" }}
                         >
                           <Link
-              to={{
-                pathname: `/taxprofessional/paydetails/${row.assign_id}`,
-                obj: {
-                  message_type: "5",
-                  query_No: row.assign_no,
-                  query_id: row.assign_id,
-                  routes: `/taxprofessional/paymentstatus`
-                }
-              }}
+to={{
+    pathname: `/taxprofessional/paydetails/${row.assign_id}`,
+    index : 1,
+    routes: "paymentstatus",
+}}
             >
                             <i
                                 class="fa fa-credit-card"

@@ -289,14 +289,22 @@ return(
   <Card>
       <CardHeader>
          <Row>
+         <h2>
+             <Link
+                  to={{
+                    pathname: `/customer/${props.location.routes}`,
+                    index: props.location.index,
+                  }}
+                >
+                  <button class="btn btn-success ml-3">Go Back</button>
+                </Link>
+                 </h2>
+             
          <Col md="8">
               <h4>Payment Details</h4>
               </Col>
       <Col md="4">
-              <button class="btn btn-success" style={{display : "flex", margin : "0 0 0 auto"}} onClick={() => history.goBack()}>
-                <i class="fas fa-arrow-left mr-2"></i>
-                Go Back
-              </button>
+             
             </Col>
          </Row>
           </CardHeader>

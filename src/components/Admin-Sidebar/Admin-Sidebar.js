@@ -148,7 +148,7 @@ const handleClick = () => {
               id="main-menu-navigation"
               data-menu="menu-navigation"
             >
-              <li className="nav-item active">
+              <li className="nav-item">
                 <NavLink to={"/customer/dashboard"}>
                   <i className="fa fa-home"></i>
                   <span className="menu-title" data-i18n="">
@@ -205,7 +205,7 @@ const handleClick = () => {
 
               <li className="nav-item">
                 <NavLink to={"/customer/feedback-data"}>
-                  <i className="fa fa-rss-square"></i>
+                <i className="fa fa-file-text"></i>
                   <span className="menu-title" data-i18n="">
                     Feedback
                   </span>
@@ -213,7 +213,7 @@ const handleClick = () => {
               </li>
               <li className="nav-item">
                 <NavLink to={"/customer/contact"}>
-                  <i className="fa fa-rss-square"></i>
+                <i class="fa fa-address-book"></i>
                   <span className="menu-title" data-i18n="">
                    Contact Us
                   </span>
@@ -378,7 +378,7 @@ const handleClick = () => {
               id="main-menu-navigation"
               data-menu="menu-navigation"
             >
-              <li className="active nav-item">
+              <li className="nav-item">
                 <NavLink to={"/teamleader/dashboard"}>
                   <i className="fa fa-home"></i>
                   <span className="menu-title" data-i18n="">

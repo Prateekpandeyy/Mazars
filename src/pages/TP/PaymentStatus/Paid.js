@@ -319,15 +319,11 @@ function AllPayment() {
     style={{ color: "green", fontSize: "16px", cursor: "pointer" }}
 >
 <Link
-              to={{
-                pathname: `/taxprofessional/paydetails/${row.assign_id}`,
-                obj: {
-                  message_type: "5",
-                  query_No: row.assign_no,
-                  query_id: row.assign_id,
-                  routes: `/taxprofessional/paymentstatus`
-                }
-              }}
+                     to={{
+                        pathname: `/taxprofessional/paydetails/${row.assign_id}`,
+                        index : 2,
+                        routes: "paymentstatus",
+                    }}
             >
                             <i
                                 class="fa fa-credit-card"
@@ -359,13 +355,9 @@ function AllPayment() {
                            <Link
               to={{
                 pathname: `/taxprofessional/paydetails/${row.assign_id}`,
-                obj: {
-                  message_type: "5",
-                  query_No: row.assign_no,
-                  query_id: row.assign_id,
-                  routes: `/taxprofessional/paymentstatus`
-                }
-              }}
+                index : 2,
+                routes: "paymentstatus",
+            }}
             >
                             <i
                                 class="fa fa-credit-card"
