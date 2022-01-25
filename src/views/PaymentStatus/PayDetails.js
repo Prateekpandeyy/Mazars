@@ -17,7 +17,7 @@ import {  baseUrl3 } from "../../config/config";
 import { useParams,  useHistory } from "react-router-dom";
 import styled from "styled-components";
 import PayModal from "./PayModal";
-const PayDetails = () => {
+const PayDetails = (props) => {
     let history = useHistory();
     const userId = window.localStorage.getItem("userid");
     const { id } = useParams();
@@ -285,10 +285,14 @@ return(
               <h4>Payment Details</h4>
               </Col>
       <Col md="4">
-              <button class="btn btn-success" style={{display : "flex", margin : "0 0 0 auto"}} onClick={() => history.goBack()}>
-                <i class="fas fa-arrow-left mr-2"></i>
-                Go Back
-              </button>
+      <Link
+                  to={{
+                    pathname: `/customer/${props.location.routes}`,
+                    index: props.location.index,
+                  }}
+                >
+                  <button class="btn btn-success ml-3">Go Back</button>
+                </Link>
             </Col>
          </Row>
           </CardHeader>

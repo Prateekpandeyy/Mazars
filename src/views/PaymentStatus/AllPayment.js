@@ -364,19 +364,16 @@ function Paid() {
                   style={{ cursor: "pointer", margin: "0 3px" }}
                   title="Pay Amount"
                  >
-                    <Link
-              to={{
-                pathname: `/customer/paydetails/${row.assign_id}`,
-                obj: {
-                  message_type: "5",
-                  query_No: row.assign_no,
-                  query_id: row.q_id,
-                  routes: `/customer/payment`
-                }
-              }}
-            >
-                                      <PaymentIcon color="primary" />
-                  </Link>
+                   
+                  <Link
+                            to={{
+                                pathname: `/customer/paydetails/${row.assign_id}`,
+                                index : 0,
+                                routes: "paymentstatus",
+                            }}
+                        >
+<PaymentIcon color="primary" />
+                        </Link>
                 </div>
             <div title="View Discussion Message" style={{pointer : "cursor", margin: "0 5px"}}>
             <i
@@ -400,18 +397,14 @@ function Paid() {
                   title="Pay Amount"
                  >
                     <Link
-              to={{
-                pathname: `/customer/paydetails/${row.assign_id}`,
-                obj: {
-                  message_type: "5",
-                  query_No: row.assign_no,
-                  query_id: row.q_id,
-                  routes: `/customer/payment`
-                }
-              }}
-            >
-                                      <PaymentIcon color="primary" />
-                  </Link>
+                            to={{
+                                pathname: `/customer/paydetails/${row.assign_id}`,
+                                index : 0,
+                                routes: "paymentstatus",
+                            }}
+                        >
+<PaymentIcon color="primary" />
+                        </Link>
                 </div>
                 :
                 null
@@ -422,19 +415,15 @@ function Paid() {
             {
               row.paid_amount > 0 && row.paid_status > 0 ?
                 <div style={{ cursor: "pointer", margin: "0 5px" }} title="Payment History">
-               <Link
-              to={{
-                pathname: `/customer/paydetails/${row.assign_id}`,
-                obj: {
-                  message_type: "5",
-                  query_No: row.assign_no,
-                  query_id: row.q_id,
-                  routes: `/customer/payment`
-                }
-              }}
-            >
-                              <PaymentIcon color="primary" />
-                  </Link>    
+                <Link
+                            to={{
+                                pathname: `/customer/paydetails/${row.assign_id}`,
+                                index : 0,
+                                routes: "paymentstatus",
+                            }}
+                        >
+<PaymentIcon color="primary" />
+                        </Link>
                 </div>
                 :
                 null
