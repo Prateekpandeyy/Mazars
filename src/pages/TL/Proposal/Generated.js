@@ -222,9 +222,9 @@ const Generated = () => {
             formatter : function(cell, row) {
                 return(
                     <>
-                    {row.is_paid == "0" ? <p>Unpaid</p> : 
+                    {row.is_paid == "0" ? <p style={{fontSize: "12px"}}>Unpaid</p> : 
                     <>
-                    {row.is_paid == "1" ? <p>Paid</p> : <p style={{color : "red"}}>Declined</p>}
+                    {row.is_paid == "1" ? <p  style={{fontSize: "12px"}}>Paid</p> : <p style={{color : "red", fontSize: "12px"}}>Declined</p>}
                     </>}
                     </>
                 )

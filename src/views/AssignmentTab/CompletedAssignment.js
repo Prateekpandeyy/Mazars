@@ -74,11 +74,14 @@ function CompleteAssignment() {
       dataField: "created",
       text: "Date",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
+      style: {
+          fontSize: "11px",
       },
-      formatter: function dateFormat(cell, row) {
-        
+      headerStyle: () => {
+          return { fontSize: "11px", width:"120px", padding: "10px 20px", whiteSpace: "nowrap" };
+      },
+       formatter: function dateFormat(cell, row) {
+       
         var oldDate = row.created;
         if (oldDate == null) {
           return null;
@@ -89,25 +92,29 @@ function CompleteAssignment() {
     {
       dataField: "assign_no",
       text: "Query No",
+      style: {
+          fontSize: "11px",
+      },
       headerStyle: () => {
-        return { fontSize: "12px" };
+          return { fontSize: "11px",    whiteSpace: "nowrap"  };
       },
       formatter: function nameFormatter(cell, row) {
-              
-        return (
-            <>
-                <Link
-                    to={{
-                        pathname: `/customer/my-assingment/${row.id}`,
-                        index: 2,
-                        routes: "assignment",
-                    }}
-                >
-                    {row.assign_no}
-                </Link>
-            </>
-        );
-    },
+       
+          return (
+              <>
+                     <Link
+                          to={{
+                              pathname: `/customer/my-assingment/${row.assign_id}`,
+                              index : 2,
+                              routes: "assignment",
+                          }}
+                      >
+                          {row.assign_no}
+                      </Link>
+              </>
+          );
+      },
+  
     },
     {
       dataField: "parent_id",
@@ -172,8 +179,8 @@ function CompleteAssignment() {
       dataField: "Exp_Delivery_Date",
       text: "Expected date of delivery",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
+     headerStyle: () => {
+        return { fontSize: "12px", width : "120px" , padding: "10px 20px"};
       },
       formatter: function dateFormat(cell, row) {
       
@@ -188,8 +195,8 @@ function CompleteAssignment() {
       dataField: "final_date",
       text: "Actual date of delivery",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
+     headerStyle: () => {
+        return { fontSize: "12px", width : "120px" , padding: "10px 20px"};
       },
       formatter: function dateFormat(cell, row) {
      
@@ -407,7 +414,7 @@ function CompleteAssignment() {
             keyField="id"
             data={assignmentDisplay}
             columns={columns}
-            classes="table-responsive"
+            classes="table-responsivepayment"
           />
 </div>
           <ViewAllReportModal

@@ -84,10 +84,10 @@ function InprogressProposal() {
                 fontSize: "11px",
             },
             headerStyle: () => {
-                return { fontSize: "11px" };
+                return { fontSize: "11px", width: "100px" };
             },
             formatter: function (cell, row) {
-            
+              
                 var oldDate = row.created;
                 if (oldDate == null) {
                     return null;
@@ -102,7 +102,7 @@ function InprogressProposal() {
                 fontSize: "11px",
             },
             headerStyle: () => {
-                return { fontSize: "11px" };
+                return { fontSize: "11px", width: "100px" };
             },
             formatter: function nameFormatter(cell, row) {
               
@@ -111,7 +111,7 @@ function InprogressProposal() {
                         <Link
                             to={{
                                 pathname: `/customer/my-assingment/${row.q_id}`,
-                                index: 1,
+                                index: 0,
                                 routes: "proposal",
                             }}
                         >
@@ -286,8 +286,44 @@ function InprogressProposal() {
             formatter: function (cell, row) {
                 return (
                     <>
-                        {row.statuscode === "6" ? null : (
-                            <div style={{ display: "flex", justifyContent: "space-between", width: "80px" }}>
+                        {row.statuscode === "6" ? <div style={{display : "flex", justifyContent : "flex-start"}}>
+                        <div title="Send Message">
+                                    <Link
+                                        to={{
+                                            pathname: `/customer/chatting/${row.q_id}&type=2`,
+                                            obj: {
+                                                message_type: "3",
+                                                query_No: row.assign_no,
+                                                query_id: row.q_id,
+                                                routes: `/customer/proposal`
+                                            }
+                                        }}
+                                    >
+                                        <i
+                                            class="fa fa-comments-o"
+                                            style={{
+                                                fontSize: 16,
+                                                cursor: "pointer",
+                                                color: "blue"
+                                            }}
+                                        ></i>
+                                    </Link>
+                                </div>
+
+                                <div title="View Discussion Message"  className="ml-2">
+                                    <i
+                                        class="fa fa-comments-o"
+                                        style={{
+                                            fontSize: 16,
+                                            cursor: "pointer",
+                                            color: "orange"
+                                        }}
+                                        onClick={() => ViewDiscussionToggel(row.assign_no)}
+                                    ></i>
+                                </div>
+
+                        </div> : (
+                            <div style={{ display: "flex", justifyContent: "flex-start"}}>
                                 <div title="Send Message">
                                     <Link
                                         to={{
@@ -311,7 +347,7 @@ function InprogressProposal() {
                                     </Link>
                                 </div>
 
-                                <div title="View Discussion Message">
+                                <div title="View Discussion Message" className="ml-2">
                                     <i
                                         class="fa fa-comments-o"
                                         style={{
@@ -326,8 +362,8 @@ function InprogressProposal() {
                                 <div>
                                     {
                                         row.statuscode > 6 ?
-                                                   <>
-                                 <div style={{ cursor: "pointer", marginLeft : "8px" }} title="View Proposal">
+                                             <>
+                                 <div style={{ cursor: "pointer" }} title="View Proposal" className="ml-2">
                 
                 <i
                   className="fa fa-eye"
@@ -345,7 +381,7 @@ function InprogressProposal() {
                                     {
                                         row.statuscode == 4
                                             ?
-                                            <div style={{ cursor: "pointer" }} title="Proposal Accepted/Rejected">
+                                            <div style={{ cursor: "pointer" }} title="Decision on Proposal" className="ml-2">
                                                 <Link to={`/customer/proposal_view/${row.q_id}`}>
                                                     <i
                                                         class="fa fa-share"
@@ -362,12 +398,14 @@ function InprogressProposal() {
                                 </div>
 
                             </div>
-                        )}
+                        )
+                        }
                     </>
                 );
             },
         },
     ];
+
 
 
     //rejected

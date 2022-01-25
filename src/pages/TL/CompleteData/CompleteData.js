@@ -149,8 +149,8 @@ const hist = useHistory();
       dataField: "Exp_Delivery_Date",
       sort: true,
       headerStyle: () => {
-        return { fontSize: "12px" };
-      },
+        return { fontSize: "12px" , width : "140px"};
+    },
       formatter: function dateFormat(cell, row) {
        
         var oldDate = row.Exp_Delivery_Date;

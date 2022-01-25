@@ -265,27 +265,19 @@ function DeclinedProposal() {
             formatter: function (cell, row) {
                 return (
                     <>
-                        <div style={{ display: "flex", justifyContent: "space-between" }}>
-                          
-
-                            {row.status_code > "3" ?
-   <div style={{ cursor: "pointer", marginLeft : "8px" }} title="View Proposal">
-                
-   <i
-     className="fa fa-eye"
-     style={{ color: "green", fontSize: "16px" }}
-     onClick={(e) => showProposalModal2(row.id)}
-   />
- 
-</div>
-                                :
-                                null
-                            }
-
-
-<div>
-                               
-                                        <div title="Send Message">
+                        <div style={{ display: "flex", justifyContent: "flex-start" }}>
+                        <div title="View Discussion Message">
+                                <i
+                                    class="fa fa-comments-o"
+                                    style={{
+                                        fontSize: 16,
+                                        cursor: "pointer",
+                                        color: "orange"
+                                    }}
+                                    onClick={() => ViewDiscussionToggel(row.assign_no)}
+                                ></i>
+                            </div>
+                        <div title="Send Message" className="ml-2">
                                             <Link
                                                 to={{
                                                     pathname: `/teamleader/chatting/${row.id}`,
@@ -309,27 +301,57 @@ function DeclinedProposal() {
                                             </Link>
                                         </div>
                                 
+                            <div className="ml-2">
+                                {row.status_code == "4" ? (
+                                    <Link to={`/teamleader/edit-proposal/${row.id}`}>
+                                        <i
+                                            className="fa fa-edit"
+                                            style={{
+                                                fontSize: "16px",
+                                                cursor: "pointer",
+                                                color: "green",
+                                            }}
+                                        ></i>
+                                    </Link>
+                                ) : row.status_code == "2"&& row.work_by != "0" ? (
+                                    <Link to={`/teamleader/sendproposal/${row.id}`}>
+                                        <i
+                                            class="fa fa-mail-forward"
+                                            style={{
+                                                fontSize: "14px",
+                                                cursor: "pointer",
+                                            }}
+                                        ></i>
+                                    </Link>
+                                ) : null}
                             </div>
 
+                            {row.status_code > "3" || row.status_code == "10" ?
+                            <>
+                                 <div style={{ cursor: "pointer", marginLeft : "2px" }} title="View Proposal">
+                
+                <i
+                  className="fa fa-eye"
+                  style={{ color: "green", fontSize: "16px" }}
+                  onClick={(e) => showProposalModal2(row.id)}
+                />
+              
+            </div>
+                              
+                                </>
+                                :
+                                null
+                            }
 
-                            <div title="View Discussion Message">
-                                <i
-                                    class="fa fa-comments-o"
-                                    style={{
-                                        fontSize: 16,
-                                        cursor: "pointer",
-                                        color: "orange"
-                                    }}
-                                    onClick={() => ViewDiscussionToggel(row.assign_no)}
-                                ></i>
-                            </div>
+
+                          
+                           
                         </div>
                     </>
                 );
             },
         },
     ];
-
     return (
         <>
             <Card>

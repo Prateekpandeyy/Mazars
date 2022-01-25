@@ -307,7 +307,7 @@ rowStyle2 = (row, index) => {
                       <div>
                         {row.assignement_draft_report || row.final_report ?
                           <div title="View All Report"
-                            style={{ cursor: "pointer" }}
+                            style={{ cursor: "pointer",  textAlign : "center" }}
                             onClick={() => ViewReport(row)}
                           >
                             <DescriptionOutlinedIcon color="secondary" />

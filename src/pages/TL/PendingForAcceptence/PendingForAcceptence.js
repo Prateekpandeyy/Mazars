@@ -128,7 +128,7 @@ function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
       },
     },
     {
-      text: "	Exp. Delivery Date",
+      text: "Delivery Due Date ",
       dataField: "Exp_Delivery_Date",
       sort: true,
       headerStyle: () => {

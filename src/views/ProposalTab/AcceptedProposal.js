@@ -89,10 +89,10 @@ function AcceptedProposal() {
                 fontSize: "11px",
             },
             headerStyle: () => {
-                return { fontSize: "11px" };
+                return { fontSize: "11px", width: "100px" };
             },
             formatter: function (cell, row) {
-                
+              
                 var oldDate = row.created;
                 if (oldDate == null) {
                     return null;
@@ -107,7 +107,7 @@ function AcceptedProposal() {
                 fontSize: "11px",
             },
             headerStyle: () => {
-                return { fontSize: "11px" };
+                return { fontSize: "11px", width: "100px" };
             },
             formatter: function nameFormatter(cell, row) {
               
@@ -116,7 +116,7 @@ function AcceptedProposal() {
                         <Link
                             to={{
                                 pathname: `/customer/my-assingment/${row.q_id}`,
-                                index: 2,
+                                index: 0,
                                 routes: "proposal",
                             }}
                         >
@@ -293,7 +293,7 @@ function AcceptedProposal() {
                                     </Link>
                                 </div>
 
-                                <div title="View Discussion Message">
+                                <div title="View Discussion Message" className="ml-2">
                                     <i
                                         class="fa fa-comments-o"
                                         style={{
@@ -306,7 +306,7 @@ function AcceptedProposal() {
                                 </div>
 
                                  <>
-                                 <div style={{ cursor: "pointer", marginLeft : "8px" }} title="View Proposal">
+                                 <div style={{ cursor: "pointer" }} title="View Proposal" className="ml-2">
                 
                 <i
                   className="fa fa-eye"

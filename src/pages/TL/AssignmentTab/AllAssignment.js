@@ -298,7 +298,7 @@ const resetData = () => {
                 <div>
                   {row.assignement_draft_report || row.final_report ?
                     <div title="View All Report"
-                      style={{ cursor: "pointer" }}
+                      style={{ cursor: "pointer", textAlign : "center" }}
                       onClick={() => ViewReport(row)}
                     >
                       <DescriptionOutlinedIcon color="secondary" />
@@ -657,8 +657,8 @@ else{
                 >
                   <option value="">--select--</option>
                   <option value="1">Inprogress</option>
-                  <option value="2">Complete</option>
-                  <option value="3">Payment Decline</option>
+                  <option value="2">Completed</option>
+                  <option value="3">Payment Declined</option>
                 </select>
               </div>
 

@@ -100,12 +100,10 @@ function AllQueriesData() {
             text: "Date",
             dataField: "created",
             sort: true,
-            style : {
-                wordBreak : "break-word"
-                },
+           
             headerStyle: () => {
-                return { fontSize: "12px"};
-            },
+              return { fontSize: "11px", width:"120px", padding: "10px 20px", whiteSpace: "nowrap" };
+          },
            formatter : function dateFormatter(cell, row) {
                return(
                    <>
@@ -117,11 +115,9 @@ function AllQueriesData() {
         {
             text: "Query No",
             dataField: "assign_no",
-            style : {
-                wordBreak : "break-word"
-                },
+            
             headerStyle: () => {
-                return { fontSize: "12px"};
+                return { fontSize: "12px", width: "120px"};
             },
             formatter: function nameFormatter(cell, row) {
               
@@ -235,12 +231,9 @@ function AllQueriesData() {
         {
             text: "Action",
             headerStyle: () => {
-                return { fontSize: "12px", textAlign: "center" };
+              return { fontSize: "12px", textAlign: "center", width: "130px"};
             },
-            style : {
-                wordBreak : "break-word"
-                },
-            formatter: function (cell, row) {
+          formatter: function (cell, row) {
                 var dateMnsFive = moment(row.exp_delivery_date).add(15, 'day').format("YYYY-MM-DD");
               
                
@@ -255,26 +248,25 @@ function AllQueriesData() {
                         {   
                             row.status == "Declined Query" ?
                             <>
-                           <div className="declinedPayment">
+                           <>
                            {dateMnsFive > curDate === true ?
-                                <div title="Send Feedback"
+                                <span title="Send Feedback"
                                 style={{
                                     cursor: "pointer",
                                 }}>
-                                <Link
-                                    to={{
-                                        pathname: `/customer/feedback/${row.assign_no}`,
-                                        obj: {
-                                            routes: `/customer/queries`
-                                        }
-                                    }}
-                                >
-                                    <FeedbackIcon />
+                               
+                                <Link 
+                                 to={{
+                                    pathname: `/customer/feedback/${row.assign_no}`,
+                                    index: 0,
+                                    routes: "queries",
+                                }}>
+                                      <FeedbackIcon />
                                 </Link>
-                            </div>
+                            </span>
                              : ""} 
                             
-                                <div title="View Discussion Message">
+                                <span title="View Discussion Message" className="ml-2">
                                     <i
                                         className="fa fa-comments-o"
                                         style={{
@@ -284,16 +276,16 @@ function AllQueriesData() {
                                         }}
                                         onClick={() => ViewDiscussionToggel(row.assign_no)}
                                     ></i>
-                                </div>
+                                </span>
 
-                           </div>
+                           </>
                             </>
                                 :
-                                <div>
+                                <>
                     {
                         row.status_code == "0" || row.status_code == "1" || row.status_code == "3" ?
-                            <div style={{ display: "flex", justifyContent: "space-around" }}>
-                                <div title="Update Query">
+                            <>
+                                <span title="Update Query" className="ml-2">
                                     <Link to={`/customer/edit-query/${row.id}`}>
                                         <i
                                             className="fa fa-edit"
@@ -303,9 +295,9 @@ function AllQueriesData() {
                                             }}
                                         ></i>
                                     </Link>
-                                </div>
+                                </span>
 
-                                <div title="Delete Query">
+                                <span title="Delete Query" className="ml-2">
                                     <i
                                         className="fa fa-trash"
                                         style={{
@@ -315,8 +307,8 @@ function AllQueriesData() {
                                         }}
                                         onClick={() => del(row.id)}
                                     ></i>
-                                </div>
-                                <div title="Send Message">
+                                </span>
+                                <span title="Send Message" className="ml-2">
                                     <Link
                                         to={{
                                             pathname: `/customer/chatting/${row.id}&type=4`,
@@ -337,8 +329,8 @@ function AllQueriesData() {
                                             }}
                                         ></i>
                                     </Link>
-                                </div>
-                                <div title="View Discussion Message">
+                                </span>
+                                <span title="View Discussion Message" className="ml-2">
                                     <i
                                         className="fa fa-comments-o"
                                         style={{
@@ -348,45 +340,43 @@ function AllQueriesData() {
                                         }}
                                         onClick={() => ViewDiscussionToggel(row.assign_no)}
                                     ></i>
-                                </div>
+                                </span>
 
-                            </div> :
+                            </> :
                             null
                     }
 
                     {
                         row.status_code == "4" || 8 < parseInt(row.status_code) || row.status_code == "2" ?
                             
-                            <div style={{ display: "flex", justifyContent: "space-around" }}>
+                            <>
 
                                 {dateMnsFive > curDate === true ?
-                                <div title="Send Feedback"
+                                <span title="Send Feedback" className = "ml-2"
                                 style={{
                                     cursor: "pointer",
                                 }}>
-                                <Link
-                                    to={{
-                                        pathname: `/customer/feedback/${row.assign_no}`,
-                                        obj: {
-                                            routes: `/customer/queries`
-                                        }
-                                    }}
-                                >
-                                    <FeedbackIcon />
+                                <Link 
+                                 to={{
+                                    pathname: `/customer/feedback/${row.assign_no}`,
+                                    index: 0,
+                                    routes: "queries",
+                                }}>
+                                      <FeedbackIcon />
                                 </Link>
-                            </div> : ""}
+                            </span> : ""}
                                 {
                                     row.delivery_report == "completed" ? null :
-                                        <div title="Upload Additional Documents"
+                                        <span title="Upload Additional Documents" className="ml-2"
                                             style={{ cursor: "pointer" }}
                                             onClick={() => additionalHandler(row.assign_no)}
                                         >
                                             <PublishIcon color="secondary" />
-                                        </div>
+                                        </span>
                                 }
                                 {row.status_code == "10" ? null 
                                 : 
-                                <div title="Send Message">
+                                <span title="Send Message" className="ml-2">
                                 <Link
                                     to={{
                                         pathname: `/customer/chatting/${row.id}&type=4`,
@@ -407,9 +397,9 @@ function AllQueriesData() {
                                         }}
                                     ></i>
                                 </Link>
-                            </div>
+                            </span>
 }
-                                <div title="View Discussion Message">
+                                <span title="View Discussion Message" className="ml-2">
                                     <i
                                         className="fa fa-comments-o"
                                         style={{
@@ -419,13 +409,13 @@ function AllQueriesData() {
                                         }}
                                         onClick={() => ViewDiscussionToggel(row.assign_no)}
                                     ></i>
-                                </div>
+                                </span>
                             
-                            </div>
+                            </>
                             :
                             null
                     }
-                </div>
+                </>
 
         }
                     </>
@@ -433,7 +423,9 @@ function AllQueriesData() {
             },
         },
     ];
-
+      
+      
+      
 
     //check
     const del = (id) => {

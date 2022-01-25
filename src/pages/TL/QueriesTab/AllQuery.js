@@ -56,7 +56,7 @@ function AllQuery() {
                 return rowIndex + 1;
             },
             headerStyle: () => {
-                return { fontSize: "12px", width: "50px" };
+                return { fontSize: "11px", width: "50px" };
             },
         },
         {
@@ -64,7 +64,7 @@ function AllQuery() {
             dataField: "created",
             sort: true,
             headerStyle: () => {
-                return { fontSize: "12px" , width : "120px"};
+                return { fontSize: "11px" , width : "120px"};
             },
             formatter : function(cell, row){
                 let dueDate=row.created.split("-").reverse().join("-")
@@ -81,7 +81,7 @@ function AllQuery() {
             text: "Query No",
             dataField: "assign_no",
             headerStyle: () => {
-                return { fontSize: "12px" , width :"120px"};
+                return { fontSize: "11px" , width :"120px"};
             },
             formatter: function nameFormatter(cell, row) {
 
@@ -106,7 +106,7 @@ function AllQuery() {
             dataField: "parent_id",
             sort: true,
             headerStyle: () => {
-                return { fontSize: "12px", width :"120px" };
+                return { fontSize: "11px", width :"120px" };
             },
         },
         {
@@ -114,7 +114,7 @@ function AllQuery() {
             dataField: "cat_name",
             sort: true,
             headerStyle: () => {
-                return { fontSize: "12px", width : "120px" };
+                return { fontSize: "11px", width : "120px" };
             },
         },
         {
@@ -122,7 +122,7 @@ function AllQuery() {
             dataField: "name",
             sort: true,
             headerStyle: () => {
-                return { fontSize: "12px" , width : "150px"};
+                return { fontSize: "11px" , width : "150px"};
             },
         },
         {
@@ -130,7 +130,7 @@ function AllQuery() {
             dataField: "Exp_Delivery_Date",
             sort: true,
             headerStyle: () => {
-                return { fontSize: "12px" , width : "140px"};
+                return { fontSize: "11px" , width : "140px"};
             },
             formatter: function dateFormat(cell, row) {
                 
@@ -144,7 +144,7 @@ function AllQuery() {
         {
             text: "Status",
             headerStyle: () => {
-                return { fontSize: "12px", width : "120px" };
+                return { fontSize: "11px", width : "120px" };
             },
             formatter: function nameFormatter(cell, row) {
                 return (
@@ -179,7 +179,7 @@ function AllQuery() {
             text: "Action",
             dataField: "",
             headerStyle: () => {
-                return { fontSize: "12px" , width : "100px"};
+                return { fontSize: "11px" , width : "100px"};
             },
             formatter: function (cell, row) {
               

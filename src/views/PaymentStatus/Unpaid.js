@@ -133,51 +133,51 @@ function Paid() {
           return { fontSize: "11px" };
       },
   },
-    {
-      dataField: "query_created_date",
-      text: "Date",
-      sort: true,
-      style: {
+  {
+    dataField: "query_created_date",
+    text: "Date",
+    sort: true,
+    style: {
         fontSize: "11px",
-      },
-      headerStyle: () => {
-        return { fontSize: "11px" };
-      },
-      formatter: function dateFormat(cell, row) {
-       
+    },
+    headerStyle: () => {
+        return { fontSize: "11px", width:"120px", padding: "10px 20px", whiteSpace: "nowrap" };
+    },
+    formatter: function dateFormat(cell, row) {
+     
         var oldDate = row.query_created_date;
         if (oldDate == null) {
-          return null;
+            return null;
         }
         return oldDate.slice(0, 10).toString().split("-").reverse().join("-");
-      },
     },
-    {
-      dataField: "assign_no",
-      text: "Query No",
-      style: {
+},
+{
+    dataField: "assign_no",
+    text: "Query No",
+    style: {
         fontSize: "11px",
-      },
-      headerStyle: () => {
-        return { fontSize: "11px" };
-      },
-      formatter: function nameFormatter(cell, row) {
-      
-        return (
-          <>
-            <Link
-              to={{
-                pathname: `/customer/my-assingment/${row.assign_id}`,
-                index : 1,
-                routes: "paymentstatus",
-              }}
-            >
-              {row.assign_no}
-            </Link>
-          </>
-        );
-      },
     },
+    headerStyle: () => {
+        return { fontSize: "11px",    whiteSpace: "nowrap"  };
+    },
+    formatter: function nameFormatter(cell, row) {
+     
+        return (
+            <>
+                   <Link
+                        to={{
+                            pathname: `/customer/my-assingment/${row.assign_id}`,
+                            index : 1,
+                            routes: "paymentstatus",
+                        }}
+                    >
+                        {row.assign_no}
+                    </Link>
+            </>
+        );
+    },
+},
     {
       dataField: "parent_id",
       text: "Category",
@@ -348,7 +348,24 @@ function Paid() {
       formatter: function (cell, row) {
         return (
           <>
-          {row.paid_status === "2" ?  <div title="View Discussion Message" style={{pointer : "cursor", margin: "0 5px"}}>
+          {row.paid_status === "2" ?
+          <>
+       <div style={{display : "flex"}}>
+       <div
+                  style={{ cursor: "pointer", margin: "0 3px" }}
+                  title="Pay Amount"
+                 >
+                   <Link
+                            to={{
+                                pathname: `/customer/paydetails/${row.assign_id}`,
+                                index : 1,
+                                routes: "paymentstatus",
+                            }}
+                        >
+                                      <PaymentIcon color="primary" />
+                  </Link>
+                </div>
+            <div title="View Discussion Message" style={{pointer : "cursor", margin: "0 5px"}}>
             <i
               class="fa fa-comments-o"
               style={{
@@ -359,6 +376,8 @@ function Paid() {
               onClick={() => ViewDiscussionToggel(row.assign_no)}
             ></i>
           </div>
+       
+         </div>   </>
           :  <div style={{display : "flex"}}>
           <div>
             {
@@ -367,17 +386,13 @@ function Paid() {
                   style={{ cursor: "pointer", margin: "0 3px" }}
                   title="Pay Amount"
                  >
-                    <Link
-              to={{
-                pathname: `/customer/paydetails/${row.assign_id}`,
-                obj: {
-                  message_type: "5",
-                  query_No: row.assign_no,
-                  query_id: row.q_id,
-                  routes: `/customer/payment`
-                }
-              }}
-            >
+                   <Link
+                            to={{
+                                pathname: `/customer/paydetails/${row.assign_id}`,
+                                index : 1,
+                                routes: "paymentstatus",
+                            }}
+                        >
                                       <PaymentIcon color="primary" />
                   </Link>
                 </div>
@@ -391,18 +406,14 @@ function Paid() {
               row.paid_amount > 0 && row.paid_status > 0 ?
                 <div style={{ cursor: "pointer", margin: "0 5px" }} title="Payment History">
                <Link
-              to={{
-                pathname: `/customer/paydetails/${row.assign_id}`,
-                obj: {
-                  message_type: "5",
-                  query_No: row.assign_no,
-                  query_id: row.q_id,
-                  routes: `/customer/payment`
-                }
-              }}
-            >
-                               <PaymentIcon color="primary" />
-                  </Link>    
+                            to={{
+                                pathname: `/customer/paydetails/${row.assign_id}`,
+                                index : 1,
+                                routes: "paymentstatus",
+                            }}
+                        >
+                                      <PaymentIcon color="primary" />
+                  </Link>  
                 </div>
                 :
                 null
@@ -451,9 +462,6 @@ function Paid() {
       },
     },
   ];
-
-
-
 
   return (
     <>

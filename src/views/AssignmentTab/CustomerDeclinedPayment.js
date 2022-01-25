@@ -73,41 +73,48 @@ function CustomerDeclinedPayment() {
             dataField: "created",
             text: "Date",
             sort: true,
+            style: {
+                fontSize: "11px",
+            },
             headerStyle: () => {
-                return { fontSize: "12px" };
+                return { fontSize: "11px", width:"120px", padding: "10px 20px", whiteSpace: "nowrap" };
             },
-            formatter: function dateFormat(cell, row) {
-              
-                var oldDate = row.created;
-                if (oldDate === null) {
-                    return null;
-                }
-                return oldDate.toString().split("-").reverse().join("-");
+             formatter: function dateFormat(cell, row) {
+             
+              var oldDate = row.created;
+              if (oldDate == null) {
+                return null;
+              }
+              return oldDate.toString().split("-").reverse().join("-");
             },
-        },
-        {
+          },
+          {
             dataField: "assign_no",
             text: "Query No",
+            style: {
+                fontSize: "11px",
+            },
             headerStyle: () => {
-                return { fontSize: "12px" };
+                return { fontSize: "11px",    whiteSpace: "nowrap"  };
             },
             formatter: function nameFormatter(cell, row) {
-              
+             
                 return (
                     <>
-                        <Link
-                            to={{
-                                pathname: `/customer/my-assingment/${row.id}`,
-                                index: 3,
-                                routes: "assignment",
-                            }}
-                        >
-                            {row.assign_no}
-                        </Link>
+                           <Link
+                                to={{
+                                    pathname: `/customer/my-assingment/${row.assign_id}`,
+                                    index : 3,
+                                    routes: "assignment",
+                                }}
+                            >
+                                {row.assign_no}
+                            </Link>
                     </>
                 );
             },
-        },
+        
+          },
         {
             dataField: "parent_id",
             text: "Category",
@@ -172,9 +179,8 @@ function CustomerDeclinedPayment() {
             text: "Expected date of delivery",
             sort: true,
             headerStyle: () => {
-                return { fontSize: "12px" };
-            },
-            formatter: function dateFormat(cell, row) {
+        return { fontSize: "12px", width : "120px" , padding: "10px 20px"};
+      },            formatter: function dateFormat(cell, row) {
                
                 var oldDate = row.created;
                 if (oldDate === null) {
@@ -188,9 +194,8 @@ function CustomerDeclinedPayment() {
             text: "Actual date of delivery",
             sort: true,
             headerStyle: () => {
-                return { fontSize: "12px" };
-            },
-            formatter: function dateFormat(cell, row) {
+        return { fontSize: "12px", width : "120px" , padding: "10px 20px"};
+      },            formatter: function dateFormat(cell, row) {
               
                 var oldDate = row.final_date;
                 if (oldDate === null || oldDate === "0000-00-00") {
@@ -332,7 +337,7 @@ function CustomerDeclinedPayment() {
                         keyField="id"
                         data={assignmentDisplay}
                         columns={columns}
-                        classes="table-responsive"
+                        classes="table-responsivepayment"
                     />
 </div>
 

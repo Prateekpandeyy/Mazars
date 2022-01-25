@@ -67,138 +67,150 @@ function InprogressAllocation() {
 
   const columns = [
     {
-      text: "S.No",
-      dataField: "",
-      formatter: (cellContent, row, rowIndex) => {
-        return rowIndex + 1;
-      },
-      headerStyle: () => {
-        return { fontSize: "12px", width: "50px" };
-      },
+        text: "S.No",
+        dataField: "",
+        formatter: (cellContent, row, rowIndex) => {
+            return rowIndex + 1;
+        },
+        style : {
+            wordBreak : "break-word"
+            },
+        headerStyle: () => {
+            return { fontSize: "12px"};
+        },
     },
     {
-      text: "Date",
-      dataField: "created",
-      sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" ,  width: "80px" };
-      },
-      formatter: function dateFormat(cell, row) {
+        text: "Date",
+        dataField: "created",
+        sort: true,
        
-        var oldDate = row.created;
-        if (oldDate == null) {
-          return null;
-        }
-        return oldDate.toString().split("-").reverse().join("-");
+        headerStyle: () => {
+          return { fontSize: "11px", width:"120px", padding: "10px 20px", whiteSpace: "nowrap" };
       },
+       formatter : function dateFormatter(cell, row) {
+           return(
+               <>
+               {CommonServices.changeFormateDate(row.created)}
+               </>
+           )
+       }
     },
     {
-      text: "Query No",
-      dataField: "assign_no",
-      headerStyle: () => {
-        return { fontSize: "12px" ,  width: "130px" };
-      },
-      formatter: function nameFormatter(cell, row) {
-      
-        return (
-          <>
+        text: "Query No",
+        dataField: "assign_no",
+        
+        headerStyle: () => {
+            return { fontSize: "12px", width: "120px"};
+        },
+        formatter: function nameFormatter(cell, row) {
+          
+            return (
+                <>
+                    <Link
+                        to={{
+                            pathname: `/customer/my-assingment/${row.id}`,
+                            index: 0,
+                            routes: "queries",
+                        }}
+                    >
+                        {row.assign_no}
+                    </Link>
+                </>
+            );
+        },
+    },
+    {
+        text: "Category",
+        dataField: "parent_id",
+        sort: true,
+        style : {
+            wordBreak : "break-word"
+            },
+        headerStyle: () => {
+            return { fontSize: "12px"};
+        },
+    },
+    {
+        text: "Sub Category",
+        dataField: "cat_name",
+        sort: true,
+        style : {
+            wordBreak : "break-word"
+            },
+        headerStyle: () => {
+            return { fontSize: "12px"};
+        },
+    },
+    {
+        text: "Status",
+        dataField: "",
+        style : {
+            wordBreak : "break-word"
+            },
+        headerStyle: () => {
+            return { fontSize: "12px"};
+        },
+        formatter: function nameFormatter(cell, row) {
+            return (
+                <>
+                    <div>
+                        {row.status}/
+                        {
+                            row.status == "Inprogress Query" ?
+                                <p className="inprogress">
+                                    {row.status_message}
+                                </p>
+                                :
+                                row.status == "Declined Query" ?
+                                    <p className="declined">
+
+                                        {row.status_message}
+                                    </p> :
+                                    row.status == "Completed Query" ?
+                                        <p className="completed">
+
+                                            {row.status_message}
+                                        </p> :
+                                        null
+                        }
+                    </div>
+                </>
+            );
+        },
+    },
+    {
+        text: "Expected / Actual Delivery Date",
+        dataField: "exp_delivery_date",
+        sort: true,
+        style : {
+            wordBreak : "break-word"
+            },
+        headerStyle: () => {
+            return { fontSize: "12px"};
+        },
+        formatter: function dateFormat(cell, row) {
            
-            <Link
-              to={{
-                pathname: `/customer/my-assingment/${row.id}`,
-                index: 1,
-                routes: "queries",
-              }}
-            >
-              {row.assign_no}
-            </Link>
-          </>
-        );
-      },
+       
+            return (
+              
+                <>
+                    {
+                        row.status == "Declined Query"
+                            ? null
+                            :
+                            row.status_code != "3" && row.status_code > "1" ?
+                              <>
+                              {row.final_discussion === "completed" ?
+                                CommonServices.removeTime(row.final_date) : 
+                                CommonServices.removeTime(row.exp_delivery_date)}
+                              </>
+                                :
+                                null
+                    }
+                </>
+            )
+        },
     },
-    {
-      text: "Category",
-      dataField: "parent_id",
-      sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" ,  width: "130px"};
-      },
-    },
-    {
-      text: "Sub Category",
-      dataField: "cat_name",
-      sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" ,  width: "130px"};
-      },
-    },
-    {
-      text: "Status",
-      dataField: "",
-      headerStyle: () => {
-        return { fontSize: "12px" ,  width: "180px" };
-      },
-      formatter: function nameFormatter(cell, row) {
-        return (
-          <>
-            <div>
-              {
-                row.status == "Inprogress Query" ?
-                  <div>
-                    {row.status}/
-                    <p className="inprogress">
-                      {row.status_message}
-                    </p>
-                  </div>
-                  :
-                  row.status == "Inprogress; Allocation" ?
-                    <p>
-                      {row.status}
-                    </p>
-                    :
-                    row.status == "Inprogress; Proposals" ?
-                      <p>
-                        {row.status}
-                      </p>
-                      :
-                      row.status == "Inprogress; Assignments" ?
-                        <p>
-                          {row.status}
-                        </p>
-                        :
-                        null
-              }
-            </div>
-          </>
-        );
-      },
-    },
-    {
-      text: "Expected / Actual Delivery Date",
-      dataField: "exp_delivery_date",
-      sort: true,
-      headerStyle: () => {
-          return { fontSize: "12px" ,  width: "180px"};
-      },
-      formatter: function dateFormat(cell, row) {
-         
-     
-          return (
-            
-              <>
-                  {
-                      row.status == "Declined Query"
-                          ? null
-                          :
-                          row.status_code != "3" && row.status_code > "1" ?
-                              CommonServices.removeTime(row.exp_delivery_date)
-                              :
-                              null
-                  }
-              </>
-          )
-      },
-  },
     {
       text: "Action",
       headerStyle: () => {

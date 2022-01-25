@@ -112,7 +112,7 @@ function LoginForm() {
             <div className="signBtn">
               <div className="boxOverlay">
                 <Typography variant="h4" style={{ "margin": "5px auto", "color": "#fff" }}>
-                  For new Client
+                  For new client
                 </Typography>
                 <button className="btn btn-success">
                   <Link className="SignUpLink"
@@ -128,7 +128,7 @@ function LoginForm() {
           </div>
           <div className="signUp">
             <Typography variant="h4" style={{ "margin": "5px auto", "color": "#2b345f" }}>
-              For existing Client
+              For existing client
             </Typography>
             {
               show ? <div className="customForm">

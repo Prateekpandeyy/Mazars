@@ -103,7 +103,7 @@ const rightAli = {
                 fontSize: "11px",
             },
             headerStyle: () => {
-                return { fontSize: "11px" };
+                return { fontSize: "11px", width: "100px" };
             },
             formatter: function (cell, row) {
               
@@ -121,7 +121,7 @@ const rightAli = {
                 fontSize: "11px",
             },
             headerStyle: () => {
-                return { fontSize: "11px" };
+                return { fontSize: "11px", width: "100px" };
             },
             formatter: function nameFormatter(cell, row) {
               
@@ -303,7 +303,7 @@ const rightAli = {
             formatter: function (cell, row) {
                 return (
                     <>
-                        {row.statuscode === "6" ? <div style={{display : "flex", justifyContent : "space-between"}}>
+                        {row.statuscode === "6" ? <div style={{display : "flex", justifyContent : "flex-start"}}>
                         <div title="Send Message">
                                     <Link
                                         to={{
@@ -327,7 +327,7 @@ const rightAli = {
                                     </Link>
                                 </div>
 
-                                <div title="View Discussion Message">
+                                <div title="View Discussion Message"  className="ml-2">
                                     <i
                                         class="fa fa-comments-o"
                                         style={{
@@ -340,7 +340,7 @@ const rightAli = {
                                 </div>
 
                         </div> : (
-                            <div style={{ display: "flex", justifyContent: "space-between", width: "80px" }}>
+                            <div style={{ display: "flex", justifyContent: "flex-start"}}>
                                 <div title="Send Message">
                                     <Link
                                         to={{
@@ -364,7 +364,7 @@ const rightAli = {
                                     </Link>
                                 </div>
 
-                                <div title="View Discussion Message">
+                                <div title="View Discussion Message" className="ml-2">
                                     <i
                                         class="fa fa-comments-o"
                                         style={{
@@ -380,7 +380,7 @@ const rightAli = {
                                     {
                                         row.statuscode > 6 ?
                                              <>
-                                 <div style={{ cursor: "pointer", marginLeft : "8px" }} title="View Proposal">
+                                 <div style={{ cursor: "pointer" }} title="View Proposal" className="ml-2">
                 
                 <i
                   className="fa fa-eye"
@@ -398,7 +398,7 @@ const rightAli = {
                                     {
                                         row.statuscode == 4
                                             ?
-                                            <div style={{ cursor: "pointer" }} title="Decision on Proposal">
+                                            <div style={{ cursor: "pointer" }} title="Decision on Proposal" className="ml-2">
                                                 <Link to={`/customer/proposal_view/${row.q_id}`}>
                                                     <i
                                                         class="fa fa-share"

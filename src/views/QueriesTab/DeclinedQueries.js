@@ -199,52 +199,93 @@ function DeclinedQueries() {
           
        
           return (
-              <>
-                  {   
-                      row.status == "Declined Query" ?
-                      <>
-                     <div className="declinedPayment">
-                     {dateMnsFive > curDate === true ?
-                          <div title="Send Feedback"
-                          style={{
-                              cursor: "pointer",
-                          }}>
-                          <Link
-                              to={{
-                                  pathname: `/customer/feedback/${row.assign_no}`,
-                                  obj: {
-                                      routes: `/customer/queries`,
-                                      index: 3
-                                  }
-                              }}
-                          >
-                              <FeedbackIcon />
-                          </Link>
-                      </div>
-                       : ""} 
-                      
-                          <div title="View Discussion Message">
-                              <i
-                                  className="fa fa-comments-o"
-                                  style={{
-                                      fontSize: 16,
-                                      cursor: "pointer",
-                                      color: "orange"
-                                  }}
-                                  onClick={() => ViewDiscussionToggel(row.assign_no)}
-                              ></i>
-                          </div>
+            
+                    <>
+                        {   
+                            row.status == "Declined Query" ?
 
-                     </div>
-                      </>
-                          :
-                       ""}
-                       
-              </>
-          );
-      },
-  },
-];
+                           <>
+                          <div style={{display: "flex"}}>
+                          {dateMnsFive > curDate === true ?
+                                <span title="Send Feedback"
+                                style={{
+                                    cursor: "pointer",
+                                }}>
+                               
+                                <Link 
+                                 to={{
+                                    pathname: `/customer/feedback/${row.assign_no}`,
+                                    index: 0,
+                                    routes: "queries",
+                                }}>
+                                      <FeedbackIcon />
+                                </Link>
+                            </span>
+                             : ""} 
+                            
+                                <span title="View Discussion Message" className="ml-2">
+                                    <i
+                                        className="fa fa-comments-o"
+                                        style={{
+                                            fontSize: 16,
+                                            cursor: "pointer",
+                                            color: "orange"
+                                        }}
+                                        onClick={() => ViewDiscussionToggel(row.assign_no)}
+                                    ></i>
+                                </span>
+
+                      
+                          </div>
+                            </>
+                                :
+                                <>
+                 
+                    {
+                        row.status_code == "4" || 8 < parseInt(row.status_code) || row.status_code == "2" ?
+                            
+                            <>
+
+                                {dateMnsFive > curDate === true ?
+                                <span title="Send Feedback"
+                                style={{
+                                    cursor: "pointer",
+                                }}>
+                                <Link 
+                                 to={{
+                                    pathname: `/customer/feedback/${row.assign_no}`,
+                                    index: 0,
+                                    routes: "queries",
+                                }}>
+                                      <FeedbackIcon />
+                                </Link>
+                            </span> : ""}
+                                
+
+                                <span title="View Discussion Message">
+                                    <i
+                                        className="fa fa-comments-o"
+                                        style={{
+                                            fontSize: 16,
+                                            cursor: "pointer",
+                                            color: "orange"
+                                        }}
+                                        onClick={() => ViewDiscussionToggel(row.assign_no)}
+                                    ></i>
+                                </span>
+                            
+                            </>
+                            :
+                            null
+                    }
+                </>
+
+        }
+                    </>
+                );
+            },
+        },
+    ];
 
   return (
     <div>

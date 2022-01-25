@@ -291,7 +291,7 @@ const ViewReport = (key) => {
                       <div>
                         {row.assignement_draft_report || row.final_report ?
                           <div title="View All Report"
-                            style={{ cursor: "pointer" }}
+                            style={{ cursor: "pointer",  textAlign : "center" }}
                             onClick={() => ViewReport(row)}
                           >
                             <DescriptionOutlinedIcon color="secondary" />
@@ -434,13 +434,13 @@ const ViewReport = (key) => {
     const onSubmit = (data) => {
       
         axios
-            .get(
-                `${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(
-                    userid
-                )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
-                }&assignment_status=${status}&stages_status=${data.p_status
-                }&pcat_id=${selectedData}`
-            )
+        .get(
+            `${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(
+                userid
+            )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
+            }&assignment_status="Final_Report"&stages_status=2
+           &pcat_id=${selectedData}`
+        )
             .then((res) => {
                 
                 if (res.data.code === 1) {

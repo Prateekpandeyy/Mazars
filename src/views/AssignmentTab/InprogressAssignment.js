@@ -83,13 +83,16 @@ function InprogressAssignment() {
       dataField: "created",
       text: "Date",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
+      style: {
+          fontSize: "11px",
       },
-      formatter: function dateFormat(cell, row) {
+      headerStyle: () => {
+          return { fontSize: "11px", width:"120px", padding: "10px 20px", whiteSpace: "nowrap" };
+      },
+       formatter: function dateFormat(cell, row) {
        
         var oldDate = row.created;
-        if (oldDate === null) {
+        if (oldDate == null) {
           return null;
         }
         return oldDate.toString().split("-").reverse().join("-");
@@ -98,25 +101,29 @@ function InprogressAssignment() {
     {
       dataField: "assign_no",
       text: "Query No",
+      style: {
+          fontSize: "11px",
+      },
       headerStyle: () => {
-        return { fontSize: "12px" };
+          return { fontSize: "11px",    whiteSpace: "nowrap"  };
       },
       formatter: function nameFormatter(cell, row) {
-              
-        return (
-            <>
-                <Link
-                    to={{
-                        pathname: `/customer/my-assingment/${row.id}`,
-                        index: 1,
-                        routes: "assignment",
-                    }}
-                >
-                    {row.assign_no}
-                </Link>
-            </>
-        );
-    },
+       
+          return (
+              <>
+                     <Link
+                          to={{
+                              pathname: `/customer/my-assingment/${row.assign_id}`,
+                              index : 1,
+                              routes: "assignment",
+                          }}
+                      >
+                          {row.assign_no}
+                      </Link>
+              </>
+          );
+      },
+  
     },
     {
       dataField: "parent_id",
@@ -182,7 +189,7 @@ function InprogressAssignment() {
       text: "Expected date of delivery",
       sort: true,
       headerStyle: () => {
-        return { fontSize: "12px" };
+        return { fontSize: "12px", width : "120px" , padding: "10px 20px"};
       },
       formatter: function dateFormat(cell, row) {
        
@@ -198,7 +205,7 @@ function InprogressAssignment() {
       text: "Actual date of delivery",
       sort: true,
       headerStyle: () => {
-        return { fontSize: "12px" };
+        return { fontSize: "12px", width : "120px" , padding: "10px 20px"};
       },
       formatter: function dateFormat(cell, row) {
     
@@ -346,7 +353,7 @@ function InprogressAssignment() {
             keyField="id"
             data={assignmentDisplay}
             columns={columns}
-            classes="table-responsive"
+            classes="table-responsivepayment"
           />
           </div>
 

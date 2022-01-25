@@ -82,7 +82,7 @@ function DeclinedProposal() {
                 fontSize: "11px",
             },
             headerStyle: () => {
-                return { fontSize: "11px" };
+                return { fontSize: "11px", width: "100px" };
             },
             formatter: function (cell, row) {
               
@@ -100,7 +100,7 @@ function DeclinedProposal() {
                 fontSize: "11px",
             },
             headerStyle: () => {
-                return { fontSize: "11px" };
+                return { fontSize: "11px", width: "100px" };
             },
             formatter: function nameFormatter(cell, row) {
               
@@ -109,7 +109,7 @@ function DeclinedProposal() {
                         <Link
                             to={{
                                 pathname: `/customer/my-assingment/${row.q_id}`,
-                                index: 3,
+                                index: 0,
                                 routes: "proposal",
                             }}
                         >
@@ -257,7 +257,7 @@ function DeclinedProposal() {
             formatter : function formatterFun(cell, row) {
                 return(
                     <>
-                    <div style={{display : "flex", justifyContent : "space-between"}}>
+                    <div style={{display : "flex", justifyContent : "flex-start"}}>
 <div title="Send Message">
                                     <Link
                                         to={{
@@ -281,7 +281,7 @@ function DeclinedProposal() {
                                     </Link>
                                 </div>
 
-                                <div title="View Discussion Message">
+                                <div title="View Discussion Message" className="ml-2">
                                     <i
                                         class="fa fa-comments-o"
                                         style={{
