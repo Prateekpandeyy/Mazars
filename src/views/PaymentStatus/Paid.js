@@ -357,7 +357,7 @@ function Unpaid() {
                               <Link
                             to={{
                                 pathname: `/customer/paydetails/${row.assign_id}`,
-                                index : 1,
+                                index : 2,
                                 routes: "paymentstatus",
                             }}
                         >
@@ -376,7 +376,7 @@ function Unpaid() {
                           <Link
                             to={{
                                 pathname: `/customer/paydetails/${row.assign_id}`,
-                                index : 1,
+                                index : 2,
                                 routes: "paymentstatus",
                             }}
                         >

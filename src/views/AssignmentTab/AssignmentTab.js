@@ -79,6 +79,7 @@ function AssignmentTab(props) {
 
   const myStyle1 = {
     backgroundColor: "grey",
+    margin: "10px auto",
     padding: "12px 24px",
     borderRadius: "50px",
     width: "auto",
@@ -89,6 +90,7 @@ function AssignmentTab(props) {
 
   const myStyle2 = {
     padding: "12px 24px",
+    margin: "10px auto",
     borderRadius: "50px",
     width: "auto",
     textAlign: "center",
