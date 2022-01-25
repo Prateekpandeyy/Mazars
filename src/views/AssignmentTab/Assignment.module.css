@@ -7,3 +7,9 @@
     width: 100%;
     flex-direction: column;
 }
+.assignmentStyle{
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    word-break: break-word;
+}

@@ -366,7 +366,7 @@ function Paid() {
                      <Link
                             to={{
                                 pathname: `/customer/paydetails/${row.assign_id}`,
-                                index : 2,
+                                index : 1,
                                 routes: "paymentstatus",
                             }}
                         >
@@ -385,7 +385,7 @@ function Paid() {
                <Link
                             to={{
                                 pathname: `/customer/paydetails/${row.assign_id}`,
-                                index : 2,
+                                index : 1,
                                 routes: "paymentstatus",
                             }}
                         >

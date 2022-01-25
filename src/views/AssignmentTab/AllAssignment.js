@@ -13,7 +13,7 @@ import ViewAllReportModal from "./ViewAllReport";
 import Records from "../../components/Records/Records";
 import DescriptionOutlinedIcon from '@material-ui/icons/DescriptionOutlined';
 import DiscardReport from "../AssignmentTab/DiscardReport";
-
+import style from './Assignment.module.css';
 
 function AllAssignment() {
   const userId = window.localStorage.getItem("userid");
@@ -273,9 +273,11 @@ function AllAssignment() {
     if (row) {
       return (
         <>
-          <p style={{ fontSize: "10px" }}>{row.tname} </p>
-          <p style={{ fontSize: "10px" }}>{row.phone}</p>
-          <p style={{ fontSize: "10px" }}>{row.email}</p>
+         <div className={style.assignmentStyle}>
+         <p>{row.tname} </p>
+          <p>{row.phone}</p>
+          <p>{row.email}</p>
+         </div>
         </>
       );
     }

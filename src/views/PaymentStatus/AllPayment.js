@@ -504,7 +504,7 @@ function Paid() {
               keyField={"assign_no"}
               data={payment}
               columns={columns}
-              classes="table-responsivepayment"
+              classes="table-responsive"
               defaultSortDirection="asc"
             />
 </div>
