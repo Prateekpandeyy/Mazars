@@ -459,7 +459,7 @@ function TeamFilter(props) {
                       onChange={(e) => setStatus1(e.target.value)}
                     >
                       <option value="">--select--</option>
-                      <option value="4">Inprogress acceptance by TL</option>
+                      <option value="4">Inprogress Acceptance</option>
                       <option value="5">Inprogress; Proposal</option>
                       <option value="6">Inprogress; Assignment</option>
                     </select>

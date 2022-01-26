@@ -472,7 +472,7 @@ setServices2(k.service)
             </div>
            <div className="row my-2">
              <div className="col-md-6 headCenter">
-               <h5>Out of Pocket Expenses</h5>
+               <label>Out of Pocket Expenses</label>
                </div>
                <div className="col-md-6">
                <input 
@@ -488,7 +488,7 @@ setServices2(k.service)
              </div>
             <div className="row my-2">
               <div className="col-md-4">
-              <h6>CGST</h6>
+              <label>CGST</label>
              <div className="row">
              <div className="col-md-6" style={percent}>
               <input 
@@ -515,7 +515,7 @@ setServices2(k.service)
                  </div>
                   </div>
                   <div className="col-md-4">
-                  <h6>SGST/UTGST </h6>
+                  <label>SGST/UTGST </label>
               <div className="row">
                   <div className="col-md-6" style={percent}>
                   <input 
@@ -542,7 +542,7 @@ setServices2(k.service)
             
                   </div>
                   <div className="col-md-4">
-              <h6>IGST</h6>
+              <label>IGST</label>
               <div className="row">
               <div className="col-md-6" style={percent}>
                 <input 
@@ -574,7 +574,7 @@ setServices2(k.service)
           
             <div className="row my-2">
                 <div className="col-md-4 headCenter">
-                  <h5>Total GST</h5>
+                  <label>Total GST</label>
                     </div>
                     <div className="col-md-4">
                         </div>
@@ -594,7 +594,7 @@ setServices2(k.service)
                 <hr/>
                 <div className="row my-2">
                 <div className="col-md-8 headCenter">
-                  <h5>Total Invoice Amount</h5>
+                  <label>Total Invoice Amount</label>
                     </div>
                    
                         <div className="col-md-4">
@@ -613,7 +613,7 @@ setServices2(k.service)
            
             <div className="row my-2">
               <div className="col-md-4 my-1 headCenter">
-              <h5>TDS </h5>
+              <label>TDS </label>
                   </div>
                 <div className="col-md-4 my-1">
                <div className = "row">
@@ -648,7 +648,7 @@ setServices2(k.service)
             </div>
             <div className="row my-2">
               <div className="col-md-6 my-1 headCenter">
-              <h5>Net Payable Amount</h5>
+              <label>Net Payable Amount</label>
                   </div>
                   <div className="col-md-2 my-1"></div>
                    
