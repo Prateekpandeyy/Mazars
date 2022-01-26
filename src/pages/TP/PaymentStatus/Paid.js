@@ -368,28 +368,31 @@ function AllPayment() {
                           ></i>
                           </Link>
                         </div>
-                        <div title="Send Message">
-                            <Link
-                                to={{
-                                    pathname: `/taxprofessional/chatting/${row.assign_id}`,
-                                    obj: {
-                                        message_type: "5",
-                                        query_No: row.assign_no,
-                                        query_id: row.assign_id,
-                                        routes: `/taxprofessional/paymentstatus`
-                                    }
-                                }}
-                            >
-                                <i
-                                    class="fa fa-comments-o"
-                                    style={{
-                                        fontSize: 18,
-                                        cursor: "pointer",
-                                        color: "blue"
-                                    }}
-                                ></i>
-                            </Link>
-                        </div>
+                        <div title="Send Message" className="ml-2">
+                                            <Link
+ to={{
+    pathname: `/taxprofessional/chatting/${row.id}`,
+    index : 2,
+    routes: "paymentstatus",
+                                                    obj: {
+                                                        message_type: "5",
+                                                        query_No: row.assign_no,
+                                                        query_id: row.id,
+                                                        routes: `/taxprofessional/paymentstatus`
+                                                    }
+                                                }}
+                                            >
+                                                <i
+                                                    class="fa fa-comments-o"
+                                                    style={{
+                                                        fontSize: 16,
+                                                        cursor: "pointer",
+                                                        marginLeft: "8px",
+                                                        color: "blue"
+                                                    }}
+                                                ></i>
+                                            </Link>
+                                        </div>
                       
 
 

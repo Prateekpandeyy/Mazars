@@ -153,6 +153,9 @@ function AssignmentTab() {
             headerStyle: () => {
                 return { fontSize: "12px", width: "50px" };
             },
+            style : {
+                fontSize : "11px"
+              },
         },
         {
             text: "Date",
@@ -161,6 +164,9 @@ function AssignmentTab() {
             headerStyle: () => {
                 return { fontSize: "12px" };
             },
+            style : {
+                fontSize : "11px"
+              },
             formatter: function dateFormat(cell, row) {
               
                 var oldDate = row.date_of_query;
@@ -176,6 +182,9 @@ function AssignmentTab() {
             headerStyle: () => {
                 return { fontSize: "12px" };
             },
+            style : {
+                fontSize : "11px"
+              },
             formatter: function nameFormatter(cell, row) {
               
                 return (
@@ -200,6 +209,9 @@ function AssignmentTab() {
             headerStyle: () => {
                 return { fontSize: "12px" };
             },
+            style : {
+                fontSize : "11px"
+              },
         },
         {
             text: "Sub Category",
@@ -208,6 +220,9 @@ function AssignmentTab() {
             headerStyle: () => {
                 return { fontSize: "12px" };
             },
+            style : {
+                fontSize : "11px"
+              },
         },
         {
             dataField: "status",
@@ -254,6 +269,9 @@ function AssignmentTab() {
             headerStyle: () => {
                 return { fontSize: "12px" };
             },
+            style : {
+                fontSize : "11px"
+              },
             formatter: function dateFormat(cell, row) {
                
                 var oldDate = row.Exp_Delivery_Date;
@@ -270,6 +288,9 @@ function AssignmentTab() {
             headerStyle: () => {
                 return { fontSize: "12px" };
             },
+            style : {
+                fontSize : "11px"
+              },
             formatter: function dateFormat(cell, row) {
             
                 var oldDate = row.final_date;
@@ -286,6 +307,9 @@ function AssignmentTab() {
             headerStyle: () => {
               return { fontSize: "12px" };
             },
+            style : {
+                fontSize : "11px", textAlign: "center"
+              },
             formatter: function (cell, row) {
               return (
                 <>
@@ -313,6 +337,9 @@ function AssignmentTab() {
             headerStyle: () => {
               return { fontSize: "12px" };
             },
+            style : {
+                fontSize : "11px"
+              },
             formatter: function (cell, row) {
               return (
                 <>
@@ -336,6 +363,9 @@ function AssignmentTab() {
             headerStyle: () => {
                 return { fontSize: "12px" };
             },
+            style : {
+                fontSize : "11px"
+              },
             formatter: function (cell, row) {
                 return (
                     <>
@@ -386,30 +416,32 @@ function AssignmentTab() {
                      onClick={() => ViewDiscussionToggel(row.assign_no)}
                    ></i>
                  </div>
-                 <div title="Send Message">
-                   <Link
-                     to={{
-                       pathname: `/taxprofessional/chatting/${row.q_id}`,
-                       obj: {
-                         message_type: "3",
-                         query_No: row.assign_no,
-                         query_id: row.q_id,
-                         routes: `/taxprofessional/assignment`
-                       }
-                     }}
-                   >
-                     <i
-                       class="fa fa-comments-o"
-                       style={{
-                         fontSize: 16,
-                         cursor: "pointer",
-                         marginLeft: "8px",
-                         color: "blue"
-                       }}
-                     ></i>
-                   </Link>
-                 </div>
-      
+                 <div title="Send Message" className="ml-2">
+                                            <Link
+ to={{
+    pathname: `/taxprofessional/chatting/${row.id}`,
+    index : 1,
+    routes: "assignment",
+                                                    obj: {
+                                                        message_type: "3",
+                                                        query_No: row.assign_no,
+                                                        query_id: row.id,
+                                                        routes: `/taxprofessional/assignment`
+                                                    }
+                                                }}
+                                            >
+                                                <i
+                                                    class="fa fa-comments-o"
+                                                    style={{
+                                                        fontSize: 16,
+                                                        cursor: "pointer",
+                                                        marginLeft: "8px",
+                                                        color: "blue"
+                                                    }}
+                                                ></i>
+                                            </Link>
+                                        </div>
+
                </div>
                }
                 </>

@@ -193,7 +193,7 @@ function Message(props) {
               
             </Col>
             <Col md="4" style={{ display: "flex", justifyContent: "center" }}>
-              <p style={{ fontSize: "20px" }}>Proposal Details</p>
+              <p style={{ fontSize: "20px" }}>Message</p>
             </Col>
             <Col
               md="4"

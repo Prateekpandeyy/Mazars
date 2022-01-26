@@ -260,9 +260,10 @@ return(
         <Layout TPDashboard="TPDashboard" TPuserId={userId}>
     {paymentDetail === undefined ? "" : 
   <Card>
-      <CardHeader>
-         
-         <Link
+                        <CardHeader>
+          <Row>
+          <Col md="4">
+          <Link
                   to={{
                     pathname: `/taxprofessional/${props.location.routes}`,
                     index: props.location.index,
@@ -270,9 +271,12 @@ return(
                 >
                   <button class="btn btn-success ml-3">Go Back</button>
                 </Link>
+            </Col>
+            <Col md="8">
               <h4>Payment Details</h4>
-              
-          </CardHeader>
+            </Col>
+          </Row>
+        </CardHeader>
           <CardBody>
           <div className="tableFixHead">
   <BootstrapTable

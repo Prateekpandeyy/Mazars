@@ -73,16 +73,16 @@ function DeclinedProposal() {
         },
         {
             dataField: "query_date",
-            text: "Date",
+            text: "Query Date",
             sort: true,
             style: {
                 fontSize: "11px",
             },
-            headerStyle: () => {
-                return { fontSize: "11px" };
+ headerStyle: () => {
+                return { fontSize: "11px" , width : "120px", whiteSpace : "nowrap", padding: "10px 20px"};
             },
             formatter: function dateFormat(cell, row) {
-              
+           
                 var oldDate = row.query_date;
                 if (oldDate == null) {
                     return null;
@@ -93,14 +93,15 @@ function DeclinedProposal() {
         {
             text: "Query No",
             dataField: "assign_no",
+           
+            headerStyle: () => {
+                return { fontSize: "11px", width: "120px" };
+            },
             style: {
                 fontSize: "11px",
             },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
             formatter: function nameFormatter(cell, row) {
-            
+              
                 return (
                     <>
 
@@ -270,10 +271,12 @@ function DeclinedProposal() {
 
                             <div>
                                
-                                        <div title="Send Message">
+                            <div title="Send Message" className="ml-2">
                                             <Link
-                                                to={{
-                                                    pathname: `/taxprofessional/chatting/${row.id}`,
+ to={{
+    pathname: `/taxprofessional/chatting/${row.id}`,
+    index : 3,
+    routes: "proposal",
                                                     obj: {
                                                         message_type: "2",
                                                         query_No: row.assign_no,

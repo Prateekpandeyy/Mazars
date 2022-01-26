@@ -58,20 +58,29 @@ function AllQuery() {
             headerStyle: () => {
                 return { fontSize: "12px", width: "50px" };
             },
+            style: {
+                fontSize : "11px"
+            }
         },
         {
-            text: "Date",
+            text: "Query Date",
             dataField: "created",
             sort: true,
             headerStyle: () => {
                 return { fontSize: "12px", width : "150px" };
             },
+            style: {
+                fontSize : "11px"
+            }
         },
         {
             text: "Query No",
             dataField: "assign_no",
             headerStyle: () => {
                 return { fontSize: "12px" , width : "150px"};
+            },
+            style: {
+                fontSize : "11px"
             },
             formatter: function nameFormatter(cell, row) {
               
@@ -98,6 +107,9 @@ function AllQuery() {
             headerStyle: () => {
                 return { fontSize: "12px",width : "120px" };
             },
+            style: {
+                fontSize : "11px"
+            }
         },
         {
             text: "Sub Category",
@@ -106,6 +118,9 @@ function AllQuery() {
             headerStyle: () => {
                 return { fontSize: "12px" };
             },
+            style: {
+                fontSize : "11px"
+            }
         },
         {
             text: "Client Name",
@@ -114,13 +129,19 @@ function AllQuery() {
             headerStyle: () => {
                 return { fontSize: "12px", width : "120px" };
             },
+            style: {
+                fontSize : "11px"
+            }
         },
         {
-            text: "	Exp. Delivery Date",
+            text: "Delivery due date / Actual Delivery date",
             dataField: "Exp_Delivery_Date",
             sort: true,
             headerStyle: () => {
                 return { fontSize: "12px", width : "120px" };
+            },
+            style: {
+                fontSize : "11px"
             },
             formatter: function dateFormat(cell, row) {
               
@@ -135,6 +156,9 @@ function AllQuery() {
             text: "Status",
             headerStyle: () => {
                 return { fontSize: "12px", width : "120px" };
+            },
+            style: {
+                fontSize : "11px"
             },
             formatter: function nameFormatter(cell, row) {
                 return (
@@ -171,6 +195,9 @@ function AllQuery() {
             headerStyle: () => {
                 return { fontSize: "12px" , width : "120px"};
             },
+            style: {
+                fontSize : "11px"
+            },
             formatter: function (cell, row) {
               
                 return (
@@ -187,29 +214,32 @@ function AllQuery() {
                      
 
                       {row.status == "Declined Query" ? null :
-                      <div title="Send Message">
-                      <Link
-                          to={{
-                              pathname: `/taxprofessional/chatting/${row.id}`,
-                              obj: {
-                                  message_type: "4",
-                                  query_No: row.assign_no,
-                                  query_id: row.id,
-                                  routes: `/taxprofessional/queriestab`
-                              }
-                          }}
-                      >
-                          <i
-                              class="fa fa-comments-o"
-                              style={{
-                                  fontSize: 16,
-                                  cursor: "pointer",
-                                  marginLeft: "8px",
-                                  color: "blue"
-                              }}
-                          ></i>
-                      </Link>
-                  </div>}
+                        <div title="Send Message" className="ml-2">
+                        <Link
+to={{
+pathname: `/taxprofessional/chatting/${row.id}`,
+index : 0,
+routes: "queriestab",
+                                obj: {
+                                    message_type: "4",
+                                    query_No: row.assign_no,
+                                    query_id: row.id,
+                                    routes: `/taxprofessional/queriestab`
+                                }
+                            }}
+                        >
+                            <i
+                                class="fa fa-comments-o"
+                                style={{
+                                    fontSize: 16,
+                                    cursor: "pointer",
+                                    marginLeft: "8px",
+                                    color: "blue"
+                                }}
+                            ></i>
+                        </Link>
+                    </div>
+}
 
                       <div title="View Discussion Message">
                           <i

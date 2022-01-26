@@ -68,7 +68,7 @@ function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
       },
     },
     {
-      text: "Date",
+      text: "Query Date",
       dataField: "query_created",
       sort: true,
       

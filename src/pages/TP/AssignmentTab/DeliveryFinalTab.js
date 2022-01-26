@@ -151,6 +151,9 @@ const ViewReport = (key) => {
             headerStyle: () => {
                 return { fontSize: "12px", width: "50px" };
             },
+            style : {
+                fontSize : "11px"
+              },
         },
         {
             text: "Date",
@@ -159,6 +162,9 @@ const ViewReport = (key) => {
             headerStyle: () => {
                 return { fontSize: "12px" };
             },
+            style : {
+                fontSize : "11px"
+              },
             formatter: function dateFormat(cell, row) {
              
                 var oldDate = row.date_of_query;
@@ -174,6 +180,9 @@ const ViewReport = (key) => {
             headerStyle: () => {
                 return { fontSize: "12px" };
             },
+            style : {
+                fontSize : "11px"
+              },
             formatter: function nameFormatter(cell, row) {
                
                 return (
@@ -198,6 +207,9 @@ const ViewReport = (key) => {
             headerStyle: () => {
                 return { fontSize: "12px" };
             },
+            style : {
+                fontSize : "11px"
+              },
         },
         {
             text: "Sub Category",
@@ -206,6 +218,9 @@ const ViewReport = (key) => {
             headerStyle: () => {
                 return { fontSize: "12px" };
             },
+            style : {
+                fontSize : "11px"
+              },
         },
         {
             dataField: "status",
@@ -252,6 +267,9 @@ const ViewReport = (key) => {
             headerStyle: () => {
                 return { fontSize: "12px" };
             },
+            style : {
+                fontSize : "11px"
+              },
             formatter: function dateFormat(cell, row) {
               
                 var oldDate = row.Exp_Delivery_Date;
@@ -265,6 +283,9 @@ const ViewReport = (key) => {
             text: "Actual date of delivery",
             dataField: "final_date",
             sort: true,
+            style : {
+                fontSize : "11px"
+              },
             headerStyle: () => {
                 return { fontSize: "12px" };
             },
@@ -276,13 +297,17 @@ const ViewReport = (key) => {
                 }
                 return oldDate.slice(0, 10).toString().split("-").reverse().join("-");
             },
+            
         },
         {
             text: "Deliverable",
             dataField: "",
             sort: true,
+            style : {
+                fontSize : "11px"
+              },
             headerStyle: () => {
-              return { fontSize: "12px" };
+              return { fontSize: "12px",  textAlign: "center" };
             },
             formatter: function (cell, row) {
               return (
@@ -311,6 +336,9 @@ const ViewReport = (key) => {
             headerStyle: () => {
               return { fontSize: "12px" };
             },
+            style : {
+                fontSize : "11px"
+              },
             formatter: function (cell, row) {
               return (
                 <>
@@ -334,6 +362,9 @@ const ViewReport = (key) => {
             headerStyle: () => {
                 return { fontSize: "12px" };
             },
+            style : {
+                fontSize : "11px"
+              },
             formatter: function (cell, row) {
                 return (
                     <>
@@ -381,29 +412,32 @@ const ViewReport = (key) => {
                      onClick={() => ViewDiscussionToggel(row.assign_no)}
                    ></i>
                  </div>
-                 <div title="Send Message">
-                   <Link
-                     to={{
-                       pathname: `/taxprofessional/chatting/${row.q_id}`,
-                       obj: {
-                         message_type: "3",
-                         query_No: row.assign_no,
-                         query_id: row.q_id,
-                         routes: `/taxprofessional/assignment`
-                       }
-                     }}
-                   >
-                     <i
-                       class="fa fa-comments-o"
-                       style={{
-                         fontSize: 16,
-                         cursor: "pointer",
-                         marginLeft: "8px",
-                         color: "blue"
-                       }}
-                     ></i>
-                   </Link>
-                 </div>
+                 <div title="Send Message" className="ml-2">
+                                            <Link
+ to={{
+    pathname: `/taxprofessional/chatting/${row.id}`,
+    index : 2,
+    routes: "assignment",
+                                                    obj: {
+                                                        message_type: "3",
+                                                        query_No: row.assign_no,
+                                                        query_id: row.id,
+                                                        routes: `/taxprofessional/assignment`
+                                                    }
+                                                }}
+                                            >
+                                                <i
+                                                    class="fa fa-comments-o"
+                                                    style={{
+                                                        fontSize: 16,
+                                                        cursor: "pointer",
+                                                        marginLeft: "8px",
+                                                        color: "blue"
+                                                    }}
+                                                ></i>
+                                            </Link>
+                                        </div>
+
       
                </div>
                }

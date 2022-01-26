@@ -149,17 +149,23 @@ const resetData = () => {
       formatter: (cellContent, row, rowIndex) => {
         return rowIndex + 1;
       },
+      style : {
+        fontSize : "11px"
+      },
       headerStyle: () => {
-        return { fontSize: "12px", width: "50px" };
+        return { fontSize: "11px", width: "50px" };
       },
     },
     {
-      text: "Date",
+      text: "Query Date",
       dataField: "date_of_query",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
+      style : {
+        fontSize : "11px"
       },
+      headerStyle: () => {
+        return { fontSize: "11px" , width : "120px", whiteSpace : "nowrap", padding: "10px 20px"};
+    },
       formatter: function dateFormat(cell, row) {
     
         var oldDate = row.date_of_query;
@@ -173,7 +179,10 @@ const resetData = () => {
       text: "Query No",
       dataField: "assign_no",
       headerStyle: () => {
-        return { fontSize: "12px" };
+        return { fontSize: "11px" , width : "120px", whiteSpace : "nowrap", padding: "10px 20px"};
+    },
+      style : {
+        fontSize : "11px"
       },
       formatter: function nameFormatter(cell, row) {
       
@@ -197,7 +206,10 @@ const resetData = () => {
       dataField: "parent_id",
       sort: true,
       headerStyle: () => {
-        return { fontSize: "12px" };
+        return { fontSize: "11px" };
+      },
+      style : {
+        fontSize : "11px"
       },
     },
     {
@@ -205,7 +217,10 @@ const resetData = () => {
       dataField: "cat_name",
       sort: true,
       headerStyle: () => {
-        return { fontSize: "12px" };
+        return { fontSize: "11px" };
+      },
+      style : {
+        fontSize : "11px"
       },
     },
     {
@@ -215,7 +230,10 @@ const resetData = () => {
         fontSize: "11px",
       },
       headerStyle: () => {
-        return { fontSize: "12px", width: "200px" };
+        return { fontSize: "11px", width: "200px" };
+      },
+      style : {
+        fontSize : "11px"
       },
       formatter: function (cell, row) {
         return (
@@ -228,23 +246,33 @@ const resetData = () => {
               }
               <p>
                 <span style={{ fontWeight: "bold" }}>Client Discussion :</span>
-                {row.client_discussion}
+               <span style={ row.client_discussion == "completed" ? clcomp : clinpro}>
+{row.client_discussion}
+                 </span>
               </p>
               <p>
                 <span style={{ fontWeight: "bold" }}>Draft report :</span>
-                {row.draft_report}
+                <span style={ row.draft_report == "completed" ? clcomp : clinpro}>
+{row.draft_report}
+                 </span>
               </p>
               <p>
                 <span style={{ fontWeight: "bold" }}>Final Discussion :</span>
-                {row.final_discussion}
+                <span style={ row.final_discussion == "completed" ? clcomp : clinpro}>
+{row.final_discussion}
+                 </span>
               </p>
               <p>
                 <span style={{ fontWeight: "bold" }}>Delivery of Final Report :</span>
-                {row.delivery_report}
+                <span style={ row.delivery_report == "completed" ? clcomp : clinpro}>
+{row.delivery_report}
+                 </span>
               </p>
               <p>
                 <span style={{ fontWeight: "bold" }}>Awaiting Completion:</span>
-                {row.other_stage}
+                <span style={ row.other_stage == "completed" ? clcomp : clinpro}>
+{row.other_stage}
+                 </span>
               </p>
             </div>
           </>
@@ -256,7 +284,10 @@ const resetData = () => {
       dataField: "Exp_Delivery_Date",
       sort: true,
       headerStyle: () => {
-        return { fontSize: "12px" };
+        return { fontSize: "11px", padding: "10px 20px"};
+    },
+      style : {
+        fontSize : "11px"
       },
       formatter: function dateFormat(cell, row) {
       
@@ -272,7 +303,10 @@ const resetData = () => {
       dataField: "final_date",
       sort: true,
       headerStyle: () => {
-        return { fontSize: "12px" };
+        return { fontSize: "11px", padding: "10px 20px"};
+    },
+      style : {
+        fontSize : "11px"
       },
       formatter: function dateFormat(cell, row) {
        
@@ -288,7 +322,10 @@ const resetData = () => {
       dataField: "",
       sort: true,
       headerStyle: () => {
-        return { fontSize: "12px" };
+        return { fontSize: "11px" };
+      },
+      style : {
+        fontSize : "11px", textAlign : "center"
       },
       formatter: function (cell, row) {
         return (
@@ -315,8 +352,11 @@ const resetData = () => {
     {
       text: "Assignment Stage",
       headerStyle: () => {
-        return { fontSize: "12px" };
+        return { fontSize: "11px" };
+      }, style : {
+        fontSize : "11px"
       },
+
       formatter: function (cell, row) {
         return (
           <>
@@ -336,13 +376,54 @@ const resetData = () => {
     {
       text: "Action",
       headerStyle: () => {
-        return { fontSize: "12px", width: "90px" };
+        return { fontSize: "11px", width: "90px" };
+      },
+      style : {
+        fontSize : "11px"
       },
       formatter: function (cell, row) {
         return (
           <>
          {
-           row.paid_status == "2" ? "" : 
+           row.paid_status == "2" ? 
+           <div style={{display : "flex"}}>
+           <div title="View Discussion Message">
+             <i
+               class="fa fa-comments-o"
+               style={{
+                 fontSize: 16,
+                 cursor: "pointer",
+                 color: "orange"
+               }}
+               onClick={() => ViewDiscussionToggel(row.assign_no)}
+             ></i>
+           </div>
+           <div title="Send Message">
+             <Link
+            to={{
+              pathname: `/teamleader/chatting/${row.q_id}`,
+              index : 0,
+              routes: "assignment",
+                 obj: {
+                   message_type: "3",
+                   query_No: row.assign_no,
+                   query_id: row.q_id,
+                   routes: `/teamleader/assignment`
+                 }
+               }}
+             >
+               <i
+                 class="fa fa-comments-o"
+                 style={{
+                   fontSize: 16,
+                   cursor: "pointer",
+                   marginLeft: "8px",
+                   color: "blue"
+                 }}
+               ></i>
+             </Link>
+           </div>
+           </div>: 
            <div
            style={{
              display: "flex",
@@ -410,8 +491,10 @@ const resetData = () => {
            </div>
            <div title="Send Message">
              <Link
-               to={{
-                 pathname: `/teamleader/chatting/${row.q_id}`,
+            to={{
+              pathname: `/teamleader/chatting/${row.q_id}`,
+              index : 0,
+              routes: "assignment",
                  obj: {
                    message_type: "3",
                    query_No: row.assign_no,
@@ -439,7 +522,12 @@ const resetData = () => {
       },
     },
   ];
-
+var clcomp= {
+  color: "green"
+}
+var clinpro = {
+  color : "blue"
+}
   rowStyle2 = (row, index) => {
     const style = {}
     var warningDate = moment(row.Exp_Delivery_Date).subtract(2, 'day').toDate();
@@ -725,7 +813,7 @@ else{
             columns={columns}
             rowStyle={ rowStyle2 }
             rowIndex
-            classes="table-responsive"
+            classes="table-responsivepayment"
           />
 </div>
           <DraftReportModal

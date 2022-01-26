@@ -83,7 +83,7 @@ function AllProposal() {
         },
         {
             dataField: "query_date",
-            text: "Date",
+            text: "Query Date",
             sort: true,
             style: {
                 fontSize: "11px",
@@ -306,8 +306,10 @@ function AllProposal() {
                             </div>
                         <div title="Send Message" className="ml-2">
                                             <Link
-                                                to={{
-                                                    pathname: `/teamleader/chatting/${row.id}`,
+ to={{
+    pathname: `/teamleader/chatting/${row.id}`,
+    index : 0,
+    routes: "proposal",
                                                     obj: {
                                                         message_type: "2",
                                                         query_No: row.assign_no,
@@ -330,7 +332,11 @@ function AllProposal() {
                                 
                             <div className="ml-2">
                                 {row.status_code == "4" ? (
-                                    <Link to={`/teamleader/edit-proposal/${row.id}`}>
+                                    <Link 
+                                    to={{
+                                        pathname: `/teamleader/edit-proposal/${row.id}`,
+                                        index : 0,
+                                        routes: "proposal" }}>
                                         <i
                                             className="fa fa-edit"
                                             style={{
@@ -341,7 +347,11 @@ function AllProposal() {
                                         ></i>
                                     </Link>
                                 ) : row.status_code == "2"&& row.work_by != "0" ? (
-                                    <Link to={`/teamleader/sendproposal/${row.id}`}>
+                                    <Link 
+                                    to={{
+                                        pathname: `/teamleader/sendproposal/${row.id}`,
+                                        index : 0,
+                                        routes: "proposal" }}>
                                         <i
                                             class="fa fa-mail-forward"
                                             style={{

@@ -110,9 +110,9 @@ function AssignmentDetails({ p, finalDate, submitData, customerQuery , diaplayAs
                     
                     <>
                       {customerQuery == "customerQuery" && submitData[0].paid_status == "2" ? null :
-                      <tr style={{display : "flex", width : "700px"}}>
+                      <tr style={{display : "flex", width : "500px"}}>
                         <td style={{display : "flex", width : "50px"}}>{i + 1}</td>
-                        <td style={{display : "flex", width : "300px"}}>
+                        <td style={{display : "flex", width : "200px"}}>
                           <a
                             href={`${ReportUrl}/${assingNo}/${p.document}`}
                             target="_blank"
@@ -125,7 +125,7 @@ function AssignmentDetails({ p, finalDate, submitData, customerQuery , diaplayAs
                         </td>
                         {p.status == "3"
                             ?
-                        <td style={{display : "flex", width : "200px"}}>
+                        <td style={{display : "flex", width : "100px"}}>
                          
                             <p className="declined">Discarded</p>
                             

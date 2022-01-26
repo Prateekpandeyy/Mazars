@@ -155,13 +155,19 @@ function AssignmentTab() {
       headerStyle: () => {
         return { fontSize: "12px", width: "50px" };
       },
+      style : {
+        fontSize : "11px"
+      }
     },
     {
       text: "Date",
       dataField: "date_of_query",
       sort: true,
       headerStyle: () => {
-        return { fontSize: "12px" };
+        return { fontSize: "11px" , width : "120px", whiteSpace : "nowrap", padding: "10px 20px"};
+    },
+      style : {
+        fontSize : "11px"
       },
       formatter: function dateFormat(cell, row) {
        
@@ -176,7 +182,10 @@ function AssignmentTab() {
       text: "Query No",
       dataField: "assign_no",
       headerStyle: () => {
-        return { fontSize: "12px" };
+        return { fontSize: "11px" , width : "120px", whiteSpace : "nowrap", padding: "10px 20px"};
+    },
+      style : {
+        fontSize : "11px"
       },
       formatter: function nameFormatter(cell, row) {
      
@@ -202,6 +211,9 @@ function AssignmentTab() {
       headerStyle: () => {
         return { fontSize: "12px" };
       },
+      style : {
+        fontSize : "11px"
+      },
     },
     {
       text: "Sub Category",
@@ -209,6 +221,9 @@ function AssignmentTab() {
       sort: true,
       headerStyle: () => {
         return { fontSize: "12px" };
+      },
+      style : {
+        fontSize : "11px"
       },
     },
     {
@@ -259,6 +274,9 @@ function AssignmentTab() {
       text: "Expected date of delivery",
       dataField: "Exp_Delivery_Date",
       sort: true,
+      style : {
+        fontSize : "11px"
+      },
       headerStyle: () => {
         return { fontSize: "12px" };
       },
@@ -275,6 +293,9 @@ function AssignmentTab() {
       text: "Actual date of delivery",
       dataField: "final_date",
       sort: true,
+      style : {
+        fontSize : "11px"
+      },
       headerStyle: () => {
         return { fontSize: "12px" };
       },
@@ -291,6 +312,9 @@ function AssignmentTab() {
       text: "Deliverable",
       dataField: "",
       sort: true,
+      style : {
+        fontSize : "11px",  textAlign: "center"
+      },
       headerStyle: () => {
         return { fontSize: "12px" };
       },
@@ -321,6 +345,9 @@ function AssignmentTab() {
       headerStyle: () => {
         return { fontSize: "12px" };
       },
+      style : {
+        fontSize : "11px"
+      },
       formatter: function (cell, row) {
         return (
           <>
@@ -343,6 +370,9 @@ function AssignmentTab() {
       text: "Action",
       headerStyle: () => {
         return { fontSize: "12px", width: "90px" };
+      },
+      style : {
+        fontSize : "11px"
       },
       formatter: function (cell, row) {
         return (
@@ -414,29 +444,32 @@ function AssignmentTab() {
                onClick={() => ViewDiscussionToggel(row.assign_no)}
              ></i>
            </div>
-           <div title="Send Message">
-             <Link
-               to={{
-                 pathname: `/taxprofessional/chatting/${row.q_id}`,
-                 obj: {
-                   message_type: "3",
-                   query_No: row.assign_no,
-                   query_id: row.q_id,
-                   routes: `/taxprofessional/assignment`
-                 }
-               }}
-             >
-               <i
-                 class="fa fa-comments-o"
-                 style={{
-                   fontSize: 16,
-                   cursor: "pointer",
-                   marginLeft: "8px",
-                   color: "blue"
-                 }}
-               ></i>
-             </Link>
-           </div>
+           <div title="Send Message" className="ml-2">
+                                            <Link
+ to={{
+    pathname: `/taxprofessional/chatting/${row.id}`,
+    index : 0,
+    routes: "assignment",
+                                                    obj: {
+                                                        message_type: "3",
+                                                        query_No: row.assign_no,
+                                                        query_id: row.id,
+                                                        routes: `/taxprofessional/assignment`
+                                                    }
+                                                }}
+                                            >
+                                                <i
+                                                    class="fa fa-comments-o"
+                                                    style={{
+                                                        fontSize: 16,
+                                                        cursor: "pointer",
+                                                        marginLeft: "8px",
+                                                        color: "blue"
+                                                    }}
+                                                ></i>
+                                            </Link>
+                                        </div>
+
 
          </div>
          }

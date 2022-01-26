@@ -123,13 +123,13 @@ rowStyle2 = (row, index) => {
         },
         {
             dataField: "query_created_date",
-            text: "Date",
+            text: "Query Date",
             sort: true,
             style: {
                 fontSize: "11px",
             },
-            headerStyle: () => {
-                return { fontSize: "11px" };
+           headerStyle: () => {
+                return { fontSize: "11px", whiteSpace : "nowrap", width: "120px" , padding : "10px 20px"};
             },
             formatter: function dateFormat(cell, row) {
                 
@@ -146,8 +146,8 @@ rowStyle2 = (row, index) => {
             style: {
                 fontSize: "11px",
             },
-            headerStyle: () => {
-                return { fontSize: "11px" };
+           headerStyle: () => {
+                return { fontSize: "11px", whiteSpace : "nowrap", width: "120px" , padding : "10px 20px"};
             },
             formatter: function nameFormatter(cell, row) {
                 
@@ -363,13 +363,9 @@ rowStyle2 = (row, index) => {
                        >
                           <Link
               to={{
-                pathname: `/teamleader/paydetails/${row.assign_id}`,
-                obj: {
-                  message_type: "5",
-                  query_No: row.assign_no,
-                  query_id: row.assign_id,
-                  routes: `/teamleader/paymentstatus`
-                }
+                  pathname: `/teamleader/paydetails/${row.assign_id}`,
+                  index : 1,
+                  routes: "paymentstatus",
               }}
             >
                             <i
@@ -388,43 +384,43 @@ rowStyle2 = (row, index) => {
                        >
                             <Link
               to={{
-                pathname: `/teamleader/paydetails/${row.assign_id}`,
-                obj: {
-                  message_type: "5",
-                  query_No: row.assign_no,
-                  query_id: row.assign_id,
-                  routes: `/teamleader/paymentstatus`
-                }
+                  pathname: `/teamleader/paydetails/${row.assign_id}`,
+                  index : 1,
+                  routes: "paymentstatus",
               }}
             >
                             <i
                                 class="fa fa-credit-card"
                                 style={{ color: "green", fontSize: "16px" }}
-                                // onClick={() => toggle(row.assign_id)}
+                              
                             ></i>
                             </Link>
                        </div>
                        <div title="Send Message">
-                           <Link
-                               to={{
-                                   pathname: `/teamleader/chatting/${row.assign_id}`,
-                                   obj: {
-                                       message_type: "5",
-                                       query_No: row.assign_no,
-                                       query_id: row.assign_id,
-                                       routes: `/teamleader/proposal`
-                                   }
-                               }}
-                           >
-                               <i
-                                   class="fa fa-comments-o"
-                                   style={{
-                                       fontSize: 18,
-                                       cursor: "pointer",
-                                       color: "blue"
-                                   }}
-                               ></i>
-                           </Link>
+                       <Link
+                             to={{
+                                pathname: `/teamleader/chatting/${row.id}`,
+                                index: 1,
+                                routes: "paymentstatus",
+                        
+                              obj: {
+                                  message_type: "4",
+                                  query_No: row.assign_no,
+                                  query_id: row.id,
+                                  routes: `/teamleader/paymentstatus`
+                              }
+                          }}
+                      >
+                          <i
+                              class="fa fa-comments-o"
+                              style={{
+                                  fontSize: 16,
+                                  cursor: "pointer",
+                                  marginLeft: "8px",
+                                  color: "blue"
+                              }}
+                          ></i>
+                      </Link>
                        </div>
                        <div>
                            {
@@ -482,7 +478,7 @@ rowStyle2 = (row, index) => {
                         columns={columns}
                         rowStyle = {rowStyle2}
                         rowIndex
-                        classes="table-responsive"
+                        classes="table-responsivepayment"
                     />
                     </div>
  <DiscardReport

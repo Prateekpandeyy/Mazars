@@ -184,7 +184,7 @@ function ProposalDetails({
                 </tr>
                 <tr style={{display : "flex", width : "100%"}}>
                   <td style={{display : "flex", width : "50%"}}>{CommonServices.capitalizeFirstLetter(amount_type)}</td>
-                  <td style={{display : "flex", width : "50%", justifyContent : "flex-end"}}>
+                  <td style={{display : "flex", width : "50%", justifyContent : "flex-start"}}>
                     {
                       amount_type == "fixed" ?
                        nfObject.format(amount_fixed)

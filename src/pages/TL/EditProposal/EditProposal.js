@@ -23,8 +23,8 @@ import { Spinner } from 'reactstrap';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { Markup } from 'interweave';
-
-function EditComponent() {
+import {Link} from "react-router-dom";
+function EditComponent(props) {
 
   const alert = useAlert();
   const { register, handleSubmit, reset, errors } = useForm();
@@ -289,13 +289,14 @@ let a = <Markup content= {description} />
         <CardHeader>
           <Row>
             <Col md="5">
-              <button
-                class="btn btn-success ml-3"
-                onClick={() => history.goBack()}
-              >
-                <i class="fas fa-arrow-left mr-2"></i>
-                Go Back
-              </button>
+            <Link
+                  to={{
+                    pathname: `/teamleader/${props.location.routes}`,
+                    index: props.location.index,
+                  }}
+                >
+                  <button class="btn btn-success ml-3">Go Back</button>
+                </Link>
             </Col>
             <Col md="7">
               <div class="btn ml-3">

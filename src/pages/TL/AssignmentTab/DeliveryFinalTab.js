@@ -47,6 +47,12 @@ function AssignmentTab() {
     const [report, setReport] = useState();
     const [reportModal, setReportModal] = useState(false);
     var rowStyle2 = {}
+    var clcomp= {
+        color: "green"
+      }
+      var clinpro = {
+        color : "blue"
+      }
     let des = false;
     const ViewDiscussionToggel = (key) => {
         setViewDiscussion(!ViewDiscussion);
@@ -147,17 +153,23 @@ const ViewReport = (key) => {
             formatter: (cellContent, row, rowIndex) => {
                 return rowIndex + 1;
             },
+            style : {
+                fontSize : "11px"
+              },
             headerStyle: () => {
-                return { fontSize: "12px", width: "50px" };
+                return { fontSize: "11px", width: "50px" };
             },
         },
         {
-            text: "Date",
+            text: "Query Date",
             dataField: "date_of_query",
             sort: true,
             headerStyle: () => {
-                return { fontSize: "12px" };
+                return { fontSize: "11px" , width : "120px", whiteSpace : "nowrap", padding: "10px 20px"};
             },
+            style : {
+                fontSize : "11px"
+              },
             formatter: function dateFormat(cell, row) {
                 
                 var oldDate = row.date_of_query;
@@ -171,8 +183,11 @@ const ViewReport = (key) => {
             text: "Query No",
             dataField: "assign_no",
             headerStyle: () => {
-                return { fontSize: "12px" };
+                return { fontSize: "11px" , padding: "10px 20px"};
             },
+            style : {
+                fontSize : "11px"
+              },
             formatter: function nameFormatter(cell, row) {
                 
                 return (
@@ -195,62 +210,89 @@ const ViewReport = (key) => {
             dataField: "parent_id",
             sort: true,
             headerStyle: () => {
-                return { fontSize: "12px" };
+                return { fontSize: "11px" };
             },
+            style : {
+                fontSize : "11px"
+              },
         },
         {
             text: "Sub Category",
             dataField: "cat_name",
             sort: true,
             headerStyle: () => {
-                return { fontSize: "12px" };
+                return { fontSize: "11px" };
             },
+            style : {
+                fontSize : "11px"
+              },
         },
         {
             dataField: "status",
             text: "Status",
             style: {
-                fontSize: "11px",
+              fontSize: "11px",
             },
             headerStyle: () => {
-                return { fontSize: "12px", width: "200px" };
+              return { fontSize: "11px", width: "200px" };
+            },
+            style : {
+              fontSize : "11px"
             },
             formatter: function (cell, row) {
-                return (
-                    <>
-                        <div>
-                            <p>
-                                <span style={{ fontWeight: "bold" }}>Client Discussion :</span>
-                                {row.client_discussion}
-                            </p>
-                            <p>
-                                <span style={{ fontWeight: "bold" }}>Draft report :</span>
-                                {row.draft_report}
-                            </p>
-                            <p>
-                                <span style={{ fontWeight: "bold" }}>Final Discussion :</span>
-                                {row.final_discussion}
-                            </p>
-                            <p>
-                                <span style={{ fontWeight: "bold" }}>Delivery of Final Report :</span>
-                                {row.delivery_report}
-                            </p>
-                            <p>
-                                <span style={{ fontWeight: "bold" }}>Awaiting Completion :</span>
-                                {row.other_stage}
-                            </p>
-                        </div>
-                    </>
-                );
+              return (
+                <>
+                  <div>
+                  {row.paid_status == "2" &&
+                      <p>
+                        <span style={{ color: "red" }}>Payment Declined</span>
+                      </p>
+                    }
+                    <p>
+                      <span style={{ fontWeight: "bold" }}>Client Discussion :</span>
+                     <span style={ row.client_discussion == "completed" ? clcomp : clinpro}>
+      {row.client_discussion}
+                       </span>
+                    </p>
+                    <p>
+                      <span style={{ fontWeight: "bold" }}>Draft report :</span>
+                      <span style={ row.draft_report == "completed" ? clcomp : clinpro}>
+      {row.draft_report}
+                       </span>
+                    </p>
+                    <p>
+                      <span style={{ fontWeight: "bold" }}>Final Discussion :</span>
+                      <span style={ row.final_discussion == "completed" ? clcomp : clinpro}>
+      {row.final_discussion}
+                       </span>
+                    </p>
+                    <p>
+                      <span style={{ fontWeight: "bold" }}>Delivery of Final Report :</span>
+                      <span style={ row.delivery_report == "completed" ? clcomp : clinpro}>
+      {row.delivery_report}
+                       </span>
+                    </p>
+                    <p>
+                      <span style={{ fontWeight: "bold" }}>Awaiting Completion:</span>
+                      <span style={ row.other_stage == "completed" ? clcomp : clinpro}>
+      {row.other_stage}
+                       </span>
+                    </p>
+                  </div>
+                </>
+              );
             },
-        },
+          },
         {
             text: "Expected date of delivery",
             dataField: "Exp_Delivery_Date",
             sort: true,
             headerStyle: () => {
-                return { fontSize: "12px" };
+                return { fontSize: "11px" , padding: "10px 20px"};
             },
+            style : {
+                fontSize : "11px"
+              },
             formatter: function dateFormat(cell, row) {
              
                 var oldDate = row.Exp_Delivery_Date;
@@ -265,8 +307,11 @@ const ViewReport = (key) => {
             dataField: "final_date",
             sort: true,
             headerStyle: () => {
-                return { fontSize: "12px" };
+                return { fontSize: "11px" , padding: "10px 20px"};
             },
+            style : {
+                fontSize : "11px"
+              },
             formatter: function dateFormat(cell, row) {
                
                 var oldDate = row.final_date;
@@ -281,8 +326,11 @@ const ViewReport = (key) => {
             dataField: "",
             sort: true,
             headerStyle: () => {
-              return { fontSize: "12px" };
+              return { fontSize: "11px" };
             },
+            style : {
+                fontSize : "11px"
+              },
             formatter: function (cell, row) {
               return (
                 <>
@@ -308,8 +356,11 @@ const ViewReport = (key) => {
           {
             text: "Assignment Stage",
             headerStyle: () => {
-              return { fontSize: "12px" };
+              return { fontSize: "11px" };
             },
+            style : {
+                fontSize : "11px", textAlign : "center"
+              },
             formatter: function (cell, row) {
               return (
                 <>
@@ -329,8 +380,11 @@ const ViewReport = (key) => {
         {
             text: "Action",
             headerStyle: () => {
-              return { fontSize: "12px", width: "90px" };
+              return { fontSize: "11px", width: "90px" };
             },
+            style : {
+                fontSize : "11px"
+              },
             formatter: function (cell, row) {
               return (
                 <>
@@ -381,8 +435,10 @@ const ViewReport = (key) => {
                  </div>
                  <div title="Send Message">
                    <Link
-                     to={{
-                       pathname: `/teamleader/chatting/${row.q_id}`,
+                    to={{
+                        pathname: `/teamleader/chatting/${row.q_id}`,
+                        index : 2,
+                        routes: "assignment",
                        obj: {
                          message_type: "3",
                          query_No: row.assign_no,
@@ -567,7 +623,7 @@ const ViewReport = (key) => {
                         columns={columns}
                         rowStyle={ rowStyle2 }
                         rowIndex
-                        classes="table-responsive"
+                        classes="table-responsivepayment"
                     />
                     </div>
  <ViewAllReportModal

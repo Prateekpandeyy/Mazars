@@ -21,7 +21,7 @@ import Alerts from "../../../common/Alerts";
 import classNames from "classnames";
 import Mandatory from "../../../components/Common/Mandatory";
 import Loader from "../../../components/Loader/Loader";
-
+import { Link } from "react-router-dom";
 const Schema = yup.object().shape({
   msg_type: yup.string().required(""),
   p_message: yup.string().required(""),
@@ -119,14 +119,16 @@ const [showTl, setShowTl] = useState(false)
       <Card>
         <CardHeader>
           <Row>
-            <Col md="4">
-              <button
-                class="btn btn-success ml-3"
-                onClick={() => history.goBack()}
-              >
-                <i class="fas fa-arrow-left mr-2"></i>
-                Go Back
-              </button>
+          <Col md="4">
+            <Link
+                  to={{
+                    pathname: `/teamleader/${props.location.routes}`,
+                    index: props.location.index,
+                  }}
+                >
+                  <button class="btn btn-success ml-3">Go Back</button>
+                </Link>
+              
             </Col>
             <Col md="8">
               <h4>Message</h4>

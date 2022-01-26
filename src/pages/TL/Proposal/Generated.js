@@ -237,6 +237,9 @@ const Generated = () => {
             headerStyle: () => {
                 return { fontSize: "12px", width: "110px" };
             },
+            style: {
+                fontSize: "11px",
+            },
             formatter: function (cell, row) {
                 return (
                     <>

@@ -72,7 +72,7 @@ function AcceptedProposal() {
         },
         {
             dataField: "query_date",
-            text: "Date",
+            text: "Query Date",
             sort: true,
             style: {
                 fontSize: "11px",
@@ -276,8 +276,10 @@ function AcceptedProposal() {
                             </div>
                         <div title="Send Message" className="ml-2">
                                             <Link
-                                                to={{
-                                                    pathname: `/teamleader/chatting/${row.id}`,
+                                              to={{
+                                                pathname: `/teamleader/chatting/${row.id}`,
+                                                index : 2,
+                                                routes: "proposal",
                                                     obj: {
                                                         message_type: "2",
                                                         query_No: row.assign_no,

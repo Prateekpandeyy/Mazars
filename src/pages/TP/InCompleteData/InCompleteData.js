@@ -53,14 +53,21 @@ function InCompleteData({ CountIncomplete }) {
       formatter: (cellContent, row, rowIndex) => {
         return rowIndex + 1;
       },
+      style : {
+        fontSize : "11px"
+      },
       headerStyle: () => {
         return { fontSize: "12px", width: "50px" };
       },
+      
     },
     {
-      text: "Date",
+      text: "Query Date",
       dataField: "created",
       sort: true,
+      style : {
+        fontSize : "11px"
+      },
       headerStyle: () => {
         return { fontSize: "12px", width : "120px" };
       },
@@ -68,6 +75,9 @@ function InCompleteData({ CountIncomplete }) {
     {
       text: "Query No",
       dataField: "assign_no",
+      style : {
+        fontSize : "11px"
+      },
       headerStyle: () => {
         return { fontSize: "12px" , width : "130px"};
       },
@@ -92,6 +102,9 @@ function InCompleteData({ CountIncomplete }) {
       text: "Category",
       dataField: "parent_id",
       sort: true,
+      style : {
+        fontSize : "11px"
+      },
       headerStyle: () => {
         return { fontSize: "12px" , width : "120px"};
       },
@@ -100,6 +113,9 @@ function InCompleteData({ CountIncomplete }) {
       text: "Sub Category",
       dataField: "cat_name",
       sort: true,
+      style : {
+        fontSize : "11px"
+      },
       headerStyle: () => {
         return { fontSize: "12px" , width :"150px"};
       },
@@ -108,16 +124,22 @@ function InCompleteData({ CountIncomplete }) {
       text: "Client Name",
       dataField: "name",
       sort: true,
+      style : {
+        fontSize : "11px"
+      },
       headerStyle: () => {
         return { fontSize: "12px" , width : "150px"};
       },
     },
     {
-      text: "	Exp. Delivery Date",
+      text: "Delivery due date / Actual Delivery date",
       dataField: "Exp_Delivery_Date",
       sort: true,
       headerStyle: () => {
         return { fontSize: "12px", width : "150px" };
+      },
+      style : {
+        fontSize : "11px"
       },
       formatter: function dateFormat(cell, row) {
      
@@ -132,6 +154,9 @@ function InCompleteData({ CountIncomplete }) {
       text: "Status",
       headerStyle: () => {
         return { fontSize: "12px" , width : "100px"};
+      },
+      style : {
+        fontSize : "11px"
       },
       formatter: function nameFormatter(cell, row) {
         return (
@@ -165,7 +190,10 @@ function InCompleteData({ CountIncomplete }) {
       text: "Action",
       dataField: "",
       headerStyle: () => {
-          return { fontSize: "12px" };
+          return { fontSize: "12px" , width : "120px"};
+      },
+      style: {
+          fontSize : "11px"
       },
       formatter: function (cell, row) {
         
@@ -183,29 +211,31 @@ function InCompleteData({ CountIncomplete }) {
                
 
                 {row.status == "Declined Query" ? null :
-                <div title="Send Message">
-                <Link
-                    to={{
-                        pathname: `/taxprofessional/chatting/${row.id}`,
-                        obj: {
-                            message_type: "4",
-                            query_No: row.assign_no,
-                            query_id: row.id,
-                            routes: `/taxprofessional/queriestab`
-                        }
-                    }}
-                >
-                    <i
-                        class="fa fa-comments-o"
-                        style={{
-                            fontSize: 16,
-                            cursor: "pointer",
-                            marginLeft: "8px",
-                            color: "blue"
-                        }}
-                    ></i>
-                </Link>
-            </div>}
+  <div title="Send Message" className="ml-2">
+  <Link
+to={{
+pathname: `/taxprofessional/chatting/${row.id}`,
+index : 2,
+routes: "queriestab",
+          obj: {
+              message_type: "4",
+              query_No: row.assign_no,
+              query_id: row.id,
+              routes: `/taxprofessional/queriestab`
+          }
+      }}
+  >
+      <i
+          class="fa fa-comments-o"
+          style={{
+              fontSize: 16,
+              cursor: "pointer",
+              marginLeft: "8px",
+              color: "blue"
+          }}
+      ></i>
+  </Link>
+</div>}
 
                 <div title="View Discussion Message">
                     <i
@@ -223,7 +253,7 @@ function InCompleteData({ CountIncomplete }) {
           );
       },
   },
-  ];
+];
 
   return (
     <>

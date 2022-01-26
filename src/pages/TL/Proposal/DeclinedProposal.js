@@ -76,13 +76,13 @@ function DeclinedProposal() {
         },
         {
             dataField: "query_date",
-            text: "Date",
+            text: "Query Date",
             sort: true,
             style: {
                 fontSize: "11px",
             },
             headerStyle: () => {
-                return { fontSize: "11px" };
+                return { fontSize: "11px" , width : "120px", whiteSpace : "nowrap", padding: "10px 20px"};
             },
             formatter: function dateFormat(cell, row) {
                
@@ -281,6 +281,8 @@ function DeclinedProposal() {
                                             <Link
                                                 to={{
                                                     pathname: `/teamleader/chatting/${row.id}`,
+                                                    index : 3,
+                                                    routes: "proposal",
                                                     obj: {
                                                         message_type: "2",
                                                         query_No: row.assign_no,

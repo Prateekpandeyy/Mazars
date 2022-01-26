@@ -258,9 +258,10 @@ function AllQueriesData() {
                             <>
                            <>
                            {dateMnsFive > curDate === true ?
-                                <span title="Send Feedback"
+                                <span title="Send Feedback" className="ml-2"
                                 style={{
                                     cursor: "pointer",
+                                   
                                 }}>
                                
                                 <Link 
@@ -377,8 +378,8 @@ function AllQueriesData() {
                             </span> : ""}
                                 {
                                     row.delivery_report == "completed" ? null :
-                                        <span title="Upload Additional Documents" className="ml-2"
-                                            style={{ cursor: "pointer" }}
+                                        <span title="Upload Additional Documents" className="ml-1"
+                                            style={{ cursor: "pointer", }}
                                             onClick={() => additionalHandler(row.assign_no)}
                                         >
                                             <PublishIcon color="secondary" />

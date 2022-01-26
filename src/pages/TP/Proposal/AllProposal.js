@@ -79,16 +79,16 @@ function AllProposal() {
         },
         {
             dataField: "query_date",
-            text: "Date",
+            text: "Query Date",
             sort: true,
             style: {
                 fontSize: "11px",
             },
-            headerStyle: () => {
-                return { fontSize: "11px" };
+ headerStyle: () => {
+                return { fontSize: "11px" , width : "120px", whiteSpace : "nowrap", padding: "10px 20px"};
             },
             formatter: function dateFormat(cell, row) {
-               
+           
                 var oldDate = row.query_date;
                 if (oldDate == null) {
                     return null;
@@ -99,14 +99,15 @@ function AllProposal() {
         {
             text: "Query No",
             dataField: "assign_no",
+           
+            headerStyle: () => {
+                return { fontSize: "11px", width: "120px" };
+            },
             style: {
                 fontSize: "11px",
             },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
             formatter: function nameFormatter(cell, row) {
-                
+              
                 return (
                     <>
 
@@ -123,6 +124,7 @@ function AllProposal() {
                 );
             },
         },
+      
         {
             text: "Category",
             dataField: "parent_id",
@@ -264,57 +266,30 @@ function AllProposal() {
             headerStyle: () => {
                 return { fontSize: "12px", width: "110px" };
             },
+            style: {
+                fontSize: "11px",
+            },
             formatter: function (cell, row) {
                 return (
                     <>
-                        <div style={{ display: "flex", justifyContent: "space-between" }}>
-                            <div>
-                                {row.status_code == "4" ? (
-                                    <Link to={`/taxprofessional/edit-proposal/${row.id}`}>
-                                        <i
-                                            className="fa fa-edit"
-                                            style={{
-                                                fontSize: "16px",
-                                                cursor: "pointer",
-                                                color: "green",
-                                            }}
-                                        ></i>
-                                    </Link>
-                                ) : row.status_code == "2" ? (
-                                    <Link to={`/taxprofessional/sendproposal/${row.id}`}>
-                                        <i
-                                            class="fa fa-mail-forward"
-                                            style={{
-                                                fontSize: "14px",
-                                                cursor: "pointer",
-                                            }}
-                                        ></i>
-                                    </Link>
-                                ) : null}
+                        <div style={{ display: "flex", justifyContent: "flex-start" }}>
+                        <div title="View Discussion Message">
+                                <i
+                                    class="fa fa-comments-o"
+                                    style={{
+                                        fontSize: 16,
+                                        cursor: "pointer",
+                                        color: "orange"
+                                    }}
+                                    onClick={() => ViewDiscussionToggel(row.assign_no)}
+                                ></i>
                             </div>
-
-                            {row.status_code > "3"  || row.status_code == "10" ?
-                                  <div style={{ cursor: "pointer", marginLeft : "8px" }} title="View Proposal">
-                
-                                  <i
-                                    className="fa fa-eye"
-                                    style={{ color: "green", fontSize: "16px" }}
-                                    onClick={(e) => showProposalModal2(row.id)}
-                                  />
-                                
-                               </div>
-                  
-                                :
-                                null
-                            }
-
-
-                            <div>
-                          
-                                        <div title="Send Message">
+                        <div title="Send Message" className="ml-2">
                                             <Link
-                                                to={{
-                                                    pathname: `/taxprofessional/chatting/${row.id}`,
+ to={{
+    pathname: `/taxprofessional/chatting/${row.id}`,
+    index : 0,
+    routes: "proposal",
                                                     obj: {
                                                         message_type: "2",
                                                         query_No: row.assign_no,
@@ -334,26 +309,65 @@ function AllProposal() {
                                                 ></i>
                                             </Link>
                                         </div>
-            
+                                
+                            <div className="ml-2">
+                                {row.status_code == "4" ? (
+                                    <Link 
+                                    to={{
+                                        pathname: `/taxprofessional/edit-proposal/${row.id}`,
+                                        index : 0,
+                                        routes: "proposal" }}>
+                                        <i
+                                            className="fa fa-edit"
+                                            style={{
+                                                fontSize: "16px",
+                                                cursor: "pointer",
+                                                color: "green",
+                                            }}
+                                        ></i>
+                                    </Link>
+                                ) : row.status_code == "2"&& row.work_by != "0" ? (
+                                    <Link 
+                                    to={{
+                                        pathname: `/taxprofessional/sendproposal/${row.id}`,
+                                        index : 0,
+                                        routes: "proposal" }}>
+                                        <i
+                                            class="fa fa-mail-forward"
+                                            style={{
+                                                fontSize: "14px",
+                                                cursor: "pointer",
+                                            }}
+                                        ></i>
+                                    </Link>
+                                ) : null}
                             </div>
 
-                            <div title="View Discussion Message">
-                                <i
-                                    class="fa fa-comments-o"
-                                    style={{
-                                        fontSize: 16,
-                                        cursor: "pointer",
-                                        color: "orange"
-                                    }}
-                                    onClick={() => ViewDiscussionToggel(row.assign_no)}
-                                ></i>
-                            </div>
+                            {row.status_code > "3" || row.status_code == "10" ?
+                            <>
+                                 <div style={{ cursor: "pointer", marginLeft : "2px" }} title="View Proposal">
+                
+                <i
+                  className="fa fa-eye"
+                  style={{ color: "green", fontSize: "16px" }}
+                  onClick={(e) => showProposalModal2(row.id)}
+                />
+              
+            </div>
+                              
+                                </>
+                                :
+                                null
+                            }
+
+
+                          
+                           
                         </div>
                     </>
                 );
             },
         },
-     
     ];
 
     return (

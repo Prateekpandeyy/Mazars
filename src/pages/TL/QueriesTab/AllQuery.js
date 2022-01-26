@@ -63,7 +63,7 @@ function AllQuery() {
             },
         },
         {
-            text: "Date",
+            text: "Query Date",
             dataField: "created",
             sort: true,
             headerStyle: () => {
@@ -226,8 +226,11 @@ function AllQuery() {
                       {row.status == "Declined Query" ? null :
                       <div title="Send Message">
                       <Link
-                          to={{
-                              pathname: `/teamleader/chatting/${row.id}`,
+                             to={{
+                                pathname: `/teamleader/chatting/${row.id}`,
+                                index: 0,
+                                routes: "queriestab",
+                        
                               obj: {
                                   message_type: "4",
                                   query_No: row.assign_no,

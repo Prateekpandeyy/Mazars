@@ -25,7 +25,7 @@ import styled from "styled-components";
 
 import { Typography } from "antd";
 
-const PayDetails = () => {
+const PayDetails = (props) => {
     let history = useHistory();
     const userId = window.localStorage.getItem("tlkey");
     const { id } = useParams();
@@ -78,7 +78,7 @@ setModal(!modal)
         },
         {
             dataField: "assign_no",
-            text: "Q.No",
+            text: "Query.No",
             
             style: {
                 fontSize: "11px",
@@ -249,11 +249,7 @@ setModal(!modal)
            
       ];
     
-      const copyFun = (e)  =>{
-   
-        navigator.clipboard.writeText(e)
-       
-      }
+    
       const Container = styled.div `
       dispaly : flex;
       width : 100%;
@@ -266,19 +262,23 @@ return(
          <Layout TLDashboard="TLDashboard" TLuserId={userId}>
     {paymentDetail === undefined ? "" : 
   <Card>
-      <CardHeader>
-         <Row>
-         <Col md="8">
-              <h4>Payment Details</h4>
-              </Col>
-      <Col md="4">
-              <button class="btn btn-success" style={{display : "flex", margin : "0 0 0 auto"}} onClick={() => history.goBack()}>
-                <i class="fas fa-arrow-left mr-2"></i>
-                Go Back
-              </button>
+                  <CardHeader>
+          <Row>
+          <Col md="4">
+          <Link
+                  to={{
+                    pathname: `/teamleader/${props.location.routes}`,
+                    index: props.location.index,
+                  }}
+                >
+                  <button class="btn btn-success ml-3">Go Back</button>
+                </Link>
             </Col>
-         </Row>
-          </CardHeader>
+            <Col md="8">
+              <h4>Payment Details</h4>
+            </Col>
+          </Row>
+        </CardHeader>
           <CardBody>
           <div className="tableFixHead">
   <BootstrapTable

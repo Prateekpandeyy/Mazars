@@ -61,7 +61,7 @@ function InCompleteData({ CountIncomplete }) {
     },
     },
     {
-      text: "Date",
+      text: "Query Date",
       dataField: "created",
       sort: true,
       headerStyle: () => {
@@ -223,7 +223,9 @@ function InCompleteData({ CountIncomplete }) {
                 <div title="Send Message">
                 <Link
                     to={{
-                        pathname: `/teamleader/chatting/${row.id}`,
+                      pathname: `/teamleader/chatting/${row.id}`,
+                      index: 1,
+                      routes: "queriestab",
                         obj: {
                             message_type: "4",
                             query_No: row.assign_no,

@@ -83,7 +83,7 @@ const hist = useHistory();
     },
     },
     {
-      text: "Date",
+      text: "Query Date",
       dataField: "created",
       sort: true,
       headerStyle: () => {

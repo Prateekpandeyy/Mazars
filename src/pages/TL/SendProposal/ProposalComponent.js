@@ -263,7 +263,7 @@ function ProposalComponent(props) {
    
     setInstallment(key)
   }
-
+console.log(props)
   return (
     <>
       <Card>
