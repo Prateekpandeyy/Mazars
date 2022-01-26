@@ -151,21 +151,22 @@ const history = useHistory();
         <Layout TPDashboard="TPDashboard" TPuserId={userId}>
             <Card>
             <CardHeader>
-                    <Row>
-                        <Col md="9">
-                            <CardTitle tag="h4">Message</CardTitle>
-                        </Col>
-                        <Col md="3">
-                        <button
-                class="btn btn-success ml-auto" style={{float : "right"}}
+          <Row>
+          <Col md="4">
+          <button
+                class="btn btn-success" 
                 onClick={() => history.goBack()}
               >
                 <i class="fas fa-arrow-left mr-2"></i>
                 Go Back
               </button>
-                        </Col>
-                    </Row>
-                </CardHeader>
+              
+            </Col>
+            <Col md="8">
+              <h4>Message</h4>
+            </Col>
+          </Row>
+        </CardHeader>
                 <CardBody style={{display : "flex", height : "80vh", overflowY : "scroll"}}>
                     <BootstrapTable
                         bootstrap4

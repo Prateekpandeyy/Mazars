@@ -53,6 +53,12 @@ function AssignmentTab() {
   const [error, setError] = useState(false)
   let des = false;
   var rowStyle2 = {}
+  var clcomp= {
+    color: "green"
+  }
+  var clinpro = {
+    color : "blue"
+  }
   const ViewReport = (key) => {
   
     setReportModal(!reportModal);
@@ -238,32 +244,41 @@ function AssignmentTab() {
       formatter: function (cell, row) {
         return (
           <>
-            <div>
+              <div>
             {row.paid_status == "2" &&
                 <p>
                   <span style={{ color: "red" }}>Payment Declined</span>
                 </p>
               }
-           
               <p>
                 <span style={{ fontWeight: "bold" }}>Client Discussion :</span>
-                {row.client_discussion}
+               <span style={ row.client_discussion == "completed" ? clcomp : clinpro}>
+{row.client_discussion}
+                 </span>
               </p>
               <p>
                 <span style={{ fontWeight: "bold" }}>Draft report :</span>
-                {row.draft_report}
+                <span style={ row.draft_report == "completed" ? clcomp : clinpro}>
+{row.draft_report}
+                 </span>
               </p>
               <p>
                 <span style={{ fontWeight: "bold" }}>Final Discussion :</span>
-                {row.final_discussion}
+                <span style={ row.final_discussion == "completed" ? clcomp : clinpro}>
+{row.final_discussion}
+                 </span>
               </p>
               <p>
                 <span style={{ fontWeight: "bold" }}>Delivery of Final Report :</span>
-                {row.delivery_report}
+                <span style={ row.delivery_report == "completed" ? clcomp : clinpro}>
+{row.delivery_report}
+                 </span>
               </p>
               <p>
-                <span style={{ fontWeight: "bold" }}>Awaiting Completion :</span>
-                {row.other_stage}
+                <span style={{ fontWeight: "bold" }}>Awaiting Completion:</span>
+                <span style={ row.other_stage == "completed" ? clcomp : clinpro}>
+{row.other_stage}
+                 </span>
               </p>
             </div>
           </>
@@ -378,7 +393,47 @@ function AssignmentTab() {
         return (
           <>
          {
-           row.paid_status == "2" ? null : 
+           row.paid_status == "2" ? 
+           <div style={{display : "flex"}}>
+                <div title="View Discussion Message">
+             <i
+               class="fa fa-comments-o"
+               style={{
+                 fontSize: 16,
+                 cursor: "pointer",
+                 color: "orange"
+               }}
+               onClick={() => ViewDiscussionToggel(row.assign_no)}
+             ></i>
+           </div>
+           <div title="Send Message" className="ml-2">
+                                            <Link
+ to={{
+    pathname: `/taxprofessional/chatting/${row.id}`,
+    index : 0,
+    routes: "assignment",
+                                                    obj: {
+                                                        message_type: "3",
+                                                        query_No: row.assign_no,
+                                                        query_id: row.id,
+                                                        routes: `/taxprofessional/assignment`
+                                                    }
+                                                }}
+                                            >
+                                                <i
+                                                    class="fa fa-comments-o"
+                                                    style={{
+                                                        fontSize: 16,
+                                                        cursor: "pointer",
+                                                        marginLeft: "8px",
+                                                        color: "blue"
+                                                    }}
+                                                ></i>
+                                            </Link>
+                                        </div>
+
+
+           </div> : 
            <div
            style={{
              display: "flex",
