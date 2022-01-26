@@ -116,7 +116,7 @@ function InprogressAssignment() {
               <>
                      <Link
                           to={{
-                              pathname: `/customer/my-assingment/${row.assign_id}`,
+                              pathname: `/customer/my-assingment/${row.id}`,
                               index : 1,
                               routes: "assignment",
                           }}

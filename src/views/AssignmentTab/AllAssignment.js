@@ -108,7 +108,7 @@ function AllAssignment() {
               <>
                      <Link
                           to={{
-                              pathname: `/customer/my-assingment/${row.assign_id}`,
+                              pathname: `/customer/my-assingment/${row.id}`,
                               index : 0,
                               routes: "assignment",
                           }}
