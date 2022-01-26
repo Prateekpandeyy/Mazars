@@ -264,7 +264,7 @@ function AddAssingmentStages() {
                                   paddingTop: "30px",
                                 }}
                               >
-                                Delivery of report
+                                Delivery of final report
                               </label>
                             </div>
                           </div>
@@ -479,7 +479,7 @@ function AddAssingmentStages() {
                                 paddingTop: "30px",
                               }}
                             >
-                              Delivery of report
+                              Delivery of final report
                             </label>
                           </div>
                         </div>
