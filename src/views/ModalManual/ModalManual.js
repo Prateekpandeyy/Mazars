@@ -31,13 +31,11 @@ const useStyle = makeStyles(theme => ({
 const ModalManual = ({showManual, openManual})  => {
     const classes = useStyle()
     return(
-        <div>
-          <Modal isOpen={openManual}  size="lg" scrollable>
-        <ModalHeader toggle={showManual}>Manual Modal </ModalHeader>
-        <ModalBody>
-<b>Visit: </b><a href=": https://mazars.multitvsolution.com/#/">: https://mazars.multitvsolution.com/#/</a>
+        <div className ={style.mainClass}>
+        
+<b>Visit: </b><a href="https://mazars.multitvsolution.com" target="_blank"> https://mazars.multitvsolution.com/#/</a>
 <p>(To post a query, visit Mazar’s portal by clicking above link.)</p>
-<section>
+<section id="login">
 <div className={style.imgBox}>
 <img src = {loginImg} className= {style.manualImg} />
 </div>
@@ -61,10 +59,9 @@ Provide your basic information to complete registration
 </Typography>
 <RegError />
 </section>
-        </ModalBody>
+       <section id="query">
 
-
-      </Modal >
+       </section>
 
         </div>
     )

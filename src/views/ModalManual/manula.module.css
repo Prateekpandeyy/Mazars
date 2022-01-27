@@ -1,3 +1,8 @@
+.mainClass{
+    display: flex;
+    padding: 15px 25px;
+    flex-direction: column;
+}
 .imgBox{
     display : flex; 
     width : 100%;

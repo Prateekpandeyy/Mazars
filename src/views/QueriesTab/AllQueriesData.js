@@ -474,6 +474,11 @@ const showManual = () => {
                 <CardHeader>
                     <Row>
                         <Col md="9">
+                            <Link to = {{
+                                pathname : `/customer/modalmanual`
+                            }}>
+                               <button  className="btn btn-success">Need help?</button> 
+                            </Link>
 {/* <button onClick={() => showManual()} className="btn btn-success">Need help?</button> */}
                         </Col>
                         <Col md="3">

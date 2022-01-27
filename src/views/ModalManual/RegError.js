@@ -4,6 +4,15 @@ import { makeStyles } from '@material-ui/core';
 import style from  './manula.module.css';
 import successregImg from "../ManualImg/successReg.jpeg";
 import errorImg from "../ManualImg/errorMsg.jpeg";
+import loginImage from '../ManualImg/Login22.jpeg';
+import loginError from '../ManualImg/loginError.jpeg';
+import freshLogin from '../ManualImg/freshLogin.jpeg';
+import forgetImg from '../ManualImg/forget.jpeg';
+import forgetotpImg from '../ManualImg/forgetOtpImg.jpeg';
+import forgetFreshImg from '../ManualImg/forgetFresh.jpeg';
+import successLoginImg from '../ManualImg/successLoginImg.jpeg';    
+import errorLoginImg from '../ManualImg/errorLoginImg.jpeg';
+import errorLoginImg2 from '../ManualImg/errorLoginImg2.jpeg';
 const useStyle = makeStyles(theme => ({
     root : {
         backgroundColor : "green", 
@@ -95,6 +104,67 @@ For Existing Client: Login with your registered Email id & Password.
     </li>
    </div>
 </ul>
+<div className={style.imgBox}>
+<img src = {loginImage} className= {style.manualImg} />
+</div>
+<Typography variant="h4">
+After clicking <Button variant="contained" className={classes.root}>Send Otp</Button> on Success message will appear. Click ok and enter the OTP received on your 
+<Button variant="contained" className={classes.root}>Send Otp</Button> email id & click on 
+
+</Typography>
+<Typography variant="h4">
+If the OTP entered is incorrect then Error message window will appear showing “Incorrect OTP”
+</Typography>
+<div className={style.imgBox}>
+<img src = {loginError} className= {style.manualImg} />
+</div>
+<Typography variant="h4">
+Forgot Password: If the client forgets the Password, then click on “Forgot Password” under “For existing client”
+</Typography>
+<div className={style.imgBox}>
+<img src = {freshLogin} className= {style.manualImg} />
+</div>
+<Typography variant="h4">
+Forgot Password: Enter your email id and click on <Button variant="contained" className={classes.root2}>Get OTP</Button>
+</Typography>
+<div className={style.imgBox}>
+<img src = {forgetImg} className= {style.manualImg} />
+</div>
+<Typography variant="h4">
+Forgot Password: After clicking on  <Button variant="contained" className={classes.root2}> Get OTP</Button>, success message window will appear & then click on OK.
+</Typography>
+<div className={style.imgBox}>
+<img src = {forgetotpImg} className= {style.manualImg} />
+</div>
+<Typography variant="h4">
+Forgot Password: Enter new password that should be minimum of eight characters, including at least 
+one upper case, lower case, special character and number along with the OTP
+ received on the email id & click on Submit.
+</Typography>
+<div className={style.imgBox}>
+<img src = {forgetFreshImg} className= {style.manualImg} />
+</div>
+<Typography variant="h4">
+Password Forgot: After clicking on <Button className={classes.root2}> Submit </Button> Success message window will appear, showing password reset 
+successfully. Now login with the new password.
+</Typography>
+<div className={style.imgBox}>
+<img src = {successLoginImg} className= {style.manualImg} />
+</div>
+<Typography variant="h4">
+Incorrect Email Id: At the login page, if the email id entered is incorrect then Error message window will appear showing “Please register before sign-in”.
+ Click Ok & login with the correct credentials.
+</Typography>
+<div className={style.imgBox}>
+<img src = {errorLoginImg} className= {style.manualImg} />
+</div>
+<Typography variant="h4">
+Incorrect password: At the login page, if the password entered is incorrect then Error message window will appear showing “Incorrect email or password”. 
+Click Ok & login with the correct credentials.
+</Typography>
+<div className={style.imgBox}>
+<img src = {errorLoginImg2} className= {style.manualImg} />
+</div>
 </div>
    </>
 )

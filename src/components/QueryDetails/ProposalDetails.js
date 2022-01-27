@@ -322,7 +322,7 @@ function ProposalDetails({
               p.paid_status == "2" && 
               <>
               <tr>
-              <th scope="row">Payment declined reason</th>
+              <th scope="row">Payment decline reason</th>
               <td>{p.notes}</td>
             </tr>
             <tr>

@@ -9,6 +9,7 @@ import PageNotFound from './components/PageNotFound/PageNotFound'
 
 
 //user routes
+import ModalMaual from './views/ModalManual/ModalManual';
 import Login from './views/Login/Login'
 import SignUp from './views/SignUpForm/SignUp'
 import Dashboard from './views/Dashboard/Dashboard'
@@ -189,6 +190,8 @@ function App() {
             <PrivateRouteUser exact path="/customer/thankyou" component={ThankYou} />  
             <PrivateRouteUser exact path="/customer/paydetails/:id" component={payDetails} />
             <PrivateRouteUser exact path = "/customer/contact" component = {Contact} />
+            <PrivateRouteUser exact path = "/customer/modalmanual" component = {ModalMaual} />
+
             <PublicRouteAdmin exact path="/admin/start" component={AdminStart} />
             <PublicRouteAdmin exact path="/admin/login" component={AdminLogin} />
             <PublicRouteAdmin exact path="/admin/forget-password" component={AdminForgetPassword} />
