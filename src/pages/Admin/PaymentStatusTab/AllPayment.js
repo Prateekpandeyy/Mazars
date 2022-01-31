@@ -98,7 +98,7 @@ function AllPayment() {
                 fontSize: "11px",
             },
             headerStyle: () => {
-                return { fontSize: "11px" };
+                return { fontSize: "11px" , width : "120px", whiteSpace : "nowrap", padding: "10px 20px"};
             },
             formatter: function dateFormat(cell, row) {
               
@@ -116,7 +116,7 @@ function AllPayment() {
                 fontSize: "11px",
             },
             headerStyle: () => {
-                return { fontSize: "11px" };
+                return { fontSize: "11px" , width : "120px", whiteSpace : "nowrap", padding: "10px 20px"};
             },
             formatter: function nameFormatter(cell, row) {
               
@@ -321,15 +321,11 @@ function AllPayment() {
 
                         <div style={{ cursor: "pointer" , diaplay :"flex", marginRight : "5px"}} title="Payment History">
                         <Link
-              to={{
-                pathname: `/admin/paydetails/${row.assign_id}`,
-                obj: {
-                  message_type: "5",
-                  query_No: row.assign_no,
-                  query_id: row.assign_id,
-                  index : 0,
-                  routes: `/admin/paymentstatus`
-                }
+                            to={{
+                                pathname: `/admin/paydetails/${row.assign_id}`,
+                                index : 0,
+                                routes: "paymentstatus",
+               
               }}
             >
                             <i
@@ -355,9 +351,11 @@ function AllPayment() {
 
 
                         <div title="Send Message">
-            <Link
-              to={{
-                pathname: `/admin/chatting/${row.assign_id}`,
+                        <Link
+                            to={{
+                                pathname: `/admin/chatting/${row.assign_id}`,
+                                index : 0,
+                                routes: "paymentstatus",
                 obj: {
                   message_type: "5",
                   query_No: row.assign_no,

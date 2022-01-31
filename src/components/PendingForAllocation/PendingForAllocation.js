@@ -80,6 +80,9 @@ function PendingAllocation({ CountPendingForAllocation }) {
       headerStyle: () => {
         return { fontSize: "12px" };
       },
+      style: {
+        fontSize: "11px",
+    },
       formatter: function dateFormat(cell, row) {
      
         var oldDate = row.created;
@@ -95,6 +98,9 @@ function PendingAllocation({ CountPendingForAllocation }) {
       headerStyle: () => {
         return { fontSize: "12px" };
       },
+      style: {
+        fontSize: "11px",
+    },
       formatter: function nameFormatter(cell, row) {
       
         return (
@@ -119,6 +125,9 @@ function PendingAllocation({ CountPendingForAllocation }) {
       headerStyle: () => {
         return { fontSize: "12px" };
       },
+      style: {
+        fontSize: "11px",
+    },
     },
     {
       text: "Sub Category",
@@ -127,6 +136,9 @@ function PendingAllocation({ CountPendingForAllocation }) {
       headerStyle: () => {
         return { fontSize: "12px" };
       },
+      style: {
+        fontSize: "11px",
+    },
     },
     {
       text: "Client Name",
@@ -135,6 +147,9 @@ function PendingAllocation({ CountPendingForAllocation }) {
       headerStyle: () => {
         return { fontSize: "12px" };
       },
+      style: {
+        fontSize: "11px",
+    },
     },
     {
       text: "Status",
@@ -142,6 +157,9 @@ function PendingAllocation({ CountPendingForAllocation }) {
       headerStyle: () => {
         return { fontSize: "12px" };
       },
+      style: {
+        fontSize: "11px",
+    },
       formatter: function nameFormatter(cell, row) {
         return (
           <>
@@ -167,6 +185,9 @@ function PendingAllocation({ CountPendingForAllocation }) {
       headerStyle: () => {
         return { fontSize: "12px" };
       },
+      style: {
+        fontSize: "11px",
+    },
       formatter: function (cell, row) {
         return (
          
@@ -213,6 +234,9 @@ function PendingAllocation({ CountPendingForAllocation }) {
       headerStyle: () => {
         return { fontSize: "12px" };
       },
+      style: {
+        fontSize: "11px",
+    },
       formatter: function (cell, row) {
         return (
           <>

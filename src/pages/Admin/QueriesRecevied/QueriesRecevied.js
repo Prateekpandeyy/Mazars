@@ -212,21 +212,13 @@ function QueriesRecevied(props) {
 
   return (
     <Layout adminDashboard="adminDashboard" adminUserId={userid}>
-      <div class="row mt-3">
-        <div class="col-md-12">
-          <div class="schedule">
-            <h3>Query Detail</h3>
-          </div>
-        </div>
-        <div class="col-xl-12 col-lg-12 col-md-12">
+ <div class="row mt-3">
+      <div class="col-xl-12 col-lg-12 col-md-12">
           <div class="card">
-            <div
-              class="card-header"
-              id="headingOne"
-              style={{ padding: ".5rem .1rem" }}
-            >
-              <h2 class="mb-0 query ml-3">
-                <Link
+          <CardHeader>
+          <Row>
+            <Col md="4">
+            <Link
                   to={{
                     pathname: `/admin/${props.location.routes}`,
                     index: props.location.index,
@@ -234,10 +226,13 @@ function QueriesRecevied(props) {
                 >
                   <button class="btn btn-success ml-3">Go Back</button>
                 </Link>
-                
-              </h2>
-            </div>
-
+              
+            </Col>
+            <Col md="8">
+              <h4>Query Details</h4>
+            </Col>
+          </Row>
+        </CardHeader>
             {submitData.map((p, index) => (
               <QueryDetails
                 p={p}

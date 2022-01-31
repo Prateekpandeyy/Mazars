@@ -83,7 +83,9 @@ function PendingForProposals({ CountPendingProposal }) {
       dataField: "created",
       text: "Date",
       sort: true,
-
+      style: {
+        fontSize: "11px",
+    },
       formatter: function dateFormat(cell, row) {
       
         var oldDate = row.created;
@@ -96,6 +98,9 @@ function PendingForProposals({ CountPendingProposal }) {
     {
       dataField: "assign_no",
       text: "Query No",
+      style: {
+        fontSize: "11px",
+    },
       formatter: function nameFormatter(cell, row) {
        
         return (
@@ -116,11 +121,17 @@ function PendingForProposals({ CountPendingProposal }) {
       dataField: "parent_id",
       text: "Category",
       sort: true,
+      style: {
+        fontSize: "11px",
+    },
     },
     {
       dataField: "cat_name",
       text: "Sub Category",
       sort: true,
+      style: {
+        fontSize: "11px",
+    },
     },
     {
       text: "Client Name",
@@ -129,12 +140,18 @@ function PendingForProposals({ CountPendingProposal }) {
       headerStyle: () => {
         return { fontSize: "12px" };
       },
+      style: {
+        fontSize: "11px",
+    },
     },
     {
       text: "Status",
       headerStyle: () => {
         return { fontSize: "12px" };
       },
+      style: {
+        fontSize: "11px",
+    },
       formatter: function nameFormatter(cell, row) {
         return (
           <>
@@ -157,6 +174,9 @@ function PendingForProposals({ CountPendingProposal }) {
       dataField: "tname",
       text: "TL name",
       sort: true,
+      style: {
+        fontSize: "11px",
+    },
     },
     {
       text: "History",
@@ -164,6 +184,9 @@ function PendingForProposals({ CountPendingProposal }) {
       headerStyle: () => {
         return { fontSize: "12px" };
       },
+      style: {
+        fontSize: "11px",
+    },
       formatter: function (cell, row) {
         return (
           <>

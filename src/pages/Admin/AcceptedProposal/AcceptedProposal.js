@@ -75,8 +75,8 @@ function AcceptedProposal({ acceptedProposal }) {
         fontSize: "11px",
       },
       headerStyle: () => {
-        return { fontSize: "11px" };
-      },
+        return { fontSize: "11px" , width : "120px", whiteSpace : "nowrap", padding: "10px 20px"};
+    },
       formatter: function dateFormat(cell, row) {
 
         var oldDate = row.created;
@@ -93,8 +93,8 @@ function AcceptedProposal({ acceptedProposal }) {
         fontSize: "11px",
       },
       headerStyle: () => {
-        return { fontSize: "11px" };
-      },
+        return { fontSize: "11px" , width : "120px", whiteSpace : "nowrap", padding: "10px 20px"};
+    },
       formatter: function nameFormatter(cell, row) {
      
         return (
@@ -265,7 +265,7 @@ function AcceptedProposal({ acceptedProposal }) {
       formatter: function (cell, row) {
         return (
           <>
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <div style={{ display: "flex" }}>
 
               {row.statuscode > "3" || row.statuscode == "10" ?
                 <div style={{ cursor: "pointer" }} title="View Proposal">
@@ -282,10 +282,12 @@ function AcceptedProposal({ acceptedProposal }) {
               }
 
 
-              <div title="Send Message">
+              <div title="Send Message" className="ml-2">
                 <Link
-                  to={{
-                    pathname: `/admin/chatting/${row.q_id}`,
+  to={{
+    pathname: `/admin/chatting/${row.q_id}`,
+    index: 2,
+    routes: "proposal",
                     obj: {
                       message_type: "2",
                       query_No: row.assign_no,
@@ -306,7 +308,7 @@ function AcceptedProposal({ acceptedProposal }) {
                 </Link>
               </div>
 
-              <div title="View Discussion Message">
+              <div title="View Discussion Message" className="ml-2">
                 <i
                   className="fa fa-comments-o"
                   style={{
@@ -348,7 +350,7 @@ function AcceptedProposal({ acceptedProposal }) {
             keyField= {"assign_no"}
             data={proposalDisplay}
             columns={columns}
-            classes="table-responsive"
+            classes="table-responsivepayment"
           />
 </div>
           <DiscardReport

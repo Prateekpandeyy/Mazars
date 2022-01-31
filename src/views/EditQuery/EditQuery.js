@@ -467,7 +467,7 @@ function EditQuery(props) {
                             value="Urgent, (4-5 Working Days)"
                           // disabled
                           />
-                          <label>Urgent, (4-5 Working Days)</label>
+                          <label>Urgent</label>
                         </div>
                         <div className="form-check">
                           <input
@@ -478,7 +478,7 @@ function EditQuery(props) {
                             value="Regular (10-12 Working Days)"
                           // disabled
                           />
-                          <label>Regular (10-12 Working Days)</label>
+                          <label>Regular </label>
                         </div>
                       </div>
                     </div>

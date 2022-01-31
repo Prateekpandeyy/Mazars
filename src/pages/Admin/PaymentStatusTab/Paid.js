@@ -94,8 +94,8 @@ function Paid() {
             style: {
                 fontSize: "11px",
             },
-            headerStyle: () => {
-                return { fontSize: "11px" };
+         headerStyle: () => {
+                return { fontSize: "11px" , width : "120px", whiteSpace : "nowrap", padding: "10px 20px"};
             },
             formatter: function dateFormat(cell, row) {
                
@@ -112,8 +112,8 @@ function Paid() {
             style: {
                 fontSize: "11px",
             },
-            headerStyle: () => {
-                return { fontSize: "11px" };
+         headerStyle: () => {
+                return { fontSize: "11px" , width : "120px", whiteSpace : "nowrap", padding: "10px 20px"};
             },
             formatter: function nameFormatter(cell, row) {
                
@@ -312,85 +312,17 @@ function Paid() {
             formatter: function (cell, row) {
                 return (
                     <>
-                        {row.paid_status == "2" ? 
-                         <div style={{ display: "flex", justifyContent: "space-between", width: "80px" }}>
+                       
+                        <div style={{ display: "flex", justifyContent: "space-between", width: "80px"}}>
 
 
-                         <div style={{ cursor: "pointer",  diaplay :"flex", marginRight : "5px" }} title="Payment History">
-                         <Link
-              to={{
-                pathname: `/admin/paydetails/${row.assign_id}`,
-                obj: {
-                  message_type: "5",
-                  query_No: row.assign_no,
-                  query_id: row.assign_id,
-                  index: 2,
-                  routes: `/admin/paymentstatus`
-                }
-              }}
-            >
-                            <i
-                                class="fa fa-credit-card"
-                                style={{ color: "green", fontSize: "16px" }}
-                                // onClick={() => toggle(row.assign_id)}
-                            ></i>
-                            </Link>
-                         </div>
- 
- 
-                         <div title="View Discussion Message">
-                             <i
-                                 class="fa fa-comments-o"
-                                 style={{
-                                     fontSize: 16,
-                                     cursor: "pointer",
-                                     color: "orange"
-                                 }}
-                                 onClick={() => ViewDiscussionToggel(row.assign_no)}
-                             ></i>
-                         </div>
- 
- 
-                         <div title="Send Message">
-             <Link
-               to={{
-                 pathname: `/admin/chatting/${row.assign_id}`,
-                 obj: {
-                   message_type: "5",
-                   query_No: row.assign_no,
-                   query_id: row.assign_id,
-                   routes: `/admin/paymentstatus`,
-                   index: 2
-                 }
-               }}
-             >
-               <i
-                 class="fa fa-comments-o"
-                 style={{
-                   fontSize: 16,
-                   cursor: "pointer",
-                   marginLeft: "8px",
-                   color: "blue"
-                 }}
-               ></i>
-             </Link>
-           </div>
- 
-                     </div> :
-                        <div style={{ display: "flex", justifyContent: "space-between", width: "40px" }}>
-
-
-                        <div style={{ cursor: "pointer" }} title="Payment History">
+                        <div style={{ cursor: "pointer" , diaplay :"flex", marginRight : "5px"}} title="Payment History">
                         <Link
-              to={{
+               to={{
                 pathname: `/admin/paydetails/${row.assign_id}`,
-                obj: {
-                  message_type: "5",
-                  query_No: row.assign_no,
-                  query_id: row.assign_id,
-                  index: 2,
-                  routes: `/admin/paymentstatus`
-                }
+                index : 1,
+                routes: "paymentstatus",
+              
               }}
             >
                             <i
@@ -399,7 +331,6 @@ function Paid() {
                                 // onClick={() => toggle(row.assign_id)}
                             ></i>
                             </Link>
-                         
                         </div>
 
 
@@ -418,14 +349,15 @@ function Paid() {
 
                         <div title="Send Message">
             <Link
-              to={{
+             to={{
                 pathname: `/admin/chatting/${row.assign_id}`,
+                index : 1,
+                routes: "paymentstatus",
                 obj: {
                   message_type: "5",
                   query_No: row.assign_no,
-                  query_id: row.id,
-                  routes: `/admin/paymentstatus`,
-                  index : 2
+                  query_id: row.assign_id,
+                  routes: `/admin/paymentstatus`
                 }
               }}
             >
@@ -441,7 +373,7 @@ function Paid() {
             </Link>
           </div>
 
-                    </div> }
+                    </div> 
                     </>
                 );
             },

@@ -136,6 +136,9 @@ var rowStyle2 = {}
       text: "Date",
       dataField: "date_of_query",
       sort: true,
+      style : {
+        fontSize : "11px"
+      },
       headerStyle: () => {
         return { fontSize: "12px" };
       },
@@ -152,7 +155,10 @@ var rowStyle2 = {}
       text: "Query No",
       dataField: "assign_no",
       headerStyle: () => {
-        return { fontSize: "12px" };
+        return { fontSize: "11px" , width : "120px", whiteSpace : "nowrap", padding: "10px 20px"};
+    },
+      style : {
+        fontSize : "11px"
       },
       formatter: function nameFormatter(cell, row) {
         
@@ -176,14 +182,20 @@ var rowStyle2 = {}
       text: "Category",
       dataField: "parent_id",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
+      style : {
+        fontSize : "11px"
       },
+      headerStyle: () => {
+        return { fontSize: "11px" , width : "120px", whiteSpace : "nowrap", padding: "10px 20px"};
+    },
     },
     {
       text: "Sub Category",
       dataField: "cat_name",
       sort: true,
+      style : {
+        fontSize : "11px"
+      },
       headerStyle: () => {
         return { fontSize: "12px" };
       },
@@ -230,6 +242,9 @@ var rowStyle2 = {}
       dataField: "Exp_Delivery_Date",
       text: "Expected date of delivery",
       sort: true,
+      style : {
+        fontSize : "11px"
+      },
       headerStyle: () => {
         return { fontSize: "12px" };
       },
@@ -246,6 +261,9 @@ var rowStyle2 = {}
       dataField: "final_date",
       text: "Actual date of delivery",
       sort: true,
+      style : {
+        fontSize : "11px"
+      },
       headerStyle: () => {
         return { fontSize: "12px" };
       },
@@ -263,6 +281,9 @@ var rowStyle2 = {}
       text: "Deliverable",
       dataField: "",
       sort: true,
+      style : {
+        fontSize : "11px"
+      },
       headerStyle: () => {
         return { fontSize: "12px" };
       },
@@ -292,6 +313,9 @@ var rowStyle2 = {}
       text: "TL name",
       dataField: "tl_name",
       sort: true,
+      style : {
+        fontSize : "11px"
+      },
       headerStyle: () => {
         return { fontSize: "12px" };
       },
@@ -300,6 +324,9 @@ var rowStyle2 = {}
       text: "Action",
       headerStyle: () => {
         return { fontSize: "12px", width: "75px" };
+      },
+      style : {
+        fontSize : "11px"
       },
       formatter: function (cell, row) {
         return (
@@ -310,6 +337,8 @@ var rowStyle2 = {}
                 <Link
                   to={{
                     pathname: `/admin/chatting/${row.q_id}`,
+                    index : 1,
+                    routes: "assignment",
                     obj: {
                       message_type: "3",
                       query_No: row.assign_no,

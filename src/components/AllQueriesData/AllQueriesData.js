@@ -53,9 +53,9 @@ function AllQueriesData({allData}) {
       headerStyle: () => {
         return { fontSize: "12px"};
       },
-      style : {
-        wordBreak : "break-word"
-        },
+ style: {
+        fontSize: "11px",
+    },
       formatter: (cellContent, row, rowIndex, index) => {
 
         return <div>{rowIndex + 1}</div>;
@@ -68,9 +68,9 @@ function AllQueriesData({allData}) {
       headerStyle: () => {
         return { fontSize: "12px"};
       },
-      style : {
-        wordBreak : "break-word"
-        },
+ style: {
+        fontSize: "11px",
+    },
       formatter: function dateFormat(cell, row) {
         var oldDate = row.created;
         if (oldDate == null) {
@@ -85,9 +85,9 @@ function AllQueriesData({allData}) {
       headerStyle: () => {
         return { fontSize: "12px"};
       },
-      style : {
-        wordBreak : "break-word"
-        },
+ style: {
+        fontSize: "11px",
+    },
       formatter: function nameFormatter(cell, row) {
         return (
           <>
@@ -111,9 +111,9 @@ function AllQueriesData({allData}) {
       headerStyle: () => {
         return { fontSize: "12px"};
       },
-      style : {
-        wordBreak : "break-word"
-        },
+ style: {
+        fontSize: "11px",
+    },
     },
     {
       text: "Sub Category",
@@ -122,9 +122,9 @@ function AllQueriesData({allData}) {
       headerStyle: () => {
         return { fontSize: "12px"};
       },
-      style : {
-        wordBreak : "break-word"
-        },
+ style: {
+        fontSize: "11px",
+    },
     },
     {
       text: "Client Name",
@@ -133,18 +133,18 @@ function AllQueriesData({allData}) {
       headerStyle: () => {
         return { fontSize: "12px"};
       },
-      style : {
-        wordBreak : "break-word"
-        },
+ style: {
+        fontSize: "11px",
+    },
     },
     {
       text: "Status",
       headerStyle: () => {
         return { fontSize: "12px"};
       },
-      style : {
-        wordBreak : "break-word"
-        },
+ style: {
+        fontSize: "11px",
+    },
       formatter: function nameFormatter(cell, row) {
         return (
           <>
@@ -179,14 +179,14 @@ function AllQueriesData({allData}) {
       headerStyle: () => {
         return { fontSize: "12px"};
       },
-      style : {
-        wordBreak : "break-word"
-        },
+ style: {
+        fontSize: "11px",
+    },
       formatter: function (cell, row) {
         return (
           <>
            {row.status == "Declined Query"  ? 
-           <div title="View Discussion Message">
+           <div title="View Discussion Message" className="ml-2">
            <i
              className="fa fa-comments-o"
              style={{
@@ -200,8 +200,11 @@ function AllQueriesData({allData}) {
             <div style={{ display: "flex", justifyContent: "space-between" }}>
             <div title="Send Message">
               <Link
-                to={{
-                  pathname: `/admin/chatting/${row.id}`,
+               to={{
+                pathname: `/admin/chatting/${row.id}`,
+                index: 0,
+                routes: "queriestab",
+              
                   obj: {
                     message_type: "4",
                     query_No: row.assign_no,

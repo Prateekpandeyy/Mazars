@@ -469,18 +469,11 @@ const showManual = () => {
     setManual(!openManual)
 }
     return (
-        <div>
-            <Card>
-                <CardHeader>
+       <Card>
+             <CardHeader>
                     <Row>
-                        <Col md="9">
-                            <Link to = {{
-                                pathname : `/customer/modalmanual`
-                            }}>
-                               <button  className="btn btn-success">Need help?</button> 
-                            </Link>
-{/* <button onClick={() => showManual()} className="btn btn-success">Need help?</button> */}
-                        </Col>
+                        <Col md = "9">
+                            </Col>
                         <Col md="3">
                             <div style={{ display: "flex", justifyContent: "space-around" }}>
                                 <Link to="/customer/select-category" className="btn btn-primary">
@@ -489,8 +482,6 @@ const showManual = () => {
                             </div>
                         </Col>
                     </Row>
-                </CardHeader>
-                <CardHeader>
                     <CustomerFilter
                         setData={setQuery}
                         getData={getQueriesData}
@@ -501,21 +492,22 @@ const showManual = () => {
                     />
                 </CardHeader>
                 <CardBody>
-                    <Records records={records} />
+              
                   
-                               <div className="tableFixHead">
-                                <BootstrapTable
-                                    bootstrap4
-                                    keyField= {"assign_no"}
-                                    data={query}
-                                    columns={columns}
-                                  rowIndex
-                                    classes="table-responsive"
-                                />
-                               
-                                </div>
-                            
-                    <AdditionalQueryModal
+                <Records records={records} />
+                  
+                  <div className="tableFixHead">
+                   <BootstrapTable
+                       bootstrap4
+                       keyField= {"assign_no"}
+                       data={query}
+                       columns={columns}
+                     rowIndex
+                       classes="table-responsive"
+                   />
+                  
+                   </div>
+                   <AdditionalQueryModal
                         additionalHandler={additionalHandler}
                         additionalQuery={additionalQuery}
                         assignNo={assignNo}
@@ -525,27 +517,20 @@ const showManual = () => {
                        
                         des = {des}
                     />
-
-
-                    <DiscardReport
+            <DiscardReport
                         ViewDiscussionToggel={ViewDiscussionToggel}
                         ViewDiscussion={ViewDiscussion}
                         report={assignNo}
                         getData={getQueriesData}
                     />
-                    <RejectedModal
+                     <RejectedModal
                     showRejectedBox = {showRejectedBox} 
                     rejectedBox = {rejectedBox}
                     getQueriesData = {getQueriesData}
                     assignNo={assignNo2}
                     deleteCliente = {deleteCliente}/>
-                    <ModalManual
-                    openManual = {openManual} 
-                    showManual={showManual}
-                    />
                 </CardBody>
-            </Card>
-        </div>
+       </Card>
     );
 }
 

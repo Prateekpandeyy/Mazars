@@ -154,9 +154,12 @@ function AssignmentComponent() {
       text: "Date",
       dataField: "date_of_query",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
+      style : {
+        fontSize : "11px"
       },
+       headerStyle: () => {
+        return { fontSize: "11px" , width : "120px", whiteSpace : "nowrap", padding: "10px 20px"};
+    },
       formatter: function dateFormat(cell, row) {
      
         var oldDate = row.date_of_query;
@@ -169,8 +172,11 @@ function AssignmentComponent() {
     {
       text: "Query No",
       dataField: "assign_no",
-      headerStyle: () => {
-        return { fontSize: "12px" };
+       headerStyle: () => {
+        return { fontSize: "11px" , width : "120px", whiteSpace : "nowrap", padding: "10px 20px"};
+    },
+      style : {
+        fontSize : "11px"
       },
       formatter: function nameFormatter(cell, row) {
      
@@ -194,6 +200,9 @@ function AssignmentComponent() {
       text: "Category",
       dataField: "parent_id",
       sort: true,
+      style : {
+        fontSize : "11px"
+      },
       headerStyle: () => {
         return { fontSize: "12px" };
       },
@@ -202,6 +211,9 @@ function AssignmentComponent() {
       text: "Sub Category",
       dataField: "cat_name",
       sort: true,
+      style : {
+        fontSize : "11px"
+      },
       headerStyle: () => {
         return { fontSize: "12px" };
       },
@@ -253,9 +265,12 @@ function AssignmentComponent() {
       dataField: "Exp_Delivery_Date",
       text: "Expected date of delivery",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
+      style : {
+        fontSize : "11px"
       },
+      headerStyle: () => {
+        return { fontSize: "11px", padding: "10px 20px"};
+    },
       formatter: function dateFormat(cell, row) {
         
       
@@ -270,9 +285,12 @@ function AssignmentComponent() {
       dataField: "final_date",
       text: "Actual date of delivery",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
+      style : {
+        fontSize : "11px"
       },
+      headerStyle: () => {
+        return { fontSize: "11px", padding: "10px 20px"};
+    },
       formatter: function dateFormat(cell, row) {
        
         var oldDate = row.final_date;
@@ -286,6 +304,9 @@ function AssignmentComponent() {
       text: "Deliverable",
       dataField: "",
       sort: true,
+      style : {
+        fontSize : "11px"
+      },
       headerStyle: () => {
         return { fontSize: "12px" };
       },
@@ -318,11 +339,17 @@ function AssignmentComponent() {
       headerStyle: () => {
         return { fontSize: "12px" };
       },
+      style : {
+        fontSize : "11px"
+      },
     },
     {
       text: "Action",
       headerStyle: () => {
         return { fontSize: "12px", width: "75px" };
+      },
+      style : {
+        fontSize : "11px"
       },
       formatter: function (cell, row) {
         return (
@@ -331,8 +358,11 @@ function AssignmentComponent() {
 
               <div title="Send Message">
                 <Link
-                  to={{
-                    pathname: `/admin/chatting/${row.q_id}`,
+                
+                    to={{
+                      pathname: `/admin/chatting/${row.q_id}`,
+                      index : 0,
+                      routes: "assignment",
                     obj: {
                       message_type: "3",
                       query_No: row.assign_no,
@@ -370,6 +400,7 @@ function AssignmentComponent() {
       },
     },
   ];
+
   rowStyle2 = (row, index) => {
     const style = {}
     var warningDate = moment(row.Exp_Delivery_Date).subtract(2, 'day').toDate();
@@ -600,7 +631,7 @@ setError(true)
             columns={columns}
             rowStyle={ rowStyle2 }
             rowIndex
-            wrapperClasses="table-responsive"
+            classes="table-responsivepayment"
           />
 </div>
           <ViewAllReportModal

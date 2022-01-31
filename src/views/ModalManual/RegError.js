@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Typography } from '@material-ui/core';
+import {Paper, Container, Typography, Button, Card, CardActionArea, CardHeader, CardMedia, CardContent, CardActions } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core';
 import style from  './manula.module.css';
 import successregImg from "../ManualImg/successReg.jpeg";
@@ -52,16 +52,16 @@ const RegError = () => {
     const classes = useStyle()
 return (
    <>
-    <Button variant="contained" className={classes.root2}>Submit</Button>
-    <Button variant="contained" className={classes.root}>Send Otp</Button>
     <Typography variant='h5' variantMapping={{
         h5 : "span"
     }}>
-    After clicking on Success message will appear. Click ok and enter the OTP to register & click on 
+    After clicking on  <Button variant="contained" className={classes.root}>Send Otp</Button> Success message will appear.
+     Click ok and enter the OTP to register & click on  <Button variant="contained" className={classes.root2}>Submit</Button>
     </Typography>
-    <div className={style.imgBox}>
+    {/* <div className={style.imgBox}>
 <img src = {successregImg} className= {style.manualImg} />
-</div>
+</div> */}
+<CardMedia component="img"  src={successregImg}/>
 <Typography variant='h5'>
 If the OTP entered is incorrect then Error message window will appear showing “Incorrect OTP, please try again
 </Typography>
@@ -166,6 +166,7 @@ Click Ok & login with the correct credentials.
 <img src = {errorLoginImg2} className= {style.manualImg} />
 </div>
 </div>
+  
    </>
 )
 }

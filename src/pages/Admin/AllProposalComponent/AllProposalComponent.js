@@ -79,12 +79,12 @@ const retviewProposal = (e) => {
       dataField: "created",
       text: "Date",
       sort: true,
-      style : {
-        wordBreak : "break-word"
-        },
-      headerStyle: () => {
-        return { fontSize: "11px" };
-      },
+      style: {
+        fontSize: "11px",
+    },
+headerStyle: () => {
+        return { fontSize: "11px" , width : "120px", whiteSpace : "nowrap", padding: "10px 20px"};
+    },
       formatter: function dateFormat(cell, row) {
     
         var oldDate = row.created;
@@ -97,12 +97,12 @@ const retviewProposal = (e) => {
     {
       dataField: "assign_no",
       text: "Query No",
-      style : {
-        wordBreak : "break-word"
-        },
-      headerStyle: () => {
-        return { fontSize: "11px" };
-      },
+      style: {
+        fontSize: "11px",
+    },
+headerStyle: () => {
+        return { fontSize: "11px" , width : "120px", whiteSpace : "nowrap", padding: "10px 20px"};
+    },
       formatter: function nameFormatter(cell, row) {
      
         return (
@@ -124,9 +124,9 @@ const retviewProposal = (e) => {
       dataField: "parent_id",
       text: "Category",
       sort: true,
-      style : {
-         wordBreak : "break-word"
-         },
+       style: {
+        fontSize: "11px",
+    },
       headerStyle: () => {
         return { fontSize: "11px" };
       },
@@ -135,9 +135,9 @@ const retviewProposal = (e) => {
       dataField: "cat_name",
       text: "Sub Category",
       sort: true,
-      style : {
-         wordBreak : "break-word"
-         },
+       style: {
+        fontSize: "11px",
+    },
       headerStyle: () => {
         return { fontSize: "11px" };
       },
@@ -146,9 +146,9 @@ const retviewProposal = (e) => {
       text: "Date of Proposal",
       dataField: "DateofProposal",
       sort: true,
-      style : {
-         wordBreak : "break-word"
-         },
+       style: {
+        fontSize: "11px",
+    },
       headerStyle: () => {
         return { fontSize: "11px" };
       },
@@ -165,9 +165,9 @@ const retviewProposal = (e) => {
       text: "Date of acceptance / decline of Proposal",
       dataField: "cust_accept_date",
       sort: true,
-      style : {
-         wordBreak : "break-word"
-         },
+       style: {
+        fontSize: "11px",
+    },
       headerStyle: () => {
         return { fontSize: "11px" };
       },
@@ -182,9 +182,9 @@ const retviewProposal = (e) => {
     },
     {
       text: "Status",
-      style : {
-         wordBreak : "break-word"
-         },
+       style: {
+        fontSize: "11px",
+    },
       headerStyle: () => {
         return { fontSize: "11px" };
       },
@@ -220,10 +220,9 @@ const retviewProposal = (e) => {
       dataField: "ProposedAmount",
       text: "Proposed Amount",
       sort: true,
-      style : {
-         wordBreak : "break-word"
-         },
-      headerStyle: () => {
+      style: {
+        fontSize: "11px",
+    },      headerStyle: () => {
         return { fontSize: "11px" };
       },
       sortFunc: (a, b, order, dataField) => {
@@ -272,10 +271,11 @@ const retviewProposal = (e) => {
       text: "TL name",
       sort: true,
       style : {
-         wordBreak : "break-word"
+       fontSize: "11px",
+       
          },
       headerStyle: () => {
-        return { fontSize: "11px" };
+        return { fontSize: "11px" , width: "100px", wordBreak: "nowrap", padding: "10px 20px"};
       },
     },
     {
@@ -286,44 +286,14 @@ const retviewProposal = (e) => {
       formatter: function (cell, row) {
         return (
           <>
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
-
-              {row.statuscode > "3" || row.statuscode == "10" ?
-                <div style={{ cursor: "pointer" }} title="View Proposal">
-                
-                    <i
-                      className="fa fa-eye"
-                      style={{ color: "green", fontSize: "16px" }}
-                      onClick={(e) => showProposalModal2(row.q_id)}
-                    />
-                  
-                </div>
-                :
-                null
-              }
-{
-  row.statuscode == "6" ? 
-  <>
-<div title="Restore Proposal"
- onClick={(e) => retviewProposal(row.q_id)}> 
-<i
-                    className="fa fa-share"
-                    style={{
-                      fontSize: 16,
-                      cursor: "pointer",
-                      marginLeft: "8px",
-                      color: "blue"
-                    }}
-                   
-                  ></i>
-</div>
-  </> : ""
-}
-
-              <div title="Send Message">
+            <div style={{display: "flex"}}>
+            <div title="Send Message">
                 <Link
-                  to={{
-                    pathname: `/admin/chatting/${row.q_id}`,
+               
+                    to={{
+                      pathname: `/admin/chatting/${row.q_id}`,
+                      index: 0,
+                      routes: "proposal",
                     obj: {
                       message_type: "2",
                       query_No: row.assign_no,
@@ -344,7 +314,7 @@ const retviewProposal = (e) => {
                 </Link>
               </div>
 
-              <div title="View Discussion Message">
+              <div title="View Discussion Message" className="ml-2">
                 <i
                   className="fa fa-comments-o"
                   style={{
@@ -356,6 +326,39 @@ const retviewProposal = (e) => {
                 ></i>
               </div>
 
+              {row.statuscode > "3" || row.statuscode == "10" ?
+                <div style={{ cursor: "pointer" }} title="View Proposal" className="ml-2">
+                
+                    <i
+                      className="fa fa-eye"
+                      style={{ color: "green", fontSize: "16px" }}
+                      onClick={(e) => showProposalModal2(row.q_id)}
+                    />
+                  
+                </div>
+                :
+                null
+              }
+{
+  row.statuscode == "6" ? 
+  <>
+<div title="Restore Proposal" className="ml-2"
+ onClick={(e) => retviewProposal(row.q_id)}> 
+<i
+                    className="fa fa-share"
+                    style={{
+                      fontSize: 16,
+                      cursor: "pointer",
+                      marginLeft: "8px",
+                      color: "blue"
+                    }}
+                   
+                  ></i>
+</div>
+  </> : null
+}
+
+            
             </div>
           </>
         );
@@ -386,7 +389,7 @@ const retviewProposal = (e) => {
             keyField= {"assign_no"}
             data={proposalDisplay}
             columns={columns}
-            classes="table-responsive"
+            classes="table-responsivepayment"
           />
           </div>
 

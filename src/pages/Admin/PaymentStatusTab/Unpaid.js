@@ -100,8 +100,8 @@ function Unpaid() {
             style: {
                 fontSize: "11px",
             },
-            headerStyle: () => {
-                return { fontSize: "11px" };
+           headerStyle: () => {
+                return { fontSize: "11px" , width : "120px", whiteSpace : "nowrap", padding: "10px 20px"};
             },
             formatter: function dateFormat(cell, row) {
               
@@ -118,8 +118,8 @@ function Unpaid() {
             style: {
                 fontSize: "11px",
             },
-            headerStyle: () => {
-                return { fontSize: "11px" };
+           headerStyle: () => {
+                return { fontSize: "11px" , width : "120px", whiteSpace : "nowrap", padding: "10px 20px"};
             },
             formatter: function nameFormatter(cell, row) {
                
@@ -301,28 +301,25 @@ function Unpaid() {
         {
             text: "Action",
             style: {
-                fontSize: "11px",
+                fontSize: "11px", diaplay : "flex", justifyContent: "space-between", width: "100px"
             },
             headerStyle: () => {
-                return { fontSize: "11px" };
+                return { fontSize: "11px", width: "110px" };
             },
             formatter: function (cell, row) {
                 return (
                     <>
-                        <div style={{ display: "flex", justifyContent: "space-between", width: "40px" }}>
+                       
+                        <div style={{ display: "flex", justifyContent: "space-between", width: "80px"}}>
 
 
-<div style={{ cursor: "pointer" }} title="Payment History">
-<Link
+                        <div style={{ cursor: "pointer" , diaplay :"flex", marginRight : "5px"}} title="Payment History">
+                        <Link
               to={{
                 pathname: `/admin/paydetails/${row.assign_id}`,
-                obj: {
-                  message_type: "5",
-                  query_No: row.assign_no,
-                  query_id: row.id,
-                  routes: `/admin/paymentstatus`,
-                  index : 1
-                }
+                index : 2,
+                routes: "paymentstatus",
+               
               }}
             >
                             <i
@@ -331,56 +328,54 @@ function Unpaid() {
                                 // onClick={() => toggle(row.assign_id)}
                             ></i>
                             </Link>
-</div>
-
-
-<div title="View Discussion Message">
-    <i
-        class="fa fa-comments-o"
-        style={{
-            fontSize: 16,
-            cursor: "pointer",
-            color: "orange"
-        }}
-        onClick={() => ViewDiscussionToggel(row.assign_no)}
-    ></i>
-</div>
-
-
-
-                            <div title="Send Message">
-                <Link
-                  to={{
-                    pathname: `/admin/chatting/${row.assign_id}`,
-                    obj: {
-                      message_type: "5",
-                      query_No: row.assign_no,
-                      query_id: row.assign_id,
-                      routes: `/admin/paymentstatus`,
-                      index : 1
-                    }
-                  }}
-                >
-                  <i
-                    class="fa fa-comments-o"
-                    style={{
-                      fontSize: 16,
-                      cursor: "pointer",
-                      marginLeft: "8px",
-                      color: "blue"
-                    }}
-                  ></i>
-                </Link>
-              </div>
-
                         </div>
+
+
+                        <div title="View Discussion Message">
+                            <i
+                                class="fa fa-comments-o"
+                                style={{
+                                    fontSize: 16,
+                                    cursor: "pointer",
+                                    color: "orange"
+                                }}
+                                onClick={() => ViewDiscussionToggel(row.assign_no)}
+                            ></i>
+                        </div>
+
+
+                        <div title="Send Message">
+            <Link
+              to={{
+                pathname: `/admin/chatting/${row.assign_id}`,
+                index : 2,
+                routes: "paymentstatus",
+                obj: {
+                  message_type: "5",
+                  query_No: row.assign_no,
+                  query_id: row.assign_id,
+                  routes: `/admin/paymentstatus`
+                }
+              }}
+            >
+              <i
+                class="fa fa-comments-o"
+                style={{
+                  fontSize: 16,
+                  cursor: "pointer",
+                  marginLeft: "8px",
+                  color: "blue"
+                }}
+              ></i>
+            </Link>
+          </div>
+
+                    </div> 
                     </>
                 );
             },
         },
     ];
-
-
     return (
         <div>
             <Card>

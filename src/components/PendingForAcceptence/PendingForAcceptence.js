@@ -64,9 +64,9 @@ function PendingForAcceptence({ pendingProposal }) {
       formatter: (cellContent, row, rowIndex) => {
         return rowIndex + 1;
       },
-      style : {
-        wordBreak : "break-word"
-        },
+      style: {
+        fontSize: "11px",
+    },
       headerStyle: () => {
         return { fontSize: "11px" };
       },
@@ -75,12 +75,12 @@ function PendingForAcceptence({ pendingProposal }) {
       dataField: "created",
       text: "Date",
       sort: true,
-      style : {
-        wordBreak : "break-word"
-        },
-      headerStyle: () => {
-        return { fontSize: "11px" };
-      },
+      style: {
+        fontSize: "11px",
+    },
+    headerStyle: () => {
+      return { fontSize: "11px" , width : "120px", whiteSpace : "nowrap", padding: "10px 20px"};
+  },
       formatter: function dateFormat(cell, row) {
 
         var oldDate = row.created;
@@ -93,12 +93,12 @@ function PendingForAcceptence({ pendingProposal }) {
     {
       dataField: "assign_no",
       text: "Query No",
-      style : {
-        wordBreak : "break-word"
-        },
-      headerStyle: () => {
-        return { fontSize: "11px" };
-      },
+      style: {
+        fontSize: "11px",
+    },
+    headerStyle: () => {
+      return { fontSize: "11px" , width : "120px", whiteSpace : "nowrap", padding: "10px 20px"};
+  },
       formatter: function nameFormatter(cell, row) {
       
         return (
@@ -120,9 +120,9 @@ function PendingForAcceptence({ pendingProposal }) {
       dataField: "parent_id",
       text: "Category",
       sort: true,
-      style : {
-        wordBreak : "break-word"
-        },
+      style: {
+        fontSize: "11px",
+    },
       headerStyle: () => {
         return { fontSize: "11px" };
       },
@@ -131,9 +131,9 @@ function PendingForAcceptence({ pendingProposal }) {
       dataField: "cat_name",
       text: "Sub Category",
       sort: true,
-      style : {
-        wordBreak : "break-word"
-        },
+      style: {
+        fontSize: "11px",
+    },
       headerStyle: () => {
         return { fontSize: "11px" };
       },
@@ -142,9 +142,9 @@ function PendingForAcceptence({ pendingProposal }) {
       text: "Date of Proposal",
       dataField: "DateofProposal",
       sort: true,
-      style : {
-        wordBreak : "break-word"
-        },
+      style: {
+        fontSize: "11px",
+    },
       headerStyle: () => {
         return { fontSize: "11px" };
       },
@@ -161,9 +161,9 @@ function PendingForAcceptence({ pendingProposal }) {
       text: "Date of acceptance of Proposal",
       dataField: "cust_accept_date",
       sort: true,
-      style : {
-        wordBreak : "break-word"
-        },
+      style: {
+        fontSize: "11px",
+    },
       headerStyle: () => {
         return { fontSize: "11px" };
       },
@@ -178,9 +178,9 @@ function PendingForAcceptence({ pendingProposal }) {
     },
     {
       text: "Status",
-      style : {
-        wordBreak : "break-word"
-        },
+      style: {
+        fontSize: "11px",
+    },
       headerStyle: () => {
         return { fontSize: "11px" };
       },
@@ -206,9 +206,9 @@ function PendingForAcceptence({ pendingProposal }) {
       dataField: "",
       text: "Proposed Amount",
       sort: true,
-      style : {
-        wordBreak : "break-word"
-        },
+      style: {
+        fontSize: "11px",
+    },
       headerStyle: () => {
         return { fontSize: "11px" };
       },
@@ -258,9 +258,9 @@ function PendingForAcceptence({ pendingProposal }) {
       dataField: "tl_name",
       text: "TL name",
       sort: true,
-      style : {
-        wordBreak : "break-word"
-        },
+      style: {
+        fontSize: "11px",
+    },
       headerStyle: () => {
         return { fontSize: "11px" };
       },
@@ -270,51 +270,19 @@ function PendingForAcceptence({ pendingProposal }) {
       headerStyle: () => {
         return { fontSize: "11px", width: "95px" };
       },
-      style : {
-        wordBreak : "break-word"
-        },
+      style: {
+        fontSize: "11px",
+    },
       formatter: function (cell, row) {
         return (
           <>
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
-
-
-              {row.statuscode > "3" ?
-                 <div style={{ cursor: "pointer" }} title="View Proposal">
-                
-                 <i
-                   className="fa fa-eye"
-                   style={{ color: "green", fontSize: "16px" }}
-                   onClick={(e) => showProposalModal2(row.q_id)}
-                 />
-               
-             </div>
-                :
-                null
-              }
-
-{
-  row.statuscode == "6" ? 
-  <>
-<div title="Retview Proposal"
- onClick={(e) => retviewProposal(row.q_id)}> 
-<i
-                    className="fa fa-share"
-                    style={{
-                      fontSize: 16,
-                      cursor: "pointer",
-                      marginLeft: "8px",
-                      color: "red"
-                    }}
-                   
-                  ></i>
-</div>
-  </> : ""
-}
-              <div title="Send Message">
+            <div style={{ display: "flex" }}>
+            <div title="Send Message">
                 <Link
                   to={{
                     pathname: `/admin/chatting/${row.q_id}`,
+                    index: 1,
+                    routes: "proposal",
                     obj: {
                       message_type: "2",
                       query_No: row.assign_no,
@@ -335,7 +303,7 @@ function PendingForAcceptence({ pendingProposal }) {
                 </Link>
               </div>
 
-              <div title="View Discussion Message">
+              <div title="View Discussion Message" className="ml-2">
                 <i
                   className="fa fa-comments-o"
                   style={{
@@ -346,6 +314,40 @@ function PendingForAcceptence({ pendingProposal }) {
                   onClick={() => ViewDiscussionToggel(row.assign_no)}
                 ></i>
               </div>
+
+              {row.statuscode > "3" ?
+                 <div style={{ cursor: "pointer" }} title="View Proposal" className="ml-2">
+                
+                 <i
+                   className="fa fa-eye"
+                   style={{ color: "green", fontSize: "16px" }}
+                   onClick={(e) => showProposalModal2(row.q_id)}
+                 />
+               
+             </div>
+                :
+                null
+              }
+
+{
+  row.statuscode == "6" ? 
+  <>
+<div title="Retview Proposal" className="ml-2"
+ onClick={(e) => retviewProposal(row.q_id)}> 
+<i
+                    className="fa fa-share"
+                    style={{
+                      fontSize: 16,
+                      cursor: "pointer",
+                      marginLeft: "8px",
+                      color: "red"
+                    }}
+                   
+                  ></i>
+</div>
+  </> : null
+}
+              
 
             </div>
           </>
@@ -377,7 +379,7 @@ function PendingForAcceptence({ pendingProposal }) {
             keyField= {"assign_no"}
             data={proposalDisplay}
             columns={columns}
-            classes="table-responsive"
+            classes="table-responsivepayment"
           />
 </div>
           <DiscardReport

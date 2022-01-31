@@ -79,9 +79,9 @@ function DeclinedProposal({ declinedProposal }) {
       style: {
         fontSize: "11px",
       },
-      headerStyle: () => {
-        return { fontSize: "11px" };
-      },
+     headerStyle: () => {
+        return { fontSize: "11px" , width : "120px", whiteSpace : "nowrap", padding: "10px 20px"};
+    },
       formatter: function dateFormat(cell, row) {
 
         var oldDate = row.created;
@@ -97,9 +97,9 @@ function DeclinedProposal({ declinedProposal }) {
       style: {
         fontSize: "11px",
       },
-      headerStyle: () => {
-        return { fontSize: "11px" };
-      },
+     headerStyle: () => {
+        return { fontSize: "11px" , width : "120px", whiteSpace : "nowrap", padding: "10px 20px"};
+    },
       formatter: function nameFormatter(cell, row) {
       
         return (
@@ -272,45 +272,14 @@ function DeclinedProposal({ declinedProposal }) {
       formatter: function (cell, row) {
         return (
           <>
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
-
-              {row.statuscode > "3" ?
-                 <div style={{ cursor: "pointer" }} title="View Proposal">
-                
-                 <i
-                   className="fa fa-eye"
-                   style={{ color: "green", fontSize: "16px" }}
-                   onClick={(e) => showProposalModal2(row.q_id)}
-                 />
-               
-             </div>
-                :
-                null
-              }
-{
-  row.statuscode == "6" ? 
-  <>
-<div title="Restore Proposal"
- onClick={(e) => retviewProposal(row.q_id)}> 
-<i
-                    class="fa fa-share"
-                    style={{
-                      fontSize: 16,
-                      cursor: "pointer",
-                      marginLeft: "8px",
-                      color: "blue"
-                    }}
-                   
-                  ></i>
-</div>
-  </> : ""
-}
-
-
-              <div title="Send Message">
+            <div style={{ display: "flex" }}>
+            <div title="Send Message">
                 <Link
+                
                   to={{
                     pathname: `/admin/chatting/${row.q_id}`,
+                    index: 3,
+                    routes: "proposal",
                     obj: {
                       message_type: "2",
                       query_No: row.assign_no,
@@ -331,7 +300,7 @@ function DeclinedProposal({ declinedProposal }) {
                 </Link>
               </div>
 
-              <div title="View Discussion Message">
+              <div title="View Discussion Message" className="ml-2">
                 <i
                   class="fa fa-comments-o"
                   style={{
@@ -343,6 +312,40 @@ function DeclinedProposal({ declinedProposal }) {
                 ></i>
               </div>
 
+              {row.statuscode > "3" ?
+                 <div style={{ cursor: "pointer" }} title="View Proposal" className="ml-2">
+                
+                 <i
+                   className="fa fa-eye"
+                   style={{ color: "green", fontSize: "16px" }}
+                   onClick={(e) => showProposalModal2(row.q_id)}
+                 />
+               
+             </div>
+                :
+                null
+              }
+{
+  row.statuscode == "6" ? 
+  <>
+<div title="Restore Proposal" className="ml-2"
+ onClick={(e) => retviewProposal(row.q_id)}> 
+<i
+                    class="fa fa-share"
+                    style={{
+                      fontSize: 16,
+                      cursor: "pointer",
+                      marginLeft: "8px",
+                      color: "blue"
+                    }}
+                   
+                  ></i>
+</div>
+  </> : ""
+}
+
+
+            
             </div>
           </>
         );
@@ -373,7 +376,7 @@ function DeclinedProposal({ declinedProposal }) {
             keyField= {"assign_no"}
             data={proposalDisplay}
             columns={columns}
-            classes="table-responsive"
+            classes="table-responsivepayment"
           />
 </div>
           <DiscardReport

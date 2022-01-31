@@ -38,7 +38,7 @@ import PaymentGateway from "./views/PaymentGateway.js/PaymentGateway";
 import ThankYou from "./views/ThankYou/Thankyou";
 import payDetails from "./views/PaymentStatus/PayDetails";
 import Contact from "./views/Contact/Contact";
-
+import About from './views/About/About';
 
 //admin routes
 import AdminStart from './pages/Admin/Start/Start'
@@ -164,7 +164,9 @@ function App() {
             <PublicRouteUser exact path="/customer/signup" component={SignUp} />
             <PublicRouteUser exact path="/customer/forget-password" component={ForgetPassword} />
             <PublicRouteUser exact path="/customer/new-password/:id" component={NewPassword} />
-
+            <PublicRouteUser exact path = "/customer/contact" component = {Contact} />
+            <PublicRouteUser exact path = "/customer/about" component = {About} />
+       
         
             <PrivateRouteUser exact path="/customer/select-category" component={SelectCategoryPage} />
             <PrivateRouteUser exact path="/customer/dashboard" component={Dashboard} />
@@ -189,9 +191,8 @@ function App() {
             <PrivateRouteUser exact path="/customer/payment" component={PaymentGateway} />
             <PrivateRouteUser exact path="/customer/thankyou" component={ThankYou} />  
             <PrivateRouteUser exact path="/customer/paydetails/:id" component={payDetails} />
-            <PrivateRouteUser exact path = "/customer/contact" component = {Contact} />
-            <PrivateRouteUser exact path = "/customer/modalmanual" component = {ModalMaual} />
-
+             <PrivateRouteUser exact path = "/customer/modalmanual" component = {ModalMaual} />
+         
             <PublicRouteAdmin exact path="/admin/start" component={AdminStart} />
             <PublicRouteAdmin exact path="/admin/login" component={AdminLogin} />
             <PublicRouteAdmin exact path="/admin/forget-password" component={AdminForgetPassword} />

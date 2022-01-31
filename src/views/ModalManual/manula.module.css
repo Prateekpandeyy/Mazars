@@ -1,6 +1,6 @@
 .mainClass{
     display: flex;
-    padding: 15px 25px;
+    padding: 25px 40px;
     flex-direction: column;
 }
 .imgBox{

@@ -63,9 +63,9 @@ function DeclinedQueries({ CountPendingForPayment }) {
       headerStyle: () => {
         return { fontSize: "12px" };
       },
-      style : {
-        wordBreak : "break-word"
-        },
+       style: {
+        fontSize: "11px",
+    },
       formatter: function dateFormat(cell, row) {
         var oldDate = row.created;
         if (oldDate == null) {
@@ -80,9 +80,9 @@ function DeclinedQueries({ CountPendingForPayment }) {
       headerStyle: () => {
         return { fontSize: "12px" };
       },
-      style : {
-        wordBreak : "break-word"
-        },
+       style: {
+        fontSize: "11px",
+    },
       formatter: function nameFormatter(cell, row) {
         return (
           <>
@@ -106,9 +106,9 @@ function DeclinedQueries({ CountPendingForPayment }) {
       headerStyle: () => {
         return { fontSize: "12px" };
       },
-      style : {
-        wordBreak : "break-word"
-        },
+       style: {
+        fontSize: "11px",
+    },
     },
     {
       text: "Sub Category",
@@ -117,9 +117,9 @@ function DeclinedQueries({ CountPendingForPayment }) {
       headerStyle: () => {
         return { fontSize: "12px" };
       },
-      style : {
-        wordBreak : "break-word"
-        },
+       style: {
+        fontSize: "11px",
+    },
     },
     {
       text: "Client Name",
@@ -128,9 +128,9 @@ function DeclinedQueries({ CountPendingForPayment }) {
       headerStyle: () => {
         return { fontSize: "12px" };
       },
-      style : {
-        wordBreak : "break-word"
-        },
+       style: {
+        fontSize: "11px",
+    },
     },
    
     {
@@ -138,9 +138,9 @@ function DeclinedQueries({ CountPendingForPayment }) {
       headerStyle: () => {
         return { fontSize: "12px" };
       },
-      style : {
-        wordBreak : "break-word"
-        },
+       style: {
+        fontSize: "11px",
+    },
       formatter: function nameFormatter(cell, row) {
         return (
           <>
@@ -174,9 +174,9 @@ function DeclinedQueries({ CountPendingForPayment }) {
       headerStyle: () => {
         return { fontSize: "12px" };
       },
-      style : {
-        wordBreak : "break-word"
-        },
+       style: {
+        fontSize: "11px",
+    },
       formatter : function forma(cell, row) {
         return(
           <>

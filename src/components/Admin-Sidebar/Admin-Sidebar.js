@@ -219,6 +219,22 @@ const handleClick = () => {
                   </span>
                 </NavLink>
               </li>
+              <li className="nav-item">
+                <NavLink to={"/customer/about"}>
+                <i class="fa fa-info"></i>
+                  <span className="menu-title" data-i18n="">
+                   About Us
+                  </span>
+                </NavLink>
+              </li>
+              <li className="nav-item">
+                <NavLink to={"/customer/modalmanual"}>
+                <i class="fa fa-question"></i>
+                  <span className="menu-title" data-i18n="">
+                   Help 
+                  </span>
+                </NavLink>
+              </li>
             </ul>
           )}
 
