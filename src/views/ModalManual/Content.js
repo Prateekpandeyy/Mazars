@@ -24,112 +24,106 @@ const Content  = () => {
      anchor.scrollIntoView({ behavior: 'smooth', block: 'center' })
     }}
 >
-For New Client Registration	______________________________________________________ 01
+For New Client Registration	__________________________________________________________________ 02
                         </div>
                         <div      onClick={() => {
      const anchor = document.querySelector('#query')
      anchor.scrollIntoView({ behavior: 'smooth', block: 'center' })
     }}
 >
-For Existing Client	______________________________________________________ 01
+For Existing Client	__________________________________________________________________________ 05
                         </div>
                         <div      onClick={() => {
      const anchor = document.querySelector('#query')
      anchor.scrollIntoView({ behavior: 'smooth', block: 'center' })
     }}
 >
-Forgot Password	______________________________________________________ 01
+Forgot Password 	____________________________________________________________________________06
                         </div>
                         <div      onClick={() => {
      const anchor = document.querySelector('#query')
      anchor.scrollIntoView({ behavior: 'smooth', block: 'center' })
     }}
 >
-Change Password	______________________________________________________ 01
+Change Password		__________________________________________________________________________ 09
                         </div>
                         <div      onClick={() => {
      const anchor = document.querySelector('#query')
      anchor.scrollIntoView({ behavior: 'smooth', block: 'center' })
     }}
 >
-Mazars Dashboard	______________________________________________________ 01
+Mazars Dashboard___________________________________________________________________________11
                         </div> 
                         <div      onClick={() => {
      const anchor = document.querySelector('#query')
      anchor.scrollIntoView({ behavior: 'smooth', block: 'center' })
     }}
 >
-Mazars Dashboard	______________________________________________________ 01
-                        </div>         
-                        <div      onClick={() => {
-     const anchor = document.querySelector('#query')
-     anchor.scrollIntoView({ behavior: 'smooth', block: 'center' })
-    }}
->
-Register Fresh Query		______________________________________________________ 01
+
+Register Fresh Query________________________________________________________________________ 12
                         </div>
                         <div      onClick={() => {
      const anchor = document.querySelector('#query')
      anchor.scrollIntoView({ behavior: 'smooth', block: 'center' })
     }}
 >
-Query Detail Page – Basic Query Information		______________________________________________________ 01
+Query Detail Page – Basic Query Information_____________________________________________________ 14
                         </div>
                         <div      onClick={() => {
      const anchor = document.querySelector('#proposal')
      anchor.scrollIntoView({ behavior: 'smooth', block: 'center' })
     }}
 >
-Proposal	______________________________________________________ 01
+Proposal	__________________________________________________________________________________15
                         </div>
                          <div      onClick={() => {
      const anchor = document.querySelector('#proposal')
      anchor.scrollIntoView({ behavior: 'smooth', block: 'center' })
     }}
 >
-Engagement Letter______________________________________________________ 01
+Engagement Letter__________________________________________________________________________ 17
                         </div>
                         <div      onClick={() => {
      const anchor = document.querySelector('#proposal')
      anchor.scrollIntoView({ behavior: 'smooth', block: 'center' })
     }}
 >
-Query Detail Page – Proposal______________________________________________________ 01
+Query Detail Page – Proposal__________________________________________________________________20
                         </div>
                         <div      onClick={() => {
      const anchor = document.querySelector('#assignment')
      anchor.scrollIntoView({ behavior: 'smooth', block: 'center' })
     }}
 >
-Assignments______________________________________________________ 01
+Assignments________________________________________________________________________________21
                         </div>
                         <div      onClick={() => {
      const anchor = document.querySelector('#assignment')
      anchor.scrollIntoView({ behavior: 'smooth', block: 'center' })
     }}
 >
-Query Detail Page – Assignments______________________________________________________ 01
+Query Detail Page – Assignments_______________________________________________________________23
                         </div>
                         <div      onClick={() => {
      const anchor = document.querySelector('#payment')
      anchor.scrollIntoView({ behavior: 'smooth', block: 'center' })
     }}
 >
-Payment Status______________________________________________________ 01
+Payment Status______________________________________________________________________________24
                         </div>
                         <div      onClick={() => {
      const anchor = document.querySelector('#message')
      anchor.scrollIntoView({ behavior: 'smooth', block: 'center' })
     }}
 >
-Inbox_____________________________________________________ 01
+Inbox_______________________________________________________________________________________28
                         </div>
                         <div      onClick={() => {
      const anchor = document.querySelector('#feedback')
      anchor.scrollIntoView({ behavior: 'smooth', block: 'center' })
     }}
 >
-Feedback_____________________________________________________ 01
+Feedback____________________________________________________________________________________29
                         </div>
                  </CardContent>
              </CardActionArea>

@@ -48,7 +48,12 @@ var rowStyle2 = {}
     setAssignNo(key)
   }
 
-
+  var clcomp= {
+    color: "green"
+  }
+  var clinpro = {
+    color : "blue"
+  }
   useEffect(() => {
     getAssignmentData();
   }, []);
@@ -139,9 +144,9 @@ var rowStyle2 = {}
       style : {
         fontSize : "11px"
       },
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
+       headerStyle: () => {
+        return { fontSize: "11px" , width : "120px", whiteSpace : "nowrap", padding: "10px 20px"};
+    },
       formatter: function dateFormat(cell, row) {
        
         var oldDate = row.date_of_query;
@@ -196,9 +201,9 @@ var rowStyle2 = {}
       style : {
         fontSize : "11px"
       },
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
+       headerStyle: () => {
+        return { fontSize: "11px" ,  whiteSpace : "nowrap", padding: "10px 20px"};
+    },
     },
     {
       dataField: "status",
@@ -207,31 +212,49 @@ var rowStyle2 = {}
         fontSize: "11px",
       },
       headerStyle: () => {
-        return { fontSize: "12px", width: "200px" };
+        return { fontSize: "11px", width: "200px" };
+      },
+      style : {
+        fontSize : "11px"
       },
       formatter: function (cell, row) {
         return (
           <>
             <div>
+            {row.paid_status == "2" &&
+                <p>
+                  <span style={{ color: "red" }}>Payment Declined</span>
+                </p>
+              }
               <p>
                 <span style={{ fontWeight: "bold" }}>Client Discussion :</span>
-                {row.client_discussion}
+               <span style={ row.client_discussion == "completed" ? clcomp : clinpro}>
+{row.client_discussion}
+                 </span>
               </p>
               <p>
-                <span style={{ fontWeight: "bold" }}>Draft Report :</span>
-                {row.draft_report}
+                <span style={{ fontWeight: "bold" }}>Draft report :</span>
+                <span style={ row.draft_report == "completed" ? clcomp : clinpro}>
+{row.draft_report}
+                 </span>
               </p>
               <p>
                 <span style={{ fontWeight: "bold" }}>Final Discussion :</span>
-                {row.final_discussion}
+                <span style={ row.final_discussion == "completed" ? clcomp : clinpro}>
+{row.final_discussion}
+                 </span>
               </p>
               <p>
                 <span style={{ fontWeight: "bold" }}>Delivery of Final Report :</span>
-                {row.delivery_report}
+                <span style={ row.delivery_report == "completed" ? clcomp : clinpro}>
+{row.delivery_report}
+                 </span>
               </p>
               <p>
-                <span style={{ fontWeight: "bold" }}>Awaiting Completion :</span>
-                {row.other_stage}
+                <span style={{ fontWeight: "bold" }}>Awaiting Completion:</span>
+                <span style={ row.other_stage == "completed" ? clcomp : clinpro}>
+{row.other_stage}
+                 </span>
               </p>
             </div>
           </>
@@ -245,9 +268,9 @@ var rowStyle2 = {}
       style : {
         fontSize : "11px"
       },
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
+       headerStyle: () => {
+        return { fontSize: "11px", padding: "10px 20px"};
+    },
       formatter: function dateFormat(cell, row) {
       
         var oldDate = row.Exp_Delivery_Date;
@@ -264,9 +287,9 @@ var rowStyle2 = {}
       style : {
         fontSize : "11px"
       },
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
+       headerStyle: () => {
+        return { fontSize: "11px", padding: "10px 20px"};
+    },
       formatter: function dateFormat(cell, row) {
         
         var oldDate = row.final_date;
@@ -527,7 +550,7 @@ var rowStyle2 = {}
             columns={columns}
             rowStyle={ rowStyle2 }
             rowIndex
-            wrapperClasses="table-responsive"
+            classes="table-responsivepayment"
           />
           </div>
   <ViewAllReportModal

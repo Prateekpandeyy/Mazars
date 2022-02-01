@@ -92,6 +92,9 @@ function ProposalComponent(props) {
    else if(dateError === true){
     Alerts.ErrorNormal("Date must be unique")
    }
+   else if(det.length == 0){
+   return false
+  }
    else{
     var lumsum = value.p_inst_date
     if (payment.label == "lumpsum") {

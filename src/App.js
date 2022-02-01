@@ -141,6 +141,8 @@ import PublicRouteUser from './Service/PublicRouteUser'
 import PublicRouteAdmin from './Service/PublicRouteAdmin'
 import PublicRouteTL from './Service/PublicRouteTL'
 import PublicRouteTP from './Service/PublicRouteTP'
+import AboutOuter from "./views/About/AboutOuter";
+import ContactOuter from "./views/Contact/ContactOuter";
 // import PayDetails from "./views/PaymentStatus/PayDetails";
 
 
@@ -164,10 +166,8 @@ function App() {
             <PublicRouteUser exact path="/customer/signup" component={SignUp} />
             <PublicRouteUser exact path="/customer/forget-password" component={ForgetPassword} />
             <PublicRouteUser exact path="/customer/new-password/:id" component={NewPassword} />
-            <PublicRouteUser exact path = "/customer/contact" component = {Contact} />
-            <PublicRouteUser exact path = "/customer/about" component = {About} />
-       
-        
+             <PublicRouteUser exact path = "/customer/aboutbasic" component={AboutOuter} />
+        <PublicRouteUser exact path = "/customer/contactbasic" component = {ContactOuter} />
             <PrivateRouteUser exact path="/customer/select-category" component={SelectCategoryPage} />
             <PrivateRouteUser exact path="/customer/dashboard" component={Dashboard} />
             <PrivateRouteUser exact path="/customer/my-assingment/:id" component={MyAssingment} />
@@ -192,7 +192,9 @@ function App() {
             <PrivateRouteUser exact path="/customer/thankyou" component={ThankYou} />  
             <PrivateRouteUser exact path="/customer/paydetails/:id" component={payDetails} />
              <PrivateRouteUser exact path = "/customer/modalmanual" component = {ModalMaual} />
-         
+             <PrivateRouteUser exact path = "/customer/contact" component = {Contact} />
+            <PrivateRouteUser exact path = "/customer/about" component = {About} />
+       
             <PublicRouteAdmin exact path="/admin/start" component={AdminStart} />
             <PublicRouteAdmin exact path="/admin/login" component={AdminLogin} />
             <PublicRouteAdmin exact path="/admin/forget-password" component={AdminForgetPassword} />

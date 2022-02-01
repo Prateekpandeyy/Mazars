@@ -457,14 +457,12 @@ const [dstate2, setDstate2] = useState("")
       <div className="container">
 
         <div className="form">
-          <div className="heading">
+          <div className="heading" style={{display : "flex", justifyContent : "space-between"}}> 
             <h2>Client Register</h2>
-          </div>
-          <div>
-          <a href={MyPDF}
+            <a href={MyPDF}
   download> Need help?</a>
-  
           </div>
+       
           <>
             <div>
               <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">

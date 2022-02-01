@@ -205,15 +205,25 @@ const handleClick = () => {
 
               <li className="nav-item">
                 <NavLink to={"/customer/feedback-data"}>
-                  <i className="fa fa-rss-square"></i>
+                <i class="fa fa-comments"></i>
                   <span className="menu-title" data-i18n="">
                     Feedback
                   </span>
                 </NavLink>
               </li>
+              
+              <li className="nav-item">
+                <NavLink to={"/customer/modalmanual"}>
+                <i class="fa fa-question"></i>
+                  <span className="menu-title" data-i18n="">
+                   Help 
+                  </span>
+                </NavLink>
+              </li>
+              
               <li className="nav-item">
                 <NavLink to={"/customer/contact"}>
-                  <i className="fa fa-rss-square"></i>
+                <i class="fa fa-address-book"></i>
                   <span className="menu-title" data-i18n="">
                    Contact Us
                   </span>
@@ -224,14 +234,6 @@ const handleClick = () => {
                 <i class="fa fa-info"></i>
                   <span className="menu-title" data-i18n="">
                    About Us
-                  </span>
-                </NavLink>
-              </li>
-              <li className="nav-item">
-                <NavLink to={"/customer/modalmanual"}>
-                <i class="fa fa-question"></i>
-                  <span className="menu-title" data-i18n="">
-                   Help 
                   </span>
                 </NavLink>
               </li>

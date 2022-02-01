@@ -608,6 +608,9 @@ if(diserror.length > 0){
 else if(dateError === true){
   Alerts.ErrorNormal("Date must be unique")
  }
+ else if(value2.length == 0){
+  return false
+ }
 else{
   var lumsum = value.p_inst_date
     if (payment.label == "lumpsum") {

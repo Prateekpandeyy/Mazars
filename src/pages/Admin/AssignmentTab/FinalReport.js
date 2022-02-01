@@ -43,6 +43,12 @@ function FinalReport() {
   const [assignNo, setAssignNo] = useState('');
   const [ViewDiscussion, setViewDiscussion] = useState(false);
   var rowStyle2 = {}
+  var clcomp= {
+    color: "green"
+  }
+  var clinpro = {
+    color : "blue"
+  }
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key)
@@ -140,9 +146,9 @@ function FinalReport() {
         fontSize : "11px"
       },
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
+        headerStyle: () => {
+        return { fontSize: "11px" , width : "120px", whiteSpace : "nowrap", padding: "10px 20px"};
+    },
       formatter: function dateFormat(cell, row) {
      
         var oldDate = row.date_of_query;
@@ -197,9 +203,9 @@ function FinalReport() {
       style : {
         fontSize : "11px"
       },
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
+        headerStyle: () => {
+        return { fontSize: "11px" , whiteSpace : "nowrap", padding: "10px 20px"};
+    },
     },
     {
       dataField: "status",
@@ -208,31 +214,49 @@ function FinalReport() {
         fontSize: "11px",
       },
       headerStyle: () => {
-        return { fontSize: "12px", width: "200px" };
+        return { fontSize: "11px", width: "200px" };
+      },
+      style : {
+        fontSize : "11px"
       },
       formatter: function (cell, row) {
         return (
           <>
             <div>
+            {row.paid_status == "2" &&
+                <p>
+                  <span style={{ color: "red" }}>Payment Declined</span>
+                </p>
+              }
               <p>
                 <span style={{ fontWeight: "bold" }}>Client Discussion :</span>
-                {row.client_discussion}
+               <span style={ row.client_discussion == "completed" ? clcomp : clinpro}>
+{row.client_discussion}
+                 </span>
               </p>
               <p>
-                <span style={{ fontWeight: "bold" }}>Draft Report :</span>
-                {row.draft_report}
+                <span style={{ fontWeight: "bold" }}>Draft report :</span>
+                <span style={ row.draft_report == "completed" ? clcomp : clinpro}>
+{row.draft_report}
+                 </span>
               </p>
               <p>
                 <span style={{ fontWeight: "bold" }}>Final Discussion :</span>
-                {row.final_discussion}
+                <span style={ row.final_discussion == "completed" ? clcomp : clinpro}>
+{row.final_discussion}
+                 </span>
               </p>
               <p>
                 <span style={{ fontWeight: "bold" }}>Delivery of Final Report :</span>
-                {row.delivery_report}
+                <span style={ row.delivery_report == "completed" ? clcomp : clinpro}>
+{row.delivery_report}
+                 </span>
               </p>
               <p>
-                <span style={{ fontWeight: "bold" }}>Awaiting Completion :</span>
-                {row.other_stage}
+                <span style={{ fontWeight: "bold" }}>Awaiting Completion:</span>
+                <span style={ row.other_stage == "completed" ? clcomp : clinpro}>
+{row.other_stage}
+                 </span>
               </p>
             </div>
           </>
@@ -246,9 +270,9 @@ function FinalReport() {
       style : {
         fontSize : "11px"
       },
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
+  headerStyle: () => {
+        return { fontSize: "11px", padding: "10px 20px"};
+    },
       formatter: function dateFormat(cell, row) {
     
         var oldDate = row.Exp_Delivery_Date;
@@ -262,9 +286,9 @@ function FinalReport() {
       dataField: "final_date",
       text: "Actual date of delivery",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
+  headerStyle: () => {
+        return { fontSize: "11px", padding: "10px 20px"};
+    },
       formatter: function dateFormat(cell, row) {
       
         var oldDate = row.final_date;
@@ -523,7 +547,7 @@ function FinalReport() {
             columns={columns}
             rowStyle={ rowStyle2 }
             rowIndex 
-            wrapperClasses="table-responsive"
+            classes="table-responsivepayment"
           />
           </div>
   <ViewAllReportModal

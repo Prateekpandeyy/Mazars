@@ -33,7 +33,12 @@ function InprogressAssignment() {
     setRejectModal(!rejectModal);
     setRejectedItem(key);
   };
-
+  var clcomp= {
+    color: "green"
+  }
+  var clinpro = {
+    color : "blue"
+  }
 
   
   const ViewReport = (key) => {
@@ -157,36 +162,49 @@ function InprogressAssignment() {
         fontSize: "11px",
       },
       headerStyle: () => {
-        return { fontSize: "12px", width: "200px" };
+        return { fontSize: "11px", width: "200px" };
+      },
+      style : {
+        fontSize : "11px"
       },
       formatter: function (cell, row) {
         return (
           <>
             <div>
-              {row.paid_status === "2" &&
+            {row.paid_status == "2" &&
                 <p>
                   <span style={{ color: "red" }}>Payment Declined</span>
                 </p>
               }
               <p>
                 <span style={{ fontWeight: "bold" }}>Client Discussion :</span>
-                {row.client_discussion}
+               <span style={ row.client_discussion == "completed" ? clcomp : clinpro}>
+{row.client_discussion}
+                 </span>
               </p>
               <p>
-                <span style={{ fontWeight: "bold" }}>Draft Report :</span>
-                {row.draft_report}
+                <span style={{ fontWeight: "bold" }}>Draft report :</span>
+                <span style={ row.draft_report == "completed" ? clcomp : clinpro}>
+{row.draft_report}
+                 </span>
               </p>
               <p>
                 <span style={{ fontWeight: "bold" }}>Final Discussion :</span>
-                {row.final_discussion}
+                <span style={ row.final_discussion == "completed" ? clcomp : clinpro}>
+{row.final_discussion}
+                 </span>
               </p>
               <p>
                 <span style={{ fontWeight: "bold" }}>Delivery of Final Report :</span>
-                {row.delivery_report}
+                <span style={ row.delivery_report == "completed" ? clcomp : clinpro}>
+{row.delivery_report}
+                 </span>
               </p>
               <p>
-                <span style={{ fontWeight: "bold" }}>Awaiting Completion :</span>
-                {row.other_stage}
+                <span style={{ fontWeight: "bold" }}>Awaiting Completion:</span>
+                <span style={ row.other_stage == "completed" ? clcomp : clinpro}>
+{row.other_stage}
+                 </span>
               </p>
             </div>
           </>

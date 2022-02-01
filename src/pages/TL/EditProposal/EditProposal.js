@@ -44,7 +44,7 @@ function EditComponent(props) {
   const [diserror, setdiserror] = useState("")
   const history = useHistory();
   const { id } = useParams();
-
+const [scopeError, setScopeError] = useState(false)
   const [dateError, setDateError] = useState(false)
   var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
   const [item] = useState(current_date);
@@ -58,7 +58,10 @@ function EditComponent(props) {
     due_date: "",
     payment : ""
   });
-
+const wrong = {
+  background: "blue",
+  border: "3px solid red"
+}
 
   const { query, name, description, fixed_amount,
     due_date, installment_amount } = proposal;
@@ -121,12 +124,15 @@ if(diserror.length > 0){
 else if(dateError === true){
   Alerts.ErrorNormal("Date must be unique")
  }
+else if(value2.length == 0){
+  setScopeError(true)
+}
 else{
   var lumsum = value.p_inst_date
     if (payment.label == "lumpsum") {
       setDate(lumsum)
     }
-
+console.log("value2", value2.length)
     let formData = new FormData();
     formData.append("assign_no", value.p_assingment);
     formData.append("name", value.p_name);
@@ -416,9 +422,9 @@ let a = <Markup content= {description} />
                   
                     }}
                     
-                    className={classNames("form-control", {
-                      "is-invalid": errors.description,
-                    })}
+                    ref={register}
+          
+                  
                     id="textarea"
                     rows="3"
                     name="description"

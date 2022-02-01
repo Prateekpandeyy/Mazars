@@ -10,22 +10,22 @@ function Footer() {
       <footer>
         <div style={{display: "flex", flexDirection: "column", justifyContent: "space-evenly", textAlign: "center"}}>
           <p>Copyright @ 2021. All right reserved.</p>
-        <div style={{display: "flex", justifyContent:"space-evenly"}}>
+        <div style={{display: "flex", justifyContent:"center"}}>
         <a href={MyPDF}
-  download> Need help?</a>
+  download> Need help?|</a>
   
      
            
-             <Link to={"/customer/contact"}>
+             <Link to={"/customer/contactbasic"}>
               
               
-              Contact Us
+              Contact Us|
             
            </Link>
            
            
            
-             <Link to={"/customer/about"}>
+             <Link to={"/customer/aboutbasic"}>
         
       
          About Us
