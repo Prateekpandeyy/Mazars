@@ -23,6 +23,8 @@ import Swal from "sweetalert2";
 import ViewComponent from "./ViewComponent";
 import DiscardReport from "../AssignmentTab/DiscardReport";
 import CommonShowProposal from "../../components/commonShowProposal/CommonShowProposal";
+import ModalManual from "../ModalManual/AllComponentManual";
+import {Modal, ModalHeader, ModalBody} from 'reactstrap';
 
 
 function ProposalTab() {
@@ -39,6 +41,7 @@ function ProposalTab() {
     const [assignNo, setAssignNo] = useState('');
     const [ViewDiscussion, setViewDiscussion] = useState(false);
      const [viewProposalModal, setViewProposalModal] = useState(false)
+     const [openManual, setManual] = useState(false)
     const [proposalId, setProposalId] = useState()
     const ViewHandler = (key) => {
 
@@ -74,7 +77,10 @@ function ProposalTab() {
             });
     };
 
-
+    const needHelp = () => {
+        
+        setManual(!openManual)
+    }
 const rightAli = {
     display : "flex", 
     justifyContent : "flex-end", 
@@ -454,6 +460,10 @@ const rightAli = {
                     />
                 </CardHeader>
                 <CardBody>
+                <div style={{display : "flex", justifyContent : "flex-end", margin : "10px auto"}}> 
+         
+         <i class="fa fa-question" style={{cursor : "pointer"}} onClick= {(e) => needHelp()}></i>
+        </div>
                     <Records records={records} />
                    <div className="tableFixHead">
                    <BootstrapTable
@@ -483,6 +493,12 @@ const rightAli = {
           viewProposalModal = {viewProposalModal}
           showProposalModal2 = {showProposalModal2}
           proposalId = {proposalId}/>
+            <Modal isOpen={openManual} toggle={needHelp} size= "lg" syle={{zIndex : "99999"}}>
+                        <ModalHeader toggle={needHelp}>Mazars</ModalHeader>
+                        <ModalBody>
+                            <ModalManual />
+                        </ModalBody>
+                    </Modal>
                 </CardBody>
             </Card>
         </div>

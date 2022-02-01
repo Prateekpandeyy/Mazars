@@ -8,7 +8,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ima from "../../logo.jpeg"
 import Collapse from '@mui/material/Collapse';
-
+import FeedbackIcon from '@material-ui/icons/Feedback';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import { useHistory } from "react-router";
@@ -205,21 +205,16 @@ const handleClick = () => {
 
               <li className="nav-item">
                 <NavLink to={"/customer/feedback-data"}>
-                <i class="fa fa-comments"></i>
+                <i class="fa">
+                  <FeedbackIcon />
+                </i>
                   <span className="menu-title" data-i18n="">
                     Feedback
                   </span>
                 </NavLink>
               </li>
               
-              <li className="nav-item">
-                <NavLink to={"/customer/modalmanual"}>
-                <i class="fa fa-question"></i>
-                  <span className="menu-title" data-i18n="">
-                   Help 
-                  </span>
-                </NavLink>
-              </li>
+
               
               <li className="nav-item">
                 <NavLink to={"/customer/contact"}>
@@ -234,6 +229,14 @@ const handleClick = () => {
                 <i class="fa fa-info"></i>
                   <span className="menu-title" data-i18n="">
                    About Us
+                  </span>
+                </NavLink>
+              </li>
+              <li className="nav-item">
+                <NavLink to={"/customer/modalmanual"}>
+                <i class="fa fa-question"></i>
+                  <span className="menu-title" data-i18n="">
+                   Help 
                   </span>
                 </NavLink>
               </li>

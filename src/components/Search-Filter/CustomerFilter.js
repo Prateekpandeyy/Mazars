@@ -652,6 +652,7 @@ const [loading, setLoading] = useState(false)
                       <option value="">--select--</option>
                       <option value="1">Unpaid</option>
                       <option value="2">Paid</option>
+                      <option value="3">Declined</option>
                     </select>
                   )}
 

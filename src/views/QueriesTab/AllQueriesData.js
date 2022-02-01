@@ -9,6 +9,7 @@ import {
     Col,
     Table,
 } from "reactstrap";
+import {Modal, ModalHeader, ModalBody} from 'reactstrap';
 import moment from "moment";
 import { Link } from "react-router-dom";
 import CustomerFilter from "../../components/Search-Filter/CustomerFilter";
@@ -23,8 +24,9 @@ import Loader from "../../components/Loader/Loader";
 import DiscardReport from "../AssignmentTab/DiscardReport";
 import { date } from "yup";
 import RejectedModal from "./RejectedModal";
-import ModalManual from "../ModalManual/ModalManual";
+import ModalManual from "../ModalManual/AllComponentManual";
 import './index.css';
+
 
 
 function AllQueriesData() {
@@ -35,6 +37,9 @@ function AllQueriesData() {
     const [records, setRecords] = useState([]);
     const [loading2, setLoading2] = useState(false);
     const [additionalQuery, setAdditionalQuery] = useState(false)
+    const [rejectedBox, showRejectedBox] = useState(false)
+    const [assignNo, setAssignNo] = useState('');
+    const [ViewDiscussion, setViewDiscussion] = useState(false);
     const [openManual, setManual] = useState(false)
    let des = false;
     const additionalHandler = (key) => {
@@ -52,9 +57,7 @@ function AllQueriesData() {
        }
         
     };
-    const [rejectedBox, showRejectedBox] = useState(false)
-    const [assignNo, setAssignNo] = useState('');
-    const [ViewDiscussion, setViewDiscussion] = useState(false);
+  
     const ViewDiscussionToggel = (key) => {
        
         setViewDiscussion(!ViewDiscussion);
@@ -81,6 +84,10 @@ function AllQueriesData() {
             });
     };
 
+    const needHelp = () => {
+        
+        setManual(!openManual)
+    }
 
     const columns = [
         {
@@ -472,15 +479,18 @@ const showManual = () => {
        <Card>
              <CardHeader>
                     <Row>
-                        <Col md = "9">
-                            </Col>
-                        <Col md="3">
-                            <div style={{ display: "flex", justifyContent: "space-around" }}>
+                    <Col md="9">
+                            <div style={{ display: "flex"}}>
                                 <Link to="/customer/select-category" className="btn btn-primary">
                                     Fresh Query
                                 </Link>
                             </div>
                         </Col>
+                        <Col md = "3" style={{textAlign: "right"}}>
+                        <i class="fa fa-question" style={{cursor : "pointer"}} onClick= {(e) => needHelp()}></i>
+                      
+                            </Col>
+                        
                     </Row>
                     <CustomerFilter
                         setData={setQuery}
@@ -529,6 +539,12 @@ const showManual = () => {
                     getQueriesData = {getQueriesData}
                     assignNo={assignNo2}
                     deleteCliente = {deleteCliente}/>
+                    <Modal isOpen={openManual} toggle={needHelp} size= "lg" syle={{zIndex : "99999"}}>
+                        <ModalHeader toggle={needHelp}>Mazars</ModalHeader>
+                        <ModalBody>
+                            <ModalManual />
+                        </ModalBody>
+                    </Modal>
                 </CardBody>
        </Card>
     );

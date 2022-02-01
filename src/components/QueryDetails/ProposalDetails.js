@@ -77,13 +77,15 @@ function ProposalDetails({
  
 
   const dataCheck = (dateArr) => {
+    let duedd = 0
 
     for (let i = 0; i < dateArr.length; i++) {
-      if (dateArr[i] === currentDate) {
+      if (dateArr[i] < currentDate) {
 
-        return i
+       duedd++;
       }
     }
+    return duedd
   }
 
   const dueDate = (a, b) => {
@@ -93,13 +95,20 @@ function ProposalDetails({
     var due = dataCheck(item2);
 
    
-
+console.log("due", due)
     //total installment
-
+let nd = 0;
     var total_Installment = 0;
-    for (var i = 0; i <= due; i++) {
+    for (var i = 1; i <= due; i++) {
+      let pk  = Number(item1[i])
       // total_Installment = total_Installment + item1[i];
-      total_Installment += +item1[i];
+      console.log("item", item1[i])
+      console.log(total_Installment + pk)
+     
+     if(item1[i] !== undefined){
+      total_Installment = total_Installment + pk;
+     }
+      nd = total_Installment + pk;
     }
 
 
@@ -108,14 +117,19 @@ function ProposalDetails({
       return prev + +current.paid_amount
     }, 0);
 
-
-    
-
-    var amount = total_Installment - total_Payment_History
-
+console.log(total_Installment)
+    console.log("PaymenHistory", total_Payment_History)
+console.log("totalAmountrem", total_Installment)
+    var amount =  total_Payment_History - total_Installment 
+console.log("amount", amount)
 
     if (amount > 0) {
-      return amount
+      if(payment_received){
+        return (accepted_amount - payment_received)
+      }
+      else{
+        return total_Payment_History
+      }
     }
   }
   return (

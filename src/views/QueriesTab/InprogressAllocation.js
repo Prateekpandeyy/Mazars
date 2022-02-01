@@ -24,6 +24,8 @@ import CommonServices from "../../common/common";
 import DiscardReport from "../AssignmentTab/DiscardReport";
 import moment from "moment";
 import './index.css';
+import ModalManual from "../ModalManual/AllComponentManual";
+import {Modal, ModalHeader, ModalBody} from 'reactstrap';
 function InprogressAllocation() {
 
   const alert = useAlert();
@@ -34,12 +36,14 @@ function InprogressAllocation() {
 
   const [assignNo, setAssignNo] = useState('');
   const [additionalQuery, setAdditionalQuery] = useState(false);
+  const [ViewDiscussion, setViewDiscussion] = useState(false);
+  const [openManual, setManual] = useState(false)
   const additionalHandler = (key) => {
     setAdditionalQuery(!additionalQuery);
     setAssignNo(key)
   };
 
-  const [ViewDiscussion, setViewDiscussion] = useState(false);
+
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key)
@@ -64,6 +68,10 @@ function InprogressAllocation() {
       });
   };
 
+  const needHelp = () => {
+        
+    setManual(!openManual)
+}
 
   const columns = [
     {
@@ -441,7 +449,11 @@ function InprogressAllocation() {
           />
         </CardHeader>
         <CardBody>
-          <Records records={records} />
+          <div style={{display : "flex", justifyContent : "flex-end", margin : "10px auto"}}> 
+         
+          <i class="fa fa-question" style={{cursor : "pointer"}} onClick= {(e) => needHelp()}></i>
+         </div>
+         <Records records={records} />
           <div className="tableFixHead">
           <BootstrapTable
             bootstrap4
@@ -465,7 +477,12 @@ function InprogressAllocation() {
             report={assignNo}
             getData={getQueriesData}
           />
-
+ <Modal isOpen={openManual} toggle={needHelp} size= "lg" syle={{zIndex : "99999"}}>
+                        <ModalHeader toggle={needHelp}>Mazars</ModalHeader>
+                        <ModalBody>
+                            <ModalManual />
+                        </ModalBody>
+                    </Modal>
         </CardBody>
       </Card>
     </div>

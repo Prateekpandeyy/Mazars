@@ -11,15 +11,10 @@ function Footer() {
         <div style={{display: "flex", flexDirection: "column", justifyContent: "space-evenly", textAlign: "center"}}>
           <p>Copyright @ 2021. All right reserved.</p>
         <div style={{display: "flex", justifyContent:"center"}}>
-        <a href={MyPDF}
-  download> Need help?|</a>
-  
-     
-           
-             <Link to={"/customer/contactbasic"}>
+        <Link to={"/customer/contactbasic"}>
               
               
-              Contact Us|
+              Contact Us | &nbsp; 
             
            </Link>
            
@@ -28,9 +23,15 @@ function Footer() {
              <Link to={"/customer/aboutbasic"}>
         
       
-         About Us
+         About Us | &nbsp;
       
       </Link>
+        <a href={MyPDF}
+  download> Need help?</a>
+  
+     
+           
+           
              
           </div>
         </div>

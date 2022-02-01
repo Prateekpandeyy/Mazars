@@ -6,12 +6,10 @@ import { Button, Typography } from "@material-ui/core";
 const AboutOuter = () => {
     return(
         <>
-        <Header noSign="noSign" />
-        <h1 style={{ "textAlign": "center", "margin": "55px 0 30px 0" }}>
-          Would you like to post a query
-        </h1>
+         <Header cust_sign="cust_sign" />
+       
         
-        <div className="StartPage">
+        <div className="StartPage" style={{ "textAlign": "center", "margin": "55px 0 30px 0" }}>
           <div className="mainContent">
   
           <Card>

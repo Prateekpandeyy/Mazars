@@ -6,12 +6,10 @@ import { Button, Typography } from "@material-ui/core";
 const ContactOuter = () => {
     return(
         <>
-        <Header noSign="noSign" />
-        <h1 style={{ "textAlign": "center", "margin": "55px 0 30px 0" }}>
-          Would you like to post a query
-        </h1>
+ <Header cust_sign="cust_sign" />
         
-        <div className="StartPage">
+        
+        <div className="StartPage" style={{ "textAlign": "center", "margin": "55px 0 30px 0" }}>
           <div className="mainContent" style={{display  : "flex", justifyContent : "center"}}>
   
           <Card>
@@ -24,13 +22,14 @@ const ContactOuter = () => {
           <Col md="12">
             
           <h4>Mazars House</h4>
-    <h4>421, Udyog vihar Phase IV</h4>
+    <h4>421, Udyog Vihar Phase IV</h4>
 
     <h4>Gurugram,Haryana 122016,
 India</h4>
-<a href="https://www.mazars.co.in" target= "_blank">www.mazars.co.in</a>
+{/* <a href="https://www.mazars.co.in" target= "_blank">www.mazars.co.in</a> */}
 <div>
-Tel:<a href="tel:+496170961709"> 91 124 481 4444</a>
+Tel:<a href="tel:+496170961709"> 91 124 481 4444</a><br/>
+Fax: <a href="tel:+91 (124) 481 4445">+91 (124) 481 4445</a>
 </div>
             </Col>
            

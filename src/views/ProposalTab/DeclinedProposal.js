@@ -20,6 +20,8 @@ import BootstrapTable from "react-bootstrap-table-next";
 import FeedbackIcon from '@material-ui/icons/Feedback';
 import Records from "../../components/Records/Records";
 import DiscardReport from "../AssignmentTab/DiscardReport";
+import ModalManual from "../ModalManual/AllComponentManual";
+import {Modal, ModalHeader, ModalBody} from 'reactstrap';
 
 
 function DeclinedProposal() {
@@ -33,7 +35,11 @@ function DeclinedProposal() {
     const [ViewDiscussion, setViewDiscussion] = useState(false);
     const [id, setId] = useState(null);
     const [reject, setRejected] = useState(true);
-
+    const [openManual, setManual] = useState(false)
+    const needHelp = () => {
+        
+        setManual(!openManual)
+    }
    
 
     useEffect(() => {
@@ -317,6 +323,10 @@ function DeclinedProposal() {
                     />
                 </CardHeader>
                 <CardBody>
+                <div style={{display : "flex", justifyContent : "flex-end", margin : "10px auto"}}> 
+         
+         <i class="fa fa-question" style={{cursor : "pointer"}} onClick= {(e) => needHelp()}></i>
+        </div>
                     <Records records={records} />
                     <div className="tableFixHead">
                     <BootstrapTable
@@ -333,6 +343,12 @@ function DeclinedProposal() {
                         report={assignNo}
                         getData={getProposalData}
                     />
+                     <Modal isOpen={openManual} toggle={needHelp} size= "lg" syle={{zIndex : "99999"}}>
+                        <ModalHeader toggle={needHelp}>Mazars</ModalHeader>
+                        <ModalBody>
+                            <ModalManual />
+                        </ModalBody>
+                    </Modal>
                     {/* <ChatComponent
                         chatHandler={chatHandler}
                         addPaymentModal={addPaymentModal}

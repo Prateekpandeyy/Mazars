@@ -18,6 +18,8 @@ import moment from "moment";
 import FeedbackIcon from '@material-ui/icons/Feedback';
 import './index.css';
 import DiscardReport from "../AssignmentTab/DiscardReport";
+import ModalManual from "../ModalManual/AllComponentManual";
+import {Modal, ModalHeader, ModalBody} from 'reactstrap';
 function InprogressProposal() {
   const alert = useAlert();
   const userId = window.localStorage.getItem("userid");
@@ -25,7 +27,7 @@ function InprogressProposal() {
   const [queriesCount, setCountQueries] = useState(null);
   const [records, setRecords] = useState([]);
   const [assignNo, setAssignNo] = useState('');
-
+  const [openManual, setManual] = useState(false)
   useEffect(() => {
     getQueriesData();
   }, []);
@@ -34,6 +36,10 @@ function InprogressProposal() {
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key)
   }
+  const needHelp = () => {
+        
+    setManual(!openManual)
+}
 
   const getQueriesData = () => {
     axios
@@ -291,6 +297,10 @@ function InprogressProposal() {
           />
         </CardHeader>
         <CardBody>
+        <div style={{display : "flex", justifyContent : "flex-end", margin : "10px auto"}}> 
+         
+         <i class="fa fa-question" style={{cursor : "pointer"}} onClick= {(e) => needHelp()}></i>
+        </div>
           <Records records={records} />
           <div className="tableFixHead">
           <BootstrapTable
@@ -308,6 +318,12 @@ function InprogressProposal() {
                         getData={getQueriesData}
                     />
           </div>
+          <Modal isOpen={openManual} toggle={needHelp} size= "lg" syle={{zIndex : "99999"}}>
+                        <ModalHeader toggle={needHelp}>Mazars</ModalHeader>
+                        <ModalBody>
+                            <ModalManual />
+                        </ModalBody>
+                    </Modal>
         </CardBody>
       </Card>
     </div>

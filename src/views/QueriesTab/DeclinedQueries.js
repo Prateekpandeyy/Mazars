@@ -21,6 +21,8 @@ import DiscardReport from "../AssignmentTab/DiscardReport";
 import FeedbackIcon from '@material-ui/icons/Feedback';
 import './index.css';
 import moment from "moment";
+import ModalManual from "../ModalManual/AllComponentManual";
+import {Modal, ModalHeader, ModalBody} from 'reactstrap';
 
 
 
@@ -33,10 +35,16 @@ function DeclinedQueries() {
 
   const [assignNo, setAssignNo] = useState('');
   const [ViewDiscussion, setViewDiscussion] = useState(false);
+  const [openManual, setManual] = useState(false)
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key)
   }
+  const needHelp = () => {
+        
+    setManual(!openManual)
+}
+
 
   useEffect(() => {
     getQueriesData();
@@ -325,6 +333,10 @@ function DeclinedQueries() {
           />
         </CardHeader>
         <CardBody>
+        <div style={{display : "flex", justifyContent : "flex-end", margin : "10px auto"}}> 
+         
+         <i class="fa fa-question" style={{cursor : "pointer"}} onClick= {(e) => needHelp()}></i>
+        </div>
           <Records records={records} />
           <div className="tableFixHead">
           <BootstrapTable
@@ -342,6 +354,12 @@ function DeclinedQueries() {
                         report={assignNo}
                         getData={getQueriesData}
                     />
+                      <Modal isOpen={openManual} toggle={needHelp} size= "lg" syle={{zIndex : "99999"}}>
+                        <ModalHeader toggle={needHelp}>Mazars</ModalHeader>
+                        <ModalBody>
+                            <ModalManual />
+                        </ModalBody>
+                    </Modal>
         </CardBody>
       </Card>
     </div>

@@ -20,6 +20,9 @@ import FeedbackIcon from '@material-ui/icons/Feedback';
 import Records from "../../components/Records/Records";
 import DiscardReport from "../AssignmentTab/DiscardReport";
 import CommonShowProposal from "../../components/commonShowProposal/CommonShowProposal";
+import ModalManual from "../ModalManual/AllComponentManual";
+import {Modal, ModalHeader, ModalBody} from 'reactstrap';
+
 
 
 function AcceptedProposal() {
@@ -37,6 +40,11 @@ function AcceptedProposal() {
     const [ViewDiscussion, setViewDiscussion] = useState(false);
      const [viewProposalModal, setViewProposalModal] = useState(false)
     const [proposalId, setProposalId] = useState()
+    const [openManual, setManual] = useState(false)
+    const needHelp = () => {
+        
+        setManual(!openManual)
+    }
     const ViewDiscussionToggel = (key) => {
         setViewDiscussion(!ViewDiscussion);
         setAssignNo(key)
@@ -341,6 +349,10 @@ function AcceptedProposal() {
                     />
                 </CardHeader>
                 <CardBody>
+                <div style={{display : "flex", justifyContent : "flex-end", margin : "10px auto"}}> 
+         
+         <i class="fa fa-question" style={{cursor : "pointer"}} onClick= {(e) => needHelp()}></i>
+        </div>
                     <Records records={records} />
                     <div className="tableFixHead">
                     <BootstrapTable
@@ -363,6 +375,12 @@ function AcceptedProposal() {
           viewProposalModal = {viewProposalModal}
           showProposalModal2 = {showProposalModal2}
           proposalId = {proposalId}/>
+           <Modal isOpen={openManual} toggle={needHelp} size= "lg" syle={{zIndex : "99999"}}>
+                        <ModalHeader toggle={needHelp}>Mazars</ModalHeader>
+                        <ModalBody>
+                            <ModalManual />
+                        </ModalBody>
+                    </Modal>
             </Card>
         </div>
     );

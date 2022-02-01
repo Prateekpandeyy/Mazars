@@ -14,6 +14,8 @@ import Records from "../../components/Records/Records";
 import DescriptionOutlinedIcon from '@material-ui/icons/DescriptionOutlined';
 import DiscardReport from "../AssignmentTab/DiscardReport";
 import './index.css'
+import ModalManual from "../ModalManual/AllComponentManual";
+import {Modal, ModalHeader, ModalBody} from 'reactstrap';
 
 
 function AllAssignment() {
@@ -25,6 +27,11 @@ function AllAssignment() {
   const [reportModal, setReportModal] = useState(false);
   const [assignNo, setAssignNo] = useState('');
   const [ViewDiscussion, setViewDiscussion] = useState(false);
+  const [openManual, setManual] = useState(false)
+  const needHelp = () => {
+      
+      setManual(!openManual)
+  }
   const ViewReport = (key) => {
 
     setReportModal(!reportModal);
@@ -372,7 +379,17 @@ function AllAssignment() {
         </CardHeader>
 
         <CardBody>
+        <div style={{display : "flex", justifyContent : "flex-end", margin : "10px auto"}}> 
+         
+         <i class="fa fa-question" style={{cursor : "pointer"}} onClick= {(e) => needHelp()}></i>
+        </div>
           <Records records={records} />
+          <Modal isOpen={openManual} toggle={needHelp} size= "lg" syle={{zIndex : "99999"}}>
+                        <ModalHeader toggle={needHelp}>Mazars</ModalHeader>
+                        <ModalBody>
+                            <ModalManual />
+                        </ModalBody>
+                    </Modal>
           <div className="tableFixHead">
           <BootstrapTable
             bootstrap4
