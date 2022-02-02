@@ -478,20 +478,9 @@ const showManual = () => {
     return (
        <Card>
              <CardHeader>
-                    <Row>
-                    <Col md="9">
-                            <div style={{ display: "flex"}}>
-                                <Link to="/customer/select-category" className="btn btn-primary">
-                                    Fresh Query
-                                </Link>
-                            </div>
-                        </Col>
-                        <Col md = "3" style={{textAlign: "right"}}>
-                        <i class="fa fa-question" style={{cursor : "pointer"}} onClick= {(e) => needHelp()}></i>
-                      
-                            </Col>
-                        
-                    </Row>
+                   
+                    <span title="help"> 
+                    <i class="fa fa-question-circle" style={{cursor : "pointer", float: "right"}} onClick= {(e) => needHelp()}></i></span>
                     <CustomerFilter
                         setData={setQuery}
                         getData={getQueriesData}
@@ -502,9 +491,23 @@ const showManual = () => {
                     />
                 </CardHeader>
                 <CardBody>
-              
                   
-                <Records records={records} />
+               
+                <Row>
+                   
+                        <Col md = "3">
+                        <div style={{ display: "flex"}}>
+                                <Link to="/customer/select-category" className="btn btn-primary">
+                                    Fresh Query
+                                </Link>
+                            </div>
+                          </Col>
+                          <Col md="9">
+                    <Records records={records} />
+                        </Col>
+                    </Row>
+                   
+               
                   
                   <div className="tableFixHead">
                    <BootstrapTable

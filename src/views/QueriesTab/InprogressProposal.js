@@ -287,6 +287,7 @@ function InprogressProposal() {
     <div>
       <Card>
         <CardHeader>
+        <span title="help"> <i class="fa fa-question-circle" style={{cursor : "pointer", float: "right"}} onClick= {(e) => needHelp()}></i></span>
           <CustomerFilter
             setData={setQuery}
             getData={getQueriesData}
@@ -297,11 +298,7 @@ function InprogressProposal() {
           />
         </CardHeader>
         <CardBody>
-        <div style={{display : "flex", justifyContent : "flex-end", margin : "10px auto"}}> 
-         
-         <i class="fa fa-question" style={{cursor : "pointer"}} onClick= {(e) => needHelp()}></i>
-        </div>
-          <Records records={records} />
+         <Records records={records} />
           <div className="tableFixHead">
           <BootstrapTable
             bootstrap4

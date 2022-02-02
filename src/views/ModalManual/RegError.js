@@ -72,7 +72,7 @@ If the OTP entered is incorrect then Error message window will appear showing �
 <Button variant="contained" className={classes.root}>Send Otp</Button>
 <Typography variant='h5' variantMapping={{
     h5 : 'span'
-}}>
+}} id="existing">
 For Existing Client: Login with your registered Email id & Password. 
     </Typography>
     <ul className={style.registrationTable}>
@@ -118,7 +118,7 @@ If the OTP entered is incorrect then Error message window will appear showing �
 <div className={style.imgBox}>
 <img src = {loginError} className= {style.manualImg} />
 </div>
-<Typography variant="h4">
+<Typography variant="h4" id="forgetPassword">
 Forgot Password: If the client forgets the Password, then click on “Forgot Password” under “For existing client”
 </Typography>
 <div className={style.imgBox}>

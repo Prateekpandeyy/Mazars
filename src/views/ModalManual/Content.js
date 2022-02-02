@@ -4,6 +4,12 @@ import { makeStyles, Button, Typography, Card, Container, CardHeader, CardAction
 import {Link} from 'react-router-dom';
 import {mainScroll as scroll} from 'react-scroll';
 const Content  = () => {
+    const goToRow = (e) => {
+        
+            const anchor = document.querySelector(e)
+            anchor.scrollIntoView({ behavior: 'smooth', block: 'center' })
+         
+    }
     return (
         <>
          <Container>
@@ -19,34 +25,57 @@ const Content  = () => {
              <CardActionArea>
                  <CardContent>
                    
-                    <div      onClick={() => {
-     const anchor = document.querySelector('#query')
-     anchor.scrollIntoView({ behavior: 'smooth', block: 'center' })
-    }}
->
-For New Client Registration	__________________________________________________________________ 02
-                        </div>
-                        <div      onClick={() => {
-     const anchor = document.querySelector('#query')
-     anchor.scrollIntoView({ behavior: 'smooth', block: 'center' })
-    }}
->
-For Existing Client	__________________________________________________________________________ 05
-                        </div>
-                        <div      onClick={() => {
-     const anchor = document.querySelector('#query')
-     anchor.scrollIntoView({ behavior: 'smooth', block: 'center' })
-    }}
->
-Forgot Password 	____________________________________________________________________________06
-                        </div>
-                        <div      onClick={() => {
-     const anchor = document.querySelector('#query')
-     anchor.scrollIntoView({ behavior: 'smooth', block: 'center' })
-    }}
->
-Change Password		__________________________________________________________________________ 09
-                        </div>
+<table style={{display : "flex", flexDirection : "column", width: "100vw"}}>
+    <tr onClick = {() => goToRow("#onlyLogin")} style={{display : 'flex'}}>
+        <td style={{display : "flex",  width: "20vw"}}> 
+            For New Client Registration	
+        </td>
+        <td style={{display : "flex",  width: "20vw"}}>
+            ____________________________________________________
+            </td>
+        <td style={{display : "flex", justifyContent : "flex-end", width: "20vw"}}>
+            02
+        </td>
+    </tr>
+    <tr onClick = {() => goToRow("#existing")} style={{display : 'flex'}}>
+        <td style={{display : "flex",  width: "20vw"}}> 
+        For Existing Client
+        </td>
+        <td style={{display : "flex",  width: "20vw"}}>
+            ____________________________________________________
+            </td>
+        <td style={{display : "flex" , justifyContent : "flex-end", width: "20vw"}}>
+            05
+        </td>
+    </tr>
+
+    <tr onClick = {() => goToRow("#forgetPassword")} style={{display : 'flex'}}>
+        <td style={{display : "flex",  width: "20vw"}}> 
+        Forgot Password 
+        </td>
+        <td style={{display : "flex",  width: "20vw"}}>
+            ____________________________________________________
+            </td>
+        <td style={{display : "flex" , justifyContent : "flex-end", width: "20vw"}}>
+            06
+        </td>
+    </tr>
+    <tr onClick = {() => goToRow("#forgetPassword")} style={{display : 'flex'}}>
+        <td style={{display : "flex",  width: "20vw"}}> 
+        Change Password	 
+        </td>
+        <td style={{display : "flex",  width: "20vw"}}>
+            ____________________________________________________
+            </td>
+        <td style={{display : "flex" , justifyContent : "flex-end", width: "20vw"}}>
+            06
+        </td>
+    </tr>
+
+                       
+                       </table>
+                       
+                                            
                         <div      onClick={() => {
      const anchor = document.querySelector('#query')
      anchor.scrollIntoView({ behavior: 'smooth', block: 'center' })

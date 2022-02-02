@@ -369,6 +369,7 @@ function CustomerDeclinedPayment() {
         <>
             <Card>
                 <CardHeader>
+                <span title="help"> <i class="fa fa-question-circle" style={{cursor : "pointer", float: "right"}} onClick= {(e) => needHelp()}></i></span>
                     <CustomerFilter
                         setData={setAssignmentDisplay}
                         getData={getAssignmentData}
@@ -380,10 +381,6 @@ function CustomerDeclinedPayment() {
                 </CardHeader>
 
                 <CardBody>
-        <div style={{display : "flex", justifyContent : "flex-end", margin : "10px auto"}}> 
-         
-         <i class="fa fa-question" style={{cursor : "pointer"}} onClick= {(e) => needHelp()}></i>
-        </div>
           <Records records={records} />
           <Modal isOpen={openManual} toggle={needHelp} size= "lg" syle={{zIndex : "99999"}}>
                         <ModalHeader toggle={needHelp}>Mazars</ModalHeader>
