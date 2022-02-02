@@ -10,6 +10,15 @@ import Layout from "../../../components/Layout/Layout";
 import { Typography, Button } from '@material-ui/core';
 import Mandatory from '../../../components/Common/Mandatory';
 import { useHistory } from 'react-router';
+import {
+  Card,
+  CardHeader,
+  CardBody,
+  CardTitle,
+  Row,
+  Col,
+  Table,
+} from "reactstrap";
 const Report = () => {
     const userid = window.localStorage.getItem("adminkey");
     const selectInputRef = useRef();
@@ -36,8 +45,10 @@ const Report = () => {
   const [taxId, setTaxId] = useState("");
   const [teamleader44, setTeamleader44] = useState("") 
   const [taxprofessional44, setTaxprofessional44] = useState("")
+  const [qno, setQno] = useState()
   const [custData, setcustData] = useState();
-  const [cname, setcName] = useState()
+  const [cname, setcName] = useState("")
+  const [qqno, setQqno] = useState("")
   var kk = []
   var pp = []
   var vv = []
@@ -82,6 +93,7 @@ const history = useHistory()
   useEffect(() => {
     getTeamLeader();
     getData();
+    getQueryNo()
 
   }, []);
 
@@ -112,7 +124,19 @@ const history = useHistory()
         }
       });
   };
-
+  const getQueryNo = () => {
+    axios
+    .get(`${baseUrl}/admin/getAllQuery`)
+      .then((res) => {
+       
+        if (res.data.code === 1) {
+          var data = res.data.result;
+           console.log("response", res.data.result)
+           let b = res.data.result
+           setQno(b.map(getqNo))
+        }
+      });
+  };
 
   const getData = () => {
     axios
@@ -129,6 +153,10 @@ const history = useHistory()
 const mapAppointmentData = ((appiontmentData) => ({
 "label" : appiontmentData.name,
 "value" : appiontmentData.id
+}))
+const getqNo = ((i) => ({
+  "label" : i.assign_no,
+   "value" : i.assign_no
 }))
   const options = tax.map(d => (
     {
@@ -190,6 +218,7 @@ const mapAppointmentData = ((appiontmentData) => ({
         formData.append("customer_name", cname)
         formData.append("teamleader", teamleader44);
         formData.append("taxprofessional", taxprofessional44);
+        formData.append("query_no", qno)
         formData.append("category", mcatname);
         formData.append("subCategory", dd);
         formData.append("q_no", Number(value.qno));
@@ -229,12 +258,15 @@ const mapAppointmentData = ((appiontmentData) => ({
         formData.append("igst_tax", Number(value.igst_tax));
         formData.append("sgst_tax", Number(value.sgst_tax));
         formData.append("total_gst", Number(value.total_gst));
-        formData.append("total_invoice", Number(value.total_invoice));
+       
         formData.append("tds", Number(value.tds));
         formData.append("net_amount", Number(value.net_amount));
         formData.append("amount_received", Number(value.amountReceived));
         formData.append("uid", JSON.parse(userid))
         formData.append("t", Math.floor(Math.random() * 110000))
+        formData.append("amount_type", Number(value.amount_type));
+        formData.append("dos", Number(value.dos));
+        formData.append("invoice_number", Number(value.invoice_number));
    axios({
      method : "POST",
      url : `${baseUrl}/report/generateReport?t=${JSON.stringify(Math.floor(Math.random() * 110000))}`,
@@ -338,19 +370,47 @@ let cc = []
     })
     setTaxprofessional44(kk2)
   }
+  const queryNumber = (e) => {
+    console.log("aaa", e)
+    let kk4 = []
+    e.map((i) => {
+      
+      kk4.push(i.value)
+    })
+    setQno(kk4)
+  }
     return (
         <>
           <Layout adminDashboard="adminDashboard" adminUserId={userid}>
           <div className="adminForm">
-         <div className="row">
-           <div className="col-md-6">
-           <Typography variant="h4">Admin Report</Typography>
-         
-             </div>
-             <div className="col-md-6" style={{display : "flex", justifyContent : "flex-end"}}>
-             <button  className="btn btn-lg btn btn-success" onClick = {() => history.goBack()}>Go Back </button>
-               </div>
-           </div>
+          <Row>
+          <Col md="4">
+          <button
+                class="btn btn-success" 
+                onClick={() => history.goBack()}
+              >
+                <i class="fas fa-arrow-left mr-2"></i>
+                Go Back
+              </button>
+              
+            </Col>
+            <Col md="4">
+              <h4>Admin Report</h4>
+            </Col>
+            <Col md= "4">
+            <label className="form-label">Report Name</label>
+          <input
+            type="text"
+            name="report_name"
+            className={classNames("form-control", {
+              "is-invalid": errors.report_name,
+            })}
+           defaultValue="report"
+            placeholder="Enter report name"
+            ref={register({ required: true })}
+          />
+            </Col>
+            </Row>
   <form onSubmit={handleSubmit(onSubmit)} autocomplete="off">
     <div className="row">
       <div className="col-md-3">
@@ -397,17 +457,11 @@ let cc = []
           </div>
           <div className="col-md-3">
         <div className="mb-3">
-          <label className="form-label">Report Name</label>
-          <input
-            type="text"
-            name="report_name"
-            className={classNames("form-control", {
-              "is-invalid": errors.report_name,
-            })}
-           defaultValue="Report"
-            placeholder="Enter report name"
-            ref={register({ required: true })}
-          />
+        <label className="form-label">Query Number</label>
+        <Select isMulti = {true} 
+
+ options={qno} onChange={(e) => queryNumber(e)}/>
+
         </div>
        
       </div>
@@ -577,9 +631,7 @@ ref={selectInputRef2}
 <span>  <input type="checkbox" ref={register} name="acceptedAmount" id="acceptedAmount"></input>
 <label htmlFor="acceptedAmount">Accepted Amount </label>
 </span>
-<span>  <input type="checkbox" ref={register} name="paymentDeclinedReason" id="paymentDeclinedReason"></input>
-<label htmlFor="paymentDeclinedReason">Payment decline reason </label>
-</span>
+
 <span>  <input type="checkbox" ref={register} name="date_acceptance" id="date_acceptance"></input>
 <label htmlFor="date_acceptance">Date of Acceptance / Decline</label>
 </span>
@@ -597,7 +649,10 @@ ref={selectInputRef2}
 </span>
 <span>  <input type="checkbox" ref={register} name="declinedDate" id="declinedDate"></input>
 <label htmlFor="declinedDate">Payment decline date</label>
-</span>             
+</span>     
+<span>  <input type="checkbox" ref={register} name="paymentDeclinedReason" id="paymentDeclinedReason"></input>
+<label htmlFor="paymentDeclinedReason">Payment decline reason </label>
+</span>        
             </div>      
            </fieldset>
            </div>
@@ -607,7 +662,7 @@ ref={selectInputRef2}
    <div className="row">
        <div className="col-md-12">
        <fieldset className="my-fieldset">
-           <legend className="login-legend">Assessnment</legend>
+           <legend className="login-legend">Assignment</legend>
             <div className="basicFeild">
            
 <span>
@@ -674,11 +729,12 @@ ref={selectInputRef2}
 <input type="checkbox" ref={register} name="total_gst" id="total_gst"></input>
 <label htmlFor="total_gst">Total Gst </label>
 </span>
+
 <span>
-<input type="checkbox" ref={register} name="total_inovice" id="total_invoice"></input>
-<label htmlFor="total_invoice">Invoice Amount</label>
+<input type="checkbox" ref={register} name="total_inovice" id="total_inovice"></input>
+<label htmlFor="total_inovice">Total Gst </label>
 </span>
-          
+
 <span>
 <input type="checkbox" ref={register} name="tds" id="tds"></input>
 <label htmlFor="tds">TDS Deducted</label>
@@ -686,7 +742,20 @@ ref={selectInputRef2}
 <span>
 <input type="checkbox" ref={register} name="net_amount" id="net_amount"></input>
 <label htmlFor="net_amount">Net Amount </label>
-</span> </div>
+</span>
+<span>
+<input type="checkbox" ref={register} name="invoice_number" id="invoice_number"></input>
+<label htmlFor="invoice_number">Invoice Number</label>
+</span> 
+<span>
+<input type="checkbox" ref={register} name="dos" id="dos"></input>
+<label htmlFor="dos">Description of Services</label>
+</span> 
+<span>
+<input type="checkbox" ref={register} name="amount_type" id="amount_type"></input>
+<label htmlFor="amount_type">Payment Type </label>
+</span>
+ </div>
            </fieldset>
            </div>
    </div>

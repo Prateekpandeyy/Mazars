@@ -1,5 +1,5 @@
 import React from 'react';
-import {Paper, Container, Typography, Button, Card, CardActionArea, CardHeader, CardMedia, CardContent, CardActions } from '@material-ui/core';
+import {Paper, Box, Container, Typography, Button, Card, CardActionArea, CardHeader, CardMedia, CardContent, CardActions } from '@material-ui/core';
 import {makeStyles} from "@material-ui/styles";
 import RegistrationInfo from "./RegistrationInfo";
 import RegError from './RegError';
@@ -30,8 +30,9 @@ const Login = () => {
     return(
         <>
              <secton id="login">
-             <Container id="onlyLogin">
-            <Card variant="outlined"> 
+           <Box>
+           <Container id="onlyLogin">
+            <Card> 
            <CardHeader  title={
                <>
              <span> visit :  </span>
@@ -41,14 +42,16 @@ const Login = () => {
            } subheader= "(To post a query, visit Mazar’s portal by clicking above link.)"/>
                 <CardActionArea>
                    
-                    <CardMedia component="img" src={loginImg}/>
+               <CardContent>
+               <CardMedia component="img" src={loginImg}/>
+               </CardContent>
                 </CardActionArea>
                 </Card>
                 </Container>
               
               
                 <Container>
-                <Card variant="outlined">
+                <Card>
                     <CardHeader  title={
                         <>
                         <Typography variant="h4">
@@ -59,15 +62,20 @@ const Login = () => {
                     } subheader="(Click on sign up icon, mentioned below “For new client” to register.)"/>
                    <CardActionArea>
                    
+                   <CardContent>
                    <CardMedia component="img" src={IgnologinImg}/>
+                   </CardContent>
                </CardActionArea>
                     </Card>
         
                     </Container>
-                   
+                   <Typography variant="h6" align="center">
+                       02
+                   </Typography>
+               </Box>
         
         <Container>
-                <Card variant="outlined">
+                <Card>
                     <CardHeader  title={
                         <>
                         <Typography variant="h4">

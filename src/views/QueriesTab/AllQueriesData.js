@@ -545,7 +545,7 @@ const showManual = () => {
                     <Modal isOpen={openManual} toggle={needHelp} size= "lg" syle={{zIndex : "99999"}}>
                         <ModalHeader toggle={needHelp}>Mazars</ModalHeader>
                         <ModalBody>
-                            <ModalManual />
+                            <ModalManual tar= {"feedback"} />
                         </ModalBody>
                     </Modal>
                 </CardBody>

@@ -6,14 +6,28 @@ import Assignment from './Assignment';
 import Payment from './Payment';
 import Scheduler from './Scheduler';
 import Feedback from './Feedback';
-import Content from './Content';
 import Login from './Login';
 import { Container } from '@material-ui/core';
-const AllComponentManual = () => {
+import { useEffect } from 'react';
+const AllComponentManual = (tar) => {
+   
+    const goToRow = (e) => {
+     
+const anchor = document.getElementById(e.tar)
+      console.log(anchor)
+     if(anchor){
+        anchor.scrollIntoView({ behavior: 'smooth', block: 'center' })
+     }
+     
+}
+
+useEffect(() => {
+    goToRow(tar)
+}, [])
 return(
     <>
 
-<div style={{display : "flex", height : "100vh", overflow : "scroll"}}>
+<div style={{display : "flex", height : "100vh", overflow : "scroll"}} onClick= {() =>   goToRow(tar)}>
 <Container>
 <Login />
 <Query />

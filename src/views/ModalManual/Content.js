@@ -5,8 +5,9 @@ import {Link} from 'react-router-dom';
 import {mainScroll as scroll} from 'react-scroll';
 const Content  = () => {
     const goToRow = (e) => {
-        
+        console.log("e3", e)
             const anchor = document.querySelector(e)
+            console.log("an", anchor)
             anchor.scrollIntoView({ behavior: 'smooth', block: 'center' })
          
     }
@@ -22,7 +23,7 @@ const Content  = () => {
                       </Typography>
                  </>
              }/>
-             <CardActionArea>
+            
                  <CardContent>
                    
 <table style={{display : "flex", flexDirection : "column", width: "100vw"}}>
@@ -68,94 +69,123 @@ const Content  = () => {
             ____________________________________________________
             </td>
         <td style={{display : "flex" , justifyContent : "flex-end", width: "20vw"}}>
-            06
+            09
         </td>
     </tr>
-
+    <tr onClick = {() => goToRow("#query")} style={{display : 'flex'}}>
+        <td style={{display : "flex",  width: "20vw"}}> 
+        Register Fresh Query
+        </td>
+        <td style={{display : "flex",  width: "20vw"}}>
+            ____________________________________________________
+            </td>
+        <td style={{display : "flex" , justifyContent : "flex-end", width: "20vw"}}>
+            12
+        </td>
+    </tr>
+    <tr onClick = {() => goToRow("#query")} style={{display : 'flex'}}>
+        <td style={{display : "flex",  width: "20vw"}}> 
+        Query Detail Page – Basic Query Information
+        </td>
+        <td style={{display : "flex",  width: "20vw"}}>
+            ____________________________________________________
+            </td>
+        <td style={{display : "flex" , justifyContent : "flex-end", width: "20vw"}}>
+            14
+        </td>
+    </tr>
+    <tr onClick = {() => goToRow("#query")} style={{display : 'flex'}}>
+        <td style={{display : "flex",  width: "20vw"}}> 
+        Proposal  </td>
+        <td style={{display : "flex",  width: "20vw"}}>
+            ____________________________________________________
+            </td>
+        <td style={{display : "flex" , justifyContent : "flex-end", width: "20vw"}}>
+            15
+        </td>
+    </tr>
+    <tr onClick = {() => goToRow("#query")} style={{display : 'flex'}}>
+        <td style={{display : "flex",  width: "20vw"}}> 
+        Engagement Letter
+          </td>
+        <td style={{display : "flex",  width: "20vw"}}>
+            ____________________________________________________
+            </td>
+        <td style={{display : "flex" , justifyContent : "flex-end", width: "20vw"}}>
+            17
+        </td>
+    </tr>
+    <tr onClick = {() => goToRow("#query")} style={{display : 'flex'}}>
+        <td style={{display : "flex",  width: "20vw"}}> 
+        Query Detail Page – Proposal
+          </td>
+        <td style={{display : "flex",  width: "20vw"}}>
+            ____________________________________________________
+            </td>
+        <td style={{display : "flex" , justifyContent : "flex-end", width: "20vw"}}>
+            20
+        </td>
+    </tr>
+    <tr onClick = {() => goToRow("#query")} style={{display : 'flex'}}>
+        <td style={{display : "flex",  width: "20vw"}}> 
+        Assignments
+          </td>
+        <td style={{display : "flex",  width: "20vw"}}>
+            ____________________________________________________
+            </td>
+        <td style={{display : "flex" , justifyContent : "flex-end", width: "20vw"}}>
+            21
+        </td>
+    </tr>
+    <tr onClick = {() => goToRow("#query")} style={{display : 'flex'}}>
+        <td style={{display : "flex",  width: "20vw"}}> 
+        Query Detail Page – Assignments
+          </td>
+        <td style={{display : "flex",  width: "20vw"}}>
+            ____________________________________________________
+            </td>
+        <td style={{display : "flex" , justifyContent : "flex-end", width: "20vw"}}>
+            23
+        </td>
+    </tr>
+    <tr onClick = {() => goToRow("#query")} style={{display : 'flex'}}>
+        <td style={{display : "flex",  width: "20vw"}}> 
+        Payment Status
+          </td>
+        <td style={{display : "flex",  width: "20vw"}}>
+            ____________________________________________________
+            </td>
+        <td style={{display : "flex" , justifyContent : "flex-end", width: "20vw"}}>
+            24
+        </td>
+    </tr>
+    <tr onClick = {() => goToRow("#inbox")} style={{display : 'flex'}}>
+        <td style={{display : "flex",  width: "20vw"}}> 
+        Inbox
+          </td>
+        <td style={{display : "flex",  width: "20vw"}}>
+            ____________________________________________________
+            </td>
+        <td style={{display : "flex" , justifyContent : "flex-end", width: "20vw"}}>
+            28
+        </td>
+    </tr>
+    <tr onClick = {() => goToRow("#feedback")} style={{display : 'flex'}}>
+        <td style={{display : "flex",  width: "20vw"}}> 
+        Feedback
+          </td>
+        <td style={{display : "flex",  width: "20vw"}}>
+            ____________________________________________________
+            </td>
+        <td style={{display : "flex" , justifyContent : "flex-end", width: "20vw"}}>
+            29
+        </td>
+    </tr>
                        
                        </table>
-                       
-                                            
-                        <div      onClick={() => {
-     const anchor = document.querySelector('#query')
-     anchor.scrollIntoView({ behavior: 'smooth', block: 'center' })
-    }}
->
-Mazars Dashboard___________________________________________________________________________11
-                        </div> 
-                        <div      onClick={() => {
-     const anchor = document.querySelector('#query')
-     anchor.scrollIntoView({ behavior: 'smooth', block: 'center' })
-    }}
->
-
-Register Fresh Query________________________________________________________________________ 12
-                        </div>
-                        <div      onClick={() => {
-     const anchor = document.querySelector('#query')
-     anchor.scrollIntoView({ behavior: 'smooth', block: 'center' })
-    }}
->
-Query Detail Page – Basic Query Information_____________________________________________________ 14
-                        </div>
-                        <div      onClick={() => {
-     const anchor = document.querySelector('#proposal')
-     anchor.scrollIntoView({ behavior: 'smooth', block: 'center' })
-    }}
->
-Proposal	__________________________________________________________________________________15
-                        </div>
-                         <div      onClick={() => {
-     const anchor = document.querySelector('#proposal')
-     anchor.scrollIntoView({ behavior: 'smooth', block: 'center' })
-    }}
->
-Engagement Letter__________________________________________________________________________ 17
-                        </div>
-                        <div      onClick={() => {
-     const anchor = document.querySelector('#proposal')
-     anchor.scrollIntoView({ behavior: 'smooth', block: 'center' })
-    }}
->
-Query Detail Page – Proposal__________________________________________________________________20
-                        </div>
-                        <div      onClick={() => {
-     const anchor = document.querySelector('#assignment')
-     anchor.scrollIntoView({ behavior: 'smooth', block: 'center' })
-    }}
->
-Assignments________________________________________________________________________________21
-                        </div>
-                        <div      onClick={() => {
-     const anchor = document.querySelector('#assignment')
-     anchor.scrollIntoView({ behavior: 'smooth', block: 'center' })
-    }}
->
-Query Detail Page – Assignments_______________________________________________________________23
-                        </div>
-                        <div      onClick={() => {
-     const anchor = document.querySelector('#payment')
-     anchor.scrollIntoView({ behavior: 'smooth', block: 'center' })
-    }}
->
-Payment Status______________________________________________________________________________24
-                        </div>
-                        <div      onClick={() => {
-     const anchor = document.querySelector('#message')
-     anchor.scrollIntoView({ behavior: 'smooth', block: 'center' })
-    }}
->
-Inbox_______________________________________________________________________________________28
-                        </div>
-                        <div      onClick={() => {
-     const anchor = document.querySelector('#feedback')
-     anchor.scrollIntoView({ behavior: 'smooth', block: 'center' })
-    }}
->
-Feedback____________________________________________________________________________________29
-                        </div>
+      
                  </CardContent>
-             </CardActionArea>
+           
          </Card>
      </Container>
         </>

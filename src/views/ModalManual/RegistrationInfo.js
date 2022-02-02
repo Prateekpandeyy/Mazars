@@ -1,5 +1,5 @@
 import React from 'react';
-import {Paper, Container, Typography, Button, Card, CardActionArea, CardHeader, CardMedia, CardContent, CardActions }from "@mui/material";
+import {Paper, Box, Container, Typography, Button, Card, CardActionArea, CardHeader, CardMedia, CardContent, CardActions }from "@mui/material";
 import style from "./manula.module.css";
 import {makeStyles} from "@material-ui/styles";
 import regImg from "../ManualImg/registrationImage.jpeg";
@@ -26,8 +26,9 @@ const RegistrationInfo = () => {
     const classes = useStyle() 
     return (
         <>
-           <Paper>
-           <Card variant="outlined">
+         <Box>
+         <Paper>
+           <Card>
                 <CardActionArea>
                     <CardContent>
                     <table className="table table-bordered p-2">
@@ -169,6 +170,10 @@ const RegistrationInfo = () => {
 
             </Card>
            </Paper>
+           <Typography variant="h6" align="right">
+                       03
+                   </Typography>
+         </Box>
         </>
     )
 }
