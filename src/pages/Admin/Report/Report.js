@@ -258,7 +258,7 @@ const getqNo = ((i) => ({
         formData.append("igst_tax", Number(value.igst_tax));
         formData.append("sgst_tax", Number(value.sgst_tax));
         formData.append("total_gst", Number(value.total_gst));
-       
+        formData.append("process_status", Number(value.process_status));
         formData.append("tds", Number(value.tds));
         formData.append("net_amount", Number(value.net_amount));
         formData.append("amount_received", Number(value.amountReceived));
@@ -599,6 +599,9 @@ ref={selectInputRef2}
 </span>
 <span>  <input type="checkbox" ref={register} name="doa" id="doa"></input>
 <label htmlFor="doa">Date of Allocation of Query</label>
+</span>
+<span>  <input type="checkbox" ref={register} name="process_status" id="process_status"></input>
+<label htmlFor="process_status">Process Status</label>
 </span>
 </div>
 </fieldset>
