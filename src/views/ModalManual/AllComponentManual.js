@@ -6,6 +6,7 @@ import Assignment from './Assignment';
 import Payment from './Payment';
 import Scheduler from './Scheduler';
 import Feedback from './Feedback';
+import Content from './Content';
 import Login from './Login';
 import { Container } from '@material-ui/core';
 import { useEffect } from 'react';
@@ -27,7 +28,7 @@ useEffect(() => {
 return(
     <>
 
-<div style={{display : "flex", height : "100vh", overflow : "scroll"}} onClick= {() =>   goToRow(tar)}>
+<div style={{display : "flex", height : "80vh", overflow : "scroll"}}>
 <Container>
 <Login />
 <Query />

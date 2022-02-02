@@ -542,7 +542,7 @@ const showManual = () => {
                     getQueriesData = {getQueriesData}
                     assignNo={assignNo2}
                     deleteCliente = {deleteCliente}/>
-                    <Modal isOpen={openManual} toggle={needHelp} size= "lg" syle={{zIndex : "99999"}}>
+                    <Modal isOpen={openManual} toggle={needHelp} size= "md">
                         <ModalHeader toggle={needHelp}>Mazars</ModalHeader>
                         <ModalBody>
                             <ModalManual tar= {"feedback"} />

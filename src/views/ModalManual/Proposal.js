@@ -1,4 +1,4 @@
-import { Typography, Button, Card, Container, CardHeader, CardActionArea, CardActions, CardMedia, CardContent } from "@material-ui/core";
+import {  Typography, Button, Card, Container, CardHeader, CardActionArea, CardActions, CardMedia, CardContent , Box} from "@material-ui/core";
 import React from "react";
 import rightArrow from '../ManualImg/rightArrow.png';
 import proposalView from '../ManualImg/proposalView.png';
@@ -77,15 +77,15 @@ const Proposal = () => {
     return (
         <>
          <section id="proposal">
-<Container>
-    <Card>
-        <CardHeader title={
+             <Box>
+                 <Container>
+                     <Card>
+                     <CardHeader title={
                     <Typography variant="h4" align="center">
                     Processing of Proposal
                             </Typography>
         }/>
-        <CardActionArea>
-            <CardContent>
+                        <CardContent>
                 <Typography variant="h4">
                 Mazars Team, after examining the query, will prepare a proposal & provide it to the client.
                  An email will also be sent to the client informing about the proposal sent
@@ -102,7 +102,21 @@ const Proposal = () => {
              
                 </Typography>
                 <CardMedia src={showProposal} component="img" />
-                <Typography variant="h4">
+              
+            </CardContent>
+                     </Card>
+                 </Container>
+                 <Typography variant="h6" align="center">
+                     29
+                 </Typography>
+                 </Box>
+                 
+
+                 <Box>
+                     <Container>
+                         <Card>
+                             <CardContent>
+                             <Typography variant="h4">
                 Engagement letter box should be checked to view the engagement letter before accepting 
                 or rejecting the proposal by pressing the    
                       <Button varinat="contained" className={classes.root}>Accept</Button>   or    
@@ -126,12 +140,7 @@ const Proposal = () => {
                 Under Proposal Tab, various action buttons will appear as per the screen below:
                 </Typography>
                 <CardMedia src={proposalView2} component="img"/>
-                
-            </CardContent>
-
-        </CardActionArea>
-        <CardActions style={{flexDirection : "column"}}>
-            <table className="table table-bordered p-2">
+                <table className="table table-bordered p-2">
 
 <tbody>
     
@@ -196,103 +205,110 @@ const Proposal = () => {
     </tr>
     </tbody>
     </table>    
-    <table className="table table-bordered p-2">
+                             </CardContent>
+                         </Card>
+                     </Container>
+                     <Typography variant="h6" align="center">
+                         30
+                     </Typography>
+                     </Box>
+        
+        <Box>
+            <Container>
+                <Card>
+                    <CardContent>
+                   
+           
+           <table className="table table-bordered p-2">
+       
+       <tbody>
+           
+           
+           <tr>
+               <th>Status</th>
+               <th>Interpretation</th>
+               <th>Screenshot listing</th>
+           </tr>
+           <tr>
+              <td>In-progress; Preparation</td>
+              <td>Mazars Team is preparing the proposal</td>
+              <td>At S.No. 1</td>
+           </tr>
+           <tr>
+              <td>In-progress; Acceptance</td>
+              <td>Mazars Team has sent the proposal to the client which is
+                   awaiting acceptance.</td>
+                   <td>At S.No.2</td>
+           </tr>
+           <tr>
+               <td>Declined; Proposal</td>
+               <td>Client has rejected the Proposal</td>
+               <td>At S.No.3</td>
+           </tr>
+           <tr>
+               <td>Accepted; Proposal</td>
+               <td>Client has accepted the proposal.</td>
+               <td>At S.No.4</td>
+           </tr>
+           </tbody>
+           </table>        
+           <CardMedia component="img" src={showProposal22}/>   
+                    </CardContent>
+                </Card>
+            </Container>
+            <Typography variant="h6" align="center">
+                         31
+                     </Typography>
+            </Box>
 
-<tbody>
-    
-    
-    <tr>
-        <th>Status</th>
-        <th>Interpretation</th>
-        <th>Screenshot listing</th>
-    </tr>
-    <tr>
-       <td>In-progress; Preparation</td>
-       <td>Mazars Team is preparing the proposal</td>
-       <td>At S.No. 1</td>
-    </tr>
-    <tr>
-       <td>In-progress; Acceptance</td>
-       <td>Mazars Team has sent the proposal to the client which is
-            awaiting acceptance.</td>
-            <td>At S.No.2</td>
-    </tr>
-    <tr>
-        <td>Declined; Proposal</td>
-        <td>Client has rejected the Proposal</td>
-        <td>At S.No.3</td>
-    </tr>
-    <tr>
-        <td>Accepted; Proposal</td>
-        <td>Client has accepted the proposal.</td>
-        <td>At S.No.4</td>
-    </tr>
-    </tbody>
-    </table>        
-    <CardMedia component="img" src={showProposal22}/>
-            </CardActions>
-    </Card>
-</Container>
-<Container>
-    <Card>
-        <CardHeader title={
-            <>
+<Box>
+    <Container>
+        <Card>
+            <CardContent>
             <Typography variant="h4">
             By selecting the Engagement Letter checkbox, the proposal can be viewed and on
 the basis of terms and conditions mentioned in the proposal, the client can make the decision by clicking on 
            <Button variant="container" className={classes.root}>Accept</Button>             or            
            <Button variant="contained" className={classes.root3}>Reject</Button>
                 </Typography>
-            </>
-        }/>
-        <CardActionArea>
-            <CardContent>
                 <CardMedia  src={proposalSeen} component="img"/>
                 <CardMedia src={proposalSeen2} component="img" />
             </CardContent>
-        </CardActionArea>
-    </Card>
-</Container>
-
-<Container>
-    <Card>
-        <CardHeader title={
-            <>
-            <Typography variant="h4">
+        </Card>
+    </Container>
+    <Typography variant="h6" align="center">
+                         32
+                     </Typography>
+    </Box>
+<Box>
+    <Container>
+        <Card>
+           <CardContent>
+           <Typography variant="h4">
             If the proposal is acceptable, click  <Button variant="container" className={classes.root}>Accept</Button>                 button. Upon acceptance,
              following success message window will appear showing “Proposal accepted successfully”.
                   or            
          
                 </Typography>
-            </>
-        }/>
-        <CardActionArea>
-            <CardContent>
                 <CardMedia  src={acceptProposal} component="img"/>
-             
-            </CardContent>
-        </CardActionArea>
-    </Card>
-</Container>
-<Container>
-    <Card>
-        <CardHeader title={
-            <>
-            <Typography variant="h4">
+                <Typography variant="h4">
             fter acceptance of proposal, action button right arrow (<CardMedia  component="img"
         src={rightArrow} style={{height: "20px",  width : "20px"}} />)
              will disappear & new eye button (<CardMedia  component="img"
         src={viewProposalsign} style={{height: "20px",  width : "20px"}} />) will appear to view the accepted proposal as below:
                 </Typography>
-            </>
-        }/>
-        <CardActionArea>
-            <CardContent>
                 <CardMedia  src={acceptProposal22} component="img"/>
-             
-            </CardContent>
-        </CardActionArea>
-        <CardActions>
+               </CardContent> 
+        </Card>
+    </Container>
+    <Typography variant="h6" align="center">
+                         33
+                     </Typography>
+    </Box>
+<Box>
+    <Container>
+        <Card>
+            <CardContent>
             <table className="table table-bordered p-2">
             <tr>
         <th><CardMedia  component="img"
@@ -310,117 +326,87 @@ the basis of terms and conditions mentioned in the proposal, the client can make
         </td>
     </tr>
             </table>
-        </CardActions>
-    </Card>
-</Container>
-
-<Container>
-    <Card>
-        <CardHeader title={
-            <>
             <Typography variant="h4">
             If the proposal is not acceptable, click          
             <Button variant="contained" className={classes.root3}>Reject</Button>   button. Rejection message window will appear showing “Are you sure to reject Proposal?”    </Typography>
-            </>
-        }/>
-        <CardActionArea>
-            <CardContent>
-                <CardMedia  src={proposalConfirm} component="img"/>
-             
-            </CardContent>
-        </CardActionArea>
-      
-    </Card>
-</Container>
-<Container>
-    <Card>
-        <CardHeader title={
-            <>
+            <CardMedia  src={proposalConfirm} component="img"/>
             <Typography variant="h4">
             The client can still review the proposal & go back by clicking 
             <Button className={classes.root3}>Cancel</Button>         button. If sure to reject, click 
             <Button variant="contained" className={classes.root}>Yes Reject it</Button>  
                             . Upon such rejection following message will appear. Click ok  
-                            </Typography> </>  }/>
-        <CardActionArea>
-            <CardContent>
-                <CardMedia  src={rejectProposal} component="img"/>
-             
+                            </Typography>
+                            <CardMedia  src={rejectProposal} component="img"/>
             </CardContent>
-        </CardActionArea>
-      
-    </Card>
-</Container>
+        </Card>
+    </Container>
+    <Typography variant="h6" align="center">
+                         34
+                     </Typography>
+    </Box>
 
-<Container>
-    <Card>
-        <CardHeader title={
-            <>
+
+<Box>
+    <Container>
+        <Card>
+            <CardContent>
             <Typography variant="h4">
             Upon rejection of proposal, following screen will be visible in the Proposal tab details.  
-                            </Typography> </>  }/>
-        <CardActionArea>
-            <CardContent>
-                <CardMedia  src={proposal221} component="img"/>
-             
-            </CardContent>
-        </CardActionArea>
-      
-    </Card>
-</Container>
-<Container>
-    <Card>
-        <CardHeader title={
-            <>
-            <Typography variant="h4">
+                            </Typography> 
+                            <CardMedia  src={proposal221} component="img"/>
+                            <Typography variant="h4">
             In case of client inadvertently rejecting the proposal,
              he may send message to the Mazars Team for restoring the pending proposal status by clicking on 
              <Button> <CardMedia src={message}component="img"/></Button> icon.
-(S.No. 1)   </Typography> </>  }/>
-        <CardActionArea>
-            <CardContent>
-                <CardMedia  src={rejectProposalView} component="img"/>
-             
+(S.No. 1)   </Typography>
+<CardMedia  src={rejectProposalView} component="img"/>
             </CardContent>
-        </CardActionArea>
-      
-    </Card>
-</Container>
-<Container>
-    <Card>
-        <CardHeader title={
-            <>
+        </Card>
+    </Container>
+    <Typography variant="h6" align="center">
+                         35
+                     </Typography>
+    </Box>
+
+
+<Box>
+    <Container>
+        <Card>
+            <CardContent>
             <Typography variant="h4">
             After examining the request, Mazars Team may quickly restore the pending proposal status & 
             it will be visible to the client. An email will also be sent to the client .4
-              </Typography> </>  }/>
-        <CardActionArea>
-            <CardContent>
-                <CardMedia  src={restoredProposalView} component="img"/>
-             
-            </CardContent>
-        </CardActionArea>
-      
-    </Card>
-</Container>
-<Container>
-    <Card>
-        <CardHeader title={
-            <>
-            <Typography variant="h4">
+              </Typography>
+              <CardMedia  src={restoredProposalView} component="img"/>
+              <Typography variant="h4">
             After the acceptance of Proposal, Proposal tab under the Query Details will show the following information.
              The client can also download the proposal by clicking download button 
-             <Button className={classes.root}>Download</Button></Typography> </>  }/>
-        <CardActionArea>
+             <Button className={classes.root}>Download</Button></Typography>
+             <CardMedia  src={restoredQueryView} component="img"/>
+            </CardContent>
+        </Card>
+    </Container>
+    <Typography variant="h6" align = "center">
+         36
+    </Typography>
+    </Box>
+<Box>
+    <Container>
+        <Card>
             <CardContent>
-                <CardMedia  src={restoredQueryView} component="img"/>
-                <CardMedia src={restoredQueryView2} component="img" />
+            <CardMedia src={restoredQueryView2} component="img" />
                 <CardMedia src={restoredQueryView3} component="img" />
              
             </CardContent>
-        </CardActionArea>
-      <CardActions style={{flexDirection : "column"}}>
-          <Typography variant="h4">
+        </Card>
+    </Container>
+    </Box>
+
+<Box>
+    <Container>
+        <Card>
+            <CardContent>
+            <Typography variant="h4">
           Query Detail Page: Proposal
               </Typography>
           <table className="table table-bordered p-2">
@@ -490,9 +476,13 @@ the basis of terms and conditions mentioned in the proposal, the client can make
                       </td>
                   </tr>
           </table>
-      </CardActions>
-    </Card>
-</Container>
+            </CardContent>
+        </Card>
+    </Container>
+    <Typography align="center" variant="h6">
+         38
+    </Typography>
+</Box>
 </section>
 </>
     )

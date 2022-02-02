@@ -1,5 +1,5 @@
 import React from 'react';
-import {Container, Card, CardHeader, CardActionArea, CardMedia, CardContent, CardActions, Typography, Button} from '@material-ui/core';
+import {Box, Container, Card, CardHeader, CardActionArea, CardMedia, CardContent, CardActions, Typography, Button} from '@material-ui/core';
 import { makeStyles } from '@mui/material/styles';
 import assignmentImage from '../ManualImg/assignmentImage.png';
 import assignmentImage2 from '../ManualImg/assignment2.png'
@@ -23,67 +23,59 @@ const Assignment = () => {
     return(
         <>
          <section id="assignment">
-        <Container>
+             <Box>
+             <Container>
             <Card>
                 <CardHeader title={
                     <Typography variant="h4">
                         Under Assignments Tab, the client can view the processing progress of the query.
                         </Typography>
                 }/>
-                <CardActionArea>
+               
                     <CardContent>
                         <CardMedia src={assignmentImage} component="img" />
-                    </CardContent>
-                </CardActionArea>
-            </Card>
-        </Container>
-        <Container>
-            <Card>
-                <CardHeader title={
-                    <Typography variant="h4">
+                        <Typography variant="h4">
                        After the Mazars Team has sent online draft reports for discussion with the client, following screen will be visible to the client.
                         An email will also be sent to the client every time any draft report is uploaded
                         </Typography>
-                }/>
-                <CardActionArea>
-                    <CardContent>
                         <CardMedia src={assignmentImage2} component="img" />
                     </CardContent>
-                </CardActionArea>
+                
             </Card>
         </Container>
-        <Container>
+        <Typography variant="h6" align = "center">
+            39
+        </Typography>
+                 </Box>
+       
+       <Box>
+       <Container>
             <Card>
-                <CardHeader title={
-                    <Typography variant="h4">
+                    <CardContent>
+                        <Typography variant="h4">
                       Under the Deliverable, by clicking on the view all report icon  
                       <Button><CardMedia src={pdfIconImage} component="img" style={{width: "20px", height: "20px" }}/></Button>   the draft reports can be viewed & 
                       downloaded by the client. Following screen will be visible to the client.
                         </Typography>
-                }/>
-                <CardActionArea>
-                    <CardContent>
                         <CardMedia src={assignmentImage21} component="img" />
-                    </CardContent>
-                </CardActionArea>
-            </Card>
-        </Container>
-        <Container>
-            <Card>
-                <CardHeader title={
-                    <Typography variant="h4">
+                        <Typography variant="h4">
                     After clicking on  <Button><CardMedia src={pdfIconImage} component="img" style={{width: "20px", height: "20px" }}/></Button>    following screen will be visible
-                       
-                      
                         </Typography>
-                }/>
-                <CardActionArea>
-                    <CardContent>
                         <CardMedia src={assignmentImage31} component="img" />
                     </CardContent>
-                </CardActionArea>
-                <CardActions style={{flexDirection : "column"}}>
-                <table className="table table-bordered p-2">
+               
+            </Card>
+        </Container>
+        <Typography variant="h6" align = "center">
+            40
+        </Typography>
+           </Box>
+        
+        <Box>
+            <Container>
+                <Card>
+                    <CardContent>
+                    <table className="table table-bordered p-2">
                 <tr>
         <th><CardMedia  component="img"
         src={rightClickIcon} style={{height: "20px",  width : "20px"}} /></th>
@@ -127,104 +119,80 @@ const Assignment = () => {
         </td>
     </tr>
             </table>
-                </CardActions>
-            </Card>
-        </Container>
-
-        <Container>
-            <Card>
-                <CardHeader title={
-                    <Typography variant="h4">
+            <Typography variant="h4">
                       After the discussion on draft report(s) is completed, Mazars Team will mark the progress status of assignment as draft report completed & will move on to finalization of the report. 
                       At this stage, further discussion with the client may take place, if required.</Typography>
-                }/>
-                <CardActionArea>
-                    <CardContent>
-                        <CardMedia src={finalAssignment} component="img" />
+                      <CardMedia src={finalAssignment} component="img" />
                     </CardContent>
-                </CardActionArea>
-            </Card>
-        </Container>
-        <Container>
-            <Card>
-                <CardHeader title={
-                    <Typography variant="h4">
+                </Card>
+            </Container>
+            <Typography variant="h6" align = "center">
+                41
+            </Typography>
+            </Box>
+
+
+
+<Box>
+    <Container>
+        <Card>
+            <CardContent>
+            <Typography variant="h4">
                         After such discussion, final reports are uploaded by the Mazars Team & are visible to the client under the deliverable’s icon   
                         <CardMedia src={pdfIconImage} component="img" style={{width: "30px", height: "30px" }}/>  as below. An email alert will also
                          be sent to the client confirming such uploading of final reports
-                      </Typography>    }/>
-                <CardActionArea>
-                    <CardContent>
-                        <CardMedia src={pdfAssignmentImg} component="img" />
-                    </CardContent>
-                </CardActionArea>
-            </Card>
-        </Container>
-        <Container>
-            <Card>
-                <CardHeader title={
-                    <Typography variant="h4">
+                      </Typography>
+                      <CardMedia src={pdfAssignmentImg} component="img" />
+                      <Typography variant="h4">
 After clicking on   
 <Button>
 <CardMedia src={pdfIconImage} component="img" style={{widht: "30px", height: "30px" }} />
     </Button>     following screen will be visible showing final report.
                        
-                      </Typography>    }/>
-                <CardActionArea>
-                    <CardContent>
-                        <CardMedia src={fileProcessImg} component="img" />
-                    </CardContent>
-                </CardActionArea>
-            </Card>
-        </Container>
+                      </Typography>
+                      <CardMedia src={fileProcessImg} component="img" />
+            </CardContent>
+        </Card>
+    </Container>
+    <Typography variant="h6" align = "center">
+                42
+            </Typography>
+    </Box>
+     
+    <Box>
         <Container>
             <Card>
-                <CardHeader title={
-                    <>
-                    <Typography variant="h4">
+                <CardContent>
+                <Typography variant="h4">
                     After delivery of final reports, Mazars Team will mark the progress status of 
                     assignment as delivery of final report completed, below screen will be visible
                         </Typography>
-                    </>
-                }/>
-                <CardActionArea>
-                    <CardContent>
-                 <CardMedia src={assignment3} component="img"/>
-                    </CardContent>
-                </CardActionArea>
-            </Card>
-        </Container>
-        <Container>
-            <Card>
-                <CardHeader title={
-                    <>
-                    <Typography variant="h4">
+                        <CardMedia src={assignment3} component="img"/>
+                        <Typography variant="h4">
                     On receipt of full payment from the client, Mazars Team will mark 
                     awaiting completion as completed & following screen will be visible to the client
                    </Typography>
-                    </>
-                }/>
-                <CardActionArea>
-                    <CardContent>
-                 <CardMedia src={assignment4} component="img"/>
-                    </CardContent>
-                </CardActionArea>
+                   <CardMedia src={assignment4} component="img"/>
+                </CardContent>
             </Card>
         </Container>
-        <Container>
-            <Card>
-                <CardHeader title={
-                    <>
-                    <Typography variant="h4">
+        <Typography variant="h6" align = "center">
+                43
+            </Typography>
+        </Box>   
+       
+        
+       <Box>
+           <Container>
+               <Card>
+                   <CardContent>
+                   <Typography variant="h4">
                     The Assignment tab under the query details will show following information.
                      </Typography>
-                    </>
-                }/>
-                <CardActionArea>
-                    <CardContent>
-                 <CardMedia src={assignmentQuery} component="img"/>
-                 <Typography variant="h4">
+                     <CardMedia src={assignmentQuery} component="img"/>
+                     <Typography variant="h4">
                  Query Detail Page: Assignment
+                 </Typography>
                  <table className="table table-bordered p-2">
                      <tr>
                          <td>Assignment Number</td>
@@ -247,26 +215,25 @@ After clicking on
                          <td>Shows the number of days taken to complete the assignment.</td>
                      </tr>
                      </table>
-                 </Typography>
-                    </CardContent>
-                </CardActionArea>
-            </Card>
-        </Container>
-
-        <Container>
-            <Card>
-                <CardHeader title={
-                    <>
+                   </CardContent>
+               </Card>
+           </Container>
+           <Typography variant="h6" align = "center">
+                44
+            </Typography>
+           </Box>
+        <Box>
+            <Container>
+                <Card>
+                    <CardContent>
                     <Typography variant="h4">
                     Under Payment Status tab, following screen will be visible after acceptance of proposal.  </Typography>
-                    </>
-                }/>
-                <CardActionArea>
-                    <CardContent>
-                 <CardMedia src={seeProposal} component="img"/>
-                 <Typography variant="h4">
+                    <CardMedia src={seeProposal} component="img"/>
+                    <Typography variant="h4">
                  Under Payment Status tab, following action buttons are visible
-                 <table className="table table-bordered p-2">
+                 </Typography>
+                    </CardContent>
+                    <table className="table table-bordered p-2">
                      <tr>
                          <td><CardMedia component="img" src={paymentHistory} style={{width: "20px", height: "20px" }}/></td>
                          <td>By clicking on this icon, the client can view the invoice and make the payment.</td>
@@ -281,12 +248,15 @@ After clicking on
                      </tr>
                    
                      </table>
-                 </Typography>
-                 <h2 id="section2">Section Two </h2>
-                    </CardContent>
-                </CardActionArea>
-            </Card>
-        </Container>
+                
+                </Card>
+            </Container>
+            <Typography variant="h6" align = "center">
+                45
+            </Typography>
+            </Box>
+       
+        
         </section>
         </>
     )
