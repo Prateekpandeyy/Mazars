@@ -25,6 +25,7 @@ const useStyle = makeStyles(theme => ({
         }
     },
    
+   
 }))
 const Login = () => {
     const classes = useStyle()
@@ -79,16 +80,20 @@ const Login = () => {
                 <Card>
                     <CardHeader  title={
                         <>
-                        <Typography variant="h4">
-                        Provide your basic information to complete the registration.
-                       
-                            </Typography>
+                        
                         </>
-                    }  subheader="(On clicking sign up for registration, 
-                    following screen will open to enter basic information.)"/>
+                    }  subheader=""/>
                  
                    
                 <CardContent>
+                <Typography variant="h6">
+                        Provide your basic information to complete the registration.
+                       
+                            </Typography>
+                            <Typography variant="body2">
+                            (On clicking sign up for registration, 
+                    following screen will open to enter basic information.)
+                                </Typography>
                 <table className="table table-bordered p-2">
 
 <tbody>

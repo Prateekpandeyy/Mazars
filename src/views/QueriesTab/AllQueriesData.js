@@ -542,10 +542,10 @@ const showManual = () => {
                     getQueriesData = {getQueriesData}
                     assignNo={assignNo2}
                     deleteCliente = {deleteCliente}/>
-                    <Modal isOpen={openManual} toggle={needHelp} size= "md">
+                    <Modal isOpen={openManual} toggle={needHelp} style={{display : "block", position: "absolute", left:"280px"}} size="lg">
                         <ModalHeader toggle={needHelp}>Mazars</ModalHeader>
                         <ModalBody>
-                            <ModalManual tar= {"feedback"} />
+                            <ModalManual tar= {"freshQuery"} />
                         </ModalBody>
                     </Modal>
                 </CardBody>

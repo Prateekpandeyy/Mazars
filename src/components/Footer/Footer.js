@@ -1,7 +1,7 @@
 import React from "react";
 import "../../assets/css/style.css";
-import MyPDF from "../../views/dFile/LoginManual.pdf"
-import MyPDF2 from "../../views/dFile/Manual.docx"
+import MyPDF from "../../views/ManualImg/newUser.pdf";
+
 import { Link } from "react-router-dom";
 function Footer() {
   const userid = window.localStorage.getItem("userid")
@@ -26,8 +26,7 @@ function Footer() {
          About Us | &nbsp;
       
       </Link>
-        <a href={MyPDF}
-  download> Need help?</a>
+        <a href={MyPDF} target="_blank"> Need help?</a>
   
      
            

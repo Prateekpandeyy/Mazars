@@ -92,12 +92,12 @@ For Existing Client: Login with your registered Email id & Password.
  
 </ul>
 <CardMedia src={loginImage} component="img" />
-<Typography variant="h5">
+<Typography variant="body1">
 After clicking <Button variant="contained" className={classes.root}>Send Otp</Button> on Success message will appear. Click ok and enter the OTP received on your 
 <Button variant="contained" className={classes.root}>Send Otp</Button> email id & click on 
 
 </Typography>
-<Typography variant="h5">
+<Typography variant="body1">
 If the OTP entered is incorrect then Error message window will appear showing “Incorrect OTP”
 </Typography>
 
@@ -116,7 +116,7 @@ If the OTP entered is incorrect then Error message window will appear showing �
          <Card>
          <CardMedia component="img" src={loginError} />
              <CardHeader title={
-                <Typography variant="h4" id="forgetPassword">
+                <Typography variant="h5" id="forgetPassword">
 Forgot Password: If the client forgets the Password, then click on “Forgot Password” under “For existing client”
 </Typography>
              }/>
@@ -134,16 +134,16 @@ Forgot Password: If the client forgets the Password, then click on “Forgot Pas
     <Container>
         <Card>
             <CardContent>
-            <Typography variant="h4">
+            <Typography variant="body1">
 Forgot Password: Enter your email id and click on <Button variant="contained" className={classes.root2}>Get OTP</Button>
 </Typography>
 <CardMedia src={forgetImg} component="img" />
-<Typography variant="h4">
+<Typography variant="body1">
 Forgot Password: After clicking on  <Button variant="contained" className={classes.root2}> Get OTP</Button>, success message window will appear & then click on OK.
 </Typography>
 <CardMedia src={forgetotpImg} component="img" />
 
-<Typography variant="h4">
+<Typography variant="body1">
 Forgot Password: Enter new password that should be minimum of eight characters, including at least 
 one upper case, lower case, special character and number along with the OTP
  received on the email id & click on Submit.
@@ -163,7 +163,7 @@ one upper case, lower case, special character and number along with the OTP
         <Card>
             <CardMedia src={forgetFreshImg} component="img" />
             <CardContent>
-            <Typography variant="h4">
+            <Typography variant="body1">
 Password Forgot: After clicking on <Button className={classes.root2}> Submit </Button> Success message window will appear, showing password reset 
 successfully. Now login with the new password.
 </Typography>
@@ -181,12 +181,12 @@ successfully. Now login with the new password.
     <Container>
         <Card>
             <CardContent>
-            <Typography variant="h4">
+            <Typography variant="body1">
 Incorrect Email Id: At the login page, if the email id entered is incorrect then Error message window will appear showing “Please register before sign-in”.
  Click Ok & login with the correct credentials.
 </Typography>
 <CardMedia src={errorLoginImg} component="img" />
-<Typography variant="h4">
+<Typography variant="body1">
 Incorrect password: At the login page, if the password entered is incorrect then Error message window will appear showing “Incorrect email or password”. 
 Click Ok & login with the correct credentials.
 </Typography>

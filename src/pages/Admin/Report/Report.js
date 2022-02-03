@@ -193,7 +193,7 @@ const getqNo = ((i) => ({
      let proposal_info = false
      let assignment_info = false
      let payment_info = false
-     if(value.assessment || value.purpose_p || value.p_format || value.t_requested || value.spc_que || value.doa){
+     if(value.process_status || value.assessment || value.purpose_p || value.p_format || value.t_requested || value.spc_que || value.doa){
       basic_info = true
      }
      if(value.dateProposal || value.proposedAmount || value.paymentTerms || value.proposal_status || value.acceptedAmount
@@ -218,7 +218,7 @@ const getqNo = ((i) => ({
         formData.append("customer_name", cname)
         formData.append("teamleader", teamleader44);
         formData.append("taxprofessional", taxprofessional44);
-        formData.append("query_no", qno)
+        formData.append("query_no", qqno)
         formData.append("category", mcatname);
         formData.append("subCategory", dd);
         formData.append("q_no", Number(value.qno));
@@ -377,7 +377,7 @@ let cc = []
       
       kk4.push(i.value)
     })
-    setQno(kk4)
+    setQqno(kk4)
   }
     return (
         <>

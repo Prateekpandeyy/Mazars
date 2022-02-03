@@ -20,7 +20,22 @@ const useStyle = makeStyles(theme => ({
             outline : "none"
         }
     },
-   
+    root2: {
+        backgroundColor: "blue",
+        color: "white",
+        margin: "10px 0px",
+        outline: "none",
+        '&:hover': {
+            backgroundColor: "blue",
+            color: "white",
+            outline: "none"
+        },
+        '&:focus': {
+            backgroundColor: "blue",
+            color: "white",
+            outline: "none"
+        }
+    },
 }))
 const RegistrationInfo = () => {
     const classes = useStyle() 

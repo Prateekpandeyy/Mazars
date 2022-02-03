@@ -3,6 +3,7 @@ import { makeStyles, Button, Typography, Card, Container, CardHeader, CardAction
 // import { Link} from "react-scroll";
 import {Link} from 'react-router-dom';
 import {mainScroll as scroll} from 'react-scroll';
+import MyPDF from '../ManualImg/manual.pdf';
 const Content  = () => {
     const goToRow = (e) => {
         console.log("e3", e)
@@ -15,14 +16,28 @@ const Content  = () => {
         <>
          <Container>
          <Card>
-             <CardHeader title={
+             {/* <CardHeader title={
                  <>
                   <Typography variant="h4">
                   Contents
                
                       </Typography>
                  </>
-             }/>
+             }/> */}
+             <div className="row mx-1 my-2">
+                 <div className="col-md-6">
+                 <Typography variant="h4">
+                Mazars Contents
+               
+                      </Typography>
+                 </div>
+                 <div className="col-md-6" style={{display: "flex", justifyContent : "flex-end"}}>
+                 <a href={MyPDF} className="btn btn-success" target="_blank"> 
+                 Download Manual</a>
+                
+                     </div>
+                 
+                 </div>
             
                  <CardContent>
                    
@@ -61,7 +76,7 @@ const Content  = () => {
             06
         </td>
     </tr>
-    <tr onClick = {() => goToRow("#forgetPassword")} style={{display : 'flex'}}>
+    <tr onClick = {() => goToRow("#changePassword")} style={{display : 'flex'}}>
         <td style={{display : "flex",  width: "20vw"}}> 
         Change Password	 
         </td>
@@ -69,10 +84,10 @@ const Content  = () => {
             ____________________________________________________
             </td>
         <td style={{display : "flex" , justifyContent : "flex-end", width: "20vw"}}>
-            09
+            11
         </td>
     </tr>
-    <tr onClick = {() => goToRow("#query")} style={{display : 'flex'}}>
+    <tr onClick = {() => goToRow("#freshQuery")} style={{display : 'flex'}}>
         <td style={{display : "flex",  width: "20vw"}}> 
         Register Fresh Query
         </td>
@@ -80,100 +95,13 @@ const Content  = () => {
             ____________________________________________________
             </td>
         <td style={{display : "flex" , justifyContent : "flex-end", width: "20vw"}}>
-            12
-        </td>
-    </tr>
-    <tr onClick = {() => goToRow("#query")} style={{display : 'flex'}}>
-        <td style={{display : "flex",  width: "20vw"}}> 
-        Query Detail Page – Basic Query Information
-        </td>
-        <td style={{display : "flex",  width: "20vw"}}>
-            ____________________________________________________
-            </td>
-        <td style={{display : "flex" , justifyContent : "flex-end", width: "20vw"}}>
-            14
-        </td>
-    </tr>
-    <tr onClick = {() => goToRow("#query")} style={{display : 'flex'}}>
-        <td style={{display : "flex",  width: "20vw"}}> 
-        Proposal  </td>
-        <td style={{display : "flex",  width: "20vw"}}>
-            ____________________________________________________
-            </td>
-        <td style={{display : "flex" , justifyContent : "flex-end", width: "20vw"}}>
             15
         </td>
     </tr>
-    <tr onClick = {() => goToRow("#query")} style={{display : 'flex'}}>
+   
+    <tr onClick = {() => goToRow("#proposalProcessing")} style={{display : 'flex'}}>
         <td style={{display : "flex",  width: "20vw"}}> 
-        Engagement Letter
-          </td>
-        <td style={{display : "flex",  width: "20vw"}}>
-            ____________________________________________________
-            </td>
-        <td style={{display : "flex" , justifyContent : "flex-end", width: "20vw"}}>
-            17
-        </td>
-    </tr>
-    <tr onClick = {() => goToRow("#query")} style={{display : 'flex'}}>
-        <td style={{display : "flex",  width: "20vw"}}> 
-        Query Detail Page – Proposal
-          </td>
-        <td style={{display : "flex",  width: "20vw"}}>
-            ____________________________________________________
-            </td>
-        <td style={{display : "flex" , justifyContent : "flex-end", width: "20vw"}}>
-            20
-        </td>
-    </tr>
-    <tr onClick = {() => goToRow("#query")} style={{display : 'flex'}}>
-        <td style={{display : "flex",  width: "20vw"}}> 
-        Assignments
-          </td>
-        <td style={{display : "flex",  width: "20vw"}}>
-            ____________________________________________________
-            </td>
-        <td style={{display : "flex" , justifyContent : "flex-end", width: "20vw"}}>
-            21
-        </td>
-    </tr>
-    <tr onClick = {() => goToRow("#query")} style={{display : 'flex'}}>
-        <td style={{display : "flex",  width: "20vw"}}> 
-        Query Detail Page – Assignments
-          </td>
-        <td style={{display : "flex",  width: "20vw"}}>
-            ____________________________________________________
-            </td>
-        <td style={{display : "flex" , justifyContent : "flex-end", width: "20vw"}}>
-            23
-        </td>
-    </tr>
-    <tr onClick = {() => goToRow("#query")} style={{display : 'flex'}}>
-        <td style={{display : "flex",  width: "20vw"}}> 
-        Payment Status
-          </td>
-        <td style={{display : "flex",  width: "20vw"}}>
-            ____________________________________________________
-            </td>
-        <td style={{display : "flex" , justifyContent : "flex-end", width: "20vw"}}>
-            24
-        </td>
-    </tr>
-    <tr onClick = {() => goToRow("#inbox")} style={{display : 'flex'}}>
-        <td style={{display : "flex",  width: "20vw"}}> 
-        Inbox
-          </td>
-        <td style={{display : "flex",  width: "20vw"}}>
-            ____________________________________________________
-            </td>
-        <td style={{display : "flex" , justifyContent : "flex-end", width: "20vw"}}>
-            28
-        </td>
-    </tr>
-    <tr onClick = {() => goToRow("#feedback")} style={{display : 'flex'}}>
-        <td style={{display : "flex",  width: "20vw"}}> 
-        Feedback
-          </td>
+        Proposal processing  </td>
         <td style={{display : "flex",  width: "20vw"}}>
             ____________________________________________________
             </td>
@@ -181,6 +109,73 @@ const Content  = () => {
             29
         </td>
     </tr>
+    <tr onClick = {() => goToRow("#assignProcess")} style={{display : 'flex'}}>
+        <td style={{display : "flex",  width: "20vw"}}> 
+        Assignment process
+          </td>
+        <td style={{display : "flex",  width: "20vw"}}>
+            ____________________________________________________
+            </td>
+        <td style={{display : "flex" , justifyContent : "flex-end", width: "20vw"}}>
+            39
+        </td>
+    </tr>
+    <tr onClick = {() => goToRow("#paymentProcess")} style={{display : 'flex'}}>
+        <td style={{display : "flex",  width: "20vw"}}> 
+        Making Payment
+          </td>
+        <td style={{display : "flex",  width: "20vw"}}>
+            ____________________________________________________
+            </td>
+        <td style={{display : "flex" , justifyContent : "flex-end", width: "20vw"}}>
+            46
+        </td>
+    </tr>
+    <tr onClick = {() => goToRow("#mazarDashboard")} style={{display : 'flex'}}>
+        <td style={{display : "flex",  width: "20vw"}}> 
+        Mazars Dashboard
+          </td>
+        <td style={{display : "flex",  width: "20vw"}}>
+            ____________________________________________________
+            </td>
+        <td style={{display : "flex" , justifyContent : "flex-end", width: "20vw"}}>
+            53
+        </td>
+    </tr>
+    <tr onClick = {() => goToRow("#showMessage")} style={{display : 'flex'}}>
+        <td style={{display : "flex",  width: "20vw"}}> 
+        Message Inbox
+          </td>
+        <td style={{display : "flex",  width: "20vw"}}>
+            ____________________________________________________
+            </td>
+        <td style={{display : "flex" , justifyContent : "flex-end", width: "20vw"}}>
+            55
+        </td>
+    </tr>
+    <tr onClick = {() => goToRow("#seceduler")} style={{display : 'flex'}}>
+        <td style={{display : "flex",  width: "20vw"}}> 
+        Scheduling a meeting
+          </td>
+        <td style={{display : "flex",  width: "20vw"}}>
+            ____________________________________________________
+            </td>
+        <td style={{display : "flex" , justifyContent : "flex-end", width: "20vw"}}>
+            56
+        </td>
+    </tr>
+    <tr onClick = {() => goToRow("#feedbackProcess")} style={{display : 'flex'}}>
+        <td style={{display : "flex",  width: "20vw"}}> 
+        Sending feedback
+          </td>
+        <td style={{display : "flex",  width: "20vw"}}>
+            ____________________________________________________
+            </td>
+        <td style={{display : "flex" , justifyContent : "flex-end", width: "20vw"}}>
+            57
+        </td>
+    </tr>
+  
                        
                        </table>
       

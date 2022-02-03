@@ -27,14 +27,14 @@ const Assignment = () => {
              <Container>
             <Card>
                 <CardHeader title={
-                    <Typography variant="h4">
+                    <Typography variant="h5">
                         Under Assignments Tab, the client can view the processing progress of the query.
                         </Typography>
                 }/>
                
                     <CardContent>
                         <CardMedia src={assignmentImage} component="img" />
-                        <Typography variant="h4">
+                        <Typography variant="body1">
                        After the Mazars Team has sent online draft reports for discussion with the client, following screen will be visible to the client.
                         An email will also be sent to the client every time any draft report is uploaded
                         </Typography>
@@ -52,13 +52,13 @@ const Assignment = () => {
        <Container>
             <Card>
                     <CardContent>
-                        <Typography variant="h4">
+                        <Typography variant="body1">
                       Under the Deliverable, by clicking on the view all report icon  
                       <Button><CardMedia src={pdfIconImage} component="img" style={{width: "20px", height: "20px" }}/></Button>   the draft reports can be viewed & 
                       downloaded by the client. Following screen will be visible to the client.
                         </Typography>
                         <CardMedia src={assignmentImage21} component="img" />
-                        <Typography variant="h4">
+                        <Typography variant="body1">
                     After clicking on  <Button><CardMedia src={pdfIconImage} component="img" style={{width: "20px", height: "20px" }}/></Button>    following screen will be visible
                         </Typography>
                         <CardMedia src={assignmentImage31} component="img" />
@@ -119,7 +119,7 @@ const Assignment = () => {
         </td>
     </tr>
             </table>
-            <Typography variant="h4">
+            <Typography variant="body1">
                       After the discussion on draft report(s) is completed, Mazars Team will mark the progress status of assignment as draft report completed & will move on to finalization of the report. 
                       At this stage, further discussion with the client may take place, if required.</Typography>
                       <CardMedia src={finalAssignment} component="img" />
@@ -137,13 +137,13 @@ const Assignment = () => {
     <Container>
         <Card>
             <CardContent>
-            <Typography variant="h4">
+            <Typography variant="body1">
                         After such discussion, final reports are uploaded by the Mazars Team & are visible to the client under the deliverable’s icon   
                         <CardMedia src={pdfIconImage} component="img" style={{width: "30px", height: "30px" }}/>  as below. An email alert will also
                          be sent to the client confirming such uploading of final reports
                       </Typography>
                       <CardMedia src={pdfAssignmentImg} component="img" />
-                      <Typography variant="h4">
+                      <Typography variant="body1">
 After clicking on   
 <Button>
 <CardMedia src={pdfIconImage} component="img" style={{widht: "30px", height: "30px" }} />
@@ -163,12 +163,12 @@ After clicking on
         <Container>
             <Card>
                 <CardContent>
-                <Typography variant="h4">
+                <Typography variant="body1">
                     After delivery of final reports, Mazars Team will mark the progress status of 
                     assignment as delivery of final report completed, below screen will be visible
                         </Typography>
                         <CardMedia src={assignment3} component="img"/>
-                        <Typography variant="h4">
+                        <Typography variant="body1">
                     On receipt of full payment from the client, Mazars Team will mark 
                     awaiting completion as completed & following screen will be visible to the client
                    </Typography>
@@ -186,11 +186,11 @@ After clicking on
            <Container>
                <Card>
                    <CardContent>
-                   <Typography variant="h4">
+                   <Typography variant="body1">
                     The Assignment tab under the query details will show following information.
                      </Typography>
                      <CardMedia src={assignmentQuery} component="img"/>
-                     <Typography variant="h4">
+                     <Typography variant="body1">
                  Query Detail Page: Assignment
                  </Typography>
                  <table className="table table-bordered p-2">
@@ -226,10 +226,10 @@ After clicking on
             <Container>
                 <Card>
                     <CardContent>
-                    <Typography variant="h4">
+                    <Typography variant="body1">
                     Under Payment Status tab, following screen will be visible after acceptance of proposal.  </Typography>
                     <CardMedia src={seeProposal} component="img"/>
-                    <Typography variant="h4">
+                    <Typography variant="body1">
                  Under Payment Status tab, following action buttons are visible
                  </Typography>
                     </CardContent>
@@ -248,10 +248,12 @@ After clicking on
                      </tr>
                    
                      </table>
-                
+                     <Typography variant="body1">
+                    TL name column displays the name of Team Leader.
+                    </Typography>
                 </Card>
             </Container>
-            <Typography variant="h6" align = "center">
+            <Typography variant="h6" align = "center" id="paymentProcess">
                 45
             </Typography>
             </Box>

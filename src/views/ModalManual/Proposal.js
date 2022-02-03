@@ -81,22 +81,22 @@ const Proposal = () => {
                  <Container>
                      <Card>
                      <CardHeader title={
-                    <Typography variant="h4" align="center">
+                    <Typography variant="h5" align="center">
                     Processing of Proposal
                             </Typography>
         }/>
                         <CardContent>
-                <Typography variant="h4">
+                <Typography variant="body1">
                 Mazars Team, after examining the query, will prepare a proposal & provide it to the client.
                  An email will also be sent to the client informing about the proposal sent
                 </Typography>
-                <Typography variant="h4">
+                <Typography variant="body1">
                 By selecting the Proposal Tab, on the left-hand side of the following screen, the client can 
                 view the proposal, by clicking on the blue arrow facing rightwards
                 <Button><CardMedia src={rightArrow} component="img" style={{width: "30px", height: "30px"}} /></Button>
                 </Typography>
                 <CardMedia src={proposalView} component="img" />
-                <Typography variant="h4">
+                <Typography variant="body1">
                 After clicking on blue arrow facing rightwards (   <Button><CardMedia src={rightArrow} component="img" style={{width: "30px", height: "30px"}} /></Button>), 
                 following window will appear:
              
@@ -116,7 +116,7 @@ const Proposal = () => {
                      <Container>
                          <Card>
                              <CardContent>
-                             <Typography variant="h4">
+                             <Typography variant="body1">
                 Engagement letter box should be checked to view the engagement letter before accepting 
                 or rejecting the proposal by pressing the    
                       <Button varinat="contained" className={classes.root}>Accept</Button>   or    
@@ -124,19 +124,19 @@ const Proposal = () => {
                        button respectively. The client can also take no action on the proposal by clicking on  
                        <Button varinat="contained" className={classes.root2}>Go Back</Button> button.
                 </Typography>
-                <Typography variant="h4">
+                <Typography variant="body1">
                 Upon checking the engagement letter box,
                  proposed engagement letter will be displayed.
                 </Typography>
-                <Typography variant="h4">
+                <Typography variant="body1">
                 Acceptance of proposal by the client will amount to acceptance
                  of Engagement letter.
                 </Typography>
-                <Typography variant="h4">
+                <Typography variant="body1">
                 Before deciding about the proposal, the client can send message to the Mazars Team for any discussion about the proposal and may accept or reject the proposal after such discussion. Conference can also be done by the Mazars Team with the client for any discussion. The Mazars 
                 Team may amend the proposal and submit fresh proposal after such discussion/conference.
                 </Typography>
-                <Typography variant = "h4">
+                <Typography variant = "body1">
                 Under Proposal Tab, various action buttons will appear as per the screen below:
                 </Typography>
                 <CardMedia src={proposalView2} component="img"/>
@@ -265,7 +265,7 @@ const Proposal = () => {
     <Container>
         <Card>
             <CardContent>
-            <Typography variant="h4">
+            <Typography variant="body1">
             By selecting the Engagement Letter checkbox, the proposal can be viewed and on
 the basis of terms and conditions mentioned in the proposal, the client can make the decision by clicking on 
            <Button variant="container" className={classes.root}>Accept</Button>             or            
@@ -284,14 +284,14 @@ the basis of terms and conditions mentioned in the proposal, the client can make
     <Container>
         <Card>
            <CardContent>
-           <Typography variant="h4">
+           <Typography variant="body1">
             If the proposal is acceptable, click  <Button variant="container" className={classes.root}>Accept</Button>                 button. Upon acceptance,
              following success message window will appear showing “Proposal accepted successfully”.
                   or            
          
                 </Typography>
                 <CardMedia  src={acceptProposal} component="img"/>
-                <Typography variant="h4">
+                <Typography variant="body1">
             fter acceptance of proposal, action button right arrow (<CardMedia  component="img"
         src={rightArrow} style={{height: "20px",  width : "20px"}} />)
              will disappear & new eye button (<CardMedia  component="img"
@@ -326,11 +326,11 @@ the basis of terms and conditions mentioned in the proposal, the client can make
         </td>
     </tr>
             </table>
-            <Typography variant="h4">
+            <Typography variant="body1">
             If the proposal is not acceptable, click          
             <Button variant="contained" className={classes.root3}>Reject</Button>   button. Rejection message window will appear showing “Are you sure to reject Proposal?”    </Typography>
             <CardMedia  src={proposalConfirm} component="img"/>
-            <Typography variant="h4">
+            <Typography variant="body1">
             The client can still review the proposal & go back by clicking 
             <Button className={classes.root3}>Cancel</Button>         button. If sure to reject, click 
             <Button variant="contained" className={classes.root}>Yes Reject it</Button>  
@@ -350,11 +350,11 @@ the basis of terms and conditions mentioned in the proposal, the client can make
     <Container>
         <Card>
             <CardContent>
-            <Typography variant="h4">
+            <Typography variant="body1">
             Upon rejection of proposal, following screen will be visible in the Proposal tab details.  
                             </Typography> 
                             <CardMedia  src={proposal221} component="img"/>
-                            <Typography variant="h4">
+                            <Typography variant="body1">
             In case of client inadvertently rejecting the proposal,
              he may send message to the Mazars Team for restoring the pending proposal status by clicking on 
              <Button> <CardMedia src={message}component="img"/></Button> icon.
@@ -373,12 +373,12 @@ the basis of terms and conditions mentioned in the proposal, the client can make
     <Container>
         <Card>
             <CardContent>
-            <Typography variant="h4">
+            <Typography variant="body1">
             After examining the request, Mazars Team may quickly restore the pending proposal status & 
             it will be visible to the client. An email will also be sent to the client .4
               </Typography>
               <CardMedia  src={restoredProposalView} component="img"/>
-              <Typography variant="h4">
+              <Typography variant="body1">
             After the acceptance of Proposal, Proposal tab under the Query Details will show the following information.
              The client can also download the proposal by clicking download button 
              <Button className={classes.root}>Download</Button></Typography>
@@ -406,7 +406,7 @@ the basis of terms and conditions mentioned in the proposal, the client can make
     <Container>
         <Card>
             <CardContent>
-            <Typography variant="h4">
+            <Typography variant="body1">
           Query Detail Page: Proposal
               </Typography>
           <table className="table table-bordered p-2">
@@ -470,7 +470,7 @@ the basis of terms and conditions mentioned in the proposal, the client can make
                   </tr>
                   <tr>
                       <td>
-                          <Typography variant="h4" color="primary">
+                          <Typography variant="body1" color="primary">
                           (After accepting the proposal, the client can view progress of the query under the assignment tab)
                           </Typography>
                       </td>
@@ -479,7 +479,7 @@ the basis of terms and conditions mentioned in the proposal, the client can make
             </CardContent>
         </Card>
     </Container>
-    <Typography align="center" variant="h6">
+    <Typography align="center" variant="h6" id="assignProcess">
          38
     </Typography>
 </Box>

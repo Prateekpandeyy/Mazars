@@ -89,28 +89,24 @@ const Query = () => {
             <Box>
             <Container>
                 <Card>
-                    <CardHeader title={
-                        <>
-                         <Typography variant="h4">
+                   
+                   
+                        <CardContent>
+                        <Typography variant="body1">
                                 After successful login by an existing client or registration
                                 of a new client, following screen/window will open
                             </Typography>
-                            <Typography variant="h4">
+                            <Typography variant="body1">
                                 Change password: To change the password, click on icon located at top right
                                 side of the screen
                             </Typography>
-                        </>
-                    }/>
-                   
-                        <CardContent>
-                           
                             <CardMedia component="img" src={imgQuery} />
-                            <Typography variant="h4">
+                            <Typography variant="body1">
                                 Change password window will appear, enter the registered email id along with the new password that
                                 client wants to register for the account & click on
                                 <Button variant="contained" className={classes.root}>Get OTP</Button>
                             </Typography>
-                            <Typography variant="h4">
+                            <Typography variant="body1">
                                 Change password: Success message window will appear showing OTP has been
                                 sent to your registered email address. Click Ok.
                             </Typography>
@@ -120,7 +116,7 @@ const Query = () => {
                 </Card>
             </Container>
 
-            <Typography variant="h6" align="center">
+            <Typography variant="h6" align="center" id="changePassword">
                        10
                    </Typography>
                
@@ -134,7 +130,7 @@ const Query = () => {
                   
                         <CardContent>
                             
-                        <Typography variant="h4">
+                        <Typography variant="h5">
                                 Change password: Enter the OTP received on your registered email address & click on
                                 <Button variant="contained" className={classes.root2}>Submit</Button>
                             </Typography>
@@ -152,14 +148,14 @@ const Query = () => {
             <Container>
                 <Card>
                         <CardContent>
-                        <Typography variant="h4">
+                        <Typography variant="body1">
                                 Change password: Success message window will appear showing “Password changed successfully”. Click ok & continue.
                             </Typography>
                             <CardMedia component="img" src={querySuccess} />
-                            <Typography variant="h4">
+                            <Typography variant="body1">
                          The new password should be used for future login.
                             </Typography>
-                            <Typography variant="h4">
+                            <Typography variant="body1">
                             After logging in, Mazars dashboard will appear as below
                                 </Typography>
                             <CardMedia component="img" src={querySuccess22} />
@@ -177,12 +173,12 @@ const Query = () => {
               <Container>
                   <Card>
 <CardContent>
-<Typography variant="h4">
+<Typography variant="h6">
                          To register a new query, click on ‘Queries’ tab & then
                          <Button variant="contained" className={classes.root2}>Fresh Query</Button> button
                             </Typography>
                             <CardMedia component="img" src={queryNew} />
-                            <Typography variant="h4">
+                            <Typography variant="h6">
                          Select the category and sub-category from drop down list as per nature of your query & click on    
                          <Button variant="contained" className={classes.root2}>Submit</Button>          
                           . Category & Sub Category should be carefully selected as these cannot be edited later on.
@@ -202,7 +198,7 @@ const Query = () => {
                <Container>
                    <Card>
                        <CardContent>
-                       <Typography variant="h4">
+                       <Typography variant="h6">
                          Category and Sub-Category Classificati
                             </Typography>
                             <table className="table table-bordered p-2">
@@ -276,7 +272,7 @@ const Query = () => {
     </tr>
     </tbody>
     </table>
-    <Typography variant="h4">
+    <Typography variant="h6">
                          Enter the complete information about your query and upload all necessary documents & click on .
                          <Button variant="contained" className={classes.root}>Submit</Button> 
                            (please see instructions below for adding fresh query) 
@@ -288,7 +284,7 @@ const Query = () => {
                        </CardContent>
                    </Card>
                </Container>
-               <Typography variant="h6" align="center">
+               <Typography variant="h6" align="center" id="freshQuery">
                        14
                    </Typography>
                </Box>
@@ -302,7 +298,7 @@ const Query = () => {
                     <CardHeader 
                     title={
                         <>
-                         <Typography variant="h4">
+                         <Typography variant="h5">
                          Instructions for adding Fresh Query:
                             </Typography>
                            
@@ -456,13 +452,13 @@ const Query = () => {
         <Container>
             <Card>
                 <CardContent>
-                <Typography variant="h4">
+                <Typography variant="body1">
                          After submitting the query, Success message window will appear showing 
                          the system generated unique query number. Click Ok. Client will also receive 
                          an email message informing successful submission of the query.
                             </Typography>
                             <CardMedia component="img" src={success2} />
-                            <Typography variant="h4">
+                            <Typography variant="body1">
                          After clicking on Ok, the query will be reflected under queries Tab
                             </Typography> 
                             <CardMedia component="img" src={queryList} />
@@ -479,12 +475,12 @@ const Query = () => {
              <Container>
                  <Card>
                      <CardContent>
-                     <Typography variant="h4">
+                     <Typography variant="body1">
                          Query Tab will show the brief status of the query,
                           Under Action column, icons are available for different actions as below:
                             </Typography>              
                             <CardMedia component="img" src={queryList22} />
-                            <Typography variant="h4">
+                            <Typography variant="body1">
                          Query Tab: Action Buttons:
                             </Typography>
                             <table className="table table-bordered p-2">
@@ -562,29 +558,24 @@ const Query = () => {
            <Box>
                <Container>
                    <Card>
-                   <CardHeader 
-                    title={
-                        <>
-                         <Typography variant="h4">
+                   
+                    <CardContent>
+                    <Typography variant="body1">
                          Action Button: Edit
                          <Button variant="contained" className={classes.root2}>
                              <CardMedia component="img" src={img1234}/>
                          </Button>
-                            </Typography>    
-                        </>
-                    }/>
-                    <CardContent>
-                           
-                           <Typography variant="h4" gutterBottom color="primary">
+                            </Typography>
+                           <Typography variant="body1" gutterBottom color="primary">
                            Click the edit icon to edit query details.
                             Category & Sub-category can’t be edited.
                            </Typography>
-                           <Typography variant="h4" color="primary">
+                           <Typography variant="body1" color="primary">
                            Additional documents can also be uploaded by clicking  icon. Documents once uploaded cannot be deleted/withdrawal.
                             Documents, therefore, should be selected carefully before being uploaded.
                            </Typography>
                            <CardMedia component="img" src={nextImg} />
-                           <Typography variant="h4">
+                           <Typography variant="body1">
                          After editing the query details, click on 
                          <Button variant="contained" className={classes.root}> Update </Button>
                          . Success message window will appear showing
@@ -592,7 +583,7 @@ const Query = () => {
                          
                             </Typography>
                             <CardMedia component="img" src={queryList222} />
-                            <Typography variant="h4">
+                            <Typography variant="body1">
                          In case of any attempt to upload any document/file 
                          already uploaded, following message will be displayed upon clicking on
                          <Button variant="contained" className={classes.root}> Update </Button>
@@ -611,7 +602,7 @@ const Query = () => {
         <Card>
             <CardContent>
             <CardMedia component="img" src={updateQuery} />
-            <Typography variant="h4">
+            <Typography variant="body1">
                          Action Button: Delete
                          <Button variant="contained"> 
                          <CardMedia src={delImg} component="img"/></Button>
@@ -619,7 +610,7 @@ const Query = () => {
                             <Typography variant="h6" color="primary">
                             Click delete icon to delete the query.
                             </Typography>
-                            <Typography variant="h4">
+                            <Typography variant="body1">
                         Delete message window will appear showing “Are you sure? Want to delete query?”. 
                         Click   <Button variant="contained" className={classes.root2}> Yes, delete it </Button> if the client wants to delete the query. Otherwise click the 
                         <Button variant="contained" className={classes.root3}> Cancle </Button> button </Typography>
@@ -636,7 +627,7 @@ const Query = () => {
            <Container>
                <Card>
                    <CardContent>
-                   <Typography variant="h4">
+                   <Typography variant="body1">
                          After clicking on    
                          <Button variant="contained" className={classes.root3}> Yes, delete it</Button>  following window will appear showing 
                          “Please provide the reason”, enter the reason(s) 
@@ -644,22 +635,22 @@ const Query = () => {
                          <Button variant="contained" className={classes.root3}> Submit</Button>
                             </Typography>
                             <CardMedia component="img" src={rejectQuery} />
-                            <Typography variant="h4">
+                            <Typography variant="body1">
                          After clicking on  
                            <Button variant="contained" className={classes.root2}> Submit</Button> , the query will be deleted & message window will appear showing “Query deleted successfully”.   
                                                   </Typography> 
-                                                  <Typography variant="h4">
+                                                  <Typography variant="body1">
   Action Button: Send message
                          <Button variant="contained"> 
                          <CardMedia component="img" src={message} style={{width: "30px", height: "30px"}}/></Button>
                             </Typography>
-                          <Typography variant="h4" color="primary">
+                          <Typography variant="body1" color="primary">
                           Click send message icon to send a message to Mazars Team
                           </Typography>
-                          <Typography variant="h4" color="primary">
+                          <Typography variant="body1" color="primary">
                           From the drop-down list, select the message type depending on the nature of message.
                           </Typography>
-                          <Typography variant="h4">
+                          <Typography variant="body1">
                           Enter the message & click  
                            <Button variant="contained" className={classes.root2}> Send</Button> 
                                                   </Typography>
@@ -712,7 +703,7 @@ const Query = () => {
                 <Container>
                     <Card>
                         <CardContent>
-                        <Typography variant="h4">
+                        <Typography variant="body1">
                          After clicking on  <Button variant="contained" className={classes.root}> Send </Button>      
                           Success message window will appear, showing “Message sent successfully”. Click ok.
                         
@@ -730,7 +721,7 @@ const Query = () => {
              <Container>
                  <Card>
                      <CardContent>
-                     <Typography variant="h4">
+                     <Typography variant="body1">
                          Action Button: View discussion message  <Button variant="contained" className={classes.root}> <CardMedia src={messageHistory} component="img"/> </Button>      
                        
                             </Typography> 
@@ -760,12 +751,12 @@ const Query = () => {
              <Container>
                  <Card>
                      <CardContent>
-                     <Typography variant="h4">
+                     <Typography variant="body1">
                          To view the details of query submitted, click on the query number 
                          in the queries tab or in the Proposal, Payment Status or Assignments tab.
                             </Typography>   
                             <CardMedia component="img" src={showQuery22} />
-                            <Typography variant="h4">
+                            <Typography variant="body1">
                          After clicking on the query number, 
                          following details will be displayed in basic query information tab.
                          </Typography> 

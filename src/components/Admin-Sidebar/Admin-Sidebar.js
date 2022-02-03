@@ -358,7 +358,7 @@ const handleClick = () => {
 
               <li className="nav-item">
                 <NavLink to={"/admin/taxprofessionals"}>
-                  <i className="fa fa-users"></i>
+                <i class="fa fa-user-plus"></i>
                   <span className="menu-title" data-i18n="">
                     Tax Professionals
                   </span>
@@ -366,7 +366,7 @@ const handleClick = () => {
               </li>
                <li className ="nav-item">
                  <NavLink to={"/admin/customers"}>
-                   <i className="fa fa-users"></i>
+                 <i class="fa fa-user"></i>
                    <span className="menu-title" data-i18n="">
                   Client
                   </span>
@@ -374,7 +374,7 @@ const handleClick = () => {
                </li>
                <li className ="nav-item">
                  <NavLink to={"/admin/reportlist"}>
-                   <i className="fa fa-users"></i>
+                 <i class="fa fa-address-book"></i>
                    <span className="menu-title" data-i18n="">
                    Report
                   </span>
@@ -496,7 +496,7 @@ const handleClick = () => {
               </li>
               <li className="nav-item">
                 <NavLink to={"/teamleader/reports"}>
-                  <i className="fa fa-users"></i>
+                <i class="fa fa-address-book"></i>
                   <span className="menu-title" data-i18n="">
                     Reports
                   </span>
@@ -504,7 +504,7 @@ const handleClick = () => {
               </li>
               <li className="nav-item">
                 <NavLink to={"/teamleader/addteamprof"}>
-                  <i className="fa fa-users"></i>
+                <i class="fa fa-user-plus"></i>
                   <span className="menu-title" data-i18n="">
                     View T.P
                   </span>
@@ -627,7 +627,7 @@ const handleClick = () => {
               </li>
               <li className="nav-item">
                 <NavLink to={"/taxprofessional/reports"}>
-                  <i className="fa fa-users"></i>
+                <i class="fa fa-address-book"></i>
                   <span className="menu-title" data-i18n="">
                     Reports
                   </span>

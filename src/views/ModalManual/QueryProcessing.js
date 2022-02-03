@@ -60,15 +60,15 @@ const QueryProcessing = () => {
      <Card>
          <CardHeader title={
              <>
-               <Typography variant="h4" align="center">
+               <Typography variant="h5" align="center">
      Processing of query by Mazars Team.
      </Typography>
-             <Typography variant="h5">
+             <Typography variant="body1">
              Mazars Team will as quickly as possible allocate the query to a Team Leader for processing. 
              Before any query is allocated to Team Leader, following status and action buttons
               will be visible in the query tab (S.No. 1 of the list in the screenshot)
              </Typography>
-             <Typography variant="h5">
+             <Typography variant="body1">
              Once query is allocated to a Team leader, following status & action buttons will be visible 
              for the query in the query tab (S.No. 2 of the list in the screenshot)
                  </Typography>
@@ -77,7 +77,7 @@ const QueryProcessing = () => {
          }/>
          <CardContent>
          <CardMedia component="img" src={processImg}/>
-         <Typography variant="h4">
+         <Typography variant="body1">
                         Query Tab: Action Buttons:
                         </Typography>
                         <table className="table table-bordered p-2">
@@ -154,13 +154,13 @@ const QueryProcessing = () => {
           <Container>
               <Card>
                   <CardContent>
-                  <Typography variant="h4">
+                  <Typography variant="body1">
                    Action Button: Upload Additional Documents
                     <Button variant="contained">
                     <CardMedia src={downloadImg} component="img" />
                     </Button>
                        </Typography>
-                       <Typography variant="h4">
+                       <Typography variant="body1">
                         After clicking on upload additional documents icon,
                          upload documents message window will appear, click on ,
                          <Button variant="contained">Choose Files </Button> 
@@ -168,7 +168,7 @@ const QueryProcessing = () => {
                          <Button variant="contained">Submit </Button> 
                             </Typography>
                         <CardMedia src={uploadMedia} component="img"  />
-                        <Typography variant="h4">
+                        <Typography variant="body1">
                         After clicking on  <Button variant="contained">Submit </Button>  success message window
                          will appear, showing name of the file(s) & uploaded successfully message. Click ok
                         </Typography>
@@ -184,19 +184,19 @@ const QueryProcessing = () => {
         <Card>
             <CardContent>
             <CardMedia src={customerQuery} component="img"/>
-            <Typography variant="h4">
+            <Typography variant="body1">
                         In case of any attempt to upload any document/file,
                          already uploaded, following message will be displayed upon clicking 
                          on <Button variant="contained">Submit </Button> 
                       </Typography> 
                       <CardMedia src={uploadedImg} component="img"/>
-                      <Typography variant="h4">
+                      <Typography variant="body1">
                    Action Button: Send Feedback
                     <Button variant="contained">
                     <CardMedia src={feedbackImg} component="img" />
                     </Button>
                        </Typography>
-                       <Typography variant="h4">
+                       <Typography variant="body1">
                         After clicking on Feedback icon, Feedback message window will appear.
                          Provide your feedback and click on   <Button variant="contained">Submit </Button> 
                           . Feedback will be sent to the Mazars Team
@@ -216,12 +216,12 @@ const QueryProcessing = () => {
             <CardContent>
             <CardMedia src={customerQuery} component="img"/>
            
-                            <Typography variant="h4">
+                            <Typography variant="body1">
                             The client can send feedback from different tabs/windows where
                              feedback icon is available.
                                 </Typography>
                         <CardMedia src={feedbackImage} component="img"  />
-                        <Typography varinat="h4">
+                        <Typography varinat="body1">
               After clicking on <Button variant="contained">Submit </Button>  success message window will
                appear showing “Feedback sent successfully”. Click ok.
               </Typography>
@@ -229,7 +229,7 @@ const QueryProcessing = () => {
             </CardContent>
         </Card>
     </Container>
-    <Typography variant="h6" align = "center">
+    <Typography variant="h6" align = "center" id="proposalProcessing">
               28
           </Typography>
     </Box>

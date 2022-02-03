@@ -382,10 +382,10 @@ function CustomerDeclinedPayment() {
 
                 <CardBody>
           <Records records={records} />
-          <Modal isOpen={openManual} toggle={needHelp} size= "lg" syle={{zIndex : "99999"}}>
+          <Modal isOpen={openManual} toggle={needHelp} style={{display : "block", position: "absolute", left:"280px"}} size="lg">
                         <ModalHeader toggle={needHelp}>Mazars</ModalHeader>
                         <ModalBody>
-                            <ModalManual />
+                            <ModalManual tar= {"assignProcess"} />
                         </ModalBody>
                     </Modal>
                     <div className="tableFixHead">

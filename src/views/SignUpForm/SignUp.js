@@ -13,7 +13,7 @@ import ResendOtp from "./ResendOtp";
 import Select from "react-select";
 import Mandatory from "../../components/Common/Mandatory";
 import EmailValidation from "../../components/Common/EmailValidation";
-import MyPDF from '../dFile/LoginManual.pdf';
+import MyPDF from '../ManualImg/newUser.pdf';
 
 
 function SignUp(props) {
@@ -459,8 +459,7 @@ const [dstate2, setDstate2] = useState("")
         <div className="form">
           <div className="heading" style={{display : "flex", justifyContent : "space-between"}}> 
             <h2>Client Register</h2>
-            <a href={MyPDF}
-  download> Need help?</a>
+            <a href={MyPDF} target="_blank"> Need help?</a>
           </div>
        
           <>
