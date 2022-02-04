@@ -29,7 +29,7 @@
     display: flex;
     width: 50%;
    opacity: 0.9;
-background-image:url("https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1050&q=80");  
+background-image:url("../ManualImg/loginCover.jpeg");  
     background-size:cover;
     background-repeat: no-repeat;
 }

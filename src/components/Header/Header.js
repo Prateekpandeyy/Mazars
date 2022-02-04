@@ -37,7 +37,7 @@ function Header({ id, cust_sign, noAdminSign, noTlSign, noTpSign, admin, mtl, mt
         {noSign && (
           <div>
             <Link to="/">
-              <img src={mazars} className="logo" alt="mazar" style={{ marginBottom: "12px" }} />
+              <img src={mazars} className="logo" alt="mazar"/>
             </Link>
           </div>
         )}
@@ -45,7 +45,7 @@ function Header({ id, cust_sign, noAdminSign, noTlSign, noTpSign, admin, mtl, mt
 
         {loginOTP && (
           <div>
-            <img src={mazars} className="logo" alt="mazar" style={{ marginBottom: "12px" }} />
+            <img src={mazars} className="logo" alt="mazar"/>
           </div>
         )}
 
