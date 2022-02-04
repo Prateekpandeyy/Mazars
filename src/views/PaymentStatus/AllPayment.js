@@ -509,7 +509,7 @@ function Paid() {
           <CardBody>
           
             <Records records={records} />
-            <div className="tableFixHead">
+            <div className="tableFixHeadpaymentCustomer">
             <BootstrapTable
               bootstrap4
               keyField={"assign_no"}

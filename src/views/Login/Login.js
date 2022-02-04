@@ -101,7 +101,7 @@ function LoginForm() {
   return (
     <>
       <Header noSign="noSign" />
-      <h1 style={{ "textAlign": "center", "margin": "55px 0 30px 0" }}>
+      <h1 style={{ textAlign: "center", margin: "55px 0 30px 0", color : "#382731"  }}>
         Would you like to post a query
       </h1>
       
@@ -127,7 +127,7 @@ function LoginForm() {
             </div>
           </div>
           <div className="signUp">
-            <Typography variant="h4" style={{ "margin": "5px auto", "color": "#2b345f" }}>
+            <Typography variant="h4" style={{ margin: "5px auto", color: "#382731" }}>
               For existing client
             </Typography>
             {

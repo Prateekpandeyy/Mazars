@@ -79,29 +79,24 @@ function Proposal(props) {
   };
 
 
-
   const myStyle1 = {
-    backgroundColor: "grey",
-    padding: "12px",
+    backgroundColor: "rgb(120, 120, 120)",
+    padding: "12px 24px",
     borderRadius: "50px",
-    width: "200px",
+    width: "auto",
     textAlign: "center",
     color: "white",
     cursor: "pointer",
   };
-
   const myStyle2 = {
-    padding: "12px",
+    padding: "12px 24px",
     borderRadius: "50px",
-    width: "200px",
+    width: "auto",
     textAlign: "center",
-    backgroundColor: "blue",
+    backgroundColor: "rgb(10, 31, 143)",
     color: "white",
     cursor: "pointer",
   };
-
-
-
 
   return (
     <Layout custDashboard="custDashboard" custUserId={userId}>

@@ -326,7 +326,7 @@ function DeclinedProposal() {
                 <CardBody>
                 
                     <Records records={records} />
-                    <div className="tableFixHead">
+                    <div className="proposalQueryCusttableFixHead">
                     <BootstrapTable
                         bootstrap4
                         keyField= {"assign_no"}

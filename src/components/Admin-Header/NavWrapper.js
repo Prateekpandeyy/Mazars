@@ -93,7 +93,7 @@ function NavWrapper(props) {
                   </span>
                 </a>
 
-                <div className="dropdown-menu dropdown-menu-right">
+                <div className="dropdown-menu dropdown-menu-right changePassword">
                   <div className="arrow_box_right">
 
                     {name == "customer" && (

@@ -22,7 +22,7 @@ function QueriesTab(props) {
 
 
   const myStyle1 = {
-    backgroundColor: "grey",
+    backgroundColor: "rgb(120, 120, 120)",
     padding: "12px 24px",
     borderRadius: "50px",
     width: "auto",
@@ -35,7 +35,7 @@ function QueriesTab(props) {
     borderRadius: "50px",
     width: "auto",
     textAlign: "center",
-    backgroundColor: "blue",
+    backgroundColor: "rgb(10, 31, 143)",
     color: "white",
     cursor: "pointer",
   };

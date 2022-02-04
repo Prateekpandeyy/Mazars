@@ -9,7 +9,7 @@ function Footer() {
     <>
       <footer>
         <div style={{display: "flex", flexDirection: "column", justifyContent: "space-evenly", textAlign: "center"}}>
-          <p>Copyright @ 2021. All right reserved.</p>
+          <p style={{ color: "#382731"}}>Copyright @ 2021. All right reserved.</p>
         <div style={{display: "flex", justifyContent:"center"}}>
         <Link to={"/customer/contactbasic"}>
               

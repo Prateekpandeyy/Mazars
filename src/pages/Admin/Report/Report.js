@@ -19,6 +19,7 @@ import {
   Col,
   Table,
 } from "reactstrap";
+import Swal from 'sweetalert2';
 const Report = () => {
     const userid = window.localStorage.getItem("adminkey");
     const selectInputRef = useRef();
@@ -178,16 +179,20 @@ const getqNo = ((i) => ({
         "value": d.id,
         "label": d.name
       }))
+const resetData = () => {
+  reset()
+  console.log(selectInputRef)
+  selectInputRef.current.select.clearValue();
+  selectInputRef2.current.select.clearValue();
+  selectInputRef3.current.select.clearValue();
+  selectInputRef4.current.select.clearValue();
+  selectInputRef5.current.select.clearValue();
+  setQno([])
 
+}
     const onSubmit = (value) => {
-      console.log(selectInputRef)
-      selectInputRef.current.select.clearValue();
-      selectInputRef2.current.select.clearValue();
-      selectInputRef3.current.select.clearValue();
-      selectInputRef4.current.select.clearValue();
-      selectInputRef5.current.select.clearValue();
-    
-      reset()
+     
+   
 
      let basic_info = false
      let proposal_info = false
@@ -275,7 +280,20 @@ const getqNo = ((i) => ({
    })
    .then(function (response) {
    if(response.data.code === 1){
+     Swal.fire({
+       title : "success",
+       html : "Report generated successfully",
+       icon : "success"
+
+     })
     window.open(`${baseUrl3}/${response.data.result}`)
+   }
+   else{
+     Swal.fire({
+       title : "error",
+       html : "Something went wrong , please try again",
+       icon :"error"
+     })
    }
    })
    .catch((error) => {
@@ -701,13 +719,13 @@ ref={selectInputRef2}
            <legend className="login-legend">Payment Receipt</legend>  
             <div className="basicFeild">
             <span>
-<input type="checkbox" ref={register} name="receiptDate" id="receiptDate"></input>
-<label htmlFor="receiptDate">Date of Receipt</label>
-</span>   
+<input type="checkbox" ref={register} name="invoice_number" id="invoice_number"></input>
+<label htmlFor="invoice_number">Invoice Number</label>
+</span> 
 <span>
-<input type="checkbox" ref={register} name="amountReceived" id="amountReceived"></input>
-<label htmlFor="amountReceived">Amount Received</label>
-</span>
+<input type="checkbox" ref={register} name="dos" id="dos"></input>
+<label htmlFor="dos">Description of Services</label>
+</span> 
 <span>
 <input type="checkbox" ref={register} name="basic_amount" id="basic_amount"></input>
 <label htmlFor="basic_amount">Basic Amount</label>
@@ -732,12 +750,10 @@ ref={selectInputRef2}
 <input type="checkbox" ref={register} name="total_gst" id="total_gst"></input>
 <label htmlFor="total_gst">Total Gst </label>
 </span>
-
 <span>
 <input type="checkbox" ref={register} name="total_inovice" id="total_inovice"></input>
-<label htmlFor="total_inovice">Total Gst </label>
+<label htmlFor="total_inovice">Invoice Value </label>
 </span>
-
 <span>
 <input type="checkbox" ref={register} name="tds" id="tds"></input>
 <label htmlFor="tds">TDS Deducted</label>
@@ -746,23 +762,30 @@ ref={selectInputRef2}
 <input type="checkbox" ref={register} name="net_amount" id="net_amount"></input>
 <label htmlFor="net_amount">Net Amount </label>
 </span>
+            <span>
+<input type="checkbox" ref={register} name="receiptDate" id="receiptDate"></input>
+<label htmlFor="receiptDate">Date of Receipt</label>
+</span>   
 <span>
-<input type="checkbox" ref={register} name="invoice_number" id="invoice_number"></input>
-<label htmlFor="invoice_number">Invoice Number</label>
-</span> 
-<span>
-<input type="checkbox" ref={register} name="dos" id="dos"></input>
-<label htmlFor="dos">Description of Services</label>
-</span> 
+<input type="checkbox" ref={register} name="amountReceived" id="amountReceived"></input>
+<label htmlFor="amountReceived">Amount Received</label>
+</span>
+
+
+
+
+
+
 <span>
 <input type="checkbox" ref={register} name="amount_type" id="amount_type"></input>
-<label htmlFor="amount_type">Payment Type </label>
+<label htmlFor="amount_type">Payment Mode </label>
 </span>
  </div>
            </fieldset>
            </div>
    </div>
    <button type="submit" class="btn btn-success btn-lg my-3">Generate Report</button>
+   <button type="button" class="btn btn-danger btn-lg m-3" onClick={() => resetData()}>Reset</button>
    <Mandatory />
   </form>
   </div>

@@ -3,7 +3,7 @@
   justify-content: space-between;
   width: 100%;
   padding: 14px 20px 4px;
-  background: #2b345f;
+  /* background: #2b345f; */
 }
 
 .heading {
@@ -147,4 +147,24 @@ color: #597EAA
 
 .received{
   background-color:#e4544633;
+}
+.swal2-styled.swal2-confirm{
+  background-color: rgb(10, 31, 143) !important;
+}
+h1, h2, h3 h4 , h5, h6, p{
+  color: #382731 !important;
+}
+.form-control:focus{
+  border-color: rgb(10, 31, 143)!important;
+}
+.btn-primary{
+  background-color: rgb(10, 31, 143) !important;
+  border-color: rgb(10, 31, 143) !important;
+  color: #fff !important;
+}
+html body a{
+  color: rgb(10, 31, 143)!important;
+}
+.main-menu.menu-light .navigation > li > a {
+  color: rgb(56, 39, 49) !important;
 }

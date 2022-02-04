@@ -52,7 +52,7 @@ function AdminHeader({ custUserId, adminUserId, TLuserId, TPuserId , feedbackNum
         {custUserId && (
           <NavWrapper 
          
-          color="#5E96AE" logout={custLogout}
+          color="rgb(10, 31, 143)" logout={custLogout}
             name="customer" email={CustEmail}
           />
         )}

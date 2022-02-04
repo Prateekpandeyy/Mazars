@@ -299,7 +299,7 @@ function InprogressProposal() {
         </CardHeader>
         <CardBody>
          <Records records={records} />
-          <div className="tableFixHead">
+          <div className="tableFixHeadQueryCustomer">
           <BootstrapTable
             bootstrap4
             keyField= {"assign_no"}

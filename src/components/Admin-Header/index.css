@@ -1,7 +1,7 @@
 
 .notification {
-  background-color: #555;
-  color: white;
+  background-color:rgb(120, 120, 120);
+  color: white !important;
   text-decoration: none;
   padding: 6px 8px;;
   position: relative;
@@ -19,6 +19,9 @@
   right: -10px;
   padding: 5px 10px;
   border-radius: 50%;
-  background-color: rgb(39, 121, 19);
+  background-color: rgb(61, 131, 117);
   color: white;
+}
+.changePassword .dropdown-item:active{
+  background-color: rgb(10, 31, 143) !important;
 }

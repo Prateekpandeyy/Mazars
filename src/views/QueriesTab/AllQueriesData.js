@@ -509,7 +509,7 @@ const showManual = () => {
                    
                
                   
-                  <div className="tableFixHead">
+                  <div className="tableFixHeadQueryCustomer">
                    <BootstrapTable
                        bootstrap4
                        keyField= {"assign_no"}

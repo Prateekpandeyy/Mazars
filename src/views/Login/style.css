@@ -28,10 +28,8 @@
 .signIn{
     display: flex;
     width: 50%;
- 
    opacity: 0.9;
 background-image:url("https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1050&q=80");  
-   
     background-size:cover;
     background-repeat: no-repeat;
 }
@@ -39,7 +37,6 @@ background-image:url("https://images.unsplash.com/photo-1454165804606-c3d57bc86b
     display: flex;
    width: 100%;
    height:100%;
-    
     justify-content: center;
     align-items: center;
     flex-direction: column;
@@ -107,10 +104,8 @@ background-image:url("https://images.unsplash.com/photo-1454165804606-c3d57bc86b
    color:#fff !important;
 }
 .signUp button{
-    display: flex;
-   
+    display: flex;   
     margin: auto;
-
 }
 .signUp p{
     font-size: 20px;
@@ -123,4 +118,10 @@ background-image:url("https://images.unsplash.com/photo-1454165804606-c3d57bc86b
     font-weight: 400;
     text-align: left;
     font-size: 15px
+}
+.btn-success{
+    background-color: #438375 !important;
+}
+.form-label{
+    color: #382731;
 }
