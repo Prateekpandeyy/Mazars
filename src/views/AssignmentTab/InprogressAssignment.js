@@ -17,8 +17,7 @@ import DiscardReport from "../AssignmentTab/DiscardReport";
 import './index.css';
 import ModalManual from "../ModalManual/AllComponentManual";
 import {Modal, ModalHeader, ModalBody} from 'reactstrap';
-
-
+import MessageIcon, { ViewDiscussionIcon, HelpIcon} from "../../components/Common/MessageIcon";
 function InprogressAssignment() {
   const userId = window.localStorage.getItem("userid");
   const [assignmentDisplay, setAssignmentDisplay] = useState([]);
@@ -180,37 +179,37 @@ function InprogressAssignment() {
             <div>
             {row.paid_status == "2" &&
                 <p>
-                  <span style={{ color: "red" }}>Payment Declined</span>
+                  <span className="declined">Payment Declined</span>
                 </p>
               }
               <p>
                 <span style={{ fontWeight: "bold" }}>Client Discussion :</span>
-               <span style={ row.client_discussion == "completed" ? clcomp : clinpro}>
-{row.client_discussion}
+               <span className={row.client_discussion === "completed" ? "completed" : "inprogress"}>
+                                {row.client_discussion}
                  </span>
               </p>
               <p>
                 <span style={{ fontWeight: "bold" }}>Draft report :</span>
-                <span style={ row.draft_report == "completed" ? clcomp : clinpro}>
-{row.draft_report}
+                <span className={row.draft_report === "completed" ? "completed" : "inprogress"}>
+                      {row.draft_report}
                  </span>
               </p>
               <p>
                 <span style={{ fontWeight: "bold" }}>Final Discussion :</span>
-                <span style={ row.final_discussion == "completed" ? clcomp : clinpro}>
-{row.final_discussion}
+                <span className={row.final_discussion === "completed" ? "completed" : "inprogress"}>
+                     {row.final_discussion}
                  </span>
               </p>
               <p>
                 <span style={{ fontWeight: "bold" }}>Delivery of Final Report :</span>
-                <span style={ row.delivery_report == "completed" ? clcomp : clinpro}>
-{row.delivery_report}
+                <span className={row.delivery_report === "completed" ? "completed" : "inprogress"}>
+                             {row.delivery_report}
                  </span>
               </p>
               <p>
                 <span style={{ fontWeight: "bold" }}>Awaiting Completion:</span>
-                <span style={ row.other_stage == "completed" ? clcomp : clinpro}>
-{row.other_stage}
+                <span className={row.other_stage === "completed" ? "completed" : "inprogress"}>
+                            {row.other_stage}
                  </span>
               </p>
             </div>
@@ -312,7 +311,7 @@ function InprogressAssignment() {
           {row.paid_status === "2" ? null :
             <div style={{ display: "flex", justifyContent: "space-between" }}>
 
-              <div title="Send Message">
+            
                 <Link
                 
                     to={{
@@ -327,28 +326,12 @@ function InprogressAssignment() {
                     }
                   }}
                 >
-                  <i
-                    class="fa fa-comments-o"
-                    style={{
-                      fontSize: 16,
-                      cursor: "pointer",
-                      color: "blue"
-                    }}
-                  ></i>
+                <MessageIcon />
                 </Link>
-              </div>
-
-              <div title="View Discussion Message">
-                <i
-                  class="fa fa-comments-o"
-                  style={{
-                    fontSize: 16,
-                    cursor: "pointer",
-                    color: "orange"
-                  }}
-                  onClick={() => ViewDiscussionToggel(row.assign_no)}
-                ></i>
-              </div>
+            
+                <div onClick={() => ViewDiscussionToggel(row.assign_no)}  className="ml-2">
+                                  <ViewDiscussionIcon />
+                                </div>
 
             </div> }
           </>
@@ -384,8 +367,7 @@ function InprogressAssignment() {
     <>
       <Card>
         <CardHeader>
-        <span title="help"> <i class="fa fa-question-circle" style={{cursor : "pointer", float: "right"}} onClick= {(e) => needHelp()}></i></span>
-          <CustomerFilter
+        <span onClick= {(e) => needHelp()}> <HelpIcon /></span>  <CustomerFilter
             setData={setAssignmentDisplay}
             getData={getAssignmentData}
             id={userId}

@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import Layout from "../../components/Layout/Layout";
+import React, { useState, useEffect } from "react";import Layout from "../../components/Layout/Layout";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
 import { useAlert } from "react-alert";
@@ -7,21 +6,17 @@ import {
     Card,
     CardHeader,
     CardBody,
-    CardTitle,
-    Row,
-    Col,
-    Table,
 } from "reactstrap";
 import { Link } from "react-router-dom";
 // import ChatComponent from "./ChatComponent";
 import "./index.css";
 import CustomerFilter from "../../components/Search-Filter/CustomerFilter";
 import BootstrapTable from "react-bootstrap-table-next";
-import FeedbackIcon from '@material-ui/icons/Feedback';
 import Records from "../../components/Records/Records";
 import DiscardReport from "../AssignmentTab/DiscardReport";
 import ModalManual from "../ModalManual/AllComponentManual";
 import {Modal, ModalHeader, ModalBody} from 'reactstrap';
+import MessageIcon, {EyeIcon, ViewDiscussionIcon, DiscussProposal, HelpIcon} from "../../components/Common/MessageIcon";
 
 
 function DeclinedProposal() {
@@ -264,7 +259,7 @@ function DeclinedProposal() {
                 return(
                     <>
                     <div style={{display : "flex", justifyContent : "flex-start"}}>
-<div title="Send Message">
+
                                     <Link
  to={{
     pathname: `/customer/chatting/${row.q_id}&type=2`,
@@ -278,28 +273,14 @@ function DeclinedProposal() {
                                             }
                                         }}
                                     >
-                                        <i
-                                            class="fa fa-comments-o"
-                                            style={{
-                                                fontSize: 16,
-                                                cursor: "pointer",
-                                                color: "blue"
-                                            }}
-                                        ></i>
+                                        <MessageIcon />
                                     </Link>
-                                </div>
+                               
 
-                                <div title="View Discussion Message" className="ml-2">
-                                    <i
-                                        class="fa fa-comments-o"
-                                        style={{
-                                            fontSize: 16,
-                                            cursor: "pointer",
-                                            color: "orange"
-                                        }}
-                                        onClick={() => ViewDiscussionToggel(row.assign_no)}
-                                    ></i>
-                                </div>
+                                    <div  onClick={() => ViewDiscussionToggel(row.assign_no)} className="ml-2">
+                                  
+                                  <ViewDiscussionIcon />
+                          </div>
 
 </div>
 
@@ -313,7 +294,7 @@ function DeclinedProposal() {
         <div>
             <Card>
                 <CardHeader>
-                <span title="help"> <i class="fa fa-question-circle" style={{cursor : "pointer", float: "right"}} onClick= {(e) => needHelp()}></i></span>
+                <span onClick= {(e) => needHelp()}> <HelpIcon /></span>
                     <CustomerFilter
                         setData={setProposalDisplay}
                         getData={getProposalData}

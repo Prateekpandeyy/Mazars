@@ -51,7 +51,7 @@ function ViewComponent({ viewModal, ViewHandler, getProposalData, viewData }) {
                         viewData.status == "Accepted; Proposal" ?
                           <div>
                             {viewData.status}
-                            <p className=".completed{">
+                            <p className="completed">
                               {viewData.statusdescription}
                             </p>
                           </div> :

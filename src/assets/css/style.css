@@ -3,7 +3,7 @@
   justify-content: space-between;
   width: 100%;
   padding: 14px 20px 0px;
-  border-bottom: 2px solid rgb(10, 31, 143);
+  border-bottom: 2px solid rgb(61, 71, 117);
   /* background: #2b345f; */
 }
 
@@ -43,7 +43,7 @@
   padding: 4px 15px;
   border-radius: 25px;
   margin-right: 15px;
-  background: #2b345f;
+  background: rgb(61,71, 117);
   border: 2px solid #ffffff;
   font-size: 14px;
 }
@@ -129,11 +129,11 @@ footer {
 
 
 .inprogress{
-color: #597EAA
+color: rgb(61, 71 , 117)
 }
 
 .completed{
-  color:green;
+  color:rgb(61, 131, 117);
   }
 
 .declined{
@@ -143,29 +143,78 @@ color: #597EAA
 
 
 .send{
-  background-color:#00804b40;
+  background-color: rgb(120, 120, 120);
   }
 
 .received{
-  background-color:#e4544633;
+  background-color:#fff;
 }
 .swal2-styled.swal2-confirm{
-  background-color: rgb(10, 31, 143) !important;
+  background-color: rgb(61, 71, 117) !important;
 }
 h1, h2, h3 h4 , h5, h6, p{
-  color: #382731 !important;
+  color: #464B4B  !important;
 }
 .form-control:focus{
-  border-color: rgb(10, 31, 143)!important;
+  border-color: rgb(61, 71, 117)!important;
 }
 .btn-primary{
-  background-color: rgb(10, 31, 143) !important;
-  border-color: rgb(10, 31, 143) !important;
+  background-color: rgb(61, 71, 117) !important;
+  border-color: rgb(61, 71, 117) !important;
   color: #fff !important;
 }
 html body a{
-  color: rgb(10, 31, 143)!important;
+  color: rgb(61, 71, 117)!important;
 }
 .main-menu.menu-light .navigation > li > a {
-  color: rgb(56, 39, 49) !important;
+  color: #464B4B !important;
+}
+.messageIcon{
+  color:rgb(61, 71, 117) !important;
+  font-size: 16px;
+  cursor: pointer;
+}
+.discussionMessage{
+  color: rgb(158, 164, 128);
+  font-size: 16px;
+  cursor: pointer;
+}
+.discussProposal{
+  color:rgb(61, 71, 117) !important;
+  font-size: 16px;
+  cursor: pointer;
+}
+.helpIcon{
+  font-size: 20px;
+  cursor: pointer;
+  float: right;
+  color: rgb(56, 39, 49)
+}
+.viewDiscusion{
+  color:rgb(61, 131, 117);
+  font-size: 16px;
+  cursor: pointer;
+}
+.feedbackIcon{
+  color:rgb(61, 71, 117) !important;
+  font-size: 16px;
+  cursor: pointer;
+}
+.deleteIcon{
+  color: #464B4B !important;
+  font-size: 16px;
+  cursor: pointer;
+}
+.editQuery{
+  color:rgb(61, 71, 117) !important;
+  font-size: 16px;
+  cursor: pointer;
+}
+.uploadIcon{
+  font-size: 16px;
+  cursor: pointer;
+}
+.payment{
+  color:rgb(61, 71, 117) !important;
+  cursor: pointer;
 }

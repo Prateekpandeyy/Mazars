@@ -92,7 +92,7 @@ function AssignmentTab(props) {
     borderRadius: "50px",
     width: "auto",
     textAlign: "center",
-    backgroundColor: "rgb(10, 31, 143)",
+    backgroundColor: "rgb(61, 71, 117)",
     color: "white",
     cursor: "pointer",
   };

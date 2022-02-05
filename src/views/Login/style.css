@@ -123,5 +123,8 @@ background-image:url("../ManualImg/loginCover.jpeg");
     background-color: #438375 !important;
 }
 .form-label{
-    color: #382731;
+    color: #464B4B;
+}
+.nav-tabs .nav-item a{
+    color: #464B4B !important;
 }

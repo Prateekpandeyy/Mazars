@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Layout from "../../components/Layout/Layout";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
 import { useAlert } from "react-alert";
@@ -7,21 +6,18 @@ import {
     Card,
     CardHeader,
     CardBody,
-    CardTitle,
-    Row,
-    Col,
-    Table,
+   
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import "./index.css";
 import CustomerFilter from "../../components/Search-Filter/CustomerFilter";
 import BootstrapTable from "react-bootstrap-table-next";
-import FeedbackIcon from '@material-ui/icons/Feedback';
 import Records from "../../components/Records/Records";
 import DiscardReport from "../AssignmentTab/DiscardReport";
 import CommonShowProposal from "../../components/commonShowProposal/CommonShowProposal";
 import ModalManual from "../ModalManual/AllComponentManual";
 import {Modal, ModalHeader, ModalBody} from 'reactstrap';
+import MessageIcon, {EyeIcon, ViewDiscussionIcon, HelpIcon} from "../../components/Common/MessageIcon";
 
 
 
@@ -292,41 +288,18 @@ function AcceptedProposal() {
                                             }
                                         }}
                                     >
-                                        <i
-                                            class="fa fa-comments-o"
-                                            style={{
-                                                fontSize: 16,
-                                                cursor: "pointer",
-                                                color: "blue"
-                                            }}
-                                        ></i>
+                                       <MessageIcon />
                                     </Link>
                                 </div>
 
-                                <div title="View Discussion Message" className="ml-2">
-                                    <i
-                                        class="fa fa-comments-o"
-                                        style={{
-                                            fontSize: 16,
-                                            cursor: "pointer",
-                                            color: "orange"
-                                        }}
-                                        onClick={() => ViewDiscussionToggel(row.assign_no)}
-                                    ></i>
+                                <div onClick={() => ViewDiscussionToggel(row.assign_no)}  className="ml-2">
+                                  <ViewDiscussionIcon />
                                 </div>
-
-                                 <>
-                                 <div style={{ cursor: "pointer" }} title="View Proposal" className="ml-2">
+                                <div  className="ml-2"  onClick={(e) => showProposalModal2(row.q_id)}>
                 
-                <i
-                  className="fa fa-eye"
-                  style={{ color: "green", fontSize: "16px" }}
-                  onClick={(e) => showProposalModal2(row.q_id)}
-                />
-              
-            </div>
-                              
-                                </>
+                <EyeIcon />
+                
+              </div>
                             </div>
                         )}
                     </>
@@ -339,7 +312,7 @@ function AcceptedProposal() {
         <div>
             <Card>
                 <CardHeader>
-                <span title="help"> <i class="fa fa-question-circle" style={{cursor : "pointer", float: "right"}} onClick= {(e) => needHelp()}></i></span>
+                <span onClick= {(e) => needHelp()}> <HelpIcon /></span>
                     <CustomerFilter
                         setData={setProposalDisplay}
                         getData={getProposalData}

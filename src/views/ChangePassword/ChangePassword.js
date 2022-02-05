@@ -336,7 +336,7 @@ const Cancel = () => {
   return (
     <>
       <Link to="/customer/dashboard" style={{ "margin": "10px" }}>
-        <Button variant="contained" color="secondary">
+        <Button variant="contained" sx={{color: "rgb(158, 164, 128)"}}>
           Cancel
         </Button>
       </Link>

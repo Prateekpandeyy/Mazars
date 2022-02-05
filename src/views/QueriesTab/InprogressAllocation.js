@@ -26,6 +26,8 @@ import moment from "moment";
 import './index.css';
 import ModalManual from "../ModalManual/AllComponentManual";
 import {Modal, ModalHeader, ModalBody} from 'reactstrap';
+import MessageIcon, {DeleteIcon, EditQuery, ViewDiscussionIcon, HelpIcon, 
+  UploadDocument, FeedBackICon} from "../../components/Common/MessageIcon";
 function InprogressAllocation() {
 
   const alert = useAlert();
@@ -239,155 +241,130 @@ function InprogressAllocation() {
      
         return (
           <>
-            {
-              row.status == "Declined Query" ?
-                null
-                :
-                <div>
-                  {
-                    row.status_code == "0" || row.status_code == "1" || row.status_code == "3" ?
-                      <div style={{ display: "flex", justifyContent: "space-around" }}>
-                        <div title="Update Query">
-                          <Link to={`/customer/edit-query/${row.id}`}>
-                            <i
-                              className="fa fa-edit"
-                              style={{
-                                fontSize: 16,
-                                cursor: "pointer",
-                              }}
-                            ></i>
-                          </Link>
-                        </div>
+              {   
+                  row.status == "Declined Query" ?
+                  <>
+                 <>
+                 {dateMnsFive > curDate === true ?
+                      <span className="ml-2">
+                     
+                      <Link 
+                       to={{
+                          pathname: `/customer/feedback/${row.assign_no}`,
+                          index: 1,
+                          routes: "queries",
+                      }}>
+                            <FeedBackICon />
+                      </Link>
+                  </span>
+                   : ""} 
+                  
+                  <span onClick={() => ViewDiscussionToggel(row.assign_no)}  className="ml-2">
+                        <ViewDiscussionIcon />
+                      </span>
+                    
 
-                        <div title="Delete Query">
-                          <i
-                            className="fa fa-trash"
-                            style={{
-                              fontSize: 16,
-                              cursor: "pointer",
-
-                            }}
-                            onClick={() => del(row.id)}
-                          ></i>
-                        </div>
-                        <div title="Send Message">
-                          <Link
-                            to={{
-                              pathname: `/customer/chatting/${row.id}&type=4`,  
-                                index: 1,
-                                routes: "queries",
-                              obj: {
-                                message_type: "4",
-                                query_No: row.assign_no,
-                                query_id: row.id,
-                                routes: `/customer/queries`
-                              }
-                            }}
-                          >
-                            <i
-                              class="fa fa-comments-o"
-                              style={{
-                                fontSize: 16,
-                                cursor: "pointer",
-                                color: "blue"
-                              }}
-                            ></i>
-                          </Link>
-                        </div>
-                        <div title="View Discussion Message">
-                                                    <i
-                                                        class="fa fa-comments-o"
-                                                        style={{
-                                                            fontSize: 16,
-                                                            cursor: "pointer",
-                                                            color: "orange"
-                                                        }}
-                                                        onClick={() => ViewDiscussionToggel(row.assign_no)}
-                                                    ></i>
-                                                </div>
-
-                      </div> :
-                      null
-                  }
-
-                                    {
-                                        row.status_code == "4" || 8 < parseInt(row.status_code) || row.status_code == "2" ?
-                                          
-                                          <div style={{ display: "flex", justifyContent: "space-around" }}>
-
-                                                {dateMnsFive > curDate === true ?
-                                                <div title="Send Feedback"
-                                                style={{
-                                                    cursor: "pointer",
-                                                }}>
-                                               <Link 
-                                 to={{
-                                    pathname: `/customer/feedback/${row.assign_no}`,
-                                    index: 1,
-                                    routes: "queries",
-                                }}>
-                                      <FeedbackIcon />
-                                </Link>
-                                            </div> : ""}
-                                          
-                        {
-                          row.delivery_report == "completed" ? null :
-                            <div title="Upload Additional Documents"
-                              style={{ cursor: "pointer" }}
-                              onClick={() => additionalHandler(row.assign_no)}
-                            >
-                              <PublishIcon color="secondary" />
-                            </div>
-                        }
-                        <div title="Send Message">
-                          <Link
-                             to={{
-                             
-                              pathname: `/customer/chatting/${row.id}&type=4`,  
-                                index: 1,
-                                routes: "queries",
-                              obj: {
-                                message_type: "4",
-                                query_No: row.assign_no,
-                                query_id: row.id,
-                                routes: `/customer/queries`
-                              }
-                            }}
-                          >
-                            <i
-                              class="fa fa-comments-o"
-                              style={{
-                                fontSize: 16,
-                                cursor: "pointer",
-                                color: "blue"
-                              }}
-                            ></i>
-                          </Link>
-                        </div>
-
-                        <div title="View Discussion Message">
-                          <i
-                            class="fa fa-comments-o"
-                            style={{
-                              fontSize: 16,
-                              cursor: "pointer",
-                              color: "orange"
-                            }}
-                            onClick={() => ViewDiscussionToggel(row.assign_no)}
-                          ></i>
-                        </div>
-                      </div>
+                 </>
+                  </>
                       :
-                      null
-                  }
-                </div>
+                      <>
+          {
+              row.status_code == "0" || row.status_code == "1" || row.status_code == "3" ?
+                  <>
+                      <span className="ml-2">
+                          <Link to={`/customer/edit-query/${row.id}`}>
+                              <EditQuery />
+                          </Link>
+                      </span>
 
-            }
+                      <span   onClick={() => del(row.id)} className="ml-2">
+                         <DeleteIcon />
+                      </span>
+                      <span className="ml-2">
+                          <Link
+                              to={{
+                                  pathname: `/customer/chatting/${row.id}&type=4`,
+                                  index: 1,
+                          routes: "queries",
+                                  obj: {
+                                      message_type: "4",
+                                      query_No: row.assign_no,
+                                      query_id: row.id,
+                                      routes: `/customer/queries`
+                                  }
+                              }}
+                          >
+                             <MessageIcon />
+                          </Link>
+                      </span>
+                      <span onClick={() => ViewDiscussionToggel(row.assign_no)}  className="ml-2">
+                        <ViewDiscussionIcon />
+                      </span>
+
+                  </> :
+                  null
+          }
+
+          {
+              row.status_code == "4" || 8 < parseInt(row.status_code) || row.status_code == "2" ?
+                  
+                  <>
+
+                      {dateMnsFive > curDate === true ?
+                      <span className = "ml-2"
+                     >
+                      <Link 
+                       to={{
+                          pathname: `/customer/feedback/${row.assign_no}`,
+                          index: 1,
+                          routes: "queries",
+                      }}>
+                            <FeedBackICon />
+                      </Link>
+                  </span> : ""}
+                      {
+                          row.delivery_report == "completed" ? null :
+                              <span className="ml-1"  onClick={() => additionalHandler(row.assign_no)}
+                              >
+                                  <UploadDocument />
+                              </span>
+                      }
+                      {row.status_code == "10" ? null 
+                      : 
+                      <span className="ml-2">
+                       <Link
+                              to={{
+                                  pathname: `/customer/chatting/${row.id}&type=4`,
+                                  index: 1,
+                          routes: "queries",
+                                  obj: {
+                                      message_type: "4",
+                                      query_No: row.assign_no,
+                                      query_id: row.id,
+                                      routes: `/customer/queries`
+                                  }
+                              }}
+                          >
+                          <MessageIcon />
+                      </Link>
+                  </span>
+}
+<span onClick={() => ViewDiscussionToggel(row.assign_no)}  className="ml-2">
+                        <ViewDiscussionIcon />
+                      </span>
+                  
+                  </>
+                  :
+                  null
+          }
+      </>
+
+}
           </>
-        );
-      },
-    },
-  ];
+      );
+  },
+},
+];
 
 
 
@@ -421,8 +398,7 @@ function InprogressAllocation() {
       data: formData,
     })
       .then(function (response) {
-      
-        if (response.data.code === 1) {
+              if (response.data.code === 1) {
           Swal.fire("", "Query deleted successfully.", "success");
           getQueriesData();
         } else {
@@ -439,8 +415,8 @@ function InprogressAllocation() {
     <div>
       <Card>
         <CardHeader>
-        <span title="help"> <i class="fa fa-question-circle" style={{cursor : "pointer", float: "right"}} onClick= {(e) => needHelp()}></i></span>
-          <CustomerFilter
+        <span onClick= {(e) => needHelp()}> <HelpIcon /></span>
+           <CustomerFilter
             setData={setQuery}
             getData={getQueriesData}
             id={userId}

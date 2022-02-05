@@ -21,12 +21,15 @@
       top: 0;
        z-index: 1;
         border: 0px; 
-        background-color:rgb(10, 31, 143) !important;
+        background-color:rgb(61, 71, 117) !important;
          color : #ffffff !important;}
   .declinedPayment{
     display: flex;
     justify-content: space-between;
     align-items: center;
+  }
+  .table tbody tr td{
+    color: #464B4B;
   }
   /* 
   

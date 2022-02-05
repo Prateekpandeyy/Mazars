@@ -25,7 +25,7 @@ import DiscardReport from "../AssignmentTab/DiscardReport";
 import CommonShowProposal from "../../components/commonShowProposal/CommonShowProposal";
 import ModalManual from "../ModalManual/AllComponentManual";
 import {Modal, ModalHeader, ModalBody} from 'reactstrap';
-
+import MessageIcon, {EyeIcon, ViewDiscussionIcon, DiscussProposal, HelpIcon} from "../../components/Common/MessageIcon";
 
 function ProposalTab() {
     const alert = useAlert();
@@ -34,7 +34,7 @@ function ProposalTab() {
     const [proposalDisplay, setProposalDisplay] = useState([]);
     const [proposalCount, setCountProposal] = useState("");
     const [records, setRecords] = useState([]);
-    const [reject, setRejected] = useState(true);
+   
 
     const [viewData, setViewData] = useState({});
     const [viewModal, setViewModal] = useState(false);
@@ -325,32 +325,18 @@ const rightAli = {
                                             }
                                         }}
                                     >
-                                        <i
-                                            class="fa fa-comments-o"
-                                            style={{
-                                                fontSize: 16,
-                                                cursor: "pointer",
-                                                color: "blue"
-                                            }}
-                                        ></i>
+                                       <MessageIcon />
                                     </Link>
                                 </div>
 
-                                <div title="View Discussion Message"  className="ml-2">
-                                    <i
-                                        class="fa fa-comments-o"
-                                        style={{
-                                            fontSize: 16,
-                                            cursor: "pointer",
-                                            color: "orange"
-                                        }}
-                                        onClick={() => ViewDiscussionToggel(row.assign_no)}
-                                    ></i>
-                                </div>
+                                <div  onClick={() => ViewDiscussionToggel(row.assign_no)} className="ml-2">
+                                  
+                                  <ViewDiscussionIcon />
+                          </div>
 
                         </div> : (
                             <div style={{ display: "flex", justifyContent: "flex-start"}}>
-                                <div title="Send Message">
+                               
                                     <Link
                                       to={{
                                         pathname: `/customer/chatting/${row.q_id}&type=2`,
@@ -364,42 +350,22 @@ const rightAli = {
                                             }
                                         }}
                                     >
-                                        <i
-                                            class="fa fa-comments-o"
-                                            style={{
-                                                fontSize: 16,
-                                                cursor: "pointer",
-                                                color: "blue"
-                                            }}
-                                        ></i>
+                                        <MessageIcon />
                                     </Link>
-                                </div>
+                            
 
-                                <div title="View Discussion Message" className="ml-2">
-                                    <i
-                                        class="fa fa-comments-o"
-                                        style={{
-                                            fontSize: 16,
-                                            cursor: "pointer",
-                                            color: "orange"
-                                        }}
-                                        onClick={() => ViewDiscussionToggel(row.assign_no)}
-                                    ></i>
+                                <div  onClick={() => ViewDiscussionToggel(row.assign_no)} className="ml-2">
+                                  
+                                        <ViewDiscussionIcon />
                                 </div>
 
                                 <div>
                                     {
                                         row.statuscode > 6 ?
                                              <>
-                                 <div style={{ cursor: "pointer" }} title="View Proposal" className="ml-2">
-                
-                <i
-                  className="fa fa-eye"
-                  style={{ color: "green", fontSize: "16px" }}
-                  onClick={(e) => showProposalModal2(row.q_id)}
-                />
-              
-            </div>
+                                 <div  onClick={(e) => showProposalModal2(row.q_id)} className="ml-2">
+                                            <EyeIcon  />
+                                           </div>
                               
                                 </>
                                             :
@@ -409,10 +375,8 @@ const rightAli = {
                                     {
                                         row.statuscode == 4
                                             ?
-                                            <div style={{ cursor: "pointer" }} title="Decision on Proposal" className="ml-2">
-                                              
-                                                 
-                                               
+                                            <div className="ml-2">
+        
                                                 <Link
                                       to={{
                                         pathname: `/customer/proposal_view/${row.q_id}`,
@@ -421,13 +385,7 @@ const rightAli = {
                                             
                                         }}
                                     >
-                                             <i
-                                                        class="fa fa-share"
-                                                        style={{
-                                                            color: "blue",
-                                                            fontSize: "13px",
-                                                        }}
-                                                    ></i>
+                                           <DiscussProposal titleName ="Discussion on Proposal"/>
                                                 </Link>
                                             </div>
                                             :
@@ -447,10 +405,10 @@ const rightAli = {
 
 
     return (
-        <div>
+     
             <Card>
                 <CardHeader>
-                <span title="help"> <i class="fa fa-question-circle" style={{cursor : "pointer", float: "right"}} onClick= {(e) => needHelp()}></i></span>
+                <span onClick= {(e) => needHelp()}> <HelpIcon /></span>
                     <CustomerFilter
                         setData={setProposalDisplay}
                         getData={getProposalData}
@@ -499,18 +457,8 @@ const rightAli = {
                     </Modal>
                 </CardBody>
             </Card>
-        </div>
+       
     );
 }
 
 export default ProposalTab;
-
-{/* <div style={{ cursor: "pointer" }} title="Rejected">
-                                            <i
-                                                class="fa fa-times"
-                                                style={{ color: "red", fontSize: "16px" }}
-                                                onClick={() => rejected(row.q_id)}
-                                            ></i>
-                                        </div> */}
-//   {row.negotiated_amount === "0" &&
-// row.accepted_amount === "0"

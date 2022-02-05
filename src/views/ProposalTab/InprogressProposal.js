@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Layout from "../../components/Layout/Layout";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
 import { useAlert } from "react-alert";
@@ -12,15 +11,12 @@ import { Link } from "react-router-dom";
 import "./index.css";
 import CustomerFilter from "../../components/Search-Filter/CustomerFilter";
 import BootstrapTable from "react-bootstrap-table-next";
-import FeedbackIcon from '@material-ui/icons/Feedback';
 import Records from "../../components/Records/Records";
-import Alerts from "../../common/Alerts";
-import Swal from "sweetalert2";
 import DiscardReport from "../AssignmentTab/DiscardReport";
 import CommonShowProposal from "../../components/commonShowProposal/CommonShowProposal";
 import ModalManual from "../ModalManual/AllComponentManual";
 import {Modal, ModalHeader, ModalBody} from 'reactstrap';
-
+import MessageIcon, {EyeIcon, ViewDiscussionIcon, DiscussProposal, HelpIcon} from "../../components/Common/MessageIcon";
 
 
 function InprogressProposal() {
@@ -294,7 +290,6 @@ function InprogressProposal() {
                 return (
                     <>
                         {row.statuscode === "6" ? <div style={{display : "flex", justifyContent : "flex-start"}}>
-                        <div title="Send Message">
                                     <Link
                                        
                                             to={{
@@ -309,32 +304,17 @@ function InprogressProposal() {
                                             }
                                         }}
                                     >
-                                        <i
-                                            class="fa fa-comments-o"
-                                            style={{
-                                                fontSize: 16,
-                                                cursor: "pointer",
-                                                color: "blue"
-                                            }}
-                                        ></i>
+                                        <MessageIcon />
                                     </Link>
-                                </div>
+                                
 
-                                <div title="View Discussion Message"  className="ml-2">
-                                    <i
-                                        class="fa fa-comments-o"
-                                        style={{
-                                            fontSize: 16,
-                                            cursor: "pointer",
-                                            color: "orange"
-                                        }}
-                                        onClick={() => ViewDiscussionToggel(row.assign_no)}
-                                    ></i>
+                                <div onClick={() => ViewDiscussionToggel(row.assign_no)}  className="ml-2">
+                                  <ViewDiscussionIcon />
                                 </div>
 
                         </div> : (
                             <div style={{ display: "flex", justifyContent: "flex-start"}}>
-                                <div title="Send Message">
+                               
                                     <Link
  to={{
     pathname: `/customer/chatting/${row.q_id}&type=2`,
@@ -348,40 +328,21 @@ function InprogressProposal() {
                                             }
                                         }}
                                     >
-                                        <i
-                                            class="fa fa-comments-o"
-                                            style={{
-                                                fontSize: 16,
-                                                cursor: "pointer",
-                                                color: "blue"
-                                            }}
-                                        ></i>
+                                       <MessageIcon />
                                     </Link>
-                                </div>
+                                
 
-                                <div title="View Discussion Message" className="ml-2">
-                                    <i
-                                        class="fa fa-comments-o"
-                                        style={{
-                                            fontSize: 16,
-                                            cursor: "pointer",
-                                            color: "orange"
-                                        }}
-                                        onClick={() => ViewDiscussionToggel(row.assign_no)}
-                                    ></i>
+                                <div  onClick={() => ViewDiscussionToggel(row.assign_no)} className="ml-2">
+                                   <ViewDiscussionIcon />
                                 </div>
 
                                 <div>
                                     {
                                         row.statuscode > 6 ?
                                              <>
-                                 <div style={{ cursor: "pointer" }} title="View Proposal" className="ml-2">
+                                 <div  className="ml-2"  onClick={(e) => showProposalModal2(row.q_id)}>
                 
-                <i
-                  className="fa fa-eye"
-                  style={{ color: "green", fontSize: "16px" }}
-                  onClick={(e) => showProposalModal2(row.q_id)}
-                />
+              <EyeIcon />
               
             </div>
                               
@@ -402,13 +363,7 @@ function InprogressProposal() {
                                             
                                         }}
                                     >
-                                                    <i
-                                                        class="fa fa-share"
-                                                        style={{
-                                                            color: "blue",
-                                                            fontSize: "13px",
-                                                        }}
-                                                    ></i>
+                                          <DiscussProposal titleName ="Discussion on Proposal"/>
                                                 </Link>
                                             </div>
                                             :
@@ -425,61 +380,13 @@ function InprogressProposal() {
         },
     ];
 
-
-
-    //rejected
-    const rejected = (id) => {
-     
-        Swal.fire({
-            title: "Are you sure?",
-            text: "Do you want to delete query ?",
-            type: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, reject it!",
-        }).then((result) => {
-            if (result.value) {
-                deleteCliente(id);
-            }
-        });
-    };
-
-
-    // delete data
-    const deleteCliente = (key) => {
-
-        let formData = new FormData();
-        formData.append("id", key);
-        formData.append("status", 6);
-
-        axios({
-            method: "POST",
-            url: `${baseUrl}/customers/ProposalAccept`,
-            data: formData,
-        })
-            .then(function (response) {
-                
-                if (response.data.code === 1) {
-                    setRejected(false);
-                    Swal.fire("Rejected", "Proposal rejected successfully.", "success");
-                    getProposalData();
-                } else {
-                    Swal.fire("Oops...", "Errorr ", "error");
-                }
-            })
-            .catch((error) => {
-                
-            });
-
-    };
-
+   
     return (
-        <div>
+       
             <Card>
                 <CardHeader>
-                <span title="help"> <i class="fa fa-question-circle" style={{cursor : "pointer", float: "right"}} onClick= {(e) => needHelp()}></i></span>
-                    <CustomerFilter
+                <span onClick= {(e) => needHelp()}> <HelpIcon /></span>
+                                  <CustomerFilter
                         setData={setProposalDisplay}
                         getData={getProposalData}
                         id={userId}
@@ -520,7 +427,7 @@ function InprogressProposal() {
           proposalId = {proposalId}/>
                 </CardBody>
             </Card>
-        </div>
+      
     );
 }
 

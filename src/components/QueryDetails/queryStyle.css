@@ -24,10 +24,12 @@ overflow-y: auto;
 .queryBox > .table thead tr th:nth-child(1){
     display : flex;
     width : 30%;
+    color: #464B4B;
 }
 .queryBox > .table thead tr th:nth-child(2){
     display : flex;
     width : 70%;
+    color: #464B4B;
 }
 .queryBox > .table > tbody{
     display : flex;
@@ -43,6 +45,7 @@ overflow-y: auto;
     display: flex;
     flex-basis: 30%;
     border-bottom : 0px;
+    color:#464B4B;
 }
 .queryBox > .table > tbody > tr > td{
     display : flex;
@@ -53,7 +56,9 @@ overflow-y: auto;
     flex-direction: column;
     padding : 0 20px;
 }
-
+h1, h2, h3, h4, h5, h5{
+    color: #464B4B !important;
+}
 
 .modalBox{
     display : flex;

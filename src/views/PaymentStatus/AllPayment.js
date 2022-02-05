@@ -1,32 +1,27 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
-import Layout from "../../components/Layout/Layout";
 import {
   Card,
   CardHeader,
   CardBody,
-  CardTitle,
-  Row,
-  Col,
   Modal,
   ModalHeader,
   ModalBody,
   ModalFooter,
   Button,
 } from "reactstrap";
-import { useAlert } from "react-alert";
 import { Link, useParams } from "react-router-dom";
 import CommonServices from "../../common/common";
 import BootstrapTable from "react-bootstrap-table-next";
 import CustomerFilter from "../../components/Search-Filter/CustomerFilter";
 import Records from "../../components/Records/Records";
-import PaymentIcon from '@material-ui/icons/Payment';
 import PaymentComponent from './PaymentComponent';
 import DiscardReport from "../AssignmentTab/DiscardReport";
 import './index.css';
 import ModalManual from "../ModalManual/AllComponentManual";
-
+import MessageIcon, { ViewDiscussionIcon, HelpIcon, 
+  Payment} from "../../components/Common/MessageIcon";
 
 function Paid() {
   const { id } = useParams();
@@ -367,10 +362,7 @@ function Paid() {
           {row.paid_status === "2" ?
           <>
        <div style={{display : "flex"}}>
-       <div
-                  style={{ cursor: "pointer", margin: "0 3px" }}
-                  title="Pay Amount"
-                 >
+     
                      <Link
                             to={{
                                 pathname: `/customer/paydetails/${row.assign_id}`,
@@ -378,30 +370,20 @@ function Paid() {
                                 routes: "paymentstatus",
                             }}
                         >
-                                      <PaymentIcon color="primary" />
+                                      <Payment />
                   </Link>
-                </div>
-            <div title="View Discussion Message" style={{pointer : "cursor", margin: "0 5px"}}>
-            <i
-              class="fa fa-comments-o"
-              style={{
-                fontSize: 16,
-                cursor: "pointer",
-                color: "orange"
-              }}
-              onClick={() => ViewDiscussionToggel(row.assign_no)}
-            ></i>
-          </div>
+                
+                  <span onClick={() => ViewDiscussionToggel(row.assign_no)}  className="ml-2">
+                                  <ViewDiscussionIcon />
+                                </span>
+                              
        
          </div>   </>
           :  <div style={{display : "flex"}}>
-          <div>
+        
             {
               row.paid_status == "0" ?
-                <div
-                  style={{ cursor: "pointer", margin: "0 3px" }}
-                  title="Pay Amount"
-                 >
+                
                     <Link
                             to={{
                                 pathname: `/customer/paydetails/${row.assign_id}`,
@@ -409,34 +391,33 @@ function Paid() {
                                 routes: "paymentstatus",
                             }}
                         >
-                                      <PaymentIcon color="primary" />
-                  </Link>   </div>
+                                      <Payment />
+                  </Link>   
                 :
                 null
             }
-          </div>
 
-          <div>
+
+         
             {
               row.paid_amount > 0 && row.paid_status > 0 ?
-                <div style={{ cursor: "pointer", margin: "0 5px" }} title="Payment History">
-             <Link
+                  <Link
                             to={{
                                 pathname: `/customer/paydetails/${row.assign_id}`,
                                 index : 0,
                                 routes: "paymentstatus",
                             }}
                         >
-                                      <PaymentIcon color="primary" />
+                                      <Payment />
                   </Link>   
-                </div>
+              
                 :
                 null
             }
-          </div>
+        
 
 
-          <div title="Send Message" style={{pointer : "cursor", margin: "0 5px"}}>
+         
             <Link
             to={{
               pathname: `/customer/chatting/${row.assign_id}`,
@@ -452,28 +433,13 @@ function Paid() {
                 }
               }}
             >
-              <i
-                class="fa fa-comments-o"
-                style={{
-                  fontSize: 16,
-                  cursor: "pointer",
-                  color: "blue"
-                }}
-              ></i>
+             <MessageIcon />
             </Link>
-          </div>
-          <div title="View Discussion Message" style={{pointer : "cursor", margin: "0 5px"}}>
-            <i
-              class="fa fa-comments-o"
-              style={{
-                fontSize: 16,
-                cursor: "pointer",
-                color: "orange"
-              }}
-              onClick={() => ViewDiscussionToggel(row.assign_no)}
-            ></i>
-          </div>
-
+       
+          <span onClick={() => ViewDiscussionToggel(row.assign_no)}  className="ml-2">
+                                  <ViewDiscussionIcon />
+                                </span>
+                              
           </div>
       }
           </>
@@ -494,8 +460,8 @@ function Paid() {
         <Card>
 
           <CardHeader>
-          <span title="help"> <i class="fa fa-question-circle" style={{cursor : "pointer", float: "right"}} onClick= {(e) => needHelp()}></i></span>
-            <CustomerFilter
+          <span onClick= {(e) => needHelp()}> <HelpIcon /></span>
+             <CustomerFilter
               setData={setPayment}
               getData={getPaymentStatus}
               allPayment="allPayment"

@@ -16,15 +16,13 @@ import CustomerFilter from "../../components/Search-Filter/CustomerFilter";
 import BootstrapTable from "react-bootstrap-table-next";
 import Swal from "sweetalert2";
 import Records from "../../components/Records/Records";
-import FeedbackIcon from '@material-ui/icons/Feedback';
-import PublishIcon from '@material-ui/icons/Publish';
 import AdditionalQueryModal from "./AdditionalQueryModal";
 import CommonServices from "../../common/common";
-import Loader from "../../components/Loader/Loader";
 import DiscardReport from "../AssignmentTab/DiscardReport";
-import { date } from "yup";
 import RejectedModal from "./RejectedModal";
 import ModalManual from "../ModalManual/AllComponentManual";
+import MessageIcon, {DeleteIcon, EditQuery, ViewDiscussionIcon, HelpIcon, 
+   UploadDocument, FeedBackICon} from "../../components/Common/MessageIcon";
 import './index.css';
 
 
@@ -265,11 +263,7 @@ function AllQueriesData() {
                             <>
                            <>
                            {dateMnsFive > curDate === true ?
-                                <span title="Send Feedback" className="ml-2"
-                                style={{
-                                    cursor: "pointer",
-                                   
-                                }}>
+                                <span className="ml-2">
                                
                                 <Link 
                                  to={{
@@ -277,22 +271,15 @@ function AllQueriesData() {
                                     index: 0,
                                     routes: "queries",
                                 }}>
-                                      <FeedbackIcon />
+                                      <FeedBackICon />
                                 </Link>
                             </span>
                              : ""} 
                             
-                                <span title="View Discussion Message" className="ml-2">
-                                    <i
-                                        className="fa fa-comments-o"
-                                        style={{
-                                            fontSize: 16,
-                                            cursor: "pointer",
-                                            color: "orange"
-                                        }}
-                                        onClick={() => ViewDiscussionToggel(row.assign_no)}
-                                    ></i>
+                            <span onClick={() => ViewDiscussionToggel(row.assign_no)}  className="ml-2">
+                                  <ViewDiscussionIcon />
                                 </span>
+                              
 
                            </>
                             </>
@@ -301,30 +288,16 @@ function AllQueriesData() {
                     {
                         row.status_code == "0" || row.status_code == "1" || row.status_code == "3" ?
                             <>
-                                <span title="Update Query" className="ml-2">
+                                <span className="ml-2">
                                     <Link to={`/customer/edit-query/${row.id}`}>
-                                        <i
-                                            className="fa fa-edit"
-                                            style={{
-                                                fontSize: 16,
-                                                cursor: "pointer",
-                                            }}
-                                        ></i>
+                                        <EditQuery />
                                     </Link>
                                 </span>
 
-                                <span title="Delete Query" className="ml-2">
-                                    <i
-                                        className="fa fa-trash"
-                                        style={{
-                                            fontSize: 16,
-                                            cursor: "pointer",
-
-                                        }}
-                                        onClick={() => del(row.id)}
-                                    ></i>
+                                <span   onClick={() => del(row.id)} className="ml-2">
+                                   <DeleteIcon />
                                 </span>
-                                <span title="Send Message" className="ml-2">
+                                <span className="ml-2">
                                     <Link
                                         to={{
                                             pathname: `/customer/chatting/${row.id}&type=4`,
@@ -338,26 +311,11 @@ function AllQueriesData() {
                                             }
                                         }}
                                     >
-                                        <i
-                                            className="fa fa-comments-o"
-                                            style={{
-                                                fontSize: 16,
-                                                cursor: "pointer",
-                                                color: "blue"
-                                            }}
-                                        ></i>
+                                       <MessageIcon />
                                     </Link>
                                 </span>
-                                <span title="View Discussion Message" className="ml-2">
-                                    <i
-                                        className="fa fa-comments-o"
-                                        style={{
-                                            fontSize: 16,
-                                            cursor: "pointer",
-                                            color: "orange"
-                                        }}
-                                        onClick={() => ViewDiscussionToggel(row.assign_no)}
-                                    ></i>
+                                <span onClick={() => ViewDiscussionToggel(row.assign_no)}  className="ml-2">
+                                  <ViewDiscussionIcon />
                                 </span>
 
                             </> :
@@ -370,31 +328,27 @@ function AllQueriesData() {
                             <>
 
                                 {dateMnsFive > curDate === true ?
-                                <span title="Send Feedback" className = "ml-2"
-                                style={{
-                                    cursor: "pointer",
-                                }}>
+                                <span className = "ml-2"
+                               >
                                 <Link 
                                  to={{
                                     pathname: `/customer/feedback/${row.assign_no}`,
                                     index: 0,
                                     routes: "queries",
                                 }}>
-                                      <FeedbackIcon />
+                                      <FeedBackICon />
                                 </Link>
                             </span> : ""}
                                 {
                                     row.delivery_report == "completed" ? null :
-                                        <span title="Upload Additional Documents" className="ml-1"
-                                            style={{ cursor: "pointer", }}
-                                            onClick={() => additionalHandler(row.assign_no)}
+                                        <span className="ml-1"  onClick={() => additionalHandler(row.assign_no)}
                                         >
-                                            <PublishIcon color="secondary" />
+                                            <UploadDocument />
                                         </span>
                                 }
                                 {row.status_code == "10" ? null 
                                 : 
-                                <span title="Send Message" className="ml-2">
+                                <span className="ml-2">
                                  <Link
                                         to={{
                                             pathname: `/customer/chatting/${row.id}&type=4`,
@@ -408,27 +362,12 @@ function AllQueriesData() {
                                             }
                                         }}
                                     >
-                                    <i
-                                        className="fa fa-comments-o"
-                                        style={{
-                                            fontSize: 16,
-                                            cursor: "pointer",
-                                            color: "blue"
-                                        }}
-                                    ></i>
+                                    <MessageIcon />
                                 </Link>
                             </span>
 }
-                                <span title="View Discussion Message" className="ml-2">
-                                    <i
-                                        className="fa fa-comments-o"
-                                        style={{
-                                            fontSize: 16,
-                                            cursor: "pointer",
-                                            color: "orange"
-                                        }}
-                                        onClick={() => ViewDiscussionToggel(row.assign_no)}
-                                    ></i>
+<span onClick={() => ViewDiscussionToggel(row.assign_no)}  className="ml-2">
+                                  <ViewDiscussionIcon />
                                 </span>
                             
                             </>
@@ -478,9 +417,7 @@ const showManual = () => {
     return (
        <Card>
              <CardHeader>
-                   
-                    <span title="help"> 
-                    <i class="fa fa-question-circle" style={{cursor : "pointer", float: "right"}} onClick= {(e) => needHelp()}></i></span>
+             <span onClick= {(e) => needHelp()}> <HelpIcon /></span>
                     <CustomerFilter
                         setData={setQuery}
                         getData={getQueriesData}

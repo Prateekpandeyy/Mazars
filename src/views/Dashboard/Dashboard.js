@@ -140,7 +140,7 @@ console.log("sessionStorage", window.sessionStorage)
           </tr>
         </thead>
 
-        <tbody className="table_body">
+        <tbody className="table_body allQueryBody">
           <tr>
             <td className="left_side">Inprogress; Allocation</td>
             <td>{inprogress_allocation}</td>

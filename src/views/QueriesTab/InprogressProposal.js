@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from "react";
-import Layout from "../../components/Layout/Layout";
+
 import axios from "axios";
 import { baseUrl } from "../../config/config";
 import { useAlert } from "react-alert";
@@ -15,11 +15,15 @@ import BootstrapTable from "react-bootstrap-table-next";
 import Records from "../../components/Records/Records";
 import CommonServices from "../../common/common";
 import moment from "moment";
-import FeedbackIcon from '@material-ui/icons/Feedback';
 import './index.css';
 import DiscardReport from "../AssignmentTab/DiscardReport";
 import ModalManual from "../ModalManual/AllComponentManual";
 import {Modal, ModalHeader, ModalBody} from 'reactstrap';
+import MessageIcon, { ViewDiscussionIcon, HelpIcon, 
+  FeedBackICon} from "../../components/Common/MessageIcon";
+
+
+
 function InprogressProposal() {
   const alert = useAlert();
   const userId = window.localStorage.getItem("userid");
@@ -192,93 +196,131 @@ function InprogressProposal() {
         return { fontSize: "12px", textAlign: "center", width: "130px"};
       },
       style : {
-        wordBreak : "break-word", fontSize : "11px"
-        },
-      formatter: function (cell, row) {
-        var dateMnsFive = moment(row.exp_delivery_date).add(15, 'day').format("YYYY-MM-DD");
-              
-               
-        var curDate = moment().format("YYYY-MM-DD")
-     
-        return (
-          <>
-            {
-              row.status == "Declined Query" ?
-                null
-                :
-                <div>
-                
-
-                                    {
-                                        row.status_code == "4" || 8 < parseInt(row.status_code) || row.status_code == "2" ?
-                                          
-                                          <div style={{ display: "flex", justifyContent: "space-around" }}>
-
-                                                {dateMnsFive > curDate === true ?
-                                                <div title="Send Feedback"
-                                                style={{
-                                                    cursor: "pointer",
-                                                }}>
-                                              <Link 
-                                 to={{
-                                    pathname: `/customer/feedback/${row.assign_no}`,
-                                    index: 2,
-                                    routes: "queries",
-                                }}>
-                                      <FeedbackIcon />
-                                </Link>
-                                            </div> : ""}
-                                          
-                       
-                        <div title="Send Message">
-                          <Link
-                            to={{
-                             
-                                pathname: `/customer/chatting/${row.id}&type=4`,  
-                                  index: 2,
-                                  routes: "queries",
-                              obj: {
-                                message_type: "4",
-                                query_No: row.assign_no,
-                                query_id: row.id,
-                                routes: `/customer/queries`
-                              }
-                            }}
-                          >
-                            <i
-                              class="fa fa-comments-o"
-                              style={{
-                                fontSize: 16,
-                                cursor: "pointer",
-                                color: "blue"
-                              }}
-                            ></i>
+          wordBreak : "break-word", fontSize : "11px"
+          },
+    formatter: function (cell, row) {
+          var dateMnsFive = moment(row.exp_delivery_date).add(15, 'day').format("YYYY-MM-DD");
+        
+         
+          var curDate = moment().format("YYYY-MM-DD")
+       
+         
+        
+          
+       
+          return (
+              <>
+                  {   
+                      row.status == "Declined Query" ?
+                      <>
+                     <>
+                     {dateMnsFive > curDate === true ?
+                          <span className="ml-2">
+                         
+                          <Link 
+                           to={{
+                              pathname: `/customer/feedback/${row.assign_no}`,
+                              index: 2,
+                              routes: "queries",
+                          }}>
+                                <FeedBackICon />
                           </Link>
-                        </div>
+                      </span>
+                       : ""} 
+                      
+                      <span onClick={() => ViewDiscussionToggel(row.assign_no)}  className="ml-2">
+                            <ViewDiscussionIcon />
+                          </span>
+                        
 
-                        <div title="View Discussion Message">
-                          <i
-                            class="fa fa-comments-o"
-                            style={{
-                              fontSize: 16,
-                              cursor: "pointer",
-                              color: "orange"
-                            }}
-                            onClick={() => ViewDiscussionToggel(row.assign_no)}
-                          ></i>
-                        </div>
-                      </div>
+                     </>
+                      </>
+                          :
+                          <>
+              {
+                  row.status_code == "0" || row.status_code == "1" || row.status_code == "3" ?
+                      <>
+
+                          <span className="ml-2">
+                              <Link
+                                  to={{
+                                      pathname: `/customer/chatting/${row.id}&type=4`,
+                                      index: 2,
+                              routes: "queries",
+                                      obj: {
+                                          message_type: "4",
+                                          query_No: row.assign_no,
+                                          query_id: row.id,
+                                          routes: `/customer/queries`
+                                      }
+                                  }}
+                              >
+                                 <MessageIcon />
+                              </Link>
+                          </span>
+                          <span onClick={() => ViewDiscussionToggel(row.assign_no)}  className="ml-2">
+                            <ViewDiscussionIcon />
+                          </span>
+
+                      </> :
+                      null
+              }
+
+              {
+                  row.status_code == "4" || 8 < parseInt(row.status_code) || row.status_code == "2" ?
+                      
+                      <>
+
+                          {dateMnsFive > curDate === true ?
+                          <span className = "ml-2"
+                         >
+                          <Link 
+                           to={{
+                              pathname: `/customer/feedback/${row.assign_no}`,
+                              index: 2,
+                              routes: "queries",
+                          }}>
+                                <FeedBackICon />
+                          </Link>
+                      </span> : ""}
+                         
+                          {row.status_code == "10" ? null 
+                          : 
+                          <span className="ml-2">
+                           <Link
+                                  to={{
+                                      pathname: `/customer/chatting/${row.id}&type=4`,
+                                      index: 2,
+                              routes: "queries",
+                                      obj: {
+                                          message_type: "4",
+                                          query_No: row.assign_no,
+                                          query_id: row.id,
+                                          routes: `/customer/queries`
+                                      }
+                                  }}
+                              >
+                              <MessageIcon />
+                          </Link>
+                      </span>
+}
+<span onClick={() => ViewDiscussionToggel(row.assign_no)}  className="ml-2">
+                            <ViewDiscussionIcon />
+                          </span>
+                      
+                      </>
                       :
                       null
-                  }
-                </div>
-
-            }
+              }
           </>
-        );
+
+  }
+              </>
+          );
       },
-    },
-  ];
+  },
+];
+
 
 
 
