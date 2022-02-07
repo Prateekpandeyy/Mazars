@@ -32,33 +32,45 @@
 .query_thead{
 	background-color:#3d4975; 
 }
+.query_thead1{
+	background-color: rgba(61, 71, 117, 0.5);
+	color:#000;
+}
 
-.second.table-striped tbody tr,
+/* .second.table-striped tbody tr,
 .third.table-striped tbody tr,
 .forth.table-striped tbody tr{
 	background-color:rgba(88, 103, 155, 0.8);
-}
+} */
 
 
 
 .proposal_thead{
-	background-color:#704b62;
+	background-color: rgb(112, 75, 99, 1);
+}
+.proposal_thead3{
+	background-color: rgba(112, 75, 99, 0.5);
+	color: #000;
 }
 
-.sixth.table-striped tbody tr{
+/* .sixth.table-striped tbody tr{
 	background-color:rgba(172, 132, 159, 1);
 }
-
+ */
 
 
 .assignment_thead{
 	background-color:rgba(67 , 131, 117, 1);
 }
 
-
-.tenth.table-striped tbody tr{
-	background-color:rgba(67, 131, 117, 0.8);
+.assignment_thead2{
+	background-color: rgba(67, 131, 117, 0.8);
+	color:#000;
 }
+
+/* .tenth.table-striped tbody tr{
+	background-color:rgba(67, 131, 117, 0.8);
+} */
 
 
 
@@ -68,4 +80,5 @@
 }
 .payment_thead2{
 	background-color:rgba(69, 126, 143, 0.8);
+	color:#000;
 }

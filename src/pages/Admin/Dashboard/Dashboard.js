@@ -175,7 +175,7 @@ let history = useHistory()
             </thead>
           </table>
           <table className="table table-striped second main_table mb-1">
-            <thead className="query_thead">
+            <thead className="query_thead1">
               <tr>
                 <th className="left_side">Inprogress; Queries</th>
                 <th>{inprogress_queries}</th>
@@ -200,7 +200,7 @@ let history = useHistory()
 
 
           <table className="table table-striped third main_table mb-1">
-            <thead className="query_thead">
+            <thead className="query_thead1">
               <tr>
                 <th className="left_side">Completed; Queries</th>
                 <th>{complete_query}</th>
@@ -216,7 +216,7 @@ let history = useHistory()
 
 
           <table className="table table-striped forth main_table mb-1">
-            <thead className="query_thead">
+            <thead className="query_thead1">
               <tr>
                 <th className="left_side">Declined; Queries</th>
                 <th>{declined_queries}</th>
@@ -257,7 +257,7 @@ let history = useHistory()
           </table>
 
           <table className="table table-striped sixth main_table mb-1">
-            <thead className="proposal_thead">
+            <thead className="proposal_thead3">
               <tr>
                 <th className="left_side">Inprogress; Proposals</th>
                 <th>{InProgress}</th>
@@ -276,7 +276,7 @@ let history = useHistory()
           </table>
 
           <table className="table table-striped seventh main_table mb-1">
-            <thead className="proposal_thead">
+            <thead className="proposal_thead3">
               <tr>
                 <th className="left_side">Accepted; Proposals </th>
                 <th>{accepted_proposals}</th>
@@ -285,7 +285,7 @@ let history = useHistory()
           </table>
 
           <table className="table table-striped eight main_table mb-1">
-            <thead className="proposal_thead">
+            <thead className="proposal_thead3">
               <tr>
                 <th className="left_side">Client Declined; Proposals</th>
                 <th>{declined}</th>
@@ -307,7 +307,7 @@ let history = useHistory()
           </table>
 
           <table className="table table-striped tenth main_table mb-1">
-            <thead className="assignment_thead">
+            <thead className="assignment_thead2">
 
               <tr>
                 <th className="left_side">Inprogress; Assignments</th>
@@ -340,7 +340,7 @@ let history = useHistory()
           </table>
 
           <table className="table table-striped tenth main_table mb-1">
-            <thead className="assignment_thead">
+            <thead className="assignment_thead2">
 
               <tr>
                 <th className="left_side">Completed; Assignments</th>
@@ -350,7 +350,7 @@ let history = useHistory()
           </table>
 
           <table className="table table-striped tenth main_table mb-1">
-            <thead className="assignment_thead">
+            <thead className="assignment_thead2">
 
               <tr>
                 <th className="left_side">Client Declined; Payment</th>
