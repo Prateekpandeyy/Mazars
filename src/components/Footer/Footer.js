@@ -7,9 +7,9 @@ function Footer() {
   const userid = window.localStorage.getItem("userid")
   return (
     <>
-      <footer style={{backgroundColor : "rgb(158, 164, 128)"}}>
+      <footer>
         <div style={{display: "flex", flexDirection: "column", justifyContent: "space-evenly", textAlign: "center"}}>
-          <p style={{ color: "#464B4B"}}>Copyright @ 2021. All right reserved.</p>
+        
         <div style={{display: "flex", justifyContent:"center"}}>
         <Link to={"/customer/contactbasic"}>
               
@@ -33,6 +33,7 @@ function Footer() {
            
              
           </div>
+          <p>Copyright @ 2021. All right reserved.</p>
         </div>
       
   

@@ -305,7 +305,7 @@ const rightAli = {
                 fontSize: "11px",
             },
             headerStyle: () => {
-                return { fontSize: "11px" };
+                return { fontSize: "11px", textAlign: "center" };
             },
             formatter: function (cell, row) {
                 return (

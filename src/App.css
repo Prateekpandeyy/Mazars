@@ -15,7 +15,7 @@
     background: #f0f0f0 !important;
     position: relative;
     min-height: 100vh;
-    font-family: "Roboto" !important;
+    font-family: Arial !important;
   }
   input[type=number]::-webkit-inner-spin-button, 
   input[type=number]::-webkit-outer-spin-button { 

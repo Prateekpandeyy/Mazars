@@ -56,7 +56,7 @@ background-image:url("../ManualImg/loginCover.jpeg");
     align-items: center;
 }
 .signBtn h4{
-    color:#000;
+    color:#fff !important;
 }
 
 .signMendatary{

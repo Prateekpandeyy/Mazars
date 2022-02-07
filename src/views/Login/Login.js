@@ -111,7 +111,7 @@ function LoginForm() {
           <div className="signIn">
             <div className="signBtn">
               <div className="boxOverlay">
-                <Typography variant="h4" style={{ "margin": "5px auto", "color": "#fff" }}>
+                <Typography variant="h4" sx={{color:"#fff"}} style={{ "margin": "5px auto"}}>
                   For new client
                 </Typography>
                 <button className="btn btn-success">

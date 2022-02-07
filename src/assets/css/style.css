@@ -141,9 +141,11 @@ color: rgb(61, 71 , 117)
 }
 
 
-
+.footerCopyright{
+  color: #fff !important;
+}
 .send{
-  background-color: rgb(120, 120, 120);
+  background-color: rgba(120, 120, 120, 0.3);
   }
 
 .received{

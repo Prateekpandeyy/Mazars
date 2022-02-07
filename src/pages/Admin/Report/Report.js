@@ -64,7 +64,7 @@ const history = useHistory()
     var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
  const firstDay = new Date(date.getFullYear() + + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2));
   const [item] = useState(current_date);
-
+const [item2, setItem2] = useState(current_date)
   useEffect(() => {
     const getCategory = async () => {
       await axios.get(`${baseUrl}/customers/getCategory?pid=0`).then((res) => {
@@ -187,6 +187,7 @@ const resetData = () => {
   selectInputRef3.current.select.clearValue();
   selectInputRef4.current.select.clearValue();
   selectInputRef5.current.select.clearValue();
+  setItem2("")
   setQno([])
 
 }
@@ -443,7 +444,7 @@ let cc = []
             className={classNames("form-control", {
               "is-invalid": errors.p_mobile,
             })}
-            defaultValue={item}
+            defaultValue={item2}
           />
         </div>
       </div>
@@ -732,7 +733,7 @@ ref={selectInputRef2}
 </span>
 <span>
 <input type="checkbox" ref={register} name="pocket_expensive" id="pocket_expensive"></input>
-<label htmlFor="pocket_expensive">Out of pocket </label>
+<label htmlFor="pocket_expensive">Out of pocket amount</label>
 </span>
 <span>
 <input type="checkbox" ref={register} name="cget_tax" id="cget_tax"></input>
