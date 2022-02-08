@@ -3,7 +3,7 @@ import {AppBar, Toolbar, Button, Typography, TextField, Grid, Box, Container, Ca
 import useForm from 'react-hook-form';
 import {Link} from 'react-router-dom';
 import mazars from "../../assets/images/mazars-logo.png";
-import  Select  from 'react-select'
+import  Select  from 'react-select';
 import style from './QueryStyle.module.css';
 const QueryContact = () => {
     const category = [{

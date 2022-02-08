@@ -130,15 +130,15 @@ footer {
 
 
 .inprogress{
-color: rgb(61, 71 , 117)
+color: rgb(61, 71 , 117) !important;
 }
 
 .completed{
-  color:rgb(61, 131, 117);
+  color:rgb(61, 131, 117) !important;
   }
 
 .declined{
-  color: red;
+  color: red !important;
 }
 
 

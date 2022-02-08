@@ -27,7 +27,7 @@ const Report = () => {
     const selectInputRef3 = useRef();
     const selectInputRef4 = useRef();
     const selectInputRef5 = useRef();
-   
+    const selectInputRef6 = useRef();
     const [subCategory, setSubCategory] = useState([]);
     const [subData, subCategeryData] = useState([])
     const [custCate, setCustcate] = useState([])
@@ -187,7 +187,7 @@ const resetData = () => {
   selectInputRef3.current.select.clearValue();
   selectInputRef4.current.select.clearValue();
   selectInputRef5.current.select.clearValue();
-  setItem2("")
+  selectInputRef6.current.select.clearValue();
   setQno([])
 
 }
@@ -477,7 +477,7 @@ let cc = []
           <div className="col-md-3">
         <div className="mb-3">
         <label className="form-label">Query Number</label>
-        <Select isMulti = {true} 
+        <Select isMulti = {true} ref={selectInputRef6}
 
  options={qno} onChange={(e) => queryNumber(e)}/>
 
@@ -603,18 +603,18 @@ ref={selectInputRef2}
            
 <span>
 <input type="checkbox" ref={register} name="purpose_p" id="purpose_p"></input>
-<label htmlFor="purpose_p">Purpose for which Opinion is sought</label>
+<label htmlFor="purpose_p">Purpose for Which Opinion is Sought</label>
 </span>
 <span>
     <input type="checkbox" ref={register} name="p_format" id="p_format"></input>
-<label htmlFor="p_format">Format in which Opinion is required</label>
+<label htmlFor="p_format">Format in Which Opinion is Required</label>
 </span>
 <span>
     <input type="checkbox" ref={register} name="t_requested" id="t_requested"></input>
 <label htmlFor="t_requested">Timeline Requested</label>
 </span>
 <span>  <input type="checkbox" ref={register} name="spc_que" id="spc_que"></input>
-<label htmlFor="spc_que">Specific questions</label>
+<label htmlFor="spc_que">Specific Questions</label>
 </span>
 <span>  <input type="checkbox" ref={register} name="doa" id="doa"></input>
 <label htmlFor="doa">Date of Allocation of Query</label>
@@ -670,10 +670,10 @@ ref={selectInputRef2}
 <label htmlFor="amount_overdue">Total Amount Overdue</label>
 </span>
 <span>  <input type="checkbox" ref={register} name="declinedDate" id="declinedDate"></input>
-<label htmlFor="declinedDate">Payment decline date</label>
+<label htmlFor="declinedDate">Payment Decline Date</label>
 </span>     
 <span>  <input type="checkbox" ref={register} name="paymentDeclinedReason" id="paymentDeclinedReason"></input>
-<label htmlFor="paymentDeclinedReason">Payment decline reason </label>
+<label htmlFor="paymentDeclinedReason">Payment Decline Reason </label>
 </span>        
             </div>      
            </fieldset>
@@ -733,19 +733,19 @@ ref={selectInputRef2}
 </span>
 <span>
 <input type="checkbox" ref={register} name="pocket_expensive" id="pocket_expensive"></input>
-<label htmlFor="pocket_expensive">Out of pocket amount</label>
+<label htmlFor="pocket_expensive">Out of Pocket Expenses</label>
 </span>
 <span>
 <input type="checkbox" ref={register} name="cget_tax" id="cget_tax"></input>
-<label htmlFor="cget_tax">Cgst Tax</label>
+<label htmlFor="cget_tax">CGST Tax</label>
 </span>
 <span>
 <input type="checkbox" ref={register} name="igst_tax" id="igst_tax"></input>
-<label htmlFor="igst_tax">Igst Tax </label>
+<label htmlFor="igst_tax">IGST Tax </label>
 </span>
 <span>
 <input type="checkbox" ref={register} name="sgst_tax" id="sgst_tax"></input>
-<label htmlFor="sgst_tax">Sgst Tax</label>
+<label htmlFor="sgst_tax">SGST Tax</label>
 </span>
 <span>
 <input type="checkbox" ref={register} name="total_gst" id="total_gst"></input>
@@ -753,7 +753,7 @@ ref={selectInputRef2}
 </span>
 <span>
 <input type="checkbox" ref={register} name="total_inovice" id="total_inovice"></input>
-<label htmlFor="total_inovice">Invoice Value </label>
+<label htmlFor="total_inovice">Invoice Amount </label>
 </span>
 <span>
 <input type="checkbox" ref={register} name="tds" id="tds"></input>

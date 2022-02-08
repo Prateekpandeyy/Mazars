@@ -272,7 +272,7 @@ console.log("sessionStorage", window.sessionStorage)
             </thead>
           </table>
 
-          <table className="table  tenth main_table">
+          <table className="table  elevnth main_table">
             <thead className="assignment_thead2">
 
               <tr>
@@ -282,7 +282,7 @@ console.log("sessionStorage", window.sessionStorage)
             </thead>
           </table>
 
-          <table className="table  tenth main_table">
+          <table className="table  twelvth main_table">
             <thead className="assignment_thead2">
 
               <tr>
@@ -296,7 +296,7 @@ console.log("sessionStorage", window.sessionStorage)
 
           <div className="col-md-3 content_header">
 
-            <table className="table  twelvth main_table">
+            <table className="table  thirteenth main_table">
               <thead className="payment_thead">
                 <tr>
                   <th className="left_side">All Payments</th>
@@ -304,7 +304,7 @@ console.log("sessionStorage", window.sessionStorage)
                 </tr>
               </thead>
             </table>
-            <table className="table  thirteen main_table">
+            <table className="table  fortheenth main_table">
               <thead className="payment_thead2">
                 <tr>
                   <th className="left_side">Paid</th>
@@ -313,7 +313,7 @@ console.log("sessionStorage", window.sessionStorage)
               </thead>
             </table>
 
-            <table className="table  thirteen main_table">
+            <table className="table  fiftheenth main_table">
               <thead className="payment_thead2">
                 <tr>
                   <th className="left_side">Unpaid</th>

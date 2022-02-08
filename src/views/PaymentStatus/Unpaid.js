@@ -240,7 +240,7 @@ function Paid() {
           return(
               <>
               {row.paid_status == "2"  ?
-              <p style={{color : "red"}}>{row.status} </p> : 
+              <p className="declined">{row.status} </p> : 
               <p>{row.status}</p>}
               </>
           )

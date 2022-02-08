@@ -24,8 +24,9 @@
 }
 
 .left_side{
-	width: 180px;
-	padding-left: 0px
+	width: 200px;
+	padding-left: 0px;
+	font-size: 12px;
 }
 
 
@@ -42,11 +43,23 @@
 .forth.table-striped tbody tr{
 	background-color:rgba(88, 103, 155, 0.8);
 } */
+.first, .second, .third, .forth, .first tr,
+.second  tr, .third  tr, .forth  tr{
+	border:1px solid #3d4975;
+}
 
-
-
+.fifth, .sixth, .seventh, .eight, .fifth tr, .sixth tr, .seventh tr, .eight tr {
+	border:1.5px solid rgb(112, 75, 98)
+}
+.ninth, .tenth, .elevnth, .twelvth, .ninth tr, .tenth tr, .elevnth tr, .twelvth tr{
+	border: 1.5px solid rgb(67, 131, 117)
+}
+.thirteenth , .fortheenth ,  .fiftheenth, .thirteenth tr, .fortheenth tr, .fiftheenth tr{
+	border: 1.5px solid rgba(69, 126, 143)
+}
 .proposal_thead{
 	background-color: rgb(112, 75, 98, 1);
+	
 }
 .proposal_thead3{
 	background-color: #be93b3;
