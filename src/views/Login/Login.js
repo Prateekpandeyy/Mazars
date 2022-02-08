@@ -101,7 +101,7 @@ function LoginForm() {
   return (
     <>
       <Header noSign="noSign" />
-      <h1 style={{ textAlign: "center", margin: "55px 0 30px 0", color : "#464B4B"  }}>
+      <h1 style={{ textAlign: "center", margin: "55px 0 30px 0", color : "#464B4B" , fontFamily: "Arial" }}>
         Would you like to post a query
       </h1>
       

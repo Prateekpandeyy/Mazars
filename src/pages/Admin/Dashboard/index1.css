@@ -33,7 +33,7 @@
 	background-color:#3d4975; 
 }
 .query_thead1{
-	background-color: rgba(61, 71, 117, 0.5);
+	background-color: #a7b0d1;
 	color:#000;
 }
 
@@ -46,10 +46,10 @@
 
 
 .proposal_thead{
-	background-color: rgb(112, 75, 99, 1);
+	background-color: rgb(112, 75, 98, 1);
 }
 .proposal_thead3{
-	background-color: rgba(112, 75, 99, 0.5);
+	background-color: #be93b3;
 	color: #000;
 }
 
@@ -64,7 +64,7 @@
 }
 
 .assignment_thead2{
-	background-color: rgba(67, 131, 117, 0.8);
+	background-color: #8ac4b8;
 	color:#000;
 }
 
@@ -79,6 +79,6 @@
 	background-color:rgba(69, 126, 143, 1);
 }
 .payment_thead2{
-	background-color:rgba(69, 126, 143, 0.8);
+	background-color: #8bb9c7;
 	color:#000;
 }

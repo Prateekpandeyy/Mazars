@@ -11,6 +11,12 @@ function Footer() {
         <div style={{display: "flex", flexDirection: "column", justifyContent: "space-evenly", textAlign: "center"}}>
         
         <div style={{display: "flex", justifyContent:"center"}}>
+        <Link to={"/customer/customerquery"}>
+              
+              
+              Query Contact Us | &nbsp; 
+            
+           </Link>
         <Link to={"/customer/contactbasic"}>
               
               
