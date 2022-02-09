@@ -2,7 +2,7 @@
     display: flex;
     height: 100%;
     flex-direction: column;
-    background-color: #1089ff;
+    background-color:rgba(10, 31, 143, 1) !important;
 
 }
 .contactDetails{

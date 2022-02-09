@@ -44,6 +44,7 @@ const Report = () => {
   const [data, setData] = useState([]);
   const [data2, setData2] = useState([]);
   const [taxId, setTaxId] = useState("");
+  const [taxxId, setTaxxId] = useState("")
   const [teamleader44, setTeamleader44] = useState("") 
   const [taxprofessional44, setTaxprofessional44] = useState("")
   const [qno, setQno] = useState()
@@ -94,10 +95,26 @@ const [item2, setItem2] = useState(current_date)
   useEffect(() => {
     getTeamLeader();
     getData();
-    getQueryNo()
+    getupdateQuery()
 
   }, []);
-
+  useEffect(() => {
+getupdateQuery()
+  }, [taxId, taxxId, cname])
+const getupdateQuery = () => {
+ 
+     axios.get(`${baseUrl}/admin/getAllQueryList?customer=${cname}&teamleader=${taxId}&taxprofessional=${taxxId}`)
+    .then((res) => {
+      if (res.data.code === 1) {
+       
+        var data = res.data.result;
+         console.log("response", res.data.result)
+         let b = res.data.result
+         setQno(b.map(getqNo))
+      }
+    })
+       
+}
   const getTeamLeader = () => {
     axios.get(`${baseUrl}/tl/getTeamLeader`).then((res) => {
     
@@ -125,19 +142,18 @@ const [item2, setItem2] = useState(current_date)
         }
       });
   };
-  const getQueryNo = () => {
-    axios
-    .get(`${baseUrl}/admin/getAllQuery`)
-      .then((res) => {
-       
-        if (res.data.code === 1) {
-          var data = res.data.result;
-           console.log("response", res.data.result)
-           let b = res.data.result
-           setQno(b.map(getqNo))
-        }
-      });
-  };
+  let pk = []
+  const custName = (a) => {
+    console.log("done")
+   
+    a.map((r) => {
+      pk.push(r.value)
+    })
+    setcName(pk)
+   
+    
+  }
+ 
 
   const getData = () => {
     axios
@@ -210,7 +226,10 @@ const resetData = () => {
    if(value.assignDate || value.completionDate || value.assignStatus || value.completionQuery || value.assignTime){
      assignment_info = true
    }
-   if(value.receiptDate || value.amountReceived){
+   if(value.receiptDate || value.amountReceived || value.invoice_number || value.dos 
+    || value.basic_amount || value.pocket_expensive || value.cget_tax || value.sgst_tax ||
+    value.igst_tax || value.total_gst || value.total_invoce || value.tds || value.net_amount
+    || value.receiptDate || value.amount_type || value.amountReceived){
      payment_info = true
    }
         let formData = new FormData();
@@ -364,13 +383,7 @@ let cc = []
      setDd(kk)
       
     }
-    const custName = (a) => {
-      let pk = []
-      a.map((r) => {
-        pk.push(r.value)
-      })
-      setcName(pk)
-    }
+   
   const teamLeader = (a) => {
  let tk = []
     a.map((i) => {
@@ -379,15 +392,16 @@ let cc = []
      tk.push(i.value)
     })
     setTeamleader44(tk)
-  
   }
   const taxProfessional = (e) => {
     let kk2 = []
     e.map((i) => {
       
       kk2.push(i.value)
+      setTaxxId(i.value)
     })
     setTaxprofessional44(kk2)
+    
   }
   const queryNumber = (e) => {
     console.log("aaa", e)
@@ -398,6 +412,7 @@ let cc = []
     })
     setQqno(kk4)
   }
+ 
     return (
         <>
           <Layout adminDashboard="adminDashboard" adminUserId={userid}>
@@ -414,7 +429,7 @@ let cc = []
               
             </Col>
             <Col md="4">
-              <h4>Admin Report</h4>
+              <h4>Report</h4>
             </Col>
             <Col md= "4">
             <label className="form-label">Report Name</label>
@@ -444,7 +459,7 @@ let cc = []
             className={classNames("form-control", {
               "is-invalid": errors.p_mobile,
             })}
-            defaultValue={item2}
+           
           />
         </div>
       </div>
@@ -564,7 +579,11 @@ ref={selectInputRef2}
            <legend className="login-legend">Basic Query Details</legend>
             <div className="basicFeild">
             <span>
-               <input type="checkbox" name="sno" id="sno" checked disabled ref={register}></input>
+               <input type="checkbox" name="select_all" id="select_all" ref={register}></input>
+               <label htmlFor="select_all">Select All</label>
+               </span>
+            <span>
+               <input type="checkbox" name="sno" id="sno" ref={register} checked disabled ref={register}></input>
                <label htmlFor="sno">S.No</label>
                </span>
                <span>

@@ -87,7 +87,7 @@ function Header({ id, cust_sign, noAdminSign, noTlSign, noTpSign, admin, mtl, mt
             <div>
               <ul className="menu">
                 <li style={{backgroundColor: "rgb(61, 71, 117)"}}>
-                  <Link to="/">Signin</Link>
+                  <Link to="/">Sign In</Link>
                 </li>             
               </ul>
             </div>
@@ -96,7 +96,7 @@ function Header({ id, cust_sign, noAdminSign, noTlSign, noTpSign, admin, mtl, mt
           {admin && !noAdminSign && (
             <ul className="menu">
               <li>
-                <Link to="/admin/login">Signin</Link>
+                <Link to="/admin/login">Sign In</Link>
               </li>
             </ul>
           )}
@@ -104,7 +104,7 @@ function Header({ id, cust_sign, noAdminSign, noTlSign, noTpSign, admin, mtl, mt
           {mtl && !noTlSign && (
             <ul className="menu">
               <li>
-                <Link to="/teamleader/login">Signin</Link>
+                <Link to="/teamleader/login">Sign In</Link>
               </li>
             </ul>
           )}
@@ -112,7 +112,7 @@ function Header({ id, cust_sign, noAdminSign, noTlSign, noTpSign, admin, mtl, mt
           {mtp && !noTpSign && (
             <ul className="menu">
               <li>
-                <Link to="/taxprofessional/login">Signin</Link>
+                <Link to="/taxprofessional/login">Sign In</Link>
               </li>
             </ul>
           )}
