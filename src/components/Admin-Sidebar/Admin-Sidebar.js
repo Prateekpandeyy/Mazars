@@ -124,14 +124,14 @@ const handleClick = () => {
           <ul className="nav navbar-nav flex-row">
             <li className="nav-item mr-auto">
               <a className="navbar-brand" href={logo}>
-                <div style={{display: "flex", width: "170px", alignItems: "center", overflow: "hidden"}}>
+                
                 <img
                   className="brand-logo"
                   alt="Chameleon admin logo"
                   src={`${ima}`}
-                  style={{display: "flex", width: "100%", height: "auto"}}
+                  style={{display: "flex", width: "100%", height: "auto", maxWidth:"100px", objectFit: "contain"}}
                 />
-                </div>
+              
                
               </a>
             </li>

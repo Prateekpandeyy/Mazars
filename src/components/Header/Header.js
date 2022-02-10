@@ -1,6 +1,6 @@
 import { Link, useHistory } from "react-router-dom";
 import "../../assets/css/style.css";
-import mazars from "../../assets/images/mazars-logo.png";
+import mazars from "../../mazars_logo.png";
 
 function Header({ id, cust_sign, noAdminSign, noTlSign, noTpSign, admin, mtl, mtp, noSign, loginOTP }) {
   let history = useHistory();
@@ -85,9 +85,9 @@ function Header({ id, cust_sign, noAdminSign, noTlSign, noTpSign, admin, mtl, mt
 
           {cust_sign && (
             <div>
-              <ul className="menu">
-                <li style={{backgroundColor: "rgb(61, 71, 117)"}}>
-                  <Link to="/">Sign In</Link>
+              <ul>
+                <li>
+             <button className="customBtn">     <Link to="/">Sign In</Link></button>
                 </li>             
               </ul>
             </div>
@@ -126,6 +126,3 @@ function Header({ id, cust_sign, noAdminSign, noTlSign, noTpSign, admin, mtl, mt
 }
 
 export default Header;
- {/* <li>
-                  <Link to="/customer/signup">SignUp</Link>
-                </li> */}

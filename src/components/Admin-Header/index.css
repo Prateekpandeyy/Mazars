@@ -25,3 +25,7 @@
 .changePassword .dropdown-item:active{
   background-color: rgb(61, 71, 117) !important;
 }
+.nameHeading:hover{
+  color:#0071CE!important;
+
+}

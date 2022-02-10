@@ -102,11 +102,11 @@ function ForgetPassword(props) {
                         <Spinner color="primary" />
                         :
                         <>
-                        <button type="submit" className="btn btn-primary">
+                        <button type="submit" className="customBtn">
                         Get OTP
                       </button>
                        <Link to="/" style={{ "margin": "10px" }}>
-                       <button type="button" className="btn" style={{backgroundColor: "rgb(158, 164, 128)"}}>
+                       <button type="button" className="customBtnCan">
                          Cancel
                        </button>
                      </Link>

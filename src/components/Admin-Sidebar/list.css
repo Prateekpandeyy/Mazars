@@ -12,3 +12,10 @@
     box-shadow: 0 0 10px rgb(0 0 0 / 12%);
    padding: 8px 9px;
 }
+.nav-item a{
+    color:#464B4B;
+}
+.nav-item a:hover{
+ 
+    color:#0071CE!important;
+}

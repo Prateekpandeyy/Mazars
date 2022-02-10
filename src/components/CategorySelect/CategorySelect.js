@@ -150,7 +150,7 @@ function CategorySelect({ addfreshbtn, startbtn }, props) {
               {startbtn && (
                 <button
                   type="submit"
-                  className="btn btn-primary  btn-block"
+                  className="customBtn"
                   onClick={e => validation()} //
                 >
                   Submit
@@ -160,7 +160,7 @@ function CategorySelect({ addfreshbtn, startbtn }, props) {
               {addfreshbtn && (
                 <button
                   type="submit"
-                  className="btn btn-primary  btn-block"
+                  className="customBtn"
                   onClick={e => validation2()} //
                 >
                   Submit

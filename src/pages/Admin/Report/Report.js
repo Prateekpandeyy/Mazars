@@ -282,6 +282,7 @@ const resetData = () => {
         formData.append("cget_tax", Number(value.cget_tax));
         formData.append("igst_tax", Number(value.igst_tax));
         formData.append("sgst_tax", Number(value.sgst_tax));
+        formData.append("invoice_amount", Number(value.total_invoce));
         formData.append("total_gst", Number(value.total_gst));
         formData.append("process_status", Number(value.process_status));
         formData.append("tds", Number(value.tds));
@@ -712,7 +713,7 @@ ref={selectInputRef2}
 </span>
 <span>
     <input type="checkbox" ref={register} name="completionDate" id="completionDate"></input>
-<label htmlFor="completionDate">Proposed Date of Completion/ Expected Date of Delivery</label>
+<label htmlFor="completionDate"> Expected Date of Delivery</label>
 </span>
 <span>
     <input type="checkbox" ref={register} name="assignStatus" id="assignStatus"></input>
@@ -768,7 +769,7 @@ ref={selectInputRef2}
 </span>
 <span>
 <input type="checkbox" ref={register} name="total_gst" id="total_gst"></input>
-<label htmlFor="total_gst">Total Gst </label>
+<label htmlFor="total_gst">Total GST </label>
 </span>
 <span>
 <input type="checkbox" ref={register} name="total_inovice" id="total_inovice"></input>

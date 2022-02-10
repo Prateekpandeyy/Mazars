@@ -121,10 +121,10 @@ console.log("sessionStorage", window.sessionStorage)
   <>
   {sessionId ? 
   <Layout custDashboard="custDashboard" custUserId={userId}>
-
-  <div className="row">
+<div className="dashobardCustomer">
+   <div className="row">
     <div className="col-md-3 content_header">
-      <table className="table  first main_table">
+      <table className="table table-striped  first main_table">
         <thead className="query_thead">
           <tr>
             <th className="left_side"> All Queries</th>
@@ -132,7 +132,7 @@ console.log("sessionStorage", window.sessionStorage)
           </tr>
         </thead>
       </table>
-      <table className="table  second main_table">
+      <table className="table table-striped  second main_table">
         <thead className="query_thead query_thead1">
           <tr>
             <th className="left_side">Inprogress; Queries</th>
@@ -157,7 +157,7 @@ console.log("sessionStorage", window.sessionStorage)
       </table>
 
       {inprogress_queries != 0 || declined_queries != 0 ? <>
-        <table className="table  third main_table">
+        <table className="table table-striped  third main_table">
           <thead className="query_thead query_thead1">
             <tr>
               <th className="left_side">Completed; Queries</th>
@@ -173,7 +173,7 @@ console.log("sessionStorage", window.sessionStorage)
         </table>
         {complete_query != 0  || declined_queries != 0 ? <>
 
-          <table className="table  forth main_table">
+          <table className="table table-striped  forth main_table">
             <thead className="query_thead query_thead1">
               <tr>
                 <th className="left_side">Declined; Queries</th>
@@ -204,7 +204,7 @@ console.log("sessionStorage", window.sessionStorage)
     {allproposal != 0 ? <>
       <div className="col-md-3 content_header">
 
-        <table className="table  fifth main_table">
+        <table className="table table-striped fifth main_table">
           <thead className="proposal_thead">
             <tr>
               <th className="left_side">All Proposals</th>
@@ -214,7 +214,7 @@ console.log("sessionStorage", window.sessionStorage)
           </thead>
         </table>
 
-        <table className="table  sixth main_table">
+        <table className="table table-striped  sixth main_table">
           <thead className="proposal_thead3">
             <tr>
               <th className="left_side">Inprogress; Proposals</th>
@@ -233,7 +233,7 @@ console.log("sessionStorage", window.sessionStorage)
           </tbody>
         </table>
 
-        <table className="table  seventh main_table">
+        <table className="table table-striped seventh main_table">
           <thead className="proposal_thead3">
             <tr>
               <th className="left_side">Accepted; Proposals </th>
@@ -242,7 +242,7 @@ console.log("sessionStorage", window.sessionStorage)
           </thead>
         </table>
 
-        <table className="table  eight main_table">
+        <table className="table table-striped eight main_table">
           <thead className="proposal_thead3">
             <tr>
               <th className="left_side">Client Declined; Proposals</th>
@@ -253,7 +253,7 @@ console.log("sessionStorage", window.sessionStorage)
       </div>
       {allassignment != 0 ? <>
         <div className="col-md-3 content_header">
-          <table className="table  ninth main_table">
+          <table className="table table-striped ninth main_table">
             <thead className="assignment_thead">
               <tr>
                 <th className="left_side">All Assignments</th>
@@ -262,7 +262,7 @@ console.log("sessionStorage", window.sessionStorage)
             </thead>
           </table>
 
-          <table className="table  tenth main_table">
+          <table className="table table-striped tenth main_table">
             <thead className="assignment_thead2">
 
               <tr>
@@ -272,7 +272,7 @@ console.log("sessionStorage", window.sessionStorage)
             </thead>
           </table>
 
-          <table className="table  elevnth main_table">
+          <table className="table table-striped elevnth main_table">
             <thead className="assignment_thead2">
 
               <tr>
@@ -282,7 +282,7 @@ console.log("sessionStorage", window.sessionStorage)
             </thead>
           </table>
 
-          <table className="table  twelvth main_table">
+          <table className="table table-striped twelvth main_table">
             <thead className="assignment_thead2">
 
               <tr>
@@ -296,7 +296,7 @@ console.log("sessionStorage", window.sessionStorage)
 
           <div className="col-md-3 content_header">
 
-            <table className="table  thirteenth main_table">
+            <table className="table table-striped thirteenth main_table">
               <thead className="payment_thead">
                 <tr>
                   <th className="left_side">All Payments</th>
@@ -304,7 +304,7 @@ console.log("sessionStorage", window.sessionStorage)
                 </tr>
               </thead>
             </table>
-            <table className="table  fortheenth main_table">
+            <table className="table table-striped fortheenth main_table">
               <thead className="payment_thead2">
                 <tr>
                   <th className="left_side">Paid</th>
@@ -313,7 +313,7 @@ console.log("sessionStorage", window.sessionStorage)
               </thead>
             </table>
 
-            <table className="table  fiftheenth main_table">
+            <table className="table table-striped fiftheenth main_table">
               <thead className="payment_thead2">
                 <tr>
                   <th className="left_side">Unpaid</th>
@@ -324,6 +324,8 @@ console.log("sessionStorage", window.sessionStorage)
           </div>
         </> : ""} </> : ""}  </> : ""}  </div>
 
+</div>
+ 
 </Layout> : 
 <>
 {logout()}

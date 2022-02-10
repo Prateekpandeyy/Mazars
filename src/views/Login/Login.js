@@ -114,7 +114,7 @@ function LoginForm() {
                 <Typography variant="h4" sx={{color:"#fff"}} style={{ "margin": "5px auto"}}>
                   For new client
                 </Typography>
-                <button className="btn btn-success">
+                <button className="customBtn">
                   <Link className="SignUpLink"
                     to={{
                       pathname: "/customer/signup",
@@ -139,7 +139,7 @@ function LoginForm() {
               </div>
                 :
                 <div className="customForm">
-                  <form onSubmit={handleSubmit(onSubmit)} className="signInForm"  autocomplete="off">
+                  <form onSubmit={handleSubmit(onSubmit)} className="signInForm"  autoComplete="off">
                     <div className="form-group">
                       <label className="form-label">Email <span className="declined">*</span></label>
                       <input
@@ -197,7 +197,7 @@ function LoginForm() {
                       loading ?
                         <Spinner color="primary" />
                         :
-                        <button className="btn btn-success" type="submit">
+                        <button className="customBtn" type="submit">
                           Send OTP
                         </button>
                     }
