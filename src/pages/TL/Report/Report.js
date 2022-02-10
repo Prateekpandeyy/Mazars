@@ -20,6 +20,7 @@ import {
   Table,
 } from "reactstrap";
 import Swal from 'sweetalert2';
+import $ from 'jquery';
 const Report = () => {
     const userid = window.localStorage.getItem("tlkey");
   
@@ -52,6 +53,10 @@ const Report = () => {
   const [custData, setcustData] = useState();
   const [cname, setcName] = useState("")
   const [qqno, setQqno] = useState("")
+  const [checkBox, setCheckBox] = useState(null);
+  const [proposalCheckbox, setProposalCheckbox] = useState(null)
+  const [assignmentCheckbox, setAssignmentCheckbox] = useState(null)
+  const [paymnetCheckbox, setPaymentCheckbox] = useState(null)
   var kk = []
   var pp = []
   var vv = []
@@ -144,6 +149,7 @@ const getTeamLeader = () => {
         
                  if(JSON.parse(userid) == i.id){
                    console.log("result", i)
+                   setTeamleader44(i.name)
        setData([i])
                  }
                })
@@ -211,13 +217,13 @@ const getqNo = ((i) => ({
     "value": v.id,
     "label": v.details
   }))
-  console.log("data", data)
+ 
   const options3 = data.map(d => (
     {
       "value": d.id,
       "label": d.name
     }))
-    console.log("tax2", data2)
+
     const options4 = data2.map(d => (
       {
         "value": d.id,
@@ -425,7 +431,7 @@ let cc = []
     
   }
   const queryNumber = (e) => {
-    console.log("aaa", e)
+    console.log("aaa", e.target.value)
     let kk4 = []
     e.map((i) => {
       
@@ -433,7 +439,39 @@ let cc = []
     })
     setQqno(kk4)
   }
- 
+  const selectAllbasic = (e) => {
+ if(checkBox === null){
+  setCheckBox(true);
+ }
+else{
+  setCheckBox(null)
+}
+  }
+ const selectAllproposal = (e) => {
+   if(proposalCheckbox === null){
+     setProposalCheckbox(true)
+   }
+   else{
+     setProposalCheckbox(null)
+   }
+
+ }
+ const selectAllAssignment = (e) => {
+   if(assignmentCheckbox === null){
+     setAssignmentCheckbox(true)
+   }
+   else{
+     setAssignmentCheckbox(null)
+   }
+ }
+ const selectAllPayment = (e) => {
+  if(paymnetCheckbox === null){
+    setPaymentCheckbox(true)
+  }
+  else{
+    setPaymentCheckbox(null)
+  }
+ }
     return (
         <>
   <Layout TLDashboard="TLDashboard" TLuserId={userid}>
@@ -598,11 +636,14 @@ ref={selectInputRef2}
        <div className="col-md-12">
            <fieldset className="my-fieldset">
            <legend className="login-legend">Basic Query Details</legend>
-            <div className="basicFeild">
-            <span>
-               <input type="checkbox" name="select_all" id="select_all" ref={register}></input>
+           <div className="basicFeild">
+           <span>
+               <input type="checkbox" onClick={(i) => selectAllbasic(i)} name="select_all" class="selectall" id="select_all" ref={register}></input>
                <label htmlFor="select_all">Select All</label>
                </span>
+               </div>
+            <div className="basicFeild">
+            
             <span>
                <input type="checkbox" name="sno" id="sno" ref={register} checked disabled ref={register}></input>
                <label htmlFor="sno">S.No</label>
@@ -637,29 +678,29 @@ ref={selectInputRef2}
 <label htmlFor="tp_name">Name of Tax Professional</label>
 </span> 
                <span>
-<input type="checkbox" name="assessment" ref={register} id="assessment"></input>
+<input type="checkbox" name="assessment" ref={register} checked={checkBox} id="assessment"></input>
 <label htmlFor="assessment">Assessment Year(s)</label>
 </span>
            
 <span>
-<input type="checkbox" ref={register} name="purpose_p" id="purpose_p"></input>
+<input type="checkbox" ref={register} name="purpose_p" checked={checkBox} id="purpose_p"></input>
 <label htmlFor="purpose_p">Purpose for Which Opinion is Sought</label>
 </span>
 <span>
-    <input type="checkbox" ref={register} name="p_format" id="p_format"></input>
+    <input type="checkbox" ref={register} name="p_format" checked={checkBox} id="p_format"></input>
 <label htmlFor="p_format">Format in Which Opinion is Required</label>
 </span>
 <span>
-    <input type="checkbox" ref={register} name="t_requested" id="t_requested"></input>
+    <input type="checkbox" ref={register} name="t_requested" checked={checkBox} id="t_requested"></input>
 <label htmlFor="t_requested">Timeline Requested</label>
 </span>
-<span>  <input type="checkbox" ref={register} name="spc_que" id="spc_que"></input>
+<span>  <input type="checkbox" ref={register} name="spc_que"  checked={checkBox} id="spc_que"></input>
 <label htmlFor="spc_que">Specific Questions</label>
 </span>
-<span>  <input type="checkbox" ref={register} name="doa" id="doa"></input>
+<span>  <input type="checkbox" ref={register} name="doa" checked={checkBox} id="doa"></input>
 <label htmlFor="doa">Date of Allocation of Query</label>
 </span>
-<span>  <input type="checkbox" ref={register} name="process_status" id="process_status"></input>
+<span>  <input type="checkbox" ref={register} checked={checkBox} name="process_status" id="process_status"></input>
 <label htmlFor="process_status">Process Status</label>
 </span>
 </div>
@@ -673,28 +714,34 @@ ref={selectInputRef2}
        <div className="col-md-12">
        <fieldset className="my-fieldset">
            <legend className="login-legend">Proposal</legend>
+           <div className="basicFeild">
+           <span>
+               <input type="checkbox" onClick={(i) => selectAllproposal(i)} name="selectallProposal" class="selectall" id="selectallProposal" ref={register}></input>
+               <label htmlFor="selectallProposal">Select All</label>
+               </span>
+               </div>
             <div className="basicFeild">
 <span>
-<input type="checkbox" ref={register} name="dateProposal" id="dateProposal"></input>
+<input type="checkbox" ref={register} name="dateProposal" checked={proposalCheckbox} id="dateProposal"></input>
 <label htmlFor="dateProposal">Date of Proposal</label>
 </span>
 <span>
-<input type="checkbox" ref={register} name="proposedAmount" id="proposedAmount"></input>
+<input type="checkbox" ref={register} name="proposedAmount" checked={proposalCheckbox} id="proposedAmount"></input>
 <label htmlFor="proposedAmount">Proposed Amount</label>
 </span>
 <span>
-<input type="checkbox"  ref={register} name="paymentTerms" id="paymentTerms"></input>
+<input type="checkbox"  ref={register} name="paymentTerms" checked={proposalCheckbox} id="paymentTerms"></input>
 <label htmlFor="paymentTerms">Payment Terms</label>
 </span>
 <span>
-<input type="checkbox" ref={register} name="proposal_status" id="proposal_status"></input>
+<input type="checkbox" ref={register} name="proposal_status"  checked={proposalCheckbox}id="proposal_status"></input>
 <label htmlFor="proposal_status">Proposal Status</label>
 </span>
-<span>  <input type="checkbox" ref={register} name="acceptedAmount" id="acceptedAmount"></input>
+<span>  <input type="checkbox" ref={register} checked={proposalCheckbox} name="acceptedAmount" id="acceptedAmount"></input>
 <label htmlFor="acceptedAmount">Accepted Amount </label>
 </span>
 
-<span>  <input type="checkbox" ref={register} name="date_acceptance" id="date_acceptance"></input>
+<span>  <input type="checkbox" ref={register} name="date_acceptance" checked={proposalCheckbox} id="date_acceptance"></input>
 <label htmlFor="date_acceptance">Date of Acceptance / Decline</label>
 </span>
 {/* <span>
@@ -702,17 +749,17 @@ ref={selectInputRef2}
 <label htmlFor="amountReceived">Total Amount Received</label>
 </span> */}
 <span>
-    <input type="checkbox" ref={register} name="amountOutstanding" id="amountOutstanding"></input>
+    <input type="checkbox" ref={register} name="amountOutstanding" checked={proposalCheckbox} id="amountOutstanding"></input>
 <label htmlFor="amountOutstanding">Total Amount Outstanding</label>
 </span>
 <span>
-    <input type="checkbox" ref={register} name="amount_overdue" id="amount_overdue"></input>
+    <input type="checkbox" ref={register} name="amount_overdue" checked={proposalCheckbox} id="amount_overdue"></input>
 <label htmlFor="amount_overdue">Total Amount Overdue</label>
 </span>
-<span>  <input type="checkbox" ref={register} name="declinedDate" id="declinedDate"></input>
+<span>  <input type="checkbox" ref={register} name="declinedDate" checked={proposalCheckbox} id="declinedDate"></input>
 <label htmlFor="declinedDate">Payment Decline Date</label>
 </span>     
-<span>  <input type="checkbox" ref={register} name="paymentDeclinedReason" id="paymentDeclinedReason"></input>
+<span>  <input type="checkbox" ref={register} name="paymentDeclinedReason" checked={proposalCheckbox} id="paymentDeclinedReason"></input>
 <label htmlFor="paymentDeclinedReason">Payment Decline Reason </label>
 </span>        
             </div>      
@@ -725,25 +772,31 @@ ref={selectInputRef2}
        <div className="col-md-12">
        <fieldset className="my-fieldset">
            <legend className="login-legend">Assignment</legend>
+           <div className="basicFeild">
+           <span>
+               <input type="checkbox" onClick={(i) => selectAllAssignment(i)} name="selectAllAssignment" class="selectall" id="selectAllAssignment" ref={register}></input>
+               <label htmlFor="selectAllAssignment">Select All</label>
+               </span>
+               </div>
             <div className="basicFeild">
            
 <span>
-<input type="checkbox" ref={register} name="assignDate" id="assignDate"></input>
+<input type="checkbox" ref={register} checked={assignmentCheckbox} name="assignDate" id="assignDate"></input>
 <label htmlFor="assignDate">Assignment Date</label>
 </span>
 <span>
-    <input type="checkbox" ref={register} name="completionDate" id="completionDate"></input>
+    <input type="checkbox" ref={register} checked={assignmentCheckbox} name="completionDate" id="completionDate"></input>
 <label htmlFor="completionDate"> Expected Date of Delivery</label>
 </span>
 <span>
-    <input type="checkbox" ref={register} name="assignStatus" id="assignStatus"></input>
+    <input type="checkbox" ref={register} checked={assignmentCheckbox} name="assignStatus" id="assignStatus"></input>
 <label htmlFor="assignStatus">Assignment Status</label>
 </span>
 
-<span>  <input type="checkbox" ref={register} name="completionQuery" id="completionQuery"></input>
+<span>  <input type="checkbox" ref={register} checked={assignmentCheckbox} name="completionQuery" id="completionQuery"></input>
 <label htmlFor="completionQuery">Date of Completion of Query </label>
 </span>
-<span>  <input type="checkbox" ref={register} name="assignTime" id="assignTime"></input>
+<span>  <input type="checkbox" ref={register} checked={assignmentCheckbox} name="assignTime" id="assignTime"></input>
 <label htmlFor="assignTime">Time taken to complete the assignment</label>
 </span>
             </div>    
@@ -758,67 +811,68 @@ ref={selectInputRef2}
        <div className="col-md-12">
        <fieldset className="my-fieldset">
            <legend className="login-legend">Payment Receipt</legend>  
+           <div className="basicFeild">
+           <span>
+               <input type="checkbox" onClick={(i) => selectAllPayment(i)} name="selectAllPayment" class="selectall" id="selectAllPayment" ref={register}></input>
+               <label htmlFor="selectAllPayment">Select All</label>
+               </span>
+               </div>
             <div className="basicFeild">
             <span>
-<input type="checkbox" ref={register} name="invoice_number" id="invoice_number"></input>
+<input type="checkbox" ref={register} checked={paymnetCheckbox} name="invoice_number" id="invoice_number"></input>
 <label htmlFor="invoice_number">Invoice Number</label>
 </span> 
 <span>
-<input type="checkbox" ref={register} name="dos" id="dos"></input>
+<input type="checkbox" ref={register} checked={paymnetCheckbox} name="dos" id="dos"></input>
 <label htmlFor="dos">Description of Services</label>
 </span> 
 <span>
-<input type="checkbox" ref={register} name="basic_amount" id="basic_amount"></input>
+<input type="checkbox" ref={register} checked={paymnetCheckbox} name="basic_amount" id="basic_amount"></input>
 <label htmlFor="basic_amount">Basic Amount</label>
 </span>
 <span>
-<input type="checkbox" ref={register} name="pocket_expensive" id="pocket_expensive"></input>
+<input type="checkbox" ref={register} checked={paymnetCheckbox} name="pocket_expensive" id="pocket_expensive"></input>
 <label htmlFor="pocket_expensive">Out of Pocket Expenses</label>
 </span>
 <span>
-<input type="checkbox" ref={register} name="cget_tax" id="cget_tax"></input>
+<input type="checkbox" ref={register} checked={paymnetCheckbox} name="cget_tax" id="cget_tax"></input>
 <label htmlFor="cget_tax">CGST Tax</label>
 </span>
 <span>
-<input type="checkbox" ref={register} name="igst_tax" id="igst_tax"></input>
+<input type="checkbox" ref={register} checked={paymnetCheckbox} name="igst_tax" id="igst_tax"></input>
 <label htmlFor="igst_tax">IGST Tax </label>
 </span>
 <span>
-<input type="checkbox" ref={register} name="sgst_tax" id="sgst_tax"></input>
+<input type="checkbox" ref={register} checked={paymnetCheckbox} name="sgst_tax" id="sgst_tax"></input>
 <label htmlFor="sgst_tax">SGST Tax</label>
 </span>
 <span>
-<input type="checkbox" ref={register} name="total_gst" id="total_gst"></input>
+<input type="checkbox" ref={register} checked={paymnetCheckbox} name="total_gst" id="total_gst"></input>
 <label htmlFor="total_gst">Total GST </label>
 </span>
 <span>
-<input type="checkbox" ref={register} name="total_inovice" id="total_inovice"></input>
+<input type="checkbox" ref={register} checked={paymnetCheckbox} name="total_inovice" id="total_inovice"></input>
 <label htmlFor="total_inovice">Invoice Amount </label>
 </span>
 <span>
-<input type="checkbox" ref={register} name="tds" id="tds"></input>
+<input type="checkbox" ref={register} checked={paymnetCheckbox} name="tds" id="tds"></input>
 <label htmlFor="tds">TDS Deducted</label>
 </span> 
 <span>
-<input type="checkbox" ref={register} name="net_amount" id="net_amount"></input>
+<input type="checkbox" ref={register} checked={paymnetCheckbox} name="net_amount" id="net_amount"></input>
 <label htmlFor="net_amount">Net Amount </label>
 </span>
             <span>
-<input type="checkbox" ref={register} name="receiptDate" id="receiptDate"></input>
+<input type="checkbox" ref={register} checked={paymnetCheckbox} name="receiptDate" id="receiptDate"></input>
 <label htmlFor="receiptDate">Date of Receipt</label>
 </span>   
 <span>
-<input type="checkbox" ref={register} name="amountReceived" id="amountReceived"></input>
+<input type="checkbox" ref={register} checked={paymnetCheckbox} name="amountReceived" id="amountReceived"></input>
 <label htmlFor="amountReceived">Amount Received</label>
 </span>
 
-
-
-
-
-
 <span>
-<input type="checkbox" ref={register} name="amount_type" id="amount_type"></input>
+<input type="checkbox" ref={register} checked={paymnetCheckbox} name="amount_type" id="amount_type"></input>
 <label htmlFor="amount_type">Payment Mode </label>
 </span>
  </div>
