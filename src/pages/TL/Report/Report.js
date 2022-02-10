@@ -104,7 +104,7 @@ getupdateQuery()
   }, [taxId, taxxId, cname])
 const getupdateQuery = () => {
  
-     axios.get(`${baseUrl}/admin/getAllQueryList?customer=${cname}&teamleader=${taxId}&taxprofessional=${taxxId}`)
+     axios.get(`${baseUrl}/admin/getAllQueryList?customer=${cname}&teamleader=${JSON.parse(userid)}&taxprofessional=${taxxId}`)
     .then((res) => {
       if (res.data.code === 1) {
        
