@@ -149,7 +149,7 @@ const getTeamLeader = () => {
         
                  if(JSON.parse(userid) == i.id){
                    console.log("result", i)
-                   setTeamleader44(i.name)
+                   setTeamleader44(i.id)
        setData([i])
                  }
                })
