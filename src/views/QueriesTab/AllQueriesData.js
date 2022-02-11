@@ -434,7 +434,7 @@ const showManual = () => {
                    
                         <Col md = "3">
                         <div style={{ display: "flex"}}>
-                                <Link to="/customer/select-category" className="btn btn-primary">
+                                <Link to="/customer/select-category" className="customBtn">
                                     Fresh Query
                                 </Link>
                             </div>

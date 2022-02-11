@@ -189,7 +189,7 @@ const getTeamLeader = () => {
 
   const getData = () => {
     axios
-    .get(`${baseUrl}/admin/getAllList`)
+    .get(`${baseUrl}/tl/allClient?tl_id=${JSON.parse(userid)}`)
       .then((res) => {
        
         var a = res.data.result;

@@ -132,10 +132,9 @@ const handleClick = () => {
               <a className="navbar-brand" href={logo}>
                 
                 <img
-                  className="brand-logo"
-                  alt="Chameleon admin logo"
+                  className="brand-logo mazarsLogo"
+                 
                   src={`${ima}`}
-                  style={{display: "flex", width: "100%", height: "auto", maxWidth:"100px", objectFit: "contain"}}
                 />
               
                

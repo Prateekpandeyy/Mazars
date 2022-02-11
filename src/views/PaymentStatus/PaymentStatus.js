@@ -14,7 +14,7 @@ import AllPayment from "./AllPayment";
 function PaymentStatus(props) {
   const userId = window.localStorage.getItem("userid");
 
-  const [tabIndex, setTabIndex] = useState(0);
+ 
   useLayoutEffect(() => {
     setTabIndex(props.location.index || 0);
   }, [props.location.index]);
@@ -23,8 +23,8 @@ function PaymentStatus(props) {
   const [allPayment, setAllPayment] = useState("");
   const [paid, setPaid] = useState("");
   const [unpaid, setUnpaid] = useState("");
-
-
+  const [bgColor, setbgColor] = useState("#2b5f55")
+  const [tabIndex, setTabIndex] = useState(0);
   useEffect(() => {
     getAllPaid();
     getPaid();
@@ -61,33 +61,50 @@ function PaymentStatus(props) {
 
 
 
-  const myStyle1 = {
-    backgroundColor: "rgb(120, 120, 120)",
-    padding: "12px 24px",
-    borderBottomLeftRadius: "1.75rem",
-    width: "auto",
-    textAlign: "center",
-    color: "white",
-    cursor: "pointer",
-    margin: "10px auto"
-  };
-  const myStyle2 = {
-    padding: "12px 24px",
-   borderBottomLeftRadius: "1.75rem",
-    width: "auto",
-    textAlign: "center",
-    backgroundColor: "rgb(61, 71, 117)",
-    color: "white",
-    cursor: "pointer",
-    margin: "10px auto"
-  };
-
+  const tableIndex = (index) => {
+    setTabIndex(index)
+    console.log(index)
+    if(index === 0){
+      setbgColor("#2b5f55")
+    }
+    else if(index === 1){
+      setbgColor("#3e8678")
+    }
+    else if(index === 2){
+      setbgColor("#3e8678")
+    }
+    else if(index === 3){
+      setbgColor("#3e8678")
+    }
+  }
+    
+    const myStyle1 = {
+      backgroundColor: "rgb(61, 71, 117)",
+      padding: "12px 24px",
+      borderBottomLeftRadius: "1.75rem",
+      width: "auto",
+      textAlign: "center",
+      color: "white",
+      cursor: "pointer",
+      margin: "10px auto"
+    };
+    const myStyle2 = {
+      padding: "12px 24px",
+     borderBottomLeftRadius: "1.75rem",
+      width: "auto",
+      textAlign: "center",
+      backgroundColor: `${bgColor}`,
+      color: "white",
+      cursor: "pointer",
+      margin: "10px auto"
+    };
+  
 
 
   return (
     <Layout custDashboard="custDashboard" custUserId={userId}>
-      <div>
-        <Tabs selectedIndex={tabIndex} onSelect={(index) => setTabIndex(index)}>
+    
+      <Tabs selectedIndex={tabIndex} onSelect={(index) => tableIndex(index)}>
           <TabList
             style={{
               listStyleType: "none",
@@ -119,7 +136,7 @@ function PaymentStatus(props) {
             <Paid />
           </TabPanel>
         </Tabs>
-      </div>
+     
     </Layout>
   );
 }

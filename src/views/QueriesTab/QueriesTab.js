@@ -28,6 +28,7 @@ function QueriesTab(props) {
   const [inprogressAllocation, setInprogressAllocation] = useState("");
   const [inprogressProposal, setInprogressProposal] = useState("");
   const [declined, setDeclined] = useState("");
+  const [bgColor, setbgColor] = useState("#55425F")
 
 
   useEffect(() => {
@@ -74,10 +75,25 @@ function QueriesTab(props) {
       }
     });
   };
-
+const tableIndex = (index) => {
+  setTabIndex(index)
+  console.log(index)
+  if(index === 0){
+    setbgColor("#55425F")
+  }
+  else if(index === 1){
+    setbgColor("#6e557b")
+  }
+  else if(index === 2){
+    setbgColor("#6e557b")
+  }
+  else if(index === 3){
+    setbgColor("#6e557b")
+  }
+}
   
   const myStyle1 = {
-    backgroundColor: "rgb(120, 120, 120)",
+    backgroundColor: "rgb(61, 71, 117)",
     padding: "12px 24px",
     borderBottomLeftRadius: "1.75rem",
     width: "auto",
@@ -91,7 +107,7 @@ function QueriesTab(props) {
    borderBottomLeftRadius: "1.75rem",
     width: "auto",
     textAlign: "center",
-    backgroundColor: "rgb(61, 71, 117)",
+    backgroundColor: `${bgColor}`,
     color: "white",
     cursor: "pointer",
     margin: "10px auto"
@@ -101,7 +117,7 @@ function QueriesTab(props) {
   return (
     <Layout custDashboard="custDashboard" custUserId={userId}>
       
-        <Tabs selectedIndex={tabIndex} onSelect={(index) => setTabIndex(index)}>
+        <Tabs selectedIndex={tabIndex} onSelect={(index) => tableIndex(index)}>
           <TabList
             style={{
               listStyleType: "none",

@@ -19,3 +19,9 @@
  
     color:#0071CE!important;
 }
+.mazarsLogo{
+    display: flex;
+   
+    justify-content: center;
+    align-items: center;
+}

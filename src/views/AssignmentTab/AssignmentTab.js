@@ -15,16 +15,17 @@ import CustomerDeclinedPayment from "./CustomerDeclinedPayment";
 function AssignmentTab(props) {
   const userId = window.localStorage.getItem("userid");
 
-  const [tabIndex, setTabIndex] = useState(0);
+ 
   useLayoutEffect(() => {
     setTabIndex(props.location.index || 0);
   }, [props.location.index]);
 
-
+  const [tabIndex, setTabIndex] = useState(0);
   const [allassignment, setAllAssignment] = useState("");
   const [inprogressAssignmentCount, setInprogressAssignmentCount] = useState("");
   const [completeAssignment, setCompleteAssignment] = useState("");
   const [declinedAssignment, setDeclinedAssignment] = useState("");
+  const [bgColor, setbgColor] = useState("#615339")
 
 
   useEffect(() => {
@@ -78,34 +79,53 @@ function AssignmentTab(props) {
   };
 
 
-  const myStyle1 = {
-    backgroundColor: "rgb(120, 120, 120)",
-    padding: "12px 24px",
-    borderBottomLeftRadius: "1.75rem",
-    width: "auto",
-    textAlign: "center",
-    color: "white",
-    cursor: "pointer",
-    margin: "10px auto"
-  };
-  const myStyle2 = {
-    padding: "12px 24px",
-   borderBottomLeftRadius: "1.75rem",
-    width: "auto",
-    textAlign: "center",
-    backgroundColor: "rgb(61, 71, 117)",
-    color: "white",
-    cursor: "pointer",
-    margin: "10px auto"
-  };
+  const tableIndex = (index) => {
+    setTabIndex(index)
+    console.log(index)
+    if(index === 0){
+      setbgColor("#615339")
+    }
+    else if(index === 1){
+      setbgColor("#907b56")
+    }
+    else if(index === 2){
+      setbgColor("#907b56")
+    }
+    else if(index === 3){
+      setbgColor("#907b56")
+    }
+  }
+    
+    const myStyle1 = {
+      backgroundColor: "rgb(61, 71, 117)",
+      padding: "12px 24px",
+      borderBottomLeftRadius: "1.75rem",
+      width: "auto",
+      textAlign: "center",
+      color: "white",
+      cursor: "pointer",
+      margin: "10px auto"
+    };
+    const myStyle2 = {
+      padding: "12px 24px",
+     borderBottomLeftRadius: "1.75rem",
+      width: "auto",
+      textAlign: "center",
+      backgroundColor: `${bgColor}`,
+      color: "white",
+      cursor: "pointer",
+      margin: "10px auto"
+    };
+  
+  
 
 
 
 
   return (
     <Layout custDashboard="custDashboard" custUserId={userId}>
-      <div>
-        <Tabs selectedIndex={tabIndex} onSelect={(index) => setTabIndex(index)}>
+
+      <Tabs selectedIndex={tabIndex} onSelect={(index) => tableIndex(index)}>
           <TabList
             style={{
               listStyleType: "none",
@@ -145,7 +165,7 @@ function AssignmentTab(props) {
             <CustomerDeclinedPayment />
           </TabPanel>
         </Tabs>
-      </div>
+     
     </Layout>
   );
 }

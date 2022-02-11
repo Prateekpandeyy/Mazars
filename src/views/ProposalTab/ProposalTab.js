@@ -16,17 +16,17 @@ import DeclinedProposal from "./DeclinedProposal";
 function Proposal(props) {
   const userId = window.localStorage.getItem("userid");
 
-  const [tabIndex, setTabIndex] = useState(0);
+ 
   useLayoutEffect(() => {
     setTabIndex(props.location.index || 0);
   }, [props.location.index]);
 
-
+  const [tabIndex, setTabIndex] = useState(0);
   const [allProposalCount, setAllProposalCount] = useState("");
   const [inprogressProposalCount, setInprogressProposalCount] = useState("");
   const [acceptedProposalCount, setAcceptedProposalCount] = useState("");
   const [declinedProposalCount, setDeclinedProposalCount] = useState("");
-
+  const [bgColor, setbgColor] = useState("#42566a")
 
   useEffect(() => {
     getAllProposal();
@@ -78,9 +78,24 @@ function Proposal(props) {
       })
   };
 
-
+  const tableIndex = (index) => {
+    setTabIndex(index)
+    console.log(index)
+    if(index === 0){
+      setbgColor("#42566a")
+    }
+    else if(index === 1){
+      setbgColor("#5f7b97")
+    }
+    else if(index === 2){
+      setbgColor("#5f7b97")
+    }
+    else if(index === 3){
+      setbgColor("#5f7b97")
+    }
+  }
   const myStyle1 = {
-    backgroundColor: "rgb(120, 120, 120)",
+    backgroundColor: "rgb(61, 71, 117)",
     padding: "12px 24px",
     borderBottomLeftRadius: "1.75rem",
     width: "auto",
@@ -94,7 +109,7 @@ function Proposal(props) {
    borderBottomLeftRadius: "1.75rem",
     width: "auto",
     textAlign: "center",
-    backgroundColor: "rgb(61, 71, 117)",
+    backgroundColor: `${bgColor}`,
     color: "white",
     cursor: "pointer",
     margin: "10px auto"
@@ -103,8 +118,8 @@ function Proposal(props) {
 
   return (
     <Layout custDashboard="custDashboard" custUserId={userId}>
-      <div>
-        <Tabs selectedIndex={tabIndex} onSelect={(index) => setTabIndex(index)}>
+    
+      <Tabs selectedIndex={tabIndex} onSelect={(index) => tableIndex(index)}>
           <TabList
             style={{
               listStyleType: "none",
@@ -144,7 +159,7 @@ function Proposal(props) {
             <DeclinedProposal />
           </TabPanel>
         </Tabs>
-      </div>
+     
     </Layout>
   );
 }

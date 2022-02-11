@@ -161,9 +161,9 @@ const getupdateQuery = () => {
 
   const getData = () => {
     axios
-    .get(`${baseUrl}//admin/getAllList`)
+    .get(`${baseUrl}/tl/allClient?tp_id=${JSON.parse(userid)}`)
       .then((res) => {
-       
+       console.log("dataClinet", res.data.result)
         var a = res.data.result;
         if (a) {
           setcustData(a.map(mapAppointmentData));
