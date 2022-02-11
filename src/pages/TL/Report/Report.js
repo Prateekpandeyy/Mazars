@@ -262,7 +262,7 @@ const resetData = () => {
    }
    if(value.receiptDate || value.amountReceived || value.invoice_number || value.dos 
     || value.basic_amount || value.pocket_expensive || value.cget_tax || value.sgst_tax ||
-    value.igst_tax || value.total_gst || value.total_invoce || value.tds || value.net_amount
+    value.igst_tax || value.total_gst || value.total_invoice || value.tds || value.net_amount
     || value.receiptDate || value.amount_type || value.amountReceived){
      payment_info = true
    }
@@ -316,7 +316,7 @@ const resetData = () => {
         formData.append("cget_tax", Number(value.cget_tax));
         formData.append("igst_tax", Number(value.igst_tax));
         formData.append("sgst_tax", Number(value.sgst_tax));
-        formData.append("invoice_amount", Number(value.total_invoce));
+        formData.append("invoice_amount", Number(value.total_invoice));
         formData.append("total_gst", Number(value.total_gst));
         formData.append("process_status", Number(value.process_status));
         formData.append("tds", Number(value.tds));
@@ -851,8 +851,8 @@ ref={selectInputRef2}
 <label htmlFor="total_gst">Total GST </label>
 </span>
 <span>
-<input type="checkbox" ref={register} checked={paymnetCheckbox} name="total_inovice" id="total_inovice"></input>
-<label htmlFor="total_inovice">Invoice Amount </label>
+<input type="checkbox" ref={register} checked={paymnetCheckbox} name="total_invoice" id="total_invoice"></input>
+<label htmlFor="total_invoice">Invoice Amount </label>
 </span>
 <span>
 <input type="checkbox" ref={register} checked={paymnetCheckbox} name="tds" id="tds"></input>

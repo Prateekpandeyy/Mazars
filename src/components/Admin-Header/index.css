@@ -1,17 +1,8 @@
 
 .notification {
-  background-color:rgb(120, 120, 120);
-  color: white !important;
-  text-decoration: none;
-  padding: 6px 8px;;
-  position: relative;
-  display: inline-block;
-  border-radius: 2px;
+color:#4B4646;
 }
 
-/* .notification:hover {
-  background: rgb(19, 110, 42);
-} */
 
 .notification .badge {
   position: absolute;
@@ -25,7 +16,22 @@
 .changePassword .dropdown-item:active{
   background-color: rgb(61, 71, 117) !important;
 }
+.nameHeading, .inboxTitle{
+  color:#4B4646;
+  font-weight: 600;
+  display: block;
+  margin: auto;
+}
 .nameHeading:hover{
   color:#0071CE!important;
 
+}
+.inboxTitle:hover{
+  color:#0071CE;
+}
+.sidebarIcons{
+  display: flex;
+  max-width: 40px;
+  max-height: 40px;
+  padding: 10px;
 }

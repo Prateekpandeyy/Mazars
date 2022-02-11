@@ -14,6 +14,12 @@ import ExpandMore from '@mui/icons-material/ExpandMore';
 import { useHistory } from "react-router";
 import './list.css';
 import ScheduleIcon from '@material-ui/icons/Schedule';
+import assignmentIcon from './images/AssignmnetIcon.png';
+import paymentIcon from './images/paymentIcon2.png';
+import queryIcons from './images/queryIcon.png';
+import feedbackIcon from './images/feedbackIcon.png';
+import scheduleIcon from './images/scheduleIcon.png';
+
 function Sidebar({ adminDashboard, custDashboard, TLDashboard, TPDashboard , feedbackNumber}) {
   const [toggleState, setToggleState] = useState(false);
   const [feedbackNumber2, setfeedbackNumber2] = useState();
@@ -159,9 +165,9 @@ const handleClick = () => {
                 </NavLink>
               </li>
 
-              <li className={toggleState && ""} onClick={() => toggleTab("active")}>
+              <li className="nav-item">
                 <NavLink to={"/customer/queries"}>
-                  <i className="fa fa-clone"></i>
+                <i className="fa"><img src={queryIcons} className="sidebarIcons" /></i>
                   <span className="menu-title" data-i18n="">
                     Queries
                   </span>
@@ -179,7 +185,7 @@ const handleClick = () => {
 
               <li className="nav-item">
                 <NavLink to={"/customer/paymentstatus"}>
-                  <i className="fa fa-file-text"></i>
+                <i className="fa"><img src={paymentIcon} className="sidebarIcons" /></i>
                   <span className="menu-title" data-i18n="">
                     Payment Status
                   </span>
@@ -188,7 +194,7 @@ const handleClick = () => {
 
               <li className="nav-item">
                 <NavLink to={"/customer/assignment"}>
-                  <i className="fa fa-file"></i>
+                  <i className="fa"><img src={assignmentIcon} className="sidebarIcons" /></i>
                   <span className="menu-title" data-i18n="">
                     Assignments
                   </span>
@@ -197,7 +203,7 @@ const handleClick = () => {
 
               <li className="nav-item">
                 <NavLink to={"/customer/schedule"}>
-                  <i className="fa fa-rss-square"></i>
+                <i className="fa"><img src={scheduleIcon} className="sidebarIcons" /></i>
                   <span className="menu-title" data-i18n="">
                     Schedule
                   </span>
@@ -207,9 +213,7 @@ const handleClick = () => {
 
               <li className="nav-item">
                 <NavLink to={"/customer/feedback-data"}>
-                <i class="fa">
-                  <FeedbackIcon />
-                </i>
+                <i className="fa"><img src={feedbackIcon} className="sidebarIcons" /></i>
                   <span className="menu-title" data-i18n="">
                     Feedback
                   </span>

@@ -18,12 +18,12 @@ function QueriesTab(props) {
   const userId = window.localStorage.getItem("userid");
 
 
-  const [tabIndex, setTabIndex] = useState(0);
+  
   useLayoutEffect(() => {
     setTabIndex(props.location.index || 0);
   }, [props.location.index]);
 
-
+  const [tabIndex, setTabIndex] = useState(0);
   const [allQueriesCount, setAllQueriesCount] = useState("");
   const [inprogressAllocation, setInprogressAllocation] = useState("");
   const [inprogressProposal, setInprogressProposal] = useState("");
@@ -100,7 +100,7 @@ function QueriesTab(props) {
 
   return (
     <Layout custDashboard="custDashboard" custUserId={userId}>
-      <div>
+      
         <Tabs selectedIndex={tabIndex} onSelect={(index) => setTabIndex(index)}>
           <TabList
             style={{
@@ -140,7 +140,7 @@ function QueriesTab(props) {
             <DeclinedQueries />
           </TabPanel>
         </Tabs>
-      </div>
+     
     </Layout>
   );
 }
