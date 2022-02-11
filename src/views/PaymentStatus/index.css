@@ -16,7 +16,15 @@
   
   .tableFixHead          { overflow: auto; }
   .tableFixHeadpaymentCustomer thead th { position: sticky; color: "white"; top: 0; z-index: 1; border: 0px; background-color:rgb(61, 71, 117) !important; color : #ffffff !important;}
-  
+  .tabHover{
+    transition: all .9s;
+  }
+  .tabHover:hover{
+   text-decoration: underline;
+    color:#0071CE;
+    font-weight: 600;
+    cursor: pointer;
+  }
   /* 
   
   .tableFixHead          { overflow-y: auto; height: 100px; }

@@ -28,6 +28,15 @@
     width : 100%;
     justify-content: space-between;
 }
+.tabHover{
+  transition: all .9s;
+}
+.tabHover:hover{
+ text-decoration: underline;
+  color:#0071CE;
+  font-weight: 600;
+  cursor: pointer;
+}
   /* 
   
   .tableFixHead          { overflow-y: auto; height: 100px; }

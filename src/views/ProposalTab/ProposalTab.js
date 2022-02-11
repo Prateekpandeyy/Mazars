@@ -95,24 +95,10 @@ function Proposal(props) {
     }
   }
   const myStyle1 = {
-    backgroundColor: "rgb(61, 71, 117)",
-    padding: "12px 24px",
-    borderBottomLeftRadius: "1.75rem",
-    width: "auto",
-    textAlign: "center",
-    color: "white",
-    cursor: "pointer",
     margin: "10px auto"
   };
   const myStyle2 = {
-    padding: "12px 24px",
-   borderBottomLeftRadius: "1.75rem",
-    width: "auto",
-    textAlign: "center",
-    backgroundColor: `${bgColor}`,
-    color: "white",
-    cursor: "pointer",
-    margin: "10px auto"
+ margin: "10px auto"
   };
 
 
@@ -127,18 +113,18 @@ function Proposal(props) {
               justifyContent: "space-around",
             }}
           >
-            <Tab style={tabIndex == 0 ? myStyle2 : myStyle1}>
+            <Tab style={tabIndex == 0 ? myStyle2 : myStyle1} className="tabHover">
               All Proposals ({allProposalCount})
             </Tab>
-            <Tab style={tabIndex == 1 ? myStyle2 : myStyle1}>
+            <Tab style={tabIndex == 1 ? myStyle2 : myStyle1} className="tabHover">
               Inprogress; Proposals ({inprogressProposalCount})
             </Tab>
 
-            <Tab style={tabIndex == 2 ? myStyle2 : myStyle1}>
+            <Tab style={tabIndex == 2 ? myStyle2 : myStyle1} className="tabHover">
               Accepted; Proposals ({acceptedProposalCount})
             </Tab>
 
-            <Tab style={tabIndex == 3 ? myStyle2 : myStyle1}>
+            <Tab style={tabIndex == 3 ? myStyle2 : myStyle1} className="tabHover">
               Declined; Proposals ({declinedProposalCount})
             </Tab>
           </TabList>

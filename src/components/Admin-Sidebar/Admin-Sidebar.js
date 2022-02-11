@@ -129,12 +129,13 @@ const handleClick = () => {
         <div className="navbar-header">
           <ul className="nav navbar-nav flex-row">
             <li className="nav-item mr-auto">
-              <a className="navbar-brand" href={logo}>
+              <a className="navbar-brand" href={logo} style={{display: "flex", height: "75px", padding: "4px", justifyContent: "center", alignItems: "center"}}>
                 
                 <img
-                  className="brand-logo mazarsLogo"
+                  className="brand-logo"
                  
                   src={`${ima}`}
+                  style={{display: "flex",  width: "100%", height: "auto", maxWidth:"100px", objectFit: "contain"}}
                 />
               
                

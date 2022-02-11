@@ -96,26 +96,12 @@ function AssignmentTab(props) {
     }
   }
     
-    const myStyle1 = {
-      backgroundColor: "rgb(61, 71, 117)",
-      padding: "12px 24px",
-      borderBottomLeftRadius: "1.75rem",
-      width: "auto",
-      textAlign: "center",
-      color: "white",
-      cursor: "pointer",
-      margin: "10px auto"
-    };
-    const myStyle2 = {
-      padding: "12px 24px",
-     borderBottomLeftRadius: "1.75rem",
-      width: "auto",
-      textAlign: "center",
-      backgroundColor: `${bgColor}`,
-      color: "white",
-      cursor: "pointer",
-      margin: "10px auto"
-    };
+  const myStyle1 = {
+    margin: "10px auto"
+  };
+  const myStyle2 = {
+ margin: "10px auto"
+  };
   
   
 
@@ -133,18 +119,18 @@ function AssignmentTab(props) {
               justifyContent: "space-around",
             }}
           >
-            <Tab style={tabIndex === 0 ? myStyle2 : myStyle1}>
+            <Tab style={tabIndex === 0 ? myStyle2 : myStyle1} className="tabHover">
               All Assignment ({allassignment})
             </Tab>
-            <Tab style={tabIndex === 1 ? myStyle2 : myStyle1}>
+            <Tab style={tabIndex === 1 ? myStyle2 : myStyle1} className="tabHover">
               Inprogress; Assignments ({inprogressAssignmentCount})
             </Tab>
 
-            <Tab style={tabIndex === 2 ? myStyle2 : myStyle1}>
+            <Tab style={tabIndex === 2 ? myStyle2 : myStyle1} className="tabHover">
               Completed; Assignments ({completeAssignment})
             </Tab>
 
-            <Tab style={tabIndex === 3 ? myStyle2 : myStyle1}>
+            <Tab style={tabIndex === 3 ? myStyle2 : myStyle1} className="tabHover">
               Client Declined; Payment ({declinedAssignment})
             </Tab>
           </TabList>
