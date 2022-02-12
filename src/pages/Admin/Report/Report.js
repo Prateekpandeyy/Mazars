@@ -208,6 +208,10 @@ const resetData = () => {
   selectInputRef4.current.select.clearValue();
   selectInputRef5.current.select.clearValue();
   selectInputRef6.current.select.clearValue();
+  setCheckBox(null);
+  setProposalCheckbox(null);
+  setAssignmentCheckbox(null);
+  setPaymentCheckbox(null);
   setQno([])
 
 }
@@ -250,6 +254,7 @@ const resetData = () => {
         formData.append("query_no", qqno)
         formData.append("category", mcatname);
         formData.append("subCategory", dd);
+        formData.append("brief_fact_case", Number(value.brief_fact_case))
         formData.append("q_no", Number(value.qno));
         formData.append("date_query", Number(value.dataQuery));
         formData.append("cust_id", Number(value.cust_id));
@@ -659,6 +664,11 @@ ref={selectInputRef2}
                <span>
 <input type="checkbox" name="assessment" ref={register} checked={checkBox} id="assessment"></input>
 <label htmlFor="assessment">Assessment Year(s)</label>
+</span>
+
+<span>
+<input type="checkbox" name="brief_fact_case" ref={register} checked={checkBox} id="brief_fact_case"></input>
+<label htmlFor="brief_fact_case">Brief fact of the case</label>
 </span>
            
 <span>

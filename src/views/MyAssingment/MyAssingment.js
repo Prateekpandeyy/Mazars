@@ -15,6 +15,7 @@ import {
   Table,
   Spinner
 } from "reactstrap";
+import {Container} from '@material-ui/core';
 function MyAssingment(props) {
   const { id } = useParams();
   
@@ -40,6 +41,7 @@ function MyAssingment(props) {
   const [tpStatus, setTpstatus] = useState();
   const [declined2, setDeclined2] = useState();
   const [declinedStatus, setDeclinedStatus] = useState(false)
+  const [routesData, setRoutesData] = useState("")
     const [diaplayProposal, setDisplayProposal] = useState({
     amount: "",
     accepted_amount: "",
@@ -186,7 +188,11 @@ function MyAssingment(props) {
     getQuery();
     getSubmittedAssingment();
   }, [assingNo]);
-
+useState(() => {
+  if(props.location.routes){
+    setRoutesData(props.location.routes)
+  }
+}, [])
 
   const getQuery = () => {
   if(assingNo === undefined){
@@ -203,25 +209,28 @@ function MyAssingment(props) {
     });
   }
   };
-
+console.log("props", props)
 
   return (
     <Layout custDashboard="custDashboard" custUserId={userId}>
-      <div class="row mt-3">
-       
-        <div class="col-xl-12 col-lg-12 col-md-12">
-          <div class="card">
-          <CardHeader>
+     
+         
+       <Container maxWidth="lg">
+       <Card style={{display : "flex", width: "950px", height : "100%"}}>
+         <CardHeader>
           <Row>
             <Col md="4">
+           {props.location.index ? 
             <Link
-                  to={{
-                    pathname: `/customer/${props.location.routes}`,
-                    index: props.location.index,
-                  }}
-                >
-                  <button class="btn btn-success ml-3">Go Back</button>
-                </Link>
+            to={{
+              pathname: `/customer/${props.location.routes}`,
+              index: props.location.index,
+            }}
+          >
+            <button class="customBtn">Go Back</button>
+          </Link> : 
+           <button class="customBtn" onClick = {() => history.goBack()}>Go Back</button>
+          }
               
             </Col>
             <Col md="8">
@@ -231,7 +240,8 @@ function MyAssingment(props) {
         </CardHeader>
            
 
-            {submitData.map((p, index) => (
+           <CardBody>
+           {submitData.map((p, index) => (
               <QueryDetails
                 p={p}
                 key={index}
@@ -259,9 +269,11 @@ function MyAssingment(props) {
                 declined2={declined2}
               />
             ))}
-          </div>
-        </div>
-      </div>
+        
+           </CardBody>
+     
+         </Card>
+       </Container>
     </Layout>
   );
 }

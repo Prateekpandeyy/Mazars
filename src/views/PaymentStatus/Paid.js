@@ -1,14 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
-import Layout from "../../components/Layout/Layout";
 import {
     Card,
     CardHeader,
     CardBody,
-    CardTitle,
-    Row,
-    Col,
+  
     Modal,
     ModalHeader,
     ModalBody,
@@ -17,16 +14,15 @@ import {
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import CommonServices from "../../common/common";
-import BootstrapTable from "react-bootstrap-table-next";
 import CustomerFilter from "../../components/Search-Filter/CustomerFilter";
 import Records from "../../components/Records/Records";
 import DiscardReport from "../AssignmentTab/DiscardReport";
-import PaymentIcon from '@material-ui/icons/Payment';
 import PaymentComponent from './PaymentComponent';
 import './index.css';
 import ModalManual from "../ModalManual/AllComponentManual";
 import MessageIcon, { ViewDiscussionIcon, HelpIcon, 
     Payment} from "../../components/Common/MessageIcon";
+    import DataTablepopulated from "../../components/DataTablepopulated/DataTabel";
 function Unpaid() {
 
     const userId = window.localStorage.getItem("userid");
@@ -131,23 +127,13 @@ function Unpaid() {
             formatter: (cellContent, row, rowIndex) => {
                 return rowIndex + 1;
             },
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
+          
         },
         {
           dataField: "query_created_date",
           text: "Date",
           sort: true,
-          style: {
-              fontSize: "11px",
-          },
-          headerStyle: () => {
-              return { fontSize: "11px", width:"120px", padding: "10px 20px", whiteSpace: "nowrap" };
-          },
+          
           formatter: function dateFormat(cell, row) {
            
               var oldDate = row.query_created_date;
@@ -160,12 +146,7 @@ function Unpaid() {
       {
           dataField: "assign_no",
           text: "Query No",
-          style: {
-              fontSize: "11px",
-          },
-          headerStyle: () => {
-              return { fontSize: "11px",    whiteSpace: "nowrap"  };
-          },
+          
           formatter: function nameFormatter(cell, row) {
            
               return (
@@ -187,34 +168,19 @@ function Unpaid() {
             dataField: "parent_id",
             text: "Category",
             sort: true,
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
+            
         },
         {
             dataField: "cat_name",
             text: "Sub Category",
             sort: true,
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
+            
         },
         {
             text: "Date of acceptance of Proposal",
             dataField: "cust_accept_date",
             sort: true,
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
+            
             formatter: function dateFormat(cell, row) {
               
                 var oldDate = row.cust_accept_date;
@@ -247,19 +213,14 @@ function Unpaid() {
         dataField: "accepted_amount",
         text: "Accepted Amount ",
         sort: true,
-        style: {
-          fontSize: "11px",
-          color: "#21a3ce",
-        },
+        
         sortFunc: (a, b, order, dataField) => {
           if (order === 'asc') {
             return b - a;
           }
           return a - b; // desc
         },
-        headerStyle: () => {
-          return { fontSize: "11px", color: "#21a3ce" };
-        },
+       
         formatter: function nameFormatter(cell, row){
             var nfObject = new Intl.NumberFormat('hi-IN')
              var x = row.accepted_amount;
@@ -273,19 +234,14 @@ function Unpaid() {
         text: "Amount Paid",
         dataField: "paid_amount",
         sort: true,
-        style: {
-          fontSize: "11px",
-          color: "#064606",
-        },
+       
         sortFunc: (a, b, order, dataField) => {
           if (order === 'asc') {
             return b - a;
           }
           return a - b; // desc
         },
-        headerStyle: () => {
-          return { fontSize: "11px", color: "#064606" };
-        },
+      
         formatter: function nameFormatter(cell, row){
             var nfObject = new Intl.NumberFormat('hi-IN')
              var x = row.paid_amount;
@@ -300,19 +256,14 @@ function Unpaid() {
         text : "Amount Outstanding",
         dataField: "amount_outstanding",
         sort: true,
-        style: {
-          fontSize: "11px",
-          color: "darkred",
-        },
+       
         sortFunc: (a, b, order, dataField) => {
           if (order === 'asc') {
             return b - a;
           }
           return a - b; // desc
         },
-        headerStyle: () => {
-          return { fontSize: "11px", color: "darkred" };
-        },
+      
         formatter: function nameFormatter(cell, row){
             var nfObject = new Intl.NumberFormat('hi-IN')
              var x = row.amount_outstanding;
@@ -326,12 +277,7 @@ function Unpaid() {
             text: "Date of Payment",
             dataField: "cust_paid_date",
             sort: true,
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
+            
             formatter: function dateFormat(cell, row) {
               
                 var oldDate = row.cust_paid_date;
@@ -344,12 +290,7 @@ function Unpaid() {
         {
             text: "Action",
             dataField: "",
-            style: {
-              fontSize: "11px"
-            },
-            headerStyle: () => {
-              return { fontSize: "11px" };
-            },
+            
             formatter: function (cell, row) {
               return (
                 <>
@@ -468,15 +409,12 @@ function Unpaid() {
                         </ModalBody>
                     </Modal>
                         <Records records={records} />
-                        <div className="tableFixHeadpaymentCustomer">
-                        <BootstrapTable
-                            bootstrap4
-                            keyField={"assign_no"}
-                            data={payment}
-                            columns={columns}
-                            classes="table-responsive"
-                        />
-                        </div>
+                        <DataTablepopulated 
+                   bgColor="#3e8678"
+                   keyField={"assign_no"}
+                   data={payment}
+                   columns={columns}>
+                    </DataTablepopulated>
 
                         <PaymentComponent
                             paymentHandler={paymentHandler}

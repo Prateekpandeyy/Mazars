@@ -93,10 +93,18 @@ const tableIndex = (index) => {
 }
   
   const myStyle1 = {
-    margin: "10px auto"
+    margin: "10px auto",
+    fontSize : "16px",
+    padding: "0 15px"
   };
   const myStyle2 = {
- margin: "10px auto"
+ margin: "10px auto",
+ 
+ backgroundColor : "#55425F",
+ color: "#fff",
+ padding: "10px",
+ borderRadius: "2px",
+ 
   };
 
 
@@ -111,17 +119,17 @@ const tableIndex = (index) => {
               justifyContent: "space-around",
             }}
           >
-            <Tab style={tabIndex == 0 ? myStyle2 : myStyle1} className="tabHover">
+            <Tab style={tabIndex == 0 ? myStyle2 : myStyle1} className="tabHoverQuery">
               All Queries ({allQueriesCount})
             </Tab>
-            <Tab style={tabIndex == 1 ? myStyle2 : myStyle1} className="tabHover">
+            <Tab style={tabIndex == 1 ? myStyle2 : myStyle1} className="tabHoverQuery">
               Inprogress; Queries({inprogressAllocation})
             </Tab>
-            <Tab style={tabIndex == 2 ? myStyle2 : myStyle1} className="tabHover">
+            <Tab style={tabIndex == 2 ? myStyle2 : myStyle1} className="tabHoverQuery">
               Completed; Queries ({inprogressProposal})
             </Tab>
 
-            <Tab style={tabIndex == 3 ? myStyle2 : myStyle1} className="tabHover">
+            <Tab style={tabIndex == 3 ? myStyle2 : myStyle1} className="tabHoverQuery">
               Declined; Queries ({declined})
             </Tab>
           </TabList>

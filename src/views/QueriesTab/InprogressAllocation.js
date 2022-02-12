@@ -7,14 +7,10 @@ import {
   Card,
   CardHeader,
   CardBody,
-  CardTitle,
-  Row,
-  Col,
-  Table,
+ 
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import CustomerFilter from "../../components/Search-Filter/CustomerFilter";
-import BootstrapTable from "react-bootstrap-table-next";
 import Records from "../../components/Records/Records";
 import FeedbackIcon from '@material-ui/icons/Feedback';
 import PublishIcon from '@material-ui/icons/Publish';
@@ -28,6 +24,7 @@ import ModalManual from "../ModalManual/AllComponentManual";
 import {Modal, ModalHeader, ModalBody} from 'reactstrap';
 import MessageIcon, {DeleteIcon, EditQuery, ViewDiscussionIcon, HelpIcon, 
   UploadDocument, FeedBackICon} from "../../components/Common/MessageIcon";
+  import DataTablepopulated from "../../components/DataTablepopulated/DataTabel";
 function InprogressAllocation() {
 
   const alert = useAlert();
@@ -82,23 +79,13 @@ function InprogressAllocation() {
         formatter: (cellContent, row, rowIndex) => {
             return rowIndex + 1;
         },
-         style : {
-               fontSize : "11px"
-                },
-        headerStyle: () => {
-            return { fontSize: "12px"};
-        },
+        
     },
     {
         text: "Date",
         dataField: "created",
         sort: true,
-        style : {
-          fontSize : "11px"
-          },
-        headerStyle: () => {
-          return { fontSize: "11px", width:"120px", padding: "10px 20px", whiteSpace: "nowrap" };
-      },
+       
        formatter : function dateFormatter(cell, row) {
            return(
                <>
@@ -110,12 +97,7 @@ function InprogressAllocation() {
     {
         text: "Query No",
         dataField: "assign_no",
-        style : {
-          wordBreak : "break-word", fontSize : "11px"
-          }, 
-        headerStyle: () => {
-            return { fontSize: "12px", width: "120px"};
-        },
+       
         formatter: function nameFormatter(cell, row) {
           
             return (
@@ -137,33 +119,18 @@ function InprogressAllocation() {
         text: "Category",
         dataField: "parent_id",
         sort: true,
-         style : {
-                wordBreak : "break-word", fontSize : "11px"
-                },
-        headerStyle: () => {
-            return { fontSize: "12px"};
-        },
+        
     },
     {
         text: "Sub Category",
         dataField: "cat_name",
         sort: true,
-         style : {
-                wordBreak : "break-word", fontSize : "11px"
-                },
-        headerStyle: () => {
-            return { fontSize: "12px"};
-        },
+       
     },
     {
         text: "Status",
         dataField: "",
-         style : {
-                wordBreak : "break-word", fontSize : "11px"
-                },
-        headerStyle: () => {
-            return { fontSize: "12px"};
-        },
+        
         formatter: function nameFormatter(cell, row) {
             return (
                 <>
@@ -196,12 +163,7 @@ function InprogressAllocation() {
         text: "Expected / Actual Delivery Date",
         dataField: "exp_delivery_date",
         sort: true,
-         style : {
-                wordBreak : "break-word", fontSize : "11px"
-                },
-        headerStyle: () => {
-            return { fontSize: "12px"};
-        },
+       
         formatter: function dateFormat(cell, row) {
            
        
@@ -227,12 +189,7 @@ function InprogressAllocation() {
     },
     {
       text: "Action",
-      headerStyle: () => {
-        return { fontSize: "12px", textAlign: "center", width: "130px" };
-      },
-      style : {
-        wordBreak : "break-word", fontSize : "11px"
-        },
+     
       formatter: function (cell, row) {
         var dateMnsFive = moment(row.exp_delivery_date).add(15, 'day').format("YYYY-MM-DD");
               
@@ -246,7 +203,7 @@ function InprogressAllocation() {
                   <>
                  <>
                  {dateMnsFive > curDate === true ?
-                      <span className="ml-2">
+                      <span className="ml-1">
                      
                       <Link 
                        to={{
@@ -259,7 +216,7 @@ function InprogressAllocation() {
                   </span>
                    : ""} 
                   
-                  <span onClick={() => ViewDiscussionToggel(row.assign_no)}  className="ml-2">
+                  <span onClick={() => ViewDiscussionToggel(row.assign_no)}  className="ml-1">
                         <ViewDiscussionIcon />
                       </span>
                     
@@ -271,16 +228,16 @@ function InprogressAllocation() {
           {
               row.status_code == "0" || row.status_code == "1" || row.status_code == "3" ?
                   <>
-                      <span className="ml-2">
+                      <span className="ml-1">
                           <Link to={`/customer/edit-query/${row.id}`}>
                               <EditQuery />
                           </Link>
                       </span>
 
-                      <span   onClick={() => del(row.id)} className="ml-2">
+                      <span   onClick={() => del(row.id)} className="ml-1">
                          <DeleteIcon />
                       </span>
-                      <span className="ml-2">
+                      <span className="ml-1">
                           <Link
                               to={{
                                   pathname: `/customer/chatting/${row.id}&type=4`,
@@ -297,7 +254,7 @@ function InprogressAllocation() {
                              <MessageIcon />
                           </Link>
                       </span>
-                      <span onClick={() => ViewDiscussionToggel(row.assign_no)}  className="ml-2">
+                      <span onClick={() => ViewDiscussionToggel(row.assign_no)}  className="ml-1">
                         <ViewDiscussionIcon />
                       </span>
 
@@ -311,7 +268,7 @@ function InprogressAllocation() {
                   <>
 
                       {dateMnsFive > curDate === true ?
-                      <span className = "ml-2"
+                      <span className = "ml-1"
                      >
                       <Link 
                        to={{
@@ -331,7 +288,7 @@ function InprogressAllocation() {
                       }
                       {row.status_code == "10" ? null 
                       : 
-                      <span className="ml-2">
+                      <span className="ml-1">
                        <Link
                               to={{
                                   pathname: `/customer/chatting/${row.id}&type=4`,
@@ -349,7 +306,7 @@ function InprogressAllocation() {
                       </Link>
                   </span>
 }
-<span onClick={() => ViewDiscussionToggel(row.assign_no)}  className="ml-2">
+<span onClick={() => ViewDiscussionToggel(row.assign_no)}  className="ml-1">
                         <ViewDiscussionIcon />
                       </span>
                   
@@ -427,16 +384,13 @@ function InprogressAllocation() {
         </CardHeader>
         <CardBody>
            <Records records={records} />
-          <div className="tableFixHeadQueryCustomer">
-          <BootstrapTable
-            bootstrap4
-            keyField= {"assign_no"}
-            data={query}
-            columns={columns}
-            rowIndex
-            classes="table-responsive"
-          />
-</div>
+          
+<DataTablepopulated 
+                   bgColor="#6e557b"
+                   keyField= {"assign_no"}
+                   data={query}
+                   columns={columns}>
+                    </DataTablepopulated>
           <AdditionalQueryModal
             additionalHandler={additionalHandler}
             additionalQuery={additionalQuery}

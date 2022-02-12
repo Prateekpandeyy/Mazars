@@ -15,6 +15,7 @@ import DescriptionOutlinedIcon from '@material-ui/icons/DescriptionOutlined';
 import DiscardReport from "../AssignmentTab/DiscardReport";
 import './index.css';
 import ModalManual from "../ModalManual/AllComponentManual";
+import DataTablepopulated from "../../components/DataTablepopulated/DataTabel";
 import {Modal, ModalHeader, ModalBody} from 'reactstrap';
 import MessageIcon, { ViewDiscussionIcon, HelpIcon} from "../../components/Common/MessageIcon";
 function CustomerDeclinedPayment() {
@@ -38,12 +39,7 @@ function CustomerDeclinedPayment() {
         setDataItem(key)
     };
 
-    var clcomp= {
-        color: "green"
-      }
-      var clinpro = {
-        color : "blue"
-      }
+   
    
     const ViewDiscussionToggel = (key) => {
         setViewDiscussion(!ViewDiscussion);
@@ -76,23 +72,13 @@ function CustomerDeclinedPayment() {
             formatter: (cellContent, row, rowIndex) => {
                 return rowIndex + 1;
             },
-            headerStyle: () => {
-                return { fontSize: "12px", width: "50px" };
-            },
-            style: {
-                fontSize: "11px",
-            },
+           
         },
         {
             dataField: "created",
             text: "Date",
             sort: true,
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px", width:"120px", padding: "10px 20px", whiteSpace: "nowrap" };
-            },
+            
              formatter: function dateFormat(cell, row) {
              
               var oldDate = row.created;
@@ -105,12 +91,7 @@ function CustomerDeclinedPayment() {
           {
             dataField: "assign_no",
             text: "Query No",
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px",    whiteSpace: "nowrap"  };
-            },
+            
             formatter: function nameFormatter(cell, row) {
              
                 return (
@@ -133,36 +114,18 @@ function CustomerDeclinedPayment() {
             dataField: "parent_id",
             text: "Category",
             sort: true,
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "12px" };
-            },
+           
         },
         {
             dataField: "cat_name",
             text: "Sub Category",
             sort: true,
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "12px" };
-            },
+           
         },
         {
             dataField: "status",
             text: "Status",
-            style: {
-              fontSize: "11px",
-            },
-            headerStyle: () => {
-              return { fontSize: "11px", width: "200px" };
-            },
-            style : {
-              fontSize : "11px"
-            },
+            
             formatter: function (cell, row) {
               return (
                 <>
@@ -211,12 +174,7 @@ function CustomerDeclinedPayment() {
             dataField: "Exp_Delivery_Date",
             text: "Expected date of delivery",
             sort: true,
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-        return { fontSize: "12px", width : "120px" , padding: "10px 20px"};
-      },            formatter: function dateFormat(cell, row) {
+                   formatter: function dateFormat(cell, row) {
                
                 var oldDate = row.created;
                 if (oldDate === null) {
@@ -229,12 +187,7 @@ function CustomerDeclinedPayment() {
             dataField: "final_date",
             text: "Actual date of delivery",
             sort: true,
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-        return { fontSize: "12px", width : "120px" , padding: "10px 20px"};
-      },            formatter: function dateFormat(cell, row) {
+                       formatter: function dateFormat(cell, row) {
               
                 var oldDate = row.final_date;
                 if (oldDate === null || oldDate === "0000-00-00") {
@@ -246,9 +199,7 @@ function CustomerDeclinedPayment() {
         {
             dataField: "",
             text: "Deliverable",
-            headerStyle: () => {
-                return { fontSize: "12px" };
-            },
+            
             formatter: function (cell, row) {
                
                 return (
@@ -276,12 +227,7 @@ function CustomerDeclinedPayment() {
         {
             dataField: "",
             text: "Team Leader name and contact number, email",
-            headerStyle: () => {
-                return { fontSize: "12px" };
-            },
-            style: {
-                fontSize: "11px",
-            },
+          
             formatter: priceFormatter,
         },
         {
@@ -369,15 +315,13 @@ function CustomerDeclinedPayment() {
                             <ModalManual tar= {"assignProcess"} />
                         </ModalBody>
                     </Modal>
-                    <div className="tableFixHead">
-                    <BootstrapTable
-                        bootstrap4
-                        keyField="id"
-                        data={assignmentDisplay}
-                        columns={columns}
-                        classes="table-responsivepayment"
-                    />
-</div>
+                    <DataTablepopulated 
+         bgColor ="#7c887c"
+          bootstrap4
+          keyField="id"
+          data={assignmentDisplay}
+          columns={columns}>
+           </DataTablepopulated>
 
                     <ViewAllReportModal
                         ViewReport={ViewReport}

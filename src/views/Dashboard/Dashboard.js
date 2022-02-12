@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
 import { useHistory } from "react-router";
-
+import {Container} from "@material-ui/core";
 function Dashboard() {
   const userId = window.localStorage.getItem("userid");
 const sessionId =  window.sessionStorage.getItem("userIdsession")
@@ -121,8 +121,9 @@ console.log("sessionStorage", window.sessionStorage)
   <>
   {sessionId ? 
   <Layout custDashboard="custDashboard" custUserId={userId}>
-<div className="dashobardCustomer">
-   <div className="row">
+
+  <Container>
+  <div className="row">
     <div className="col-md-3 content_header">
       <table className="table table-striped  first main_table">
         <thead className="query_thead">
@@ -324,7 +325,8 @@ console.log("sessionStorage", window.sessionStorage)
           </div>
         </> : ""} </> : ""}  </> : ""}  </div>
 
-</div>
+  </Container>
+
  
 </Layout> : 
 <>

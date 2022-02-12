@@ -5,6 +5,7 @@
 .queryBox{
 display: block;
 height: 55vh;
+width: 100%;
 overflow-y: auto;
 }
 .queryBox > .table{

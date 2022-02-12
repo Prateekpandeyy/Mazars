@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Layout from "../../components/Layout/Layout";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
 import { useAlert } from "react-alert";
@@ -7,18 +6,12 @@ import {
     Card,
     CardHeader,
     CardBody,
-    CardTitle,
-    Row,
-    Col,
-    Table,
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import "./index.css";
 import CustomerFilter from "../../components/Search-Filter/CustomerFilter";
 import BootstrapTable from "react-bootstrap-table-next";
-import FeedbackIcon from '@material-ui/icons/Feedback';
 import Records from "../../components/Records/Records";
-import Alerts from "../../common/Alerts";
 import Swal from "sweetalert2";
 import ViewComponent from "./ViewComponent";
 import DiscardReport from "../AssignmentTab/DiscardReport";
@@ -26,7 +19,7 @@ import CommonShowProposal from "../../components/commonShowProposal/CommonShowPr
 import ModalManual from "../ModalManual/AllComponentManual";
 import {Modal, ModalHeader, ModalBody} from 'reactstrap';
 import MessageIcon, {EyeIcon, ViewDiscussionIcon, DiscussProposal, HelpIcon} from "../../components/Common/MessageIcon";
-
+import DataTablepopulated from "../../components/DataTablepopulated/DataTabel";
 function ProposalTab() {
     const alert = useAlert();
 
@@ -89,28 +82,18 @@ const rightAli = {
 
     const columns = [
         {
-            text: "S.No",
             dataField: "",
-            style: {
-                fontSize: "11px",
-            },
+            text: "S.No",
             formatter: (cellContent, row, rowIndex) => {
-                return rowIndex + 1;
+              return rowIndex + 1;
             },
-            headerStyle: () => {
-                return { fontSize: "11px", width: "50px" };
-            },
-        },
+          
+          },
         {
             text: "Date",
             dataField: "created",
             sort: true,
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px", width: "100px" };
-            },
+          
             formatter: function (cell, row) {
               
                 var oldDate = row.created;
@@ -123,12 +106,7 @@ const rightAli = {
         {
             text: "Query No",
             dataField: "assign_no",
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px", width: "100px" };
-            },
+           
             formatter: function nameFormatter(cell, row) {
               
                 return (
@@ -150,34 +128,19 @@ const rightAli = {
             text: "Category",
             dataField: "parent_id",
             sort: true,
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
+           
         },
         {
             text: "Sub Category",
             dataField: "cat_name",
             sort: true,
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
+           
         },
         {
             text: "Date of Proposal",
             dataField: "DateofProposal",
             sort: true,
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
+            
             formatter: function dateFormat(cell, row) {
              
                 var oldDate = row.DateofProposal;
@@ -191,12 +154,7 @@ const rightAli = {
             text: "Date of acceptance / decline of Proposal",
             dataField: "cust_accept_date",
             sort: true,
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
+           
             formatter: function dateFormat(cell, row) {
              
                 var oldDate = row.cust_accept_date;
@@ -208,12 +166,7 @@ const rightAli = {
         },
         {
             text: "Status",
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
+           
             formatter: function nameFormatter(cell, row) {
                 return (
                     <>
@@ -250,12 +203,7 @@ const rightAli = {
             text: "Proposed Amout",
             dataField: "ProposedAmount",
             sort: true,
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
+          
             sortFunc: (a, b, order, dataField) => {
                 if (order === 'asc') {
                   return b - a;
@@ -275,13 +223,7 @@ const rightAli = {
             text: "Accepted Amount",
             dataField: "accepted_amount",
             sort: true,
-            style: {
-                fontSize: "11px",
-
-            },
-            headerStyle: () => {
-                return { fontSize: "11px"  };
-            },
+            
             sortFunc: (a, b, order, dataField) => {
                 if (order === 'asc') {
                   return b - a;
@@ -301,12 +243,7 @@ const rightAli = {
         {
             text: "Action",
             dataField: "",
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px", textAlign: "center" };
-            },
+            
             formatter: function (cell, row) {
                 return (
                     <>
@@ -421,16 +358,13 @@ const rightAli = {
                 <CardBody>
               
                     <Records records={records} />
-                   <div className="proposalQueryCusttableFixHead">
-                   <BootstrapTable
-                        bootstrap4
-                        keyField= {"assign_no"}
-                        data={proposalDisplay}
-                        columns={columns}
-                        classes="table-responsive"
-                    />
-                       </div>
 
+ <DataTablepopulated 
+                   bgColor="#42566a"
+                   keyField= {"assign_no"}
+                   data={proposalDisplay}
+                   columns={columns}>
+                    </DataTablepopulated>
                     <ViewComponent
                         ViewHandler={ViewHandler}
                         viewModal={viewModal}

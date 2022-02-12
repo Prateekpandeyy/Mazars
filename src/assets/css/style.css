@@ -173,17 +173,17 @@ html body a{
   color: #464B4B;
 }
 .messageIcon{
-  color:rgb(61, 71, 117) !important;
+  color:#0071CE;
   font-size: 16px;
   cursor: pointer;
 }
 .discussionMessage{
-  color: rgb(158, 164, 128);
+  color: orange;
   font-size: 16px;
   cursor: pointer;
 }
 .discussProposal{
-  color:rgb(61, 71, 117) !important;
+  color:#5a625a;
   font-size: 16px;
   cursor: pointer;
 }
@@ -204,12 +204,12 @@ html body a{
   cursor: pointer;
 }
 .deleteIcon{
-  color: #464B4B !important;
+  color: orangered;
   font-size: 16px;
   cursor: pointer;
 }
 .editQuery{
-  color:rgb(61, 71, 117) !important;
+  color:#081f8f;
   font-size: 16px;
   cursor: pointer;
 }
@@ -236,9 +236,9 @@ html body a{
   line-height: 1;
   max-width: 100%;
   min-width: 100px;
-  min-height: 3rem;
+  min-height: 2rem;
   overflow: hidden;
-  padding: 0.75rem 1.5rem;
+  padding: 0.6rem 1rem;
   position: relative;
   text-decoration: none;
   transform: all 0.3s;

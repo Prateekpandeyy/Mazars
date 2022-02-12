@@ -95,13 +95,15 @@ function Proposal(props) {
     }
   }
   const myStyle1 = {
-    margin: "10px auto"
+    margin: "10px auto",
+    fontSize : "14px"
   };
   const myStyle2 = {
- margin: "10px auto"
+ margin: "10px auto",
+ 
+ color : "#42566a",
+ fontWeight : 1000
   };
-
-
   return (
     <Layout custDashboard="custDashboard" custUserId={userId}>
     

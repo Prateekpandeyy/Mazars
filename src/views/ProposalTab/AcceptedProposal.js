@@ -11,14 +11,13 @@ import {
 import { Link } from "react-router-dom";
 import "./index.css";
 import CustomerFilter from "../../components/Search-Filter/CustomerFilter";
-import BootstrapTable from "react-bootstrap-table-next";
 import Records from "../../components/Records/Records";
 import DiscardReport from "../AssignmentTab/DiscardReport";
 import CommonShowProposal from "../../components/commonShowProposal/CommonShowProposal";
 import ModalManual from "../ModalManual/AllComponentManual";
 import {Modal, ModalHeader, ModalBody} from 'reactstrap';
 import MessageIcon, {EyeIcon, ViewDiscussionIcon, HelpIcon} from "../../components/Common/MessageIcon";
-
+import DataTablepopulated from "../../components/DataTablepopulated/DataTabel";
 
 
 function AcceptedProposal() {
@@ -75,26 +74,17 @@ function AcceptedProposal() {
         {
             text: "S.No",
             dataField: "",
-            style: {
-                fontSize: "11px",
-            },
+           
             formatter: (cellContent, row, rowIndex) => {
                 return rowIndex + 1;
             },
-            headerStyle: () => {
-                return { fontSize: "11px", width: "50px" };
-            },
+           
         },
         {
             text: "Date",
             dataField: "created",
             sort: true,
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px", width: "100px" };
-            },
+           
             formatter: function (cell, row) {
               
                 var oldDate = row.created;
@@ -107,12 +97,7 @@ function AcceptedProposal() {
         {
             text: "Query No",
             dataField: "assign_no",
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px", width: "100px" };
-            },
+           
             formatter: function nameFormatter(cell, row) {
               
                 return (
@@ -134,34 +119,19 @@ function AcceptedProposal() {
             text: "Category",
             dataField: "parent_id",
             sort: true,
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
+           
         },
         {
             text: "Sub Category",
             dataField: "cat_name",
             sort: true,
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
+           
         },
         {
             text: "Date of Proposal",
             dataField: "DateofProposal",
             sort: true,
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
+           
             formatter: function dateFormat(cell, row) {
 
                 var oldDate = row.DateofProposal;
@@ -175,12 +145,7 @@ function AcceptedProposal() {
             text: "Date of acceptance of Proposal",
             dataField: "cust_accept_date",
             sort: true,
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
+           
             formatter: function dateFormat(cell, row) {
              
                 var oldDate = row.cust_accept_date;
@@ -192,12 +157,7 @@ function AcceptedProposal() {
         },
         {
             text: "Status",
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
+            
             formatter: function nameFormatter(cell, row) {
                 return (
                     <>
@@ -212,12 +172,7 @@ function AcceptedProposal() {
             text: "Proposed Amout",
             dataField: "ProposedAmount",
             sort: true,
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
+            
             sortFunc: (a, b, order, dataField) => {
                 if (order === 'asc') {
                   return b - a;
@@ -237,13 +192,7 @@ function AcceptedProposal() {
             text: "Accepted Amount",
             dataField: "accepted_amount",
             sort: true,
-            style: {
-                fontSize: "11px",
-                color: "#21a3ce",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px", color: "#21a3ce" };
-            },
+           
             sortFunc: (a, b, order, dataField) => {
                 if (order === 'asc') {
                   return b - a;
@@ -262,12 +211,7 @@ function AcceptedProposal() {
         {
             text: "Action",
             dataField: "",
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
+            
             formatter: function (cell, row) {
                 return (
                     <>
@@ -309,7 +253,7 @@ function AcceptedProposal() {
     ];
 
     return (
-        <div>
+       
             <Card>
                 <CardHeader>
                 <span onClick= {(e) => needHelp()}> <HelpIcon /></span>
@@ -325,15 +269,12 @@ function AcceptedProposal() {
                 <CardBody>
                 
                     <Records records={records} />
-                    <div className="proposalQueryCusttableFixHead">
-                    <BootstrapTable
-                        bootstrap4
-                        keyField= {"assign_no"}
-                        data={proposalDisplay}
-                        columns={columns}
-                        classes="table-responsive"
-                    />
-</div>
+                    <DataTablepopulated 
+                   bgColor="#5f7b97"
+                   keyField= {"assign_no"}
+                   data={proposalDisplay}
+                   columns={columns}>
+                    </DataTablepopulated>
                     <DiscardReport
                         ViewDiscussionToggel={ViewDiscussionToggel}
                         ViewDiscussion={ViewDiscussion}
@@ -353,7 +294,7 @@ function AcceptedProposal() {
                         </ModalBody>
                     </Modal>
             </Card>
-        </div>
+        
     );
 }
 

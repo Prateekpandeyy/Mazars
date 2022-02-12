@@ -21,7 +21,7 @@ import ModalManual from "../ModalManual/AllComponentManual";
 import {Modal, ModalHeader, ModalBody} from 'reactstrap';
 import MessageIcon, { ViewDiscussionIcon, HelpIcon, 
   FeedBackICon} from "../../components/Common/MessageIcon";
-
+import DataTablepopulated from "../../components/DataTablepopulated/DataTabel";
 
 
 function InprogressProposal() {
@@ -68,23 +68,13 @@ function InprogressProposal() {
       formatter: (cellContent, row, rowIndex) => {
         return rowIndex + 1;
       },
-      style : {
-      fontSize : "11px"
-        },
-      headerStyle: () => {
-        return { fontSize: "12px", width: "50px" };
-      },
+     
     },
     {
       text: "Date",
       dataField: "created",
       sort: true,
-      style : {
-        wordBreak : "break-word", fontSize : "11px"
-        },
-      headerStyle: () => {
-          return { fontSize: "12px", width: "170px"};
-      },
+     
      formatter : function dateFormatter(cell, row) {
          return(
              <>
@@ -97,12 +87,7 @@ function InprogressProposal() {
       text: "Query No",
       dataField: "assign_no",
       
-      headerStyle: () => {
-          return { fontSize: "12px", width: "100px"};
-      },
-      style : {
-        wordBreak : "break-word", fontSize : "11px"
-        },
+      
       formatter: function nameFormatter(cell, row) {
         
           return (
@@ -124,33 +109,18 @@ function InprogressProposal() {
       text: "Category",
       dataField: "parent_id",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px"};
-      },
-      style : {
-        wordBreak : "break-word", fontSize : "11px"
-        },
+     
     },
     {
       text: "Sub Category",
       dataField: "cat_name",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px"};
-      },
-      style : {
-        wordBreak : "break-word", fontSize : "11px"
-        },
+     
     },
     {
       text: "Status",
       dataField: "",
-      headerStyle: () => {
-        return { fontSize: "12px"};
-      },
-      style : {
-        wordBreak : "break-word", fontSize : "11px"
-        },
+    
       formatter: function nameFormatter(cell, row) {
         return (
           <>
@@ -166,12 +136,7 @@ function InprogressProposal() {
       text: "Actual Delivery Date",
       dataField: "final_date",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px"};
-      },
-      style : {
-        wordBreak : "break-word", fontSize : "11px"
-        },
+     
       formatter: function dateFormat(cell, row) {
         
 
@@ -192,12 +157,7 @@ function InprogressProposal() {
     },
     {
       text: "Action",
-      headerStyle: () => {
-        return { fontSize: "12px", textAlign: "center", width: "130px"};
-      },
-      style : {
-          wordBreak : "break-word", fontSize : "11px"
-          },
+     
     formatter: function (cell, row) {
           var dateMnsFive = moment(row.exp_delivery_date).add(15, 'day').format("YYYY-MM-DD");
         
@@ -341,22 +301,19 @@ function InprogressProposal() {
         </CardHeader>
         <CardBody>
          <Records records={records} />
-          <div className="tableFixHeadQueryCustomer">
-          <BootstrapTable
-            bootstrap4
-            keyField= {"assign_no"}
-            data={query}
-            columns={columns}
-            rowIndex
-            classes="table-responsive"
-          />
+         <DataTablepopulated 
+                   bgColor="#6e557b"
+                   keyField= {"assign_no"}
+                   data={query}
+                   columns={columns}>
+                    </DataTablepopulated>
                               <DiscardReport
                         ViewDiscussionToggel={ViewDiscussionToggel}
                         ViewDiscussion={ViewDiscussion}
                         report={assignNo}
                         getData={getQueriesData}
                     />
-          </div>
+       
           <Modal isOpen={openManual} toggle={needHelp} style={{display : "block", position: "absolute", left:"280px"}} size="lg">
                         <ModalHeader toggle={needHelp}>Mazars</ModalHeader>
                         <ModalBody>

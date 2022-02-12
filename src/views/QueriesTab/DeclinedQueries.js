@@ -22,7 +22,7 @@ import ModalManual from "../ModalManual/AllComponentManual";
 import {Modal, ModalHeader, ModalBody} from 'reactstrap';
 import MessageIcon, { ViewDiscussionIcon, HelpIcon, 
   FeedBackICon} from "../../components/Common/MessageIcon";
-
+import DataTablepopulated from "../../components/DataTablepopulated/DataTabel";
 
 
 function DeclinedQueries() {
@@ -72,23 +72,13 @@ function DeclinedQueries() {
       formatter: (cellContent, row, rowIndex) => {
         return rowIndex + 1;
       },
-      headerStyle: () => {
-        return { fontSize: "12px", width: "50px" };
-      },
-      style : {
-       fontSize : "11px"
-        },
+     
     },
     {
       text: "Date",
       dataField: "created",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px", width: "150px" };
-      },
-      style : {
-        wordBreak : "break-word", fontSize : "11px"
-        },
+     
       formatter: function dateFormat(cell, row) {
 
         var oldDate = row.created;
@@ -101,12 +91,7 @@ function DeclinedQueries() {
     {
       text: "Query No",
       dataField: "assign_no",
-      headerStyle: () => {
-        return { fontSize: "12px",   width: "150px" };
-      },
-      style : {
-        wordBreak : "break-word", fontSize : "11px"
-        },
+      
       formatter: function nameFormatter(cell, row) {
               
         return (
@@ -128,33 +113,18 @@ function DeclinedQueries() {
       text: "Category",
       dataField: "parent_id",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" , width: "150px" };
-      },
-      style : {
-        wordBreak : "break-word", fontSize : "11px"
-        },
+      
     },
     {
       text: "Sub Category",
       dataField: "cat_name",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px", width: "140px"  };
-      },
-      style : {
-        wordBreak : "break-word", fontSize : "11px"
-        },
+    
     },
     {
       text: "Status",
       dataField: "",
-      headerStyle: () => {
-        return { fontSize: "12px", width: "140px"  };
-      },
-      style : {
-        wordBreak : "break-word", fontSize : "11px"
-        },
+     
       formatter: function nameFormatter(cell, row) {
         return (
           <>
@@ -187,12 +157,7 @@ function DeclinedQueries() {
       text: "Expected Delivery Date",
       dataField: "exp_delivery_date",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" , width: "150px" };
-      },
-      style : {
-        wordBreak : "break-word", fontSize : "11px"
-        },
+     
       formatter: function dateFormat(cell, row) {
    
 
@@ -213,12 +178,7 @@ function DeclinedQueries() {
     },
     {
       text: "Action",
-      headerStyle: () => {
-        return { fontSize: "12px", textAlign: "center", width: "130px"};
-      },
-      style : {
-          wordBreak : "break-word", fontSize : "11px"
-          },
+     
     formatter: function (cell, row) {
           var dateMnsFive = moment(row.exp_delivery_date).add(15, 'day').format("YYYY-MM-DD");
         
@@ -359,16 +319,12 @@ function DeclinedQueries() {
         </CardHeader>
         <CardBody>
           <Records records={records} />
-          <div className="tableFixHeadQueryCustomer">
-          <BootstrapTable
-            bootstrap4
-            keyField= {"assign_no"}
-            data={query}
-            columns={columns}
-            rowIndex
-            classes="table-responsive"
-          />
-          </div>
+          <DataTablepopulated 
+                   bgColor="#6e557b"
+                   keyField= {"assign_no"}
+                   data={query}
+                   columns={columns}>
+                    </DataTablepopulated>
           <DiscardReport
                         ViewDiscussionToggel={ViewDiscussionToggel}
                         ViewDiscussion={ViewDiscussion}

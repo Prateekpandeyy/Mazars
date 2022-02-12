@@ -15,6 +15,7 @@ import DescriptionOutlinedIcon from '@material-ui/icons/DescriptionOutlined';
 import DiscardReport from "../AssignmentTab/DiscardReport";
 import './index.css'
 import ModalManual from "../ModalManual/AllComponentManual";
+import DataTablepopulated from "../../components/DataTablepopulated/DataTabel";
 import {Modal, ModalHeader, ModalBody} from 'reactstrap';
 import MessageIcon, { ViewDiscussionIcon, HelpIcon} from "../../components/Common/MessageIcon";
 function AllAssignment() {
@@ -72,24 +73,14 @@ function AllAssignment() {
       formatter: (cellContent, row, rowIndex) => {
         return rowIndex + 1;
       },
-      style: {
-        fontSize: "11px",
-    },
-      headerStyle: () => {
-        return { fontSize: "12px", width: "50px" };
-      },
+    
     },
    
     {
       dataField: "created",
       text: "Date",
       sort: true,
-      style: {
-          fontSize: "11px",
-      },
-      headerStyle: () => {
-          return { fontSize: "11px", width:"120px", padding: "10px 20px", whiteSpace: "nowrap" };
-      },
+    
        formatter: function dateFormat(cell, row) {
        
         var oldDate = row.created;
@@ -102,12 +93,7 @@ function AllAssignment() {
     {
       dataField: "assign_no",
       text: "Query No",
-      style: {
-          fontSize: "11px",
-      },
-      headerStyle: () => {
-          return { fontSize: "11px",    whiteSpace: "nowrap"  };
-      },
+      
       formatter: function nameFormatter(cell, row) {
        
           return (
@@ -129,36 +115,18 @@ function AllAssignment() {
       dataField: "parent_id",
       text: "Category",
       sort: true,
-      style: {
-        fontSize: "11px",
-    },
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
+    
     },
     {
       dataField: "cat_name",
       text: "Sub Category",
       sort: true,
-      style: {
-        fontSize: "11px",
-    },
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
+      
     },
     {
       dataField: "status",
       text: "Status",
-      style: {
-        fontSize: "11px",
-      },
-      headerStyle: () => {
-        return { fontSize: "11px", width: "200px" };
-      },
-      style : {
-        fontSize : "11px"
-      },
+     
       formatter: function (cell, row) {
         return (
           <>
@@ -207,12 +175,7 @@ function AllAssignment() {
       dataField: "Exp_Delivery_Date",
       text: "Expected date of delivery",
       sort: true,
-      style: {
-        fontSize: "11px",
-    },
-      headerStyle: () => {
-        return { fontSize: "12px", width : "120px" , padding: "10px 20px"};
-      },
+     
       formatter: function dateFormat(cell, row) {
       
         var oldDate = row.created;
@@ -226,12 +189,7 @@ function AllAssignment() {
       dataField: "final_date",
       text: "Actual date of delivery",
       sort: true,
-      style: {
-        fontSize: "11px",
-    },
-      headerStyle: () => {
-        return { fontSize: "12px", width : "120px" , padding: "10px 20px"};
-      },
+      
       formatter: function dateFormat(cell, row) {
        
         var oldDate = row.final_date;
@@ -244,9 +202,7 @@ function AllAssignment() {
     {
       dataField: "",
       text: "Deliverable",
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
+     
       formatter: function (cell, row) {
      
         return (
@@ -274,22 +230,12 @@ function AllAssignment() {
     {
       dataField: "",
       text: "Team Leader name and contact number, email",
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
-      style: {
-        fontSize: "11px",
-    },
+     
       formatter: priceFormatter,
     },
     {
       text: "Action",
-      headerStyle: () => {
-        return { fontSize: "12px", textAlign: "center", width: "70px" };
-      },
-      style: {
-        fontSize: "11px",
-    },
+     
       formatter: function (cell, row) {
         return (
           <>
@@ -367,7 +313,7 @@ function AllAssignment() {
                             <ModalManual tar= {"assignProcess"} />
                         </ModalBody>
                     </Modal>
-          <div className="tableFixHead">
+          {/* <div className="tableFixHead">
           <BootstrapTable
             bootstrap4
             keyField="id"
@@ -375,8 +321,14 @@ function AllAssignment() {
             columns={columns}
             classes="table-responsivepayment"
           />
-          </div>
-
+          </div> */}
+         <DataTablepopulated 
+         bgColor = "#5a625a"
+          bootstrap4
+          keyField="id"
+          data={assignmentDisplay}
+          columns={columns}>
+           </DataTablepopulated>
           <ViewAllReportModal
             ViewReport={ViewReport}
             reportModal={reportModal}

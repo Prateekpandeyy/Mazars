@@ -24,7 +24,7 @@ import ModalManual from "../ModalManual/AllComponentManual";
 import MessageIcon, {DeleteIcon, EditQuery, ViewDiscussionIcon, HelpIcon, 
    UploadDocument, FeedBackICon} from "../../components/Common/MessageIcon";
 import './index.css';
-
+import DataTablepopulated from "../../components/DataTablepopulated/DataTabel";
 
 
 function AllQueriesData() {
@@ -94,23 +94,13 @@ function AllQueriesData() {
             formatter: (cellContent, row, rowIndex) => {
                 return rowIndex + 1;
             },
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "12px"};
-            },
+
         },
         {
             text: "Date",
             dataField: "created",
             sort: true,
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-              return { fontSize: "11px", width:"120px", padding: "10px 20px", whiteSpace: "nowrap" };
-          },
+            
            formatter : function dateFormatter(cell, row) {
                return(
                    <>
@@ -123,12 +113,7 @@ function AllQueriesData() {
             text: "Query No",
             dataField: "assign_no",
             
-            headerStyle: () => {
-                return { fontSize: "12px", width: "120px"};
-            },
-            style: {
-                fontSize: "11px",
-            },
+            
             formatter: function nameFormatter(cell, row) {
               
                 return (
@@ -150,33 +135,18 @@ function AllQueriesData() {
             text: "Category",
             dataField: "parent_id",
             sort: true,
-            style : {
-                wordBreak : "break-word", fontSize : "11px"
-                },
-            headerStyle: () => {
-                return { fontSize: "12px"};
-            },
+            
         },
         {
             text: "Sub Category",
             dataField: "cat_name",
             sort: true,
-            style : {
-                wordBreak : "break-word", fontSize : "11px"
-                },
-            headerStyle: () => {
-                return { fontSize: "12px"};
-            },
+            
         },
         {
             text: "Status",
             dataField: "",
-            style : {
-                wordBreak : "break-word", fontSize : "11px"
-                },
-            headerStyle: () => {
-                return { fontSize: "12px"};
-            },
+           
             formatter: function nameFormatter(cell, row) {
                 return (
                     <>
@@ -209,12 +179,7 @@ function AllQueriesData() {
             text: "Expected / Actual Delivery Date",
             dataField: "exp_delivery_date",
             sort: true,
-            style : {
-                wordBreak : "break-word", fontSize : "11px"
-                },
-            headerStyle: () => {
-                return { fontSize: "12px"};
-            },
+           
             formatter: function dateFormat(cell, row) {
                
            
@@ -240,12 +205,7 @@ function AllQueriesData() {
         },
         {
             text: "Action",
-            headerStyle: () => {
-              return { fontSize: "12px", textAlign: "center", width: "130px"};
-            },
-            style : {
-                wordBreak : "break-word", fontSize : "11px"
-                },
+            
           formatter: function (cell, row) {
                 var dateMnsFive = moment(row.exp_delivery_date).add(15, 'day').format("YYYY-MM-DD");
               
@@ -263,7 +223,7 @@ function AllQueriesData() {
                             <>
                            <>
                            {dateMnsFive > curDate === true ?
-                                <span className="ml-2">
+                                <span className="ml-1">
                                
                                 <Link 
                                  to={{
@@ -276,7 +236,7 @@ function AllQueriesData() {
                             </span>
                              : ""} 
                             
-                            <span onClick={() => ViewDiscussionToggel(row.assign_no)}  className="ml-2">
+                            <span onClick={() => ViewDiscussionToggel(row.assign_no)}  className="ml-1">
                                   <ViewDiscussionIcon />
                                 </span>
                               
@@ -288,7 +248,7 @@ function AllQueriesData() {
                     {
                         row.status_code == "0" || row.status_code == "1" || row.status_code == "3" ?
                             <>
-                                <span className="ml-2">
+                                <span className="ml-1">
                                     <Link to={`/customer/edit-query/${row.id}`}>
                                         <EditQuery />
                                     </Link>
@@ -297,7 +257,7 @@ function AllQueriesData() {
                                 <span   onClick={() => del(row.id)} className="ml-2">
                                    <DeleteIcon />
                                 </span>
-                                <span className="ml-2">
+                                <span className="ml-1">
                                     <Link
                                         to={{
                                             pathname: `/customer/chatting/${row.id}&type=4`,
@@ -328,7 +288,7 @@ function AllQueriesData() {
                             <>
 
                                 {dateMnsFive > curDate === true ?
-                                <span className = "ml-2"
+                                <span className = "ml-1"
                                >
                                 <Link 
                                  to={{
@@ -348,7 +308,7 @@ function AllQueriesData() {
                                 }
                                 {row.status_code == "10" ? null 
                                 : 
-                                <span className="ml-2">
+                                <span className="ml-1">
                                  <Link
                                         to={{
                                             pathname: `/customer/chatting/${row.id}&type=4`,
@@ -366,7 +326,7 @@ function AllQueriesData() {
                                 </Link>
                             </span>
 }
-<span onClick={() => ViewDiscussionToggel(row.assign_no)}  className="ml-2">
+<span onClick={() => ViewDiscussionToggel(row.assign_no)}  className="ml-1">
                                   <ViewDiscussionIcon />
                                 </span>
                             
@@ -433,30 +393,25 @@ const showManual = () => {
                 <Row>
                    
                         <Col md = "3">
-                        <div style={{ display: "flex"}}>
-                                <Link to="/customer/select-category" className="customBtn">
+                        
+                                <Link to="/customer/select-category" className="tabHoverQuery ml-1">
                                     Fresh Query
                                 </Link>
-                            </div>
+                           
                           </Col>
                           <Col md="9">
                     <Records records={records} />
                         </Col>
                     </Row>
-                   
+                   <DataTablepopulated 
+                   bgColor="#55425f"
+                   keyField= {"assign_no"}
+                   data={query}
+                   columns={columns}>
+                    </DataTablepopulated>
                
                   
-                  <div className="tableFixHeadQueryCustomer">
-                   <BootstrapTable
-                       bootstrap4
-                       keyField= {"assign_no"}
-                       data={query}
-                       columns={columns}
-                     rowIndex
-                       classes="table-responsive"
-                   />
-                  
-                   </div>
+                 
                    <AdditionalQueryModal
                         additionalHandler={additionalHandler}
                         additionalQuery={additionalQuery}

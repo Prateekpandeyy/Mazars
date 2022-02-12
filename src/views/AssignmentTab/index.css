@@ -34,7 +34,7 @@
 .tabHover:hover{
  text-decoration: underline;
   color:#0071CE;
-  font-weight: 600;
+ 
   cursor: pointer;
 }
   /* 

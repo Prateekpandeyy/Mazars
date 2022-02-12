@@ -22,7 +22,7 @@ import './index.css';
 import ModalManual from "../ModalManual/AllComponentManual";
 import MessageIcon, { ViewDiscussionIcon, HelpIcon, 
   Payment} from "../../components/Common/MessageIcon";
-
+import DataTablepopulated from "../../components/DataTablepopulated/DataTabel";
 function Paid() {
   const { id } = useParams();
   const userId = window.localStorage.getItem("userid");
@@ -126,23 +126,13 @@ function Paid() {
         formatter: (cellContent, row, rowIndex) => {
             return rowIndex + 1;
         },
-        style: {
-            fontSize: "11px",
-        },
-        headerStyle: () => {
-            return { fontSize: "11px" };
-        },
+       
     },
     {
         dataField: "query_created_date",
         text: "Date",
         sort: true,
-        style: {
-            fontSize: "11px",
-        },
-        headerStyle: () => {
-            return { fontSize: "11px", width:"120px", padding: "10px 20px", whiteSpace: "nowrap" };
-        },
+       
         formatter: function dateFormat(cell, row) {
          
             var oldDate = row.query_created_date;
@@ -155,12 +145,7 @@ function Paid() {
     {
         dataField: "assign_no",
         text: "Query No",
-        style: {
-            fontSize: "11px",
-        },
-        headerStyle: () => {
-            return { fontSize: "11px",    whiteSpace: "nowrap"  };
-        },
+       
         formatter: function nameFormatter(cell, row) {
          
             return (
@@ -182,34 +167,19 @@ function Paid() {
         dataField: "parent_id",
         text: "Category",
         sort: true,
-        style: {
-            fontSize: "11px",
-        },
-        headerStyle: () => {
-            return { fontSize: "11px" };
-        },
+       
     },
     {
         dataField: "cat_name",
         text: "Sub Category",
         sort: true,
-        style: {
-            fontSize: "11px",
-        },
-        headerStyle: () => {
-            return { fontSize: "11px" };
-        },
+       
     },
     {
         text: "Date of acceptance of Proposal",
         dataField: "cust_accept_date",
         sort: true,
-        style: {
-            fontSize: "11px",
-        },
-        headerStyle: () => {
-            return { fontSize: "11px" };
-        },
+      
         formatter: function dateFormat(cell, row) {
         
             var oldDate = row.cust_accept_date;
@@ -222,12 +192,7 @@ function Paid() {
     {
       text: "Status",
       dataField: "",
-      style: {
-          fontSize: "11px",
-      },
-      headerStyle: () => {
-          return { fontSize: "11px" };
-      },
+     
       formatter : function (cell, row) {
           return(
               <>
@@ -242,19 +207,14 @@ function Paid() {
     dataField: "accepted_amount",
     text: "Accepted Amount ",
     sort: true,
-    style: {
-      fontSize: "11px",
-      color: "#21a3ce",
-    },
+   
     sortFunc: (a, b, order, dataField) => {
       if (order === 'asc') {
         return b - a;
       }
       return a - b; // desc
     },
-    headerStyle: () => {
-      return { fontSize: "11px", color: "#21a3ce" };
-    },
+   
     formatter: function nameFormatter(cell, row){
         var nfObject = new Intl.NumberFormat('hi-IN')
          var x = row.accepted_amount;
@@ -268,19 +228,14 @@ function Paid() {
     text: "Amount Paid",
     dataField: "paid_amount",
     sort: true,
-    style: {
-      fontSize: "11px",
-      color: "#064606",
-    },
+   
     sortFunc: (a, b, order, dataField) => {
       if (order === 'asc') {
         return b - a;
       }
       return a - b; // desc
     },
-    headerStyle: () => {
-      return { fontSize: "11px", color: "#064606" };
-    },
+   
     formatter: function nameFormatter(cell, row){
         var nfObject = new Intl.NumberFormat('hi-IN')
          var x = row.paid_amount;
@@ -295,19 +250,14 @@ function Paid() {
     text : "Amount Outstanding",
     dataField: "amount_outstanding",
     sort: true,
-    style: {
-      fontSize: "11px",
-      color: "darkred",
-    },
+   
     sortFunc: (a, b, order, dataField) => {
       if (order === 'asc') {
         return b - a;
       }
       return a - b; // desc
     },
-    headerStyle: () => {
-      return { fontSize: "11px", color: "darkred" };
-    },
+    
     formatter: function nameFormatter(cell, row){
         var nfObject = new Intl.NumberFormat('hi-IN')
          var x = row.amount_outstanding;
@@ -321,12 +271,7 @@ function Paid() {
         text: "Date of Payment",
         dataField: "cust_paid_date",
         sort: true,
-        style: {
-            fontSize: "11px",
-        },
-        headerStyle: () => {
-            return { fontSize: "11px" };
-        },
+       
         formatter: function dateFormat(cell, row) {
           
             var oldDate = row.cust_paid_date;
@@ -336,26 +281,16 @@ function Paid() {
             return oldDate.slice(0, 10).toString().split("-").reverse().join("-");
         },
     },
-    {
-        dataField: "tl_name",
-        text: "TL name",
-        sort: true,
-        style: {
-            fontSize: "11px",
-        },
-        headerStyle: () => {
-            return { fontSize: "11px" };
-        },
-    },
+    // {
+    //     dataField: "tl_name",
+    //     text: "TL name",
+    //     sort: true,
+       
+    // },
   {
       text: "Action",
       dataField: "",
-      style: {
-        fontSize: "11px"
-      },
-      headerStyle: () => {
-        return { fontSize: "11px" };
-      },
+     
       formatter: function (cell, row) {
         return (
           <>
@@ -455,8 +390,8 @@ function Paid() {
 
 
   return (
-    <>
-      <>
+  
+<>
         <Card>
 
           <CardHeader>
@@ -475,7 +410,7 @@ function Paid() {
           <CardBody>
           
             <Records records={records} />
-            <div className="tableFixHeadpaymentCustomer">
+            {/* <div className="tableFixHeadpaymentCustomer">
             <BootstrapTable
               bootstrap4
               keyField={"assign_no"}
@@ -484,7 +419,13 @@ function Paid() {
               classes="table-responsivepayment"
               defaultSortDirection="asc"
             />
-</div>
+</div> */}
+<DataTablepopulated 
+                   bgColor="#2b5f55"
+                   keyField={"assign_no"}
+                   data={payment}
+                   columns={columns}>
+                    </DataTablepopulated>
             <PaymentComponent
               paymentHandler={paymentHandler}
               addPaymentModal={addPaymentModal}
@@ -500,7 +441,10 @@ function Paid() {
             />
 
 
-            <Modal isOpen={modal} fade={false} toggle={toggle}>
+            
+          </CardBody>
+        </Card>
+        <Modal isOpen={modal} fade={false} toggle={toggle}>
               <ModalHeader toggle={toggle}>History</ModalHeader>
               <ModalBody>
                 <table class="table table-bordered">
@@ -536,9 +480,6 @@ function Paid() {
                             <ModalManual tar= {"paymentProcess"} />
                         </ModalBody>
                     </Modal>
-          </CardBody>
-        </Card>
-      </>
     </>
   );
 }

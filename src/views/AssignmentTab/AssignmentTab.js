@@ -100,8 +100,11 @@ function AssignmentTab(props) {
     margin: "10px auto"
   };
   const myStyle2 = {
- margin: "10px auto"
-  };
+    margin: "10px auto",
+ 
+    color : "#5a625a",
+    fontWeight : 1000
+     };
   
   
 
