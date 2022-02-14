@@ -223,7 +223,7 @@ const resetData = () => {
      let proposal_info = false
      let assignment_info = false
      let payment_info = false
-     if(value.process_status || brief_fact_case || value.assessment || value.purpose_p || value.p_format || value.t_requested || value.spc_que || value.doa){
+     if(value.process_status || value.brief_fact_case || value.assessment || value.purpose_p || value.p_format || value.t_requested || value.spc_que || value.doa){
       basic_info = true
      }
      if(value.dateProposal || value.proposedAmount || value.paymentTerms || value.proposal_status || value.acceptedAmount

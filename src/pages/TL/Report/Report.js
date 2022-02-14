@@ -249,10 +249,10 @@ const resetData = () => {
      let proposal_info = false
      let assignment_info = false
      let payment_info = false
-     if(value.process_status || value.assessment || value.purpose_p || value.p_format || value.t_requested || value.spc_que || value.doa){
+     if(value.process_status || value.assessment ||  value.brief_fact_case || value.purpose_p || value.p_format || value.t_requested || value.spc_que || value.doa){
       basic_info = true
      }
-     if(value.dateProposal || value.proposedAmount || value.paymentTerms || value.proposal_status || value.acceptedAmount
+     if(value.dateProposal || value.amount_receipt || value.proposedAmount || value.paymentTerms || value.proposal_status || value.acceptedAmount
       || value.paymentDeclinedReason || value.date_acceptance || value.amountOutstanding
       || value.amount_overdue || value.declinedDate){
         proposal_info = true
@@ -267,6 +267,7 @@ const resetData = () => {
      payment_info = true
    }
         let formData = new FormData();
+        formData.append("amount_receipt", Number(value.amount_receipt));
         formData.append("report_name", value.report_name)
         formData.append("basic_info", Number(basic_info));
         formData.append("proposal_info", Number(proposal_info));
@@ -291,6 +292,7 @@ const resetData = () => {
         formData.append("t_requested", Number(value.t_requested));
         formData.append("spc_que", Number(value.spc_que));
         formData.append("date_allocation", Number(value.doa));
+        formData.append("brief_fact_case", Number(value.brief_fact_case))
         // formData.append("teamleader", Number(value.tl_name));
         // formData.append("taxprofessional", Number(value.tp_name));
         formData.append("date_proposal", Number(value.dateProposal));
@@ -681,7 +683,10 @@ ref={selectInputRef2}
 <input type="checkbox" name="assessment" ref={register} checked={checkBox} id="assessment"></input>
 <label htmlFor="assessment">Assessment Year(s)</label>
 </span>
-           
+<span>
+<input type="checkbox" name="brief_fact_case" ref={register} checked={checkBox} id="brief_fact_case"></input>
+<label htmlFor="brief_fact_case">Name of the case</label>
+</span>        
 <span>
 <input type="checkbox" ref={register} name="purpose_p" checked={checkBox} id="purpose_p"></input>
 <label htmlFor="purpose_p">Purpose for Which Opinion is Sought</label>
@@ -744,10 +749,10 @@ ref={selectInputRef2}
 <span>  <input type="checkbox" ref={register} name="date_acceptance" checked={proposalCheckbox} id="date_acceptance"></input>
 <label htmlFor="date_acceptance">Date of Acceptance / Decline</label>
 </span>
-{/* <span>
-<input type="checkbox" ref={register} name="amountReceived" id="amountReceived"></input>
-<label htmlFor="amountReceived">Total Amount Received</label>
-</span> */}
+<span>
+<input type="checkbox" ref={register} name="amount_receipt" id="amount_receipt"></input>
+<label htmlFor="amount_receipt">Total Amount Receipt</label>
+</span>
 <span>
     <input type="checkbox" ref={register} name="amountOutstanding" checked={proposalCheckbox} id="amountOutstanding"></input>
 <label htmlFor="amountOutstanding">Total Amount Outstanding</label>
