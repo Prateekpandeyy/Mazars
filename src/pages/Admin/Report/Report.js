@@ -223,12 +223,12 @@ const resetData = () => {
      let proposal_info = false
      let assignment_info = false
      let payment_info = false
-     if(value.process_status || value.assessment || value.purpose_p || value.p_format || value.t_requested || value.spc_que || value.doa){
+     if(value.process_status || brief_fact_case || value.assessment || value.purpose_p || value.p_format || value.t_requested || value.spc_que || value.doa){
       basic_info = true
      }
      if(value.dateProposal || value.proposedAmount || value.paymentTerms || value.proposal_status || value.acceptedAmount
       || value.paymentDeclinedReason || value.date_acceptance || value.amountOutstanding
-      || value.amount_overdue || value.declinedDate){
+      || value.amount_overdue || value.declinedDate || value.amount_receipt){
         proposal_info = true
       }
    if(value.assignDate || value.completionDate || value.assignStatus || value.completionQuery || value.assignTime){
@@ -275,7 +275,7 @@ const resetData = () => {
         formData.append("accepted_amount", Number(value.acceptedAmount));
         formData.append("payment_declined_reasen", Number(value.paymentDeclinedReason));
         formData.append("date_of_acceptance", Number(value.date_acceptance));
-        // formData.append("amount_received", value.amountReceived);
+         formData.append("amount_receipt", Number(value.amount_receipt));
         formData.append("amount_outstanding", Number(value.amountOutstanding));
         formData.append("amount_overdue", Number(value.amount_overdue));
         formData.append("payment_declined", Number(value.declinedDate));
@@ -733,10 +733,10 @@ ref={selectInputRef2}
 <span>  <input type="checkbox" ref={register} name="date_acceptance" checked={proposalCheckbox} id="date_acceptance"></input>
 <label htmlFor="date_acceptance">Date of Acceptance / Decline</label>
 </span>
-{/* <span>
-<input type="checkbox" ref={register} name="amountReceived" id="amountReceived"></input>
-<label htmlFor="amountReceived">Total Amount Received</label>
-</span> */}
+<span>
+<input type="checkbox" ref={register} name="amount_receipt" id="amount_receipt"></input>
+<label htmlFor="amount_receipt">Total Amount Receipt</label>
+</span>
 <span>
     <input type="checkbox" ref={register} name="amountOutstanding" checked={proposalCheckbox} id="amountOutstanding"></input>
 <label htmlFor="amountOutstanding">Total Amount Outstanding</label>
