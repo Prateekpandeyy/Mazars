@@ -84,13 +84,13 @@ function Header({ id, cust_sign, noAdminSign, noTlSign, noTpSign, admin, mtl, mt
           )}
 
           {cust_sign && (
-            <div>
-              <ul>
+           
+              <ul className="menu">
                 <li>
-             <button className="customBtn">     <Link to="/">Sign In</Link></button>
+             <button className="signInBtn">     <Link to="/">Sign In</Link></button>
                 </li>             
               </ul>
-            </div>
+           
           )}
          
           {admin && !noAdminSign && (
