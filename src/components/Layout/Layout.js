@@ -37,7 +37,7 @@ function Layout(props) {
 
       <div className="app-content content" style={{display : 'flex', width : "100%"}}>
         
-          <div className="content-body" style={{display : 'flex', width : "100%"}}>
+          <div className="content-body" style={{display : 'flex', width : "100%", flexDirection : "column"}}>
             {props.children}
         
         </div>

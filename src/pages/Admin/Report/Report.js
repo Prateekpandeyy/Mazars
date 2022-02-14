@@ -668,7 +668,7 @@ ref={selectInputRef2}
 
 <span>
 <input type="checkbox" name="brief_fact_case" ref={register} checked={checkBox} id="brief_fact_case"></input>
-<label htmlFor="brief_fact_case">Brief fact of the case</label>
+<label htmlFor="brief_fact_case">Name of the case</label>
 </span>
            
 <span>
