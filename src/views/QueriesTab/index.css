@@ -8,19 +8,12 @@
     color: #464B4B;
     
   }
-  .tabHoverQuery{
+  .tabHover{
     transition: all .9s;
-    font-size: 16px;
-    color : #464B4B;
-    font-weight: 700;
-    padding : 0px 10px;
   }
-  .tabHoverQuery:hover{
+  .tabHover:hover{
    text-decoration: underline;
-  
-   color:#0071CE;
-
-   padding: "0 20px";
+    color:#0071CE;
+   
     cursor: pointer;
   }
-  

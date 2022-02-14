@@ -14,7 +14,7 @@ function Footer() {
         <Link to={"/customer/customerquery"}>
               
               
-              Query Contact Us | &nbsp; 
+              Enquiry | &nbsp; 
             
            </Link>
         <Link to={"/customer/contactbasic"}>

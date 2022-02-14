@@ -106,7 +106,7 @@ function ForgetPassword(props) {
                         Get OTP
                       </button>
                        <Link to="/" style={{ "margin": "10px" }}>
-                       <button type="button" className="customBtnCan">
+                       <button type="button" className="customBtn">
                          Cancel
                        </button>
                      </Link>

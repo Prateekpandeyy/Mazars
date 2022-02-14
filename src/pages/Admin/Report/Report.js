@@ -148,7 +148,7 @@ const getupdateQuery = () => {
   };
   let pk = []
   const custName = (a) => {
-    console.log("done")
+    console.log(a)
    
     a.map((r) => {
       pk.push(r.value)
@@ -192,12 +192,12 @@ const getqNo = ((i) => ({
   const options3 = data.map(d => (
     {
       "value": d.id,
-      "label": d.name
+      "label": d.postname
     }))
     const options4 = data2.map(d => (
       {
         "value": d.id,
-        "label": d.name
+        "label": d.post_name
       }))
 const resetData = () => {
   reset()
@@ -525,26 +525,6 @@ let cc = []
        
       </div>
       <div className="col-md-3">
-      <div className="mb-3">
-          <label className="form-label">Client Id</label>
-         <Select isMulti options={custData} ref={selectInputRef5} onChange={(e) => custName(e)}>
-
-         </Select>
-        </div>
-          </div>
-          <div className="col-md-3">
-        <div className="mb-3">
-        <label className="form-label">Query Number</label>
-        <Select isMulti = {true} ref={selectInputRef6}
-
- options={qno} onChange={(e) => queryNumber(e)}/>
-
-        </div>
-       
-      </div>
-   </div> 
-   <div className="row">
-   <div className="col-md-3">
 
 <div className="mb-3">
 <label className="form-label">Teamleader</label>
@@ -563,7 +543,10 @@ ref={selectInputRef2}
  options={options4} onChange={(e) => taxProfessional(e)}/>
 
 </div>
-</div>
+</div>  
+   </div> 
+   <div className="row">
+   
        <div className="col-md-3">
            <label className="form-label">Category</label>
            <Select isMulti options={options}
@@ -615,6 +598,24 @@ ref={selectInputRef2}
                         value={subData}>
                       </Select>
             </div>
+            <div className="col-md-3">
+<div className="mb-3">
+    <label className="form-label">Client Id</label>
+   <Select isMulti options={custData} ref={selectInputRef5} onChange={(e) => custName(e)}>
+
+   </Select>
+  </div>
+    </div>
+    <div className="col-md-3">
+  <div className="mb-3">
+  <label className="form-label">Query Number</label>
+  <Select isMulti = {true} ref={selectInputRef6}
+
+options={qno} onChange={(e) => queryNumber(e)}/>
+
+  </div>
+ 
+</div>
    </div>
    <div className="row">
        <div className="col-md-12">
@@ -734,8 +735,8 @@ ref={selectInputRef2}
 <label htmlFor="date_acceptance">Date of Acceptance / Decline</label>
 </span>
 <span>
-<input type="checkbox" ref={register} name="amount_receipt" id="amount_receipt"></input>
-<label htmlFor="amount_receipt">Total Amount Receipt</label>
+<input type="checkbox" ref={register} checked={proposalCheckbox} name="amount_receipt" id="amount_receipt"></input>
+<label htmlFor="amount_receipt">Total Amount Received</label>
 </span>
 <span>
     <input type="checkbox" ref={register} name="amountOutstanding" checked={proposalCheckbox} id="amountOutstanding"></input>

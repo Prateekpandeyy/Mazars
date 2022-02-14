@@ -19,7 +19,7 @@ function ResendOtp({ invalid, wEmail, disabled, indNumError, zipError, passError
               else {
                 setLoading(true)
                 let formData = new FormData();
-                formData.append("email", value.p_email);
+                formData.append("email", email);
                 formData.append("phone", phone);
                 formData.append("p", "registration");
         
@@ -61,8 +61,8 @@ function ResendOtp({ invalid, wEmail, disabled, indNumError, zipError, passError
 
                 
                 {
-                      disabled ?
-                        <Spinner color="primary" />
+                      loading ?
+                      <span></span>
                         :
                         <div style={{ paddingTop: "10px" }}>
                         <button type="submit" class="btn btn-success">SEND OTP</button>

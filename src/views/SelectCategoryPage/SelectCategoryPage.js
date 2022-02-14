@@ -43,7 +43,7 @@ function SelectCategoryPage() {
         <CardHeader  title={
           <Grid container>
             <Grid item sm ={6}>
-            <button class="btn btn-success" onClick={() => history.goBack()}>
+            <button class="customBtn" onClick={() => history.goBack()}>
                 <i class="fas fa-arrow-left mr-2"></i>
                 Go Back
               </button>

@@ -58,7 +58,7 @@ function DeleteQuery({ id, setLoading }) {
 
   return (
     <div>
-      <button type="button" class="btn btn-primary" onClick={() => del(id)}>
+      <button type="button" class="customBtn" onClick={() => del(id)}>
         Delete
       </button>
     </div>

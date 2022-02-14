@@ -20,6 +20,7 @@ import {
   Table,
 } from "reactstrap";
 import Swal from 'sweetalert2';
+import Cookies from 'js-cookie';
 const Report = () => {
     const userid = window.localStorage.getItem("tpkey");
     const selectInputRef = useRef();
@@ -55,10 +56,16 @@ const Report = () => {
   const [proposalCheckbox, setProposalCheckbox] = useState(null)
   const [assignmentCheckbox, setAssignmentCheckbox] = useState(null)
   const [paymnetCheckbox, setPaymentCheckbox] = useState(null)
+  const [tlName, setTlName] = useState()
+  const gettpName = Cookies.get("tpName")
   var kk = []
   var pp = []
-  var vv = []
 
+  var vv = []
+const tpName = {
+ "value" : JSON.parse(userid),
+  "label" : gettpName
+}
   var allData1 = {}
   var dir = []
   var indir = []
@@ -100,10 +107,11 @@ const [item2, setItem2] = useState(current_date)
     getTeamLeader();
     getData();
     getupdateQuery()
-
+    getTaxProf();
   }, []);
   useEffect(() => {
-getupdateQuery()
+    getTeamLeader();
+getTaxProf();
   }, [taxId, taxxId, cname])
 const getupdateQuery = () => {
  
@@ -120,27 +128,25 @@ const getupdateQuery = () => {
        
 }
   const getTeamLeader = () => {
-    axios.get(`${baseUrl}/tl/getTeamLeader`).then((res) => {
+    axios.get(`${baseUrl}/tp/gettpuserinfo?id=${JSON.parse(userid)}`).then((res) => {
     
-      var dd = []
-      if (res.data.code === 1) {
-        pp.push(res.data.result)
-        setData((res.data.result));
-       
-      }
+     console.log("res", res.data.result)
+     setTlName({
+       label : res.data.result.parent_post_name,
+       value : res.data.result.parent_user
+     })
     });
   };
 
-  useEffect(() => {
-    getTaxProf();
-  }, [taxId]);
+
 
   const getTaxProf = () => {
     axios
-      .get(`${baseUrl}/tp/getTaxProfessional?tl_id=${taxId}`)
+      .get(`${baseUrl}/tp/getTaxProfessional?tl_id=${JSON.parse(userid)}`)
       .then((res) => {
       
         if (res.data.code === 1) {
+          console.log("taxprofessional", res.data.result)
           setData2(res.data.result);
          
         }
@@ -219,10 +225,10 @@ const resetData = () => {
      let proposal_info = false
      let assignment_info = false
      let payment_info = false
-     if(value.process_status || value.assessment || value.purpose_p || value.p_format || value.t_requested || value.spc_que || value.doa){
+     if(value.process_status || value.assessment || value.brief_fact_case || value.purpose_p || value.p_format || value.t_requested || value.spc_que || value.doa){
       basic_info = true
      }
-     if(value.dateProposal || value.proposedAmount || value.paymentTerms || value.proposal_status || value.acceptedAmount
+     if(value.dateProposal || value.amount_receipt || value.proposedAmount || value.paymentTerms || value.proposal_status || value.acceptedAmount
       || value.paymentDeclinedReason || value.date_acceptance || value.amountOutstanding
       || value.amount_overdue || value.declinedDate){
         proposal_info = true
@@ -237,6 +243,7 @@ const resetData = () => {
      payment_info = true
    }
         let formData = new FormData();
+        formData.append("amount_receipt", Number(value.amount_receipt));
         formData.append("report_name", value.report_name)
         formData.append("basic_info", Number(basic_info));
         formData.append("proposal_info", Number(proposal_info));
@@ -260,6 +267,7 @@ const resetData = () => {
         formData.append("t_requested", Number(value.t_requested));
         formData.append("spc_que", Number(value.spc_que));
         formData.append("date_allocation", Number(value.doa));
+        formData.append("brief_fact_case", Number(value.brief_fact_case))
         // formData.append("teamleader", Number(value.tl_name));
         // formData.append("taxprofessional", Number(value.tp_name));
         formData.append("date_proposal", Number(value.dateProposal));
@@ -519,26 +527,38 @@ let cc = []
        
       </div>
       <div className="col-md-3">
-      <div className="mb-3">
-          <label className="form-label">Client Id</label>
-         <Select isMulti options={custData} ref={selectInputRef5} onChange={(e) => custName(e)}>
 
-         </Select>
-        </div>
-          </div>
-          <div className="col-md-3">
-        <div className="mb-3">
-        <label className="form-label">Query Number</label>
-        <Select isMulti = {true} ref={selectInputRef6}
+<div className="mb-3">
+<label className="form-label">Teamleader</label>
+<Select isDisabled = {true}  value={tlName}
+ styles={{
 
- options={qno} onChange={(e) => queryNumber(e)}/>
+  singleValue: (styles, { data }) => ({
+    ...styles,
+    color:  "#000"
+  }),
+}}
+ />
+</div>
+</div>
 
-        </div>
-       
-      </div>
+<div className="col-md-3">
+<div className="mb-3">
+<label className="form-label">Taxprofessional</label>
+<Select value={tpName} isDisabled={true} 
+styles={{
+
+  singleValue: (styles, { data }) => ({
+    ...styles,
+    color:  "#000"
+  }),
+}} />
+
+</div>
+</div>
    </div> 
    <div className="row">
-
+  
        <div className="col-md-3">
            <label className="form-label">Category</label>
            <Select isMulti options={options}
@@ -590,6 +610,24 @@ let cc = []
                         value={subData}>
                       </Select>
             </div>
+            <div className="col-md-3">
+<div className="mb-3">
+    <label className="form-label">Client Id</label>
+   <Select isMulti options={custData} ref={selectInputRef5} onChange={(e) => custName(e)}>
+
+   </Select>
+  </div>
+    </div>
+    <div className="col-md-3">
+  <div className="mb-3">
+  <label className="form-label">Query Number</label>
+  <Select isMulti = {true} ref={selectInputRef6}
+
+options={qno} onChange={(e) => queryNumber(e)}/>
+
+  </div>
+ 
+</div>
    </div>
    <div className="row">
        <div className="col-md-12">
@@ -640,7 +678,10 @@ let cc = []
 <input type="checkbox" name="assessment" ref={register} checked={checkBox} id="assessment"></input>
 <label htmlFor="assessment">Assessment Year(s)</label>
 </span>
-           
+<span>
+<input type="checkbox" name="brief_fact_case" ref={register} checked={checkBox} id="brief_fact_case"></input>
+<label htmlFor="brief_fact_case">Name of the case</label>
+</span>      
 <span>
 <input type="checkbox" ref={register} name="purpose_p" checked={checkBox} id="purpose_p"></input>
 <label htmlFor="purpose_p">Purpose for Which Opinion is Sought</label>
@@ -703,10 +744,10 @@ let cc = []
 <span>  <input type="checkbox" ref={register} name="date_acceptance" checked={proposalCheckbox} id="date_acceptance"></input>
 <label htmlFor="date_acceptance">Date of Acceptance / Decline</label>
 </span>
-{/* <span>
-<input type="checkbox" ref={register} name="amountReceived" id="amountReceived"></input>
-<label htmlFor="amountReceived">Total Amount Received</label>
-</span> */}
+<span>
+<input type="checkbox" ref={register} checked={proposalCheckbox} name="amount_receipt" id="amount_receipt"></input>
+<label htmlFor="amount_receipt">Total Amount Received</label>
+</span>
 <span>
     <input type="checkbox" ref={register} name="amountOutstanding" checked={proposalCheckbox} id="amountOutstanding"></input>
 <label htmlFor="amountOutstanding">Total Amount Outstanding</label>

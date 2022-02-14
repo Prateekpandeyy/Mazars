@@ -480,7 +480,7 @@ const [loading, setLoading] = useState(false)
       <>
         <button
           type="submit"
-          className="customBtn mx-sm-1 mb-2"
+          className="searchBtn mx-sm-1 mb-2"
           onClick={() => resetData()}
         >
           Reset
@@ -677,7 +677,7 @@ const [loading, setLoading] = useState(false)
                       loading ?
                         <Spinner color="primary" />
                         :
-                        <button type="submit" className="customBtn mx-sm-1 mb-2">
+                        <button type="submit" className="searchBtn mx-sm-1 mb-2">
                         Search
                       </button>
                     }

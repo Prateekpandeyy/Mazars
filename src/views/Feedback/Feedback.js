@@ -85,7 +85,7 @@ function Feedback(props) {
                     index: props.location.index,
                   }}
                 >
-                  <button class="btn btn-success ml-3">Go Back</button>
+                  <button class="customBtn">Go Back</button>
                 </Link>
               
             </Col>
@@ -136,7 +136,7 @@ function Feedback(props) {
                       loading ?
                         <Spinner color="primary" />
                         :
-                        <button className="btn btn-primary" type="submit">
+                        <button className="customBtn" type="submit">
                          Submit
                         </button>
                     }

@@ -44,7 +44,7 @@ function AdminHeader({ custUserId, adminUserId, TLuserId, TPuserId , feedbackNum
  
   
   return (
-    <div>
+   
       <nav
         className="header-navbar navbar-expand-md navbar navbar-with-menu navbar-without-dd-arrow navbar-semi-light"
         sty
@@ -52,7 +52,7 @@ function AdminHeader({ custUserId, adminUserId, TLuserId, TPuserId , feedbackNum
         {custUserId && (
           <NavWrapper 
          
-          color="#E5F0FA" logout={custLogout}
+          color="#fff" logout={custLogout}
             name="customer" email={CustEmail}
           />
         )}
@@ -72,7 +72,7 @@ function AdminHeader({ custUserId, adminUserId, TLuserId, TPuserId , feedbackNum
           name="taxprofessional" email={tpEmail}
         />}
       </nav>
-    </div>
+   
   );
 }
 

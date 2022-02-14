@@ -225,7 +225,7 @@ function EditQuery(props) {
         <CardHeader>
           <Row>
             <Col md="4">
-              <button class="btn btn-success" onClick={() => history.goBack()}>
+              <button class="customBtn" onClick={() => history.goBack()}>
                 <i class="fas fa-arrow-left mr-2"></i>
                 Go Back
               </button>
@@ -547,7 +547,7 @@ function EditQuery(props) {
                     </Box>
                             
                         :
-                        <button className="btn btn-success" type="submit">
+                        <button className="customBtn" type="submit">
                           Update
                         </button>
                     }

@@ -105,7 +105,7 @@ const [dstate2, setDstate2] = useState("")
         setDisabled(true)
         // setDisplay(false)
       }
-      timer(180);
+      timer(10);
     }
   }
 
@@ -798,7 +798,7 @@ const [dstate2, setDstate2] = useState("")
               {
                 disabled ?
                   <ResendOtp setDisabled={setDisabled} disabled={disabled} getTime={getTime}
-                    email={email} phone={phone} setLoad={setLoad} invalid={invalid} indNumError={indNumError}
+                    email={email2} phone={phone} setLoad={setLoad} invalid={invalid} indNumError={indNumError}
                     wEmail={wEmail} zipError={zipError} passError={passError}
                     setLoading={setLoading} loading={loading}
                     display={display}
