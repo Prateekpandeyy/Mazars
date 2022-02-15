@@ -73,9 +73,7 @@ function AllAssignment() {
       formatter: (cellContent, row, rowIndex) => {
         return rowIndex + 1;
       },
-    headerStyle: () => {
-      return({maxWidth: "20px"})
-    }
+    
     },
    
     {

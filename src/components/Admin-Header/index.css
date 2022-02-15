@@ -28,16 +28,14 @@ color:#4B4646;
   display: block;
   margin: auto;
 }
-.nameHeading:hover{
-  color:#0071CE!important;
 
-}
-.inboxTitle:hover{
-  color:#0071CE;
-}
+
 .sidebarIcons{
   display: flex;
   max-width: 40px;
   max-height: 40px;
   padding: 8px;
+}
+.main-menu.menu-light .navigation > li.hover > a{
+  color: #0071CE;
 }

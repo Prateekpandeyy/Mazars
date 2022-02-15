@@ -293,14 +293,14 @@ function ChangePassword(props) {
                             disabled ? null
                               :
                               <>
-                                <button type="submit" className="btn btn-primary" onClick={() => setOtp()}>Submit</button>
+                                <button type="submit" className="customBtn" onClick={() => setOtp()}>Submit</button>
                                 <Cancel />
                               </>
                           }
                         </div>
                         :
                         <>
-                          <button type="submit" class="btn btn-success" onClick={() => getOtp("otp")}>Get OTP</button>
+                          <button type="submit" class="customBtn" onClick={() => getOtp("otp")}>Get OTP</button>
                           <Cancel />
                         </>
                     }
@@ -336,9 +336,9 @@ const Cancel = () => {
   return (
     <>
       <Link to="/customer/dashboard" style={{ "margin": "10px" }}>
-        <Button variant="contained" sx={{color: "rgb(158, 164, 128)"}}>
+        <button className="customBtn">
           Cancel
-        </Button>
+        </button>
       </Link>
     </>
   );

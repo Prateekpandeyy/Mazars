@@ -98,7 +98,7 @@ function NavWrapper(props) {
 
                     {name == "customer" && (
                       <Link to="/customer/change-password">
-                        <div className="dropdown-item"
+                        <div className="dropdown-item" 
                           style={{ cursor: "pointer" }}>
                           <VpnKeyIcon />
                           <span style={{ marginLeft: "3px" }}>Change Password</span>

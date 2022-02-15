@@ -14,7 +14,7 @@ import Select from "react-select";
 import Mandatory from "../../components/Common/Mandatory";
 import EmailValidation from "../../components/Common/EmailValidation";
 import MyPDF from '../ManualImg/newUser.pdf';
-
+import  { HelpIcon } from "../../components/Common/MessageIcon";
 
 function SignUp(props) {
   
@@ -70,8 +70,9 @@ const [dstate2, setDstate2] = useState("")
   }
   // cusSub
   const cusSub = {
-    "display": "flex",
-    "alignItems": "center"
+    display: "flex",
+    alignItems : "center",
+    justifyContent: "flex-start"
   }
   // Toggle Password
   const togglePasssword = () => {
@@ -459,7 +460,7 @@ const [dstate2, setDstate2] = useState("")
         <div className="form">
           <div className="heading" style={{display : "flex", justifyContent : "space-between"}}> 
             <h2>Client Register</h2>
-            <a href={MyPDF} target="_blank"> Need help?</a>
+            <a href={MyPDF} className="tabHover" target="_blank"> <HelpIcon /> </a>
           </div>
        
           <>
@@ -780,16 +781,17 @@ const [dstate2, setDstate2] = useState("")
                       <div class="col-md-6" style={cusSub}>
                         {
                           show ?
-                            <div>
+                            <div style={cusSub}>
                               {
                                 disabled ? null
                                   :
-                                  <button type="submit" className="customBtn" onClick={() => setOtp()}>Submit</button>
+                                  <button type="submit" className="customBtn" onClick={() => setOtp()} style={{marginTop: "1rem"}}>Submit</button>
                               }
                             </div>
                             :
-                            <button type="submit" class="autoWidthBtn" onClick={() => getOtp("otp")}>SEND OTP</button>
-                        }
+                            <div style={cusSub}>
+                            <button type="submit" class="autoWidthBtn" onClick={() => getOtp("otp")} style={{marginTop: "1rem"}}>SEND OTP</button>
+                       </div> }
                       </div>
                   }
                 </div>

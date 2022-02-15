@@ -26,6 +26,7 @@ const MyContainer = styled(Container)({
      fontSize : "12px",
      width: "fitContent"
     },
+  
     "& tbody tr td" : {
         fontSize : "11px",
     }

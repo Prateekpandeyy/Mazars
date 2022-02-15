@@ -204,7 +204,11 @@ const handleClick = () => {
 
               <li className="nav-item">
                 <NavLink to={"/customer/schedule"}>
-                <i className="fa"><img src={scheduleIcon} className="sidebarIcons" /></i>
+                  
+
+                  <i className="fa">
+                    <img src={scheduleIcon} className="fa sidebarIcons" /></i>
+               
                   <span className="menu-title" data-i18n="">
                     Schedule
                   </span>

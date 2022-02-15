@@ -65,7 +65,7 @@ function ResendOtp({ invalid, wEmail, disabled, indNumError, zipError, passError
                       <span></span>
                         :
                         <div style={{ paddingTop: "10px" }}>
-                        <button type="submit" class="btn btn-success">SEND OTP</button>
+                        <button type="submit" class="autoWidthBtn">SEND OTP</button>
                     </div>
                     }
             </form>

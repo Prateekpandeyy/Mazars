@@ -27,7 +27,7 @@ function Header({ id, cust_sign, noAdminSign, noTlSign, noTpSign, admin, mtl, mt
         )}
 
         {cust_sign && (
-          <div>
+          <div className="noSignINBox">
             <Link to="/">
               <img className="logo" src="https://www.mazars.co.in/extension/ezmazars_rwdesign/design/mazars2020/images/mazars-logo.png" className="logo" alt="mazar" />
             </Link>
@@ -73,7 +73,7 @@ function Header({ id, cust_sign, noAdminSign, noTlSign, noTpSign, admin, mtl, mt
           </div>
         )}
 
-        <div>
+        <div className="noSignINBox">
           {id && (
             <ul className="menu">
               <li style={{ color: "#fff" }}>{id}</li>
