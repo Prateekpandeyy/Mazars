@@ -190,10 +190,11 @@ html body a{
   cursor: pointer;
 }
 .helpIcon{
-  font-size: 20px;
+  font-size: 30px;
   cursor: pointer;
   float: right;
-  color: rgb(56, 39, 49)
+  color: rgb(56, 39, 49);
+ 
 }
 .viewDiscusion{
   color: #615339;

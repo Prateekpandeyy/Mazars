@@ -238,7 +238,7 @@ function CompleteAssignment() {
     },
     {
       dataField: "",
-      text: "Team Leader name and contact number, email",
+      text: "Team Leader",
       
       formatter: priceFormatter,
     },

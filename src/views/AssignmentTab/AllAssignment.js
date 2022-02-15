@@ -73,7 +73,9 @@ function AllAssignment() {
       formatter: (cellContent, row, rowIndex) => {
         return rowIndex + 1;
       },
-    
+    headerStyle: () => {
+      return({maxWidth: "20px"})
+    }
     },
    
     {
@@ -229,7 +231,7 @@ function AllAssignment() {
     },
     {
       dataField: "",
-      text: "Team Leader name and contact number, email",
+      text: "Team Leader",
      
       formatter: priceFormatter,
     },

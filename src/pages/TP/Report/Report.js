@@ -253,7 +253,7 @@ setQno([])
         formData.append("from", value.p_from);
         formData.append("to", value.p_to);
         formData.append("customer_name", cname)
-       
+        formData.append("teamleader", tlName.value)
         formData.append("query_no", qqno)
         formData.append("category", mcatname);
         formData.append("subCategory", dd);

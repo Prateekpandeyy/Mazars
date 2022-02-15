@@ -32,6 +32,7 @@ const DiscussProposal = (props) => {
 const HelpIcon = () => {
   return(
     <i title="Help" class="fa fa-question-circle helpIcon"></i>
+    
   )
 }
 const FeedBackICon = () => {
