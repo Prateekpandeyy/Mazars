@@ -425,3 +425,9 @@ html body a{
   color:#fff !important;
   font-weight: 700 !important;
 }
+.inboxTitle:hover{
+  color:#0071CE;
+}
+.notification:hover .badge{
+ background-color: #0071CE !important;
+}

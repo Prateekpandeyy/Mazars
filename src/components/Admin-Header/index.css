@@ -21,6 +21,7 @@ color:#4B4646;
 }
 .changePassword .dropdown-item:active{
   background-color: rgb(61, 71, 117) !important;
+  color: #fff !important;
 }
 .nameHeading, .inboxTitle{
   color:#4B4646;
