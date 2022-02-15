@@ -66,7 +66,7 @@ function Message(props) {
                 return rowIndex + 1;
             },
             headerStyle: () => {
-                return { fontSize: "12px", width: "10px" };
+                return { fontSize: "12px", width: "10px" , backgroundColor: "rgb(61, 131, 117)", color: "#fff", border: "1px solid rgb(61, 131, 117)"};
             },
         },
         
@@ -75,7 +75,7 @@ function Message(props) {
     dataField: "setdate",
     sort: true,
     headerStyle: () => {
-        return { fontSize: "12px", width: "60px" };
+        return { fontSize: "12px", width: "60px",  backgroundColor: "rgb(61, 131, 117)", color: "#fff", border: "1px solid rgb(61, 131, 117)" };
     },
 
 },
@@ -83,7 +83,7 @@ function Message(props) {
             text: "Query No",
             dataField: "assign_no",      
             headerStyle: () => {
-                return { fontSize: "12px", width: "30px" };
+                return { fontSize: "12px", width: "30px" ,  backgroundColor: "rgb(61, 131, 117)", color: "#fff", border: "1px solid rgb(61, 131, 117)"};
             },
             formatter: function nameFormatter(cell, row) {
                
@@ -98,7 +98,7 @@ function Message(props) {
         {
             text: "Message",
             headerStyle: () => {
-                return { fontSize: "12px", width: "180px" };
+                return { fontSize: "12px", width: "180px",  backgroundColor: "rgb(61, 131, 117)", color: "#fff", border: "1px solid rgb(61, 131, 117)" };
             },
             formatter: function nameFormatter(cell, row) {
                
@@ -184,7 +184,7 @@ function Message(props) {
           <Row>
           <Col md="4">
           <button
-                class="btn btn-success" 
+                className="autoWidthBtn" 
                 onClick={() => history.goBack()}
               >
                 <i class="fas fa-arrow-left mr-2"></i>

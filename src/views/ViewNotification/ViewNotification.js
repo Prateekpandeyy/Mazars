@@ -54,7 +54,7 @@ function ViewNotification() {
           <Row>
             <Col md="4">
               <button
-                class="btn btn-success ml-3"
+                class="autoWidthBtn ml-3"
                 onClick={() => history.goBack()}
               >
                 <i class="fas fa-arrow-left mr-2"></i>
@@ -62,7 +62,7 @@ function ViewNotification() {
               </button>
             </Col>
             <Col md="8">
-              <h4>Message Details</h4>
+              <h4 className="contentTitle">Message Details</h4>
             </Col>
           </Row>
         </CardHeader>
@@ -70,25 +70,25 @@ function ViewNotification() {
           <table class="table table-bordered">
             <tbody>
               <tr>
-                <th scope="row">Query No</th>
+                <th className="contentTitle" scope="row">Query No</th>
                 <td>{data.assign_no}</td>
               </tr>
               <tr>
-                <th scope="row"> Sender</th>
+                <th className="contentTitle" scope="row"> Sender</th>
                 <td>{data.name}</td>
               </tr>
               <tr>
-                <th scope="row">Date</th>
+                <th className="contentTitle" scope="row">Date</th>
                 <td>
                   {CommonServices.removeTime(data.setdate)}
                 </td>
               </tr>
               <tr>
-                <th scope="row">Message</th>
+                <th className="contentTitle" scope="row">Message</th>
                 <td>{data.message}</td>
               </tr>
               <tr>
-                <th scope="row">Type</th>
+                <th className="contentTitle" scope="row">Type</th>
                 <td>
                   {data.type}
                 </td>
