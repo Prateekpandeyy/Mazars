@@ -377,6 +377,7 @@ const rightAli = {
                         ViewDiscussion={ViewDiscussion}
                         report={assignNo}
                         getData={getProposalData}
+                        headColor="#42566a"
                     />
    <CommonShowProposal
           setViewProposalModal = {setViewProposalModal}

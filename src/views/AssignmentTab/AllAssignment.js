@@ -334,6 +334,7 @@ function AllAssignment() {
             ViewDiscussion={ViewDiscussion}
             report={assignNo}
             getData={getAssignmentData}
+            headColor="#5a625a"
           />
 
         </CardBody>

@@ -335,6 +335,7 @@ function CustomerDeclinedPayment() {
                         ViewDiscussion={ViewDiscussion}
                         report={assignNo}
                         getData={getAssignmentData}
+                        headColor="#7c887c"
                     />
 
                 </CardBody>

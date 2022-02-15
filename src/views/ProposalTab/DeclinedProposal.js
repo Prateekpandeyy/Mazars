@@ -265,6 +265,7 @@ function DeclinedProposal() {
                         ViewDiscussion={ViewDiscussion}
                         report={assignNo}
                         getData={getProposalData}
+                        headColor="#5f7b97"
                     />
                     <Modal isOpen={openManual} toggle={needHelp} style={{display : "block", position: "absolute", left:"280px"}} size="lg">
                         <ModalHeader toggle={needHelp}>Mazars</ModalHeader>

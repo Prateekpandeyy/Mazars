@@ -430,6 +430,7 @@ function Paid() {
               ViewDiscussion={ViewDiscussion}
               report={assignNo}
               getData={getPaymentStatus}
+              headColor="#2b5f55"
             />
 
 

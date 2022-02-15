@@ -403,6 +403,7 @@ function InprogressAllocation() {
             ViewDiscussion={ViewDiscussion}
             report={assignNo}
             getData={getQueriesData}
+            headColor="#6e557b"
           />
  <Modal isOpen={openManual} toggle={needHelp} style={{display : "block", position: "absolute", left:"280px"}} size="lg">
                         <ModalHeader toggle={needHelp}>Mazars</ModalHeader>

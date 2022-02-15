@@ -456,6 +456,7 @@ function Paid() {
               ViewDiscussion={ViewDiscussion}
               report={assignNo}
               getData={getPaymentStatus}
+              headColor="#3e8678"
             />
    <Modal isOpen={openManual} toggle={needHelp} style={{display : "block", position: "absolute", left:"280px"}} size="lg">
                         <ModalHeader toggle={needHelp}>Mazars</ModalHeader>

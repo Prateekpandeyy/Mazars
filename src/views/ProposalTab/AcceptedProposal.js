@@ -280,6 +280,7 @@ function AcceptedProposal() {
                         ViewDiscussion={ViewDiscussion}
                         report={assignNo}
                         getData={getProposalData}
+                        headColor="#5f7b97"
                     />
                 </CardBody>
                 <CommonShowProposal

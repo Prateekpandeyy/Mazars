@@ -9,7 +9,8 @@ import CommonServices from "../../common/common";
 function DiscardReport({
   ViewDiscussion,
   ViewDiscussionToggel,
-  report
+  report,
+  headColor
 }) {
   const userId = window.localStorage.getItem("userid");
   const [data, setData] = useState([]);
@@ -37,7 +38,7 @@ function DiscardReport({
         <ModalBody>
           <table class="table table-bordered">
             <thead>
-              <tr>
+              <tr style={{backgroundColor: `${headColor}`, color: "#fff"}}>
                 <th scope="row">S.No</th>
                 <th scope="row">Date</th>
                 <th scope="row">Name</th>

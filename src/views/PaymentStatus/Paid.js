@@ -428,6 +428,7 @@ function Unpaid() {
                             ViewDiscussion={ViewDiscussion}
                             report={assignNo}
                             getData={getPaymentStatus}
+                            headColor="#3e8678"
                         />
 
                         <Modal isOpen={modal} fade={false} toggle={toggle}>

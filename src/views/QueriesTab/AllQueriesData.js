@@ -407,6 +407,7 @@ const showManual = () => {
                    bgColor="#55425f"
                    keyField= {"assign_no"}
                    data={query}
+                   
                    columns={columns}>
                     </DataTablepopulated>
                
@@ -427,6 +428,7 @@ const showManual = () => {
                         ViewDiscussion={ViewDiscussion}
                         report={assignNo}
                         getData={getQueriesData}
+                        headColor="#55425f"
                     />
                      <RejectedModal
                     showRejectedBox = {showRejectedBox} 
