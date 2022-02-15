@@ -14,11 +14,12 @@ import ExpandMore from '@mui/icons-material/ExpandMore';
 import { useHistory } from "react-router";
 import './list.css';
 import ScheduleIcon from '@material-ui/icons/Schedule';
-import assignmentIcon from './images/AssignmnetIcon.png';
-import paymentIcon from './images/paymentIcon2.png';
+import assignmentIcon from './images/finalAssignmentIcon.png';
+import paymentIcon from './images/Payment_icons.jpg';
 import queryIcons from './images/queryIcon.png';
 import feedbackIcon from './images/feedbackIcon.png';
-import scheduleIcon from './images/scheduleIcon.png';
+import scheduleIcon from './images/Schedule_final.png';
+import ProposalIcons from './images/Proposal_icons.png';
 
 function Sidebar({ adminDashboard, custDashboard, TLDashboard, TPDashboard , feedbackNumber}) {
   const [toggleState, setToggleState] = useState(false);
@@ -176,7 +177,7 @@ const handleClick = () => {
 
               <li className="nav-item">
                 <NavLink to={"/customer/proposal"}>
-                  <i className="fa fa-envelope"></i>
+                <i className="fa"><img src={ProposalIcons} className="sidebarIcons" /></i>
                   <span className="menu-title" data-i18n="">
                     Proposal
                   </span>
@@ -213,7 +214,9 @@ const handleClick = () => {
 
               <li className="nav-item">
                 <NavLink to={"/customer/feedback-data"}>
-                <i className="fa"><img src={feedbackIcon} className="sidebarIcons" /></i>
+                <i className="fa">
+                  <FeedbackIcon />
+                </i>
                   <span className="menu-title" data-i18n="">
                     Feedback
                   </span>

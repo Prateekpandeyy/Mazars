@@ -206,15 +206,12 @@ const getqNo = ((i) => ({
         "label": d.name
       }))
 const resetData = () => {
-  reset()
-  console.log(selectInputRef)
-  selectInputRef.current.select.clearValue();
-  selectInputRef2.current.select.clearValue();
-  selectInputRef3.current.select.clearValue();
-  selectInputRef4.current.select.clearValue();
-  selectInputRef5.current.select.clearValue();
-  selectInputRef6.current.select.clearValue();
-  setQno([])
+ console.log("done")
+reset()
+selectInputRef5.current.select.clearValue();
+selectInputRef6.current.select.clearValue();
+selectInputRef3.current.select.clearValue();
+selectInputRef4.current.select.clearValue();
 
 }
     const onSubmit = (value) => {

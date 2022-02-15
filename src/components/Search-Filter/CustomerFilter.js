@@ -534,7 +534,7 @@ const [loading, setLoading] = useState(false)
                 <div>
                   <button
                     type="submit"
-                    className="btn btn-primary mb-2 ml-3"
+                    className="btnSearch mb-2 ml-3"
                     onClick={resetCategory}
                   >
                     X

@@ -784,11 +784,11 @@ const [dstate2, setDstate2] = useState("")
                               {
                                 disabled ? null
                                   :
-                                  <button type="submit" className="btn btn-primary" onClick={() => setOtp()}>Submit</button>
+                                  <button type="submit" className="customBtn" onClick={() => setOtp()}>Submit</button>
                               }
                             </div>
                             :
-                            <button type="submit" class="btn btn-success" onClick={() => getOtp("otp")}>SEND OTP</button>
+                            <button type="submit" class="autoWidthBtn" onClick={() => getOtp("otp")}>SEND OTP</button>
                         }
                       </div>
                   }

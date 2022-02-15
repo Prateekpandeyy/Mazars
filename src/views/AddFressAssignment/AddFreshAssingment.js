@@ -198,7 +198,7 @@ function AddFreshAssingment(props) {
           <CardHeader>
             <Row>
               <Col md="4">
-                <button class="customBtn" onClick={() => history.goBack()}>
+                <button class="autoWidthBtn" onClick={() => history.goBack()}>
                   <i class="fas fa-arrow-left mr-2"></i>
                   Go Back
                 </button>

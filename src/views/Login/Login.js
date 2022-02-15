@@ -127,7 +127,7 @@ function LoginForm() {
             </div>
           </div>
           <div className="signUp">
-            <Typography variant="h4" style={{ margin: "5px auto", color: "#382731" }}>
+            <Typography variant="h4" style={{ margin: "5px auto", color: "#464B4B" }}>
               For existing client
             </Typography>
             {
@@ -148,7 +148,7 @@ function LoginForm() {
                           "is-invalid": errors.p_email,
                         })}
                         name="p_email"
-                        autocomplete="off"
+                       autoComplete="new-password"
                         ref={register}
                         placeholder="Enter Email"
                         onChange={(e) => handleChange(e)}
@@ -163,7 +163,7 @@ function LoginForm() {
                           "is-invalid": errors.p_password,
                         })}
                         name="p_password"
-                        autocomplete="off"
+                       autoComplete="new-password"
                         placeholder="Enter Password"
                         ref={register}
                         onCopy={(e) => {
@@ -182,7 +182,7 @@ function LoginForm() {
                       />
                     </div>
 
-                    <div style={{ display: "flex", margin: "0 0 30px 0", justifyContent: "flex-end" }}>
+                    <div style={{ display: "flex", margin: "0 0 30px 0", justifyContent: "flex-end" }} className="tabHover">
                       <Link
                         to={{
                           pathname: "/customer/forget-password",

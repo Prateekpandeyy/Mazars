@@ -23,7 +23,7 @@ import { baseUrl2, baseUrl3 } from "../../config/config";
 import { useParams, Link, useHistory } from "react-router-dom";
 import styled from "styled-components";
 import PayModal from "./PayModal";
-import { Typography } from "antd";
+import DataTablepopulated from "../../components/DataTablepopulated/DataTabel";
 import './index.css';
 const PayDetails = (props) => {
     let history = useHistory();
@@ -69,22 +69,27 @@ setModal(!modal)
             formatter: (cellContent, row, rowIndex) => {
                 return rowIndex + 1;
             },
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px", width: "90px" };
-            },
+           
         },
         {
             dataField: "assign_no",
             text: "Q.No",
             
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px", width: "120px" };
+            formatter: function nameFormatter(cell, row) {
+         
+                return (
+                    <>
+                           <Link
+                                to={{
+                                    pathname: `/customer/my-assingment/${row.assign_id}`,
+                                  
+                                    routes: "paymentstatus",
+                                }}
+                            >
+                                {row.assign_no}
+                            </Link>
+                    </>
+                );
             },
         },
         {
@@ -296,7 +301,7 @@ return(
                     index: props.location.index,
                   }}
                 >
-                  <button class="btn btn-success ml-3">Go Back</button>
+                  <button class="customBtn ml-3">Go Back</button>
                 </Link>
               
             </Col>
@@ -311,15 +316,13 @@ return(
         </CardHeader>
           <CardBody>
    {showTable == true ? 
-     <div className="tableFixHead">
-  <BootstrapTable
-  bootstrap4
-  keyField="id"
-  data={paymentDetail}
-  columns={columns}
-  classes="table-responsive"
-/>  
-</div> : 
+
+<DataTablepopulated 
+                   bgColor="#2b5f55"
+                   keyField={"assign_no"}
+                   data={paymentDetail}
+  columns={columns}>
+                    </DataTablepopulated> : 
 <Container>
     <p>Invoice not generated</p>
     </Container>}

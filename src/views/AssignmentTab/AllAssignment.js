@@ -171,20 +171,20 @@ function AllAssignment() {
         );
       },
     },
-    {
-      dataField: "Exp_Delivery_Date",
-      text: "Expected date of delivery",
-      sort: true,
+    // {
+    //   dataField: "Exp_Delivery_Date",
+    //   text: "Expected date of delivery",
+    //   sort: true,
      
-      formatter: function dateFormat(cell, row) {
-      
-        var oldDate = row.created;
-        if (oldDate == null) {
-          return null;
-        }
-        return oldDate.toString().split("-").reverse().join("-");
-      },
-    },
+    //   formatter: function dateFormat(cell, row) {
+
+    //     var oldDate = row.created;
+    //     if (oldDate == null) {
+    //       return null;
+    //     }
+    //     return oldDate.toString().split("-").reverse().join("-");
+    //   },
+    // },
     {
       dataField: "final_date",
       text: "Actual date of delivery",
@@ -313,15 +313,7 @@ function AllAssignment() {
                             <ModalManual tar= {"assignProcess"} />
                         </ModalBody>
                     </Modal>
-          {/* <div className="tableFixHead">
-          <BootstrapTable
-            bootstrap4
-            keyField="id"
-            data={assignmentDisplay}
-            columns={columns}
-            classes="table-responsivepayment"
-          />
-          </div> */}
+          
          <DataTablepopulated 
          bgColor = "#5a625a"
           bootstrap4

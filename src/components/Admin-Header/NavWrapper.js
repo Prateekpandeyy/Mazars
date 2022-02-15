@@ -19,7 +19,7 @@ function NavWrapper(props) {
   return (
     <>
       <div className="navbar-wrapper">
-        <div className="navbar-container" style={{ background: color }}>
+        <div className="navbar-container" style={{ background: color, borderBottom: "2px solid #787878" }}>
           <div className="collapse navbar-collapse show" id="navbar-mobile">
             <ul className="nav navbar-nav mr-auto float-left">
               <li className="nav-item d-block d-md-none">

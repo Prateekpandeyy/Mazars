@@ -19,17 +19,17 @@ function Header({ id, cust_sign, noAdminSign, noTlSign, noTpSign, admin, mtl, mt
     <>
       <div className="header">
         {id && (
-          <div>
+         
             <Link to="/customer/questionnaire-page">
               <img src={mazars} className="logo" alt="mazar" />
             </Link>
-          </div>
+         
         )}
 
         {cust_sign && (
           <div>
             <Link to="/">
-              <img src={mazars} className="logo" alt="mazar" />
+              <img className="logo" src="https://www.mazars.co.in/extension/ezmazars_rwdesign/design/mazars2020/images/mazars-logo.png" className="logo" alt="mazar" />
             </Link>
           </div>
         )}
@@ -84,12 +84,17 @@ function Header({ id, cust_sign, noAdminSign, noTlSign, noTpSign, admin, mtl, mt
           )}
 
           {cust_sign && (
+            <button className="customBtn">
+            <Link className="SignUpLink"
+              to={{
+                pathname: "/",
+              }}
+            >
+              Sign In
+            </Link>
+          </button>
            
-              <ul className="menu">
-                <li>
-             <button className="signInBtn">     <Link to="/">Sign In</Link></button>
-                </li>             
-              </ul>
+          
            
           )}
          

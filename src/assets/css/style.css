@@ -29,7 +29,7 @@
 
 .logo {
   display: flex;
-  width: 25%;
+  width: 50%;
 
   padding : 10px;
  max-height: 75px;
@@ -185,7 +185,7 @@ html body a{
   cursor: pointer;
 }
 .discussProposal{
-  color:#5a625a;
+  color:#081f8f;
   font-size: 16px;
   cursor: pointer;
 }
@@ -223,7 +223,32 @@ html body a{
   color:rgb(61, 71, 117) !important;
   cursor: pointer;
 }
-.customBtn{
+.customBtnSign:hover{
+  color:#fff;
+}
+.customBtnSign{
+  border-bottom-left-radius: 1.75rem;
+  background-color: #0071CE;
+  border:1px solid #0071CE;
+  color:#fff;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  justify-content: center;
+  line-height: 1;
+  width: 100px;
+  min-height: 2rem;
+  overflow: hidden;
+  padding: 0.6rem 1rem;
+  position: relative;
+  text-decoration: none;
+  transform: all 0.3s;
+  vertical-align: middle;
+
+}
+.customBtn  {
    
   border-bottom-left-radius: 1.75rem;
   background-color: #0071CE;
@@ -236,7 +261,7 @@ html body a{
   font-weight: 500;
   justify-content: center;
   line-height: 1;
-  width: 150px;
+  width: 100px;
   min-height: 2rem;
   overflow: hidden;
   padding: 0.6rem 1rem;
@@ -272,37 +297,10 @@ html body a{
 }
 .customBtn > a{
   color: #fff}
-.customBtnCan{
- 
-  border-bottom-left-radius: 1.75rem;
-  background-color: rgb(158, 164, 128);
-  border:1px solid  rgb(158, 164, 128);
-  color:#fff;
-  display: inline-flex;
-  align-items: center;
-  cursor: pointer;
-  font-size: 1rem;
-  font-weight: 500;
-  justify-content: center;
-  line-height: 1;
-  max-width: 100%;
-  min-width: 100px;
-  min-height: 3rem;
-  overflow: hidden;
-  padding: 0.75rem 1.5rem;
-  position: relative;
-  text-decoration: none;
-  transform: all 0.3s;
-  vertical-align: middle;
 
-}
 
-.customBtnCan:hover{
-  background-color: rgba(158, 164, 128, 0.7);
-  border: 1px solid rgba(158, 164, 128, 0.7);
-  color: #fff!important;
-}
-.customBtn:hover, .searchBtn:hover{
+
+.customBtn:hover, .searchBtn:hover, .autoWidthBtn:hover{
   background-color: #081f8f!important;
   border: 1px solid #081f8f!important;
   color: #fff!important;
@@ -328,4 +326,45 @@ html body a{
   transform: all 0.3s;
   vertical-align: middle;
 
+}
+.btnSearch{
+  background-color: #0071CE;
+  border:1px solid #0071CE;
+  color:#fff;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  justify-content: center;
+  line-height: 1;
+  width: auto;
+  min-height: 2rem;
+  overflow: hidden;
+  padding: 0.6rem 1rem;
+  position: relative;
+  text-decoration: none;
+  transform: all 0.3s;
+  vertical-align: middle;
+}
+.autoWidthBtn{
+  border-bottom-left-radius: 1.75rem;
+  background-color: #0071CE;
+  border:1px solid #0071CE;
+  color:#fff;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  justify-content: center;
+  line-height: 1;
+  
+  min-height: 2rem;
+  overflow: hidden;
+  padding: 0.6rem 1rem;
+  position: relative;
+  text-decoration: none;
+  transform: all 0.3s;
+  vertical-align: middle;
 }

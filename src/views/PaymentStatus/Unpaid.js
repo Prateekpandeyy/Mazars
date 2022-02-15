@@ -352,7 +352,7 @@ function Paid() {
 
 
          
-            <Link
+            <Link className="ml-2"
             to={{
               pathname: `/customer/chatting/${row.assign_id}`,
               index : 1,

@@ -126,6 +126,7 @@ function Paid() {
         formatter: (cellContent, row, rowIndex) => {
             return rowIndex + 1;
         },
+      
        
     },
     {
@@ -353,7 +354,7 @@ function Paid() {
 
 
          
-            <Link
+            <Link className="ml-2"
             to={{
               pathname: `/customer/chatting/${row.assign_id}`,
               index : 0,
@@ -410,16 +411,7 @@ function Paid() {
           <CardBody>
           
             <Records records={records} />
-            {/* <div className="tableFixHeadpaymentCustomer">
-            <BootstrapTable
-              bootstrap4
-              keyField={"assign_no"}
-              data={payment}
-              columns={columns}
-              classes="table-responsivepayment"
-              defaultSortDirection="asc"
-            />
-</div> */}
+
 <DataTablepopulated 
                    bgColor="#2b5f55"
                    keyField={"assign_no"}

@@ -113,6 +113,8 @@ fontWeight : 1000
               listStyleType: "none",
               display: "flex",
               justifyContent: "space-around",
+             margin: "0px",
+             padding: "10px"
             }}
           >
             <Tab style={tabIndex == 0 ? myStyle2 : myStyle1} className="tabHover">

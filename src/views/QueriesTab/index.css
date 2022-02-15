@@ -8,11 +8,17 @@
     color: #464B4B;
     
   }
-  .tabHover{
+  .tabHover, .tabHoverLink{
     transition: all .9s;
   }
   .tabHover:hover{
    text-decoration: underline;
+    color:#0071CE;
+   
+    cursor: pointer;
+  }
+  .tabHoverLink:hover{
+    text-decoration: underline;
     color:#0071CE;
    
     cursor: pointer;

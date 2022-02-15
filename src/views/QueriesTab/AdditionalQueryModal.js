@@ -106,7 +106,7 @@ function AdditionalQueryModal({
                   :
                   <button
                     type="submit"
-                    className="btn btn-primary"
+                    className="customBtn"
                   >
                     Submit
                   </button>
