@@ -386,21 +386,22 @@ const amountStyle  = {
                         {
                           valueCheckBox ?
                             <div>
-                              <button type="submit" className="btn btn-primary">
+                              <button type="submit" className="customBtn">
                                 Accept
                               </button>
-                              <button type="button" className="btn btn-danger ml-2" onClick={() => rejected(id)}>
+                              <button type="button" className="dangerBtn ml-2" onClick={() => rejected(id)}>
                                 Reject
                               </button>
                             </div>
                             :
-                            <div>
-                              <button type="submit" className="customBtn" disabled>
+                            <div className="proposalBtn">
+                              <button type="submit" disabled  className="customBtnDisabled">
                                 Accept
                               </button>
-                              <button type="button" className="dangerBtn ml-2" disabled>
+                              <button type="button" disabled  className="dangerBtnDisabled ml-2">
                                 Reject
                               </button>
+                              
                             </div>
                         }
                       </div>

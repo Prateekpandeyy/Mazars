@@ -307,7 +307,7 @@ function AddFreshAssingment(props) {
                           Specific Questions for advisory <span className="declined">*</span>
                         </label>
                         <div
-                          className="btn btn-primary"
+                          className="btn queryPlusIcon"
                           onClick={() => append({ query: "" })}
                         >
                           +
@@ -332,7 +332,7 @@ function AddFreshAssingment(props) {
                             />
                             
                             <div
-                              className="btn btn-primary ml-2"
+                              className="btn queryPlusIcon ml-2"
                               onClick={() => remove(index)}
                             >
                               -

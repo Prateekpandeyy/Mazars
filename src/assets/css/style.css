@@ -249,7 +249,8 @@ html body a{
   vertical-align: middle;
 
 }
-.customBtn  {
+
+.customBtn, .customBtnDisabled  {
    
   border-bottom-left-radius: 1.75rem;
   background-color: #0071CE;
@@ -306,7 +307,7 @@ html body a{
 
 
 
-.customBtn:hover, .searchBtn:hover, .autoWidthBtn:hover{
+.customBtn:hover, .searchBtn:hover, .autoWidthBtn:hover, .queryPlusIcon:hover{
   background-color: #081f8f!important;
   border: 1px solid #081f8f!important;
   color: #fff!important;
@@ -374,7 +375,7 @@ html body a{
   transform: all 0.3s;
   vertical-align: middle;
 }
-.dangerBtn{
+.dangerBtn, .dangerBtnDisabled{
   border-bottom-left-radius: 1.75rem;
   background-color: orangered;
   border:1px solid orangered;
@@ -395,6 +396,7 @@ html body a{
   transform: all 0.3s;
   vertical-align: middle;
 }
+
 .dangerBtn:hover{
   background-color: rgb(177, 52, 6)!important;
   border: 1px solid rgb(177, 52, 6)!important;
@@ -402,4 +404,24 @@ html body a{
 }
 .changePassword .dropdown-item:hover{
   color:#0071CE;
+}
+.customBtnDisabled:disabled,
+.customBtnDisabled.disabled{
+  color:#fff;
+  border-color: #a0a0a0;
+  background-color: rgba(61, 71, 117, 0.5);
+}
+.customBtnDisabled:hover, .dangerBtnDisabled:hover{
+  cursor: not-allowed;
+}
+.dangerBtnDisabled:disabled,
+.dangerBtnDisabled:disabled{
+  color:#fff;
+  border-color: #a0a0a0;
+  background-color: rgba(212, 22, 9, 0.5);
+}
+.queryPlusIcon{
+  background-color: #0071CE !important;
+  color:#fff !important;
+  font-weight: 700 !important;
 }

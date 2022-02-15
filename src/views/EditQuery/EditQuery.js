@@ -225,7 +225,7 @@ function EditQuery(props) {
         <CardHeader>
           <Row>
             <Col md="4">
-              <button class="customBtn" onClick={() => history.goBack()}>
+              <button class="autoWidthBtn" onClick={() => history.goBack()}>
                 <i class="fas fa-arrow-left mr-2"></i>
                 Go Back
               </button>
@@ -339,7 +339,7 @@ function EditQuery(props) {
                           Specific Questions for advisory <span className="declined">*</span>
                         </label>
                         <div
-                          className="btn btn-primary"
+                          className="btn queryPlusIcon"
                           onClick={() => append({ query: "" })}
                         >
                           +
@@ -360,7 +360,7 @@ function EditQuery(props) {
                             ref={register({ required: true })}
                           />
                           <div
-                            className="btn btn-primary ml-2"
+                            className="btn queryPlusIcon ml-2"
                             onClick={() => remove(index)}
                           >
                             -

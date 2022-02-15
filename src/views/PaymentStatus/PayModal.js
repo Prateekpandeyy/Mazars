@@ -118,7 +118,7 @@ return(
     </table> }
 
 <ModalFooter>
-    <button onClick={() => payFun()} className="btn btn-success">Pay Now</button>
+    <button onClick={() => payFun()} className="customBtn">Pay Now</button>
 </ModalFooter>
     </ModalBody>
   </Modal>

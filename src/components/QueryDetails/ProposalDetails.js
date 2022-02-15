@@ -174,7 +174,7 @@ console.log("amount", amount)
                   {CommonServices.removeTime(proposal_date)}
                   {proposal_date && (
                     <a
-                      className="btn btn-primary btn-sm"
+                      className="customBtn"
                       href={`${baseUrl}/customers/dounloadpdf?id=${p.id}`}
                       role="button"
                     >

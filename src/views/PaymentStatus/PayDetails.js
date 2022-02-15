@@ -24,6 +24,8 @@ import { useParams, Link, useHistory } from "react-router-dom";
 import styled from "styled-components";
 import PayModal from "./PayModal";
 import DataTablepopulated from "../../components/DataTablepopulated/DataTabel";
+import  { DiscussProposal} from "../../components/Common/MessageIcon";
+
 import './index.css';
 const PayDetails = (props) => {
     let history = useHistory();
@@ -230,17 +232,11 @@ setModal(!modal)
                           <DescriptionOutlinedIcon color="secondary" /></a> : ""}
                           
                           {row.is_paid == "0" ? 
-            <div title="Pay">
-                    <i
-                class="fa fa-mail-forward"
-                style={{
-                    fontSize: "14px",
-                    cursor: "pointer",
-                    color: "blue"
-                }}
-                onClick={() => openModal(row)}
-            ></i> 
-                </div>: ""}
+
+           <div onClick={() => openModal(row)}>
+                <DiscussProposal titleName ="Pay"/>
+               </div>
+                : ""}
                   </div>
                    </>
                 )
@@ -324,7 +320,7 @@ return(
   columns={columns}>
                     </DataTablepopulated> : 
 <Container>
-    <p>Invoice not generated</p>
+    <p className="declined">Invoice not generated</p>
     </Container>}
 <PayModal 
 showModal = {modal}

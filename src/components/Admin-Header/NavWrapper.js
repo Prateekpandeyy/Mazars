@@ -54,7 +54,7 @@ function NavWrapper(props) {
               </li>
 
               <li>
-                <h4 className="brand-text nameHeading">{name == "customer" ? CommonServices.capitalizeFirstLetter("client") : CommonServices.capitalizeFirstLetter(name)}: {JSON.parse(email)} </h4>
+                <h4 className="brand-text">{name == "customer" ? CommonServices.capitalizeFirstLetter("client") : CommonServices.capitalizeFirstLetter(name)}: {JSON.parse(email)} </h4>
               </li>
              
             </ul>

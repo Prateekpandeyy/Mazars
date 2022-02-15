@@ -289,8 +289,8 @@ function InprogressProposal() {
     <div>
       <Card>
         <CardHeader>
-        <span title="help"> <i class="fa fa-question-circle" style={{cursor : "pointer", float: "right"}} onClick= {(e) => needHelp()}></i></span>
-          <CustomerFilter
+        <span onClick= {(e) => needHelp()}> <HelpIcon /></span>
+        <CustomerFilter
             setData={setQuery}
             getData={getQueriesData}
             id={userId}

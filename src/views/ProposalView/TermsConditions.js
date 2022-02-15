@@ -18,7 +18,7 @@ function PaymentModal({
             height="100%" width="100%" />
         </ModalBody>
         <ModalFooter>
-          <Button color="secondary" onClick={readTerms}>Ok</Button>
+          <button className="customBtn" onClick={readTerms}>Close</button>
         </ModalFooter>
 
       </Modal>
