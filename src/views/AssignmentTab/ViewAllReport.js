@@ -8,6 +8,7 @@ import DiscardReport from "./DiscardReport";
 import Assignmodal from "./Assignmodal";
 import PublishIcon from '@material-ui/icons/Publish';
 import {Typography} from "@material-ui/core";
+import MessageIcon from "../../components/Common/MessageIcon";
 
 function ViewReport({
   reportModal,
@@ -104,7 +105,7 @@ function ViewReport({
            <Typography variant="h6">
            View All Report 
            </Typography>
-           <button class="btn btn-success" onClick={() => ViewDiscussionToggel()}>
+           <button class="autoWidthBtn" onClick={() => ViewDiscussionToggel()}>
                 View Discussion
               </button>
            
@@ -192,7 +193,7 @@ function ViewReport({
           </div> :""}
 
           {p.status === "2" && p.customer_files !== null ?
-          <p style={{color : "red"}}>Pending </p> : ""}
+          <p className="declined">Pending </p> : ""}
 
 
 
@@ -214,17 +215,9 @@ function ViewReport({
   onClick={() => acceptHandler(p)}
 ></i>
 </div> : null}
-                <div title="Discussion">
-                <i
-                  class="fa fa-comments-o"
-                  style={{
-                    fontSize: 16,
-                    cursor: "pointer",
-                    marginLeft: "8px",
-                    color: "green"
-                  }}
-                  onClick={() => toggleNested(p)}
-                ></i>
+                <div title="Discussion" onClick={() => toggleNested(p)} className="ml-2">
+                
+             <MessageIcon />
               </div>
               
               </> }

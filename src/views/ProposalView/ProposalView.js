@@ -239,7 +239,7 @@ const amountStyle  = {
                     index: props.location.index,
                   }}
                 >
-                  <button class="btn btn-success ml-3">Go Back</button>
+                  <button class="customBtn ml-3">Go Back</button>
                 </Link>
               
             </Col>
@@ -395,10 +395,10 @@ const amountStyle  = {
                             </div>
                             :
                             <div>
-                              <button type="submit" className="btn btn-primary" disabled>
+                              <button type="submit" className="customBtn" disabled>
                                 Accept
                               </button>
-                              <button type="button" className="btn btn-danger ml-2" disabled>
+                              <button type="button" className="dangerBtn ml-2" disabled>
                                 Reject
                               </button>
                             </div>

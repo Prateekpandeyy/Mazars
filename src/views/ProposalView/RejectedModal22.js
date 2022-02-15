@@ -84,7 +84,7 @@ let history = useHistory()
                 loading ?
                   <Spinner color="primary" />
                   :
-                  <button type="submit" className="btn btn-primary">
+                  <button type="submit" className="customBtn">
                     Submit
                   </button>
               }

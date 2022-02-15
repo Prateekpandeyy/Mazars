@@ -196,7 +196,7 @@ html body a{
   color: rgb(56, 39, 49)
 }
 .viewDiscusion{
-  color:rgb(61, 131, 117);
+  color: #615339;
   font-size: 16px;
   cursor: pointer;
 }
@@ -367,4 +367,30 @@ html body a{
   text-decoration: none;
   transform: all 0.3s;
   vertical-align: middle;
+}
+.dangerBtn{
+  border-bottom-left-radius: 1.75rem;
+  background-color: orangered;
+  border:1px solid orangered;
+  color:#fff;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  justify-content: center;
+  line-height: 1;
+  width: 100px;
+  min-height: 2rem;
+  overflow: hidden;
+  padding: 0.6rem 1rem;
+  position: relative;
+  text-decoration: none;
+  transform: all 0.3s;
+  vertical-align: middle;
+}
+.dangerBtn:hover{
+  background-color: rgb(177, 52, 6)!important;
+  border: 1px solid rgb(177, 52, 6)!important;
+  color: #fff!important;
 }

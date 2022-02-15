@@ -212,7 +212,11 @@ selectInputRef5.current.select.clearValue();
 selectInputRef6.current.select.clearValue();
 selectInputRef3.current.select.clearValue();
 selectInputRef4.current.select.clearValue();
-
+setCheckBox(null);
+setProposalCheckbox(null);
+setAssignmentCheckbox(null);
+setPaymentCheckbox(null);
+setQno([])
 }
     const onSubmit = (value) => {
      

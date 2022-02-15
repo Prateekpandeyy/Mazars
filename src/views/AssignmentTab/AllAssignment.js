@@ -171,20 +171,20 @@ function AllAssignment() {
         );
       },
     },
-    // {
-    //   dataField: "Exp_Delivery_Date",
-    //   text: "Expected date of delivery",
-    //   sort: true,
+    {
+      dataField: "Exp_Delivery_Date",
+      text: "Expected date of delivery",
+      sort: true,
      
-    //   formatter: function dateFormat(cell, row) {
+      formatter: function dateFormat(cell, row) {
 
-    //     var oldDate = row.created;
-    //     if (oldDate == null) {
-    //       return null;
-    //     }
-    //     return oldDate.toString().split("-").reverse().join("-");
-    //   },
-    // },
+        var oldDate = row.created;
+        if (oldDate == null) {
+          return null;
+        }
+        return oldDate.toString().split("-").reverse().join("-");
+      },
+    },
     {
       dataField: "final_date",
       text: "Actual date of delivery",

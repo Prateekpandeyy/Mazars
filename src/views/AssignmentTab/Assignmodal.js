@@ -110,7 +110,7 @@ function Assignmodal({
                   :
                   <button
                     type="submit"
-                    className="btn btn-primary"
+                    className="customBtn"
                   >
                     Submit
                   </button>
