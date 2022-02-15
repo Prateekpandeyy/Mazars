@@ -9,7 +9,7 @@ return (
 <Card>
 
 <CardHeader>
-<h3 style={{textAlign: "center"}}>Contact Us</h3>    
+<h4 style={{textAlign: "center"}} className="contentTitle">Contact Us</h4>    
         </CardHeader>
 <CardBody style={{textAlign: "center"}}>
 <Row>

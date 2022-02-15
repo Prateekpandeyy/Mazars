@@ -22,7 +22,7 @@ function Schedule() {
         <CardHeader>
         <Row>
             <Col md="7">
-              <CardTitle tag="h4">Schedule </CardTitle>
+              <CardTitle tag="h4" className="contentTitle">Schedule </CardTitle>
             </Col>
             <Col md="5"></Col>
           </Row>

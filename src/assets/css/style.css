@@ -431,3 +431,9 @@ html body a{
 .notification:hover .badge{
  background-color: #0071CE !important;
 }
+ h1, h2, h3, h4, h5, h6{
+  color:#464B4B;
+}
+.contentTitle{
+  color:#464B4B;
+}
