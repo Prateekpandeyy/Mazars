@@ -38,11 +38,11 @@ function DiscardReport({
         <ModalBody>
           <table class="table table-bordered">
             <thead>
-              <tr style={{backgroundColor: `${headColor}`, color: "#fff"}}>
-                <th scope="row">S.No</th>
-                <th scope="row">Date</th>
-                <th scope="row">Name</th>
-                <th scope="row">Message</th>
+              <tr style={{backgroundColor: `${headColor}`,  color: "#fff"}}>
+                <th scope="row" style={{border: `1px solid ${headColor}`}}>S.No</th>
+                <th scope="row" style={{border: `1px solid ${headColor}`}}>Date</th>
+                <th scope="row" style={{border: `1px solid ${headColor}`}}>Name</th>
+                <th scope="row" style={{border: `1px solid ${headColor}`}}>Message</th>
               </tr>
             </thead>
             {data.length > 0
