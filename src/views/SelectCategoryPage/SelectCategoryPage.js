@@ -42,14 +42,17 @@ function SelectCategoryPage() {
         <Card>
         <CardHeader  title={
           <Grid container>
-            <Grid item sm ={6}>
+            <Grid item sm ={4}>
             <button class="autoWidthBtn" onClick={() => history.goBack()}>
                 <i class="fas fa-arrow-left mr-2"></i>
                 Go Back
               </button>
               </Grid>
-              <Grid item sm = {6}>
-              <p style={{ fontSize: "20px" }}>Add Fresh Query</p>
+              <Grid item sm = {4} align="center">
+              <h4 className="contentTitle"> Add Fresh Query </h4>
+                </Grid>
+                <Grid item sm = {4}>
+           
                 </Grid>
             </Grid>
         }/>

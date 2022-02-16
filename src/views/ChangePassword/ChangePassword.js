@@ -144,9 +144,7 @@ function ChangePassword(props) {
     <Layout custDashboard="custDashboard" custUserId={userId}>
       <div className="container">
         <div className="form">
-          <div className="heading">
-            <h2>Change Password</h2>
-          </div>
+          <h4  className="contentTitle">Change Password</h4>
 
           <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
             <div className="row">

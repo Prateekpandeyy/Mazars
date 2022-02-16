@@ -42,7 +42,7 @@ function CustomerNotification({ tokenKey, name }) {
                      
                            
                                 <Link to={`/${name}/message`} className="notification">
-                              <h4 className="inboxTitle">Inbox </h4>
+                              <h4 className="contentTitle" style={{display:"flex", margin: "0 0 5px 0"}}>Inbox </h4>
                                     <span className="badge">{countNotification}</span>
                                     
                                 </Link>

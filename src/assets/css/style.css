@@ -307,10 +307,12 @@ html body a{
 
 
 
-.customBtn:hover, .searchBtn:hover, .autoWidthBtn:hover, .queryPlusIcon:hover{
+.customBtn:hover, .searchBtn:hover, .autoWidthBtn:hover, .queryPlusIcon:hover, .btnSearch:hover,
+ .customBtn:focus, .searchBtn:focus, .autoWidthBtn:focus, .queryPlusIcon:focus, .btnSearch:focus{
   background-color: #081f8f!important;
   border: 1px solid #081f8f!important;
   color: #fff!important;
+  outline:1px solid #081f8f;
 }
 .signInBtn{
   border-bottom-left-radius: 1.75rem;

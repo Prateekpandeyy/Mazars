@@ -24,9 +24,10 @@ const MyContainer = styled(Container)({
     "& thead tr th" : {
      border : "0px",
      fontSize : "12px",
-     width: "fitContent"
     },
-  
+  '& thead tr th:first' : {
+   border: "1px solid green"
+  },
     "& tbody tr td" : {
         fontSize : "11px",
     }
