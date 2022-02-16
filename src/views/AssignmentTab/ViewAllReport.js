@@ -15,7 +15,8 @@ function ViewReport({
   ViewReport,
   report,
   getPendingforAcceptance,
-  dataItem
+  dataItem,
+  deleiverAble
 }) {
   const userId = window.localStorage.getItem("userid");
   const [data, setData] = useState([]);
@@ -114,9 +115,9 @@ function ViewReport({
           <table class="table table-bordered">
             <thead>
               <tr>
-                <th scope="row">S.No</th>
-                <th scope="row">Date</th>
-                <th scope="row">Document</th>
+                <th scope="row" style={{border: `1px solid ${deleiverAble}`, color: "#fff", backgroundColor: `${deleiverAble}` , width: "50px"}}>S.No</th>
+                <th scope="row" style={{border: `1px solid ${deleiverAble}`, color: "#fff", backgroundColor: `${deleiverAble}`, width: "150px"}}>Date</th>
+                <th scope="row" style={{border: `1px solid ${deleiverAble}`, color: "#fff", backgroundColor: `${deleiverAble}`}}>Document</th>
               
                 {/* {
                   dataItem ?
@@ -124,12 +125,12 @@ function ViewReport({
                     :
                     null
                 } */}
-                <th scope="row">Uploaded file
+                <th scope="row" style={{border: `1px solid ${deleiverAble}`, color: "#fff", backgroundColor: `${deleiverAble}`}}>Uploaded file
                 </th>
                
                 {
                   dataItem ?
-                    dataItem.final_report ? null : <th scope="row">Action</th>
+                    dataItem.final_report ? null : <th scope="row" style={{border: `1px solid ${deleiverAble}`, color: "#fff", width: "50px", backgroundColor: `${deleiverAble}`}}>Action</th>
                     :
                     null
                 }
@@ -258,6 +259,7 @@ function ViewReport({
         ViewDiscussionToggel={ViewDiscussionToggel}
         ViewDiscussion={ViewDiscussion}
         report={report}
+        headColor={deleiverAble}
         getData={getData}
       />
     </div>

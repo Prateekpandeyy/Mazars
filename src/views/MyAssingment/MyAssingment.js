@@ -216,7 +216,7 @@ console.log("props", props)
      
          
        <Container maxWidth="lg">
-       <Card style={{display : "flex", width: "950px", height : "100%"}}>
+       <Card style={{display : "flex", height : "100%"}}>
          <CardHeader>
           <Row>
             <Col md="4">
@@ -233,8 +233,11 @@ console.log("props", props)
           }
               
             </Col>
-            <Col md="8">
+            <Col md="4" align="center">
               <h4>Query Details</h4>
+            </Col>
+            <Col md="4">
+            
             </Col>
           </Row>
         </CardHeader>

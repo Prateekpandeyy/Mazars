@@ -133,7 +133,7 @@ fontWeight : 1000
           </TabList>
 
           <TabPanel>
-            <AllQueriesData />
+            <AllQueriesData snWidth = {50}/>
           </TabPanel>
 
           <TabPanel>

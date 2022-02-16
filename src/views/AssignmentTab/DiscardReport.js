@@ -52,7 +52,7 @@ function DiscardReport({
                     <td>{i + 1}</td>
                     <td>{CommonServices.removeTime(p.setdate)}</td>
                     <td>{p.sender}</td>
-                    <td style={{display : "block", width : "460px", overflow : "wrap"}}>
+                    <td style={{ width : "460px", overflow : "wrap"}}>
                       {
                         p.type === "sent" ?
                           <i class="fa fa-mail-forward" style={{ color: "red", marginLeft: "10px", marginRight: "10px" }}></i>

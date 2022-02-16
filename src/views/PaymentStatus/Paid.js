@@ -127,7 +127,11 @@ function Unpaid() {
             formatter: (cellContent, row, rowIndex) => {
                 return rowIndex + 1;
             },
-          
+            headerStyle : () => {
+                return( {
+                    width: "50px"
+                })
+            }
         },
         {
           dataField: "query_created_date",

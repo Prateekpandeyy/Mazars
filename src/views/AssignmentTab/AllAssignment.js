@@ -73,7 +73,11 @@ function AllAssignment() {
       formatter: (cellContent, row, rowIndex) => {
         return rowIndex + 1;
       },
-    
+      headerStyle : () => {
+        return( {
+            width: "50px"
+        })
+    }
     },
    
     {
@@ -126,7 +130,11 @@ function AllAssignment() {
     {
       dataField: "status",
       text: "Status",
-     
+      headerStyle : () => {
+        return( {
+            width: "180px"
+        })
+    },
       formatter: function (cell, row) {
         return (
           <>
@@ -171,32 +179,43 @@ function AllAssignment() {
         );
       },
     },
-    {
-      dataField: "Exp_Delivery_Date",
-      text: "Expected date of delivery",
-      sort: true,
+    // {
+    //   dataField: "Exp_Delivery_Date",
+    //   text: "Expected date of delivery",
+    //   sort: true,
      
-      formatter: function dateFormat(cell, row) {
+    //   formatter: function dateFormat(cell, row) {
 
-        var oldDate = row.created;
-        if (oldDate == null) {
-          return null;
-        }
-        return oldDate.toString().split("-").reverse().join("-");
-      },
-    },
+    //     var oldDate = row.created;
+    //     if (oldDate == null) {
+    //       return null;
+    //     }
+    //     return oldDate.toString().split("-").reverse().join("-");
+    //   },
+    // },
     {
       dataField: "final_date",
-      text: "Actual date of delivery",
+      text: "Expected / Actual date of delivery",
       sort: true,
       
       formatter: function dateFormat(cell, row) {
        
-        var oldDate = row.final_date;
-        if (oldDate == null || oldDate === "0000-00-00") {
+        var oldDate1 = row.final_date;
+        if (oldDate1 == null || oldDate1 === "0000-00-00") {
           return null;
         }
-        return oldDate.toString().split("-").reverse().join("-");
+        let finalDate =  oldDate1.toString().split("-").reverse().join("-");
+        var oldDate2 = row.created;
+        if (oldDate2 == null || oldDate2 === "0000-00-00") {
+          return null;
+        }
+        let expectedDate =  oldDate2.toString().split("-").reverse().join("-");
+        return(
+          <>
+          {finalDate ? 
+          <p>{finalDate}</p> : <p>{expectedDate}</p>}
+          </>
+        )
       },
     },
     {
@@ -235,7 +254,9 @@ function AllAssignment() {
     },
     {
       text: "Action",
-     
+      headerStyle : () => {
+        return({width: "70px"})
+      },
       formatter: function (cell, row) {
         return (
           <>
@@ -327,6 +348,7 @@ function AllAssignment() {
             report={report}
             getPendingforAcceptance={getAssignmentData}
             dataItem={dataItem}
+            deleiverAble = "#5a625a"
           />
 
           <DiscardReport

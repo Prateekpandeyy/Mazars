@@ -72,7 +72,11 @@ function CustomerDeclinedPayment() {
             formatter: (cellContent, row, rowIndex) => {
                 return rowIndex + 1;
             },
-           
+            headerStyle : () => {
+                return( {
+                    width: "50px"
+                })
+            } 
         },
         {
             dataField: "created",
@@ -232,9 +236,9 @@ function CustomerDeclinedPayment() {
         },
         {
             text: "Action",
-            headerStyle: () => {
-                return { fontSize: "12px", textAlign: "center", width: "70px" };
-            },
+            headerStyle : () => {
+                return({width: "70px"})
+              },
             style: {
                 fontSize: "11px",
             },
@@ -329,6 +333,7 @@ function CustomerDeclinedPayment() {
                         report={report}
                         getPendingforAcceptance={getAssignmentData}
                         dataItem={dataItem}
+                        deleiverAble = "#7c887c"
                     />
                     <DiscardReport
                         ViewDiscussionToggel={ViewDiscussionToggel}

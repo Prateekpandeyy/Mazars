@@ -6,7 +6,7 @@ import { baseUrl } from "../../config/config";
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
-import ima from "../../logo.jpeg"
+import ima from "../../mazars_logo.png";
 import Collapse from '@mui/material/Collapse';
 import FeedbackIcon from '@material-ui/icons/Feedback';
 import ExpandLess from '@mui/icons-material/ExpandLess';

@@ -78,7 +78,11 @@ function CompleteAssignment() {
       formatter: (cellContent, row, rowIndex) => {
         return rowIndex + 1;
       },
-     
+      headerStyle : () => {
+        return( {
+            width: "50px"
+        })
+    }
     },
     {
       dataField: "created",
@@ -244,8 +248,8 @@ function CompleteAssignment() {
     },
     {
       text: "Action",
-      headerStyle: () => {
-        return { fontSize: "12px", textAlign: "center", width: "70px" };
+      headerStyle : () => {
+        return({width: "70px"})
       },
       style: {
         fontSize: "11px",
@@ -368,6 +372,7 @@ function CompleteAssignment() {
             reportModal={reportModal}
             report={report}
             getPendingforAcceptance={getAssignmentData}
+            deleiverAble = "#7c887c"
           />
           <DiscardReport
             ViewDiscussionToggel={ViewDiscussionToggel}

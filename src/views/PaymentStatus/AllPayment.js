@@ -127,7 +127,11 @@ function Paid() {
             return rowIndex + 1;
         },
       
-       
+        headerStyle : () => {
+          return( {
+              width: "50px"
+          })
+      }
     },
     {
         dataField: "query_created_date",
@@ -251,7 +255,9 @@ function Paid() {
     text : "Amount Outstanding",
     dataField: "amount_outstanding",
     sort: true,
-   
+  //  headerStyle: () => {
+  //    return({padding: "5px"})
+  //  },
     sortFunc: (a, b, order, dataField) => {
       if (order === 'asc') {
         return b - a;

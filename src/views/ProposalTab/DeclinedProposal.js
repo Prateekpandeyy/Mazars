@@ -68,7 +68,11 @@ function DeclinedProposal() {
             formatter: (cellContent, row, rowIndex) => {
                 return rowIndex + 1;
             },
-            
+            headerStyle : () => {
+                return( {
+                    width: "50px"
+                })
+            }
         },
         {
             text: "Date",

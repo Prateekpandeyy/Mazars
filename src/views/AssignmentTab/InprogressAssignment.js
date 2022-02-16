@@ -87,7 +87,11 @@ function InprogressAssignment() {
       formatter: (cellContent, row, rowIndex) => {
         return rowIndex + 1;
       },
-      
+      headerStyle : () => {
+        return( {
+            width: "50px"
+        })
+    } 
     },
     {
       dataField: "created",
@@ -250,7 +254,9 @@ function InprogressAssignment() {
     },
     {
       text: "Action",
-      
+      headerStyle : () => {
+        return({width: "70px"})
+      },
       formatter: function (cell, row) {
         return (
           <>
@@ -353,6 +359,7 @@ function InprogressAssignment() {
             reportModal={reportModal}
             report={report}
             getPendingforAcceptance={getAssignmentData}
+            deleiverAble = "#7c887c"
           />
 
           <DiscardReport
