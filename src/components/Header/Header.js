@@ -99,27 +99,39 @@ function Header({ id, cust_sign, noAdminSign, noTlSign, noTpSign, admin, mtl, mt
           )}
          
           {admin && !noAdminSign && (
-            <ul className="menu">
-              <li>
-                <Link to="/admin/login">Sign In</Link>
-              </li>
-            </ul>
+             <button className="customBtn">
+             <Link className="SignUpLink"
+               to={{
+                 pathname: "/admin/login",
+               }}
+             >
+               Sign In
+             </Link>
+           </button>
           )}
 
           {mtl && !noTlSign && (
-            <ul className="menu">
-              <li>
-                <Link to="/teamleader/login">Sign In</Link>
-              </li>
-            </ul>
+  <button className="customBtn">
+  <Link className="SignUpLink"
+    to={{
+      pathname: "/teamleader/login",
+    }}
+  >
+    Sign In
+  </Link>
+</button>
           )}
 
           {mtp && !noTpSign && (
-            <ul className="menu">
-              <li>
-                <Link to="/taxprofessional/login">Sign In</Link>
-              </li>
-            </ul>
+             <button className="customBtn">
+             <Link className="SignUpLink"
+               to={{
+                 pathname: "/taxprofessional/login",
+               }}
+             >
+               Sign In
+             </Link>
+           </button>
           )}
 
 

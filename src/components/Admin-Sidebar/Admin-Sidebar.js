@@ -16,7 +16,7 @@ import './list.css';
 import ScheduleIcon from '@material-ui/icons/Schedule';
 import assignmentIcon from './images/finalAssignmentIcon.png';
 import paymentIcon from './images/Payment_icons.jpg';
-import queryIcons from './images/queryIcon.png';
+import queryIcons from './images/query.png';
 import feedbackIcon from './images/feedbackIcon.png';
 import scheduleIcon from './images/Schedule_final.png';
 import ProposalIcons from './images/Proposal_icons.png';

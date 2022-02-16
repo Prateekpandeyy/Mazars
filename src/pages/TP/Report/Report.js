@@ -115,7 +115,7 @@ getTaxProf();
   }, [taxId, taxxId, cname])
 const getupdateQuery = () => {
  
-     axios.get(`${baseUrl}/admin/getAllQueryList?customer=${cname}&teamleader=${taxId}&taxprofessional=${JSON.parse(userid)}`)
+     axios.get(`${baseUrl}/admin/getAllQueryList?customer=${cname}`)
     .then((res) => {
       if (res.data.code === 1) {
        
