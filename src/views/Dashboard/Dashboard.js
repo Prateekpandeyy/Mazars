@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
 import { useHistory } from "react-router";
-import {Container} from "@material-ui/core";
+import {Container, Grid, Paper, Box} from "@material-ui/core";
 function Dashboard() {
   const userId = window.localStorage.getItem("userid");
 const sessionId =  window.sessionStorage.getItem("userIdsession")
@@ -123,9 +123,13 @@ console.log("sessionStorage", window.sessionStorage)
   <Layout custDashboard="custDashboard" custUserId={userId}>
 
   <Container>
-  <div className="row">
-    <div className="col-md-3 content_header">
-      <table className="table table-striped  first main_table">
+ <Grid container>
+
+  <Grid item sm = {3}>
+  <Box m={1}> 
+     <Paper>
+
+       <table className="table table-striped  first main_table">
         <thead className="query_thead">
           <tr>
             <th className="left_side"> All Queries</th>
@@ -201,11 +205,17 @@ console.log("sessionStorage", window.sessionStorage)
               </tr>
             </tbody>
           </table>
-        </> : ""}   </> : ""}   </div>
+        </> : ""}   </> : ""}
+        
+         </Paper>   
+         </Box>
+        </Grid>
     {allproposal != 0 ? <>
-      <div className="col-md-3 content_header">
-
-        <table className="table table-striped fifth main_table">
+      <Grid item sm = {3}>
+      <Box m={1}>
+     <Paper>
+     
+       <table className="table table-striped fifth main_table">
           <thead className="proposal_thead">
             <tr>
               <th className="left_side">All Proposals</th>
@@ -251,10 +261,16 @@ console.log("sessionStorage", window.sessionStorage)
             </tr>
           </thead>
         </table>
-      </div>
+       
+     </Paper>
+     </Box>
+      </Grid>
       {allassignment != 0 ? <>
-        <div className="col-md-3 content_header">
-          <table className="table table-striped ninth main_table">
+        <Grid item sm = {3}>
+        <Box m={1}>
+         <Paper>
+        
+           <table className="table table-striped ninth main_table">
             <thead className="assignment_thead">
               <tr>
                 <th className="left_side">All Assignments</th>
@@ -292,12 +308,17 @@ console.log("sessionStorage", window.sessionStorage)
               </tr>
             </thead>
           </table>
-        </div>
+          
+         </Paper>
+         </Box>
+    </Grid>
         {totalpayment != 0 ? <>
 
-          <div className="col-md-3 content_header">
-
-            <table className="table table-striped thirteenth main_table">
+          <Grid item sm = {3}>
+          <Box m={1}>
+           <Paper>
+           
+             <table className="table table-striped thirteenth main_table">
               <thead className="payment_thead">
                 <tr>
                   <th className="left_side">All Payments</th>
@@ -322,9 +343,12 @@ console.log("sessionStorage", window.sessionStorage)
                 </tr>
               </thead>
             </table>
-          </div>
-        </> : ""} </> : ""}  </> : ""}  </div>
-
+           
+           </Paper>
+           </Box>
+         </Grid>
+        </> : ""} </> : ""}  </> : ""}  
+</Grid>
   </Container>
 
  

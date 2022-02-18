@@ -166,7 +166,7 @@ function Login(props) {
                       <Spinner color="primary" />
                     </div>
                     :
-                    <button type="submit" className="btn btn-primary">
+                    <button type="submit" className="customBtn">
                       Submit
                     </button>
                 }

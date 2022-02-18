@@ -156,9 +156,9 @@ function VerifyOtp({ email, uid, loading, setLoading }) {
                 <div class="text-center">
                   {
                     disabled ?
-                      <button type="submit" class="btn btn-success" onClick={resendOtp}>SEND OTP</button>
+                      <button type="submit" class="autoWidthBtn" onClick={resendOtp}>SEND OTP</button>
                       :
-                      <button type="submit" class="btn btn-primary">VERIFY OTP</button>
+                      <button type="submit" class="autoWidthBtn">VERIFY OTP</button>
                   }
                 </div>
             }

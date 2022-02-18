@@ -99,11 +99,11 @@ function ForgetPassword(props) {
                   )}
                 </div>
 
-                <button type="submit" className="btn btn-primary">
+                <button type="submit" className="autoWidthBtn">
                   Get OTP
                 </button>
                 <Link to="/teamleader/login" style={{ "margin": "10px" }}>
-                  <button type="submit" className="btn btn-secondary">
+                  <button type="submit" className="customBtn">
                     Cancel
                   </button>
                 </Link>

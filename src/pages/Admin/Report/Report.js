@@ -43,7 +43,7 @@ const Report = () => {
   const [custCate2, setCustcate2] = useState([]);
   const [data, setData] = useState([]);
   const [data2, setData2] = useState([]);
-  const [taxId, setTaxId] = useState("");
+  const [taxId, setTaxId] = useState([]);
   const [taxxId, setTaxxId] = useState("")
   const [teamleader44, setTeamleader44] = useState("") 
   const [taxprofessional44, setTaxprofessional44] = useState("")
@@ -137,7 +137,7 @@ const getupdateQuery = () => {
 
   const getTaxProf = () => {
     axios
-      .get(`${baseUrl}/tp/getTaxProfessional?tl_id=${taxId}`)
+      .get(`${baseUrl}/tp/getTaxProfessional?tl_id=${teamleader44}`)
       .then((res) => {
       
         if (res.data.code === 1) {
@@ -398,7 +398,7 @@ let cc = []
  let tk = []
     a.map((i) => {
     
-      setTaxId(i.value) 
+setTaxId(i.value) 
      tk.push(i.value)
     })
     setTeamleader44(tk)
