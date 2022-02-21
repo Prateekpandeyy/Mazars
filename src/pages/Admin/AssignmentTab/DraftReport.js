@@ -6,22 +6,21 @@ import {
   Card,
   CardHeader,
   CardBody,
-  CardTitle,
-  Row,
-  Col,
-  Table,
+ 
 } from "reactstrap";
 import { useForm } from "react-hook-form";
 import "antd/dist/antd.css";
 import { Select } from "antd";
 import { Link } from "react-router-dom";
-import BootstrapTable from "react-bootstrap-table-next";
-import AdminFilter from "../../../components/Search-Filter/AdminFilter";
 import Records from "../../../components/Records/Records";
 import DiscardReport from "../AssignmentTab/DiscardReport";
 import DescriptionOutlinedIcon from '@material-ui/icons/DescriptionOutlined';
 import ViewAllReportModal from "./ViewAllReport";
 import moment from "moment";
+import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
+import MessageIcon, {ViewDiscussionIcon, Payment} from "../../../components/Common/MessageIcon";
+
+
 function DraftReport() {
   const userid = window.localStorage.getItem("adminkey");
 
@@ -134,19 +133,14 @@ var rowStyle2 = {}
         return rowIndex + 1;
       },
       headerStyle: () => {
-        return { fontSize: "12px", width: "50px" };
+        return { width: "50px" };
       },
     },
     {
       text: "Date",
       dataField: "date_of_query",
       sort: true,
-      style : {
-        fontSize : "11px"
-      },
-       headerStyle: () => {
-        return { fontSize: "11px" , width : "120px", whiteSpace : "nowrap", padding: "10px 20px"};
-    },
+      
       formatter: function dateFormat(cell, row) {
        
         var oldDate = row.date_of_query;
@@ -159,12 +153,7 @@ var rowStyle2 = {}
     {
       text: "Query No",
       dataField: "assign_no",
-      headerStyle: () => {
-        return { fontSize: "11px" , width : "120px", whiteSpace : "nowrap", padding: "10px 20px"};
-    },
-      style : {
-        fontSize : "11px"
-      },
+      
       formatter: function nameFormatter(cell, row) {
         
         return (
@@ -187,35 +176,19 @@ var rowStyle2 = {}
       text: "Category",
       dataField: "parent_id",
       sort: true,
-      style : {
-        fontSize : "11px"
-      },
-      headerStyle: () => {
-        return { fontSize: "11px" , width : "120px", whiteSpace : "nowrap", padding: "10px 20px"};
-    },
+      
     },
     {
       text: "Sub Category",
       dataField: "cat_name",
       sort: true,
-      style : {
-        fontSize : "11px"
-      },
-       headerStyle: () => {
-        return { fontSize: "11px" ,  whiteSpace : "nowrap", padding: "10px 20px"};
-    },
+      
     },
     {
       dataField: "status",
       text: "Status",
-      style: {
-        fontSize: "11px",
-      },
       headerStyle: () => {
         return { fontSize: "11px", width: "200px" };
-      },
-      style : {
-        fontSize : "11px"
       },
       formatter: function (cell, row) {
         return (
@@ -223,37 +196,37 @@ var rowStyle2 = {}
             <div>
             {row.paid_status == "2" &&
                 <p>
-                  <span style={{ color: "red" }}>Payment Declined</span>
+                  <span className="declined">Payment Declined</span>
                 </p>
               }
               <p>
                 <span style={{ fontWeight: "bold" }}>Client Discussion :</span>
-               <span style={ row.client_discussion == "completed" ? clcomp : clinpro}>
-{row.client_discussion}
+               <span className={row.client_discussion === "completed" ? "completed" : "inprogress"}>
+                                {row.client_discussion}
                  </span>
               </p>
               <p>
                 <span style={{ fontWeight: "bold" }}>Draft report :</span>
-                <span style={ row.draft_report == "completed" ? clcomp : clinpro}>
-{row.draft_report}
+                <span className={row.draft_report === "completed" ? "completed" : "inprogress"}>
+                      {row.draft_report}
                  </span>
               </p>
               <p>
                 <span style={{ fontWeight: "bold" }}>Final Discussion :</span>
-                <span style={ row.final_discussion == "completed" ? clcomp : clinpro}>
-{row.final_discussion}
+                <span className={row.final_discussion === "completed" ? "completed" : "inprogress"}>
+                     {row.final_discussion}
                  </span>
               </p>
               <p>
                 <span style={{ fontWeight: "bold" }}>Delivery of Final Report :</span>
-                <span style={ row.delivery_report == "completed" ? clcomp : clinpro}>
-{row.delivery_report}
+                <span className={row.delivery_report === "completed" ? "completed" : "inprogress"}>
+                             {row.delivery_report}
                  </span>
               </p>
               <p>
                 <span style={{ fontWeight: "bold" }}>Awaiting Completion:</span>
-                <span style={ row.other_stage == "completed" ? clcomp : clinpro}>
-{row.other_stage}
+                <span className={row.other_stage === "completed" ? "completed" : "inprogress"}>
+                            {row.other_stage}
                  </span>
               </p>
             </div>
@@ -265,12 +238,7 @@ var rowStyle2 = {}
       dataField: "Exp_Delivery_Date",
       text: "Expected date of delivery",
       sort: true,
-      style : {
-        fontSize : "11px"
-      },
-       headerStyle: () => {
-        return { fontSize: "11px", padding: "10px 20px"};
-    },
+      
       formatter: function dateFormat(cell, row) {
       
         var oldDate = row.Exp_Delivery_Date;
@@ -284,12 +252,7 @@ var rowStyle2 = {}
       dataField: "final_date",
       text: "Actual date of delivery",
       sort: true,
-      style : {
-        fontSize : "11px"
-      },
-       headerStyle: () => {
-        return { fontSize: "11px", padding: "10px 20px"};
-    },
+     
       formatter: function dateFormat(cell, row) {
         
         var oldDate = row.final_date;
@@ -304,12 +267,7 @@ var rowStyle2 = {}
       text: "Deliverable",
       dataField: "",
       sort: true,
-      style : {
-        fontSize : "11px"
-      },
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
+      
       formatter: function (cell, row) {
         return (
           <>
@@ -336,27 +294,17 @@ var rowStyle2 = {}
       text: "TL name",
       dataField: "tl_name",
       sort: true,
-      style : {
-        fontSize : "11px"
-      },
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
+     
     },
     {
       text: "Action",
-      headerStyle: () => {
-        return { fontSize: "12px", width: "75px" };
-      },
-      style : {
-        fontSize : "11px"
-      },
+      
       formatter: function (cell, row) {
         return (
           <>
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <div style={{ display: "flex"}}>
 
-              <div title="Send Message">
+
                 <Link
                   to={{
                     pathname: `/admin/chatting/${row.q_id}`,
@@ -370,29 +318,14 @@ var rowStyle2 = {}
                     }
                   }}
                 >
-                  <i
-                    className="fa fa-comments-o"
-                    style={{
-                      fontSize: 16,
-                      cursor: "pointer",
-                      marginLeft: "8px",
-                      color: "blue"
-                    }}
-                  ></i>
+                <MessageIcon />
                 </Link>
-              </div>
+            
 
-              <div title="View Discussion Message">
-                <i
-                  className="fa fa-comments-o"
-                  style={{
-                    fontSize: 16,
-                    cursor: "pointer",
-                    color: "orange"
-                  }}
-                  onClick={() => ViewDiscussionToggel(row.assign_no)}
-                ></i>
-              </div>
+              <div  onClick={() => ViewDiscussionToggel(row.assign_no)} className="ml-1">
+                                  
+                                  <ViewDiscussionIcon />
+                          </div>
             </div>
           </>
         );
@@ -440,7 +373,7 @@ var rowStyle2 = {}
       <>
         <button
           type="submit"
-          className="btn btn-primary mx-sm-1 mb-2"
+          className="customBtn mb-2"
           onClick={() => resetData()}
         >
           Reset
@@ -531,7 +464,7 @@ var rowStyle2 = {}
 
 
 
-              <button type="submit" className="btn btn-primary mx-sm-1 mb-2">
+              <button type="submit" className="customBtn">
                 Search
               </button>
 
@@ -542,17 +475,12 @@ var rowStyle2 = {}
 
         <CardBody className="card-body">
           <Records records={records} />
-          <div className="tableFixHead">
-          <BootstrapTable
-            bootstrap4
-            keyField="id"
-            data={assignmentDisplay}
-            columns={columns}
-            rowStyle={ rowStyle2 }
-            rowIndex
-            classes="table-responsivepayment"
-          />
-          </div>
+          <DataTablepopulated 
+                   bgColor="#42566a"
+                   keyField= {"assign_no"}
+                   data={assignmentDisplay}
+                   columns={columns}>
+                    </DataTablepopulated>
   <ViewAllReportModal
             ViewReport={ViewReport}
             reportModal={reportModal}

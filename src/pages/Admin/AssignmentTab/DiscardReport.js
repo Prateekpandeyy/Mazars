@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from "reactstrap";
-import { useForm } from "react-hook-form";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import CommonServices from "../../../common/common";
-import Alerts from "../../../common/Alerts";
-
 
 function DiscardReport({
   ViewDiscussion,
@@ -74,7 +71,7 @@ function DiscardReport({
         </ModalBody>
         <ModalFooter>
           <div>
-            <Button color="primary" onClick={ViewDiscussionToggel}>Cancel</Button>
+            <button className = "autoWidthBtn" onClick={ViewDiscussionToggel}>Cancel</button>
           </div>
         </ModalFooter>
       </Modal >

@@ -36,7 +36,7 @@ function CustomerNotification({ tokenKey, name }) {
 
     return (
         <>
-            <div style={{display : "flex", justifyContent : "center", alignItems : "center"}}>
+            <div style={{display : "flex", justifyContent : "center", alignItems : "flex-end", padding: "10px"}}>
                 <li className="dropdown dropdown-notification nav-item">
                     {countNotification ? (
                      

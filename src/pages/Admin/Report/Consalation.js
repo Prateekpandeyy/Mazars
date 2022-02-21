@@ -11,6 +11,8 @@ import {
   import { Link , useHistory} from 'react-router-dom';
   import BootstrapTable from 'react-bootstrap-table-next';
   import { Typography, Button } from '@material-ui/core';
+  import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
+
 const Consalation = () => {
     const userid = window.localStorage.getItem("adminkey")
     const [data, setData] = useState();
@@ -42,15 +44,13 @@ let history  = useHistory()
               return rowIndex + 1
             },
             headerStyle: () => {
-                return { fontSize: "12px", width: "50px" };
+                return { width: "50px" };
               },
         },
         {
           text: "Query No",
           dataField: "assign_no",
-          headerStyle: () => {
-            return { fontSize: "12px" };
-          },
+        
           formatter: function nameFormatter(cell, row) {
             return (
               <>
@@ -71,57 +71,32 @@ let history  = useHistory()
             dataField: "first_name",
             text: "Client Name",
             sort: true,
-            style: {
-              fontSize: "11px",
-            },
-            headerStyle: () => {
-              return { fontSize: "11px" };
-            },
+           
           },
           {
             dataField: "customer_id",
             text: "Client Id",
             sort: true,
-            style: {
-              fontSize: "11px",
-            },
-            headerStyle: () => {
-              return { fontSize: "11px" };
-            },
+           
           },
           {
             dataField : "mobile",
             text : "Mobile Number",
             sort : true,
-            style : {
-                fontSize : "11px"
-            },
-            headerStyle : () => {
-                return { fontSize : "11px"}
-            }
+           
         },
           {
            dataField : "Invoice_Number",
            text : "Invoice No",
            sort : true,
-           style : {
-                fontSize : "11px"
-           },
-           headerStyle : () => {
-               return {fontSize : "11px"}
-           }
+          
           },
          
           {
               dataField : "txn_date",
               text : "Payment Date",
               sort : true,
-              style : {
-                  fontSize : "11px"
-              },
-              headerStyle : () => {
-                  return { fontSize : "11px"}
-              },
+             
               formatter : function formatterD (cell ,row) {
                   let a = row.txn_date.split("-").reverse().join("-")
                 return(
@@ -133,12 +108,7 @@ let history  = useHistory()
             dataField : "payment_type",
             text : "Payment Type",
             sort : true,
-            style : {
-                fontSize : "11px"
-            },
-            headerStyle : () => {
-                return { fontSize : "11px"}
-            }
+           
         },
         
         // {
@@ -157,67 +127,37 @@ let history  = useHistory()
             dataField : "TL_Post_Id",
             text : "Tl Post",
             sort : true,
-            style : {
-                fontSize : "11px"
-            },
-            headerStyle : () => {
-                return { fontSize : "11px"}
-            }
+            
         },
         {
             dataField : "Invoice_Amount",
             text : "Invoice Amount",
             sort : true,
-            style : {
-                fontSize : "11px"
-            },
-            headerStyle : () => {
-                return { fontSize : "11px"}
-            }
+           
         },
         {
             dataField : "Tds_Deducted",
             text : "TDS Deducted",
             sort : true,
-            style : {
-                fontSize : "11px"
-            },
-            headerStyle : () => {
-                return { fontSize : "11px"}
-            }
+            
         },
         {
             dataField: "Amt_Collected",
             text: "Amount Paid",
             sort: true,
-            style: {
-              fontSize: "11px",
-            },
-            headerStyle: () => {
-              return { fontSize: "11px" };
-            },
+           
           },
         {
             dataField : "delay",
             text : "Delay Days",
             sort : true,
-            style : {
-                fontSize : "11px"
-            },
-            headerStyle : () => {
-                return { fontSize : "11px"}
-            }
+           
         },
         {
             dataField : "",
             text : "Status",
             sort : true,
-            style : {
-                fontSize : "11px"
-            },
-            headerStyle : () => {
-                return { fontSize : "11px"}
-            },
+            
             formatter : function formatterD (cell ,row) {
               let a ;
               if(row.status === "1"){
@@ -227,7 +167,7 @@ let history  = useHistory()
                 a = "Unmatched"
             }
               return(
-                <p style= {row.status === "1" ? proc : unproc}>{a}</p>
+                <p className= {row.status === "1" ? "completed" : "declined"}>{a}</p>
               )
             }
         },
@@ -235,12 +175,7 @@ let history  = useHistory()
             dataField : "receipt_url",
             text : "Receipt",
             sort : true,
-            style : {
-                fontSize : "11px"
-            },
-            headerStyle : () => {
-                return { fontSize : "11px"}
-            },
+          
             formatter : function formatterName (cell , row) {
                return(
                 <a target="_blank"
@@ -265,7 +200,7 @@ let history  = useHistory()
          
              </div>
              <div className="col-md-6" style={{display : "flex", justifyContent : "flex-end"}}>
-             <button  className="btn btn-lg btn btn-success" onClick = {() => history.goBack()}>Go Back </button>
+             <button  className="autoWidthBtn" onClick = {() => history.goBack()}>Go Back </button>
                </div>
            </div>
 <ConsaltSearch  setData = {setData} />
@@ -273,17 +208,15 @@ let history  = useHistory()
      </CardHeader>
      <CardBody>
  
-     <div className="tableFixHead">
+    
      {data === undefined ? "" : 
-     <BootstrapTable
-     bootstrap4
-     keyField="id"
-     data={data}
-     columns={columns}
-     rowIndex
-     classes="table-responsivepayment"
-   />}
-     </div>
+       <DataTablepopulated 
+       bgColor="#42566a"
+       keyField= {"assign_no"}
+       data={data}
+       columns={columns}>
+        </DataTablepopulated>}
+    
      </CardBody>
  </Card>
         </Layout>

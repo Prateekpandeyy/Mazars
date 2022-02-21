@@ -20,6 +20,7 @@ import queryIcons from './images/query.png';
 import feedbackIcon from './images/feedbackIcon.png';
 import scheduleIcon from './images/Schedule_final.png';
 import ProposalIcons from './images/Proposal_icons.png';
+import AboutIcon from './images/about-us.png';
 
 function Sidebar({ adminDashboard, custDashboard, TLDashboard, TPDashboard , feedbackNumber}) {
   const [toggleState, setToggleState] = useState(false);
@@ -239,7 +240,8 @@ const handleClick = () => {
               </li>
               <li className="nav-item">
                 <NavLink to={"/customer/about"}>
-                <i class="fa fa-info"></i>
+                <i className="fa">
+                    <img src={AboutIcon} className="fa sidebarIcons" /></i>
                   <span className="menu-title" data-i18n="">
                    About Us
                   </span>

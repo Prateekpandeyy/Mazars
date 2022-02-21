@@ -3,23 +3,19 @@ import {
   Card,
   CardHeader,
   CardBody,
-  CardTitle,
-  Row,
-  Col,
-  Table,
+ 
 } from "reactstrap";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
-import { useForm } from "react-hook-form";
-import "antd/dist/antd.css";
-import { Select } from "antd";
 import { Link } from "react-router-dom";
-import BootstrapTable from "react-bootstrap-table-next";
 import AdminFilter from "../../../components/Search-Filter/AdminFilter";
 import Records from "../../../components/Records/Records";
 import DiscardReport from "../AssignmentTab/DiscardReport";
 import RetviewModal from "../AllProposalComponent/RetviewModal";
 import ShowProposal from "../AllProposalComponent/ShowProposal";
+import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
+import MessageIcon, {EyeIcon, ViewDiscussionIcon, DiscussProposal, HelpIcon} from "../../../components/Common/MessageIcon";
+
 function DeclinedProposal({ declinedProposal }) {
   const [proposalDisplay, setProposalDisplay] = useState([]);
   const [records, setRecords] = useState([]);
@@ -65,23 +61,16 @@ function DeclinedProposal({ declinedProposal }) {
       formatter: (cellContent, row, rowIndex) => {
         return rowIndex + 1;
       },
-      style: {
-        fontSize: "11px",
-      },
+    
       headerStyle: () => {
-        return { fontSize: "11px" };
+        return { width : "50px" };
       },
     },
     {
       dataField: "created",
       text: "Date",
       sort: true,
-      style: {
-        fontSize: "11px",
-      },
-     headerStyle: () => {
-        return { fontSize: "11px" , width : "120px", whiteSpace : "nowrap", padding: "10px 20px"};
-    },
+     
       formatter: function dateFormat(cell, row) {
 
         var oldDate = row.created;
@@ -94,12 +83,7 @@ function DeclinedProposal({ declinedProposal }) {
     {
       dataField: "assign_no",
       text: "Query No",
-      style: {
-        fontSize: "11px",
-      },
-     headerStyle: () => {
-        return { fontSize: "11px" , width : "120px", whiteSpace : "nowrap", padding: "10px 20px"};
-    },
+      
       formatter: function nameFormatter(cell, row) {
       
         return (
@@ -121,34 +105,19 @@ function DeclinedProposal({ declinedProposal }) {
       dataField: "parent_id",
       text: "Category",
       sort: true,
-      style: {
-        fontSize: "11px",
-      },
-      headerStyle: () => {
-        return { fontSize: "11px" };
-      },
+     
     },
     {
       dataField: "cat_name",
       text: "Sub Category",
       sort: true,
-      style: {
-        fontSize: "11px",
-      },
-      headerStyle: () => {
-        return { fontSize: "11px" };
-      },
+
     },
     {
       text: "Date of Proposal",
       dataField: "DateofProposal",
       sort: true,
-      style: {
-        fontSize: "11px",
-      },
-      headerStyle: () => {
-        return { fontSize: "11px" };
-      },
+     
       formatter: function dateFormat(cell, row) {
       
         var oldDate = row.DateofProposal;
@@ -162,12 +131,7 @@ function DeclinedProposal({ declinedProposal }) {
       text: "Date of Declined of Proposal",
       dataField: "cust_accept_date",
       sort: true,
-      style: {
-        fontSize: "11px",
-      },
-      headerStyle: () => {
-        return { fontSize: "11px" };
-      },
+      
       formatter: function dateFormat(cell, row) {
      
         var oldDate = row.cust_accept_date;
@@ -179,12 +143,7 @@ function DeclinedProposal({ declinedProposal }) {
     },
     {
       text: "Status",
-      style: {
-        fontSize: "11px",
-      },
-      headerStyle: () => {
-        return { fontSize: "11px" };
-      },
+      
       formatter: function nameFormatter(cell, row) {
         return (
           <>
@@ -206,12 +165,7 @@ function DeclinedProposal({ declinedProposal }) {
       dataField: "ProposedAmount",
       text: "Proposed Amount",
       sort: true,
-      style: {
-        fontSize: "11px",
-      },
-      headerStyle: () => {
-        return { fontSize: "11px" };
-      },
+
       sortFunc: (a, b, order, dataField) => {
         if (order === 'asc') {
           return b - a;
@@ -235,9 +189,7 @@ function DeclinedProposal({ declinedProposal }) {
         fontSize: "11px",
         color: "#21a3ce",
       },
-      headerStyle: () => {
-        return { fontSize: "11px", color: "#21a3ce" };
-      },
+    
       sortFunc: (a, b, order, dataField) => {
         if (order === 'asc') {
           return b - a;
@@ -257,23 +209,16 @@ function DeclinedProposal({ declinedProposal }) {
       dataField: "tl_name",
       text: "TL name",
       sort: true,
-      style: {
-        fontSize: "11px",
-      },
-      headerStyle: () => {
-        return { fontSize: "11px" };
-      },
+      
     },
     {
       text: "Action",
-      headerStyle: () => {
-        return { fontSize: "11px", width: "95px" };
-      },
+     
       formatter: function (cell, row) {
         return (
           <>
             <div style={{ display: "flex" }}>
-            <div title="Send Message">
+          
                 <Link
                 
                   to={{
@@ -288,58 +233,28 @@ function DeclinedProposal({ declinedProposal }) {
                     }
                   }}
                 >
-                  <i
-                    class="fa fa-comments-o"
-                    style={{
-                      fontSize: 16,
-                      cursor: "pointer",
-                      marginLeft: "8px",
-                      color: "blue"
-                    }}
-                  ></i>
+              <MessageIcon />
                 </Link>
-              </div>
+             
 
-              <div title="View Discussion Message" className="ml-2">
-                <i
-                  class="fa fa-comments-o"
-                  style={{
-                    fontSize: 16,
-                    cursor: "pointer",
-                    color: "orange"
-                  }}
-                  onClick={() => ViewDiscussionToggel(row.assign_no)}
-                ></i>
-              </div>
+                <div  onClick={() => ViewDiscussionToggel(row.assign_no)} className="ml-1">
+                                  
+                                  <ViewDiscussionIcon />
+                          </div>
+
 
               {row.statuscode > "3" ?
-                 <div style={{ cursor: "pointer" }} title="View Proposal" className="ml-2">
-                
-                 <i
-                   className="fa fa-eye"
-                   style={{ color: "green", fontSize: "16px" }}
-                   onClick={(e) => showProposalModal2(row.q_id)}
-                 />
-               
-             </div>
+                                <div  onClick={(e) => showProposalModal2(row.q_id)} className="ml-1">
+                                <EyeIcon  />
+                               </div>
                 :
                 null
               }
 {
   row.statuscode == "6" ? 
   <>
-<div title="Restore Proposal" className="ml-2"
- onClick={(e) => retviewProposal(row.q_id)}> 
-<i
-                    class="fa fa-share"
-                    style={{
-                      fontSize: 16,
-                      cursor: "pointer",
-                      marginLeft: "8px",
-                      color: "blue"
-                    }}
-                   
-                  ></i>
+<div  onClick={(e) => retviewProposal(row.q_id)} className="ml-1">
+<DiscussProposal titleName ="Restore Proposal"/>
 </div>
   </> : ""
 }
@@ -370,15 +285,12 @@ function DeclinedProposal({ declinedProposal }) {
         </CardHeader>
         <CardBody>
           <Records records={records} />
-          <div className="tableFixHead">
-          <BootstrapTable
-            bootstrap4
-            keyField= {"assign_no"}
-            data={proposalDisplay}
-            columns={columns}
-            classes="table-responsivepayment"
-          />
-</div>
+          <DataTablepopulated 
+                   bgColor="#42566a"
+                   keyField= {"assign_no"}
+                   data={proposalDisplay}
+                   columns={columns}>
+                    </DataTablepopulated>
           <DiscardReport
             ViewDiscussionToggel={ViewDiscussionToggel}
             ViewDiscussion={ViewDiscussion}

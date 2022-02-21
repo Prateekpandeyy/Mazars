@@ -4,7 +4,7 @@ import "./index1.css";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import { useHistory } from "react-router-dom";
-
+import {Container, Grid, Paper, Box} from "@material-ui/core";
 
 
 function Dashboard() {
@@ -164,7 +164,8 @@ let history = useHistory()
       adminsessionId ?
       <Layout adminDashboard="adminDashboard" adminUserId={userId}>
 
-      <div className="row">
+<Container>
+<div className="row">
         <div className="col-md-3 content_header">
           <table className="table table-striped first main_table mb-1">
             <thead className="query_thead">
@@ -390,6 +391,7 @@ let history = useHistory()
           </table>
         </div>
       </div>
+</Container>
 
     </Layout> : 
     <>

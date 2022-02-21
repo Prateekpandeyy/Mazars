@@ -9,12 +9,11 @@ import {
   
 } from "reactstrap";
 import { Link } from "react-router-dom";
-
-import AdminFilter from "../../components/Search-Filter/AdminFilter";
-import BootstrapTable from "react-bootstrap-table-next";
 import History from "./History";
 import Records from "../../components/Records/Records";
-
+import AdminFilter from "../../components/Search-Filter/AdminFilter";
+import DataTablepopulated from "../DataTablepopulated/DataTabel";
+import {DeleteIcon, DiscussProposal} from "../../components/Common/MessageIcon";
 
 function PendingAllocation({ CountPendingForAllocation }) {
 
@@ -70,19 +69,14 @@ function PendingAllocation({ CountPendingForAllocation }) {
         return rowIndex + 1;
       },
       headerStyle: () => {
-        return { fontSize: "12px", width: "50px" };
+        return { width: "50px" };
       },
     },
     {
       text: "Date",
       dataField: "created",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
-      style: {
-        fontSize: "11px",
-    },
+     
       formatter: function dateFormat(cell, row) {
      
         var oldDate = row.created;
@@ -95,12 +89,7 @@ function PendingAllocation({ CountPendingForAllocation }) {
     {
       text: "Query No",
       dataField: "assign_no",
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
-      style: {
-        fontSize: "11px",
-    },
+      
       formatter: function nameFormatter(cell, row) {
       
         return (
@@ -122,44 +111,24 @@ function PendingAllocation({ CountPendingForAllocation }) {
       text: "Category",
       dataField: "parent_id",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
-      style: {
-        fontSize: "11px",
-    },
+      
     },
     {
       text: "Sub Category",
       dataField: "cat_name",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
-      style: {
-        fontSize: "11px",
-    },
+      
     },
     {
       text: "Client Name",
       dataField: "name",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
-      style: {
-        fontSize: "11px",
-    },
+     
     },
     {
       text: "Status",
       dataField: "status",
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
-      style: {
-        fontSize: "11px",
-    },
+      
       formatter: function nameFormatter(cell, row) {
         return (
           <>
@@ -182,40 +151,33 @@ function PendingAllocation({ CountPendingForAllocation }) {
     {
       text: "Action",
       dataField: "",
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
-      style: {
-        fontSize: "11px",
-    },
+      
       formatter: function (cell, row) {
         return (
          
           <>
             {row.is_assigned === "1" ? (
-              <p style={{ color: "green", fontSize: "10px" }}>
+              <p className="inprogress">
                 Allocated to {row.tname} on
                 <p>{row.allocation_time}</p>
               </p>
             ) : (
               <div style={{ display: "flex", justifyContent: "space-around" }}>
-                <div title="Assign to">
+               
                   <Link
                     to={`/admin/queryassing/${row.id}`}
                   >
-                    <i className="fa fa-share"></i>
+                   <DiscussProposal titleName="Assign to" />
                   </Link>
 
-                </div>
-                <div title="Decline Query">
+                
+                
                   <Link
                     to={`/admin/query_rejection/${row.id}`}
                   >
-                    <i
-                      className="fa fa-trash"
-                    ></i>
+                   <DeleteIcon titleName="Decline Query"/>
                   </Link>
-                </div>
+                
 
 
 
@@ -242,7 +204,7 @@ function PendingAllocation({ CountPendingForAllocation }) {
           <>
             <button
               type="button"
-              className="btn btn-info btn-sm"
+              className="autoWidthBtn"
               onClick={() => toggle(row.id)}
             >
               History
@@ -269,15 +231,12 @@ function PendingAllocation({ CountPendingForAllocation }) {
         </CardHeader>
         <CardBody className = "card-body">
           <Records records={records} />
-          <div className="tableFixHead">
-          <BootstrapTable
-            bootstrap4
-            keyField="assign_no"
-            data={pendingData}
-            columns={columns}
-            rowIndex
-            wrapperClasses="table-responsive"
-          /> </div>
+          <DataTablepopulated 
+          bgColor="#55425f"
+          keyField= {"assign_no"}
+          data={pendingData} 
+          columns={columns}>
+           </DataTablepopulated>
           <History history={history} toggle={toggle} modal={modal} />
         </CardBody>
       </Card>

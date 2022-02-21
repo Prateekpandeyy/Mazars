@@ -4,12 +4,12 @@ import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import { Card, CardHeader, CardBody, CardTitle, Row, Col } from "reactstrap";
 import { Link } from "react-router-dom";
-import "antd/dist/antd.css";
-import BootstrapTable from "react-bootstrap-table-next";
 import TeamFilter from "../../../components/Search-Filter/tlFilter";
 import ChatHistory from "./ChatHistory";
 import DiscardReport from "../AssignmentTab/DiscardReport";
 import CommonShowProposal from "../../../components/commonShowProposal/CommonShowProposal";
+import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
+import MessageIcon, {EyeIcon, ViewDiscussionIcon, DiscussProposal, HelpIcon} from "../../../components/Common/MessageIcon";
 
 
 function InprogressProposal() {
@@ -68,19 +68,14 @@ function InprogressProposal() {
                 fontSize: "11px",
             },
             headerStyle: () => {
-                return { fontSize: "11px", width: "60px" };
+                return { width: "50px" };
             },
         },
         {
             dataField: "query_date",
             text: "Query Date",
             sort: true,
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" , width : "120px", whiteSpace : "nowrap", padding: "10px 20px"};
-            },
+          
             formatter: function dateFormat(cell, row) {
             
                 var oldDate = row.query_date;
@@ -93,12 +88,7 @@ function InprogressProposal() {
         {
             text: "Query No",
             dataField: "assign_no",
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px", width: "120px" };
-            },
+          
             formatter: function nameFormatter(cell, row) {
                 
                 return (
@@ -121,34 +111,19 @@ function InprogressProposal() {
             text: "Category",
             dataField: "parent_id",
             sort: true,
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
+           
         },
         {
             text: "Sub Category",
             dataField: "cat_name",
             sort: true,
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
+           
         },
         {
             text: "Date of Proposal",
             dataField: "DateofProposal",
             sort: true,
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
+           
             formatter: function dateFormat(cell, row) {
               
                 var oldDate = row.DateofProposal;
@@ -162,12 +137,7 @@ function InprogressProposal() {
             text: "Date of acceptance / decline of Proposal",
             dataField: "cust_accept_date",
             sort: true,
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
+         
             formatter: function dateFormat(cell, row) {
               
                 var oldDate = row.cust_accept_date;
@@ -179,12 +149,7 @@ function InprogressProposal() {
         },
         {
             text: "Status",
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
+           
             formatter: function nameFormatter(cell, row) {
                 return (
                     <>
@@ -219,12 +184,7 @@ function InprogressProposal() {
             dataField: "ProposedAmount",
             text: "Proposed Amount",
             sort: true,
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
+            
             sortFunc: (a, b, order, dataField) => {
                 if (order === 'asc') {
                   return b - a;
@@ -244,13 +204,7 @@ function InprogressProposal() {
             dataField: "accepted_amount",
             text: "Accepted Amount ",
             sort: true,
-            style: {
-                fontSize: "11px",
-                color: "#21a3ce",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px", color: "#21a3ce" };
-            },
+           
             formatter: function nameFormatter(cell, row){
                 var nfObject = new Intl.NumberFormat('hi-IN')
                  var x = row.accepted_amount;
@@ -263,26 +217,12 @@ function InprogressProposal() {
         {
             text: "Action",
             dataField: "",
-            headerStyle: () => {
-                return { fontSize: "12px", width: "110px" };
-            },
+            
             formatter: function (cell, row) {
                 return (
                     <>
-                        <div style={{ display: "flex", justifyContent: "flex-start" }}>
-                        <div title="View Discussion Message">
-                                <i
-                                    class="fa fa-comments-o"
-                                    style={{
-                                        fontSize: 16,
-                                        cursor: "pointer",
-                                        color: "orange"
-                                    }}
-                                    onClick={() => ViewDiscussionToggel(row.assign_no)}
-                                ></i>
-                            </div>
-                        <div title="Send Message" className="ml-2">
-                                            <Link
+                        <div style={{ display: "flex" }}>
+                        <Link
  to={{
     pathname: `/teamleader/chatting/${row.id}`,
     index : 1,
@@ -295,17 +235,16 @@ function InprogressProposal() {
                                                     }
                                                 }}
                                             >
-                                                <i
-                                                    class="fa fa-comments-o"
-                                                    style={{
-                                                        fontSize: 16,
-                                                        cursor: "pointer",
-                                                        marginLeft: "8px",
-                                                        color: "blue"
-                                                    }}
-                                                ></i>
+                                              <MessageIcon />
                                             </Link>
-                                        </div>
+                        <div  onClick={() => ViewDiscussionToggel(row.assign_no)} className="ml-1">
+                                  
+                                  <ViewDiscussionIcon />
+                          </div>
+
+                      
+                                         
+                                       
                                 
                             <div className="ml-2">
                                 {row.status_code == "4" ? (
@@ -342,13 +281,9 @@ function InprogressProposal() {
 
                             {row.status_code > "3" || row.status_code == "10" ?
                             <>
-                                 <div style={{ cursor: "pointer", marginLeft : "2px" }} title="View Proposal">
+                                 <div   onClick={(e) => showProposalModal2(row.id)} title="View Proposal">
                 
-                <i
-                  className="fa fa-eye"
-                  style={{ color: "green", fontSize: "16px" }}
-                  onClick={(e) => showProposalModal2(row.id)}
-                />
+         <EyeIcon />
               
             </div>
                               
@@ -380,16 +315,12 @@ function InprogressProposal() {
                     />
                 </CardHeader>
                 <CardBody>
-                <div className="tableFixHead">
-                    <BootstrapTable
-                        bootstrap4
-                        keyField= {"assign_no"}
-                        data={proposal}
-                        columns={columns}
-                        rowIndex
-                        classes="table-responsive"
-                    />
-                    </div>
+                <DataTablepopulated 
+                   bgColor="#42566a"
+                   keyField= {"assign_no"}
+                   data={proposal}
+                   columns={columns}>
+                    </DataTablepopulated>
 
                     <ChatHistory
                         chatHandler={chatHandler}

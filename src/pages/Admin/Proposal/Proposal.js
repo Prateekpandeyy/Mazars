@@ -16,7 +16,7 @@ function Proposal(props) {
   const [pendingProposalCount, setPendingProposalCount] = useState("");
   const [acceptedProposalCount, setAcceptedProposalCount] = useState("");
   const [declinedProposalCount, setDeclinedProposalCount] = useState("");
-
+  const [bgColor, setbgColor] = useState("#42566a")
 
 
   useEffect(() => {
@@ -87,49 +87,52 @@ function Proposal(props) {
     setTabIndex(props.location.index || 0);
   }, [props.location.index]);
 
+  const tableIndex = (index) => {
+    setTabIndex(index)
+    console.log(index)
+    if(index === 0){
+      setbgColor("#42566a")
+    }
+    else if(index === 1){
+      setbgColor("#5f7b97")
+    }
+    else if(index === 2){
+      setbgColor("#5f7b97")
+    }
+    else if(index === 3){
+      setbgColor("#5f7b97")
+    }
+  }
   const myStyle1 = {
-    backgroundColor: "grey",
-    padding: "12px 24px",
-    borderRadius: "50px",
-    width: "auto",
-    textAlign: "center",
-    color: "white",
-    cursor: "pointer",
+    margin: "10px auto",
+    fontSize : "14px"
   };
-
   const myStyle2 = {
-    padding: "12px 24px",
-    borderRadius: "50px",
-    width: "auto",
-    textAlign: "center",
-    backgroundColor: "blue",
-    color: "white",
-    cursor: "pointer",
+ margin: "10px auto",
+ 
+ color : "#42566a",
+ fontWeight : 1000
   };
 
   return (
     <Layout adminDashboard="adminDashboard" adminUserId={userid}>
       <div>
-        <Tabs selectedIndex={tabIndex} onSelect={(index) => setTabIndex(index)}>
+        <Tabs selectedIndex={tabIndex} onSelect={(index) => tableIndex(index)}>
           <TabList
-            style={{
-              listStyleType: "none",
-              display: "flex",
-              justifyContent: "space-around",
-            }}
+className="fixedTab"
           >
-            <Tab style={tabIndex == 0 ? myStyle2 : myStyle1}>
+            <Tab style={tabIndex == 0 ? myStyle2 : myStyle1} className="tabHover">
               All Proposals ({allProposalCount})
             </Tab>
-            <Tab style={tabIndex == 1 ? myStyle2 : myStyle1}>
+            <Tab style={tabIndex == 1 ? myStyle2 : myStyle1} className="tabHover">
               Inprogress; Proposals ({pendingProposalCount})
             </Tab>
 
-            <Tab style={tabIndex == 2 ? myStyle2 : myStyle1}>
+            <Tab style={tabIndex == 2 ? myStyle2 : myStyle1} className="tabHover">
               Accepted; Proposals ({acceptedProposalCount})
             </Tab>
 
-            <Tab style={tabIndex == 3 ? myStyle2 : myStyle1}>
+            <Tab style={tabIndex == 3 ? myStyle2 : myStyle1} className="tabHover">
               Client Declined; Proposals ({declinedProposalCount})
             </Tab>
           </TabList>

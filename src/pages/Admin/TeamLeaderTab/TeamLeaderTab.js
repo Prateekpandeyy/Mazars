@@ -16,6 +16,7 @@ import {
 import BootstrapTable from "react-bootstrap-table-next";
 import Swal from "sweetalert2";
 import History from './History.js';
+import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
 function TeamLeaderTab() {
   const alert = useAlert();
   const [data, setData] = useState([]);
@@ -63,28 +64,21 @@ function TeamLeaderTab() {
         return rowIndex + 1;
       },
       headerStyle: () => {
-        return { fontSize: "12px" };
+        return { width : "50px" };
       },
     },
     {
       dataField: "post_name",
       text: "TL post name",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
+     
     },
 
     {
       dataField: "email",
       text: "TL post email",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
-      style : {
-         wordBreak : "break-word"
-         },
+    
     },
     {
       dataField: "name",
@@ -98,31 +92,19 @@ function TeamLeaderTab() {
       dataField: "personal_email",
       text: "Email",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px"};
-      },
-      style : {
-        wordBreak : "break-word"
-        },
+     
     },
     {
       dataField: "phone",
       text: "Mobile No",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px"};
-      },
+     
     },
     {
       dataField: "parent_id",
       text: "Category",
       sort: true,
-      style : {
-         whiteSpace : "nowrap"
-      },
-      headerStyle: () => {
-        return { fontSize: "12px"};
-      },
+    
     
      
       formatter: function nameFormatter(cell, row) {
@@ -145,7 +127,7 @@ function TeamLeaderTab() {
                   <>
                  
                  <div style={{display : "flex", height : "80px"}}>
-                 <p className={e.includes("Indirect") === true ? "dirCla" : "indirCla"}> {e}</p>
+                 <p className={e.includes("Indirect") === true ? "completed" : "inprogress"}> {e}</p>
                  </div>
                   </>
                 )
@@ -159,12 +141,7 @@ function TeamLeaderTab() {
       dataField: "allcat_id",
       text: "Sub Category",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px"};
-      },
-      style : {
-        wordBreak : "break-word"
-        },
+     
       formatter: function nameFormatter(cell, row) {
         var digit = [];
 
@@ -189,15 +166,15 @@ else{
            {digit.direct.length > 0 && digit.indirect.length > 0 ?
            <>
             <div style={{display : "block", height : "80px"}}>
-            <p style={{ "color": "green", "display": "block" }}>{digit.indirect + pp}</p>
+            <p className="completed">{digit.indirect + pp}</p>
             </div>
             <div style={{display : "block", height : "70px"}}>
-            <p style={{ "color": "blue", "diplay": "block" }}>{digit.direct + k} </p> 
+            <p className = "inprogress">{digit.direct + k} </p> 
             </div>
            </> : <>
            {digit.direct.length > 0 ?
-            <p style={{ "color": "blue", "diplay": "block" }}>{digit.direct + k} </p> :
-            <p style={{ "color": "green", "display": "block" }}>{digit.indirect + pp}</p>
+            <p className = "inprogress">{digit.direct + k} </p> :
+            <p className="completed">{digit.indirect + pp}</p>
            }
            </>
            }
@@ -215,9 +192,7 @@ else{
     {
       dataField: "",
       text: "Action",
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
+      
       formatter: function (cell, row) {
         return (
           <>
@@ -249,7 +224,7 @@ else{
           <>
             <button
               type="button"
-              class="btn btn-info btn-sm"
+              class="autoWidthBtn"
               onClick={() => toggle(row.id)}
             >
               History
@@ -329,23 +304,19 @@ else{
               <CardTitle tag="h4">Team Leaders ({tlCount})</CardTitle>
             </Col>
             <Col md="2">
-              <Link to={"/admin/addnewtl"} className="btn btn-primary">
+              <Link to={"/admin/addnewtl"} className="customBtn">
                 Add New
               </Link>
             </Col>
           </Row>
         </CardHeader>
         <CardBody>
-        <div className="tableFixHead">
-          <BootstrapTable
-            bootstrap4
-            keyField="id"
-            data={data}
-            classes="table-responsive"
-            columns={columns}
-            rowIndex
-          />
-          </div>
+        <DataTablepopulated 
+                   bgColor="#42566a"
+                   keyField= {"assign_no"}
+                   data={data}
+                   columns={columns}>
+                    </DataTablepopulated>
         </CardBody>
       </Card>
       <History history={history} toggle={toggle} modal={modal} />

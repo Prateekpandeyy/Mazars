@@ -38,7 +38,7 @@ function AddFreshAssingment(props) {
   const category = window.localStorage.getItem("category");
   // const userNameId = window.localStorage.getItem("name");
   const [custcheckError, setCheckerror] = useState(null);
-  const [selectedOption, setSelectedOption] = useState([]);
+  const [selectedOption, setSelectedOption] = useState("");
   const [purposeOption, setPurposeOption] = useState([]);
   const [assessmentYear, setAssessmentYear] = useState([]);
   const [det, addDet] = useState();
@@ -135,7 +135,9 @@ function AddFreshAssingment(props) {
         Number(value.p_format_physically)
       );
       formData.append("case_name", value.p_case_name);
-      formData.append("assessment_year", JSON.stringify(selectedOption));
+    {selectedOption ? 
+      formData.append("assessment_year", JSON.stringify(selectedOption)) :
+      formData.append("assessment_year", selectedOption)}
       formData.append("purpose", JSON.stringify(purposeOption));
       axios
         .post(`${baseUrl}/customers/PostQuestion`, formData, {

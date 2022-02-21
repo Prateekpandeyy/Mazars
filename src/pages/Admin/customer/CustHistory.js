@@ -66,9 +66,9 @@ function CustHistory({ history, toggle,modal }) {
           </table>
         </ModalBody>
         <ModalFooter>
-          <Button color="secondary" onClick={toggle}>
+          <button className = "customBtn" onClick={toggle}>
             Cancel
-          </Button>
+          </button>
         </ModalFooter>
       </Modal>
     </div>

@@ -165,12 +165,12 @@ onChange= {(e) =>teamLeader(e)}/>
          </div>
          <div className="row">
            <div className="col-md-6">
-           <button className="btn btn-primary">Search</button>
+           <button className="customBtn">Search</button>
            
              </div>
              <div className="col-md-6 my-2" style={{display : "flex", justifyContent : "flex-end"}}>
-             <button type="button" onClick={() => downloadReport()} className="btn btn-success mx-2">Download</button>
-             <button type="button" onClick={() => refrehData()} className="btn btn-secondary mx-2">Pull payment data</button>
+             <button type="button" onClick={() => downloadReport()} className="autoWidthBtn mx-2">Download</button>
+             <button type="button" onClick={() => refrehData()} className="autoWidthBtn mx-2">Pull payment data</button>
              </div>
          </div>
       </form>

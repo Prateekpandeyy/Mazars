@@ -25,7 +25,7 @@ function History({ history,toggle,modal }) {
   }
   return (
     <div>
-      <Modal isOpen={modal} fade={false} toggle={toggle}>
+      <Modal isOpen={modal} fade={false} toggle={toggle} size="md">
         <ModalHeader toggle={toggle}>History</ModalHeader>
         <ModalBody>
           <table className="table table-bordered">
@@ -57,9 +57,9 @@ function History({ history,toggle,modal }) {
           </table>
         </ModalBody>
         <ModalFooter>
-          <Button color="secondary" onClick={toggle}>
+          <button className= "autoWidthBtn" onClick={toggle}>
             Cancel
-          </Button>
+          </button>
         </ModalFooter>
       </Modal>
     </div>

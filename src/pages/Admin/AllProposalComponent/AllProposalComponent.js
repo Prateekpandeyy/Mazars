@@ -5,17 +5,16 @@ import {
   Card,
   CardHeader,
   CardBody,
- 
 } from "reactstrap";
 import RetviewModal from "./RetviewModal";
 import { Link, NavLink } from "react-router-dom";
 import AdminFilter from "../../../components/Search-Filter/AdminFilter";
-import BootstrapTable from "react-bootstrap-table-next";
 import Records from "../../../components/Records/Records";
 import ViewComponent from "../ViewProposal/ViewComponent";
 import DiscardReport from "../AssignmentTab/DiscardReport";
 import ShowProposal from "./ShowProposal";
-
+import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
+import MessageIcon, {EyeIcon, ViewDiscussionIcon, DiscussProposal, HelpIcon} from "../../../components/Common/MessageIcon";
 function AllProposalComponent({ allProposal }) {
   const [proposalDisplay, setProposalDisplay] = useState([]);
   const [records, setRecords] = useState([]);
@@ -68,23 +67,16 @@ const retviewProposal = (e) => {
       formatter: (cellContent, row, rowIndex) => {
         return rowIndex + 1;
       },
-      style : {
-        wordBreak : "break-word"
-        },
+    
       headerStyle: () => {
-        return { fontSize: "11px" };
+        return { width : "50px"};
       },
     },
     {
       dataField: "created",
       text: "Date",
       sort: true,
-      style: {
-        fontSize: "11px",
-    },
-headerStyle: () => {
-        return { fontSize: "11px" , width : "120px", whiteSpace : "nowrap", padding: "10px 20px"};
-    },
+    
       formatter: function dateFormat(cell, row) {
     
         var oldDate = row.created;
@@ -97,12 +89,7 @@ headerStyle: () => {
     {
       dataField: "assign_no",
       text: "Query No",
-      style: {
-        fontSize: "11px",
-    },
-headerStyle: () => {
-        return { fontSize: "11px" , width : "120px", whiteSpace : "nowrap", padding: "10px 20px"};
-    },
+    
       formatter: function nameFormatter(cell, row) {
      
         return (
@@ -124,34 +111,19 @@ headerStyle: () => {
       dataField: "parent_id",
       text: "Category",
       sort: true,
-       style: {
-        fontSize: "11px",
-    },
-      headerStyle: () => {
-        return { fontSize: "11px" };
-      },
+      
     },
     {
       dataField: "cat_name",
       text: "Sub Category",
       sort: true,
-       style: {
-        fontSize: "11px",
-    },
-      headerStyle: () => {
-        return { fontSize: "11px" };
-      },
+      
     },
     {
       text: "Date of Proposal",
       dataField: "DateofProposal",
       sort: true,
-       style: {
-        fontSize: "11px",
-    },
-      headerStyle: () => {
-        return { fontSize: "11px" };
-      },
+      
       formatter: function dateFormat(cell, row) {
        
         var oldDate = row.DateofProposal;
@@ -165,12 +137,7 @@ headerStyle: () => {
       text: "Date of acceptance / decline of Proposal",
       dataField: "cust_accept_date",
       sort: true,
-       style: {
-        fontSize: "11px",
-    },
-      headerStyle: () => {
-        return { fontSize: "11px" };
-      },
+      
       formatter: function dateFormat(cell, row) {
      
         var oldDate = row.cust_accept_date;
@@ -182,12 +149,7 @@ headerStyle: () => {
     },
     {
       text: "Status",
-       style: {
-        fontSize: "11px",
-    },
-      headerStyle: () => {
-        return { fontSize: "11px" };
-      },
+      
       formatter: function nameFormatter(cell, row) {
         return (
           <>
@@ -220,11 +182,7 @@ headerStyle: () => {
       dataField: "ProposedAmount",
       text: "Proposed Amount",
       sort: true,
-      style: {
-        fontSize: "11px",
-    },      headerStyle: () => {
-        return { fontSize: "11px" };
-      },
+     
       sortFunc: (a, b, order, dataField) => {
         if (order === 'asc') {
           return b - a;
@@ -244,13 +202,7 @@ headerStyle: () => {
       dataField: "accepted_amount",
       text: "Accepted Amount ",
       sort: true,
-      style: {
-        fontSize: "11px",
-        color: "#21a3ce",
-      },
-      headerStyle: () => {
-        return { fontSize: "11px", color: "#21a3ce" };
-      },
+     
       sortFunc: (a, b, order, dataField) => {
         if (order === 'asc') {
           return b - a;
@@ -270,13 +222,7 @@ headerStyle: () => {
       dataField: "tl_name",
       text: "TL name",
       sort: true,
-      style : {
-       fontSize: "11px",
-       
-         },
-      headerStyle: () => {
-        return { fontSize: "11px" , width: "100px", wordBreak: "nowrap", padding: "10px 20px"};
-      },
+
     },
     {
       text: "Action",
@@ -287,7 +233,7 @@ headerStyle: () => {
         return (
           <>
             <div style={{display: "flex"}}>
-            <div title="Send Message">
+           
                 <Link
                
                     to={{
@@ -302,58 +248,29 @@ headerStyle: () => {
                     }
                   }}
                 >
-                  <i
-                    className="fa fa-comments-o"
-                    style={{
-                      fontSize: 16,
-                      cursor: "pointer",
-                      marginLeft: "8px",
-                      color: "blue"
-                    }}
-                  ></i>
+                <MessageIcon />
                 </Link>
-              </div>
+            
 
-              <div title="View Discussion Message" className="ml-2">
-                <i
-                  className="fa fa-comments-o"
-                  style={{
-                    fontSize: 16,
-                    cursor: "pointer",
-                    color: "orange"
-                  }}
-                  onClick={() => ViewDiscussionToggel(row.assign_no)}
-                ></i>
-              </div>
+              <div  onClick={() => ViewDiscussionToggel(row.assign_no)} className="ml-1">
+                                  
+                                  <ViewDiscussionIcon />
+                          </div>
+
 
               {row.statuscode > "3" || row.statuscode == "10" ?
-                <div style={{ cursor: "pointer" }} title="View Proposal" className="ml-2">
-                
-                    <i
-                      className="fa fa-eye"
-                      style={{ color: "green", fontSize: "16px" }}
-                      onClick={(e) => showProposalModal2(row.q_id)}
-                    />
-                  
-                </div>
+                <div  onClick={(e) => showProposalModal2(row.q_id)} className="ml-1">
+                <EyeIcon  />
+               </div>
                 :
                 null
               }
 {
   row.statuscode == "6" ? 
   <>
-<div title="Restore Proposal" className="ml-2"
- onClick={(e) => retviewProposal(row.q_id)}> 
-<i
-                    className="fa fa-share"
-                    style={{
-                      fontSize: 16,
-                      cursor: "pointer",
-                      marginLeft: "8px",
-                      color: "blue"
-                    }}
-                   
-                  ></i>
+
+<div  onClick={(e) => retviewProposal(row.q_id)}>
+<DiscussProposal titleName ="Restore Proposal"/>
 </div>
   </> : null
 }
@@ -383,16 +300,12 @@ headerStyle: () => {
 
         <CardBody>
           <Records records={records} />
-          <div className="tableFixHead">
-          <BootstrapTable
-            bootstrap4
-            keyField= {"assign_no"}
-            data={proposalDisplay}
-            columns={columns}
-            classes="table-responsivepayment"
-          />
-          </div>
-
+          <DataTablepopulated 
+                   bgColor="#42566a"
+                   keyField= {"assign_no"}
+                   data={proposalDisplay}
+                   columns={columns}>
+                    </DataTablepopulated>
           <ViewComponent
             ViewHandler={ViewHandler}
             viewModal={viewModal}

@@ -15,7 +15,7 @@ function AssignmentTab(props) {
     const [allAssignmentCount, setAllAssignmentCount] = useState("");
     const [draft, setDraft] = useState("");
     const [final, setFinal] = useState();
-
+    const [bgColor, setbgColor] = useState("#615339")
 
     useEffect(() => {
         CountAllAssignment();
@@ -57,43 +57,51 @@ function AssignmentTab(props) {
     }, [props.location.index]);
 
 
-    const myStyle1 = {
-        backgroundColor: "grey",
-        padding: "12px 24px",
-        borderRadius: "50px",
-        width: "auto",
-        textAlign: "center",
-        color: "white",
-        cursor: "pointer",
-    };
-    const myStyle2 = {
-        padding: "12px 24px",
-        borderRadius: "50px",
-        width: "auto",
-        textAlign: "center",
-        backgroundColor: "blue",
-        color: "white",
-        cursor: "pointer",
-    };
+    const tableIndex = (index) => {
+        setTabIndex(index)
+        console.log(index)
+        if(index === 0){
+          setbgColor("#615339")
+        }
+        else if(index === 1){
+          setbgColor("#907b56")
+        }
+        else if(index === 2){
+          setbgColor("#907b56")
+        }
+        else if(index === 3){
+          setbgColor("#907b56")
+        }
+      }
+        
+      const myStyle1 = {
+        margin: "10px auto"
+      };
+      const myStyle2 = {
+        margin: "10px auto",
+     
+        color : "#5a625a",
+        fontWeight : 1000
+         };
+      
+      
+    
+    
 
     return (
         <Layout adminDashboard="adminDashboard" adminUserId={userid}>
-            <div>
-                <Tabs selectedIndex={tabIndex} onSelect={(index) => setTabIndex(index)}>
-                    <TabList
-                        style={{
-                            listStyleType: "none",
-                            display: "flex",
-                            justifyContent: "space-around",
-                        }}
-                    >
-                        <Tab style={tabIndex == 0 ? myStyle2 : myStyle1}>
+        
+            <Tabs selectedIndex={tabIndex} onSelect={(index) => tableIndex(index)}>
+      <TabList
+          className="fixedTab"
+          >
+                        <Tab style={tabIndex == 0 ? myStyle2 : myStyle1} className="tabHover">
                             All Assignments ({allAssignmentCount})
                         </Tab>
-                        <Tab style={tabIndex == 1 ? myStyle2 : myStyle1}>
+                        <Tab style={tabIndex == 1 ? myStyle2 : myStyle1} className="tabHover">
                             Inprogress; Draft Reports  ({draft})
                         </Tab>
-                        <Tab style={tabIndex == 2 ? myStyle2 : myStyle1}>
+                        <Tab style={tabIndex == 2 ? myStyle2 : myStyle1} className="tabHover">
                         Inprogress; Delivery of Final Reports ({final})
                         </Tab>
 
@@ -111,7 +119,7 @@ function AssignmentTab(props) {
                         <FinalReport />
                     </TabPanel>
                 </Tabs>
-            </div>
+           
         </Layout>
     );
 }

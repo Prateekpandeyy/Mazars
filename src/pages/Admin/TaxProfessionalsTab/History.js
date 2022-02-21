@@ -57,7 +57,7 @@ function History({ history,toggle,modal }) {
           </table>
         </ModalBody>
         <ModalFooter>
-          <Button color="secondary" onClick={toggle}>
+          <Button className="customBtn" onClick={toggle}>
             Cancel
           </Button>
         </ModalFooter>

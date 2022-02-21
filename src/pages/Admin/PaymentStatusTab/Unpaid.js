@@ -14,15 +14,13 @@ import {
     ModalFooter,
     Button,
 } from "reactstrap";
-import { useForm } from "react-hook-form";
-import "antd/dist/antd.css";
-import { Select } from "antd";
 import { Link } from "react-router-dom";
-import BootstrapTable from "react-bootstrap-table-next";
 import AdminFilter from "../../../components/Search-Filter/AdminFilter";
 import CommonServices from "../../../common/common";
 import Records from "../../../components/Records/Records";
 import DiscardReport from "../AssignmentTab/DiscardReport";
+import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
+import MessageIcon, {ViewDiscussionIcon, Payment} from "../../../components/Common/MessageIcon";
 
 
 
@@ -86,23 +84,16 @@ function Unpaid() {
             formatter: (cellContent, row, rowIndex) => {
                 return rowIndex + 1;
             },
-            style: {
-                fontSize: "11px",
-            },
+         
             headerStyle: () => {
-                return { fontSize: "11px" };
+                return { width : "50px" };
             },
         },
         {
             dataField: "query_created_date",
             text: "Date",
             sort: true,
-            style: {
-                fontSize: "11px",
-            },
-           headerStyle: () => {
-                return { fontSize: "11px" , width : "120px", whiteSpace : "nowrap", padding: "10px 20px"};
-            },
+          
             formatter: function dateFormat(cell, row) {
               
                 var oldDate = row.query_created_date;
@@ -115,12 +106,7 @@ function Unpaid() {
         {
             dataField: "assign_no",
             text: "Query No",
-            style: {
-                fontSize: "11px",
-            },
-           headerStyle: () => {
-                return { fontSize: "11px" , width : "120px", whiteSpace : "nowrap", padding: "10px 20px"};
-            },
+           
             formatter: function nameFormatter(cell, row) {
                
                 return (
@@ -142,34 +128,19 @@ function Unpaid() {
             dataField: "parent_id",
             text: "Category",
             sort: true,
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
+            
         },
         {
             dataField: "cat_name",
             text: "Sub Category",
             sort: true,
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
+            
         },
         {
             text: "Date of acceptance of Proposal",
             dataField: "cust_accept_date",
             sort: true,
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
+          
             formatter: function dateFormat(cell, row) {
                
                 var oldDate = row.cust_accept_date;
@@ -182,30 +153,20 @@ function Unpaid() {
         {
             text: "Status",
             dataField: "status",
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
+           
         },
         {
             dataField: "accepted_amount",
             text: "Accepted Amount ",
             sort: true,
-            style: {
-              fontSize: "11px",
-              color: "#21a3ce",
-            },
+           
             sortFunc: (a, b, order, dataField) => {
               if (order === 'asc') {
                 return b - a;
               }
               return a - b; // desc
             },
-            headerStyle: () => {
-              return { fontSize: "11px", color: "#21a3ce" };
-            },
+          
             formatter: function nameFormatter(cell, row){
                 var nfObject = new Intl.NumberFormat('hi-IN')
                  var x = row.accepted_amount;
@@ -219,19 +180,14 @@ function Unpaid() {
             text: "Amount Paid",
             dataField: "paid_amount",
             sort: true,
-            style: {
-              fontSize: "11px",
-              color: "#064606",
-            },
+          
             sortFunc: (a, b, order, dataField) => {
               if (order === 'asc') {
                 return b - a;
               }
               return a - b; // desc
             },
-            headerStyle: () => {
-              return { fontSize: "11px", color: "#064606" };
-            },
+           
             formatter: function nameFormatter(cell, row){
                 var nfObject = new Intl.NumberFormat('hi-IN')
                  var x = row.paid_amount;
@@ -246,19 +202,14 @@ function Unpaid() {
             text : "Outstanding Amount",
             dataField: "amount_outstanding",
             sort: true,
-            style: {
-              fontSize: "11px",
-              color: "darkred",
-            },
+           
             sortFunc: (a, b, order, dataField) => {
               if (order === 'asc') {
                 return b - a;
               }
               return a - b; // desc
             },
-            headerStyle: () => {
-              return { fontSize: "11px", color: "darkred" };
-            },
+           
             formatter: function nameFormatter(cell, row){
                 var nfObject = new Intl.NumberFormat('hi-IN')
                  var x = row.amount_outstanding;
@@ -272,12 +223,7 @@ function Unpaid() {
             text: "Date of Payment",
             dataField: "cust_paid_date",
             sort: true,
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
+           
             formatter: function dateFormat(cell, row) {
               
                 var oldDate = row.cust_paid_date;
@@ -291,61 +237,18 @@ function Unpaid() {
             dataField: "tl_name",
             text: "TL name",
             sort: true,
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
+           
         },
         {
             text: "Action",
-            style: {
-                fontSize: "11px", diaplay : "flex", justifyContent: "space-between", width: "100px"
-            },
-            headerStyle: () => {
-                return { fontSize: "11px", width: "110px" };
-            },
+           
             formatter: function (cell, row) {
                 return (
                     <>
                        
                         <div style={{ display: "flex", justifyContent: "space-between", width: "80px"}}>
 
-
-                        <div style={{ cursor: "pointer" , diaplay :"flex", marginRight : "5px"}} title="Payment History">
                         <Link
-              to={{
-                pathname: `/admin/paydetails/${row.assign_id}`,
-                index : 2,
-                routes: "paymentstatus",
-               
-              }}
-            >
-                            <i
-                                class="fa fa-credit-card"
-                                style={{ color: "green", fontSize: "16px" }}
-                                // onClick={() => toggle(row.assign_id)}
-                            ></i>
-                            </Link>
-                        </div>
-
-
-                        <div title="View Discussion Message">
-                            <i
-                                class="fa fa-comments-o"
-                                style={{
-                                    fontSize: 16,
-                                    cursor: "pointer",
-                                    color: "orange"
-                                }}
-                                onClick={() => ViewDiscussionToggel(row.assign_no)}
-                            ></i>
-                        </div>
-
-
-                        <div title="Send Message">
-            <Link
               to={{
                 pathname: `/admin/chatting/${row.assign_id}`,
                 index : 2,
@@ -358,18 +261,29 @@ function Unpaid() {
                 }
               }}
             >
-              <i
-                class="fa fa-comments-o"
-                style={{
-                  fontSize: 16,
-                  cursor: "pointer",
-                  marginLeft: "8px",
-                  color: "blue"
-                }}
-              ></i>
+<MessageIcon />
             </Link>
-          </div>
+            <div  onClick={() => ViewDiscussionToggel(row.assign_no)} className="mx-1">
+                                  
+                                  <ViewDiscussionIcon />
+                          </div>
+                        <Link
+              to={{
+                pathname: `/admin/paydetails/${row.assign_id}`,
+                index : 2,
+                routes: "paymentstatus",
+               
+              }}
+            >
+                          <Payment />
+                            </Link>
+                        
 
+
+                         
+
+
+                      
                     </div> 
                     </>
                 );
@@ -391,16 +305,12 @@ function Unpaid() {
                 </CardHeader>
                 <CardBody>
                     <Records records={records} />
-                    <div className="tableFixHead">
-                    <BootstrapTable
-                        bootstrap4
-                        keyField= {"assign_no"}
-                        data={payment}
-                        columns={columns}
-                        classes="table-responsivepayment"
-                        rowIndex
-                    />
-</div>
+                    <DataTablepopulated 
+                   bgColor="#42566a"
+                   keyField= {"assign_no"}
+                   data={payment}
+                   columns={columns}>
+                    </DataTablepopulated>
                     <Modal isOpen={modal} fade={false} toggle={toggle}>
                         <ModalHeader toggle={toggle}>History</ModalHeader>
                         <ModalBody>

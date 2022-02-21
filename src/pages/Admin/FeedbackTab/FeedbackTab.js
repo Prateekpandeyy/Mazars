@@ -12,10 +12,9 @@ import {
   Table,
 } from "reactstrap";
 import BootstrapTable from "react-bootstrap-table-next";
-// import FeedbackService from "../../../config/services/QueryDetails";
-import CommonServices from "../../../common/common";
 import { useAlert } from "react-alert";
 import { useHistory } from "react-router";
+import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
 
 function FeedbackTab() {
   const alert = useAlert();
@@ -155,13 +154,12 @@ function FeedbackTab() {
             </Row>
           </CardHeader>
           <CardBody>
-            <BootstrapTable
-              bootstrap4
-              keyField="id"
-              data={feedbackData}
-              columns={columns}
-              rowIndex
-            />
+          <DataTablepopulated 
+       bgColor="#42566a"
+       keyField= {"assign_no"}
+       data={feedbackData}
+       columns={columns}>
+        </DataTablepopulated>
           </CardBody>
         </Card>
       </Layout>

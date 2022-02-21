@@ -20,6 +20,8 @@ import Records from "../../components/Records/Records";
 import DiscardReport from "../../pages/Admin/AssignmentTab/DiscardReport";
 import RetviewModal from "../../pages/Admin/AllProposalComponent/RetviewModal"
 import ShowProposal from "../../pages/Admin/AllProposalComponent/ShowProposal";
+import DataTablepopulated from "../../components/DataTablepopulated/DataTabel";
+import MessageIcon, {EyeIcon, ViewDiscussionIcon, DiscussProposal, HelpIcon} from "../../components/Common/MessageIcon";
 function PendingForAcceptence({ pendingProposal }) {
   const [proposalDisplay, setProposalDisplay] = useState([]);
   const [records, setRecords] = useState([]);
@@ -64,23 +66,16 @@ function PendingForAcceptence({ pendingProposal }) {
       formatter: (cellContent, row, rowIndex) => {
         return rowIndex + 1;
       },
-      style: {
-        fontSize: "11px",
-    },
+   
       headerStyle: () => {
-        return { fontSize: "11px" };
+        return { width : "50px"};
       },
     },
     {
       dataField: "created",
       text: "Date",
       sort: true,
-      style: {
-        fontSize: "11px",
-    },
-    headerStyle: () => {
-      return { fontSize: "11px" , width : "120px", whiteSpace : "nowrap", padding: "10px 20px"};
-  },
+
       formatter: function dateFormat(cell, row) {
 
         var oldDate = row.created;
@@ -93,12 +88,7 @@ function PendingForAcceptence({ pendingProposal }) {
     {
       dataField: "assign_no",
       text: "Query No",
-      style: {
-        fontSize: "11px",
-    },
-    headerStyle: () => {
-      return { fontSize: "11px" , width : "120px", whiteSpace : "nowrap", padding: "10px 20px"};
-  },
+     
       formatter: function nameFormatter(cell, row) {
       
         return (
@@ -120,34 +110,19 @@ function PendingForAcceptence({ pendingProposal }) {
       dataField: "parent_id",
       text: "Category",
       sort: true,
-      style: {
-        fontSize: "11px",
-    },
-      headerStyle: () => {
-        return { fontSize: "11px" };
-      },
+      
     },
     {
       dataField: "cat_name",
       text: "Sub Category",
       sort: true,
-      style: {
-        fontSize: "11px",
-    },
-      headerStyle: () => {
-        return { fontSize: "11px" };
-      },
+      
     },
     {
       text: "Date of Proposal",
       dataField: "DateofProposal",
       sort: true,
-      style: {
-        fontSize: "11px",
-    },
-      headerStyle: () => {
-        return { fontSize: "11px" };
-      },
+     
       formatter: function dateFormat(cell, row) {
 
         var oldDate = row.DateofProposal;
@@ -161,12 +136,7 @@ function PendingForAcceptence({ pendingProposal }) {
       text: "Date of acceptance of Proposal",
       dataField: "cust_accept_date",
       sort: true,
-      style: {
-        fontSize: "11px",
-    },
-      headerStyle: () => {
-        return { fontSize: "11px" };
-      },
+      
       formatter: function dateFormat(cell, row) {
 
         var oldDate = row.cust_accept_date;
@@ -178,12 +148,7 @@ function PendingForAcceptence({ pendingProposal }) {
     },
     {
       text: "Status",
-      style: {
-        fontSize: "11px",
-    },
-      headerStyle: () => {
-        return { fontSize: "11px" };
-      },
+     
       formatter: function nameFormatter(cell, row) {
         return (
           <>
@@ -206,12 +171,7 @@ function PendingForAcceptence({ pendingProposal }) {
       dataField: "",
       text: "Proposed Amount",
       sort: true,
-      style: {
-        fontSize: "11px",
-    },
-      headerStyle: () => {
-        return { fontSize: "11px" };
-      },
+     
       sortFunc: (a, b, order, dataField) => {
         if (order === 'asc') {
           return b - a;
@@ -234,11 +194,9 @@ function PendingForAcceptence({ pendingProposal }) {
       style: {
         fontSize: "11px",
         color: "#21a3ce",
-        wordBreak : "break-word"
+       
       },
-      headerStyle: () => {
-        return { fontSize: "11px", color: "#21a3ce" };
-      },
+     
       sortFunc: (a, b, order, dataField) => {
         if (order === 'asc') {
           return b - a;
@@ -258,26 +216,16 @@ function PendingForAcceptence({ pendingProposal }) {
       dataField: "tl_name",
       text: "TL name",
       sort: true,
-      style: {
-        fontSize: "11px",
-    },
-      headerStyle: () => {
-        return { fontSize: "11px" };
-      },
+     
     },
     {
       text: "Action",
-      headerStyle: () => {
-        return { fontSize: "11px", width: "95px" };
-      },
-      style: {
-        fontSize: "11px",
-    },
+     
       formatter: function (cell, row) {
         return (
           <>
             <div style={{ display: "flex" }}>
-            <div title="Send Message">
+          
                 <Link
                   to={{
                     pathname: `/admin/chatting/${row.q_id}`,
@@ -291,40 +239,19 @@ function PendingForAcceptence({ pendingProposal }) {
                     }
                   }}
                 >
-                  <i
-                    className="fa fa-comments-o"
-                    style={{
-                      fontSize: 16,
-                      cursor: "pointer",
-                      marginLeft: "8px",
-                      color: "blue"
-                    }}
-                  ></i>
+                  <MessageIcon />
                 </Link>
-              </div>
+            
+                <div  onClick={() => ViewDiscussionToggel(row.assign_no)} className="ml-1">
+                                  
+                                  <ViewDiscussionIcon />
+                          </div>
 
-              <div title="View Discussion Message" className="ml-2">
-                <i
-                  className="fa fa-comments-o"
-                  style={{
-                    fontSize: 16,
-                    cursor: "pointer",
-                    color: "orange"
-                  }}
-                  onClick={() => ViewDiscussionToggel(row.assign_no)}
-                ></i>
-              </div>
 
               {row.statuscode > "3" ?
-                 <div style={{ cursor: "pointer" }} title="View Proposal" className="ml-2">
-                
-                 <i
-                   className="fa fa-eye"
-                   style={{ color: "green", fontSize: "16px" }}
-                   onClick={(e) => showProposalModal2(row.q_id)}
-                 />
-               
-             </div>
+               <div  onClick={(e) => showProposalModal2(row.q_id)} className="ml-1">
+               <EyeIcon  />
+              </div>
                 :
                 null
               }
@@ -332,18 +259,8 @@ function PendingForAcceptence({ pendingProposal }) {
 {
   row.statuscode == "6" ? 
   <>
-<div title="Retview Proposal" className="ml-2"
- onClick={(e) => retviewProposal(row.q_id)}> 
-<i
-                    className="fa fa-share"
-                    style={{
-                      fontSize: 16,
-                      cursor: "pointer",
-                      marginLeft: "8px",
-                      color: "red"
-                    }}
-                   
-                  ></i>
+<div  onClick={(e) => retviewProposal(row.q_id)}>
+<DiscussProposal titleName ="Restore Proposal"/>
 </div>
   </> : null
 }
@@ -373,15 +290,12 @@ function PendingForAcceptence({ pendingProposal }) {
         </CardHeader>
         <CardBody>
           <Records records={records} />
-          <div className="tableFixHead">
-          <BootstrapTable
-            bootstrap4
-            keyField= {"assign_no"}
-            data={proposalDisplay}
-            columns={columns}
-            classes="table-responsivepayment"
-          />
-</div>
+          <DataTablepopulated 
+                   bgColor="#42566a"
+                   keyField= {"assign_no"}
+                   data={proposalDisplay}
+                   columns={columns}>
+                    </DataTablepopulated>
           <DiscardReport
             ViewDiscussionToggel={ViewDiscussionToggel}
             ViewDiscussion={ViewDiscussion}

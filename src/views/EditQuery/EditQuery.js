@@ -38,7 +38,7 @@ function EditQuery(props) {
   const [custcheckError, setCheckerror] = useState(null);
   const [queryDocs, setQueryDocs] = useState([]);
  const [qno, setQno] = useState()
-  const [selectedOption, setSelectedOption] = useState([]);
+  const [selectedOption, setSelectedOption] = useState("");
   const [purposeOption, setPurposeOption] = useState([]);
   const [selectError, setSelectError] = useState()
   const [assessmentYear, setAssessmentYear] = useState([]);
@@ -158,7 +158,7 @@ function EditQuery(props) {
    
       formData.append("fact", value2);
       formData.append("specific", JSON.stringify(value.users));
-      formData.append("timelines", value.p_timelines);
+     
       formData.append("user", JSON.parse(userId));
       formData.append("id", id);
       formData.append("cid", JSON.parse(category));
@@ -172,7 +172,9 @@ function EditQuery(props) {
         Number(value.p_Softcopy_physical)
       );
       formData.append("case_name", value.case_name);
-      formData.append("assessment_year", JSON.stringify(selectedOption));
+      {selectedOption ? 
+        formData.append("assessment_year", JSON.stringify(selectedOption)) :
+        formData.append("assessment_year", selectedOption)}
       formData.append("purpose", JSON.stringify(purposeOption));
 
       axios

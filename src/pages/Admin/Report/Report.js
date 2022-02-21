@@ -463,10 +463,10 @@ setTaxId(i.value)
           <Row>
           <Col md="4">
           <button
-                class="btn btn-success" 
+                className="autoWidthBtn" 
                 onClick={() => history.goBack()}
               >
-                <i class="fas fa-arrow-left mr-2"></i>
+               
                 Go Back
               </button>
               
@@ -668,7 +668,7 @@ options={qno} onChange={(e) => queryNumber(e)}/>
 </span>
 
 <span>
-<input type="checkbox" name="brief_fact_case" ref={register} checked={checkBox} id="brief_fact_case"></input>
+<input type="checkbox" name="brief_fact_case" ref={register}  checked={checkBox} id="brief_fact_case"></input>
 <label htmlFor="brief_fact_case">Name of the case</label>
 </span>
            

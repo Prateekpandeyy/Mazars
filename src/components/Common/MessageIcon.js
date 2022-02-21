@@ -45,10 +45,10 @@ const FeedBackICon = () => {
     </>
   )
 }
-const DeleteIcon = () => {
+const DeleteIcon = (props) => {
   return(
     <>
-     <i className="fa fa-trash deleteIcon" title="Delete Query"></i>
+     <i className="fa fa-trash deleteIcon" title={props.titleName}></i>
     </>
   )
 }

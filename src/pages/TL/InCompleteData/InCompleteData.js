@@ -11,10 +11,9 @@ import {
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import { Link } from "react-router-dom";
-import BootstrapTable from "react-bootstrap-table-next";
 import TeamFilter from "../../../components/Search-Filter/tlFilter";
 import DiscardReport from "../AssignmentTab/DiscardReport";
-
+import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
 
 function InCompleteData({ CountIncomplete }) {
   const userid = window.localStorage.getItem("tlkey");
@@ -54,22 +53,15 @@ function InCompleteData({ CountIncomplete }) {
         return rowIndex + 1;
       },
       headerStyle: () => {
-        return { fontSize: "12px", width: "50px" };
+        return {width: "50px" };
       },
-      style: {
-        fontSize: "11px",
-    },
+    
     },
     {
       text: "Query Date",
       dataField: "created",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px", width : "150px" };
-      },
-      style: {
-        fontSize: "11px",
-    },
+    
       formatter : function(cell, row){
         let dueDate=row.created.split("-").reverse().join("-")
       
@@ -84,12 +76,7 @@ function InCompleteData({ CountIncomplete }) {
     {
       text: "Query No",
       dataField: "assign_no",
-      headerStyle: () => {
-        return { fontSize: "12px" , width : "150px"};
-      },
-      style: {
-        fontSize: "11px",
-    },
+     
       formatter: function nameFormatter(cell, row) {
        
         return (
@@ -111,45 +98,25 @@ function InCompleteData({ CountIncomplete }) {
       text: "Category",
       dataField: "parent_id",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px", width : "100px" };
-      },
-      style: {
-        fontSize: "11px",
-    },
+    
     },
     {
       text: "Sub Category",
       dataField: "cat_name",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" , width : "100px"};
-      },
-      style: {
-        fontSize: "11px",
-    },
+    
     },
     {
       text: "Client Name",
       dataField: "name",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" , width : "150px"};
-      },
-      style: {
-        fontSize: "11px",
-    },
+  
     },
     {
       text: "Delivery Due Date   / Acutal Delivery Date",
       dataField: "Exp_Delivery_Date",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" , width : "140px"};
-    },
-    style: {
-      fontSize: "11px",
-  },
+    
       formatter: function dateFormat(cell, row) {
 
         var oldDate = row.Exp_Delivery_Date;
@@ -161,12 +128,7 @@ function InCompleteData({ CountIncomplete }) {
     },
     {
       text: "Status",
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
-      style: {
-        fontSize: "11px",
-    },
+      
       formatter: function nameFormatter(cell, row) {
         return (
           <>
@@ -277,16 +239,13 @@ function InCompleteData({ CountIncomplete }) {
           />
         </CardHeader>
         <CardBody>
-        <div className="tableFixHead">
-          <BootstrapTable
-            bootstrap4
-            keyField="id"
-            data={incompleteData}
-            columns={columns}
-            rowIndex
-            classes="table-responsive"
-          />
-</div>
+        <DataTablepopulated 
+          bgColor="#55425f"
+          keyField= {"assign_no"}
+          data={incompleteData}
+          
+          columns={columns}>
+           </DataTablepopulated> 
           <DiscardReport
             ViewDiscussionToggel={ViewDiscussionToggel}
             ViewDiscussion={ViewDiscussion}

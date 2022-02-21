@@ -16,7 +16,7 @@ import TeamFilter from "../../../components/Search-Filter/tlFilter";
 import History from "../../../components/PendingForAllocation/History";
 import Swal from "sweetalert2";
 import { useParams, useHistory } from "react-router-dom";
-
+import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
 function CompletedQuery() {
   const userid = window.localStorage.getItem("tlkey");
 const hist = useHistory();
@@ -76,7 +76,7 @@ const hist = useHistory();
         return rowIndex + 1;
       },
       headerStyle: () => {
-        return { fontSize: "12px", width: "50px" };
+        return { width: "50px" };
       },
       style: {
         fontSize: "11px",
@@ -86,12 +86,7 @@ const hist = useHistory();
       text: "Query Date",
       dataField: "created",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px", width : "120px" };
-      },
-      style: {
-        fontSize: "11px",
-    },
+     
       formatter : function(cell, row){
         let dueDate=row.created.split("-").reverse().join("-")
      
@@ -106,12 +101,7 @@ const hist = useHistory();
     {
       text: "Query No",
       dataField: "assign_no",
-      headerStyle: () => {
-        return { fontSize: "12px" ,  width : "120px" };
-      },
-      style: {
-        fontSize: "11px",
-    },
+     
       formatter: function nameFormatter(cell, row) {
 
         return (
@@ -133,45 +123,25 @@ const hist = useHistory();
       text: "Category",
       dataField: "parent_id",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
-      style: {
-        fontSize: "11px",
-    },
+     
     },
     {
       text: "Sub Category",
       dataField: "cat_name",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
-      style: {
-        fontSize: "11px",
-    },
+     
     },
     {
       text: "Client Name",
       dataField: "name",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
-      style: {
-        fontSize: "11px",
-    },
+    
     },
     {
       text: "Delivery Due Date ",
       dataField: "Exp_Delivery_Date",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" , width : "140px"};
-    },
-    style: {
-      fontSize: "11px",
-  },
+    
       formatter: function dateFormat(cell, row) {
        
         var oldDate = row.Exp_Delivery_Date;
@@ -183,12 +153,7 @@ const hist = useHistory();
     },
     {
       text: "Status",
-      headerStyle: () => {
-          return { fontSize: "12px" };
-      },
-      style: {
-        fontSize: "11px",
-    },
+     
       formatter: function nameFormatter(cell, row) {
           return (
               <>
@@ -224,12 +189,7 @@ const hist = useHistory();
   {
     text: "Action",
     dataField: "",
-    headerStyle: () => {
-      return { fontSize: "12px" };
-    },
-    style: {
-      fontSize: "11px",
-  },
+    
     formatter: function (cell, row) {
       return (
         <>
@@ -238,47 +198,13 @@ const hist = useHistory();
            <i onClick ={() => assignConfirm(row.id, row.assign_no)} class="fa fa-share" style={{color : "blue", cursor : "pointer"}}></i>
           ) : (
             <div style={{ display: "flex", justifyContent: "space-around" }}>
-              {/* <div title="Assign to">
-               
-
-              </div>
-              <div title="Decline Query">
-                <Link
-                  to={`/teamleader/query_rejection/${row.id}`}
-                >
-                  <i
-                    className="fa fa-trash"
-                  ></i>
-                </Link>
-              </div> */}
-  <p style={{ color: "green", fontSize: "10px" }}>
+            
+  <p className="completed">
 
  Allocated to {row.tname} on
 <p>{row.allocation_time}</p>
 </p>
-              {/* <div title="Send Message">
-                <Link
-                  to={{
-                    pathname: `/teamleader/chatting/${row.id}`,
-                    obj: {
-                      message_type: "4",
-                      query_No: row.assign_no,
-                      query_id: row.id,
-                      routes: `/teamleader/queriestab`
-                    }
-                  }}
-                >
-                  <i
-                    class="fa fa-comments-o"
-                    style={{
-                      fontSize: 16,
-                      cursor: "pointer",
-                      marginLeft: "8px",
-                      color: "blue"
-                    }}
-                  ></i>
-                </Link>
-              </div> */}
+          
 
             </div>
 
@@ -300,7 +226,7 @@ const hist = useHistory();
         <>
           <button
             type="button"
-            class="btn btn-info btn-sm"
+            class="autoWidthBtn"
             onClick={() => toggle(row.id)}
           >
             History
@@ -357,16 +283,13 @@ Swal.fire({
           />
         </CardHeader>
         <CardBody>
-        <div className="tableFixHead">
-          <BootstrapTable
-            bootstrap4
-            keyField="id"
-            data={incompleteData}
-            columns={columns}
-            rowIndex
-            classes="table-responsive"
-          />
-          </div>
+        <DataTablepopulated 
+          bgColor="#55425f"
+          keyField= {"assign_no"}
+          data={incompleteData}
+          
+          columns={columns}>
+           </DataTablepopulated> 
             <History history={history} toggle={toggle} modal={modal} />
         </CardBody>
       </Card>

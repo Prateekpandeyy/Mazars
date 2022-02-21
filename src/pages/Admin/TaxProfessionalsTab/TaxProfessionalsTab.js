@@ -15,10 +15,10 @@ import { baseUrl } from "../../../config/config";
 import { Link } from "react-router-dom";
 import { useAlert } from "react-alert";
 import Swal from "sweetalert2";
-
 import BootstrapTable from "react-bootstrap-table-next";
 import TaxProffesionalService from "../../../config/services/TaxProffesional";
 import History from './History.js';
+import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
 function TaxProfessionalsTab() {
   const alert = useAlert();
   const [data, setData] = useState([]);
@@ -76,86 +76,51 @@ function TaxProfessionalsTab() {
         return rowIndex + 1;
       },
       headerStyle: () => {
-        return { fontSize: "11px"};
+        return { width : "50px"};
       },
     },
     {
       dataField: "tl_name",
       text: "TL post name",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "11px" };
-      },
-      style : {
-        wordBreak : "break-word"
-        },
+     
     },
     {
       dataField: "tl_post_email",
       text: "TL post email",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "11px" };
-      },
-      style : {
-        wordBreak : "break-word"
-        },
+     
     },
     {
       dataField: "post_name",
       text: "TP post name",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "11px" };
-      },
-      style : {
-        wordBreak : "break-word"
-        },
+    
     },
 
     {
       dataField: "email",
       text: "TP post email",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "11px" };
-      },
-      style : {
-        wordBreak : "break-word"
-        },
+     
     },
     {
       dataField: "name",
       text: "Name of TP",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "11px" };
-      },
-      style : {
-        wordBreak : "break-word"
-        },
+     
     },
     {
       dataField: "personal_email",
       text: "Email",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "11px" };
-      },
-      style : {
-        wordBreak : "break-word"
-        },
+     
     },
     {
       dataField: "phone",
       text: "Mobile No",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "11px" };
-      },
-      style : {
-        wordBreak : "break-word"
-        },
+     
     },
     {
       // dataField: "parent_id",
@@ -164,9 +129,7 @@ function TaxProfessionalsTab() {
       headerStyle: () => {
         return { fontSize: "11px" };
       },
-      style : {
-        wordBreak : "break-word"
-        },
+     
       formatter : function nameFormatter(cell, row) {
        
         digit2 = row.allpcat_id.split(",")
@@ -178,7 +141,7 @@ function TaxProfessionalsTab() {
              digit2.map((e) => {
              return(
                <>
-            <p className= {e.includes("Indirect") === true ? "dirCla" : "indirCla"}> {e}</p>  
+            <p className= {e.includes("Indirect") === true ? "completed" : "inprogress"}> {e}</p>  
                </>
              ) 
            })
@@ -194,12 +157,7 @@ function TaxProfessionalsTab() {
      
       text: "Sub Category",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "11px" };
-      },
-      style : {
-        wordBreak : "break-word"
-        },
+
       formatter : function nameFormatter(cell, row) {
         var digit = [];
          
@@ -219,7 +177,7 @@ function TaxProfessionalsTab() {
             digit.map((e) => {
             return(
               <>
-             <p className= {row.allpcat_id.includes("Indirect") === true ? "dirCla" : "indirCla"}> {e + kk}</p>  
+             <p className= {row.allpcat_id.includes("Indirect") === true ? "completed" : "inprogress"}> {e + kk}</p>  
               </>
             ) 
           })
@@ -233,9 +191,7 @@ function TaxProfessionalsTab() {
     {
       dataField: "",
       text: "Action",
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
+     
       formatter: function (cell, row) {
         return (
           <>
@@ -269,7 +225,7 @@ function TaxProfessionalsTab() {
           <>
             <button
               type="button"
-              class="btn btn-info btn-sm"
+              class="autoWidthBtn"
               onClick={() => toggle(row.id)}
             >
               History
@@ -334,16 +290,12 @@ function TaxProfessionalsTab() {
           </Row>
         </CardHeader>
         <CardBody>
-        <div className="tableFixHead">
-          <BootstrapTable
-            bootstrap4
-            keyField="id"
-            data={data}
-            columns={columns}
-            rowIndex
-            classes="table-responsive"
-          />
-          </div>
+        <DataTablepopulated 
+                   bgColor="#42566a"
+                   keyField= {"assign_no"}
+                   data={data}
+                   columns={columns}>
+                    </DataTablepopulated>
         </CardBody>
       </Card>
       <History history={history} toggle={toggle} modal={modal} />

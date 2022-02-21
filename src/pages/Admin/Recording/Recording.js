@@ -20,7 +20,7 @@ import {Link} from 'react-router-dom'
 import RecordingFilter from "../../../components/Search-Filter/RecordingFilter";
 import RecordingEdit from './RecordingEdit';
 import './recording.css';
-
+import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
 
 
 function Recording() {
@@ -83,24 +83,18 @@ function Recording() {
             formatter: (cellContent, row, rowIndex) => {
                 return rowIndex + 1;
             },
-            headerStyle: () => {
-                return { fontSize: "12px", width: "8px", padding : "9px 5px" };
-            },
+          
         },
         {
             text: "Date",
             sort: true,
             dataField: "created_date",
-            headerStyle: () => {
-                return { fontSize: "12px", width: "30px" };
-            },
+          
         },
         {
             text: "Query No",
             dataField: "",
-            headerStyle: () => {
-                return { fontSize: "12px", width: "20px" };
-            },
+           
             formatter : function formatter(cell, row){
                 let a = row.assign_id.split("-")[row.assign_id.split("-").length - 1]
                 return <>
@@ -119,24 +113,17 @@ function Recording() {
         {
             text: "Participants",
             dataField: "participants",
-            headerStyle: () => {
-                return { fontSize: "12px", width: "40px" };
-            },
+           
         },
        
         {
             text: "Summary of Discussion",
             dataField: "message",
-            headerStyle: () => {
-                return { fontSize: "12px", width: "80px" };
-            },
+          
         },
         {
             text: "Action",
-            headerStyle: () => {
-                return { fontSize: "12px", width: "20px" };
-                
-            },
+           
             formatter: function nameFormatter(cell, row) {
              
                 var recording = row.file.split(",");
@@ -197,7 +184,7 @@ function Recording() {
     return (
      <>
        <Layout adminDashboard="adminDashboard" adminUserId={userid}>
-           <div style={{position:"relative", height : "100vh", overflow : "scroll"}}>
+       
                 <Card>
                 <CardHeader>
                     <Row>
@@ -217,18 +204,16 @@ function Recording() {
                        userid = {userid}
                        getRecording = {getRecording}
                     /> 
-                    <BootstrapTable
-                        bootstrap4
-                        keyField="id"
-                        data={feedbackData}
-                        columns={columns}
-                        rowIndex
-                    />
+                             <DataTablepopulated 
+                   bgColor="#42566a"
+                   keyField= {"assign_no"}
+                   data={feedbackData}
+                   columns={columns}>
+                    </DataTablepopulated>
                 </CardBody>
 
             </Card>
           
-           </div>
             
           
           <RecordingEdit 

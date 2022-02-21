@@ -226,7 +226,7 @@ function NewPassword(props) {
                       ""
                       :
                       <div>
-                        <button type="submit" className="btn btn-primary" >
+                        <button type="submit" className="customBtn" >
                           Submit
                         </button>
                         <Cancel />
@@ -259,7 +259,7 @@ const Cancel = () => {
   return (
     <>
       <Link to="/admin/forget-password" style={{ "margin": "10px" }}>
-        <button type="submit" className="btn btn-secondary">
+        <button type="submit" className="customBtn">
           Cancel
         </button>
       </Link>

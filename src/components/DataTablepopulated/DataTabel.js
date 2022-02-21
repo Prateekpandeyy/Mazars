@@ -24,10 +24,11 @@ const MyContainer = styled(Container)({
     "& thead tr th" : {
      border : "0px",
      fontSize : "12px",
-     padding: "5px"
+     padding: "10px 3px"
     },
 
     "& tbody tr td" : {
+       
         fontSize : "11px",
     }
    

@@ -196,6 +196,7 @@ html body a{
   color: rgb(56, 39, 49);
  
 }
+
 .viewDiscusion{
   color: #615339;
   font-size: 16px;
@@ -307,8 +308,8 @@ html body a{
 
 
 
-.customBtn:hover, .searchBtn:hover, .autoWidthBtn:hover, .queryPlusIcon:hover, .btnSearch:hover,
- .customBtn:focus, .searchBtn:focus, .autoWidthBtn:focus, .queryPlusIcon:focus, .btnSearch:focus{
+.customBtn:hover, .searchBtn:hover, .autoWidthBtn:hover, .queryPlusIcon:hover, .btnSearch:hover, .helpIcon:hover
+ .customBtn:focus, .searchBtn:focus, .autoWidthBtn:focus, .queryPlusIcon:focus, .btnSearch:focus, .helpIcon:focus{
   background-color: #081f8f!important;
   border: 1px solid #081f8f!important;
   color: #fff!important;
@@ -438,4 +439,23 @@ html body a{
 }
 .contentTitle{
   color:#464B4B;
+}
+.fixedTab{
+list-style-type: none;
+display: flex;
+justify-content: space-between;
+margin: 0px;
+padding: 10px;
+}
+.myStyle2{
+  margin: 10px auto;
+color : #55425f;
+font-weight : 1000;
+}
+.myStyle1{
+  margin: 10px auto;
+  font-size: 14px;
+}
+.menu-expanded .main-menu.menu-light .navigation > li > a > i{
+  margin-right: 8px !important;
 }

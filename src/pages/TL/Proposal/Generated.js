@@ -15,6 +15,8 @@ import Tds from "./Tds";
 import InvoiceFilter from "../../../components/Search-Filter/InvoiceFilter"
 import moment from "moment";
 import FileCopyIcon from '@mui/icons-material/FileCopy';
+import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
+import MessageIcon, {EyeIcon, ViewDiscussionIcon, DiscussProposal, HelpIcon} from "../../../components/Common/MessageIcon";
 
 const Generated = () => {
     var rowStyle2 = {}
@@ -79,19 +81,14 @@ const Generated = () => {
                 fontSize: "11px",
             },
             headerStyle: () => {
-                return { fontSize: "11px", width: "60px" };
+                return { width: "50px" };
             },
         },
        
         {
             text: "Query No",
             dataField: "assign_no",
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" , width : "120px"};
-            },
+            
             formatter: function nameFormatter(cell, row) {
                 
                 return (
@@ -114,35 +111,19 @@ const Generated = () => {
             text: "Installment No",
             dataField: "installment_no",
             sort: true,
-            style: {
-                fontSize: "11px",
-                textAlign : "center"
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
+            
         },
         {
             text: "Invoice No",
             dataField: "billno",
             sort: true,
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px",  width : "150px" };
-            },
+           
         },
         {
             text: "Due Date",
             dataField: "due_date",
             sort: true,
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
+           
             formatter : function(cell, row){
                 let dueDate=row.due_date.split("-").reverse().join("-")
 
@@ -158,12 +139,7 @@ const Generated = () => {
             text: "Invoice amount",
             dataField: "invoice_amount",
             sort: true,
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
+            
             sortFunc: (a, b, order, dataField) => {
                 if (order === 'asc') {
                   return b - a;
@@ -183,12 +159,7 @@ const Generated = () => {
             text: "Tds Deducted",
             dataField: "tds_amount",
             sort: true,
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
+
             sortFunc: (a, b, order, dataField) => {
                 if (order === 'asc') {
                   return b - a;
@@ -213,18 +184,13 @@ const Generated = () => {
             text: "Status",
             dataField: "is_paid",
             sort: true,
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
+           
             formatter : function(cell, row) {
                 return(
                     <>
-                    {row.is_paid == "0" ? <p style={{fontSize: "12px"}}>Unpaid</p> : 
+                    {row.is_paid == "0" ? <p>Unpaid</p> : 
                     <>
-                    {row.is_paid == "1" ? <p  style={{fontSize: "12px"}}>Paid</p> : <p style={{color : "red", fontSize: "12px"}}>Declined</p>}
+                    {row.is_paid == "1" ? <p>Paid</p> : <p className="declined">Declined</p>}
                     </>}
                     </>
                 )
@@ -234,12 +200,7 @@ const Generated = () => {
         {
             text: "Action",
             dataField: "",
-            headerStyle: () => {
-                return { fontSize: "12px", width: "110px" };
-            },
-            style: {
-                fontSize: "11px",
-            },
+           
             formatter: function (cell, row) {
                 return (
                     <>
@@ -328,17 +289,13 @@ const Generated = () => {
                 <CardBody>
                     
                     
-                <div className="tableFixHead">
-                    <BootstrapTable
-                        bootstrap4
-                        keyField= {"id"}
-                        data={proposal}
-                        columns={columns}
-                        rowIndex
-                        rowStyle={ rowStyle2 }
-                        classes="table-responsive"
-                    />
-                    </div>
+                <DataTablepopulated 
+                   bgColor="#42566a"
+                   keyField= {"assign_no"}
+                   data={proposal}
+                   columns={columns}>
+                    </DataTablepopulated>
+
 
                    
                     <DiscardReport

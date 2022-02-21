@@ -56,10 +56,10 @@ function ViewNotification() {
           <Row>
             <Col md="4">
               <button
-                class="btn btn-success ml-3"
+                className="autoWidthBtn ml-3"
                 onClick={() => history.goBack()}
               >
-                <i class="fas fa-arrow-left mr-2"></i>
+              
                 Go Back
               </button>
             </Col>

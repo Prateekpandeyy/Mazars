@@ -19,10 +19,9 @@ import {
 import { useForm } from "react-hook-form";
 import "antd/dist/antd.css";
 import { Select } from "antd";
-import BootstrapTable from "react-bootstrap-table-next";
 import AdminFilter from "../../components/Search-Filter/AdminFilter";
 import Records from "../../components/Records/Records";
-
+import DataTablepopulated from "../DataTablepopulated/DataTabel";
 
 function PendingForProposals({ CountPendingProposal }) {
   const { handleSubmit, register, errors, reset } = useForm();
@@ -78,14 +77,15 @@ function PendingForProposals({ CountPendingProposal }) {
       formatter: (cellContent, row, rowIndex) => {
         return rowIndex + 1;
       },
+      headerStyle: () => {
+        return({width: "50px"})
+      }
     },
     {
       dataField: "created",
       text: "Date",
       sort: true,
-      style: {
-        fontSize: "11px",
-    },
+      
       formatter: function dateFormat(cell, row) {
       
         var oldDate = row.created;
@@ -98,9 +98,7 @@ function PendingForProposals({ CountPendingProposal }) {
     {
       dataField: "assign_no",
       text: "Query No",
-      style: {
-        fontSize: "11px",
-    },
+     
       formatter: function nameFormatter(cell, row) {
        
         return (
@@ -121,37 +119,25 @@ function PendingForProposals({ CountPendingProposal }) {
       dataField: "parent_id",
       text: "Category",
       sort: true,
-      style: {
-        fontSize: "11px",
-    },
+     
     },
     {
       dataField: "cat_name",
       text: "Sub Category",
       sort: true,
-      style: {
-        fontSize: "11px",
-    },
+     
     },
     {
       text: "Client Name",
       dataField: "name",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
-      style: {
-        fontSize: "11px",
-    },
+     
+     
     },
     {
       text: "Status",
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
-      style: {
-        fontSize: "11px",
-    },
+     
+     
       formatter: function nameFormatter(cell, row) {
         return (
           <>
@@ -174,25 +160,19 @@ function PendingForProposals({ CountPendingProposal }) {
       dataField: "tname",
       text: "TL name",
       sort: true,
-      style: {
-        fontSize: "11px",
-    },
+     
     },
     {
       text: "History",
       dataField: "",
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
-      style: {
-        fontSize: "11px",
-    },
+     
+     
       formatter: function (cell, row) {
         return (
           <>
             <button
               type="button"
-              className="btn btn-info btn-sm"
+              className="autoWidthBtn"
               onClick={() => toggle(row.id)}
             >
               History
@@ -221,16 +201,14 @@ function PendingForProposals({ CountPendingProposal }) {
         </CardHeader>
         <CardBody>
           <Records records={records} />
-          <div className="tableFixHead">
-          <BootstrapTable
-            bootstrap4
-            keyField="id"
-            data={nonpendingData}
-            columns={columns}
-            wrapperClasses="table-responsive"
-          />
-          </div>
-          <Modal isOpen={modal} fade={false} toggle={toggle}>
+          <DataTablepopulated 
+          bgColor="#55425f"
+          keyField= {"assign_no"}
+          data={nonpendingData}
+          
+          columns={columns}>
+           </DataTablepopulated> 
+          <Modal isOpen={modal} fade={false} toggle={toggle} size="md">
             <ModalHeader toggle={toggle}>History</ModalHeader>
             <ModalBody>
               <table className="table table-bordered">
@@ -260,9 +238,9 @@ function PendingForProposals({ CountPendingProposal }) {
               </table>
             </ModalBody>
             <ModalFooter>
-              <Button color="secondary" onClick={toggle}>
+              <button className="autoWidthBtn" onClick={toggle}>
                 Cancel
-              </Button>
+              </button>
             </ModalFooter>
           </Modal>
         </CardBody>

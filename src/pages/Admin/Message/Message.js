@@ -17,6 +17,7 @@ import BootstrapTable from "react-bootstrap-table-next";
 import { useHistory } from "react-router";
 // import PaymentModal from "./PaymentModal";
 import CommonServices from "../../../common/common";
+import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
 
 
 function Message(props) {
@@ -154,10 +155,10 @@ const history = useHistory();
           <Row>
           <Col md="4">
           <button
-                class="btn btn-success" 
+                class="autoWidthBtn" 
                 onClick={() => history.goBack()}
               >
-                <i class="fas fa-arrow-left mr-2"></i>
+               
                 Go Back
               </button>
               
@@ -167,14 +168,13 @@ const history = useHistory();
             </Col>
           </Row>
         </CardHeader>
-                <CardBody style={{display : "flex", height : "80vh", overflowY : "scroll"}}>
-                    <BootstrapTable
-                        bootstrap4
-                        keyField="id"
-                        data={query}
-                        columns={columns}
-                        rowIndex
-                    />
+                <CardBody>
+                <DataTablepopulated 
+       bgColor="#42566a"
+       keyField= {"assign_no"}
+       data={query}
+       columns={columns}>
+        </DataTablepopulated>
                 </CardBody>
             </Card>
         </Layout>
@@ -182,20 +182,3 @@ const history = useHistory();
 }
 
 export default Message;
-
-{/* <Col md="3">
-                            <div style={{ display: "flex", justifyContent: "space-around" }}
-                                class="btn btn-primary"
-                            // onClick={() => paymentHandler()}
-                            >
-                                <Link
-                                    to={{
-                                        pathname: `/customer/chatting`,
-                                        obj: props.location.obj
-                                    }}
-
-                                >
-                                    Add Message
-                                </Link>
-                            </div>
-                        </Col> */}

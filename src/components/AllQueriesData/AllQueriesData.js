@@ -7,12 +7,11 @@ import {
   CardHeader,
   CardBody,
 } from "reactstrap";
-import BootstrapTable from "react-bootstrap-table-next";
 import AdminFilter from "../../components/Search-Filter/AdminFilter";
 import Records from "../../components/Records/Records";
 import DiscardReport from "../../pages/Admin/AssignmentTab/DiscardReport";
-
-
+import DataTablepopulated from "../DataTablepopulated/DataTabel";
+import MessageIcon, { ViewDiscussionIcon} from "../../components/Common/MessageIcon";
 
 function AllQueriesData({allData}) {
 
@@ -51,11 +50,9 @@ function AllQueriesData({allData}) {
       text: "S.No",
       dataField: "",
       headerStyle: () => {
-        return { fontSize: "12px"};
+        return { width : "50px"};
       },
- style: {
-        fontSize: "11px",
-    },
+ 
       formatter: (cellContent, row, rowIndex, index) => {
 
         return <div>{rowIndex + 1}</div>;
@@ -65,12 +62,7 @@ function AllQueriesData({allData}) {
       text: "Date",
       dataField: "created",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px"};
-      },
- style: {
-        fontSize: "11px",
-    },
+      
       formatter: function dateFormat(cell, row) {
         var oldDate = row.created;
         if (oldDate == null) {
@@ -82,12 +74,7 @@ function AllQueriesData({allData}) {
     {
       text: "Query No",
       dataField: "assign_no",
-      headerStyle: () => {
-        return { fontSize: "12px"};
-      },
- style: {
-        fontSize: "11px",
-    },
+      
       formatter: function nameFormatter(cell, row) {
         return (
           <>
@@ -108,43 +95,23 @@ function AllQueriesData({allData}) {
       text: "Category",
       dataField: "parent_id",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px"};
-      },
- style: {
-        fontSize: "11px",
-    },
+     
     },
     {
       text: "Sub Category",
       dataField: "cat_name",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px"};
-      },
- style: {
-        fontSize: "11px",
-    },
+     
     },
     {
       text: "Client Name",
       dataField: "name",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px"};
-      },
- style: {
-        fontSize: "11px",
-    },
+      
     },
     {
       text: "Status",
-      headerStyle: () => {
-        return { fontSize: "12px"};
-      },
- style: {
-        fontSize: "11px",
-    },
+      
       formatter: function nameFormatter(cell, row) {
         return (
           <>
@@ -176,27 +143,14 @@ function AllQueriesData({allData}) {
     },
     {
       text: "Action",
-      headerStyle: () => {
-        return { fontSize: "12px"};
-      },
- style: {
-        fontSize: "11px",
-    },
+     
       formatter: function (cell, row) {
         return (
           <>
            {row.status == "Declined Query"  ? 
-           <div title="View Discussion Message" className="ml-2">
-           <i
-             className="fa fa-comments-o"
-             style={{
-               fontSize: 16,
-               cursor: "pointer",
-               color: "orange"
-             }}
-             onClick={() => ViewDiscussionToggel(row.assign_no)}
-           ></i>
-         </div> : 
+          <span onClick={() => ViewDiscussionToggel(row.assign_no)}  className="ml-1">
+          <ViewDiscussionIcon />
+        </span>: 
             <div style={{ display: "flex", justifyContent: "space-between" }}>
             <div title="Send Message">
               <Link
@@ -213,29 +167,13 @@ function AllQueriesData({allData}) {
                   }
                 }}
               >
-                <i
-                  className="fa fa-comments-o"
-                  style={{
-                    fontSize: 16,
-                    cursor: "pointer",
-                    marginLeft: "8px",
-                    color: "blue"
-                  }}
-                ></i>
+                <MessageIcon />
               </Link>
             </div>
 
-            <div title="View Discussion Message">
-              <i
-                className="fa fa-comments-o"
-                style={{
-                  fontSize: 16,
-                  cursor: "pointer",
-                  color: "orange"
-                }}
-                onClick={() => ViewDiscussionToggel(row.assign_no)}
-              ></i>
-            </div>
+            <span onClick={() => ViewDiscussionToggel(row.assign_no)}  className="ml-1">
+          <ViewDiscussionIcon />
+        </span>
           </div>
 }
           </>
@@ -261,15 +199,13 @@ function AllQueriesData({allData}) {
         <CardBody>
           <Records records={records} />
          {allQueriesData != undefined ? 
-          <div className="tableFixHead">
-          <BootstrapTable
-          bootstrap4
-          keyField="id"
+          <DataTablepopulated 
+          bgColor="#55425f"
+          keyField= {"assign_no"}
           data={allQueriesData}
-          columns={columns}
-          rowIndex
-          wrapperClasses="table-responsive"
-        />  </div> : ""}
+          
+          columns={columns}>
+           </DataTablepopulated> : ""}
 
 
           <DiscardReport

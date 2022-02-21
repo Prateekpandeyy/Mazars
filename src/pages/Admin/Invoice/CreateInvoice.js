@@ -8,6 +8,8 @@ import DiscardReport from "../AssignmentTab/DiscardReport";
 import Tds from "./Tds";
 import InvoiceFilter from "../../../components/Search-Filter/InvoiceFilter";
 import Records from "../../../components/Records/Records";
+import FileCopyIcon from '@mui/icons-material/FileCopy';
+import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
 const CreateInvoice = () => {
     const userid = window.localStorage.getItem("adminkey");
     const [proposal, setProposal] = useState([]);
@@ -61,23 +63,16 @@ const CreateInvoice = () => {
             formatter: (cellContent, row, rowIndex) => {
                 return rowIndex + 1;
             },
-            style: {
-                fontSize: "11px",
-            },
+          
             headerStyle: () => {
-                return { fontSize: "11px", width: "200px" };
+                return {  width: "50px" };
             },
         },
        
         {
             text: "Query No",
             dataField: "assign_no",
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" , width: "200px"};
-            },
+            
             formatter: function nameFormatter(cell, row) {
 
                 return (
@@ -101,24 +96,13 @@ const CreateInvoice = () => {
             text: "Installment No",
             dataField: "installment_no",
             sort: true,
-            style: {
-                fontSize: "11px",
-               textAlign : "center"
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" , width: "200px"};
-            },
+           
         }, 
         {
             text: "Due Date",
             dataField: "due_date",
             sort: true,
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px", width: "200px" };
-            },
+         
             formatter : function(cell, row){
                 let dueDate=row.due_date.split("-").reverse().join("-")
 
@@ -134,12 +118,7 @@ const CreateInvoice = () => {
             text: "Amount",
             dataField: "paid_amount",
             sort: true,
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px", width: "200px" };
-            },
+           
             sortFunc: (a, b, order, dataField) => {
                 if (order === 'asc') {
                   return b - a;
@@ -178,16 +157,12 @@ const CreateInvoice = () => {
 
                 <CardBody>
              
-                <div className="tableFixHead">
-                    <BootstrapTable
-                        bootstrap4
-                        keyField=  {"id"}
-                        data={proposal}
-                        columns={columns}
-                        rowIndex
-                        classes="table-responsive"
-                    />
-                    </div>
+                <DataTablepopulated 
+                   bgColor="#42566a"
+                   keyField= {"assign_no"}
+                   data={proposal}
+                   columns={columns}>
+                    </DataTablepopulated>
 
                    
                     <DiscardReport

@@ -275,7 +275,7 @@ function AdminFilter(props) {
       <>
         <button
           type="submit"
-          className="btn btn-primary mx-sm-1 mb-2"
+          className="searchBtn mx-sm-1 mb-2"
           onClick={() => resetData()}
         >
           Reset
@@ -328,7 +328,7 @@ function AdminFilter(props) {
                 <div>
                   <button
                     type="submit"
-                    className="btn btn-primary mb-2 ml-3"
+                    className="btnSearch mb-2 ml-3"
                     onClick={resetCategory}
                   >
                     X
@@ -450,9 +450,9 @@ function AdminFilter(props) {
                   )}
                 </div>
 
-                <button type="submit" className="btn btn-primary mx-sm-1 mb-2">
-                  Search
-                </button>
+                <button type="submit" className="searchBtn mx-sm-1 mb-2">
+                        Search
+                      </button>
                 <Reset />
 
                
