@@ -301,7 +301,7 @@ let a = <Markup content= {description} />
                     index: props.location.index,
                   }}
                 >
-                  <button class="btn btn-success ml-3">Go Back</button>
+                  <button class="autoWidthBtn ml-3">Go Back</button>
                 </Link>
             </Col>
             <Col md="7">
@@ -527,7 +527,7 @@ let a = <Markup content= {description} />
                 loading ?
                   <Spinner color="primary" />
                   :
-                  <button type="submit" class="btn btn-primary">
+                  <button type="submit" class="customBtn">
                     Submit
                   </button>
               }

@@ -75,6 +75,34 @@ const Payment = () => {
     </>
   )
 }
+const PaymentDecline = () => {
+  return(
+    <>
+    <i title="Payment Decline" className="paymentDeclined">
+      <PaymentIcon />
+    </i>
+    </>
+  )
+}
+const DraftReportUploadIcon = () => {
+  return(
+    <>
+       <i title="Upload Additional Documents" className="draftReport">
+  <PublishIcon color="secondary" style={{color: "green"}} />
+  </i>
+    </>
+  )
+}
+const FinalReportUploadIcon = () => {
+  return(
+    <>
+    <i title="Upload Additional Documents" className="finalReport">
+  <PublishIcon/>
+  </i>
+    </>
+  )
+}
 export default MessageIcon;
 export { EyeIcon , ViewDiscussionIcon, DiscussProposal, HelpIcon, FeedBackICon
-, DeleteIcon, EditQuery, UploadDocument, Payment}
+, DeleteIcon, EditQuery, UploadDocument, Payment, PaymentDecline, DraftReportUploadIcon, 
+FinalReportUploadIcon}

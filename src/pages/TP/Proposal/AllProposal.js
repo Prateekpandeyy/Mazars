@@ -10,7 +10,9 @@ import TaxProfessionalFilter from "../../../components/Search-Filter/tpfilter";
 import ChatHistory from "./ChatHistory";
  import DiscardReport from "../AssignmentTab/DiscardReport";
  import CommonShowProposal from "../../../components/commonShowProposal/CommonShowProposal";
-
+ import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
+ import MessageIcon, {EyeIcon, ViewDiscussionIcon, DiscussProposal, HelpIcon} from "../../../components/Common/MessageIcon";
+ 
 
 
 
@@ -70,23 +72,16 @@ function AllProposal() {
             formatter: (cellContent, row, rowIndex) => {
                 return rowIndex + 1;
             },
-            style: {
-                fontSize: "11px",
-            },
+          
             headerStyle: () => {
-                return { fontSize: "11px", width: "60px" };
+                return { width: "60px" };
             },
         },
         {
             dataField: "query_date",
             text: "Query Date",
             sort: true,
-            style: {
-                fontSize: "11px",
-            },
- headerStyle: () => {
-                return { fontSize: "11px" , width : "120px", whiteSpace : "nowrap", padding: "10px 20px"};
-            },
+          
             formatter: function dateFormat(cell, row) {
            
                 var oldDate = row.query_date;
@@ -100,12 +95,7 @@ function AllProposal() {
             text: "Query No",
             dataField: "assign_no",
            
-            headerStyle: () => {
-                return { fontSize: "11px", width: "120px" };
-            },
-            style: {
-                fontSize: "11px",
-            },
+           
             formatter: function nameFormatter(cell, row) {
               
                 return (
@@ -129,34 +119,19 @@ function AllProposal() {
             text: "Category",
             dataField: "parent_id",
             sort: true,
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
+          
         },
         {
             text: "Sub Category",
             dataField: "cat_name",
             sort: true,
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
+            
         },
         {
             text: "Date of Proposal",
             dataField: "DateofProposal",
             sort: true,
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
+            
             formatter: function dateFormat(cell, row) {
              
                 var oldDate = row.DateofProposal;
@@ -170,12 +145,7 @@ function AllProposal() {
             text: "Date of acceptance / decline of Proposal",
             dataField: "cust_accept_date",
             sort: true,
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
+            
             formatter: function dateFormat(cell, row) {
             
                 var oldDate = row.cust_accept_date;
@@ -187,12 +157,7 @@ function AllProposal() {
         },
         {
             text: "Status",
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
+           
             formatter: function nameFormatter(cell, row) {
                 return (
                     <>
@@ -225,12 +190,7 @@ function AllProposal() {
             dataField: "",
             text: "Proposed Amount",
             sort: true,
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
+           
             formatter: function nameFormatter(cell, row){
                 var nfObject = new Intl.NumberFormat('hi-IN')
                  var x = row.ProposedAmount;
@@ -244,13 +204,7 @@ function AllProposal() {
             dataField: "accepted_amount",
             text: "Accepted Amount ",
             sort: true,
-            style: {
-                fontSize: "11px",
-                color: "#21a3ce",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px", color: "#21a3ce" };
-            },
+          
             formatter: function nameFormatter(cell, row){
                 var nfObject = new Intl.NumberFormat('hi-IN')
                  var x = row.accepted_amount;
@@ -263,29 +217,12 @@ function AllProposal() {
         {
             text: "Action",
             dataField: "",
-            headerStyle: () => {
-                return { fontSize: "12px", width: "110px" };
-            },
-            style: {
-                fontSize: "11px",
-            },
+           
             formatter: function (cell, row) {
                 return (
                     <>
-                        <div style={{ display: "flex", justifyContent: "flex-start" }}>
-                        <div title="View Discussion Message">
-                                <i
-                                    class="fa fa-comments-o"
-                                    style={{
-                                        fontSize: 16,
-                                        cursor: "pointer",
-                                        color: "orange"
-                                    }}
-                                    onClick={() => ViewDiscussionToggel(row.assign_no)}
-                                ></i>
-                            </div>
-                        <div title="Send Message" className="ml-2">
-                                            <Link
+                        <div style={{ display: "flex"}}>
+                        <Link
  to={{
     pathname: `/taxprofessional/chatting/${row.id}`,
     index : 0,
@@ -298,17 +235,15 @@ function AllProposal() {
                                                     }
                                                 }}
                                             >
-                                                <i
-                                                    class="fa fa-comments-o"
-                                                    style={{
-                                                        fontSize: 16,
-                                                        cursor: "pointer",
-                                                        marginLeft: "8px",
-                                                        color: "blue"
-                                                    }}
-                                                ></i>
+                                              <MessageIcon />
                                             </Link>
-                                        </div>
+                                     
+                                            <div  onClick={() => ViewDiscussionToggel(row.assign_no)} className="ml-1">
+                                  
+                                  <ViewDiscussionIcon />
+                          </div>
+                       
+                                           
                                 
                             <div className="ml-2">
                                 {row.status_code == "4" ? (
@@ -345,16 +280,10 @@ function AllProposal() {
 
                             {row.status_code > "3" || row.status_code == "10" ?
                             <>
-                                 <div style={{ cursor: "pointer", marginLeft : "2px" }} title="View Proposal">
+                               <div   onClick={(e) => showProposalModal2(row.id)} title="View Proposal">
                 
-                <i
-                  className="fa fa-eye"
-                  style={{ color: "green", fontSize: "16px" }}
-                  onClick={(e) => showProposalModal2(row.id)}
-                />
-              
-            </div>
-                              
+                <EyeIcon />
+               </div>    
                                 </>
                                 :
                                 null
@@ -383,17 +312,13 @@ function AllProposal() {
                     />
                 </CardHeader>
                 <CardBody>
-                <div className="tableFixHead">
-                    <BootstrapTable
-                        bootstrap4
-                        keyField="id"
-                        data={proposal}
-                        columns={columns}
-                        rowIndex
-                        classes="table-responsive"
-                    />
-                    </div>
-
+                <DataTablepopulated 
+          bgColor="#55425f"
+          keyField= {"assign_no"}
+          data={proposal}
+          
+          columns={columns}>
+           </DataTablepopulated> 
                     <ChatHistory
                         chatHandler={chatHandler}
                         addPaymentModal={addPaymentModal}

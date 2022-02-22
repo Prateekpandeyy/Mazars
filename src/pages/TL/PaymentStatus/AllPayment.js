@@ -26,7 +26,7 @@ import RejectedModal from "./RejectedModal";
 import DiscardReport from "../AssignmentTab/DiscardReport";
 import moment from "moment";
 import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
-import MessageIcon, {EyeIcon, ViewDiscussionIcon, DiscussProposal, HelpIcon} from "../../../components/Common/MessageIcon";
+import MessageIcon, {PaymentDecline, Payment, ViewDiscussionIcon, DiscussProposal, HelpIcon} from "../../../components/Common/MessageIcon";
 
 
 
@@ -121,7 +121,7 @@ rowStyle2 = (row, index) => {
             },
            
             headerStyle: () => {
-                return {width : "50px" };
+                return {width : "35px" };
             },
         },
         {
@@ -193,7 +193,7 @@ rowStyle2 = (row, index) => {
                 return(
                     <>
                     {row.paid_status == "2"  ?
-                    <p style={{color : "red"}}>{row.status} </p> : 
+                    <p className="declined">{row.status} </p> : 
                     <p>{row.status}</p>}
                     </>
                 )
@@ -285,7 +285,7 @@ rowStyle2 = (row, index) => {
                 return (
                     <>
                     <div style={{display: "flex"}}>
-<div style={{display: "flex"}}>
+
 <Link
                              to={{
                                 pathname: `/teamleader/chatting/${row.id}`,
@@ -306,65 +306,24 @@ rowStyle2 = (row, index) => {
                                   
                                   <ViewDiscussionIcon />
                           </div>
-</div>
-
-
-                       {row.paid_status === "2" ? 
-                     
- <div title="Payment History" style={{ color: "green", fontSize: "16px", cursor: "pointer" }} className="ml-1">
-           <Link
+                          <Link
               to={{
                   pathname: `/teamleader/paydetails/${row.assign_id}`,
                   index : 0,
                   routes: "paymentstatus",
               }}
             >
-                            <i
-                                class="fa fa-credit-card"
-                                style={{ color: "green", fontSize: "16px" }}
-                              
-                            ></i>
+                          <Payment />
                             </Link>
-                       </div>
-                 
-                       :  <div style={{ display: "flex"}}>
 
-                       <div title="Payment History" className="ml-1"
-                         
-                           style={{ color: "green", fontSize: "16px", cursor: "pointer" }}
-                       >
-                           <Link
-              to={{
-                  pathname: `/teamleader/paydetails/${row.assign_id}`,
-                  index : 0,
-                  routes: "paymentstatus",
-              }}
-            >
-                            <i
-                                class="fa fa-credit-card"
-                                style={{ color: "green", fontSize: "16px" }}
-                              
-                            ></i>
-                            </Link>
-                       </div>
-                      
-                       
-                           {
+                          {
                                row.paid_status == "0" ?
-                                   <div title="Payment decline"
-                                       onClick={() => rejectHandler(row)}
-                                       style={{ color: "red", fontSize: "16px", cursor: "pointer" }}
-                                   >
-                                       <PaymentIcon />
+                                   <div title="Payment decline" onClick={() => rejectHandler(row)}>
+                                       <PaymentDecline />
                                    </div>
                                    : null
                            }
-                     
-
-
-                      
-
-                   </div>}
+                       
                    </div>
                     </>
                 );

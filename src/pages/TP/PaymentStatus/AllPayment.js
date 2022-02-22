@@ -25,6 +25,9 @@ import AssessmentIcon from '@material-ui/icons/Assessment';
 import RejectedModal from "./RejectedModal";
 import DiscardReport from "../AssignmentTab/DiscardReport";
 import moment from 'moment';
+import MessageIcon, {PaymentDecline, Payment, ViewDiscussionIcon, DiscussProposal, HelpIcon} from "../../../components/Common/MessageIcon";
+import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
+
 
 
 
@@ -115,23 +118,17 @@ rowStyle2 = (row, index) => {
             formatter: (cellContent, row, rowIndex) => {
                 return rowIndex + 1;
             },
-            style: {
-                fontSize: "11px",
-            },
+           
             headerStyle: () => {
-                return { fontSize: "11px" };
+                return { width: "50px" };
             },
         },
         {
             dataField: "query_created_date",
             text: "Date",
             sort: true,
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" , width : "120px"};
-            },
+           
+           
             formatter: function dateFormat(cell, row) {
 
                 var oldDate = row.query_created_date;
@@ -144,12 +141,7 @@ rowStyle2 = (row, index) => {
         {
             dataField: "assign_no",
             text: "Query No",
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" , width : "100px"};
-            },
+           
             formatter: function nameFormatter(cell, row) {
                 return (
                     <>
@@ -170,34 +162,19 @@ rowStyle2 = (row, index) => {
             dataField: "parent_id",
             text: "Category",
             sort: true,
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
+            
         },
         {
             dataField: "cat_name",
             text: "Sub Category",
             sort: true,
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
+            
         },
         {
             text: "Date of acceptance of Proposal",
             dataField: "cust_accept_date",
             sort: true,
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px", width : "100px" };
-            },
+           
             formatter: function dateFormat(cell, row) {
               
                 var oldDate = row.cust_accept_date;
@@ -210,12 +187,7 @@ rowStyle2 = (row, index) => {
         {
             text: "Status",
             dataField: "",
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
+           
             formatter : function (cell, row) {
                 return(
                     <>
@@ -230,19 +202,14 @@ rowStyle2 = (row, index) => {
             dataField: "accepted_amount",
             text: "Accepted Amount ",
             sort: true,
-            style: {
-              fontSize: "11px",
-              color: "#21a3ce",
-            },
+            
             sortFunc: (a, b, order, dataField) => {
               if (order === 'asc') {
                 return b - a;
               }
               return a - b; // desc
             },
-            headerStyle: () => {
-              return { fontSize: "11px", color: "#21a3ce" };
-            },
+           
             formatter: function nameFormatter(cell, row){
                 var nfObject = new Intl.NumberFormat('hi-IN')
                  var x = row.accepted_amount;
@@ -256,19 +223,14 @@ rowStyle2 = (row, index) => {
             text: "Amount Paid",
             dataField: "paid_amount",
             sort: true,
-            style: {
-              fontSize: "11px",
-              color: "#064606",
-            },
+          
             sortFunc: (a, b, order, dataField) => {
               if (order === 'asc') {
                 return b - a;
               }
               return a - b; // desc
             },
-            headerStyle: () => {
-              return { fontSize: "11px", color: "#064606" };
-            },
+            
             formatter: function nameFormatter(cell, row){
                 var nfObject = new Intl.NumberFormat('hi-IN')
                  var x = row.paid_amount;
@@ -283,19 +245,14 @@ rowStyle2 = (row, index) => {
             text : "Outstanding Amount",
             dataField: "amount_outstanding",
             sort: true,
-            style: {
-              fontSize: "11px",
-              color: "darkred",
-            },
+          
             sortFunc: (a, b, order, dataField) => {
               if (order === 'asc') {
                 return b - a;
               }
               return a - b; // desc
             },
-            headerStyle: () => {
-              return { fontSize: "11px", color: "darkred" };
-            },
+         
             formatter: function nameFormatter(cell, row){
                 var nfObject = new Intl.NumberFormat('hi-IN')
                  var x = row.amount_outstanding;
@@ -308,12 +265,7 @@ rowStyle2 = (row, index) => {
             text: "Date of Payment",
             dataField: "cust_paid_date",
             sort: true,
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" , width : "80px"};
-            },
+           
             formatter: function dateFormat(cell, row) {
             
                 var oldDate = row.cust_paid_date;
@@ -325,113 +277,45 @@ rowStyle2 = (row, index) => {
         },
         {
             text: "Action",
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
+        
             formatter: function (cell, row) {
                 return (
                     <>
+                    <div style={{display: "flex"}}>
 
-                        {row.paid_status === "2" ?  <div style={{ display: "flex", justifyContent: "space-between", width: "90px" }}>
-
-<div title="Payment History"
-
-    style={{ color: "green", fontSize: "16px", cursor: "pointer" }}
->
 <Link
-          
-            to={{
-                pathname: `/taxprofessional/paydetails/${row.assign_id}`,
-                index : 0,
-                routes: "paymentstatus",
-            }}
-            >
-                            <i
-                                class="fa fa-credit-card"
-                                style={{ color: "green", fontSize: "16px" }}
-                                // onClick={() => toggle(row.assign_id)}
-                            ></i>
-                            </Link>
-</div>
-
-<div title="View Discussion Message">
-    <i
-        class="fa fa-comments-o"
-        style={{
-            fontSize: 16,
-            cursor: "pointer",
-            color: "orange"
-        }}
-        onClick={() => ViewDiscussionToggel(row.assign_no)}
-    ></i>
-</div>
-
-</div> : 
-                        <div style={{ display: "flex", justifyContent: "space-between", width: "90px" }}>
-
-                        <div title="Payment History"
-
-                            style={{ color: "green", fontSize: "16px", cursor: "pointer" }}
-                        >
+                             to={{
+                                pathname: `/taxprofessional/chatting/${row.id}`,
+                                index: 0,
+                                routes: "paymentstatus",
+                        
+                              obj: {
+                                  message_type: "4",
+                                  query_No: row.assign_no,
+                                  query_id: row.id,
+                                  routes: `/taxprofessional/paymentstatus`
+                              }
+                          }}
+                      >
+                          <MessageIcon />
+                      </Link>
+<div  onClick={() => ViewDiscussionToggel(row.assign_no)} className="ml-1">
+                                  
+                                  <ViewDiscussionIcon />
+                          </div>
                           <Link
-          
-          to={{
-              pathname: `/taxprofessional/paydetails/${row.assign_id}`,
-              index : 0,
-              routes: "paymentstatus",
-          }}
-          >
-                          <i
-                              class="fa fa-credit-card"
-                              style={{ color: "green", fontSize: "16px" }}
-                              // onClick={() => toggle(row.assign_id)}
-                          ></i>
-                          </Link>
-                        </div>
-                        <div title="Send Message" className="ml-2">
-                                            <Link
- to={{
-    pathname: `/taxprofessional/chatting/${row.id}`,
-    index : 0,
-    routes: "paymentstatus",
-                                                    obj: {
-                                                        message_type: "5",
-                                                        query_No: row.assign_no,
-                                                        query_id: row.id,
-                                                        routes: `/taxprofessional/paymentstatus`
-                                                    }
-                                                }}
-                                            >
-                                                <i
-                                                    class="fa fa-comments-o"
-                                                    style={{
-                                                        fontSize: 16,
-                                                        cursor: "pointer",
-                                                        marginLeft: "8px",
-                                                        color: "blue"
-                                                    }}
-                                                ></i>
-                                            </Link>
-                                        </div>
-                                
+              to={{
+                  pathname: `/taxprofessional/paydetails/${row.assign_id}`,
+                  index : 0,
+                  routes: "paymentstatus",
+              }}
+            >
+                          <Payment />
+                            </Link>
 
-
-                        <div title="View Discussion Message">
-                            <i
-                                class="fa fa-comments-o"
-                                style={{
-                                    fontSize: 16,
-                                    cursor: "pointer",
-                                    color: "orange"
-                                }}
-                                onClick={() => ViewDiscussionToggel(row.assign_no)}
-                            ></i>
-                        </div>
-
-                    </div>}
+                         
+                       
+                   </div>
                     </>
                 );
             },
@@ -453,19 +337,12 @@ rowStyle2 = (row, index) => {
                 </CardHeader>
 
                 <CardBody>
-                <div className="tableFixHead">
-                    <BootstrapTable
-                        bootstrap4
-                        keyField="id"
-                        data={payment}
-                        columns={columns}
-                        rowStyle={rowStyle2}
-                        rowIndex
-                        classes="table-responsivepayment"
-                    />
-
-</div>
-                    <RejectedModal
+                <DataTablepopulated 
+                   bgColor="#42566a"
+                   keyField= {"assign_no"}
+                   data={payment}
+                   columns={columns}>
+                    </DataTablepopulated>  <RejectedModal
                         rejectHandler={rejectHandler}
                         addPaymentModal={addPaymentModal}
                         assignNo={assignNo}

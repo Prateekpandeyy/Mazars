@@ -18,7 +18,7 @@ import "react-modal-video/scss/modal-video.scss";
 import RecordingFilter from "../../../components/Search-Filter/RecordingFilter";
 import {Link} from 'react-router-dom';
 import './recording.css';
-
+import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
 
 
 
@@ -241,13 +241,12 @@ const editRecording = (participants, assign_id, message, id) => {
                        userid = {userid}
                        getRecording = {getRecording}
                     /> 
-                    <BootstrapTable
-                        bootstrap4
-                        keyField="id"
-                        data={feedbackData}
-                        columns={columns}
-                        rowIndex
-                    />
+                    <DataTablepopulated 
+                   bgColor="#42566a"
+                   keyField= {"assign_no"}
+                   data={feedbackData}
+                   columns={columns}>
+                    </DataTablepopulated>
                 </CardBody>
 
             </Card>

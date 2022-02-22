@@ -14,7 +14,8 @@ import { Link } from "react-router-dom";
 import BootstrapTable from "react-bootstrap-table-next";
 import TaxProfessionalFilter from "../../../components/Search-Filter/tpfilter";
 import DiscardReport from "../AssignmentTab/DiscardReport";
-
+import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
+import MessageIcon, {ViewDiscussionIcon, } from "../../../components/Common/MessageIcon";
 
 function InCompleteData({ CountIncomplete }) {
   const userid = window.localStorage.getItem("tpkey");
@@ -53,11 +54,9 @@ function InCompleteData({ CountIncomplete }) {
       formatter: (cellContent, row, rowIndex) => {
         return rowIndex + 1;
       },
-      style : {
-        fontSize : "11px"
-      },
+    
       headerStyle: () => {
-        return { fontSize: "12px", width: "50px" };
+        return {  width: "50px" };
       },
       
     },
@@ -65,22 +64,12 @@ function InCompleteData({ CountIncomplete }) {
       text: "Query Date",
       dataField: "created",
       sort: true,
-      style : {
-        fontSize : "11px"
-      },
-      headerStyle: () => {
-        return { fontSize: "12px", width : "120px" };
-      },
+     
     },
     {
       text: "Query No",
       dataField: "assign_no",
-      style : {
-        fontSize : "11px"
-      },
-      headerStyle: () => {
-        return { fontSize: "12px" , width : "130px"};
-      },
+     
       formatter: function nameFormatter(cell, row) {
 
         return (
@@ -102,45 +91,25 @@ function InCompleteData({ CountIncomplete }) {
       text: "Category",
       dataField: "parent_id",
       sort: true,
-      style : {
-        fontSize : "11px"
-      },
-      headerStyle: () => {
-        return { fontSize: "12px" , width : "120px"};
-      },
+      
     },
     {
       text: "Sub Category",
       dataField: "cat_name",
       sort: true,
-      style : {
-        fontSize : "11px"
-      },
-      headerStyle: () => {
-        return { fontSize: "12px" , width :"150px"};
-      },
+      
     },
     {
       text: "Client Name",
       dataField: "name",
       sort: true,
-      style : {
-        fontSize : "11px"
-      },
-      headerStyle: () => {
-        return { fontSize: "12px" , width : "150px"};
-      },
+     
     },
     {
       text: "Delivery due date / Actual Delivery date",
       dataField: "Exp_Delivery_Date",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px", width : "150px" };
-      },
-      style : {
-        fontSize : "11px"
-      },
+     
       formatter: function dateFormat(cell, row) {
      
         var oldDate = row.Exp_Delivery_Date;
@@ -152,12 +121,7 @@ function InCompleteData({ CountIncomplete }) {
     },
     {
       text: "Status",
-      headerStyle: () => {
-        return { fontSize: "12px" , width : "100px"};
-      },
-      style : {
-        fontSize : "11px"
-      },
+      
       formatter: function nameFormatter(cell, row) {
         return (
           <>
@@ -189,12 +153,7 @@ function InCompleteData({ CountIncomplete }) {
     {
       text: "Action",
       dataField: "",
-      headerStyle: () => {
-          return { fontSize: "12px" , width : "120px"};
-      },
-      style: {
-          fontSize : "11px"
-      },
+     
       formatter: function (cell, row) {
         
           return (
@@ -204,14 +163,13 @@ function InCompleteData({ CountIncomplete }) {
                 <div
                 style={{
                     display: "flex",
-                    justifyContent: "space-evenly",
-                    color: "green",
+                   
                 }}
             >
                
 
                 {row.status == "Declined Query" ? null :
-  <div title="Send Message" className="ml-2">
+ 
   <Link
 to={{
 pathname: `/taxprofessional/chatting/${row.id}`,
@@ -225,29 +183,14 @@ routes: "queriestab",
           }
       }}
   >
-      <i
-          class="fa fa-comments-o"
-          style={{
-              fontSize: 16,
-              cursor: "pointer",
-              marginLeft: "8px",
-              color: "blue"
-          }}
-      ></i>
+     <MessageIcon />
   </Link>
-</div>}
+}
 
-                <div title="View Discussion Message">
-                    <i
-                        class="fa fa-comments-o"
-                        style={{
-                            fontSize: 16,
-                            cursor: "pointer",
-                            color: "orange"
-                        }}
-                        onClick={() => ViewDiscussionToggel(row.assign_no)}
-                    ></i>
-                </div>
+<div  onClick={() => ViewDiscussionToggel(row.assign_no)} className="ml-1">
+                                  
+                                  <ViewDiscussionIcon />
+                          </div>
             </div>}
               </>
           );
@@ -268,16 +211,13 @@ routes: "queriestab",
           />
         </CardHeader>
         <CardBody>
-        <div className="tableFixHead">
-          <BootstrapTable
-            bootstrap4
-            keyField="id"
-            data={incompleteData}
-            columns={columns}
-            classes="table-responsive"
-            rowIndex
-          />
-</div>
+        <DataTablepopulated 
+              bgColor="#55425f"
+              keyField= {"assign_no"}
+              data={incompleteData}
+              
+              columns={columns}>
+               </DataTablepopulated> 
           <DiscardReport
             ViewDiscussionToggel={ViewDiscussionToggel}
             ViewDiscussion={ViewDiscussion}

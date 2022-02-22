@@ -17,8 +17,8 @@ import BootstrapTable from "react-bootstrap-table-next";
 import PaymentModal from "./PaymentModal";
 import CommonServices from "../../../common/common";
 import { useHistory } from "react-router";
+import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
 function Message(props) {
-   
     const alert = useAlert();
 
     const userId = window.localStorage.getItem("tpkey");
@@ -154,7 +154,7 @@ const history = useHistory();
           <Row>
           <Col md="4">
           <button
-                class="btn btn-success" 
+                class="autoWidthBtn" 
                 onClick={() => history.goBack()}
               >
                 <i class="fas fa-arrow-left mr-2"></i>
@@ -168,13 +168,12 @@ const history = useHistory();
           </Row>
         </CardHeader>
                 <CardBody style={{display : "flex", height : "80vh", overflowY : "scroll"}}>
-                    <BootstrapTable
-                        bootstrap4
-                        keyField="id"
-                        data={query}
-                        columns={columns}
-                        rowIndex
-                    />
+                <DataTablepopulated 
+                   bgColor="#42566a"
+                   keyField= {"assign_no"}
+                   data={query}
+                   columns={columns}>
+                    </DataTablepopulated>
                     <PaymentModal
                         paymentHandler={paymentHandler}
                         addPaymentModal={addPaymentModal}

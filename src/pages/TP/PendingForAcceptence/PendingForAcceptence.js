@@ -13,7 +13,7 @@ import RejectedModal from "./RejectedModal";
 import Alerts from "../../../common/Alerts";
 import { Spinner } from 'reactstrap';
 import { useHistory } from "react-router";
-
+import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
 function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
   let history = useHistory();
   const userid = window.localStorage.getItem("tpkey");
@@ -61,23 +61,16 @@ function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
       formatter: (cellContent, row, rowIndex) => {
         return rowIndex + 1;
       },
-      style: {
-        fontSize : "11px"
-    },
+   
       headerStyle: () => {
-        return { fontSize: "12px", width: "50px" };
+        return { width: "50px" };
       },
     },
     {
       text: "Date",
       dataField: "query_created",
       sort: true,
-      style: {
-        fontSize : "11px"
-    },
-      headerStyle: () => {
-        return { fontSize: "12px" , width : "120px"};
-      },
+     
       formatter: function dateFormat(cell, row) {
      
         var oldDate = row.query_created;
@@ -90,12 +83,7 @@ function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
     {
       text: "Query No",
       dataField: "assign_no",
-      headerStyle: () => {
-        return { fontSize: "12px" , width : "150px"};
-      },
-      style: {
-        fontSize : "11px"
-    },
+      
       formatter: function nameFormatter(cell, row) {
 
         return (
@@ -117,42 +105,25 @@ function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
       text: "Category",
       dataField: "parent_id",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" , width : "150px"};
-      },
-      style: {
-        fontSize : "11px"
-    }
+      
     },
     {
       text: "Sub Category",
       dataField: "cat_name",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px", width : "150px" };
-      },
-      style: {
-        fontSize : "11px"
-    }
+
     },
     {
       text: "Client Name",
       dataField: "name",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" , width : "150px"};
-      },
-      style: {
-        fontSize : "11px"
-    }
+     
     },
     {
       text: "Delivery due date / Actual Delivery date",
       dataField: "Exp_Delivery_Date",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" , width : "150px"};
-      },
+     
       formatter: function dateFormat(cell, row) {
      
         var oldDate = row.Exp_Delivery_Date;
@@ -161,19 +132,12 @@ function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
         }
         return oldDate.toString().split("-").reverse().join("-");
       },
-      style: {
-        fontSize : "11px"
-    }
+     
     },
     {
       text: "Accept / Reject",
       dataField: "",
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
-      style: {
-        fontSize : "11px"
-    },
+     
       formatter: function (cell, row) {
         return (
           <>
@@ -266,16 +230,13 @@ function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
             loading ?
               <Spinner color="primary" />
               :
-              <div className="tableFixHead">
-              <BootstrapTable
-                bootstrap4
-                keyField="id"
-                data={pendingData}
-                columns={columns}
-                rowIndex
-                classes="table-responsive"
-              />
-              </div>
+              <DataTablepopulated 
+              bgColor="#55425f"
+              keyField= {"assign_no"}
+              data={pendingData}
+              
+              columns={columns}>
+               </DataTablepopulated> 
           }
           <RejectedModal
             rejectHandler={rejectHandler}

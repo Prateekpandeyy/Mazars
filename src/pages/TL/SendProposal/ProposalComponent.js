@@ -274,7 +274,7 @@ console.log(props)
           <Row>
             <Col md="5">
               <button
-                class="btn btn-success ml-3"
+                class="autoWidthBtn ml-3"
                 onClick={() => history.goBack()}
               >
                 <i class="fas fa-arrow-left mr-2"></i>
@@ -502,7 +502,7 @@ console.log(props)
                 loading ?
                   <Spinner color="primary" />
                   :
-                  <button type="submit" class="btn btn-primary">
+                  <button type="submit" class="customBtn">
                     Submit
                   </button>
               }

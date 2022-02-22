@@ -271,7 +271,7 @@ return(
                     index: props.location.index,
                   }}
                 >
-                  <button class="btn btn-success ml-3">Go Back</button>
+                  <button class="autoWidthBtn ml-3">Go Back</button>
                 </Link>
             </Col>
             <Col md="8">

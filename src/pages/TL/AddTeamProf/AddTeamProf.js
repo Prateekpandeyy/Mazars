@@ -15,7 +15,7 @@ import {
 } from "reactstrap";
 import { useAlert } from "react-alert";
 import BootstrapTable from "react-bootstrap-table-next";
-
+import DataTablepopulated from '../../../components/DataTablepopulated/DataTabel'
 function AddTeamProf() {
   const alert = useAlert();
   const [data, setData] = useState([]);
@@ -178,37 +178,15 @@ function AddTeamProf() {
           </Row>
         </CardHeader>
         <CardBody>
-        <div className="tableFixHead">
-          <BootstrapTable
-            bootstrap4
-            keyField="id"
-            data={data}
-            columns={columns}
-            rowIndex
-            classes="table-responsive"
-          />
-          </div>
+        <DataTablepopulated 
+                   bgColor="#42566a"
+                   keyField= {"assign_no"}
+                   data={data}
+                   columns={columns}>
+                    </DataTablepopulated>
+        
 
-          {/* <Table responsive="sm" bordered>
-            <thead>
-              <tr>
-                <th scope="col">S.No</th>
-                <th scope="col">Name</th>
-                <th scope="col">Email</th>
-                <th scope="col">Phone No.</th>
-              </tr>
-            </thead>
-            <tbody>
-              {data.map((p, i) => (
-                <tr>
-                  <th scope="row">{i + 1}</th>
-                  <td>{p.name}</td>
-                  <td>{p.email}</td>
-                  <td>{p.phone}</td>
-                </tr>
-              ))}
-            </tbody>
-          </Table> */}
+      
         </CardBody>
       </Card>
     </Layout>

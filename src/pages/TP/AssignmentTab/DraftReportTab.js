@@ -15,6 +15,9 @@ import DiscardReport from "../AssignmentTab/DiscardReport";
 import DraftReportModal from "./DraftReportUpload";
 import ViewAllReportModal from "./ViewAllReport";
 import DescriptionOutlinedIcon from '@material-ui/icons/DescriptionOutlined';
+import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
+import MessageIcon, { ViewDiscussionIcon, DraftReportUploadIcon, FinalReportUploadIcon} from "../../../components/Common/MessageIcon";
+
 
 
 
@@ -156,22 +159,15 @@ function AssignmentTab() {
                 return rowIndex + 1;
             },
             headerStyle: () => {
-                return { fontSize: "12px", width: "50px" };
+                return {  width: "50px" };
             },
-            style : {
-                fontSize : "11px"
-              },
+            
         },
         {
             text: "Date",
             dataField: "date_of_query",
             sort: true,
-            headerStyle: () => {
-                return { fontSize: "12px" };
-            },
-            style : {
-                fontSize : "11px"
-              },
+           
             formatter: function dateFormat(cell, row) {
               
                 var oldDate = row.date_of_query;
@@ -184,12 +180,7 @@ function AssignmentTab() {
         {
             text: "Query No",
             dataField: "assign_no",
-            headerStyle: () => {
-                return { fontSize: "12px" };
-            },
-            style : {
-                fontSize : "11px"
-              },
+           
             formatter: function nameFormatter(cell, row) {
               
                 return (
@@ -211,87 +202,71 @@ function AssignmentTab() {
             text: "Category",
             dataField: "parent_id",
             sort: true,
-            headerStyle: () => {
-                return { fontSize: "12px" };
-            },
-            style : {
-                fontSize : "11px"
-              },
+           
         },
         {
             text: "Sub Category",
             dataField: "cat_name",
             sort: true,
-            headerStyle: () => {
-                return { fontSize: "12px" };
-            },
-            style : {
-                fontSize : "11px"
-              },
+           
         },
         {
             dataField: "status",
             text: "Status",
-            style: {
-                fontSize: "11px",
-            },
+           
             headerStyle: () => {
-                return { fontSize: "12px", width: "200px" };
+              return { fontSize: "11px", width: "200px" };
             },
+      
             formatter: function (cell, row) {
-                return (
-                    <>
-                         <div>
-            {row.paid_status == "2" &&
-                <p>
-                  <span style={{ color: "red" }}>Payment Declined</span>
-                </p>
-              }
-              <p>
-                <span style={{ fontWeight: "bold" }}>Client Discussion :</span>
-               <span style={ row.client_discussion == "completed" ? clcomp : clinpro}>
-{row.client_discussion}
-                 </span>
-              </p>
-              <p>
-                <span style={{ fontWeight: "bold" }}>Draft report :</span>
-                <span style={ row.draft_report == "completed" ? clcomp : clinpro}>
-{row.draft_report}
-                 </span>
-              </p>
-              <p>
-                <span style={{ fontWeight: "bold" }}>Final Discussion :</span>
-                <span style={ row.final_discussion == "completed" ? clcomp : clinpro}>
-{row.final_discussion}
-                 </span>
-              </p>
-              <p>
-                <span style={{ fontWeight: "bold" }}>Delivery of Final Report :</span>
-                <span style={ row.delivery_report == "completed" ? clcomp : clinpro}>
-{row.delivery_report}
-                 </span>
-              </p>
-              <p>
-                <span style={{ fontWeight: "bold" }}>Awaiting Completion:</span>
-                <span style={ row.other_stage == "completed" ? clcomp : clinpro}>
-{row.other_stage}
-                 </span>
-              </p>
-            </div>
-          </>
-        );
-      },
-    },
+              return (
+                <>
+                  <div>
+                  {row.paid_status == "2" &&
+                      <p>
+                        <span className="declined">Payment Declined</span>
+                      </p>
+                    }
+                    <p>
+                      <span style={{ fontWeight: "bold" }}>Client Discussion :</span>
+                     <span className={row.client_discussion === "completed" ? "completed" : "inprogress"}>
+                                      {row.client_discussion}
+                       </span>
+                    </p>
+                    <p>
+                      <span style={{ fontWeight: "bold" }}>Draft report :</span>
+                      <span className={row.draft_report === "completed" ? "completed" : "inprogress"}>
+                            {row.draft_report}
+                       </span>
+                    </p>
+                    <p>
+                      <span style={{ fontWeight: "bold" }}>Final Discussion :</span>
+                      <span className={row.final_discussion === "completed" ? "completed" : "inprogress"}>
+                           {row.final_discussion}
+                       </span>
+                    </p>
+                    <p>
+                      <span style={{ fontWeight: "bold" }}>Delivery of Final Report :</span>
+                      <span className={row.delivery_report === "completed" ? "completed" : "inprogress"}>
+                                   {row.delivery_report}
+                       </span>
+                    </p>
+                    <p>
+                      <span style={{ fontWeight: "bold" }}>Awaiting Completion:</span>
+                      <span className={row.other_stage === "completed" ? "completed" : "inprogress"}>
+                                  {row.other_stage}
+                       </span>
+                    </p>
+                  </div>
+                </>
+              );
+            },
+          },
         {
             text: "Expected date of delivery",
             dataField: "Exp_Delivery_Date",
             sort: true,
-            headerStyle: () => {
-                return { fontSize: "12px" };
-            },
-            style : {
-                fontSize : "11px"
-              },
+          
             formatter: function dateFormat(cell, row) {
                
                 var oldDate = row.Exp_Delivery_Date;
@@ -305,12 +280,7 @@ function AssignmentTab() {
             text: "Actual date of delivery",
             dataField: "final_date",
             sort: true,
-            headerStyle: () => {
-                return { fontSize: "12px" };
-            },
-            style : {
-                fontSize : "11px"
-              },
+          
             formatter: function dateFormat(cell, row) {
             
                 var oldDate = row.final_date;
@@ -324,12 +294,7 @@ function AssignmentTab() {
             text: "Deliverable",
             dataField: "",
             sort: true,
-            headerStyle: () => {
-              return { fontSize: "12px" };
-            },
-            style : {
-                fontSize : "11px", textAlign: "center"
-              },
+           
             formatter: function (cell, row) {
               return (
                 <>
@@ -354,12 +319,7 @@ function AssignmentTab() {
           },
           {
             text: "Assignment Stage",
-            headerStyle: () => {
-              return { fontSize: "12px" };
-            },
-            style : {
-                fontSize : "11px"
-              },
+           
             formatter: function (cell, row) {
               return (
                 <>
@@ -378,99 +338,64 @@ function AssignmentTab() {
               );
             },
           },
-        {
+          {
             text: "Action",
-            headerStyle: () => {
-                return { fontSize: "12px" };
-            },
-            style : {
-                fontSize : "11px"
-              },
+            
             formatter: function (cell, row) {
-                return (
-                    <>
+              return (
+                <>
+              <div style={{display: "flex"}}>
+              <Link
+                  to={{
+                    pathname: `/taxprofessional/chatting/${row.q_id}`,
+                    index : 1,
+                    routes: "assignment",
+                       obj: {
+                         message_type: "3",
+                         query_No: row.assign_no,
+                         query_id: row.q_id,
+                         routes: `/taxprofessional/assignment`
+                       }
+                     }}
+                   >
+                    <MessageIcon />
+                   </Link>
+                   <div  onClick={() => ViewDiscussionToggel(row.assign_no)} className="ml-1">
+                                        
+                                        <ViewDiscussionIcon />
+                                </div>
                {
-                 row.paid_status == "2" ? null : 
-                 <div
-                 style={{
-                   display: "flex",
-                   justifyContent: "space-between",
-                 }}
-               >
+                 row.paid_status == "2" ? 
+                null : 
+                 <>
                  
-                 
-                    {
-                    row.client_discussion == "completed" && row.draft_report == "inprogress" && row.paid_status !=2 ?
-                    <div title="upload Pdf">
-                    <p
-                      style={{ cursor: "pointer", color: "green" }}
-                      onClick={() => uploadDraftReport(row.id)}
-                    >
-                      <i class="fa fa-upload" style={{ fontSize: "16px" }}></i>
-                      draft
-                    </p>
-                  </div> : null
-                 }
                   {
-                    row.client_discussion == "completed" && row.draft_report == "completed" && row.final_discussion == "inprogress" ?
-                    <div title="upload Pdf">
+                    row.client_discussion == "completed" && row.draft_report == "inprogress" && row.final_discussion == "inprogress" &&  row.paid_status !=2  ?
+                   
                     <p
-                      style={{ cursor: "pointer", color: "green" }}
+                      style={{ display: "flex", flexDirection: "column" , cursor: "pointer", color: "green" }}
                       onClick={() => uploadDraftReport(row.id)}
                     >
-                      <i class="fa fa-upload" style={{ fontSize: "16px" }}></i>
+                     <DraftReportUploadIcon />
                       draft
                     </p>
-                  </div> : null
+                   : null
                  }
+     
                 
       
-                 <div title="View Discussion Message">
-                   <i
-                     class="fa fa-comments-o"
-                     style={{
-                       fontSize: 16,
-                       cursor: "pointer",
-                       color: "orange"
-                     }}
-                     onClick={() => ViewDiscussionToggel(row.assign_no)}
-                   ></i>
-                 </div>
-                 <div title="Send Message" className="ml-2">
-                                            <Link
- to={{
-    pathname: `/taxprofessional/chatting/${row.id}`,
-    index : 1,
-    routes: "assignment",
-                                                    obj: {
-                                                        message_type: "3",
-                                                        query_No: row.assign_no,
-                                                        query_id: row.id,
-                                                        routes: `/taxprofessional/assignment`
-                                                    }
-                                                }}
-                                            >
-                                                <i
-                                                    class="fa fa-comments-o"
-                                                    style={{
-                                                        fontSize: 16,
-                                                        cursor: "pointer",
-                                                        marginLeft: "8px",
-                                                        color: "blue"
-                                                    }}
-                                                ></i>
-                                            </Link>
-                                        </div>
-
-               </div>
+                
+                
+               </>
                }
-                </>
-                );
+       
+              </div>
+                
+                         </>
+              );
             },
-        },
-    ];
-
-
+          },
+        ];
     const onSubmit = (data) => {
        
         axios
@@ -494,7 +419,7 @@ function AssignmentTab() {
             <>
                 <button
                     type="submit"
-                    class="btn btn-primary mx-sm-1 mb-2"
+                    class="customBtn mx-sm-1 mb-2"
                     onClick={() => resetData()}
                 >
                     Reset
@@ -547,7 +472,7 @@ function AssignmentTab() {
                             <div>
                                 <button
                                     type="submit"
-                                    class="btn btn-primary mb-2 ml-3"
+                                    class="btnSearch mb-2 ml-3"
                                     onClick={resetCategory}
                                 >
                                     X
@@ -588,7 +513,7 @@ function AssignmentTab() {
                             <div class="form-group mx-sm-1  mb-2">
                                 <label className="form-select form-control">Total Records : {records}</label>
                             </div>
-                            <button type="submit" class="btn btn-primary mx-sm-1 mb-2">
+                            <button type="submit" class="customBtn mx-sm-1 mb-2">
                                 Search
                             </button>
 
@@ -598,16 +523,13 @@ function AssignmentTab() {
                 </CardHeader>
 
                 <CardBody>
-                <div className="tableFixHead">
-                    <BootstrapTable
-                        bootstrap4
-                        keyField="id"
-                        data={assignment}
-                        columns={columns}
-                        rowIndex
-                        classes="table-responsive"
-                    />
-                    </div>
+                <DataTablepopulated 
+                   bgColor="#42566a"
+                   keyField= {"assign_no"}
+                   data={assignment}
+                   columns={columns}>
+                    </DataTablepopulated>
+
 
 <DraftReportModal
             draftModal={draftModal}

@@ -101,7 +101,7 @@ des = false;
                   :
                   <button
                     type="submit"
-                    className="btn btn-primary"
+                    className="customBtn"
                   >
                     Upload
                   </button>

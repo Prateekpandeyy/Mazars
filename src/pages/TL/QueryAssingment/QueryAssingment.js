@@ -190,7 +190,7 @@ function QueryAssingment() {
                 }}
               >
                 <button
-                  class="btn btn-success ml-3"
+                  class="autoWidthBtn ml-3"
                 >
                   <i class="fas fa-arrow-left mr-2"></i>
                   Go Back
@@ -280,7 +280,7 @@ function QueryAssingment() {
                                 </td>
 
                                 <td>
-                                  <button type="submit" class="btn btn-success">
+                                  <button type="submit" class="customBtn">
                                     Assign
                                   </button>
                                 </td>
@@ -316,7 +316,7 @@ function QueryAssingment() {
                                 </td>
 
                                 <td>
-                                  <button class="btn btn-success" disabled>
+                                  <button disabled  className="customBtnDisabled">
                                     Assigned
                                   </button>
                                 </td>

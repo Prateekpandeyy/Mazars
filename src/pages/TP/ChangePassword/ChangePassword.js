@@ -140,7 +140,7 @@ function ChangePassword(props) {
               )}
             </div>
 
-            <button type="submit" className="btn btn-primary">
+            <button type="submit" className="customBtn">
               Submit
             </button>
           </form>

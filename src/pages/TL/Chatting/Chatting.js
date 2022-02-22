@@ -22,6 +22,7 @@ import classNames from "classnames";
 import Mandatory from "../../../components/Common/Mandatory";
 import Loader from "../../../components/Loader/Loader";
 import { Link } from "react-router-dom";
+
 const Schema = yup.object().shape({
   msg_type: yup.string().required(""),
   p_message: yup.string().required(""),

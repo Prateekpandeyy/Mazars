@@ -136,7 +136,8 @@ const getupdateQuery = () => {
   }, [taxId]);
 
   const getTaxProf = () => {
-    axios
+    if(teamleader44){
+      axios
       .get(`${baseUrl}/tp/getTaxProfessional?tl_id=${teamleader44}`)
       .then((res) => {
       
@@ -145,6 +146,18 @@ const getupdateQuery = () => {
          
         }
       });
+    }
+    else{
+      axios
+      .get(`${baseUrl}/tp/getTaxProfessional`)
+      .then((res) => {
+      
+        if (res.data.code === 1) {
+          setData2(res.data.result);
+         
+        }
+      });
+    }
   };
   let pk = []
   const custName = (a) => {

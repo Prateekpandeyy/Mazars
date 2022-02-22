@@ -100,7 +100,7 @@ function DraftReport({ des, loading, setLoading, fianlModal, uploadFinalReport, 
                 loading ?
                   <Spinner color="primary" />
                   :
-                  <button type="submit" className="btn btn-primary">
+                  <button type="submit" className="customBtn">
                     Upload
                   </button>
               }

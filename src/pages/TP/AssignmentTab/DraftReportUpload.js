@@ -101,7 +101,7 @@ function DraftReport({ loading, setLoading, draftModal, uploadDraftReport, id, g
                   :
                   <button
                     type="submit"
-                    className="btn btn-primary"
+                    className="customBtn"
                   >
                     Upload
                   </button>

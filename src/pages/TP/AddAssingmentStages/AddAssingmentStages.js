@@ -150,10 +150,10 @@ function AddAssingmentStages() {
           <Row>
             <Col md="4">
               <button
-                class="btn btn-success ml-3"
+                class="autoWidthBtn ml-3"
                 onClick={() => history.goBack()}
               >
-                <i class="fas fa-arrow-left mr-2"></i>
+               
                 Go Back
               </button>
             </Col>
@@ -314,7 +314,7 @@ function AddAssingmentStages() {
                         <div class="form-group">
                           <button
                             type="submit"
-                            class="btn btn-primary"
+                            class="customBtn"
                             disabled
                           >
                             Submit
@@ -574,7 +574,7 @@ function AddAssingmentStages() {
                           loading ?
                             <Spinner color="primary" />
                             :
-                            <button type="submit" class="btn btn-primary">
+                            <button type="submit" class="customBtn">
                               Submit
                             </button>
                         }

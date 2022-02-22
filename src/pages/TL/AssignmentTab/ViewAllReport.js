@@ -118,7 +118,7 @@ function ViewReport({
            <Typography variant="h6">
            View All Report 
            </Typography>
-           <button class="btn btn-success" onClick={() => ViewDiscussionToggel()}>
+           <button class="autoWidthBtn" onClick={() => ViewDiscussionToggel()}>
                 View Discussion
               </button>
         </ModalHeader>

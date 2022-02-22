@@ -466,7 +466,7 @@ let cc = []
           <Row>
           <Col md="4">
           <button
-                class="btn btn-success" 
+                class="autoWidthBtn" 
                 onClick={() => history.goBack()}
               >
                 <i class="fas fa-arrow-left mr-2"></i>
@@ -880,8 +880,8 @@ options={qno} onChange={(e) => queryNumber(e)}/>
            </fieldset>
            </div>
    </div>
-   <button type="submit" class="btn btn-success btn-lg my-3">Generate Report</button>
-   <button type="button" class="btn btn-danger btn-lg m-3" onClick={() => resetData()}>Reset</button>
+   <button type="submit" class="autoWidthBtn my-3">Generate Report</button>
+   <button type="button" class="customBtn m-3" onClick={() => resetData()}>Reset</button>
    <Mandatory />
   </form>
   </div>

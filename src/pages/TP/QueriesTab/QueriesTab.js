@@ -23,26 +23,38 @@ function QueriesTab(props) {
 
   const [allQuery, setAllQuery] = useState("");
   const [declined, setDeclined] = useState("");
+  const [bgColor, setbgColor] = useState("#55425F")
 
 
+
+  const tableIndex = (index) => {
+    setTabIndex(index)
+    console.log(index)
+    if(index === 0){
+      setbgColor("#55425F")
+    }
+    else if(index === 1){
+      setbgColor("#6e557b")
+    }
+    else if(index === 2){
+      setbgColor("#6e557b")
+    }
+    else if(index === 3){
+      setbgColor("#6e557b")
+    }
+  }
+    
   const myStyle1 = {
-    backgroundColor: "grey",
-    padding: "12px",
-    borderRadius: "50px",
-    width: "200px",
-    textAlign: "center",
-    color: "white",
-    cursor: "pointer",
+    margin: "10px auto",
+    fontSize : "14px"
   };
   const myStyle2 = {
-    padding: "12px",
-    borderRadius: "50px",
-    width: "200px",
-    textAlign: "center",
-    backgroundColor: "blue",
-    color: "white",
-    cursor: "pointer",
+  margin: "10px auto",
+  
+  color : "#55425f",
+  fontWeight : 1000
   };
+
 
 
   useLayoutEffect(() => {
@@ -124,30 +136,18 @@ function QueriesTab(props) {
 
   return (
     <Layout TPDashboard="TPDashboard" TPuserId={userid}>
-      <div>
-        <Tabs selectedIndex={tabIndex} onSelect={(index) => setTabIndex(index)}>
-          <TabList
-            style={{
-              listStyleType: "none",
-              display: "flex",
-              justifyContent: "space-around",
-            }}
-          >
-            <Tab style={tabIndex == 0 ? myStyle2 : myStyle1}>
+    <Tabs selectedIndex={tabIndex} onSelect={(index) => tableIndex(index)}>
+          <TabList className="fixedTab">
+            <Tab style={tabIndex == 0 ? myStyle2 : myStyle1} className="tabHover">
               All Query ({allQuery})
             </Tab>
-            <Tab style={tabIndex == 1 ? myStyle2 : myStyle1}>
+            <Tab style={tabIndex == 1 ? myStyle2 : myStyle1} className="tabHover"> 
               Pending For Acceptence ({pendindForAccepttence})
             </Tab>
-            <Tab style={tabIndex == 2 ? myStyle2 : myStyle1}>
+            <Tab style={tabIndex == 2 ? myStyle2 : myStyle1} className="tabHover">
               Inprogress; Queries ({incomplete})
             </Tab>
-            {/* <Tab style={tabIndex == 3 ? myStyle2 : myStyle1}>
-            Pending for assignment({complete})
-            </Tab> */}
-            {/* <Tab style={tabIndex == 4 ? myStyle2 : myStyle1}>
-              Declined; Queries ({declined})
-            </Tab> */}
+       
           </TabList>
 
 
@@ -164,16 +164,9 @@ function QueriesTab(props) {
             <InCompleteData
             />
           </TabPanel>
-          <TabPanel>
-            <CompleteData
-            />
-          </TabPanel>
-          <TabPanel>
-            <DeclinedQuery
-            />
-          </TabPanel>
+         
         </Tabs>
-      </div>
+    
     </Layout>
   );
 }

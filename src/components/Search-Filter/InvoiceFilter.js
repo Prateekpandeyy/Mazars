@@ -182,8 +182,8 @@ const InvoiceFilter = (props) => {
           </div> }
            <div className="col-md-3">
          
-          <button className="btn btn-success" type="submit"  style={{ height: "33px" }}>Search</button>
-           <button className="btn btn-primary mx-2" onClick={() => resetData()}  style={{ height: "33px" }}>Reset</button>
+          <button className="customBtn" type="submit"  style={{ height: "33px" }}>Search</button>
+           <button className="customBtn mx-2" onClick={() => resetData()}  style={{ height: "33px" }}>Reset</button>
             </div>
         
                  <div className="col-md-4">

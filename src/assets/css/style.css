@@ -225,8 +225,18 @@ html body a{
   color:rgb(61, 71, 117) !important;
   cursor: pointer;
 }
+.paymentDeclined{
+  color:red !important;
+  cursor: pointer;
+}
 .customBtnSign:hover{
   color:#fff;
+}
+.finalReport{
+  color:red !important;
+}
+.draftReport{
+  color:rgb(61, 131, 117) !important;
 }
 .customBtnSign{
   border-bottom-left-radius: 1.75rem;

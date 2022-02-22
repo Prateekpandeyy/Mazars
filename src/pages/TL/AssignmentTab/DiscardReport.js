@@ -72,7 +72,7 @@ function DiscardReport({
         </ModalBody>
         <ModalFooter>
           <div>
-            <Button color="primary" onClick={ViewDiscussionToggel}>Cancel</Button>
+            <button color="customBtn" onClick={ViewDiscussionToggel}>Cancel</button>
           </div>
         </ModalFooter>
       </Modal >

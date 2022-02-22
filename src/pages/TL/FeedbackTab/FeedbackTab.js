@@ -15,6 +15,7 @@ import CommonServices from "../../../common/common";
 import BootstrapTable from "react-bootstrap-table-next";
 import { useAlert } from "react-alert";
 import { useHistory } from "react-router";
+import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
 function FeedbackTab() {
   const alert = useAlert();
 const history = useHistory();
@@ -143,13 +144,12 @@ const history = useHistory();
             </Row>
           </CardHeader>
           <CardBody>
-            <BootstrapTable
-              bootstrap4
-              keyField="id"
-              data={feedbackData}
-              columns={columns}
-              rowIndex
-            />
+          <DataTablepopulated 
+                   bgColor="#42566a"
+                   keyField= {"assign_no"}
+                   data={feedbackData}
+                   columns={columns}>
+                    </DataTablepopulated>
           </CardBody>
         </Card>
       </Layout>

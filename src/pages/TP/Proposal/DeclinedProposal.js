@@ -9,7 +9,9 @@ import BootstrapTable from "react-bootstrap-table-next";
 import TaxProfessionalFilter from "../../../components/Search-Filter/tpfilter";
  import DiscardReport from "../AssignmentTab/DiscardReport";
  import CommonShowProposal from "../../../components/commonShowProposal/CommonShowProposal";
-
+ import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
+ import MessageIcon, {EyeIcon, ViewDiscussionIcon, DiscussProposal, HelpIcon} from "../../../components/Common/MessageIcon";
+ 
 
 
 function DeclinedProposal() {
@@ -64,23 +66,16 @@ function DeclinedProposal() {
             formatter: (cellContent, row, rowIndex) => {
                 return rowIndex + 1;
             },
-            style: {
-                fontSize: "11px",
-            },
+           
             headerStyle: () => {
-                return { fontSize: "11px", width: "60px" };
+                return {  width: "50px" };
             },
         },
         {
             dataField: "query_date",
             text: "Query Date",
             sort: true,
-            style: {
-                fontSize: "11px",
-            },
- headerStyle: () => {
-                return { fontSize: "11px" , width : "120px", whiteSpace : "nowrap", padding: "10px 20px"};
-            },
+          
             formatter: function dateFormat(cell, row) {
            
                 var oldDate = row.query_date;
@@ -94,12 +89,7 @@ function DeclinedProposal() {
             text: "Query No",
             dataField: "assign_no",
            
-            headerStyle: () => {
-                return { fontSize: "11px", width: "120px" };
-            },
-            style: {
-                fontSize: "11px",
-            },
+           
             formatter: function nameFormatter(cell, row) {
               
                 return (
@@ -122,34 +112,19 @@ function DeclinedProposal() {
             text: "Category",
             dataField: "parent_id",
             sort: true,
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
+            
         },
         {
             text: "Sub Category",
             dataField: "cat_name",
             sort: true,
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
+          
         },
         {
             text: "Date of Proposal",
             dataField: "DateofProposal",
             sort: true,
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
+          
             formatter: function dateFormat(cell, row) {
             
                 var oldDate = row.DateofProposal;
@@ -163,12 +138,7 @@ function DeclinedProposal() {
             text: "Date of acceptance / decline of Proposal",
             dataField: "cust_accept_date",
             sort: true,
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
+          
             formatter: function dateFormat(cell, row) {
               
                 var oldDate = row.cust_accept_date;
@@ -180,12 +150,7 @@ function DeclinedProposal() {
         },
         {
             text: "Status",
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
+         
             formatter: function nameFormatter(cell, row) {
                 return (
                     <>
@@ -207,12 +172,7 @@ function DeclinedProposal() {
             dataField: "",
             text: "Proposed Amount",
             sort: true,
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
+           
             formatter: function nameFormatter(cell, row){
                 var nfObject = new Intl.NumberFormat('hi-IN')
                  var x = row.ProposedAmount;
@@ -226,13 +186,7 @@ function DeclinedProposal() {
             dataField: "accepted_amount",
             text: "Accepted Amount ",
             sort: true,
-            style: {
-                fontSize: "11px",
-                color: "#21a3ce",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px", color: "#21a3ce" };
-            },
+            
             formatter: function nameFormatter(cell, row){
                 var nfObject = new Intl.NumberFormat('hi-IN')
                  var x = row.accepted_amount;
@@ -245,38 +199,18 @@ function DeclinedProposal() {
         {
             text: "Action",
             dataField: "",
-            headerStyle: () => {
-                return { fontSize: "12px", width: "110px" };
-            },
+           
             formatter: function (cell, row) {
                 return (
                     <>
-                        <div style={{ display: "flex", justifyContent: "space-between" }}>
-                           
-
-                            {row.status_code > "3" ?
-                                <div style={{ cursor: "pointer", marginLeft : "8px" }} title="View Proposal">
-                
-                                <i
-                                  className="fa fa-eye"
-                                  style={{ color: "green", fontSize: "16px" }}
-                                  onClick={(e) => showProposalModal2(row.id)}
-                                />
-                              
-                             </div>
-                                :
-                                null
-                            }
-
-
-                            <div>
-                               
-                            <div title="Send Message" className="ml-2">
+                        <div style={{ display: "flex"}}>
+                       
+                       
                                             <Link
- to={{
-    pathname: `/taxprofessional/chatting/${row.id}`,
-    index : 3,
-    routes: "proposal",
+                                                to={{
+                                                    pathname: `/taxprofessional/chatting/${row.id}`,
+                                                    index : 3,
+                                                    routes: "proposal",
                                                     obj: {
                                                         message_type: "2",
                                                         query_No: row.assign_no,
@@ -285,38 +219,61 @@ function DeclinedProposal() {
                                                     }
                                                 }}
                                             >
-                                                <i
-                                                    class="fa fa-comments-o"
-                                                    style={{
-                                                        fontSize: 16,
-                                                        cursor: "pointer",
-                                                        marginLeft: "8px",
-                                                        color: "blue"
-                                                    }}
-                                                ></i>
+                                               <MessageIcon />
                                             </Link>
-                                        </div>
+                                            <div  onClick={() => ViewDiscussionToggel(row.assign_no)} className="ml-1">
+                                  
+                                  <ViewDiscussionIcon />
+                          </div>
+                           
                                 
+                            <div className="ml-2">
+                                {row.status_code == "4" ? (
+                                    <Link to={`/taxprofessional/edit-proposal/${row.id}`}>
+                                        <i
+                                            className="fa fa-edit"
+                                            style={{
+                                                fontSize: "16px",
+                                                cursor: "pointer",
+                                                color: "green",
+                                            }}
+                                        ></i>
+                                    </Link>
+                                ) : row.status_code == "2"&& row.work_by != "0" ? (
+                                    <Link to={`/taxprofessional/sendproposal/${row.id}`}>
+                                        <i
+                                            class="fa fa-mail-forward"
+                                            style={{
+                                                fontSize: "14px",
+                                                cursor: "pointer",
+                                            }}
+                                        ></i>
+                                    </Link>
+                                ) : null}
                             </div>
-                            
-                            <div title="View Discussion Message">
-                                <i
-                                    class="fa fa-comments-o"
-                                    style={{
-                                        fontSize: 16,
-                                        cursor: "pointer",
-                                        color: "orange"
-                                    }}
-                                    onClick={() => ViewDiscussionToggel(row.assign_no)}
-                                ></i>
-                            </div>
+
+                            {row.status_code > "3" || row.status_code == "10" ?
+                            <>
+                             <div  onClick={(e) => showProposalModal2(row.id)} title="View Proposal">
+             <EyeIcon />
+              
+            </div>
+
+                              
+                                </>
+                                :
+                                null
+                            }
+
+
+                          
+                           
                         </div>
                     </>
                 );
             },
         },
     ];
-
     return (
         <>
             <Card>
@@ -330,16 +287,12 @@ function DeclinedProposal() {
                     />
                 </CardHeader>
                 <CardBody>
-                <div className="tableFixHead">
-                    <BootstrapTable
-                        bootstrap4
-                        keyField="id"
-                        data={proposal}
-                        columns={columns}
-                        rowIndex
-                        classes="table-responsive"
-                    />
-                    </div>
+                <DataTablepopulated 
+                   bgColor="#42566a"
+                   keyField= {"assign_no"}
+                   data={proposal}
+                   columns={columns}>
+                    </DataTablepopulated>
                     <DiscardReport
                         ViewDiscussionToggel={ViewDiscussionToggel}
                         ViewDiscussion={ViewDiscussion}
