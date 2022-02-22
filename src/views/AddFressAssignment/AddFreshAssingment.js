@@ -121,6 +121,7 @@ function AddFreshAssingment(props) {
       }
    
       formData.append("fact", det);
+    
       formData.append("specific", JSON.stringify(value.users));
       formData.append("timelines", value.p_timelines);
       formData.append("user", JSON.parse(userId));
@@ -453,7 +454,7 @@ function AddFreshAssingment(props) {
                             type="radio"
                             name="p_timelines"
                             ref={register}
-                            value="Urgent, (4-5 Working Days)"
+                            value="Urgent"
 
                           />
                           <label>Urgent</label>
@@ -464,7 +465,7 @@ function AddFreshAssingment(props) {
                             type="radio"
                             name="p_timelines"
                             ref={register}
-                            value="Regular (10-12 Working Days)"
+                            value="Regular"
                             defaultChecked
                           />
                           <label>Regular</label>

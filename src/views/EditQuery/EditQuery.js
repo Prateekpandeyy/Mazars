@@ -158,7 +158,7 @@ function EditQuery(props) {
    
       formData.append("fact", value2);
       formData.append("specific", JSON.stringify(value.users));
-     
+      formData.append("timelines", value.p_timelines);
       formData.append("user", JSON.parse(userId));
       formData.append("id", id);
       formData.append("cid", JSON.parse(category));
@@ -466,7 +466,7 @@ function EditQuery(props) {
                             type="radio"
                             name="p_timelines"
                             ref={register}
-                            value="Urgent, (4-5 Working Days)"
+                            value="Urgent"
                           // disabled
                           />
                           <label>Urgent</label>
@@ -477,7 +477,7 @@ function EditQuery(props) {
                             type="radio"
                             name="p_timelines"
                             ref={register}
-                            value="Regular (10-12 Working Days)"
+                            value="Regular"
                           // disabled
                           />
                           <label>Regular </label>

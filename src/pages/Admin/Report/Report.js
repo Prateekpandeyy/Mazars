@@ -112,7 +112,7 @@ const getupdateQuery = () => {
       if (res.data.code === 1) {
        
         var data = res.data.result;
-         console.log("response", res.data.result)
+       
          let b = res.data.result
          setQno(b.map(getqNo))
       }
@@ -133,9 +133,10 @@ const getupdateQuery = () => {
 
   useEffect(() => {
     getTaxProf();
-  }, [taxId]);
+  }, [teamleader44]);
 
   const getTaxProf = () => {
+    console.log("teamleader", teamleader44)
     if(teamleader44){
       axios
       .get(`${baseUrl}/tp/getTaxProfessional?tl_id=${teamleader44}`)
