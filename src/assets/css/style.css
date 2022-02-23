@@ -239,7 +239,7 @@ html body a{
   color:rgb(61, 131, 117) !important;
 }
 .customBtnSign{
-  border-bottom-left-radius: 1.75rem;
+  border-bottom-left-radius: 1rem;
   background-color: #0071CE;
   border:1px solid #0071CE;
   color:#fff;
@@ -263,7 +263,7 @@ html body a{
 
 .customBtn, .customBtnDisabled  {
    
-  border-bottom-left-radius: 1.75rem;
+  border-bottom-left-radius: 1rem;
   background-color: #0071CE;
   border:1px solid #0071CE;
   color:#fff;
@@ -292,7 +292,7 @@ html body a{
 
 .searchBtn{
    
-  border-bottom-left-radius: 1.75rem;
+  border-bottom-left-radius: 1rem;
   background-color: #0071CE;
   border:1px solid #0071CE;
   color:#fff;
@@ -326,7 +326,7 @@ html body a{
   outline:1px solid #081f8f;
 }
 .signInBtn{
-  border-bottom-left-radius: 1.75rem;
+  border-bottom-left-radius: 1rem;
   background-color: #0071CE;
   border:1px solid #0071CE;
   color:#fff;
@@ -368,7 +368,7 @@ html body a{
   vertical-align: middle;
 }
 .autoWidthBtn{
-  border-bottom-left-radius: 1.75rem;
+  border-bottom-left-radius: 1rem;
   background-color: #0071CE;
   border:1px solid #0071CE;
   color:#fff;
@@ -389,7 +389,7 @@ html body a{
   vertical-align: middle;
 }
 .dangerBtn, .dangerBtnDisabled{
-  border-bottom-left-radius: 1.75rem;
+  border-bottom-left-radius: 1rem;
   background-color: orangered;
   border:1px solid orangered;
   color:#fff;

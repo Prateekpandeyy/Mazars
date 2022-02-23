@@ -296,7 +296,7 @@ function QueryAssingment(props) {
                               </td>
 
                               <td>
-                                <button type="submit" class="btn btn-success">
+                                <button type="submit" class="customBtn">
                                   Assign
                                 </button>
                               </td>
@@ -331,7 +331,7 @@ function QueryAssingment(props) {
                                 />
                               </td>
                               <td>
-                                <button class="btn btn-success" disabled>
+                                <button class="autoWidthBtn" disabled>
                                   Assigned
                                 </button>
                               </td>

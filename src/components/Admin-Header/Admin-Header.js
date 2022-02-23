@@ -58,7 +58,7 @@ function AdminHeader({ custUserId, adminUserId, TLuserId, TPuserId , feedbackNum
         )}
 
         {adminUserId && (
-          <NavWrapper color="#262d47" logout={adminLogout}
+          <NavWrapper color="#fff" logout={adminLogout}
             name="admin" email={adminEmail}
             feedbackNumber= {feedbackNumber}
           />

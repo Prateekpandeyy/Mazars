@@ -160,7 +160,7 @@ const handleClick = () => {
             >
               <li className="nav-item">
                 <NavLink to={"/customer/dashboard"}>
-                  <i className="fa fa-home"></i>
+                  <i className="fa dashboardMenu"></i>
                   <span className="menu-title" data-i18n="">
                     Dashboard
                   </span>
@@ -169,7 +169,7 @@ const handleClick = () => {
 
               <li className="nav-item">
                 <NavLink to={"/customer/queries"}>
-                <i className="fa"><img src={queryIcons} className="sidebarIcons" /></i>
+                <i className="fa queryMenu"></i>
                   <span className="menu-title" data-i18n="">
                     Queries
                   </span>
@@ -178,7 +178,7 @@ const handleClick = () => {
 
               <li className="nav-item">
                 <NavLink to={"/customer/proposal"}>
-                <i className="fa"><img src={ProposalIcons} className="sidebarIcons" /></i>
+                <i className="fa proposalMenu"></i>
                   <span className="menu-title" data-i18n="">
                     Proposal
                   </span>
@@ -187,7 +187,7 @@ const handleClick = () => {
 
               <li className="nav-item">
                 <NavLink to={"/customer/paymentstatus"}>
-                <i className="fa"><img src={paymentIcon} className="sidebarIcons" /></i>
+                <i className="fa paymentMenu"></i>
                   <span className="menu-title" data-i18n="">
                     Payment Status
                   </span>
@@ -196,7 +196,7 @@ const handleClick = () => {
 
               <li className="nav-item">
                 <NavLink to={"/customer/assignment"}>
-                  <i className="fa"><img src={assignmentIcon} className="sidebarIcons" /></i>
+                <i className="fa assignmentMenu"></i>
                   <span className="menu-title" data-i18n="">
                     Assignments
                   </span>
@@ -207,8 +207,7 @@ const handleClick = () => {
                 <NavLink to={"/customer/schedule"}>
                   
 
-                  <i className="fa">
-                    <img src={scheduleIcon} className="fa sidebarIcons" /></i>
+                <i className="fa scheduleMenu"></i>
                
                   <span className="menu-title" data-i18n="">
                     Schedule
@@ -219,9 +218,7 @@ const handleClick = () => {
 
               <li className="nav-item">
                 <NavLink to={"/customer/feedback-data"}>
-                <i className="fa">
-                  <FeedbackIcon />
-                </i>
+                <i className="fa feedbackMenu"></i>
                   <span className="menu-title" data-i18n="">
                     Feedback
                   </span>
@@ -232,7 +229,7 @@ const handleClick = () => {
               
               <li className="nav-item">
                 <NavLink to={"/customer/contact"}>
-                <i class="fa fa-address-book"></i>
+                <i className="fa contactMenu"></i>
                   <span className="menu-title" data-i18n="">
                    Contact Us
                   </span>
@@ -240,8 +237,7 @@ const handleClick = () => {
               </li>
               <li className="nav-item">
                 <NavLink to={"/customer/about"}>
-                <i className="fa">
-                    <img src={AboutIcon} className="fa sidebarIcons" /></i>
+                <i className="fa aboutMenu"></i>
                   <span className="menu-title" data-i18n="">
                    About Us
                   </span>

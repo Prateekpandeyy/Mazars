@@ -332,7 +332,7 @@ function AllProposal() {
                 </CardHeader>
                 <CardBody>
                 <DataTablepopulated 
-          bgColor="#55425f"
+          bgColor="#42566a"
           keyField= {"assign_no"}
           data={proposal}
           

@@ -25,3 +25,138 @@
     justify-content: center;
     align-items: center;
 }
+
+.dashboardMenu{
+    background-image: url("./images/newImage/home.png") !important;
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
+  max-width: 35px !important;
+  max-height: 35px !important;
+}
+.nav-item a:hover .dashboardMenu{
+    background-image: url("./images//newHoverImgaes/icons/home.png") !important;
+  background-repeat: no-repeat !important;
+  background-size: cover !important;   
+  max-width: 35px !important;
+  max-height: 35px !important;
+}
+.queryMenu{
+    background-image: url("./images/newImage/q.png") !important;
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
+  max-width: 35px !important;
+  max-height: 35px !important;
+}
+.nav-item a:hover .queryMenu{
+    background-image: url("./images//newHoverImgaes/icons/q.png") !important;
+  background-repeat: no-repeat !important;
+  background-size: cover !important;  
+  max-width: 35px !important;
+  max-height: 35px !important; 
+}
+.proposalMenu{
+    background-image: url("./images/newImage/proposal.png") !important;
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
+  max-width: 35px !important;
+  max-height: 35px !important;
+}
+.nav-item a:hover .proposalMenu{
+    background-image: url("./images//newHoverImgaes/icons/proposal.png") !important;
+  background-repeat: no-repeat !important;
+  background-size: cover !important; 
+  max-width: 35px !important;
+  max-height: 35px !important;  
+}
+.paymentMenu{
+    background-image: url("./images/newImage/payment.png") !important;
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
+  max-width: 35px !important;
+  max-height: 35px !important;
+}
+.nav-item a:hover .paymentMenu{
+    background-image: url("./images//newHoverImgaes/icons/payment.png") !important;
+  background-repeat: no-repeat !important;
+  background-size: cover !important;   
+  max-width: 35px !important;
+  max-height: 35px !important;
+}
+.assignmentMenu{
+    background-image: url("./images/newImage/que.png") !important;
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
+}
+.nav-item a:hover .assignmentMenu{
+    background-image: url("./images//newHoverImgaes/icons/que.png") !important;
+  background-repeat: no-repeat !important;
+  background-size: cover !important;   
+  max-width: 35px !important;
+  max-height: 35px !important;
+}
+.scheduleMenu{
+    background-image: url("./images/newImage/shedule.png") !important;
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
+  max-width: 35px !important;
+  max-height: 35px !important;
+}
+.nav-item a:hover .scheduleMenu{
+    background-image: url("./images//newHoverImgaes/icons/shedule.png") !important;
+  background-repeat: no-repeat !important;
+  background-size: cover !important;   
+  max-width: 35px !important;
+  max-height: 35px !important;
+}
+.feedbackMenu{
+    background-image: url("./images/newImage/feedback.png") !important;
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
+  max-width: 35px !important;
+  max-height: 35px !important;
+}
+.nav-item a:hover .feedbackMenu{
+    background-image: url("./images//newHoverImgaes/icons/feedback.png") !important;
+  background-repeat: no-repeat !important;
+  background-size: cover !important;   
+  max-width: 35px !important;
+  max-height: 35px !important;
+}
+.contactMenu{
+    background-image: url("./images/newImage/contact.png") !important;
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
+  max-width: 35px !important;
+  max-height: 35px !important;
+}
+.nav-item a:hover .contactMenu{
+    background-image: url("./images//newHoverImgaes/icons/contact.png") !important;
+  background-repeat: no-repeat !important;
+  background-size: cover !important;  
+  max-width: 35px !important;
+  max-height: 35px !important; 
+}
+.aboutMenu{
+    background-image: url("./images/newImage/about.png") !important;
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
+  max-width: 35px !important;
+  max-height: 35px !important;
+}
+.nav-item a:hover .aboutMenu{
+    background-image: url("./images//newHoverImgaes/icons/about.png") !important;
+  background-repeat: no-repeat !important;
+  background-size: cover !important;   
+  max-width: 35px !important;
+  max-height: 35px !important;
+}
+.helpMenu{
+    background-image: url("./images/newImage/home.png") !important;
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
+}
+.nav-item a:hover .helpMenu{
+    background-image: url("./images//newHoverImgaes/icons/home.png") !important;
+  background-repeat: no-repeat !important;
+  background-size: cover !important;   
+}

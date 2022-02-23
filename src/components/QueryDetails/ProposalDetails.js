@@ -341,7 +341,7 @@ console.log("amount", amount)
             </tr>
             <tr>
                 <th scope="row">Payment Decline Date</th>
-                <td>{CommonServices.removeTime(p.declined_date)}</td>
+                <td>{CommonServices.removeTime(p.payment_declined_date)}</td>
               </tr>
               </>
              

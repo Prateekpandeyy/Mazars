@@ -302,7 +302,7 @@ function DeclinedProposal() {
                 </CardHeader>
                 <CardBody>
                 <DataTablepopulated 
-                   bgColor="#42566a"
+                   bgColor="#5f7b97"
                    keyField= {"assign_no"}
                    data={proposal}
                    columns={columns}>
