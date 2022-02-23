@@ -545,7 +545,7 @@ const ViewReport = (key) => {
 
                 <CardBody>
                 <DataTablepopulated 
-                   bgColor="#42566a"
+  bgColor ="#7c887c"
                    keyField= {"assign_no"}
                    data={assignment}
                    columns={columns}>

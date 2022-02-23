@@ -316,6 +316,7 @@ const resetData = () => {
         formData.append("amount_type", Number(value.amount_type));
         formData.append("dos", Number(value.dos));
         formData.append("invoice_number", Number(value.invoice_number));
+        formData.append("search_pay_amount", Number(value.search_pay_amount))
    axios({
      method : "POST",
      url : `${baseUrl}/report/generateReport?t=${JSON.stringify(Math.floor(Math.random() * 110000))}`,
@@ -820,6 +821,10 @@ options={qno} onChange={(e) => queryNumber(e)}/>
                <input type="checkbox" onClick={(i) => selectAllPayment(i)} name="selectAllPayment" class="selectall" id="selectAllPayment" ref={register}></input>
                <label htmlFor="selectAllPayment">Select All</label>
                </span>
+               <span>
+<input type="checkbox" ref={register} checked={paymnetCheckbox} name="search_pay_amount" id="search_pay_amount"></input>
+<label htmlFor="search_pay_amount">Paid</label>
+</span> 
                </div>
             <div className="basicFeild">
             <span>

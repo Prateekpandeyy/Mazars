@@ -44,7 +44,7 @@ const history = useHistory();
         return rowIndex + 1;
       },
       headerStyle: () => {
-        return { fontSize: "12px", width: "10px" };
+        return { fontSize: "12px", width: "10px", border: "1px solid #081f8f", color:"#fff", backgroundColor:"#081f8f" };
       },
     },
     {
@@ -52,7 +52,7 @@ const history = useHistory();
       dataField: "created",
       sort: true,
       headerStyle: () => {
-        return { fontSize: "12px", width: "60px" };
+        return { fontSize: "12px", width: "60px" , border: "1px solid #081f8f", color:"#fff", backgroundColor:"#081f8f"};
       },
     
     },
@@ -60,13 +60,13 @@ const history = useHistory();
       text: "Query No",
       dataField: "assign_no",
       headerStyle: () => {
-        return { fontSize: "12px", width: "40px" };
+        return { fontSize: "12px", width: "40px" , border: "1px solid #081f8f", color:"#fff", backgroundColor:"#081f8f"};
       },
     },
     {
       text: "Feedback",
       headerStyle: () => {
-        return { fontSize: "12px", width: "150px" };
+        return { fontSize: "12px", width: "150px" , border: "1px solid #081f8f", color:"#fff", backgroundColor:"#081f8f"};
       },
       formatter: function nameFormatter(cell, row) {
     

@@ -22,6 +22,7 @@ import BootstrapTable from "react-bootstrap-table-next";
 import { baseUrl2, baseUrl3 } from "../../../config/config";
 import { useParams, Link, useHistory } from "react-router-dom";
 import styled from "styled-components";
+import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
 
 import { Typography } from "antd";
 
@@ -69,34 +70,22 @@ setModal(!modal)
             formatter: (cellContent, row, rowIndex) => {
                 return rowIndex + 1;
             },
-            style: {
-                fontSize: "11px",
-            },
+          
             headerStyle: () => {
-                return { fontSize: "11px", width: "90px" };
+                return { width: "90px" };
             },
         },
         {
             dataField: "assign_no",
             text: "Query.No",
             
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px", width: "120px" };
-            },
+         
         },
         {
             dataField: "installment_no",
             text: "Installment No",
            
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px", width: "80px" };
-            },
+            
            
            
         },
@@ -104,12 +93,6 @@ setModal(!modal)
             dataField: "billno",
             text: "Invoice No",
            
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px", width: "150px" };
-            },
            
             formatter : function(cell, row){
                 return(
@@ -124,12 +107,7 @@ setModal(!modal)
             dataField: "due_date",
             text: "Due Date",
            sort : true,
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px", width: "120px" };
-            },
+          
             formatter : function(cell, row){
                 let dueDate=row.due_date.split("-").reverse().join("-")
 
@@ -146,22 +124,12 @@ setModal(!modal)
             dataField: "invoice_amount",
             text: "Invoice Amount",
            
-            style: {
-                fontSize: "11px", textAlign : "right"
-            },
-            headerStyle: () => {
-                return { fontSize: "11px", width: "120px" };
-            },
+           
         },
         {
             dataField : "tds_amount",
             text : "Tds Deducted",
-            style : {
-                fontSize : "11px", textAlign : "right"
-            }, 
-            headerStyle : () => {
-                return { fontSize : "11px", width : "100px"}
-            },
+            
             formatter : function(cell, row){
                 return(
                     <>
@@ -174,12 +142,7 @@ setModal(!modal)
         {
             dataField : "amount",
             text : "Amount Paid",
-            style : {
-                fontSize : "11px", textAlign : "right"
-            }, 
-            headerStyle : () => {
-                return { fontSize : "11px", width : "100px"}
-            },
+           
             formatter: function (cell,row){
                 return(
                     <>
@@ -194,12 +157,7 @@ setModal(!modal)
             dataField: "invoice",
             text: "Invoice",
            
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px", width: "90px" };
-            },
+            
             formatter: function dateFormat(cell, row) {
                 return(
                    <>
@@ -220,12 +178,7 @@ setModal(!modal)
             dataField: "",
             text: "Payment Details",
            
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px", width: "90px" };
-            },
+           
            
            formatter: function dateFormat(cell, row){
            
@@ -280,15 +233,13 @@ return(
           </Row>
         </CardHeader>
           <CardBody>
-          <div className="tableFixHead">
-  <BootstrapTable
-  bootstrap4
-  keyField="id"
-  data={paymentDetail}
-  columns={columns}
-  classes="table-responsivepayment"
-/> 
-</div>
+          <DataTablepopulated 
+                   bgColor="#2b5f55"
+                   keyField= {"assign_no"}
+                   data={paymentDetail}
+                   columns={columns}>
+                    </DataTablepopulated>
+
 </CardBody>
 </Card>}
 </Layout>                  

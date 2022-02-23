@@ -687,7 +687,7 @@ else{
 
         <CardBody>
         <DataTablepopulated 
-                   bgColor="#42566a"
+                    bgColor = "#5a625a"
                    keyField= {"assign_no"}
                    data={assignment}
                    columns={columns}>
