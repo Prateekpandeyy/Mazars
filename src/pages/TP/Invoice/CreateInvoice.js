@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import BootstrapTable from "react-bootstrap-table-next";
 import Tds from "./Tds";
 import InvoiceFilter from "../../../components/Search-Filter/InvoiceFilter";
-
+import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
 const CreateInvoice = () => {
     const userid = window.localStorage.getItem("tpkey");
     const [records, setRecords] = useState([]);
@@ -203,16 +203,14 @@ const CreateInvoice = () => {
                     </CardHeader>
 
                 <CardBody>
-                <div className="tableFixHead">
-                    <BootstrapTable
-                        bootstrap4
-                        keyField='id'
-                        data={proposal}
-                        columns={columns}
-                        rowIndex
-                        classes="table-responsive"
-                    />
-</div>
+                <DataTablepopulated 
+           bgColor="#42566a"
+          keyField= {"assign_no"}
+          data={proposal}
+          
+          columns={columns}>
+
+              </DataTablepopulated>
                    
 
                     <Tds 

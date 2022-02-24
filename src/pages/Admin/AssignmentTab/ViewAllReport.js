@@ -154,7 +154,7 @@ const viewStyle = {
                    {p.status === "0" || p.status === "2" ?
                    <>
                    {p.tlstatus === "0" ?
-                   <p style={{ color: "red" }}>Pending</p> :
+                   <p className="declined">Pending</p> :
                    <div style={{ display: "flex", justifyContent: "space-around" }}>
                     <div title="Discussion">
                       <i

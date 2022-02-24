@@ -103,7 +103,7 @@ function Chatting(props) {
                     index: props.location.index,
                   }}
                 >
-                  <button class="btn btn-success ml-3">Go Back</button>
+                  <button class="autoWidthBtn ml-3">Go Back</button>
                 </Link>
               
             </Col>
@@ -180,7 +180,7 @@ function Chatting(props) {
                           </div>
                         )}
                       </div>
-                      <button type="submit" className="btn btn-primary">
+                      <button type="submit" className="customBtn">
                         Send
                       </button>
                     </div>

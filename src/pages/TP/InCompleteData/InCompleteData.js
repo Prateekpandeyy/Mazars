@@ -223,6 +223,7 @@ routes: "queriestab",
             ViewDiscussion={ViewDiscussion}
             report={assignNo}
             getData={getInCompleteAssingment}
+            headColor="#55425f"
           />
         </CardBody>
       </Card>

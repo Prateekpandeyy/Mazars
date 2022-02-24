@@ -81,7 +81,7 @@ function QueryRejection(props) {
                                     index: 1,
                                 }}
                             >
-                                <button class="btn btn-success ml-3">
+                                <button class="autoWidthBtn ml-3">
                                     <i class="fas fa-arrow-left mr-2"></i>
                                     Go Back
                                 </button>
@@ -125,7 +125,7 @@ function QueryRejection(props) {
                                                     </div>
                                                 </div>
                                             </div>
-                                            <button type="submit" className="btn btn-primary">
+                                            <button type="submit" className="ustomBtnc">
                                                 Submit
                                             </button>
                                         </form>

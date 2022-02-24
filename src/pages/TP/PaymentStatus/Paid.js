@@ -314,7 +314,7 @@ function AllPayment() {
 
                 <CardBody>
                 <DataTablepopulated 
-                   bgColor="#42566a"
+                                   bgColor="#3e8678"
                    keyField= {"assign_no"}
                    data={payment}
                    columns={columns}>
@@ -331,6 +331,7 @@ function AllPayment() {
                         ViewDiscussion={ViewDiscussion}
                         report={assignNo}
                         getData={getPaymentStatus}
+                        headColor="#3e8678"
                     />
                     <Modal isOpen={modal} fade={false} toggle={toggle}>
                         <ModalHeader toggle={toggle}>History</ModalHeader>

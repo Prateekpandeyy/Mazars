@@ -228,7 +228,7 @@ const Generated = () => {
     const copyFun = (e)  =>{
    
         navigator.clipboard.writeText(e)
-    setShowCopyUrl("clicked")
+  
       }
     rowStyle2 = (row, index) => {
         const style = {}

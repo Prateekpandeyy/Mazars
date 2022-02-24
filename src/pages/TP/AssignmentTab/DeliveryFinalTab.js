@@ -16,7 +16,7 @@ import DescriptionOutlinedIcon from '@material-ui/icons/DescriptionOutlined';
 import ViewAllReportModal from "./ViewAllReport";
 import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
 import MessageIcon, { ViewDiscussionIcon, DraftReportUploadIcon, FinalReportUploadIcon} from "../../../components/Common/MessageIcon";
-
+import DiscardReport from "../AssignmentTab/DiscardReport";
 function AssignmentTab() {
 
     const history = useHistory();
@@ -551,6 +551,13 @@ const ViewReport = (key) => {
             report={report}
             dataItem={dataItem}
           />
+           <DiscardReport
+                        ViewDiscussionToggel={ViewDiscussionToggel}
+                        ViewDiscussion={ViewDiscussion}
+                        report={assignNo}
+                        getData={getAssignmentList}
+                        headColor="#42566a"
+                    />
                     
                 </CardBody>
             </Card>

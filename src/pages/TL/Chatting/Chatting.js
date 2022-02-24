@@ -127,7 +127,7 @@ const [showTl, setShowTl] = useState(false)
                     index: props.location.index,
                   }}
                 >
-                  <button class="btn btn-success ml-3">Go Back</button>
+                  <button class="customBtn ml-3">Go Back</button>
                 </Link>
               
             </Col>
@@ -244,7 +244,7 @@ type="text"
                           </div>
                         )}
                       </div>
-                      <button type="submit" className="btn btn-primary">
+                      <button type="submit" className="customBtn">
                         Send
                       </button>
                     </div>

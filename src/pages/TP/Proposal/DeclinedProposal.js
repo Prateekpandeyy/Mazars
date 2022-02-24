@@ -288,7 +288,7 @@ function DeclinedProposal() {
                 </CardHeader>
                 <CardBody>
                 <DataTablepopulated 
-                   bgColor="#42566a"
+                   bgColor="#5f7b97"
                    keyField= {"assign_no"}
                    data={proposal}
                    columns={columns}>
@@ -298,6 +298,7 @@ function DeclinedProposal() {
                         ViewDiscussion={ViewDiscussion}
                         report={assignNo}
                         getData={getProposalList}
+                        headColor="#5f7b97"
                     />
                       <CommonShowProposal
           setViewProposalModal = {setViewProposalModal}

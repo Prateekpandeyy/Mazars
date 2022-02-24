@@ -209,7 +209,7 @@ function QueryAssingment(props) {
                   index: 1,
                 }}
               >
-                <button class="btn btn-success ml-3">
+                <button class="autoWidthBtn ml-3">
                   <i class="fas fa-arrow-left mr-2"></i>
                   Go Back
                 </button>

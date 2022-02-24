@@ -338,7 +338,7 @@ rowStyle2 = (row, index) => {
 
                 <CardBody>
                 <DataTablepopulated 
-                   bgColor="#42566a"
+                   bgColor="#2b5f55"
                    keyField= {"assign_no"}
                    data={payment}
                    columns={columns}>
@@ -354,6 +354,7 @@ rowStyle2 = (row, index) => {
                         ViewDiscussion={ViewDiscussion}
                         report={assignNo}
                         getData={getPaymentStatus}
+                        headColor="#2b5f55"
                     />
                     <Modal isOpen={modal} fade={false} toggle={toggle}>
                         <ModalHeader toggle={toggle}>History</ModalHeader>

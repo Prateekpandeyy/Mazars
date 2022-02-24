@@ -14,6 +14,9 @@ import Alerts from "../../../common/Alerts";
 import { Spinner } from 'reactstrap';
 import { useHistory } from "react-router";
 import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
+import MessageIcon, { Accept, Reject} from "../../../components/Common/MessageIcon";
+
+
 function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
   let history = useHistory();
   const userid = window.localStorage.getItem("tpkey");
@@ -145,31 +148,22 @@ function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
               style={{
                 display: "flex",
                 justifyContent: "space-evenly",
-                color: "#6967ce",
-                cursor: "pointer",
+              
               }}
               id="div1"
             >
               <div
-                id="accept"
-                title="Accept Assignment"
+             
+               
                 onClick={() => acceptHandler(row)}
               >
-                <i
-                  class="fa fa-check"
-                  style={{ color: "green", fontSize: "16px" }}
-                ></i>
+                <Accept titleNme= "Accept Assignment" />
               </div>
               <div
-                id="reject"
-                title="Reject Assignment"
-                // onClick={() => rejectHandler(row)}
+               
                 onClick={() => rejectHandler(row)}
               >
-                <i
-                  class="fa fa-times"
-                  style={{ color: "red", fontSize: "16px" }}
-                ></i>
+              <Reject titleNme= "Accept Assignment" />
               </div>
             </div>
           </>

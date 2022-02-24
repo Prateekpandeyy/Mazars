@@ -394,7 +394,9 @@ const handleClick = () => {
 
               <li className="nav-item">
                 <NavLink to={"/admin/taxprofessionals"}>
-                <i class="fa fa-user-plus"></i>
+                <i className="fa">
+                  <span className="taxprofessionalMenu"></span>
+                </i>
                   <span className="menu-title" data-i18n="">
                     Tax Professionals
                   </span>
@@ -402,7 +404,9 @@ const handleClick = () => {
               </li>
                <li className ="nav-item">
                  <NavLink to={"/admin/customers"}>
-                 <i class="fa fa-user"></i>
+                 <i className="fa">
+                  <span className="clientMenu"></span>
+                </i>
                    <span className="menu-title" data-i18n="">
                   Client
                   </span>
@@ -557,7 +561,9 @@ const handleClick = () => {
               </li>
               <li className="nav-item">
                 <NavLink to={"/teamleader/addteamprof"}>
-                <i class="fa fa-user-plus"></i>
+                <i className="fa">
+                  <span className="taxprofessionalMenu"></span>
+                </i>
                   <span className="menu-title" data-i18n="">
                     View T.P
                   </span>

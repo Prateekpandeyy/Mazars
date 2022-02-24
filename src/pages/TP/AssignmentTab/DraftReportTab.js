@@ -551,6 +551,7 @@ function AssignmentTab() {
                         ViewDiscussion={ViewDiscussion}
                         report={assignNo}
                         getData={getAssignmentList}
+                        headColor="#42566a"
                     />
                 </CardBody>
             </Card>

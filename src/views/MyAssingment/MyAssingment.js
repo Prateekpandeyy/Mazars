@@ -139,7 +139,7 @@ function MyAssingment(props) {
               accepted_amount: res.data.proposal_queries[0].accepted_amount,
               payment_received: res.data.proposal_queries[0].paid_amount,
               amount: res.data.proposal_queries[0].amount,
-              cust_accept_date: res.data.proposal_queries[0].cust_accept_date,
+              cust_accept_date: res.data.result[0].declined_date,
               proposal_date: res.data.proposal_queries[0].created,
               description: res.data.proposal_queries[0].description,
 

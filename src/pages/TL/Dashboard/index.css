@@ -146,11 +146,11 @@
 	color:#464B4B;
 }
 .tenth.table-striped > tbody > tr:nth-child(2n+1){
-	background-color: #907B56;
+	background-color:#d0d9d0 ;
 	color:#464B4B;
 }
 .tenth.table-striped > tbody > tr:nth-child(2n){
-	background-color: #907B56;
+	background-color:#d0d9d0 ;
 	color:#464B4B;
 }
 .eleventh.table-striped > tbody > tr:nth-child(2n+1){

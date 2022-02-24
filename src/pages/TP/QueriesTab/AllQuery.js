@@ -162,46 +162,46 @@ function AllQuery() {
               
                 return (
                     <>
-                     {row.tp_status == "1" ? null : 
+                      {row.status_code == "1" ? null :
                       
                       <div
                       style={{
                           display: "flex",
-                       
+                          
                       }}
                   >
                      
 
                       {row.status == "Declined Query" ? null :
-                       
-                        <Link
-to={{
-pathname: `/taxprofessional/chatting/${row.id}`,
-index : 0,
-routes: "queriestab",
-                                obj: {
-                                    message_type: "4",
-                                    query_No: row.assign_no,
-                                    query_id: row.id,
-                                    routes: `/taxprofessional/queriestab`
-                                }
-                            }}
-                        >
-                            <MessageIcon />
-                        </Link>
-                  
-}
+                   
+                      <Link
+                             to={{
+                                pathname: `/taxprofessional/chatting/${row.id}`,
+                                index: 0,
+                                routes: "queriestab",
+                        
+                              obj: {
+                                  message_type: "4",
+                                  query_No: row.assign_no,
+                                  query_id: row.id,
+                                  routes: `/taxprofessional/queriestab`
+                              }
+                          }}
+                      >
+                          <MessageIcon />
+                      </Link>
+                 }
 
-<div  onClick={() => ViewDiscussionToggel(row.assign_no)} className="ml-1">
-                                  
+<span onClick={() => ViewDiscussionToggel(row.assign_no)}  className="ml-2">
                                   <ViewDiscussionIcon />
-                          </div>
-                  </div>}
-                    </>
+                                </span>
+                  </div>
+}                    </>
                 );
             },
         },
     ];
+
 
     return (
         <>

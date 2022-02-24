@@ -19,7 +19,8 @@ function ViewReport({
   reportModal,
   ViewReport,
   report,
-  dataItem
+  dataItem,
+  headColor
 }) {
   const userId = window.localStorage.getItem("tpkey");
   const [data, setData] = useState([]);
@@ -126,11 +127,11 @@ function ViewReport({
           <table class="table table-bordered">
             <thead>
               <tr>
-                <th scope="row">S.No</th>
-                <th scope="row">Date</th>
-                <th scope="row">Document</th>
-                <th scope="row">Report Type</th>
-                <th scope="row">Action</th>
+                <th style={{border: `1px solid ${headColor}`, color: "#fff", backgroundColor: `${headColor}`}}>S.No</th>
+                <th style={{border: `1px solid ${headColor}`, color: "#fff", backgroundColor: `${headColor}`}}>Date</th>
+                <th style={{border: `1px solid ${headColor}`, color: "#fff", backgroundColor: `${headColor}`}}>Document</th>
+                <th style={{border: `1px solid ${headColor}`, color: "#fff", backgroundColor: `${headColor}`}}>Report Type</th>
+                <th style={{border: `1px solid ${headColor}`, color: "#fff", backgroundColor: `${headColor}`}}>Action</th>
               </tr>
             </thead>
 
@@ -192,7 +193,7 @@ function ViewReport({
                    {p.status === "0" || p.status === "2" ?
                    <>
                    {p.tlstatus === "0" ?
-                   <p style={{ color: "red" }}>Pending</p> :
+                   <p className="declined">Pending</p> :
                    <div style={{ display: "flex", justifyContent: "space-around" }}>
                     <div title="Discussion">
                       <i
@@ -242,7 +243,8 @@ function ViewReport({
         ViewDiscussionToggel={ViewDiscussionToggel}
         ViewDiscussion={ViewDiscussion}
         report={report}
-        getData={getData}
+        getData={getData} 
+        headColor ={headColor}
       />
 
     </div>

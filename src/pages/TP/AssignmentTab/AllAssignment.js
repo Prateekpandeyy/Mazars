@@ -719,12 +719,14 @@ else{
             reportModal={reportModal}
             report={report}
             dataItem={dataItem}
+          
           />
 
           <DiscardReport
             ViewDiscussionToggel={ViewDiscussionToggel}
             ViewDiscussion={ViewDiscussion}
             report={assignNo}
+            headColor="#42566a"
             getData={getAssignmentList}
           />
         </CardBody>
