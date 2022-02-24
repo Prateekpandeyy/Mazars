@@ -16,6 +16,7 @@ import {
 import BootstrapTable from "react-bootstrap-table-next";
 import Swal from "sweetalert2";
 import History from './History.js';
+import {EditQuery} from "../../../components/Common/MessageIcon";
 import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
 function TeamLeaderTab() {
   const alert = useAlert();
@@ -197,14 +198,7 @@ else{
         return (
           <>
             <Link to={`/admin/edittl/${row.id}`}>
-              <i
-                className="fa fa-edit"
-                style={{
-                  fontSize: 18,
-                  cursor: "pointer",
-                  marginLeft: "8px",
-                }}
-              ></i>
+            <EditQuery />
             </Link>
           
           </>
@@ -319,7 +313,7 @@ else{
                     </DataTablepopulated>
         </CardBody>
       </Card>
-      <History history={history} toggle={toggle} modal={modal} />
+      <History history={history} bgColor="#42566" toggle={toggle} modal={modal} />
     </Layout>
   );
 }

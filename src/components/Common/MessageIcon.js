@@ -52,9 +52,9 @@ const DeleteIcon = (props) => {
     </>
   )
 }
-const EditQuery = () =>{
+const EditQuery = (props) =>{
   return(
-    <i className="fa fa-edit editQuery" title="Update Query"></i>
+    <i className="fa fa-edit editQuery" title={props.titleName}></i>
   )
 }
 const UploadDocument = () => {
@@ -102,7 +102,25 @@ const FinalReportUploadIcon = () => {
     </>
   )
 }
+const Accept = (props) => {
+  return(
+    <i
+    class="fa fa-check acceptIcon" title= {props.titleName} 
+  ></i>
+  )
+}
+const Reject = (props) => {
+  return(<i
+    class="fa fa-times rejectIcon" title= {props.titleName}
+   
+  ></i>)
+}
+const ActionIcon = (props) => {
+  return(
+   <i title={props.titleName} class="fa fa-share discussProposal"></i>
+  )
+ }
 export default MessageIcon;
 export { EyeIcon , ViewDiscussionIcon, DiscussProposal, HelpIcon, FeedBackICon
 , DeleteIcon, EditQuery, UploadDocument, Payment, PaymentDecline, DraftReportUploadIcon, 
-FinalReportUploadIcon}
+FinalReportUploadIcon, Accept, Reject, ActionIcon}

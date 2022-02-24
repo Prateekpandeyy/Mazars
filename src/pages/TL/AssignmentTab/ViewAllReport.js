@@ -19,6 +19,7 @@ function ViewReport({
   reportModal,
   ViewReport,
   report,
+  headColor,
   dataItem
 }) {
   const userId = window.localStorage.getItem("tlkey");
@@ -126,11 +127,11 @@ function ViewReport({
           <table class="table table-bordered">
             <thead>
               <tr>
-                <th scope="row">S.No</th>
-                <th scope="row">Date</th>
-                <th scope="row">Document</th>
-                <th scope="row">Report Type</th>
-                <th scope="row">Action</th>
+                <th style={{border: `1px solid ${headColor}`, color: "#fff", backgroundColor: `${headColor}`}}>S.No</th>
+                <th style={{border: `1px solid ${headColor}`, color: "#fff", backgroundColor: `${headColor}`}}>Date</th>
+                <th style={{border: `1px solid ${headColor}`, color: "#fff", backgroundColor: `${headColor}`}}>Document</th>
+                <th style={{border: `1px solid ${headColor}`, color: "#fff", backgroundColor: `${headColor}`}}>Report Type</th>
+                <th style={{border: `1px solid ${headColor}`, color: "#fff", backgroundColor: `${headColor}`}}>Action</th>
               </tr>
             </thead>
 
@@ -244,6 +245,7 @@ function ViewReport({
         ViewDiscussion={ViewDiscussion}
         report={report}
         getData={getData}
+        headColor={headColor}
       />
 
     </div>

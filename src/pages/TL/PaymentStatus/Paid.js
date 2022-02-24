@@ -328,6 +328,7 @@ function AllPayment() {
                         ViewDiscussion={ViewDiscussion}
                         report={assignNo}
                         getData={getPaymentStatus}
+                        headColor="#3e8678"
                     />
                     <RejectedModal
                         rejectHandler={rejectHandler}

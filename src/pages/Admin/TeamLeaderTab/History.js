@@ -14,7 +14,7 @@ import {
   Button,
 } from "reactstrap";
 
-function History({ history, toggle,modal }) {
+function History({ history, toggle,modal, bgColor }) {
   //change date format
   function ChangeFormateDate(oldDate) {
    
@@ -25,18 +25,18 @@ function History({ history, toggle,modal }) {
   }
   return (
     <div>
-      <Modal isOpen={modal} fade={false} toggle={toggle}>
+      <Modal isOpen={modal} fade={false} toggle={toggle} size="md">
         <ModalHeader toggle={toggle}>History</ModalHeader>
         <ModalBody>
           <table class="table table-bordered">
             <thead>
               <tr>
-                <th scope="row">S.No</th>
-                <th scope="row">From</th>
-                <th scope="row">To</th>
-                <th scope="row">Name</th>
-                <th scope="row">Email</th>
-                <th scope="row">Phone</th>
+                <th  style={{backgroundColor: "#42566a", color: "#fff", border: "1px solid #42566a"}}>S.No</th>
+                <th   style={{backgroundColor: "#42566a", color: "#fff",  border: "1px solid #42566a"}}>From</th>
+                <th   style={{backgroundColor: "#42566a", color: "#fff",  border: "1px solid #42566a"}}>To</th>
+                <th   style={{backgroundColor: "#42566a", color: "#fff",  border: "1px solid #42566a"}}>Name</th>
+                <th   style={{backgroundColor: "#42566a", color: "#fff",  border: "1px solid #42566a"}}>Email</th>
+                <th   style={{backgroundColor: "#42566a", color: "#fff",  border: "1px solid #42566a"}}>Phone</th>
               </tr>
             </thead>
 

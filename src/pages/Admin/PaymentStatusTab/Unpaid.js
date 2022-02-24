@@ -246,7 +246,7 @@ function Unpaid() {
                 return (
                     <>
                        
-                        <div style={{ display: "flex", justifyContent: "space-between", width: "80px"}}>
+                        <div style={{ display: "flex"}}>
 
                         <Link
               to={{
@@ -306,7 +306,7 @@ function Unpaid() {
                 <CardBody>
                     <Records records={records} />
                     <DataTablepopulated 
-                   bgColor="#42566a"
+                   bgColor="#3e8678"
                    keyField= {"assign_no"}
                    data={payment}
                    columns={columns}>
@@ -348,6 +348,7 @@ function Unpaid() {
                         ViewDiscussion={ViewDiscussion}
                         report={assignNo}
                         getData={getPaymentStatus}
+                        headColor="#3e8678"
                     />
 
                 </CardBody>

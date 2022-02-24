@@ -635,7 +635,7 @@ const checktlPost = (e) => {
           <div class="col-md-12 d-flex justify-content-between">
             <div>
               <button
-                class="btn btn-success ml-3"
+                class="autoWidthBtn ml-3"
                 onClick={() => history.goBack()}
               >
                 <i class="fas fa-arrow-left mr-2"></i>
@@ -849,9 +849,9 @@ const checktlPost = (e) => {
                   <Spinner color="primary" />
                   :
                         <Form.Item>
-                          <Button type="primary" htmlType="submit">
+                          <button type="submit" className="customBtn">
                             Update
-                          </Button>
+                          </button>
                         </Form.Item>  }
                       </div>
                     </div>

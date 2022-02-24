@@ -431,7 +431,7 @@ function FinalReport() {
               <div>
                 <button
                   type="submit"
-                  className="btn btn-primary mb-2 ml-3"
+                  className="btnSearch mb-2 ml-3"
                   onClick={resetCategory}
                 >
                   X
@@ -479,7 +479,7 @@ function FinalReport() {
         <CardBody className="card-body">
           <Records records={records} />
           <DataTablepopulated 
-                   bgColor="#42566a"
+                  bgColor="#7c887c"
                    keyField= {"assign_no"}
                    data={assignmentDisplay}
                    columns={columns}>
@@ -489,12 +489,14 @@ function FinalReport() {
             reportModal={reportModal}
             report={report}
             getPendingforAcceptance={getAssignmentData}
+            deleiverAble = "#7c887c"
           />
           <DiscardReport
             ViewDiscussionToggel={ViewDiscussionToggel}
             ViewDiscussion={ViewDiscussion}
             report={assignNo}
             getData={getAssignmentData}
+            headColor="#7c887c"
           />
         </CardBody>
       </Card>

@@ -9,7 +9,7 @@ import ChatHistory from "./ChatHistory";
 import DiscardReport from "../AssignmentTab/DiscardReport";
 import CommonShowProposal from "../../../components/commonShowProposal/CommonShowProposal";
 import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
-import MessageIcon, {EyeIcon, ViewDiscussionIcon, DiscussProposal, HelpIcon} from "../../../components/Common/MessageIcon";
+import MessageIcon, {EyeIcon, ViewDiscussionIcon, EditQuery, ActionIcon} from "../../../components/Common/MessageIcon";
 
 
 function InprogressProposal() {
@@ -253,14 +253,7 @@ function InprogressProposal() {
      pathname: `/teamleader/edit-proposal/${row.id}`,
      index : 1,
      routes: "proposal" }}>
-     <i
-         className="fa fa-edit"
-         style={{
-             fontSize: "16px",
-             cursor: "pointer",
-             color: "green",
-         }}
-     ></i>
+     <EditQuery titleName="Edit Proposal"/>
  </Link>
                                 ) : row.status_code == "2"&& row.work_by != "0" ? (
                                     <Link 
@@ -268,13 +261,7 @@ function InprogressProposal() {
                                         pathname: `/teamleader/sendproposal/${row.id}`,
                                         index : 1,
                                         routes: "proposal" }}>
-                                        <i
-                                            class="fa fa-mail-forward"
-                                            style={{
-                                                fontSize: "14px",
-                                                cursor: "pointer",
-                                            }}
-                                        ></i>
+                                      <ActionIcon titleName= "Decision on proposal" />
                                     </Link>
                                 ) : null}
                             </div>
@@ -333,6 +320,7 @@ function InprogressProposal() {
                         ViewDiscussion={ViewDiscussion}
                         report={assignNo}
                         getData={getProposalList}
+                        headColor="#5f7b97"
                     />
                       <CommonShowProposal
           setViewProposalModal = {setViewProposalModal}

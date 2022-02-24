@@ -15,7 +15,7 @@ import BootstrapTable from "react-bootstrap-table-next";
 import TeamFilter from "../../../components/Search-Filter/tlFilter";
 import DiscardReport from "../AssignmentTab/DiscardReport";
 import DataTablepopulated from '../../../components/DataTablepopulated/DataTabel';
-
+import MessageIcon, { ViewDiscussionIcon } from "../../../components/Common/MessageIcon";
 
 function AllQuery() {
 
@@ -175,14 +175,13 @@ function AllQuery() {
                       <div
                       style={{
                           display: "flex",
-                          justifyContent: "space-evenly",
-                          color: "green",
+                          
                       }}
                   >
                      
 
                       {row.status == "Declined Query" ? null :
-                      <div title="Send Message">
+                   
                       <Link
                              to={{
                                 pathname: `/teamleader/chatting/${row.id}`,
@@ -197,29 +196,13 @@ function AllQuery() {
                               }
                           }}
                       >
-                          <i
-                              class="fa fa-comments-o"
-                              style={{
-                                  fontSize: 16,
-                                  cursor: "pointer",
-                                  marginLeft: "8px",
-                                  color: "blue"
-                              }}
-                          ></i>
+                          <MessageIcon />
                       </Link>
-                  </div>}
+                 }
 
-                      <div title="View Discussion Message">
-                          <i
-                              class="fa fa-comments-o"
-                              style={{
-                                  fontSize: 16,
-                                  cursor: "pointer",
-                                  color: "orange"
-                              }}
-                              onClick={() => ViewDiscussionToggel(row.assign_no)}
-                          ></i>
-                      </div>
+<span onClick={() => ViewDiscussionToggel(row.assign_no)}  className="ml-2">
+                                  <ViewDiscussionIcon />
+                                </span>
                   </div>
 }                    </>
                 );
@@ -253,6 +236,7 @@ function AllQuery() {
                         ViewDiscussion={ViewDiscussion}
                         report={assignNo}
                         getData={getInCompleteAssingment}
+                        headColor="#55425f"
                     />
 
                 </CardBody>

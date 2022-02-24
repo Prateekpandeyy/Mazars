@@ -718,7 +718,8 @@ else{
             ViewReport={ViewReport}
             reportModal={reportModal}
             report={report}
-            dataItem={dataItem}
+            dataItem={dataItem}k
+            headColor = "#5a625a"
           />
 
           <DiscardReport
@@ -726,6 +727,7 @@ else{
             ViewDiscussion={ViewDiscussion}
             report={assignNo}
             getData={getAssignmentList}
+            headColor = "#5a625a"
           />
         </CardBody>
       </Card>

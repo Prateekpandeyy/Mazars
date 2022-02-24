@@ -282,6 +282,7 @@ function AcceptedProposal({ acceptedProposal }) {
             ViewDiscussion={ViewDiscussion}
             report={assignNo}
             getData={getAcceptedProposal}
+            headColor="#42566a"
           />
            <ShowProposal 
           setViewProposalModal = {setViewProposalModal}

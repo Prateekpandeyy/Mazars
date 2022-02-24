@@ -559,6 +559,7 @@ rowStyle2 = (row, index) => {
             reportModal={reportModal}
             report={report}
             dataItem={dataItem}
+            headColor ="#7c887c"
           />
 
                     <DiscardReport
@@ -566,6 +567,7 @@ rowStyle2 = (row, index) => {
                         ViewDiscussion={ViewDiscussion}
                         report={assignNo}
                         getData={getAssignmentList}
+                        headColor ="#7c887c"
                     />
                 </CardBody>
             </Card>

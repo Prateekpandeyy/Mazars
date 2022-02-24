@@ -888,8 +888,8 @@ options={qno} onChange={(e) => queryNumber(e)}/>
            </fieldset>
            </div>
    </div>
-   <button type="submit" class="btn btn-success btn-lg my-3">Generate Report</button>
-   <button type="button" class="btn btn-danger btn-lg m-3" onClick={() => resetData()}>Reset</button>
+   <button type="submit" class="autoWidthBtn my-3">Generate Report</button>
+   <button type="button" class="autoWidthBtn m-3" onClick={() => resetData()}>Reset</button>
    <Mandatory />
   </form>
   </div>

@@ -11,7 +11,8 @@ function DiscardReport({
   ViewDiscussion,
   ViewDiscussionToggel,
   report,
-  getData
+  getData,
+  headColor
 }) {
   const userId = window.localStorage.getItem("tlkey");
   const [data, setData] = useState([]);
@@ -42,10 +43,10 @@ function DiscardReport({
           <table class="table table-bordered">
             <thead>
               <tr>
-                <th scope="row">S.No</th>
-                <th scope="row">Date</th>
-                <th scope="row">Name</th>
-                <th scope="row">Message</th>
+                <th scope="row" style={{border: `1px solid ${headColor}`, backgroundColor: `${headColor}`, color:"#fff"}}>S.No</th>
+                <th scope="row" style={{border: `1px solid ${headColor}`, backgroundColor: `${headColor}`, color:"#fff"}}>Date</th>
+                <th scope="row" style={{border: `1px solid ${headColor}`, backgroundColor: `${headColor}`, color:"#fff"}}>Name</th>
+                <th scope="row" style={{border: `1px solid ${headColor}`, backgroundColor: `${headColor}`, color:"#fff"}}>Message</th>
               </tr>
             </thead>
             {data.length > 0
@@ -72,7 +73,7 @@ function DiscardReport({
         </ModalBody>
         <ModalFooter>
           <div>
-            <button color="customBtn" onClick={ViewDiscussionToggel}>Cancel</button>
+            <button className="customBtn" onClick={ViewDiscussionToggel}>Cancel</button>
           </div>
         </ModalFooter>
       </Modal >

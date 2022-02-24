@@ -14,6 +14,8 @@ import { Link } from "react-router-dom";
 import TeamFilter from "../../../components/Search-Filter/tlFilter";
 import DiscardReport from "../AssignmentTab/DiscardReport";
 import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
+import MessageIcon, {DeleteIcon, EditQuery, ViewDiscussionIcon, HelpIcon, 
+  UploadDocument, FeedBackICon} from "../../../components/Common/MessageIcon";
 
 function InCompleteData({ CountIncomplete }) {
   const userid = window.localStorage.getItem("tlkey");
@@ -168,62 +170,47 @@ function InCompleteData({ CountIncomplete }) {
     },
       formatter: function (cell, row) {
         
-          return (
-              <>
-                {row.status_code == "1" ? null :
+         
+        return (
+          <>
+            {row.status_code == "1" ? null :
+            
+            <div
+            style={{
+                display: "flex",
                 
-                <div
-                style={{
-                    display: "flex",
-                    justifyContent: "space-evenly",
-                    color: "green",
-                }}
-            >
-               
+            }}
+        >
+           
 
-                {row.status == "Declined Query" ? null :
-                <div title="Send Message">
-                <Link
-                    to={{
+            {row.status == "Declined Query" ? null :
+         
+            <Link
+                   to={{
                       pathname: `/teamleader/chatting/${row.id}`,
                       index: 1,
                       routes: "queriestab",
-                        obj: {
-                            message_type: "4",
-                            query_No: row.assign_no,
-                            query_id: row.id,
-                            routes: `/teamleader/queriestab`
-                        }
-                    }}
-                >
-                    <i
-                        class="fa fa-comments-o"
-                        style={{
-                            fontSize: 16,
-                            cursor: "pointer",
-                            marginLeft: "8px",
-                            color: "blue"
-                        }}
-                    ></i>
-                </Link>
-            </div>}
+              
+                    obj: {
+                        message_type: "4",
+                        query_No: row.assign_no,
+                        query_id: row.id,
+                        routes: `/teamleader/queriestab`
+                    }
+                }}
+            >
+                <MessageIcon />
+            </Link>
+       }
 
-                <div title="View Discussion Message">
-                    <i
-                        class="fa fa-comments-o"
-                        style={{
-                            fontSize: 16,
-                            cursor: "pointer",
-                            color: "orange"
-                        }}
-                        onClick={() => ViewDiscussionToggel(row.assign_no)}
-                    ></i>
-                </div>
-            </div>
+<span onClick={() => ViewDiscussionToggel(row.assign_no)}  className="ml-2">
+                        <ViewDiscussionIcon />
+                      </span>
+        </div>
 }                    </>
-          );
-      },
+      );
   },
+},
 ];
 
   return (
@@ -240,7 +227,7 @@ function InCompleteData({ CountIncomplete }) {
         </CardHeader>
         <CardBody>
         <DataTablepopulated 
-          bgColor="#55425f"
+                                bgColor="#6e557b"
           keyField= {"assign_no"}
           data={incompleteData}
           
@@ -251,6 +238,7 @@ function InCompleteData({ CountIncomplete }) {
             ViewDiscussion={ViewDiscussion}
             report={assignNo}
             getData={getInCompleteAssingment}
+            headColor="#6e557b"
           />
         </CardBody>
       </Card>

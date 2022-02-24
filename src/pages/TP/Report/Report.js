@@ -239,7 +239,7 @@ setQno([])
    }
    if(value.receiptDate || value.amountReceived || value.invoice_number || value.dos 
     || value.basic_amount || value.pocket_expensive || value.cget_tax || value.sgst_tax ||
-    value.igst_tax || value.total_gst || value.total_invoice || value.tds || value.net_amount
+    value.igst_tax || value.total_gst || value.total_invoice || value.tds 
     || value.receiptDate || value.amount_type || value.amountReceived){
      payment_info = true
    }
@@ -298,13 +298,14 @@ setQno([])
         formData.append("total_gst", Number(value.total_gst));
         formData.append("process_status", Number(value.process_status));
         formData.append("tds", Number(value.tds));
-        formData.append("net_amount", Number(value.net_amount));
+       
         formData.append("amount_received", Number(value.amountReceived));
         formData.append("uid", JSON.parse(userid))
         formData.append("t", Math.floor(Math.random() * 110000))
         formData.append("amount_type", Number(value.amount_type));
         formData.append("dos", Number(value.dos));
         formData.append("invoice_number", Number(value.invoice_number));
+        formData.append("search_pay_amount", Number(value.search_pay_amount))
    axios({
      method : "POST",
      url : `${baseUrl}/report/generateReport?t=${JSON.stringify(Math.floor(Math.random() * 110000))}`,
@@ -817,6 +818,10 @@ options={qno} onChange={(e) => queryNumber(e)}/>
                <input type="checkbox" onClick={(i) => selectAllPayment(i)} name="selectAllPayment" class="selectall" id="selectAllPayment" ref={register}></input>
                <label htmlFor="selectAllPayment">Select All</label>
                </span>
+               <span>
+<input type="checkbox" ref={register} checked={paymnetCheckbox} name="search_pay_amount" id="search_pay_amount"></input>
+<label htmlFor="search_pay_amount">Paid</label>
+</span> 
                </div>
             <div className="basicFeild">
             <span>
@@ -859,10 +864,10 @@ options={qno} onChange={(e) => queryNumber(e)}/>
 <input type="checkbox" ref={register} checked={paymnetCheckbox} name="tds" id="tds"></input>
 <label htmlFor="tds">TDS Deducted</label>
 </span> 
-<span>
+{/* <span>
 <input type="checkbox" ref={register} checked={paymnetCheckbox} name="net_amount" id="net_amount"></input>
 <label htmlFor="net_amount">Net Amount </label>
-</span>
+</span> */}
             <span>
 <input type="checkbox" ref={register} checked={paymnetCheckbox} name="receiptDate" id="receiptDate"></input>
 <label htmlFor="receiptDate">Date of Receipt</label>

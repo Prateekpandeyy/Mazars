@@ -24,6 +24,7 @@ function ViewReport({
   ViewReport,
   report,
   getPendingforAcceptance,
+  deleiverAble
 }) {
   const userId = window.localStorage.getItem("adminkey");
   const [data, setData] = useState([]);
@@ -80,12 +81,12 @@ const viewStyle = {
           <table className="table table-bordered">
             <thead>
               <tr>
-                <th scope="row">S.No</th>
-                <th scope="row">Date</th>
-                <th scope="row">Document</th>
+                <th style={{border: `1px solid ${deleiverAble}`, color: "#fff", backgroundColor: `${deleiverAble}`}}>S.No</th>
+                <th style={{border: `1px solid ${deleiverAble}`, color: "#fff", backgroundColor: `${deleiverAble}`}}>Date</th>
+                <th style={{border: `1px solid ${deleiverAble}`, color: "#fff", backgroundColor: `${deleiverAble}`}}>Document</th>
                
-                <th scope="row">Report Type</th>
-                <th scope="row">Action</th>
+                <th style={{border: `1px solid ${deleiverAble}`, color: "#fff", backgroundColor: `${deleiverAble}`}}>Report Type</th>
+                <th style={{border: `1px solid ${deleiverAble}`, color: "#fff", backgroundColor: `${deleiverAble}`}}>Action</th>
               </tr>
             </thead>
 
@@ -195,6 +196,7 @@ const viewStyle = {
         ViewDiscussion={ViewDiscussion}
         report={report}
         getData={getData}
+        headColor="#5a625a"
       />
     </>
   );

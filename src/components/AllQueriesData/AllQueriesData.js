@@ -151,8 +151,8 @@ function AllQueriesData({allData}) {
           <span onClick={() => ViewDiscussionToggel(row.assign_no)}  className="ml-1">
           <ViewDiscussionIcon />
         </span>: 
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <div title="Send Message">
+         
+            <>
               <Link
                to={{
                 pathname: `/admin/chatting/${row.id}`,
@@ -169,12 +169,12 @@ function AllQueriesData({allData}) {
               >
                 <MessageIcon />
               </Link>
-            </div>
+            
 
             <span onClick={() => ViewDiscussionToggel(row.assign_no)}  className="ml-1">
           <ViewDiscussionIcon />
         </span>
-          </div>
+          </>
 }
           </>
         );
@@ -213,6 +213,7 @@ function AllQueriesData({allData}) {
             ViewDiscussion={ViewDiscussion}
             report={assignNo}
             getData={getAllQueriesData}
+            headColor="#55425f"
           />
 
         </CardBody>

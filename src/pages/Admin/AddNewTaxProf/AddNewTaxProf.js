@@ -358,7 +358,7 @@ function AddNew() {
           <div className="col-md-12 d-flex">
             <div>
               <button
-                className="btn btn-success ml-3"
+                className="autoWidthBtn ml-3"
                 onClick={() => history.goBack()}
               >
                 <i className="fas fa-arrow-left mr-2"></i>

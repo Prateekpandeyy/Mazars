@@ -182,6 +182,7 @@ function DeclinedQueries({ CountPendingForPayment }) {
             ViewDiscussion={ViewDiscussion}
             report={assignNo}
             getData={getPendingForPayment}
+            headColor="#6e557b"
           />
         </CardBody>
       </Card>

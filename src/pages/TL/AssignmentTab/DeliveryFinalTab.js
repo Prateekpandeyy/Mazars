@@ -562,6 +562,7 @@ const ViewReport = (key) => {
                         ViewDiscussion={ViewDiscussion}
                         report={assignNo}
                         getData={getAssignmentList}
+                        headColor ="#7c887c"
                     />
                      <FinalReportUpload
             fianlModal={fianlModal}

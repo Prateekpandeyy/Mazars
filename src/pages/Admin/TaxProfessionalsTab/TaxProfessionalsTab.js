@@ -19,6 +19,7 @@ import BootstrapTable from "react-bootstrap-table-next";
 import TaxProffesionalService from "../../../config/services/TaxProffesional";
 import History from './History.js';
 import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
+import {EditQuery} from "../../../components/Common/MessageIcon";
 function TaxProfessionalsTab() {
   const alert = useAlert();
   const [data, setData] = useState([]);
@@ -196,14 +197,7 @@ function TaxProfessionalsTab() {
         return (
           <>
             <Link to={`/admin/edittp/${row.id}`}>
-              <i
-                className="fa fa-edit"
-                style={{
-                  fontSize: 18,
-                  cursor: "pointer",
-                  marginLeft: "8px",
-                }}
-              ></i>
+             <EditQuery />
             </Link>
             {/* <i
               className="fa fa-trash"
@@ -283,7 +277,7 @@ function TaxProfessionalsTab() {
               <CardTitle tag="h4">Tax Professionals ({tpCount})</CardTitle>
             </Col>
             <Col md="2">
-              <Link to={"/admin/addnewtp"} class="btn btn-primary">
+              <Link to={"/admin/addnewtp"} class="autoWidthBtn">
                 Add New
               </Link>
             </Col>

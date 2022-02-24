@@ -296,6 +296,8 @@ function DeclinedProposal({ declinedProposal }) {
             ViewDiscussion={ViewDiscussion}
             report={assignNo}
             getData={getDeclinedProposal}
+            
+            headColor="#42566a"
           />
             <RetviewModal 
           retview = {retview}

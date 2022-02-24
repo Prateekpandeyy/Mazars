@@ -318,6 +318,7 @@ const retviewProposal = (e) => {
             ViewDiscussion={ViewDiscussion}
             report={assignNo}
             getData={getProposalData}
+            headColor="#42566a"
           />
           <RetviewModal 
           retview = {retview}

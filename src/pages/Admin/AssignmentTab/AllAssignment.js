@@ -471,7 +471,7 @@ setError(true)
               <div>
                 <button
                   type="submit"
-                  className="btn btn-primary mb-2 ml-3"
+                  className="btnSearch mb-2 ml-3"
                   onClick={resetCategory}
                 >
                   X
@@ -576,7 +576,7 @@ setError(true)
         <CardBody className="card-body">
           <Records records={records} />
           <DataTablepopulated 
-                   bgColor="#42566a"
+                  bgColor = "#5a625a"
                    keyField= {"assign_no"}
                    data={assignmentDisplay}
                    columns={columns}>
@@ -587,6 +587,7 @@ setError(true)
             reportModal={reportModal}
             report={report}
             getPendingforAcceptance={getAssignmentData}
+            deleiverAble = "#5a625a"
           />
 
           <DiscardReport
@@ -594,6 +595,7 @@ setError(true)
             ViewDiscussion={ViewDiscussion}
             report={assignNo}
             getData={getAssignmentData}
+            headColor="#5a625a"
           />
 
         </CardBody>

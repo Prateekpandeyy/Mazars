@@ -16,7 +16,7 @@ import InvoiceFilter from "../../../components/Search-Filter/InvoiceFilter"
 import moment from "moment";
 import FileCopyIcon from '@mui/icons-material/FileCopy';
 import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
-import MessageIcon, {EyeIcon, ViewDiscussionIcon, DiscussProposal, HelpIcon} from "../../../components/Common/MessageIcon";
+import MessageIcon, {EyeIcon, ViewDiscussionIcon, DiscussProposal, HelpIcon, EditQuery, ActionIcon} from "../../../components/Common/MessageIcon";
 
 const Generated = () => {
     var rowStyle2 = {}
@@ -212,16 +212,10 @@ const Generated = () => {
                          <DescriptionOutlinedIcon color="secondary" />
                               </a>
                               {row.is_paid == "0" ? 
-                        <i
-                        class="fa fa-edit"
-                        style={{
-                            fontSize: "16px",
-                            margin: "0 5px",
-                            cursor: "pointer",
-                            color : "blue",
-                        }}
-                       onClick = {() => addTdsToggle(row)} 
-                    ></i> : ""
+                      
+                      <div  className="mx-1" onClick = {() => addTdsToggle(row)}>
+                  <EditQuery title="Edit Invoice"/> 
+                  </div> : ""
                         }
                           {row.is_paid == "0" 
                 ?   

@@ -1,8 +1,10 @@
 .listStyle{
     line-height: 40px;
-    display: inline-block;
+    display: inline-flex;
     width: 40px;
     height: 40px;
+    justify-content: center;
+    align-items: center;
     margin-right: 20px;
     text-align: center;
     vertical-align: middle;
@@ -27,128 +29,211 @@
 }
 
 .dashboardMenu{
-    background-image: url("./images/newImage/home.png") !important;
+    background-image: url("./images/newImage/homes.png") !important;
   background-repeat: no-repeat !important;
   background-size: cover !important;
-  max-width: 35px !important;
-  max-height: 35px !important;
+  max-width: 40px !important;
+  max-height: 40px !important;
+  box-sizing: border-box;
+  padding: 16px 15px;
+  margin: 3px 5px 5px 5px;
 }
 .nav-item a:hover .dashboardMenu{
-    background-image: url("./images//newHoverImgaes/icons/home.png") !important;
-  background-repeat: no-repeat !important;
-  background-size: cover !important;   
-  max-width: 35px !important;
-  max-height: 35px !important;
+    background-image: url("./images/newHoverImgaes/icons/home.png") !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    max-width: 40px !important;
+    max-height: 40px !important;
+    box-sizing: border-box;
+    padding: 16px 15px;
+    margin-top: 3px;
 }
 .queryMenu{
     background-image: url("./images/newImage/q.png") !important;
-  background-repeat: no-repeat !important;
-  background-size: cover !important;
-  max-width: 35px !important;
-  max-height: 35px !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    max-width: 40px !important;
+    max-height: 40px !important;
+    box-sizing: border-box;
+    padding: 16px 15px;
+    margin-top: 3px;
 }
 .nav-item a:hover .queryMenu{
     background-image: url("./images//newHoverImgaes/icons/q.png") !important;
-  background-repeat: no-repeat !important;
-  background-size: cover !important;  
-  max-width: 35px !important;
-  max-height: 35px !important; 
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    max-width: 40px !important;
+    max-height: 40px !important;
+    box-sizing: border-box;
+    padding: 16px 15px;
+    margin-top: 3px; 
 }
 .proposalMenu{
     background-image: url("./images/newImage/proposal.png") !important;
-  background-repeat: no-repeat !important;
-  background-size: cover !important;
-  max-width: 35px !important;
-  max-height: 35px !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    max-width: 40px !important;
+    max-height: 40px !important;
+    box-sizing: border-box;
+    padding: 16px 15px;
+    margin-top: 3px;
 }
 .nav-item a:hover .proposalMenu{
     background-image: url("./images//newHoverImgaes/icons/proposal.png") !important;
-  background-repeat: no-repeat !important;
-  background-size: cover !important; 
-  max-width: 35px !important;
-  max-height: 35px !important;  
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    max-width: 40px !important;
+    max-height: 40px !important;
+    box-sizing: border-box;
+    padding: 16px 15px;
+    margin-top: 3px;
 }
 .paymentMenu{
     background-image: url("./images/newImage/payment.png") !important;
-  background-repeat: no-repeat !important;
-  background-size: cover !important;
-  max-width: 35px !important;
-  max-height: 35px !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    max-width: 40px !important;
+    max-height: 40px !important;
+    box-sizing: border-box;
+    padding: 16px 15px;
+    margin-top: 3px;
 }
 .nav-item a:hover .paymentMenu{
     background-image: url("./images//newHoverImgaes/icons/payment.png") !important;
-  background-repeat: no-repeat !important;
-  background-size: cover !important;   
-  max-width: 35px !important;
-  max-height: 35px !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    max-width: 40px !important;
+    max-height: 40px !important;
+    box-sizing: border-box;
+    padding: 16px 15px;
+    margin-top: 3px;
 }
 .assignmentMenu{
-    background-image: url("./images/newImage/que.png") !important;
-  background-repeat: no-repeat !important;
-  background-size: cover !important;
+    background-image: url("./images/newImage/assignment.png") !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    max-width: 40px !important;
+    max-height: 40px !important;
+    box-sizing: border-box;
+    padding: 16px 15px;
+    margin-top: 3px;
 }
 .nav-item a:hover .assignmentMenu{
-    background-image: url("./images//newHoverImgaes/icons/que.png") !important;
-  background-repeat: no-repeat !important;
-  background-size: cover !important;   
-  max-width: 35px !important;
-  max-height: 35px !important;
+    background-image: url("./images//newHoverImgaes/icons/assignment.png") !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    max-width: 40px !important;
+    max-height: 40px !important;
+    box-sizing: border-box;
+    padding: 16px 15px;
+    margin-top: 3px;
 }
 .scheduleMenu{
-    background-image: url("./images/newImage/shedule.png") !important;
-  background-repeat: no-repeat !important;
-  background-size: cover !important;
-  max-width: 35px !important;
-  max-height: 35px !important;
+    background-image: url("./images/newImage/shedule2.png") !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    max-width: 20px !important;
+    max-height: 20px !important;
+    box-sizing: border-box;
+    padding: 16px 15px;
+    margin-top: 3px;
+    display: flex;
+    width: 40px;
 }
-.nav-item a:hover .scheduleMenu{
+.nav-item:hover .scheduleMenu{
     background-image: url("./images//newHoverImgaes/icons/shedule.png") !important;
-  background-repeat: no-repeat !important;
-  background-size: cover !important;   
-  max-width: 35px !important;
-  max-height: 35px !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    max-width: 20px !important;
+    max-height: 20px !important;
+    box-sizing: border-box;
+    padding: 16px 15px;
+    margin-top: 3px;
 }
 .feedbackMenu{
     background-image: url("./images/newImage/feedback.png") !important;
-  background-repeat: no-repeat !important;
-  background-size: cover !important;
-  max-width: 35px !important;
-  max-height: 35px !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    max-width: 40px !important;
+    max-height: 40px !important;
+    box-sizing: border-box;
+    padding: 16px 15px;
+    margin-top: 3px;
+  
 }
 .nav-item a:hover .feedbackMenu{
     background-image: url("./images//newHoverImgaes/icons/feedback.png") !important;
-  background-repeat: no-repeat !important;
-  background-size: cover !important;   
-  max-width: 35px !important;
-  max-height: 35px !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    max-width: 40px !important;
+    max-height: 40px !important;
+    box-sizing: border-box;
+    padding: 16px 15px;
+    margin-top: 3px;
 }
 .contactMenu{
     background-image: url("./images/newImage/contact.png") !important;
-  background-repeat: no-repeat !important;
-  background-size: cover !important;
-  max-width: 35px !important;
-  max-height: 35px !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    max-width: 40px !important;
+    max-height: 40px !important;
+    box-sizing: border-box;
+    padding: 16px 15px;
+    margin-top: 3px;
 }
 .nav-item a:hover .contactMenu{
-    background-image: url("./images//newHoverImgaes/icons/contact.png") !important;
-  background-repeat: no-repeat !important;
-  background-size: cover !important;  
-  max-width: 35px !important;
-  max-height: 35px !important; 
+    background-image: url("./images//newHoverImgaes/icons/cantact.png") !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    max-width: 40px !important;
+    max-height: 40px !important;
+    box-sizing: border-box;
+    padding: 16px 15px;
+    margin-top: 3px; 
 }
 .aboutMenu{
-    background-image: url("./images/newImage/about.png") !important;
-  background-repeat: no-repeat !important;
-  background-size: cover !important;
-  max-width: 35px !important;
-  max-height: 35px !important;
+    background-image: url("./images/newHoverImgaes/icons/about.png") !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    max-width: 30px !important;
+    max-height: 30px !important;
+    box-sizing: border-box;
+    padding: 16px 15px;
+    margin-top: 3px;
+    width: 25px;
+    height: 25px;
 }
 .nav-item a:hover .aboutMenu{
-    background-image: url("./images//newHoverImgaes/icons/about.png") !important;
-  background-repeat: no-repeat !important;
-  background-size: cover !important;   
-  max-width: 35px !important;
-  max-height: 35px !important;
+    background-image: url("./images/newHoverImgaes/icons/aboutHover.png") !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    max-width: 40px !important;
+    max-height: 40px !important;
+    box-sizing: border-box;
+    padding: 16px 15px;
+    margin-top: 3px;
+}
+.reportMenu{
+    background-image: url("./images/newImage/report.png") !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    max-width: 30px !important;
+    max-height: 30px !important;
+    box-sizing: border-box;
+    padding: 16px 15px;
+    margin-top: 3px;
+    width: 25px;
+    height: 25px;
+}
+.nav-item a:hover .reportMenu{
+    background-image: url("./images/newImage/report.png") !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    max-width: 40px !important;
+    max-height: 40px !important;
+    box-sizing: border-box;
+    padding: 16px 15px;
+    margin-top: 3px;
 }
 .helpMenu{
     background-image: url("./images/newImage/home.png") !important;

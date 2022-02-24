@@ -31,12 +31,12 @@ function History({ history,toggle,modal }) {
           <table class="table table-bordered">
             <thead>
               <tr>
-                <th scope="row">S.No</th>
-                <th scope="row">Name</th>
-                <th scope="row">Query No</th>
-                <th scope="row">Status</th>
-                <th scope="row">Date of Allocation</th>
-                <th scope="row">Notes</th>
+                <th style={{backgroundColor: "#6e557b", color: "#fff", border: "1px solid #6e557b"}}>S.No</th>
+                <th style={{backgroundColor: "#6e557b", color: "#fff", border: "1px solid #6e557b"}}>Name</th>
+                <th style={{backgroundColor: "#6e557b", color: "#fff", border: "1px solid #6e557b"}}>Query No</th>
+                <th style={{backgroundColor: "#6e557b", color: "#fff", border: "1px solid #6e557b"}}>Status</th>
+                <th style={{backgroundColor: "#6e557b", color: "#fff", border: "1px solid #6e557b"}}>Date of Allocation</th>
+                <th style={{backgroundColor: "#6e557b", color: "#fff", border: "1px solid #6e557b"}}>Notes</th>
               </tr>
             </thead>
 

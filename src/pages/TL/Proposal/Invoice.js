@@ -15,6 +15,8 @@ import OutlinedInputIcons from "@mui/material/OutlinedInput";
 import InvoiceFilter from "../../../components/Search-Filter/InvoiceFilter";
 import DescriptionOutlinedIcon from '@material-ui/icons/DescriptionOutlined';
 import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
+import MessageIcon, {EyeIcon, ViewDiscussionIcon, EditQuery, ActionIcon} from "../../../components/Common/MessageIcon";
+
 const Invoice = () => {
     const userid = window.localStorage.getItem("tlkey");
     const [records, setRecords] = useState([]);
@@ -158,16 +160,8 @@ const Invoice = () => {
                 return (
                     
                     <>
-                        <div style={{ display: "flex", justifyContent: "space-between" }}>
-                        <i
-                                            class="fa fa-mail-forward"
-                                            style={{
-                                                fontSize: "14px",
-                                                cursor: "pointer",
-                                                color : "blue",
-                                            }}
-                                            onClick = {() => addTdsToggle(row)} 
-                                        ></i>
+                        <div style={{ display: "flex"}}   onClick = {() => addTdsToggle(row)}>
+<ActionIcon  titleName="Create Invoice" />
                            
                         </div>
                     </>

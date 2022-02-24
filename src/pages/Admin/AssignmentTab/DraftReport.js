@@ -425,7 +425,7 @@ var rowStyle2 = {}
               <div>
                 <button
                   type="submit"
-                  className="btn btn-primary mb-2 ml-3"
+                  className="btnSearch mb-2 ml-3"
                   onClick={resetCategory}
                 >
                   X
@@ -476,7 +476,7 @@ var rowStyle2 = {}
         <CardBody className="card-body">
           <Records records={records} />
           <DataTablepopulated 
-                   bgColor="#42566a"
+                   bgColor="#7c887c"
                    keyField= {"assign_no"}
                    data={assignmentDisplay}
                    columns={columns}>
@@ -486,12 +486,14 @@ var rowStyle2 = {}
             reportModal={reportModal}
             report={report}
             getPendingforAcceptance={getAssignmentData}
+            deleiverAble = "#7c887c"
           />
           <DiscardReport
             ViewDiscussionToggel={ViewDiscussionToggel}
             ViewDiscussion={ViewDiscussion}
             report={assignNo}
             getData={getAssignmentData}
+            headColor="#7c887c"
           />
         </CardBody>
       </Card>

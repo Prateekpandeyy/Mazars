@@ -12,6 +12,7 @@ import RejectedModal from "./RejectedModal";
 import Alerts from "../../../common/Alerts";
 import { Spinner } from 'reactstrap';
 import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
+import { Accept, Reject} from "../../../components/Common/MessageIcon";
 
 function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
   const userid = window.localStorage.getItem("tlkey");
@@ -145,25 +146,16 @@ function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
               id="div1"
             >
               <div
-                id="accept"
-                title="Accept Assignment"
+                
                 onClick={() => acceptHandler(row)}
               >
-                <i
-                  class="fa fa-check"
-                  style={{ color: "green", fontSize: "16px" }}
-                ></i>
+              <Accept titleName= "Accept Assignment"/>
               </div>
               <div
-                id="reject"
-                title="Reject Assignment"
-                // onClick={() => rejectHandler(row)}
+            
                 onClick={() => rejectHandler(row)}
               >
-                <i
-                  class="fa fa-times"
-                  style={{ color: "red", fontSize: "16px" }}
-                ></i>
+               <Reject titleName="Reject Assignment" />
               </div>
             </div>
           </>
@@ -223,7 +215,7 @@ function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
               <Spinner color="primary" />
               :
               <DataTablepopulated 
-              bgColor="#55425f"
+              bgColor="#6e557b"
               keyField= {"assign_no"}
               data={pendingData}
               

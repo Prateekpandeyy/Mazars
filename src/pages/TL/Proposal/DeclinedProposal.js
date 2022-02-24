@@ -312,6 +312,7 @@ function DeclinedProposal() {
                         ViewDiscussion={ViewDiscussion}
                         report={assignNo}
                         getData={getProposalList}
+                        headColor="#5f7b97"
                     />
                       <CommonShowProposal
           setViewProposalModal = {setViewProposalModal}

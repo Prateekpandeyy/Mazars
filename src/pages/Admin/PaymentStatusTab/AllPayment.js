@@ -319,7 +319,7 @@ function AllPayment() {
                 <CardBody>
                     <Records records={records} />
                     <DataTablepopulated 
-                   bgColor="#42566a"
+                   bgColor="#2b5f55"
                    keyField= {"assign_no"}
                    data={payment}
                    columns={columns}>
@@ -364,6 +364,7 @@ function AllPayment() {
                         ViewDiscussion={ViewDiscussion}
                         report={assignNo}
                         getData={getPaymentStatus}
+                        headColor="#2b5f55"
                     />
 
                 </CardBody>

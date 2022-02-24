@@ -73,7 +73,7 @@ if(SearchQuery == "SearchQuery") {
       <>
         <button
           type="submit"
-          className="btn btn-primary mx-sm-1 mb-2"
+          className="customBtn mx-sm-1 mb-2"
           onClick={() => resetData()}
         >
           Reset
@@ -100,7 +100,7 @@ if(SearchQuery == "SearchQuery") {
                     className="form-select form-control"
                     
                   />
-                <button type="submit" className="btn btn-primary mx-sm-1 mb-2">
+                <button type="submit" className="customBtn mx-sm-1 mb-2">
                   Search
                 </button>
                 <Reset />

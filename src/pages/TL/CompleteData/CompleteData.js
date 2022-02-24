@@ -17,6 +17,8 @@ import History from "../../../components/PendingForAllocation/History";
 import Swal from "sweetalert2";
 import { useParams, useHistory } from "react-router-dom";
 import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
+import { ActionIcon} from "../../../components/Common/MessageIcon";
+
 function CompletedQuery() {
   const userid = window.localStorage.getItem("tlkey");
 const hist = useHistory();
@@ -195,8 +197,11 @@ const hist = useHistory();
         <>
           {row.statuscode === "0" || row.statuscode === "3"? (
            
-           <i onClick ={() => assignConfirm(row.id, row.assign_no)} class="fa fa-share" style={{color : "blue", cursor : "pointer"}}></i>
-          ) : (
+           <div onClick ={() => assignConfirm(row.id, row.assign_no)}>
+<ActionIcon  titleName="Assign to tp" />
+           </div>
+         
+           ) : (
             <div style={{ display: "flex", justifyContent: "space-around" }}>
             
   <p className="completed">
@@ -284,7 +289,7 @@ Swal.fire({
         </CardHeader>
         <CardBody>
         <DataTablepopulated 
-          bgColor="#55425f"
+                                 bgColor="#6e557b"
           keyField= {"assign_no"}
           data={incompleteData}
           

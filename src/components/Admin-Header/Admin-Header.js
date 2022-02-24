@@ -64,11 +64,11 @@ function AdminHeader({ custUserId, adminUserId, TLuserId, TPuserId , feedbackNum
           />
         )}
 
-        {TLuserId && <NavWrapper color="#BC85A3" logout={tlLogout}
+        {TLuserId && <NavWrapper color="#fff" logout={tlLogout}
           name="teamleader" email={tlEmail}
         />}
 
-        {TPuserId && <NavWrapper color="#9799BA" logout={tpLogout}
+        {TPuserId && <NavWrapper color="#fff" logout={tpLogout}
           name="taxprofessional" email={tpEmail}
         />}
       </nav>

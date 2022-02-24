@@ -301,6 +301,7 @@ function PendingForAcceptence({ pendingProposal }) {
             ViewDiscussion={ViewDiscussion}
             report={assignNo}
             getData={getPendingAcceptedProposal}
+            headColor="#42566a"
           />
            <RetviewModal 
           retview = {retview}
