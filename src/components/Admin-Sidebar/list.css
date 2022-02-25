@@ -29,7 +29,7 @@
 }
 
 .dashboardMenu{
-    background-image: url("./images/newIm/normal-icon/home.png") !important;
+    background-image: url("./images/againImg/das_gary.png") !important;
   background-repeat: no-repeat !important;
   background-size: cover !important;
   max-width: 40px !important;
@@ -39,7 +39,7 @@
   margin: 3px 5px 5px 5px;
 }
 .nav-item a:hover .dashboardMenu{
-    background-image: url("./images/newHov/hover-icon/home.png") !important;
+    background-image: url("./images/againImg/das_higl.png") !important;
     background-repeat: no-repeat !important;
     background-size: cover !important;
     max-width: 40px !important;
@@ -49,7 +49,7 @@
     margin-top: 3px;
 }
 .queryMenu{
-    background-image: url("./images/newIm/normal-icon/letter-q.png") !important;
+    background-image: url("./images/againImg/quer_gray.png") !important;
     background-repeat: no-repeat !important;
     background-size: cover !important;
     max-width: 40px !important;
@@ -59,7 +59,7 @@
     margin-top: 3px;
 }
 .nav-item a:hover .queryMenu{
-    background-image: url("./images/newHov/hover-icon/letter-q.png") !important;
+    background-image: url("./images/againImg/quer_higl.png") !important;
     background-repeat: no-repeat !important;
     background-size: cover !important;
     max-width: 40px !important;
@@ -69,7 +69,7 @@
     margin-top: 3px; 
 }
 .proposalMenu{
-    background-image: url("./images/newIm/normal-icon/business-proposal.png") !important;
+    background-image: url("./images/againImg/propsa_gary.png") !important;
     background-repeat: no-repeat !important;
     background-size: cover !important;
     max-width: 40px !important;
@@ -79,7 +79,7 @@
     margin-top: 3px;
 }
 .nav-item a:hover .proposalMenu{
-    background-image: url("./images/newHov/hover-icon/business-proposal.png") !important;
+    background-image: url("./images/againImg/propsa_higl.png") !important;
     background-repeat: no-repeat !important;
     background-size: cover !important;
     max-width: 40px !important;
@@ -89,7 +89,7 @@
     margin-top: 3px;
 }
 .paymentMenu{
-    background-image: url("./images/newImage/payment.png") !important;
+    background-image: url("./images/againImg/pay_gray.png") !important;
     background-repeat: no-repeat !important;
     background-size: cover !important;
     max-width: 40px !important;
@@ -99,7 +99,7 @@
     margin-top: 3px;
 }
 .nav-item a:hover .paymentMenu{
-    background-image: url("./images/newHoverImgaes/icons/payment.png") !important;
+    background-image: url("./images/againImg/pay_higl.png") !important;
     background-repeat: no-repeat !important;
     background-size: cover !important;
     max-width: 40px !important;
@@ -109,7 +109,7 @@
     margin-top: 3px;
 }
 .assignmentMenu{
-    background-image: url("./images/newIm/normal-icon/tr.png") !important;
+    background-image: url("./images/againImg/assign_gray.png") !important;
     background-repeat: no-repeat !important;
     background-size: cover !important;
     max-width: 40px !important;
@@ -119,7 +119,7 @@
     margin-top: 3px;
 }
 .nav-item a:hover .assignmentMenu{
-    background-image: url("./images/newHov/hover-icon/tr.png") !important;
+    background-image: url("./images/againImg/assign_higl.png") !important;
     background-repeat: no-repeat !important;
     background-size: cover !important;
     max-width: 40px !important;
@@ -129,7 +129,7 @@
     margin-top: 3px;
 }
 .scheduleMenu{
-    background-image: url("./images/newIm/normal-icon/calendar\ \(1\).png") !important;
+    background-image: url("./images/againImg/sche_gary.png") !important;
     background-repeat: no-repeat !important;
     background-size: cover !important;
     max-width: 20px !important;
@@ -141,7 +141,7 @@
     width: 40px;
 }
 .nav-item:hover .scheduleMenu{
-    background-image: url("./images/newHov/hover-icon/calendar\ \(1\).png") !important;
+    background-image: url("./images/againImg/sche_higl.png") !important;
     background-repeat: no-repeat !important;
     background-size: cover !important;
     max-width: 20px !important;
@@ -151,7 +151,7 @@
     margin-top: 3px;
 }
 .feedbackMenu{
-    background-image: url("./images/newIm/normal-icon/feedback.png") !important;
+    background-image: url("./images/againImg/feed_gary.png") !important;
     background-repeat: no-repeat !important;
     background-size: cover !important;
     max-width: 40px !important;
@@ -162,7 +162,7 @@
   
 }
 .nav-item a:hover .feedbackMenu{
-    background-image: url("./images/newHov/hover-icon/feedback.png") !important;
+    background-image: url("./images/againImg/feed_higl.png") !important;
     background-repeat: no-repeat !important;
     background-size: cover !important;
     max-width: 40px !important;
@@ -172,7 +172,7 @@
     margin-top: 3px;
 }
 .contactMenu{
-    background-image: url("./images/newIm/normal-icon/contact-book.png") !important;
+    background-image: url("./images/againImg/contact_gray.png") !important;
     background-repeat: no-repeat !important;
     background-size: cover !important;
     max-width: 40px !important;
@@ -182,7 +182,7 @@
     margin-top: 3px;
 }
 .nav-item a:hover .contactMenu{
-    background-image: url("./images/newHov/hover-icon/contact-book.png") !important;
+    background-image: url("./images/againImg/contact_higl.png") !important;
     background-repeat: no-repeat !important;
     background-size: cover !important;
     max-width: 40px !important;
@@ -233,7 +233,7 @@
     margin-top: 3px; 
 }
 .aboutMenu{
-    background-image: url("./images/newIm/normal-icon/about.png") !important;
+    background-image: url("./images/againImg/about_gray.png") !important;
     background-repeat: no-repeat !important;
     background-size: cover !important;
     max-width: 30px !important;
@@ -245,7 +245,29 @@
     height: 25px;
 }
 .nav-item a:hover .aboutMenu{
-    background-image: url("./images/newIm/normal-icon/reports.png") !important;
+    background-image: url("./images/againImg/about_higl.png") !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    max-width: 40px !important;
+    max-height: 40px !important;
+    box-sizing: border-box;
+    padding: 16px 15px;
+    margin-top: 3px;
+}
+.helpMenu{
+    background-image: url("./images/againImg/help_gary.png") !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    max-width: 30px !important;
+    max-height: 30px !important;
+    box-sizing: border-box;
+    padding: 16px 15px;
+    margin-top: 3px;
+    width: 25px;
+    height: 25px;
+}
+.nav-item a:hover .helpMenu{
+    background-image: url("./images/againImg/help_higl.png") !important;
     background-repeat: no-repeat !important;
     background-size: cover !important;
     max-width: 40px !important;
@@ -275,14 +297,4 @@
     box-sizing: border-box;
     padding: 16px 15px;
     margin-top: 3px;
-}
-.helpMenu{
-    background-image: url("./images/newImage/home.png") !important;
-  background-repeat: no-repeat !important;
-  background-size: cover !important;
-}
-.nav-item a:hover .helpMenu{
-    background-image: url("./images//newHoverImgaes/icons/home.png") !important;
-  background-repeat: no-repeat !important;
-  background-size: cover !important;   
 }

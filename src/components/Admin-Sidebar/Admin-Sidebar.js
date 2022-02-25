@@ -261,7 +261,9 @@ const handleClick = () => {
               </li>
               <li className="nav-item">
                 <NavLink to={"/customer/modalmanual"}>
-                <i class="fa fa-question"></i>
+                <i className="fa">
+                  <span className="helpMenu"></span>
+                </i>
                   <span className="menu-title" data-i18n="">
                    Help 
                   </span>
