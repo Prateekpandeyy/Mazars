@@ -82,11 +82,11 @@ const viewStyle = {
             <thead>
               <tr>
                 <th style={{border: `1px solid ${deleiverAble}`, color: "#fff", backgroundColor: `${deleiverAble}`}}>S.No</th>
-                <th style={{border: `1px solid ${deleiverAble}`, color: "#fff", backgroundColor: `${deleiverAble}`}}>Date</th>
+                <th style={{border: `1px solid ${deleiverAble}`, color: "#fff", backgroundColor: `${deleiverAble}`,  width:"120px"}}>Date</th>
                 <th style={{border: `1px solid ${deleiverAble}`, color: "#fff", backgroundColor: `${deleiverAble}`}}>Document</th>
                
-                <th style={{border: `1px solid ${deleiverAble}`, color: "#fff", backgroundColor: `${deleiverAble}`}}>Report Type</th>
-                <th style={{border: `1px solid ${deleiverAble}`, color: "#fff", backgroundColor: `${deleiverAble}`}}>Action</th>
+                <th style={{border: `1px solid ${deleiverAble}`, color: "#fff", backgroundColor: `${deleiverAble}` , width: "150px"}}>Report Type</th>
+                <th style={{border: `1px solid ${deleiverAble}`, color: "#fff", backgroundColor: `${deleiverAble}`, width: "80px"}}>Action</th>
               </tr>
             </thead>
 
@@ -136,7 +136,7 @@ const viewStyle = {
                   <td>
                   {p.stages_type === "2" ? <>
                   {p.status === "3" ? 
-                   <p style={{ color: "red" }}> Discarded</p> : 
+                   <p className="declined"> Discarded</p> : 
                    null}
                    {
                      p.status === "1" ?

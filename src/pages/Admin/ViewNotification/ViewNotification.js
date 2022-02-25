@@ -63,9 +63,10 @@ function ViewNotification() {
                 Go Back
               </button>
             </Col>
-            <Col md="8">
+            <Col md="4" align="center">
               <h4>Message Details</h4>
             </Col>
+            <Col md="4"></Col>
           </Row>
         </CardHeader>
         <CardBody>

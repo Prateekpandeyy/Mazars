@@ -199,7 +199,7 @@ function QueryAssingment() {
             </Col>
             <Col md="4">
               <div style={{ textAlign: "center" }}>
-                <h2>Query Allocation</h2>
+                <h4>Query Allocation</h4>
               </div>
             </Col>
           </Row>

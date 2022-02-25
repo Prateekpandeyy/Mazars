@@ -22,6 +22,7 @@ import { Select } from "antd";
 import AdminFilter from "../../components/Search-Filter/AdminFilter";
 import Records from "../../components/Records/Records";
 import DataTablepopulated from "../DataTablepopulated/DataTabel";
+import { History } from '../Common/MessageIcon'
 
 function PendingForProposals({ CountPendingProposal }) {
   const { handleSubmit, register, errors, reset } = useForm();
@@ -170,13 +171,16 @@ function PendingForProposals({ CountPendingProposal }) {
       formatter: function (cell, row) {
         return (
           <>
-            <button
+            {/* <button
               type="button"
               className="autoWidthBtn"
               onClick={() => toggle(row.id)}
             >
               History
-            </button>
+            </button> */}
+            <div  onClick={() => toggle(row.id)} titleName="History">
+              <History />
+            </div>
           </>
         );
       },

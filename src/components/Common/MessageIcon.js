@@ -75,6 +75,13 @@ const Payment = () => {
     </>
   )
 }
+const History = (props) =>{
+  return(
+    <>
+    <i class="fa fa-history historyIcon"   title={props.titleName}></i>
+    </>
+  )
+}
 const PaymentDecline = () => {
   return(
     <>
@@ -123,4 +130,4 @@ const ActionIcon = (props) => {
 export default MessageIcon;
 export { EyeIcon , ViewDiscussionIcon, DiscussProposal, HelpIcon, FeedBackICon
 , DeleteIcon, EditQuery, UploadDocument, Payment, PaymentDecline, DraftReportUploadIcon, 
-FinalReportUploadIcon, Accept, Reject, ActionIcon}
+FinalReportUploadIcon, Accept, Reject, ActionIcon, History}

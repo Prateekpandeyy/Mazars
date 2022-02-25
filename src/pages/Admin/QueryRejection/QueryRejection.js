@@ -125,7 +125,7 @@ function QueryRejection(props) {
                                                     </div>
                                                 </div>
                                             </div>
-                                            <button type="submit" className="ustomBtnc">
+                                            <button type="submit" className="customBtn">
                                                 Submit
                                             </button>
                                         </form>

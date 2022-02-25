@@ -233,7 +233,7 @@ setModal(!modal)
               {row.is_paid == "0" ? 
                "":   <>
             {row.is_paid == "1" ?  <a href={row.receipt_url} target="blank">Payment receipt</a> 
-            : <p style={{fontWieght: "800", fontSize: "16px", padding: "5px", color : "red"}}>Declined</p> }
+            : <p style={{fontWieght: "800", fontSize: "16px", padding: "5px"}} className="declined">Declined</p> }
             </>}
               </>
                : ""}
@@ -270,7 +270,7 @@ return(
                     index: props.location.index,
                   }}
                 >
-                  <button class="btn btn-success ml-3">Go Back</button>
+                  <button class="autoWidthBtn ml-3">Go Back</button>
                 </Link>
             </Col>
             <Col md="8">

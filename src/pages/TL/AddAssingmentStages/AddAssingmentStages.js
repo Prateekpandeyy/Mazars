@@ -180,7 +180,7 @@ function AddAssingmentStages() {
                                 style={{
                                   fontSize: "20px",
                                   fontWeight: "500",
-                                  paddingTop: "30px",
+                                 
                                 }}
                               >
                                 Client Discussion
@@ -207,7 +207,7 @@ function AddAssingmentStages() {
                                 style={{
                                   fontSize: "20px",
                                   fontWeight: "500",
-                                  paddingTop: "30px",
+                                 
                                 }}
                               >
                                 Draft Report
@@ -234,7 +234,7 @@ function AddAssingmentStages() {
                                 style={{
                                   fontSize: "20px",
                                   fontWeight: "500",
-                                  paddingTop: "30px",
+                                 
                                 }}
                               >
                                 Final Discussion
@@ -261,7 +261,7 @@ function AddAssingmentStages() {
                                 style={{
                                   fontSize: "20px",
                                   fontWeight: "500",
-                                  paddingTop: "30px",
+                                 
                                 }}
                               >
                                 Delivery of final report
@@ -288,7 +288,7 @@ function AddAssingmentStages() {
                                 style={{
                                   fontSize: "20px",
                                   fontWeight: "500",
-                                  paddingTop: "30px",
+                                 
                                 }}
                               >
                                 Awaiting Completion
@@ -331,7 +331,7 @@ function AddAssingmentStages() {
                               style={{
                                 fontSize: "20px",
                                 fontWeight: "500",
-                                paddingTop: "30px",
+                               
                               }}
                             >
                               Client Discussion
@@ -378,7 +378,7 @@ function AddAssingmentStages() {
                               style={{
                                 fontSize: "20px",
                                 fontWeight: "500",
-                                paddingTop: "30px",
+                               
                               }}
                             >
                               Draft Report
@@ -427,7 +427,7 @@ function AddAssingmentStages() {
                               style={{
                                 fontSize: "20px",
                                 fontWeight: "500",
-                                paddingTop: "30px",
+                               
                               }}
                             >
                               Final Discussion
@@ -476,7 +476,7 @@ function AddAssingmentStages() {
                               style={{
                                 fontSize: "20px",
                                 fontWeight: "500",
-                                paddingTop: "30px",
+                               
                               }}
                             >
                               Delivery of final report
@@ -526,7 +526,7 @@ function AddAssingmentStages() {
                               style={{
                                 fontSize: "20px",
                                 fontWeight: "500",
-                                paddingTop: "30px",
+                               
                               }}
                             >
                               Awaiting Completion

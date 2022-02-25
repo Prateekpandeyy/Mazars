@@ -127,11 +127,11 @@ function ViewReport({
           <table class="table table-bordered">
             <thead>
               <tr>
-                <th style={{border: `1px solid ${headColor}`, color: "#fff", backgroundColor: `${headColor}`}}>S.No</th>
-                <th style={{border: `1px solid ${headColor}`, color: "#fff", backgroundColor: `${headColor}`}}>Date</th>
+                <th style={{border: `1px solid ${headColor}`, color: "#fff", backgroundColor: `${headColor}` }}>S.No</th>
+                <th style={{border: `1px solid ${headColor}`, color: "#fff", backgroundColor: `${headColor}` , width: "120px"}}>Date</th>
                 <th style={{border: `1px solid ${headColor}`, color: "#fff", backgroundColor: `${headColor}`}}>Document</th>
-                <th style={{border: `1px solid ${headColor}`, color: "#fff", backgroundColor: `${headColor}`}}>Report Type</th>
-                <th style={{border: `1px solid ${headColor}`, color: "#fff", backgroundColor: `${headColor}`}}>Action</th>
+                <th style={{border: `1px solid ${headColor}`, color: "#fff", backgroundColor: `${headColor}` , width: "150px"}}>Report Type</th>
+                <th style={{border: `1px solid ${headColor}`, color: "#fff", backgroundColor: `${headColor}` , width: "80px"}}>Action</th>
               </tr>
             </thead>
 
@@ -176,7 +176,7 @@ function ViewReport({
                   {p.stages_type === "2" ?
                   <>
                    {p.status === "3" ? 
-                   <p style={{ color: "red" }}> Discarded</p> : 
+                   <p className="declined"> Discarded</p> : 
                    null}
                    {
                      p.status === "1" ?

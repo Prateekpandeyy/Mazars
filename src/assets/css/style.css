@@ -451,6 +451,11 @@ html body a{
 .inboxTitle:hover{
   color:#0071CE;
 }
+.historyIcon{
+  font-size: 25px;
+  cursor: pointer;
+  color: "green";
+}
 .notification:hover .badge{
  background-color: #0071CE !important;
 }
