@@ -89,7 +89,7 @@
     margin-top: 3px;
 }
 .paymentMenu{
-    background-image: url("./images/newIm/normal-icon/payment.png") !important;
+    background-image: url("./images/newImage/payment.png") !important;
     background-repeat: no-repeat !important;
     background-size: cover !important;
     max-width: 40px !important;
@@ -99,7 +99,7 @@
     margin-top: 3px;
 }
 .nav-item a:hover .paymentMenu{
-    background-image: url("./images/newHov/hover-icon/payment.png") !important;
+    background-image: url("./images/newHoverImgaes/icons/payment.png") !important;
     background-repeat: no-repeat !important;
     background-size: cover !important;
     max-width: 40px !important;

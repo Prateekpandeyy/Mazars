@@ -126,12 +126,12 @@ const ReportList = () => {
                                    Generate Report
                                 </Link>
            </div>
-           <div className="col-md-4">
+           {/* <div className="col-md-4">
      
      <Link to="/admin/consalation" className="autoWidthBtn">
                               Consolidate Payment
                            </Link>
-      </div>
+      </div> */}
        </div>
 {data === undefined ? "" : 
     <DataTablepopulated 
