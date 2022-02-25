@@ -814,13 +814,10 @@ options={qno} onChange={(e) => queryNumber(e)}/>
        <fieldset className="my-fieldset">
            <legend className="login-legend">Payment Receipt</legend>  
            <div className="basicFeild">
-           <span>
-               <input type="checkbox" onClick={(i) => selectAllPayment(i)} name="selectAllPayment" class="selectall" id="selectAllPayment" ref={register}></input>
-               <label htmlFor="selectAllPayment">Select All</label>
-               </span>
+         
                <span>
 <input type="checkbox" ref={register} checked={paymnetCheckbox} name="search_pay_amount" id="search_pay_amount"></input>
-<label htmlFor="search_pay_amount">Paid</label>
+<label htmlFor="search_pay_amount">Payment Received Record Only</label>
 </span> 
                </div>
             <div className="basicFeild">
