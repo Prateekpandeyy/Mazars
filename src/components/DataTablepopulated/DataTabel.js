@@ -41,6 +41,7 @@ const MyContainer = styled(Container)({
   keyField = {props.keyField}
   data = {props.data}
   columns = {props.columns}
+  rowStyle = {props.rowStyle2}
   rowIndex/>
 
 </MyContainer>

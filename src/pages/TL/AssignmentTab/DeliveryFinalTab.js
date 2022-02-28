@@ -548,6 +548,7 @@ const ViewReport = (key) => {
   bgColor ="#7c887c"
                    keyField= {"assign_no"}
                    data={assignment}
+                   rowStyle2 = {rowStyle2}
                    columns={columns}>
                     </DataTablepopulated>
  <ViewAllReportModal

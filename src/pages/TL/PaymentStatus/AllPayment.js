@@ -350,6 +350,7 @@ rowStyle2 = (row, index) => {
                    bgColor="#2b5f55"
                    keyField= {"assign_no"}
                    data={payment}
+                   rowStyle2 = {rowStyle2}
                    columns={columns}>
                     </DataTablepopulated>
 

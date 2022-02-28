@@ -118,9 +118,15 @@ const cgstFun = (e) => {
  let kkk = e.target.value.split(".")[1]
   if(kkk)
    if(kkk.length < 3){
-     
+     let a = 0;
+     console.log("aaa", pocketExp.length)
     setCgetRate(e.target.value);
-    let a = parseInt(basicAmount) + parseInt(pocketExp);
+    if(pocketExp.length === 0){
+      a = parseInt(basicAmount) + parseInt(0);
+    }
+    else{
+      a = parseInt(basicAmount) + parseInt(pocketExp);
+    }
      let cget = parseFloat(a * e.target.value / 100)
      setCgstTotal(parseFloat(cget));
      setGst(parseInt(Math.round(cget) + Math.round(igetTotal) + Math.round(sgetTotal)))
@@ -133,7 +139,14 @@ const cgstFun = (e) => {
    }
  else{
   setCgetRate(e.target.value);
-  let a = parseInt(basicAmount) + parseInt(pocketExp);
+  console.log("aaa", pocketExp.length)
+  let a = 0
+  if(pocketExp.length === 0){
+    a = parseInt(basicAmount) + parseInt(0);
+  }
+  else{
+    a = parseInt(basicAmount) + parseInt(pocketExp);
+  }
    let cget = parseFloat(a * e.target.value / 100)
    setCgstTotal(parseFloat(cget));
    setGst(parseInt(Math.round(cget) + Math.round(igetTotal) + Math.round(sgetTotal)))
@@ -147,8 +160,15 @@ const sgstFun = (e) => {
   let kkk = e.target.value.split(".")[1]
   if(kkk){
     if(kkk.length < 3){
+      let a = 0
+  if(pocketExp.length === 0){
+    a = parseInt(basicAmount) + parseInt(0);
+  }
+  else{
+    a = parseInt(basicAmount) + parseInt(pocketExp);
+  }
       setSgetRate(e.target.value)
-      let a = parseInt(basicAmount) + parseInt(pocketExp);
+     
             let cget = parseFloat(a * e.target.value / 100)
             setSgstTotal(parseFloat(cget))
             setTotal(parseInt(cget + igetTotal + cgetTotal + a))
@@ -162,7 +182,13 @@ const sgstFun = (e) => {
   }
 else{
   setSgetRate(e.target.value)
-  let a = parseInt(basicAmount) + parseInt(pocketExp);
+  let a = 0
+  if(pocketExp.length === 0){
+    a = parseInt(basicAmount) + parseInt(0);
+  }
+  else{
+    a = parseInt(basicAmount) + parseInt(pocketExp);
+  }
         let cget = parseFloat(a * e.target.value / 100)
         setSgstTotal(parseFloat(cget))
         setTotal(parseInt(cget + igetTotal + cgetTotal + a))
@@ -181,7 +207,13 @@ else{
   if(kkk){
 if(kkk.length < 3){
   setIgetRate(e.target.value)
-  let a = parseInt(basicAmount) + parseInt(pocketExp);
+  let a = 0
+  if(pocketExp.length === 0){
+    a = parseInt(basicAmount) + parseInt(0);
+  }
+  else{
+    a = parseInt(basicAmount) + parseInt(pocketExp);
+  }
       let cget = parseFloat(a * e.target.value / 100) 
          setIgstTotal(parseFloat(cget)) 
          setGst(parseInt(Math.round(cget) + Math.round(sgetTotal) + Math.round(cgetTotal)));
@@ -196,7 +228,13 @@ else{
   }
    else{
     setIgetRate(e.target.value)
-    let a = parseInt(basicAmount) + parseInt(pocketExp);
+    let a = 0
+  if(pocketExp.length === 0){
+    a = parseInt(basicAmount) + parseInt(0);
+  }
+  else{
+    a = parseInt(basicAmount) + parseInt(pocketExp);
+  }
         let cget = parseFloat(a * e.target.value / 100) 
            setIgstTotal(parseFloat(cget)) 
            setGst(parseInt(Math.round(cget) + Math.round(sgetTotal) + Math.round(cgetTotal)));
@@ -214,7 +252,13 @@ else{
    if(kkk.length < 3){
     if(e.target.value > 100){
       setTdsR(100);
-      let a = parseInt(basicAmount) + parseInt(pocketExp);
+     let a = 0
+  if(pocketExp.length === 0){
+    a = parseInt(basicAmount) + parseInt(0);
+  }
+  else{
+    a = parseInt(basicAmount) + parseInt(pocketExp);
+  }
       let cget = Math.round((a * 100 / 100))
          setTds(cget)
        setgrandTotal(parseInt(total) - parseInt(cget))
@@ -222,7 +266,13 @@ else{
     }  
     else{
      setTdsR(e.target.value)
-     let a = parseInt(basicAmount) + parseInt(pocketExp);
+    let a = 0
+  if(pocketExp.length === 0){
+    a = parseInt(basicAmount) + parseInt(0);
+  }
+  else{
+    a = parseInt(basicAmount) + parseInt(pocketExp);
+  }
       let cget = Math.round((a * e.target.value / 100))
          setTds(cget)
        setgrandTotal(parseInt(total) - parseInt(cget))  
@@ -235,7 +285,13 @@ else{
  else{
   if(e.target.value > 100){
     setTdsR(100);
-    let a = parseInt(basicAmount) + parseInt(pocketExp);
+   let a = 0
+  if(pocketExp.length === 0){
+    a = parseInt(basicAmount) + parseInt(0);
+  }
+  else{
+    a = parseInt(basicAmount) + parseInt(pocketExp);
+  }
     let cget = Math.round((a * 100 / 100))
        setTds(cget)
      setgrandTotal(parseInt(total) - parseInt(cget))
@@ -243,7 +299,13 @@ else{
   }  
   else{
    setTdsR(e.target.value)
-   let a = parseInt(basicAmount) + parseInt(pocketExp);
+  let a = 0
+  if(pocketExp.length === 0){
+    a = parseInt(basicAmount) + parseInt(0);
+  }
+  else{
+    a = parseInt(basicAmount) + parseInt(pocketExp);
+  }
     let cget = Math.round((a * e.target.value / 100))
        setTds(cget)
      setgrandTotal(parseInt(total) - parseInt(cget))  
@@ -254,7 +316,7 @@ else{
 
  const pocketExpFun = (e) => {
  if(e.target.value === ""){
-   setPocketExp(0)
+   setPocketExp('')
  }
  else{
    setPocketExp(parseInt(e.target.value).toString())

@@ -12,7 +12,7 @@ import {
     ModalFooter,
     Button,
 } from "reactstrap";
-
+import moment from "moment";
 import { Link } from "react-router-dom";
 import AdminFilter from "../../../components/Search-Filter/AdminFilter";
 import CommonServices from "../../../common/common";
@@ -296,7 +296,19 @@ function Paid() {
         },
     ];
 
-
+    const rowStyle2 = (row, index) => {
+        const style = {}
+        var warningDate = moment(row.Exp_Delivery_Date).subtract(2, 'day').toDate();
+        // var warnformat = warningDate.format("YYYY-MM-DD");
+        var aa = moment().toDate();
+     
+        if(row.paid_status != "2" && row.status != "Complete" && warningDate < aa)  {
+          style.backgroundColor = "#c1d8f2";
+          style.color = "#000111"
+        }
+      
+        return style;
+      }
     return (
         <div>
             <Card>
@@ -317,6 +329,7 @@ function Paid() {
                   bgColor="#3e8678"
                    keyField= {"assign_no"}
                    data={payment}
+                   rowStyle2= {rowStyle2}
                    columns={columns}>
                     </DataTablepopulated>
                    

@@ -348,6 +348,7 @@ rowStyle2 = (row, index) => {
                 <CardBody>
                 <DataTablepopulated 
  bgColor="#3e8678"
+ rowStyle2={rowStyle2}
                    keyField= {"assign_no"}
                    data={payment}
                    columns={columns}>

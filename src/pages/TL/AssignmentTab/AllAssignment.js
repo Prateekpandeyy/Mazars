@@ -689,6 +689,7 @@ else{
         <DataTablepopulated 
                     bgColor = "#5a625a"
                    keyField= {"assign_no"}
+                   rowStyle2 = {rowStyle2}
                    data={assignment}
                    columns={columns}>
                     </DataTablepopulated>

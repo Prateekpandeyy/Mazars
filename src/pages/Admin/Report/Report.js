@@ -357,8 +357,8 @@ const resetData = () => {
         })
         }
       }
-    else if(basic_info === false || proposal_info === false || assignment_info === false 
-      ||  payment_info === false){
+    else if(basic_info === false && proposal_info === false && assignment_info === false 
+      &&  payment_info === false){
       Swal.fire({
         title : "error",
         html : "Please select atleast one field",

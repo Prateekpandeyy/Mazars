@@ -17,6 +17,7 @@ import ViewAllReportModal from "./ViewAllReport";
 import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
 import MessageIcon, { ViewDiscussionIcon, DraftReportUploadIcon, FinalReportUploadIcon} from "../../../components/Common/MessageIcon";
 import DiscardReport from "../AssignmentTab/DiscardReport";
+import moment from "moment";
 function AssignmentTab() {
 
     const history = useHistory();
@@ -435,6 +436,25 @@ const ViewReport = (key) => {
         );
     };
 
+const rowStyle2 = (row, index) => {
+    const style = {}
+    var warningDate = moment(row.Exp_Delivery_Date).subtract(2, 'day').toDate();
+    // var warnformat = warningDate.format("YYYY-MM-DD");
+    var aa = moment().toDate();
+   
+
+    if(row.paid_status != "2" && row.status != "Complete" && warningDate < aa)  {
+      style.backgroundColor = "#c1d8f2";
+      style.color = "#000111"
+    }
+    else if(row.paid_status != "2" && warningDate > aa){
+      style.backgroundColor = "#fff";
+      style.color = "#000"
+    }
+  
+    return style;
+  }
+
 
 
     return (
@@ -532,6 +552,7 @@ const ViewReport = (key) => {
                 <DataTablepopulated 
                    bgColor="#42566a"
                    keyField= {"assign_no"}
+                   rowStyle2={rowStyle2}
                    data={assignment}
                    columns={columns}>
                     </DataTablepopulated>

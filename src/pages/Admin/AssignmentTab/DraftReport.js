@@ -479,6 +479,7 @@ var rowStyle2 = {}
                    bgColor="#7c887c"
                    keyField= {"assign_no"}
                    data={assignmentDisplay}
+                   rowStyle2= {rowStyle2}
                    columns={columns}>
                     </DataTablepopulated>
   <ViewAllReportModal

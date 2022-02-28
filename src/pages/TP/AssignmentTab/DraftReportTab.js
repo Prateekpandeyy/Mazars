@@ -17,7 +17,7 @@ import ViewAllReportModal from "./ViewAllReport";
 import DescriptionOutlinedIcon from '@material-ui/icons/DescriptionOutlined';
 import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
 import MessageIcon, { ViewDiscussionIcon, DraftReportUploadIcon, FinalReportUploadIcon} from "../../../components/Common/MessageIcon";
-
+import moment from "moment";
 
 
 
@@ -427,6 +427,26 @@ function AssignmentTab() {
             </>
         );
     };
+    const rowStyle2 = (row, index) => {
+      const style = {}
+      var warningDate = moment(row.Exp_Delivery_Date).subtract(2, 'day').toDate();
+      // var warnformat = warningDate.format("YYYY-MM-DD");
+      var aa = moment().toDate();
+     
+  
+      if(row.paid_status != "2" && row.status != "Complete" && warningDate < aa)  {
+        style.backgroundColor = "#c1d8f2";
+        style.color = "#000111"
+      }
+      else if(row.paid_status != "2" && warningDate > aa){
+        style.backgroundColor = "#fff";
+        style.color = "#000"
+      }
+    
+      return style;
+    }
+  
+  
 
 
     return (
@@ -525,6 +545,7 @@ function AssignmentTab() {
                 <CardBody>
                 <DataTablepopulated 
                    bgColor="#42566a"
+                   rowStyle2={rowStyle2}
                    keyField= {"assign_no"}
                    data={assignment}
                    columns={columns}>

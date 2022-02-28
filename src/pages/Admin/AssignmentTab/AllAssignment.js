@@ -579,6 +579,7 @@ setError(true)
                   bgColor = "#5a625a"
                    keyField= {"assign_no"}
                    data={assignmentDisplay}
+                   rowStyle2= {rowStyle2}
                    columns={columns}>
                     </DataTablepopulated>
                    

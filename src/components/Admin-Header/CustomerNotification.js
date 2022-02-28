@@ -39,14 +39,45 @@ function CustomerNotification({ tokenKey, name }) {
             <div style={{display : "flex", justifyContent : "center", alignItems : "flex-end", padding: "10px"}}>
                 <li className="dropdown dropdown-notification nav-item">
                     {countNotification ? (
-                     
-                           
-                                <Link to={`/${name}/message`} className="notification">
+                     <>
+                     {
+                         name === "Team Leader" ?
+                         <Link to={`/teamleader/message`} className="notification">
+                         <h4 className="contentTitle" style={{display:"flex", margin: "0 0 5px 0"}}>Inbox </h4>
+                               <span className="badge">{countNotification}</span>
+                               
+                           </Link>
+                       : ""
+                     }
+                     {
+                         name === "Tax Professional" ?
+                         <Link to={`/taxprofessional/message`} className="notification">
+                         <h4 className="contentTitle" style={{display:"flex", margin: "0 0 5px 0"}}>Inbox </h4>
+                               <span className="badge">{countNotification}</span>
+                               
+                           </Link>
+                       : ""
+                     }
+                         {
+                             name === "customer" ?
+                             <Link to={`/${name}/message`} className="notification">
                               <h4 className="contentTitle" style={{display:"flex", margin: "0 0 5px 0"}}>Inbox </h4>
                                     <span className="badge">{countNotification}</span>
                                     
-                                </Link>
+                                </Link> :""
+                         }
+                         {
+                             name === "admin" ?
+                             <Link to={`/${name}/message`} className="notification">
+                              <h4 className="contentTitle" style={{display:"flex", margin: "0 0 5px 0"}}>Inbox </h4>
+                                    <span className="badge">{countNotification}</span>
+                                    
+                                </Link> : ""
+                         }
                            
+                     </>
+                           
+                            
                          
                            
                                 
