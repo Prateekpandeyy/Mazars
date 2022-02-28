@@ -23,6 +23,7 @@ import ProposalIcons from './images/Proposal_icons.png';
 import AboutIcon from './images/about-us.png';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
+import GroupAddOutlinedIcon from '@mui/icons-material/GroupAddOutlined';
 function Sidebar({ adminDashboard, custDashboard, TLDashboard, TPDashboard , feedbackNumber}) {
   const [toggleState, setToggleState] = useState(false);
   const [feedbackNumber2, setfeedbackNumber2] = useState();
@@ -389,7 +390,7 @@ const handleClick = () => {
               <li className="nav-item">
                 <NavLink to={"/admin/teamleaders"}>
                 <i class="">
-                  <PersonOutlineIcon />
+                  <PersonOutlineIcon style={{fontSize: "30px", opacity: "0.6",  fontWeight: 500, color: "#3B3B3B"}}/>
                 </i>
                   <span className="menu-title" data-i18n="">
                     Team Leaders
@@ -400,7 +401,7 @@ const handleClick = () => {
               <li className="nav-item">
                 <NavLink to={"/admin/taxprofessionals"}>
                 <i className="fa">
-                  <span className="taxprofessionalMenu"></span>
+                <GroupAddOutlinedIcon style={{fontSize: "30px", opacity: "0.6",  fontWeight: 500, color: "#3B3B3B"}} />
                 </i>
                   <span className="menu-title" data-i18n="">
                     Tax Professionals
@@ -410,7 +411,7 @@ const handleClick = () => {
                <li className ="nav-item">
                  <NavLink to={"/admin/customers"}>
                  <i className="fa">
-               <PersonAddAltIcon style={{fontSize: "30px", opacity: "0.6",  fontWeight: 500, color: "#3B3B3B"}} />
+               <PersonAddAltIcon  style={{fontSize: "30px", opacity: "0.6",  fontWeight: 500, color: "#3B3B3B"}} />
                 </i>
                    <span className="menu-title" data-i18n="">
                   Client
