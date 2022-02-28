@@ -41,6 +41,7 @@ function MyAssingment(props) {
   const [tpStatus, setTpstatus] = useState();
   const [declined2, setDeclined2] = useState();
   const [declinedStatus, setDeclinedStatus] = useState(false)
+  const [overDue, setOverDue] = useState("")
   const [routesData, setRoutesData] = useState("")
     const [diaplayProposal, setDisplayProposal] = useState({
     amount: "",
@@ -135,6 +136,8 @@ function MyAssingment(props) {
           }
 
           if (res.data.proposal_queries.length > 0) {
+            setOverDue(res.data.result[0].overdueamount)
+            console.log("overDue", res.data.result[0].overdueamount)
             setDisplayProposal({
               accepted_amount: res.data.proposal_queries[0].accepted_amount,
               payment_received: res.data.proposal_queries[0].paid_amount,
@@ -142,7 +145,7 @@ function MyAssingment(props) {
               cust_accept_date: res.data.result[0].declined_date,
               proposal_date: res.data.proposal_queries[0].created,
               description: res.data.proposal_queries[0].description,
-
+            
               amount_type: res.data.proposal_queries[0].amount_type,
               amount_fixed: res.data.proposal_queries[0].amount,
               amount_hourly: res.data.proposal_queries[0].amount_hourly,
@@ -209,7 +212,7 @@ useState(() => {
     });
   }
   };
-console.log("props", props)
+
 
   return (
     <Layout custDashboard="custDashboard" custUserId={userId}>
@@ -248,6 +251,7 @@ console.log("props", props)
               <QueryDetails
                 p={p}
                 key={index}
+                overDue = {overDue}
                 diaplaySpecific={diaplaySpecific}
                 diaplayProposal={diaplayProposal}
                 diaplayHistory={diaplayHistory}

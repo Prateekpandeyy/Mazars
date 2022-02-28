@@ -65,11 +65,11 @@ function AdminHeader({ custUserId, adminUserId, TLuserId, TPuserId , feedbackNum
         )}
 
         {TLuserId && <NavWrapper color="#fff" logout={tlLogout}
-          name="teamleader" email={tlEmail}
+          name="Team Leader" email={tlEmail}
         />}
 
         {TPuserId && <NavWrapper color="#fff" logout={tpLogout}
-          name="taxprofessional" email={tpEmail}
+          name="Tax Professional" email={tpEmail}
         />}
       </nav>
    

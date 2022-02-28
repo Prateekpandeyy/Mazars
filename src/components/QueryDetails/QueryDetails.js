@@ -16,6 +16,7 @@ import Feedback from './Feedback'
 
 
 function QueryDetails({
+  overDue,
   p,
   diaplaySpecific,
   diaplayProposal,
@@ -132,7 +133,7 @@ function QueryDetails({
                     tlName2={tlName2}
                     tp22 = {tp22}
                     tpStatus={tpStatus}
-                    
+                    overDue = {overDue}
                   />
                 </Card>
               </Col>

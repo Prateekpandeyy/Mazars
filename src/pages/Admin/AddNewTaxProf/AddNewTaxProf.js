@@ -380,7 +380,7 @@ function AddNew() {
                 <div className="row">
                   <div className="col-md-6">
                     <div className="form-group">
-                      <label>Teamleader post name <span className="declined">*</span></label>
+                      <label>Team Leader post name <span className="declined">*</span></label>
 
                       <select
                         name="p_teamleader"
@@ -411,7 +411,7 @@ function AddNew() {
 
                   <div className="col-md-6">
                     <div className="form-group">
-                      <label> Teamleader post email <span className="declined">*</span></label>
+                      <label> Team Leader post email <span className="declined">*</span></label>
                       <input
                         type="email"
                         name="post_email"

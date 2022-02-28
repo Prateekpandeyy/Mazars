@@ -266,97 +266,231 @@ const resetData = () => {
     || value.receiptDate || value.amount_type || value.amountReceived){
      payment_info = true
    }
-        let formData = new FormData();
-        formData.append("amount_receipt", Number(value.amount_receipt));
-        formData.append("report_name", value.report_name)
-        formData.append("basic_info", Number(basic_info));
-        formData.append("proposal_info", Number(proposal_info));
-        formData.append("assignment_info", Number(assignment_info));
-        formData.append("payment_info", Number(payment_info))
-        formData.append("from", value.p_from);
-        formData.append("to", value.p_to);
-        formData.append("customer_name", cname)
-        formData.append("teamleader", teamleader44);
-        formData.append("taxprofessional", taxprofessional44);
-        formData.append("query_no", qqno)
-        formData.append("category", mcatname);
-        formData.append("subCategory", dd);
-        formData.append("q_no", Number(value.qno));
-        formData.append("date_query", Number(value.dataQuery));
-        formData.append("cust_id", Number(value.cust_id));
-        formData.append("basic_category", Number(value.basicCategory));
-        formData.append("basic_sub_category", Number(value.basic_sub_category));
-        formData.append("assessment", Number(value.assessment));
-        formData.append("purpose", Number(value.purpose_p));
-        formData.append("p_format", Number(value.p_format));
-        formData.append("t_requested", Number(value.t_requested));
-        formData.append("spc_que", Number(value.spc_que));
-        formData.append("date_allocation", Number(value.doa));
-        formData.append("brief_fact_case", Number(value.brief_fact_case))
-        // formData.append("teamleader", Number(value.tl_name));
-        // formData.append("taxprofessional", Number(value.tp_name));
-        formData.append("date_proposal", Number(value.dateProposal));
-        formData.append("proposed_amount", Number(value.proposedAmount));
-        formData.append("payment_terms", Number(value.paymentTerms));
-        formData.append("proposal_status", Number(value.proposal_status));
-        formData.append("accepted_amount", Number(value.acceptedAmount));
-        formData.append("payment_declined_reasen", Number(value.paymentDeclinedReason));
-        formData.append("date_of_acceptance", Number(value.date_acceptance));
-        // formData.append("amount_received", value.amountReceived);
-        formData.append("amount_outstanding", Number(value.amountOutstanding));
-        formData.append("amount_overdue", Number(value.amount_overdue));
-        formData.append("payment_declined", Number(value.declinedDate));
-        // formData.append("assignment_number", Number(value.assignNumber));
-        formData.append("assign_date", Number(value.assignDate));
-        formData.append("proposed_completion_date", Number(value.completionDate));
-        formData.append("assignment_status", Number(value.assignStatus));
-        formData.append("date_complation", Number(value.completionQuery));
-        formData.append("assign_time", Number(value.assignTime));
-        formData.append("payment_recived_date", Number(value.receiptDate));
-        formData.append("basic_amount", Number(value.basic_amount));
-        formData.append("pocket_expensive", Number(value.pocket_expensive));
-        formData.append("cget_tax", Number(value.cget_tax));
-        formData.append("igst_tax", Number(value.igst_tax));
-        formData.append("sgst_tax", Number(value.sgst_tax));
-        formData.append("invoice_amount", Number(value.total_invoice));
-        formData.append("total_gst", Number(value.total_gst));
-        formData.append("process_status", Number(value.process_status));
-        formData.append("tds", Number(value.tds));
-      
-        formData.append("amount_received", Number(value.amountReceived));
-        formData.append("uid", JSON.parse(userid))
-        formData.append("t", Math.floor(Math.random() * 110000))
-        formData.append("amount_type", Number(value.amount_type));
-        formData.append("dos", Number(value.dos));
-        formData.append("invoice_number", Number(value.invoice_number));
-        formData.append("search_pay_amount", Number(value.search_pay_amount))
-   axios({
-     method : "POST",
-     url : `${baseUrl}/report/generateReport?t=${JSON.stringify(Math.floor(Math.random() * 110000))}`,
-     data : formData
+   if(value.search_pay_amount){
+    if(payment_info){
+      let formData = new FormData();
+      formData.append("amount_receipt", Number(value.amount_receipt));
+      formData.append("report_name", value.report_name)
+      formData.append("basic_info", Number(basic_info));
+      formData.append("proposal_info", Number(proposal_info));
+      formData.append("assignment_info", Number(assignment_info));
+      formData.append("payment_info", Number(payment_info))
+      formData.append("from", value.p_from);
+      formData.append("to", value.p_to);
+      formData.append("customer_name", cname)
+      formData.append("teamleader", teamleader44);
+      formData.append("taxprofessional", taxprofessional44);
+      formData.append("query_no", qqno)
+      formData.append("category", mcatname);
+      formData.append("subCategory", dd);
+      formData.append("q_no", Number(value.qno));
+      formData.append("date_query", Number(value.dataQuery));
+      formData.append("cust_id", Number(value.cust_id));
+      formData.append("basic_category", Number(value.basicCategory));
+      formData.append("basic_sub_category", Number(value.basic_sub_category));
+      formData.append("assessment", Number(value.assessment));
+      formData.append("purpose", Number(value.purpose_p));
+      formData.append("p_format", Number(value.p_format));
+      formData.append("t_requested", Number(value.t_requested));
+      formData.append("spc_que", Number(value.spc_que));
+      formData.append("date_allocation", Number(value.doa));
+      formData.append("brief_fact_case", Number(value.brief_fact_case))
+      // formData.append("teamleader", Number(value.tl_name));
+      // formData.append("taxprofessional", Number(value.tp_name));
+      formData.append("date_proposal", Number(value.dateProposal));
+      formData.append("proposed_amount", Number(value.proposedAmount));
+      formData.append("payment_terms", Number(value.paymentTerms));
+      formData.append("proposal_status", Number(value.proposal_status));
+      formData.append("accepted_amount", Number(value.acceptedAmount));
+      formData.append("payment_declined_reasen", Number(value.paymentDeclinedReason));
+      formData.append("date_of_acceptance", Number(value.date_acceptance));
+      // formData.append("amount_received", value.amountReceived);
+      formData.append("amount_outstanding", Number(value.amountOutstanding));
+      formData.append("amount_overdue", Number(value.amount_overdue));
+      formData.append("payment_declined", Number(value.declinedDate));
+      // formData.append("assignment_number", Number(value.assignNumber));
+      formData.append("assign_date", Number(value.assignDate));
+      formData.append("proposed_completion_date", Number(value.completionDate));
+      formData.append("assignment_status", Number(value.assignStatus));
+      formData.append("date_complation", Number(value.completionQuery));
+      formData.append("assign_time", Number(value.assignTime));
+      formData.append("payment_recived_date", Number(value.receiptDate));
+      formData.append("basic_amount", Number(value.basic_amount));
+      formData.append("pocket_expensive", Number(value.pocket_expensive));
+      formData.append("cget_tax", Number(value.cget_tax));
+      formData.append("igst_tax", Number(value.igst_tax));
+      formData.append("sgst_tax", Number(value.sgst_tax));
+      formData.append("invoice_amount", Number(value.total_invoice));
+      formData.append("total_gst", Number(value.total_gst));
+      formData.append("process_status", Number(value.process_status));
+      formData.append("tds", Number(value.tds));
+    
+      formData.append("amount_received", Number(value.amountReceived));
+      formData.append("uid", JSON.parse(userid))
+      formData.append("t", Math.floor(Math.random() * 110000))
+      formData.append("amount_type", Number(value.amount_type));
+      formData.append("dos", Number(value.dos));
+      formData.append("invoice_number", Number(value.invoice_number));
+      formData.append("search_pay_amount", Number(value.search_pay_amount))
+ axios({
+   method : "POST",
+   url : `${baseUrl}/report/generateReport?t=${JSON.stringify(Math.floor(Math.random() * 110000))}`,
+   data : formData
+
+ })
+ .then(function (response) {
+ if(response.data.code === 1){
+   Swal.fire({
+     title : "success",
+     html : "Report generated successfully",
+     icon : "success"
 
    })
-   .then(function (response) {
-   if(response.data.code === 1){
-     Swal.fire({
-       title : "success",
-       html : "Report generated successfully",
-       icon : "success"
-
-     })
-    window.open(`${baseUrl3}/${response.data.result}`)
-   }
-   else{
-     Swal.fire({
-       title : "error",
-       html : "Something went wrong , please try again",
-       icon :"error"
-     })
-   }
+  window.open(`${baseUrl3}/${response.data.result}`)
+ }
+ else{
+   Swal.fire({
+     title : "error",
+     html : "Something went wrong , please try again",
+     icon :"error"
    })
-   .catch((error) => {
+ }
+ })
+ .catch((error) => {
+
+ });
+    }
+    else{
+      Swal.fire({
+        title : "error",
+        html : "Please select atleast one feild iin payment section",
+        icon : "error"
+      })
+      }
+   }
+   else if(basic_info === false){
+    Swal.fire({
+      title : "error",
+      html : "Please select atleast one feild in basic section",
+      icon : "error"
+    })
+  }
+  else if(proposal_info === false){
+    Swal.fire({
+      title : "error",
+      html : "Please select atleast one feild in proposal section",
+      icon : "error"
+    })
+  }
+  else if(assignment_info === false){
+    Swal.fire({
+      title : "error",
+      html : "Please select atleast one feild in assignment section",
+      icon : "error"
+    })
+  }
+  else if(payment_info === false){
+    Swal.fire({
+      title : "error",
+      html : "Please select atleast one feild in payment section",
+      icon : "error"
+    })
+  }
+  else{
+    let formData = new FormData();
+    formData.append("amount_receipt", Number(value.amount_receipt));
+    formData.append("report_name", value.report_name)
+    formData.append("basic_info", Number(basic_info));
+    formData.append("proposal_info", Number(proposal_info));
+    formData.append("assignment_info", Number(assignment_info));
+    formData.append("payment_info", Number(payment_info))
+    formData.append("from", value.p_from);
+    formData.append("to", value.p_to);
+    formData.append("customer_name", cname)
+    formData.append("teamleader", teamleader44);
+    formData.append("taxprofessional", taxprofessional44);
+    formData.append("query_no", qqno)
+    formData.append("category", mcatname);
+    formData.append("subCategory", dd);
+    formData.append("q_no", Number(value.qno));
+    formData.append("date_query", Number(value.dataQuery));
+    formData.append("cust_id", Number(value.cust_id));
+    formData.append("basic_category", Number(value.basicCategory));
+    formData.append("basic_sub_category", Number(value.basic_sub_category));
+    formData.append("assessment", Number(value.assessment));
+    formData.append("purpose", Number(value.purpose_p));
+    formData.append("p_format", Number(value.p_format));
+    formData.append("t_requested", Number(value.t_requested));
+    formData.append("spc_que", Number(value.spc_que));
+    formData.append("date_allocation", Number(value.doa));
+    formData.append("brief_fact_case", Number(value.brief_fact_case))
+    // formData.append("teamleader", Number(value.tl_name));
+    // formData.append("taxprofessional", Number(value.tp_name));
+    formData.append("date_proposal", Number(value.dateProposal));
+    formData.append("proposed_amount", Number(value.proposedAmount));
+    formData.append("payment_terms", Number(value.paymentTerms));
+    formData.append("proposal_status", Number(value.proposal_status));
+    formData.append("accepted_amount", Number(value.acceptedAmount));
+    formData.append("payment_declined_reasen", Number(value.paymentDeclinedReason));
+    formData.append("date_of_acceptance", Number(value.date_acceptance));
+    // formData.append("amount_received", value.amountReceived);
+    formData.append("amount_outstanding", Number(value.amountOutstanding));
+    formData.append("amount_overdue", Number(value.amount_overdue));
+    formData.append("payment_declined", Number(value.declinedDate));
+    // formData.append("assignment_number", Number(value.assignNumber));
+    formData.append("assign_date", Number(value.assignDate));
+    formData.append("proposed_completion_date", Number(value.completionDate));
+    formData.append("assignment_status", Number(value.assignStatus));
+    formData.append("date_complation", Number(value.completionQuery));
+    formData.append("assign_time", Number(value.assignTime));
+    formData.append("payment_recived_date", Number(value.receiptDate));
+    formData.append("basic_amount", Number(value.basic_amount));
+    formData.append("pocket_expensive", Number(value.pocket_expensive));
+    formData.append("cget_tax", Number(value.cget_tax));
+    formData.append("igst_tax", Number(value.igst_tax));
+    formData.append("sgst_tax", Number(value.sgst_tax));
+    formData.append("invoice_amount", Number(value.total_invoice));
+    formData.append("total_gst", Number(value.total_gst));
+    formData.append("process_status", Number(value.process_status));
+    formData.append("tds", Number(value.tds));
   
-   });
+    formData.append("amount_received", Number(value.amountReceived));
+    formData.append("uid", JSON.parse(userid))
+    formData.append("t", Math.floor(Math.random() * 110000))
+    formData.append("amount_type", Number(value.amount_type));
+    formData.append("dos", Number(value.dos));
+    formData.append("invoice_number", Number(value.invoice_number));
+    formData.append("search_pay_amount", Number(value.search_pay_amount))
+axios({
+ method : "POST",
+ url : `${baseUrl}/report/generateReport?t=${JSON.stringify(Math.floor(Math.random() * 110000))}`,
+ data : formData
+
+})
+.then(function (response) {
+if(response.data.code === 1){
+ Swal.fire({
+   title : "success",
+   html : "Report generated successfully",
+   icon : "success"
+
+ })
+window.open(`${baseUrl3}/${response.data.result}`)
+}
+else{
+ Swal.fire({
+   title : "error",
+   html : "Something went wrong , please try again",
+   icon :"error"
+ })
+}
+})
+.catch((error) => {
+
+});
+  
+  }
+      
     }
 
     // Category 
@@ -556,7 +690,7 @@ value={options3[0]}
 
 <div className="col-md-3">
 <div className="mb-3">
-<label className="form-label">Taxprofessional</label>
+<label className="form-label">Tax Professional</label>
 <Select isMulti = {true} 
 ref={selectInputRef2}
  options={options4} onChange={(e) => taxProfessional(e)}/>

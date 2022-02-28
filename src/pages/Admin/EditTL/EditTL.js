@@ -615,7 +615,7 @@ const checktlPost = (e) => {
     .then(function (response) {
       
       if (response.data.code === 1) {
-        Swal.fire("Teamleader has been deleted successfully");
+        Swal.fire("Team Leader has been deleted successfully");
         history.goBack();
         getTeamLeader();
       } else {
@@ -673,7 +673,7 @@ const checktlPost = (e) => {
                   <div class="row">
                     <div class="col-md-6">
                       <div class="form-group">
-                      <label>Teamleader Post Name <span className="declined">*</span></label>
+                      <label>Team Leader Post Name <span className="declined">*</span></label>
                         <input
                           type="text"
                           name="post_name"
@@ -693,7 +693,7 @@ const checktlPost = (e) => {
 
                     <div class="col-md-6">
                       <div class="form-group">
-                      <label>Teamleader Post Email <span className="declined">*</span></label>
+                      <label>Team Leader Post Email <span className="declined">*</span></label>
                         <input
                           type="text"
                           name="post_email"

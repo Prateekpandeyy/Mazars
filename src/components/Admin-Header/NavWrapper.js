@@ -69,10 +69,10 @@ function NavWrapper(props) {
                 <CustomerNotification tokenKey={adminkey} name={name} />
               )}
 
-              {name == "teamleader" && (
+              {name == "Team Leader" && (
                 <CustomerNotification tokenKey={tlkey} name={name} />
               )}
-               {name == "taxprofessional" && (
+               {name == "Tax Professional" && (
                 <CustomerNotification tokenKey={tpkey} name={name} />
               )}
 

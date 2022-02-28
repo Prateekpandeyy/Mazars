@@ -38,6 +38,7 @@ function QueriesRecevied(props) {
   const [declined2, setDeclined2] = useState();
   const [declinedStatus, setDeclinedStatus] = useState(false)
   const [finalDate, setFinalDate] = useState()
+  const [overDue, setOverDue] = useState("")
   const [qstatus, setqStatus] = useState();
   const [diaplayProposal, setDisplayProposal] = useState({
     amount: "",
@@ -148,6 +149,7 @@ function QueriesRecevied(props) {
           }
 
           if (res.data.proposal_queries.length > 0) {
+            setOverDue(res.data.result[0].overdueamount)
             setDisplayProposal({
               accepted_amount: res.data.proposal_queries[0].accepted_amount,
               payment_received: res.data.proposal_queries[0].paid_amount,
@@ -264,6 +266,7 @@ function QueriesRecevied(props) {
                 tp22 = {tp22}
                 finalDate={finalDate}
                 qstatus={qstatus}
+                overDue = {overDue}
               />
             ))}
           </div>

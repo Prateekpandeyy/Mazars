@@ -12,7 +12,8 @@ function ProposalDetails({
   accept,
   tlName2,
   tpStatus,
-  tp22
+  tp22, 
+  overDue
 }) {
 
   const {
@@ -37,7 +38,7 @@ function ProposalDetails({
   } = diaplayProposal;
 
   const { tlname, date_of_allocation } = diaplayHistory;
-
+  console.log("overDueDetails", overDue)
   var nfObject = new Intl.NumberFormat('hi-IN')
 
 
@@ -95,7 +96,7 @@ function ProposalDetails({
     var due = dataCheck(item2);
 
    
-console.log("due", due)
+
     //total installment
 let nd = 0;
     var total_Installment = 0;
@@ -117,11 +118,11 @@ let nd = 0;
       return prev + +current.paid_amount
     }, 0);
 
-console.log(total_Installment)
+
     console.log("PaymenHistory", total_Payment_History)
-console.log("totalAmountrem", total_Installment)
+
     var amount =  total_Payment_History - total_Installment 
-console.log("amount", amount)
+
 
     if (amount > 0) {
       if(payment_received){
@@ -324,7 +325,7 @@ console.log("amount", amount)
             </tr>
             <tr>
               <th scope="row">Payment Overdue</th>
-              <td>{dueDate(installment_amount, due_date)}</td>
+              <td>{overDue}</td>
             </tr>
             <tr>
               <th scope="row">Payment Outstanding</th>

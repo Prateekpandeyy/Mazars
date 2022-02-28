@@ -187,7 +187,7 @@ function AddNew() {
             setLoading(false)
             Swal.fire({
               "title": "Success",
-              "html": "Teamleader created successfully.",
+              "html": "Team Leader created successfully.",
               "icon": "success"
             })
 
@@ -456,7 +456,7 @@ function AddNew() {
                 <div className="row">
                                     <div className="col-md-6">
                     <div className="form-group">
-                    <label>Teamleader Post Name <span className="declined">*</span></label>
+                    <label>Team Leader Post Name <span className="declined">*</span></label>
                       
                       <input
                         type="text"
@@ -475,7 +475,7 @@ function AddNew() {
                   </div>
                   <div className="col-md-6">
                     <div className="form-group">
-                    <label>Teamleader Post Email <span className="declined">*</span></label>
+                    <label>Team Leader Post Email <span className="declined">*</span></label>
                     
                    
                     <EmailValidation

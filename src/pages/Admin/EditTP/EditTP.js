@@ -480,7 +480,7 @@ function EditTP() {
      .then(function (response) {
        
        if (response.data.code === 1) {
-         Swal.fire("Taxprofessional has been deleted successfully");
+         Swal.fire("Tax Professional has been deleted successfully");
          history.goBack();
        } else {
          Swal.fire("Oops...", "Errorr ", "error");
@@ -538,7 +538,7 @@ function EditTP() {
                    <div class="row">
                   <div class="col-md-6">
                   <div class="form-group">
-                  <label>Teamleader post name <span className="declined">*</span></label>
+                  <label>Team Leader post name <span className="declined">*</span></label>
                   <input type="text" className = "form-control" 
                   defaultValue = {data11} 
               disabled />   
@@ -546,7 +546,7 @@ function EditTP() {
                   </div>
                     <div class="col-md-6">
                       <div class="form-group">
-                      <label> Teamleader post email <span className="declined">*</span></label>
+                      <label> Team Leader post email <span className="declined">*</span></label>
                         <input
                           type="text"
                           name="post_email"
