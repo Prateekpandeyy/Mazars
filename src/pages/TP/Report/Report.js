@@ -345,34 +345,15 @@ setQno([])
       })
     }
   }
-  else if(basic_info === false){
+  else if(basic_info === false || proposal_info === false || assignment_info === false 
+    ||  payment_info === false){
     Swal.fire({
       title : "error",
-      html : "Please select atleast one feild in basic section",
+      html : "Please select atleast one field",
       icon : "error"
     })
   }
-  else if(proposal_info === false){
-    Swal.fire({
-      title : "error",
-      html : "Please select atleast one feild in proposal section",
-      icon : "error"
-    })
-  }
-  else if(assignment_info === false){
-    Swal.fire({
-      title : "error",
-      html : "Please select atleast one feild in assignment section",
-      icon : "error"
-    })
-  }
-  else if(payment_info === false){
-    Swal.fire({
-      title : "error",
-      html : "Please select atleast one feild in payment section",
-      icon : "error"
-    })
-  }
+
   else{
     let formData = new FormData();
     formData.append("amount_receipt", Number(value.amount_receipt));
@@ -1020,7 +1001,7 @@ options={qno} onChange={(e) => queryNumber(e)}/>
    </div>
    <button type="submit" class="autoWidthBtn my-3">Generate Report</button>
    <button type="button" class="customBtn m-3" onClick={() => resetData()}>Reset</button>
-   <Mandatory />
+  
   </form>
   </div>
             </Layout>

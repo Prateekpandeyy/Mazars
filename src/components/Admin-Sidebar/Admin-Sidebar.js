@@ -21,7 +21,8 @@ import feedbackIcon from './images/feedbackIcon.png';
 import scheduleIcon from './images/Schedule_final.png';
 import ProposalIcons from './images/Proposal_icons.png';
 import AboutIcon from './images/about-us.png';
-
+import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
+import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
 function Sidebar({ adminDashboard, custDashboard, TLDashboard, TPDashboard , feedbackNumber}) {
   const [toggleState, setToggleState] = useState(false);
   const [feedbackNumber2, setfeedbackNumber2] = useState();
@@ -387,7 +388,9 @@ const handleClick = () => {
 
               <li className="nav-item">
                 <NavLink to={"/admin/teamleaders"}>
-                  <i className="fa fa-users"></i>
+                <i class="">
+                  <PersonOutlineIcon />
+                </i>
                   <span className="menu-title" data-i18n="">
                     Team Leaders
                   </span>
@@ -407,7 +410,7 @@ const handleClick = () => {
                <li className ="nav-item">
                  <NavLink to={"/admin/customers"}>
                  <i className="fa">
-                  <span className="clientMenu"></span>
+               <PersonAddAltIcon style={{fontSize: "30px", opacity: "0.6",  fontWeight: 500, color: "#3B3B3B"}} />
                 </i>
                    <span className="menu-title" data-i18n="">
                   Client
