@@ -86,7 +86,7 @@ const viewStyle = {
                 <th style={{border: `1px solid ${deleiverAble}`, color: "#fff", backgroundColor: `${deleiverAble}`}}>Document</th>
                
                 <th style={{border: `1px solid ${deleiverAble}`, color: "#fff", backgroundColor: `${deleiverAble}` , width: "150px"}}>Report Type</th>
-                <th style={{border: `1px solid ${deleiverAble}`, color: "#fff", backgroundColor: `${deleiverAble}`, width: "80px"}}>Action</th>
+                <th style={{border: `1px solid ${deleiverAble}`, color: "#fff", backgroundColor: `${deleiverAble}`, width: "100px"}}>Action</th>
               </tr>
             </thead>
 

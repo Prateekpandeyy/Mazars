@@ -131,7 +131,7 @@ function ViewReport({
                 <th style={{border: `1px solid ${headColor}`, color: "#fff", backgroundColor: `${headColor}` , width: "120px"}}>Date</th>
                 <th style={{border: `1px solid ${headColor}`, color: "#fff", backgroundColor: `${headColor}`}}>Document</th>
                 <th style={{border: `1px solid ${headColor}`, color: "#fff", backgroundColor: `${headColor}` , width: "150px"}}>Report Type</th>
-                <th style={{border: `1px solid ${headColor}`, color: "#fff", backgroundColor: `${headColor}` , width: "80px"}}>Action</th>
+                <th style={{border: `1px solid ${headColor}`, color: "#fff", backgroundColor: `${headColor}` , width: "100px"}}>Action</th>
               </tr>
             </thead>
 

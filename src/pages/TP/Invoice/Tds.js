@@ -734,15 +734,15 @@ const percent = {
   flexDirection : "row",
   alignItems : "center"
 }
-  const getServices = () => {
-    axios.get(`${baseUrl}/tl/getServices`)
-    .then((res) => {
-
-      if(res.data.code === 1){
-        setServices(res.data.result);
-      }
-    })
-  }
+const getServices = () => {
+      axios.get(`${baseUrl}/tl/getServices`)
+      .then((res) => {
+  
+        if(res.data.code === 1){
+          setServices(res.data.result);
+        }
+      })
+    }
   useEffect(() => {
     getServices();
   }, [])
@@ -751,7 +751,7 @@ const percent = {
     getDataild();
     }
     else {
-   
+     
       setTdsR(10)
       setCgetRate(18);
       setIgetRate(0);
@@ -760,7 +760,7 @@ const percent = {
     setBillNo(props.billNo)
     setBasicAmount(props.paidAmount)
     setPocketExp(0)
-    setCgstTotal(parseInt(props.paidAmount * 18 / 100).toFixed(2))
+    setCgstTotal(parseInt(props.paidAmount * 18 / 100))
     setIgstTotal(parseInt(0));
     setSgstTotal(parseInt(0))
     setGst(parseInt(props.paidAmount * 18 / 100))
@@ -773,21 +773,21 @@ const percent = {
 
 const getDataild = () => {
   axios
-  .get(`${baseUrl}/admin/getPaymentDetail?tl_id=${JSON.parse(userid)}&invoice=1&invoice_id=${props.id}`)
+  .get(`${baseUrl}/admin/getPaymentDetail?tp_id=${JSON.parse(userid)}&invoice=1&invoice_id=${props.id}`)
 .then((res) => {
 
 if(res.data.payment_detail){
   res.data.payment_detail.map((i) => {
-  setSac(i.serviceCode)
+    setSac(i.serviceCode)
      setGstNum(i.gstin_no)
  setBillNo(i.billno)
  setDiscription(i.description)
-setTdsR(parseFloat(i.tds_rate))
+setTdsR(i.tds_rate)
  setBasicAmount(parseInt(i.paid_amount))
  setPocketExp(parseFloat(i.opt_expenses));
- setCgstTotal(parseFloat(i.cgst_amount).toFixed(2));
- setIgstTotal(parseFloat(i.igst_amount).toFixed(2));
- setSgstTotal(parseFloat(i.sgst_amount).toFixed(2));
+ setCgstTotal(parseFloat(i.cgst_amount));
+ setIgstTotal(parseFloat(i.igst_amount));
+ setSgstTotal(parseFloat(i.sgst_amount));
  setCgetRate(parseFloat(i.cgst_rate));
  setIgetRate(parseFloat(i.igst_rate));
  setSgetRate(parseFloat(i.sgst_rate));
@@ -801,7 +801,7 @@ setTds(parseFloat(i.tds_amount))
 
 })
 }
-  // Cgst Tax function
+ // Cgst Tax function
 const cgstFun = (e) => {
  
  

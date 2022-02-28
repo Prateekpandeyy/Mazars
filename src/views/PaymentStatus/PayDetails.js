@@ -266,7 +266,7 @@ setModal(!modal)
             {row.is_paid == "1" ?  <a href={row.receipt_url} target="_blank">Payment receipt</a> 
             : ""}
            {row.is_paid == "2" ? 
-           <p style={{ fontSize: "11px", padding: "5px", color : "red"}}>Declined</p>  : ""}
+           <p style={{ fontSize: "14px", padding: "5px", color : "red"}}>Declined</p>  : ""}
                 </>
                   
                    

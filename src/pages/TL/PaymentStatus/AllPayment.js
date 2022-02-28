@@ -104,14 +104,31 @@ function AllPayment() {
 // Row Style
 rowStyle2 = (row, index) => {
     const style = {}
-
-    if(row.paid_status != "2" && row.status != "Complete" && moment(row.due_date).toDate() > moment().toDate){
-        style.backgroundColor = "#c1d8f2";
-        style.color = "#000111"
+    var warningDate = moment(row.due_date).subtract(5, 'day').toDate();
+    // var warnformat = warningDate.format("YYYY-MM-DD");
+    var aa = moment().toDate();
+     var cc = moment(row.due_date).toDate();
+     if(row.is_paid === "2"){
+        style.backgroundColor = "#fff";
+        style.color = "#000"
+    }
+    else if(row.paid_status != "2" && row.is_paid != "1" && cc < aa){
+        style.backgroundColor = "#bfdfd2";
+      style.color = "#000111"
+    }
+   else if(row.paid_status != "2" && row.is_paid != "1" && row.status != "Complete" && warningDate < aa)  {
+      style.backgroundColor = "#c1d8f2";
+      style.color = "#000111"
     }
    
+    else if(row.paid_status != "2" && row.is_paid != "1" && warningDate > aa){
+      style.backgroundColor = "#fff";
+      style.color = "#000"
+    }
+  
     return style;
   }
+
     const columns = [
         {
             dataField: "",

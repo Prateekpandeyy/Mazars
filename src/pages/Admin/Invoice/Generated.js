@@ -279,6 +279,7 @@ const Generated = () => {
                    bgColor="#42566a"
                    keyField= {"assign_no"}
                    data={proposal}
+                   rowStyle2 = {rowStyle2}
                    columns={columns}>
                     </DataTablepopulated>
                    

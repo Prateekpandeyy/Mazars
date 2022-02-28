@@ -26,7 +26,7 @@ import RejectedModal from "./RejectedModal";
 import DiscardReport from "../AssignmentTab/DiscardReport";
 import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
 import MessageIcon, {PaymentDecline, Payment, ViewDiscussionIcon, DiscussProposal, HelpIcon} from "../../../components/Common/MessageIcon";
-
+import moment from "moment";
 
 
 
@@ -297,7 +297,20 @@ function AllPayment() {
             },
         },
     ];
+const rowStyle2 = (row, index) => {
+    const style = {}
+    var warningDate = moment(row.Exp_Delivery_Date).subtract(2, 'day').toDate();
+    // var warnformat = warningDate.format("YYYY-MM-DD");
+    var aa = moment().toDate();
+   
 
+    if(row.paid_status != "2" && row.status != "Complete" && warningDate < aa)  {
+      style.backgroundColor = "#c1d8f2";
+      style.color = "#000111"
+    }
+  
+    return style;
+  }
 
     return (
         <>
@@ -317,6 +330,7 @@ function AllPayment() {
                                    bgColor="#3e8678"
                    keyField= {"assign_no"}
                    data={payment}
+                   rowStyle2 = {rowStyle2}
                    columns={columns}>
                     </DataTablepopulated>
 

@@ -130,7 +130,7 @@ function ViewReport({
                
                 {
                   dataItem ?
-                    dataItem.final_report ? null : <th scope="row" style={{border: `1px solid ${deleiverAble}`, color: "#fff", width: "50px", backgroundColor: `${deleiverAble}`}}>Action</th>
+                    dataItem.final_report ? null : <th scope="row" style={{border: `1px solid ${deleiverAble}`, color: "#fff", width: "100px", backgroundColor: `${deleiverAble}`}}>Action</th>
                     :
                     null
                 }
