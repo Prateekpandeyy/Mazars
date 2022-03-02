@@ -9,6 +9,7 @@
    width: 100%;
    height: auto;
    flex-direction: column;
+   z-index: 99999;
   
 
 }
@@ -20,6 +21,7 @@
     height: auto;
     border: 2px solid greenyellow;
     flex-direction: column;
+    z-index: 99999;
 }
 .canBtn{
     display : flex;
@@ -28,6 +30,7 @@
     justify-content: space-between;
     padding: 20px;
     cursor : pointer;
+    z-index: 99999;
     background-color: rgb(38, 45, 71);
    
 }

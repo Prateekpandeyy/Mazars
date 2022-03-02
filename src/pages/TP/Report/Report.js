@@ -340,13 +340,13 @@ setQno([])
     else{
       Swal.fire({
         title : "error",
-        html : "Please select atleast one feild iin payment section",
+        html : "Please select atleast one field iin payment section",
         icon : "error"
       })
     }
   }
-  else if(basic_info === false || proposal_info === false || assignment_info === false 
-    ||  payment_info === false){
+  else if(basic_info === false && proposal_info === false && assignment_info === false 
+    &&  payment_info === false){
     Swal.fire({
       title : "error",
       html : "Please select atleast one field",

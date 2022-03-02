@@ -24,6 +24,7 @@ import AboutIcon from './images/about-us.png';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
 import GroupAddOutlinedIcon from '@mui/icons-material/GroupAddOutlined';
+import { makeStyles } from '@material-ui/core';
 function Sidebar({ adminDashboard, custDashboard, TLDashboard, TPDashboard , feedbackNumber}) {
   const [toggleState, setToggleState] = useState(false);
   const [feedbackNumber2, setfeedbackNumber2] = useState();
@@ -53,7 +54,37 @@ useEffect(() => {
   getFeedback4();
 }, [custDashboard])
 
+// const useStyle = makeStyles({
+//   myTeamleader : {
+//     fontSize: "30px",
+//     opacity : "0.6",
+//     fontWeight : 500,
+//     color : "#3B3B3B",
+   
+//   },
+//   "&:hover, &:focus":{
+//     color : "black",
+//     backgroundColor : "green"
+//         }
+// })
+const useStyle = makeStyles({
+  myTeamleader: {
+    fontSize: "30px",
+      opacity : "0.6",
+      fontWeight : 500,
+      color : "#3B3B3B", 
 
+  },
+  myClassHover : {
+    '&:hover': {
+      cursor: 'pointer',
+    
+      "& $myTeamleader": {
+        color: "#0071CE"
+      }
+   }
+  }
+});
 useEffect(() => {
   getFeedback2();
 }, [adminDashboard])
@@ -123,6 +154,7 @@ const handleClick = () => {
 
   setOpen(!open);
 };
+const classes = useStyle()
   return (
     <>
       <div
@@ -388,9 +420,10 @@ const handleClick = () => {
             
 
               <li className="nav-item">
-                <NavLink to={"/admin/teamleaders"}>
+                <NavLink to={"/admin/teamleaders"} className={classes.myClassHover}>
                 <i class="">
-                  <PersonOutlineIcon style={{fontSize: "30px", opacity: "0.6",  fontWeight: 500, color: "#3B3B3B"}}/>
+                  <PersonOutlineIcon className={classes.myTeamleader}
+                  />
                 </i>
                   <span className="menu-title" data-i18n="">
                     Team Leaders
@@ -399,9 +432,9 @@ const handleClick = () => {
               </li>
 
               <li className="nav-item">
-                <NavLink to={"/admin/taxprofessionals"}>
+                <NavLink to={"/admin/taxprofessionals"} className={classes.myClassHover}>
                 <i className="fa">
-                <GroupAddOutlinedIcon style={{fontSize: "30px", opacity: "0.6",  fontWeight: 500, color: "#3B3B3B"}} />
+                <GroupAddOutlinedIcon className={classes.myTeamleader} />
                 </i>
                   <span className="menu-title" data-i18n="">
                     Tax Professionals
@@ -409,9 +442,9 @@ const handleClick = () => {
                 </NavLink>
               </li>
                <li className ="nav-item">
-                 <NavLink to={"/admin/customers"}>
+                 <NavLink to={"/admin/customers"} className={classes.myClassHover}>
                  <i className="fa">
-               <PersonAddAltIcon  style={{fontSize: "30px", opacity: "0.6",  fontWeight: 500, color: "#3B3B3B"}} />
+               <PersonAddAltIcon  className={classes.myTeamleader} />
                 </i>
                    <span className="menu-title" data-i18n="">
                   Client
@@ -566,9 +599,9 @@ const handleClick = () => {
                 </NavLink>
               </li>
               <li className="nav-item">
-                <NavLink to={"/teamleader/addteamprof"}>
+                <NavLink to={"/teamleader/addteamprof"} className={classes.myClassHover}>
                 <i className="fa">
-                  <span className="taxprofessionalMenu"></span>
+                <GroupAddOutlinedIcon  className={classes.myTeamleader} />
                 </i>
                   <span className="menu-title" data-i18n="">
                     View T.P

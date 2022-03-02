@@ -202,8 +202,11 @@ function QueriesRecevied(props) {
                 </Link>
               
             </Col>
-            <Col md="8">
+            <Col md="4" align="center">
               <h4>Query Details</h4>
+            </Col>
+            <Col md="4" align = "center">
+            
             </Col>
           </Row>
         </CardHeader>    {submitData.map((p, index) => (

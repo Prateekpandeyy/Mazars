@@ -352,7 +352,7 @@ const resetData = () => {
        else{
         Swal.fire({
           title : "error",
-          html : "Please select atleast one feild iin payment section",
+          html : "Please select atleast one field iin payment section",
           icon : "error"
         })
         }

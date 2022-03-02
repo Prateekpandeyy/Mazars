@@ -114,13 +114,13 @@ const ReportList = () => {
         <>
         <Layout adminDashboard="adminDashboard" adminUserId={userid}>
       <Container>
-      <div className = "row">
+      <div className = "row p-2">
            <div className="col-md-4">
            <Typography variant = "h4">
             Report List
         </Typography>
        </div>
-       <div className="col-md-4">
+       <div className="col-md-8" style={{textAlign : "right"}}>
      
           <Link to="/admin/reports" className="autoWidthBtn">
                                    Generate Report

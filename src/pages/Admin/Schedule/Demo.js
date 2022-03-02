@@ -152,9 +152,7 @@ function Demo() {
       allowMultiple: true,
     },
   ];
-const closeFun = () => {
-  alert("done")
-}
+
   const styles = (theme) => ({
     button: {
       color: theme.palette.background.default,
@@ -527,7 +525,7 @@ history.push(`/admin/meeting/${data.id}`);
                       booleanEditorComponent={BooleanEditor}
                       basicLayoutComponent={BasicLayout}
                       textEditorComponent={TextEditor}
-                      onClose= {() => closeFun()}
+                      
                       readOnly
                     />
                     
