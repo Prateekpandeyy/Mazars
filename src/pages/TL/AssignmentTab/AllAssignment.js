@@ -261,28 +261,49 @@ const resetData = () => {
       sort: true,
      
       formatter: function dateFormat(cell, row) {
-      
-        var oldDate = row.Exp_Delivery_Date;
-        if (oldDate == null) {
-          return null;
+       
+        var oldDate1 = row.final_date;
+       
+        let finalDate , expectedDate;
+        if(oldDate1){
+       finalDate = oldDate1.toString().split("-").reverse().join("-")
         }
-        return oldDate.toString().split("-").reverse().join("-");
+        var oldDate2 = row.created;
+       
+       
+        if(expectedDate){
+         expectedDate= oldDate2.toString().split("-").reverse().join("-")
+        }
+        console.log("finalDate", finalDate)
+        console.log("expectedDate", expectedDate)
+        return(
+          <>
+          {finalDate ? 
+          <p>{finalDate}</p> : <p>{expectedDate}</p>}
+          </>
+        )
       },
+    
     },
     {
-      text: "Actual date of delivery",
-      dataField: "final_date",
-      sort: true,
+      text: "TP Name",
+      dataField: "tp_name",
     
-      formatter: function dateFormat(cell, row) {
-       
-        var oldDate = row.final_date;
-        if (oldDate == null || oldDate == "0000-00-00 00:00:00") {
-          return null;
-        }
-        return oldDate.slice(0, 10).toString().split("-").reverse().join("-");
-      },
     },
+    // {
+    //   text: "Actual date of delivery",
+    //   dataField: "final_date",
+    //   sort: true,
+    
+    //   formatter: function dateFormat(cell, row) {
+       
+    //     var oldDate = row.final_date;
+    //     if (oldDate == null || oldDate == "0000-00-00 00:00:00") {
+    //       return null;
+    //     }
+    //     return oldDate.slice(0, 10).toString().split("-").reverse().join("-");
+    //   },
+    // },
     {
       text: "Deliverable",
       dataField: "",

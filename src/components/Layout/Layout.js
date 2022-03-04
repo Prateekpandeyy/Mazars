@@ -1,7 +1,7 @@
 import Sidebar from "../Admin-Sidebar/Admin-Sidebar";
 import Header from "../Admin-Header/Admin-Header";
 import Footer from "../Admin-Footer/Admin-Footer";
-
+import $ from 'jquery';
 
 
 function Layout(props) {
@@ -10,7 +10,21 @@ function Layout(props) {
     custDashboard, adminDashboard, TLDashboard,
     TPDashboard,
     custUserId, adminUserId, TLuserId, TPuserId, feedbackNumber } = props
-    
+    var $sortable = $('.sortable');
+
+$sortable.on('click', function(){
+  
+  var $this = $(this);
+  var asc = $this.hasClass('asc');
+  var desc = $this.hasClass('desc');
+  $sortable.removeClass('asc').removeClass('desc');
+  if (desc || (!asc && !desc)) {
+    $this.addClass('asc');
+  } else {
+    $this.addClass('desc');
+  }
+  
+});
   return (
    
     <>

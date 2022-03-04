@@ -25,6 +25,8 @@ import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
 import GroupAddOutlinedIcon from '@mui/icons-material/GroupAddOutlined';
 import { makeStyles } from '@material-ui/core';
+
+import ContactPageOutlinedIcon from '@mui/icons-material/ContactPageOutlined';
 function Sidebar({ adminDashboard, custDashboard, TLDashboard, TPDashboard , feedbackNumber}) {
   const [toggleState, setToggleState] = useState(false);
   const [feedbackNumber2, setfeedbackNumber2] = useState();
@@ -69,7 +71,7 @@ useEffect(() => {
 // })
 const useStyle = makeStyles({
   myTeamleader: {
-    fontSize: "30px",
+    fontSize: "30px !important",
       opacity : "0.6",
       fontWeight : 500,
       color : "#3B3B3B", 
@@ -80,6 +82,22 @@ const useStyle = makeStyles({
       cursor: 'pointer',
     
       "& $myTeamleader": {
+        color: "#0071CE"
+      }
+   }
+  },
+  myTeamleader2: {
+    fontSize: "30px !important",
+      opacity : "0.6",
+      fontWeight : 500,
+      color : "#3B3B3B", 
+
+  },
+  myClassHover : {
+    '&:hover': {
+      cursor: 'pointer',
+    
+      "& $myTeamleader2": {
         color: "#0071CE"
       }
    }
@@ -344,8 +362,11 @@ const classes = useStyle()
               </li>
 
               <li className="nav-item">
-                <NavLink to={"/admin/adinvoice"}>
-                  <i className="fa fa-file-text"></i>
+                <NavLink to={"/admin/adinvoice"} className={classes.myClassHover}>
+              
+                 <i className="fa">
+               <ContactPageOutlinedIcon  className={classes.myTeamleader2} />
+                </i>
                   <span className="menu-title" data-i18n="">
                    Invoice
                   </span>
@@ -514,8 +535,11 @@ const classes = useStyle()
               </li>
 
               <li className="nav-item">
-                <NavLink to={"/teamleader/tlinvoice"}>
-                  <i className="fa fa-file-text"></i>
+              
+                 <NavLink to={"/teamleader/tlinvoice"} className={classes.myClassHover}>
+                 <i className="fa">
+               <ContactPageOutlinedIcon  className={classes.myTeamleader2} />
+                </i>
                   <span className="menu-title" data-i18n="">
                    Invoice
                   </span>
@@ -662,8 +686,10 @@ const classes = useStyle()
               </li>
 
               <li className="nav-item">
-                <NavLink to={"/taxprofessional/tpinvoice"}>
-                  <i className="fa fa-file-text"></i>
+                <NavLink to={"/taxprofessional/tpinvoice"} className={classes.myClassHover}>
+                <i className="fa">
+               <ContactPageOutlinedIcon  className={classes.myTeamleader2} />
+                </i>
                   <span className="menu-title" data-i18n="">
                    Invoice
                   </span>

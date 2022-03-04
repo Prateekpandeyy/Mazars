@@ -484,7 +484,7 @@ font-weight : 1000;
 .menu-expanded .main-menu.menu-light .navigation > li > a > i{
   margin-right: 8px !important;
 }
-.caret {
+/* .caret {
   display: inline-block;
   width: 0;
   height: 0;
@@ -497,10 +497,59 @@ font-weight : 1000;
   border-left: 4px solid transparent;
 }
 
-.dropup .caret, .navbar-fixed-bottom .dropdown .caret {
+.dropup .caret,  .dropdown .caret {
   border-top: 0;
   border-bottom: 4px dashed;
   border-bottom: 4px solid \9;
   z-index: 99999;
   content: "";
+} */
+
+ /* .caret{
+ 
+ border : 2.5px solid;
+  margin: 0 2px;
+  height: 20px;
+  border-top: 0;
+  border-bottom: 4px dashed;
+  border-bottom: 4px solid \9;
+  background-color: none;
+}
+ .caret{
+ background-color: none;
+  border : 2.5px solid;
+   margin: 0 2px;
+   height: 20px;
+   border-top: 0;
+   border-bottom: 4px dashed;
+   border-bottom: 4px solid \9;
+ 
+ 
+ } */
+ .caret{
+  background: url(http://tablesorter.com/themes/blue/bg.gif) no-repeat 99
+ }
+ th.sortable {
+  position: relative;
+  cursor: pointer;
+}
+
+th.sortable::after {
+  font-family: FontAwesome;
+  content: "\f0dc";
+  position: absolute;
+  right: 8px;
+  color: #fff;
+}
+
+th.sortable.asc::after {
+  content: "\f0d8";
+}
+
+th.sortable.desc::after {
+  content: "\f0d7";
+}
+
+th.sortable:hover::after {
+  color: #fff;
 }

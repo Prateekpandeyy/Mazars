@@ -39,6 +39,7 @@ import ThankYou from "./views/ThankYou/Thankyou";
 import payDetails from "./views/PaymentStatus/PayDetails";
 import Contact from "./views/Contact/Contact";
 import About from './views/About/About';
+import NewPage from './views/NewPage/NewPage';
 
 //admin routes
 import AdminStart from './pages/Admin/Start/Start'
@@ -196,7 +197,7 @@ function App() {
              <PrivateRouteUser exact path = "/customer/modalmanual" component = {ModalMaual} />
              <PrivateRouteUser exact path = "/customer/contact" component = {Contact} />
             <PrivateRouteUser exact path = "/customer/about" component = {About} />
-       
+             <PublicRouteUser exact path = "/customer/queryinfo" component = {NewPage} />
             <PublicRouteAdmin exact path="/admin/start" component={AdminStart} />
             <PublicRouteAdmin exact path="/admin/login" component={AdminLogin} />
             <PublicRouteAdmin exact path="/admin/forget-password" component={AdminForgetPassword} />

@@ -106,7 +106,7 @@ const [dstate2, setDstate2] = useState("")
         setDisabled(true)
         // setDisplay(false)
       }
-      timer(10);
+      timer(180);
     }
   }
 
