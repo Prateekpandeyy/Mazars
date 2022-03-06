@@ -39,7 +39,7 @@ import ThankYou from "./views/ThankYou/Thankyou";
 import payDetails from "./views/PaymentStatus/PayDetails";
 import Contact from "./views/Contact/Contact";
 import About from './views/About/About';
-import NewPage from './views/NewPage/NewPage';
+
 
 //admin routes
 import AdminStart from './pages/Admin/Start/Start'
@@ -75,7 +75,7 @@ import AdminInvoice from "./pages/Admin/Invoice/Invoice";
 import AdpayDetails from "./pages/Admin/PaymentStatusTab/Paydetails";
 import ReportList from "./pages/Admin/Report/ReportList"
 import Consalation from './pages/Admin/Report/Consalation';
-import LoginFun from "./components/LoginForm/LoginFun";
+import Cms from  './pages/Admin/CMS/CMS';
 //TL routes
 import TlStart from './pages/TL/Start/Start'
 import TlLogin from './pages/TL/Login/Login'
@@ -197,13 +197,14 @@ function App() {
              <PrivateRouteUser exact path = "/customer/modalmanual" component = {ModalMaual} />
              <PrivateRouteUser exact path = "/customer/contact" component = {Contact} />
             <PrivateRouteUser exact path = "/customer/about" component = {About} />
-             <PublicRouteUser exact path = "/customer/queryinfo" component = {NewPage} />
+            
             <PublicRouteAdmin exact path="/admin/start" component={AdminStart} />
             <PublicRouteAdmin exact path="/admin/login" component={AdminLogin} />
             <PublicRouteAdmin exact path="/admin/forget-password" component={AdminForgetPassword} />
             <PublicRouteAdmin exact path="/admin/new-password/:id" component={AdminNewPassword} />
 
             <PrivateRouteAdmin exact path="/admin/dashboard" component={AdminDashboard} />
+            <PrivateRouteAdmin exact path = "/admin/cms" component = {Cms} />
             <PrivateRouteAdmin exact path="/admin/addnewtl" component={AdminNewTeamLeader} />
             <PrivateRouteAdmin exact path="/admin/addnewtp" component={AdminNewTaxProf} />
             <PrivateRouteAdmin exact path="/admin/teamleaders" component={AdminTeamLeaderTab} />

@@ -13,7 +13,7 @@ function Header({ id, cust_sign, noAdminSign, noTlSign, noTpSign, admin, mtl, mt
     history.push("/customer/signin");
   }
 
- 
+
 
   return (
     <>
@@ -35,10 +35,13 @@ function Header({ id, cust_sign, noAdminSign, noTlSign, noTpSign, admin, mtl, mt
         )}
 
         {noSign && (
-          <div>
-            <Link to="/">
+          <div style = {{display : "flex", width: "100%", alignItems: "center",  justifyContent: "space-between"}}>
+              <Link to="/">
               <img src={mazars} className="logo" alt="mazar"/>
             </Link>
+          <div>
+        <CmsCont />
+            </div>
           </div>
         )}
 
@@ -143,3 +146,28 @@ function Header({ id, cust_sign, noAdminSign, noTlSign, noTpSign, admin, mtl, mt
 }
 
 export default Header;
+
+const CmsCont = () => {
+  return(
+    <>
+<div style={{display : "flex", width: "300px", alignItems: "center", justifyContent: "space-evenly"}}>
+<Link to = "/" className="tabHoverLink" onClick={(e) => {getPageLink(e)}}>
+     Articles
+    </Link>
+    <Link to = "/" className="tabHoverLink">
+      Updates
+    </Link>
+    <Link to = "/" className="tabHoverLink">
+     Important Links
+    </Link>
+    <Link to = "/" className="tabHoverLink">
+      FAQ
+    </Link>
+</div>
+    </>
+  )
+}
+const getPageLink = (e) => {
+  console.log("This is my page")
+  alert("done")
+}

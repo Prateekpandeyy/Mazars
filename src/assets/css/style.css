@@ -553,3 +553,11 @@ th.sortable.desc::after {
 th.sortable:hover::after {
   color: #fff;
 }
+/* #test.ck-content{
+  height: 250px !important;
+}
+#test .ck-editor__editable:not(.ck-editor__nested-editable) {
+  min-height: 400px !important;
+  }
+   */
+  

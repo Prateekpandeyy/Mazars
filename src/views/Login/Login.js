@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect } from "react";
 import Header from "../../components/Header/Header";
 import Footer from '../../components/Footer/Footer';
-import { Button, Typography } from "@material-ui/core";
+import { Button, Box, Typography } from "@material-ui/core";
 import './style.css';
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
@@ -16,13 +16,42 @@ import Mandatory from "../../components/Common/Mandatory";
 import { Spinner } from 'reactstrap';
 import ShowError from "../../components/LoadingTime/LoadingTime";
 import LoadingTime from "../../components/LoadingTime/LoadingTime";
-import MyPDF from '../dFile/LoginManual.pdf';
 import Cookies from "js-cookie";
+import CloudImg from './images/Cloud.jpg';
+import PaperLess from './images/Paperless.jpg';
+import whatp from './images/whatp.jpeg';
+import { styled , makeStyles} from "@material-ui/styles";
 const Schema = yup.object().shape({
   p_email: yup.string().email("invalid email").required(""),
   p_password: yup.string().required(""),
 });
-
+const MyBox = styled(Box)({
+  display: "flex", 
+  width: "300px",
+  justifyContent : "space-between",
+  alignItems : "center",
+  padding : "10px"
+})
+const ImgBox = styled(Box)({
+display: "inline-flex",
+maxWidth : "50px",
+maxHeight : "50px",
+})
+const MyContainer = styled(Box)({
+  display : "flex", 
+  justifyContent : "center", 
+  alignItems : "center", 
+  width: "100%",
+  flexDirection : "column"
+})
+const useStyle = makeStyles({
+  imgResponsive : {
+    display : "flex",
+    width: "100%",
+    height : "auto", 
+    cursor : "pointer"
+  }
+})
 
 function LoginForm() {
   const { handleSubmit, register, errors } = useForm({
@@ -96,15 +125,26 @@ function LoginForm() {
    
     setEmail(e.target.value);
   };
-
+const classes = useStyle()
 
   return (
     <>
       <Header noSign="noSign" />
-      <h1 style={{ textAlign: "center", margin: "55px 0 30px 0", color : "#464B4B" , fontFamily: "Arial" }}>
+     <MyContainer>
+     <MyBox>
+      <ImgBox>
+      <img src = {CloudImg} className = {classes.imgResponsive} />
+      </ImgBox>
+      <ImgBox>
+      <img src = {PaperLess} className = {classes.imgResponsive} /> 
+      </ImgBox>
+      <ImgBox>
+      <img src = {whatp} className = {classes.imgResponsive} />
+      </ImgBox>
+      </MyBox>
+      <h1>
         Would you like to post a query
       </h1>
-      
       <div className="StartPage">
         <div className="mainContent">
 
@@ -210,6 +250,9 @@ function LoginForm() {
 
         </div>
       </div>
+
+     </MyContainer>
+      
 
 
       <Footer />

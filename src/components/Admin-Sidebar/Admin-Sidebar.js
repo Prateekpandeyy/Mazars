@@ -494,6 +494,16 @@ const classes = useStyle()
                   {/* Feedback  <span className="badge">{feedbackNumber2}</span> */}
                 </NavLink>
               </li>
+              <li className ="nav-item">
+                 <NavLink to={"/admin/cms"}>
+                 <i className="fa">
+                  <span className="reportMenu"></span>
+                </i>
+                   <span className="menu-title" data-i18n="">
+                  CMS
+                  </span>
+                 </NavLink>
+               </li>
             </ul>
           )}
 

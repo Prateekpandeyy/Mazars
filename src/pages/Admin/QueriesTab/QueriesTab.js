@@ -19,7 +19,7 @@ function QueriesTab(props) {
   const [declined, setDeclined] = useState("");
   const [inprogressAllocation, setInprogressAllocation] = useState();
   const [bgColor, setbgColor] = useState("#55425F")
-
+  const [tabIndex, setTabIndex] = useState(0);
   useEffect(() => {
     CountAllQuery();
     CountInprogressAllocation();
@@ -66,7 +66,7 @@ function QueriesTab(props) {
   };
 
 
-  const [tabIndex, setTabIndex] = useState(0);
+
   useLayoutEffect(() => {
     setTabIndex(props.location.index || 0);
   }, [props.location.index]);
