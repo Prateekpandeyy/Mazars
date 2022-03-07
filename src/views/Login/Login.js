@@ -27,7 +27,7 @@ const Schema = yup.object().shape({
 });
 const MyBox = styled(Box)({
   display: "flex", 
-  width: "300px",
+ width: "25%",
   justifyContent : "space-between",
   alignItems : "center",
   padding : "10px"
@@ -131,17 +131,7 @@ const classes = useStyle()
     <>
       <Header noSign="noSign" />
      <MyContainer>
-     <MyBox>
-      <ImgBox>
-      <img src = {CloudImg} className = {classes.imgResponsive} />
-      </ImgBox>
-      <ImgBox>
-      <img src = {PaperLess} className = {classes.imgResponsive} /> 
-      </ImgBox>
-      <ImgBox>
-      <img src = {whatp} className = {classes.imgResponsive} />
-      </ImgBox>
-      </MyBox>
+    
       <h1>
         Would you like to post a query
       </h1>
@@ -247,10 +237,21 @@ const classes = useStyle()
             }
             <Mandatory />
           </div>
-
+     
         </div>
+        <MyBox>
+      <ImgBox>
+      <img src = {CloudImg} className = {classes.imgResponsive} />
+      </ImgBox>
+      <ImgBox>
+      <img src = {PaperLess} className = {classes.imgResponsive} /> 
+      </ImgBox>
+      <ImgBox>
+      <img src = {whatp} className = {classes.imgResponsive} />
+      </ImgBox>
+      </MyBox>
       </div>
-
+    
      </MyContainer>
       
 

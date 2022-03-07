@@ -45,11 +45,11 @@ const CmsContent = () => {
        let formData = new FormData();
        formData.append("post", det);
        formData.append("id", pageto);
-       formData.append("uid", userId)
+       formData.append("uid", JSON.parse(userId))
        axios({
            method : "POST", 
            url : `${baseUrl}/admin/createpage`,
-           formData : formData
+           data : formData
        })
        .then((res) => {
            console.log("reee", res)

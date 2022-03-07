@@ -37,9 +37,10 @@
 .StartPage{
     display: flex;
     width:100%;
-    justify-content: center;
-    align-items: flex-start;
-    height: 600px;   
+   
+    align-items: center;
+    flex-direction: column;
+     height: 600px;
 }
 .loading{
     display: flex;
