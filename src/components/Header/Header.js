@@ -1,7 +1,8 @@
 import { Link, useHistory } from "react-router-dom";
 import "../../assets/css/style.css";
 import mazars from "../../mazars_logo.png";
-
+import { baseUrl } from "../../config/config";
+import axios from "axios";
 function Header({ id, cust_sign, noAdminSign, noTlSign, noTpSign, admin, mtl, mtp, noSign, loginOTP }) {
   let history = useHistory();
 
@@ -151,16 +152,16 @@ const CmsCont = () => {
   return(
     <>
 <div style={{display : "flex", width: "300px", alignItems: "center", justifyContent: "space-evenly"}}>
-<Link to = "/" className="tabHoverLink" onClick={(e) => {getPageLink(e)}}>
+<Link to = "/" className="tabHoverLink" onClick={(e) => {getPageLink(1)}}>
      Articles
     </Link>
-    <Link to = "/" className="tabHoverLink">
+    <Link to = "/" className="tabHoverLink" onClick={(e) => {getPageLink(2)}}>
       Updates
     </Link>
-    <Link to = "/" className="tabHoverLink">
+    <Link to = "/" className="tabHoverLink" onClick={(e) => {getPageLink(3)}}>
      Important Links
     </Link>
-    <Link to = "/" className="tabHoverLink">
+    <Link to = "/" className="tabHoverLink" onClick={(e) => {getPageLink(4)}}>
       FAQ
     </Link>
 </div>
@@ -168,6 +169,8 @@ const CmsCont = () => {
   )
 }
 const getPageLink = (e) => {
-  console.log("This is my page")
-  alert("done")
+axios.get(`${baseUrl}/customers/getpage?id=${e}`)
+.then((res) => {
+  console.log("response", res)
+})
 }

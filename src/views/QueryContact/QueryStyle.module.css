@@ -34,3 +34,34 @@
 .whiteTextTypography > a{
     color: #fff !important;
 }
+.myFormBox{
+    display: flex;
+    flex-direction: column;
+    margin: 10px 0;
+}
+.mySelectBox{
+    display: flex;
+    width: 100%;
+    padding: 10px;
+    border:1px solid #464B4B;
+    border-bottom-left-radius: 1.75rem;
+    background-color: #f0f0f0;
+    outline: #464B4B;
+}
+.myNameBox {
+    display: flex;
+    width: 100%;
+    padding: 10px;
+    border: 0px;
+    background-color: #f0f0f0;
+    border-bottom: 1px solid #464B4B;
+    outline: #464B4B;
+}
+.myMessageBox{
+    display: flex;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #464B4B;
+    background-color: #f0f0f0;
+    outline: #464B4B;
+}
