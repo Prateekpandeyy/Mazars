@@ -398,9 +398,7 @@ const showManual = () => {
                    
                         <Col md = "3">
                         
-                                <Link to="/customer/select-category" className="tabHoverLink ml-1">
-                                    Fresh Query
-                                </Link>
+
                            
                           </Col>
                           <Col md="9">

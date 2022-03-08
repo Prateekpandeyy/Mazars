@@ -145,6 +145,7 @@ import PublicRouteTP from './Service/PublicRouteTP'
 import AboutOuter from "./views/About/AboutOuter";
 import ContactOuter from "./views/Contact/ContactOuter";
 import QueryContact from "./views/QueryContact/QueryContact";
+import Updates from "./views/Login/Updates";
 // import PayDetails from "./views/PaymentStatus/PayDetails";
 
 
@@ -170,6 +171,7 @@ function App() {
             <PublicRouteUser exact path="/customer/new-password/:id" component={NewPassword} />
              <PublicRouteUser exact path = "/customer/aboutbasic" component={AboutOuter} />
      <PublicRouteUser exact path = "/customer/customerquery" component={QueryContact} />
+     <PublicRouteUser exact path = "/customer/updates" component={Updates} />
         <PublicRouteUser exact path = "/customer/contactbasic" component = {ContactOuter} />
             <PrivateRouteUser exact path="/customer/select-category" component={SelectCategoryPage} />
             <PrivateRouteUser exact path="/customer/dashboard" component={Dashboard} />

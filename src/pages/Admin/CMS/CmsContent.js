@@ -7,6 +7,7 @@ import { baseUrl } from '../../../config/config';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import './map.css';
+import Swal from 'sweetalert2';
 const MyContainer = styled(Container)({
 
 })
@@ -43,7 +44,7 @@ const CmsContent = () => {
    const submitData = (e) => {
        console.log("done")
        let formData = new FormData();
-       formData.append("post", det);
+       formData.append("content", det);
        formData.append("id", pageto);
        formData.append("uid", JSON.parse(userId))
        axios({
@@ -52,12 +53,18 @@ const CmsContent = () => {
            data : formData
        })
        .then((res) => {
-           console.log("reee", res)
+          if(res.data.code === 1){
+              Swal.fire({
+                  title : "success",
+                  html : "content created successfully",
+                  icon : "success"
+              })
+          }
        })
    }
     return(
       <MyContainer>
-         <h4 className="contentTitle">CMS</h4>
+
          <div className="row">
              <div className="col-md-4 col-sm-12">
                  
@@ -65,6 +72,7 @@ const CmsContent = () => {
                       <select
                      onChange={(e) => getToPage(e.target.value)}
                       value={pageto}
+                      multiple = {false}
                        className="form-control"
                       >
                        
@@ -84,21 +92,7 @@ const CmsContent = () => {
              <CKEditor
              id="test"
                      editor={ ClassicEditor }
-                     onInit={(editor) => {
-                        // You can store the "editor" and use when it is needed.
-                        // console.log("Editor is ready to use!", editor);
-                        ClassicEditor
-    .create( document.querySelector( '#editor' ), {
-        cloudServices: {
-            tokenUrl: 'https://example.com/cs-token-endpoint',
-            uploadUrl: 'https://your-organization-id.cke-cs.com/easyimage/upload/'
-        }
-    } )
-    
-                        editor.editing.view.change( writer => {
-                            writer.setStyle( 'height', '500px', editor.editing.view.document.getRoot() );
-                        } );
-                    }}
+                    
                     
                     rows="10"
                     name="p_fact"

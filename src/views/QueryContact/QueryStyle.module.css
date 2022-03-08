@@ -65,3 +65,73 @@
     background-color: #f0f0f0;
     outline: #464B4B;
 }
+.formFieldLegend {
+    color: #464b4b;
+    display: block;
+    font-size: 1.5rem;
+    font-weight: 300;
+    margin-bottom: 2rem;
+}
+.formChoice{
+    cursor: pointer;
+    display: block;
+    line-height: 1;
+    padding-left: 1rem;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    font-size: 1.5rem;
+    font-weight: 300;
+    color: #464b4b;
+}
+.formFieldSelect {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-color: transparent;
+    border: 0;
+    color: #464b4b;
+    line-height: 1.5;
+    min-height: 3rem;
+    outline: none!important;
+    overflow: hidden;
+    padding: 0.75rem 2rem 0.75rem 1rem;
+    text-overflow: ellipsis;
+    width: 100%;
+    border:1px solid #464B4B;
+    border-bottom-left-radius: 1.75rem;
+    background-color: #f0f0f0;
+    outline: #464B4B;
+}
+.formButton{
+    align-items: center;
+    background-color: #0071ce;
+    border: 1px solid #0071ce;
+    border-bottom-left-radius: 1.75rem;
+    color: #fff;
+    cursor: pointer;
+    display: inline-flex;
+    font-size: 1rem;
+    font-weight: 500;
+    justify-content: center;
+    line-height: 1;
+    max-width: 100%;
+    min-height: 3rem;
+    max-width: 300px;
+    overflow: hidden;
+    padding: 0.75rem 1.5rem;
+    position: relative;
+    text-decoration: none!important;
+    transition: all .3s;
+    vertical-align: middle;
+}
+.formTextArea{
+    border: 1px solid #979797;
+    line-height: 1.4;
+    padding: 0.75rem 1.5rem;
+    background-color: transparent;
+    color: #464b4b;
+    width: 100%;
+    min-height: 120px;
+}

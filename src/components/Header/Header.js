@@ -3,7 +3,8 @@ import "../../assets/css/style.css";
 import mazars from "../../mazars_logo.png";
 import { baseUrl } from "../../config/config";
 import axios from "axios";
-function Header({ id, cust_sign, noAdminSign, noTlSign, noTpSign, admin, mtl, mtp, noSign, loginOTP }) {
+function Header({ id, cust_sign, noAdminSign, noTlSign, 
+  noTpSign, admin, mtl, mtp, noSign, loginOTP, getData }) {
   let history = useHistory();
 
   const custLogout = () => {
@@ -41,7 +42,7 @@ function Header({ id, cust_sign, noAdminSign, noTlSign, noTpSign, admin, mtl, mt
               <img src={mazars} className="logo" alt="mazar"/>
             </Link>
           <div>
-        <CmsCont />
+        <CmsCont getData= {getData} />
             </div>
           </div>
         )}
@@ -149,28 +150,32 @@ function Header({ id, cust_sign, noAdminSign, noTlSign, noTpSign, admin, mtl, mt
 export default Header;
 
 const CmsCont = () => {
+  let history = useHistory()
+  const getPageLink = (e) => {
+    axios.get(`${baseUrl}/customers/getpage?page=${e}`)
+    .then((res) => {
+    
+    
+      localStorage.setItem("myArticles", res.data.result.content)
+     
+    })
+    }
   return(
     <>
 <div style={{display : "flex", width: "300px", alignItems: "center", justifyContent: "space-evenly"}}>
-<Link to = "/" className="tabHoverLink" onClick={(e) => {getPageLink(1)}}>
+<Link to = "/customer/updates" className="tabHoverLink" onClick={(e) => {getPageLink(1)}}>
      Articles
     </Link>
-    <Link to = "/" className="tabHoverLink" onClick={(e) => {getPageLink(2)}}>
+    <Link to = "/customer/updates" className="tabHoverLink" onClick={(e) => {getPageLink(2)}}>
       Updates
     </Link>
-    <Link to = "/" className="tabHoverLink" onClick={(e) => {getPageLink(3)}}>
+    <Link to = "/customer/updates" className="tabHoverLink" onClick={(e) => {getPageLink(3)}}>
      Important Links
     </Link>
-    <Link to = "/" className="tabHoverLink" onClick={(e) => {getPageLink(4)}}>
+    <Link to = "/customer/updates" className="tabHoverLink" onClick={(e) => {getPageLink(4)}}>
       FAQ
     </Link>
 </div>
     </>
   )
-}
-const getPageLink = (e) => {
-axios.get(`${baseUrl}/customers/getpage?id=${e}`)
-.then((res) => {
-  console.log("response", res)
-})
 }

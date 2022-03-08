@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { Select } from "antd";
 import { Spinner } from 'reactstrap';
 import ShowError from "../../components/LoadingTime/LoadingTime";
-
+import {Link} from 'react-router-dom'
 function CustomerFilter(props) {
   const { Option } = Select;
   const { handleSubmit, register, errors, reset } = useForm();
@@ -682,7 +682,12 @@ const [loading, setLoading] = useState(false)
                       </button>
                     }
                 <Reset />
-
+    {
+      query ?
+      <Link to="/customer/select-category" className="autoWidthBtn ml-2 mb-1">
+      Fresh Query
+  </Link> : ""
+    }
                
 
               </div>
