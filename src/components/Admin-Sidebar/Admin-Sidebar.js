@@ -32,6 +32,7 @@ function Sidebar({ adminDashboard, custDashboard, TLDashboard, TPDashboard , fee
   const [feedbackNumber2, setfeedbackNumber2] = useState();
   const [feedbackNumbertl, setfeedbackNumbertl] = useState();
   const [feedbackNumbertp, setfeedbackNumbertp] = useState();
+  const [open2, setOpen2] = useState(false)
   const [open, setOpen] = useState(false)
   const [logo, setLogo] = useState("customer/dashboard")
   const tlkey= window.localStorage.getItem("tlkey");
@@ -172,6 +173,9 @@ const handleClick = () => {
 
   setOpen(!open);
 };
+const handleClickCms = () => {
+  setOpen2(!open2)
+}
 const classes = useStyle()
   return (
     <>
@@ -494,7 +498,7 @@ const classes = useStyle()
                   {/* Feedback  <span className="badge">{feedbackNumber2}</span> */}
                 </NavLink>
               </li>
-              <li className ="nav-item">
+              {/* <li className ="nav-item">
                  <NavLink to={"/admin/cms"}>
                  <i className="fa">
                   <span className="reportMenu"></span>
@@ -503,7 +507,85 @@ const classes = useStyle()
                   Customer Page
                   </span>
                  </NavLink>
-               </li>
+               </li> */}
+                 <li className="nav-item">
+                 
+                 <ListItemButton  onMouseEnter={() => handleClickCms()}>
+           
+       
+   <i className="listStyle">
+                     <span className="scheduleMenu"></span>
+                   </i>
+   
+   
+                   <span className="menu-title" data-i18n="">
+                   Customer Page
+                   </span>
+                   {open2 ? <ExpandLess /> : <ExpandMore />}
+                
+   
+         
+          
+         </ListItemButton>
+   
+         <Collapse in={open2}  unmountOnExit>
+           <List component="div" disablePadding>
+           <ul>
+                     <li>
+                     <NavLink to={"/admin/cms"}>
+                     
+                   <span className="menu-title" data-i18n="">
+                    Articles
+                   </span>
+                   </NavLink>
+                     </li>
+                     <li>
+                     <NavLink to={"/admin/flash"}>
+                     
+                   <span className="menu-title" data-i18n="">
+               Important Links
+                   </span>
+                   </NavLink>
+                     </li>
+                     <li>
+                     <NavLink to={"/admin/updates"}>
+                     
+                   <span className="menu-title" data-i18n="">
+              Updates
+                   </span>
+                   </NavLink>
+                     </li>
+                     <li>
+                     <NavLink to={"/admin/updates"}>
+                     
+                   <span className="menu-title" data-i18n="">
+            FAQ
+                   </span>
+                   </NavLink>
+                     </li>
+                     <li>
+                     <NavLink to={"/admin/flash"}>
+                     
+                   <span className="menu-title" data-i18n="">
+           News
+                   </span>
+                   </NavLink>
+                     </li>
+                     <li>
+                     <NavLink to={"/admin/flash"}>
+                     
+                   <span className="menu-title" data-i18n="">
+          Media Gallery
+                   </span>
+                   </NavLink>
+                     </li>
+                   </ul>
+           </List>
+         </Collapse>
+                 </li>
+   
+               
+   
             </ul>
           )}
 

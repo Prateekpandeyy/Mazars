@@ -10,20 +10,21 @@ import costEffective from './images/costEffective.png';
 import servicesImg from './images/services.png';
 import { styled , makeStyles} from "@material-ui/styles";
 import { Markup } from "interweave";
+import { useHistory, useParams } from "react-router";
 
 const MyBox = styled(Box)({
   display: "flex", 
  width: "1000px",
  margin: "10px 0px",
   justifyContent : "space-between",
-  alignItems : "center",
+ 
   padding : "10px"
 })
 const ImgBox = styled(Box)({
 display: "flex",
 width: "20%",
 flexDirection: "column",
-height: "200px",
+minHeight: "200px",
 alignItems : "center",
 padding : "10px"
 })
@@ -51,14 +52,35 @@ function Updates() {
 
   const [linkData, setLinkData] = useState("myData")
   const [showData, setShowData] = useState(false)
-  const myData = localStorage.getItem("myArticles")
-  
+ 
+  let history = useHistory()
+  let id = useParams()
+  const getId = history.location.index;
 useEffect(() => {
   showLinkData()
 }, [showData])
 const showLinkData = () => {
-  console.log(showData)
+  console.log(getId === 1)
+ if(getId === 1){
+   console.log("id", id)
+   const myData = localStorage.getItem("myArticles")
   setLinkData(myData)
+ }
+ else  if(getId === 2){
+  console.log("id", id)
+  const myData = localStorage.getItem("myUpdates")
+ setLinkData(myData)
+}
+else  if(getId === 3){
+  console.log("id", id)
+  const myData = localStorage.getItem("myLinks")
+ setLinkData(myData)
+}
+else if (getId === 4){
+  console.log("id", id)
+  const myData = localStorage.getItem("myFaq")
+  setLinkData(myData)
+}
 }
 
 
@@ -81,7 +103,7 @@ const classes = useStyle()
    
   
       <div className="StartPage">
-        <div className="mainContent">
+        <div className="mainContent22">
 
      <Markup content = {linkData} />
         </div>

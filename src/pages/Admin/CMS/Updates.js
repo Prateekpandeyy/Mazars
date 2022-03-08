@@ -10,7 +10,7 @@ import { useHistory } from 'react-router';
 const MyContainer = styled(Container)({
 
 })
-const Cms = () =>{ 
+const Updates = () =>{ 
     const userId = window.localStorage.getItem("adminkey");
    
     let history = useHistory()
@@ -23,7 +23,7 @@ return (
      <button 
     
       className="autoWidthBtn rightAlign my-2" onClick={(e) => {
-        history.push("/admin/articles")
+        history.push("/admin/updatecontent")
       }}>Create message</button>
     <Card>
         <CardBody>
@@ -36,7 +36,7 @@ return (
   );
 }
 
-export default Cms;
+export default Updates;
 
 
 

@@ -40,7 +40,7 @@
    
     align-items: center;
     flex-direction: column;
-     height: 750px;
+     min-height: 750px;
 }
 .loading{
     display: flex;
@@ -55,9 +55,19 @@
     display: flex;
     width:1000px;
     border-radius: 10px;
-    height: 400px;
+    min-height: 400px;
 
     /* box-shadow: 0 10px 5px 5px rgba(0,0,0, 0.1), 0 -10px 5px 5px rgba(0,0,0,0.1); */
+    background-color: #fff;
+}
+.mainContent22{
+    display: flex;
+    width:1000px;
+    border-radius: 10px;
+    min-height: 400px;
+    padding: 20px;
+    margin: 10px 0;
+     box-shadow: 0 10px 5px 5px rgba(0,0,0, 0.1), 0 -10px 5px 5px rgba(0,0,0,0.1); 
     background-color: #fff;
 }
 .signIn{

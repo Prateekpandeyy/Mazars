@@ -59,4 +59,7 @@
   .slider.round:before {
     border-radius: 50%;
   }
-  
+  .rightAlign {
+    display: flex;
+  margin-left: auto;
+  }

@@ -13,7 +13,7 @@ import classNames from "classnames";
 const MyContainer = styled(Container)({
 
 })
-const CmsContent = () => {
+const UpdatesContent = () => {
     const userId = localStorage.getItem("adminkey")
     const { handleSubmit, register, errors, getValues } = useForm();
     const [pages, getPages] = useState([])
@@ -48,7 +48,7 @@ const CmsContent = () => {
        console.log("done")
        let formData = new FormData();
        formData.append("content", det);
-       formData.append("id", 1);
+       formData.append("id", 2);
        formData.append("uid", JSON.parse(userId));
        formData.append("heading", e.p_heading)
        formData.append("writer", e.p_wirter);
@@ -166,4 +166,4 @@ const CmsContent = () => {
       </Layout>
     )
 }
-export default CmsContent;
+export default UpdatesContent;

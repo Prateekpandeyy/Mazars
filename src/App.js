@@ -76,6 +76,8 @@ import AdpayDetails from "./pages/Admin/PaymentStatusTab/Paydetails";
 import ReportList from "./pages/Admin/Report/ReportList"
 import Consalation from './pages/Admin/Report/Consalation';
 import Cms from  './pages/Admin/CMS/CMS';
+import AdminUpdates from './pages/Admin/CMS/Updates';
+import UpdatesContent from "./pages/Admin/CMS/UpdatesContent";
 //TL routes
 import TlStart from './pages/TL/Start/Start'
 import TlLogin from './pages/TL/Login/Login'
@@ -146,6 +148,8 @@ import AboutOuter from "./views/About/AboutOuter";
 import ContactOuter from "./views/Contact/ContactOuter";
 import QueryContact from "./views/QueryContact/QueryContact";
 import Updates from "./views/Login/Updates";
+import FlashMessage from "./pages/Admin/CMS/FlashMessage";
+import CmsContent from "./pages/Admin/CMS/CmsContent";
 // import PayDetails from "./views/PaymentStatus/PayDetails";
 
 
@@ -204,9 +208,8 @@ function App() {
             <PublicRouteAdmin exact path="/admin/login" component={AdminLogin} />
             <PublicRouteAdmin exact path="/admin/forget-password" component={AdminForgetPassword} />
             <PublicRouteAdmin exact path="/admin/new-password/:id" component={AdminNewPassword} />
-
+            <PrivateRouteAdmin exact path="/admin/cms" component={Cms} />
             <PrivateRouteAdmin exact path="/admin/dashboard" component={AdminDashboard} />
-            <PrivateRouteAdmin exact path = "/admin/cms" component = {Cms} />
             <PrivateRouteAdmin exact path="/admin/addnewtl" component={AdminNewTeamLeader} />
             <PrivateRouteAdmin exact path="/admin/addnewtp" component={AdminNewTaxProf} />
             <PrivateRouteAdmin exact path="/admin/teamleaders" component={AdminTeamLeaderTab} />
@@ -235,6 +238,10 @@ function App() {
             <PrivateRouteAdmin exact path="/admin/paydetails/:id" component={AdpayDetails} />
             <PrivateRouteAdmin exact path = "/admin/reportlist" component = {ReportList} />
             <PrivateRouteAdmin exact path = "/admin/consalation" component = {Consalation} />
+            <PrivateRouteAdmin exact path = "/admin/flash" component = {FlashMessage} />
+            <PrivateRouteAdmin exact path = "/admin/articles" component = {CmsContent} />
+            <PrivateRouteAdmin exact path = "/admin/updates" component = {AdminUpdates} />
+            <PrivateRouteAdmin exact path = "/admin/updatecontent" component = {UpdatesContent} />
             <PublicRouteTL exact path="/teamleader/start" component={TlStart} />
             <PublicRouteTL exact path="/teamleader/login" component={TlLogin} />
             <PublicRouteTL exact path="/teamleader/forget-password" component={TlForgetPassword} />

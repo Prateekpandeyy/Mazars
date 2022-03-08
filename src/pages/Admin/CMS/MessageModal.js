@@ -3,6 +3,8 @@ import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from "reactstrap";
 import axios from 'axios';
 import { baseUrl } from '../../../config/config';
 import Swal from 'sweetalert2';
+import classNames from "classnames";
+import { useForm } from "react-hook-form";
 const MessageModal = (
     {
        messageBox,
@@ -13,6 +15,7 @@ const MessageModal = (
       }
       
 ) => {
+    const { handleSubmit, register, errors, getValues } = useForm();
     const [news , setNews] = useState("")
     const [stats, setStats] = useState(false)
     useEffect(() => {
@@ -32,14 +35,16 @@ const MessageModal = (
            }
         }
     }
-    const submitData = () => {
+    const onSubmit = (value) => {
         let formData = new FormData()
        if(edit === false){
         formData.append("news", news);
         formData.append("status", stats)
+        formData.append("heading", value.heading)
        }
        else{
         formData.append("news", news);
+        formData.append("heading", value.heading)
         formData.append("status", stats)
         formData.append("id", editData.id)
        }
@@ -79,13 +84,28 @@ const MessageModal = (
       <>
 
         <Modal isOpen={messageBox} toggle={messageFun} size="md">
-            <ModalHeader toggle={messageFun}> Message</ModalHeader>
+            <ModalHeader toggle={messageFun}> News </ModalHeader>
             <ModalBody>
+            <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
             <div className="row">
-<div className="col-md-12"> Messages </div>
 <div className="col-md-12">
+    <label>Heading </label>
+    <input 
+    type="text"
+    name="p_heading"
+    className={classNames("form-control", {
+        "is-invalid" : errors.p_heading
+    })}
+     ref={register({required : true})} />
+    </div>
+<div className="col-md-12">
+    <label>Message </label>
 <textarea
-className="form-control"
+                        className={classNames("form-control", {
+                            "is-invalid": errors.p_message,
+                          })}
+                          ref={register({ required: true })}
+                          name="p_message"
 onChange = {(e) => setNews(e.target.value)}
 value = {news}
 style={{height: "200px"}}
@@ -93,22 +113,20 @@ style={{height: "200px"}}
 
 </textarea>
     </div>
-</div>
-
-<div className="row">
-<div className="col-md-3">
+    <div className="col-md-3">
  
 <span style={{margin : "10px 0"}}>
 <input type="checkbox" style={{margin : "10px 0px"}} name="hide" checked = {stats} id="hide" onChange= {(e) => myLabel(e)}></input>
 <label htmlFor="hide" style={{margin : "10px"}}> Visible</label>
 </span>
          </div>
-     </div>
-    
-<div className="row">
-<div className="col-md-12">
-<button onClick = {(e) => submitData()} className="customBtn my-2">Submit</button> </div>
+         <div className="col-md-12">
+<button type="submit" className="customBtn my-2">Submit</button> </div>
+
 </div>
+
+</form>
+ 
             </ModalBody>
         </Modal>
       </>

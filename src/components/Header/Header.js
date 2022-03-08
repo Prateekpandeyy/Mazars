@@ -156,23 +156,47 @@ const CmsCont = () => {
     .then((res) => {
     
     
+     if(e === 1){
       localStorage.setItem("myArticles", res.data.result.content)
-     
+     }
+     else if (e === 2){
+      localStorage.setItem("myUpdates", res.data.result.content)
+     }
+     else if (e === 3){
+      localStorage.setItem("myLinks", res.data.result.content)
+     }
+     else if (e === 4){
+      localStorage.setItem("myFaq", res.data.result.content)
+     }
     })
     }
   return(
     <>
 <div style={{display : "flex", width: "300px", alignItems: "center", justifyContent: "space-evenly"}}>
-<Link to = "/customer/updates" className="tabHoverLink" onClick={(e) => {getPageLink(1)}}>
+<Link to = {{
+  pathname : "/customer/updates",
+  index : 1
+}} className="tabHoverLink" onClick={(e) => {getPageLink(1)}}>
      Articles
     </Link>
-    <Link to = "/customer/updates" className="tabHoverLink" onClick={(e) => {getPageLink(2)}}>
+    <Link to = {{
+  pathname : "/customer/updates",
+  index : 2
+}} className="tabHoverLink" onClick={(e) => {getPageLink(2)}}>
       Updates
     </Link>
-    <Link to = "/customer/updates" className="tabHoverLink" onClick={(e) => {getPageLink(3)}}>
+    <Link 
+    to = {{
+  pathname : "/customer/updates",
+  index : 3
+}} className="tabHoverLink" onClick={(e) => {getPageLink(3)}}>
      Important Links
     </Link>
-    <Link to = "/customer/updates" className="tabHoverLink" onClick={(e) => {getPageLink(4)}}>
+    <Link 
+    to = {{
+  pathname : "/customer/updates",
+  index : 4
+}} className="tabHoverLink" onClick={(e) => {getPageLink(4)}}>
       FAQ
     </Link>
 </div>

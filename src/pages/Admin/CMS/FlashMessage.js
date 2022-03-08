@@ -7,16 +7,11 @@ import MessageModal from './MessageModal';
 import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
 import {
     Card,
-    CardHeader,
     CardBody,
-    Modal,
-    ModalHeader,
-    ModalBody,
-    ModalFooter,
-    Button,
 } from "reactstrap";
 import { EditQuery , DeleteIcon} from '../../../components/Common/MessageIcon';
 import Swal from 'sweetalert2';
+import Layout from "../../../components/Layout/Layout";
 const MyContainer = styled(Container)({
 
 })
@@ -156,9 +151,10 @@ const FlashMessage = () => {
    
 ]
     return (
+      <Layout adminDashboard="adminDashboard" adminUserId={userId}>
         <MyContainer>
      
-       <button className="autoWidthBtn my-2"  onClick = {showMessage}>Create message</button>
+       <button className="autoWidthBtn rightAlign my-2"  onClick = {showMessage}>Create message</button>
       <Card>
           <CardBody>
           <DataTablepopulated 
@@ -176,6 +172,8 @@ const FlashMessage = () => {
        edit = {edit} 
        getList = {getList} />
       </MyContainer>
+      </Layout>
     )
+   
 }
 export default FlashMessage;

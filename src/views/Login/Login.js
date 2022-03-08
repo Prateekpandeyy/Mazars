@@ -32,6 +32,7 @@ const Schema = yup.object().shape({
 const MyBox = styled(Box)({
   display: "flex", 
  width: "1000px",
+ flexDirection: "column",
  margin: "10px 0px",
   justifyContent : "space-between",
   alignItems : "center",
@@ -220,7 +221,7 @@ console.log("news", news)
                 <div className="customForm">
                   <form onSubmit={handleSubmit(onSubmit)} className="signInForm"  autoComplete="off">
                     <div className="form-group">
-                      <label className="form-label">Email <span className="declined">*</span></label>
+                      <label className="form-label">User Id <span className="declined">*</span></label>
                       <input
                         type="text"
                         className={classNames("form-control", {
@@ -289,12 +290,16 @@ console.log("news", news)
      
         </div>
         <MyBox>
-      <ImgBox>
+          <h2> Mazars Advisory Solutions </h2>
+          <h4>A pioneering online innovative solution backed by group of professionals with extensive industry knowledge and experience in
+             taxation matters, provides solutions to all direct & indirect tax queries.  </h4>
+    <div style={{display: 'flex'}}>
+    <ImgBox>
       <img src = {servicesImg}
       className = {classes.imgResponsive} />
       <h5 style={{margin: "10px 0"}}>Services</h5>
       <p style={{textAlign : "center"}}>
-      Caters to all direct & indirect tax queries related to compliance requirements (including transfer pricing), assessment proceedings, litigation matters, opinions and other advisory needs
+      Offers solutions to all compliance requirements, assessment proceedings, litigation matters, opinions and other advisory needs.
       </p>
       </ImgBox>
       <ImgBox>
@@ -320,6 +325,7 @@ console.log("news", news)
       <h5 style={{margin: "10px 0"}}>Paperless</h5>
       <p style={{textAlign : "center"}}>Operates completely in paperless environment.</p>
       </ImgBox>
+    </div>
       </MyBox>
       </div>
     
