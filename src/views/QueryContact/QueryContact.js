@@ -8,6 +8,7 @@ import style from './QueryStyle.module.css';
 import Header from "../../components/Header/Header";
 import axios from 'axios';
 import { baseUrl } from "../../config/config";
+import Swal from 'sweetalert2';
 const QueryContact = () => {
     const { handleSubmit, register, errors } = useForm();
     
@@ -24,6 +25,20 @@ const QueryContact = () => {
      })   
      .then((res) => {
          console.log("response", res)
+         if(res.data.code === 1){
+             Swal.fire({
+                 title : "success",
+                 html : "Your query submitted successfully, our team will contact you soon",
+                 icon : "success"
+             })
+         }
+         else{
+             Swal.fire({
+                 title : "error",
+                 html :"Something went wrong, please try again",
+                 icon : "error"
+             })
+         }
      })
     }
     return (

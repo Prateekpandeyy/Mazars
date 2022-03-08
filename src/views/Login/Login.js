@@ -79,6 +79,7 @@ function LoginForm() {
   const [isPasswordShow, setPasswordShow] = useState(false);
   const [linkData, setLinkData] = useState("myData")
   const [showData, setShowData] = useState(false)
+  const [news, getNews] = useState([])
   const myData = localStorage.getItem("myArticles")
    const togglePasssword = () => {
     setPasswordShow(!isPasswordShow)
@@ -94,7 +95,22 @@ const showLinkData = () => {
     getTime()
   }, [load]);
 
-
+useEffect(() => {
+  latestNews()
+}, [])
+const latestNews = () => {
+  axios.get(`${baseUrl}/customers/getnews`)
+  .then((res) =>{
+  let pp = []
+    if(res.data.code === 1){
+      res.data.result.map((i) => {
+       pp.push(i.news)
+        console.log("news", i.news)
+      })
+      getNews(pp)
+    }
+  })
+}
   const getTime = () => {
 
     if (load) {
@@ -146,15 +162,24 @@ const showLinkData = () => {
     setEmail(e.target.value);
   };
 const classes = useStyle()
-
+console.log("news", news)
   return (
     <>
       <Header noSign="noSign" />
      <MyContainer>
+ 
+  <div style={{padding :"10px 0px"}}> 
+  <h2 style={{textAlign : "center"}}>Latest Updates </h2>
+  {
+     news.map((i) => (
+      <h5>{i}</h5>
+     ))
+   }
+    </div>
    
-      <h1>
+      <h2>
         Would you like to post a query
-      </h1>
+      </h2>
       <div className="StartPage">
         <div className="mainContent">
 
