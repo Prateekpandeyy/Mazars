@@ -122,11 +122,7 @@ const FlashMessage = () => {
         dataField: "news",
        
       },
-      {
-        text: "Status",
-        dataField: "status",
-        
-      },
+     
       {
         text: "Action",
         dataField: "",
