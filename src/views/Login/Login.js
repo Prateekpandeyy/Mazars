@@ -168,18 +168,22 @@ console.log("news", news)
       <Header noSign="noSign" />
      <MyContainer>
  
-  <div style={{padding :"10px 0px"}}> 
-  <h2 style={{textAlign : "center"}}>Latest Updates </h2>
+  <div style={{width: "100%", marginBottom : "15px", 
+  padding: "3px 0px", fontSize: "14px", backgroundColor : "rgb(159 155 155 / 39%)"}}> 
+  <marquee>
   {
      news.map((i) => (
-      <h5>{i}</h5>
+
+<span style={{padding: "0px 20px", fontSize: "16px", color: "464b4b"}}> {i} </span> 
+
      ))
    }
+   </marquee>
     </div>
    
-      <h2>
+      {/* <h2>
         Would you like to post a query
-      </h2>
+      </h2> */}
       <div className="StartPage">
         <div className="mainContent">
 
@@ -309,7 +313,7 @@ console.log("news", news)
       </ImgBox>  
       <ImgBox>
       <img src = {CloudImg} className = {classes.imgResponsive} />
-      <h5 style={{margin: "10px 0"}}>secure platform</h5>
+      <h5 style={{margin: "10px 0"}}>Secure Platform</h5>
       <p style={{textAlign : "center"}}>A secure platform that ensures total privacy of client’s data.</p>
       </ImgBox> <ImgBox>
       <img src = {PaperLess} className = {classes.imgResponsive} />

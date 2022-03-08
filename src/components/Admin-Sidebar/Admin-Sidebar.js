@@ -500,7 +500,7 @@ const classes = useStyle()
                   <span className="reportMenu"></span>
                 </i>
                    <span className="menu-title" data-i18n="">
-                  CMS
+                  Customer Page
                   </span>
                  </NavLink>
                </li>

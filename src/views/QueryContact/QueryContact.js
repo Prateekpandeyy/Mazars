@@ -20,7 +20,7 @@ const QueryContact = () => {
         formData.append("message", value.p_message);
      axios({
          method :"POST",
-         url : `${baseUrl}/ustomers/enquirysubmit`,
+         url : `${baseUrl}/customers/enquirysubmit`,
          data : formData
      })   
      .then((res) => {

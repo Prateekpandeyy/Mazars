@@ -192,7 +192,7 @@ function Login(props) {
 
 
       </div>
-      <Footer />
+
     </>
   );
 }
