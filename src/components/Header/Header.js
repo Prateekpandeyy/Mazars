@@ -1,8 +1,14 @@
-import { Link, useHistory } from "react-router-dom";
+import { Link, NavLink, useHistory } from "react-router-dom";
 import "../../assets/css/style.css";
 import mazars from "../../mazars_logo.png";
 import { baseUrl } from "../../config/config";
 import axios from "axios";
+import {useState} from 'react';
+import Collapse from '@mui/material/Collapse';
+import ExpandLess from '@mui/icons-material/ExpandLess';
+import ExpandMore from '@mui/icons-material/ExpandMore';
+import ListItemButton from '@mui/material/ListItemButton';
+import List from '@mui/material/List';
 function Header({ id, cust_sign, noAdminSign, noTlSign, 
   noTpSign, admin, mtl, mtp, noSign, loginOTP, getData }) {
   let history = useHistory();
@@ -150,7 +156,12 @@ function Header({ id, cust_sign, noAdminSign, noTlSign,
 export default Header;
 
 const CmsCont = () => {
+  const [open, setOpen] = useState(false)
   let history = useHistory()
+  const handleClick = () => {
+
+    setOpen(!open);
+  };
   const getPageLink = (e) => {
     axios.get(`${baseUrl}/customers/getpage?page=${e}`)
     .then((res) => {
@@ -172,13 +183,56 @@ const CmsCont = () => {
     }
   return(
     <>
-<div style={{display : "flex", width: "300px", alignItems: "center", justifyContent: "space-evenly"}}>
-<Link to = {{
+<div className="clientSubMenu">
+{/* <Link to = {{
   pathname : "/customer/updates",
   index : 1
 }} className="tabHoverLink" onClick={(e) => {getPageLink(1)}}>
      Articles
-    </Link>
+    </Link> */}
+       <li className="nav-item" className="tabHoverLink" style={{listStyle : "none", height: "40px"}}>
+                 
+                 <ListItemButton  onMouseEnter={() => handleClick()}>
+           
+       
+   
+   
+   
+                   <span className="menu-title" data-i18n="">
+                     Articles
+                   </span>
+                   {open ? <ExpandLess /> : <ExpandMore />}
+                
+   
+         
+          
+         </ListItemButton>
+   
+         <Collapse in={open}  unmountOnExit style={{textAlign: "center", zIndex: "99999", backgroundColor : "#fff"}}>
+           <List component="div" disablePadding style={{backgroundColor : "#fff", zIndex: "99999"}}>
+           <ul style={{listStyle : "none", backgroundColor : "#fff", zIndex: "99999"}}>
+                     <li>
+                     <Link to = "/customer/direct">
+                     
+                   <span className="menu-title" data-i18n="">
+                  Direct Tax
+                   </span>
+                   </Link >
+                     </li>
+                     <li>
+                     <Link to="/customer/indirect">
+                     
+                   <span className="menu-title" data-i18n="">
+                Indirect Tax
+                   </span>
+                   </Link>
+                     </li>
+                   </ul>
+           </List>
+         </Collapse>
+                 </li>
+   
+          
     <Link to = {{
   pathname : "/customer/updates",
   index : 2

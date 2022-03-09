@@ -17,13 +17,14 @@ import { Spinner } from 'reactstrap';
 import ShowError from "../../components/LoadingTime/LoadingTime";
 import LoadingTime from "../../components/LoadingTime/LoadingTime";
 import Cookies from "js-cookie";
-import CloudImg from './images/cloud.png';
-import PaperLess from './images/Paperless.png';
-import whatp from './images/video.png';
-import costEffective from './images/costEffective.png';
-import servicesImg from './images/services.png';
+import CloudImg from './images/Cloud.jpg';
+import PaperLess from './images/paperLess.jpeg';
+import whatp from './images/video.jpeg';
+import costEffective from './images/costEffective.jpeg';
+import servicesImg from './images/services.jpeg';
 import { styled , makeStyles} from "@material-ui/styles";
 import { Markup } from "interweave";
+import $ from 'jquery';
 import CookieConsent from "react-cookie-consent"
 const Schema = yup.object().shape({
   p_email: yup.string().email("invalid email").required(""),
@@ -81,10 +82,14 @@ function LoginForm() {
   const [linkData, setLinkData] = useState("myData")
   const [showData, setShowData] = useState(false)
   const [news, getNews] = useState([])
+  const [pos,setPos] = useState(0);   
+  const [run, setRun] = useState(true);
+  let  width = 800
   const myData = localStorage.getItem("myArticles")
    const togglePasssword = () => {
     setPasswordShow(!isPasswordShow)
   };
+ 
 useEffect(() => {
   showLinkData()
 }, [showData])
@@ -163,7 +168,30 @@ const latestNews = () => {
     setEmail(e.target.value);
   };
 const classes = useStyle()
-console.log("news", news)
+const scrollEff = () => {
+  if(run) setPos(p=>p<width? p+1: -width);        
+}
+
+useEffect(() => {
+  const tm = setTimeout(scrollEff, 10);
+  return () => clearTimeout(tm);
+},[pos]);
+
+const onMouseEnter = (e) => {
+  // console.log("mouse enter");
+  setRun(false);
+}
+
+const onMouseLeave = (e) => {
+  // console.log("mouse leave");
+  setRun(true);
+  setPos(pos+1); // to trigger useEffect 
+}
+const styles = {
+  position: "relative", 
+  fontSize: "1em",
+  right: pos + "px"
+};
   return (
     <>
       <Header noSign="noSign" />
@@ -171,15 +199,21 @@ console.log("news", news)
  
   <div style={{width: "100%", marginBottom : "15px", 
   padding: "3px 0px", fontSize: "14px", backgroundColor : "rgb(159 155 155 / 39%)"}}> 
-  <marquee>
+  <h1 style={styles} 
+            onMouseEnter={onMouseEnter} 
+            onMouseLeave={onMouseLeave} 
+        >
   {
      news.map((i) => (
 
-<span style={{padding: "0px 20px", fontSize: "16px", color: "464b4b"}}> {i} </span> 
+<span style={{padding: "0px 20px", fontSize: "16px", color: "464b4b"}}> 
+<Link className="tabHover" to = "/customer/latestupdates">
+{i}
+</Link> </span> 
 
      ))
    }
-   </marquee>
+  </h1>
     </div>
    
       {/* <h2>

@@ -550,6 +550,12 @@ th.sortable.desc::after {
 th.sortable:hover::after {
   color: #fff;
 }
+.clientSubMenu{
+  display: flex;
+  width: 500px;
+  align-items: center;
+  justify-content: space-evenly;
+}
 /* #test.ck-content{
   height: 250px !important;
 }

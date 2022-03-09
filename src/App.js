@@ -150,6 +150,10 @@ import QueryContact from "./views/QueryContact/QueryContact";
 import Updates from "./views/Login/Updates";
 import FlashMessage from "./pages/Admin/CMS/FlashMessage";
 import CmsContent from "./pages/Admin/CMS/CmsContent";
+import Direct from "./views/Tax/Direct";
+import Indirect from "./views/Tax/Indirect";
+import Details from "./views/Tax/Details";
+import LatestUpdates from "./views/Tax/LatestUpdats";
 // import PayDetails from "./views/PaymentStatus/PayDetails";
 
 
@@ -174,7 +178,11 @@ function App() {
             <PublicRouteUser exact path="/customer/forget-password" component={ForgetPassword} />
             <PublicRouteUser exact path="/customer/new-password/:id" component={NewPassword} />
              <PublicRouteUser exact path = "/customer/aboutbasic" component={AboutOuter} />
+             <PublicRouteUser exact path = "/customer/direct" component={Direct} />
+             <PublicRouteUser exact path = "/customer/indirect" component={Indirect} />
+             <PublicRouteUser exact path = "/customer/details" component={Details} />
      <PublicRouteUser exact path = "/customer/customerquery" component={QueryContact} />
+     <PublicRouteUser exact path = "/customer/latestupdates" component={LatestUpdates} />
      <PublicRouteUser exact path = "/customer/updates" component={Updates} />
         <PublicRouteUser exact path = "/customer/contactbasic" component = {ContactOuter} />
             <PrivateRouteUser exact path="/customer/select-category" component={SelectCategoryPage} />
