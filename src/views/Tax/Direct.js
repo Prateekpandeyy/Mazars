@@ -3,6 +3,7 @@ import Header from "../../components/Header/Header";
 import { styled , makeStyles} from "@material-ui/styles";
 import { Link } from 'react-router-dom';
 import Data from './directData.js';
+import Footer from '../../components/Footer/Footer';
 import { Button, Box, Typography, Table, TableContainer, 
 TableHead, TablePagination, TableBody, TableRow, TableCell } from "@material-ui/core";
 const MyContainer = styled(Box)({
@@ -27,9 +28,9 @@ const Direct = () => {
         <MyContainer>
    
   
-        <div className="StartPage">
+        <div className="StartPageDetails">
           <div className="mainContent222">
-          <h4>Direct Tax </h4>
+          <h4> Articles - Direct Tax </h4>
    
     <TableContainer>
         <Table>
@@ -62,6 +63,7 @@ const Direct = () => {
         </div>
       
        </MyContainer>
+       <Footer />
        </>
   
     )

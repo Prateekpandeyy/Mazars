@@ -78,6 +78,11 @@ else  if(getId === 3){
 }
 else if (getId === 4){
   console.log("id", id)
+  const myData = localStorage.getItem("myMediaGallery")
+  setLinkData(myData)
+}
+else if (getId === 5){
+  console.log("id", id)
   const myData = localStorage.getItem("myFaq")
   setLinkData(myData)
 }
@@ -102,44 +107,12 @@ const classes = useStyle()
      <MyContainer>
    
   
-      <div className="StartPage">
-        <div className="mainContent22">
+     <div className="StartPageDetails">
+          <div className="mainContent222">
 
      <Markup content = {linkData} />
         </div>
-        <MyBox>
-      <ImgBox>
-      <img src = {servicesImg}
-      className = {classes.imgResponsive} />
-      <h5 style={{margin: "10px 0"}}>Services</h5>
-      <p style={{textAlign : "center"}}>
-      Caters to all direct & indirect tax queries related to compliance requirements (including transfer pricing), assessment proceedings, litigation matters, opinions and other advisory needs
-      </p>
-      </ImgBox>
-      <ImgBox>
-      <img src = {whatp} className = {classes.imgResponsive} />
-      <h5 style={{margin: "10px 0"}}>Video Confrence</h5>
-      <p style={{textAlign : "center"}}>
-      Offers video conferencing facility to hold meetings with clients.
-      </p>
-      </ImgBox> 
-      <ImgBox>
-      <img src = {costEffective} className = {classes.imgResponsive} />
-      <h5 style={{margin: "10px 0"}}>Cost Effective</h5>
-      <p style={{textAlign : "center"}}>
-      Provides cost effective solutions, designed exclusively for clients
-      </p>
-      </ImgBox>  
-      <ImgBox>
-      <img src = {CloudImg} className = {classes.imgResponsive} />
-      <h5 style={{margin: "10px 0"}}>secure platform</h5>
-      <p style={{textAlign : "center"}}>A secure platform that ensures total privacy of client’s data.</p>
-      </ImgBox> <ImgBox>
-      <img src = {PaperLess} className = {classes.imgResponsive} />
-      <h5 style={{margin: "10px 0"}}>Paperless</h5>
-      <p style={{textAlign : "center"}}>Operates completely in paperless environment.</p>
-      </ImgBox>
-      </MyBox>
+
       </div>
     
      </MyContainer>

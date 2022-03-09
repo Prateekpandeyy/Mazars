@@ -81,7 +81,7 @@ const LatestUpdates = () => {
    }
   </h1>
     </div>
-        <div className="StartPage">
+    <div className="StartPageDetails">
           <div className="mainContent222">
           <h4>Message Details </h4>
    

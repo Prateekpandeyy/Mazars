@@ -176,8 +176,11 @@ const CmsCont = () => {
      else if (e === 3){
       localStorage.setItem("myLinks", res.data.result.content)
      }
-     else if (e === 4){
+     else if (e === 5){
       localStorage.setItem("myFaq", res.data.result.content)
+     }
+     else if (e === 4){
+      localStorage.setItem("myMediaGallery", res.data.result.content)
      }
     })
     }
@@ -210,7 +213,7 @@ const CmsCont = () => {
    
          <Collapse in={open}  unmountOnExit style={{textAlign: "center", zIndex: "99999", backgroundColor : "#fff"}}>
            <List component="div" disablePadding style={{backgroundColor : "#fff", zIndex: "99999"}}>
-           <ul style={{listStyle : "none", backgroundColor : "#fff", zIndex: "99999"}}>
+           <ul style={{listStyle : "none", textAlign : "left", padding: "10px 15px", backgroundColor : "#fff", zIndex: "99999"}}>
                      <li>
                      <Link to = "/customer/direct">
                      
@@ -251,7 +254,14 @@ const CmsCont = () => {
   pathname : "/customer/updates",
   index : 4
 }} className="tabHoverLink" onClick={(e) => {getPageLink(4)}}>
-      FAQ
+     Media Gallery
+    </Link>
+    <Link 
+    to = {{
+  pathname : "/customer/updates",
+  index : 4
+}} className="tabHoverLink" onClick={(e) => {getPageLink(5)}}>
+      Frequently Asked Questions
     </Link>
 </div>
     </>
