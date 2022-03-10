@@ -119,11 +119,19 @@ return (
 
 <MyContainer>
    
-     <button 
+     {/* <button 
     
       className="autoWidthBtn rightAlign my-2" onClick={(e) => {
         history.push("/admin/articles")
-      }}>Add Articles</button>
+      }}>Add Articles</button> */}
+        <div className="headingContent">
+        <h4>Articles </h4>
+        <button 
+    
+    className="autoWidthBtn rightAlign my-2" onClick={(e) => {
+      history.push("/admin/articles")
+    }}>New Articles</button> 
+        </div>
     <Card>
         <CardBody>
         <DataTablepopulated 

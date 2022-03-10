@@ -17,23 +17,43 @@ const MessageModal = (
 ) => {
     const { handleSubmit, register, errors, getValues } = useForm();
     const [news , setNews] = useState("")
+    const [heading, setHeading] = useState("")
     const [stats, setStats] = useState(false)
+    const userId = localStorage.getItem("adminkey")
     useEffect(() => {
         getEditData()
     }, [edit])
 
     const getEditData = (e) => {
-        console.log("done",  editData)
-        if(edit === true){
-            console.log("editData", editData)
-            setNews(editData.news)
-           if(editData.status == "0"){
-               setStats(true)
-           }
-           else{
-               setStats(false)
-           }
-        }
+       console.log("editData", editData)
+       if(editData && editData.id !== undefined){
+        axios.get(`${baseUrl}/admin/getallnews?uid=${JSON.parse(userId)}&id=${editData.id}`)
+        .then((res) => {
+           console.log("res",editData)
+           res.data.result.map((i) => {
+               setHeading(i.heading)
+               setNews(i.news)
+               if(i.status == "1"){
+                   setStats(true)
+               }
+               else{
+                   setStats(false)
+               }
+           })
+        })
+       }
+        // console.log("done",  editData)
+        // if(edit === true){
+        //     console.log("editData", editData)
+        //     setNews(editData.news)
+        //     setHeading(editData.heading)
+        //    if(editData.status == "0"){
+        //        setStats(true)
+        //    }
+        //    else{
+        //        setStats(false)
+        //    }
+        // }
     }
     const onSubmit = (value) => {
         let formData = new FormData()
@@ -48,7 +68,7 @@ const MessageModal = (
        }
        else{
         formData.append("news", news);
-        formData.append("heading", value.heading)
+        formData.append("heading", value.p_heading)
        {
       stats === true ?
       formData.append("status", 1):
@@ -72,6 +92,9 @@ const MessageModal = (
              })
              messageFun();
              getList()
+             setHeading([])
+             setStats(null)
+             setNews([])
          }
          else{
              Swal.fire({
@@ -101,6 +124,8 @@ const MessageModal = (
     <input 
     type="text"
     name="p_heading"
+    value={heading}
+    onChange={(e) => setHeading(e.target.value)}
     className={classNames("form-control", {
         "is-invalid" : errors.p_heading
     })}

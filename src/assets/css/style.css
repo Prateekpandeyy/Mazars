@@ -556,6 +556,12 @@ th.sortable:hover::after {
   align-items: center;
   justify-content: space-evenly;
 }
+.headingContent{
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
 /* #test.ck-content{
   height: 250px !important;
 }

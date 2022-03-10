@@ -567,7 +567,7 @@ const classes = useStyle()
                      <NavLink to={"/admin/flash"}>
                      
                    <span className="menu-title" data-i18n="">
-           News
+                   Flash Updates
                    </span>
                    </NavLink>
                      </li>

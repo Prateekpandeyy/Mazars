@@ -12,6 +12,7 @@ import {
 import { EditQuery , DeleteIcon} from '../../../components/Common/MessageIcon';
 import Swal from 'sweetalert2';
 import Layout from "../../../components/Layout/Layout";
+import CommonServices from "../../../common/common";
 const MyContainer = styled(Container)({
 
 })
@@ -22,6 +23,7 @@ const FlashMessage = () => {
     const [edit, isEdit] = useState(false)
     const [myVal222, setMyVal22] = useState(false)
     const [editData, setEditData] = useState()
+   const [check, setCheck] = useState(true)
     const userId = localStorage.getItem("adminkey")
     useEffect(() => {
         getList()
@@ -34,10 +36,18 @@ const FlashMessage = () => {
        
     }
   const showMessage = (e) => {
+    console.log("eee", e)
+     if(e.id){
       setMessageBox(!messageBox)
+     }
+     else{
+       setMessageBox(!messageBox)
+       setEditData("")
+       isEdit(false)
+     }
   }
   const editQuery = (e) => {
-   
+   console.log("eee", e)
       setEditData(e)
       setMessageBox(!messageBox)
       isEdit(true)
@@ -80,17 +90,22 @@ const FlashMessage = () => {
   const myShowValue = (e, row) => {
       console.log("etarget", e.target.checked)
         if(e.target.checked === true){
-            e.target.checked = true
+
+            
             axios.get(`${baseUrl}/admin/setnewsstatus?uid=${JSON.parse(userId)}&id=${row.id}&status=0`)
        .then((res) => {
            console.log("res", res)
+           if(res.data.result === 1){
+             setCheck(true)
+           }
        })
         }
         else{
-            e.target.checked = false
+           
             axios.get(`${baseUrl}/admin/setnewsstatus?uid=${JSON.parse(userId)}&id=${row.id}&status=1`)
             .then((res) => {
                 console.log("res", res)
+                setCheck(false)
             })
         }
           
@@ -110,11 +125,24 @@ const FlashMessage = () => {
     {
       text: "Date",
       dataField: "created_date",
+      headerStyle : () => {
+        return {width: "150px"}
+      },
+      formatter : function dateFormatter(cell, row) {
+        console.log("row", row.created_date.split(" "))
+        let a = row.created_date.split(" ")
+        return(
+         
+            <>
+            {CommonServices.changeFormateDate(a[0])}
+            </>
+        )
+    }
      
     },
     {
-        text: "Message",
-        dataField: "news",
+        text: "Heading",
+        dataField: "heading",
        
       },
      
@@ -125,6 +153,13 @@ const FlashMessage = () => {
             return {width: "150px"}
         },
         formatter : function(cell, row) {
+       if(row.status == "1"){
+         setCheck(true)
+         console.log("doneeee", row.id)
+       }
+       else{
+         setCheck(false)
+       }
             return(
                 <>
              <div style={{display : "flex", justifyContent : "space-evenly"}}>
@@ -134,13 +169,23 @@ const FlashMessage = () => {
                 <div onClick = {(e) => delQuery(row)}> 
  <DeleteIcon />
                 </div>
-                <div>
-                <label class="switch" onChange= {(e) => myShowValue(e, row)}>
-  <input type="checkbox"  />
-  <span class="slider round"></span>
-</label>
-
-                </div>
+               {
+                 row.status == "1" ?
+                 <div>
+                 <label class="switch" onChange= {(e) => myShowValue(e, row)}>
+   <input type="checkbox" aria-checked={true} defaultChecked={true}/>
+   <span class="slider round"></span>
+ </label>
+ 
+                 </div> : 
+                  <div>
+                  <label class="switch" onChange= {(e) => myShowValue(e, row)}>
+    <input type="checkbox"   />
+    <span class="slider round"></span>
+  </label>
+  
+                  </div>
+               }
              </div>
                 </>
             
@@ -154,7 +199,12 @@ const FlashMessage = () => {
       <Layout adminDashboard="adminDashboard" adminUserId={userId}>
         <MyContainer>
      
-       <button className="autoWidthBtn rightAlign my-2"  onClick = {showMessage}>Add News</button>
+      <div className="headingContent">
+        <h4>Flash Updates </h4>
+      <button className="autoWidthBtn rightAlign my-2"  onClick = {showMessage}>
+       New Flash Update </button>
+        </div>
+       
       <Card>
           <CardBody>
           <DataTablepopulated 

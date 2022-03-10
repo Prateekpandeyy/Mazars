@@ -26,6 +26,8 @@ const MyContainer = styled(Container)({
 const Links = () => {
     const [det, addDet] = useState();
     const [stats, setStats] = useState(false)
+    const [heading, setHeading] = useState("")
+    const [writer, setWriter] = useState("")
     let history = useHistory()
     let getId = useParams()
     const userId = localStorage.getItem("adminkey")
@@ -42,7 +44,8 @@ const Links = () => {
          if(res.data.code === 1){
         res.data.result.map((i) => {
           if(i.id === getId.id){
-           
+            setHeading(i.heading)
+            setWriter(i.writer)
            addDet(i.content)
           }
         })
@@ -55,6 +58,8 @@ const Links = () => {
         let formData = new FormData();
        
         formData.append("content", det);
+        formData.append("heading", heading)
+       formData.append("writer", writer);
        formData.append("id", 3)
     
         axios({
@@ -100,7 +105,38 @@ const Links = () => {
         </div>
         <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
           
-         
+         <div className="row">
+         <div className="col-md-4 col-sm-12">
+                 
+                 <label className="form-label">Heading</label>
+                   <input 
+                   type="text"
+                   className={classNames("form-control", {
+                    "is-invalid": errors.p_heading,
+                  })}
+                  value={heading}
+                  onChange={(e) => setHeading(e.target.value)}
+                  ref={register({ required: true })}
+                  name="p_heading"
+                   placeholder = "Please enter heading"
+                   />
+                 </div>
+                 <div className="col-md-4 col-sm-12">
+                 
+                 <label className="form-label">Writer</label>
+                   <input 
+                   type="text"
+                   className={classNames("form-control", {
+                    "is-invalid": errors.p_wirter,
+                  })}
+                  onChange={(e) => setWriter(e.target.value)}
+                  value={writer}
+                  ref={register({ required: true })}
+                  name="p_wirter"
+                   placeholder = "Please enter heading"
+                   />
+                 </div>
+           </div>
         
          
            <div className="row">
