@@ -11,6 +11,15 @@ import Layout from "../../../components/Layout/Layout";
 import { useForm } from "react-hook-form";
 import { useHistory } from 'react-router';
 import classNames from "classnames";
+import {
+    Card,
+    CardHeader,
+    CardBody,
+    CardTitle,
+    Row,
+    Col,
+    Table,
+  } from "reactstrap";
 const MyContainer = styled(Container)({
 
 })
@@ -60,6 +69,23 @@ const UpdatesContent = () => {
     return(
         <Layout adminDashboard="adminDashboard" adminUserId={userId}>
       <MyContainer>
+      <div className="py-2">
+      <Row>
+          <Col md="4">
+          <button
+                className="autoWidthBtn" 
+                onClick={() => history.goBack()}
+              >
+               
+                Go Back
+              </button>
+              
+            </Col>
+            <Col md="4">
+              <h4>Updates</h4>
+            </Col>
+            </Row>
+        </div>
       <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
         
        

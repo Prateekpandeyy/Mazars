@@ -1,9 +1,11 @@
 
-import React , {useState} from 'react';
+import React , {useState, useEffect} from 'react';
 import Header from "../../components/Header/Header";
 import { styled , makeStyles} from "@material-ui/styles";
 import { Link } from 'react-router-dom';
 import Data from './directData.js';
+import axios from 'axios';
+import { baseUrl } from '../../config/config';
 import Footer from '../../components/Footer/Footer';
 import { Button, Box, Typography, Table, TableContainer, 
 TableHead, TablePagination, TableBody, TableRow, TableCell } from "@material-ui/core";
@@ -17,12 +19,24 @@ const MyContainer = styled(Box)({
 const Indirect = () => {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5)
+    const [data, setData] = useState([])
+    let wirtten = "-"
     const onChangePage = (event, nextPage) => {
         setPage(nextPage)
     }
     const onChangeRowsPerPage = (e) => {
         setRowsPerPage(e.target.value)
     }
+    const getData =() => {
+        axios.get(`${baseUrl}/customers/getarticles?type=indirect`)
+        .then((res) => {
+          console.log("response", res)
+          setData(res.data.result)
+        })
+    }
+  useEffect(()=> {
+      getData()
+  }, [])
     return(
        <>
         <Header noSign="noSign" />
@@ -35,13 +49,16 @@ const Indirect = () => {
    
     <TableContainer>
         <Table>
-            <TableBody>
+        <TableBody>
                {
-                   Data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((i) => (
+                   data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((i) => (
                     <TableRow>
                     <TableCell>
-                    <Link to = "/customer/details">
-                      {i.title}
+                    <Link to = {{
+                            pathname : "/customer/details",
+                            index : i.id
+                        }}>
+                      {i.heading} {wirtten} <span style={{fontWeight: "bold"}}>{i.writer}</span>
                         </Link>
                     </TableCell>
                 </TableRow>

@@ -118,10 +118,10 @@ return (
     <Layout adminDashboard="adminDashboard" adminUserId={userId}>
 
 <MyContainer>
-     
+   <span style={{textAlign: "center"}}>Articles </span>
      <button 
     
-      className="autoWidthBtn rightAlign my-2" onClick={(e) => {
+      className="autoWidthBtn my-2" onClick={(e) => {
         history.push("/admin/articles")
       }}>Add Articles</button>
     <Card>

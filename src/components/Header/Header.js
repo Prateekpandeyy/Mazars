@@ -163,26 +163,27 @@ const CmsCont = () => {
     setOpen(!open);
   };
   const getPageLink = (e) => {
-    axios.get(`${baseUrl}/customers/getpage?page=${e}`)
-    .then((res) => {
-    
-    
-     if(e === 1){
-      localStorage.setItem("myArticles", res.data.result.content)
+   
+     if(e === "direct"){
+       axios.get(`${baseUrl}/customers/getarticles?type=${e}`)
+       .then((res) => {
+         console.log("response", res)
+       })
+      // localStorage.setItem("myArticles", res.data.result.content)
      }
      else if (e === 2){
-      localStorage.setItem("myUpdates", res.data.result.content)
+      // localStorage.setItem("myUpdates", res.data.result.content)
      }
      else if (e === 3){
-      localStorage.setItem("myLinks", res.data.result.content)
+      // localStorage.setItem("myLinks", res.data.result.content)
      }
      else if (e === 5){
-      localStorage.setItem("myFaq", res.data.result.content)
+      // localStorage.setItem("myFaq", res.data.result.content)
      }
      else if (e === 4){
-      localStorage.setItem("myMediaGallery", res.data.result.content)
+      // localStorage.setItem("myMediaGallery", res.data.result.content)
      }
-    })
+  
     }
   return(
     <>
@@ -242,6 +243,7 @@ const CmsCont = () => {
 }} className="tabHoverLink" onClick={(e) => {getPageLink(2)}}>
       Updates
     </Link>
+
     <Link 
     to = {{
   pathname : "/customer/updates",
@@ -252,7 +254,7 @@ const CmsCont = () => {
     <Link 
     to = {{
   pathname : "/customer/updates",
-  index : 4
+  index : 5
 }} className="tabHoverLink" onClick={(e) => {getPageLink(4)}}>
      Media Gallery
     </Link>

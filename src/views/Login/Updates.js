@@ -1,17 +1,13 @@
-import { useRef, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Header from "../../components/Header/Header";
 import Footer from '../../components/Footer/Footer';
 import './style.css';
 import {Box} from "@material-ui/core";
-import CloudImg from './images/cloud.png';
-import PaperLess from './images/Paperless.png';
-import whatp from './images/video.png';
-import costEffective from './images/costEffective.png';
-import servicesImg from './images/services.png';
 import { styled , makeStyles} from "@material-ui/styles";
 import { Markup } from "interweave";
 import { useHistory, useParams } from "react-router";
-
+import axios from 'axios';
+import {baseUrl} from '../../config/config';
 const MyBox = styled(Box)({
   display: "flex", 
  width: "1000px",
@@ -50,7 +46,7 @@ const useStyle = makeStyles({
 function Updates() {
  
 
-  const [linkData, setLinkData] = useState("myData")
+  const [linkData, setLinkData] = useState([])
   const [showData, setShowData] = useState(false)
  
   let history = useHistory()
@@ -58,34 +54,30 @@ function Updates() {
   const getId = history.location.index;
 useEffect(() => {
   showLinkData()
-}, [showData])
+}, [])
 const showLinkData = () => {
-  console.log(getId === 1)
- if(getId === 1){
-   console.log("id", id)
-   const myData = localStorage.getItem("myArticles")
-  setLinkData(myData)
+ 
+ if(getId === 2){
+  axios.get(`${baseUrl}/customers/getupdated`)
+  .then((res) => {
+   
+    setLinkData(res.data.result)
+  })
  }
- else  if(getId === 2){
-  console.log("id", id)
-  const myData = localStorage.getItem("myUpdates")
- setLinkData(myData)
-}
-else  if(getId === 3){
-  console.log("id", id)
-  const myData = localStorage.getItem("myLinks")
- setLinkData(myData)
-}
-else if (getId === 4){
-  console.log("id", id)
-  const myData = localStorage.getItem("myMediaGallery")
-  setLinkData(myData)
-}
-else if (getId === 5){
-  console.log("id", id)
-  const myData = localStorage.getItem("myFaq")
-  setLinkData(myData)
-}
+ else if(getId === 3){
+  axios.get(`${baseUrl}/customers/getpage?page=${getId}`)
+  .then((res) => {
+   console.log("res", res)
+    setLinkData([res.data.result])
+  })
+ }
+ else if (getId === 4){
+  axios.get(`${baseUrl}/customers/getpage?page=${getId}`)
+  .then((res) => {
+    console.log("res", res)
+    setLinkData([res.data.result])
+  })
+ }
 }
 
 
@@ -110,7 +102,11 @@ const classes = useStyle()
      <div className="StartPageDetails">
           <div className="mainContent222">
 
-     <Markup content = {linkData} />
+     {
+       linkData.map((i) => (
+        <Markup content = {i.content} />
+       ))
+     }
         </div>
 
       </div>

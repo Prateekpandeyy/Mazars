@@ -11,6 +11,15 @@ import Layout from "../../../components/Layout/Layout";
 import { useForm } from "react-hook-form";
 import classNames from "classnames";
 import { useHistory, useParams } from 'react-router';
+import {
+  Card,
+  CardHeader,
+  CardBody,
+  CardTitle,
+  Row,
+  Col,
+  Table,
+} from "reactstrap";
 const MyContainer = styled(Container)({
 
 })
@@ -61,7 +70,11 @@ const CmsContent = () => {
        let formData = new FormData();
        formData.append("type", pageto)
        formData.append("content", det);
-      formData.append("status", stats)
+    {
+      stats === true ?
+      formData.append("status", 1):
+      formData.append("status", 0)
+    }
        formData.append("heading", heading)
        formData.append("writer", writer);
        formData.append("publish_date", date);
@@ -91,7 +104,25 @@ const CmsContent = () => {
 
     return(
         <Layout adminDashboard="adminDashboard" adminUserId={userId}>
+          
       <MyContainer>
+      <div className="py-2">
+      <Row>
+          <Col md="4">
+          <button
+                className="autoWidthBtn" 
+                onClick={() => history.goBack()}
+              >
+               
+                Go Back
+              </button>
+              
+            </Col>
+            <Col md="4">
+              <h4>Articles</h4>
+            </Col>
+            </Row>
+        </div>
       <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
          <div className="row">
              <div className="col-md-4 col-sm-12">
