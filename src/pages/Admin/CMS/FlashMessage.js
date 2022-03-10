@@ -169,7 +169,7 @@ const FlashMessage = () => {
                 <div onClick = {(e) => delQuery(row)}> 
  <DeleteIcon />
                 </div>
-               {
+               {/* {
                  row.status == "1" ?
                  <div>
                  <label class="switch" onChange= {(e) => myShowValue(e, row)}>
@@ -185,7 +185,24 @@ const FlashMessage = () => {
   </label>
   
                   </div>
-               }
+               } */}
+                {
+                  row.status == "1" ?
+                  <div>
+                  <label class="switch" onChange= {(e) => myShowValue(e, row)}>
+    <input type="checkbox"  defaultChecked={true}/>
+    <span class="slider round"></span>
+  </label>
+  
+                  </div> :
+                   <div>
+                   <label class="switch" onChange= {(e) => myShowValue(e, row)}>
+     <input type="checkbox"  />
+     <span class="slider round"></span>
+   </label>
+   
+                   </div>
+                }
              </div>
                 </>
             

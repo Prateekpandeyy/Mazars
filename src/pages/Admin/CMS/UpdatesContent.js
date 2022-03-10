@@ -9,7 +9,7 @@ import './map.css';
 import Swal from 'sweetalert2';
 import Layout from "../../../components/Layout/Layout";
 import { useForm } from "react-hook-form";
-import { useHistory } from 'react-router';
+import { useHistory, useParams } from 'react-router';
 import classNames from "classnames";
 import {
     Card,
@@ -29,15 +29,19 @@ const UpdatesContent = () => {
     const [pages, getPages] = useState([])
     const [det, addDet] = useState();
     const [pageto, setTopage] = useState([])
+    const [heading, setHeading] = useState("")
+    const [date, setDate] = useState("")
  let history = useHistory()
+ let getId = useParams()
     useEffect(() => {
         getPageValue()
     }, [])
     const getPageValue = () => {
-        axios.get(`${baseUrl}/admin/pagelist?uid=${JSON.parse(userId)}`)
+        axios.get(`${baseUrl}/admin/getallupdate?uid=${JSON.parse(userId)}&id=${getId.id}`)
         .then((res) =>{
             console.log("ress", res.data.result)
-       getPages(res.data.result)
+            
+      
         })
     }
    const getToPage = (e) => {
@@ -48,8 +52,8 @@ const UpdatesContent = () => {
        let formData = new FormData();
        formData.append("content", det);
        formData.append("status", 1)
-     
-      
+       formData.append("heading", heading)
+       formData.append("publish_date", date);
        axios({
            method : "POST", 
            url : `${baseUrl}/admin/setupdate`,
@@ -90,7 +94,38 @@ const UpdatesContent = () => {
         
        
         
-       
+       <div className="row">
+       <div className="col-md-4 col-sm-12">
+                 
+                 <label className="form-label">Heading</label>
+                   <input 
+                   type="text"
+                   className={classNames("form-control", {
+                    "is-invalid": errors.p_heading,
+                  })}
+                  value={heading}
+                  onChange={(e) => setHeading(e.target.value)}
+                  ref={register({ required: true })}
+                  name="p_heading"
+                   placeholder = "Please enter heading"
+                   />
+                 </div>
+                 <div className="col-md-4 col-sm-12">
+                 
+                 <label className="form-label">Date of Publishing</label>
+                   <input 
+                   type="date"
+                   className={classNames("form-control", {
+                    "is-invalid": errors.p_publisher,
+                  })}
+                  value={date}
+                  onChange={(e) => setDate(e.target.value)}
+                  ref={register({ required: true })}
+                  name="p_publisher"
+                   placeholder = "Please enter heading"
+                   />
+                 </div>
+         </div>
          <div className="row">
              <div className="col-md-12">
              <label className="form-label">Pages</label> </div>

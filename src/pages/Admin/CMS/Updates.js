@@ -68,7 +68,7 @@ const Updates = () =>{
          <>
        
                   <div style={{display : "flex", justifyContent : "space-evenly"}}>
-                  <Link to={`/admin/articlesedit/${row.id}`}>
+                  <Link to={`/admin/editupdates/${row.id}`}>
           <EditQuery />
       </Link>
       <span   onClick={() => del(row.id)} className="ml-2">

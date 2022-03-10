@@ -17,7 +17,7 @@ const MessageModal = (
       }
       
 ) => {
-    const { handleSubmit, register, errors, getValues } = useForm();
+    const { handleSubmit, register, errors, getValues, reset } = useForm();
     const [news , setNews] = useState("")
     const [heading, setHeading] = useState("")
     const [stats, setStats] = useState(false)
@@ -28,7 +28,7 @@ const MessageModal = (
 
     const getEditData = (e) => {
        console.log("editData", editData)
-       if(editData && editData.id !== undefined){
+       if(editData && editData.id !== undefined && edit === true){
         axios.get(`${baseUrl}/admin/getallnews?uid=${JSON.parse(userId)}&id=${editData.id}`)
         .then((res) => {
            console.log("res",editData)
@@ -44,6 +44,7 @@ const MessageModal = (
            })
         })
        }
+      
         // console.log("done",  editData)
         // if(edit === true){
         //     console.log("editData", editData)
@@ -87,6 +88,9 @@ const MessageModal = (
      .then((res) => {
          console.log("response", res)
          if(res.data.code === 1){
+           setHeading("")
+           setNews("")
+           setStats(false)
              Swal.fire({
                  message : "success", 
                  html : "Message added successfully",
@@ -95,7 +99,7 @@ const MessageModal = (
         setMessageBox(false)
          getList()
          isEdit(false)
-       
+     
         
          }
          else{

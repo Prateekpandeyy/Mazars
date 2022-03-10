@@ -87,12 +87,19 @@ return (
     <Layout adminDashboard="adminDashboard" adminUserId={userId}>
 
 <MyContainer>
-     
-     <button 
+<div className="headingContent">
+        <h4>Link </h4>
+        <button 
     
       className="autoWidthBtn rightAlign my-2" onClick={(e) => {
         history.push("/admin/links")
-      }}>Add Links</button>
+      }}>New Links</button>
+        </div>
+     {/* <button 
+    
+      className="autoWidthBtn rightAlign my-2" onClick={(e) => {
+        history.push("/admin/links")
+      }}>Add Links</button> */}
     <Card>
         <CardBody>
         <DataTablepopulated 
