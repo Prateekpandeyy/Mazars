@@ -39,13 +39,21 @@ const MessageModal = (
         let formData = new FormData()
        if(edit === false){
         formData.append("news", news);
-        formData.append("status", stats)
+       {
+      stats === true ?
+      formData.append("status", 1):
+      formData.append("status", 0)
+    }
         formData.append("heading", value.heading)
        }
        else{
         formData.append("news", news);
         formData.append("heading", value.heading)
-        formData.append("status", stats)
+       {
+      stats === true ?
+      formData.append("status", 1):
+      formData.append("status", 0)
+    }
         formData.append("id", editData.id)
        }
      axios({

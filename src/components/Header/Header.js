@@ -263,7 +263,7 @@ const CmsCont = () => {
   pathname : "/customer/updates",
   index : 4
 }} className="tabHoverLink" onClick={(e) => {getPageLink(5)}}>
-      Frequently Asked Questions
+      FAQ
     </Link>
 </div>
     </>

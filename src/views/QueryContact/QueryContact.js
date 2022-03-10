@@ -45,9 +45,9 @@ const QueryContact = () => {
         <>
 
 <Header noSign="noSign"/>
-<Box style={{margin: "10px 30px"}}>
+{/* <Box style={{margin: "10px 30px"}}>
                        <h1>Enquiry form</h1>
-                           </Box>
+                           </Box> */}
                        
             <Container maxWidth="md">
                 <Grid container justify="center">
@@ -58,14 +58,14 @@ const QueryContact = () => {
                          <Grid item lg={12}>
                                <Box className={style.myFormBox}>
                                <label className = {style.formFieldLegend}>
-                               Your information
+                               MAS Enquiry Form
                                </label>
                               <select 
                                  ref={register}
                                  name="info"
                               className={style.formFieldSelect}>
-                                  <option>General enquiries - Mazars in India</option>
-                                  <option>Business Advisory Services - Mazars in India</option>
+                                  <option>General enquiries - MAS </option>
+                                  <option>Business Advisory Services - MAS </option>
                               </select>
                                </Box>
                               </Grid> 
@@ -112,7 +112,7 @@ const QueryContact = () => {
   <input style={{width : "1.2rem", height : "1.2rem"}} 
      ref={register} className="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
   <label className = {style.formChoice} for="flexCheckDefault">
-I accept that Mazars will process my personal data for the purpose of handling my request
+I accept that MAS will process my personal data for the purpose of handling my request
   </label>
   </div>
                                </Box>

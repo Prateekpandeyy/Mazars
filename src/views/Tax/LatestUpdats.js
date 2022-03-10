@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { baseUrl } from '../../config/config';
 import { Box } from "@material-ui/core";
+import { useHistory } from 'react-router';
 const MyContainer = styled(Box)({
     display : "flex", 
     justifyContent : "center", 
@@ -17,6 +18,8 @@ const LatestUpdates = () => {
     const [news, getNews] = useState([])
     const [pos,setPos] = useState(0);   
     const [run, setRun] = useState(true);
+    let history = useHistory()
+    let getId = history.location.index;
     let  width = 800
     useEffect(() => {
         latestNews()

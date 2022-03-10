@@ -110,7 +110,7 @@ const latestNews = () => {
   let pp = []
     if(res.data.code === 1){
       res.data.result.map((i) => {
-       pp.push(i.news)
+       pp.push(i)
         console.log("news", i.news)
       })
       getNews(pp)
@@ -207,8 +207,15 @@ const styles = {
      news.map((i) => (
 
 <span style={{padding: "0px 20px", fontSize: "16px", color: "464b4b"}}> 
-<Link className="tabHover" to = "/customer/latestupdates">
-{i}
+{/* <Link className="tabHover" to = {{
+  pathname : "/customer/latestupdates",
+  index : i.id
+}}> */}
+ <Link className="tabHover" to = {{
+  pathname : "/customer/latestupdates",
+                            index : i.id
+                        }}>
+{i.news}
 </Link> </span> 
 
      ))
@@ -336,6 +343,14 @@ const styles = {
       Offers solutions to all compliance requirements, assessment proceedings, litigation matters, opinions and other advisory needs.
       </p>
       </ImgBox>
+      
+      <ImgBox>
+      <img src = {costEffective} className = {classes.imgResponsive} />
+      <h5 style={{margin: "10px 0"}}>Cost Effective</h5>
+      <p style={{textAlign : "center"}}>
+      Provides cost effective solution, designed exclusively for client.
+      </p>
+      </ImgBox> 
       <ImgBox>
       <img src = {whatp} className = {classes.imgResponsive} />
       <h5 style={{margin: "10px 0"}}>Video Confrence</h5>
@@ -344,16 +359,9 @@ const styles = {
       </p>
       </ImgBox> 
       <ImgBox>
-      <img src = {costEffective} className = {classes.imgResponsive} />
-      <h5 style={{margin: "10px 0"}}>Cost Effective</h5>
-      <p style={{textAlign : "center"}}>
-      Provides cost effective solutions, designed exclusively for clients
-      </p>
-      </ImgBox>  
-      <ImgBox>
       <img src = {CloudImg} className = {classes.imgResponsive} />
       <h5 style={{margin: "10px 0"}}>Secure Platform</h5>
-      <p style={{textAlign : "center"}}>A secure platform that ensures total privacy of client’s data.</p>
+      <p style={{textAlign : "center"}}>Ensures total privacy of client’s data.</p>
       </ImgBox> <ImgBox>
       <img src = {PaperLess} className = {classes.imgResponsive} />
       <h5 style={{margin: "10px 0"}}>Paperless</h5>
