@@ -154,7 +154,7 @@ const FlashMessage = () => {
       <Layout adminDashboard="adminDashboard" adminUserId={userId}>
         <MyContainer>
      
-       <button className="autoWidthBtn rightAlign my-2"  onClick = {showMessage}>Create message</button>
+       <button className="autoWidthBtn rightAlign my-2"  onClick = {showMessage}>Add News</button>
       <Card>
           <CardBody>
           <DataTablepopulated 

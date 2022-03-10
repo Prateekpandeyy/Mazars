@@ -5,35 +5,37 @@ import {
   Card,
   CardBody,
 } from "reactstrap";
+import axios from 'axios';
 import { styled } from "@material-ui/styles";
 import { useHistory } from 'react-router';
-import axios from 'axios';
 import { baseUrl } from '../../../config/config';
 import DataTablepopulated from '../../../components/DataTablepopulated/DataTabel';
 import  {DeleteIcon, EditQuery,} from "../../../components/Common/MessageIcon";
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import { Markup } from 'interweave';
+
 const MyContainer = styled(Container)({
 
 })
-const Cms = () =>{ 
-  const [list, setList] = useState([])
+const Updates = () =>{ 
     const userId = window.localStorage.getItem("adminkey");
+    const [list, setList] = useState([])
     let history = useHistory()
     useEffect(() => {
       getList()
     }, [])
   
     const getList = () => {
-      axios.get(`${baseUrl}/admin/getallarticles?uid=${JSON.parse(userId)}`)
+      axios.get(`${baseUrl}/admin/pagelist?uid=${JSON.parse(userId)}&id=3`)
       .then((res) => {
-      
+      console.log("ress", res)
        if(res.data.code === 1){
         setList(res.data.result)
+        
        }
       })
     }
-
     const columns = [
       {
         dataField: "",
@@ -47,73 +49,40 @@ const Cms = () =>{
         },
       },
       {
-        dataField : "publish_date",
-        text : "Date"
+        dataField : "",
+        text : "Links",
+        formatter : function myUpdates(cell, row) {
+            return(
+              <Markup content={row.content} />
+            )
+          }
       },
-      {
-        dataField : "type",
-        text : "Category"
-      },
-      {
-        dataField : "heading",
-        text : "Heading"
-      },
-      {
-        dataField : "writer",
-        text : "Writer"
-      },
+     
       {
         dataField : "",
         text : "Action",
+        headerStyle : () => {
+          return{ width: "150px"}
+        },
         formatter : function CmsAction(cell, row) {
          return(
          <>
-          <Link to={`/admin/articlesedit/${row.id}`}>
+       
+                  <div style={{display : "flex", justifyContent : "space-evenly"}}>
+                  <Link to={`/admin/linksedit/${row.id}`}>
           <EditQuery />
       </Link>
-       <span   onClick={() => del(row.id)} className="ml-2">
-       <DeleteIcon />
-    </span>
+      
+                
+             </div>
          </>
          )
         }
       }
     ]
-    const del = (id) => {
- 
-
-      Swal.fire({
-          title: "Are you sure?",
-          text: "Want to delete query? Yes, delete it!",
-          type: "warning",
-          showCancelButton: true,
-          confirmButtonColor: "#3085d6",
-          cancelButtonColor: "#d33",
-          confirmButtonText: "Yes, delete it!",
-      }).then((result) => {
-          if (result.value) {
-            axios.get(`${baseUrl}/admin/removearticle?uid=${JSON.parse(userId)}&id=${id}`)
-            .then((res) => {
-console.log("response", res)
-if(res.data.code === 1){
-  Swal.fire({
-    title : "success",
-    html  : "Articles deleted successfully",
-    icon : "success"
-  })
-  getList()
-}
-else{
-  Swal.fire({
-    title :"error",
-    html : "Something went wrong , please try again",
-    icon : "error"
-  })
-}
-            })
-          }
-      });
-  };
+    
+  
+  
 return (
     <Layout adminDashboard="adminDashboard" adminUserId={userId}>
 
@@ -122,8 +91,8 @@ return (
      <button 
     
       className="autoWidthBtn rightAlign my-2" onClick={(e) => {
-        history.push("/admin/articles")
-      }}>Add Articles</button>
+        history.push("/admin/links")
+      }}>Add Links</button>
     <Card>
         <CardBody>
         <DataTablepopulated 
@@ -140,7 +109,7 @@ return (
   );
 }
 
-export default Cms;
+export default Updates;
 
 
 

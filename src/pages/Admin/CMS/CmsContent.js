@@ -10,52 +10,67 @@ import Swal from 'sweetalert2';
 import Layout from "../../../components/Layout/Layout";
 import { useForm } from "react-hook-form";
 import classNames from "classnames";
+import { useHistory, useParams } from 'react-router';
 const MyContainer = styled(Container)({
 
 })
 const CmsContent = () => {
     const userId = localStorage.getItem("adminkey")
     const { handleSubmit, register, errors, getValues } = useForm();
-    const [pages, getPages] = useState([])
+   
+    const [stats, setStats] = useState(false)
     const [det, addDet] = useState();
-    const [pageto, setTopage] = useState([])
-    const options22 = 
-       [
-        {
-            label : 22,
-             value : "onelejlk"
-          }
-    , {
-        label : 112,
-         value : "onelejlk"
-      }
-    
-       ]
+    const [heading, setHeading] = useState("")
+    const [writer, setWriter] = useState("")
+    const [date, setDate] = useState("")
+    const [pageto, setTopage] = useState("direct")
+    const [editData, setEditData] = useState();
+    let history  = useHistory()
+    let getId = useParams()
+   
     useEffect(() => {
-        getPageValue()
+      getData()
     }, [])
-    const getPageValue = () => {
-        axios.get(`${baseUrl}/admin/pagelist?uid=${JSON.parse(userId)}`)
-        .then((res) =>{
-            console.log("ress", res.data.result)
-       getPages(res.data.result)
-        })
+    const getData = (e) => {
+      console.log("getId", getId.id)
+     if(getId.id !== undefined){
+      axios.get(`${baseUrl}/admin/getallarticles?uid=${JSON.parse(userId)}&id=${getId.id}`)
+      .then((res) => {
+      
+       if(res.data.code === 1){
+      res.data.result.map((i) => {
+        if(i.id === getId.id){
+         setTopage(i.type)
+         setHeading(i.heading)
+         setWriter(i.writer)
+         console.log("publishDate", i.content)
+         setDate(i.publish_date);
+         addDet(i.content)
+        }
+      })
+       }
+      })
+     }
     }
+   
    const getToPage = (e) => {
        setTopage(e)
    }
    const onSubmit = (e) => {
-       console.log("done")
+      
        let formData = new FormData();
+       formData.append("type", pageto)
        formData.append("content", det);
-       formData.append("id", 1);
-       formData.append("uid", JSON.parse(userId));
-       formData.append("heading", e.p_heading)
-       formData.append("writer", e.p_wirter);
-       formData.append("publisher", e.p_publisher);
+      formData.append("status", stats)
+       formData.append("heading", heading)
+       formData.append("writer", writer);
+       formData.append("publish_date", date);
+       if(getId.id !== undefined){
+         formData.append("id", getId.id)
+       }
        axios({
            method : "POST", 
-           url : `${baseUrl}/admin/createpage`,
+           url : `${baseUrl}/admin/setarticles`,
            data : formData
        })
        .then((res) => {
@@ -65,9 +80,15 @@ const CmsContent = () => {
                   html : "content created successfully",
                   icon : "success"
               })
+              history.push("/admin/cms")
           }
        })
    }
+   const myLabel = (e) => {
+  
+    setStats(!stats)
+}
+
     return(
         <Layout adminDashboard="adminDashboard" adminUserId={userId}>
       <MyContainer>
@@ -86,8 +107,8 @@ const CmsContent = () => {
                       ref={register({ required: true })}
                       name="p_category"
                       >
-                      <option>Direct Tax</option>
-                      <option>Indirect Tax</option>I
+                      <option value = "direct">Direct Tax</option>
+                      <option value = "indirect">Indirect Tax</option>I
                           </select>
                  </div>
                  <div className="col-md-4 col-sm-12">
@@ -98,6 +119,8 @@ const CmsContent = () => {
                    className={classNames("form-control", {
                     "is-invalid": errors.p_heading,
                   })}
+                  value={heading}
+                  onChange={(e) => setHeading(e.target.value)}
                   ref={register({ required: true })}
                   name="p_heading"
                    placeholder = "Please enter heading"
@@ -114,6 +137,8 @@ const CmsContent = () => {
                    className={classNames("form-control", {
                     "is-invalid": errors.p_wirter,
                   })}
+                  onChange={(e) => setWriter(e.target.value)}
+                  value={writer}
                   ref={register({ required: true })}
                   name="p_wirter"
                    placeholder = "Please enter heading"
@@ -121,12 +146,14 @@ const CmsContent = () => {
                  </div>
                  <div className="col-md-4 col-sm-12">
                  
-                 <label className="form-label">Publisher</label>
+                 <label className="form-label">Date of Publish</label>
                    <input 
                    type="date"
                    className={classNames("form-control", {
                     "is-invalid": errors.p_publisher,
                   })}
+                  value={date}
+                  onChange={(e) => setDate(e.target.value)}
                   ref={register({ required: true })}
                   name="p_publisher"
                    placeholder = "Please enter heading"
@@ -143,7 +170,7 @@ const CmsContent = () => {
              id="test"
                      editor={ ClassicEditor }
                     
-                    
+                    data={det}
                     rows="10"
                     name="p_fact"
                 
@@ -157,6 +184,15 @@ const CmsContent = () => {
                 ></CKEditor>
                  </div>
          </div>
+         <div className="row">
+         <div className="col-md-3">
+ 
+ <span style={{margin : "10px 0"}}>
+ <input type="checkbox" style={{margin : "10px 0px"}} name="hide" checked = {stats} id="hide" onChange= {(e) => myLabel(e)}></input>
+ <label htmlFor="hide" style={{margin : "10px"}}> Publish</label>
+ </span>
+ </div>
+           </div>
          <div className="row">
             <div className="col-md-12">
             <button className="customBtn my-2">Submit</button> </div>

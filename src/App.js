@@ -78,6 +78,8 @@ import Consalation from './pages/Admin/Report/Consalation';
 import Cms from  './pages/Admin/CMS/CMS';
 import AdminUpdates from './pages/Admin/CMS/Updates';
 import UpdatesContent from "./pages/Admin/CMS/UpdatesContent";
+import Linklist from "./pages/Admin/CMS/Linklist";
+import FaqList from "./pages/Admin/CMS/FaqList";
 //TL routes
 import TlStart from './pages/TL/Start/Start'
 import TlLogin from './pages/TL/Login/Login'
@@ -154,6 +156,8 @@ import Direct from "./views/Tax/Direct";
 import Indirect from "./views/Tax/Indirect";
 import Details from "./views/Tax/Details";
 import LatestUpdates from "./views/Tax/LatestUpdats";
+import Links from "./pages/Admin/CMS/Links";
+import Faq from "./pages/Admin/CMS/Faq";
 // import PayDetails from "./views/PaymentStatus/PayDetails";
 
 
@@ -249,7 +253,15 @@ function App() {
             <PrivateRouteAdmin exact path = "/admin/flash" component = {FlashMessage} />
             <PrivateRouteAdmin exact path = "/admin/articles" component = {CmsContent} />
             <PrivateRouteAdmin exact path = "/admin/updates" component = {AdminUpdates} />
+            <PrivateRouteAdmin exact path = "/admin/articlesedit/:id" component = {CmsContent} />
             <PrivateRouteAdmin exact path = "/admin/updatecontent" component = {UpdatesContent} />
+            <PrivateRouteAdmin exact path = "/admin/editupdates/:id" component = {UpdatesContent} />
+            <PrivateRouteAdmin exact path = "/admin/links" component = {Links} />
+            <PrivateRouteAdmin exact path = "/admin/linksedit/:id" component = {Links} />
+            <PrivateRouteAdmin exact path = "/admin/linklist" component = {Linklist} />
+            <PrivateRouteAdmin exact path = "/admin/faqlist" component = {FaqList} />
+            <PrivateRouteAdmin exact path = "/admin/faqedit/:id" component = {Faq} />
+            <PrivateRouteAdmin exact path = "/admin/faq" component = {Faq} />
             <PublicRouteTL exact path="/teamleader/start" component={TlStart} />
             <PublicRouteTL exact path="/teamleader/login" component={TlLogin} />
             <PublicRouteTL exact path="/teamleader/forget-password" component={TlForgetPassword} />

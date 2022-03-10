@@ -540,7 +540,7 @@ const classes = useStyle()
                    </NavLink>
                      </li>
                      <li>
-                     <NavLink to={"/admin/flash"}>
+                     <NavLink to={"/admin/linklist"}>
                      
                    <span className="menu-title" data-i18n="">
                Important Links
@@ -556,7 +556,7 @@ const classes = useStyle()
                    </NavLink>
                      </li>
                      <li>
-                     <NavLink to={"/admin/updates"}>
+                     <NavLink to={"/admin/faqlist"}>
                      
                    <span className="menu-title" data-i18n="">
             FAQ

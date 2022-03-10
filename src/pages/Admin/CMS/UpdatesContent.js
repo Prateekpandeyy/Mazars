@@ -9,6 +9,7 @@ import './map.css';
 import Swal from 'sweetalert2';
 import Layout from "../../../components/Layout/Layout";
 import { useForm } from "react-hook-form";
+import { useHistory } from 'react-router';
 import classNames from "classnames";
 const MyContainer = styled(Container)({
 
@@ -19,18 +20,7 @@ const UpdatesContent = () => {
     const [pages, getPages] = useState([])
     const [det, addDet] = useState();
     const [pageto, setTopage] = useState([])
-    const options22 = 
-       [
-        {
-            label : 22,
-             value : "onelejlk"
-          }
-    , {
-        label : 112,
-         value : "onelejlk"
-      }
-    
-       ]
+ let history = useHistory()
     useEffect(() => {
         getPageValue()
     }, [])
@@ -48,14 +38,12 @@ const UpdatesContent = () => {
        console.log("done")
        let formData = new FormData();
        formData.append("content", det);
-       formData.append("id", 2);
-       formData.append("uid", JSON.parse(userId));
-       formData.append("heading", e.p_heading)
-       formData.append("writer", e.p_wirter);
-       formData.append("publisher", e.p_publisher);
+       formData.append("status", 1)
+     
+      
        axios({
            method : "POST", 
-           url : `${baseUrl}/admin/createpage`,
+           url : `${baseUrl}/admin/setupdate`,
            data : formData
        })
        .then((res) => {
@@ -65,6 +53,7 @@ const UpdatesContent = () => {
                   html : "content created successfully",
                   icon : "success"
               })
+              history.push("/admin/updates")
           }
        })
    }
@@ -72,67 +61,9 @@ const UpdatesContent = () => {
         <Layout adminDashboard="adminDashboard" adminUserId={userId}>
       <MyContainer>
       <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
-         <div className="row">
-             <div className="col-md-4 col-sm-12">
-                 
-                 <label className="form-label">Category</label>
-                      <select
-                     onChange={(e) => getToPage(e.target.value)}
-                      value={pageto}
-                      multiple = {false}
-                      className={classNames("form-control", {
-                        "is-invalid": errors.p_category,
-                      })}
-                      ref={register({ required: true })}
-                      name="p_category"
-                      >
-                      <option>Direct Tax</option>
-                      <option>Indirect Tax</option>I
-                          </select>
-                 </div>
-                 <div className="col-md-4 col-sm-12">
-                 
-                 <label className="form-label">Heading</label>
-                   <input 
-                   type="text"
-                   className={classNames("form-control", {
-                    "is-invalid": errors.p_heading,
-                  })}
-                  ref={register({ required: true })}
-                  name="p_heading"
-                   placeholder = "Please enter heading"
-                   />
-                 </div>
-         </div>
+        
        
-         <div className="row">
-             <div className="col-md-4 col-sm-12">
-                 
-                 <label className="form-label">Writer</label>
-                   <input 
-                   type="text"
-                   className={classNames("form-control", {
-                    "is-invalid": errors.p_wirter,
-                  })}
-                  ref={register({ required: true })}
-                  name="p_wirter"
-                   placeholder = "Please enter heading"
-                   />
-                 </div>
-                 <div className="col-md-4 col-sm-12">
-                 
-                 <label className="form-label">Publisher</label>
-                   <input 
-                   type="date"
-                   className={classNames("form-control", {
-                    "is-invalid": errors.p_publisher,
-                  })}
-                  ref={register({ required: true })}
-                  name="p_publisher"
-                   placeholder = "Please enter heading"
-                   />
-                 </div>
-         </div>
+        
        
          <div className="row">
              <div className="col-md-12">
