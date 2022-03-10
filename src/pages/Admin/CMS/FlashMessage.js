@@ -42,8 +42,8 @@ const FlashMessage = () => {
      }
      else{
        setMessageBox(!messageBox)
-       setEditData("")
-       isEdit(false)
+       setEditData(null)
+      isEdit(false)
      }
   }
   const editQuery = (e) => {
@@ -220,7 +220,9 @@ const FlashMessage = () => {
        messageFun = {showMessage}
        editData = {editData}
        edit = {edit} 
-       getList = {getList} />
+       getList = {getList}
+       isEdit={isEdit}
+       setMessageBox={setMessageBox} />
       </MyContainer>
       </Layout>
     )

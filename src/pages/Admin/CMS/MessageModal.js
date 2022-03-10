@@ -11,7 +11,9 @@ const MessageModal = (
        messageFun,
        edit, 
        editData,
-       getList
+       getList,
+       isEdit,
+       setMessageBox
       }
       
 ) => {
@@ -90,11 +92,11 @@ const MessageModal = (
                  html : "Message added successfully",
                  icon : "success"
              })
-             messageFun();
-             getList()
-             setHeading([])
-             setStats(null)
-             setNews([])
+        setMessageBox(false)
+         getList()
+         isEdit(false)
+       
+        
          }
          else{
              Swal.fire({
@@ -102,8 +104,7 @@ const MessageModal = (
                  html : "Something went wrong, please try again",
                  icon : "error"
              })
-             messageFun()
-             getList()
+           
          }
      })
     }
