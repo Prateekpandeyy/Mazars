@@ -44,7 +44,7 @@ const MessageModal = (
       formData.append("status", 1):
       formData.append("status", 0)
     }
-        formData.append("heading", value.heading)
+        formData.append("heading", value.p_heading)
        }
        else{
         formData.append("news", news);

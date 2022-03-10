@@ -111,7 +111,7 @@ const latestNews = () => {
     if(res.data.code === 1){
       res.data.result.map((i) => {
        pp.push(i)
-        console.log("news", i.news)
+        console.log("news", i)
       })
       getNews(pp)
     }
@@ -213,9 +213,9 @@ const styles = {
 }}> */}
  <Link className="tabHover" to = {{
   pathname : "/customer/latestupdates",
-                            index : i.id
+  index : i.id
                         }}>
-{i.news}
+{i.heading}
 </Link> </span> 
 
      ))

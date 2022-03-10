@@ -18,6 +18,7 @@ const LatestUpdates = () => {
     const [news, getNews] = useState([])
     const [pos,setPos] = useState(0);   
     const [run, setRun] = useState(true);
+    const [description, setDescription] = useState({})
     let history = useHistory()
     let getId = history.location.index;
     let  width = 800
@@ -28,10 +29,14 @@ const LatestUpdates = () => {
         axios.get(`${baseUrl}/customers/getnews`)
         .then((res) =>{
         let pp = []
+        console.log("getId", getId, history)
           if(res.data.code === 1){
             res.data.result.map((i) => {
-             pp.push(i.news)
-              console.log("news", i.news)
+             pp.push(i)
+             if(i.id === getId){
+               console.log("fixedId", i)
+               setDescription(i)
+             }
             })
             getNews(pp)
           }
@@ -61,6 +66,7 @@ const LatestUpdates = () => {
         fontSize: "1em",
         right: pos + "px"
       };
+
     return(
        <>
         <Header noSign="noSign" />
@@ -76,8 +82,11 @@ const LatestUpdates = () => {
      news.map((i) => (
 
 <span style={{padding: "0px 20px", fontSize: "16px", color: "464b4b"}}> 
-<Link className="tabHover" to = "/customer/latestupdates">
-{i}
+<Link className="tabHover" to = {{
+  pathname : "/customer/latestupdates",
+  index : i.id
+                        }}>
+{i.heading}
 </Link> </span> 
 
      ))
@@ -86,11 +95,9 @@ const LatestUpdates = () => {
     </div>
     <div className="StartPageDetails">
           <div className="mainContent222">
-          <h4>Message Details </h4>
+          <h4>{description.heading} </h4>
    
-   <p>
-   Hello . anyone can me to create a Marquee in React with onmouseover and onmouseout effect s.because onmouseover and onmouseout is working on HTML page but in React not.Hello . anyone can me to create a Marquee in React with onmouseover and onmouseout effect s.because onmouseover and onmouseout is working on HTML page but in React not.Hello . anyone can me to create a Marquee in React with onmouseover and onmouseout effect s.because onmouseover and onmouseout is working on HTML page but in React not.
-   </p>
+ <p>{description.news}</p>
           </div>
       
         </div>

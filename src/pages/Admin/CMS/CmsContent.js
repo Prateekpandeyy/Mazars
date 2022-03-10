@@ -41,7 +41,7 @@ const CmsContent = () => {
       getData()
     }, [])
     const getData = (e) => {
-      console.log("getId", getId.id)
+   
      if(getId.id !== undefined){
       axios.get(`${baseUrl}/admin/getallarticles?uid=${JSON.parse(userId)}&id=${getId.id}`)
       .then((res) => {
@@ -52,9 +52,14 @@ const CmsContent = () => {
          setTopage(i.type)
          setHeading(i.heading)
          setWriter(i.writer)
-         console.log("publishDate", i.content)
          setDate(i.publish_date);
-         addDet(i.content)
+         addDet(i.content)   
+         if(i.status == 1){
+          setStats(true)
+         }
+         else{
+           setStats(false)
+         }
         }
       })
        }
@@ -177,7 +182,7 @@ const CmsContent = () => {
                  </div>
                  <div className="col-md-4 col-sm-12">
                  
-                 <label className="form-label">Date of Publish</label>
+                 <label className="form-label">Date of Publishing</label>
                    <input 
                    type="date"
                    className={classNames("form-control", {
