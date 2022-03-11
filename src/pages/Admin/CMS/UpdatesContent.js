@@ -40,7 +40,13 @@ const UpdatesContent = () => {
         axios.get(`${baseUrl}/admin/getallupdate?uid=${JSON.parse(userId)}&id=${getId.id}`)
         .then((res) =>{
             console.log("ress", res.data.result)
-            
+          
+            res.data.result.map((i) => {
+              console.log(i.content)
+              setHeading(i.heading)
+              addDet(i.content)
+              setDate(i.publish_date)
+            })
       
         })
     }
@@ -135,7 +141,7 @@ const UpdatesContent = () => {
              id="test"
                      editor={ ClassicEditor }
                     
-                    
+                    data={det}
                     rows="10"
                     name="p_fact"
                 
