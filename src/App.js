@@ -162,6 +162,8 @@ import Faq from "./pages/Admin/CMS/Faq";
 import FlashContent from "./pages/Admin/CMS/FlashContent";
 import MediaGallery from "./pages/Admin/CMS/MediaGallery";
 import MediaContent from "./pages/Admin/CMS/MediaContent";
+import MediaTab from "./pages/Admin/CMS/MediaTab";
+import VideoContent from "./pages/Admin/CMS/VideoContent";
 
 // import PayDetails from "./views/PaymentStatus/PayDetails";
 
@@ -271,6 +273,8 @@ function App() {
             <PrivateRouteAdmin exact path = "/admin/flashcontent/:id" component = {FlashContent} />
             <PrivateRouteAdmin exact path = "/admin/faqedit/:id" component = {Faq} />
             <PrivateRouteAdmin exact path = "/admin/faq" component = {Faq} />
+            <PrivateRouteAdmin exact path = "/admin/mediatab" component = {MediaTab} />
+            <PrivateRouteAdmin exact path = "/admin/videocontent" component = {VideoContent} />
             <PublicRouteTL exact path="/teamleader/start" component={TlStart} />
             <PublicRouteTL exact path="/teamleader/login" component={TlLogin} />
             <PublicRouteTL exact path="/teamleader/forget-password" component={TlForgetPassword} />

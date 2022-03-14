@@ -20,6 +20,7 @@ const MyContainer = styled(Box)({
 const Media = () => {
     const [galleryData, setGalleryData] = useState([])
     const userId = window.localStorage.getItem("adminkey");
+    const [large, setLarge] = useState(false)
     useEffect(() => {
       getGalleryData()
     }, [])
@@ -32,22 +33,36 @@ const Media = () => {
       })
     }
     let history = useHistory()
+   const enLarge = (e) => {
+    let img = document.getElementById(e);
+   if(large === false){
+    img.style.transform = "scale(2)";
+    img.style.transition = "transform 0.25s ease";
+    setLarge(true)
+   }
+   else if (large === true){
+    img.style.transform = "scale(1)";
+    img.style.transition = "transform 0.25s ease"
+    setLarge(false)
+   }
    
+   }
+  
     return(
         <>
         <Header noSign="noSign" />
         <MyContainer>
         <div className="StartPageDetails">
-               
+        
         <div className="mainContent2222">
-                 
+        <h4 style={{display : "flex", width: "1000px"}}>Media </h4> 
                  {
                      
                    galleryData.map((i) => (
                     
-                    <div className="galleryBox"> 
+                    <div className="galleryBox" onClick={() => enLarge(i.id)}> 
                     
-                    <img src={`${baseUrl3}/assets/gallery/${i.name}`} />
+                    <img  id={i.id} src={`${baseUrl3}/assets/gallery/${i.name}`} />
                     <h4 className="delIcon">{i.title}</h4>
                   </div>
                   

@@ -572,7 +572,7 @@ const classes = useStyle()
                    </NavLink>
                      </li>
                      <li>
-                     <NavLink to={"/admin/mediacontent"}>
+                     <NavLink to={"/admin/mediatab"}>
                      
                    <span className="menu-title" data-i18n="">
           Media Gallery

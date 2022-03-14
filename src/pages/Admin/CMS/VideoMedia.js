@@ -27,7 +27,7 @@ const MyBox = styled(Box)({
     lineHeight : "30px",
     borderRadius: "10px"
   })
-const MediaContent = () => {
+const VideoMedia = () => {
   const [galleryData, setGalleryData] = useState([])
   const [large, setLarge] = useState(false)
     const userId = window.localStorage.getItem("adminkey");
@@ -78,62 +78,25 @@ else{
           }
       });
   };
-  const enLarge = (e) => {
-    console.log("done", e)
-    let img = document.getElementById(e);
-   if(large === false){
-    img.style.transform = "scale(2)";
-    img.style.transition = "transform 0.25s ease";
-   
-    img.style.zIndex = 99999;
-    
-    setLarge(true)
-   }
-   else if (large === true){
-    img.style.transform = "scale(1)";
-    img.style.margin = "0px";
-    img.style.transition = "transform 0.25s ease"
-    setLarge(false)
-   }
-   
-   }
+ 
     return(
        
         <MyContainer>
                 <div className="headingContent">
-                <h4>Media </h4>
+                <h4>Video Gallery </h4>
                 <button 
             
             className="autoWidthBtn rightAlign my-2" onClick={(e) => {
-              history.push("/admin/mediagallery")
-            }}>New Media Gallery</button> 
+              history.push("/admin/videocontent")
+            }}>New Video Gallery</button> 
                 </div>
                 <div className="galleryContainer">
                  
-                 {
-                   galleryData.map((i) => (
-                    <div className="galleryBox" onClick={() => enLarge(i.id)}> 
-                    
-                    <img id={i.id} src={`${baseUrl3}/assets/gallery/${i.name}`} />
-                    <h4 className="delIcon">{i.title}</h4> 
-                  
-                  <div className="delIcon">
-                  <span title="Delete Media" onClick={() => del(i.id)}>
-                   <DeleteIcon />
-                   </span>
-                   <h6>
-                     {i.created_date}
-                   </h6>
-                    </div>
-                 
-                   </div>
-                  
-                  ))
-                 }
+                
               
                 </div>
                 </MyContainer>
              
     )
 }
-export default MediaContent;
+export default VideoMedia;

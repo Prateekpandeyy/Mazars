@@ -16,7 +16,7 @@ function AssignmentTab(props) {
     const [draft, setDraft] = useState("");
     const [final, setFinal] = useState();
     const [bgColor, setbgColor] = useState("#615339")
-
+    const [tabIndex, setTabIndex] = useState(0);
     useEffect(() => {
         CountAllAssignment();
         CountDraftReport();
@@ -51,7 +51,7 @@ function AssignmentTab(props) {
         });
     };
 
-    const [tabIndex, setTabIndex] = useState(0);
+  
     useLayoutEffect(() => {
         setTabIndex(props.location.index || 0);
     }, [props.location.index]);

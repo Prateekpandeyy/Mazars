@@ -28,7 +28,7 @@ const InnerBox = styled(Paper)({
   lineHeight : "30px",
   borderRadius: "10px"
 })
-const MediaGallery = () => {
+const VideoContent = () => {
     const userId = window.localStorage.getItem("adminkey");
     let history = useHistory()
     const [heading, setHeading] = useState("")
@@ -42,7 +42,7 @@ const MediaGallery = () => {
       for (var i = 0; i < uploadImg.length; i++) {
         let file = uploadImg[i];
         formData.append("upload", file);
-        formData.append("type", "image")
+        formData.append("type", "video")
        
       }
     }
@@ -96,7 +96,8 @@ const MediaGallery = () => {
                   
                   <label className="form-label">Media</label>
                   <input
-                type="file"
+                  type="file"
+                accept="file_extension|audio/*|video/*|image/*|media_type"
                 name="p_upload"
                 ref={register}
                 className="form-control-file"
@@ -120,4 +121,4 @@ const MediaGallery = () => {
                 </Layout>
     )
 }
-export default MediaGallery;
+export default VideoContent;

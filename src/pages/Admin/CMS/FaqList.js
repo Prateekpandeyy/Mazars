@@ -37,20 +37,10 @@ const Updates = () =>{
       })
     }
     const columns = [
-      {
-        dataField: "",
-        text: "S.No",
-        formatter: (cellContent, row, rowIndex) => {
-          return rowIndex + 1;
-        },
-      
-        headerStyle: () => {
-          return { width : "50px" };
-        },
-      },
+     
       {
         dataField : "",
-        text : "Links",
+        text : "",
         formatter : function myUpdates(cell, row) {
             return(
               <Markup content={row.content} />
@@ -58,27 +48,6 @@ const Updates = () =>{
           }
       },
      
-      {
-        dataField : "",
-        text : "Action",
-        headerStyle : () => {
-          return{ width: "150px"}
-        },
-        formatter : function CmsAction(cell, row) {
-         return(
-         <>
-       
-                  <div style={{display : "flex", justifyContent : "space-evenly"}}>
-                  <Link to={`/admin/faqedit/${row.id}`}>
-          <EditQuery />
-      </Link>
-      
-                
-             </div>
-         </>
-         )
-        }
-      }
     ]
     
   
@@ -87,16 +56,16 @@ return (
     <Layout adminDashboard="adminDashboard" adminUserId={userId}>
 
 <MyContainer>
-     
-     <button 
+<Link to={`/admin/faqedit/4`}>
+<button 
     
-      className="autoWidthBtn rightAlign my-2" onClick={(e) => {
-        history.push("/admin/faq")
-      }}>FAQ</button>
+    className="autoWidthBtn rightAlign my-2">Update FAQ</button>
+      </Link>
+   
     <Card>
         <CardBody>
         <DataTablepopulated 
-                   bgColor="#42566a"
+                   bgColor="#fff"
                    keyField={'id'}
                    data={list}
                    columns={columns}>
