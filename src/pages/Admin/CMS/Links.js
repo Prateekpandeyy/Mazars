@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { Container } from '@material-ui/core';
+import { Container , Box, Paper} from '@material-ui/core';
 import {  styled } from '@mui/material';
 import axios from 'axios';
 import { baseUrl } from '../../../config/config';
@@ -23,11 +23,28 @@ import {
 const MyContainer = styled(Container)({
 
 })
+const MyBox = styled(Box)({
+  display: "flex",
+  width: "100%", 
+  height: "500px",
+  justifyContent: "center",
+  alignItems: "center"
+})
+const InnerBox = styled(Paper)({
+  display :"flex",
+  flexDirection: "column",
+  padding: "20px",
+  minHeight: "300px",
+  width: "400px",
+  lineHeight : "30px",
+  borderRadius: "10px"
+})
 const Links = () => {
     const [det, addDet] = useState();
     const [stats, setStats] = useState(false)
     const [heading, setHeading] = useState("")
     const [writer, setWriter] = useState("")
+    const [error, setError] = useState(false)
     let history = useHistory()
     let getId = useParams()
     const userId = localStorage.getItem("adminkey")
@@ -38,15 +55,15 @@ const Links = () => {
       const getData = (e) => {
         console.log("getId", getId.id)
        if(getId.id !== undefined){
-        axios.get(`${baseUrl}/admin/pagelist?uid=${JSON.parse(userId)}&id=${getId.id}`)
+        axios.get(`${baseUrl}/admin/getalllinks?uid=${JSON.parse(userId)}&id=${getId.id}`)
         .then((res) => {
         
          if(res.data.code === 1){
         res.data.result.map((i) => {
           if(i.id === getId.id){
             setHeading(i.heading)
-            setWriter(i.writer)
-           addDet(i.content)
+            setWriter(i.url)
+           
           }
         })
          }
@@ -57,32 +74,51 @@ const Links = () => {
       
         let formData = new FormData();
        
-        formData.append("content", det);
-        formData.append("heading", heading)
-       formData.append("writer", writer);
-       formData.append("id", 3)
-    
-        axios({
-            method : "POST", 
-            url : `${baseUrl}/admin/createpage`,
-            data : formData
-        })
-        .then((res) => {
-           if(res.data.code === 1){
-               Swal.fire({
-                   title : "success",
-                   html : "content created successfully",
-                   icon : "success"
-               })
-               history.push("/admin/linklist")
-           }
-        })
+if(error === false){
+        
+  formData.append("heading", heading)
+  formData.append("url", writer);
+if(getId.id){
+ formData.append("id", getId.id)
+}
+
+   axios({
+       method : "POST", 
+       url : `${baseUrl}/admin/setlinks`,
+       data : formData
+   })
+   .then((res) => {
+      if(res.data.code === 1){
+          Swal.fire({
+              title : "success",
+              html : "content created successfully",
+              icon : "success"
+          })
+          history.push("/admin/linklist")
+      }
+   })
+}
     }
     const myLabel = (e) => {
    
      setStats(!stats)
  }
- 
+ function ValidURL(link) {
+   console.log("links", link)
+  var regex = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/;
+  if(!regex.test(link)) {
+    
+    return false;
+  } else {
+     if(link.includes("https://www")){
+      setError(false)
+     }
+     else{
+       setError(true)
+     }
+  }
+}
+
     return(
         <Layout adminDashboard="adminDashboard" adminUserId={userId}>
         <MyContainer>
@@ -99,75 +135,63 @@ const Links = () => {
               
             </Col>
             <Col md="4">
-              <h4>Links</h4>
+              <h4>Important Link</h4>
             </Col>
             </Row>
         </div>
-        <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
+       <MyBox>
+       <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
           
+
+         <InnerBox>
+           <h4 style={{textAlign: "center"}}>Link </h4>
          <div className="row">
-         <div className="col-md-4 col-sm-12">
-                 
-                 <label className="form-label">Heading</label>
-                   <input 
-                   type="text"
-                   className={classNames("form-control", {
-                    "is-invalid": errors.p_heading,
-                  })}
-                  value={heading}
-                  onChange={(e) => setHeading(e.target.value)}
-                  ref={register({ required: true })}
-                  name="p_heading"
-                   placeholder = "Please enter heading"
-                   />
-                 </div>
-                 <div className="col-md-4 col-sm-12">
-                 
-                 <label className="form-label">Writer</label>
-                   <input 
-                   type="text"
-                   className={classNames("form-control", {
-                    "is-invalid": errors.p_wirter,
-                  })}
-                  onChange={(e) => setWriter(e.target.value)}
-                  value={writer}
-                  ref={register({ required: true })}
-                  name="p_wirter"
-                   placeholder = "Please enter heading"
-                   />
-                 </div>
-           </div>
-        
-         
-           <div className="row">
-               <div className="col-md-12">
-               <label className="form-label">Pages</label> </div>
-               
-               <div className="col-md-12">
-               <CKEditor
-               id="test"
-                       editor={ ClassicEditor }
-                      
-                      data={det}
-                      rows="10"
-                      name="p_fact"
+         <div className="col-md-12 col-sm-12">
                   
-                      onChange={ ( event, editor ) => {
-                        addDet(editor.getData());
-                       
-  
-                      
-                    } }
-             
-                  ></CKEditor>
-                   </div>
-           </div>
+                  <label className="form-label">Heading</label>
+                    <input 
+                    type="text"
+                    className={classNames("form-control", {
+                     "is-invalid": errors.p_heading,
+                   })}
+                   value={heading}
+                   onChange={(e) => setHeading(e.target.value)}
+                   ref={register({ required: true })}
+                   name="p_heading"
+                    placeholder = "Please enter heading"
+                    />
+                  </div>
+                </div>
+                <div className="row">
+                <div className="col-md-12 col-sm-12">
+                  
+                  <label className="form-label">Link</label>
+                    <input 
+                    type="url"
+                    className={classNames("form-control", {
+                     "is-invalid": errors.p_wirter || error,
+                   })}
+                   onBlur = {(e) => ValidURL(e.target.value)}
+                   onChange={(e) => setWriter(e.target.value)}
+                   value={writer}
+                   ref={register({ required: true })}
+                   name="p_wirter"
+                    placeholder = "Please enter heading"
+                    />
+                  </div>
+                  </div>
+                <div className="row">
+                  <div className="col-md-12">
+               <button className="customBtn mt-5">Submit</button> </div>
+               </div>
+         </InnerBox>
+          
          
-           <div className="row">
-              <div className="col-md-12">
-              <button className="customBtn my-2">Submit</button> </div>
-           </div>
-           </form>
+          
+           
+          
+            </form>
+       </MyBox>
         </MyContainer>
         </Layout>
     )

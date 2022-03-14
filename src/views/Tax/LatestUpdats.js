@@ -6,6 +6,7 @@ import axios from 'axios';
 import { baseUrl } from '../../config/config';
 import { Box } from "@material-ui/core";
 import { useHistory } from 'react-router';
+import { Markup } from 'interweave';
 const MyContainer = styled(Box)({
     display : "flex", 
     justifyContent : "center", 
@@ -96,8 +97,8 @@ const LatestUpdates = () => {
     <div className="StartPageDetails">
           <div className="mainContent222">
           <h4>{description.heading} </h4>
-   
- <p>{description.news}</p>
+   <Markup content={description.news} />
+
           </div>
       
         </div>

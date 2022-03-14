@@ -69,7 +69,7 @@ const Faq = () => {
                    html : "content created successfully",
                    icon : "success"
                })
-               history.push("/admin/linklist")
+               history.push("/admin/faqlist")
            }
         })
     }

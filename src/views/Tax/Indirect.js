@@ -51,14 +51,15 @@ const Indirect = () => {
         <Table>
         <TableBody>
                {
-                   data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((i) => (
+                   data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((i, e) => (
                     <TableRow>
                     <TableCell>
                     <Link to = {{
                             pathname : "/customer/details",
                             index : i.id
-                        }}>
-                      {i.heading} {wirtten} <span style={{fontWeight: "bold"}}>{i.writer}</span>
+                        }} style={{fontSize: "16px",}}>
+                    {e + 1} {i.heading} {wirtten} <span style={{fontWeight: "bold",  margin:"0 10px"}}>{i.writer}</span>
+                    {i.publish_date}
                         </Link>
                     </TableCell>
                 </TableRow>

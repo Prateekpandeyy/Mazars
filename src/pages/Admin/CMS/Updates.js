@@ -20,6 +20,7 @@ const MyContainer = styled(Container)({
 const Updates = () =>{ 
     const userId = window.localStorage.getItem("adminkey");
     const [list, setList] = useState([])
+    const [check, setCheck] = useState(true)
     let history = useHistory()
     useEffect(() => {
       getList()
@@ -48,21 +49,17 @@ const Updates = () =>{
         },
       },
       {
-        dataField : "",
-        text : "Updates",
-        formatter : function myUpdates(cell, row) {
-          return(
-            <Markup content={row.content} />
-          )
-        }
+        dataField : "heading",
+        text : "Heading",
+        headerStyle : () => {
+          return{ width: "800px"}
+        },
       },
      
       {
         dataField : "",
         text : "Action",
-        headerStyle : () => {
-          return{ width: "150px"}
-        },
+      
         formatter : function CmsAction(cell, row) {
          return(
          <>
@@ -74,16 +71,27 @@ const Updates = () =>{
       <span   onClick={() => del(row.id)} className="ml-2">
        <DeleteIcon />
     </span>
-                <div>
-                <span>
-                <label class="switch" onChange= {(e) => myShowValue(e, row)}>
-  <input type="checkbox"  />
-  <span class="slider round"></span>
-</label>
-
-                </span>
-
-                </div>
+    {
+                  row.status == "1" ?
+                  <div>
+                  <label class="switch" onChange= {(e) => myShowValue(e, row)}>
+    <input type="checkbox"  defaultChecked  />
+    <span class="slider round"></span>
+  </label>
+  
+                  </div> :
+                  ""
+                }
+                {
+                  row.status == "0" ?
+                  <div>
+                  <label class="switch" onChange= {(e) => myShowValue(e, row)}>
+    <input type="checkbox"  />
+    <span class="slider round"></span>
+  </label>
+  
+                  </div> : ""
+                }
              </div>
          </>
          )
@@ -97,6 +105,7 @@ const Updates = () =>{
             axios.get(`${baseUrl}/admin/setupdatestatus?uid=${JSON.parse(userId)}&id=${row.id}&status=0`)
        .then((res) => {
            console.log("res", res)
+           setCheck(true)
        })
         }
         else{
@@ -104,6 +113,7 @@ const Updates = () =>{
             axios.get(`${baseUrl}/admin/setupdatestatus?uid=${JSON.parse(userId)}&id=${row.id}&status=1`)
             .then((res) => {
                 console.log("res", res)
+                setCheck(false)
             })
         }
           

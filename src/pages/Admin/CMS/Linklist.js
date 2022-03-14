@@ -27,7 +27,7 @@ const Updates = () =>{
     }, [])
   
     const getList = () => {
-      axios.get(`${baseUrl}/admin/pagelist?uid=${JSON.parse(userId)}&id=3`)
+      axios.get(`${baseUrl}/admin/getalllinks?uid=${JSON.parse(userId)}`)
       .then((res) => {
       console.log("ress", res)
        if(res.data.code === 1){
@@ -49,13 +49,19 @@ const Updates = () =>{
         },
       },
       {
+        dataField : "heading",
+        text : "Heading",
+        
+      },
+      {
         dataField : "",
-        text : "Links",
-        formatter : function myUpdates(cell, row) {
-            return(
-              <Markup content={row.content} />
-            )
-          }
+        text : "Link",
+        formatter: function urlFormatter(cell, row){
+          return(
+            <a href={row.url} target="blank">{row.url}</a>
+          )
+        }
+        
       },
      
       {
@@ -70,9 +76,13 @@ const Updates = () =>{
        
                   <div style={{display : "flex", justifyContent : "space-evenly"}}>
                   <Link to={`/admin/linksedit/${row.id}`}>
-          <EditQuery />
+         <div title="Edit link">
+         <EditQuery />
+         </div>
       </Link>
-      
+      <span   onClick={() => del(row.id)} className="ml-2" title="Delete links">
+       <DeleteIcon />
+    </span>
                 
              </div>
          </>
@@ -81,14 +91,48 @@ const Updates = () =>{
       }
     ]
     
-  
+    const del = (id) => {
+ 
+
+      Swal.fire({
+          title: "Are you sure?",
+          text: "Want to delete link? Yes, delete it!",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes, delete it!",
+      }).then((result) => {
+          if (result.value) {
+            axios.get(`${baseUrl}/admin/removelinks?uid=${JSON.parse(userId)}&id=${id}`)
+            .then((res) => {
+console.log("response", res)
+if(res.data.code === 1){
+  Swal.fire({
+    title : "success",
+    html  : "Link deleted successfully",
+    icon : "success"
+  })
+  getList()
+}
+else{
+  Swal.fire({
+    title :"error",
+    html : "Something went wrong , please try again",
+    icon : "error"
+  })
+}
+            })
+          }
+      });
+  };
   
 return (
     <Layout adminDashboard="adminDashboard" adminUserId={userId}>
 
 <MyContainer>
 <div className="headingContent">
-        <h4>Link </h4>
+        <h4>Important Links </h4>
         <button 
     
       className="autoWidthBtn rightAlign my-2" onClick={(e) => {

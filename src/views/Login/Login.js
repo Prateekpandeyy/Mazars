@@ -84,6 +84,7 @@ function LoginForm() {
   const [news, getNews] = useState([])
   const [pos,setPos] = useState(0);   
   const [run, setRun] = useState(true);
+  const [enableCookies, setEnableCookies] = useState(true)
   let  width = 800
   const myData = localStorage.getItem("myArticles")
    const togglePasssword = () => {
@@ -207,10 +208,7 @@ const styles = {
      news.map((i) => (
 
 <span style={{padding: "0px 20px", fontSize: "16px", color: "464b4b"}}> 
-{/* <Link className="tabHover" to = {{
-  pathname : "/customer/latestupdates",
-  index : i.id
-}}> */}
+
  <Link className="tabHover" to = {{
   pathname : "/customer/latestupdates",
   index : i.id
@@ -222,7 +220,7 @@ const styles = {
    }
   </h1>
     </div>
-   
+    <h2> Mazars Advisory Solutions </h2>
       {/* <h2>
         Would you like to post a query
       </h2> */}
@@ -331,8 +329,8 @@ const styles = {
      
         </div>
         <MyBox>
-          <h2> Mazars Advisory Solutions </h2>
-          <h4>A pioneering online innovative solution backed by group of professionals with extensive industry knowledge and experience in
+         
+          <h4>MAS solution backed by group of professionals with extensive industry knowledge and experience in
              taxation matters, provides solutions to all direct & indirect tax queries.  </h4>
     <div style={{display: 'flex'}}>
     <ImgBox>
@@ -373,18 +371,34 @@ const styles = {
     
      </MyContainer>
       
-<CookieConsent debug = {true}
+{
+  enableCookies === true ?
+  <div className="popup">
+  <CookieConsent debug = {true}
+ 
 location="bottom"
-expires={1}
+declineButtonStyle = {{borderBottomLeftRadius: "1.75rem",
+backgroundColor : "red", border: "1px solid red", color: "#fff"
+, cursor : "pointer", fontSize : "1rem", fontWeight: 500,
+minWidth: "100px", minHeight: "3rem"}}
 style={{backgroundColor : "#FFF", color: "#4B4646"}}
 buttonStyle = {{borderBottomLeftRadius: "1.75rem",
 backgroundColor : "#0071CE", border: "1px solid #0071CE", color: "#fff"
 , cursor : "pointer", fontSize : "1rem", fontWeight: 500,
 minWidth: "100px", minHeight: "3rem"}}
+enableDeclineButton
+onDecline={() => {
+  console.log("done")
+}}
+visible="byCookieValue"
+overlayClasses="overlayclass"
+setDeclineCookie = {false}
 >
   This is contains cookies ,please read our cookies policy before login
 </CookieConsent>
-
+</div>
+ : ""
+}
       <Footer />
     </>
   );

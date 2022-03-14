@@ -177,7 +177,7 @@ const CmsContent = () => {
                   value={writer}
                   ref={register({ required: true })}
                   name="p_wirter"
-                   placeholder = "Please enter heading"
+                   placeholder = "Please enter writer name"
                    />
                  </div>
                  <div className="col-md-4 col-sm-12">

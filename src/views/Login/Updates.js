@@ -8,6 +8,8 @@ import { Markup } from "interweave";
 import { useHistory, useParams } from "react-router";
 import axios from 'axios';
 import {baseUrl} from '../../config/config';
+import { Table, TableContainer, 
+  TableHead, TablePagination, TableBody, TableRow, TableCell} from "@material-ui/core";
 const MyBox = styled(Box)({
   display: "flex", 
  width: "1000px",
@@ -45,10 +47,13 @@ const useStyle = makeStyles({
 
 function Updates() {
  
-
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5)
   const [linkData, setLinkData] = useState([])
   const [showData, setShowData] = useState(false)
- 
+  const [updates, isUpdates] = useState(false)
+  const [myData, setMyData] = useState()
+  const [ description, setDescription] = useState(false)
   let history = useHistory()
   let id = useParams()
   const getId = history.location.index;
@@ -60,7 +65,7 @@ const showLinkData = () => {
  if(getId === 2){
   axios.get(`${baseUrl}/customers/getupdated`)
   .then((res) => {
-   
+   isUpdates(true)
     setLinkData(res.data.result)
   })
  }
@@ -88,8 +93,16 @@ const showLinkData = () => {
   
   
 
- 
-
+ const getData = (e) => {
+setDescription(true);
+setMyData(e)
+ }
+ const onChangePage = (event, nextPage) => {
+  setPage(nextPage)
+}
+const onChangeRowsPerPage = (e) => {
+  setRowsPerPage(e.target.value)
+}
   
 const classes = useStyle()
 
@@ -99,18 +112,63 @@ const classes = useStyle()
      <MyContainer>
    
   
+   {
+     description === false ? 
      <div className="StartPageDetails">
-          <div className="mainContent222">
+     <div className="mainContent222">
 
+
+  <>
+ {
+   updates === true ?
+  <TableContainer>
+    <Table>
+      <TableBody>
+      {
+  linkData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((i, e) => (
+        <TableRow>
+          <TableCell onClick={(p) => getData(i.content)} style={{pointer : "cursor"}}>
+         
+     <Markup content = {i.heading} /> 
+  
+          </TableCell>
+        </TableRow>
+         ))
+        }
+      </TableBody>
+    </Table>
+    <TablePagination 
+        rowsPerPageOptions = {[5, 10, 15, 20, 25]}
+        count = {10}
+        rowsPerPage = {rowsPerPage}
+        page = {page}
+        onChangePage = {onChangePage}
+        onChangeRowsPerPage = {onChangeRowsPerPage}
+         />
+  </TableContainer>
+   : 
+   <>
      {
-       linkData.map((i) => (
-        <Markup content = {i.content} />
-       ))
-     }
-        </div>
+  linkData.map((i) => (
+   <Markup content = {i.content} />
+   ))
+  }
+   </>
+ }
+  </>
+ 
+   </div>
 
-      </div>
-    
+ </div> : 
+   <div className="StartPageDetails">
+   <div className="mainContent222">
+
+   <Markup content = {myData} />
+ </div>
+
+</div>
+
+   }
      </MyContainer>
 
 

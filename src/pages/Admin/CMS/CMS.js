@@ -69,11 +69,15 @@ const Cms = () =>{
          return(
          <>
           <Link to={`/admin/articlesedit/${row.id}`}>
-          <EditQuery />
+         <span title="Edit Articles">
+         <EditQuery />
+         </span>
       </Link>
-       <span   onClick={() => del(row.id)} className="ml-2">
+      
+      <span  title="Delete Articles" onClick={() => del(row.id)} className="ml-2">
        <DeleteIcon />
     </span>
+
          </>
          )
         }
@@ -84,7 +88,7 @@ const Cms = () =>{
 
       Swal.fire({
           title: "Are you sure?",
-          text: "Want to delete query? Yes, delete it!",
+          text: "Want to delete articles? Yes, delete it!",
           type: "warning",
           showCancelButton: true,
           confirmButtonColor: "#3085d6",

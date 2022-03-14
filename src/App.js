@@ -158,6 +158,9 @@ import Details from "./views/Tax/Details";
 import LatestUpdates from "./views/Tax/LatestUpdats";
 import Links from "./pages/Admin/CMS/Links";
 import Faq from "./pages/Admin/CMS/Faq";
+import FlashContent from "./pages/Admin/CMS/FlashContent";
+import MediaGallery from "./pages/Admin/CMS/MediaGallery";
+import MediaContent from "./pages/Admin/CMS/MediaContent";
 // import PayDetails from "./views/PaymentStatus/PayDetails";
 
 
@@ -260,6 +263,9 @@ function App() {
             <PrivateRouteAdmin exact path = "/admin/linksedit/:id" component = {Links} />
             <PrivateRouteAdmin exact path = "/admin/linklist" component = {Linklist} />
             <PrivateRouteAdmin exact path = "/admin/faqlist" component = {FaqList} />
+            <PrivateRouteAdmin exact path = "/admin/mediagallery" component = {MediaGallery} />
+            <PrivateRouteAdmin exact path = "/admin/mediacontent" component = {MediaContent} />
+            <PrivateRouteAdmin exact path = "/admin/flashcontent/:id" component = {FlashContent} />
             <PrivateRouteAdmin exact path = "/admin/faqedit/:id" component = {Faq} />
             <PrivateRouteAdmin exact path = "/admin/faq" component = {Faq} />
             <PublicRouteTL exact path="/teamleader/start" component={TlStart} />

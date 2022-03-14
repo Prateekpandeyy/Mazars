@@ -13,6 +13,8 @@ import { EditQuery , DeleteIcon} from '../../../components/Common/MessageIcon';
 import Swal from 'sweetalert2';
 import Layout from "../../../components/Layout/Layout";
 import CommonServices from "../../../common/common";
+import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 const MyContainer = styled(Container)({
 
 })
@@ -25,6 +27,7 @@ const FlashMessage = () => {
     const [editData, setEditData] = useState()
    const [check, setCheck] = useState(true)
     const userId = localStorage.getItem("adminkey")
+    let history = useHistory()
     useEffect(() => {
         getList()
     }, [])
@@ -36,15 +39,7 @@ const FlashMessage = () => {
        
     }
   const showMessage = (e) => {
-    console.log("eee", e)
-     if(e.id){
-      setMessageBox(!messageBox)
-     }
-     else{
-       setMessageBox(!messageBox)
-       setEditData(null)
-      isEdit(false)
-     }
+   history.push("/admin/flashcontent")
   }
   const editQuery = (e) => {
    console.log("eee", e)
@@ -163,45 +158,35 @@ const FlashMessage = () => {
             return(
                 <>
              <div style={{display : "flex", justifyContent : "space-evenly"}}>
-             <div onClick = {(e) => editQuery(row)}> 
- <EditQuery />
-                </div>
+             <Link to={`/admin/flashcontent/${row.id}`}>
+         <span title="Edit Articles">
+         <EditQuery />
+         </span>
+         </Link>
                 <div onClick = {(e) => delQuery(row)}> 
  <DeleteIcon />
                 </div>
-               {/* {
-                 row.status == "1" ?
-                 <div>
-                 <label class="switch" onChange= {(e) => myShowValue(e, row)}>
-   <input type="checkbox" aria-checked={true} defaultChecked={true}/>
-   <span class="slider round"></span>
- </label>
- 
-                 </div> : 
-                  <div>
-                  <label class="switch" onChange= {(e) => myShowValue(e, row)}>
-    <input type="checkbox"   />
-    <span class="slider round"></span>
-  </label>
-  
-                  </div>
-               } */}
+              
                 {
                   row.status == "1" ?
                   <div>
                   <label class="switch" onChange= {(e) => myShowValue(e, row)}>
-    <input type="checkbox"  defaultChecked={true}/>
+    <input type="checkbox"  defaultChecked/>
     <span class="slider round"></span>
   </label>
   
                   </div> :
-                   <div>
-                   <label class="switch" onChange= {(e) => myShowValue(e, row)}>
-     <input type="checkbox"  />
-     <span class="slider round"></span>
-   </label>
-   
-                   </div>
+                  ""
+                }
+                {
+                  row.status == "0" ?
+                  <div>
+                  <label class="switch" onChange= {(e) => myShowValue(e, row)}>
+    <input type="checkbox"  />
+    <span class="slider round"></span>
+  </label>
+  
+                  </div> : ""
                 }
              </div>
                 </>

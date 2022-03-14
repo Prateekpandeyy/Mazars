@@ -60,6 +60,9 @@ const UpdatesContent = () => {
        formData.append("status", 1)
        formData.append("heading", heading)
        formData.append("publish_date", date);
+      if(getId.id){
+        formData.append("id", getId.id)
+      }
        axios({
            method : "POST", 
            url : `${baseUrl}/admin/setupdate`,
