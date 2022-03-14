@@ -36,7 +36,7 @@ const VideoMedia = () => {
     }, [])
     const getGalleryData = () => {
     
-      axios.get(`${baseUrl}/admin/getgallarylist?uid=${JSON.parse(userId)}`)
+      axios.get(`${baseUrl}/admin/getgallarylist?uid=${JSON.parse(userId)}&type=video`)
       .then((res) => {
         console.log("res", res.data.result)
         setGalleryData(res.data.result)
@@ -82,20 +82,39 @@ else{
     return(
        
         <MyContainer>
-                <div className="headingContent">
-                <h4>Video Gallery </h4>
-                <button 
+        <div className="headingContent">
+        <h4>Media </h4>
+        <button 
+    
+    className="autoWidthBtn rightAlign my-2" onClick={(e) => {
+      history.push("/admin/videocontent")
+    }}>New Media Gallery</button> 
+        </div>
+        <div className="galleryContainer">
+         
+         {
+           galleryData.map((i) => (
+            <div className="galleryBox"> 
             
-            className="autoWidthBtn rightAlign my-2" onClick={(e) => {
-              history.push("/admin/videocontent")
-            }}>New Video Gallery</button> 
-                </div>
-                <div className="galleryContainer">
-                 
-                
-              
-                </div>
-                </MyContainer>
+            <img id={i.id} src={`${baseUrl3}/assets/gallery/${i.name}`} />
+            <h4 className="delIcon">{i.title}</h4> 
+          
+          <div className="delIcon">
+          <span title="Delete Media" onClick={() => del(i.id)}>
+           <DeleteIcon />
+           </span>
+           <h6>
+             {i.created_date}
+           </h6>
+            </div>
+         
+           </div>
+          
+          ))
+         }
+      
+        </div>
+        </MyContainer>
              
     )
 }

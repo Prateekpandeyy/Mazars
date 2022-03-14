@@ -48,11 +48,18 @@ const Cms = () =>{
       },
       {
         dataField : "publish_date",
-        text : "Date"
+        text : "Date",
+        headerStyle : () => {
+          return { width : "100px" };
+        }
       },
+    
       {
         dataField : "type",
-        text : "Category"
+        text : "Category",
+        headerStyle : () => {
+          return { width : "100px" };
+        }
       },
       {
         dataField : "heading",
@@ -60,11 +67,17 @@ const Cms = () =>{
       },
       {
         dataField : "writer",
-        text : "Writer"
+        text : "Writer",
+        headerStyle : () => {
+          return { width : "150px" };
+        }
       },
       {
         dataField : "",
         text : "Action",
+        headerStyle : () => {
+          return { width : "100px" };
+        },
         formatter : function CmsAction(cell, row) {
          return(
          <>

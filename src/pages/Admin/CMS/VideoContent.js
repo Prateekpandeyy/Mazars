@@ -58,7 +58,7 @@ const VideoContent = () => {
             html : "Image uploaded successfully",
             icon :"success"
           })
-          history.push("/admin/mediacontent")
+          history.push("/admin/mediatab")
         }
       })
       console.log("done")
