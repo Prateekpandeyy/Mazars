@@ -42,6 +42,7 @@ const MediaGallery = () => {
       for (var i = 0; i < uploadImg.length; i++) {
         let file = uploadImg[i];
         formData.append("upload", file);
+        formData.append("type", "image")
        
       }
     }

@@ -80,3 +80,8 @@
     border-radius: 10px;
     flex-direction: column;
   }
+ .delIcon{
+   display: flex;
+   padding: 2px 15px;
+   justify-content: space-between;
+ }

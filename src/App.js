@@ -39,6 +39,7 @@ import ThankYou from "./views/ThankYou/Thankyou";
 import payDetails from "./views/PaymentStatus/PayDetails";
 import Contact from "./views/Contact/Contact";
 import About from './views/About/About';
+import Media from './views/Tax/Media';
 
 
 //admin routes
@@ -161,6 +162,7 @@ import Faq from "./pages/Admin/CMS/Faq";
 import FlashContent from "./pages/Admin/CMS/FlashContent";
 import MediaGallery from "./pages/Admin/CMS/MediaGallery";
 import MediaContent from "./pages/Admin/CMS/MediaContent";
+
 // import PayDetails from "./views/PaymentStatus/PayDetails";
 
 
@@ -218,6 +220,7 @@ function App() {
              <PrivateRouteUser exact path = "/customer/modalmanual" component = {ModalMaual} />
              <PrivateRouteUser exact path = "/customer/contact" component = {Contact} />
             <PrivateRouteUser exact path = "/customer/about" component = {About} />
+            <PublicRouteUser exact path = "/customer/media" component = {Media} />
             
             <PublicRouteAdmin exact path="/admin/start" component={AdminStart} />
             <PublicRouteAdmin exact path="/admin/login" component={AdminLogin} />

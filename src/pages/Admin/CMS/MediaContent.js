@@ -5,7 +5,9 @@ import {  styled } from '@mui/material';
 import { useHistory, useParams } from 'react-router';
 import axios from 'axios';
 import { baseUrl, baseUrl3 } from '../../../config/config';
-import {DeleteIcon} from "../../../components/Common/MessageIcon"
+import {DeleteIcon} from "../../../components/Common/MessageIcon";
+import Swal from 'sweetalert2';
+
 const MyContainer = styled(Container)({
 
 })
@@ -33,13 +35,48 @@ const MediaContent = () => {
     }, [])
     const getGalleryData = () => {
     
-      axios.get(`${baseUrl}/customers/getgallery`)
+      axios.get(`${baseUrl}/admin/getgallarylist?uid=${JSON.parse(userId)}`)
       .then((res) => {
         console.log("res", res.data.result)
         setGalleryData(res.data.result)
       })
     }
     let history = useHistory()
+    const del = (id) => {
+ 
+
+      Swal.fire({
+          title: "Are you sure?",
+          text: "Want to delete articles? Yes, delete it!",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes, delete it!",
+      }).then((result) => {
+          if (result.value) {
+            axios.get(`${baseUrl}/admin/deleteimage?uid=${JSON.parse(userId)}&id=${id}`)
+            .then((res) => {
+console.log("response", res)
+if(res.data.code === 1){
+  Swal.fire({
+    title : "success",
+    html  : "Articles deleted successfully",
+    icon : "success"
+  })
+  getGalleryData()
+}
+else{
+  Swal.fire({
+    title :"error",
+    html : "Something went wrong , please try again",
+    icon : "error"
+  })
+}
+            })
+          }
+      });
+  };
     return(
         <Layout adminDashboard="adminDashboard" adminUserId={userId}>
 
@@ -57,13 +94,24 @@ const MediaContent = () => {
                  {
                    galleryData.map((i) => (
                     <div className="galleryBox"> 
-                    <h4>{i.title}</h4> 
-                    <img src={`${baseUrl3}/assets/gallery/${i.name}`} /></div>
-                   ))
+                    
+                    <img src={`${baseUrl3}/assets/gallery/${i.name}`} />
+                    <h4 className="delIcon">{i.title}</h4> 
+                  
+                  <div className="delIcon">
+                  <span title="Delete Media" onClick={() => del(i.id)}>
+                   <DeleteIcon />
+                   </span>
+                   <h6>
+                     {i.created_date}
+                   </h6>
+                    </div>
+                 
+                   </div>
+                  
+                  ))
                  }
-               <span>
-               <DeleteIcon />
-               </span>
+              
                 </div>
                 </MyContainer>
                 </Layout>

@@ -162,38 +162,11 @@ const CmsCont = () => {
 
     setOpen(!open);
   };
-  const getPageLink = (e) => {
-   
-     if(e === "direct"){
-       axios.get(`${baseUrl}/customers/getarticles?type=${e}`)
-       .then((res) => {
-         console.log("response", res)
-       })
-      // localStorage.setItem("myArticles", res.data.result.content)
-     }
-     else if (e === 2){
-      // localStorage.setItem("myUpdates", res.data.result.content)
-     }
-     else if (e === 3){
-      // localStorage.setItem("myLinks", res.data.result.content)
-     }
-     else if (e === 5){
-      // localStorage.setItem("myFaq", res.data.result.content)
-     }
-     else if (e === 4){
-      // localStorage.setItem("myMediaGallery", res.data.result.content)
-     }
-  
-    }
+ 
   return(
     <>
 <div className="clientSubMenu">
-{/* <Link to = {{
-  pathname : "/customer/updates",
-  index : 1
-}} className="tabHoverLink" onClick={(e) => {getPageLink(1)}}>
-     Articles
-    </Link> */}
+
        <li className="nav-item" className="tabHoverLink" style={{listStyle : "none", height: "40px"}}>
                  
                  <ListItemButton 
@@ -241,7 +214,7 @@ const CmsCont = () => {
     <Link to = {{
   pathname : "/customer/updates",
   index : 2
-}} className="tabHoverLink" onClick={(e) => {getPageLink(2)}}>
+}} className="tabHoverLink">
       Updates
     </Link>
 
@@ -249,21 +222,21 @@ const CmsCont = () => {
     to = {{
   pathname : "/customer/updates",
   index : 3
-}} className="tabHoverLink" onClick={(e) => {getPageLink(3)}}>
+}} className="tabHoverLink">
      Important Links
     </Link>
     <Link 
     to = {{
-  pathname : "/customer/updates",
+  pathname : "/customer/media",
   index : 5
-}} className="tabHoverLink" onClick={(e) => {getPageLink(4)}}>
+}} className="tabHoverLink">
      Media Gallery
     </Link>
     <Link 
     to = {{
   pathname : "/customer/updates",
   index : 4
-}} className="tabHoverLink" onClick={(e) => {getPageLink(5)}}>
+}} className="tabHoverLink">
       FAQ
     </Link>
 </div>
