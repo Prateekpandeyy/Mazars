@@ -57,6 +57,7 @@ const MediaGallery = () => {
             html : "Image uploaded successfully",
             icon :"success"
           })
+          history.push("/admin/mediacontent")
         }
       })
       console.log("done")

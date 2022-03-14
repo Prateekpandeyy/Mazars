@@ -192,26 +192,17 @@ background-image:url("../ManualImg/loginCover.jpeg");
 .nav-tabs .nav-item a{
     color: #464B4B !important;
 }
-.CookieConsent {
-  max-width: 500px;
-  border-radius: 5px;
-  padding: 20px 30px;
-  background-color: white;
-  position: fixed !important;
-  top: 50%;
-  left: 50% !important;
-  right: auto;
-  bottom: auto;
-  transform: translate3d(-50%, -50%, 9999990px);
-  width: 95%;
-  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+.myLinkStyle{
+    display: flex;
 }
-
-.overlayclass { 
-  position: fixed;
-  background-color: rgba(0,0,0,0.5);
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+#myValue22{
+    display: flex;
+    align-items: center;
+}
+#myValue22 a {
+    margin: 10px 50px;
+}
+#myValue22 h6{
+ margin-left: 10px;
+ margin-right: 10px;
 }

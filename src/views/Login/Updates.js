@@ -54,6 +54,7 @@ function Updates() {
   const [updates, isUpdates] = useState(false)
   const [myData, setMyData] = useState()
   const [ description, setDescription] = useState(false)
+  const [linkData22, showLinkData22] = useState(false)
   let history = useHistory()
   let id = useParams()
   const getId = history.location.index;
@@ -62,30 +63,33 @@ useEffect(() => {
 }, [])
 const showLinkData = () => {
  
- if(getId === 2){
-  axios.get(`${baseUrl}/customers/getupdated`)
-  .then((res) => {
-   isUpdates(true)
-    setLinkData(res.data.result)
-  })
- }
- else if(getId === 3){
-  axios.get(`${baseUrl}/customers/getimportantlink`)
-  .then((res) => {
-   console.log("res", res)
-    setLinkData([res.data.result])
-  })
- }
- else if (getId === 4){
-  axios.get(`${baseUrl}/customers/getpage?page=${getId}`)
-  .then((res) => {
-    console.log("res", res)
-    setLinkData([res.data.result])
-  })
- }
-}
-
-
+  if(getId === 2){
+    axios.get(`${baseUrl}/customers/getupdated`)
+    .then((res) => {
+     isUpdates(true)
+      setLinkData(res.data.result)
+    })
+   }
+   else if(getId === 3){
+    axios.get(`${baseUrl}/customers/getimportantlink`)
+    .then((res) => {
+     console.log("res", res)
+      setLinkData(res.data.result)
+      showLinkData22(true)
+      isUpdates(false)
+    })
+   }
+   else if (getId === 4){
+    axios.get(`${baseUrl}/customers/getpage?page=${getId}`)
+    .then((res) => {
+      console.log("res", res)
+      setLinkData([res.data.result])
+      isUpdates(false)
+    })
+   }
+  }
+  
+  
   
   if(window.location.origin === "http://mazars.multitvsolution.com" && window.location.protocol == 'http:'){
     window.location.href = window.location.href.replace('http:', 'https:')
@@ -148,11 +152,44 @@ const classes = useStyle()
   </TableContainer>
    : 
    <>
-     {
+     {/* {
   linkData.map((i) => (
-   <Markup content = {i.content} />
+   <Markup content = {`${i.heading}  ${i.url}`} />
    ))
-  }
+  } */}
+    <TableContainer>
+    <Table>
+      <TableBody>
+      {
+  linkData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((i, e) => (
+ 
+ <>
+  {linkData22 === true ?
+    <TableRow>
+      <TableCell>
+      <Markup content = {`<div id="myValue22"> <h6> ${e + 1}</h6> <h4>${i.heading} </h4>  <a href=${i.url} target="_blank">${i.url}</a></div>`} />
+      </TableCell>
+    </TableRow>
+  : 
+  <TableRow>
+ <TableCell onClick={(p) => getData(i.content)} style={{pointer : "cursor"}}>
+   </TableCell>
+   <Markup content = {i.content} />
+    </TableRow> }
+ </>
+         ))
+        }
+      </TableBody>
+    </Table>
+    <TablePagination 
+        rowsPerPageOptions = {[5, 10, 15, 20, 25]}
+        count = {10}
+        rowsPerPage = {rowsPerPage}
+        page = {page}
+        onChangePage = {onChangePage}
+        onChangeRowsPerPage = {onChangeRowsPerPage}
+         />
+  </TableContainer>
    </>
  }
   </>

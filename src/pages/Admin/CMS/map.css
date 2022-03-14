@@ -63,3 +63,20 @@
     display: flex;
   margin-left: auto;
   }
+  .galleryContainer{
+    display: flex;
+    width: 80vw;
+   
+   height: 500px;
+    flex-wrap: wrap;
+  }
+  .galleryBox{
+    display: flex;
+    max-height: 240px;
+    height: 100%;
+    width: calc(100% / 3 - 30px);
+    margin: 5px;
+    border: 1px solid #000;
+    border-radius: 10px;
+    flex-direction: column;
+  }
