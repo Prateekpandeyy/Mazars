@@ -70,7 +70,7 @@ const showLinkData = () => {
   })
  }
  else if(getId === 3){
-  axios.get(`${baseUrl}/customers/getpage?page=${getId}`)
+  axios.get(`${baseUrl}/customers/getimportantlink`)
   .then((res) => {
    console.log("res", res)
     setLinkData([res.data.result])

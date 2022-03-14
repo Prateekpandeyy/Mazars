@@ -70,7 +70,7 @@ const Indirect = () => {
         </Table>
         <TablePagination 
         rowsPerPageOptions = {[5, 10, 15, 20, 25]}
-        count = {10}
+        count = {page.length}
         rowsPerPage = {rowsPerPage}
         page = {page}
         onChangePage = {onChangePage}

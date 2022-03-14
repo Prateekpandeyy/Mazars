@@ -84,7 +84,6 @@ function LoginForm() {
   const [news, getNews] = useState([])
   const [pos,setPos] = useState(0);   
   const [run, setRun] = useState(true);
-  const [enableCookies, setEnableCookies] = useState(true)
   let  width = 800
   const myData = localStorage.getItem("myArticles")
    const togglePasssword = () => {
@@ -208,7 +207,10 @@ const styles = {
      news.map((i) => (
 
 <span style={{padding: "0px 20px", fontSize: "16px", color: "464b4b"}}> 
-
+{/* <Link className="tabHover" to = {{
+  pathname : "/customer/latestupdates",
+  index : i.id
+}}> */}
  <Link className="tabHover" to = {{
   pathname : "/customer/latestupdates",
   index : i.id
@@ -371,34 +373,18 @@ const styles = {
     
      </MyContainer>
       
-{
-  enableCookies === true ?
-  <div className="popup">
-  <CookieConsent debug = {true}
- 
+<CookieConsent debug = {true}
 location="bottom"
-declineButtonStyle = {{borderBottomLeftRadius: "1.75rem",
-backgroundColor : "red", border: "1px solid red", color: "#fff"
-, cursor : "pointer", fontSize : "1rem", fontWeight: 500,
-minWidth: "100px", minHeight: "3rem"}}
+expires={1}
 style={{backgroundColor : "#FFF", color: "#4B4646"}}
 buttonStyle = {{borderBottomLeftRadius: "1.75rem",
 backgroundColor : "#0071CE", border: "1px solid #0071CE", color: "#fff"
 , cursor : "pointer", fontSize : "1rem", fontWeight: 500,
 minWidth: "100px", minHeight: "3rem"}}
-enableDeclineButton
-onDecline={() => {
-  console.log("done")
-}}
-visible="byCookieValue"
-overlayClasses="overlayclass"
-setDeclineCookie = {false}
 >
   This is contains cookies ,please read our cookies policy before login
 </CookieConsent>
-</div>
- : ""
-}
+
       <Footer />
     </>
   );

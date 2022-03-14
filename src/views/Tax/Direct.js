@@ -72,7 +72,7 @@ const Direct = () => {
     
                 <TablePagination 
             rowsPerPageOptions = {[5, 10, 15, 20, 25]}
-            count = {100}
+            count = {page.length}
             rowsPerPage = {rowsPerPage}
             page = {page}
             onChangePage = {onChangePage}
