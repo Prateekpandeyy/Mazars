@@ -25,7 +25,7 @@ const Cms = () =>{
     }, [])
   
     const getList = () => {
-      axios.get(`${baseUrl}/admin/getallarticles?uid=${JSON.parse(userId)}`)
+      axios.get(`${baseUrl}/cms/getallarticles?uid=${JSON.parse(userId)}`)
       .then((res) => {
       
        if(res.data.code === 1){
@@ -109,7 +109,7 @@ const Cms = () =>{
           confirmButtonText: "Yes, delete it!",
       }).then((result) => {
           if (result.value) {
-            axios.get(`${baseUrl}/admin/removearticle?uid=${JSON.parse(userId)}&id=${id}`)
+            axios.get(`${baseUrl}/cms/removearticle?uid=${JSON.parse(userId)}&id=${id}`)
             .then((res) => {
 console.log("response", res)
 if(res.data.code === 1){

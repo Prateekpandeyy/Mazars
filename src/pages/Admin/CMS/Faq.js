@@ -36,7 +36,7 @@ const Faq = () => {
       const getData = (e) => {
         console.log("getId", getId.id)
        if(getId.id !== undefined){
-        axios.get(`${baseUrl}/admin/pagelist?uid=${JSON.parse(userId)}&id=${getId.id}`)
+        axios.get(`${baseUrl}/cms/pagelist?uid=${JSON.parse(userId)}&id=${getId.id}`)
         .then((res) => {
         
          if(res.data.code === 1){
@@ -59,7 +59,7 @@ const Faq = () => {
     
         axios({
             method : "POST", 
-            url : `${baseUrl}/admin/createpage`,
+            url : `${baseUrl}/cms/createpage`,
             data : formData
         })
         .then((res) => {

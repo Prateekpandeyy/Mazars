@@ -61,6 +61,7 @@ function Login(props) {
           setLoading(false)
           setShow(true)
           Cookies.set("adminName", response.data.display_name)
+          localStorage.setItem("role", response.data.role)
           Swal.fire({
             "title" : "success", 
             "html" : "As per your request, OTP has been sent to your registered email address.",

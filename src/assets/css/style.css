@@ -552,9 +552,9 @@ th.sortable:hover::after {
 }
 .clientSubMenu{
   display: flex;
-  width: 800px;
+  width: 500px;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: space-between;
 }
 .headingContent{
   display: flex;

@@ -27,7 +27,7 @@ const Updates = () =>{
     }, [])
   
     const getList = () => {
-      axios.get(`${baseUrl}/admin/pagelist?uid=${JSON.parse(userId)}&id=4`)
+      axios.get(`${baseUrl}/cms/pagelist?uid=${JSON.parse(userId)}&id=4`)
       .then((res) => {
       console.log("ress", res)
        if(res.data.code === 1){

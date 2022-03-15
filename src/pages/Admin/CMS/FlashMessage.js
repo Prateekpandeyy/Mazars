@@ -32,7 +32,7 @@ const FlashMessage = () => {
         getList()
     }, [])
     const getList = () => {
-        axios.get(`${baseUrl}/admin/getallnews?uid=${JSON.parse(userId)}`)
+        axios.get(`${baseUrl}/cms/getallnews?uid=${JSON.parse(userId)}`)
         .then((res) => {
            setList(res.data.result)
         })
@@ -61,7 +61,7 @@ const FlashMessage = () => {
         confirmButtonText: "Yes",
       }).then((result) => {
         if (result.value === true) {
-            axios.get(`${baseUrl}/admin/removenews?uid=${JSON.parse(userId)}&id=${e.id}`)
+            axios.get(`${baseUrl}/cms/removenews?uid=${JSON.parse(userId)}&id=${e.id}`)
       .then((res) => {
           if(res.data.code === 1){
               Swal.fire({
@@ -87,7 +87,7 @@ const FlashMessage = () => {
         if(e.target.checked === true){
 
             
-            axios.get(`${baseUrl}/admin/setnewsstatus?uid=${JSON.parse(userId)}&id=${row.id}&status=0`)
+            axios.get(`${baseUrl}/cms/setnewsstatus?uid=${JSON.parse(userId)}&id=${row.id}&status=0`)
        .then((res) => {
            console.log("res", res)
            if(res.data.result === 1){
@@ -97,7 +97,7 @@ const FlashMessage = () => {
         }
         else{
            
-            axios.get(`${baseUrl}/admin/setnewsstatus?uid=${JSON.parse(userId)}&id=${row.id}&status=1`)
+            axios.get(`${baseUrl}/cms/setnewsstatus?uid=${JSON.parse(userId)}&id=${row.id}&status=1`)
             .then((res) => {
                 console.log("res", res)
                 setCheck(false)

@@ -37,7 +37,7 @@ const UpdatesContent = () => {
         getPageValue()
     }, [])
     const getPageValue = () => {
-        axios.get(`${baseUrl}/admin/getallupdate?uid=${JSON.parse(userId)}&id=${getId.id}`)
+        axios.get(`${baseUrl}/cms/getallupdate?uid=${JSON.parse(userId)}&id=${getId.id}`)
         .then((res) =>{
             console.log("ress", res.data.result)
           
@@ -65,7 +65,7 @@ const UpdatesContent = () => {
       }
        axios({
            method : "POST", 
-           url : `${baseUrl}/admin/setupdate`,
+           url : `${baseUrl}/cms/setupdate`,
            data : formData
        })
        .then((res) => {

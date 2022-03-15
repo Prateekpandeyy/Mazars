@@ -35,7 +35,7 @@ const FlashContent = () => {
        getData()
    }, [])
    const getData = () => {
-    axios.get(`${baseUrl}/admin/getallnews?uid=${JSON.parse(userId)}&id=${getId.id}`)
+    axios.get(`${baseUrl}/cms/getallnews?uid=${JSON.parse(userId)}&id=${getId.id}`)
     .then((res) => {
      
        res.data.result.map((i) => {
@@ -68,7 +68,7 @@ const FlashContent = () => {
      axios({
 
          method : "POST",
-         url : `${baseUrl}/admin/setnews`,
+         url : `${baseUrl}/cms/setnews`,
          data : formData
      })
      .then((res) => {

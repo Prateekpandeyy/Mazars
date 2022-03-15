@@ -55,7 +55,7 @@ const Links = () => {
       const getData = (e) => {
         console.log("getId", getId.id)
        if(getId.id !== undefined){
-        axios.get(`${baseUrl}/admin/getalllinks?uid=${JSON.parse(userId)}&id=${getId.id}`)
+        axios.get(`${baseUrl}/cms/getalllinks?uid=${JSON.parse(userId)}&id=${getId.id}`)
         .then((res) => {
         
          if(res.data.code === 1){
@@ -84,7 +84,7 @@ if(getId.id){
 
    axios({
        method : "POST", 
-       url : `${baseUrl}/admin/setlinks`,
+       url : `${baseUrl}/cms/setlinks`,
        data : formData
    })
    .then((res) => {

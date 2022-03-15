@@ -39,7 +39,7 @@ const VideoMedia = () => {
     }, [])
     const getGalleryData = () => {
     
-      axios.get(`${baseUrl}/admin/getgallarylist?uid=${JSON.parse(userId)}&type=video`)
+      axios.get(`${baseUrl}/cms/getgallarylist?uid=${JSON.parse(userId)}&type=video`)
       .then((res) => {
         console.log("res", res.data.result)
         setGalleryData(res.data.result)
@@ -59,7 +59,7 @@ const VideoMedia = () => {
           confirmButtonText: "Yes, delete it!",
       }).then((result) => {
           if (result.value) {
-            axios.get(`${baseUrl}/admin/deleteimage?uid=${JSON.parse(userId)}&id=${id}`)
+            axios.get(`${baseUrl}/cms/deleteimage?uid=${JSON.parse(userId)}&id=${id}`)
             .then((res) => {
 console.log("response", res)
 if(res.data.code === 1){

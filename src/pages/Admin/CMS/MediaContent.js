@@ -36,7 +36,7 @@ const MediaContent = () => {
     }, [])
     const getGalleryData = () => {
     
-      axios.get(`${baseUrl}/admin/getgallarylist?uid=${JSON.parse(userId)}&type="image"`)
+      axios.get(`${baseUrl}/cms/getgallarylist?uid=${JSON.parse(userId)}&type="image"`)
       .then((res) => {
         console.log("res", res.data.result)
         setGalleryData(res.data.result)
@@ -56,7 +56,7 @@ const MediaContent = () => {
           confirmButtonText: "Yes, delete it!",
       }).then((result) => {
           if (result.value) {
-            axios.get(`${baseUrl}/admin/deleteimage?uid=${JSON.parse(userId)}&id=${id}`)
+            axios.get(`${baseUrl}/cms/deleteimage?uid=${JSON.parse(userId)}&id=${id}`)
             .then((res) => {
 console.log("response", res)
 if(res.data.code === 1){

@@ -22,6 +22,7 @@ const Media = () => {
     const userId = window.localStorage.getItem("adminkey");
     const [large, setLarge] = useState(false)
     const [selected, setSelected] = useState([])
+    const [count, setCount] = useState(0)
     useEffect(() => {
       getGalleryData()
     }, [])
@@ -38,23 +39,23 @@ const Media = () => {
    const enLarge = (e) => {
    
     let img = document.getElementById(e);
-   if(large === false){
-   console.log("kk", kk)
+   if(large === false && kk.length === 0){
+ kk.push(e)
     img.style.transform = "scale(2)";
     img.style.transition = "transform 0.25s ease";
     img.style.zIndex = 99999;
     setLarge(true)
-    
+  
    
    }
    else if (large === true){
-    kk.pop(e)
+console.log("fixed", kk)
     img.style.transform = "scale(1)";
     img.style.transition = "transform 0.25s ease"
     img.style.zIndex = 99;
     setLarge(false)
    }
-  
+  console.log("kkk", kk, kk.length)
    }
   
     return(

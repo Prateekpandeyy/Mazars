@@ -48,7 +48,7 @@ const VideoContent = () => {
     }
       axios({
         method : "POST", 
-        url : `${baseUrl}/admin/uploadphoto`,
+        url : `${baseUrl}/cms/uploadphoto`,
         data : formData
       })
       .then((res) => {

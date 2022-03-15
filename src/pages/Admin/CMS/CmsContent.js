@@ -43,7 +43,7 @@ const CmsContent = () => {
     const getData = (e) => {
    
      if(getId.id !== undefined){
-      axios.get(`${baseUrl}/admin/getallarticles?uid=${JSON.parse(userId)}&id=${getId.id}`)
+      axios.get(`${baseUrl}/cms/getallarticles?uid=${JSON.parse(userId)}&id=${getId.id}`)
       .then((res) => {
       
        if(res.data.code === 1){
@@ -88,7 +88,7 @@ const CmsContent = () => {
        }
        axios({
            method : "POST", 
-           url : `${baseUrl}/admin/setarticles`,
+           url : `${baseUrl}/cms/setarticles`,
            data : formData
        })
        .then((res) => {

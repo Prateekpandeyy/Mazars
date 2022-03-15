@@ -27,7 +27,7 @@ const Updates = () =>{
     }, [])
   
     const getList = () => {
-      axios.get(`${baseUrl}/admin/getalllinks?uid=${JSON.parse(userId)}`)
+      axios.get(`${baseUrl}/cms/getalllinks?uid=${JSON.parse(userId)}`)
       .then((res) => {
       console.log("ress", res)
        if(res.data.code === 1){
@@ -104,7 +104,7 @@ const Updates = () =>{
           confirmButtonText: "Yes, delete it!",
       }).then((result) => {
           if (result.value) {
-            axios.get(`${baseUrl}/admin/removelinks?uid=${JSON.parse(userId)}&id=${id}`)
+            axios.get(`${baseUrl}/cms/removelinks?uid=${JSON.parse(userId)}&id=${id}`)
             .then((res) => {
 console.log("response", res)
 if(res.data.code === 1){

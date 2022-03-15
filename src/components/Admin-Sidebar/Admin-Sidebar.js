@@ -43,6 +43,7 @@ function Sidebar({ adminDashboard, custDashboard, TLDashboard, TPDashboard , fee
   
     setToggleState(index);
   };
+  const role = localStorage.getItem("role")
 const feedNumber = {
   fontSize: "10.5px",
   height: "15px",
@@ -176,10 +177,129 @@ const handleClick = () => {
 const handleClickCms = () => {
   setOpen2(!open2)
 }
+console.log("role", role)
 const classes = useStyle()
   return (
     <>
-      <div
+{
+  role === "cms" ?
+  <>
+    <div
+        className="main-menu menu-fixed menu-light menu-accordion  menu-shadow "
+        data-scroll-to-active="true"
+        data-img="https://themeselection.com/demo/ chameleon-free-bootstrap-admin-template/theme-assets/images/backgrounds/02.jpg"
+      >
+        <div className="navbar-header">
+          <ul className="nav navbar-nav flex-row">
+            <li className="nav-item mr-auto">
+              <a className="navbar-brand" href={logo} style={{display: "flex", height: "75px", padding: "4px", justifyContent: "center", alignItems: "center"}}>
+                
+                <img
+                  className="brand-logo"
+                 
+                  src={`${ima}`}
+                  style={{display: "flex",  width: "100%", height: "auto", maxWidth:"100px", objectFit: "contain"}}
+                />
+              
+               
+              </a>
+            </li>
+            <li className="nav-item d-md-none">
+              <a className="nav-link close-navbar">
+                <i className="fa fa-times"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div className="main-menu-content">
+
+            <ul
+              className="navigation navigation-main"
+              id="main-menu-navigation"
+              data-menu="menu-navigation"
+            >
+              <li className="nav-item">
+              
+                <NavLink to={"/admin/cms"}>
+                <i className="fa"> <span className="dashboardMenu"></span></i>
+    <span className="menu-title" data-i18n="">
+     Articles
+    </span>
+    </NavLink>
+              </li>
+
+              <li className="nav-item">
+               
+                 <NavLink to={"/admin/linklist"}>
+                 <i className="fa">
+                  <span className="queryMenu"></span>
+                </i>
+    <span className="menu-title" data-i18n="">
+  Important Links
+    </span>
+    </NavLink>
+              </li>
+
+              <li className="nav-item">
+             
+                    <NavLink to={"/admin/updates"}>
+                    <i className="fa">
+                  <span className="proposalMenu"></span>
+                </i>
+    <span className="menu-title" data-i18n="">
+  Updates
+    </span>
+    </NavLink>
+              </li>
+
+              <li className="nav-item">
+               
+                 <NavLink to={"/admin/faqlist"}>
+                 <i className="fa">
+                  <span className="paymentMenu"></span>
+                </i>
+    <span className="menu-title" data-i18n="">
+  FAQ
+    </span>
+    </NavLink>
+              </li>
+
+              <li className="nav-item">
+              
+                 <NavLink to={"/admin/flash"}>
+                 <i className="fa">
+                  <span className="assignmentMenu"></span>
+                </i>
+    <span className="menu-title" data-i18n="">
+    Flash Updates
+    </span>
+    </NavLink>
+              </li>
+
+              <li className="nav-item">
+              <NavLink to={"/admin/mediatab"}>
+              <i className="fa">
+                  <span className="scheduleMenu"></span>
+                </i>
+    <span className="menu-title" data-i18n="">
+  Media Gallery
+    </span>
+    </NavLink>
+             
+              </li>
+
+
+             
+              
+
+            
+            
+            </ul>
+          </div>
+</div>
+  </> :
+  <>
+        <div
         className="main-menu menu-fixed menu-light menu-accordion  menu-shadow "
         data-scroll-to-active="true"
         data-img="https://themeselection.com/demo/ chameleon-free-bootstrap-admin-template/theme-assets/images/backgrounds/02.jpg"
@@ -875,6 +995,8 @@ const classes = useStyle()
         </div>
         <div className="navigation-background"></div>
       </div>
+  </>
+}
     </>
   );
 }
