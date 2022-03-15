@@ -7,7 +7,8 @@ import axios from 'axios';
 import { baseUrl, baseUrl3 } from '../../../config/config';
 import {DeleteIcon} from "../../../components/Common/MessageIcon";
 import Swal from 'sweetalert2';
-
+import CloseIcon from '@material-ui/icons/Close';
+import ReactPlayer from "react-player";
 const MyContainer = styled(Container)({
 
 })
@@ -30,6 +31,8 @@ const MyBox = styled(Box)({
 const VideoMedia = () => {
   const [galleryData, setGalleryData] = useState([])
   const [large, setLarge] = useState(false)
+  const [videoId, setVideoId] = useState()
+  const [play, isPlay] = useState(false)
     const userId = window.localStorage.getItem("adminkey");
     useEffect(() => {
       getGalleryData()
@@ -79,6 +82,10 @@ else{
       });
   };
  
+  const playVideo2 = (e) => {
+    isPlay(true)
+    setVideoId(`${baseUrl3}/assets/gallery/${e}`)
+  }
     return(
        
         <MyContainer>
@@ -94,9 +101,9 @@ else{
          
          {
            galleryData.map((i) => (
-            <div className="galleryBox"> 
+            <div className="galleryBox" onClick = {(e) => playVideo2(i.name)}> 
             
-            <img id={i.id} src={`${baseUrl3}/assets/gallery/${i.name}`} />
+            <video id={i.id} src={`${baseUrl3}/assets/gallery/${i.name}`} />
             <h4 className="delIcon">{i.title}</h4> 
           
           <div className="delIcon">
@@ -114,6 +121,29 @@ else{
          }
       
         </div>
+        {
+          play === true ?
+                
+          <div className="modalBox">
+          <div className="boxContainer">
+          <div className="canBtn"  title="cancel">
+              <h4>Recording Player</h4>
+              <CloseIcon  onClick= {() => isPlay(false)} id="myBtn"/> </div>
+         
+
+         <div className="my2">
+         <ReactPlayer
+           url={videoId}
+           controls={true}
+           playing={true}
+           width='100%'
+           height='100%'
+          />
+             </div>
+          </div>
+     
+    </div> : ""
+        }
         </MyContainer>
              
     )

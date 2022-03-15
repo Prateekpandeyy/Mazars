@@ -7,6 +7,7 @@ import {baseUrl} from '../../config/config';
 import Footer from '../../components/Footer/Footer';
 import { Button, Box, Typography, Table, TableContainer, 
 TableHead, TablePagination, TableBody, TableRow, TableCell } from "@material-ui/core";
+import Breadcrumbs from '@mui/material/Breadcrumbs';
 const MyContainer = styled(Box)({
     display : "flex", 
     justifyContent : "center", 
@@ -46,8 +47,15 @@ const Direct = () => {
   
         <div className="StartPageDetails">
           <div className="mainContent222">
-          <h4> Articles - Direct Tax </h4>
-   
+          {/* <h4> Articles - Direct Tax </h4> */}
+          
+          <Breadcrumbs separator="<" maxItems={3} aria-label="breadcrumb">
+  <Link underline="hover" color="inherit" to="/direct">
+   Article
+  </Link>
+  
+  <Typography color="text.primary">Direct</Typography>
+</Breadcrumbs>
     <TableContainer>
         <Table>
             <TableBody>
@@ -57,9 +65,10 @@ const Direct = () => {
                     <TableCell>
                         <Link to = {{
                             pathname : "/customer/details",
-                            index : i.id
+                            index : i.id,
+                            hash : "direct"
                         }} style={{fontSize: "16px",}}>
-                    {e + 1} {i.heading} {wirtten} <span style={{fontWeight: "bold",  margin:"0 10px"}}>{i.writer}</span>
+                   {`${e + 1 } . ${i.heading} ${wirtten}` } <span style={{fontWeight: "bold",  margin:"0 10px"}}>{i.writer}</span>
                     {i.publish_date}
                         </Link>
                     </TableCell>
@@ -70,14 +79,17 @@ const Direct = () => {
             </TableBody>
         </Table>
     
+            {
+                data.length > 4 ?
                 <TablePagination 
-            rowsPerPageOptions = {[5, 10, 15, 20, 25]}
-            count = {page.length}
-            rowsPerPage = {rowsPerPage}
-            page = {page}
-            onChangePage = {onChangePage}
-            onChangeRowsPerPage = {onChangeRowsPerPage} />
-             
+                rowsPerPageOptions = {[5, 10, 15, 20, 25]}
+                count = {data.length}
+                rowsPerPage = {rowsPerPage}
+                page = {page}
+                onChangePage = {onChangePage}
+                onChangeRowsPerPage = {onChangeRowsPerPage} />
+              : ""    
+            }
       
     </TableContainer>
           </div>

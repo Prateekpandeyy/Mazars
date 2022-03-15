@@ -8,8 +8,9 @@ import { useHistory, useParams  } from 'react-router';
 import axios from 'axios';
 import { baseUrl } from '../../config/config';
 import { Markup } from 'interweave';
-import { Button, Box, Typography, Table, TableContainer, 
+import {Breadcrumbs, Button, Box, Typography, Table, TableContainer, 
 TableHead, TablePagination, TableBody, TableRow, TableCell } from "@material-ui/core";
+import CommonServices from '../../common/common.js';
 const MyContainer = styled(Box)({
     display : "flex", 
     justifyContent : "center", 
@@ -21,7 +22,8 @@ const Details = () => {
   let history = useHistory();
   let getId = useParams();
   const [data, setData] = useState([])
-  console.log("history", history.location.index)
+  const [linkdata, setLinkData] = useState("direct")
+  console.log("history", history.location)
   useEffect(() => {
     getData()
   }, [])
@@ -32,6 +34,12 @@ const Details = () => {
     .then((res) => {
       console.log("resData", res)
       setData(res.data.result)
+      if(history.location.hash == "#direct"){
+        setLinkData("direct")
+      }
+      else if(history.location.hash == "#indirect"){
+        setLinkData("indirect")
+      }
     })
   }
 }
@@ -45,7 +53,16 @@ const Details = () => {
          {
            data.map((i) => (
             <div className="mainContent222">
-            <h3>Articles </h3>
+             <Breadcrumbs separator="<" maxItems={3} aria-label="breadcrumb">
+  <Link underline="hover" color="inherit" to="/">
+   Article
+  </Link> 
+  <Link underline="hover" color="inherit" to = {`/customer/${linkdata}`}>
+  {CommonServices.capitalizeFirstLetter(linkdata)}
+  </Link>
+  
+  <Typography color="text.primary"> {CommonServices.capitalizeFirstLetter(linkdata)}</Typography>
+</Breadcrumbs>
            <div style={{margin: "10px 0"}}>
            <h5> {i.heading} </h5>
             <h6>Writer -  {i.writer} </h6>

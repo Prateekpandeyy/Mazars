@@ -7,7 +7,7 @@ import Data from './directData.js';
 import axios from 'axios';
 import { baseUrl } from '../../config/config';
 import Footer from '../../components/Footer/Footer';
-import { Button, Box, Typography, Table, TableContainer, 
+import { Button, Breadcrumbs, Box, Typography, Table, TableContainer, 
 TableHead, TablePagination, TableBody, TableRow, TableCell } from "@material-ui/core";
 const MyContainer = styled(Box)({
     display : "flex", 
@@ -45,7 +45,14 @@ const Indirect = () => {
   
         <div className="StartPageDetails">
           <div className="mainContent222">
-          <h4>Articles - Indirect Tax </h4>
+          
+          <Breadcrumbs separator="<" maxItems={3} aria-label="breadcrumb">
+  <Link underline="hover" color="inherit" to="/">
+   Article
+  </Link>
+  
+  <Typography color="text.primary">Indirect</Typography>
+</Breadcrumbs>
    
     <TableContainer>
         <Table>
@@ -56,7 +63,8 @@ const Indirect = () => {
                     <TableCell>
                     <Link to = {{
                             pathname : "/customer/details",
-                            index : i.id
+                            index : i.id,
+                            hash : "indirect"
                         }} style={{fontSize: "16px",}}>
                     {e + 1} {i.heading} {wirtten} <span style={{fontWeight: "bold",  margin:"0 10px"}}>{i.writer}</span>
                     {i.publish_date}
@@ -68,14 +76,17 @@ const Indirect = () => {
                
             </TableBody>
         </Table>
-        <TablePagination 
-        rowsPerPageOptions = {[5, 10, 15, 20, 25]}
-        count = {page.length}
-        rowsPerPage = {rowsPerPage}
-        page = {page}
-        onChangePage = {onChangePage}
-        onChangeRowsPerPage = {onChangeRowsPerPage}
-         />
+       {
+           data.length > 4 ?
+           <TablePagination 
+           rowsPerPageOptions = {[5, 10, 15, 20, 25]}
+           count = {data.length}
+           rowsPerPage = {rowsPerPage}
+           page = {page}
+           onChangePage = {onChangePage}
+           onChangeRowsPerPage = {onChangeRowsPerPage}
+            /> : ""
+       }
     </TableContainer>
           </div>
       

@@ -5,10 +5,10 @@ import './style.css';
 import {Box} from "@material-ui/core";
 import { styled , makeStyles} from "@material-ui/styles";
 import { Markup } from "interweave";
-import { useHistory, useParams } from "react-router";
+import { useHistory, useParams, Link } from "react-router-dom";
 import axios from 'axios';
 import {baseUrl} from '../../config/config';
-import { Table, TableContainer, 
+import {Typography, Breadcrumbs, Table, TableContainer, 
   TableHead, TablePagination, TableBody, TableRow, TableCell} from "@material-ui/core";
 const MyBox = styled(Box)({
   display: "flex", 
@@ -126,65 +126,98 @@ const classes = useStyle()
  {
    updates === true ?
   <TableContainer>
+       <Breadcrumbs separator="<" maxItems={3} aria-label="breadcrumb">
+  <Link underline="hover" color="inherit" to="/">
+   Article
+  </Link>
+  
+  <Typography color="text.primary">Direct</Typography>
+  </Breadcrumbs>
     <Table>
       <TableBody>
       {
   linkData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((i, e) => (
         <TableRow>
-          <TableCell onClick={(p) => getData(i.content)} style={{pointer : "cursor"}}>
-         
-     <Markup content = {i.heading} /> 
-  
+          <TableCell  onClick={(p) => getData(i)} style={{pointer : "cursor"}}>
+         <span className="tabHover nav-link" style={{fontSize: "16px"}}>
+     <Markup  content = {`
+     ${e + 1} . ${i.heading}  ${i.publish_date}
+      `} /> 
+  </span>
           </TableCell>
         </TableRow>
          ))
         }
       </TableBody>
     </Table>
-    <TablePagination 
-        rowsPerPageOptions = {[5, 10, 15, 20, 25]}
-        count = {10}
-        rowsPerPage = {rowsPerPage}
-        page = {page}
-        onChangePage = {onChangePage}
-        onChangeRowsPerPage = {onChangeRowsPerPage}
-         />
+   {
+     linkData.length > 4 ?
+     <TablePagination 
+     rowsPerPageOptions = {[5, 10, 15, 20, 25]}
+     count = {linkData.length}
+     rowsPerPage = {rowsPerPage}
+     page = {page}
+     onChangePage = {onChangePage}
+     onChangeRowsPerPage = {onChangeRowsPerPage}
+      /> : ""
+   }
   </TableContainer>
    : 
    <>
    
     <TableContainer>
+    {linkData22 === true ? <>
+    <Breadcrumbs separator="<" maxItems={3} aria-label="breadcrumb">
+  <Link underline="hover" color="inherit" to="/">
+   Article
+  </Link>
+  
+  <Typography color="text.primary">Link</Typography>
+  </Breadcrumbs>
     <Table>
       <TableBody>
       {
   linkData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((i, e) => (
  
  <>
-  {linkData22 === true ?
+  
     <TableRow>
       <TableCell>
       <Markup content = {`<div id="myValue22"> <h6> ${e + 1}</h6> <h4>${i.heading} </h4>  <a href=${i.url} target="_blank">${i.url}</a></div>`} />
       </TableCell>
     </TableRow>
-  : 
-  <TableRow>
- <TableCell onClick={(p) => getData(i.content)} style={{pointer : "cursor"}}>
-   </TableCell>
-   <Markup content = {i.content} />
-    </TableRow> }
+ 
  </>
          ))
         }
       </TableBody>
     </Table>
-    <TablePagination 
+    </> : "" }
+    {linkData22 === false ? <>
+    <Breadcrumbs separator="<" maxItems={3} aria-label="breadcrumb">
+  <Link underline="hover" color="inherit" to="/">
+   Article
+  </Link>
+  
+  <Typography color="text.primary">FAQ</Typography>
+  </Breadcrumbs>
+   {
+     linkData.map((i) => (
+      <Markup className="myFaq" content = {i.content} />
+     ))
+   }
+    </> : "" }
+    {
+      linkData.length > 4 ?
+      <TablePagination 
         rowsPerPageOptions = {[5, 10, 15, 20, 25]}
-        count = {10}
+        count = {linkData.length}
         rowsPerPage = {rowsPerPage}
         page = {page}
         onChangePage = {onChangePage}
         onChangeRowsPerPage = {onChangeRowsPerPage}
-         />
+         /> : ""
+    }
   </TableContainer>
    </>
  }
@@ -195,8 +228,19 @@ const classes = useStyle()
  </div> : 
    <div className="StartPageDetails">
    <div className="mainContent222">
-
-   <Markup content = {myData} />
+   <Breadcrumbs separator="<" maxItems={3} aria-label="breadcrumb">
+  <Link underline="hover" color="inherit" to="/">
+   Article
+  </Link>
+  <Link underline="hover" color="inherit" to = {{
+  pathname : "/customer/updates",
+  index : 2
+}}>
+   Updates
+  </Link>
+  <Typography color="text.primary">Direct</Typography>
+  </Breadcrumbs>
+   <Markup content = {myData.content + myData.heading} />
  </div>
 
 </div>

@@ -167,7 +167,9 @@ const CmsCont = () => {
     <>
 <div className="clientSubMenu">
 
-       <li className="nav-item" className="tabHoverLink" style={{listStyle : "none", height: "40px"}}>
+       <li className="nav-item" className="tabHoverLink" style={{listStyle : "none",
+        height: "20px", width: "180px", display: "flex", justifyContent : "center",
+        alignItems : "center", flexDirection : "column"}}>
                  
                  <ListItemButton 
                  onMouseEnter={() => handleClick()}>
@@ -176,7 +178,7 @@ const CmsCont = () => {
    
    
    
-                   <span className="menu-title" data-i18n="">
+                   <span className="nav-item">
                      Articles
                    </span>
                    {open ? <ExpandLess /> : <ExpandMore />}
@@ -186,24 +188,25 @@ const CmsCont = () => {
           
          </ListItemButton>
    
-         <Collapse in={open}  unmountOnExit style={{textAlign: "center", zIndex: "99999", backgroundColor : "#fff"}}>
-           <List component="div" disablePadding style={{backgroundColor : "#fff", zIndex: "99999"}}>
-           <ul style={{listStyle : "none", textAlign : "left", padding: "10px 15px", backgroundColor : "#fff", zIndex: "99999"}}>
+         <Collapse in={open}  unmountOnExit>
+           <List component="div" className="myLink22">
+           <ul style={{listStyle : "none", textAlign : "left", 
+           padding: "10px 15px",  zIndex: "99999"}}>
                      <li>
-                     <Link to = "/customer/direct">
+                     <NavLink to = "/customer/direct">
                      
                    <span className="menu-title" data-i18n="">
                   Direct Tax
                    </span>
-                   </Link >
+                   </NavLink >
                      </li>
                      <li>
-                     <Link to="/customer/indirect">
+                     <NavLink to="/customer/indirect">
                      
                    <span className="menu-title" data-i18n="">
                 Indirect Tax
                    </span>
-                   </Link>
+                   </NavLink>
                      </li>
                    </ul>
            </List>
@@ -211,34 +214,34 @@ const CmsCont = () => {
                  </li>
    
           
-    <Link to = {{
+    <NavLink to = {{
   pathname : "/customer/updates",
   index : 2
 }} className="tabHoverLink">
       Updates
-    </Link>
+    </NavLink>
 
-    <Link 
+    <NavLink 
     to = {{
   pathname : "/customer/updates",
   index : 3
 }} className="tabHoverLink">
      Important Links
-    </Link>
-    <Link 
+    </NavLink>
+    <NavLink 
     to = {{
   pathname : "/customer/media",
   index : 5
 }} className="tabHoverLink">
      Media Gallery
-    </Link>
-    <Link 
+    </NavLink>
+    <NavLink 
     to = {{
   pathname : "/customer/updates",
   index : 4
 }} className="tabHoverLink">
       FAQ
-    </Link>
+    </NavLink>
 </div>
     </>
   )

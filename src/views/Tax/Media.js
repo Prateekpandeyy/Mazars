@@ -8,7 +8,7 @@ import { useHistory, useParams  } from 'react-router';
 import axios from 'axios';
 import { baseUrl , baseUrl3} from '../../config/config';
 import { Markup } from 'interweave';
-import { Button, Box, Typography, Table, TableContainer, 
+import {Breadcrumbs, Button, Box, Typography, Table, TableContainer, 
 TableHead, TablePagination, TableBody, TableRow, TableCell } from "@material-ui/core";
 const MyContainer = styled(Box)({
     display : "flex", 
@@ -38,11 +38,13 @@ const Media = () => {
    if(large === false){
     img.style.transform = "scale(2)";
     img.style.transition = "transform 0.25s ease";
+    img.style.zIndex = 99999;
     setLarge(true)
    }
    else if (large === true){
     img.style.transform = "scale(1)";
     img.style.transition = "transform 0.25s ease"
+    img.style.zIndex = 99;
     setLarge(false)
    }
    
@@ -55,7 +57,15 @@ const Media = () => {
         <div className="StartPageDetails">
         
         <div className="mainContent2222">
-        <h4 style={{display : "flex", width: "1000px"}}>Media </h4> 
+        <div style={{display : "flex", width: "1000px"}}>
+        <Breadcrumbs separator="<" maxItems={3} aria-label="breadcrumb">
+  <Link underline="hover" color="inherit" to="/">
+   Article
+  </Link>
+  
+  <Typography color="text.primary">Media</Typography>
+  </Breadcrumbs></div> 
+     
                  {
                      
                    galleryData.map((i) => (
