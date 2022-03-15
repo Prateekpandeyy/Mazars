@@ -213,7 +213,15 @@ background-image:url("../ManualImg/loginCover.jpeg");
 #myValue22 a {
     margin: 10px 50px;
 }
+#myValue22 p {
+    margin-bottom: 0px;
+    font-size: 16px;
+}
+.updatesLink{
+    color: rgb(61, 71, 117)
+}
 #myValue22 h6{
  margin-left: 10px;
  margin-right: 10px;
+ margin-bottom: 3px;
 }

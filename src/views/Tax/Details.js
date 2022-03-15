@@ -54,19 +54,17 @@ const Details = () => {
            data.map((i) => (
             <div className="mainContent222">
              <Breadcrumbs separator="<" maxItems={3} aria-label="breadcrumb">
-  <Link underline="hover" color="inherit" to="/">
-   Article
-  </Link> 
+  
   <Link underline="hover" color="inherit" to = {`/customer/${linkdata}`}>
   {CommonServices.capitalizeFirstLetter(linkdata)}
   </Link>
   
-  <Typography color="text.primary"> {CommonServices.capitalizeFirstLetter(linkdata)}</Typography>
+  <Typography color="text.primary"> Details</Typography>
 </Breadcrumbs>
            <div style={{margin: "10px 0"}}>
            <h5> {i.heading} </h5>
             <h6>Writer -  {i.writer} </h6>
-            <h6>Date of publisher - {i.publish_date} </h6>
+            <h6>Date of publishing -   {i.publish_date.split("-").reverse().join("-")} </h6>
              </div>
      
     <Markup content={i.content} />

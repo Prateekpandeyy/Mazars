@@ -127,11 +127,14 @@ const classes = useStyle()
    updates === true ?
   <TableContainer>
        <Breadcrumbs separator="<" maxItems={3} aria-label="breadcrumb">
-  <Link underline="hover" color="inherit" to="/">
-   Article
+  <Link underline="hover" color="inherit" to={{
+    pathname : "/customer/updates",
+    index : 2
+  }}>
+   Update
   </Link>
   
-  <Typography color="text.primary">Direct</Typography>
+ 
   </Breadcrumbs>
     <Table>
       <TableBody>
@@ -139,10 +142,11 @@ const classes = useStyle()
   linkData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((i, e) => (
         <TableRow>
           <TableCell  onClick={(p) => getData(i)} style={{pointer : "cursor"}}>
-         <span className="tabHover nav-link" style={{fontSize: "16px"}}>
-     <Markup  content = {`
-     ${e + 1} . ${i.heading}  ${i.publish_date}
-      `} /> 
+         <span className="tabHover" style={{fontSize: "16px", paddingTop : "0px",
+        paddingBottom : "0px"}}>
+    <span className="updatesLink">
+     {`${e + 1} . ${i.heading} -    ${i.publish_date.split("-").reverse().join("-")}`}
+      </span>
   </span>
           </TableCell>
         </TableRow>
@@ -168,22 +172,41 @@ const classes = useStyle()
     <TableContainer>
     {linkData22 === true ? <>
     <Breadcrumbs separator="<" maxItems={3} aria-label="breadcrumb">
-  <Link underline="hover" color="inherit" to="/">
-   Article
+  <Link underline="hover" color="inherit" to={{
+    pathname : "/customer/updates",
+    index : 3
+  }}>
+  Link
   </Link>
   
-  <Typography color="text.primary">Link</Typography>
+
   </Breadcrumbs>
     <Table>
+    <TableHead>
+   <TableRow>
+     <TableCell>S.No</TableCell>
+     <TableCell>Heading</TableCell>
+     <TableCell>Link</TableCell>
+   </TableRow>
+   </TableHead>
       <TableBody>
       {
   linkData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((i, e) => (
  
  <>
+
   
     <TableRow>
+      <TableCell style={{padding: "8px 16px"}}>
+      {/* <Markup content = {`<div id="myValue22"> <h6> ${e + 1}</h6> <p>${i.heading} </p>
+        <a href=${i.url} target="_blank">${i.url}</a></div>`} /> */}
+        {e + 1}
+      </TableCell>
       <TableCell>
-      <Markup content = {`<div id="myValue22"> <h6> ${e + 1}</h6> <h4>${i.heading} </h4>  <a href=${i.url} target="_blank">${i.url}</a></div>`} />
+        {i.heading}
+      </TableCell>
+      <TableCell>
+        <a href={i.url} target="_blank">{i.url}</a>
       </TableCell>
     </TableRow>
  
@@ -194,13 +217,19 @@ const classes = useStyle()
     </Table>
     </> : "" }
     {linkData22 === false ? <>
-    <Breadcrumbs separator="<" maxItems={3} aria-label="breadcrumb">
-  <Link underline="hover" color="inherit" to="/">
-   Article
-  </Link>
-  
-  <Typography color="text.primary">FAQ</Typography>
-  </Breadcrumbs>
+ {
+   linkData.length > 0 ?
+   <Breadcrumbs separator="<" maxItems={3} aria-label="breadcrumb">
+   <Link underline="hover" color="inherit" to={{
+    pathname : "/customer/updates",
+    index : 4
+  }}>
+   FAQ
+   </Link>
+   
+   
+   </Breadcrumbs> : ""
+ }
    {
      linkData.map((i) => (
       <Markup className="myFaq" content = {i.content} />
@@ -229,18 +258,16 @@ const classes = useStyle()
    <div className="StartPageDetails">
    <div className="mainContent222">
    <Breadcrumbs separator="<" maxItems={3} aria-label="breadcrumb">
-  <Link underline="hover" color="inherit" to="/">
-   Article
-  </Link>
+  
   <Link underline="hover" color="inherit" to = {{
   pathname : "/customer/updates",
   index : 2
 }}>
    Updates
   </Link>
-  <Typography color="text.primary">Direct</Typography>
+  <Typography color="text.primary">Details</Typography>
   </Breadcrumbs>
-   <Markup content = {myData.content + myData.heading} />
+   <Markup content = {`<h4>${myData.heading} </h4> <span>${myData.content}</span>`} />
  </div>
 
 </div>

@@ -112,7 +112,7 @@ const QueryContact = () => {
   <input style={{width : "1.2rem", height : "1.2rem"}} 
      ref={register} className="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
   <label className = {style.formChoice} for="flexCheckDefault">
-I accept that MAS will process my personal data for the purpose of handling my request
+I accept that MAS will process my personal data for the purpose of handling my request.
   </label>
   </div>
                                </Box>

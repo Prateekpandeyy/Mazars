@@ -565,11 +565,14 @@ th.sortable:hover::after {
 .myLink22{
 background-color: #fff !important;
 z-index: 99999;
-border: 1px solid #0071CE;
-border-radius: 0% 100% 30% 70% / 100% 1% 99% 0%;
+border: 1px solid #fff;
 }
 .myFaq table{
   border: 1px solid #ccc;
+}
+.subLink2{
+  display: flex;
+  width: 100%;
 }
 /* #test.ck-content{
   height: 250px !important;

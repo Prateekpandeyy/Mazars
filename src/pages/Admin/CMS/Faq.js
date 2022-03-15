@@ -55,7 +55,7 @@ const Faq = () => {
         let formData = new FormData();
        
         formData.append("content", det);
-       formData.append("id", 3)
+       formData.append("id", 4)
     
         axios({
             method : "POST", 
@@ -109,21 +109,21 @@ const Faq = () => {
                
                <div className="col-md-12">
                <CKEditor
-               id="test"
-                       editor={ ClassicEditor }
-                      
-                      data={det}
-                      rows="10"
-                      name="p_fact"
-                  
-                      onChange={ ( event, editor ) => {
-                        addDet(editor.getData());
-                       
-  
-                      
-                    } }
-             
-                  ></CKEditor>
+             id="test"
+                     editor={ ClassicEditor }
+                    
+                    data={det}
+                    rows="10"
+                    name="p_fact"
+                
+                    onChange={ ( event, editor ) => {
+                      addDet(editor.getData());
+                     
+
+                    
+                  } }
+           
+                ></CKEditor>
                    </div>
            </div>
          

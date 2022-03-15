@@ -27,3 +27,14 @@
    
     cursor: pointer;
   }
+  .tabHoverLinksubMenu{
+    color: rgb(61, 71,117);
+   
+    font-weight: 700;
+  }
+  .tabHoverLinksubMenu:hover{
+    color: #0071CE;
+    
+   
+    cursor: pointer;
+  }

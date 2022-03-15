@@ -17,7 +17,7 @@ import { Spinner } from 'reactstrap';
 import ShowError from "../../components/LoadingTime/LoadingTime";
 import LoadingTime from "../../components/LoadingTime/LoadingTime";
 import Cookies from "js-cookie";
-import CloudImg from './images/Cloud.jpg';
+import CloudImg from './images/cloud1.jpeg';
 import PaperLess from './images/paperLess.jpeg';
 import whatp from './images/video.jpeg';
 import costEffective from './images/costEffective.jpeg';
@@ -222,7 +222,7 @@ const styles = {
    }
   </h1>
     </div>
-    <h2> Mazars Advisory Solutions </h2>
+    <h2 style={{textAlign: "left"}}> Mazars Advisory Solutions (MAS) </h2>
       {/* <h2>
         Would you like to post a query
       </h2> */}

@@ -157,18 +157,23 @@ export default Header;
 
 const CmsCont = () => {
   const [open, setOpen] = useState(false)
+  const [open2, setOpen2] = useState(false)
   let history = useHistory()
   const handleClick = () => {
 
     setOpen(!open);
+  };
+  const handleClick2 = () => {
+
+    setOpen2(!open2);
   };
  
   return(
     <>
 <div className="clientSubMenu">
 
-       <li className="nav-item" className="tabHoverLink" style={{listStyle : "none",
-        height: "20px", width: "180px", display: "flex", justifyContent : "center",
+       <li className="nav-item" className="tabHoverLinksubMenu" style={{listStyle : "none",
+        height: "20px", minWidth: "100px", display: "flex", justifyContent : "center",
         alignItems : "center", flexDirection : "column"}}>
                  
                  <ListItemButton 
@@ -191,23 +196,25 @@ const CmsCont = () => {
          <Collapse in={open}  unmountOnExit>
            <List component="div" className="myLink22">
            <ul style={{listStyle : "none", textAlign : "left", 
-           padding: "10px 15px",  zIndex: "99999"}}>
-                     <li>
+           display: "flex", padding: "4px", width: "100px", flexDirection:"column",  zIndex: "99999"}}>
+                
                      <NavLink to = "/customer/direct">
-                     
+                     <li className="tabHover">
                    <span className="menu-title" data-i18n="">
                   Direct Tax
                    </span>
-                   </NavLink >
-                     </li>
-                     <li>
+                   </li>
+                   </NavLink>
+                   
+                    
                      <NavLink to="/customer/indirect">
-                     
+                     <li className="tabHover">
                    <span className="menu-title" data-i18n="">
                 Indirect Tax
                    </span>
+                   </li>
                    </NavLink>
-                     </li>
+                    
                    </ul>
            </List>
          </Collapse>
@@ -228,13 +235,63 @@ const CmsCont = () => {
 }} className="tabHoverLink">
      Important Links
     </NavLink>
-    <NavLink 
+    {/* <NavLink 
     to = {{
   pathname : "/customer/media",
   index : 5
 }} className="tabHoverLink">
      Media Gallery
-    </NavLink>
+    </NavLink> */}
+      <li className="nav-item" className="tabHoverLinksubMenu" style={{listStyle : "none",
+        height: "20px", minWidth: "100px", display: "flex", justifyContent : "center",
+        alignItems : "center", flexDirection : "column"}}>
+                 
+                 <ListItemButton 
+                 onMouseEnter={() => handleClick2()}>
+           
+       
+   
+   
+   
+                   <span className="nav-item">
+                  Media Gallery
+                   </span>
+                   {open2 ? <ExpandLess /> : <ExpandMore />}
+                
+   
+         
+          
+         </ListItemButton>
+   
+         <Collapse in={open2}  unmountOnExit>
+           <List component="div" className="myLink22">
+           <ul style={{listStyle : "none", textAlign : "left", 
+           display: "flex", padding: "4px", width: "100px", 
+           flexDirection:"column",  zIndex: "99999"}}>
+                
+                      <NavLink 
+    to = {{
+  pathname : "/customer/media",
+  index : 5
+}} className="tabHoverLink">
+     Media Gallery
+    </NavLink> 
+                   
+                    
+                     <NavLink to="/customer/indirect">
+                     <li className="tabHover">
+                   <span className="menu-title" data-i18n="">
+              Video Gallery
+                   </span>
+                   </li>
+                   </NavLink>
+                    
+                   </ul>
+           </List>
+         </Collapse>
+                 </li>
+   
+          
     <NavLink 
     to = {{
   pathname : "/customer/updates",

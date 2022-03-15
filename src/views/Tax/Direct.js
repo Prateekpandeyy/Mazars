@@ -49,12 +49,12 @@ const Direct = () => {
           <div className="mainContent222">
           {/* <h4> Articles - Direct Tax </h4> */}
           
-          <Breadcrumbs separator="<" maxItems={3} aria-label="breadcrumb">
-  <Link underline="hover" color="inherit" to="/direct">
-   Article
+          <Breadcrumbs separator=">" maxItems={3} aria-label="breadcrumb">
+  <Link underline="hover" color="inherit" to="/customer/direct">
+  Direct
   </Link>
   
-  <Typography color="text.primary">Direct</Typography>
+  
 </Breadcrumbs>
     <TableContainer>
         <Table>
@@ -69,7 +69,7 @@ const Direct = () => {
                             hash : "direct"
                         }} style={{fontSize: "16px",}}>
                    {`${e + 1 } . ${i.heading} ${wirtten}` } <span style={{fontWeight: "bold",  margin:"0 10px"}}>{i.writer}</span>
-                    {i.publish_date}
+                  -  {i.publish_date.split("-").reverse().join("-")}
                         </Link>
                     </TableCell>
                 </TableRow>

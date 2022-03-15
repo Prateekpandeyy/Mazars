@@ -47,11 +47,11 @@ const Indirect = () => {
           <div className="mainContent222">
           
           <Breadcrumbs separator="<" maxItems={3} aria-label="breadcrumb">
-  <Link underline="hover" color="inherit" to="/">
-   Article
+  <Link underline="hover" color="inherit" to="/customer/indirect">
+  Indirect
   </Link>
   
-  <Typography color="text.primary">Indirect</Typography>
+ 
 </Breadcrumbs>
    
     <TableContainer>
@@ -67,7 +67,7 @@ const Indirect = () => {
                             hash : "indirect"
                         }} style={{fontSize: "16px",}}>
                     {e + 1} {i.heading} {wirtten} <span style={{fontWeight: "bold",  margin:"0 10px"}}>{i.writer}</span>
-                    {i.publish_date}
+                    -  {i.publish_date.split("-").reverse().join("-")}
                         </Link>
                     </TableCell>
                 </TableRow>
