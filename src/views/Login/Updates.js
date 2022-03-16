@@ -131,7 +131,7 @@ const classes = useStyle()
     pathname : "/customer/updates",
     index : 2
   }}>
-   Update
+   Updates
   </Link>
   
  

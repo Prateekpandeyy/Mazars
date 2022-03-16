@@ -48,7 +48,7 @@ const Indirect = () => {
           
           <Breadcrumbs separator="<" maxItems={3} aria-label="breadcrumb">
   <Link underline="hover" color="inherit" to="/customer/indirect">
-  Indirect
+  Indirect tax
   </Link>
   
  

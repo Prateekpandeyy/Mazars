@@ -67,11 +67,11 @@ console.log("fixed", kk)
         <div className="mainContent2222">
         <div style={{display : "flex", width: "1000px"}}>
         <Breadcrumbs separator="<" maxItems={3} aria-label="breadcrumb">
-  <Link underline="hover" color="inherit" to="/">
-   Article
+  <Link underline="hover" color="inherit" to="/customer/media">
+  Media
   </Link>
   
-  <Typography color="text.primary">Media</Typography>
+  
   </Breadcrumbs></div> 
      
                  {

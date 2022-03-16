@@ -41,6 +41,9 @@ const Updates = () =>{
       {
         dataField : "",
         text : "",
+        headerStyle: () => {
+          return {height : "0px", padding: "0px"}
+        },
         formatter : function myUpdates(cell, row) {
             return(
               <Markup content={row.content} />

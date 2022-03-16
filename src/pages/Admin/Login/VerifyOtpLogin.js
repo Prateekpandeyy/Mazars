@@ -68,11 +68,15 @@ function VerifyOtp({ email, uid, loading, setLoading }) {
           localStorage.setItem("adminkey", JSON.stringify(response.data["user id"]));
           sessionStorage.setItem("adminIdsession", JSON.stringify(response.data["user id"]));
           localStorage.setItem("adminEmail", JSON.stringify(response.data.name));
-         if(role === "cms"){
-          history.push("/admin/cms");
+       
+          if(role === "cms"){
+          history.push("/admin/cms")
+      window.location.reload(true)
          }
            else{
-            history.push("/admin/dashboard");
+            
+        history.push("/admin/dashboard")
+        window.location.reload(true)
            }
         } else {
           Alerts.ErrorNormal("Incorrect OTP, please try again.")

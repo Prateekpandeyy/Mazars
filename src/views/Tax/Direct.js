@@ -51,7 +51,7 @@ const Direct = () => {
           
           <Breadcrumbs separator=">" maxItems={3} aria-label="breadcrumb">
   <Link underline="hover" color="inherit" to="/customer/direct">
-  Direct
+  Direct tax
   </Link>
   
   

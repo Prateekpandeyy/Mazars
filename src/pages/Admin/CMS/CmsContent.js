@@ -20,6 +20,9 @@ import {
   Col,
   Table,
 } from "reactstrap";
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+import { Markup } from 'interweave';
 const MyContainer = styled(Container)({
 
 })
@@ -53,7 +56,8 @@ const CmsContent = () => {
          setHeading(i.heading)
          setWriter(i.writer)
          setDate(i.publish_date);
-         addDet(i.content)   
+        addDet(i.content) 
+         console.log("imgData", i)
          if(i.status == 1){
           setStats(true)
          }
@@ -106,6 +110,15 @@ const CmsContent = () => {
   
     setStats(!stats)
 }
+
+/* 
+ * Quill editor formats
+ * See https://quilljs.com/docs/formats/
+ */
+/* 
+ * PropType validation
+ */
+
 
     return(
         <Layout adminDashboard="adminDashboard" adminUserId={userId}>
@@ -202,7 +215,7 @@ const CmsContent = () => {
              <label className="form-label">Pages</label> </div>
              
              <div className="col-md-12">
-             <CKEditor
+             {/* <CKEditor
              id="test"
                      editor={ ClassicEditor }
                     
@@ -217,7 +230,32 @@ const CmsContent = () => {
                     
                   } }
            
-                ></CKEditor>
+                ></CKEditor> */
+                <ReactQuill
+                value={det}
+                modules={ {
+                  toolbar: [
+                    [{ 'header': '1'}, {'header': '2'}, { 'font': [] }],
+                    [{size: []}],
+                    ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+                    [{'list': 'ordered'}, {'list': 'bullet'}, 
+                     {'indent': '-1'}, {'indent': '+1'}],
+                    ['link', 'image', 'video'],
+                    ['clean']
+                  ],
+                  clipboard: {
+                    // toggle to add extra line breaks when pasting HTML:
+                    matchVisual: false,
+                  }}}
+                formats={
+                  [
+                    'header', 'font', 'size',
+                    'bold', 'italic', 'underline', 'strike', 'blockquote',
+                    'list', 'bullet', 'indent',
+                    'link', 'image', 'video'
+                  ]
+                  
+                } theme="snow" value={det} onChange={addDet}/>}
                  </div>
          </div>
          <div className="row">

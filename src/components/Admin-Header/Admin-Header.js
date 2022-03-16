@@ -17,6 +17,7 @@ function AdminHeader({ custUserId, adminUserId, TLuserId, TPuserId , feedbackNum
   const adminLogout = () => {
     localStorage.removeItem("adminkey");
     localStorage.removeItem("adminEmail");
+    localStorage.removeItem("role")
     history.push("/admin/login");
   };
 

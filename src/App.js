@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import { HashRouter as Router, Route, Switch } from "react-router-dom";
 import "./App.css";
 import { positions, Provider, transitions } from "react-alert";
@@ -164,6 +164,9 @@ import MediaGallery from "./pages/Admin/CMS/MediaGallery";
 import MediaContent from "./pages/Admin/CMS/MediaContent";
 import MediaTab from "./pages/Admin/CMS/MediaTab";
 import VideoContent from "./pages/Admin/CMS/VideoContent";
+import Mediatextshow from "./pages/Admin/CMS/Mediatextshow";
+import MediaContentCustomer from "./views/Tax/MediaContentCustomer";
+import GalleryVideo from "./views/Tax/GalleryVideo";
 
 // import PayDetails from "./views/PaymentStatus/PayDetails";
 
@@ -176,9 +179,22 @@ const options = {
 };
 
 function App() {
- const role = localStorage.getItem("role")
-console.log("roel", role)
+ const [cms, showCms] = useState(false)
+useEffect(() => {
+  getRole()
+}, [])
+const getRole = () => {
+  let a = localStorage.getItem("role")
+ if(a === "admin"){
+   showCms(false)
+ }
+ else{
+   showCms(true)
+ }
+}
+console.log("showCms", cms)
   return (
+   <>
     <div>
       <Provider template={AlertTemplate} {...options}>
         <Router>
@@ -191,7 +207,10 @@ console.log("roel", role)
              <PublicRouteUser exact path = "/customer/aboutbasic" component={AboutOuter} />
              <PublicRouteUser exact path = "/customer/direct" component={Direct} />
              <PublicRouteUser exact path = "/customer/indirect" component={Indirect} />
-             <PublicRouteUser exact path = "/customer/details" component={Details} />
+             <PublicRouteUser exact path = "/customer/mediacontent" component={MediaContentCustomer} />
+             <PublicRouteUser exact path = "/customer/media" component = {Media} />
+             <PublicRouteUser exact path = "/customer/videogallery" component = {GalleryVideo} />
+         <PublicRouteUser exact path = "/customer/details" component={Details} />
      <PublicRouteUser exact path = "/customer/customerquery" component={QueryContact} />
      <PublicRouteUser exact path = "/customer/latestupdates" component={LatestUpdates} />
      <PublicRouteUser exact path = "/customer/updates" component={Updates} />
@@ -221,48 +240,21 @@ console.log("roel", role)
             <PrivateRouteUser exact path="/customer/paydetails/:id" component={payDetails} />
              <PrivateRouteUser exact path = "/customer/modalmanual" component = {ModalMaual} />
              <PrivateRouteUser exact path = "/customer/contact" component = {Contact} />
+             <PrivateRouteUser exact path = "/customer/mediacontent" component = {Contact} />
             <PrivateRouteUser exact path = "/customer/about" component = {About} />
-            <PublicRouteUser exact path = "/customer/media" component = {Media} />
+           
             
             <PublicRouteAdmin exact path="/admin/start" component={AdminStart} />
             <PublicRouteAdmin exact path="/admin/login" component={AdminLogin} />
             <PublicRouteAdmin exact path="/admin/forget-password" component={AdminForgetPassword} />
             <PublicRouteAdmin exact path="/admin/new-password/:id" component={AdminNewPassword} />
             <PrivateRouteAdmin exact path="/admin/cms" component={Cms} />
-
-          
-            
-                <PrivateRouteAdmin exact path="/admin/dashboard" component={AdminDashboard} />
-                <PrivateRouteAdmin exact path="/admin/addnewtl" component={AdminNewTeamLeader} />
-                <PrivateRouteAdmin exact path="/admin/addnewtp" component={AdminNewTaxProf} />
-                <PrivateRouteAdmin exact path="/admin/teamleaders" component={AdminTeamLeaderTab} />
-                <PrivateRouteAdmin exact path="/admin/taxprofessionals" component={AdminTaxProfessionalsTab} />
-                <PrivateRouteAdmin exact path="/admin/proposal" component={AdminProposal} />
-                <PrivateRouteAdmin exact path="/admin/queries/:id" component={AdminQueriesRecevied} />
-                <PrivateRouteAdmin exact path="/admin/queryassing/:id" component={AdminQueryAssingment} />
-                <PrivateRouteAdmin exact path="/admin/queriestab" component={AdminQueriesTab} />
-                <PrivateRouteAdmin exact path="/admin/feedback" component={AdminFeedbackTab} />
-                <PrivateRouteAdmin exact path="/admin/paymentstatus" component={AdminPaymentStatusTab} />
-                <PrivateRouteAdmin exact path="/admin/assignment" component={AdminAssignmentTab} />
-                <PrivateRouteAdmin exact path="/admin/edittl/:id" component={AdminEditTL} />
-                <PrivateRouteAdmin exact path="/admin/edittp/:id" component={AdminEditTP} />
-                <PrivateRouteAdmin exact path="/admin/pending/:id" component={AdminPendingRecevived} />
-                <PrivateRouteAdmin exact path="/admin/query_rejection/:id" component={AdminQueryRejection} />
-                <PrivateRouteAdmin exact path="/admin/schedule" component={AdminSchedule} />
-                <PrivateRouteAdmin exact path="/admin/meeting" component={AdminMeetingComponent} />
-                <PrivateRouteAdmin exact path="/admin/chatting/:id" component={AdminChatting} />
-                <PrivateRouteAdmin exact path="/admin/message" component={AdminMessage} />
-                <PrivateRouteAdmin exact path="/admin/view-notification/:id" component={AdminViewNotification} />
-                <PrivateRouteAdmin exact path="/admin/recording" component={AdminRecording} />
-                <PrivateRouteAdmin exact path="/admin/meeting/:id" component={adMeetingComponent} />
-                <PrivateRouteAdmin exact path="/admin/customers" component={Customer} />
-                <PrivateRouteAdmin exact path="/admin/reports" component={adminReport} />
-                <PrivateRouteAdmin exact path= "/admin/adinvoice" component={AdminInvoice}/>
-                <PrivateRouteAdmin exact path="/admin/paydetails/:id" component={AdpayDetails} />
-                <PrivateRouteAdmin exact path = "/admin/reportlist" component = {ReportList} />
-                <PrivateRouteAdmin exact path = "/admin/consalation" component = {Consalation} />
+            <PrivateRouteAdmin exact path="/admin/dashboard" component={AdminDashboard} />
            
-             <PrivateRouteAdmin exact path = "/admin/flash" component = {FlashMessage} />
+            {
+              cms === true ?
+              <>
+              <PrivateRouteAdmin exact path = "/admin/flash" component = {FlashMessage} />
             <PrivateRouteAdmin exact path = "/admin/articles" component = {CmsContent} />
             <PrivateRouteAdmin exact path = "/admin/updates" component = {AdminUpdates} />
             <PrivateRouteAdmin exact path = "/admin/articlesedit/:id" component = {CmsContent} />
@@ -274,16 +266,53 @@ console.log("roel", role)
             <PrivateRouteAdmin exact path = "/admin/faqlist" component = {FaqList} />
             <PrivateRouteAdmin exact path = "/admin/mediagallery" component = {MediaGallery} />
             <PrivateRouteAdmin exact path = "/admin/mediacontent" component = {MediaContent} />
+            <PrivateRouteAdmin exact path = "/admin/flashcontent" component = {FlashContent} />
             <PrivateRouteAdmin exact path = "/admin/flashcontent/:id" component = {FlashContent} />
             <PrivateRouteAdmin exact path = "/admin/faqedit/:id" component = {Faq} />
             <PrivateRouteAdmin exact path = "/admin/faq" component = {Faq} />
             <PrivateRouteAdmin exact path = "/admin/mediatab" component = {MediaTab} />
             <PrivateRouteAdmin exact path = "/admin/videocontent" component = {VideoContent} />
+            <PrivateRouteAdmin exact path = "/admin/mediatext" component = {Mediatextshow} />
+            <PrivateRouteAdmin exact path = "/admin/mediatext/:id" component = {Mediatextshow} />
+            
+              </> : 
+              <>
+           <PrivateRouteAdmin exact path="/admin/addnewtl" component={AdminNewTeamLeader} />
+            <PrivateRouteAdmin exact path="/admin/addnewtp" component={AdminNewTaxProf} />
+            <PrivateRouteAdmin exact path="/admin/teamleaders" component={AdminTeamLeaderTab} />
+            <PrivateRouteAdmin exact path="/admin/taxprofessionals" component={AdminTaxProfessionalsTab} />
+            <PrivateRouteAdmin exact path="/admin/proposal" component={AdminProposal} />
+            <PrivateRouteAdmin exact path="/admin/queries/:id" component={AdminQueriesRecevied} />
+            <PrivateRouteAdmin exact path="/admin/queryassing/:id" component={AdminQueryAssingment} />
+            <PrivateRouteAdmin exact path="/admin/queriestab" component={AdminQueriesTab} />
+            <PrivateRouteAdmin exact path="/admin/feedback" component={AdminFeedbackTab} />
+            <PrivateRouteAdmin exact path="/admin/paymentstatus" component={AdminPaymentStatusTab} />
+            <PrivateRouteAdmin exact path="/admin/assignment" component={AdminAssignmentTab} />
+            <PrivateRouteAdmin exact path="/admin/edittl/:id" component={AdminEditTL} />
+            <PrivateRouteAdmin exact path="/admin/edittp/:id" component={AdminEditTP} />
+            <PrivateRouteAdmin exact path="/admin/pending/:id" component={AdminPendingRecevived} />
+            <PrivateRouteAdmin exact path="/admin/query_rejection/:id" component={AdminQueryRejection} />
+            <PrivateRouteAdmin exact path="/admin/schedule" component={AdminSchedule} />
+            <PrivateRouteAdmin exact path="/admin/meeting" component={AdminMeetingComponent} />
+            <PrivateRouteAdmin exact path="/admin/chatting/:id" component={AdminChatting} />
+            <PrivateRouteAdmin exact path="/admin/message" component={AdminMessage} />
+            <PrivateRouteAdmin exact path="/admin/view-notification/:id" component={AdminViewNotification} />
+            <PrivateRouteAdmin exact path="/admin/recording" component={AdminRecording} />
+            <PrivateRouteAdmin exact path="/admin/meeting/:id" component={adMeetingComponent} />
+            <PrivateRouteAdmin exact path="/admin/customers" component={Customer} />
+            <PrivateRouteAdmin exact path="/admin/reports" component={adminReport} />
+            <PrivateRouteAdmin exact path= "/admin/adinvoice" component={AdminInvoice}/>
+            <PrivateRouteAdmin exact path="/admin/paydetails/:id" component={AdpayDetails} />
+            <PrivateRouteAdmin exact path = "/admin/reportlist" component = {ReportList} />
+            <PrivateRouteAdmin exact path = "/admin/consalation" component = {Consalation} />
+              </>
+            }
             <PublicRouteTL exact path="/teamleader/start" component={TlStart} />
             <PublicRouteTL exact path="/teamleader/login" component={TlLogin} />
             <PublicRouteTL exact path="/teamleader/forget-password" component={TlForgetPassword} />
             <PublicRouteTL exact path="/teamleader/new-password/:id" component={TlNewPassword} />
-                 
+          
+                  
             <PrivateRouteTL exact path="/teamleader/dashboard" component={TlDashboard} />
             <PrivateRouteTL exact path="/teamleader/addnew" component={TlAddNew} />
             <PrivateRouteTL exact path="/teamleader/addteamprof" component={TlAddTeamProf} />
@@ -343,6 +372,7 @@ console.log("roel", role)
         </Router>
       </Provider>
     </div>
+   </>
   );
 }
 

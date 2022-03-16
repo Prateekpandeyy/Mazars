@@ -265,8 +265,8 @@ const CmsCont = () => {
    
          <Collapse in={open2}  unmountOnExit>
            <List component="div" className="myLink22">
-           <ul style={{listStyle : "none", textAlign : "left", 
-           display: "flex", padding: "4px", width: "100px", 
+           <ul style={{listStyle : "none", textAlign : "center", 
+           display: "flex", padding: "4px", width: "150px", 
            flexDirection:"column",  zIndex: "99999"}}>
                 
                       <NavLink 
@@ -278,10 +278,17 @@ const CmsCont = () => {
     </NavLink> 
                    
                     
-                     <NavLink to="/customer/indirect">
+                     <NavLink to="/customer/videogallery">
                      <li className="tabHover">
                    <span className="menu-title" data-i18n="">
               Video Gallery
+                   </span>
+                   </li>
+                   </NavLink>
+                   <NavLink to="/customer/mediacontent">
+                     <li className="tabHover">
+                   <span className="menu-title" data-i18n="">
+                       Media Content
                    </span>
                    </li>
                    </NavLink>

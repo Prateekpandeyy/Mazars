@@ -225,3 +225,17 @@ background-image:url("../ManualImg/loginCover.jpeg");
  margin-right: 10px;
  margin-bottom: 3px;
 }
+.overlayStyleLogin{
+    display: flex;
+    width: 100vw;
+    min-height: 900px;
+    height: 100%;
+    z-index: 999;
+    top:0;
+    left:0;
+    bottom:0;
+    right:0;
+    position: absolute;
+    background-color: rgba(0,0,0,0.1);
+    
+}

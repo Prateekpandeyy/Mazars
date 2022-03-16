@@ -51,7 +51,7 @@ const VideoMedia = () => {
 
       Swal.fire({
           title: "Are you sure?",
-          text: "Want to delete articles? Yes, delete it!",
+          text: "Want to delete video? Yes, delete it!",
           type: "warning",
           showCancelButton: true,
           confirmButtonColor: "#3085d6",
@@ -65,7 +65,7 @@ console.log("response", res)
 if(res.data.code === 1){
   Swal.fire({
     title : "success",
-    html  : "Articles deleted successfully",
+    html  : "Video deleted successfully",
     icon : "success"
   })
   getGalleryData()
@@ -90,7 +90,8 @@ else{
        
         <MyContainer>
         <div className="headingContent">
-        <h4>Media </h4>
+        <h4> Video
+        </h4>
         <button 
     
     className="autoWidthBtn rightAlign my-2" onClick={(e) => {
@@ -101,9 +102,10 @@ else{
          
          {
            galleryData.map((i) => (
-            <div className="galleryBox" onClick = {(e) => playVideo2(i.name)}> 
+            <div className="galleryBox"> 
             
-            <video id={i.id} src={`${baseUrl3}/assets/gallery/${i.name}`} />
+            <video id={i.id} src={`${baseUrl3}/assets/gallery/${i.name}`}
+            onClick = {(e) => playVideo2(i.name)} />
             <h4 className="delIcon">{i.title}</h4> 
           
           <div className="delIcon">

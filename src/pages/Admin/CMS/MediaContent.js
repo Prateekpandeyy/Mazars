@@ -40,6 +40,7 @@ const MediaContent = () => {
       .then((res) => {
         console.log("res", res.data.result)
         setGalleryData(res.data.result)
+        console.log("resMedia", res.data.result)
       })
     }
     let history = useHistory()
@@ -85,7 +86,7 @@ else{
     img.style.transform = "scale(2)";
     img.style.transition = "transform 0.25s ease";
    
-    img.style.zIndex = 99999;
+  
     
     setLarge(true)
    }
@@ -112,9 +113,10 @@ else{
                  
                  {
                    galleryData.map((i) => (
-                    <div className="galleryBox" onClick={() => enLarge(i.id)}> 
+                    <div className="galleryBox"> 
                     
-                    <img id={i.id} src={`${baseUrl3}/assets/gallery/${i.name}`} />
+                    <img id={i.id} src={`${baseUrl3}/assets/gallery/${i.name}`}
+                    onClick={() => enLarge(i.id)} />
                     <h4 className="delIcon">{i.title}</h4> 
                   
                   <div className="delIcon">

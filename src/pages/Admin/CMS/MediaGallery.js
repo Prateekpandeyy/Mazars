@@ -58,7 +58,7 @@ const MediaGallery = () => {
             html : "Image uploaded successfully",
             icon :"success"
           })
-          history.push("/cms/mediatab")
+          history.push("/admin/mediatab")
         }
       })
       console.log("done")
@@ -97,6 +97,7 @@ const MediaGallery = () => {
                   <label className="form-label">Media</label>
                   <input
                 type="file"
+                multiple={true}
                 name="p_upload"
                 ref={register}
                 className="form-control-file"

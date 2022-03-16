@@ -84,6 +84,7 @@ function LoginForm() {
   const [news, getNews] = useState([])
   const [pos,setPos] = useState(0);   
   const [run, setRun] = useState(true);
+  const [overLay, setOverlay] = useState(true)
   let  width = 800
   const myData = localStorage.getItem("myArticles")
    const togglePasssword = () => {
@@ -194,9 +195,15 @@ const styles = {
 };
   return (
     <>
-      <Header noSign="noSign" />
+  {
+    overLay === true ?
+    <div className="overlayStyleLogin"></div> : ""
+  }
+    <div>
+      
+    <Header noSign="noSign" />
      <MyContainer>
- 
+    
   <div style={{width: "100%", marginBottom : "15px", 
   padding: "3px 0px", fontSize: "14px", backgroundColor : "rgb(159 155 155 / 39%)"}}> 
   <h1 style={styles} 
@@ -370,9 +377,9 @@ const styles = {
     </div>
       </MyBox>
       </div>
-    
+     
      </MyContainer>
-      
+    
 <CookieConsent debug = {true}
 location="bottom"
 expires={1}
@@ -381,11 +388,15 @@ buttonStyle = {{borderBottomLeftRadius: "1.75rem",
 backgroundColor : "#0071CE", border: "1px solid #0071CE", color: "#fff"
 , cursor : "pointer", fontSize : "1rem", fontWeight: 500,
 minWidth: "100px", minHeight: "3rem"}}
+onAccept={(e) => {
+  setOverlay(false)
+}}
 >
   This is contains cookies ,please read our cookies policy before login
 </CookieConsent>
 
       <Footer />
+    </div>
     </>
   );
 }

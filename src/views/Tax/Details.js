@@ -8,8 +8,7 @@ import { useHistory, useParams  } from 'react-router';
 import axios from 'axios';
 import { baseUrl } from '../../config/config';
 import { Markup } from 'interweave';
-import {Breadcrumbs, Button, Box, Typography, Table, TableContainer, 
-TableHead, TablePagination, TableBody, TableRow, TableCell } from "@material-ui/core";
+import {Breadcrumbs, Box, Typography } from "@material-ui/core";
 import CommonServices from '../../common/common.js';
 const MyContainer = styled(Box)({
     display : "flex", 
@@ -56,7 +55,7 @@ const Details = () => {
              <Breadcrumbs separator="<" maxItems={3} aria-label="breadcrumb">
   
   <Link underline="hover" color="inherit" to = {`/customer/${linkdata}`}>
-  {CommonServices.capitalizeFirstLetter(linkdata)}
+  {CommonServices.capitalizeFirstLetter(linkdata) + " tax"}
   </Link>
   
   <Typography color="text.primary"> Details</Typography>
