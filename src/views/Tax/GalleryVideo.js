@@ -39,11 +39,11 @@ const GalleryVideo = () => {
             <div className="mainContent222">
              <Breadcrumbs separator="<" maxItems={3} aria-label="breadcrumb">
   
-  <Link underline="hover" color="inherit" to = {`/customer/videogallery`}>
- Gallery
+  <Link underline="hover" color="inherit" to = {`/customer/media`}>
+ Media
   </Link>
   
-  <Typography color="text.primary"> Details</Typography>
+  <Typography color="text.primary"> Album</Typography>
 </Breadcrumbs>
           <h1>My Content</h1>
         <div>

@@ -25,7 +25,8 @@ import servicesImg from './images/services.jpeg';
 import { styled , makeStyles} from "@material-ui/styles";
 import { Markup } from "interweave";
 import $ from 'jquery';
-import CookieConsent from "react-cookie-consent"
+import CookieConsent from "react-cookie-consent";
+
 const Schema = yup.object().shape({
   p_email: yup.string().email("invalid email").required(""),
   p_password: yup.string().required(""),
@@ -87,6 +88,7 @@ function LoginForm() {
   const [overLay, setOverlay] = useState(true)
   let  width = 800
   const myData = localStorage.getItem("myArticles")
+  const cookieEnable = Cookies.get("accept")
    const togglePasssword = () => {
     setPasswordShow(!isPasswordShow)
   };
@@ -193,10 +195,11 @@ const styles = {
   fontSize: "1em",
   right: pos + "px"
 };
+console.log("cookieEnable", cookieEnable)
   return (
     <>
   {
-    overLay === true ?
+    overLay === true && cookieEnable === undefined ?
     <div className="overlayStyleLogin"></div> : ""
   }
     <div>
@@ -380,7 +383,9 @@ const styles = {
      
      </MyContainer>
     
-<CookieConsent debug = {true}
+{
+  cookieEnable ? "" :
+  <CookieConsent debug = {true}
 location="bottom"
 expires={1}
 style={{backgroundColor : "#FFF", color: "#4B4646"}}
@@ -390,11 +395,13 @@ backgroundColor : "#0071CE", border: "1px solid #0071CE", color: "#fff"
 minWidth: "100px", minHeight: "3rem"}}
 onAccept={(e) => {
   setOverlay(false)
+  Cookies.set("accept", "agree")
 }}
 >
   This is contains cookies ,please read our cookies policy before login
 </CookieConsent>
 
+}
       <Footer />
     </div>
     </>

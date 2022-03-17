@@ -174,9 +174,10 @@ const CmsCont = () => {
 
        <li className="nav-item" className="tabHoverLinksubMenu" style={{listStyle : "none",
         height: "20px", minWidth: "100px", display: "flex", justifyContent : "center",
-        alignItems : "center", flexDirection : "column"}}>
+        alignItems : "center", flexDirection : "column"}}  onMouseLeave = {() => handleClick()}>
                  
                  <ListItemButton 
+                
                  onMouseEnter={() => handleClick()}>
            
        
@@ -195,7 +196,7 @@ const CmsCont = () => {
    
          <Collapse in={open}  unmountOnExit>
            <List component="div" className="myLink22">
-           <ul style={{listStyle : "none", textAlign : "left", 
+           <ul style={{listStyle : "none", textAlign : "center", 
            display: "flex", padding: "4px", width: "100px", flexDirection:"column",  zIndex: "99999"}}>
                 
                      <NavLink to = "/customer/direct">
@@ -235,16 +236,10 @@ const CmsCont = () => {
 }} className="tabHoverLink">
      Important Links
     </NavLink>
-    {/* <NavLink 
-    to = {{
-  pathname : "/customer/media",
-  index : 5
-}} className="tabHoverLink">
-     Media Gallery
-    </NavLink> */}
+   
       <li className="nav-item" className="tabHoverLinksubMenu" style={{listStyle : "none",
         height: "20px", minWidth: "100px", display: "flex", justifyContent : "center",
-        alignItems : "center", flexDirection : "column"}}>
+        alignItems : "center", flexDirection : "column"}} onMouseLeave = {() => handleClick2()}>
                  
                  <ListItemButton 
                  onMouseEnter={() => handleClick2()}>
@@ -266,7 +261,7 @@ const CmsCont = () => {
          <Collapse in={open2}  unmountOnExit>
            <List component="div" className="myLink22">
            <ul style={{listStyle : "none", textAlign : "center", 
-           display: "flex", padding: "4px", width: "150px", 
+           display: "flex", padding: "4px", width: "120px", 
            flexDirection:"column",  zIndex: "99999"}}>
                 
                       <NavLink 

@@ -44,6 +44,8 @@
     "lodash": "^4.17.21",
     "moment": "^2.29.1",
     "node-sass": "^4.14.1",
+    "quill-image-compress": "^1.2.22",
+    "quill-image-resize-module": "^3.0.0",
     "react": "^17.0.2",
     "react-alert": "^7.0.2",
     "react-alert-template-basic": "^1.0.0",
