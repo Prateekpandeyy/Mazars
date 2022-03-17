@@ -269,7 +269,7 @@ const CmsCont = () => {
   pathname : "/customer/media",
   index : 5
 }} className="tabHoverLink">
-     Media Gallery
+    Photo Gallery
     </NavLink> 
                    
                     
@@ -283,7 +283,7 @@ const CmsCont = () => {
                    <NavLink to="/customer/mediacontent">
                      <li className="tabHover">
                    <span className="menu-title" data-i18n="">
-                       Media Content
+                       Media news
                    </span>
                    </li>
                    </NavLink>

@@ -51,9 +51,9 @@ const Media = () => {
         <div style={{display : "flex", width: "1000px"}}>
         <Breadcrumbs separator="<" maxItems={3} aria-label="breadcrumb">
   <Link underline="hover" color="inherit" to="/customer/media">
-  Media
+  Media Gallery
   </Link>
-  
+  <Typography color="text.primary">  Photo Gallery</Typography>
   
   </Breadcrumbs></div> 
      

@@ -50,6 +50,9 @@ const Direct = () => {
           {/* <h4> Articles - Direct Tax </h4> */}
           
           <Breadcrumbs separator=">" maxItems={3} aria-label="breadcrumb">
+          <Link underline="hover" color="inherit" to="/customer/direct">
+  Articles
+  </Link>
   <Link underline="hover" color="inherit" to="/customer/direct">
   Direct tax
   </Link>

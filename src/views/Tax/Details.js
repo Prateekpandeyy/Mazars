@@ -52,8 +52,10 @@ const Details = () => {
          {
            data.map((i) => (
             <div className="mainContent222">
-             <Breadcrumbs separator="<" maxItems={3} aria-label="breadcrumb">
-  
+             <Breadcrumbs separator=">" maxItems={3} aria-label="breadcrumb">
+             <Link underline="hover" color="inherit" to="/customer/direct">
+  Articles
+  </Link>
   <Link underline="hover" color="inherit" to = {`/customer/${linkdata}`}>
   {CommonServices.capitalizeFirstLetter(linkdata) + " tax"}
   </Link>

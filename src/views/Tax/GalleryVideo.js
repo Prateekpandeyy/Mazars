@@ -40,12 +40,15 @@ const GalleryVideo = () => {
              <Breadcrumbs separator="<" maxItems={3} aria-label="breadcrumb">
   
   <Link underline="hover" color="inherit" to = {`/customer/media`}>
- Media
+ Media Gallery
+  </Link>
+  <Link underline="hover" color="inherit" to = {`/customer/media`}>
+ Photo Gallery
   </Link>
   
-  <Typography color="text.primary"> Album</Typography>
+  <Typography color="text.primary"> Nature Image(Make your life easy)</Typography>
 </Breadcrumbs>
-          <h1>My Content</h1>
+        
         <div>
         <ImageGallery items={images} 
         height={300}
