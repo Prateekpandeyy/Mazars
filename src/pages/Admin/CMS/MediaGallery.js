@@ -35,17 +35,25 @@ const MediaGallery = () => {
     const { handleSubmit, register, errors, getValues } = useForm();
     const onSubmit = (value) => {
       let formData = new FormData();
-      console.log("sss", value.p_upload.length)
+      let file ; 
       formData.append("title", heading);
-      var uploadImg = value.p_upload;
-    if (uploadImg) {
-      for (var i = 0; i < uploadImg.length; i++) {
-        let file = uploadImg[i];
-        formData.append("upload", file);
-        formData.append("type", "image")
-       
+      formData.append("type", "image")
+      var uploadImg = value.uploadImg;
+      if (uploadImg) {
+        for (var i = 0; i < uploadImg.length; i++) {
+           file = uploadImg[i];
+         
+        }
       }
-    }
+      formData.append("upload_1[]", file);
+    // if (uploadImg) {
+    //   for (var i = 0; i < uploadImg.length; i++) {
+    //     let file = uploadImg[i];
+    //     formData.append("upload", file);
+    //     formData.append("type", "image")
+       
+    //   }
+    // }
       axios({
         method : "POST", 
         url : `${baseUrl}/admin/uploadphoto`,
@@ -96,11 +104,11 @@ const MediaGallery = () => {
                   
                   <label className="form-label">Media</label>
                   <input
-                type="file"
-                multiple={true}
-                name="p_upload"
-                ref={register}
-                className="form-control-file"
+               type="file"
+               name= "uploadImg"
+               ref={register}
+               className="form-control-file manage_file"
+               multiple
               
               />
                   </div>

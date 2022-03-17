@@ -65,12 +65,12 @@ const Direct = () => {
                {
                    data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((i, e) => (
                     <TableRow>
-                    <TableCell>
+                    <TableCell className="tableCellStyle">
                         <Link to = {{
                             pathname : "/customer/details",
                             index : i.id,
                             hash : "direct"
-                        }} style={{fontSize: "16px",}}>
+                        }}>
                    {`${e + 1 } . ${i.heading} ${wirtten}` } <span style={{fontWeight: "bold",  margin:"0 10px"}}>{i.writer}</span>
                   -  {i.publish_date.split("-").reverse().join("-")}
                         </Link>

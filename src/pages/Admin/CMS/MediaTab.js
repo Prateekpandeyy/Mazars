@@ -51,13 +51,13 @@ const MediaTab = () => {
           className="fixedTab"
           >
                         <Tab style={tabIndex == 0 ? myStyle2 : myStyle1} className="tabHover">
-                         Image Gallery
+                       Photo Gallery
                         </Tab>
                         <Tab style={tabIndex == 1 ? myStyle2 : myStyle1} className="tabHover">
-                         Video Gallery
+                         Media Gallery
                         </Tab>
                         <Tab style={tabIndex == 2 ? myStyle2 : myStyle1} className="tabHover">
-                       Media Content
+                       Media News
                         </Tab>
 
                     </TabList>

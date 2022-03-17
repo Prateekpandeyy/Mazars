@@ -141,9 +141,8 @@ const classes = useStyle()
       {
   linkData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((i, e) => (
         <TableRow>
-          <TableCell  onClick={(p) => getData(i)} style={{pointer : "cursor"}}>
-         <span className="tabHover" style={{fontSize: "16px", paddingTop : "0px",
-        paddingBottom : "0px"}}>
+          <TableCell  onClick={(p) => getData(i)}className="tableCellStyle">
+         <span className="tabHover">
     <span className="updatesLink">
      {`${e + 1} . ${i.heading} -    ${i.publish_date.split("-").reverse().join("-")}`}
       </span>
@@ -197,7 +196,7 @@ const classes = useStyle()
 
   
     <TableRow>
-      <TableCell style={{padding: "8px 16px"}}>
+      <TableCell style={{padding: "8px 16px"}} className="tableCellStyle">
       {/* <Markup content = {`<div id="myValue22"> <h6> ${e + 1}</h6> <p>${i.heading} </p>
         <a href=${i.url} target="_blank">${i.url}</a></div>`} /> */}
         {e + 1}

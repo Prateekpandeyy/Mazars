@@ -35,10 +35,10 @@ const MyBox = styled(Box)({
   display: "flex", 
  width: "1000px",
  flexDirection: "column",
- margin: "10px 0px",
+ margin: "0px",
   justifyContent : "space-between",
   alignItems : "center",
-  padding : "10px"
+  padding : "1rem 0 1rem 0"
 })
 const ImgBox = styled(Box)({
 display: "flex",
@@ -232,13 +232,13 @@ console.log("cookieEnable", cookieEnable)
    }
   </h1>
     </div>
-    <h2 style={{textAlign: "left"}}> Mazars Advisory Solutions (MAS) </h2>
-      {/* <h2>
-        Would you like to post a query
-      </h2> */}
+   <span className="loginHeading">
+   <h2> Mazars Advisory Solutions (MAS) </h2>
+   </span>
+    
       <div className="StartPage">
         <div className="mainContent">
-
+        
           <div className="signIn">
             <div className="signBtn">
               <div className="boxOverlay">

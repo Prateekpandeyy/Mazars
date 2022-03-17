@@ -47,6 +47,9 @@ const Indirect = () => {
           <div className="mainContent222">
           
           <Breadcrumbs separator="<" maxItems={3} aria-label="breadcrumb">
+          <Link underline="hover" color="inherit" to="/customer/direct">
+  Articles
+  </Link>
   <Link underline="hover" color="inherit" to="/customer/indirect">
   Indirect tax
   </Link>
@@ -60,7 +63,7 @@ const Indirect = () => {
                {
                    data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((i, e) => (
                     <TableRow>
-                    <TableCell>
+                    <TableCell className="tableCellStyle">
                     <Link to = {{
                             pathname : "/customer/details",
                             index : i.id,

@@ -52,11 +52,14 @@ const MediaContentCustomer = () => {
            <div className="mainContent222">
               <TableContainer>
              <Breadcrumbs separator="<" maxItems={3} aria-label="breadcrumb">
+             <Link underline="hover" color="inherit" to="/customer/media">
+  Media Gallery
+  </Link>
         <Link underline="hover" color="inherit" to={{
           pathname : "/customer/updates",
           index : 2
         }}>
-         Media Content
+       Media News
         </Link>
         
        
@@ -98,14 +101,16 @@ const MediaContentCustomer = () => {
          <div className="StartPageDetails">
          <div className="mainContent222">
          <Breadcrumbs separator="<" maxItems={3} aria-label="breadcrumb">
-        
-        <Link underline="hover" color="inherit" to = {{
-        pathname : "/customer/mediacontent",
-      
-      }}>
-         Media Content
+         <Link underline="hover" color="inherit" to="/customer/media">
+  Media Gallery
+  </Link>
+        <Link underline="hover" color="inherit" to={{
+          pathname : "/customer/updates",
+          index : 2
+        }}>
+       Media News
         </Link>
-        <Typography color="text.primary">Details</Typography>
+        <Typography color="text.primary">{myData.heading}</Typography>
         </Breadcrumbs>
          <Markup content = {`<h4>${myData.heading} </h4> <span>${myData.content}</span>`} />
        </div>
