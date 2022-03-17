@@ -36,16 +36,18 @@ const VideoContent = () => {
     const onSubmit = (value) => {
       let formData = new FormData();
       console.log("sss", value.p_upload.length)
+      let file ; 
       formData.append("title", heading);
-      var uploadImg = value.p_upload;
-    if (uploadImg) {
-      for (var i = 0; i < uploadImg.length; i++) {
-        let file = uploadImg[i];
-        formData.append("upload", file);
-        formData.append("type", "video")
-       
+      formData.append("type", "image");
+      formData.append("date_event", value.date_event)
+      var uploadImg = value.uploadImg;
+      if (uploadImg) {
+        for (var i = 0; i < uploadImg.length; i++) {
+           file = uploadImg[i];
+           formData.append("upload[]", file);
+        }
       }
-    }
+      
       axios({
         method : "POST", 
         url : `${baseUrl}/cms/uploadphoto`,
@@ -91,6 +93,20 @@ const VideoContent = () => {
                     />
                   </div>
                 </div>
+                <div className="row">
+                <div className="col-md-12 col-sm-12">
+                  
+                  <label className="form-label">Date</label>
+                  <input
+               type="date"
+               name= "date_event"
+               ref={register}
+               className="form-control"
+               multiple
+              
+              />
+                  </div>
+                  </div>
                 <div className="row">
                 <div className="col-md-12 col-sm-12">
                   

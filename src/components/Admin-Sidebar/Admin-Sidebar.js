@@ -182,7 +182,7 @@ const classes = useStyle()
   return (
     <>
 {
-  role === "cms" ?
+ adminDashboard && role === "cms" ?
   <>
     <div
         className="main-menu menu-fixed menu-light menu-accordion  menu-shadow "

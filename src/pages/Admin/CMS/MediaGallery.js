@@ -37,15 +37,16 @@ const MediaGallery = () => {
       let formData = new FormData();
       let file ; 
       formData.append("title", heading);
-      formData.append("type", "image")
+      formData.append("type", "image");
+      formData.append("date_event", value.date_event)
       var uploadImg = value.uploadImg;
       if (uploadImg) {
         for (var i = 0; i < uploadImg.length; i++) {
            file = uploadImg[i];
-         
+           formData.append("upload[]", file);
         }
       }
-      formData.append("upload_1[]", file);
+    
     // if (uploadImg) {
     //   for (var i = 0; i < uploadImg.length; i++) {
     //     let file = uploadImg[i];
@@ -102,6 +103,20 @@ const MediaGallery = () => {
                 <div className="row">
                 <div className="col-md-12 col-sm-12">
                   
+                  <label className="form-label">Date</label>
+                  <input
+               type="date"
+               name= "date_event"
+               ref={register}
+               className="form-control"
+               multiple
+              
+              />
+                  </div>
+                  </div>
+                <div className="row">
+                <div className="col-md-12 col-sm-12">
+                  
                   <label className="form-label">Media</label>
                   <input
                type="file"
@@ -112,6 +127,7 @@ const MediaGallery = () => {
               
               />
                   </div>
+            
                   </div>
                 <div className="row">
                   <div className="col-md-12">
