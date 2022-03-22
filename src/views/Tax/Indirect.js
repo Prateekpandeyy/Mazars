@@ -46,7 +46,7 @@ const Indirect = () => {
         <div className="StartPageDetails">
           <div className="mainContent222">
           
-          <Breadcrumbs separator="<" maxItems={3} aria-label="breadcrumb">
+          <Breadcrumbs separator=">" maxItems={3} aria-label="breadcrumb">
           <Link underline="hover" color="inherit" to="/customer/direct">
   Articles
   </Link>
@@ -68,7 +68,7 @@ const Indirect = () => {
                             pathname : "/customer/details",
                             index : i.id,
                             hash : "indirect"
-                        }} style={{fontSize: "16px",}}>
+                        }}>
                     {e + 1} {i.heading} {wirtten} <span style={{fontWeight: "bold",  margin:"0 10px"}}>{i.writer}</span>
                     -  {i.publish_date.split("-").reverse().join("-")}
                         </Link>

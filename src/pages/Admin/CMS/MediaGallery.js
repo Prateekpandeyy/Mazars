@@ -61,6 +61,8 @@ const MediaGallery = () => {
         data : formData
       })
       .then((res) => {
+        let a = res.data
+        console.log("res", a)
         if(res.data.code === 1){
           Swal.fire({
             title :"success",

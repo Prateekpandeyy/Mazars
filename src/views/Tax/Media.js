@@ -49,7 +49,7 @@ const Media = () => {
         
         <div className="mainContent2222">
         <div style={{display : "flex", width: "1000px"}}>
-        <Breadcrumbs separator="<" maxItems={3} aria-label="breadcrumb">
+        <Breadcrumbs separator=">" maxItems={3} aria-label="breadcrumb">
   <Link underline="hover" color="inherit" to="/customer/media">
   Media Gallery
   </Link>
@@ -61,11 +61,15 @@ const Media = () => {
                      
                    galleryData.map((i) => (
                     
-                    <div className="galleryBox" onClick={() => enLarge(i.id)}> 
-                    
-                    <img  id={i.id} src={`${baseUrl3}/assets/gallery/${i.name}`} />
-                    <h4 className="delIcon">{i.title}</h4>
-                  </div>
+                   
+  <Link className="galleryBox" to = {{
+                      pathname : "/customer/videogallery", 
+                      index : i
+                    }}>
+                    <img  id={i.id} key={i.id} src={`${baseUrl3}/assets/gallery/${i.name}`} />
+                  <h4 style={{margin: "5px 10px"}}>{i.title}</h4>
+                  </Link>
+                 
                   
                   ))
                  }

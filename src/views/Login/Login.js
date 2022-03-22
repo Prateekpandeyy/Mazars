@@ -195,7 +195,7 @@ const styles = {
   fontSize: "1em",
   right: pos + "px"
 };
-console.log("cookieEnable", cookieEnable)
+
   return (
     <>
   {

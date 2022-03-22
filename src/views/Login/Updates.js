@@ -256,7 +256,7 @@ const classes = useStyle()
  </div> : 
    <div className="StartPageDetails">
    <div className="mainContent222">
-   <Breadcrumbs separator="<" maxItems={3} aria-label="breadcrumb">
+   <Breadcrumbs separator=">" maxItems={3} aria-label="breadcrumb">
   
   <Link underline="hover" color="inherit" to = {{
   pathname : "/customer/updates",
@@ -264,7 +264,7 @@ const classes = useStyle()
 }}>
    Updates
   </Link>
-  <Typography color="text.primary">Details</Typography>
+  <Typography color="text.primary">{myData.heading}</Typography>
   </Breadcrumbs>
    <Markup content = {`<h4>${myData.heading} </h4> <span>${myData.content}</span>`} />
  </div>

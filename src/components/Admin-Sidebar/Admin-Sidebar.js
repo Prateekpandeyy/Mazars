@@ -25,8 +25,13 @@ import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
 import GroupAddOutlinedIcon from '@mui/icons-material/GroupAddOutlined';
 import { makeStyles } from '@material-ui/core';
-
 import ContactPageOutlinedIcon from '@mui/icons-material/ContactPageOutlined';
+import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined';
+import LinkOutlinedIcon from '@mui/icons-material/LinkOutlined';
+import TipsAndUpdatesOutlinedIcon from '@mui/icons-material/TipsAndUpdatesOutlined';
+import QuizOutlinedIcon from '@mui/icons-material/QuizOutlined';
+import UnsubscribeOutlinedIcon from '@mui/icons-material/UnsubscribeOutlined';
+import PermMediaOutlinedIcon from '@mui/icons-material/PermMediaOutlined';
 function Sidebar({ adminDashboard, custDashboard, TLDashboard, TPDashboard , feedbackNumber}) {
   const [toggleState, setToggleState] = useState(false);
   const [feedbackNumber2, setfeedbackNumber2] = useState();
@@ -220,8 +225,11 @@ const classes = useStyle()
             >
               <li className="nav-item">
               
-                <NavLink to={"/admin/cms"}>
-                <i className="fa"> <span className="dashboardMenu"></span></i>
+                <NavLink to={"/admin/cms"} className={classes.myClassHover}>
+                <i class="">
+                  <ArticleOutlinedIcon className={classes.myTeamleader}
+                  />
+                </i>
     <span className="menu-title" data-i18n="">
      Articles
     </span>
@@ -229,63 +237,69 @@ const classes = useStyle()
               </li>
 
               <li className="nav-item">
+              <NavLink to={"/admin/linklist"} className={classes.myClassHover}>
+                <i class="">
+                  <LinkOutlinedIcon className={classes.myTeamleader}
+                  />
+                </i>
+    <span className="menu-title" data-i18n="">
+    Important Links
+    </span>
+    </NavLink>
+                 
+              </li>
+
+              <li className="nav-item">
+              <NavLink to={"/admin/updates"} className={classes.myClassHover}>
+                <i class="">
+                  <TipsAndUpdatesOutlinedIcon className={classes.myTeamleader}
+                  />
+                </i>
+    <span className="menu-title" data-i18n="">
+   Updates
+    </span>
+    </NavLink>
+                   
+              </li>
+
+              <li className="nav-item">
                
-                 <NavLink to={"/admin/linklist"}>
-                 <i className="fa">
-                  <span className="queryMenu"></span>
+                
+     <NavLink to={"/admin/faqlist"} className={classes.myClassHover}>
+                <i class="">
+                  <QuizOutlinedIcon className={classes.myTeamleader}
+                  />
                 </i>
     <span className="menu-title" data-i18n="">
-  Important Links
+    FAQ
     </span>
     </NavLink>
               </li>
 
               <li className="nav-item">
-             
-                    <NavLink to={"/admin/updates"}>
-                    <i className="fa">
-                  <span className="proposalMenu"></span>
-                </i>
-    <span className="menu-title" data-i18n="">
-  Updates
-    </span>
-    </NavLink>
-              </li>
-
-              <li className="nav-item">
-               
-                 <NavLink to={"/admin/faqlist"}>
-                 <i className="fa">
-                  <span className="paymentMenu"></span>
-                </i>
-    <span className="menu-title" data-i18n="">
-  FAQ
-    </span>
-    </NavLink>
-              </li>
-
-              <li className="nav-item">
-              
-                 <NavLink to={"/admin/flash"}>
-                 <i className="fa">
-                  <span className="assignmentMenu"></span>
+              <NavLink to={"/admin/flash"} className={classes.myClassHover}>
+                <i class="">
+                  <UnsubscribeOutlinedIcon className={classes.myTeamleader}
+                  />
                 </i>
     <span className="menu-title" data-i18n="">
     Flash Updates
     </span>
     </NavLink>
+                 
               </li>
 
               <li className="nav-item">
-              <NavLink to={"/admin/mediatab"}>
-              <i className="fa">
-                  <span className="scheduleMenu"></span>
+            
+              <NavLink to={"/admin/mediatab"} className={classes.myClassHover}>
+                <i class="">
+                  <PermMediaOutlinedIcon className={classes.myTeamleader}
+                  />
                 </i>
     <span className="menu-title" data-i18n="">
-  Media Gallery
+    Media Gallery
     </span>
     </NavLink>
-             
               </li>
 
 

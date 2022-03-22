@@ -36,7 +36,7 @@ const MediaContent = () => {
     }, [])
     const getGalleryData = () => {
     
-      axios.get(`${baseUrl}/cms/getgallarylist?uid=${JSON.parse(userId)}&type="image"`)
+      axios.get(`${baseUrl}/cms/getgallarylist?uid=${JSON.parse(userId)}&type=image`)
       .then((res) => {
         console.log("res", res.data.result)
         setGalleryData(res.data.result)

@@ -38,9 +38,9 @@ const VideoContent = () => {
       console.log("sss", value.p_upload.length)
       let file ; 
       formData.append("title", heading);
-      formData.append("type", "image");
+      formData.append("type", "video");
       formData.append("date_event", value.date_event)
-      var uploadImg = value.uploadImg;
+      var uploadImg = value.p_upload;
       if (uploadImg) {
         for (var i = 0; i < uploadImg.length; i++) {
            file = uploadImg[i];

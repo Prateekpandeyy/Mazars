@@ -1,20 +1,37 @@
-import React from 'react';
-import { AppBar, Toolbar, Button, Typography, TextField, Grid, Box, Container, Card, Paper } from '@material-ui/core';
+import React, {useState} from 'react';
+import { Grid, Box, Container} from '@material-ui/core';
 import {useForm} from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { useHistory} from 'react-router-dom';
 import mazars from "../../assets/images/mazars-logo.png";
-import Select from "react-select";
 import style from './QueryStyle.module.css';
 import Header from "../../components/Header/Header";
 import axios from 'axios';
 import { baseUrl } from "../../config/config";
 import Swal from 'sweetalert2';
+import classNames from 'classnames';
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+const Schema = yup.object().shape({
+    p_email: yup.string().email("invalid email").required(""),
+    p_name: yup.string().required(""),
+    p_message: yup.string().required(""),
+    p_info: yup.string().required(""),
+    acceptTerms: yup.bool()
+    .oneOf([true], 'Accept Ts & Cs is required')
+  });
 const QueryContact = () => {
-    const { handleSubmit, register, errors } = useForm();
+    const [check, setCheck] = useState(true)
+    let history = useHistory()
+    const { handleSubmit, register, errors } = useForm(
+        {
+            resolver: yupResolver(Schema),
+        }
+    );
     
     const onSubmit = (value) => {
+        console.log("data", value.p_info)
         let formData = new FormData();
-        formData.append("enquiry_type", value.info);
+        formData.append("enquiry_type", value.p_info);
         formData.append("name", value.p_name);
         formData.append("email", value.p_email);
         formData.append("message", value.p_message);
@@ -31,6 +48,7 @@ const QueryContact = () => {
                  html : "Your query submitted successfully, our team will contact you soon",
                  icon : "success"
              })
+             history.push("/")
          }
          else{
              Swal.fire({
@@ -60,23 +78,30 @@ const QueryContact = () => {
                                <label className = {style.formFieldLegend}>
                                MAS Enquiry Form
                                </label>
+                              
                               <select 
                                  ref={register}
-                                 name="info"
-                              className={style.formFieldSelect}>
-                                  <option>General enquiries - MAS </option>
-                                  <option>Business Advisory Services - MAS </option>
+                                 name="p_info"
+                                 className={classNames(`form-control ${style.mySelectBox}`, {
+                                    "is-invalid": errors.p_info,
+                                  })}>
+                                     
+                                  <option value="General enquiries - MAS">General enquiries - MAS </option>
+                                  <option value="Business Advisory Services - MAS">Business Advisory Services - MAS </option>
                               </select>
                                </Box>
                               </Grid> 
                               <Grid item lg={12}>
                               <Box className={style.myFormBox}>
                               <input 
+                                type = "text" 
+                                name = "p_name"
                                  ref={register}
                              placeholder = "Type here your name"
-                             className={style.myNameBox}
-                             name = "p_name"
-                             type = "text" />
+                             className={classNames(`form-control ${style.myNameBox}`, {
+                                "is-invalid": errors.p_name,
+                              })}
+                           />
                                   </Box>
                             
                               </Grid> 
@@ -86,7 +111,9 @@ const QueryContact = () => {
                                  ref={register}
                                  name = "p_email"
                              placeholder = "Type here your e-mail address"
-                             className={style.myNameBox}
+                             className={classNames(`form-control ${style.myNameBox}`, {
+                                 "is-invalid" : errors.p_email
+                             })}
                              type = "text" />
                                   </Box>
                             
@@ -101,7 +128,10 @@ const QueryContact = () => {
                                 ref={register}
                                 name = "p_message"
                              placeholder="Type your message here"
-                             className={style.formTextArea}>
+                             className={classNames(`form-control ${style.formTextArea}`,
+                             {
+                                 "is-invalid" : errors.p_message
+                             })}>
 
                              </textarea>
                                </Box>
@@ -109,8 +139,16 @@ const QueryContact = () => {
                               <Grid item lg={12}>
                                <Box className={style.myFormBox}>
                                <div className="form-check">
-  <input style={{width : "1.2rem", height : "1.2rem"}} 
-     ref={register} className="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
+  <input  
+   type="checkbox"
+   id="flexCheckDefault"
+     ref={register}
+     name="acceptTerms" 
+     onChange={(e) => setCheck(!check)}
+     className={classNames(`form-check-input`,
+                             {
+                                 "mainCheckBox" : errors.acceptTerms 
+                             })} />
   <label className = {style.formChoice} for="flexCheckDefault">
 I accept that MAS will process my personal data for the purpose of handling my request.
   </label>
@@ -119,7 +157,7 @@ I accept that MAS will process my personal data for the purpose of handling my r
                               </Grid>
                               <Grid item lg={12}>
                                <Box className={style.myFormBox}>
-                          <button className={style.formButton}>Send</button>
+                          <button type="submit" className={style.formButton}>Send</button>
                                </Box>
                               </Grid> 
                          </form>

@@ -60,7 +60,7 @@ const Details = () => {
   {CommonServices.capitalizeFirstLetter(linkdata) + " tax"}
   </Link>
   
-  <Typography color="text.primary"> Details</Typography>
+  <Typography color="text.primary"> {i.heading}</Typography>
 </Breadcrumbs>
            <div style={{margin: "10px 0"}}>
            <h5> {i.heading} </h5>
