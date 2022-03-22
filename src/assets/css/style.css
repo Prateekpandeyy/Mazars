@@ -594,7 +594,9 @@ th.sortable:hover::after {
   outline: 1px solid red;
   border: 0px;
 }
-
+.customInvalid {
+  border: 1px solid red;
+}
 /* #test.ck-content{
   height: 250px !important;
 }

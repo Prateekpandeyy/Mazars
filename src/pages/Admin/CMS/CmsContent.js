@@ -23,6 +23,7 @@ import {
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { Markup } from 'interweave';
+
 const MyContainer = styled(Container)({
 
 })
@@ -31,12 +32,13 @@ const CmsContent = () => {
     const { handleSubmit, register, errors, getValues } = useForm();
    
     const [stats, setStats] = useState(false)
-    const [det, addDet] = useState();
+    const [det, addDet] = useState("");
     const [heading, setHeading] = useState("")
     const [writer, setWriter] = useState("")
     const [date, setDate] = useState("")
     const [pageto, setTopage] = useState("direct")
     const [editData, setEditData] = useState();
+    const [editorError, setEditorError] = useState(false)
     let history  = useHistory()
     let getId = useParams()
    
@@ -75,40 +77,53 @@ const CmsContent = () => {
        setTopage(e)
    }
    const onSubmit = (e) => {
-      
-       let formData = new FormData();
-       formData.append("type", pageto)
-       formData.append("content", det);
-    {
-      stats === true ?
-      formData.append("status", 1):
-      formData.append("status", 0)
-    }
-       formData.append("heading", heading)
-       formData.append("writer", writer);
-       formData.append("publish_date", date);
-       if(getId.id !== undefined){
-         formData.append("id", getId.id)
-       }
-       axios({
-           method : "POST", 
-           url : `${baseUrl}/cms/setarticles`,
-           data : formData
-       })
-       .then((res) => {
-          if(res.data.code === 1){
-              Swal.fire({
-                  title : "success",
-                  html : "content created successfully",
-                  icon : "success"
-              })
-              history.push("/admin/cms")
-          }
-       })
+     console.log("det", det.length)
+     if(det.length > 1){
+        
+      let formData = new FormData();
+      formData.append("type", pageto)
+      formData.append("content", det);
+   {
+     stats === true ?
+     formData.append("status", 1):
+     formData.append("status", 0)
+   }
+      formData.append("heading", heading)
+      formData.append("writer", writer);
+      formData.append("publish_date", date);
+      if(getId.id !== undefined){
+        formData.append("id", getId.id)
+      }
+      axios({
+          method : "POST", 
+          url : `${baseUrl}/cms/setarticles`,
+          data : formData
+      })
+      .then((res) => {
+         if(res.data.code === 1){
+             Swal.fire({
+                 title : "success",
+                 html : "content created successfully",
+                 icon : "success"
+             })
+             history.push("/admin/cms")
+         }
+      })
+     }
+     else{
+      setEditorError(true)
+     }
    }
    const myLabel = (e) => {
   
     setStats(!stats)
+}
+const getEditValue= (e) => {
+
+  addDet(e)
+  if(e){
+    setEditorError(false)
+  }
 }
 
 /* 
@@ -232,7 +247,13 @@ const CmsContent = () => {
            
                 ></CKEditor> */
                 <ReactQuill
+                ref={register}
+               
+                className={classNames({
+                  "customInvalid" : editorError
+                })}
                 value={det}
+                name="myEditor"
                 modules={ {
                   toolbar: [
                     [{ 'header': '1'}, {'header': '2'}, { 'font': [] }],
@@ -255,7 +276,7 @@ const CmsContent = () => {
                     'link', 'image', 'video'
                   ]
                   
-                } theme="snow" value={det} onChange={addDet}/>}
+                } theme="snow" value={det} onChange={getEditValue}/>}
                  </div>
          </div>
          <div className="row">
