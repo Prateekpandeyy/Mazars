@@ -103,7 +103,7 @@ else{
        
         <MyContainer>
                 <div className="headingContent">
-                <h4>Media </h4>
+                <h4>Photo Gallery </h4>
                 <button 
             
             className="autoWidthBtn rightAlign my-2" onClick={(e) => {
