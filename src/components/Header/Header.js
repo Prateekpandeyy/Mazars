@@ -273,7 +273,7 @@ const CmsCont = () => {
     </NavLink> 
                    
                     
-                     <NavLink to="/customer/videogallery">
+                     <NavLink to="/customer/videolist">
                      <li className="tabHover">
                    <span className="menu-title" data-i18n="">
               Video Gallery
