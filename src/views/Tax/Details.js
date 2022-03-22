@@ -10,6 +10,7 @@ import { baseUrl } from '../../config/config';
 import { Markup } from 'interweave';
 import {Breadcrumbs, Box, Typography } from "@material-ui/core";
 import CommonServices from '../../common/common.js';
+import DownloadIcon from '@mui/icons-material/Download';
 const MyContainer = styled(Box)({
     display : "flex", 
     justifyContent : "center", 
@@ -65,7 +66,12 @@ const Details = () => {
            <div style={{margin: "10px 0"}}>
            <h5> {i.heading} </h5>
             <h6>Writer -  {i.writer} </h6>
-            <h6>Date of publishing -   {i.publish_date.split("-").reverse().join("-")} </h6>
+           <div style={{display: "flex", width: '80%',
+            justifyContent : "space-between", 
+            alignItems: "center"}}>
+           <h6>Date of publishing -   {i.publish_date.split("-").reverse().join("-")} </h6>
+           <DownloadIcon style={{color : "red"}} />
+             </div>
              </div>
      
     <Markup content={i.content} />

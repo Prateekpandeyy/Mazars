@@ -81,6 +81,7 @@ import AdminUpdates from './pages/Admin/CMS/Updates';
 import UpdatesContent from "./pages/Admin/CMS/UpdatesContent";
 import Linklist from "./pages/Admin/CMS/Linklist";
 import FaqList from "./pages/Admin/CMS/FaqList";
+import GroupImage from "./pages/Admin/CMS/GroupImage";
 //TL routes
 import TlStart from './pages/TL/Start/Start'
 import TlLogin from './pages/TL/Login/Login'
@@ -168,6 +169,9 @@ import Mediatextshow from "./pages/Admin/CMS/Mediatextshow";
 import MediaContentCustomer from "./views/Tax/MediaContentCustomer";
 import GalleryVideo from "./views/Tax/GalleryVideo";
 import VideoList from "./views/Tax/VideoList";
+import EditImage from "./pages/Admin/CMS/EditImage";
+import EditVideo from "./pages/Admin/CMS/EditVideo";
+import Groupvideo from "./pages/Admin/CMS/Groupvideo";
 
 // import PayDetails from "./views/PaymentStatus/PayDetails";
 
@@ -276,7 +280,10 @@ console.log("showCms", cms)
             <PrivateRouteAdmin exact path = "/admin/videocontent" component = {VideoContent} />
             <PrivateRouteAdmin exact path = "/admin/mediatext" component = {Mediatextshow} />
             <PrivateRouteAdmin exact path = "/admin/mediatext/:id" component = {Mediatextshow} />
-            
+            <PrivateRouteAdmin exact path = "/admin/imagegallery" component = {GroupImage} />
+            <PrivateRouteAdmin exact path = "/admin/videogallery" component = {Groupvideo} />
+            <PrivateRouteAdmin exact path = "/admin/editimage/:id" component = {EditImage} />
+            <PrivateRouteAdmin exact path = "/admin/editvideo/:id" component = {EditVideo} />
               </> : 
               <>
            <PrivateRouteAdmin exact path="/admin/addnewtl" component={AdminNewTeamLeader} />

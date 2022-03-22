@@ -147,7 +147,7 @@ return (
     
     className="autoWidthBtn rightAlign my-2" onClick={(e) => {
       history.push("/admin/articles")
-    }}>New Articles</button> 
+    }}>New Article</button> 
         </div>
     <Card>
         <CardBody>

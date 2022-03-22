@@ -7,7 +7,8 @@ import axios from 'axios';
 import { baseUrl, baseUrl3 } from '../../../config/config';
 import {DeleteIcon} from "../../../components/Common/MessageIcon";
 import Swal from 'sweetalert2';
-
+import {Link} from 'react-router-dom';
+import {EditQuery} from '../../../components/Common/MessageIcon';
 const MyContainer = styled(Container)({
 
 })
@@ -115,14 +116,26 @@ else{
                    galleryData.map((i) => (
                     <div className="galleryBox"> 
                     
-                    <img id={i.id} src={`${baseUrl3}/assets/gallery/${i.name}`}
-                    onClick={() => enLarge(i.id)} />
-                    <h4 className="delIcon">{i.title}</h4> 
+                    {/* <img id={i.id} src={`${baseUrl3}/assets/gallery/${i.name}`}
+                    onClick={() => enLarge(i.id)} /> */}
+                     <Link style={{display : "flex", height : "80%", overflow : "hidden"}} to = {{
+                      pathname : "/admin/imagegallery", 
+                      index : i
+                    }}>
+                    <img  id={i.id} key={i.id} src={`${baseUrl3}/assets/gallery/${i.name}`} />
+                  <h4 style={{margin: "5px 10px"}}>{i.title}</h4>
+                  </Link>
+                   
                   
                   <div className="delIcon">
-                  <span title="Delete Media" onClick={() => del(i.id)}>
+                  {/* <span title="Delete Media" onClick={() => del(i.id)}>
                    <DeleteIcon />
-                   </span>
+                   </span> */}
+                   <Link 
+                   to={`/admin/editimage/${i.id}`}
+                   >
+                     <EditQuery />
+                     </Link>
                    <h6>
                      {i.created_date}
                    </h6>

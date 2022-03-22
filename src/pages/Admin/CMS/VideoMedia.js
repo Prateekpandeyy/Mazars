@@ -9,6 +9,8 @@ import {DeleteIcon} from "../../../components/Common/MessageIcon";
 import Swal from 'sweetalert2';
 import CloseIcon from '@material-ui/icons/Close';
 import ReactPlayer from "react-player";
+import {EditQuery} from '../../../components/Common/MessageIcon';
+import { Link } from 'react-router-dom';
 const MyContainer = styled(Container)({
 
 })
@@ -103,15 +105,21 @@ else{
          {
            galleryData.map((i) => (
             <div className="galleryBox"> 
-            
+             <Link style={{display : "flex", height : "80%", overflow : "hidden"}} to = {{
+                      pathname : "/admin/videogallery", 
+                      index : i
+                    }}>
             <video id={i.id} src={`${baseUrl3}/assets/gallery/${i.name}`}
-            onClick = {(e) => playVideo2(i.name)} />
+            />
+            </Link>
             <h4 className="delIcon">{i.title}</h4> 
           
           <div className="delIcon">
-          <span title="Delete Media" onClick={() => del(i.id)}>
-           <DeleteIcon />
-           </span>
+          <Link 
+                   to={`/admin/editvideo/${i.id}`}
+                   >
+                     <EditQuery />
+                     </Link>
            <h6>
              {i.created_date}
            </h6>
