@@ -8,6 +8,8 @@ import { useHistory, useParams  } from 'react-router';
 import axios from 'axios';
 import { baseUrl , baseUrl3} from '../../config/config';
 import { Markup } from 'interweave';
+import ReactPlayer from "react-player";
+import CloseIcon from '@material-ui/icons/Close';
 import {Breadcrumbs, Button, Box, Typography, Table, TableContainer, 
 TableHead, TablePagination, TableBody, TableRow, TableCell } from "@material-ui/core";
 const MyContainer = styled(Box)({
@@ -17,30 +19,35 @@ const MyContainer = styled(Box)({
     width: "100%",
     flexDirection : "column"
   })
-const Media = () => {
+const Videogallery = () => {
     const [galleryData, setGalleryData] = useState([])
     const userId = window.localStorage.getItem("adminkey");
     const [large, setLarge] = useState(false)
     const [selected, setSelected] = useState([])
     const [count, setCount] = useState(0)
-    useEffect(() => {
-      getGalleryData()
-    }, [])
-    const getGalleryData = () => {
-    
-      axios.get(`${baseUrl}/customers/getgallery`)
-      .then((res) => {
-        console.log("res", res.data.result)
-        setGalleryData(res.data.result)
-      })
-    }
+    const [videoId, setVideoId] = useState()
+    const [play, isPlay] = useState(false)
     let history = useHistory()
-    let kk = []
-   const enLarge = (e) => {
+    useEffect(() => {
+        getGalleryVideo()
+    }, [])
+   const getGalleryVideo = () => {
+    if(history.location.index){
+     
    
-  history.push("/customer/imagegallery")
+        axios.get(`${baseUrl}/customers/getvideogallery?id=${history.location.index.id}`)
+        .then((res) => {
+         
+          setGalleryData(res.data.result)
+          
+        })
+        }
    }
-  
+   const playVideo2 = (e) => {
+    isPlay(true)
+    setVideoId(`${baseUrl3}/assets/gallery/${e}`)
+  }
+
     return(
         <>
         <Header noSign="noSign" />
@@ -53,7 +60,10 @@ const Media = () => {
   <Link underline="hover" color="inherit" to="/customer/media">
   Media Gallery
   </Link>
-  <Typography color="text.primary">  Photo Gallery</Typography>
+  <Link underline="hover" color="inherit" to="/customer/media">
+  Video Gallery
+  </Link>
+  <Typography color="text.primary">  Video List</Typography>
   
   </Breadcrumbs></div> 
      
@@ -61,14 +71,15 @@ const Media = () => {
                      
                    galleryData.map((i) => (
                     
-                   
-  <Link className="galleryBox" to = {{
-                      pathname : "/customer/imagegallery", 
-                      index : i
-                    }}>
-                    <img  id={i.id} key={i.id} src={`${baseUrl3}/assets/gallery/${i.name}`} />
-                  <h4 style={{margin: "5px 10px"}}>{i.title}</h4>
-                  </Link>
+                   <div className="galleryBox">
+ 
+                               <video 
+                                 onClick = {(e) => playVideo2(i.name)}
+                                 style={{display : "flex", width: "100%"}} id={i.id} src={`${baseUrl3}/assets/gallery/${i.name}`}
+           />
+       
+            <h4 style={{margin: "5px 10px"}}>{i.title}</h4>
+                 </div>
                  
                   
                   ))
@@ -76,8 +87,31 @@ const Media = () => {
               
               </div>
                 </div>
+                {
+          play === true ?
+                
+          <div className="modalBox">
+          <div className="boxContainer">
+          <div className="canBtn"  title="cancel">
+              <h4>Recording Player</h4>
+              <CloseIcon  onClick= {() => isPlay(false)} id="myBtn"/> </div>
+         
+
+         <div className="my2">
+         <ReactPlayer
+           url={videoId}
+           controls={true}
+           playing={true}
+           width='100%'
+           height='100%'
+          />
+             </div>
+          </div>
+     
+    </div> : ""
+        }
                 </MyContainer>
                </>
     )
 }
-export default Media;
+export default Videogallery;

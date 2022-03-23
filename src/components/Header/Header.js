@@ -187,7 +187,7 @@ const CmsCont = () => {
                    <span className="nav-item">
                      Articles
                    </span>
-                   {open ? <ExpandLess /> : <ExpandMore />}
+                  
                 
    
          
@@ -251,7 +251,7 @@ const CmsCont = () => {
                    <span className="nav-item">
                   Media Gallery
                    </span>
-                   {open2 ? <ExpandLess /> : <ExpandMore />}
+                 
                 
    
          

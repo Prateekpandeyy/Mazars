@@ -62,9 +62,13 @@ const VideoList = () => {
                    galleryData.map((i) => (
                     
                    <div className="galleryBox">
- 
-                               <video id={i.id} src={`${baseUrl3}/assets/gallery/${i.name}`}
-            onClick = {(e) => playVideo2(i.name)} />
+ <Link  to = {{
+                      pathname : "/customer/videogallery", 
+                      index : i
+                    }}>
+                               <video style={{display : "flex", width: "100%"}} id={i.id} src={`${baseUrl3}/assets/gallery/${i.name}`}
+           />
+           </Link>
             <h4 style={{margin: "5px 10px"}}>{i.title}</h4>
                  </div>
                  

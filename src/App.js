@@ -172,6 +172,7 @@ import VideoList from "./views/Tax/VideoList";
 import EditImage from "./pages/Admin/CMS/EditImage";
 import EditVideo from "./pages/Admin/CMS/EditVideo";
 import Groupvideo from "./pages/Admin/CMS/Groupvideo";
+import Videogallery from "./views/Tax/VideoGallary";
 
 // import PayDetails from "./views/PaymentStatus/PayDetails";
 
@@ -214,8 +215,9 @@ console.log("showCms", cms)
              <PublicRouteUser exact path = "/customer/indirect" component={Indirect} />
              <PublicRouteUser exact path = "/customer/mediacontent" component={MediaContentCustomer} />
              <PublicRouteUser exact path = "/customer/media" component = {Media} />
-             <PublicRouteUser exact path = "/customer/videogallery" component = {GalleryVideo} />
+             <PublicRouteUser exact path = "/customer/imagegallery" component = {GalleryVideo} />
              <PublicRouteUser exact path = "/customer/videolist" component = {VideoList} />
+             <PublicRouteUser exact path = "/customer/videogallery" component = {Videogallery} />
          <PublicRouteUser exact path = "/customer/details" component={Details} />
      <PublicRouteUser exact path = "/customer/customerquery" component={QueryContact} />
      <PublicRouteUser exact path = "/customer/latestupdates" component={LatestUpdates} />
