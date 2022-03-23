@@ -167,7 +167,7 @@ return (
         history.push("/admin/updatecontent")
       }}>Create message</button> */}
         <div className="headingContent">
-        <h4> Media Content </h4>
+        <h4> Media News </h4>
         <button 
     
     className="autoWidthBtn rightAlign my-2" onClick={(e) => {

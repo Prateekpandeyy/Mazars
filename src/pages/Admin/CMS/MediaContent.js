@@ -9,6 +9,8 @@ import {DeleteIcon} from "../../../components/Common/MessageIcon";
 import Swal from 'sweetalert2';
 import {Link} from 'react-router-dom';
 import {EditQuery} from '../../../components/Common/MessageIcon';
+import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
+import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
 const MyContainer = styled(Container)({
 
 })
@@ -45,60 +47,125 @@ const MediaContent = () => {
       })
     }
     let history = useHistory()
-    const del = (id) => {
+   
+  const del = (e) => {
  
 
-      Swal.fire({
-          title: "Are you sure?",
-          text: "Want to delete articles? Yes, delete it!",
-          type: "warning",
-          showCancelButton: true,
-          confirmButtonColor: "#3085d6",
-          cancelButtonColor: "#d33",
-          confirmButtonText: "Yes, delete it!",
-      }).then((result) => {
-          if (result.value) {
-            axios.get(`${baseUrl}/cms/deleteimage?uid=${JSON.parse(userId)}&id=${id}`)
-            .then((res) => {
+    Swal.fire({
+        title: "Are you sure?",
+        text: "Want to delete articles? Yes, delete it!",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+        if (result.value) {
+          axios.get(`${baseUrl}/cms/removegallery?uid=${JSON.parse(userId)}&id=${e.id}`)
+          .then((res) => {
 console.log("response", res)
 if(res.data.code === 1){
-  Swal.fire({
-    title : "success",
-    html  : "Articles deleted successfully",
-    icon : "success"
-  })
-  getGalleryData()
+Swal.fire({
+  title : "success",
+  html  : "Articles deleted successfully",
+  icon : "success"
+})
+getGalleryData()
 }
 else{
-  Swal.fire({
-    title :"error",
-    html : "Something went wrong , please try again",
-    icon : "error"
-  })
+Swal.fire({
+  title :"error",
+  html : "Something went wrong , please try again",
+  icon : "error"
+})
 }
-            })
-          }
-      });
-  };
-  const enLarge = (e) => {
-    console.log("done", e)
-    let img = document.getElementById(e);
-   if(large === false){
-    img.style.transform = "scale(2)";
-    img.style.transition = "transform 0.25s ease";
-   
-  
+          })
+        }
+    });
+};
+  const columns = [
+    {
+      dataField: "",
+      text: "S.No",
+      formatter: (cellContent, row, rowIndex) => {
+        return rowIndex + 1;
+      },
     
-    setLarge(true)
-   }
-   else if (large === true){
-    img.style.transform = "scale(1)";
-    img.style.margin = "0px";
-    img.style.transition = "transform 0.25s ease"
-    setLarge(false)
-   }
+      headerStyle: () => {
+        return { width : "50px" };
+      },
+    },
+    {
+      dataField: "",
+      text: "Image",
+    
+     
+      formatter: function dateFormat(cell, row) {
+return(
+  <>
+ <Link style={{display : "flex", height : "80%", overflow : "hidden"}} to = {{
+                      pathname : "/admin/imagegallery", 
+                      index : row
+                    }}>
+                    <img  id={row.id} key={row.id} src={`${baseUrl3}/assets/gallery/${row.name}`} 
+                    style={{width: "50px", height: "50px"}} />
+                 
+                  </Link>
+  </>
+) }
+    },
    
-   }
+    {
+      dataField: "created_date",
+      text: "Date",
+      sort: true,
+     
+      formatter: function dateFormat(cell, row) {
+
+        var oldDate = row.created_date;
+        if (oldDate == null) {
+          return null;
+        }
+        return oldDate.toString().split("-").reverse().join("-");
+      },
+    },
+   
+    {
+      dataField: "title",
+      text: "Title",
+     
+    },
+    {
+      dataField : "",
+      text : "Action",
+      formatter : function nameFormatter (cell, row) {
+        return(
+          <>
+              
+           <div style={{display : "flex", width: "70px", alignItems: "center", justifyContent: "space-evenly"}}>
+           <Link 
+                   to={`/admin/editimage/${row.id}`}
+                   >
+                     <EditQuery />
+                     </Link>
+                     <Link style={{display : "flex", height : "80%", overflow : "hidden"}} to = {{
+                      pathname : "/admin/imagegallery", 
+                      index : row
+                    }}>
+
+                          <InsertPhotoIcon className="inprogress" />
+                              
+                  </Link>
+                  <span onClick={() => del(row)}>
+                            <DeleteIcon />
+                            </span>
+           </div>
+            
+          </>
+        )
+      }
+    }
+  ]
     return(
        
         <MyContainer>
@@ -111,41 +178,14 @@ else{
             }}>New Media Gallery</button> 
                 </div>
                 <div className="galleryContainer">
+                <DataTablepopulated 
+                   bgColor="#42566a"
+                   keyField= {"assign_no"}
+                   data={galleryData}
+                   columns={columns}>
+                    </DataTablepopulated>
                  
-                 {
-                   galleryData.map((i) => (
-                    <div className="galleryBox"> 
-                    
-                    {/* <img id={i.id} src={`${baseUrl3}/assets/gallery/${i.name}`}
-                    onClick={() => enLarge(i.id)} /> */}
-                     <Link style={{display : "flex", height : "80%", overflow : "hidden"}} to = {{
-                      pathname : "/admin/imagegallery", 
-                      index : i
-                    }}>
-                    <img  id={i.id} key={i.id} src={`${baseUrl3}/assets/gallery/${i.name}`} />
-                  <h4 style={{margin: "5px 10px"}}>{i.title}</h4>
-                  </Link>
-                   
-                  
-                  <div className="delIcon">
-                  {/* <span title="Delete Media" onClick={() => del(i.id)}>
-                   <DeleteIcon />
-                   </span> */}
-                   <Link 
-                   to={`/admin/editimage/${i.id}`}
-                   >
-                     <EditQuery />
-                     </Link>
-                   <h6>
-                     {i.created_date}
-                   </h6>
-                    </div>
-                 
-                   </div>
-                  
-                  ))
-                 }
-              
+
                 </div>
                 </MyContainer>
              

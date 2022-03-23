@@ -2,11 +2,10 @@ import React , {useState, useEffect} from 'react';
 import Header from "../../components/Header/Header";
 import { styled , makeStyles} from "@material-ui/styles";
 import { Link } from 'react-router-dom';
-import Data from './directData.js';
 import Footer from '../../components/Footer/Footer';
 import { useHistory, useParams  } from 'react-router';
 import axios from 'axios';
-import { baseUrl } from '../../config/config';
+import { baseUrl, baseUrl3 } from '../../config/config';
 import { Markup } from 'interweave';
 import {Breadcrumbs, Box, Typography } from "@material-ui/core";
 import CommonServices from '../../common/common.js';
@@ -43,6 +42,7 @@ const Details = () => {
     })
   }
 }
+
     return(
        <>
         <Header noSign="noSign" />
@@ -64,14 +64,21 @@ const Details = () => {
   <Typography color="text.primary"> {i.heading}</Typography>
 </Breadcrumbs>
            <div style={{margin: "10px 0"}}>
-           <h5> {i.heading} </h5>
-            <h6>Writer -  {i.writer} </h6>
-           <div style={{display: "flex", width: '80%',
+           <div style={{display: "flex", width: '100%',
             justifyContent : "space-between", 
             alignItems: "center"}}>
+           <h5> {i.heading} </h5>
+          <a href={`${baseUrl}/${i.file}`} target="_blank">
+          <DownloadIcon style={{color : "red"}} title="download"/>
+          </a>
+         
+         
+           </div>
+            <h6>Writer -  {i.writer} </h6>
+           
            <h6>Date of publishing -   {i.publish_date.split("-").reverse().join("-")} </h6>
-           <DownloadIcon style={{color : "red"}} />
-             </div>
+         
+            
              </div>
      
     <Markup content={i.content} />

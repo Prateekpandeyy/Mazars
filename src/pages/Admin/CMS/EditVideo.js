@@ -63,7 +63,7 @@ const EditVideo = () => {
       let formData = new FormData();
       let file ; 
       formData.append("title", heading);
-      formData.append("type", "image");
+      formData.append("type", "video");
       formData.append("date_event", value.date_event)
       formData.append("id", getId.id)
       var uploadImg = value.uploadImg;

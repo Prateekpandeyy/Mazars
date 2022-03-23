@@ -11,6 +11,8 @@ import CloseIcon from '@material-ui/icons/Close';
 import ReactPlayer from "react-player";
 import {EditQuery} from '../../../components/Common/MessageIcon';
 import { Link } from 'react-router-dom';
+import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
+import OndemandVideoIcon from '@mui/icons-material/OndemandVideo';
 const MyContainer = styled(Container)({
 
 })
@@ -48,6 +50,90 @@ const VideoMedia = () => {
       })
     }
     let history = useHistory()
+    const columns = [
+      {
+        dataField: "",
+        text: "S.No",
+        formatter: (cellContent, row, rowIndex) => {
+          return rowIndex + 1;
+        },
+      
+        headerStyle: () => {
+          return { width : "50px" };
+        },
+      },
+      {
+        dataField: "",
+        text: "Image",
+      
+       
+        formatter: function dateFormat(cell, row) {
+  return(
+    <>
+   <Link style={{display : "flex", height : "80%", overflow : "hidden"}} to = {{
+                         pathname : "/admin/videogallery", 
+                        index : row
+                      }}>
+                      <video id={row.id} src={`${baseUrl3}/assets/gallery/${row.name}`}
+          style={{width: "50px", height: "50px"}}  />
+                   
+                    </Link>
+    </>
+  ) }
+      },
+     
+      {
+        dataField: "created_date",
+        text: "Date",
+        sort: true,
+       
+        formatter: function dateFormat(cell, row) {
+  
+          var oldDate = row.created_date;
+          if (oldDate == null) {
+            return null;
+          }
+          return oldDate.toString().split("-").reverse().join("-");
+        },
+      },
+     
+      {
+        dataField: "title",
+        text: "Title",
+       
+      },
+      {
+        dataField : "",
+        text : "Action",
+        formatter : function nameFormatter (cell, row) {
+          return(
+            <>
+                
+             <div style={{display : "flex", width: "70px", alignItems: "center", justifyContent: "space-evenly"}}>
+             <Link 
+                     to={`/admin/editvideo/${row.id}`}
+                     >
+                       <EditQuery />
+                       </Link>
+                       <Link style={{display : "flex", height : "80%", overflow : "hidden"}} to = {{
+                        pathname : "/admin/videogallery", 
+                        index : row
+                      }}>
+  
+  <OndemandVideoIcon className="inprogress" />
+                                
+                    </Link>
+                    <span onClick={() => del(row)}>
+                              <DeleteIcon />
+                              </span>
+             </div>
+              
+            </>
+          )
+        }
+      }
+    ]
+    
     const del = (id) => {
  
 
@@ -92,7 +178,7 @@ else{
        
         <MyContainer>
         <div className="headingContent">
-        <h4> Video
+        <h4> Video Gallery
         </h4>
         <button 
     
@@ -100,7 +186,7 @@ else{
       history.push("/admin/videocontent")
     }}>New Media Gallery</button> 
         </div>
-        <div className="galleryContainer">
+        {/* <div className="galleryContainer">
          
          {
            galleryData.map((i) => (
@@ -130,7 +216,17 @@ else{
           ))
          }
       
-        </div>
+        </div> */}
+        <div className="galleryContainer">
+                <DataTablepopulated 
+                   bgColor="#42566a"
+                   keyField= {"assign_no"}
+                   data={galleryData}
+                   columns={columns}>
+                    </DataTablepopulated>
+                 
+
+                </div>
         {
           play === true ?
                 
