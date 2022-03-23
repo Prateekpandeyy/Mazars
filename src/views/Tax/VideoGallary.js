@@ -78,7 +78,10 @@ const Videogallery = () => {
                                  style={{display : "flex", width: "100%"}} id={i.id} src={`${baseUrl3}/assets/gallery/${i.name}`}
            />
        
+            <div style={{display: "flex", width: "100%", justifyContent: "space-between"}}>
             <h4 style={{margin: "5px 10px"}}>{i.title}</h4>
+            <h4>{i.created_date.split(" ")[0].split("-").reverse().join("-")}</h4>
+                </div>
                  </div>
                  
                   
