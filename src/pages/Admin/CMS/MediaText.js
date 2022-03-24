@@ -172,7 +172,7 @@ return (
     
     className="autoWidthBtn rightAlign my-2" onClick={(e) => {
       history.push("/admin/mediatext")
-    }}>New Updates</button>  
+    }}>New Media News</button>  
         </div>
     <Card>
         <CardBody>

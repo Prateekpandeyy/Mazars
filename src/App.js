@@ -258,6 +258,66 @@ console.log("showCms", cms)
             <PublicRouteAdmin exact path="/admin/new-password/:id" component={AdminNewPassword} />
             <PrivateRouteAdmin exact path="/admin/cms" component={Cms} />
             <PrivateRouteAdmin exact path="/admin/dashboard" component={AdminDashboard} />
+          
+            <PublicRouteTL exact path="/teamleader/start" component={TlStart} />
+            <PublicRouteTL exact path="/teamleader/login" component={TlLogin} />
+            <PublicRouteTL exact path="/teamleader/forget-password" component={TlForgetPassword} />
+            <PublicRouteTL exact path="/teamleader/new-password/:id" component={TlNewPassword} />
+          
+                  
+            <PrivateRouteTL exact path="/teamleader/dashboard" component={TlDashboard} />
+            <PrivateRouteTL exact path="/teamleader/addnew" component={TlAddNew} />
+            <PrivateRouteTL exact path="/teamleader/addteamprof" component={TlAddTeamProf} />
+            <PrivateRouteTL exact path="/teamleader/proposal" component={TlProposalTab} />
+            <PrivateRouteTL exact path="/teamleader/addassingment/:id" component={TlAddAssingmentStages} />
+            <PrivateRouteTL exact path="/teamleader/queries/:id" component={TlQueriesRecevied} />
+            <PrivateRouteTL exact path="/teamleader/queryassing/:id" component={TlQueryAssingment} />
+            <PrivateRouteTL exact path="/teamleader/edittp/:id" component={TlEditTP} />
+            <PrivateRouteTL exact path="/teamleader/feedback" component={TlFeedbackTab} />
+            <PrivateRouteTL exact path="/teamleader/paymentstatus" component={TlPaymentStatus} />
+            <PrivateRouteTL exact path="/teamleader/assignment" component={TlAssignmentTab} />
+            <PrivateRouteTL exact path="/teamleader/sendproposal/:id" component={TlSendProposal} />
+            <PrivateRouteTL exact path="/teamleader/queriestab" component={TlQueriesTab} />
+            <PrivateRouteTL exact path="/teamleader/edit-proposal/:id" component={TlEditProposal} />
+            <PrivateRouteTL exact path="/teamleader/pending/:id" component={TlPendingReceived} />
+            <PrivateRouteTL exact path="/teamleader/assignment-form/:id" component={TlAssignmentForm} />
+            <PrivateRouteTL exact path="/teamleader/meeting/:id" component={TlMeetingComponent} />
+            <PrivateRouteTL exact path="/teamleader/view-report/:id" component={TlViewReport} />
+            <PrivateRouteTL exact path="/teamleader/schedule" component={TlSchedule} />
+            <PrivateRouteTL exact path="/teamleader/view-notification/:id" component={TlViewNotification} />
+            <PrivateRouteTL exact path="/teamleader/chatting/:id" component={TlChatting} />
+            <PrivateRouteTL exact path="/teamleader/message" component={TlMessage} />
+            <PrivateRouteTL exact path="/teamleader/recording" component={TlRecording} />
+            <PrivateRouteTL exact path="/teamleader/reports" component={TlReport}/>
+            <PrivateRouteTL exact path="/teamleader/invoice" component={TlInvoice}/>
+            <PrivateRouteTL exact path="/teamleader/tlinvoice" component={TlInvoiceTab}/>
+            <PrivateRouteTL exact path="/teamleader/paydetails/:id" component={TlpayDetails} />
+
+            <PublicRouteTP exact path="/taxprofessional/start" component={TpStart} />
+            <PublicRouteTP exact path="/taxprofessional/login" component={TpLogin} />
+            <PublicRouteTP exact path="/taxprofessional/new-password/:id" component={TpNewPassword} />
+            <PublicRouteTP exact path="/taxprofessional/forget-password" component={TpForgetPassword} />
+            
+            <PrivateRouteTP exact path="/taxprofessional/queries/:id" component={TpQueriesRecevied} />
+            <PrivateRouteTP exact path="/taxprofessional/queriestab" component={TpQueriesTab} />
+            <PrivateRouteTP exact path="/taxprofessional/proposal" component={TpProposalTab} />
+            <PrivateRouteTP exact path="/taxprofessional/sendproposal/:id" component={TpSendProposal} />
+            <PrivateRouteTP exact path="/taxprofessional/edit-proposal/:id" component={TpEditProposal} />
+            <PrivateRouteTP exact path="/taxprofessional/change-password" component={TpChangePassword} />
+            <PrivateRouteTP exact path="/taxprofessional/dashboard" component={TpDashboard} />
+            <PrivateRouteTP exact path ="/taxprofessional/chatting/:id" component = {TpChatting} />
+            <PrivateRouteTP exact path="/taxprofessional/addassingment/:id" component={TpAddAssingmentStages} />
+            <PrivateRouteTP exact path="/taxprofessional/paymentstatus" component={TpPaymentStatus} />
+            <PrivateRouteTP exact path="/taxprofessional/assignment" component={TpAssignmentTab} />
+            <PrivateRouteTP exact path="/taxprofessional/schedule" component={TpSchedule} />
+            <PrivateRouteTP exact path="/taxprofessional/message" component={TpMessage} />
+            <PrivateRouteTP exact path="/taxprofessional/feedback" component={TpFeedbackTab} />
+            <PrivateRouteTP exact path="/taxprofessional/meeting/:id" component={TpMeetingComponent} />
+            <PrivateRouteTP exact path="/taxprofessional/view-notification/:id" component={TpViewNotification} />
+            <PrivateRouteTP exact path="/taxprofessional/recording" component={TpRecording} />
+            <PrivateRouteTP exact path="/taxprofessional/reports" component={TpReport}/>
+            <PrivateRouteTP exact path="/taxprofessional/tpinvoice" component={TpInvoice}/>
+            <PrivateRouteTP exact path="/taxprofessional/paydetails/:id" component={TppayDetails} />
            
             {
               cms === true ?
@@ -318,65 +378,6 @@ console.log("showCms", cms)
             <PrivateRouteAdmin exact path = "/admin/consalation" component = {Consalation} />
               </>
             }
-            <PublicRouteTL exact path="/teamleader/start" component={TlStart} />
-            <PublicRouteTL exact path="/teamleader/login" component={TlLogin} />
-            <PublicRouteTL exact path="/teamleader/forget-password" component={TlForgetPassword} />
-            <PublicRouteTL exact path="/teamleader/new-password/:id" component={TlNewPassword} />
-          
-                  
-            <PrivateRouteTL exact path="/teamleader/dashboard" component={TlDashboard} />
-            <PrivateRouteTL exact path="/teamleader/addnew" component={TlAddNew} />
-            <PrivateRouteTL exact path="/teamleader/addteamprof" component={TlAddTeamProf} />
-            <PrivateRouteTL exact path="/teamleader/proposal" component={TlProposalTab} />
-            <PrivateRouteTL exact path="/teamleader/addassingment/:id" component={TlAddAssingmentStages} />
-            <PrivateRouteTL exact path="/teamleader/queries/:id" component={TlQueriesRecevied} />
-            <PrivateRouteTL exact path="/teamleader/queryassing/:id" component={TlQueryAssingment} />
-            <PrivateRouteTL exact path="/teamleader/edittp/:id" component={TlEditTP} />
-            <PrivateRouteTL exact path="/teamleader/feedback" component={TlFeedbackTab} />
-            <PrivateRouteTL exact path="/teamleader/paymentstatus" component={TlPaymentStatus} />
-            <PrivateRouteTL exact path="/teamleader/assignment" component={TlAssignmentTab} />
-            <PrivateRouteTL exact path="/teamleader/sendproposal/:id" component={TlSendProposal} />
-            <PrivateRouteTL exact path="/teamleader/queriestab" component={TlQueriesTab} />
-            <PrivateRouteTL exact path="/teamleader/edit-proposal/:id" component={TlEditProposal} />
-            <PrivateRouteTL exact path="/teamleader/pending/:id" component={TlPendingReceived} />
-            <PrivateRouteTL exact path="/teamleader/assignment-form/:id" component={TlAssignmentForm} />
-            <PrivateRouteTL exact path="/teamleader/meeting/:id" component={TlMeetingComponent} />
-            <PrivateRouteTL exact path="/teamleader/view-report/:id" component={TlViewReport} />
-            <PrivateRouteTL exact path="/teamleader/schedule" component={TlSchedule} />
-            <PrivateRouteTL exact path="/teamleader/view-notification/:id" component={TlViewNotification} />
-            <PrivateRouteTL exact path="/teamleader/chatting/:id" component={TlChatting} />
-            <PrivateRouteTL exact path="/teamleader/message" component={TlMessage} />
-            <PrivateRouteTL exact path="/teamleader/recording" component={TlRecording} />
-            <PrivateRouteTL exact path="/teamleader/reports" component={TlReport}/>
-            <PrivateRouteTL exact path="/teamleader/invoice" component={TlInvoice}/>
-            <PrivateRouteTL exact path="/teamleader/tlinvoice" component={TlInvoiceTab}/>
-            <PrivateRouteTL exact path="/teamleader/paydetails/:id" component={TlpayDetails} />
-
-            <PublicRouteTP exact path="/taxprofessional/start" component={TpStart} />
-            <PublicRouteTP exact path="/taxprofessional/login" component={TpLogin} />
-            <PublicRouteTP exact path="/taxprofessional/new-password/:id" component={TpNewPassword} />
-            <PublicRouteTP exact path="/taxprofessional/forget-password" component={TpForgetPassword} />
-            
-            <PrivateRouteTP exact path="/taxprofessional/queries/:id" component={TpQueriesRecevied} />
-            <PrivateRouteTP exact path="/taxprofessional/queriestab" component={TpQueriesTab} />
-            <PrivateRouteTP exact path="/taxprofessional/proposal" component={TpProposalTab} />
-            <PrivateRouteTP exact path="/taxprofessional/sendproposal/:id" component={TpSendProposal} />
-            <PrivateRouteTP exact path="/taxprofessional/edit-proposal/:id" component={TpEditProposal} />
-            <PrivateRouteTP exact path="/taxprofessional/change-password" component={TpChangePassword} />
-            <PrivateRouteTP exact path="/taxprofessional/dashboard" component={TpDashboard} />
-            <PrivateRouteTP exact path ="/taxprofessional/chatting/:id" component = {TpChatting} />
-            <PrivateRouteTP exact path="/taxprofessional/addassingment/:id" component={TpAddAssingmentStages} />
-            <PrivateRouteTP exact path="/taxprofessional/paymentstatus" component={TpPaymentStatus} />
-            <PrivateRouteTP exact path="/taxprofessional/assignment" component={TpAssignmentTab} />
-            <PrivateRouteTP exact path="/taxprofessional/schedule" component={TpSchedule} />
-            <PrivateRouteTP exact path="/taxprofessional/message" component={TpMessage} />
-            <PrivateRouteTP exact path="/taxprofessional/feedback" component={TpFeedbackTab} />
-            <PrivateRouteTP exact path="/taxprofessional/meeting/:id" component={TpMeetingComponent} />
-            <PrivateRouteTP exact path="/taxprofessional/view-notification/:id" component={TpViewNotification} />
-            <PrivateRouteTP exact path="/taxprofessional/recording" component={TpRecording} />
-            <PrivateRouteTP exact path="/taxprofessional/reports" component={TpReport}/>
-            <PrivateRouteTP exact path="/taxprofessional/tpinvoice" component={TpInvoice}/>
-            <PrivateRouteTP exact path="/taxprofessional/paydetails/:id" component={TppayDetails} />
             <Route exact path="/*" component={PageNotFound} />
 
           </Switch>

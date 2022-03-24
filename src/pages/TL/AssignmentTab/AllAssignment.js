@@ -263,19 +263,19 @@ const resetData = () => {
       formatter: function dateFormat(cell, row) {
        
         var oldDate1 = row.final_date;
-       
+
         let finalDate , expectedDate;
-        if(oldDate1){
-       finalDate = oldDate1.toString().split("-").reverse().join("-")
+        if(oldDate1 && oldDate1 !== "0000-00-00 00:00:00"){
+       finalDate = oldDate1.split(" ")[0].split("-").reverse().join("-")
         }
-        var oldDate2 = row.created;
-       
-       
+        var oldDate2 = row.Exp_Delivery_Date;
+       console.log("row", row)
+       expectedDate = oldDate2
         if(expectedDate){
          expectedDate= oldDate2.toString().split("-").reverse().join("-")
         }
-        console.log("finalDate", finalDate)
-        console.log("expectedDate", expectedDate)
+        // console.log("finalDate", finalDate)
+        // console.log("expectedDate", expectedDate)
         return(
           <>
           {finalDate ? 

@@ -10,6 +10,7 @@ import { Markup } from 'interweave';
 import {Breadcrumbs, Box, Typography } from "@material-ui/core";
 import CommonServices from '../../common/common.js';
 import DownloadIcon from '@mui/icons-material/Download';
+import DescriptionOutlinedIcon from '@material-ui/icons/DescriptionOutlined';
 const MyContainer = styled(Box)({
     display : "flex", 
     justifyContent : "center", 
@@ -69,7 +70,7 @@ const Details = () => {
             alignItems: "center"}}>
            <h5> {i.heading} </h5>
           <a href={`${baseUrl}/${i.file}`} target="_blank">
-          <DownloadIcon style={{color : "red"}} title="download"/>
+          <DescriptionOutlinedIcon color="secondary" />
           </a>
          
          

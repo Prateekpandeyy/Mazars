@@ -120,12 +120,22 @@ const getFeedback4 = () => {
 const getFeedback2 = () => {
   if(adminDashboard != undefined){
     axios.get(`${baseUrl}/admin/getFeedback?uid=${JSON.parse(adminkey)}&&type=total`).then((res) => {
-setLogo("admin/dashboard")
+      if(role === "cms"){
+        setLogo("/#/admin/cms")
+       }
+       else{
+        setLogo("/#/admin/dashboard")
+       }
       if (res.data.code === 1) {
        
        if(res.data.result != undefined){
          setfeedbackNumber2(res.data.result[0].total)
-         setLogo("/#/admin/dashboard")
+         if(role === "cms"){
+          setLogo("/#/admin/cms")
+         }
+         else{
+          setLogo("/#/admin/dashboard")
+         }
        }
       }
     });

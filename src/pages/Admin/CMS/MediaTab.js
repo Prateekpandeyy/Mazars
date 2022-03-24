@@ -54,7 +54,7 @@ const MediaTab = () => {
                        Photo Gallery
                         </Tab>
                         <Tab style={tabIndex == 1 ? myStyle2 : myStyle1} className="tabHover">
-                         Media Gallery
+                         Video Gallery
                         </Tab>
                         <Tab style={tabIndex == 2 ? myStyle2 : myStyle1} className="tabHover">
                        Media News

@@ -91,10 +91,10 @@ function RejectedModal({
                   <Spinner color="primary" />
                   :
                   <div>
-                    <button type="submit" className="btn btn-primary">
+                    <button type="submit" className="customBtn">
                       Submit
                     </button>
-                    <Button color="primary"className="btn btn-danger ml-2" onClick={toggleNested}>Cancel</Button>
+                    <button color="primary"className="dangerBtn mx-2" onClick={toggleNested}>Cancel</button>
                   </div>
               }
             </div>

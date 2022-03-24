@@ -118,7 +118,7 @@ return(
     {
       dataField: "created_date",
       text: "Date",
-      sort: true,
+   
      
       formatter: function dateFormat(cell, row) {
 
@@ -126,7 +126,8 @@ return(
         if (oldDate == null) {
           return null;
         }
-        return oldDate.toString().split("-").reverse().join("-");
+   
+        return oldDate.split(" ")[0].split("-").reverse().join("-");
       },
     },
    
@@ -175,7 +176,7 @@ return(
             
             className="autoWidthBtn rightAlign my-2" onClick={(e) => {
               history.push("/admin/mediagallery")
-            }}>New Media Gallery</button> 
+            }}>New Photo Gallery</button> 
                 </div>
                 <div className="galleryContainer">
                 <DataTablepopulated 

@@ -93,7 +93,7 @@ const VideoMedia = () => {
           if (oldDate == null) {
             return null;
           }
-          return oldDate.toString().split("-").reverse().join("-");
+          return oldDate.split(" ")[0].split("-").reverse().join("-");
         },
       },
      
@@ -184,7 +184,7 @@ else{
     
     className="autoWidthBtn rightAlign my-2" onClick={(e) => {
       history.push("/admin/videocontent")
-    }}>New Media Gallery</button> 
+    }}>New Video Gallery</button> 
         </div>
         {/* <div className="galleryContainer">
          

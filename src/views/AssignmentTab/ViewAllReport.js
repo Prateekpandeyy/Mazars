@@ -180,7 +180,8 @@ function ViewReport({
                 </td>
                
   {p.stages_type === "2" ?
-  <>
+ <div className="px-2">
+    <>
    {
         p.status === "1" ?
           <div style={{ cursor: "pointer" }} title="Client Accepted">
@@ -189,6 +190,7 @@ function ViewReport({
               style={{
                 color: "blue",
                 fontSize: "16px",
+              
               }}
             ></i>
           </div> :""}
@@ -231,7 +233,8 @@ function ViewReport({
         <PublishIcon color="secondary" />
     </div> : ""}
     </div>
-    </> :""}</> : null}
+    </> :""}</>
+   </div> : null}
                   </tr>
                 </tbody>
               ))
