@@ -77,7 +77,7 @@ const FlashContent = () => {
           
              Swal.fire({
                  message : "success", 
-                 html : "Message added successfully",
+                 html : "Flash Update added successfully",
                  icon : "success"
              })
              history.push("/admin/flash")
@@ -115,7 +115,7 @@ const FlashContent = () => {
               
             </Col>
             <Col md="4">
-              <h4>Flash Message</h4>
+              <h4>Flash Updates</h4>
             </Col>
             </Row>
         </div>
@@ -134,7 +134,7 @@ const FlashContent = () => {
      ref={register({required : true})} />
     </div>
 <div className="col-md-12">
-    <label>Message </label>
+    <label>Content</label>
     <CKEditor
              id="test"
                      editor={ ClassicEditor }
@@ -156,7 +156,7 @@ const FlashContent = () => {
  
 <span style={{margin : "10px 0"}}>
 <input type="checkbox" style={{margin : "10px 0px"}} name="hide" checked = {stats} id="hide" onChange= {(e) => myLabel(e)}></input>
-<label htmlFor="hide" style={{margin : "10px"}}> Visible</label>
+<label htmlFor="hide" style={{margin : "10px"}}> Publish</label>
 </span>
          </div>
          <div className="col-md-12">

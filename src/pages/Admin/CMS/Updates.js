@@ -124,7 +124,7 @@ const Updates = () =>{
 
       Swal.fire({
           title: "Are you sure?",
-          text: "Want to delete query? Yes, delete it!",
+          text: "Want to delete update? Yes, delete it!",
           type: "warning",
           showCancelButton: true,
           confirmButtonColor: "#3085d6",
@@ -138,7 +138,7 @@ console.log("response", res)
 if(res.data.code === 1){
   Swal.fire({
     title : "success",
-    html  : "Articles deleted successfully",
+    html  : "Update deleted successfully",
     icon : "success"
   })
   getList()
@@ -159,11 +159,7 @@ return (
 
 <MyContainer>
      
-     {/* <button 
-    
-      className="autoWidthBtn rightAlign my-2" onClick={(e) => {
-        history.push("/admin/updatecontent")
-      }}>Create message</button> */}
+   
         <div className="headingContent">
         <h4> Updates </h4>
         <button 

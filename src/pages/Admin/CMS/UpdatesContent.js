@@ -72,7 +72,7 @@ const UpdatesContent = () => {
           if(res.data.code === 1){
               Swal.fire({
                   title : "success",
-                  html : "content created successfully",
+                  html : "Update created successfully",
                   icon : "success"
               })
               history.push("/admin/updates")
@@ -137,7 +137,7 @@ const UpdatesContent = () => {
          </div>
          <div className="row">
              <div className="col-md-12">
-             <label className="form-label">Pages</label> </div>
+             <label className="form-label">Content</label> </div>
              
              <div className="col-md-12">
              <CKEditor

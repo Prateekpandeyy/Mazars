@@ -68,7 +68,7 @@ const Faq = () => {
            if(res.data.code === 1){
                Swal.fire({
                    title : "success",
-                   html : "content created successfully",
+                   html : "Faq updated successfully",
                    icon : "success"
                })
                history.push("/admin/faqlist")
@@ -107,7 +107,7 @@ const Faq = () => {
          
            <div className="row">
                <div className="col-md-12">
-               <label className="form-label">Pages</label> </div>
+               <label className="form-label">Content</label> </div>
                
                <div className="col-md-12">
                <CKEditor
@@ -126,31 +126,7 @@ const Faq = () => {
                   } }
            
                 ></CKEditor>
-                {/* <ReactQuill
-                value={det}
-                modules={ {
-                  toolbar: [
-                    [{ 'header': '1'}, {'header': '2'}, { 'font': [] }],
-                    [{size: []}],
-                    ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-                    [{'list': 'ordered'}, {'list': 'bullet'}, 
-                     {'indent': '-1'}, {'indent': '+1'}],
-                    ['link', 'image', 'video'],
-                    ['clean']
-                  ],
-                  clipboard: {
-                    // toggle to add extra line breaks when pasting HTML:
-                    matchVisual: false,
-                  }}}
-                formats={
-                  [
-                    'header', 'font', 'size',
-                    'bold', 'italic', 'underline', 'strike', 'blockquote',
-                    'list', 'bullet', 'indent',
-                    'link', 'image', 'video'
-                  ]
-                  
-                } theme="snow" value={det} onChange={addDet}/> */}
+               
                    </div>
            </div>
          

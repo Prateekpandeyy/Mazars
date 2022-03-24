@@ -91,7 +91,7 @@ if(getId.id){
       if(res.data.code === 1){
           Swal.fire({
               title : "success",
-              html : "content created successfully",
+              html : "Link created successfully",
               icon : "success"
           })
           history.push("/admin/linklist")

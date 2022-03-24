@@ -159,26 +159,33 @@ const CmsCont = () => {
   const [open, setOpen] = useState(false)
   const [open2, setOpen2] = useState(false)
   let history = useHistory()
-  const handleClick = () => {
-
-    setOpen(!open);
+  const handleClickOn = () => {
+    setOpen(false);
   };
-  const handleClick2 = () => {
+  const handleClickOff = () => {
 
-    setOpen2(!open2);
+    setOpen(true);
+  };
+  const handleClickOn2 = () => {
+
+    setOpen2(false);
+  };
+  const handleClickOff2 = () => {
+
+    setOpen2(true);
   };
  
   return(
     <>
 <div className="clientSubMenu">
 
-       <li className="nav-item" className="tabHoverLinksubMenu" style={{listStyle : "none",
-        height: "20px", minWidth: "100px", display: "flex", justifyContent : "center",
-        alignItems : "center", flexDirection : "column"}}  onMouseLeave = {() => handleClick()}>
+       <li className="nav-item tabHoverLinksubMenu"
+       style={{listStyle : "none",  height : "40px"}}  onMouseLeave = {() => handleClickOn()}
+     >
                  
                  <ListItemButton 
                 
-                 onMouseEnter={() => handleClick()}>
+                 onMouseEnter={() => handleClickOff()}>
            
        
    
@@ -196,11 +203,10 @@ const CmsCont = () => {
    
          <Collapse in={open}  unmountOnExit>
            <List component="div" className="myLink22">
-           <ul style={{listStyle : "none", textAlign : "left", 
-           display: "flex", padding: "6px", width: "100px", flexDirection:"column",  zIndex: "99999"}}>
+           <ul style={{listStyle : "none", }}>
                 
                      <NavLink to = "/customer/direct">
-                     <li className="tabHover">
+                     <li className="tabHover mx-1">
                    <span className="menu-title" data-i18n="">
                   Direct Tax
                    </span>
@@ -209,7 +215,7 @@ const CmsCont = () => {
                    
                     
                      <NavLink to="/customer/indirect">
-                     <li className="tabHover">
+                     <li className="tabHover mx-1">
                    <span className="menu-title" data-i18n="">
                 Indirect Tax
                    </span>
@@ -237,12 +243,12 @@ const CmsCont = () => {
      Important Links
     </NavLink>
    
-      <li className="nav-item" className="tabHoverLinksubMenu" style={{listStyle : "none",
-        height: "20px", minWidth: "100px", display: "flex", justifyContent : "center",
-        alignItems : "center", flexDirection : "column"}} onMouseLeave = {() => handleClick2()}>
+      <li className="nav-item tabHoverLinksubMenu" 
+        style={{listStyle : "none",  height : "40px"}}
+         onMouseLeave = {() => handleClickOn2()}>
                  
                  <ListItemButton 
-                 onMouseEnter={() => handleClick2()}>
+                 onMouseEnter={() => handleClickOff2()}>
            
        
    
@@ -260,28 +266,30 @@ const CmsCont = () => {
    
          <Collapse in={open2}  unmountOnExit>
            <List component="div" className="myLink22">
-           <ul style={{listStyle : "none", textAlign : "left", 
-           display: "flex", padding: "6px", width: "120px", 
-           flexDirection:"column",  zIndex: "99999"}}>
+           <ul style={{listStyle : "none"}}>
                 
                       <NavLink 
     to = {{
   pathname : "/customer/media",
   index : 5
 }} className="tabHoverLink">
-    Photo Gallery
+   <li className="tabHover mx-1">
+                   <span className="menu-title" data-i18n="">
+               Photo Gallery
+                   </span>
+                   </li>
     </NavLink> 
                    
                     
                      <NavLink to="/customer/videolist">
-                     <li className="tabHover">
+                     <li className="tabHover mx-1">
                    <span className="menu-title" data-i18n="">
               Video Gallery
                    </span>
                    </li>
                    </NavLink>
                    <NavLink to="/customer/mediacontent">
-                     <li className="tabHover">
+                     <li className="tabHover mx-1">
                    <span className="menu-title" data-i18n="">
                        Media news
                    </span>

@@ -139,11 +139,7 @@ return (
         history.push("/admin/links")
       }}>New Links</button>
         </div>
-     {/* <button 
     
-      className="autoWidthBtn rightAlign my-2" onClick={(e) => {
-        history.push("/admin/links")
-      }}>Add Links</button> */}
     <Card>
         <CardBody>
         <DataTablepopulated 

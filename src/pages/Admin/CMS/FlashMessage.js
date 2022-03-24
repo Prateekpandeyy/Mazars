@@ -66,7 +66,7 @@ const FlashMessage = () => {
           if(res.data.code === 1){
               Swal.fire({
                   title : "success",
-                  html : "message deleted successfully", 
+                  html : "Flash Update deleted successfully", 
                   icon : "success"
               })
               getList()

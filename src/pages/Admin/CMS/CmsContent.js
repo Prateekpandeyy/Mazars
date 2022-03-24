@@ -227,7 +227,7 @@ const getEditValue= (e) => {
        
          <div className="row">
              <div className="col-md-12">
-             <label className="form-label">Pages</label> </div>
+             <label className="form-label">Content</label> </div>
              
              <div className="col-md-12">
              {/* <CKEditor

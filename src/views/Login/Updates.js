@@ -185,7 +185,7 @@ const classes = useStyle()
    <TableRow>
      <TableCell>S.No</TableCell>
      <TableCell>Heading</TableCell>
-     <TableCell>Link</TableCell>
+     <TableCell>Url</TableCell>
    </TableRow>
    </TableHead>
       <TableBody>

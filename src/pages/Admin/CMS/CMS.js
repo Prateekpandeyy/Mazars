@@ -101,7 +101,7 @@ const Cms = () =>{
 
       Swal.fire({
           title: "Are you sure?",
-          text: "Want to delete articles? Yes, delete it!",
+          text: "Want to delete article? Yes, delete it!",
           type: "warning",
           showCancelButton: true,
           confirmButtonColor: "#3085d6",
@@ -115,7 +115,7 @@ console.log("response", res)
 if(res.data.code === 1){
   Swal.fire({
     title : "success",
-    html  : "Articles deleted successfully",
+    html  : "Article deleted successfully",
     icon : "success"
   })
   getList()

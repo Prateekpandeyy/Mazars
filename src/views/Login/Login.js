@@ -207,6 +207,7 @@ const styles = {
     <Header noSign="noSign" />
      <MyContainer>
     
+ {news.length > 0 ?
   <div style={{width: "100%", marginBottom : "15px", 
   padding: "3px 0px", fontSize: "14px", backgroundColor : "rgb(159 155 155 / 39%)"}}> 
   <h1 style={styles} 
@@ -217,10 +218,7 @@ const styles = {
      news.map((i) => (
 
 <span style={{padding: "0px 20px", fontSize: "16px", color: "464b4b"}}> 
-{/* <Link className="tabHover" to = {{
-  pathname : "/customer/latestupdates",
-  index : i.id
-}}> */}
+
  <Link className="tabHover" to = {{
   pathname : "/customer/latestupdates",
   index : i.id
@@ -231,9 +229,9 @@ const styles = {
      ))
    }
   </h1>
-    </div>
+    </div> : ""}
    <span className="loginHeading">
-   <h2> Mazars Advisory Solutions (MAS) </h2>
+   <h2 className = "my-3"> Mazars Advisory Solutions (MAS) </h2>
    </span>
     
       <div className="StartPage">
