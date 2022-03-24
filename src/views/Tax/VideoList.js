@@ -47,7 +47,7 @@ const VideoList = () => {
         <MyContainer>
         <div className="StartPageDetails">
         
-        <div className="mainContent2222">
+        <div className="mainContentvideo">
         <div style={{display : "flex", width: "1000px"}}>
         <Breadcrumbs separator=">" maxItems={3} aria-label="breadcrumb">
   <Link underline="hover" color="inherit" to="/customer/media">
@@ -69,7 +69,10 @@ const VideoList = () => {
                                <video style={{display : "flex", width: "100%"}} id={i.id} src={`${baseUrl3}/assets/gallery/${i.name}`}
            />
            </Link>
-            <h4 style={{margin: "5px 10px"}}>{i.title}</h4>
+           <div style={{display: "flex", padding: "5px 10px", width: "100%", justifyContent: "space-between"}}>
+            <h4>{i.title}</h4>
+            <h4>{i.created_date.split(" ")[0].split("-").reverse().join("-")}</h4>
+                </div>
                  </div>
                  
                   
@@ -102,6 +105,7 @@ const VideoList = () => {
     </div> : ""
         }
                 </MyContainer>
+                <Footer />
                </>
     )
 }

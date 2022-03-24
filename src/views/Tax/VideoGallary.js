@@ -60,7 +60,7 @@ const Videogallery = () => {
   <Link underline="hover" color="inherit" to="/customer/media">
   Media Gallery
   </Link>
-  <Link underline="hover" color="inherit" to="/customer/media">
+  <Link underline="hover" color="inherit" to="/customer/videolist">
   Video Gallery
   </Link>
   <Typography color="text.primary">  Video List</Typography>

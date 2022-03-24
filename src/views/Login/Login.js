@@ -223,7 +223,7 @@ const styles = {
   pathname : "/customer/latestupdates",
   index : i.id
                         }}>
-{i.heading} &nbsp;|
+{i.heading} 
 </Link> </span> 
 
      ))

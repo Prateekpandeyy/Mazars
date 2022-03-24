@@ -48,7 +48,7 @@ const useStyle = makeStyles({
 function Updates() {
  
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5)
+  const [rowsPerPage, setRowsPerPage] = useState(10)
   const [linkData, setLinkData] = useState([])
   const [showData, setShowData] = useState(false)
   const [updates, isUpdates] = useState(false)
@@ -154,7 +154,7 @@ const classes = useStyle()
       </TableBody>
     </Table>
    {
-     linkData.length > 4 ?
+     linkData.length > 10 ?
      <TablePagination 
      rowsPerPageOptions = {[5, 10, 15, 20, 25]}
      count = {linkData.length}
@@ -183,8 +183,8 @@ const classes = useStyle()
     <Table>
     <TableHead>
    <TableRow>
-     <TableCell>S.No</TableCell>
-     <TableCell>Heading</TableCell>
+     <TableCell style= {{width : "50px"}}>S.No</TableCell>
+     <TableCell style={{width : "400px"}}>Heading</TableCell>
      <TableCell>Url</TableCell>
    </TableRow>
    </TableHead>
@@ -236,7 +236,7 @@ const classes = useStyle()
    }
     </> : "" }
     {
-      linkData.length > 4 ?
+      linkData.length > 10 ?
       <TablePagination 
         rowsPerPageOptions = {[5, 10, 15, 20, 25]}
         count = {linkData.length}

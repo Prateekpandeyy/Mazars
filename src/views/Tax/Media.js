@@ -67,7 +67,10 @@ const Media = () => {
                       index : i
                     }}>
                     <img  id={i.id} key={i.id} src={`${baseUrl3}/assets/gallery/${i.name}`} />
-                  <h4 style={{margin: "5px 10px"}}>{i.title}</h4>
+                    <div style={{display: "flex", padding: "5px 10px", width: "100%", justifyContent: "space-between"}}>
+            <h4>{i.title}</h4>
+            <h4>{i.created_date.split(" ")[0].split("-").reverse().join("-")}</h4>
+                </div>
                   </Link>
                  
                   
@@ -77,6 +80,7 @@ const Media = () => {
               </div>
                 </div>
                 </MyContainer>
+                <Footer />
                </>
     )
 }

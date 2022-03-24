@@ -18,7 +18,7 @@ const MyContainer = styled(Box)({
   })
 const Indirect = () => {
     const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(5)
+    const [rowsPerPage, setRowsPerPage] = useState(10)
     const [data, setData] = useState([])
     let wirtten = "-"
     const onChangePage = (event, nextPage) => {
@@ -80,7 +80,7 @@ const Indirect = () => {
             </TableBody>
         </Table>
        {
-           data.length > 4 ?
+           data.length > 10 ?
            <TablePagination 
            rowsPerPageOptions = {[5, 10, 15, 20, 25]}
            count = {data.length}

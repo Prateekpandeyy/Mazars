@@ -52,7 +52,7 @@ const Details = () => {
         <div className="StartPageDetails">
          {
            data.map((i) => (
-            <div className="mainContent222">
+            <div className="mainContentDetails">
              <Breadcrumbs separator=">" maxItems={3} aria-label="breadcrumb">
              <Link underline="hover" color="inherit" to="/customer/direct">
   Articles

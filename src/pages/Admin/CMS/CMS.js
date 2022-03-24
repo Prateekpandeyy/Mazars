@@ -18,6 +18,7 @@ const MyContainer = styled(Container)({
 })
 const Cms = () =>{ 
   const [list, setList] = useState([])
+  const [check, setCheck] = useState(true)
     const userId = window.localStorage.getItem("adminkey");
     let history = useHistory()
     useEffect(() => {
@@ -33,8 +34,31 @@ const Cms = () =>{
        }
       })
     }
+    const myShowValue = (e, row) => {
+      console.log("etarget", e.target.checked)
+        if(e.target.checked === true){
 
-    const columns = [
+            
+            axios.get(`${baseUrl}/cms/setarticlestatus?uid=${JSON.parse(userId)}&id=${row.id}&status=0`)
+       .then((res) => {
+           console.log("res", res)
+           if(res.data.result === 1){
+             setCheck(true)
+           }
+       })
+        }
+        else{
+           
+            axios.get(`${baseUrl}/cms/setarticlestatus?uid=${JSON.parse(userId)}&id=${row.id}&status=1`)
+            .then((res) => {
+                console.log("res", res)
+                setCheck(false)
+            })
+        }
+          
+     
+  }
+      const columns = [
       {
         dataField: "",
         text: "S.No",
@@ -81,6 +105,7 @@ const Cms = () =>{
         formatter : function CmsAction(cell, row) {
          return(
          <>
+           <div style={{display : "flex", justifyContent : "space-evenly"}}>
           <Link to={`/admin/articlesedit/${row.id}`}>
          <span title="Edit Articles">
          <EditQuery />
@@ -91,6 +116,28 @@ const Cms = () =>{
        <DeleteIcon />
     </span>
 
+    {
+                  row.status == "1" ?
+                  <div>
+                  <label class="switch" onChange= {(e) => myShowValue(e, row)}>
+    <input type="checkbox"  defaultChecked/>
+    <span class="slider round"></span>
+  </label>
+  
+                  </div> :
+                  ""
+                }
+                {
+                  row.status == "0" ?
+                  <div>
+                  <label class="switch" onChange= {(e) => myShowValue(e, row)}>
+    <input type="checkbox"  />
+    <span class="slider round"></span>
+  </label>
+  
+                  </div> : ""
+                }
+                </div>
          </>
          )
         }
@@ -136,11 +183,7 @@ return (
 
 <MyContainer>
    
-     {/* <button 
-    
-      className="autoWidthBtn rightAlign my-2" onClick={(e) => {
-        history.push("/admin/articles")
-      }}>Add Articles</button> */}
+  
         <div className="headingContent">
         <h4>Articles </h4>
         <button 
