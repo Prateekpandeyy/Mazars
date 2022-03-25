@@ -78,7 +78,7 @@ const UpdatesContent = () => {
                   html : `${message}`,
                   icon : "success"
               })
-              history.push("/admin/updates")
+              history.push("/cms/updates")
           }
        })
    }

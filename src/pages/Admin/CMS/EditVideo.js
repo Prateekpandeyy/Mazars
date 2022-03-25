@@ -97,7 +97,7 @@ const EditVideo = () => {
             html : "Video Gallery Update successfully",
             icon :"success"
           })
-          history.push("/admin/mediatab")
+          history.push("/cms/mediatab")
         }
       })
      

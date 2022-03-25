@@ -118,7 +118,7 @@ return(
          return(
          <>
            <div style={{display : "flex", justifyContent : "space-evenly"}}>
-          <Link to={`/admin/articlesedit/${row.id}`}>
+          <Link to={`/cms/articlesedit/${row.id}`}>
          <span title="Edit Articles">
          <EditQuery />
          </span>
@@ -201,7 +201,7 @@ return (
         <button 
     
     className="autoWidthBtn rightAlign my-2" onClick={(e) => {
-      history.push("/admin/articles")
+      history.push("/cms/articles")
     }}>New Article</button> 
         </div>
     <Card>

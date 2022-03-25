@@ -81,7 +81,7 @@ Swal.fire({
                     {/* <img id={i.id} src={`${baseUrl3}/assets/gallery/${i.name}`}
                     onClick={() => enLarge(i.id)} /> */}
                      <Link style={{display : "flex", height : "80%", overflow : "hidden"}} to = {{
-                      pathname : "/admin/imagegallery", 
+                      pathname : "/cms/imagegallery", 
                       index : i
                     }}>
                   <video id={i.id} src={`${baseUrl3}/assets/gallery/${i.name}`}></video>

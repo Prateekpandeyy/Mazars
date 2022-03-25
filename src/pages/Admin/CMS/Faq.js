@@ -71,7 +71,7 @@ const Faq = () => {
                    html : "Faq updated successfully",
                    icon : "success"
                })
-               history.push("/admin/faqlist")
+               history.push("/cms/faqlist")
            }
         })
     }

@@ -73,7 +73,7 @@ const VideoMedia = () => {
   return(
     <>
    <Link style={{display : "flex", height : "80%", overflow : "hidden"}} to = {{
-                         pathname : "/admin/videogallery", 
+                         pathname : "/cms/videogallery", 
                         index : row
                       }}>
                       <video id={row.id} src={`${baseUrl3}/assets/gallery/${row.name}`}
@@ -113,12 +113,12 @@ const VideoMedia = () => {
                 
              <div style={{display : "flex", width: "70px", alignItems: "center", justifyContent: "space-evenly"}}>
              <Link 
-                     to={`/admin/editvideo/${row.id}`}
+                     to={`/cms/editvideo/${row.id}`}
                      >
                        <EditQuery titleName="Edit Video Gallery" />
                        </Link>
                        <Link style={{display : "flex", height : "80%", overflow : "hidden"}} to = {{
-                        pathname : "/admin/videogallery", 
+                        pathname : "/cms/videogallery", 
                         index : row
                       }}>
   
@@ -187,7 +187,7 @@ else{
         <button 
     
     className="autoWidthBtn rightAlign my-2" onClick={(e) => {
-      history.push("/admin/videocontent")
+      history.push("/cms/videocontent")
     }}>New Video Gallery</button> 
         </div>
         

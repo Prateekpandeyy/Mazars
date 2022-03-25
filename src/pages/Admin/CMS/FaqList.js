@@ -61,7 +61,7 @@ return (
 <MyContainer>
 <div className="headingContent">
         <h4>FAQs </h4>
-        <Link to={`/admin/faqedit/4`}>
+        <Link to={`/cms/faqedit/4`}>
 <button 
     
     className="autoWidthBtn rightAlign my-2">Update FAQ</button>

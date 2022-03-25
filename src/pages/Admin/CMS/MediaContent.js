@@ -104,7 +104,7 @@ Swal.fire({
 return(
   <>
  <Link style={{display : "flex", height : "80%", overflow : "hidden"}} to = {{
-                      pathname : "/admin/imagegallery", 
+                      pathname : "/cms/imagegallery", 
                       index : row
                     }}>
                     <img  id={row.id} key={row.id} src={`${baseUrl3}/assets/gallery/${row.name}`} 
@@ -145,12 +145,12 @@ return(
               
            <div style={{display : "flex", width: "70px", alignItems: "center", justifyContent: "space-evenly"}}>
            <Link 
-                   to={`/admin/editimage/${row.id}`}
+                   to={`/cms/editimage/${row.id}`}
                    >
                      <EditQuery titleName="Edit Photo Gallery" />
                      </Link>
                      <Link style={{display : "flex", height : "80%", overflow : "hidden"}} to = {{
-                      pathname : "/admin/imagegallery", 
+                      pathname : "/cms/imagegallery", 
                       index : row
                     }}>
 
@@ -177,7 +177,7 @@ return(
                 <button 
             
             className="autoWidthBtn rightAlign my-2" onClick={(e) => {
-              history.push("/admin/mediagallery")
+              history.push("/cms/mediagallery")
             }}>New Photo Gallery</button> 
                 </div>
                 <div className="galleryContainer">

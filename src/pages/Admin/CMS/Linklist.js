@@ -75,7 +75,7 @@ const Updates = () =>{
          <>
        
                   <div style={{display : "flex", justifyContent : "space-evenly"}}>
-                  <Link to={`/admin/linksedit/${row.id}`}>
+                  <Link to={`/cms/linksedit/${row.id}`}>
          <div title="Edit link">
          <EditQuery />
          </div>
@@ -136,7 +136,7 @@ return (
         <button 
     
       className="autoWidthBtn rightAlign my-2" onClick={(e) => {
-        history.push("/admin/links")
+        history.push("/cms/links")
       }}>New Links</button>
         </div>
     

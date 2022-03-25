@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
-import { Link } from "react-router-dom";
+import { Link , useHistory} from "react-router-dom";
 
 
 function CustomerNotification({ tokenKey, name }) {
@@ -11,6 +11,7 @@ function CustomerNotification({ tokenKey, name }) {
    
     const [countNotification, setCountNotification] = useState("");
    const role = localStorage.getItem("role")
+   let history = useHistory()
 
     useEffect(() => {
         getNotification();
@@ -21,7 +22,16 @@ function CustomerNotification({ tokenKey, name }) {
         axios
             .get(`${baseUrl}/customers/getNotification?id=${JSON.parse(tokenKey)}&type_list=uread`)
             .then((res) => {
-              
+                if(role === "cms" && window.location.hash.search("cms") !== 2){
+                    console.log("cmsfixed")
+                    history.push("/*")
+                }
+                else if(role === "admin" && window.location.hash.search("cms") === 2){
+                    console.log("done")
+                    history.push("/*")
+                }
+                
+           
                 if (res.data.code === 1) {
                    
                    if(res.data.result[0] != undefined){

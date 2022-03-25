@@ -65,7 +65,7 @@ const Updates = () =>{
          <>
        
                   <div style={{display : "flex", justifyContent : "space-evenly"}}>
-                  <Link to={`/admin/editupdates/${row.id}`}>
+                  <Link to={`/cms/editupdates/${row.id}`}>
           <EditQuery titleName="Edit Update"/>
       </Link>
       <span   onClick={() => del(row.id)} className="ml-2">
@@ -169,7 +169,7 @@ return (
         <button 
     
     className="autoWidthBtn rightAlign my-2" onClick={(e) => {
-      history.push("/admin/updatecontent")
+      history.push("/cms/updatecontent")
     }}>New Updates</button>  
         </div>
     <Card>

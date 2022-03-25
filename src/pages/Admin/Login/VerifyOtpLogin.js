@@ -70,13 +70,13 @@ function VerifyOtp({ email, uid, loading, setLoading }) {
           localStorage.setItem("adminEmail", JSON.stringify(response.data.name));
        
           if(role === "cms"){
-          history.push("/admin/cms")
-      window.location.reload(true)
+          history.push("/cms/cms")
+
          }
            else{
             
         history.push("/admin/dashboard")
-        window.location.reload(true)
+  
            }
         } else {
           Alerts.ErrorNormal("Incorrect OTP, please try again.")

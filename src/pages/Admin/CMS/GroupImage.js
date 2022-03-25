@@ -104,7 +104,7 @@ Swal.fire({
                     
                   
                      <Link style={{display : "flex", height : "80%", overflow : "hidden"}} to = {{
-                      pathname : "/admin/imagegallery", 
+                      pathname : "/cms/imagegallery", 
                       index : i
                     }}>
                     <img  id={i.id} key={i.id} src={`${baseUrl3}/assets/gallery/${i.name}`} />

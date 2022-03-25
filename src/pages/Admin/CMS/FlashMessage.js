@@ -39,7 +39,7 @@ const FlashMessage = () => {
        
     }
   const showMessage = (e) => {
-   history.push("/admin/flashcontent")
+   history.push("/cms/flashcontent")
   }
   const editQuery = (e) => {
    console.log("eee", e)
@@ -158,7 +158,7 @@ const FlashMessage = () => {
             return(
                 <>
              <div style={{display : "flex", justifyContent : "space-evenly"}}>
-             <Link to={`/admin/flashcontent/${row.id}`}>
+             <Link to={`/cms/flashcontent/${row.id}`}>
 
          <EditQuery titleName="Edit Flash Update"/>
         

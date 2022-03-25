@@ -114,7 +114,7 @@ const CmsContent = () => {
                  html : `${message}`,
                  icon : "success"
              })
-             history.push("/admin/cms")
+             history.push("/cms/cms")
          }
       })
      }

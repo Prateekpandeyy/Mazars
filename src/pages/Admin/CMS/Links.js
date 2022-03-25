@@ -95,7 +95,7 @@ if(getId.id){
               html : `${message}`,
               icon : "success"
           })
-          history.push("/admin/linklist")
+          history.push("/cms/linklist")
       }
    })
 }

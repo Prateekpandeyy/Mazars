@@ -121,7 +121,7 @@ const getFeedback2 = () => {
   if(adminDashboard != undefined){
     axios.get(`${baseUrl}/admin/getFeedback?uid=${JSON.parse(adminkey)}&&type=total`).then((res) => {
       if(role === "cms"){
-        setLogo("/#/admin/cms")
+        setLogo("/#/cms/cms")
        }
        else{
         setLogo("/#/admin/dashboard")
@@ -131,7 +131,7 @@ const getFeedback2 = () => {
        if(res.data.result != undefined){
          setfeedbackNumber2(res.data.result[0].total)
          if(role === "cms"){
-          setLogo("/#/admin/cms")
+          setLogo("/#/cms/cms")
          }
          else{
           setLogo("/#/admin/dashboard")
@@ -235,7 +235,7 @@ const classes = useStyle()
             >
               <li className="nav-item">
               
-                <NavLink to={"/admin/cms"} className={classes.myClassHover}>
+                <NavLink to={"/cms/cms"} className={classes.myClassHover}>
                 <i class="">
                   <ArticleOutlinedIcon className={classes.myTeamleader}
                   />
@@ -247,7 +247,7 @@ const classes = useStyle()
               </li>
 
               <li className="nav-item">
-              <NavLink to={"/admin/linklist"} className={classes.myClassHover}>
+              <NavLink to={"/cms/linklist"} className={classes.myClassHover}>
                 <i class="">
                   <LinkOutlinedIcon className={classes.myTeamleader}
                   />
@@ -260,7 +260,7 @@ const classes = useStyle()
               </li>
 
               <li className="nav-item">
-              <NavLink to={"/admin/updates"} className={classes.myClassHover}>
+              <NavLink to={"/cms/updates"} className={classes.myClassHover}>
                 <i class="">
                   <TipsAndUpdatesOutlinedIcon className={classes.myTeamleader}
                   />
@@ -275,7 +275,7 @@ const classes = useStyle()
               <li className="nav-item">
                
                 
-     <NavLink to={"/admin/faqlist"} className={classes.myClassHover}>
+     <NavLink to={"/cms/faqlist"} className={classes.myClassHover}>
                 <i class="">
                   <QuizOutlinedIcon className={classes.myTeamleader}
                   />
@@ -287,7 +287,7 @@ const classes = useStyle()
               </li>
 
               <li className="nav-item">
-              <NavLink to={"/admin/flash"} className={classes.myClassHover}>
+              <NavLink to={"/cms/flash"} className={classes.myClassHover}>
                 <i class="">
                   <UnsubscribeOutlinedIcon className={classes.myTeamleader}
                   />
@@ -301,7 +301,7 @@ const classes = useStyle()
 
               <li className="nav-item">
             
-              <NavLink to={"/admin/mediatab"} className={classes.myClassHover}>
+              <NavLink to={"/cms/mediatab"} className={classes.myClassHover}>
                 <i class="">
                   <PermMediaOutlinedIcon className={classes.myTeamleader}
                   />
@@ -642,16 +642,7 @@ const classes = useStyle()
                   {/* Feedback  <span className="badge">{feedbackNumber2}</span> */}
                 </NavLink>
               </li>
-              {/* <li className ="nav-item">
-                 <NavLink to={"/admin/cms"}>
-                 <i className="fa">
-                  <span className="reportMenu"></span>
-                </i>
-                   <span className="menu-title" data-i18n="">
-                  Customer Page
-                  </span>
-                 </NavLink>
-               </li> */}
+             
                  
    
             </ul>
