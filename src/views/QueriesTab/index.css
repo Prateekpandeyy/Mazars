@@ -27,11 +27,31 @@
 }
 .tabHoverLinksubMenu {
   color: rgb(61, 71, 117);
-
+  height: 40px;
   font-weight: 700;
+  list-style: none;
+  text-align: center;
+  margin: auto;
+}
+.headerHover {
+  color: rgb(92, 115, 216);
+  height: 40px;
+  font-weight: 700;
+  list-style: none;
+  text-align: center;
+  margin: auto;
+  display: inline-flex;
+  align-items: center;
+}
+.headerHover a {
+  color: rgb(61, 71, 117);
+}
+.tabHoverLinksubMenu ul {
+  list-style: none;
 }
 .tabHoverLinksubMenu:hover {
   color: #0071ce;
-
+  height: 40px;
   cursor: pointer;
+  list-style: none;
 }

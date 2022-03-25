@@ -51,6 +51,7 @@ const FlashContent = () => {
     })
    }
     const onSubmit = (value) => {
+        let message = "Flash added successfully"
         let formData = new FormData()
        
         formData.append("news", det);
@@ -60,10 +61,10 @@ const FlashContent = () => {
       formData.append("status", 1):
       formData.append("status", 0)
     }
-    //    {getId.id !== undefined ?
-    //     formData.append("id", getId.id) : ""}
+   
     if(getId.id){
         formData.append("id", getId.id)
+        message = "Flash updated successfully"
     }
      axios({
 
@@ -77,7 +78,7 @@ const FlashContent = () => {
           
              Swal.fire({
                  message : "success", 
-                 html : "Flash Update added successfully",
+                 html : `${message}`,
                  icon : "success"
              })
              history.push("/admin/flash")

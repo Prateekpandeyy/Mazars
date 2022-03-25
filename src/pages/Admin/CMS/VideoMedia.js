@@ -65,8 +65,10 @@ const VideoMedia = () => {
       {
         dataField: "",
         text: "Image",
-      
-       
+     
+        style: {
+         paddingTop : "0px"
+        },
         formatter: function dateFormat(cell, row) {
   return(
     <>
@@ -113,18 +115,20 @@ const VideoMedia = () => {
              <Link 
                      to={`/admin/editvideo/${row.id}`}
                      >
-                       <EditQuery />
+                       <EditQuery titleName="Edit Video Gallery" />
                        </Link>
                        <Link style={{display : "flex", height : "80%", overflow : "hidden"}} to = {{
                         pathname : "/admin/videogallery", 
                         index : row
                       }}>
   
+  <span title="Video Gallery">
   <OndemandVideoIcon className="inprogress" />
+  </span>
                                 
                     </Link>
                     <span onClick={() => del(row)}>
-                              <DeleteIcon />
+                              <DeleteIcon titleName="Delete Video Gallery" />
                               </span>
              </div>
               
@@ -139,7 +143,7 @@ const VideoMedia = () => {
 
       Swal.fire({
           title: "Are you sure?",
-          text: "Want to delete video? Yes, delete it!",
+          text: "Want to delete video gallery? Yes, delete it!",
           type: "warning",
           showCancelButton: true,
           confirmButtonColor: "#3085d6",
@@ -147,13 +151,13 @@ const VideoMedia = () => {
           confirmButtonText: "Yes, delete it!",
       }).then((result) => {
           if (result.value) {
-            axios.get(`${baseUrl}/cms/deleteimage?uid=${JSON.parse(userId)}&id=${id}`)
+            axios.get(`${baseUrl}/cms/removegallery?uid=${JSON.parse(userId)}&id=${id.id}`)
             .then((res) => {
 console.log("response", res)
 if(res.data.code === 1){
   Swal.fire({
     title : "success",
-    html  : "Video deleted successfully",
+    html  : "Video gallery deleted successfully",
     icon : "success"
   })
   getGalleryData()
@@ -186,37 +190,7 @@ else{
       history.push("/admin/videocontent")
     }}>New Video Gallery</button> 
         </div>
-        {/* <div className="galleryContainer">
-         
-         {
-           galleryData.map((i) => (
-            <div className="galleryBox"> 
-             <Link style={{display : "flex", height : "80%", overflow : "hidden"}} to = {{
-                      pathname : "/admin/videogallery", 
-                      index : i
-                    }}>
-            <video id={i.id} src={`${baseUrl3}/assets/gallery/${i.name}`}
-            />
-            </Link>
-            <h4 className="delIcon">{i.title}</h4> 
-          
-          <div className="delIcon">
-          <Link 
-                   to={`/admin/editvideo/${i.id}`}
-                   >
-                     <EditQuery />
-                     </Link>
-           <h6>
-             {i.created_date}
-           </h6>
-            </div>
-         
-           </div>
-          
-          ))
-         }
-      
-        </div> */}
+        
         <div className="galleryContainer">
                 <DataTablepopulated 
                    bgColor="#42566a"

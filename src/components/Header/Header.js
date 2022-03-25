@@ -178,32 +178,16 @@ const CmsCont = () => {
   return(
     <>
 <div className="clientSubMenu">
-
-       <li className="nav-item tabHoverLinksubMenu"
-       style={{listStyle : "none",  height : "40px"}}  onMouseLeave = {() => handleClickOn()}
-     >
-                 
-                 <ListItemButton 
-                
-                 onMouseEnter={() => handleClickOff()}>
-           
-       
-   
-   
-   
-                   <span className="nav-item">
+  <li className="nav-item tabHoverLinksubMenu"  onMouseLeave = {() => handleClickOn()}>
+       <ListItemButton  onMouseEnter={() => handleClickOff()}>
+       <span className="nav-item">
                      Articles
                    </span>
-                  
-                
-   
-         
-          
-         </ListItemButton>
+</ListItemButton>
    
          <Collapse in={open}  unmountOnExit>
            <List component="div" className="myLink22">
-           <ul style={{listStyle : "none", }}>
+           <ul>
                 
                      <NavLink to = "/customer/direct">
                      <li className="tabHover mx-1">
@@ -227,46 +211,35 @@ const CmsCont = () => {
          </Collapse>
                  </li>
    
-          
+         <li className="nav-item headerHover"> 
     <NavLink to = {{
   pathname : "/customer/updates",
   index : 2
-}} className="tabHoverLink">
+}} >
       Updates
     </NavLink>
+</li>
 
-    <NavLink 
-    to = {{
+      <li className="nav-item headerHover"> 
+    <NavLink to = {{
   pathname : "/customer/updates",
   index : 3
-}} className="tabHoverLink">
-     Important Links
+}} >
+       Important Links
     </NavLink>
-   
+</li>
       <li className="nav-item tabHoverLinksubMenu" 
-        style={{listStyle : "none",  height : "40px"}}
          onMouseLeave = {() => handleClickOn2()}>
                  
                  <ListItemButton 
                  onMouseEnter={() => handleClickOff2()}>
-           
-       
-   
-   
-   
-                   <span className="nav-item">
+   <span className="nav-item">
                   Media Gallery
                    </span>
-                 
-                
-   
-         
-          
-         </ListItemButton>
-   
+         </ListItemButton>  
          <Collapse in={open2}  unmountOnExit>
            <List component="div" className="myLink22">
-           <ul style={{listStyle : "none"}}>
+           <ul>
                 
                       <NavLink 
     to = {{
@@ -301,14 +274,15 @@ const CmsCont = () => {
          </Collapse>
                  </li>
    
-          
+                 <li className="nav-item headerHover"> 
     <NavLink 
     to = {{
   pathname : "/customer/updates",
   index : 4
-}} className="tabHoverLink">
+}} >
       FAQ
     </NavLink>
+    </li>
 </div>
     </>
   )

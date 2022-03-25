@@ -54,7 +54,7 @@ const FlashMessage = () => {
     //   })
     Swal.fire({
         title: "Are you sure?",
-        text: "do you wnat to delete",
+        text: "do you wnat to delete flash updates",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
@@ -159,12 +159,12 @@ const FlashMessage = () => {
                 <>
              <div style={{display : "flex", justifyContent : "space-evenly"}}>
              <Link to={`/admin/flashcontent/${row.id}`}>
-         <span title="Edit Articles">
-         <EditQuery />
-         </span>
+
+         <EditQuery titleName="Edit Flash Update"/>
+        
          </Link>
                 <div onClick = {(e) => delQuery(row)}> 
- <DeleteIcon />
+ <DeleteIcon titleName="Delete Flash Update" />
                 </div>
               
                 {

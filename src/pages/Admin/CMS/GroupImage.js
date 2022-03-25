@@ -8,6 +8,12 @@ import { useHistory } from "react-router";
 import {DeleteIcon} from "../../../components/Common/MessageIcon";
 import Swal from 'sweetalert2';
 import {Link} from 'react-router-dom';
+import {
+ 
+  Row,
+  Col,
+  
+} from "reactstrap";
 const MyContainer = styled(Container)({
 
 })
@@ -38,7 +44,7 @@ const GroupImage = () => {
 
     Swal.fire({
         title: "Are you sure?",
-        text: "Want to delete articles? Yes, delete it!",
+        text: "Want to delete Photo? Yes, delete it!",
         type: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
@@ -52,7 +58,7 @@ console.log("response", res)
 if(res.data.code === 1){
 Swal.fire({
   title : "success",
-  html  : "Articles deleted successfully",
+  html  : "Photo deleted successfully",
   icon : "success"
 })
 getImages()
@@ -71,15 +77,32 @@ Swal.fire({
     return(
         <>
      <Layout adminDashboard="adminDashboard" adminUserId={userId}>   
+     
  <MyContainer>
+ <div className="py-2">
+      <Row>
+          <Col md="4">
+          <button
+                className="autoWidthBtn" 
+                onClick={() => history.goBack()}
+              >
+               
+                Go Back
+              </button>
+              
+            </Col>
+            <Col md="4" align="center">
+              <h4>Photo Gallery</h4>
+            </Col>
+            </Row>
+        </div>
  <div className="galleryContainer">
                  
  {
                    galleryData.map((i) => (
                     <div className="galleryBox" key={i.id}> 
                     
-                    {/* <img id={i.id} src={`${baseUrl3}/assets/gallery/${i.name}`}
-                    onClick={() => enLarge(i.id)} /> */}
+                  
                      <Link style={{display : "flex", height : "80%", overflow : "hidden"}} to = {{
                       pathname : "/admin/imagegallery", 
                       index : i
@@ -90,11 +113,11 @@ Swal.fire({
                    
                   
                   <div className="delIcon">
-                  <span title="Delete Media" onClick={() => del(i)}>
+                  <span title="Delete Photo" onClick={() => del(i)}>
                    <DeleteIcon />
                    </span>
                    <h6>
-                     {i.created_date}
+                     {i.created_date.split(" ")[0].split("-").reverse().join("-")}
                    </h6>
                     </div>
                  

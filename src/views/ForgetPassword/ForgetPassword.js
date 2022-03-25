@@ -73,7 +73,7 @@ function ForgetPassword(props) {
   return (
     <>
       <Header cust_sign="cust_sign" />
-      <div className="container">
+      <div className="container" style={{height : "450px"}}>
         <div className="form">
           <div className="heading">
             <h2>Forgot Password</h2>

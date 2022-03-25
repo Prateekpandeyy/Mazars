@@ -66,8 +66,10 @@ const GalleryVideo = () => {
   
         <div className="StartPageDetails">
       
-            <div className="mainContent222">
-             <Breadcrumbs separator=">" maxItems={3} aria-label="breadcrumb">
+            <div style={{display : "flex", width:"1000px", justifyContent: "center",
+          alignItems: "flex-start", flexDirection: "column", padding: "5px 0px"}}>
+            <span style={{textAlign: "left"}}>
+            <Breadcrumbs separator=">" maxItems={3} aria-label="breadcrumb">
   
   <Link underline="hover" color="inherit" to = {`/customer/media`}>
  Media Gallery
@@ -79,7 +81,8 @@ const GalleryVideo = () => {
   <Typography color="text.primary"> Nature Image(Make your life easy)</Typography>
 </Breadcrumbs>
         
-        <div>
+              </span>
+        <div style={{display: "flex", width:"100%", justifyContent: "center", alignItems: "center"}}>
     {images.length > 0 ? 
      <ImageGallery items={images} 
      height={300}

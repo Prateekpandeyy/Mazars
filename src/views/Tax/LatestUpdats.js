@@ -7,6 +7,7 @@ import { baseUrl } from '../../config/config';
 import { Box } from "@material-ui/core";
 import { useHistory } from 'react-router';
 import { Markup } from 'interweave';
+import Footer from '../../components/Footer/Footer';
 const MyContainer = styled(Box)({
     display : "flex", 
     justifyContent : "center", 
@@ -80,15 +81,17 @@ const LatestUpdates = () => {
             onMouseLeave={onMouseLeave} 
         >
   {
-     news.map((i) => (
-
+     news.map((i, e) => (
+<>
 <span style={{padding: "0px 20px", fontSize: "16px", color: "464b4b"}}> 
-<Link className="tabHover" to = {{
+
+ <Link className="tabHover" to = {{
   pathname : "/customer/latestupdates",
   index : i.id
                         }}>
-{i.heading}
-</Link> </span> 
+{i.heading} 
+</Link> </span> {e < news.length - 1 === true ? <span> | </span> : ""}
+</> 
 
      ))
    }
@@ -104,6 +107,7 @@ const LatestUpdates = () => {
         </div>
       
        </MyContainer>
+       <Footer />
        </>
   
     )

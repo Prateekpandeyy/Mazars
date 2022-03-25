@@ -35,7 +35,7 @@ const Cms = () =>{
       })
     }
     const myShowValue = (e, row) => {
-      console.log("etarget", e.target.checked)
+     
         if(e.target.checked === true){
 
             
@@ -75,6 +75,12 @@ const Cms = () =>{
         text : "Date",
         headerStyle : () => {
           return { width : "100px" };
+        },
+        formatter : function dateFun (cell, row) {
+
+return(
+  <p>{row.publish_date.split("-").reverse().join("-")}</p>
+)
         }
       },
     
@@ -83,6 +89,12 @@ const Cms = () =>{
         text : "Category",
         headerStyle : () => {
           return { width : "100px" };
+        },
+        formatter : function (cell, row){
+       
+          return(
+            <p>{row.type.charAt(0).toUpperCase()+ row.type.slice(1)}</p>
+          )
         }
       },
       {
@@ -112,7 +124,7 @@ const Cms = () =>{
          </span>
       </Link>
       
-      <span  title="Delete Articles" onClick={() => del(row.id)} className="ml-2">
+      <span  title="Delete Articles" onClick={() => del(row.id)} className="mx-2">
        <DeleteIcon />
     </span>
 

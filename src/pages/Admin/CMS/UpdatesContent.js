@@ -33,6 +33,8 @@ const UpdatesContent = () => {
     const [date, setDate] = useState("")
  let history = useHistory()
  let getId = useParams()
+ var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
+ const [item] = useState(current_date);
     useEffect(() => {
         getPageValue()
     }, [])
@@ -54,7 +56,7 @@ const UpdatesContent = () => {
        setTopage(e)
    }
    const onSubmit = (e) => {
-       console.log("done")
+       let message = "Updates created successfully"
        let formData = new FormData();
        formData.append("content", det);
        formData.append("status", 1)
@@ -62,6 +64,7 @@ const UpdatesContent = () => {
        formData.append("publish_date", date);
       if(getId.id){
         formData.append("id", getId.id)
+        let message = "Updated updated successfully"
       }
        axios({
            method : "POST", 
@@ -72,7 +75,7 @@ const UpdatesContent = () => {
           if(res.data.code === 1){
               Swal.fire({
                   title : "success",
-                  html : "Update created successfully",
+                  html : `${message}`,
                   icon : "success"
               })
               history.push("/admin/updates")
@@ -131,7 +134,7 @@ const UpdatesContent = () => {
                   onChange={(e) => setDate(e.target.value)}
                   ref={register({ required: true })}
                   name="p_publisher"
-                   placeholder = "Please enter heading"
+                 min = {item}
                    />
                  </div>
          </div>

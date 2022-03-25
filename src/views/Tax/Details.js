@@ -9,7 +9,6 @@ import { baseUrl, baseUrl3 } from '../../config/config';
 import { Markup } from 'interweave';
 import {Breadcrumbs, Box, Typography } from "@material-ui/core";
 import CommonServices from '../../common/common.js';
-import DownloadIcon from '@mui/icons-material/Download';
 import DescriptionOutlinedIcon from '@material-ui/icons/DescriptionOutlined';
 const MyContainer = styled(Box)({
     display : "flex", 
@@ -23,16 +22,16 @@ const Details = () => {
   let getId = useParams();
   const [data, setData] = useState([])
   const [linkdata, setLinkData] = useState("direct")
-  console.log("history", history.location)
+ 
   useEffect(() => {
     getData()
   }, [])
   const getData = (e) => {
-    console.log("getId", getId.id)
+   
    if(history.location.index !== undefined){
     axios.get(`${baseUrl}/customers/getarticles?id=${history.location.index}`)
     .then((res) => {
-      console.log("resData", res)
+     
       setData(res.data.result)
       if(history.location.hash == "#direct"){
         setLinkData("direct")

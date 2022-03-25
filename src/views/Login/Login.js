@@ -215,8 +215,8 @@ const styles = {
             onMouseLeave={onMouseLeave} 
         >
   {
-     news.map((i) => (
-
+     news.map((i, e) => (
+<>
 <span style={{padding: "0px 20px", fontSize: "16px", color: "464b4b"}}> 
 
  <Link className="tabHover" to = {{
@@ -224,8 +224,8 @@ const styles = {
   index : i.id
                         }}>
 {i.heading} 
-</Link> </span> 
-
+</Link> </span> {e < news.length - 1 === true ? <span> | </span> : ""}
+</>
      ))
    }
   </h1>

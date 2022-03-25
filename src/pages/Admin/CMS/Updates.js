@@ -20,7 +20,7 @@ const MyContainer = styled(Container)({
 const Updates = () =>{ 
     const userId = window.localStorage.getItem("adminkey");
     const [list, setList] = useState([])
-    const [check, setCheck] = useState(true)
+    const [check, setCheck] = useState(false)
     let history = useHistory()
     useEffect(() => {
       getList()
@@ -66,16 +66,16 @@ const Updates = () =>{
        
                   <div style={{display : "flex", justifyContent : "space-evenly"}}>
                   <Link to={`/admin/editupdates/${row.id}`}>
-          <EditQuery />
+          <EditQuery titleName="Edit Update"/>
       </Link>
       <span   onClick={() => del(row.id)} className="ml-2">
-       <DeleteIcon />
+       <DeleteIcon titleName="Delete Update" />
     </span>
     {
                   row.status == "1" ?
                   <div>
                   <label class="switch" onChange= {(e) => myShowValue(e, row)}>
-    <input type="checkbox"  defaultChecked  />
+    <input type="checkbox"  defaultChecked/>
     <span class="slider round"></span>
   </label>
   
@@ -98,27 +98,31 @@ const Updates = () =>{
         }
       }
     ]
-    const myShowValue = (e, row) => {
-      console.log("etarget", e.target.checked)
-        if(e.target.checked === true){
-            e.target.checked = true
-            axios.get(`${baseUrl}/admin/setupdatestatus?uid=${JSON.parse(userId)}&id=${row.id}&status=0`)
-       .then((res) => {
-           console.log("res", res)
-           setCheck(true)
-       })
-        }
-        else{
-            e.target.checked = false
-            axios.get(`${baseUrl}/admin/setupdatestatus?uid=${JSON.parse(userId)}&id=${row.id}&status=1`)
-            .then((res) => {
-                console.log("res", res)
-                setCheck(false)
-            })
-        }
-          
+  
+  const myShowValue = (e, row) => {
      
-  }
+    if(e.target.checked === true){
+
+        
+        axios.get(`${baseUrl}/cms/setupdatestatus?uid=${JSON.parse(userId)}&id=${row.id}&status=0`)
+   .then((res) => {
+       console.log("res", res)
+       if(res.data.result === 1){
+         setCheck(true)
+       }
+   })
+    }
+    else{
+       
+        axios.get(`${baseUrl}/cms/setupdatestatus?uid=${JSON.parse(userId)}&id=${row.id}&status=1`)
+        .then((res) => {
+            console.log("res", res)
+            setCheck(false)
+        })
+    }
+      
+ 
+}
     const del = (id) => {
  
 

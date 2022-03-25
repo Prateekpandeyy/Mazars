@@ -68,10 +68,10 @@ const MediaText = () =>{
        
                   <div style={{display : "flex", justifyContent : "space-evenly"}}>
                   <Link to={`/admin/mediatext/${row.id}`}>
-          <EditQuery />
+          <EditQuery titleName="Edit media news" />
       </Link>
       <span   onClick={() => del(row.id)} className="ml-2">
-       <DeleteIcon />
+       <DeleteIcon titleName="Delete media news" />
     </span>
     {
                   row.status == "1" ?
@@ -104,17 +104,17 @@ const MediaText = () =>{
       console.log("etarget", e.target.checked)
         if(e.target.checked === true){
             e.target.checked = true
-            axios.get(`${baseUrl}/admin/etgalleryupdatestatus?uid=${JSON.parse(userId)}&id=${row.id}&status=0`)
+            axios.get(`${baseUrl}/admin/setgalleryupdatestatus?uid=${JSON.parse(userId)}&id=${row.id}&status=0`)
        .then((res) => {
-           console.log("res", res)
+         
            setCheck(true)
        })
         }
         else{
             e.target.checked = false
-            axios.get(`${baseUrl}/admin/etgalleryupdatestatus?uid=${JSON.parse(userId)}&id=${row.id}&status=1`)
+            axios.get(`${baseUrl}/admin/setgalleryupdatestatus?uid=${JSON.parse(userId)}&id=${row.id}&status=1`)
             .then((res) => {
-                console.log("res", res)
+               
                 setCheck(false)
             })
         }
@@ -126,7 +126,7 @@ const MediaText = () =>{
 
       Swal.fire({
           title: "Are you sure?",
-          text: "Want to delete query? Yes, delete it!",
+          text: "Want to delete media news? Yes, delete it!",
           type: "warning",
           showCancelButton: true,
           confirmButtonColor: "#3085d6",
@@ -134,13 +134,13 @@ const MediaText = () =>{
           confirmButtonText: "Yes, delete it!",
       }).then((result) => {
           if (result.value) {
-            axios.get(`${baseUrl}/cms/cms/removegalleryupdate?uid=${JSON.parse(userId)}&id=${id}`)
+            axios.get(`${baseUrl}/cms/removemedianews?uid=${JSON.parse(userId)}&id=${id}`)
             .then((res) => {
 console.log("response", res)
 if(res.data.code === 1){
   Swal.fire({
     title : "success",
-    html  : "Articles deleted successfully",
+    html  : "Media news deleted successfully",
     icon : "success"
   })
   getList()
@@ -161,11 +161,7 @@ return (
 
 <MyContainer>
      
-     {/* <button 
     
-      className="autoWidthBtn rightAlign my-2" onClick={(e) => {
-        history.push("/admin/updatecontent")
-      }}>Create message</button> */}
         <div className="headingContent">
         <h4> Media News </h4>
         <button 

@@ -9,6 +9,12 @@ import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { baseUrl } from '../../../config/config';
 import Swal from 'sweetalert2';
+import {
+  
+  Row,
+  Col,
+ 
+} from "reactstrap";
 const MyContainer = styled(Container)({
 
 })
@@ -32,6 +38,9 @@ const VideoContent = () => {
     const userId = window.localStorage.getItem("adminkey");
     let history = useHistory()
     const [heading, setHeading] = useState("")
+    var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
+    const [item] = useState(current_date);
+  
     const { handleSubmit, register, errors, getValues } = useForm();
     const onSubmit = (value) => {
       let formData = new FormData();
@@ -57,7 +66,7 @@ const VideoContent = () => {
         if(res.data.code === 1){
           Swal.fire({
             title :"success",
-            html : "Image uploaded successfully",
+            html : "Video Gallery added successfully",
             icon :"success"
           })
           history.push("/admin/mediatab")
@@ -75,7 +84,21 @@ const VideoContent = () => {
           
 
          <InnerBox>
-           <h4 style={{textAlign: "center"}}>Media </h4>
+         <Row>
+          <Col md="4">
+          <button
+                className="autoWidthBtn" 
+                onClick={() => history.goBack()}
+              >
+               
+                Go Back
+              </button>
+              
+            </Col>
+            <Col md="6">
+              <h4>Video Gallery</h4>
+            </Col>
+            </Row>
          <div className="row">
          <div className="col-md-12 col-sm-12">
                   
@@ -103,21 +126,21 @@ const VideoContent = () => {
                ref={register}
                className="form-control"
                multiple
-              
+              min = {item}
               />
                   </div>
                   </div>
                 <div className="row">
                 <div className="col-md-12 col-sm-12">
                   
-                  <label className="form-label">Media</label>
+                  <label className="form-label">Video</label>
                   <input
                   type="file"
                 accept="file_extension|audio/*|video/*|image/*|media_type"
                 name="p_upload"
                 ref={register}
                 className="form-control-file"
-              
+                min = {item}
               />
                   </div>
                   </div>

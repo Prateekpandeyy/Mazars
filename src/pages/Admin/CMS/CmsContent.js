@@ -23,7 +23,7 @@ import {
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { Markup } from 'interweave';
-
+import { Spinner } from 'reactstrap';
 const MyContainer = styled(Container)({
 
 })
@@ -39,8 +39,12 @@ const CmsContent = () => {
     const [pageto, setTopage] = useState("direct")
     const [editData, setEditData] = useState();
     const [editorError, setEditorError] = useState(false)
+    const [loading, setLoading] = useState(false);
     let history  = useHistory()
     let getId = useParams()
+    var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
+    const [item] = useState(current_date);
+  
    
     useEffect(() => {
       getData()
@@ -77,8 +81,10 @@ const CmsContent = () => {
        setTopage(e)
    }
    const onSubmit = (e) => {
-     console.log("det", det.length)
-     if(det.length > 1){
+     let message = "Content created successfully"
+
+  setLoading(true)
+     if(det[0].search('\"<p><br></p>\"')){
         
       let formData = new FormData();
       formData.append("type", pageto)
@@ -93,6 +99,7 @@ const CmsContent = () => {
       formData.append("publish_date", date);
       if(getId.id !== undefined){
         formData.append("id", getId.id)
+        message = "Content updated successfully"
       }
       axios({
           method : "POST", 
@@ -101,9 +108,10 @@ const CmsContent = () => {
       })
       .then((res) => {
          if(res.data.code === 1){
+           setLoading(false)
              Swal.fire({
                  title : "success",
-                 html : "content created successfully",
+                 html : `${message}`,
                  icon : "success"
              })
              history.push("/admin/cms")
@@ -221,6 +229,7 @@ const getEditValue= (e) => {
                   ref={register({ required: true })}
                   name="p_publisher"
                    placeholder = "Please enter heading"
+                   min = {item}
                    />
                  </div>
          </div>
@@ -290,7 +299,11 @@ const getEditValue= (e) => {
            </div>
          <div className="row">
             <div className="col-md-12">
-            <button className="customBtn my-2">Submit</button> </div>
+            {
+                      loading ?
+                        <Spinner color="primary" />
+                        :
+            <button className="customBtn my-2">Submit</button> } </div>
          </div>
          </form>
       </MyContainer>

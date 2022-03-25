@@ -53,7 +53,7 @@ const MediaContent = () => {
 
     Swal.fire({
         title: "Are you sure?",
-        text: "Want to delete articles? Yes, delete it!",
+        text: "Want to delete Photo Galllery ? Yes, delete it!",
         type: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
@@ -67,7 +67,7 @@ console.log("response", res)
 if(res.data.code === 1){
 Swal.fire({
   title : "success",
-  html  : "Articles deleted successfully",
+  html  : "Photo Gallery deleted successfully",
   icon : "success"
 })
 getGalleryData()
@@ -147,18 +147,20 @@ return(
            <Link 
                    to={`/admin/editimage/${row.id}`}
                    >
-                     <EditQuery />
+                     <EditQuery titleName="Edit Photo Gallery" />
                      </Link>
                      <Link style={{display : "flex", height : "80%", overflow : "hidden"}} to = {{
                       pathname : "/admin/imagegallery", 
                       index : row
                     }}>
 
+                          <span title="Photo Gallery">
                           <InsertPhotoIcon className="inprogress" />
+                          </span>
                               
                   </Link>
                   <span onClick={() => del(row)}>
-                            <DeleteIcon />
+                            <DeleteIcon titleName="Delete Photo Gallery" />
                             </span>
            </div>
             

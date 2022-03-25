@@ -9,6 +9,12 @@ import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { baseUrl } from '../../../config/config';
 import Swal from 'sweetalert2';
+import {
+  
+  Row,
+  Col,
+ 
+} from "reactstrap";
 const MyContainer = styled(Container)({
 
 })
@@ -33,6 +39,10 @@ const MediaGallery = () => {
     let history = useHistory()
     const [heading, setHeading] = useState("")
     const { handleSubmit, register, errors, getValues } = useForm();
+    var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
+    const [item] = useState(current_date);
+  
+   
     const onSubmit = (value) => {
       let formData = new FormData();
       let file ; 
@@ -84,7 +94,21 @@ const MediaGallery = () => {
           
 
          <InnerBox>
-           <h4 style={{textAlign: "center"}}>Media </h4>
+         <Row>
+          <Col md="4">
+          <button
+                className="autoWidthBtn" 
+                onClick={() => history.goBack()}
+              >
+               
+                Go Back
+              </button>
+              
+            </Col>
+            <Col md="6">
+              <h4>Photo Gallery</h4>
+            </Col>
+            </Row>
          <div className="row">
          <div className="col-md-12 col-sm-12">
                   
@@ -111,7 +135,7 @@ const MediaGallery = () => {
                name= "date_event"
                ref={register}
                className="form-control"
-               multiple
+              min = {item}
               
               />
                   </div>
@@ -119,7 +143,7 @@ const MediaGallery = () => {
                 <div className="row">
                 <div className="col-md-12 col-sm-12">
                   
-                  <label className="form-label">Media</label>
+                  <label className="form-label">Photo</label>
                   <input
                type="file"
                name= "uploadImg"

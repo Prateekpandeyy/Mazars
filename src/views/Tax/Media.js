@@ -67,7 +67,8 @@ const Media = () => {
                       index : i
                     }}>
                     <img  id={i.id} key={i.id} src={`${baseUrl3}/assets/gallery/${i.name}`} />
-                    <div style={{display: "flex", padding: "5px 10px", width: "100%", justifyContent: "space-between"}}>
+                    <div style={{display: "flex", width: "100%",
+                     justifyContent: "space-between", padding : "5px"}}>
             <h4>{i.title}</h4>
             <h4>{i.created_date.split(" ")[0].split("-").reverse().join("-")}</h4>
                 </div>

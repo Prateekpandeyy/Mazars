@@ -4,9 +4,10 @@ import { styled , makeStyles} from "@material-ui/styles";
 import { Link } from 'react-router-dom';
 import { baseUrl } from '../../config/config';
 import {Typography, Breadcrumbs, Table, TableContainer, Box,  
-    TableHead, TablePagination, TableBody, TableRow, TableCell} from "@material-ui/core";
+   TablePagination, TableBody, TableRow, TableCell} from "@material-ui/core";
 import axios from 'axios';
 import { Markup } from 'interweave';
+import Footer from '../../components/Footer/Footer';
 const MyContainer = styled(Box)({
     display : "flex", 
     justifyContent : "center", 
@@ -118,6 +119,7 @@ const MediaContentCustomer = () => {
       </div>
        : ""}
        </MyContainer>
+       <Footer />
        </>
   
     )

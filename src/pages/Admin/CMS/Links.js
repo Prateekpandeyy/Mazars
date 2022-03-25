@@ -75,11 +75,12 @@ const Links = () => {
         let formData = new FormData();
        
 if(error === false){
-        
+        let message = "Link created successfully"
   formData.append("heading", heading)
   formData.append("url", writer);
 if(getId.id){
  formData.append("id", getId.id)
+ message = "Link updated successfully"
 }
 
    axios({
@@ -91,7 +92,7 @@ if(getId.id){
       if(res.data.code === 1){
           Swal.fire({
               title : "success",
-              html : "Link created successfully",
+              html : `${message}`,
               icon : "success"
           })
           history.push("/admin/linklist")

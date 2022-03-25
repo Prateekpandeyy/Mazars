@@ -10,7 +10,7 @@ function CustomerNotification({ tokenKey, name }) {
 
    
     const [countNotification, setCountNotification] = useState("");
-   
+   const role = localStorage.getItem("role")
 
     useEffect(() => {
         getNotification();
@@ -67,7 +67,7 @@ function CustomerNotification({ tokenKey, name }) {
                                 </Link> :""
                          }
                          {
-                             name === "admin" ?
+                             name === "admin" && role === "admin" ?
                              <Link to={`/${name}/message`} className="notification">
                               <h4 className="contentTitle" style={{display:"flex", margin: "0 0 5px 0"}}>Inbox </h4>
                                     <span className="badge">{countNotification}</span>

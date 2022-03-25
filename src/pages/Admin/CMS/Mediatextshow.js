@@ -33,6 +33,10 @@ const Mediatextshow = () => {
     const [date, setDate] = useState("")
  let history = useHistory()
  let getId = useParams()
+ var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
+    const [item] = useState(current_date);
+  
+   
     useEffect(() => {
         getPageValue()
     }, [])
@@ -55,7 +59,7 @@ const Mediatextshow = () => {
        setTopage(e)
    }
    const onSubmit = (e) => {
-       console.log("done")
+      let message = "Media news added successfully"
        let formData = new FormData();
        formData.append("content", det);
        formData.append("status", 1)
@@ -63,6 +67,7 @@ const Mediatextshow = () => {
        formData.append("publish_date", date);
       if(getId.id){
         formData.append("id", getId.id)
+        message = "Media news updated successfully"
       }
        axios({
            method : "POST", 
@@ -73,7 +78,7 @@ const Mediatextshow = () => {
           if(res.data.code === 1){
               Swal.fire({
                   title : "success",
-                  html : "content created successfully",
+                  html : `${message}`,
                   icon : "success"
               })
               history.push("/admin/mediatab")
@@ -133,12 +138,13 @@ const Mediatextshow = () => {
                   ref={register({ required: true })}
                   name="p_publisher"
                    placeholder = "Please enter heading"
+                   min = {item}
                    />
                  </div>
          </div>
          <div className="row">
              <div className="col-md-12">
-             <label className="form-label">Pages</label> </div>
+             <label className="form-label">Content</label> </div>
              
              <div className="col-md-12">
              <CKEditor

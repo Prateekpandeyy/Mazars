@@ -11,6 +11,12 @@ import { baseUrl, baseUrl3 } from '../../../config/config';
 import Swal from 'sweetalert2';
 import {DeleteIcon, EyeIcon} from "../../../components/Common/MessageIcon";
 import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
+import {
+  
+  Row,
+  Col,
+ 
+} from "reactstrap";
 const MyContainer = styled(Container)({
 
 })
@@ -39,6 +45,9 @@ const EditImage = () => {
     const [images, setImages] = useState([])
     const { handleSubmit, register, errors, getValues } = useForm();
     let getId = useParams()
+    var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
+    const [item] = useState(current_date);
+  
    
     useEffect(() => {
       getData()
@@ -79,7 +88,7 @@ const EditImage = () => {
   if(res.data.code === 1){
   Swal.fire({
     title : "success",
-    html  : "Articles deleted successfully",
+    html  : "Image deleted successfully",
     icon : "success"
   })
   getData()
@@ -111,15 +120,6 @@ const EditImage = () => {
         }
       }
       
-    
-    // if (uploadImg) {
-    //   for (var i = 0; i < uploadImg.length; i++) {
-    //     let file = uploadImg[i];
-    //     formData.append("upload", file);
-    //     formData.append("type", "image")
-       
-    //   }
-    // }
       axios({
         method : "POST", 
         url : `${baseUrl}/cms/uploadphoto`,
@@ -131,7 +131,7 @@ const EditImage = () => {
         if(res.data.code === 1){
           Swal.fire({
             title :"success",
-            html : "Image uploaded successfully",
+            html : "Photo Gallery updated successfully",
             icon :"success"
           })
           history.push("/admin/mediatab")
@@ -150,7 +150,22 @@ const EditImage = () => {
           
 
          <InnerBox>
-           <h4 style={{textAlign: "center"}}>Media </h4>
+         <Row>
+          <Col md="4">
+          <button
+                className="autoWidthBtn" 
+                onClick={() => history.goBack()}
+              >
+               
+                Go Back
+              </button>
+              
+            </Col>
+            <Col md="6">
+              <h4>Photo Gallery</h4>
+            </Col>
+            </Row>
+         
          <div className="row">
          <div className="col-md-12 col-sm-12">
                   
@@ -178,7 +193,7 @@ const EditImage = () => {
                name= "date_event"
                ref={register}
                className="form-control"
-           
+           min= {item}
               
               />
                   </div>

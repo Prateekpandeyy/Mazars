@@ -684,9 +684,13 @@ const [loading, setLoading] = useState(false)
                 <Reset />
     {
       query ?
-      <Link to="/customer/select-category" className="autoWidthBtn ml-2 mb-1">
-      Fresh Query
-  </Link> : ""
+     
+        <Link to="/customer/select-category" style={{color : "#fff", marginLeft : "auto"}}>
+     <button  className="autoWidthBtn mb-1" style={{marginLeft : "auto", color : "#fff"}}>
+       Fresh Query 
+       </button> 
+  </Link>
+      : ""
     }
                
 

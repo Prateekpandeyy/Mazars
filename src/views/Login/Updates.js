@@ -197,8 +197,7 @@ const classes = useStyle()
   
     <TableRow>
       <TableCell style={{padding: "8px 16px"}} className="tableCellStyle">
-      {/* <Markup content = {`<div id="myValue22"> <h6> ${e + 1}</h6> <p>${i.heading} </p>
-        <a href=${i.url} target="_blank">${i.url}</a></div>`} /> */}
+     
         {e + 1}
       </TableCell>
       <TableCell>
