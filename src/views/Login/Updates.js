@@ -222,7 +222,7 @@ const classes = useStyle()
     pathname : "/customer/updates",
     index : 4
   }}>
-   FAQ
+   FAQs
    </Link>
    
    

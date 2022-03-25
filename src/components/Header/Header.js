@@ -280,7 +280,7 @@ const CmsCont = () => {
   pathname : "/customer/updates",
   index : 4
 }} >
-      FAQ
+      FAQs
     </NavLink>
     </li>
 </div>
