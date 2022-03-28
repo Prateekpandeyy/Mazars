@@ -338,7 +338,7 @@ const styles = {
           </div>
      
         </div>
-        <MyBox>
+        {/* <MyBox>
          
           <h4>MAS solution backed by group of professionals with extensive industry knowledge and experience in
              taxation matters, provides solutions to all direct & indirect tax queries.  </h4>
@@ -376,7 +376,7 @@ const styles = {
       <p style={{textAlign : "center"}}>Operates completely in paperless environment.</p>
       </ImgBox>
     </div>
-      </MyBox>
+      </MyBox> */}
       </div>
      
      </MyContainer>

@@ -1,6 +1,6 @@
 import axios from "axios";
 export default axios.create({
-  baseURL: "http://stagingapi.masindia.live/v1",
+  baseURL: "http://api.masindia.live/v1",
   headers: {
     "Content-type": "application/json",
   },
