@@ -193,7 +193,7 @@ const EditImage = () => {
                name= "date_event"
                ref={register}
                className="form-control"
-           min= {item}
+           max= {item}
               
               />
                   </div>

@@ -125,7 +125,7 @@ const VideoContent = () => {
                name= "date_event"
                ref={register}
                className="form-control"
-               multiple
+               max={item}
             
               />
                   </div>

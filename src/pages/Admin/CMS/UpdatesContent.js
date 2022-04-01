@@ -134,7 +134,7 @@ const UpdatesContent = () => {
                   onChange={(e) => setDate(e.target.value)}
                   ref={register({ required: true })}
                   name="p_publisher"
-               
+               max={item}
                    />
                  </div>
          </div>

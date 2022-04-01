@@ -138,7 +138,7 @@ const Mediatextshow = () => {
                   ref={register({ required: true })}
                   name="p_publisher"
                    placeholder = "Please enter heading"
-                
+                max={item}
                    />
                  </div>
          </div>

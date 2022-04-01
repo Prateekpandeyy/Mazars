@@ -61,19 +61,7 @@ const Media = () => {
                      
                    galleryData.map((i) => (
                     
-                   
-  // <Link className="galleryBox" to = {{
-  //                     pathname : "/customer/imagegallery", 
-  //                     index : i
-  //                   }}>
-  //                   <img  id={i.id} key={i.id} src={`${baseUrl3}/assets/gallery/${i.name}`} />
-  //                   <div style={{display: "flex", width: "100%",
-  //                    justifyContent: "space-between", padding : "5px"}}>
-  //           <h4>{i.title}</h4>
-  //           <h4>{i.created_date.split(" ")[0].split("-").reverse().join("-")}</h4>
-  //               </div>
-  //                 </Link>
-                 
+  
                  
   <div className="galleryBoxvideo">
   <div style={{display : "flex", justifyContent: "center", height: "70%", width: "100%", alignItems: "center"}}>

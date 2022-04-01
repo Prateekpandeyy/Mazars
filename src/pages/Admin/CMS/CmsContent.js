@@ -134,15 +134,6 @@ const getEditValue= (e) => {
   }
 }
 
-/* 
- * Quill editor formats
- * See https://quilljs.com/docs/formats/
- */
-/* 
- * PropType validation
- */
-
-
     return(
         <Layout adminDashboard="adminDashboard" adminUserId={userId}>
           
@@ -229,7 +220,7 @@ const getEditValue= (e) => {
                   ref={register({ required: true })}
                   name="p_publisher"
                    placeholder = "Please enter heading"
-                  
+                  max={item}
                    />
                  </div>
          </div>
@@ -239,22 +230,7 @@ const getEditValue= (e) => {
              <label className="form-label">Content</label> </div>
              
              <div className="col-md-12">
-             {/* <CKEditor
-             id="test"
-                     editor={ ClassicEditor }
-                    
-                    data={det}
-                    rows="10"
-                    name="p_fact"
-                
-                    onChange={ ( event, editor ) => {
-                      addDet(editor.getData());
-                     
-
-                    
-                  } }
-           
-                ></CKEditor> */
+             {
                 <ReactQuill
                 ref={register}
                

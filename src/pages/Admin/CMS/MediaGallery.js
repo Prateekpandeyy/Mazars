@@ -135,7 +135,7 @@ const MediaGallery = () => {
                name= "date_event"
                ref={register}
                className="form-control"
-             
+             max={item}
               
               />
                   </div>
