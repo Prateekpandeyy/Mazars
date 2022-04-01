@@ -130,11 +130,10 @@ const cgstFun = (e) => {
      let cget = parseFloat(a * e.target.value / 100)
      setCgstTotal(parseFloat(cget).toFixed(2));
      setGst(parseInt(Math.round(cget) + Math.round(igetTotal) + Math.round(sgetTotal)))
+   let total = parseInt(Math.round(cget) + Math.round(igetTotal) + Math.round(sgetTotal))
+     setTotal(parseInt(a) + parseInt(total))
+     setgrandTotal(parseInt(a) + parseInt(total) - parseInt(tds2))
    
-     setTotal(parseInt(a) + parseInt(Math.abs(cget)) + parseInt(igetTotal) + parseInt(sgetTotal))
-     setgrandTotal(parseInt(cget + sgetTotal + igetTotal + a - tds2))
-    setgrandTotal(parseInt(cget) + parseInt(sgetTotal) + parseInt(igetTotal) 
-    + parseInt(a) - parseInt(tds2))
    }
    else{
      return false;
@@ -153,10 +152,10 @@ const cgstFun = (e) => {
    let cget = parseFloat(a * e.target.value / 100)
    setCgstTotal(parseFloat(cget).toFixed(2));
    setGst(parseInt(Math.round(cget) + Math.round(igetTotal) + Math.round(sgetTotal)))
-   setTotal(parseInt(a) + parseInt(Math.abs(cget)) + parseInt(igetTotal) + parseInt(sgetTotal))
+   let total = parseInt(Math.round(cget) + Math.round(igetTotal) + Math.round(sgetTotal))
+   setTotal(parseInt(a) + parseInt(total))
   //  setTotal(parseInt(cget) + parseInt(igetTotal) + parseInt(sgetTotal + parseInt(a)))
-   setgrandTotal(parseInt(cget) + parseInt(sgetTotal) + parseInt(igetTotal) 
-   + parseInt(a) - parseInt(tds2))
+  setgrandTotal(parseInt(a) + parseInt(total) - parseInt(tds2))
   
  }
 }
@@ -176,13 +175,10 @@ const sgstFun = (e) => {
      
             let cget = parseFloat(a * e.target.value / 100)
             setSgstTotal(parseFloat(cget).toFixed(2))
-           
-            setTotal(parseInt(a) + parseInt(Math.abs(cget)) + parseInt(igetTotal) + parseInt(cgetTotal))
             setGst(parseInt(Math.round(cget) + Math.round(igetTotal) + Math.round(cgetTotal)))
-            setgrandTotal(parseInt(cget + igetTotal + cgetTotal + a - tds2))
-            setgrandTotal(parseInt(cget) + parseInt(igetTotal) + parseInt(cgetTotal) 
-            + parseInt(a) - parseInt(tds2))
-      
+            let total = parseInt(Math.round(cget) + Math.round(igetTotal) + Math.round(cgetTotal))
+            setTotal(parseInt(a) + parseInt(total))
+            setgrandTotal(parseInt(a) + parseInt(total) - parseInt(tds2))
     }
     else{
       return false;
@@ -198,11 +194,11 @@ else{
     a = parseInt(basicAmount) + parseInt(pocketExp);
   }
         let cget = parseFloat(a * e.target.value / 100)
-        setSgstTotal(parseFloat(cget).toFixed(2))
-        setTotal(parseInt(a) + parseInt(Math.abs(cget)) + parseInt(igetTotal) + parseInt(cgetTotal))
         setGst(parseInt(Math.round(cget) + Math.round(igetTotal) + Math.round(cgetTotal)))
-        setgrandTotal(parseInt(cget) + parseInt(igetTotal) + parseInt(cgetTotal) 
-        + parseInt(a) - parseInt(tds2))
+        setSgstTotal(parseFloat(cget).toFixed(2))
+        let total =parseInt(Math.round(cget) + Math.round(igetTotal) + Math.round(cgetTotal));
+        setTotal(parseInt(a) + parseInt(total))
+        setgrandTotal(parseInt(a) + parseInt(total) - parseInt(tds2))
 }
    
    }
@@ -225,11 +221,9 @@ if(kkk.length < 3){
       let cget = parseFloat(a * e.target.value / 100) 
          setIgstTotal(parseFloat(cget).toFixed(2)) 
          setGst(parseInt(Math.round(cget) + Math.round(sgetTotal) + Math.round(cgetTotal)));
-      
-         setTotal(parseInt(a) + parseInt(Math.abs(cget)) + parseInt(sgetTotal) + parseInt(cgetTotal))
-         setgrandTotal(parseInt(cget) + parseInt(sgetTotal) + parseInt(cgetTotal) 
-         + parseInt(a) - parseInt(tds2))
- 
+      let total = parseInt(Math.round(cget) + Math.round(sgetTotal) + Math.round(cgetTotal));
+         setTotal(parseInt(a) + parseInt(total))
+         setgrandTotal(parseInt(a) + parseInt(total) - parseInt(tds2))
 }
 else{
   return false;
@@ -247,11 +241,9 @@ else{
         let cget = parseFloat(a * e.target.value / 100) 
            setIgstTotal(parseFloat(cget).toFixed(2)) 
            setGst(parseInt(Math.round(cget) + Math.round(sgetTotal) + Math.round(cgetTotal)));
-           setTotal(parseInt(a) + parseInt(Math.abs(cget)) + parseInt(sgetTotal) + parseInt(cgetTotal))
-           setgrandTotal(parseInt(cget) + parseInt(sgetTotal) + parseInt(cgetTotal) 
-         + parseInt(a) - parseInt(tds2))
- 
-   
+           let total = parseInt(Math.round(cget) + Math.round(sgetTotal) + Math.round(cgetTotal))
+           setTotal(parseInt(a) + parseInt(total))
+           setgrandTotal(parseInt(a) + parseInt(total) - parseInt(tds2))
    }
       
  }
