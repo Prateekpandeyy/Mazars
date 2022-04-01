@@ -1,14 +1,14 @@
 import axios from "axios";
 export default axios.create({
-  baseURL: "http://api.masindia.live/v1",
+  baseURL: "https://api.masindia.live/v1",
   headers: {
     "Content-type": "application/json",
   },
 });
 
-// // // for server 
+// for local
 // export default axios.create({
-//   baseURL: "https://mazarsapi.multitvsolution.com/mazarapi/v1",
+//   baseURL: "https://stagingapi.masindia.live/v1",
 //   headers: {
 //     "Content-type": "application/json",
 //   },

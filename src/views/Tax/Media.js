@@ -8,8 +8,8 @@ import { useHistory, useParams  } from 'react-router';
 import axios from 'axios';
 import { baseUrl , baseUrl3} from '../../config/config';
 import { Markup } from 'interweave';
-import {Breadcrumbs, Button, Box, Typography, Table, TableContainer, 
-TableHead, TablePagination, TableBody, TableRow, TableCell } from "@material-ui/core";
+import pngAlbum from './album.png';
+import {Breadcrumbs, Button, Box, Typography, } from "@material-ui/core";
 const MyContainer = styled(Box)({
     display : "flex", 
     justifyContent : "center", 
@@ -62,19 +62,39 @@ const Media = () => {
                    galleryData.map((i) => (
                     
                    
-  <Link className="galleryBox" to = {{
-                      pathname : "/customer/imagegallery", 
-                      index : i
-                    }}>
-                    <img  id={i.id} key={i.id} src={`${baseUrl3}/assets/gallery/${i.name}`} />
-                    <div style={{display: "flex", width: "100%",
-                     justifyContent: "space-between", padding : "5px"}}>
-            <h4>{i.title}</h4>
-            <h4>{i.created_date.split(" ")[0].split("-").reverse().join("-")}</h4>
-                </div>
-                  </Link>
+  // <Link className="galleryBox" to = {{
+  //                     pathname : "/customer/imagegallery", 
+  //                     index : i
+  //                   }}>
+  //                   <img  id={i.id} key={i.id} src={`${baseUrl3}/assets/gallery/${i.name}`} />
+  //                   <div style={{display: "flex", width: "100%",
+  //                    justifyContent: "space-between", padding : "5px"}}>
+  //           <h4>{i.title}</h4>
+  //           <h4>{i.created_date.split(" ")[0].split("-").reverse().join("-")}</h4>
+  //               </div>
+  //                 </Link>
                  
-                  
+                 
+  <div className="galleryBoxvideo">
+  <div style={{display : "flex", justifyContent: "center", height: "70%", width: "100%", alignItems: "center"}}>
+  <Link style={{display: "flex", height: "100%"}}
+  to = {{
+    pathname : "/customer/imagegallery",
+                        index : i
+                      }}>
+                        <img src={pngAlbum} 
+                        style={{display : "flex", width: "100%", height: "100%", }}
+                         id={i.id} 
+                        />
+  
+                               
+             </Link>
+    </div>
+             <div style={{ padding: "5px 10px", width: "100%", justifyContent: "space-between"}}>
+              <h5>{i.title}</h5>
+              <h5>{i.created_date.split(" ")[0].split("-").reverse().join("-")}</h5>
+                  </div>
+                   </div>  
                   ))
                  }
               

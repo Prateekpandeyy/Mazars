@@ -86,10 +86,9 @@ function Login(props) {
       history.push("/admin/login");
     }, 36000000)
   }
-  if(window.location.origin === "http://mazars.multitvsolution.com" && window.location.protocol == 'http:'){
+  if(window.location.origin === "http://masindia.live" && window.location.protocol == 'http:'){
     window.location.href = window.location.href.replace('http:', 'https:')
   }
-  
   return (
     <>
       <Header mtl="mtl" noTlSign = "noSingIn"/>

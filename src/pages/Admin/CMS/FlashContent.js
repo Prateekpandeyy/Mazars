@@ -81,7 +81,7 @@ const FlashContent = () => {
                  html : `${message}`,
                  icon : "success"
              })
-             history.push("/admin/flash")
+             history.push("/cms/flash")
         
          }
          else{

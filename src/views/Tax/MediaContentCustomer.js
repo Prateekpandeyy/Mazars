@@ -52,16 +52,11 @@ const MediaContentCustomer = () => {
            <div className="StartPageDetails">
            <div className="mainContent222">
               <TableContainer>
-             <Breadcrumbs separator="<" maxItems={3} aria-label="breadcrumb">
+             <Breadcrumbs separator=">" maxItems={3} aria-label="breadcrumb">
              <Link underline="hover" color="inherit" to="/customer/media">
   Media Gallery
   </Link>
-        <Link underline="hover" color="inherit" to={{
-          pathname : "/customer/updates",
-          index : 2
-        }}>
-       Media News
-        </Link>
+  <Typography color="text.primary">  Media News</Typography>
         
        
         </Breadcrumbs>
@@ -101,12 +96,12 @@ const MediaContentCustomer = () => {
         {description === true ?
          <div className="StartPageDetails">
          <div className="mainContent222">
-         <Breadcrumbs separator="<" maxItems={3} aria-label="breadcrumb">
+         <Breadcrumbs separator=">" maxItems={3} aria-label="breadcrumb">
          <Link underline="hover" color="inherit" to="/customer/media">
   Media Gallery
   </Link>
         <Link underline="hover" color="inherit" to={{
-          pathname : "/customer/updates",
+          pathname : "/customer/mediacontent",
           index : 2
         }}>
        Media News

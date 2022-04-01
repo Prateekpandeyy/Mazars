@@ -11,6 +11,7 @@ import { Markup } from 'interweave';
 import ReactPlayer from "react-player";
 import CloseIcon from '@material-ui/icons/Close';
 import {Breadcrumbs, Box, Typography  } from "@material-ui/core";
+import pngAlbum from './album.png';
 const MyContainer = styled(Box)({
     display : "flex", 
     justifyContent : "center", 
@@ -61,17 +62,24 @@ const VideoList = () => {
                      
                    galleryData.map((i) => (
                     
-                   <div className="galleryBox">
- <Link  to = {{
+                   <div className="galleryBoxvideo">
+<div style={{display : "flex", justifyContent: "center", height: "70%", width: "100%", alignItems: "center"}}>
+<Link style={{display: "flex", height: "100%"}}
+to = {{
                       pathname : "/customer/videogallery", 
                       index : i
                     }}>
-                               <video style={{display : "flex", width: "100%"}} id={i.id} src={`${baseUrl3}/assets/gallery/${i.name}`}
-           />
+                      <img src={pngAlbum} 
+                      style={{display : "flex", width: "100%", height: "100%", }}
+                       id={i.id} 
+                      />
+
+                             
            </Link>
-           <div style={{display: "flex", padding: "5px 10px", width: "100%", justifyContent: "space-between"}}>
-            <h4>{i.title}</h4>
-            <h4>{i.created_date.split(" ")[0].split("-").reverse().join("-")}</h4>
+  </div>
+           <div style={{ padding: "5px 10px", width: "100%", justifyContent: "space-between"}}>
+            <h5>{i.title}</h5>
+            <h5>{i.created_date.split(" ")[0].split("-").reverse().join("-")}</h5>
                 </div>
                  </div>
                  

@@ -22,15 +22,12 @@ function CustomerNotification({ tokenKey, name }) {
         axios
             .get(`${baseUrl}/customers/getNotification?id=${JSON.parse(tokenKey)}&type_list=uread`)
             .then((res) => {
-                if(role === "cms" && window.location.hash.search("cms") !== 2){
+                console.log("roleAdmin", window.location.hash.search("admin"))
+                if(role === "cms" && window.location.hash.search("admin") == 2){
                     console.log("cmsfixed")
                     history.push("/*")
                 }
-                else if(role === "admin" && window.location.hash.search("cms") === 2){
-                    console.log("done")
-                    history.push("/*")
-                }
-                
+               
            
                 if (res.data.code === 1) {
                    

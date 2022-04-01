@@ -371,7 +371,7 @@ const amountStyle  = {
                     title="Read"
                     style={{ cursor: "pointer" }}
                   >
-                    Engagement Letter
+                   Please read engagement letter
                   </label>
                   <p className="declined">{custcheckError}</p>
                 </div>

@@ -25,7 +25,7 @@ const FlashMessage = () => {
     const [edit, isEdit] = useState(false)
     const [myVal222, setMyVal22] = useState(false)
     const [editData, setEditData] = useState()
-   const [check, setCheck] = useState(true)
+    const [check, setCheck] = useState(false)
     const userId = localStorage.getItem("adminkey")
     let history = useHistory()
     useEffect(() => {

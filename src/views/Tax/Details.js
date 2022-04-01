@@ -68,7 +68,7 @@ const Details = () => {
             justifyContent : "space-between", 
             alignItems: "center"}}>
            <h5> {i.heading} </h5>
-          <a href={`${baseUrl}/${i.file}`} target="_blank">
+          <a href={`${baseUrl3}/${i.file}`} target="_blank">
           <DescriptionOutlinedIcon color="secondary" />
           </a>
          

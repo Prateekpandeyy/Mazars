@@ -67,7 +67,7 @@ const MediaText = () =>{
          <>
        
                   <div style={{display : "flex", justifyContent : "space-evenly"}}>
-                  <Link to={`/admin/mediatext/${row.id}`}>
+                  <Link to={`/cms/mediatext/${row.id}`}>
           <EditQuery titleName="Edit media news" />
       </Link>
       <span   onClick={() => del(row.id)} className="ml-2">

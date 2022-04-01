@@ -48,7 +48,7 @@ function Header({ id, cust_sign, noAdminSign, noTlSign,
               <img src={mazars} className="logo" alt="mazar"/>
             </Link>
           <div>
-        {/* <CmsCont getData= {getData} /> */}
+        <CmsCont getData= {getData} />
             </div>
           </div>
         )}

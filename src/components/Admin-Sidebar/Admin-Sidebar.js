@@ -192,7 +192,7 @@ const handleClick = () => {
 const handleClickCms = () => {
   setOpen2(!open2)
 }
-console.log("role", role)
+
 const classes = useStyle()
   return (
     <>

@@ -88,13 +88,7 @@ const MediaGallery = () => {
         <Layout adminDashboard="adminDashboard" adminUserId={userId}>
 
         <MyContainer>
-           
-        <MyBox>
-       <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
-          
-
-         <InnerBox>
-         <Row>
+        <Row className="my-2">
           <Col md="4">
           <button
                 className="autoWidthBtn" 
@@ -105,10 +99,16 @@ const MediaGallery = () => {
               </button>
               
             </Col>
-            <Col md="6">
+            <Col md="4" align="center">
               <h4>Photo Gallery</h4>
             </Col>
             </Row>
+        <MyBox>
+       <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
+          
+
+         <InnerBox>
+
          <div className="row">
          <div className="col-md-12 col-sm-12">
                   
@@ -135,7 +135,7 @@ const MediaGallery = () => {
                name= "date_event"
                ref={register}
                className="form-control"
-              min = {item}
+             
               
               />
                   </div>

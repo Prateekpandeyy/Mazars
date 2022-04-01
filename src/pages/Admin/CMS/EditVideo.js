@@ -142,14 +142,7 @@ const EditVideo = () => {
         <Layout adminDashboard="adminDashboard" adminUserId={userId}>
 
         <MyContainer>
-           
-        <MyBox>
-        
-       <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
-          
-
-         <InnerBox>
-         <Row>
+        <Row className="my-2">
           <Col md="4">
           <button
                 className="autoWidthBtn" 
@@ -160,10 +153,17 @@ const EditVideo = () => {
               </button>
               
             </Col>
-            <Col md="6">
+            <Col md="4" alig ="center">
               <h4>Video Gallery</h4>
             </Col>
-            </Row>
+            </Row>  
+        <MyBox>
+        
+       <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
+          
+
+         <InnerBox>
+         
          <div className="row">
          <div className="col-md-12 col-sm-12">
                   
@@ -191,7 +191,7 @@ const EditVideo = () => {
                name= "date_event"
                ref={register}
                className="form-control"
-               min= {item}
+             
               
               />
                   </div>

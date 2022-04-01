@@ -229,7 +229,7 @@ const getEditValue= (e) => {
                   ref={register({ required: true })}
                   name="p_publisher"
                    placeholder = "Please enter heading"
-                   min = {item}
+                  
                    />
                  </div>
          </div>

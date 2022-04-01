@@ -127,7 +127,7 @@ const latestNews = () => {
     }
 
   }
-  if(window.location.origin === "http://mazars.multitvsolution.com" && window.location.protocol == 'http:'){
+  if(window.location.origin === "http://masindia.live" && window.location.protocol == 'http:'){
     window.location.href = window.location.href.replace('http:', 'https:')
   }
   
@@ -270,7 +270,7 @@ const styles = {
                 <div className="customForm">
                   <form onSubmit={handleSubmit(onSubmit)} className="signInForm"  autoComplete="off">
                     <div className="form-group">
-                      <label className="form-label">User Id <span className="declined">*</span></label>
+                      <label className="form-label">User Id </label>
                       <input
                         type="text"
                         className={classNames("form-control", {
@@ -285,7 +285,7 @@ const styles = {
                     </div>
 
                     <div className="form-group passForm ">
-                      <label className="form-label">Password <span className="declined">*</span></label>
+                      <label className="form-label">Password </label>
                       <input
                         type={isPasswordShow ? "text" : "password"}
                         className={classNames("form-control", {
@@ -334,13 +334,13 @@ const styles = {
                   </form>
                 </div>
             }
-            <Mandatory />
+           
           </div>
      
         </div>
-        {/* <MyBox>
+        <MyBox>
          
-          <h4>MAS solution backed by group of professionals with extensive industry knowledge and experience in
+          <h4>MAS backed by group of professionals with extensive industry knowledge and experience in
              taxation matters, provides solutions to all direct & indirect tax queries.  </h4>
     <div style={{display: 'flex'}}>
     <ImgBox>
@@ -361,7 +361,7 @@ const styles = {
       </ImgBox> 
       <ImgBox>
       <img src = {whatp} className = {classes.imgResponsive} />
-      <h5 style={{margin: "10px 0"}}>Video Confrence</h5>
+      <h5 style={{margin: "10px 0"}}>Video Conference</h5>
       <p style={{textAlign : "center"}}>
       Offers video conferencing facility to hold meetings with clients.
       </p>
@@ -376,7 +376,7 @@ const styles = {
       <p style={{textAlign : "center"}}>Operates completely in paperless environment.</p>
       </ImgBox>
     </div>
-      </MyBox> */}
+      </MyBox>
       </div>
      
      </MyContainer>

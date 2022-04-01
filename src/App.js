@@ -173,6 +173,7 @@ import EditImage from "./pages/Admin/CMS/EditImage";
 import EditVideo from "./pages/Admin/CMS/EditVideo";
 import Groupvideo from "./pages/Admin/CMS/Groupvideo";
 import Videogallery from "./views/Tax/VideoGallary";
+import GroupVideo from "./views/Tax/GroupVideo";
 
 // import PayDetails from "./views/PaymentStatus/PayDetails";
 
@@ -221,6 +222,7 @@ function App() {
              <PublicRouteUser exact path = "/customer/videolist" component = {VideoList} />
              <PublicRouteUser exact path = "/customer/videogallery" component = {Videogallery} />
          <PublicRouteUser exact path = "/customer/details" component={Details} />
+         <PublicRouteUser exact path = "/customer/groupvideo" component = {GroupVideo} />
      <PublicRouteUser exact path = "/customer/customerquery" component={QueryContact} />
      <PublicRouteUser exact path = "/customer/latestupdates" component={LatestUpdates} />
      <PublicRouteUser exact path = "/customer/updates" component={Updates} />

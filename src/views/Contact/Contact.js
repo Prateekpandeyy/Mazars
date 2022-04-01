@@ -15,14 +15,16 @@ return (
 <Row>
           <Col md="12">
             
-          <h4>Mazars House</h4>
-    <h4>421, Udyog vihar Phase IV</h4>
+          <h4>106-107, Mercantile House</h4>
+    <h4>Kasturba Gandhi Marg, Connaught Place</h4>
 
-    <h4>Gurugram,Haryana 122016,
-India</h4>
-<a href="https://www.mazars.co.in" target= "_blank">www.mazars.co.in</a>
+    <h4>New Delhi-110001, India</h4>
+
 <div>
-Tel:<a href="tel:+496170961709"> 91 124 481 4444</a>
+    Email : <a href="mailto: support@masindia.live">support@masindia.live</a>
+    </div>
+<div>
+Tel:<a href="tel:+496170961709"> +91 111-43684444</a>
 </div>
             </Col>
            
