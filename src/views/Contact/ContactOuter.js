@@ -9,13 +9,13 @@ const ContactOuter = () => {
  <Header cust_sign="cust_sign" />
         
         
-        <div className="StartPage" style={{ "textAlign": "center", "margin": "55px 0 30px 0" }}>
-          <div className="mainContent" style={{display  : "flex", justifyContent : "center"}}>
-  
-          <Card>
+ <div className="StartPageDetailscontact">
+ <div className="mainContentDetailscontact">
+          <Card style={{display : "flex", width: "100%", border : "1px solid #fff",
+        boxShadow : "none"}}>
 
 <CardHeader>
-<h3 style={{textAlign: "center"}}>Contact Us</h3>    
+<h3 style={{textAlign: "center", width: "100%"}}>Contact Us</h3>    
         </CardHeader>
 <CardBody style={{textAlign: "center"}}>
 <Row>

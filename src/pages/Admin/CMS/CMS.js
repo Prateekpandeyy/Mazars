@@ -41,7 +41,7 @@ const Cms = () =>{
             
             axios.get(`${baseUrl}/cms/setarticlestatus?uid=${JSON.parse(userId)}&id=${row.id}&status=0`)
        .then((res) => {
-           console.log("res", res)
+         
            if(res.data.result === 1){
              setCheck(true)
            }
@@ -51,7 +51,7 @@ const Cms = () =>{
            
             axios.get(`${baseUrl}/cms/setarticlestatus?uid=${JSON.parse(userId)}&id=${row.id}&status=1`)
             .then((res) => {
-                console.log("res", res)
+              
                 setCheck(false)
             })
         }

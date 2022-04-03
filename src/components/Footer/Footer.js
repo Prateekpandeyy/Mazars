@@ -4,6 +4,7 @@ import MyPDF from "../../views/ManualImg/newUser.pdf";
 
 import { Link } from "react-router-dom";
 function Footer() {
+  let date = new Date()
   const userid = window.localStorage.getItem("userid")
   return (
     <>
@@ -39,7 +40,7 @@ function Footer() {
            
              
           </div>
-          <p>Copyright @ 2021. All right reserved.</p>
+{`Copyright  @${date.getFullYear()} All right reserved`} 
         </div>
       
   

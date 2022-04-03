@@ -97,7 +97,7 @@ Swal.fire({
     },
     {
       dataField: "",
-      text: "Image",
+      text: "Album Name",
     
      
       formatter: function dateFormat(cell, row) {
@@ -107,8 +107,7 @@ return(
                       pathname : "/cms/imagegallery", 
                       index : row
                     }}>
-                    <img  id={row.id} key={row.id} src={`${baseUrl3}/assets/gallery/${row.name}`} 
-                    style={{width: "50px", height: "50px"}} />
+                   {row.title}
                  
                   </Link>
   </>
@@ -131,11 +130,7 @@ return(
       },
     },
    
-    {
-      dataField: "title",
-      text: "Title",
-     
-    },
+   
     {
       dataField : "",
       text : "Action",
@@ -149,16 +144,7 @@ return(
                    >
                      <EditQuery titleName="Edit Photo Gallery" />
                      </Link>
-                     <Link style={{display : "flex", height : "80%", overflow : "hidden"}} to = {{
-                      pathname : "/cms/imagegallery", 
-                      index : row
-                    }}>
-
-                          <span title="Photo Gallery">
-                          <InsertPhotoIcon className="inprogress" />
-                          </span>
-                              
-                  </Link>
+                   
                   <span onClick={() => del(row)}>
                             <DeleteIcon titleName="Delete Photo Gallery" />
                             </span>

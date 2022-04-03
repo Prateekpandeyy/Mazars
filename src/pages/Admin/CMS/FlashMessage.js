@@ -89,7 +89,7 @@ const FlashMessage = () => {
             
             axios.get(`${baseUrl}/cms/setnewsstatus?uid=${JSON.parse(userId)}&id=${row.id}&status=0`)
        .then((res) => {
-           console.log("res", res)
+           
            if(res.data.result === 1){
              setCheck(true)
            }
@@ -99,7 +99,7 @@ const FlashMessage = () => {
            
             axios.get(`${baseUrl}/cms/setnewsstatus?uid=${JSON.parse(userId)}&id=${row.id}&status=1`)
             .then((res) => {
-                console.log("res", res)
+                
                 setCheck(false)
             })
         }
@@ -188,6 +188,7 @@ const FlashMessage = () => {
   
                   </div> : ""
                 }
+         
              </div>
                 </>
             

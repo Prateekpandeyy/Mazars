@@ -184,7 +184,7 @@ const classes = useStyle()
     <TableHead>
    <TableRow>
      <TableCell style= {{width : "50px"}}>S.No</TableCell>
-     <TableCell style={{width : "400px"}}>Heading</TableCell>
+     <TableCell style={{width : "400px"}}>Site</TableCell>
      <TableCell>Url</TableCell>
    </TableRow>
    </TableHead>
@@ -254,7 +254,7 @@ const classes = useStyle()
 
  </div> : 
    <div className="StartPageDetails">
-   <div className="mainContent222">
+   <div className="mainContentDetails">
    <Breadcrumbs separator=">" maxItems={3} aria-label="breadcrumb">
   
   <Link underline="hover" color="inherit" to = {{
@@ -265,7 +265,10 @@ const classes = useStyle()
   </Link>
   <Typography color="text.primary">{myData.heading}</Typography>
   </Breadcrumbs>
-   <Markup content = {`<h4>${myData.heading} </h4> <span>${myData.content}</span>`} />
+  <div style={{margin: "20px 0 10px 0"}}>
+  <Markup content = {`<h4>${myData.heading} </h4> <h5>Date - ${myData.publish_date}</h5> <span>${myData.content}</span>`} />
+  </div>
+   
  </div>
 
 </div>

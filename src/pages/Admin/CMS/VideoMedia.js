@@ -64,11 +64,9 @@ const VideoMedia = () => {
       },
       {
         dataField: "",
-        text: "Image",
+        text: "Album Name",
      
-        style: {
-         paddingTop : "0px"
-        },
+    
         formatter: function dateFormat(cell, row) {
   return(
     <>
@@ -76,14 +74,13 @@ const VideoMedia = () => {
                          pathname : "/cms/videogallery", 
                         index : row
                       }}>
-                      <video id={row.id} src={`${baseUrl3}/assets/gallery/${row.name}`}
-          style={{width: "50px", height: "50px"}}  />
+                    {row.title}
                    
                     </Link>
     </>
   ) }
       },
-     
+      
       {
         dataField: "created_date",
         text: "Date",
@@ -99,11 +96,7 @@ const VideoMedia = () => {
         },
       },
      
-      {
-        dataField: "title",
-        text: "Title",
-       
-      },
+     
       {
         dataField : "",
         text : "Action",
@@ -117,16 +110,7 @@ const VideoMedia = () => {
                      >
                        <EditQuery titleName="Edit Video Gallery" />
                        </Link>
-                       <Link style={{display : "flex", height : "80%", overflow : "hidden"}} to = {{
-                        pathname : "/cms/videogallery", 
-                        index : row
-                      }}>
-  
-  <span title="Video Gallery">
-  <OndemandVideoIcon className="inprogress" />
-  </span>
-                                
-                    </Link>
+                     
                     <span onClick={() => del(row)}>
                               <DeleteIcon titleName="Delete Video Gallery" />
                               </span>

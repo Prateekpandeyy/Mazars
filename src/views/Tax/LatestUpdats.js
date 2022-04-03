@@ -36,7 +36,7 @@ const LatestUpdates = () => {
             res.data.result.map((i) => {
              pp.push(i)
              if(i.id === getId){
-               console.log("fixedId", i)
+              
                setDescription(i)
              }
             })

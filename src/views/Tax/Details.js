@@ -9,6 +9,7 @@ import { baseUrl, baseUrl3 } from '../../config/config';
 import { Markup } from 'interweave';
 import {Breadcrumbs, Box, Typography } from "@material-ui/core";
 import CommonServices from '../../common/common.js';
+import {  VscFilePdf} from "react-icons/vsc";
 import DescriptionOutlinedIcon from '@material-ui/icons/DescriptionOutlined';
 const MyContainer = styled(Box)({
     display : "flex", 
@@ -52,7 +53,7 @@ const Details = () => {
         <div className="StartPageDetails">
          {
            data.map((i) => (
-            <div className="mainContentDetails">
+            <div className="articlesDetails">
              <Breadcrumbs separator=">" maxItems={3} aria-label="breadcrumb">
              <Link underline="hover" color="inherit" to="/customer/direct">
   Articles
@@ -63,13 +64,13 @@ const Details = () => {
   
   <Typography color="text.primary"> {i.heading}</Typography>
 </Breadcrumbs>
-           <div style={{margin: "10px 0"}}>
+           <div style={{margin: "20px 0 10px 0"}}>
            <div style={{display: "flex", width: '100%',
             justifyContent : "space-between", 
             alignItems: "center"}}>
            <h5> {i.heading} </h5>
           <a href={`${baseUrl3}/${i.file}`} target="_blank">
-          <DescriptionOutlinedIcon color="secondary" />
+          <VscFilePdf  style={{dislay: "flex", width: "40px", height: "40px"}} />
           </a>
          
          

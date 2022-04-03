@@ -108,7 +108,9 @@ const MediaContentCustomer = () => {
         </Link>
         <Typography color="text.primary">{myData.heading}</Typography>
         </Breadcrumbs>
-         <Markup content = {`<h4>${myData.heading} </h4> <span>${myData.content}</span>`} />
+       <div style={{margin: "20px 0px 10px 0px"}}>
+       <Markup content = {`<h4>${myData.heading} </h4> <span>${myData.content}</span>`} />
+       </div>
        </div>
       
       </div>

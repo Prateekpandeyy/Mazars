@@ -9,6 +9,7 @@ import axios from 'axios';
 import { baseUrl } from "../../config/config";
 import Swal from 'sweetalert2';
 import classNames from 'classnames';
+import Footer from './../../components/Footer/Footer';
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 const Schema = yup.object().shape({
@@ -165,8 +166,9 @@ I accept that MAS will process my personal data for the purpose of handling my r
                     </Grid>
                     
                 </Grid>
+               
             </Container>
-          
+            <Footer />
         </>
     )
 }

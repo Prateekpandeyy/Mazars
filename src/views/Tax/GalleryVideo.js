@@ -16,22 +16,9 @@ import './style.css';
       })
 const GalleryVideo = () => {
   const [images, setImages] = useState([])
-  
+  const [title, setTitle] = useState("")
   let history = useHistory();
-    // const images = [
-    //     {
-    //       original: 'https://picsum.photos/id/1018/1000/600/',
-    //       thumbnail: 'https://picsum.photos/id/1018/250/150/',
-    //     },
-    //     {
-    //       original: 'https://picsum.photos/id/1015/1000/600/',
-    //       thumbnail: 'https://picsum.photos/id/1015/250/150/',
-    //     },
-    //     {
-    //       original: 'https://picsum.photos/id/1019/1000/600/',
-    //       thumbnail: 'https://picsum.photos/id/1019/250/150/',
-    //     },
-    //   ];
+  
     useEffect(() => {
       getImages()
     }, [])
@@ -43,19 +30,19 @@ const GalleryVideo = () => {
       .then((res) => {
        
       res.data.result.map((i) => {
+        setTitle(i.title)
         let  a = {
           original : `${baseUrl3}/assets/gallery/${i.name}`,
           thumbnail : `${baseUrl3}/assets/gallery/${i.name}`
         }
         obj.push(a)
-        console.log("aa", a, obj)
+      
      setImages(obj)
       })
       })
      
      }
-     console.log("obj", obj)
-    }
+        }
     
    
     return(
@@ -78,11 +65,11 @@ const GalleryVideo = () => {
  Photo Gallery
   </Link>
   
-  <Typography color="text.primary"> Nature Image(Make your life easy)</Typography>
+  <Typography color="text.primary"> {title}</Typography>
 </Breadcrumbs>
         
               </span>
-        <div style={{display: "flex", width:"100%", justifyContent: "center", alignItems: "center"}}>
+        <div style={{display: "flex", margin: "20px 0 10px 0", width:"100%", justifyContent: "center", alignItems: "center"}}>
     {images.length > 0 ? 
      <ImageGallery items={images} 
      height={300}

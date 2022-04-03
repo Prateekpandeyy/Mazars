@@ -67,7 +67,10 @@ Swal.fire({
           })
         }
     });
-};
+}; const playVideo2 = (e) => {
+  // isPlay(true)
+  // setVideoId(`${baseUrl3}/assets/gallery/${e}`)
+}
     return(
         <>
      <Layout adminDashboard="adminDashboard" adminUserId={userId}>   
@@ -80,13 +83,11 @@ Swal.fire({
                     
                     {/* <img id={i.id} src={`${baseUrl3}/assets/gallery/${i.name}`}
                     onClick={() => enLarge(i.id)} /> */}
-                     <Link style={{display : "flex", height : "80%", overflow : "hidden"}} to = {{
-                      pathname : "/cms/imagegallery", 
-                      index : i
-                    }}>
-                  <video id={i.id} src={`${baseUrl3}/assets/gallery/${i.name}`}></video>
+                    
+                  <video id={i.id} src={`${baseUrl3}/assets/gallery/${i.name}`}
+                   onClick={() => playVideo2(i.id)}></video>
                   <h4 style={{margin: "5px 10px"}}>{i.title}</h4>
-                  </Link>
+                  
                    
                   
                   <div className="delIcon">
@@ -104,6 +105,30 @@ Swal.fire({
                  }
               
                 </div>
+                {/* {
+          play === true ?
+                
+          <div className="modalBox">
+          <div className="boxContainer">
+          <div className="canBtn"  title="cancel">
+              <h4>Recording Player</h4>
+              <CloseIcon  onClick= {() => isPlay(false)} id="myBtn"/> </div>
+         
+
+         <div className="my2">
+         <ReactPlayer
+           url={videoId}
+           controls={true}
+           playing={true}
+           width='100%'
+           height='100%'
+          />
+             </div>
+          </div>
+     
+    </div> : ""
+        } */}
+
  </MyContainer>
        </Layout>  
        </>

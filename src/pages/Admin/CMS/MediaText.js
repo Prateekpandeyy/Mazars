@@ -20,7 +20,7 @@ const MyContainer = styled(Container)({
 const MediaText = () =>{ 
     const userId = window.localStorage.getItem("adminkey");
     const [list, setList] = useState([])
-    const [check, setCheck] = useState(true)
+    const [check, setCheck] = useState(false)
     let history = useHistory()
     useEffect(() => {
       getList()
@@ -77,7 +77,7 @@ const MediaText = () =>{
                   row.status == "1" ?
                   <div>
                   <label class="switch" onChange= {(e) => myShowValue(e, row)}>
-    <input type="checkbox"  defaultChecked  />
+    <input type="checkbox"  defaultChecked/>
     <span class="slider round"></span>
   </label>
   
@@ -101,24 +101,43 @@ const MediaText = () =>{
       }
     ]
     const myShowValue = (e, row) => {
-      console.log("etarget", e.target.checked)
-        if(e.target.checked === true){
-            e.target.checked = true
-            axios.get(`${baseUrl}/admin/setgalleryupdatestatus?uid=${JSON.parse(userId)}&id=${row.id}&status=0`)
-       .then((res) => {
+      // console.log("etarget", e.target.checked)
+      //   if(e.target.checked === true){
+      //       e.target.checked = true
+      //       axios.get(`${baseUrl}/cms/setgalleryupdatestatus?uid=${JSON.parse(userId)}&id=${row.id}&status=0`)
+      //  .then((res) => {
          
-           setCheck(true)
-       })
-        }
-        else{
-            e.target.checked = false
-            axios.get(`${baseUrl}/admin/setgalleryupdatestatus?uid=${JSON.parse(userId)}&id=${row.id}&status=1`)
-            .then((res) => {
+      //      setCheck(true)
+      //  })
+      //   }
+      //   else{
+      //       e.target.checked = false
+      //       axios.get(`${baseUrl}/cms/setgalleryupdatestatus?uid=${JSON.parse(userId)}&id=${row.id}&status=1`)
+      //       .then((res) => {
                
-                setCheck(false)
-            })
-        }
+      //           setCheck(false)
+      //       })
+      //   }
           
+      if(e.target.checked === true){
+
+            
+        axios.get(`${baseUrl}/cms/setgalleryupdatestatus?uid=${JSON.parse(userId)}&id=${row.id}&status=0`)
+   .then((res) => {
+     
+       if(res.data.result === 1){
+         setCheck(true)
+       }
+   })
+    }
+    else{
+       
+        axios.get(`${baseUrl}/cms/setgalleryupdatestatus?uid=${JSON.parse(userId)}&id=${row.id}&status=1`)
+        .then((res) => {
+          
+            setCheck(false)
+        })
+    }
      
   }
     const del = (id) => {

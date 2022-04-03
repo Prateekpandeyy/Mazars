@@ -61,6 +61,7 @@
     "react-dropdown-input": "^0.1.11",
     "react-hls-player": "^3.0.7",
     "react-hook-form": "^6.15.5",
+    "react-icons": "^4.3.1",
     "react-image-gallery": "^1.2.7",
     "react-infinite-scroll-component": "^6.1.0",
     "react-loader-spinner": "^4.0.0",
