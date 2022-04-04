@@ -106,8 +106,31 @@ const Faq = () => {
         
          
            <div className="row">
+           <div className="col-md-12">
+               <label className="form-label">Question</label> </div>
+               
                <div className="col-md-12">
-               <label className="form-label">Content</label> </div>
+               <CKEditor
+             id="test"
+                     editor={ ClassicEditor }
+                    
+                    // data={det}
+                    rows="10"
+                    name="p_fact"
+                
+                    onChange={ ( event, editor ) => {
+                      addDet(editor.getData());
+                     
+
+                    
+                  } }
+           
+                ></CKEditor>
+               
+                   </div>
+           
+               <div className="col-md-12">
+               <label className="form-label">Answer</label> </div>
                
                <div className="col-md-12">
                <CKEditor

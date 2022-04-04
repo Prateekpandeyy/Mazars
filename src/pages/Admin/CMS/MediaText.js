@@ -49,10 +49,25 @@ const MediaText = () =>{
         },
       },
       {
+        dataField: "created_date",
+        text: "Date",
+     
+       
+        formatter: function dateFormat(cell, row) {
+  console.log("createrDate", row)
+          var oldDate = row.publish_date;
+          if (oldDate == null) {
+            return null;
+          }
+     
+          return oldDate.split(" ")[0].split("-").reverse().join("-");
+        },
+      },
+      {
         dataField : "heading",
         text : "Heading",
         headerStyle : () => {
-          return{ width: "750px"}
+          return{ width: "600px"}
         },
       },
      

@@ -40,6 +40,7 @@ import payDetails from "./views/PaymentStatus/PayDetails";
 import Contact from "./views/Contact/Contact";
 import About from './views/About/About';
 import Media from './views/Tax/Media';
+import FaqQuestion from "./views/Tax/FaqQuestion";
 
 
 //admin routes
@@ -227,6 +228,7 @@ function App() {
      <PublicRouteUser exact path = "/customer/latestupdates" component={LatestUpdates} />
      <PublicRouteUser exact path = "/customer/updates" component={Updates} />
         <PublicRouteUser exact path = "/customer/contactbasic" component = {ContactOuter} />
+       <PublicRouteUser exact path = "/customer/faq-question" component={FaqQuestion} />
             <PrivateRouteUser exact path="/customer/select-category" component={SelectCategoryPage} />
             <PrivateRouteUser exact path="/customer/dashboard" component={Dashboard} />
             <PrivateRouteUser exact path="/customer/my-assingment/:id" component={MyAssingment} />

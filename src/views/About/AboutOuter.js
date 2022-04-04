@@ -13,7 +13,7 @@ const MyBox = styled(Box)({
 const AboutOuter = () => {
     return(
         <>
-         <Header cust_sign="cust_sign" />
+         <Header noSign="noSign"/>
          <div className="StartPageDetailscontact">
  <div className="mainContentDetailscontact">
           <Card style={{display : "flex", width: "100%", boxShadow: "none", border: "1px solid #fff"}}>

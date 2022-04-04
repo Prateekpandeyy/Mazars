@@ -258,6 +258,28 @@ html body a {
   transform: all 0.3s;
   vertical-align: middle;
 }
+.downloadBtnPdf {
+  border-bottom-left-radius: 1rem;
+  background-color: #0071ce;
+  border: 1px solid #0071ce;
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  justify-content: center;
+  line-height: 1;
+  width: 200px;
+  min-height: 2rem;
+  overflow: hidden;
+  padding: 0.6rem 1rem;
+  position: relative;
+  text-decoration: none;
+  transform: all 0.3s;
+  vertical-align: middle;
+  outline: 0px;
+}
 
 .customBtn,
 .customBtnDisabled {
@@ -493,48 +515,6 @@ h6 {
 .menu-expanded .main-menu.menu-light .navigation > li > a > i {
   margin-right: 8px !important;
 }
-/* .caret {
-  display: inline-block;
-  width: 0;
-  height: 0;
-  margin-left: 2px;
-  vertical-align: middle;
-  border-top: 4px dashed;
-  border-top: 4px solid \9;
-  border-right: 4px solid transparent;
-  z-index: 99999;
-  border-left: 4px solid transparent;
-}
-
-.dropup .caret,  .dropdown .caret {
-  border-top: 0;
-  border-bottom: 4px dashed;
-  border-bottom: 4px solid \9;
-  z-index: 99999;
-  content: "";
-} */
-
-/* .caret{
- 
- border : 2.5px solid;
-  margin: 0 2px;
-  height: 20px;
-  border-top: 0;
-  border-bottom: 4px dashed;
-  border-bottom: 4px solid \9;
-  background-color: none;
-}
- .caret{
- background-color: none;
-  border : 2.5px solid;
-   margin: 0 2px;
-   height: 20px;
-   border-top: 0;
-   border-bottom: 4px dashed;
-   border-bottom: 4px solid \9;
- 
- 
- } */
 .caret {
   background: url(http://tablesorter.com/themes/blue/bg.gif) no-repeat 99;
 }
@@ -598,10 +578,3 @@ th.sortable:hover::after {
 .customInvalid {
   border: 1px solid red;
 }
-/* #test.ck-content{
-  height: 250px !important;
-}
-#test .ck-editor__editable:not(.ck-editor__nested-editable) {
-  min-height: 400px !important;
-  }
-   */

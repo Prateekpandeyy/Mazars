@@ -7,6 +7,7 @@ import ImageGallery from 'react-image-gallery';
 import { baseUrl, baseUrl3 } from "../../config/config";
 import axios from "axios";
 import './style.css';
+import classes from './design.module.css';
     const MyContainer = styled(Box)({
         display : "flex", 
         justifyContent : "center", 
@@ -69,11 +70,12 @@ const GalleryVideo = () => {
 </Breadcrumbs>
         
               </span>
-        <div style={{display: "flex", margin: "20px 0 10px 0", width:"100%", justifyContent: "center", alignItems: "center"}}>
+        <div style={{display: "flex", margin: "20px 0 10px 0", 
+        width:"100%", justifyContent: "center", alignItems: "center"}}>
     {images.length > 0 ? 
      <ImageGallery items={images} 
-     height={300}
-     additionalClass = "myVideo" /> : "" }
+     
+     additionalClass = {classes.myVideo} /> : "" }
             </div>
             </div>
         

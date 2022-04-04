@@ -1,26 +1,15 @@
 import { NavLink } from "react-router-dom";
 import React, { useEffect, useState } from "react";
-import { Badge } from "reactstrap";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
 import ima from "../../mazars_logo.png";
 import Collapse from '@mui/material/Collapse';
-import FeedbackIcon from '@material-ui/icons/Feedback';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import { useHistory } from "react-router";
 import './list.css';
-import ScheduleIcon from '@material-ui/icons/Schedule';
-import assignmentIcon from './images/finalAssignmentIcon.png';
-import paymentIcon from './images/Payment_icons.jpg';
-import queryIcons from './images/query.png';
-import feedbackIcon from './images/feedbackIcon.png';
-import scheduleIcon from './images/Schedule_final.png';
-import ProposalIcons from './images/Proposal_icons.png';
-import AboutIcon from './images/about-us.png';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
 import GroupAddOutlinedIcon from '@mui/icons-material/GroupAddOutlined';
@@ -63,19 +52,7 @@ useEffect(() => {
   getFeedback4();
 }, [custDashboard])
 
-// const useStyle = makeStyles({
-//   myTeamleader : {
-//     fontSize: "30px",
-//     opacity : "0.6",
-//     fontWeight : 500,
-//     color : "#3B3B3B",
-   
-//   },
-//   "&:hover, &:focus":{
-//     color : "black",
-//     backgroundColor : "green"
-//         }
-// })
+
 const useStyle = makeStyles({
   myTeamleader: {
     fontSize: "30px !important",

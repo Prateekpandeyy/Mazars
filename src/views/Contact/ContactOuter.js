@@ -6,7 +6,7 @@ import { Button, Typography } from "@material-ui/core";
 const ContactOuter = () => {
     return(
         <>
- <Header cust_sign="cust_sign" />
+   <Header noSign="noSign"/>
         
         
  <div className="StartPageDetailscontact">

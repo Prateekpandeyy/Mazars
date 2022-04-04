@@ -275,9 +275,14 @@ const CmsCont = () => {
                  </li>
    
                  <li className="nav-item headerHover"> 
-    <NavLink 
+    {/* <NavLink 
     to = {{
   pathname : "/customer/updates",
+  index : 4
+}} > */}
+  <NavLink 
+    to = {{
+  pathname : "/customer/faq-question",
   index : 4
 }} >
       FAQs

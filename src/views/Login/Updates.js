@@ -266,7 +266,7 @@ const classes = useStyle()
   <Typography color="text.primary">{myData.heading}</Typography>
   </Breadcrumbs>
   <div style={{margin: "20px 0 10px 0"}}>
-  <Markup content = {`<h4>${myData.heading} </h4> <h5>Date - ${myData.publish_date}</h5> <span>${myData.content}</span>`} />
+  <Markup content = {`<h4>${myData.heading} </h4> <h5>Date - ${myData.publish_date.split("-").reverse().join("-")}</h5> <span>${myData.content}</span>`} />
   </div>
    
  </div>

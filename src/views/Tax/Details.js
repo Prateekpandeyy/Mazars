@@ -10,13 +10,39 @@ import { Markup } from 'interweave';
 import {Breadcrumbs, Box, Typography } from "@material-ui/core";
 import CommonServices from '../../common/common.js';
 import {  VscFilePdf} from "react-icons/vsc";
-import DescriptionOutlinedIcon from '@material-ui/icons/DescriptionOutlined';
+import classes from './design.module.css';
+import ima from "../../mazars_logo.png";
 const MyContainer = styled(Box)({
     display : "flex", 
     justifyContent : "center", 
     alignItems : "center", 
     width: "100%",
     flexDirection : "column"
+  })
+  const ArticleHeader = styled(Box)({
+    display : "flex",
+    width: "100%",
+    justifyContent: "space-between",
+    alignItems: "center",
+    backgroundColor: "#fff",
+    border: "1px solid #000",
+    padding: "10px 5px",
+    margin: "8px 0px"
+  })
+  const MyLogo = styled(Box)({
+    display : "flex",
+    width: "100%",
+    height: "auto",
+    maxWidth: "100px",
+    objectFit: "contain"
+  })
+  const MyHeading = styled(Box)({
+    display : "flex",
+    justifyContent: "space-between"
+  })
+  const RightContent = styled(Box)({
+    display: "flex",
+    flexDirection: "column"
   })
 const Details = () => {
   let history = useHistory();
@@ -46,14 +72,14 @@ const Details = () => {
 
     return(
        <>
-        <Header noSign="noSign" />
+        <Header noSign="noSign"/>
         <MyContainer>
    
   
-        <div className="StartPageDetails">
+        <div className={classes.articleContent}>
          {
            data.map((i) => (
-            <div className="articlesDetails">
+            <div className={classes.articlesDetails}>
              <Breadcrumbs separator=">" maxItems={3} aria-label="breadcrumb">
              <Link underline="hover" color="inherit" to="/customer/direct">
   Articles
@@ -64,17 +90,24 @@ const Details = () => {
   
   <Typography color="text.primary"> {i.heading}</Typography>
 </Breadcrumbs>
-           <div style={{margin: "20px 0 10px 0"}}>
-           <div style={{display: "flex", width: '100%',
-            justifyContent : "space-between", 
-            alignItems: "center"}}>
+<ArticleHeader>
+<MyLogo>
+<img className={classes.myLogo} src={`${ima}`}/>
+</MyLogo>
+<RightContent>
+<h4>Mazars Advisory Solutions (MAS)</h4>
+<h5>Building lasting relationship</h5>
+</RightContent>
+  </ArticleHeader>
+           <div>
+           <MyHeading>
            <h5> {i.heading} </h5>
           <a href={`${baseUrl3}/${i.file}`} target="_blank">
-          <VscFilePdf  style={{dislay: "flex", width: "40px", height: "40px"}} />
+          <VscFilePdf style={{display: "flex", width: "40px", height: "40px"}} />
           </a>
          
          
-           </div>
+           </MyHeading>
             <h6>Writer -  {i.writer} </h6>
            
            <h6>Date of publishing -   {i.publish_date.split("-").reverse().join("-")} </h6>
@@ -83,6 +116,11 @@ const Details = () => {
              </div>
      
     <Markup content={i.content} />
+    <a href={`${baseUrl3}/${i.file}`} target="_blank" 
+    className={classes.myLink}>
+
+    <button className="downloadBtnPdf"> Download Pdf</button>
+    </a> 
             </div>
         
            ))

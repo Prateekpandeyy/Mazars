@@ -47,7 +47,7 @@ const Media = () => {
         <MyContainer>
         <div className="StartPageDetails">
         
-        <div className="mainContent2222">
+        <div className="mainContentvideo">
         <div style={{display : "flex", width: "1000px"}}>
         <Breadcrumbs separator=">" maxItems={3} aria-label="breadcrumb">
   <Link underline="hover" color="inherit" to="/customer/media">
