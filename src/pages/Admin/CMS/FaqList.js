@@ -76,7 +76,12 @@ const Updates = () =>{
       },
       {
           text: "Answer",
-          dataField: "answer",
+          dataField: "",
+          formatter: function nameFunction(cell, row) {
+            return(
+              <Markup content={row.answer} />
+            )
+          }
          
         },
        

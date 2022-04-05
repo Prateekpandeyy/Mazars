@@ -75,7 +75,7 @@ input:checked + .slider:before {
   display: flex;
   max-height: 200px;
   height: 100%;
-  width: calc(100% / 5 - 30px);
+  width: calc(100% / 5 - 10px);
   margin: 5px;
 
   border-radius: 10px;

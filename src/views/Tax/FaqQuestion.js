@@ -13,6 +13,8 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { baseUrl } from '../../config/config';
 import { Markup } from 'interweave';
 import classes from './design.module.css';
+import AddIcon from "@material-ui/icons/Add";
+import RemoveIcon from "@material-ui/icons/Remove";
 const MyContainer = styled(Box)({
     display : "flex", 
     justifyContent : "center", 
@@ -25,6 +27,8 @@ const FaqQuestion = () => {
     const [data, setData] = useState(["1"])
     const [list, setList] = useState([])
     const [heading, setHeading] = useState("")
+   
+    const [expanded, setExpanded] = useState(false);
     const getList = () => {
       axios.get(`${baseUrl}/customers/getfaq`)
       .then((res) => {
@@ -39,7 +43,10 @@ const FaqQuestion = () => {
     useEffect(() => {
       getList()
     }, [])
-    console.log("faqList", list)
+    const handleChange = (panel) => (event, isExpanded) => {
+      setExpanded(isExpanded ? panel : false);
+    };
+  
     return(
         <>
          <Header noSign="noSign"/>
@@ -51,10 +58,8 @@ const FaqQuestion = () => {
         
              <div className={classes.articlesDetails}>
               <Breadcrumbs separator=">" maxItems={3} aria-label="breadcrumb">
-              <Link underline="hover" color="inherit" to="/customer/direct">
-   Articles
-   </Link>
-   <Link underline="hover" color="inherit" to = {`/customer/faq-questions`}>
+           
+   <Link underline="hover" color="inherit" to = {`/customer/faq-question`}>
    {CommonServices.capitalizeFirstLetter("Faq") + " Question"}
    </Link>
    
@@ -64,18 +69,28 @@ const FaqQuestion = () => {
             <div>
             
           {list && list.map((i) => (
-             <Accordion key={i.id}>
-             <AccordionSummary
-               expandIcon={<ExpandMoreIcon />}
-               aria-controls="panel1a-content"
-               id="panel1a-header"
-             >
-               <Typography variant="h6">{i.question}</Typography>
-             </AccordionSummary>
-             <AccordionDetails>
-             <Markup content={i.answer} />
-             </AccordionDetails>
-           </Accordion>
+                       <>
+                             <Accordion expanded={expanded === i.id} onChange={handleChange(i.id)}>
+        <AccordionSummary
+       expandIcon={expanded === i.id ? <RemoveIcon /> : <AddIcon />}
+          aria-controls={i.id}
+          id={i.id}
+        >
+          <Typography sx={{ width: '33%', flexShrink: 0 }} variant="h6">
+{i.question}
+          </Typography>
+        
+        </AccordionSummary>
+        <AccordionDetails>
+          <Typography>
+          <Markup content={i.answer} />
+          </Typography>
+        </AccordionDetails>
+      </Accordion>
+    
+
+                       </>
+               
           ))}
      
               </div>
