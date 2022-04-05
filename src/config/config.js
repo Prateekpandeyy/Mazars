@@ -16,12 +16,12 @@
 // export const baseUrl3 = "https://stagingapi.masindia.live/mazarsapi"
 
 
-export const baseUrl = "http://13.232.121.233/mazarsapi/v1";
-export const ImageUrl = "http://13.232.121.233/mazarsapi/assets/image";
-export const ReportUrl = "http://13.232.121.233/mazarsapi/assets/upload/report";
+export const baseUrl = "http://43.204.16.182/mazarapi/v1";
+export const ImageUrl = "http://43.204.16.182/mazarapi/assets/image";
+export const ReportUrl = "http://43.204.16.182/mazarapi/assets/upload/report";
 // //for local
- export const baseUrl2 = "http://13.232.121.233";
-export const baseUrl3 = "http://13.232.121.233/mazarsapi"
+ export const baseUrl2 = "http://43.204.16.182/";
+export const baseUrl3 = "http://43.204.16.182/mazarapi/"
 
 
 

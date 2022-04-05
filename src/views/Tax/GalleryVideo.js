@@ -45,14 +45,14 @@ const GalleryVideo = () => {
      }
         }
     
-   
+   console.log("images", images)
     return(
         <>
          <Header noSign="noSign" />
         <MyContainer>
    
   
-        <div className="StartPageDetails">
+        <div className={classes.articleContent}>
       
             <div style={{display : "flex", width:"1000px", justifyContent: "center",
           alignItems: "flex-start", flexDirection: "column", padding: "5px 0px"}}>

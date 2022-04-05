@@ -24,8 +24,8 @@ const MyContainer = styled(Box)({
     width: "100%",
     justifyContent: "space-between",
     alignItems: "center",
-    backgroundColor: "#fff",
-    border: "1px solid #000",
+    backgroundColor: "#ccc",
+  
     padding: "10px 5px",
     margin: "8px 0px"
   })
