@@ -7,9 +7,11 @@ import { styled , makeStyles} from "@material-ui/styles";
 import { Markup } from "interweave";
 import { useHistory, useParams, Link } from "react-router-dom";
 import axios from 'axios';
-import {baseUrl} from '../../config/config';
+import { baseUrl, baseUrl3 } from '../../config/config';
 import ima from "../../mazars_logo.png";
 import classesCustom from './design.module.css';
+import CommonServices from '../../common/common.js';
+import {  VscFilePdf} from "react-icons/vsc";
 import {Typography, Breadcrumbs, Table, TableContainer, 
   TableHead, TablePagination, TableBody, TableRow, TableCell} from "@material-ui/core";
 const MyBox = styled(Box)({
@@ -38,7 +40,7 @@ const MyContainer = styled(Box)({
 const ArticleHeader = styled(Box)({
   display : "flex",
   width: "100%",
-  justifyContent: "space-between",
+  justifyContent: "flex-end",
   alignItems: "center",
   backgroundColor: "#e4f0fa",
 
@@ -280,8 +282,8 @@ const classes = useStyle()
    </div>
 
  </div> : 
-   <div className="StartPageDetails">
-   <div className="mainContentDetails">
+   <div className={classesCustom.articleContent}>
+   <div className={classesCustom.articlesDetails}>
    <Breadcrumbs separator=">" maxItems={3} aria-label="breadcrumb">
   
   <Link underline="hover" color="inherit" to = {{
@@ -294,16 +296,32 @@ const classes = useStyle()
   </Breadcrumbs>
   <div style={{margin: "20px 0 10px 0"}}>
   <ArticleHeader>
-<MyLogo>
-<img className={classesCustom.myLogo} src={`${ima}`}/>
-</MyLogo>
+
 <RightContent>
-<h4>Mazars Advisory Solutions (MAS)</h4>
-<h5>Building lasting relationship</h5>
+<h4 style={{color: "#081f8f"}}>Mazars Advisory Solutions (MAS)</h4>
+<span style={{color: "#0071ce", fontSize: "18px"}}>Building lasting relationship</span>
+<a href="https://www.masindia.live" target="_blank">www.masindia.live.com</a>
 </RightContent>
   </ArticleHeader>
   
-  <Markup content = {`<h4>${myData.heading} </h4> <h5>Date - ${myData.publish_date.split("-").reverse().join("-")}</h5> <span>${myData.content}</span>`} />
+  <div>
+           <MyHeading>
+           <h5>  {CommonServices.capitalizeFirstLetter(myData.heading)}</h5>
+           <a href={`${baseUrl3}/${myData.file}`} target="_blank" 
+    className={classes.myLink}>
+
+    <button className="downloadBtnPdf"> Download  <VscFilePdf style={{display: "flex",
+     margin: "0 10px", color: "#e4f0fa", width: "20px", height: "20px"}} /></button>
+    </a> 
+         
+           </MyHeading>
+
+           <h6>Date of publishing -   {myData.publish_date.split("-").reverse().join("-")} </h6>
+         
+            
+             </div>
+     
+    <Markup content={myData.content} />
   </div>
    
  </div>

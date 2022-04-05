@@ -26,7 +26,7 @@ const MyContainer = styled(Container)({
 const Mediatextshow = () => {
     const userId = localStorage.getItem("adminkey")
     const { handleSubmit, register, errors, getValues } = useForm();
-    const [pages, getPages] = useState([])
+    const [stats, setStats] = useState(false)
     const [det, addDet] = useState();
     const [pageto, setTopage] = useState([])
     const [heading, setHeading] = useState("")
@@ -49,7 +49,12 @@ const Mediatextshow = () => {
               console.log(i.content)
               setHeading(i.heading)
               addDet(i.content)
-              console.log("ress", i.publish_date.split(" ")[0])
+              if(i.status == 1){
+                setStats(true)
+               }
+               else{
+                 setStats(false)
+               }
               setDate(i.publish_date.split(" ")[0])
             })
       
@@ -62,7 +67,7 @@ const Mediatextshow = () => {
       let message = "Media news added successfully"
        let formData = new FormData();
        formData.append("content", det);
-       formData.append("status", 1)
+       formData.append("status", Number(stats))
        formData.append("heading", heading)
        formData.append("publish_date", date);
       if(getId.id){
@@ -85,6 +90,10 @@ const Mediatextshow = () => {
           }
        })
    }
+   const myLabel = (e) => {
+  
+    setStats(!stats)
+}
     return(
         <Layout adminDashboard="adminDashboard" adminUserId={userId}>
       <MyContainer>
@@ -165,6 +174,15 @@ const Mediatextshow = () => {
                 ></CKEditor>
                  </div>
          </div>
+         <div className="row">
+         <div className="col-md-3">
+ 
+ <span style={{margin : "10px 0"}}>
+ <input type="checkbox" style={{margin : "10px 0px"}} name="hide" checked = {stats} id="hide" onChange= {(e) => myLabel(e)}></input>
+ <label htmlFor="hide" style={{margin : "10px"}}> Publish</label>
+ </span>
+ </div>
+           </div>
          <div className="row">
             <div className="col-md-12">
             <button className="customBtn my-2">Submit</button> </div>

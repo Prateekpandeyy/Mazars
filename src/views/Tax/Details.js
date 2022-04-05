@@ -22,7 +22,7 @@ const MyContainer = styled(Box)({
   const ArticleHeader = styled(Box)({
     display : "flex",
     width: "100%",
-    justifyContent: "space-between",
+    justifyContent: "flex-end",
     alignItems: "center",
     backgroundColor: "#e4f0fa",
   
@@ -88,20 +88,19 @@ const Details = () => {
   {CommonServices.capitalizeFirstLetter(linkdata) + " tax"}
   </Link>
   
-  <Typography color="text.primary"> {i.heading}</Typography>
+  <Typography color="text.primary"> {CommonServices.capitalizeFirstLetter(i.heading)}</Typography>
 </Breadcrumbs>
 <ArticleHeader>
-<MyLogo>
-<img className={classes.myLogo} src={`${ima}`}/>
-</MyLogo>
+
 <RightContent>
-<h4>Mazars Advisory Solutions (MAS)</h4>
-<h5>Building lasting relationship</h5>
+<h4 style={{color: "#081f8f"}}>Mazars Advisory Solutions (MAS)</h4>
+<span style={{color: "#0071ce", fontSize: "18px"}}>Building lasting relationship</span>
+<a href="https://www.masindia.live" target="_blank">www.masindia.live.com</a>
 </RightContent>
   </ArticleHeader>
            <div>
            <MyHeading>
-           <h5> {i.heading} </h5>
+           <h5>  {CommonServices.capitalizeFirstLetter(i.heading)}</h5>
          
           <a href={`${baseUrl3}${i.file}`} target="_blank">
           <VscFilePdf style={{display: "flex", width: "40px", height: "40px"}} />
@@ -110,7 +109,7 @@ const Details = () => {
          
            </MyHeading>
             <h6>Writer -  {i.writer} </h6>
-            <h5> Email - {i.email} </h5>
+            <h6> Email - {i.email} </h6>
            <h6>Date of publishing -   {i.publish_date.split("-").reverse().join("-")} </h6>
          
             

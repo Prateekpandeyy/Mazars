@@ -108,15 +108,16 @@ const Faq = () => {
         
          
            <div className="row">
-             <div className="col-md-4">
+             <div className="col-md-6">
              <label className="form-label">Question</label> 
-                   <input 
-                   type="text" 
+                   <textarea
+                    
                    value = {question}
                    onChange={(e) => setQuestion(e.target.value)}
-                   className = "form-control" />
+                   className = "form-control">
+                     </textarea>
                </div>
-               <div className="col-md-12">
+               <div className="col-md-12 py-2">
                <label className="form-label">Answer</label> </div>
                
                <div className="col-md-12">

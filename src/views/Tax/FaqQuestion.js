@@ -60,7 +60,7 @@ const FaqQuestion = () => {
               <Breadcrumbs separator=">" maxItems={3} aria-label="breadcrumb">
            
    <Link underline="hover" color="inherit" to = {`/customer/faq-question`}>
-   {CommonServices.capitalizeFirstLetter("Faq") + " Question"}
+   {CommonServices.capitalizeFirstLetter("Faq")}
    </Link>
    
    <Typography color="text.primary"> FAQs</Typography>

@@ -21,7 +21,7 @@ const MyContainer = styled(Container)({
 const Updates = () =>{ 
     const userId = window.localStorage.getItem("adminkey");
     const [list, setList] = useState([])
-    const [check, setCheck] = useState(false)
+    const [check, setCheck] = useState(true)
     let history = useHistory()
     useEffect(() => {
       getList()
@@ -211,7 +211,7 @@ return (
         <Link to={`/cms/faqedit/4`}>
 <button 
     
-    className="autoWidthBtn rightAlign my-2">Add FAQs</button>
+    className="autoWidthBtn rightAlign my-2">Add FAQ</button>
       </Link> 
         </div>
 

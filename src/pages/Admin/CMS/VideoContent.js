@@ -139,6 +139,7 @@ const VideoContent = () => {
                 accept="file_extension|audio/*|video/*|image/*|media_type"
                 name="p_upload"
                 ref={register}
+                multiple
                 className="form-control-file"
                 min = {item}
               />

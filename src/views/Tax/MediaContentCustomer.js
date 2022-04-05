@@ -8,12 +8,17 @@ import {Typography, Breadcrumbs, Table, TableContainer, Box,
 import axios from 'axios';
 import { Markup } from 'interweave';
 import Footer from '../../components/Footer/Footer';
+import CommonServices from '../../common/common.js';
 const MyContainer = styled(Box)({
     display : "flex", 
     justifyContent : "center", 
     alignItems : "center", 
     width: "100%",
     flexDirection : "column"
+  })
+  const MyHeading = styled(Box)({
+    display : "flex",
+    justifyContent: "space-between"
   })
 const MediaContentCustomer = () => {
     const [data, setData] = useState([])
@@ -109,7 +114,18 @@ const MediaContentCustomer = () => {
         <Typography color="text.primary">{myData.heading}</Typography>
         </Breadcrumbs>
        <div style={{margin: "20px 0px 10px 0px"}}>
-       <Markup content = {`<h4>${myData.heading} </h4> <span>${myData.content}</span>`} />
+       <div>
+           <MyHeading>
+           <h5>  {CommonServices.capitalizeFirstLetter(myData.heading)}</h5>
+          
+         
+           </MyHeading>
+
+           <h6>Date of publishing -   {myData.publish_date.split(" ")[0].split("-").reverse().join("-")} </h6>
+         
+            
+             </div>
+             <Markup content={myData.content} />
        </div>
        </div>
       
