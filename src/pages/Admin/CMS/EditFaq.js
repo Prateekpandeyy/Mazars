@@ -47,6 +47,12 @@ const EditFaq = () => {
           if(i.id === getId.id){
            setQuestion(i.question)
            addDet(i.answer)
+           if(i.status == 1){
+            setStats(true)
+           }
+           else{
+             setStats(false)
+           }
           }
         })
          }
@@ -59,7 +65,7 @@ const EditFaq = () => {
        
         formData.append("question", question);
         formData.append("answer", det);
-        formData.append("status", stats)
+        formData.append("status", Number(stats))
       formData.append("id", getId.id)
         axios({
             method : "POST", 

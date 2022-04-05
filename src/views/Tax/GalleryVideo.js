@@ -25,8 +25,8 @@ const GalleryVideo = () => {
     }, [])
     const getImages = () => {
       let obj = []
-     if(history.location.index){
-     
+     if(typeof(history.location.index) === 'object'){
+     console.log("index", typeof(history.location.index) === 'object' )
       axios.get(`${baseUrl}/customers/getgallery?id=${history.location.index.id}`)
       .then((res) => {
        
@@ -42,6 +42,15 @@ const GalleryVideo = () => {
       })
       })
      
+     }
+     else{
+      let  a = {
+        original : `${baseUrl3}/assets/gallery/${history.location.index}`,
+        thumbnail : `${baseUrl3}/assets/gallery/${history.location.index}`
+      }
+      obj.push(a)
+    
+   setImages(obj)
      }
         }
     

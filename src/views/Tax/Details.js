@@ -24,7 +24,7 @@ const MyContainer = styled(Box)({
     width: "100%",
     justifyContent: "space-between",
     alignItems: "center",
-    backgroundColor: "#ccc",
+    backgroundColor: "#e4f0fa",
   
     padding: "10px 5px",
     margin: "8px 0px"
@@ -102,14 +102,15 @@ const Details = () => {
            <div>
            <MyHeading>
            <h5> {i.heading} </h5>
-          <a href={`${baseUrl3}/${i.file}`} target="_blank">
+         
+          <a href={`${baseUrl3}${i.file}`} target="_blank">
           <VscFilePdf style={{display: "flex", width: "40px", height: "40px"}} />
           </a>
          
          
            </MyHeading>
             <h6>Writer -  {i.writer} </h6>
-           
+            <h5> Email - {i.email} </h5>
            <h6>Date of publishing -   {i.publish_date.split("-").reverse().join("-")} </h6>
          
             
@@ -119,7 +120,8 @@ const Details = () => {
     <a href={`${baseUrl3}/${i.file}`} target="_blank" 
     className={classes.myLink}>
 
-    <button className="downloadBtnPdf"> Download Pdf</button>
+    <button className="downloadBtnPdf"> Download  <VscFilePdf style={{display: "flex",
+     margin: "0 10px", color: "#e4f0fa", width: "20px", height: "20px"}} /></button>
     </a> 
             </div>
         

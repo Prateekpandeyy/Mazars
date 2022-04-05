@@ -8,6 +8,8 @@ import { Markup } from "interweave";
 import { useHistory, useParams, Link } from "react-router-dom";
 import axios from 'axios';
 import {baseUrl} from '../../config/config';
+import ima from "../../mazars_logo.png";
+import classesCustom from './design.module.css';
 import {Typography, Breadcrumbs, Table, TableContainer, 
   TableHead, TablePagination, TableBody, TableRow, TableCell} from "@material-ui/core";
 const MyBox = styled(Box)({
@@ -32,6 +34,31 @@ const MyContainer = styled(Box)({
   alignItems : "center", 
   width: "100%",
   flexDirection : "column"
+})
+const ArticleHeader = styled(Box)({
+  display : "flex",
+  width: "100%",
+  justifyContent: "space-between",
+  alignItems: "center",
+  backgroundColor: "#e4f0fa",
+
+  padding: "10px 5px",
+  margin: "8px 0px"
+})
+const MyLogo = styled(Box)({
+  display : "flex",
+  width: "100%",
+  height: "auto",
+  maxWidth: "100px",
+  objectFit: "contain"
+})
+const MyHeading = styled(Box)({
+  display : "flex",
+  justifyContent: "space-between"
+})
+const RightContent = styled(Box)({
+  display: "flex",
+  flexDirection: "column"
 })
 const useStyle = makeStyles({
   imgResponsive : {
@@ -266,6 +293,16 @@ const classes = useStyle()
   <Typography color="text.primary">{myData.heading}</Typography>
   </Breadcrumbs>
   <div style={{margin: "20px 0 10px 0"}}>
+  <ArticleHeader>
+<MyLogo>
+<img className={classesCustom.myLogo} src={`${ima}`}/>
+</MyLogo>
+<RightContent>
+<h4>Mazars Advisory Solutions (MAS)</h4>
+<h5>Building lasting relationship</h5>
+</RightContent>
+  </ArticleHeader>
+  
   <Markup content = {`<h4>${myData.heading} </h4> <h5>Date - ${myData.publish_date.split("-").reverse().join("-")}</h5> <span>${myData.content}</span>`} />
   </div>
    

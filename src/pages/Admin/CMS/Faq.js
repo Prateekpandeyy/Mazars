@@ -59,7 +59,7 @@ const Faq = () => {
        
         formData.append("question", question);
         formData.append("answer", det);
-        formData.append("status", stats)
+        formData.append("status", Number(stats))
       
         axios({
             method : "POST", 

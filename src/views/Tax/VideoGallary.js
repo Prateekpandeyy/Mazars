@@ -24,6 +24,7 @@ const Videogallery = () => {
     const [videoId, setVideoId] = useState()
     const [video, isVideo] = useState(false)
     const [play, isPlay] = useState(false)
+    const [title, setTitle] = useState("")
     let history = useHistory()
     useEffect(() => {
         getGalleryVideo()
@@ -37,8 +38,10 @@ const Videogallery = () => {
         
           setGalleryData(res.data.result)
           res.data.result.map((i) => {
+            setTitle(i.title)
            if(i.name.split(".")[1] === "mp4"){
              isVideo(true)
+             
            }
           })
           
@@ -65,7 +68,7 @@ const Videogallery = () => {
   <Link underline="hover" color="inherit" to="/customer/videolist">
   Video Gallery
   </Link>
-  <Typography color="text.primary">  Video List</Typography>
+  <Typography color="text.primary">  {title}</Typography>
   
   </Breadcrumbs></div> 
      
@@ -86,13 +89,19 @@ const Videogallery = () => {
                                  style={{display : "flex", zIndex: 1, width: "100%"}} id={i.id} src={`${baseUrl3}/assets/gallery/${i.name}`}
            />
                      </>
-       : ""
+       :
+       <Link style={{display: "flex", height: "100%"}}
+       to = {{
+         pathname : "/customer/imagegallery",
+                             index : i.name
+                           }}><img 
+       onClick = {(e) => playVideo2(i.name)}
+       style={{display : "flex", zIndex: 1, width: "100%"}} id={i.id} src={`${baseUrl3}/assets/gallery/${i.name}`}
+/>
+</Link>
                      }
            
-                           <div style={{ padding: "5px 0px", width: "100%", justifyContent: "space-between"}}>
-            <h5>{i.title}</h5>
-            <h5>{i.created_date.split(" ")[0].split("-").reverse().join("-")}</h5>
-                </div>
+                          
                  </div>
                  
                   

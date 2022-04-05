@@ -40,6 +40,7 @@ const CmsContent = () => {
     const [editData, setEditData] = useState();
     const [editorError, setEditorError] = useState(false)
     const [loading, setLoading] = useState(false);
+    const [email, setEmail] = useState("")
     let history  = useHistory()
     let getId = useParams()
     var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
@@ -63,6 +64,7 @@ const CmsContent = () => {
          setWriter(i.writer)
          setDate(i.publish_date);
         addDet(i.content) 
+        setEmail(i.email)
          console.log("imgData", i)
          if(i.status == 1){
           setStats(true)
@@ -97,6 +99,7 @@ const CmsContent = () => {
       formData.append("heading", heading)
       formData.append("writer", writer);
       formData.append("publish_date", date);
+      formData.append("email", email)
       if(getId.id !== undefined){
         formData.append("id", getId.id)
         message = "Content updated successfully"
@@ -192,7 +195,7 @@ const getEditValue= (e) => {
          </div>
        
          <div className="row">
-             <div className="col-md-4 col-sm-12">
+             <div className="col-md-4 col-sm-4">
                  
                  <label className="form-label">Writer</label>
                    <input 
@@ -207,7 +210,7 @@ const getEditValue= (e) => {
                    placeholder = "Please enter writer name"
                    />
                  </div>
-                 <div className="col-md-4 col-sm-12">
+                 <div className="col-md-4 col-sm-4">
                  
                  <label className="form-label">Date of Publishing</label>
                    <input 
@@ -221,6 +224,21 @@ const getEditValue= (e) => {
                   name="p_publisher"
                    placeholder = "Please enter heading"
                   max={item}
+                   />
+                 </div>
+                 <div className="col-md-4 col-sm-4">
+                 
+                 <label className="form-label">Email</label>
+                   <input 
+                   type="email"
+                   className={classNames("form-control", {
+                    "is-invalid": errors.p_email,
+                  })}
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  ref={register({ required: true })}
+                  name="p_email"
+                   placeholder = "Please enter heading"
                    />
                  </div>
          </div>
