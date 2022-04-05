@@ -9,6 +9,7 @@ import axios from 'axios';
 import { Markup } from 'interweave';
 import Footer from '../../components/Footer/Footer';
 import CommonServices from '../../common/common.js';
+import classesCustom from './design.module.css';
 const MyContainer = styled(Box)({
     display : "flex", 
     justifyContent : "center", 
@@ -23,7 +24,7 @@ const MyContainer = styled(Box)({
 const MediaContentCustomer = () => {
     const [data, setData] = useState([])
     const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5)
+  const [rowsPerPage, setRowsPerPage] = useState(10)
   const [myData, setMyData] = useState()
   const [ description, setDescription] = useState(false)
     useEffect(() => {
@@ -54,8 +55,8 @@ const MediaContentCustomer = () => {
         <MyContainer>
        {
            description === false ?
-           <div className="StartPageDetails">
-           <div className="mainContent222">
+           <div className={classesCustom.articleContent}>
+     <div className={classesCustom.articlesDetails}>
               <TableContainer>
              <Breadcrumbs separator=">" maxItems={3} aria-label="breadcrumb">
              <Link underline="hover" color="inherit" to="/customer/media">
@@ -84,7 +85,7 @@ const MediaContentCustomer = () => {
             </TableBody>
           </Table>
           {
-           data.length > 4 ?
+           data.length > 10 ?
            <TablePagination 
            rowsPerPageOptions = {[5, 10, 15, 20, 25]}
            count = {data.length}

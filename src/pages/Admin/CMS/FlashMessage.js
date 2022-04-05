@@ -148,14 +148,7 @@ const FlashMessage = () => {
             return {width: "150px"}
         },
         formatter : function(cell, row) {
-       if(row.status == "1"){
-         setCheck(true)
-         console.log("doneeee", row.id)
-       }
-       else{
-         setCheck(false)
-       }
-            return(
+         return(
                 <>
              <div style={{display : "flex", justifyContent : "space-evenly"}}>
              <Link to={`/cms/flashcontent/${row.id}`}>

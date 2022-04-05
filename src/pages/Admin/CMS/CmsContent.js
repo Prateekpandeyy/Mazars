@@ -65,7 +65,7 @@ const CmsContent = () => {
          setDate(i.publish_date);
         addDet(i.content) 
         setEmail(i.email)
-         console.log("imgData", i)
+        
          if(i.status == 1){
           setStats(true)
          }

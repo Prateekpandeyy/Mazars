@@ -147,9 +147,8 @@ const classes = useStyle()
   
    {
      description === false ? 
-     <div className="StartPageDetails">
-     <div className="mainContent222">
-
+     <div className={classesCustom.articleContent}>
+     <div className={classesCustom.articlesDetails}>
 
   <>
  {

@@ -116,9 +116,7 @@ Swal.fire({
                   <span title="Delete Photo" onClick={() => del(i)}>
                    <DeleteIcon />
                    </span>
-                   <h6>
-                     {i.created_date.split(" ")[0].split("-").reverse().join("-")}
-                   </h6>
+
                     </div>
                  
                    </div>

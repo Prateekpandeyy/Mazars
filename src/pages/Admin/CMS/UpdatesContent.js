@@ -31,6 +31,7 @@ const UpdatesContent = () => {
     const [pageto, setTopage] = useState([])
     const [heading, setHeading] = useState("")
     const [date, setDate] = useState("")
+    const [stats, setStats] = useState(false)
  let history = useHistory()
  let getId = useParams()
  var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
@@ -48,6 +49,12 @@ const UpdatesContent = () => {
               setHeading(i.heading)
               addDet(i.content)
               setDate(i.publish_date)
+              if(i.status == 1){
+                setStats(true)
+               }
+               else{
+                 setStats(false)
+               }
             })
       
         })
@@ -59,7 +66,7 @@ const UpdatesContent = () => {
        let message = "Updates created successfully"
        let formData = new FormData();
        formData.append("content", det);
-       formData.append("status", 1)
+       formData.append("status", Number(stats))
        formData.append("heading", heading)
        formData.append("publish_date", date);
       if(getId.id){
@@ -82,6 +89,10 @@ const UpdatesContent = () => {
           }
        })
    }
+   const myLabel = (e) => {
+  
+    setStats(!stats)
+}
     return(
         <Layout adminDashboard="adminDashboard" adminUserId={userId}>
       <MyContainer>
@@ -161,6 +172,15 @@ const UpdatesContent = () => {
                 ></CKEditor>
                  </div>
          </div>
+         <div className="row">
+         <div className="col-md-3">
+ 
+ <span style={{margin : "10px 0"}}>
+ <input type="checkbox" style={{margin : "10px 0px"}} name="hide" checked = {stats} id="hide" onChange= {(e) => myLabel(e)}></input>
+ <label htmlFor="hide" style={{margin : "10px"}}> Publish</label>
+ </span>
+ </div>
+           </div>
          <div className="row">
             <div className="col-md-12">
             <button className="customBtn my-2">Submit</button> </div>

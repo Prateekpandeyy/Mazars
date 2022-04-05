@@ -184,7 +184,7 @@ const Videogallery = () => {
          pathname : "/customer/imagegallery",
                              index : i.name
                            }}><img 
-       onClick = {(e) => playVideo2(i.name)}
+       
        style={{display : "flex", zIndex: 1, width: "100%"}} id={i.id} src={`${baseUrl3}/assets/gallery/${i.name}`}
 />
 </Link>

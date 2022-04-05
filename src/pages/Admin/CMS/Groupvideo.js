@@ -8,11 +8,22 @@ import { useHistory } from "react-router";
 import {DeleteIcon} from "../../../components/Common/MessageIcon";
 import Swal from 'sweetalert2';
 import {Link} from 'react-router-dom';
+import {
+ 
+  Row,
+  Col,
+  
+} from "reactstrap";
+import { AiOutlinePlaySquare } from 'react-icons/ai';
+import ReactPlayer from "react-player";
+import CloseIcon from '@material-ui/icons/Close';
 const MyContainer = styled(Container)({
 
 })
 const Groupvideo = () => {
   const [galleryData, setGalleryData] = useState([])
+  const [videoId, setVideoId] = useState()
+  const [play, isPlay] = useState(false)
   const userId = window.localStorage.getItem("adminkey");
   let history = useHistory();
   
@@ -38,7 +49,7 @@ const Groupvideo = () => {
 
     Swal.fire({
         title: "Are you sure?",
-        text: "Want to delete articles? Yes, delete it!",
+        text: "Want to delete media? Yes, delete it!",
         type: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
@@ -52,7 +63,7 @@ console.log("response", res)
 if(res.data.code === 1){
 Swal.fire({
   title : "success",
-  html  : "Articles deleted successfully",
+  html  : "Media deleted successfully",
   icon : "success"
 })
 getImages()
@@ -67,23 +78,76 @@ Swal.fire({
           })
         }
     });
-}; const playVideo2 = (e) => {
-  // isPlay(true)
-  // setVideoId(`${baseUrl3}/assets/gallery/${e}`)
+};
+ const playVideo2 = (e) => {
+  isPlay(true)
+  setVideoId(`${baseUrl3}/assets/gallery/${e}`)
 }
     return(
         <>
      <Layout adminDashboard="adminDashboard" adminUserId={userId}>   
  <MyContainer>
+ <div className="py-2">
+      <Row>
+          <Col md="4">
+          <button
+                className="autoWidthBtn" 
+                onClick={() => history.goBack()}
+              >
+               
+                Go Back
+              </button>
+              
+            </Col>
+            <Col md="4" align="center">
+              <h4>Video Gallery</h4>
+            </Col>
+            </Row>
+        </div>
  <div className="galleryContainer">
                  
  {
                    galleryData.map((i) => (
                     <div className="galleryBox" key={i.id}> 
-                    
-                    {/* <img id={i.id} src={`${baseUrl3}/assets/gallery/${i.name}`}
-                    onClick={() => enLarge(i.id)} /> */}
-                    
+                    {
+                      i.name.split(".")[1] === "mp4" === true ?
+                     <>
+                      <div style={{position: "relative"}}>
+                      <video 
+                                 onClick = {(e) => playVideo2(i.name)}
+                                 style={{display : "flex", zIndex: 1, width: "100%"}} id={i.id} src={`${baseUrl3}/assets/gallery/${i.name}`}
+           />
+                      <span  onClick = {(e) => playVideo2(i.name)}>
+                       <AiOutlinePlaySquare style={{display: "flex", 
+                       color: "red", width: "40px", height:"40px", position: "absolute",
+                       top: "20%", left: "50%" }} />
+                       </span>
+                       <div className="delIcon">
+                  <span title="Delete Media" onClick={() => del(i)}>
+                   <DeleteIcon />
+                   </span>
+                  
+                    </div>
+                        </div>
+                              
+                     </>
+       :
+       <>
+      <img 
+      
+       style={{display : "flex", zIndex: 1, width: "100%"}} id={i.id} src={`${baseUrl3}/assets/gallery/${i.name}`}
+/>
+<div className="delIcon">
+                  <span title="Delete Media" onClick={() => del(i)}>
+                   <DeleteIcon />
+                   </span>
+                  
+                    </div>
+</>
+
+                     }
+                
+{/*                     
                   <video id={i.id} src={`${baseUrl3}/assets/gallery/${i.name}`}
                    onClick={() => playVideo2(i.id)}></video>
                   <h4 style={{margin: "5px 10px"}}>{i.title}</h4>
@@ -94,10 +158,8 @@ Swal.fire({
                   <span title="Delete Media" onClick={() => del(i)}>
                    <DeleteIcon />
                    </span>
-                   <h6>
-                     {i.created_date}
-                   </h6>
-                    </div>
+                  
+                    </div> */}
                  
                    </div>
                   
@@ -105,7 +167,7 @@ Swal.fire({
                  }
               
                 </div>
-                {/* {
+                {
           play === true ?
                 
           <div className="modalBox">
@@ -127,7 +189,7 @@ Swal.fire({
           </div>
      
     </div> : ""
-        } */}
+        }
 
  </MyContainer>
        </Layout>  

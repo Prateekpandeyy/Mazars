@@ -28,7 +28,7 @@ const FaqQuestion = () => {
     const [list, setList] = useState([])
     const [heading, setHeading] = useState("")
    
-    const [expanded, setExpanded] = useState(false);
+    const [expanded, setExpanded] = useState([]);
     const getList = () => {
       axios.get(`${baseUrl}/customers/getfaq`)
       .then((res) => {
@@ -44,9 +44,19 @@ const FaqQuestion = () => {
       getList()
     }, [])
     const handleChange = (panel) => (event, isExpanded) => {
-      setExpanded(isExpanded ? panel : false);
+if(expanded.includes(panel)){
+let k = expanded.filter((i) => {
+  return panel !== i
+})
+setExpanded(k)
+}
+else{
+  setExpanded((oldData) => {
+    return([...oldData, panel])
+  });
+}
     };
-  
+  console.log("pdata", expanded)
     return(
         <>
          <Header noSign="noSign"/>
@@ -63,16 +73,16 @@ const FaqQuestion = () => {
    {CommonServices.capitalizeFirstLetter("Faq")}
    </Link>
    
-   <Typography color="text.primary"> FAQs</Typography>
+   <Typography> FAQs</Typography>
  </Breadcrumbs>
  
-            <div>
+        
             
           {list && list.map((i) => (
                        <>
-                             <Accordion expanded={expanded === i.id} onChange={handleChange(i.id)}>
+                             <Accordion  key = {i.id} expanded={expanded.includes(i.id) == true} onChange={handleChange(i.id)}>
         <AccordionSummary
-       expandIcon={expanded === i.id ? <RemoveIcon /> : <AddIcon />}
+       expandIcon={expanded.includes(i.id) == true ? <RemoveIcon /> : <AddIcon />}
           aria-controls={i.id}
           id={i.id}
         >
@@ -93,7 +103,6 @@ const FaqQuestion = () => {
                
           ))}
      
-              </div>
       
    
              </div>

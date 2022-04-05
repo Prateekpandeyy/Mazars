@@ -7,6 +7,7 @@ import Data from './directData.js';
 import axios from 'axios';
 import { baseUrl } from '../../config/config';
 import Footer from '../../components/Footer/Footer';
+import classesCustom from './design.module.css';
 import { Button, Breadcrumbs, Box, Typography, Table, TableContainer, 
 TableHead, TablePagination, TableBody, TableRow, TableCell } from "@material-ui/core";
 const MyContainer = styled(Box)({
@@ -43,9 +44,9 @@ const Indirect = () => {
         <MyContainer>
    
   
-        <div className="StartPageDetails">
-          <div className="mainContent222">
-          
+        <div className={classesCustom.articleContent}>
+     <div className={classesCustom.articlesDetails}>
+
           <Breadcrumbs separator=">" maxItems={3} aria-label="breadcrumb">
           <Link underline="hover" color="inherit" to="/customer/direct">
   Articles

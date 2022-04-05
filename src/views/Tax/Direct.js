@@ -8,6 +8,7 @@ import Footer from '../../components/Footer/Footer';
 import { Button, Box, Typography, Table, TableContainer, 
 TableHead, TablePagination, TableBody, TableRow, TableCell } from "@material-ui/core";
 import Breadcrumbs from '@mui/material/Breadcrumbs';
+import classesCustom from './design.module.css';
 const MyContainer = styled(Box)({
     display : "flex", 
     justifyContent : "center", 
@@ -45,10 +46,9 @@ const Direct = () => {
         <MyContainer>
    
   
-        <div className="StartPageDetails">
-          <div className="mainContent222">
-          {/* <h4> Articles - Direct Tax </h4> */}
-          
+        <div className={classesCustom.articleContent}>
+     <div className={classesCustom.articlesDetails}>
+
           <Breadcrumbs separator=">" maxItems={3} aria-label="breadcrumb">
           <Link underline="hover" color="inherit" to="/customer/direct">
   Articles
