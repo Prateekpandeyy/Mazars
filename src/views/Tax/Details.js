@@ -1,7 +1,6 @@
 import React , {useState, useEffect} from 'react';
 import Header from "../../components/Header/Header";
 import { styled , makeStyles} from "@material-ui/styles";
-import { Link } from 'react-router-dom';
 import Footer from '../../components/Footer/Footer';
 import { useHistory, useParams  } from 'react-router';
 import axios from 'axios';
@@ -12,6 +11,7 @@ import CommonServices from '../../common/common.js';
 import {  VscFilePdf} from "react-icons/vsc";
 import classes from './design.module.css';
 import ima from "../../mazars_logo.png";
+import { Link } from 'react-router-dom';
 const MyContainer = styled(Box)({
     display : "flex", 
     justifyContent : "center", 
@@ -22,7 +22,7 @@ const MyContainer = styled(Box)({
   const ArticleHeader = styled(Box)({
     display : "flex",
     width: "100%",
-    justifyContent: "flex-end",
+    justifyContent: "space-between",
     alignItems: "center",
     backgroundColor: "#e4f0fa",
   
@@ -91,11 +91,16 @@ const Details = () => {
   <Typography color="text.primary"> {CommonServices.capitalizeFirstLetter(i.heading)}</Typography>
 </Breadcrumbs>
 <ArticleHeader>
+<MyLogo>
+<Link to = "/">
+<img className={classes.myLogo} src={`${ima}`}/>
+</Link>
 
+</MyLogo>
 <RightContent>
 <h4 style={{color: "#081f8f"}}>Mazars Advisory Solutions (MAS)</h4>
 <span style={{color: "#0071ce", fontSize: "18px"}}>Building lasting relationship</span>
-<a href="https://www.masindia.live" target="_blank">www.masindia.live.com</a>
+<a href="https://www.masindia.live" target="_blank">www.masindia.live</a>
 </RightContent>
   </ArticleHeader>
            <div>

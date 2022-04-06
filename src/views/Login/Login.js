@@ -31,6 +31,20 @@ const Schema = yup.object().shape({
   p_email: yup.string().email("invalid email").required(""),
   p_password: yup.string().required(""),
 });
+const MainContent = styled(Box)({
+  display: "flex",
+  minHeight: "100vh",
+  height: "100%",
+  flexDirection: "column",
+  justifyContent: "space-between"
+})
+const FlashSection = styled(Box)({
+  width: "100%",
+  marginBottom : "15px", 
+  padding: "3px 0px",
+  fontSize: "14px", 
+  backgroundColor : "rgb(159 155 155 / 39%)"
+})
 const MyBox = styled(Box)({
   display: "flex", 
  width: "1000px",
@@ -202,14 +216,13 @@ const styles = {
     overLay === true && cookieEnable === undefined ?
     <div className="overlayStyleLogin"></div> : ""
   }
-    <div>
+    <MainContent>
       
     <Header noSign="noSign" />
      <MyContainer>
     
  {news.length > 0 ?
-  <div style={{width: "100%", marginBottom : "15px", 
-  padding: "3px 0px", fontSize: "14px", backgroundColor : "rgb(159 155 155 / 39%)"}}> 
+  <FlashSection> 
   <h1 style={styles} 
             onMouseEnter={onMouseEnter} 
             onMouseLeave={onMouseLeave} 
@@ -217,19 +230,21 @@ const styles = {
   {
      news.map((i, e) => (
 <>
-<span style={{padding: "0px 20px", fontSize: "16px", color: "464b4b"}}> 
+<span style={{padding: "0px 20px", margin: "50px 0", fontSize: "16px", color: "464b4b"}}> 
 
  <Link className="tabHover" to = {{
   pathname : "/customer/latestupdates",
   index : i.id
                         }}>
 {i.heading} 
-</Link> </span> {e < news.length - 1 === true ? <span> | </span> : ""}
+</Link> </span>
+
+ {e < news.length - 1 === true ? <span> | </span> : ""}
 </>
      ))
    }
   </h1>
-    </div> : ""}
+    </FlashSection> : ""}
    <span className="loginHeading">
    <h2 className = "my-3"> Mazars Advisory Solutions (MAS) </h2>
    </span>
@@ -386,6 +401,7 @@ const styles = {
   <CookieConsent debug = {true}
 location="bottom"
 expires={1}
+buttonText="Accept"
 style={{backgroundColor : "#FFF", color: "#4B4646"}}
 buttonStyle = {{borderBottomLeftRadius: "1.75rem",
 backgroundColor : "#0071CE", border: "1px solid #0071CE", color: "#fff"
@@ -401,7 +417,7 @@ onAccept={(e) => {
 
 }
       <Footer />
-    </div>
+    </MainContent>
     </>
   );
 }

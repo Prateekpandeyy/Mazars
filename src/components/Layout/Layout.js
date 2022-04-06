@@ -28,7 +28,7 @@ $sortable.on('click', function(){
   return (
    
     <>
-  <div style={{display : "flex", flexDirection : "column"}}>
+  
 
 
    
@@ -58,9 +58,9 @@ $sortable.on('click', function(){
       </div>
 
 </div>
-  </div>
+  
      
-      {/* <Footer /> */}
+      
     </>
   );
 }

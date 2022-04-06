@@ -26,8 +26,9 @@ const ContactOuter = () => {
     <h4>Kasturba Gandhi Marg, Connaught Place</h4>
 
     <h4>New Delhi-110001, India</h4>
-{/* <a href="https://www.mazars.co.in" target= "_blank">www.mazars.co.in</a> */}
+
 <div>
+    {/* Email : <a href="mailto: support@masindia.live">support@masindia.live</a> */}
     Email : <a href="mailto: support@masindia.live">support@masindia.live</a>
     </div>
 <div>

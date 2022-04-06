@@ -10,11 +10,11 @@ TableHead, TablePagination, TableBody, TableRow, TableCell } from "@material-ui/
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import classesCustom from './design.module.css';
 const MyContainer = styled(Box)({
-    display : "flex", 
-    justifyContent : "center", 
-    alignItems : "center", 
-    width: "100%",
-    flexDirection : "column"
+    display: "flex",
+  minHeight: "100vh",
+  height: "100%",
+  flexDirection: "column",
+  justifyContent: "space-between"
   })
 const Direct = () => {
     const [page, setPage] = useState(0);

@@ -63,20 +63,20 @@ const getServices = () => {
     else {
      
       setTdsR(10)
-      setCgetRate(18);
+      setCgetRate(0);
       setIgetRate(0);
       setSgetRate(0)
       setGstNum(props.gstNo);
     setBillNo(props.billNo)
     setBasicAmount(props.paidAmount)
     setPocketExp(0)
-    setCgstTotal(parseInt(props.paidAmount * 18 / 100))
+    setCgstTotal(parseInt(props.paidAmount * 0 / 100).toFixed(2))
     setIgstTotal(parseInt(0));
     setSgstTotal(parseInt(0))
-    setGst(parseInt(props.paidAmount * 18 / 100))
+    setGst(parseInt(props.paidAmount * 0 / 100))
     setTds(parseInt(props.paidAmount * tdsRate / 100))
     setTotal(parseInt(props.paidAmount) + parseInt(props.paidAmount * cgetRate / 100))
-    setgrandTotal(parseInt(parseInt(props.paidAmount) + parseInt(props.paidAmount * 18 / 100)) - parseInt(props.paidAmount * tdsRate / 100))
+    setgrandTotal(parseInt(parseInt(props.paidAmount) + parseInt(props.paidAmount * 0 / 100)) - parseInt(props.paidAmount * tdsRate / 100))
     }
   }, [props.paidAmount])
     const { handleSubmit, register, errors, getValues, reset } = useForm();
@@ -324,7 +324,6 @@ const cgstFun = (e) => {
  }
  }
  
-
  const pocketExpFun = (e) => {
  if(e.target.value === ""){
    setPocketExp('')
@@ -344,20 +343,19 @@ const cgstFun = (e) => {
    
   
  
-  let cget1 = parseFloat(Math.round(a * cgetRate / 100))
-  let sget1 = parseFloat(Math.round(a * sgetRate / 100))
-  let iget1 = parseFloat(Math.round(a * igetRate / 100))
+  let cget1 = parseFloat((a * cgetRate / 100))
+  let sget1 = parseFloat((a * sgetRate / 100))
+  let iget1 = parseFloat((a * igetRate / 100))
   let tdsamount = parseInt(Math.round(a * tdsR / 100))
     setCgstTotal(parseFloat(a * cgetRate / 100).toFixed(2));
    setSgstTotal(parseFloat(a * sgetRate / 100).toFixed(2));
    setIgstTotal(parseFloat(a * igetRate / 100).toFixed(2));
    
- setGst((oldData) => {
-  return(parseInt(parseInt(cget1) + parseInt(sget1) + parseInt(iget1)))
- })
-  setTotal((oldData) => {
-    return(parseInt(cget1) + parseInt(iget1) + parseInt(sget1) + parseInt(a))
-  })
+
+ let total = Number(cget1) + Number(iget1) + Number(sget1)
+ setTotal(parseInt(a) + Math.round(total))
+setGst(total)
+
   setTds((oldData) => {
     return(parseInt(tdsamount))
   })

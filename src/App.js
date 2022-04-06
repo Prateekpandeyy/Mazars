@@ -206,7 +206,7 @@ function App() {
 
   return (
    <>
-    <div>
+  
       <Provider template={AlertTemplate} {...options}>
         <Router>
           <Switch>
@@ -387,7 +387,7 @@ function App() {
           </Switch>
         </Router>
       </Provider>
-    </div>
+  
    </>
   );
 }

@@ -454,12 +454,12 @@ const [dstate2, setDstate2] = useState("")
 
   return (
     <>
-      <Header cust_sign="cust_sign" />
+       <Header noSign="noSign" />
       <div className="container">
 
         <div className="form">
           <div className="heading" style={{display : "flex", justifyContent : "space-between"}}> 
-            <h2>Client Register</h2>
+            <h2>Client Registerion</h2>
             <a href={MyPDF} className="tabHover" target="_blank"> <HelpIcon /> </a>
           </div>
        

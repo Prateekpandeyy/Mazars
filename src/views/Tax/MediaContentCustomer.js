@@ -71,12 +71,12 @@ const MediaContentCustomer = () => {
             {
         data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((i, e) => (
               <TableRow>
-                <TableCell  onClick={(p) => getData(i)} style={{pointer : "cursor"}}>
-               <span className="tabHover" style={{fontSize: "16px", paddingTop : "0px",
-              paddingBottom : "0px"}}>
+               
+               <TableCell className="tableCellStyle" style={{cursor: "pointer"}} onClick={(p) => getData(i)}>
+             
           <span className="updatesLink">
            {`${e + 1} . ${i.heading} -    ${i.publish_date.split(" ")[0].split("-").reverse().join("-")}`}
-            </span>
+        
         </span>
                 </TableCell>
               </TableRow>
@@ -122,7 +122,7 @@ const MediaContentCustomer = () => {
          
            </MyHeading>
 
-           <h6>Date of publishing -   {myData.publish_date.split(" ")[0].split("-").reverse().join("-")} </h6>
+           <h6>Date -   {myData.publish_date.split(" ")[0].split("-").reverse().join("-")} </h6>
          
             
              </div>

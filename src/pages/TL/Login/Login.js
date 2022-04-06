@@ -102,7 +102,7 @@ function Login(props) {
             :
             <div className="form">
               <div className="heading">
-                <h2>MTL Login</h2>
+                <h2>Teamleader Login</h2>
               </div>
               <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
                 <div className="row">

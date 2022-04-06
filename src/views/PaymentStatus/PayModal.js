@@ -60,7 +60,7 @@ const PayModal = (props) => {
     window.location.hash="customer/paymentstatus"
     }
     const inVal = (e) => {
-       if(e.target.value.length > 7){
+       if(e.target.value.length > 5){
            return false
        }
        else{

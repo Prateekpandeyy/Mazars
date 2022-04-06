@@ -40,7 +40,7 @@ const MyContainer = styled(Box)({
 const ArticleHeader = styled(Box)({
   display : "flex",
   width: "100%",
-  justifyContent: "flex-end",
+  justifyContent: "space-between",
   alignItems: "center",
   backgroundColor: "#e4f0fa",
 
@@ -295,7 +295,11 @@ const classes = useStyle()
   </Breadcrumbs>
   <div style={{margin: "20px 0 10px 0"}}>
   <ArticleHeader>
-
+  <MyLogo>
+<Link to = "/">
+<img className={classesCustom.myLogo} src={`${ima}`}/>
+</Link>
+</MyLogo>
 <RightContent>
 <h4 style={{color: "#081f8f"}}>Mazars Advisory Solutions (MAS)</h4>
 <span style={{color: "#0071ce", fontSize: "18px"}}>Building lasting relationship</span>
@@ -315,7 +319,7 @@ const classes = useStyle()
          
            </MyHeading>
 
-           <h6>Date of publishing -   {myData.publish_date.split("-").reverse().join("-")} </h6>
+           <h6>Date -   {myData.publish_date.split("-").reverse().join("-")} </h6>
          
             
              </div>

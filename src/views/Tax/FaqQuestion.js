@@ -73,7 +73,7 @@ else{
    {CommonServices.capitalizeFirstLetter("Faq")}
    </Link>
    
-   <Typography> FAQs</Typography>
+  
  </Breadcrumbs>
  
         
