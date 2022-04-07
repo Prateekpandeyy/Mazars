@@ -14,7 +14,7 @@ import  {DeleteIcon, EditQuery,} from "../../../components/Common/MessageIcon";
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { Markup } from 'interweave';
-
+import GridExample from './GridExaxple';
 const MyContainer = styled(Container)({
 
 })
@@ -22,20 +22,20 @@ const Updates = () =>{
     const userId = window.localStorage.getItem("adminkey");
     const [list, setList] = useState([])
     let history = useHistory()
-    useEffect(() => {
-      getList()
-    }, [])
+    // useEffect(() => {
+    //   getList()
+    // }, [])
   
-    const getList = () => {
-      axios.get(`${baseUrl}/cms/getalllinks?uid=${JSON.parse(userId)}`)
-      .then((res) => {
-      console.log("ress", res)
-       if(res.data.code === 1){
-        setList(res.data.result)
+    // const getList = () => {
+    //   axios.get(`${baseUrl}/cms/getalllinks?uid=${JSON.parse(userId)}`)
+    //   .then((res) => {
+    //   console.log("ress", res)
+    //    if(res.data.code === 1){
+    //     setList(res.data.result)
         
-       }
-      })
-    }
+    //    }
+    //   })
+    // }
     const columns = [
       {
         dataField: "",
@@ -113,7 +113,7 @@ if(res.data.code === 1){
     html  : "Link deleted successfully",
     icon : "success"
   })
-  getList()
+ 
 }
 else{
   Swal.fire({
@@ -142,12 +142,14 @@ return (
     
     <Card>
         <CardBody>
-        <DataTablepopulated 
+        {/* <DataTablepopulated 
                    bgColor="#42566a"
                    keyField={'id'}
                    data={list}
                    columns={columns}>
-                    </DataTablepopulated>
+                    </DataTablepopulated> */}
+                    <GridExample 
+                    />
         </CardBody>
         </Card>
    

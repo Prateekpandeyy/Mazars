@@ -45,6 +45,11 @@ const Links = () => {
     const [heading, setHeading] = useState("")
     const [writer, setWriter] = useState("")
     const [error, setError] = useState(false)
+    const [dd, setDd] = useState({
+      direct: [],
+     
+    });
+  
     let history = useHistory()
     let getId = useParams()
     const userId = localStorage.getItem("adminkey")
@@ -71,12 +76,15 @@ const Links = () => {
        }
       }
     const onSubmit = (e) => {
-      
+   
+      console.log(dd)
+    
         let formData = new FormData();
        
 if(error === false){
         let message = "Link created successfully"
   formData.append("heading", heading)
+  formData.append("position", dd)
   formData.append("url", writer);
 if(getId.id){
  formData.append("id", getId.id)
@@ -120,6 +128,12 @@ if(getId.id){
   }
 }
 
+const myOrder = (e) => {
+  setDd({
+    direct: e.target.value,
+  
+  })
+}
     return(
         <Layout adminDashboard="adminDashboard" adminUserId={userId}>
         <MyContainer>
@@ -181,6 +195,22 @@ if(getId.id){
                     />
                   </div>
                   </div>
+                  <div className="row">
+                  <div className="col-md-12 col-sm-12">
+                  
+                  <label className="form-label">Order</label>
+                    <input 
+                    type="number"
+                    className={classNames("form-control", {
+                     "is-invalid": errors.p_wirter || error,
+                   })}
+                  onChange={(e) => myOrder(e)}
+                   ref={register({ required: true })}
+                   name="p_order"
+                    placeholder = "Please enter heading"
+                    />
+                  </div>
+                    </div>
                 <div className="row">
                   <div className="col-md-12">
                <button className="customBtn mt-5">Submit</button> </div>
