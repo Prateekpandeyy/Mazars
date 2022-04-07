@@ -4,7 +4,8 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'react-app-polyfill/ie11';
 import 'react-app-polyfill/stable';
-
+import 'ag-grid-community/dist/styles/ag-grid.css';
+import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 ReactDOM.render(
   <React.StrictMode>
     <App />

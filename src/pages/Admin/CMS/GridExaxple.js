@@ -70,6 +70,7 @@ import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 import axios from 'axios';
 import { baseUrl } from '../../../config/config';
 const GridExample = () => {
+    
    const [rowData, setRowData] = useState([])
    const getList = () => {
        axios.get(`${baseUrl}/cms/getalllinks?uid=${JSON.parse(userId)}`)
