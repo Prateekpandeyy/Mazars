@@ -67,9 +67,9 @@ const allLinkOrder = (e) => {
 
 const [columnDefs] = useState([
         {
-            field: 'Websit',
+            field: 'Url',
             rowDrag: true,
-            initialWidth: 300,
+            initialWidth: 250,
             cellRenderer: function(params) {
                 let keyData = params.data.url;
                 let newLink = 
@@ -81,9 +81,12 @@ const [columnDefs] = useState([
     
         },
         {
-            field: 'heading',
-            initialWidth: 150
-           
+            field: 'Website',
+            initialWidth: 500,
+            cellRendererFramework:(params) =>
+            <p>
+{params.data.heading}
+            </p>
     
         },
       
@@ -163,7 +166,7 @@ const [columnDefs] = useState([
   console.log("order", order)
    return (
    <>
-    <div className="ag-theme-alpine" style={{height: 400, width: 800, overflow: "auto"}}>
+    <div className="ag-theme-alpine" style={{height: 400, width: 900, overflow: "auto"}}>
         <AgGridReact
             rowData={rowData}
             rowDragManaged={true}
