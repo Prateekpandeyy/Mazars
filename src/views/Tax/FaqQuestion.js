@@ -86,7 +86,7 @@ else{
           aria-controls={i.id}
           id={i.id}
         >
-          <Typography sx={{ width: '33%', flexShrink: 0 }} variant="h6">
+          <Typography style={{ width: '33%', flexShrink: 0 , fontWeight: 600, fontSize: "13px"}} variant="subtitle2">
 {i.question}
           </Typography>
         

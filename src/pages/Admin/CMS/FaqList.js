@@ -332,7 +332,7 @@ return (
 <MyContainer>
 <div className="headingContent">
         <h4>FAQs </h4>
-        <Link to={`/cms/faqedit/4`}>
+        <Link to={`/cms/faq`}>
 <button 
     
     className="autoWidthBtn rightAlign my-2">Add FAQ</button>

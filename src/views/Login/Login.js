@@ -97,10 +97,10 @@ function LoginForm() {
   const [linkData, setLinkData] = useState("myData")
   const [showData, setShowData] = useState(false)
   const [news, getNews] = useState([])
-  const [pos,setPos] = useState(0);   
+  const [pos,setPos] = useState(1200);   
   const [run, setRun] = useState(true);
   const [overLay, setOverlay] = useState(true)
-  let  width = 800
+  let  width = 1200
   const myData = localStorage.getItem("myArticles")
   const cookieEnable = Cookies.get("accept")
    const togglePasssword = () => {
@@ -186,6 +186,7 @@ const latestNews = () => {
   };
 const classes = useStyle()
 const scrollEff = () => {
+
   if(run) setPos(p=>p<width? p+1: -width);        
 }
 

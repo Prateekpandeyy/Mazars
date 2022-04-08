@@ -77,21 +77,12 @@ const [columnDefs] = useState([
         },
         {
             field: 'answer',
-            initialWidth: 150,
+            initialWidth: 400,
             cellRendererFramework:(params) =>
             <Markup content={params.data.answer} />
     
         },
-        {
-            field: 'Date',
-            initialWidth: 150,
-            valueGetter: function (params) {
-              
-                return params.data.created_date.split(" ")[0].split("-").reverse().join("-");
-              },
-           
-    
-        },
+        
         {
             field: 'Action',
            
@@ -168,7 +159,7 @@ const [columnDefs] = useState([
       
         Swal.fire({
             title: "Are you sure?",
-            text: "Want to delete faq? Yes, delete it!",
+            text: "Want to delete FAQ? Yes, delete it!",
             type: "warning",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
@@ -182,7 +173,7 @@ const [columnDefs] = useState([
       if(res.data.code === 1){
       Swal.fire({
       title : "success",
-      html  : "faq deleted successfully",
+      html  : "FAQ deleted successfully",
       icon : "success"
       })
       getList()
@@ -214,7 +205,7 @@ const [columnDefs] = useState([
   console.log("order", order)
    return (
    <>
-    <div className="ag-theme-alpine" style={{height: 400, width: 800, overflow: "auto"}}>
+    <div className="ag-theme-alpine" style={{height: 400, width: 900, overflow: "auto"}}>
         <AgGridReact
             rowData={rowData}
             rowDragManaged={true}

@@ -76,7 +76,7 @@ const EditFaq = () => {
            if(res.data.code === 1){
                Swal.fire({
                    title : "success",
-                   html : "Faq updated successfully",
+                   html : "FAQ updated successfully",
                    icon : "success"
                })
                history.push("/cms/faqlist")

@@ -70,7 +70,7 @@ const Faq = () => {
            if(res.data.code === 1){
                Swal.fire({
                    title : "success",
-                   html : "Faq updated successfully",
+                   html : "Faq added successfully",
                    icon : "success"
                })
                history.push("/cms/faqlist")
