@@ -195,22 +195,7 @@ const myOrder = (e) => {
                     />
                   </div>
                   </div>
-                  <div className="row">
-                  <div className="col-md-12 col-sm-12">
-                  
-                  <label className="form-label">Order</label>
-                    <input 
-                    type="number"
-                    className={classNames("form-control", {
-                     "is-invalid": errors.p_wirter || error,
-                   })}
-                  onChange={(e) => myOrder(e)}
-                   ref={register({ required: true })}
-                   name="p_order"
-                    placeholder = "Please enter heading"
-                    />
-                  </div>
-                    </div>
+                
                 <div className="row">
                   <div className="col-md-12">
                <button className="customBtn mt-5">Submit</button> </div>
