@@ -20,6 +20,12 @@ const MyContainer = styled(Box)({
     width: "100%",
     flexDirection : "column"
   })
+  const Disclamair = styled(Box)({
+display: "flex",
+flexDirection: "column",
+width:"100%",
+padding: "20px"
+  })
   const ArticleWrapper = styled(Box)({
     display: "flex", 
     flexDirection: "column",
@@ -136,6 +142,18 @@ const Details = () => {
     <button className="downloadBtnPdf"> Download  <VscFilePdf style={{display: "flex",
      margin: "0 10px", color: "#e4f0fa", width: "20px", height: "20px"}} /></button>
     </a> 
+    <Disclamair>
+      <h6>Disclaimer</h6>
+      <h4>By clicking on the "AGREE" button below, the user hereby acknowledges having read and understood the disclaimer below:</h4>
+  <ul>
+    <li>The user on his own accord wishes to know more about Mazars Advisory Solutions (MAS) and any of its members for his own information and use.</li>
+<li>The user acknowledges that there has been no solicitation, invitation, or inducement of any sort whatsoever from MAS or any of its members to create an Attorney/Consultant-Client relationship.</li>
+  <li>The user acknowledges that MAS makes every effort to maintain updated and accurate information on this website and cannot accept responsibility for any prejudice, loss or damage which may occur from use of such information. MAS assumes no liability for the interpretation or use of content or information contained on this website, nor does it offer any warranty of any kind, either express or implied in relation to such content or information.</li>
+ <li>     The user acknowledges that MAS does not intend that links / URLs contained on this website re-directing users to third party websites be considered as referrals to, endorsements of, or affiliations with any such third-party website operators. MAS is not responsible for, and makes no representation or warranty, express or implied, about the content or information contained on such third-party websites.
+</li>
+  </ul>
+  <p className={classes.agree}>Agree</p>
+    </Disclamair>
     </ArticleWrapper>
             </div>
         

@@ -11,6 +11,7 @@ import { baseUrl, baseUrl3 } from '../../../config/config';
 import Swal from 'sweetalert2';
 import {DeleteIcon, EyeIcon} from "../../../components/Common/MessageIcon";
 import OndemandVideoIcon from '@mui/icons-material/OndemandVideo';
+import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
 import {
   
   Row,
@@ -201,9 +202,14 @@ const EditVideo = () => {
                       {data.map((i, e) => (
                           <div className="col-md-12 col-sm-12">
                             <div style={{display : "flex", justifyContent : "space-evenly", alignItems : "center"}}>
+                            {
+                      i.name.split(".")[1] === "mp4" === true ? 
                           <a href={`${baseUrl3}/assets/gallery/${i.name}`} className="tabHover" target="_blank">
                           <OndemandVideoIcon className="inprogress" />
-                              </a>
+                              </a> : 
+                              <a href={`${baseUrl3}/assets/gallery/${i.name}`} className="tabHover" target="_blank">
+                              <InsertPhotoIcon className="inprogress" />
+                                  </a> }
 
                               <span onClick={() => del(i)}>
                             <DeleteIcon />
