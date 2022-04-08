@@ -32,7 +32,7 @@ const ContactOuter = () => {
     Email : <a href="mailto: support@masindia.live">support@masindia.live</a>
     </div>
 <div>
-Tel:<a href="tel:+496170961709"> +91 111-43684444</a>
+Tel:<a href="tel:+496170961709"> +91 11-43684444</a>
 </div>
             </Col>
            

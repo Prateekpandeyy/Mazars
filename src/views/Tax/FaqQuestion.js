@@ -56,7 +56,7 @@ else{
   });
 }
     };
-  console.log("pdata", expanded)
+  
     return(
         <>
          <Header noSign="noSign"/>
@@ -70,7 +70,7 @@ else{
               <Breadcrumbs separator=">" maxItems={3} aria-label="breadcrumb">
            
    <Link underline="hover" color="inherit" to = {`/customer/faq-question`}>
-   {CommonServices.capitalizeFirstLetter("Faq")}
+   {CommonServices.capitalizeFirstLetter("FAQ")}
    </Link>
    
   

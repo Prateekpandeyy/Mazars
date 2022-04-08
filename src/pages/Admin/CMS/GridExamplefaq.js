@@ -7,12 +7,13 @@ import { baseUrl } from '../../../config/config';
 import Swal from 'sweetalert2';
 import {Link} from 'react-router-dom';
 import  {DeleteIcon, EditQuery,} from "../../../components/Common/MessageIcon";
+import { Markup } from 'interweave';
 const GirdExamplefaq = () => {
-    
+  const [check, setCheck] = useState(false)
    const [rowData, setRowData] = useState([])
   const [order, setOrder] = useState("")
    const getList = () => {
-       axios.get(`${baseUrl}/cms/getalllinks?uid=${JSON.parse(userId)}`)
+    axios.get(`${baseUrl}/cms/getallfaq?uid=${JSON.parse(userId)}`)
        .then((res) => {
        console.log("ress", res)
         if(res.data.code === 1){
@@ -42,37 +43,47 @@ const allLinkOrder = (e) => {
     axios({
 
         method : "POST",
-        url : `${baseUrl}/cms/linkspace`,
+        url : `${baseUrl}/cms/faqspace`,
         data : formData
     })
     .then((res) => {
-        console.log("done")
+      if(res.data.code === 1){
+        Swal.fire({
+          title :"success",
+          html : "Order Rearranged successfully",
+          icon : "success"
+        })
+      }
+      else{
+       if(res.data.code === 1){
+         Swal.fire({
+           title :"error",
+           html : "Something went wrong",
+           icon : "error"
+         })
+       }
+      }
     })
 }
 
 const [columnDefs] = useState([
         {
-            field: 'url',
+            field: 'question',
             rowDrag: true,
             initialWidth: 300,
-            cellRenderer: function(params) {
-                let keyData = params.data.url;
-                let newLink = 
-                `<a href= ${keyData}
-                target="_blank">${keyData}</a>`;
-                return newLink;
-            }
+            
           
     
         },
         {
-            field: 'heading',
-            initialWidth: 150
-           
+            field: 'answer',
+            initialWidth: 150,
+            cellRendererFramework:(params) =>
+            <Markup content={params.data.answer} />
     
         },
         {
-            field: 'created_date',
+            field: 'Date',
             initialWidth: 150,
             valueGetter: function (params) {
               
@@ -84,33 +95,80 @@ const [columnDefs] = useState([
         {
             field: 'Action',
            
-            initialWidth: 100,
+            initialWidth: 150,
           cellRendererFramework:(params) =>
               
-               
-          <div style={{display : "flex", justifyContent : "space-evenly"}}>
-          <Link to={`/cms/linksedit/${params.data.id}`}>
- <div title="Edit link">
- <EditQuery />
- </div>
-</Link>
-<span   onClick={() => del(params.data.id)} className="ml-2" title="Delete links">
-<DeleteIcon />
-</span>
-        
-     </div>
+     <>
+                   <div style={{display : "flex", alignContent: "center", justifyContent : "space-evenly"}}>
+              <Link to={`/cms/editfaq/${params.data.id}`}>
+  
+              <EditQuery titleName="Edit Flash Update"/>
+            
+              </Link>
+                     <div onClick = {(e) => del(params.data)}> 
+      <DeleteIcon titleName="Delete Flash Update" />
+                     </div>
+                  
+{
+              params.data.status == "1" ?
+              <div style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
+              <label class="switch" onChange= {(e) => myShowValue(e, params.data)}>
+<input type="checkbox"  defaultChecked/>
+<span class="slider round"></span>
+</label>
+
+              </div> :
+              ""
+            }
+            {
+              params.data == "0" ?
+              <div>
+              <label class="switch" onChange= {(e) => myShowValue(e, params.data)}>
+<input type="checkbox"  />
+<span class="slider round"></span>
+</label>
+
+              </div> : ""
+            }
+         </div>
+     
+     </>
   
               
         
             
         },
     ]);
-    function del(id){
+    const myShowValue = (e, row) => {
  
-
+      if(e.target.checked === true){
+      
+          
+          axios.get(`${baseUrl}/cms/setfaqstatus?uid=${JSON.parse(userId)}&id=${row.id}&status=0`)
+      .then((res) => {
+         console.log("res", res)
+         if(res.data.result === 1){
+           setCheck(true)
+         }
+      })
+      }
+      else{
+         
+          axios.get(`${baseUrl}/cms/setfaqstatus?uid=${JSON.parse(userId)}&id=${row.id}&status=1`)
+          .then((res) => {
+              console.log("res", res)
+              setCheck(false)
+          })
+      }
+        
+      
+      }
+      const del = (id) => {
+      
+      
         Swal.fire({
             title: "Are you sure?",
-            text: "Want to delete link? Yes, delete it!",
+            text: "Want to delete faq? Yes, delete it!",
             type: "warning",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
@@ -118,29 +176,28 @@ const [columnDefs] = useState([
             confirmButtonText: "Yes, delete it!",
         }).then((result) => {
             if (result.value) {
-              axios.get(`${baseUrl}/cms/removelinks?uid=${JSON.parse(userId)}&id=${id}`)
+              axios.get(`${baseUrl}/cms/removefaq?uid=${JSON.parse(userId)}&id=${id.id}`)
               .then((res) => {
-  console.log("response", res)
-  if(res.data.code === 1){
-    Swal.fire({
+      console.log("response", res)
+      if(res.data.code === 1){
+      Swal.fire({
       title : "success",
-      html  : "Link deleted successfully",
+      html  : "faq deleted successfully",
       icon : "success"
-    })
-    getList()
-  }
-  else{
-    Swal.fire({
+      })
+      getList()
+      }
+      else{
+      Swal.fire({
       title :"error",
       html : "Something went wrong , please try again",
       icon : "error"
-    })
-  }
+      })
+      }
               })
             }
         });
-    };
-    
+      };
     const onRowDragEnd = (e) => {
         let linkOrder = []
         e.node.parent.allLeafChildren.map((i) => {

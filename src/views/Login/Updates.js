@@ -215,7 +215,7 @@ const classes = useStyle()
    <TableRow>
      <TableCell style= {{width : "50px"}}>S.No</TableCell>
      <TableCell style={{width : "400px"}}>Site</TableCell>
-     <TableCell>Url</TableCell>
+     <TableCell>Website</TableCell>
    </TableRow>
    </TableHead>
       <TableBody>

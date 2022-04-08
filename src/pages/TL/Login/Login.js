@@ -108,7 +108,7 @@ function Login(props) {
                 <div className="row">
                   <div className="col-md-12">
                     <div className="mb-3">
-                      <label className="form-label">Email</label>
+                      <label className="form-label">User Id</label>
                       <input
                         type="text"
                         className={classNames("form-control", {

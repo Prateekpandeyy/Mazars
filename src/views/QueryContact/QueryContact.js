@@ -46,7 +46,7 @@ const QueryContact = () => {
          if(res.data.code === 1){
              Swal.fire({
                  title : "success",
-                 html : "Your query submitted successfully, our team will contact you soon",
+                 html : "Your enquiry submitted successfully, our team will contact you soon",
                  icon : "success"
              })
              history.push("/")

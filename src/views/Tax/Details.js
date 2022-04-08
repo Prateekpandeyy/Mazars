@@ -20,6 +20,12 @@ const MyContainer = styled(Box)({
     width: "100%",
     flexDirection : "column"
   })
+  const ArticleWrapper = styled(Box)({
+    display: "flex", 
+    flexDirection: "column",
+    border: "1px solid #081f8f",
+    padding: "5px"
+  })
   const ArticleHeader = styled(Box)({
     display : "flex",
     width: "100%",
@@ -92,6 +98,7 @@ const Details = () => {
   
   <Typography color="text.primary"> {CommonServices.capitalizeFirstLetter(i.heading)}</Typography>
 </Breadcrumbs>
+<ArticleWrapper>
 <ArticleHeader>
 <MyLogo>
 <Link to = "/">
@@ -129,6 +136,7 @@ const Details = () => {
     <button className="downloadBtnPdf"> Download  <VscFilePdf style={{display: "flex",
      margin: "0 10px", color: "#e4f0fa", width: "20px", height: "20px"}} /></button>
     </a> 
+    </ArticleWrapper>
             </div>
         
            ))

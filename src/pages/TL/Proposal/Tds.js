@@ -689,7 +689,7 @@ setServices2(k.service)
                 <div className="col-md-4 my-1">
                <div className = "row">
                 
-                   <div className="col-md-6"  style={percent}>
+                   <div className="col-md-8"  style={percent}>
                    <input 
                     type="number"
                     className="form-control"
@@ -700,7 +700,7 @@ setServices2(k.service)
                     ref={register}
                     onChange= {(e) => tdsFun(e)} /> %
                      </div>
-                     <div className="col-md-6">
+                     <div className="col-md-4">
                    </div>
                  </div>
                     </div>

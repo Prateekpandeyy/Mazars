@@ -82,6 +82,7 @@ import AdminUpdates from './pages/Admin/CMS/Updates';
 import UpdatesContent from "./pages/Admin/CMS/UpdatesContent";
 import Linklist from "./pages/Admin/CMS/Linklist";
 import FaqList from "./pages/Admin/CMS/FaqList";
+import CmsLogin from './pages/Admin/cmslogin/Login';
 import GroupImage from "./pages/Admin/CMS/GroupImage";
 //TL routes
 import TlStart from './pages/TL/Start/Start'
@@ -355,7 +356,7 @@ function App() {
             <PrivateRouteTP exact path="/taxprofessional/paydetails/:id" component={TppayDetails} />
            
            
-            
+            <PublicRouteAdmin exact path = "/cms/login" component = {CmsLogin} />
             <PrivateRouteAdmin exact path="/cms/cms" component={Cms} />
             <PrivateRouteAdmin exact path = "/cms/flash" component = {FlashMessage} />
             <PrivateRouteAdmin exact path = "/cms/articles" component = {CmsContent} />

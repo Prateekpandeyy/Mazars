@@ -109,7 +109,8 @@ function Login(props) {
             :
             <div class="form">
               <div class="heading">
-                <h2>ADMIN LOGIN</h2>
+                <h2>
+                    CMS LOGIN</h2>
               </div>
               <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="row">

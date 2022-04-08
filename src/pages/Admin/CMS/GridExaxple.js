@@ -46,13 +46,28 @@ const allLinkOrder = (e) => {
         data : formData
     })
     .then((res) => {
-        console.log("done")
+       if(res.data.code === 1){
+         Swal.fire({
+           title :"success",
+           html : "Order Rearranged successfully",
+           icon : "success"
+         })
+       }
+       else{
+        if(res.data.code === 1){
+          Swal.fire({
+            title :"error",
+            html : "Something went wrong",
+            icon : "error"
+          })
+        }
+       }
     })
 }
 
 const [columnDefs] = useState([
         {
-            field: 'url',
+            field: 'Websit',
             rowDrag: true,
             initialWidth: 300,
             cellRenderer: function(params) {
@@ -71,16 +86,7 @@ const [columnDefs] = useState([
            
     
         },
-        {
-            field: 'created_date',
-            initialWidth: 150,
-            valueGetter: function (params) {
-              
-                return params.data.created_date.split(" ")[0].split("-").reverse().join("-");
-              },
-           
-    
-        },
+      
         {
             field: 'Action',
            
