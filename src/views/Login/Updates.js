@@ -214,8 +214,8 @@ const classes = useStyle()
     <TableHead>
    <TableRow>
      <TableCell style= {{width : "50px"}}>S.No</TableCell>
-     <TableCell style={{width : "400px"}}>Site</TableCell>
-     <TableCell>Website</TableCell>
+     <TableCell style={{width : "400px"}}>Website</TableCell>
+     <TableCell>Url</TableCell>
    </TableRow>
    </TableHead>
       <TableBody>
@@ -293,7 +293,7 @@ const classes = useStyle()
 }}>
    Updates
   </Link>
-  <Typography color="text.primary">{myData.heading}</Typography>
+ 
   </Breadcrumbs>
   <div style={{margin: "20px 0 10px 0"}}>
   <ArticleHeader>

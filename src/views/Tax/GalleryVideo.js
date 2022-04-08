@@ -75,7 +75,7 @@ const GalleryVideo = () => {
  Photo Gallery
   </Link>
   
-  <Typography color="text.primary"> {title}</Typography>
+ 
 </Breadcrumbs>
         
               </span>

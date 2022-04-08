@@ -36,7 +36,7 @@ padding: "20px"
     display : "flex",
     width: "100%",
     justifyContent: "space-between",
-    alignItems: "center",
+   
     backgroundColor: "#e4f0fa",
   
     padding: "10px 5px",
@@ -102,7 +102,7 @@ const Details = () => {
   {CommonServices.capitalizeFirstLetter(linkdata) + " tax"}
   </Link>
   
-  <Typography color="text.primary"> {CommonServices.capitalizeFirstLetter(i.heading)}</Typography>
+ 
 </Breadcrumbs>
 <ArticleWrapper>
 <ArticleHeader>
@@ -114,7 +114,7 @@ const Details = () => {
 </MyLogo>
 <RightContent>
 <h4 style={{color: "#081f8f"}}>Mazars Advisory Solutions (MAS)</h4>
-<span style={{color: "#0071ce", fontSize: "18px"}}>Building Lasting Relationship</span>
+<span style={{color: "#0071ce", fontSize: "18px"}}>Building Lasting Relationships</span>
 <a href="https://www.masindia.live" target="_blank">www.masindia.live</a>
 </RightContent>
   </ArticleHeader>
@@ -128,9 +128,9 @@ const Details = () => {
          
          
            </MyHeading>
-            <h6>Writer -  {i.writer} </h6>
-            <h6> Email - {i.email} </h6>
-           <h6>Date of publishing -   {i.publish_date.split("-").reverse().join("-")} </h6>
+            <h6>Writer :  {i.writer} </h6>
+            <h6> Email : {i.email} </h6>
+           <h6>Date of publishing :   {i.publish_date.split("-").reverse().join("-")} </h6>
          
             
              </div>
@@ -142,7 +142,7 @@ const Details = () => {
     <button className="downloadBtnPdf"> Download  <VscFilePdf style={{display: "flex",
      margin: "0 10px", color: "#e4f0fa", width: "20px", height: "20px"}} /></button>
     </a> 
-    <Disclamair>
+    {/* <Disclamair>
       <h6>Disclaimer</h6>
       <h4>By clicking on the "AGREE" button below, the user hereby acknowledges having read and understood the disclaimer below:</h4>
   <ul>
@@ -153,7 +153,7 @@ const Details = () => {
 </li>
   </ul>
   <p className={classes.agree}>Agree</p>
-    </Disclamair>
+    </Disclamair> */}
     </ArticleWrapper>
             </div>
         
