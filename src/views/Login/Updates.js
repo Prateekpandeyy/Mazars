@@ -12,6 +12,7 @@ import ima from "../../mazars_logo.png";
 import classesCustom from './design.module.css';
 import CommonServices from '../../common/common.js';
 import {  VscFilePdf} from "react-icons/vsc";
+import { OuterloginContainer } from "../../components/Common/OuterloginContainer";
 import {Typography, Breadcrumbs, Table, TableContainer, 
   TableHead, TablePagination, TableBody, TableRow, TableCell} from "@material-ui/core";
 const MyBox = styled(Box)({
@@ -141,6 +142,7 @@ const classes = useStyle()
 
   return (
     <>
+    <OuterloginContainer>
       <Header noSign="noSign" getData = {setShowData} />
      <MyContainer>
    
@@ -302,7 +304,7 @@ const classes = useStyle()
 </MyLogo>
 <RightContent>
 <h4 style={{color: "#081f8f"}}>Mazars Advisory Solutions (MAS)</h4>
-<span style={{color: "#0071ce", fontSize: "18px"}}>Building lasting relationship</span>
+<span style={{color: "#0071ce", fontSize: "18px"}}>Building Lasting Relationship</span>
 <a href="https://www.masindia.live" target="_blank">www.masindia.live.com</a>
 </RightContent>
   </ArticleHeader>
@@ -336,6 +338,7 @@ const classes = useStyle()
 
 
       <Footer />
+      </OuterloginContainer>
     </>
   );
 }

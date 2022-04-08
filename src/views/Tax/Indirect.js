@@ -8,6 +8,7 @@ import axios from 'axios';
 import { baseUrl } from '../../config/config';
 import Footer from '../../components/Footer/Footer';
 import classesCustom from './design.module.css';
+import { OuterloginContainer } from '../../components/Common/OuterloginContainer';
 import { Button, Breadcrumbs, Box, Typography, Table, TableContainer, 
 TableHead, TablePagination, TableBody, TableRow, TableCell } from "@material-ui/core";
 const MyContainer = styled(Box)({
@@ -40,6 +41,7 @@ const Indirect = () => {
   }, [])
     return(
        <>
+        <OuterloginContainer>
         <Header noSign="noSign" />
         <MyContainer>
    
@@ -52,7 +54,7 @@ const Indirect = () => {
   Articles
   </Link>
   <Link underline="hover" color="inherit" to="/customer/indirect">
-  Indirect tax
+  Indirect Tax
   </Link>
   
  
@@ -98,6 +100,7 @@ const Indirect = () => {
       
        </MyContainer>
        <Footer />
+        </OuterloginContainer>
        </>
   
     )

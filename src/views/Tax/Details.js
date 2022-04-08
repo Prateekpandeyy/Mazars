@@ -11,6 +11,7 @@ import CommonServices from '../../common/common.js';
 import {  VscFilePdf} from "react-icons/vsc";
 import classes from './design.module.css';
 import ima from "../../mazars_logo.png";
+import { OuterloginContainer } from '../../components/Common/OuterloginContainer';
 import { Link } from 'react-router-dom';
 const MyContainer = styled(Box)({
     display : "flex", 
@@ -72,7 +73,8 @@ const Details = () => {
 
     return(
        <>
-        <Header noSign="noSign"/>
+       <OuterloginContainer>
+       <Header noSign="noSign"/>
         <MyContainer>
    
   
@@ -99,7 +101,7 @@ const Details = () => {
 </MyLogo>
 <RightContent>
 <h4 style={{color: "#081f8f"}}>Mazars Advisory Solutions (MAS)</h4>
-<span style={{color: "#0071ce", fontSize: "18px"}}>Building lasting relationship</span>
+<span style={{color: "#0071ce", fontSize: "18px"}}>Building Lasting Relationship</span>
 <a href="https://www.masindia.live" target="_blank">www.masindia.live</a>
 </RightContent>
   </ArticleHeader>
@@ -135,6 +137,7 @@ const Details = () => {
       
        </MyContainer>
        <Footer />
+       </OuterloginContainer>
        </>
   
     )

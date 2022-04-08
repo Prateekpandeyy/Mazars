@@ -15,6 +15,7 @@ import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { Markup } from 'interweave';
 import CommonServices from "../../../common/common";
+import GirdExamplefaq from './GridExamplefaq';
 const MyContainer = styled(Container)({
 
 })
@@ -340,12 +341,13 @@ return (
 
         <Card>
           <CardBody>
-          <DataTablepopulated 
+          {/* <DataTablepopulated 
                   bgColor = "#5a625a"
                    keyField= {"assign_no"}
                    data={list}
                    columns={columns}>
-                    </DataTablepopulated>
+                    </DataTablepopulated> */}
+                    <GirdExamplefaq />
           </CardBody>
           </Card>
     </MyContainer>

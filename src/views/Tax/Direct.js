@@ -9,9 +9,10 @@ import { Button, Box, Typography, Table, TableContainer,
 TableHead, TablePagination, TableBody, TableRow, TableCell } from "@material-ui/core";
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import classesCustom from './design.module.css';
+import { OuterloginContainer } from '../../components/Common/OuterloginContainer';
 const MyContainer = styled(Box)({
     display: "flex",
-  minHeight: "100vh",
+  
   height: "100%",
   flexDirection: "column",
   justifyContent: "space-between"
@@ -42,7 +43,8 @@ const Direct = () => {
   }, [])
     return(
        <>
-        <Header noSign="noSign" />
+<OuterloginContainer>
+<Header noSign="noSign" />
         <MyContainer>
    
   
@@ -54,7 +56,7 @@ const Direct = () => {
   Articles
   </Link>
   <Link underline="hover" color="inherit" to="/customer/direct">
-  Direct tax
+  Direct Tax
   </Link>
   
   
@@ -101,6 +103,7 @@ const Direct = () => {
       
        </MyContainer>
        <Footer />
+</OuterloginContainer>
        </>
   
     )
