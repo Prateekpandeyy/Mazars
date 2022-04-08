@@ -172,9 +172,11 @@ const classes = useStyle()
   linkData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((i, e) => (
         <TableRow>
           <TableCell  onClick={(p) => getData(i)}className="tableCellStyle">
-         <span className="tabHover">
-    <span className="updatesLink">
-     {`${e + 1} . ${i.heading} -    ${i.publish_date.split("-").reverse().join("-")}`}
+         <span>
+         <span style={{color: "rgb(61, 71, 117"}}>
+           {`${e + 1} .`}
+           </span> <span className="tabHover updatesLink">
+     {` ${i.heading} -    ${i.publish_date.split("-").reverse().join("-")}`}
       </span>
   </span>
           </TableCell>

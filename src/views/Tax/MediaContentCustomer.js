@@ -73,12 +73,22 @@ const MediaContentCustomer = () => {
               <TableRow>
                
                <TableCell className="tableCellStyle" style={{cursor: "pointer"}} onClick={(p) => getData(i)}>
-             
-          <span className="updatesLink">
-           {`${e + 1} . ${i.heading} -    ${i.publish_date.split(" ")[0].split("-").reverse().join("-")}`}
+               <span>
+         <span style={{color: "rgb(61, 71, 117"}}>
+           {`${e + 1} .`}
+           </span> <span className="tabHover updatesLink">
+           {` ${i.heading} -    ${i.publish_date.split(" ")[0].split("-").reverse().join("-")}`}
+      </span>
+  </span>
+  </TableCell>
+          {/* <span className="tabHover updatesLink">
+          <span style={{color: "rgb(61, 71, 117"}}>
+           {`${e + 1} .`}
+           </span>
+           {` ${i.heading} -    ${i.publish_date.split(" ")[0].split("-").reverse().join("-")}`}
         
         </span>
-                </TableCell>
+                </TableCell> */}
               </TableRow>
                ))
               }
