@@ -10,7 +10,10 @@ import Swal from 'sweetalert2';
 import {Link} from 'react-router-dom';
 import {EditQuery} from '../../../components/Common/MessageIcon';
 import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
-import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
+import {
+  Card,
+  CardBody,
+} from "reactstrap";
 const MyContainer = styled(Container)({
 
 })
@@ -156,28 +159,33 @@ return(
     }
   ]
     return(
-       
-        <MyContainer>
-                <div className="headingContent">
-                <h4>Photo Gallery </h4>
-                <button 
-            
-            className="autoWidthBtn rightAlign my-2" onClick={(e) => {
-              history.push("/cms/mediagallery")
-            }}>New Photo Gallery</button> 
-                </div>
-                <div className="galleryContainer">
-                <DataTablepopulated 
-                   bgColor="#42566a"
-                   keyField= {"assign_no"}
-                   data={galleryData}
-                   columns={columns}>
-                    </DataTablepopulated>
-                 
+    
+      <Layout adminDashboard="adminDashboard" adminUserId={userId}>
 
-                </div>
-                </MyContainer>
-             
+      <MyContainer>
+           
+          
+      <div className="headingContent">
+               <h4>Photo Gallery </h4>
+               <button 
+            
+           className="autoWidthBtn rightAlign my-2" onClick={(e) => {
+             history.push("/cms/mediagallery")
+           }}>New Photo Gallery</button> 
+               </div>
+          <Card>
+              <CardBody>
+              <DataTablepopulated 
+               bgColor="#42566a"
+               keyField= {"assign_no"}
+               data={galleryData}
+               columns={columns}>
+                </DataTablepopulated>
+              </CardBody>
+              </Card>
+         
+          </MyContainer>
+      </Layout>
     )
 }
 export default MediaContent;

@@ -163,10 +163,10 @@ const [columnDefs] = useState([
      
       setOrder(linkOrder)
     }
-  console.log("order", order)
+
    return (
    <>
-    <div className="ag-theme-alpine" style={{height: 400, width: 900, overflow: "auto"}}>
+    <div className="ag-theme-alpine" style={{height: 400, overflow: "auto"}}>
         <AgGridReact
             rowData={rowData}
             rowDragManaged={true}

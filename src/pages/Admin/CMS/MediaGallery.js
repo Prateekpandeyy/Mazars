@@ -79,7 +79,7 @@ const MediaGallery = () => {
             html : "Image uploaded successfully",
             icon :"success"
           })
-          history.push("/cms/mediatab")
+          history.push("/cms/imagelist")
         }
       })
       console.log("done")

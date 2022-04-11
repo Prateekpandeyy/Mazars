@@ -12,7 +12,11 @@ import ReactPlayer from "react-player";
 import {EditQuery} from '../../../components/Common/MessageIcon';
 import { Link } from 'react-router-dom';
 import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
-import OndemandVideoIcon from '@mui/icons-material/OndemandVideo';
+import {
+  Card,
+  CardBody,
+} from "reactstrap";
+
 const MyContainer = styled(Container)({
 
 })
@@ -163,28 +167,35 @@ else{
     setVideoId(`${baseUrl3}/assets/gallery/${e}`)
   }
     return(
-       
-        <MyContainer>
-        <div className="headingContent">
-        <h4> Video Gallery
-        </h4>
-        <button 
-    
-    className="autoWidthBtn rightAlign my-2" onClick={(e) => {
-      history.push("/cms/videocontent")
-    }}>New Video Gallery</button> 
-        </div>
-        
-        <div className="galleryContainer">
-                <DataTablepopulated 
-                   bgColor="#42566a"
-                   keyField= {"assign_no"}
-                   data={galleryData}
-                   columns={columns}>
-                    </DataTablepopulated>
-                 
+  
+    <Layout adminDashboard="adminDashboard" adminUserId={userId}>
 
-                </div>
+    <MyContainer>
+         
+        
+    <div className="headingContent">
+     <h4> Video Gallery
+     </h4>
+     <button 
+    
+     className="autoWidthBtn rightAlign my-2" onClick={(e) => {
+   history.push("/cms/videocontent")
+     }}>New Video Gallery</button> 
+     </div>
+        <Card>
+            <CardBody>
+           
+               <DataTablepopulated 
+                  bgColor="#42566a"
+                  keyField= {"assign_no"}
+                  data={galleryData}
+                  columns={columns}>
+                   </DataTablepopulated>
+                 
+            </CardBody>
+            </Card>
+       
+        </MyContainer>
         {
           play === true ?
                 
@@ -208,8 +219,7 @@ else{
      
     </div> : ""
         }
-        </MyContainer>
-             
+    </Layout>
     )
 }
 export default VideoMedia;

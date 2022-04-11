@@ -21,6 +21,8 @@ import TipsAndUpdatesOutlinedIcon from '@mui/icons-material/TipsAndUpdatesOutlin
 import QuizOutlinedIcon from '@mui/icons-material/QuizOutlined';
 import UnsubscribeOutlinedIcon from '@mui/icons-material/UnsubscribeOutlined';
 import PermMediaOutlinedIcon from '@mui/icons-material/PermMediaOutlined';
+import MissedVideoCallIcon from '@mui/icons-material/MissedVideoCall';
+import MediaBluetoothOffIcon from '@mui/icons-material/MediaBluetoothOff';
 function Sidebar({ adminDashboard, custDashboard, TLDashboard, TPDashboard , feedbackNumber}) {
   const [toggleState, setToggleState] = useState(false);
   const [feedbackNumber2, setfeedbackNumber2] = useState();
@@ -278,16 +280,40 @@ const classes = useStyle()
 
               <li className="nav-item">
             
-              <NavLink to={"/cms/mediatab"} className={classes.myClassHover}>
+              <NavLink to={"/cms/imagelist"} className={classes.myClassHover}>
                 <i class="">
                   <PermMediaOutlinedIcon className={classes.myTeamleader}
                   />
                 </i>
     <span className="menu-title" data-i18n="">
-    Media Gallery
+    Photo Gallery
     </span>
     </NavLink>
               </li>
+              <li className="nav-item">
+            
+              <NavLink to={"/cms/videolist"} className={classes.myClassHover}>
+                <i class="">
+                  <MissedVideoCallIcon className={classes.myTeamleader}
+                  />
+                </i>
+    <span className="menu-title" data-i18n="">
+    Video Gallery
+    </span>
+    </NavLink>
+              </li>
+              <li className="nav-item">
+            
+            <NavLink to={"/cms/contentlist"} className={classes.myClassHover}>
+              <i class="">
+                <MediaBluetoothOffIcon className={classes.myTeamleader}
+                />
+              </i>
+  <span className="menu-title" data-i18n="">
+  Media News
+  </span>
+  </NavLink>
+            </li>
 
 
              

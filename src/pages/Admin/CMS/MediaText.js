@@ -191,7 +191,7 @@ else{
       });
   };
 return (
-
+  <Layout adminDashboard="adminDashboard" adminUserId={userId}>
 
 <MyContainer>
      
@@ -216,7 +216,7 @@ return (
         </Card>
    
     </MyContainer>
-
+</Layout>
   );
 }
 

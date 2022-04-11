@@ -69,7 +69,7 @@ const VideoContent = () => {
             html : "Video Gallery added successfully",
             icon :"success"
           })
-          history.push("/cms/mediatab")
+          history.push("/cms/videolist")
         }
       })
       console.log("done")

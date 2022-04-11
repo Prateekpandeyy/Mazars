@@ -177,6 +177,8 @@ import Groupvideo from "./pages/Admin/CMS/Groupvideo";
 import Videogallery from "./views/Tax/VideoGallary";
 import GroupVideo from "./views/Tax/GroupVideo";
 import EditFaq from "./pages/Admin/CMS/EditFaq";
+import VideoMedia from "./pages/Admin/CMS/VideoMedia";
+import MediaText from "./pages/Admin/CMS/MediaText";
 
 // import PayDetails from "./views/PaymentStatus/PayDetails";
 
@@ -383,6 +385,9 @@ function App() {
             <PrivateRouteAdmin exact path = "/cms/editimage/:id" component = {EditImage} />
             <PrivateRouteAdmin exact path = "/cms/editvideo/:id" component = {EditVideo} />
              <PrivateRouteAdmin exact path = "/cms/editfaq/:id" component = {EditFaq} />
+             <PrivateRouteAdmin exact path = "/cms/videolist" component = {VideoMedia} />
+             <PrivateRouteAdmin exact path = "/cms/contentlist" component = {MediaText} />
+             <PrivateRouteAdmin exaxt path = "/cms/imagelist" component = {MediaContent} />
             <Route exact path="/*" component={PageNotFound} />
 
           </Switch>

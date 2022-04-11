@@ -86,7 +86,7 @@ const Mediatextshow = () => {
                   html : `${message}`,
                   icon : "success"
               })
-              history.push("/cms/mediatab")
+              history.push("/cms/contentlist")
           }
        })
    }

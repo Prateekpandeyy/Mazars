@@ -8,6 +8,10 @@ import Swal from 'sweetalert2';
 import {Link} from 'react-router-dom';
 import  {DeleteIcon, EditQuery,} from "../../../components/Common/MessageIcon";
 import { Markup } from 'interweave';
+import {
+  Card,
+  CardBody,
+} from "reactstrap";
 const GirdExamplefaq = () => {
   const [check, setCheck] = useState(false)
    const [rowData, setRowData] = useState([])
@@ -205,7 +209,7 @@ const [columnDefs] = useState([
   console.log("order", order)
    return (
    <>
-    <div className="ag-theme-alpine" style={{height: 400, width: 900, overflow: "auto"}}>
+    <div className="ag-theme-alpine" style={{height: 400, overflow: "auto"}}>
         <AgGridReact
             rowData={rowData}
             rowDragManaged={true}

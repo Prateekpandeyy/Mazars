@@ -134,10 +134,10 @@ const EditImage = () => {
             html : "Photo Gallery updated successfully",
             icon :"success"
           })
-          history.push("/cms/mediatab")
+          history.push("/cms/imagelist")
         }
       })
-      console.log("done")
+    
     }
     return(
         <Layout adminDashboard="adminDashboard" adminUserId={userId}>
