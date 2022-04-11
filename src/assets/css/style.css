@@ -557,7 +557,7 @@ th.sortable:hover::after {
 }
 .myLink22 {
   background-color: #fff !important;
-  z-index: 99999;
+  z-index: 999;
   border: 1px solid #fff;
 }
 .myFaq table {
@@ -577,4 +577,9 @@ th.sortable:hover::after {
 }
 .customInvalid {
   border: 1px solid red;
+}
+@media (max-width: 767px) {
+  footer {
+    position: relative !important;
+  }
 }

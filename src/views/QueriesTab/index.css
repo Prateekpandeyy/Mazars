@@ -34,7 +34,7 @@
   margin: auto;
 }
 .headerHover {
-  color: rgb(92, 115, 216);
+  color: rgb(61, 71, 117);
   height: 40px;
   font-weight: 700;
   list-style: none;
@@ -42,6 +42,7 @@
   margin: auto;
   display: inline-flex;
   align-items: center;
+  cursor: pointer;
 }
 .headerHover a {
   color: rgb(61, 71, 117);

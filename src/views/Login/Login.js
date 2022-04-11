@@ -3,7 +3,7 @@ import Header from "../../components/Header/Header";
 import Footer from '../../components/Footer/Footer';
 import { Button, Box, Typography } from "@material-ui/core";
 import './style.css';
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -36,7 +36,8 @@ const MainContent = styled(Box)({
   minHeight: "100vh",
   height: "100%",
   flexDirection: "column",
-  justifyContent: "space-between"
+  justifyContent: "space-between",
+  position: "relative"
 })
 const FlashSection = styled(Box)({
   width: "100%",
@@ -99,7 +100,8 @@ function LoginForm() {
   const [news, getNews] = useState([])
   const [pos,setPos] = useState(1200);   
   const [run, setRun] = useState(true);
-  const [overLay, setOverlay] = useState(true)
+  const [showCookie, setShowCookie] = useState(false)
+  let history = useHistory()
   let  width = 1200
   const myData = localStorage.getItem("myArticles")
   const cookieEnable = Cookies.get("accept")
@@ -211,15 +213,26 @@ const styles = {
   right: pos + "px"
 };
 
+const showCook = () => {
+ 
+  setShowCookie(true)
+}
+const myCookie2 = () => {
+  if(cookieEnable){
+history.push("/customer/signup")
+  }
+  else{
+    setShowCookie(true)
+  }
+}
   return (
     <>
-  {
-    overLay === true && cookieEnable === undefined ?
-    <div className="overlayStyleLogin"></div> : ""
-  }
+ 
     <MainContent>
       
-    <Header noSign="noSign" />
+  
+    <Header noSign="noSign"  showCook = {showCook}/>
+    
      <MyContainer>
     
  {news.length > 0 ?
@@ -260,13 +273,9 @@ const styles = {
                   For new client
                 </Typography>
                 <button className="customBtn">
-                  <Link className="SignUpLink"
-                    to={{
-                      pathname: "/customer/signup",
-                    }}
-                  >
+                <a onClick = {() => myCookie2("contactbasic")}>
                     Sign Up
-                  </Link>
+                  </a>
                 </button>
               </div>
             </div>
@@ -364,8 +373,7 @@ const styles = {
       className = {classes.imgResponsive} />
       <h5 style={{margin: "10px 0"}}>Services</h5>
       <p style={{textAlign : "center"}}>
-      Offers solutions to all compliance requirements, assessment proceedings, litigation matters, opinions and other advisory needs.
-      </p>
+      Offers solutions to all compliance requirements, transfer pricing matters, assessment proceedings, appeal & litigation matters, opinions and other advisory needs. </p>
       </ImgBox>
       
       <ImgBox>
@@ -398,26 +406,48 @@ const styles = {
      </MyContainer>
     
 {
-  cookieEnable ? "" :
-  <CookieConsent debug = {true}
-location="bottom"
-expires={1}
-buttonText="Accept"
-style={{backgroundColor : "#FFF", color: "#4B4646"}}
-buttonStyle = {{borderBottomLeftRadius: "1.75rem",
+ showCookie === true ?
+ <div className="popup">
+  
+ <CookieConsent
+   disableStyles
+   location="none"
+   buttonText="Accept"
+   cookieName="myAwesomeCookieName2"
+   overlay
+  
+   buttonStyle = {{borderBottomLeftRadius: "1.75rem", position: "absolute",
+   top: "10px", right: "10px",
 backgroundColor : "#0071CE", border: "1px solid #0071CE", color: "#fff"
 , cursor : "pointer", fontSize : "1rem", fontWeight: 500,
-minWidth: "100px", minHeight: "3rem"}}
+minWidth: "100px", minHeight: "3rem", textAlign: "center", display: "block", marginLeft: "auto"}}
 onAccept={(e) => {
-  setOverlay(false)
-  Cookies.set("accept", "agree")
+
+ Cookies.set("accept", "agree")
 }}
->
-  This is contains cookies ,please read our cookies policy before login
-</CookieConsent>
+   overlayClasses="overlayclass"
+  
+ >
+ <h4 style={{textAlign: "center"}}>Disclaimer</h4>
+ <h5>By clicking on the "Agree" button below, the user hereby acknowledges having read and understood the disclaimer below:</h5>
+<ul>
+  <li>The user on his own accord wishes to know more about Mazars Advisory Solutions (MAS) and any of its members for his own information and use.</li>
+<li>The user acknowledges that there has been no solicitation, invitation, or inducement of any sort whatsoever from MAS or any of its members to create an Attorney/Consultant-Client relationship.</li>
+<li>The user acknowledges that MAS makes every effort to maintain updated and accurate information on this website and cannot accept responsibility for any prejudice, loss or damage which may occur from use of such information. MAS assumes no liability for the interpretation or use of content or information contained on this website, nor does it offer any warranty of any kind,
+   either express or implied in relation to such content or information.</li>
+<li>    The user acknowledges that MAS does not intend that links / URLs contained on this website re-directing users to third party websites be considered as referrals to, endorsements of, or affiliations with any such third-party website operators. MAS is not responsible for, and makes no representation or warranty, express or implied, about the content or information contained on such third-party websites.
+</li>
+</ul>
+ </CookieConsent>
+</div>
+: ""
 
 }
-      <Footer />
+
+<Footer 
+showCook = {showCook} />
+  
+      
     </MainContent>
     </>
   );

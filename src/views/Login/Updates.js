@@ -93,14 +93,8 @@ useEffect(() => {
 }, [])
 const showLinkData = () => {
  
-  if(getId === 2){
-    axios.get(`${baseUrl}/customers/getupdated`)
-    .then((res) => {
-     isUpdates(true)
-      setLinkData(res.data.result)
-    })
-   }
-   else if(getId === 3){
+  
+    if(getId === 3){
     axios.get(`${baseUrl}/customers/getimportantlink`)
     .then((res) => {
      console.log("res", res)
@@ -115,6 +109,13 @@ const showLinkData = () => {
       console.log("res", res)
       setLinkData([res.data.result])
       isUpdates(false)
+    })
+   }
+   else{
+    axios.get(`${baseUrl}/customers/getupdated`)
+    .then((res) => {
+     isUpdates(true)
+      setLinkData(res.data.result)
     })
    }
   }
@@ -306,7 +307,7 @@ const classes = useStyle()
 </MyLogo>
 <RightContent>
 <h4 style={{color: "#081f8f"}}>Mazars Advisory Solutions (MAS)</h4>
-<span style={{color: "#0071ce", fontSize: "18px"}}>Building Lasting Relationship</span>
+<span style={{color: "#0071ce", fontSize: "18px"}}>Building Lasting Relationships</span>
 <a href="https://www.masindia.live" target="_blank">www.masindia.live.com</a>
 </RightContent>
   </ArticleHeader>

@@ -9,8 +9,9 @@ import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import ListItemButton from '@mui/material/ListItemButton';
 import List from '@mui/material/List';
+import Cookies from "js-cookie";
 function Header({ id, cust_sign, noAdminSign, noTlSign, 
-  noTpSign, admin, mtl, mtp, noSign, loginOTP, getData }) {
+  noTpSign, admin, mtl, mtp, noSign, loginOTP, getData, showCook }) {
   let history = useHistory();
 
   const custLogout = () => {
@@ -48,7 +49,7 @@ function Header({ id, cust_sign, noAdminSign, noTlSign,
               <img src={mazars} className="logo" alt="mazar"/>
             </Link>
           <div>
-        <CmsCont getData= {getData} />
+        <CmsCont getData= {getData} showCook = {showCook}/>
             </div>
           </div>
         )}
@@ -155,7 +156,7 @@ function Header({ id, cust_sign, noAdminSign, noTlSign,
 
 export default Header;
 
-const CmsCont = () => {
+const CmsCont = (props) => {
   const [open, setOpen] = useState(false)
   const [open2, setOpen2] = useState(false)
   let history = useHistory()
@@ -174,7 +175,40 @@ const CmsCont = () => {
 
     setOpen2(true);
   };
- 
+  const cookieEnable = Cookies.get("accept")
+  const myLink = (e) => {
+   if(cookieEnable){
+     if(e === "direct"){
+      history.push("/customer/direct")
+     }
+     else if(e === "indirect"){
+       history.push("/customer/indirect")
+     }
+     else if (e === "photo"){
+       history.push("/customer/media")
+     }
+     else if (e === "video"){
+      history.push("/customer/videolist")
+    }
+    else if (e === "mediacontent"){
+      history.push("/customer/mediacontent")
+    }
+    else if (e === "faqlist"){
+      history.push("/customer/faq-question")
+    }
+    else if (e === "linklist"){
+      history.push("/customer/link")
+    }
+     
+    else if (e === "updatelist"){
+      history.push("/customer/updates")
+    }
+   }
+   else{
+    
+props.showCook("showCookies")
+   }
+  }
   return(
     <>
 <div className="clientSubMenu">
@@ -189,44 +223,38 @@ const CmsCont = () => {
            <List component="div" className="myLink22">
            <ul>
                 
-                     <NavLink to = "/customer/direct">
-                     <li className="tabHover mx-1">
+                  
+                     <li className="tabHover mx-1" onClick = {() => myLink("direct")}>
                    <span className="menu-title" data-i18n="">
                   Direct Tax
                    </span>
                    </li>
-                   </NavLink>
+                 
                    
                     
-                     <NavLink to="/customer/indirect">
-                     <li className="tabHover mx-1">
+                    
+                     <li className="tabHover mx-1" onClick = {() => myLink("direct")}>
                    <span className="menu-title" data-i18n="">
                 Indirect Tax
                    </span>
                    </li>
-                   </NavLink>
+                  
                     
                    </ul>
            </List>
          </Collapse>
                  </li>
    
-         <li className="nav-item headerHover"> 
-    <NavLink to = {{
-  pathname : "/customer/updates",
-  index : 2
-}} >
+         <li className="nav-item headerHover" onClick = {() => myLink("updatelist")}> 
+   
       Updates
-    </NavLink>
+  
 </li>
 
-      <li className="nav-item headerHover"> 
-    <NavLink to = {{
-  pathname : "/customer/updates",
-  index : 3
-}} >
+      <li className="nav-item headerHover" onClick = {() => myLink("linklist")}> 
+   
        Important Links
-    </NavLink>
+    
 </li>
       <li className="nav-item tabHoverLinksubMenu" 
          onMouseLeave = {() => handleClickOn2()}>
@@ -241,52 +269,44 @@ const CmsCont = () => {
            <List component="div" className="myLink22">
            <ul>
                 
-                      <NavLink 
-    to = {{
-  pathname : "/customer/media",
-  index : 5
-}} className="tabHoverLink">
-   <li className="tabHover mx-1">
+               
+   <li className="tabHover mx-1" onClick = {() => myLink("photo")}>
                    <span className="menu-title" data-i18n="">
                Photo Gallery
                    </span>
                    </li>
-    </NavLink> 
+   
                    
                     
-                     <NavLink to="/customer/videolist">
-                     <li className="tabHover mx-1">
+                   
+                     <li className="tabHover mx-1" onClick = {() => myLink("video")}>
                    <span className="menu-title" data-i18n="">
               Video Gallery
                    </span>
                    </li>
-                   </NavLink>
-                   <NavLink to="/customer/mediacontent">
-                     <li className="tabHover mx-1">
+                   
+                  
+                     <li className="tabHover mx-1" onClick = {() => myLink("mediacontent")}>
                    <span className="menu-title" data-i18n="">
                        Media news
                    </span>
                    </li>
-                   </NavLink>
+                   
                     
                    </ul>
            </List>
          </Collapse>
                  </li>
    
-                 <li className="nav-item headerHover"> 
+                 <li className="nav-item headerHover" onClick = {() => myLink("faqlist")}> 
     {/* <NavLink 
     to = {{
   pathname : "/customer/updates",
   index : 4
 }} > */}
-  <NavLink 
-    to = {{
-  pathname : "/customer/faq-question",
-  index : 4
-}} >
+ 
       FAQs
-    </NavLink>
+   
     </li>
 </div>
     </>

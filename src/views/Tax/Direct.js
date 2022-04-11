@@ -65,7 +65,7 @@ const Direct = () => {
         <Table>
             <TableBody>
                {
-                   data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((i, e) => (
+                   data && data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((i, e) => (
                     <TableRow>
                     <TableCell className="tableCellStyle">
                         <Link to = {{

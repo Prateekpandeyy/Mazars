@@ -41,6 +41,7 @@ import Contact from "./views/Contact/Contact";
 import About from './views/About/About';
 import Media from './views/Tax/Media';
 import FaqQuestion from "./views/Tax/FaqQuestion";
+import LinklistUser from "./views/Login/Linklist";
 
 
 //admin routes
@@ -233,6 +234,7 @@ function App() {
      <PublicRouteUser exact path = "/customer/updates" component={Updates} />
         <PublicRouteUser exact path = "/customer/contactbasic" component = {ContactOuter} />
        <PublicRouteUser exact path = "/customer/faq-question" component={FaqQuestion} />
+          <PublicRouteAdmin exact path = "/customer/link" component = {LinklistUser} />
             <PrivateRouteUser exact path="/customer/select-category" component={SelectCategoryPage} />
             <PrivateRouteUser exact path="/customer/dashboard" component={Dashboard} />
             <PrivateRouteUser exact path="/customer/my-assingment/:id" component={MyAssingment} />
