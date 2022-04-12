@@ -459,7 +459,7 @@ const [dstate2, setDstate2] = useState("")
 
         <div className="form">
           <div className="heading" style={{display : "flex", justifyContent : "space-between"}}> 
-            <h2>Client Registerion</h2>
+            <h2>Client Registration</h2>
             <a href={MyPDF} className="tabHover" target="_blank"> <HelpIcon /> </a>
           </div>
        

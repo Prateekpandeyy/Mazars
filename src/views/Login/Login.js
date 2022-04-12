@@ -130,7 +130,7 @@ const latestNews = () => {
     if(res.data.code === 1){
       res.data.result.map((i) => {
        pp.push(i)
-        console.log("news", i)
+      
       })
       getNews(pp)
     }
@@ -210,7 +210,8 @@ const onMouseLeave = (e) => {
 const styles = {
   position: "relative", 
   fontSize: "1em",
-  right: pos + "px"
+  right: pos + "px",
+ 
 };
 
 const showCook = () => {
@@ -218,11 +219,12 @@ const showCook = () => {
   setShowCookie(true)
 }
 const myCookie2 = () => {
+  console.log("done")
   if(cookieEnable){
 history.push("/customer/signup")
   }
   else{
-    setShowCookie(true)
+   showCook()
   }
 }
   return (
@@ -410,10 +412,11 @@ history.push("/customer/signup")
  <div className="popup">
   
  <CookieConsent
+ debug = {true}
    disableStyles
    location="none"
-   buttonText="Accept"
-   cookieName="myAwesomeCookieName2"
+   buttonText="Agree"
+   expires={1}
    overlay
   
    buttonStyle = {{borderBottomLeftRadius: "1.75rem", position: "absolute",

@@ -557,7 +557,7 @@ th.sortable:hover::after {
 }
 .myLink22 {
   background-color: #fff !important;
-  z-index: 999;
+  z-index: 0;
   border: 1px solid #fff;
 }
 .myFaq table {

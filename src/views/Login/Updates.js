@@ -31,6 +31,12 @@ minHeight: "200px",
 alignItems : "center",
 padding : "10px"
 })
+const ArticleWrapper = styled(Box)({
+  display: "flex", 
+  flexDirection: "column",
+  border: "1px solid #081f8f",
+  padding: "5px"
+})
 const MyContainer = styled(Box)({
   display : "flex", 
   justifyContent : "center", 
@@ -299,6 +305,7 @@ const classes = useStyle()
  
   </Breadcrumbs>
   <div style={{margin: "20px 0 10px 0"}}>
+    <ArticleWrapper>
   <ArticleHeader>
   <MyLogo>
 <Link to = "/">
@@ -330,6 +337,7 @@ const classes = useStyle()
              </div>
      
     <Markup content={myData.content} />
+    </ArticleWrapper>
   </div>
    
  </div>
