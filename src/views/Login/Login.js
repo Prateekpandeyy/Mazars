@@ -246,16 +246,33 @@ history.push("/customer/signup")
   {
      news.map((i, e) => (
 <>
-<span style={{padding: "0px 20px", margin: "50px 0", fontSize: "16px", color: "464b4b"}}> 
+{
+  cookieEnable ? <>
+  
+  <span style={{padding: "0px 20px", margin: "50px 0", fontSize: "16px", color: "464b4b"}}> 
 
- <Link className="tabHover" to = {{
-  pathname : "/customer/latestupdates",
-  index : i.id
-                        }}>
+<Link className="tabHover" to = {{
+ pathname : "/customer/latestupdates",
+ index : i.id
+                       }}>
 {i.heading} 
 </Link> </span>
 
- {e < news.length - 1 === true ? <span> | </span> : ""}
+{e < news.length - 1 === true ? <span> | </span> : ""}
+ 
+  </> : 
+  <>
+
+<span style={{padding: "0px 20px", margin: "50px 0", fontSize: "16px", color: "464b4b"}}> 
+
+<span onClick = {() => myCookie2("contactbasic")} className="tabHover">
+{i.heading} 
+</span> </span>
+
+{e < news.length - 1 === true ? <span> | </span> : ""}
+ 
+ </>
+}
 </>
      ))
    }

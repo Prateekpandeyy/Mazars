@@ -11,6 +11,7 @@ import Swal from 'sweetalert2';
 import classNames from 'classnames';
 import Footer from './../../components/Footer/Footer';
 import { yupResolver } from "@hookform/resolvers/yup";
+import { OuterloginContainer } from '../../components/Common/OuterloginContainer';
 import * as yup from "yup";
 const Schema = yup.object().shape({
     p_email: yup.string().email("invalid email").required(""),
@@ -63,112 +64,112 @@ const QueryContact = () => {
     return (
         <>
 
+<OuterloginContainer>
 <Header noSign="noSign"/>
-{/* <Box style={{margin: "10px 30px"}}>
-                       <h1>Enquiry form</h1>
-                           </Box> */}
+
                        
-            <Container maxWidth="md">
-                <Grid container justify="center">
-                    <Grid item lg={12} sm={12}>
+<Container maxWidth="md">
+    <Grid container justify="center">
+        <Grid item lg={12} sm={12}>
 
-                   
-                         <form onSubmit={handleSubmit(onSubmit)}>
-                         <Grid item lg={12}>
-                               <Box className={style.myFormBox}>
-                               <label className = {style.formFieldLegend}>
-                               MAS Enquiry Form
-                               </label>
-                              
-                              <select 
-                                 ref={register}
-                                 name="p_info"
-                                 className={classNames(`form-control ${style.mySelectBox}`, {
-                                    "is-invalid": errors.p_info,
-                                  })}>
-                                     
-                                  <option value="General enquiries - MAS">General enquiries - MAS </option>
-                                  <option value="Business Advisory Services - MAS">Business Advisory Services - MAS </option>
-                              </select>
-                               </Box>
-                              </Grid> 
-                              <Grid item lg={12}>
-                              <Box className={style.myFormBox}>
-                              <input 
-                                type = "text" 
-                                name = "p_name"
-                                 ref={register}
-                             placeholder = "Type here your name"
-                             className={classNames(`form-control ${style.myNameBox}`, {
-                                "is-invalid": errors.p_name,
-                              })}
-                           />
-                                  </Box>
-                            
-                              </Grid> 
-                              <Grid item lg={12}>
-                              <Box className={style.myFormBox}>
-                              <input 
-                                 ref={register}
-                                 name = "p_email"
-                             placeholder = "Type here your e-mail address"
-                             className={classNames(`form-control ${style.myNameBox}`, {
-                                 "is-invalid" : errors.p_email
-                             })}
-                             type = "text" />
-                                  </Box>
-                            
-                              </Grid>  
-                              <Grid item lg={12}>
-                               <Box className={style.myFormBox}>
-                               <label className = {style.formFieldLegend}>
-                            Your message*
+       
+             <form onSubmit={handleSubmit(onSubmit)}>
+             <Grid item lg={12}>
+                   <Box className={style.myFormBox}>
+                   <label className = {style.formFieldLegend}>
+                   MAS Enquiry Form
+                   </label>
+                  
+                  <select 
+                     ref={register}
+                     name="p_info"
+                     className={classNames(`form-control ${style.mySelectBox}`, {
+                        "is-invalid": errors.p_info,
+                      })}>
+                         
+                      <option value="General enquiries - MAS">General enquiries - MAS </option>
+                      <option value="Business Advisory Services - MAS">Business Advisory Services - MAS </option>
+                  </select>
+                   </Box>
+                  </Grid> 
+                  <Grid item lg={12}>
+                  <Box className={style.myFormBox}>
+                  <input 
+                    type = "text" 
+                    name = "p_name"
+                     ref={register}
+                 placeholder = "Type here your name"
+                 className={classNames(`form-control ${style.myNameBox}`, {
+                    "is-invalid": errors.p_name,
+                  })}
+               />
+                      </Box>
+                
+                  </Grid> 
+                  <Grid item lg={12}>
+                  <Box className={style.myFormBox}>
+                  <input 
+                     ref={register}
+                     name = "p_email"
+                 placeholder = "Type here your e-mail address"
+                 className={classNames(`form-control ${style.myNameBox}`, {
+                     "is-invalid" : errors.p_email
+                 })}
+                 type = "text" />
+                      </Box>
+                
+                  </Grid>  
+                  <Grid item lg={12}>
+                   <Box className={style.myFormBox}>
+                   <label className = {style.formFieldLegend}>
+                Your message*
 
-                               </label>
-                             <textarea 
-                                ref={register}
-                                name = "p_message"
-                             placeholder="Type your message here"
-                             className={classNames(`form-control ${style.formTextArea}`,
-                             {
-                                 "is-invalid" : errors.p_message
-                             })}>
+                   </label>
+                 <textarea 
+                    ref={register}
+                    name = "p_message"
+                 placeholder="Type your message here"
+                 className={classNames(`form-control ${style.formTextArea}`,
+                 {
+                     "is-invalid" : errors.p_message
+                 })}>
 
-                             </textarea>
-                               </Box>
-                              </Grid> 
-                              <Grid item lg={12}>
-                               <Box className={style.myFormBox}>
-                               <div className="form-check">
-  <input  
-   type="checkbox"
-   id="flexCheckDefault"
-     ref={register}
-     name="acceptTerms" 
-     onChange={(e) => setCheck(!check)}
-     className={classNames(`form-check-input`,
-                             {
-                                 "mainCheckBox" : errors.acceptTerms 
-                             })} />
-  <label className = {style.formChoice} for="flexCheckDefault">
+                 </textarea>
+                   </Box>
+                  </Grid> 
+                  <Grid item lg={12}>
+                   <Box className={style.myFormBox}>
+                   <div className="form-check">
+<input  
+type="checkbox"
+id="flexCheckDefault"
+ref={register}
+name="acceptTerms" 
+onChange={(e) => setCheck(!check)}
+className={classNames(`form-check-input`,
+                 {
+                     "mainCheckBox" : errors.acceptTerms 
+                 })} />
+<label className = {style.formChoice} for="flexCheckDefault">
 I accept that MAS will process my personal data for the purpose of handling my request.
-  </label>
-  </div>
-                               </Box>
-                              </Grid>
-                              <Grid item lg={12}>
-                               <Box className={style.myFormBox}>
-                          <button type="submit" className={style.formButton}>Send</button>
-                               </Box>
-                              </Grid> 
-                         </form>
-                       
-                    </Grid>
-                    
-                </Grid>
-               
-            </Container>
-            <Footer />
+</label>
+</div>
+                   </Box>
+                  </Grid>
+                  <Grid item lg={12}>
+                   <Box className={style.myFormBox}>
+              <button type="submit" className={style.formButton}>Send</button>
+                   </Box>
+                  </Grid> 
+             </form>
+           
+        </Grid>
+        
+    </Grid>
+   
+</Container>
+<Footer />
+</OuterloginContainer>
         </>
     )
 }

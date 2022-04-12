@@ -10,6 +10,7 @@ import { Markup } from 'interweave';
 import Footer from '../../components/Footer/Footer';
 import CommonServices from '../../common/common.js';
 import classesCustom from './design.module.css';
+import { OuterloginContainer } from '../../components/Common/OuterloginContainer';
 const MyContainer = styled(Box)({
     display : "flex", 
     justifyContent : "center", 
@@ -51,7 +52,8 @@ const MediaContentCustomer = () => {
     return(
         <>
       
-        <Header noSign="noSign" />
+       <OuterloginContainer>
+       <Header noSign="noSign" />
         <MyContainer>
        {
            description === false ?
@@ -70,9 +72,9 @@ const MediaContentCustomer = () => {
             <TableBody>
             {
         data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((i, e) => (
-              <TableRow>
+              <TableRow key={i.id}>
                
-               <TableCell className="tableCellStyle" style={{cursor: "pointer"}} onClick={(p) => getData(i)}>
+               <TableCell key={i.id} className="tableCellStyle" style={{cursor: "pointer"}} onClick={(p) => getData(i)}>
                <span>
          <span style={{color: "rgb(61, 71, 117"}}>
            {`${e + 1} .`}
@@ -81,14 +83,7 @@ const MediaContentCustomer = () => {
       </span>
   </span>
   </TableCell>
-          {/* <span className="tabHover updatesLink">
-          <span style={{color: "rgb(61, 71, 117"}}>
-           {`${e + 1} .`}
-           </span>
-           {` ${i.heading} -    ${i.publish_date.split(" ")[0].split("-").reverse().join("-")}`}
-        
-        </span>
-                </TableCell> */}
+       
               </TableRow>
                ))
               }
@@ -144,6 +139,7 @@ const MediaContentCustomer = () => {
        : ""}
        </MyContainer>
        <Footer />
+       </OuterloginContainer>
        </>
   
     )

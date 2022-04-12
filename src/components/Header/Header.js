@@ -212,8 +212,8 @@ props.showCook("showCookies")
   return(
     <>
 <div className="clientSubMenu">
-  <li className="nav-item tabHoverLinksubMenu"  onMouseLeave = {() => handleClickOn()}>
-       <ListItemButton  onMouseEnter={() => handleClickOff()}>
+  <li className="nav-item tabHoverLinksubMenu"  onMouseEnter={() => handleClickOff()}  onMouseLeave = {() => handleClickOn()}>
+       <ListItemButton>
        <span className="nav-item">
                      Articles
                    </span>

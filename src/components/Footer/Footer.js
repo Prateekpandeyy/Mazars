@@ -34,13 +34,13 @@ props.showCook("showCookies")
         <div style={{display: "flex", flexDirection: "column", justifyContent: "space-evenly", textAlign: "center"}}>
         
         <div style={{display: "flex", justifyContent:"center"}}>
-        <a onClick = {() => myLink("contactbasic")}>
+        <a onClick = {() => myLink("enquiry")}>
               
               
               Enquiry | &nbsp; 
             
            </a>
-        <a onClick = {() => myLink("enquiry")}>
+        <a onClick = {() => myLink("contactbasic")}>
               
               
               Contact Us | &nbsp; 

@@ -15,26 +15,11 @@ import {  VscFilePdf} from "react-icons/vsc";
 import { OuterloginContainer } from "../../components/Common/OuterloginContainer";
 import {Typography, Breadcrumbs, Table, TableContainer, 
   TableHead, TablePagination, TableBody, TableRow, TableCell} from "@material-ui/core";
-const MyBox = styled(Box)({
-  display: "flex", 
- width: "1000px",
- margin: "10px 0px",
-  justifyContent : "space-between",
- 
-  padding : "10px"
-})
-const ImgBox = styled(Box)({
-display: "flex",
-width: "20%",
-flexDirection: "column",
-minHeight: "200px",
-alignItems : "center",
-padding : "10px"
-})
+
 const ArticleWrapper = styled(Box)({
   display: "flex", 
   flexDirection: "column",
-  border: "1px solid #081f8f",
+ 
   padding: "5px"
 })
 const MyContainer = styled(Box)({

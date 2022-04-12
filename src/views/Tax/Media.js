@@ -11,6 +11,7 @@ import { Markup } from 'interweave';
 import pngAlbum from './album.png';
 import classes from './design.module.css';
 import {Breadcrumbs, Button, Box, Typography, } from "@material-ui/core";
+import { OuterloginContainer } from '../../components/Common/OuterloginContainer';
 const MyContainer = styled(Box)({
     display : "flex", 
     justifyContent : "center", 
@@ -44,7 +45,8 @@ const Media = () => {
   
     return(
         <>
-        <Header noSign="noSign" />
+      <OuterloginContainer>
+      <Header noSign="noSign" />
                <MyContainer>
    
   
@@ -100,6 +102,7 @@ const Media = () => {
  
   </MyContainer>
                 <Footer />
+      </OuterloginContainer>
                </>
     )
 }

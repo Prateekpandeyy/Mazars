@@ -26,15 +26,12 @@ function SignUp(props) {
   const [load, setLoad] = useState(false);
 
   const [password, setPassword] = useState(false);
-  const [passError, setpassError] = useState()
+  
   const [repassword, setRepassword] = useState(false);
   const [show, setShow] = useState(false);
- 
   const [State, setState] = useState([]);
   const [city, setCity] = useState([]);
-  const [countryCode, setCountryCode] = useState('')
-  const [showPlus, setShowPlus] = useState(false)
-  const [email, setEmail] = useState('');
+  const [countryCode, setCountryCode] = useState('91')
   const [phone, setPhone] = useState('');
   const [valiEmail, setValiemail] = useState(null)
   const [invalid, setInvalid] = useState(null)
@@ -42,12 +39,10 @@ function SignUp(props) {
   const [numAvail, setNumAvail] = useState(null)
   const [countryName, setCountryName] = useState(null)
   const [stateName, setStateName] = useState(null)
-
   const [countryId, setCountryId] = useState(null)
   const [indNumError, setIndNumError] = useState(null)
   const [zipCode, setZipCode] = useState('')
   const [zipError, setZipError] = useState(null)
-
   const [wEmail, setWemail] = useState();
   const [time, setTime] = useState('')
   const [disabled, setDisabled] = useState(false)
@@ -62,6 +57,7 @@ const [email2, setEmail2] = useState();
 const [estate, setEstate] = useState("");
 const [cityState2, setCityValue2] = useState("")
 const [dstate2, setDstate2] = useState("")
+const [myCount, setMyCount] = useState(101)
   //Css
   const CountryNumStyle = {
     "display": "flex",
@@ -86,7 +82,21 @@ const [dstate2, setDstate2] = useState("")
   useEffect(() => {
     getTime()
   }, [load]);
-
+useEffect(() => {
+  var arrayState = []
+    let sta = {}
+    states.filter((data) => {
+      if (data.country_id == 101) {
+        console.log("get State")
+        sta = {
+          "value" : data.id,
+          "label" : data.name
+        }
+        arrayState.push(sta)
+      }
+    });
+    setState(arrayState)
+}, [])
 
   const getTime = () => {
     
@@ -112,6 +122,8 @@ const [dstate2, setDstate2] = useState("")
 
   //get country
   const getcountry = (key) => {
+    setMyCount(key)
+    console.log("key", key)
     setZipCode("")
     setZipError("")
     setDstate("");
@@ -119,7 +131,7 @@ const [dstate2, setDstate2] = useState("")
     setCityValue2("")
     setDstate2("")
     setCountryName(key)
-    setShowPlus(true)
+   
     setPhone("")
     setIndNumError("")
     setNumAvail("")
@@ -519,6 +531,7 @@ const [dstate2, setDstate2] = useState("")
                         name="p_profession"
                         aria-label="Default select example"
                         ref={register({ required: true })}
+                        value={countryId}
                       >
                         <option value="">--select--</option>
                         {professionName.map((p, index) => (
@@ -542,6 +555,7 @@ const [dstate2, setDstate2] = useState("")
                         })}
                         ref={register({ required: true })}
                         onChange={(e) => getcountry(e.target.value)}
+                        value={myCount}
                       >
                         <option value="">--select--</option>
                         {country.map((p) => (
@@ -602,7 +616,7 @@ const [dstate2, setDstate2] = useState("")
                           ref={register({ required: true })}
                         >
                           <option>
-                            {showPlus ? "+" + countryCode : null}
+                            { "+" + countryCode}
                           </option>
                         </select>
                         <input
@@ -679,7 +693,7 @@ const [dstate2, setDstate2] = useState("")
                           return false
                         }}
                         className={classNames("form-control", {
-                          "is-invalid": errors.p_password || passError,
+                          "is-invalid": errors.p_password ,
                         })}
                         name="p_password"
                         placeholder="Enter Your Password"
@@ -801,7 +815,7 @@ const [dstate2, setDstate2] = useState("")
                 disabled ?
                   <ResendOtp setDisabled={setDisabled} disabled={disabled} getTime={getTime}
                     email={email2} phone={phone} setLoad={setLoad} invalid={invalid} indNumError={indNumError}
-                    wEmail={wEmail} zipError={zipError} passError={passError}
+                    wEmail={wEmail} zipError={zipError} 
                     setLoading={setLoading} loading={loading}
                     display={display}
                     emailError={emailError}

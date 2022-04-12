@@ -54,7 +54,7 @@ const allLinkOrder = (e) => {
       if(res.data.code === 1){
         Swal.fire({
           title :"success",
-          html : "Order Rearranged successfully",
+          html : "Order rearranged successfully",
           icon : "success"
         })
       }

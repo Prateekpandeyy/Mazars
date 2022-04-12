@@ -5,6 +5,7 @@ import { styled } from '@material-ui/core';
 import {Box} from "@material-ui/core"
 import { Card, CardBody, CardTitle, CardHeader, Row, Col } from 'reactstrap';
 import { Button, Typography } from "@material-ui/core";
+import { OuterloginContainer } from '../../components/Common/OuterloginContainer';
 const MyBox = styled(Box)({
   display : "flex", 
   flexDirection : "column", 
@@ -13,7 +14,8 @@ const MyBox = styled(Box)({
 const AboutOuter = () => {
     return(
         <>
-         <Header noSign="noSign"/>
+<OuterloginContainer>
+<Header noSign="noSign"/>
          <div className="StartPageDetailscontact">
  <div className="mainContentDetailscontact">
           <Card style={{display : "flex", width: "100%", boxShadow: "none", border: "1px solid #fff"}}>
@@ -48,6 +50,7 @@ const AboutOuter = () => {
           </div>
         </div>
         <Footer />
+</OuterloginContainer>
       </>
     );
   }

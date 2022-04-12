@@ -15,6 +15,7 @@ import { Markup } from 'interweave';
 import classes from './design.module.css';
 import AddIcon from "@material-ui/icons/Add";
 import RemoveIcon from "@material-ui/icons/Remove";
+import { OuterloginContainer } from '../../components/Common/OuterloginContainer';
 const MyContainer = styled(Box)({
     display : "flex", 
     justifyContent : "center", 
@@ -59,7 +60,8 @@ else{
   
     return(
         <>
-         <Header noSign="noSign"/>
+     <OuterloginContainer>
+     <Header noSign="noSign"/>
          <MyContainer>
     
    
@@ -113,6 +115,7 @@ else{
        
         </MyContainer>
         <Footer />
+     </OuterloginContainer>
         </>
    
      )
