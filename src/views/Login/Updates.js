@@ -298,7 +298,7 @@ const classes = useStyle()
 </Link>
 </MyLogo>
 <RightContent>
-<h4 style={{color: "#081f8f"}}>Mazars Advisory Solutions (MAS)</h4>
+<h4 style={{color: "#081f8f", fontWeight: 600, letterSpacing: "0.1rem"}}>Mazars Advisory Solutions (MAS)</h4>
 <span style={{color: "#0071ce", fontSize: "18px"}}>Building Lasting Relationships</span>
 <a href="https://www.masindia.live" target="_blank">www.masindia.live.com</a>
 </RightContent>
