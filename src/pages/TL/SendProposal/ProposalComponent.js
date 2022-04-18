@@ -33,7 +33,7 @@ function ProposalComponent(props) {
   const [loading, setLoading] = useState(false);
 
   const [custId, setCustId] = useState("");
-  const [custname, setCustName] = useState();
+  const [custname, setCustName] = useState("");
   const [assignId, setAssignID] = useState("");
   const [assingNo, setAssingNo] = useState("");
   const [store, setStore] = useState(null);
@@ -46,28 +46,39 @@ function ProposalComponent(props) {
   const [det, addDet] = useState()
   const [date, setDate] = useState();
   const [amount, setAmount] = useState();
+  const [companyName, setCompanyName] = useState([])
   const [dateError, setDateError] = useState(false)
+  const [company2, setCompany2] = useState("")
   var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
   const [item] = useState(current_date);
-
+  const getQuery = () => {
+    axios
+      .get(
+        `${baseUrl}/tl/pendingTlProposal?tl_id=${JSON.parse(
+          userid
+        )}&assign_id=${id}`
+      )
+      .then((res) => {
+        if (res.data.code === 1) {
+          if (res.data.result.length > 0) {
+            setAssingNo(res.data.result[0].assign_no);
+            setAssignID(res.data.result[0].id);
+          }
+        }
+      });
+  };
+  const getCompany = () => {
+    axios.get(
+      `${baseUrl}/tl/getcompany`
+    )
+    .then((res) => {
+      console.log("response", res)
+      setCompanyName(res.data.result)
+    })
+  }
 
   useEffect(() => {
-    const getQuery = () => {
-      axios
-        .get(
-          `${baseUrl}/tl/pendingTlProposal?tl_id=${JSON.parse(
-            userid
-          )}&assign_id=${id}`
-        )
-        .then((res) => {
-          if (res.data.code === 1) {
-            if (res.data.result.length > 0) {
-              setAssingNo(res.data.result[0].assign_no);
-              setAssignID(res.data.result[0].id);
-            }
-          }
-        });
-    };
+   getCompany()
     getQuery();
   }, []);
 
@@ -106,7 +117,7 @@ function ProposalComponent(props) {
 
     let formData = new FormData();
     formData.append("assign_no", assingNo);
-    formData.append("name", value.p_name);
+    formData.append("name", custname);
     formData.append("type", "tl");
     formData.append("id", JSON.parse(userid));
     formData.append("assign_id", assignId);
@@ -118,7 +129,7 @@ function ProposalComponent(props) {
 
     formData.append("payment_terms", payment.value);
     formData.append("no_of_installment", installment.value);
-
+    formData.append("companyName", value.p_company)
     payment.label == "lumpsum" ?
       formData.append("due_date", lumsum) :
       payment.label == "installment" ?
@@ -266,7 +277,7 @@ function ProposalComponent(props) {
    
     setInstallment(key)
   }
-console.log(props)
+
   return (
     <>
       <Card>
@@ -302,8 +313,26 @@ console.log(props)
                     className="form-control"
                     value={assingNo}
                     ref={register}
+                    disabled
                   />
                 </div>
+                <div class="form-group">
+                  <label>Company</label>
+                  <select
+                    class="form-control"
+                    ref={register}
+                    name="p_company"
+                   
+                   onChange= {(e) => setCompany2(e.target.value)}
+                  >
+{
+  companyName.map((i) => (
+    <option value={i.company_prefix}>{i.name}</option>
+  ))
+}
+                  </select>
+                </div>
+
                 <div class="form-group">
                   <label>Fee</label>
                   <select
@@ -329,19 +358,11 @@ console.log(props)
                     onChange={(e) => handleChange(e)}
                   />
                 </div>
+                
                 <p style={{ "color": "red" }}>{diserror}</p>
                 <div class="form-group">
                   <label>Scope of Work<span className="declined">*</span></label>
-                  {/* <textarea
-                    className={classNames("form-control", {
-                      "is-invalid": errors.description,
-                    })}
-                    id="textarea"
-                    rows="3"
-                    name="description"
-                    ref={register({ required: true })}
-                    placeholder="Enter Proposal Description"
-                  ></textarea> */}
+
                   <CKEditor
                      editor={ ClassicEditor }
                      height  = "600px"
@@ -434,6 +455,7 @@ console.log(props)
                     className="form-control"
                     value={custname}
                     ref={register}
+                    disabled
                   />
                 </div>
 

@@ -57,7 +57,7 @@ function NewPassword(props) {
       }
       setDisabled(true)
     }
-    timer(10);
+    timer(180);
   }
 
 
@@ -264,7 +264,7 @@ function NewPassword(props) {
 
         </div>
       </div>
-      <Footer />
+  
     </>
   )
 }

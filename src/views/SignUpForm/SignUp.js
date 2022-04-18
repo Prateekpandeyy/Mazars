@@ -67,8 +67,9 @@ const [myCount, setMyCount] = useState(101)
   // cusSub
   const cusSub = {
     display: "flex",
+    width: "100%",
     alignItems : "center",
-    justifyContent: "flex-start"
+    justifyContent: "center"
   }
   // Toggle Password
   const togglePasssword = () => {
@@ -87,7 +88,7 @@ useEffect(() => {
     let sta = {}
     states.filter((data) => {
       if (data.country_id == 101) {
-        console.log("get State")
+     
         sta = {
           "value" : data.id,
           "label" : data.name
@@ -123,7 +124,7 @@ useEffect(() => {
   //get country
   const getcountry = (key) => {
     setMyCount(key)
-    console.log("key", key)
+   
     setZipCode("")
     setZipError("")
     setDstate("");
@@ -173,7 +174,7 @@ useEffect(() => {
     }
   setDstate(key)
   
-   console.log(key)
+  
     let sta = {}
     states.filter((p) => {
       if (p.id == key) {
@@ -184,8 +185,7 @@ useEffect(() => {
     var arrayCity = []
     cities.filter((data) => {
       if (data.state_id === key.value) {
-        console.log("value", data.id)
-        console.log("label", data.name)
+       
         sta = {
           "value" : data.id,
           "label" : data.name
@@ -343,7 +343,7 @@ useEffect(() => {
     ) {
       return;
     }
-   console.log(input)
+ 
    setEstate(input)
   }
 
@@ -355,7 +355,7 @@ useEffect(() => {
     ) {
       return;
     }
-   console.log(input)
+  
    setCityValue2(input)
   }
 
@@ -712,11 +712,7 @@ useEffect(() => {
                         className={`fa ${password ? "fa-eye-slash" : "fa-eye"} password-icon`}
                         onClick={togglePasssword}
                       />
-                      {errors.p_password && (
-                        <div className="invalid-feedback">
-                          {errors.p_password.message}
-                        </div>
-                      )}
+                     
                     </div>
                   </div>
 
@@ -786,7 +782,15 @@ useEffect(() => {
                       </div>
                       : null
                   }
-                  {
+                  <div className="col-md-6">
+                    <label>
+                     Choose a password that should be minimum of eight characters,
+including at least one upper case, lower case, special character
+and number
+                    </label>
+                    </div>
+                <div style={{display: "flex", width: "100%", justifyContent: "center"}}>
+                {
                     loading ?
                       <div class="col-md-12" style={cusSub}>
                         <Spinner color="primary" />
@@ -808,6 +812,7 @@ useEffect(() => {
                        </div> }
                       </div>
                   }
+                  </div>
                 </div>
               </form>
 

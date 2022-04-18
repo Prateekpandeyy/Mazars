@@ -36,7 +36,7 @@ function EditComponent(props) {
   const [amount, setAmount] = useState();
   const [date, setDate] = useState();
   const [load, setLoad] = useState(true);
-
+  const [companyName, setCompanyName] = useState([])
   const[clearValue, setClearValue] = useState(true)
   const [payment, setPayment] = useState([]);
   const [installment, setInstallment] = useState([]);
@@ -46,6 +46,7 @@ function EditComponent(props) {
   const { id } = useParams();
 const [scopeError, setScopeError] = useState(false)
   const [dateError, setDateError] = useState(false)
+  const [company2, setCompany2] = useState("")
   var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
   const [item] = useState(current_date);
   const [proposal, setProposal] = useState({
@@ -65,8 +66,17 @@ const wrong = {
 
   const { query, name, description, fixed_amount,
     due_date, installment_amount } = proposal;
-
+ const getCompany = () => {
+    axios.get(
+      `${baseUrl}/tl/getcompany`
+    )
+    .then((res) => {
+      console.log("response", res)
+      setCompanyName(res.data.result)
+    })
+  }
   useEffect(() => {
+    getCompany()
     getQuery();
   }, []);
 
@@ -75,6 +85,7 @@ const wrong = {
     axios.get(`${baseUrl}/tl/getProposalDetail?id=${id}`).then((res) => {
 
       if (res.data.code === 1) {
+        setCompany2(res.data.result.company)
         setProposal({
           name: res.data.result.name,
           query: res.data.result.assign_no,
@@ -144,7 +155,7 @@ console.log("value2", value2.length)
     formData.append("amount_type", "fixed");
     formData.append("amount", value.p_fixed);
     formData.append("installment_amount", amount);
-
+    formData.append("companyName", value.p_company)
     formData.append("payment_terms", payment.value);
     formData.append("no_of_installment", installment.value);
 
@@ -328,6 +339,22 @@ let a = <Markup content= {description} />
                     ref={register}
                   />
                 </div>
+                <div class="form-group">
+                  <label>Company</label>
+                  <select
+                    class="form-control"
+                    ref={register}
+                    name="p_company"
+                   defaultValue={company2}
+                   onChange= {(e) => setCompany2(e.target.value)}
+                  >
+{
+  companyName.map((i) => (
+    <option value={i.company_prefix}>{i.name}</option>
+  ))
+}
+                  </select>
+                </div>
 
                 <div class="form-group">
                   <label>Fee</label>
@@ -364,24 +391,7 @@ let a = <Markup content= {description} />
                      height = "400px"
                      config = {{
 
-                      highlight: {
-                        options: [
-                            {
-                                model: 'greenMarker',
-                                class: 'marker-green',
-                                title: 'Green marker',
-                                color: 'var(--ck-highlight-marker-green)',
-                                type: 'marker'
-                            },
-                            {
-                                model: 'redPen',
-                                class: 'pen-red',
-                                title: 'Red pen',
-                                color: 'var(--ck-highlight-pen-red)',
-                                type: 'pen'
-                            }
-                        ]
-                    },
+                    
                       fontFamily: {
                         options: [
                             'default',

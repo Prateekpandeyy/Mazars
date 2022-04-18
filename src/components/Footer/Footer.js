@@ -55,7 +55,7 @@ props.showCook("showCookies")
          About Us | &nbsp;
       
       </a>
-        <a onClick = {() => myLink("needhelp")} target="_blank"> Need help?</a>
+      <a href={MyPDF}  target="_blank"> Need help?</a>
   
      
            

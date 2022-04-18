@@ -233,7 +233,7 @@ props.showCook("showCookies")
                    
                     
                     
-                     <li className="tabHover mx-1" onClick = {() => myLink("direct")}>
+                     <li className="tabHover mx-1" onClick = {() => myLink("indirect")}>
                    <span className="menu-title" data-i18n="">
                 Indirect Tax
                    </span>
