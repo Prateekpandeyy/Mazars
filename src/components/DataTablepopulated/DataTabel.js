@@ -6,7 +6,7 @@ import { styled } from "@material-ui/styles";
 
 const DataTablepopulated = (props) => {
     const colorCode = props.bgColor;
-console.log("props", props)
+
 const MyContainer = styled(Container)({
     display: 'flex',
     height : "65vh",

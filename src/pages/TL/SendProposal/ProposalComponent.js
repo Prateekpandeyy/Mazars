@@ -129,7 +129,7 @@ function ProposalComponent(props) {
 
     formData.append("payment_terms", payment.value);
     formData.append("no_of_installment", installment.value);
-    formData.append("companyName", value.p_company)
+    formData.append("company", value.p_company)
     payment.label == "lumpsum" ?
       formData.append("due_date", lumsum) :
       payment.label == "installment" ?

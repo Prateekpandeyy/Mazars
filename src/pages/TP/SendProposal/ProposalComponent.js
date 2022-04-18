@@ -47,29 +47,40 @@ function ProposalComponent(props) {
   const [det, addDet] = useState()
   const [date, setDate] = useState();
   const [amount, setAmount] = useState();
-  
+  const [companyName, setCompanyName] = useState([])
+  const [company2, setCompany2] = useState("")
   const [dateError, setDateError] = useState(false)
   var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
   const [item] = useState(current_date);
 
+  const getQuery = () => {
+    axios
+      .get(
+        `${baseUrl}/tl/pendingTlProposal?tp_id=${JSON.parse(
+          userid
+        )}&assign_id=${id}`
+      )
+      .then((res) => {
+        if (res.data.code === 1) {
+          if (res.data.result.length > 0) {
+            setAssingNo(res.data.result[0].assign_no);
+            setAssignID(res.data.result[0].id);
+          }
+        }
+      });
+  };
+  const getCompany = () => {
+    axios.get(
+      `${baseUrl}/tl/getcompany`
+    )
+    .then((res) => {
+      console.log("response", res)
+      setCompanyName(res.data.result)
+    })
+  }
 
   useEffect(() => {
-    const getQuery = () => {
-      axios
-        .get(
-          `${baseUrl}/tl/pendingTlProposal?tp_id=${JSON.parse(
-            userid
-          )}&assign_id=${id}`
-        )
-        .then((res) => {
-          if (res.data.code === 1) {
-            if (res.data.result.length > 0) {
-              setAssingNo(res.data.result[0].assign_no);
-              setAssignID(res.data.result[0].id);
-            }
-          }
-        });
-    };
+   getCompany()
     getQuery();
   }, []);
 
@@ -115,7 +126,7 @@ function ProposalComponent(props) {
     formData.append("amount_type", "fixed");
     formData.append("amount", value.p_fixed);
     formData.append("installment_amount", amount);
-
+    formData.append("company", value.p_company)
     formData.append("payment_terms", payment.value);
     formData.append("no_of_installment", installment.value);
 
@@ -304,6 +315,22 @@ function ProposalComponent(props) {
                     value={assingNo}
                     ref={register}
                   />
+                </div>
+                <div class="form-group">
+                  <label>Company</label>
+                  <select
+                    class="form-control"
+                    ref={register}
+                    name="p_company"
+                   
+                   onChange= {(e) => setCompany2(e.target.value)}
+                  >
+{
+  companyName.map((i) => (
+    <option value={i.company_prefix}>{i.name}</option>
+  ))
+}
+                  </select>
                 </div>
                 <div class="form-group">
                   <label>Fee</label>

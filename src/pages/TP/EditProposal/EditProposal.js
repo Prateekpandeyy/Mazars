@@ -43,6 +43,8 @@ function EditComponent(props) {
   const [installment, setInstallment] = useState([]);
   const [value2, setValue2] = useState('');
   const [diserror, setdiserror] = useState("")
+  const [company2, setCompany2] = useState("")
+  const [companyName, setCompanyName] = useState([])
   const history = useHistory();
   const { id } = useParams();
 
@@ -66,12 +68,22 @@ function EditComponent(props) {
 
   useEffect(() => {
     getQuery();
+    getCompany()
   }, []);
 
-
+  const getCompany = () => {
+    axios.get(
+      `${baseUrl}/tl/getcompany`
+    )
+    .then((res) => {
+      console.log("response", res)
+      setCompanyName(res.data.result)
+    })
+  }
   const getQuery = () => {
     axios.get(`${baseUrl}/tl/getProposalDetail?id=${id}`).then((res) => {
       if (res.data.code === 1) {
+        setCompany2(res.data.result.company)
         setProposal({
           name: res.data.result.name,
           query: res.data.result.assign_no,
@@ -141,7 +153,7 @@ else{
     formData.append("amount_type", "fixed");
     formData.append("amount", value.p_fixed);
     formData.append("installment_amount", amount);
-
+    formData.append("company", value.p_company)
     formData.append("payment_terms", payment.value);
     formData.append("no_of_installment", installment.value);
 
@@ -325,7 +337,22 @@ else{
                     ref={register}
                   />
                 </div>
-
+                <div class="form-group">
+                  <label>Company</label>
+                  <select
+                    class="form-control"
+                    ref={register}
+                    name="p_company"
+                   defaultValue={company2}
+                   onChange= {(e) => setCompany2(e.target.value)}
+                  >
+{
+  companyName.map((i) => (
+    <option value={i.company_prefix}>{i.name}</option>
+  ))
+}
+                  </select>
+                </div>
                 <div class="form-group">
                   <label>Fee</label>
                   <select

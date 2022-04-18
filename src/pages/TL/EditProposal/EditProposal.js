@@ -24,6 +24,7 @@ import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { Markup } from 'interweave';
 import {Link} from "react-router-dom";
+
 function EditComponent(props) {
 
   const alert = useAlert();
@@ -155,7 +156,7 @@ console.log("value2", value2.length)
     formData.append("amount_type", "fixed");
     formData.append("amount", value.p_fixed);
     formData.append("installment_amount", amount);
-    formData.append("companyName", value.p_company)
+    formData.append("company", value.p_company)
     formData.append("payment_terms", payment.value);
     formData.append("no_of_installment", installment.value);
 
@@ -337,6 +338,7 @@ let a = <Markup content= {description} />
                     class="form-control"
                     value={query}
                     ref={register}
+                    disabled
                   />
                 </div>
                 <div class="form-group">
@@ -471,6 +473,7 @@ let a = <Markup content= {description} />
                     class="form-control"
                     value={name}
                     ref={register}
+                    disabled
                   />
                 </div>
 
