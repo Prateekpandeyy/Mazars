@@ -4,7 +4,9 @@
   "private": true,
   "dependencies": {
     "@ckeditor/ckeditor5-build-classic": "^30.0.0",
+    "@ckeditor/ckeditor5-clipboard": "^34.0.0",
     "@ckeditor/ckeditor5-font": "^31.0.0",
+    "@ckeditor/ckeditor5-list": "^34.0.0",
     "@ckeditor/ckeditor5-paste-from-office": "^34.0.0",
     "@ckeditor/ckeditor5-react": "^3.0.3",
     "@devexpress/dx-react-core": "^2.7.6",
@@ -50,6 +52,7 @@
     "node-sass": "^4.14.1",
     "quill-image-compress": "^1.2.22",
     "quill-image-resize-module": "^3.0.0",
+    "quill-paste-smart": "^1.4.10",
     "react": "^17.0.2",
     "react-alert": "^7.0.2",
     "react-alert-template-basic": "^1.0.0",

@@ -578,6 +578,21 @@ th.sortable:hover::after {
 .customInvalid {
   border: 1px solid red;
 }
+.ck.ck-content ul,
+.ck.ck-content ul li {
+  list-style-type: inherit;
+}
+.ck.ck-content ol,
+.ck.ck-content ol li::marker {
+  list-style-type: decimal;
+  padding: 0px 40px;
+}
+
+.ck.ck-content ul {
+  /* Default user agent stylesheet, you can change it to your needs. */
+  padding-left: 40px;
+}
+
 @media (max-width: 767px) {
   footer {
     position: relative !important;

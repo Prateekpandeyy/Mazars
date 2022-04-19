@@ -45,13 +45,30 @@ const CmsContent = () => {
     let getId = useParams()
     var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
     const [item] = useState(current_date);
-  
+    const Quill = require("quill");
    
     useEffect(() => {
       getData()
     }, [])
     const getData = (e) => {
-   
+      var quill = new Quill('#editor-container', {
+        modules: {
+            toolbar: [
+                [{ 'header': '1'}, {'header': '2'}, { 'font': [] }],
+                [{size: []}],
+                ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+                [{'list': 'ordered'}, {'list': 'bullet'}, 
+                 {'indent': '-1'}, {'indent': '+1'}],
+                ['link', 'image', 'video'],
+                ['clean']
+              ],
+              
+        },
+        
+        placeholder: 'Compose an epic...',
+        theme: 'snow'  // or 'bubble'
+      });
+    
      if(getId.id !== undefined){
       axios.get(`${baseUrl}/cms/getallarticles?uid=${JSON.parse(userId)}&id=${getId.id}`)
       .then((res) => {
@@ -247,39 +264,8 @@ const getEditValue= (e) => {
              <div className="col-md-12">
              <label className="form-label">Content</label> </div>
              
-             <div className="col-md-12">
-             {
-                <ReactQuill
-                ref={register}
-               
-                className={classNames({
-                  "customInvalid" : editorError
-                })}
-                value={det}
-                name="myEditor"
-                modules={ {
-                  toolbar: [
-                    [{ 'header': '1'}, {'header': '2'}, { 'font': [] }],
-                    [{size: []}],
-                    ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-                    [{'list': 'ordered'}, {'list': 'bullet'}, 
-                     {'indent': '-1'}, {'indent': '+1'}],
-                    ['link', 'image', 'video'],
-                    ['clean']
-                  ],
-                  clipboard: {
-                    // toggle to add extra line breaks when pasting HTML:
-                    matchVisual: false,
-                  }}}
-                formats={
-                  [
-                    'header', 'font', 'size',
-                    'bold', 'italic', 'underline', 'strike', 'blockquote',
-                    'list', 'bullet', 'indent',
-                    'link', 'image', 'video'
-                  ]
-                  
-                } theme="snow" value={det} onChange={getEditValue}/>}
+             <div className="col-md-12" style={{display : "flex", flexDirection :"column"}}>
+             <div id="editor-container"></div>
                  </div>
          </div>
          <div className="row">
