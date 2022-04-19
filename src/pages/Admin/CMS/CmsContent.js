@@ -101,13 +101,15 @@ const CmsContent = () => {
    }
    const onSubmit = (e) => {
      let message = "Content created successfully"
-
+console.log("det", det)
   setLoading(true)
-     if(det[0].search('\"<p><br></p>\"')){
-        
+  var myEditor = document.querySelector('#editor-container')
+var html = myEditor.children[0].innerHTML;
+addDet(html)
+      console.log("html", html)  
       let formData = new FormData();
       formData.append("type", pageto)
-      formData.append("content", det);
+      formData.append("content", html);
    {
      stats === true ?
      formData.append("status", 1):
@@ -137,10 +139,7 @@ const CmsContent = () => {
              history.push("/cms/cms")
          }
       })
-     }
-     else{
-      setEditorError(true)
-     }
+    
    }
    const myLabel = (e) => {
   
@@ -265,7 +264,8 @@ const getEditValue= (e) => {
              <label className="form-label">Content</label> </div>
              
              <div className="col-md-12" style={{display : "flex", flexDirection :"column"}}>
-             <div id="editor-container"></div>
+             <div id="editor-container"
+            ></div>
                  </div>
          </div>
          <div className="row">
