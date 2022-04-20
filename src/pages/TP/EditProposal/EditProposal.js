@@ -333,6 +333,7 @@ else{
                     type="text"
                     name="p_assingment"
                     class="form-control"
+                    disabled
                     value={query}
                     ref={register}
                   />
@@ -482,6 +483,7 @@ else{
                     type="text"
                     name="p_name"
                     class="form-control"
+                    disabled
                     value={name}
                     ref={register}
                   />
