@@ -213,7 +213,7 @@ const styles = {
   right: pos + "px",
  
 };
-
+console.log("done")
 const showCook = () => {
  
   setShowCookie(true)

@@ -172,7 +172,7 @@ const CmsCont = (props) => {
     setOpen2(false);
   };
   const handleClickOff2 = () => {
-
+console.log("header fixed")
     setOpen2(true);
   };
   const cookieEnable = Cookies.get("accept")
