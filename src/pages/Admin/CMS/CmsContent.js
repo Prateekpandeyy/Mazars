@@ -51,8 +51,10 @@ const CmsContent = () => {
       getData()
     }, [])
     const getData = (e) => {
+     
       var quill = new Quill('#editor-container', {
         modules: {
+          
             toolbar: [
                 [{ 'header': '1'}, {'header': '2'}, { 'font': [] }],
                 [{size: []}],
@@ -68,7 +70,7 @@ const CmsContent = () => {
         placeholder: 'Compose an epic...',
         theme: 'snow'  // or 'bubble'
       });
-    
+      quill.root.setAttribute('spellcheck', "true")
      if(getId.id !== undefined){
       axios.get(`${baseUrl}/cms/getallarticles?uid=${JSON.parse(userId)}&id=${getId.id}`)
       .then((res) => {

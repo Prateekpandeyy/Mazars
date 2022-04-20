@@ -146,8 +146,8 @@ else{
     }
 console.log("value2", value2.length)
     let formData = new FormData();
-    formData.append("assign_no", value.p_assingment);
-    formData.append("name", value.p_name);
+    formData.append("assign_no", query);
+    formData.append("name", name);
     formData.append("type", "tl");
     formData.append("id", JSON.parse(userid));
     formData.append("assign_id", id);

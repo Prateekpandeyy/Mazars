@@ -13,7 +13,7 @@ export const ImageUrl = "https://stagingapi.masindia.live/assets/image";
 export const ReportUrl = "https://stagingapi.masindia.live/assets/upload/report";
 // // //for local
  export const baseUrl2 = "https://stagingapi.masindia.live";
-export const baseUrl3 = "https://stagingapi.masindia.live/"
+export const baseUrl3 = "https://stagingapi.masindia.live"
 
 
 // //for local
