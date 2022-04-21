@@ -63,8 +63,7 @@ const GalleryVideo = () => {
   
         <div className={classes.articleContent}>
       
-            <div style={{display : "flex", width:"1000px", justifyContent: "center",
-          alignItems: "flex-start", flexDirection: "column", padding: "5px 0px"}}>
+        <div className={classes.articlesDetails}>
             <span style={{textAlign: "left"}}>
             <Breadcrumbs separator=">" maxItems={3} aria-label="breadcrumb">
   

@@ -3,7 +3,7 @@ import Header from "../../components/Header/Header";
 import Footer from '../../components/Footer/Footer';
 import { Card, CardBody, CardTitle, CardHeader, Row, Col } from 'reactstrap';
 import { OuterloginContainer } from '../../components/Common/OuterloginContainer';
-import { Button, Typography } from "@material-ui/core";
+import classes from './../About/design.module.css';
 const ContactOuter = () => {
     return(
         <>
@@ -11,8 +11,8 @@ const ContactOuter = () => {
 <Header noSign="noSign"/>
         
         
-        <div className="StartPageDetailscontact">
-        <div className="mainContentDetailscontact">
+<div className={classes.articleContent}>
+<div className={classes.articlesDetails}>
                  <Card style={{display : "flex", width: "100%", border : "1px solid #fff",
                boxShadow : "none"}}>
        

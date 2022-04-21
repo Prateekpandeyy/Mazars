@@ -24,7 +24,7 @@ function Footer(props) {
      }
    }
    else{
-     console.log("done")
+  
 props.showCook("showCookies")
    }
   }

@@ -113,8 +113,7 @@ const [loading, setLoading] = useState(false)
     }
 
     if (InprogressAllocation == "InprogressAllocation") {
-      console.log("done", data.p_status)
-      console.log("done")
+   
      if(data.p_status.length > 0){
       axios
       .get(

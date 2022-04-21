@@ -16,7 +16,16 @@ import Alerts from "../../common/Alerts";
 import ResendOtp from "./ResendOtp";
 import { Spinner } from "reactstrap";
 import ShowError from "../../components/LoadingTime/LoadingTime";
-
+import { OuterloginContainer } from "../../components/Common/OuterloginContainer";
+import { styled , makeStyles} from "@material-ui/styles";
+import {  Box, Typography } from "@material-ui/core";
+const MyContainer = styled(Box)({
+  display : "flex", 
+  justifyContent : "center", 
+  alignItems : "center", 
+  width: "100%",
+  flexDirection : "column"
+})
 function NewPassword(props) {
   const alert = useAlert();
   const { register, handleSubmit, errors, getValues, reset } = useForm();
@@ -104,8 +113,10 @@ function NewPassword(props) {
 
   return (
     <>
-      <Header cust_sign="cust_sign" />
-      <div className="container">
+    <OuterloginContainer>
+    <Header cust_sign="cust_sign" />
+     <MyContainer>
+     <div className="container">
         <div className="form">
 
           <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
@@ -276,7 +287,9 @@ function NewPassword(props) {
 
         </div>
       </div>
+       </MyContainer>
       <Footer />
+    </OuterloginContainer>
     </>
   )
 }

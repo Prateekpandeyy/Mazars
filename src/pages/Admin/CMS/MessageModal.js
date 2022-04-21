@@ -45,18 +45,7 @@ const MessageModal = (
         })
        }
       
-        // console.log("done",  editData)
-        // if(edit === true){
-        //     console.log("editData", editData)
-        //     setNews(editData.news)
-        //     setHeading(editData.heading)
-        //    if(editData.status == "0"){
-        //        setStats(true)
-        //    }
-        //    else{
-        //        setStats(false)
-        //    }
-        // }
+     
     }
     const onSubmit = (value) => {
         let formData = new FormData()

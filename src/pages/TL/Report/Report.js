@@ -176,8 +176,7 @@ const getTeamLeader = () => {
   };
   let pk = []
   const custName = (a) => {
-    console.log("done")
-   
+ 
     a.map((r) => {
       pk.push(r.value)
     })

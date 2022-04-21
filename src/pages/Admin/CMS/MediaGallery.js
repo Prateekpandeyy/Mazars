@@ -82,7 +82,7 @@ const MediaGallery = () => {
           history.push("/cms/imagelist")
         }
       })
-      console.log("done")
+   
     }
     return(
         <Layout adminDashboard="adminDashboard" adminUserId={userId}>

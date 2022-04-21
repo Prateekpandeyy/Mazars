@@ -105,8 +105,8 @@ const MediaContentCustomer = () => {
               </div> : ""
        }
         {description === true ?
-         <div className="StartPageDetails">
-         <div className="mainContent222">
+       <div className={classesCustom.articleContent}>
+       <div className={classesCustom.articlesDetails}>
          <Breadcrumbs separator=">" maxItems={3} aria-label="breadcrumb">
          <Link underline="hover" color="inherit" to="/customer/media">
   Media Gallery

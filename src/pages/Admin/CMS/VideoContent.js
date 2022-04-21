@@ -72,7 +72,7 @@ const VideoContent = () => {
           history.push("/cms/videolist")
         }
       })
-      console.log("done")
+  
     }
     return(
         <Layout adminDashboard="adminDashboard" adminUserId={userId}>

@@ -344,7 +344,7 @@ else{
                     class="form-control"
                     ref={register}
                     name="p_company"
-                   defaultValue={company2}
+                   value={company2}
                    onChange= {(e) => setCompany2(e.target.value)}
                   >
 {

@@ -15,12 +15,20 @@ import { Link } from "react-router-dom";
 import Alerts from "../../common/Alerts";
 import Mandatory from "../../components/Common/Mandatory";
 import ShowError from "../../components/LoadingTime/LoadingTime";
-
+import { OuterloginContainer } from "../../components/Common/OuterloginContainer";
+import { styled , makeStyles} from "@material-ui/styles";
+import {Breadcrumbs, Box, Typography } from "@material-ui/core";
 const Schema = yup.object().shape({
   p_email: yup.string().email("invalid email").required(""),
 });
 
-
+const MyContainer = styled(Box)({
+  display : "flex", 
+  justifyContent : "center", 
+  alignItems : "center", 
+  width: "100%",
+  flexDirection : "column"
+})
 function ForgetPassword(props) {
 
 
@@ -72,8 +80,11 @@ function ForgetPassword(props) {
 
   return (
     <>
-      <Header cust_sign="cust_sign" />
-      <div className="container" style={{height : "450px"}}>
+
+  <OuterloginContainer>
+  <Header cust_sign="cust_sign" />
+     <MyContainer>
+     <div className="container" style={{height : "450px"}}>
         <div className="form">
           <div className="heading">
             <h2>Forgot Password</h2>
@@ -121,7 +132,10 @@ function ForgetPassword(props) {
 
       </div>
 
-      <Footer />
+    
+     </MyContainer>
+     <Footer />
+  </OuterloginContainer>
     </>
   );
 }

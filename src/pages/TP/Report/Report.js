@@ -154,7 +154,7 @@ const getupdateQuery = () => {
   };
   let pk = []
   const custName = (a) => {
-    console.log("done")
+  
    
     a.map((r) => {
       pk.push(r.value)
@@ -206,7 +206,7 @@ const getqNo = ((i) => ({
         "label": d.name
       }))
 const resetData = () => {
- console.log("done")
+ 
 reset()
 selectInputRef5.current.select.clearValue();
 selectInputRef6.current.select.clearValue();

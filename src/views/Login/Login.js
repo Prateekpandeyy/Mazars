@@ -1,7 +1,7 @@
-import { useRef, useState, useEffect } from "react";
+import {  useState, useEffect } from "react";
 import Header from "../../components/Header/Header";
 import Footer from '../../components/Footer/Footer';
-import { Button, Box, Typography } from "@material-ui/core";
+import {  Box, Typography } from "@material-ui/core";
 import './style.css';
 import { Link, useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
@@ -12,7 +12,6 @@ import { baseUrl } from "../../config/config";
 import VerifyOTP from "./VerifyOTP";
 import classNames from "classnames";
 import Alerts from "../../common/Alerts";
-import Mandatory from "../../components/Common/Mandatory";
 import { Spinner } from 'reactstrap';
 import ShowError from "../../components/LoadingTime/LoadingTime";
 import LoadingTime from "../../components/LoadingTime/LoadingTime";
@@ -23,32 +22,21 @@ import whatp from './images/video.jpeg';
 import costEffective from './images/costEffective.jpeg';
 import servicesImg from './images/services.jpeg';
 import { styled , makeStyles} from "@material-ui/styles";
-import { Markup } from "interweave";
-import $ from 'jquery';
 import CookieConsent from "react-cookie-consent";
-
+import MainContainer from "../../components/Common/MainContainer";
+import MyContainer from "../../components/Common/MyContainer";
+import FlashSection from "../../components/Common/FlashSection";
+import MainContent from "../../components/Common/MainContent";
 const Schema = yup.object().shape({
   p_email: yup.string().email("invalid email").required(""),
   p_password: yup.string().required(""),
 });
-const MainContent = styled(Box)({
-  display: "flex",
-  minHeight: "100vh",
-  height: "100%",
-  flexDirection: "column",
-  justifyContent: "space-between",
-  position: "relative"
-})
-const FlashSection = styled(Box)({
-  width: "100%",
-  marginBottom : "15px", 
-  padding: "3px 0px",
-  fontSize: "14px", 
-  backgroundColor : "rgb(159 155 155 / 39%)"
-})
+
+
 const MyBox = styled(Box)({
   display: "flex", 
- width: "1000px",
+ maxWidth: "1000px",
+ width: "100%",
  flexDirection: "column",
  margin: "0px",
   justifyContent : "space-between",
@@ -59,17 +47,10 @@ const ImgBox = styled(Box)({
 display: "flex",
 width: "20%",
 flexDirection: "column",
-height: "200px",
 alignItems : "center",
 padding : "10px"
 })
-const MyContainer = styled(Box)({
-  display : "flex", 
-  justifyContent : "center", 
-  alignItems : "center", 
-  width: "100%",
-  flexDirection : "column"
-})
+
 const useStyle = makeStyles({
   imgResponsive : {
     display : "flex",
@@ -213,13 +194,13 @@ const styles = {
   right: pos + "px",
  
 };
-console.log("done")
+
 const showCook = () => {
  
   setShowCookie(true)
 }
 const myCookie2 = () => {
-  console.log("done")
+ 
   if(cookieEnable){
 history.push("/customer/signup")
   }
@@ -230,7 +211,7 @@ history.push("/customer/signup")
   return (
     <>
  
-    <MainContent>
+    <MainContainer>
       
   
     <Header noSign="noSign"  showCook = {showCook}/>
@@ -238,7 +219,7 @@ history.push("/customer/signup")
      <MyContainer>
     
  {news.length > 0 ?
-  <FlashSection> 
+  <FlashSection>
   <h1 style={styles} 
             onMouseEnter={onMouseEnter} 
             onMouseLeave={onMouseLeave} 
@@ -283,7 +264,7 @@ history.push("/customer/signup")
    </span>
     
       <div className="StartPage">
-        <div className="mainContent">
+        <MainContent>
         
           <div className="signIn">
             <div className="signBtn">
@@ -304,7 +285,8 @@ history.push("/customer/signup")
               For existing client
             </Typography>
             {
-              show ? <div className="customForm">
+              show ? 
+              <div className="customForm">
 
                 <VerifyOTP email={email} uid={uid} time={time} setLoad={setLoad}
                   setDisabled={setDisabled} disabled={disabled} setLoading={setLoading}
@@ -381,42 +363,42 @@ history.push("/customer/signup")
            
           </div>
      
-        </div>
+      </MainContent>
         <MyBox>
          
-          <h4>MAS backed by group of professionals with extensive industry knowledge and experience in
+          <h4 style={{fontSize: "1.5rem"}}>MAS backed by group of professionals with extensive industry knowledge and experience in
              taxation matters, provides solutions to all direct & indirect tax queries.  </h4>
     <div style={{display: 'flex'}}>
     <ImgBox>
       <img src = {servicesImg}
       className = {classes.imgResponsive} />
-      <h5 style={{margin: "10px 0"}}>Services</h5>
-      <p style={{textAlign : "center"}}>
+      <h5 style={{margin: "10px 0", fontSize: "1.1rem"}}>Services</h5>
+      <p style={{textAlign : "center", fontSize: "1rem"}}>
       Offers solutions to all compliance requirements, transfer pricing matters, assessment proceedings, appeal & litigation matters, opinions and other advisory needs. </p>
       </ImgBox>
       
       <ImgBox>
       <img src = {costEffective} className = {classes.imgResponsive} />
-      <h5 style={{margin: "10px 0"}}>Cost Effective</h5>
-      <p style={{textAlign : "center"}}>
+      <h5 style={{margin: "10px 0", fontSize: "1.1rem"}}>Cost Effective</h5>
+      <p style={{textAlign : "center", fontSize: "1rem"}}>
       Provides cost effective solution, designed exclusively for client.
       </p>
       </ImgBox> 
       <ImgBox>
       <img src = {whatp} className = {classes.imgResponsive} />
-      <h5 style={{margin: "10px 0"}}>Video Conference</h5>
-      <p style={{textAlign : "center"}}>
+      <h5 style={{margin: "10px 0", fontSize: "1.1rem"}}>Video Conference</h5>
+      <p style={{textAlign : "center", fontSize: "1rem"}}>
       Offers video conferencing facility to hold meetings with clients.
       </p>
       </ImgBox> 
       <ImgBox>
       <img src = {CloudImg} className = {classes.imgResponsive} />
-      <h5 style={{margin: "10px 0"}}>Secure Platform</h5>
-      <p style={{textAlign : "center"}}>Ensures total privacy of client’s data.</p>
+      <h5 style={{margin: "10px 0", fontSize: "1.1rem"}}>Secure Platform</h5>
+      <p style={{textAlign : "center", fontSize: "1rem"}}>Ensures total privacy of client’s data.</p>
       </ImgBox> <ImgBox>
       <img src = {PaperLess} className = {classes.imgResponsive} />
-      <h5 style={{margin: "10px 0"}}>Paperless</h5>
-      <p style={{textAlign : "center"}}>Operates completely in paperless environment.</p>
+      <h5 style={{margin: "10px 0", fontSize: "1.1rem"}}>Paperless</h5>
+      <p style={{textAlign : "center", fontSize: "1rem"}}>Operates completely in paperless environment.</p>
       </ImgBox>
     </div>
       </MyBox>
@@ -468,7 +450,7 @@ onAccept={(e) => {
 showCook = {showCook} />
   
       
-    </MainContent>
+    </MainContainer>
     </>
   );
 }

@@ -1,15 +1,17 @@
 .articleContent {
   display: flex;
+  max-width: 1000px;
   width: 100%;
-  align-items: center;
+
   flex-direction: column;
   min-height: 490px;
   overflow: hidden;
+  margin: auto;
 }
 .articlesDetails {
   display: flex;
   flex-direction: column;
-  width: 1000px;
+  width: 100%;
   border-radius: 10px;
   min-height: 400px;
   padding: 20px;

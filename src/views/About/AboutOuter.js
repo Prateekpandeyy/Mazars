@@ -6,18 +6,15 @@ import {Box} from "@material-ui/core"
 import { Card, CardBody, CardTitle, CardHeader, Row, Col } from 'reactstrap';
 import { Button, Typography } from "@material-ui/core";
 import { OuterloginContainer } from '../../components/Common/OuterloginContainer';
-const MyBox = styled(Box)({
-  display : "flex", 
-  flexDirection : "column", 
-  padding : "15px"
-})
+import classes from './design.module.css';
+
 const AboutOuter = () => {
     return(
         <>
 <OuterloginContainer>
 <Header noSign="noSign"/>
-         <div className="StartPageDetailscontact">
- <div className="mainContentDetailscontact">
+<div className={classes.articleContent}>
+<div className={classes.articlesDetails}>
           <Card style={{display : "flex", width: "100%", boxShadow: "none", border: "1px solid #fff"}}>
 
 <CardHeader>
