@@ -1,0 +1,36 @@
+
+@media (max-width: 800px) {
+    .mainTransaction{
+        overflow-x: overlay;
+    }
+    .tradMenu{
+        margin-top: -350px;
+        margin-left: 20px;
+    }
+    .itemMenu{
+        margin-top: -220px;
+        margin-left: -150px;
+    }
+    .cashMenu{
+        margin-top: -100px;
+        margin-left: -120px;
+    }
+    .dates{
+        margin-top: -10px;
+        margin-left: -150px;
+    }
+    .buttons{
+        margin-top: 100px;
+        margin-left: -320px;
+    }
+    .menus{
+        margin-top:200px;
+        margin-left: -120px;
+        width: 500px;
+    }
+    .hiLight{
+        margin-top: 120px;
+        margin-left: -200px;
+        width: 355px;
+    }
+}

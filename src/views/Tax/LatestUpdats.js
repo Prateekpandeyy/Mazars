@@ -8,6 +8,8 @@ import { Box } from "@material-ui/core";
 import { useHistory } from 'react-router';
 import { Markup } from 'interweave';
 import Footer from '../../components/Footer/Footer';
+import classes from './design.module.css';
+import { OuterloginContainer } from '../../components/Common/OuterloginContainer';
 const MyContainer = styled(Box)({
     display : "flex", 
     justifyContent : "center", 
@@ -71,7 +73,8 @@ const LatestUpdates = () => {
 
     return(
        <>
-        <Header noSign="noSign" />
+    <OuterloginContainer>
+    <Header noSign="noSign" />
         <MyContainer>
    
         <div style={{width: "100%", marginBottom : "15px", 
@@ -97,8 +100,8 @@ const LatestUpdates = () => {
    }
   </h1>
     </div>
-    <div className="StartPageDetails">
-          <div className="mainContent222">
+    <div className={classes.articleContent}>
+    <div className={classes.articlesDetails}>
           <h4>{description.heading} </h4>
    <Markup content={description.news} />
 
@@ -108,6 +111,7 @@ const LatestUpdates = () => {
       
        </MyContainer>
        <Footer />
+    </OuterloginContainer>
        </>
   
     )

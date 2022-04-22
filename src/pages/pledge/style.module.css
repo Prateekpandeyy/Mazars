@@ -1,0 +1,57 @@
+.pledgeHeader {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 15px;
+  }
+  .selectDrop {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .submitBtn {
+    margin-left: auto;
+    padding-right: 40px;
+  }
+  
+  .inputChnage {
+    border: 0;
+    text-align: center;
+  }
+  .inputChnage:focus {
+    outline: none;
+  }
+  .drpDown {
+    display: flex;
+    max-width: 200px;
+    height: 40px;
+    background: #ffffff;
+    border: 1px solid #ebebeb;
+    box-shadow: 0px 2px 16px rgb(61 61 61 / 6%);
+    border-radius: 7px;
+    padding: 0 10px;
+    font-size: 18px;
+    font-weight: bold;
+  }
+  .mainBox {
+    background: #ffffff;
+    margin-left: -50px;
+    border: 1px solid #ebebeb;
+    box-sizing: border-box;
+    box-shadow: 0px 2px 16px rgba(61, 61, 61, 0.06);
+    border-radius: 10px;
+  }
+  .header {
+    width: auto;
+    height: 33px;
+    margin-left: 40px;
+    left: 171px;
+    margin-top: 30px;
+    font-family: "Poppins";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 22px;
+    line-height: 33px;
+    color: #3d3d3d;
+  }
+  ul.listView {
+    list-style-type: circle;
+  }

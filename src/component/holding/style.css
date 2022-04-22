@@ -1,0 +1,49 @@
+.asOncurrentHolding{
+    width: auto;
+    font-family: 'Poppins';
+    font-weight: bold;
+    font-size: 18px;
+    margin-left: 10px;
+}
+.asOn{
+    width:max-content;
+    margin-left: 35px;
+    font-family: 'Poppins';
+    font-weight: bold;
+    font-size: 18px;
+}
+.edis{
+    margin-left: -370px;
+}
+.show{
+    margin-left: -550px;
+}
+.main{
+    margin-left: 200px;
+}
+
+@media (max-width: 800px) {
+    .holdingAccount{
+        margin-top: -150px;
+        width: 0px;
+        font-size: 10px;
+    }
+    .dropdown{
+        width: 50px;
+    }
+    .asOn{
+       margin-left: 40px;
+       margin-top: -60px;
+       width: 100px;
+    }
+    .asOncurrentHolding{
+        margin-top: 40px;
+        margin-left: -105px;
+        font-size: small;
+    }
+    
+    .button{
+        margin-top: 150px;
+        margin-left: -310px;
+    }
+}

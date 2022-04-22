@@ -1,0 +1,29 @@
+.textFirst{
+    width: max-content;
+    margin-left: 200px;
+}
+
+@media (max-width: 800px) {
+    .ledger{
+        margin-top: -80px;
+        margin-left: 80px;
+    }
+    .textFirst{
+        margin-top: 10px;
+        margin-left: -269px;
+    }
+    .selectFirst{
+        margin-top: 80px;
+        margin-left: -237px;
+        margin-right: auto;
+        display: block;
+    }   
+    .files{
+        margin-right: 160px;
+    }
+    .profiles{
+        margin-left: auto;
+        margin-right: auto;
+    }
+   
+}

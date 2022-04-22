@@ -1,0 +1,36 @@
+.myTarget {
+  color: green;
+}
+.leftContent {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  padding-left: 10px;
+  background-color: #0364be;
+  margin-right: 100px;
+  
+}
+.myContainer {
+  display: flex !important;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  min-width: 100%;
+  min-height: 100%;
+}
+/* ::-webkit-scrollbar{
+  display: none;
+} */
+.main {
+  margin-left: -24px;
+}
+@media (max-width: 500px) {
+  .main .myContainer .card {
+    margin-left: -80px;
+    margin-top: -90px;
+    overflow: scroll;
+  }
+  .main .myContainer .leftContent{
+      display: none;
+  }
+}

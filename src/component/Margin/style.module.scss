@@ -1,0 +1,36 @@
+.title{
+width: 290px;
+height: 33px;
+left: 130px;
+top: 128px;
+font-family: 'Poppins';
+font-style: normal;
+font-weight: bold;
+font-size: 18px;
+line-height: 33px;
+}
+
+@media (max-width: 800px) {
+    .title{
+        margin-top: -150px;
+        font-size: 14px;
+        margin-left: 20px;
+    }
+    .butn{
+        margin-top: -50px;
+        margin-left: -295px;
+        font-size: small;
+    }
+    .menu{
+        margin-top:50px;
+        margin-left: -200px;
+      
+    }
+    .hiLi{
+        margin-top: 100px;
+        margin-left: -252px;
+        display: flex;
+        width: 330px;
+       
+    }
+}

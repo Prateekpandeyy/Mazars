@@ -1,0 +1,95 @@
+.contain{
+    width: auto;
+    height: 300px;
+    padding: 20px;
+    margin-left: 66px;
+    margin-right: 150px;
+    margin-top: 50px;
+    background: #FFFFFF;
+    border: 1px solid #EBEBEB;
+    box-sizing: border-box;
+    box-shadow: 0px 2px 16px rgba(61, 61, 61, 0.06);
+    border-radius: 10px;
+}
+.ammount{
+    width:auto;
+    height: 30px;
+    margin-left: 65px;
+    top: 678px;
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 60px;
+    color: #3D3D3D;
+    text-shadow: 0px 2px 16px rgba(61, 61, 61, 0.06);
+}
+.bmsAmmount{
+    width: auto;
+    height: 30px;
+    margin-left: 65px;
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 80px;
+    color: #3D3D3D;
+    text-shadow: 0px 2px 16px rgba(61, 61, 61, 0.06)
+}
+.buttonOk{
+    width: auto;
+    margin-left: 600px;
+    margin-top: 100px;
+}
+.buttonCancel{
+    width: auto;
+    margin-left: 785px;
+    margin-top: -37px;
+    border:1px solid #EBEBEB;
+    color: white;
+}
+.mainContainer{
+    width: auto;
+    height: 650px;
+    margin-left:0px;
+    top: 101px;
+    background: #FFFFFF;
+    border: 1px solid #EBEBEB;
+    box-sizing: border-box;
+    box-shadow: 0px 2px 16px rgba(61, 61, 61, 0.06);
+    border-radius: 10px;
+}
+.radioButton{
+    margin-top: 10px;
+    margin-left: 600px;
+    width:300px;
+    display: -webkit-inline-box;
+}
+@media (max-width: 800px) {
+    .mainContainer{
+      width: min-content;
+    }
+    .contain{
+        margin-left: 0px;
+        width:min-content;
+    }
+    .radioButton{
+        margin-left: 100px;
+    }
+    .ammount{
+        margin-top: 50px;
+        margin-left: 10px;
+    }
+    .bmsAmmount{
+        margin-top: 10px;
+        margin-left: 10px;
+    }
+    .buttonOk{
+        margin-left: 20px;
+        margin-top: 50px;
+    }
+    .buttonCancel{
+        margin-left: 20px;
+        margin-top: 20px;
+    }
+}

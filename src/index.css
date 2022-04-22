@@ -1,0 +1,36 @@
+/* .dx-selection tr{
+  background: #E1F1FF !important;
+} */
+.ant-picker-date-panel {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+}
+.ant-picker-header {
+  background-color: #e1f1ff !important;
+  color: #0085ff !important;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80%;
+}
+.ant-picker-header-super-prev-btn,
+.ant-picker-header-super-next-btn {
+  display: none;
+}
+
+.ant-picker-header-prev-btn,
+.ant-picker-header-next-btn {
+  background-color: #0085ff !important;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  height: 25px;
+  align-items: center;
+}
+.ant-picker-prev-icon,
+.ant-picker-next-icon {
+  color: #fff;
+}

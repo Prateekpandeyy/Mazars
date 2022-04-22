@@ -1,0 +1,19 @@
+/* .first {
+   margin-left: 300px;
+    display: inline-block;
+} */
+/* .second {
+    width: 2%;
+    display: inline-block;
+} */
+
+@media (max-width: 800px) {
+    .first{
+        margin-left: -500px;
+    }
+    .second{
+        margin-top: 40px;
+        margin-right: 20px;
+    }
+}
+

@@ -1,56 +1,142 @@
-@import "~react-image-gallery/styles/css/image-gallery.css";
+.App-link {
+  color: #61dafb;
+}
 * {
   margin: 0;
   padding: 0;
-  -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
-
-html,
 body {
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden;
-  color: #3f3f3f;
-  font-family: Montserrat;
-  background: #f0f0f0 !important;
-  position: relative;
-  min-height: 100vh;
-  font-family: Arial !important;
+  font-family: "Poppins" !important;
 }
-input[type="number"]::-webkit-inner-spin-button,
-input[type="number"]::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  margin: 0;
+.breadcrumbStyle {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 36px;
+  color: #3d3d3d;
+}
+.subBreadcrumbStyle {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 1rem;
+  line-height: 33px;
+  color: #3d3d3d;
+}
+#gridContainer .dx-datagrid-headers .dx-datagrid-content,
+#dataGrid .dx-datagrid-headers .dx-datagrid-content,
+#holdingDataGird .dx-datagrid-headers .dx-datagrid-content,
+#holdingDataGrid .dx-datagrid-headers .dx-datagrid-content,
+#transactionDataGrid .dx-datagrid-headers .dx-datagrid-content,
+#transactionDataGrid_trade .dx-datagrid-headers .dx-datagrid-content {
+  font-family: "Poppins" !important;
+  font-style: normal !important;
+  font-weight: 500 !important;
+  font-size: 14px !important;
+  line-height: 30px !important;
+  color: #3d3d3d !important;
+  border: 1px solid #e1f1ff !important;
+  border-radius: 10px !important;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p,
-label,
-a,
-button,
-th,
-td,
-div,
-span {
-  font-family: Arial !important;
+#gridContainer .dx-datagrid-rowsview .dx-datagrid-content,
+#dataGrid .dx-datagrid-rowsview .dx-datagrid-content {
+  font-family: "Poppins" !important;
+  font-style: normal !important;
+  font-weight: 400 !important;
+  font-size: 12px !important;
+  line-height: 27px !important;
+  /* identical to box height */
+
+  color: #3d3d3d !important;
 }
-.ag-theme-alpine .ag-icon {
-  font-family: "agGridAlpine";
+#gridContainer .checked {
+  display: flex;
+  width: 18px;
+  height: 18px;
+  margin: auto;
+  padding: 30px;
+}
+.openingBalance,
+.creditBalance,
+.totalSummaryStyle {
+  color: #0085ff !important;
+  font-weight: 600;
   font-size: 16px;
-  line-height: 16px;
-  font-style: normal;
-  font-weight: normal;
-  font-feature-settings: normal;
-  font-variant: normal;
-  text-transform: none;
-  -webkit-font-smoothing: antialiased;
-  font-family: "agGridAlpine" !important;
+  font-family: "Poppins";
+  line-height: 30px;
+  text-align: right;
+}
+.debitBalance {
+  color: #e2a705 !important;
+  font-weight: 600;
+  font-size: 16px;
+  font-family: "Poppins";
+  line-height: 30px;
+  text-align: right;
+}
+.totalBalance {
+  color: #00b824 !important;
+  font-weight: 600;
+  font-size: 16px;
+  font-family: "Poppins";
+  line-height: 30px;
+  text-align: right;
+}
+.warning4 {
+  font-family: Poppins !important;
+  font-style: normal !important;
+  font-weight: 600 !important;
+  font-size: 16px !important;
+  line-height: 30px !important;
+
+  color: #0085ff !important;
+}
+.variantClass {
+  font-family: Poppins !important;
+  font-style: normal !important;
+  font-weight: 600 !important;
+  font-size: 16px !important;
+  line-height: 30px !important;
+
+  color: #000 !important;
+}
+.myMenuActive {
+  filter: invert(27%) sepia(51%) saturate(2878%) hue-rotate(165deg)
+    brightness(104%) contrast(97%) !important;
+}
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.dx-header-row {
+  color: #3b3b3b !important;
+}
+.dx-datagrid-rowsview .dx-selection.dx-row > td,
+.dx-datagrid-rowsview .dx-selection.dx-row:hover > td {
+  background-color: transparent !important;
+}
+.pieClass {
+  border-radius: 50px !important;
+}
+/* .dx-datagrid-rowsview .dx-row:nth-child(2n + 2) , .dx-datagrid-rowsview .dx-row > tr:nth-child(2n + 2){
+  background-color: #E1F1FF !important;
+}
+ .dx-datagrid .dx-row-alt:nth-child(2n + 2), .dx-datagrid .dx-row-alt > tr:nth-child(2n + 2) {
+  background-color: #E1F1FF !important;
+} */
+.dx-datagrid-checkbox-size.dx-checkbox-checked .dx-checkbox-icon {
+  color: #fff !important;
+  background-color: #0085ff !important;
+  width: 20px;
+  height: 20px;
+  border-radius: 5px;
+  outline: none;
 }
