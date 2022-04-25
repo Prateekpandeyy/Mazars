@@ -15,7 +15,7 @@ import Mandatory from "../../components/Common/Mandatory";
 import EmailValidation from "../../components/Common/EmailValidation";
 import MyPDF from '../ManualImg/newUser.pdf';
 import  { HelpIcon } from "../../components/Common/MessageIcon";
-
+import { OuterloginContainer } from "../../components/Common/OuterloginContainer";
 function SignUp(props) {
   
   const { handleSubmit, register, errors, getValues } = useForm();
@@ -466,7 +466,8 @@ useEffect(() => {
 
   return (
     <>
-       <Header noSign="noSign" />
+      <OuterloginContainer>
+      <Header noSign="noSign" />
       <div className="container">
 
         <div className="form">
@@ -836,6 +837,7 @@ and number
 
       </div>
       <Footer />
+      </OuterloginContainer>
     </>
   );
 }

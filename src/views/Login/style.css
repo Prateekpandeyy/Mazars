@@ -302,7 +302,12 @@
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
   z-index: 99999;
 }
-
+.fa-bars {
+  color: #000;
+}
+.fa-items {
+  color: #000;
+}
 .overlayclass {
   position: fixed;
   background-color: rgba(0, 0, 0, 0.5);
@@ -320,5 +325,27 @@
     min-height: 750px;
     flex-wrap: wrap;
     align-items: flex-start;
+  }
+  .form {
+    width: 100%;
+    margin: auto;
+    margin-top: 5%;
+    margin-bottom: 10%;
+    background: white;
+    padding: 25px;
+    box-shadow: 6px 6px 10px 2px #00000075;
+    border-radius: 15px;
+  }
+  .password-icon-login {
+    position: relative;
+    left: 25vw;
+    bottom: 3vh;
+    cursor: pointer;
+  }
+  .fa-bars {
+    color: #000;
+  }
+  .fa-items {
+    color: #000;
   }
 }

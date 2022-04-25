@@ -47,8 +47,8 @@ function AdminHeader({ custUserId, adminUserId, TLuserId, TPuserId , feedbackNum
   return (
    
       <nav
-        className="header-navbar navbar-expand-md navbar navbar-with-menu navbar-without-dd-arrow navbar-semi-light"
-        sty
+        className="header-navbar navbar-expand-lg navbar navbar-with-menu navbar-without-dd-arrow navbar-semi-light"
+        
       >
         {custUserId && (
           <NavWrapper 

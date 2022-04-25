@@ -12,7 +12,7 @@ import classesCustom from './design.module.css';
 import { OuterloginContainer } from '../../components/Common/OuterloginContainer';
 const MyContainer = styled(Box)({
     display: "flex",
-  
+  padding : "0 15px",
   height: "100%",
   flexDirection: "column",
   justifyContent: "space-between"
