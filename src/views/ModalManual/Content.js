@@ -14,7 +14,7 @@ const Content  = () => {
     }
     return (
         <>
-         <Container>
+         <Container maxWidth= "xl">
          <Card>
              {/* <CardHeader title={
                  <>

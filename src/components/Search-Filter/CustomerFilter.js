@@ -491,213 +491,204 @@ const [loading, setLoading] = useState(false)
   return (
     <>
       <div className="row">
-        <div className="col-sm-12 d-flex">
-          <div>
-            <form onSubmit={handleSubmit(onSubmit)}>
-              <div className="form-inline">
-                <div className="form-group mb-2">
-                  <Select
-                    style={{ width: 130 }}
-                    placeholder="Select Category"
-                    defaultValue={[]}
-                    onChange={handleCategory}
-                    value={selectedData}
-                  >
-                    <Option value="1" label="Compilance">
-                      <div className="demo-option-label-item">Direct Tax</div>
-                    </Option>
-                    <Option value="2" label="Compilance">
-                      <div className="demo-option-label-item">Indirect Tax</div>
-                    </Option>
-                  </Select>
-                </div>
+        <div className="col-md-12">
+        <form onSubmit={handleSubmit(onSubmit)}>
+        <div className="form-inline">
+      <div className="form-group mb-2">
+        <Select
+         
+          placeholder="Select Category"
+          defaultValue={[]}
+          onChange={handleCategory}
+          value={selectedData}
+        >
+          <Option value="1" label="Compilance">
+            <div className="demo-option-label-item">Direct Tax</div>
+          </Option>
+          <Option value="2" label="Compilance">
+            <div className="demo-option-label-item">Indirect Tax</div>
+          </Option>
+        </Select>
+      </div>
+        <div className="form-group mx-sm-1  mb-2">
+        <Select
+          mode="multiple"
+          style={{ width: 250 }}
+          placeholder="Select Sub Category"
+          defaultValue={[]}
+          onChange={handleSubCategory}
+          value={store2}
+          allowClear
+        >
+          {tax2.map((p, index) => (
+            <Option value={p.id} key={index}>
+              {p.details}
+            </Option>
+          ))}
+        </Select>
+      </div>
+      <div className="form-group mx-sm-1  mb-2">
+      <div>
+        <button
+          type="submit"
+          className="btnSearch mb-2 ml-3"
+          onClick={resetCategory}
+        >
+          X
+        </button>
+        </div>
+        </div>
+        <div className="form-group mx-sm-1  mb-2">
+        <label className="form-select form-control">From</label>
+      </div>
+      <div className="form-group mx-sm-1  mb-2">
+        <input
+          type="date"
+          name="p_dateFrom"
+          className="form-select form-control"
+          ref={register}
+          max={item}
+        />
+      </div>
+      <div className="form-group mx-sm-1  mb-2">
+        <label className="form-select form-control">To</label>
+      </div>
+      <div className="form-group mx-sm-1  mb-2">
+        <input
+          type="date"
+          name="p_dateTo"
+          className="form-select form-control"
+          ref={register}
+          defaultValue={item}
+          max={item}
+        />
+      </div>
+      <div className="form-group mx-sm-1  mb-2">
+        {query == "query" && (
+          <select
+            className="form-select form-control"
+            name="p_status"
+            ref={register}
+            style={{ height: "33px" }}
+          >
+            <option value="">--select--</option>
+            <option value="1">Inprogress Queries</option>
+            <option value="2">Completed Queries</option>
+            <option value="3">Declined Queries</option>
+          </select>
+        )}
 
-                <div className="form-group mx-sm-1  mb-2">
-                  <Select
-                    mode="multiple"
-                    style={{ width: 250 }}
-                    placeholder="Select Sub Category"
-                    defaultValue={[]}
-                    onChange={handleSubCategory}
-                    value={store2}
-                    allowClear
-                  >
-                    {tax2.map((p, index) => (
-                      <Option value={p.id} key={index}>
-                        {p.details}
-                      </Option>
-                    ))}
-                  </Select>
-                </div>
-
-                <div>
-                  <button
-                    type="submit"
-                    className="btnSearch mb-2 ml-3"
-                    onClick={resetCategory}
-                  >
-                    X
-                  </button>
-                </div>
-
-                <div className="form-group mx-sm-1  mb-2">
-                  <label className="form-select form-control">From</label>
-                </div>
-
-                <div className="form-group mx-sm-1  mb-2">
-                  <input
-                    type="date"
-                    name="p_dateFrom"
-                    className="form-select form-control"
-                    ref={register}
-                    max={item}
-                  />
-                </div>
-
-                <div className="form-group mx-sm-1  mb-2">
-                  <label className="form-select form-control">To</label>
-                </div>
-
-                <div className="form-group mx-sm-1  mb-2">
-                  <input
-                    type="date"
-                    name="p_dateTo"
-                    className="form-select form-control"
-                    ref={register}
-                    defaultValue={item}
-                    max={item}
-                  />
-                </div>
-
-                <div className="form-group mx-sm-1  mb-2">
-                  {query == "query" && (
-                    <select
-                      className="form-select form-control"
-                      name="p_status"
-                      ref={register}
-                      style={{ height: "33px" }}
-                    >
-                      <option value="">--select--</option>
-                      <option value="1">Inprogress Queries</option>
-                      <option value="2">Completed Queries</option>
-                      <option value="3">Declined Queries</option>
-                    </select>
-                  )}
-
-                  {InprogressAllocation == "InprogressAllocation" && (
-                    <select
-                      className="form-select form-control"
-                      name="p_status"
-                      ref={register}
-                      style={{ height: "33px" }}
-                    >
-                      <option value="">--select--</option>
-                      <option value="4">Inprogress; Allocation</option>
-                      <option value="5">Inprogress; Proposals</option>
-                      <option value="6">Inprogress; Assignments</option>
-                    </select>
-                  )}
+        {InprogressAllocation == "InprogressAllocation" && (
+          <select
+            className="form-select form-control"
+            name="p_status"
+            ref={register}
+            style={{ height: "33px" }}
+          >
+            <option value="">--select--</option>
+            <option value="4">Inprogress; Allocation</option>
+            <option value="5">Inprogress; Proposals</option>
+            <option value="6">Inprogress; Assignments</option>
+          </select>
+        )}
 
 
-                  {DeclinedQuery == "DeclinedQuery" && (
-                    <select
-                      className="form-select form-control"
-                      name="p_status"
-                      ref={register}
-                      style={{ height: "33px" }}
-                    >
-                      <option value="">--select--</option>
-                      <option value="1">Admin Declined; Queries</option>
-                      <option value="2">Client Declined; Queries</option>
-                      <option value="3">Client Declined; Proposals</option>
-                      <option value="4">Client Declined; Payment</option>
-                    </select>
-                  )}
+        {DeclinedQuery == "DeclinedQuery" && (
+          <select
+            className="form-select form-control"
+            name="p_status"
+            ref={register}
+            style={{ height: "33px" }}
+          >
+            <option value="">--select--</option>
+            <option value="1">Admin Declined; Queries</option>
+            <option value="2">Client Declined; Queries</option>
+            <option value="3">Client Declined; Proposals</option>
+            <option value="4">Client Declined; Payment</option>
+          </select>
+        )}
 
-                  {proposal == "proposal" && (
-                    <select
-                      className="form-select form-control"
-                      name="p_status"
-                      ref={register}
-                      style={{ height: "33px" }}
-                    >
-                      <option value="">--select--</option>
-                      <option value="1">Inprogress Proposals</option>
-                      <option value="2">Accepted Proposals</option>
-                      <option value="3">Declined Proposals</option>
-                    </select>
-                  )}
+        {proposal == "proposal" && (
+          <select
+            className="form-select form-control"
+            name="p_status"
+            ref={register}
+            style={{ height: "33px" }}
+          >
+            <option value="">--select--</option>
+            <option value="1">Inprogress Proposals</option>
+            <option value="2">Accepted Proposals</option>
+            <option value="3">Declined Proposals</option>
+          </select>
+        )}
 
-                  {inprogressProposal == "inprogressProposal" && (
-                    <select
-                      className="form-select form-control"
-                      name="p_status"
-                      ref={register}
-                      style={{ height: "33px" }}
-                    >
-                      <option value="">--select--</option>
-                      <option value="4">Inprogress; Preparation</option>
-                      <option value="5"> Inprogress; Acceptance</option>
-                    </select>
-                  )}
+        {inprogressProposal == "inprogressProposal" && (
+          <select
+            className="form-select form-control"
+            name="p_status"
+            ref={register}
+            style={{ height: "33px" }}
+          >
+            <option value="">--select--</option>
+            <option value="4">Inprogress; Preparation</option>
+            <option value="5"> Inprogress; Acceptance</option>
+          </select>
+        )}
 
-                  {allPayment == "allPayment" && (
-                    <select
-                      className="form-select form-control"
-                      name="p_status"
-                      ref={register}
-                      style={{ height: "33px" }}
-                    >
-                      <option value="">--select--</option>
-                      <option value="1">Unpaid</option>
-                      <option value="2">Paid</option>
-                      <option value="3">Declined</option>
-                    </select>
-                  )}
+        {allPayment == "allPayment" && (
+          <select
+            className="form-select form-control"
+            name="p_status"
+            ref={register}
+            style={{ height: "33px" }}
+          >
+            <option value="">--select--</option>
+            <option value="1">Unpaid</option>
+            <option value="2">Paid</option>
+            <option value="3">Declined</option>
+          </select>
+        )}
 
-                  {assignment == "assignment" && (
-                    <select
-                      className="form-select form-control"
-                      name="p_status"
-                      ref={register}
-                      style={{ height: "33px" }}
-                    >
-                      <option value="">--select--</option>
-                      <option value="1">Inprogress</option>
-                      <option value="2">Completed</option>
-                      <option value="3">Payment Declined</option>
-                    </select>
-                  )}
+        {assignment == "assignment" && (
+          <select
+            className="form-select form-control"
+            name="p_status"
+            ref={register}
+            style={{ height: "33px" }}
+          >
+            <option value="">--select--</option>
+            <option value="1">Inprogress</option>
+            <option value="2">Completed</option>
+            <option value="3">Payment Declined</option>
+          </select>
+        )}
 
-                </div>
-
-               
-                {
-                      loading ?
-                        <Spinner color="primary" />
-                        :
-                        <button type="submit" className="searchBtn mx-sm-1 mb-2">
-                        Search
-                      </button>
-                    }
-                <Reset />
-    {
-      query ?
-     
-        <Link to="/customer/select-category" style={{color : "#fff", marginLeft : "auto"}}>
-     <button  className="autoWidthBtn mb-1" style={{marginLeft : "auto", color : "#fff"}}>
-       Fresh Query 
-       </button> 
-  </Link>
-      : ""
-    }
-               
-
-              </div>
-            </form>
-          </div>
+      </div>
+      {
+            loading ?
+              <Spinner color="primary" />
+              :
+              <button type="submit" className="searchBtn mx-sm-1 mb-2">
+              Search
+            </button>
+          }
+      <Reset />
+{
+query ?
+<div className="mx-sm-1">
+<Link to="/customer/select-category" style={{color : "#fff", marginLeft : "auto"}}>
+<button  className="autoWidthBtn mb-1" style={{marginLeft : "auto", color : "#fff"}}>
+Fresh Query 
+</button> 
+</Link>
+</div>
+: ""
+}
+      </div>
+          </form>
         </div>
       </div>
+         
     </>
   );
 }

@@ -94,11 +94,11 @@ const tableIndex = (index) => {
   
 const myStyle1 = {
   margin: "10px auto",
-  fontSize : "14px"
+  fontSize : "1rem"
 };
 const myStyle2 = {
 margin: "10px auto",
-
+fontSize : "1rem",
 color : "#55425f",
 fontWeight : 1000
 };

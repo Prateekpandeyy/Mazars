@@ -224,7 +224,7 @@ function AllQueriesData() {
                     <>
                         {   
                             row.status == "Declined Query" ?
-                            <>
+                           
                            <>
                            {dateMnsFive > curDate === true ?
                                 <span className="ml-1">
@@ -245,7 +245,7 @@ function AllQueriesData() {
                                 </span>
                               
 
-                           </>
+                        
                             </>
                                 :
                                 <>

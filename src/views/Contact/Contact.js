@@ -6,7 +6,7 @@ const Contact = () => {
 return (
     <Layout custDashboard="custDashboard" custUserId={userId}>
 
-<Card>
+<Card style={{margin: "10px"}}>
 
 <CardHeader>
 <h4 style={{textAlign: "center"}} className="contentTitle">Contact Us</h4>    

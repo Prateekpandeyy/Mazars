@@ -91,7 +91,7 @@ const Payment = () => {
         <>
           <section id="payment">
               <Box id="paymentProcess">
-                  <Container>
+                  <Container maxWidth= "xl">
                      <Card>
                          <CardHeader title={
                               <Typography variant="h5">
@@ -123,7 +123,7 @@ const Payment = () => {
                   </Box>
          
 <Box>
-    <Container>
+    <Container maxWidth= "xl">
         <Card>
             <CardContent>
             <CardMedia src={invoiceOne} component="img" />
@@ -140,7 +140,7 @@ const Payment = () => {
     </Box>
        
 <Box>
-    <Container>
+    <Container maxWidth= "xl">
         <Card>
             <CardContent>
             <Typography variant="body1">
@@ -178,7 +178,7 @@ const Payment = () => {
     </Box>
 
        <Box>
-           <Container>
+           <Container maxWidth= "xl">
                <Card>
                    <CardContent>
                    <Typography variant="body1">
@@ -197,7 +197,7 @@ const Payment = () => {
         
 
         <Box>
-            <Container>
+            <Container maxWidth= "xl">
                 <Card>
                     <CardContent>
                     <Typography variant="body1">
@@ -245,7 +245,7 @@ const Payment = () => {
        
 
        <Box>
-           <Container>
+           <Container maxWidth= "xl">
                <Card>
                    <CardContent>
                    <Typography variant="body1">
@@ -279,7 +279,7 @@ const Payment = () => {
 
 
            <Box>
-           <Container>
+           <Container maxWidth= "xl">
                <Card>
                    <CardContent>
                    <Typography variant="body1">
@@ -302,7 +302,7 @@ const Payment = () => {
                </Box>
      
        <Box>
-           <Container>
+           <Container maxWidth= "xl">
                <Card>
                    <CardHeader title={
                         <Typography variant="h5">
@@ -325,7 +325,7 @@ const Payment = () => {
 
        
 <Box>
-    <Container>
+    <Container maxWidth= "xl">
         <Card>
             <CardHeader title={
                  <Typography variant="h5">
@@ -350,7 +350,7 @@ const Payment = () => {
             </Typography>
     </Box>
   <Box>
-  <Container>
+  <Container maxWidth= "xl">
     <Card>
         <CardContent>
         <Typography variant="body1">

@@ -77,7 +77,7 @@ const Scheduler = () => {
         <>
            <section>
                <Box>
-                   <Container>
+                   <Container maxWidth= "xl">
                        <Card>
                            <CardHeader  title={
                                  <Typography variant="h5">
@@ -107,7 +107,7 @@ const Scheduler = () => {
     
     
 <Box id= "schMeeting">
-    <Container>
+    <Container maxWidth= "xl">
         <Card>
             <CardContent>
             <Typography variant="body1">

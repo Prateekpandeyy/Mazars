@@ -8,7 +8,7 @@ const Feedback = () => {
         <>
           <section id= "feedback">
               <Box>
-                  <Container>
+                  <Container maxWidth= "xl">
                       <Card>
                           <CardHeader title={
   <Typography variant="h5">
@@ -28,7 +28,7 @@ const Feedback = () => {
                   </Box>
             
 <Box>
-    <Container>
+    <Container maxWidth= "xl">
         <Card>
             <CardContent>
             <Typography variant="body1">

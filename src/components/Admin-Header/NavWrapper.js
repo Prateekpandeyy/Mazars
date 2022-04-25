@@ -53,13 +53,13 @@ function NavWrapper(props) {
                 </ul>
               </li>
 
-              <li style={{zIndex: 99}}>
+              <li style={{zIndex: 99, margin: "auto"}}>
                 <h4 style={{display:"flex", margin: "0 0 5px 0"}}>{name == "customer" ? CommonServices.capitalizeFirstLetter("client") : CommonServices.capitalizeFirstLetter(name)}: {JSON.parse(email)} </h4>
               </li>
              
             </ul>
 
-            <ul className="nav navbar-nav float-right">
+            <ul className="nav navbar-nav float-right" style={{display: "flex", flexDirection: "row"}}>
 
               {name == "customer" && (
                 <CustomerNotification tokenKey={userId} name={name} />

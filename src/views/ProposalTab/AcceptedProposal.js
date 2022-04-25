@@ -219,14 +219,14 @@ function AcceptedProposal() {
             formatter: function (cell, row) {
                 return (
                     <>
-                        {row.statuscode === "6" ? null : (
-                            <div style={{ display: "flex", justifyContent: "space-between", width: "60px" }}>
-
-                                <div title="Send Message">
+                        {row.statuscode === "6" ? 
+                        <>
+                        <span className="ml-1" title="Send Message">
+                      
                                     <Link
                                         to={{
                                             pathname: `/customer/chatting/${row.q_id}&type=2`,
-                                            index: 2,
+                                            index: 0,
                                             routes: "proposal",
                                             obj: {
                                                 message_type: "3",
@@ -238,23 +238,65 @@ function AcceptedProposal() {
                                     >
                                        <MessageIcon />
                                     </Link>
-                                </div>
+                                    </span>
+                              <span onClick={() => ViewDiscussionToggel(row.assign_no)} className="ml-1">
+                              <ViewDiscussionIcon />
+                              </span>
 
-                                <div onClick={() => ViewDiscussionToggel(row.assign_no)}  className="ml-2">
-                                  <ViewDiscussionIcon />
-                                </div>
-                                <div  className="ml-2"  onClick={(e) => showProposalModal2(row.q_id)}>
-                
-                <EyeIcon />
-                
-              </div>
-                            </div>
-                        )}
+                               
+
+                        </> : (
+                            <>
+                               
+                               <span className="ml-1" title="Send Message">
+                                   <Link
+                                      to={{
+                                        pathname: `/customer/chatting/${row.q_id}&type=2`,
+                                        index: 0,
+                                        routes: "proposal",     
+                                            obj: {
+                                                message_type: "3",
+                                                query_No: row.assign_no,
+                                                query_id: row.q_id,
+                                                routes: `/customer/proposal`
+                                            }
+                                        }}
+                                    >
+                                        <MessageIcon />
+                                    </Link>
+                                   </span>
+                            
+
+                                   <span onClick={() => ViewDiscussionToggel(row.assign_no)} className="ml-1">
+                              <ViewDiscussionIcon />
+                              </span>
+
+                               
+                                    {
+                                        row.statuscode > 6 ?
+                                             <>
+                                 <span  onClick={(e) => showProposalModal2(row.q_id)} className="ml-1">
+                                            <EyeIcon  />
+                                           </span>
+                              
+                                </>
+                                            :
+                                            null
+                                    }
+
+                                   
+                               
+
+                            </>
+                        )
+                        }
                     </>
                 );
             },
         },
     ];
+
+
 
     return (
        

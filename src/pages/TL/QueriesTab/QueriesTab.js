@@ -139,7 +139,7 @@ function QueriesTab(props) {
               Inprogress; Queries ({incomplete})
             </Tab>
             <Tab style={tabIndex == 2 ? myStyle2 : myStyle1} className="tabHover">
-              Pending For Acceptence ({pendindForAccepttence})
+              Pending For Acceptance ({pendindForAccepttence})
             </Tab>
             <Tab style={tabIndex == 3 ? myStyle2 : myStyle1} className="tabHover">
             Inprogress Assignment to Tp ({complete})

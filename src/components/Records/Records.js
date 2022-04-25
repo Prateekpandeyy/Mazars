@@ -3,11 +3,10 @@ import React from 'react';
 function Records({records}) {
     return (
         <div className="row">
-            <div className="col-9">
-            </div>
-            <div className="col-3">
+           
+            <div className="col-12 ml-auto">
                 <div className="form-group">
-                    <label className="form-select form-control"
+                    <label className="form-select form-control w-25 ml-auto"
                     >Total Records : {records}</label>
                 </div>
             </div>

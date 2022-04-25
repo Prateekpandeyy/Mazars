@@ -52,7 +52,7 @@ const RegError = () => {
 return (
    <>
    <Box>
-       <Container>
+       <Container maxWidth= "xl">
            <Card>
                <CardContent>
                    <CardMedia  src={errorImg} component="img"/>
@@ -112,7 +112,7 @@ If the OTP entered is incorrect then Error message window will appear showing â€
 
 
  <Box>
-     <Container>
+     <Container maxWidth= "xl">
          <Card>
          <CardMedia component="img" src={loginError} />
              <CardHeader title={
@@ -131,7 +131,7 @@ Forgot Password: If the client forgets the Password, then click on â€œForgot Pas
                    </Typography>
      </Box>
 <Box>
-    <Container>
+    <Container maxWidth= "xl">
         <Card>
             <CardContent>
             <Typography variant="body1">
@@ -159,7 +159,7 @@ one upper case, lower case, special character and number along with the OTP
 
 
 <Box>
-    <Container>
+    <Container maxWidth= "xl">
         <Card>
             <CardMedia src={forgetFreshImg} component="img" />
             <CardContent>
@@ -178,7 +178,7 @@ successfully. Now login with the new password.
     </Box>
 
 <Box>
-    <Container>
+    <Container maxWidth= "xl">
         <Card>
             <CardContent>
             <Typography variant="body1">

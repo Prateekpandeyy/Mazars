@@ -291,47 +291,145 @@ function Unpaid() {
                 return oldDate.slice(0, 10).toString().split("-").reverse().join("-");
             },
         },
+        // {
+        //     text: "Action",
+        //     dataField: "",
+            
+        //     formatter: function (cell, row) {
+        //       return (
+        //         <>
+        //         {row.paid_status === "2" ?
+        //         <>
+        //      <div style={{display : "flex"}}>
+           
+        //                    <Link
+        //                           to={{
+        //                               pathname: `/customer/paydetails/${row.assign_id}`,
+        //                               index : 2,
+        //                               routes: "paymentstatus",
+        //                           }}
+        //                       >
+        //                                     <Payment />
+        //                 </Link>
+                      
+        //                 <span onClick={() => ViewDiscussionToggel(row.assign_no)}  className="ml-2">
+        //                                 <ViewDiscussionIcon />
+        //                               </span>
+                                    
+             
+        //        </div>   </>
+        //         :  <div style={{display : "flex"}}>
+              
+        //           {
+        //             row.paid_status == "0" ?
+                      
+        //                   <Link
+        //                           to={{
+        //                               pathname: `/customer/paydetails/${row.assign_id}`,
+        //                               index : 2,
+        //                               routes: "paymentstatus",
+        //                           }}
+        //                       >
+        //                                     <Payment />
+        //                 </Link>   
+        //               :
+        //               null
+        //           }
+      
+      
+               
+        //           {
+        //             row.paid_amount > 0 && row.paid_status > 0 ?
+        //                 <Link
+        //                           to={{
+        //                               pathname: `/customer/paydetails/${row.assign_id}`,
+        //                               index : 2,
+        //                               routes: "paymentstatus",
+        //                           }}
+        //                       >
+        //                                     <Payment />
+        //                 </Link>   
+                    
+        //               :
+        //               null
+        //           }
+              
+      
+      
+               
+        //           <Link className="ml-2"
+        //           to={{
+        //             pathname: `/customer/chatting/${row.assign_id}`,
+        //             index : 2,
+        //             routes: "paymentstatus",
+                   
+                    
+        //               obj: {
+        //                 message_type: "5",
+        //                 query_No: row.assign_no,
+        //                 query_id: row.assign_id,
+        //                 routes: `/customer/paymentstatus`
+        //               }
+        //             }}
+        //           >
+        //            <MessageIcon />
+        //           </Link>
+             
+        //         <span onClick={() => ViewDiscussionToggel(row.assign_no)}  className="ml-2">
+        //                                 <ViewDiscussionIcon />
+        //                               </span>
+                                    
+        //         </div>
+        //     }
+        //         </>
+        //       );
+        //     },
+        //   },
+        // ];
+      
         {
             text: "Action",
             dataField: "",
-            
+           
             formatter: function (cell, row) {
               return (
                 <>
                 {row.paid_status === "2" ?
                 <>
-             <div style={{display : "flex"}}>
            
-                           <Link
-                                  to={{
-                                      pathname: `/customer/paydetails/${row.assign_id}`,
-                                      index : 2,
-                                      routes: "paymentstatus",
-                                  }}
-                              >
-                                            <Payment />
-                        </Link>
+           
+           <Link
+                                   to={{
+                                       pathname: `/customer/paydetails/${row.assign_id}`,
+                                       index : 2,
+                                       routes: "paymentstatus",
+                                   }}
+                               >
+                                             <Payment />
+                         </Link>
                       
-                        <span onClick={() => ViewDiscussionToggel(row.assign_no)}  className="ml-2">
+                      
+                        <span onClick={() => ViewDiscussionToggel(row.assign_no)}  className="ml-1">
                                         <ViewDiscussionIcon />
                                       </span>
-                                    
-             
-               </div>   </>
-                :  <div style={{display : "flex"}}>
+                                      </>
+                :
+                  <>
               
                   {
                     row.paid_status == "0" ?
                       
-                          <Link
-                                  to={{
-                                      pathname: `/customer/paydetails/${row.assign_id}`,
-                                      index : 2,
-                                      routes: "paymentstatus",
-                                  }}
-                              >
-                                            <Payment />
-                        </Link>   
+                        
+           <Link
+           to={{
+               pathname: `/customer/paydetails/${row.assign_id}`,
+               index : 2,
+               routes: "paymentstatus",
+           }}
+       >
+                     <Payment />
+ </Link>
+
                       :
                       null
                   }
@@ -340,15 +438,17 @@ function Unpaid() {
                
                   {
                     row.paid_amount > 0 && row.paid_status > 0 ?
-                        <Link
-                                  to={{
-                                      pathname: `/customer/paydetails/${row.assign_id}`,
-                                      index : 2,
-                                      routes: "paymentstatus",
-                                  }}
-                              >
-                                            <Payment />
-                        </Link>   
+                         
+           <Link
+           to={{
+               pathname: `/customer/paydetails/${row.assign_id}`,
+               index : 2,
+               routes: "paymentstatus",
+           }}
+       >
+                     <Payment />
+ </Link>
+ 
                     
                       :
                       null
@@ -357,6 +457,7 @@ function Unpaid() {
       
       
                
+                 
                   <Link className="ml-2"
                   to={{
                     pathname: `/customer/chatting/${row.assign_id}`,
@@ -375,19 +476,17 @@ function Unpaid() {
                    <MessageIcon />
                   </Link>
              
-                <span onClick={() => ViewDiscussionToggel(row.assign_no)}  className="ml-2">
+                <span onClick={() => ViewDiscussionToggel(row.assign_no)}  className="ml-1">
                                         <ViewDiscussionIcon />
                                       </span>
                                     
-                </div>
+                </>
             }
                 </>
               );
             },
           },
         ];
-      
-
 
     return (
         <>

@@ -122,7 +122,7 @@ console.log("sessionStorage", window.sessionStorage)
   {sessionId ? 
   <Layout custDashboard="custDashboard" custUserId={userId}>
 
-  <Container>
+<Container maxWidth="xl">
  <Grid container>
 
   <Grid item sm = {3}>

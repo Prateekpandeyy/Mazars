@@ -176,21 +176,21 @@ html body a {
 }
 .messageIcon {
   color: #0071ce;
-  font-size: 16px;
+  font-size: 1rem;
   cursor: pointer;
 }
 .discussionMessage {
   color: orange;
-  font-size: 16px;
+  font-size: 1rem;
   cursor: pointer;
 }
 .discussProposal {
   color: #081f8f;
-  font-size: 16px;
+  font-size: 1rem;
   cursor: pointer;
 }
 .helpIcon {
-  font-size: 30px;
+  font-size: 2rem;
   cursor: pointer;
   float: right;
   color: rgb(56, 39, 49);
@@ -198,26 +198,26 @@ html body a {
 
 .viewDiscusion {
   color: #615339;
-  font-size: 16px;
+  font-size: 1rem;
   cursor: pointer;
 }
 .feedbackIcon {
   color: rgb(61, 71, 117) !important;
-  font-size: 16px;
+  font-size: 1rem;
   cursor: pointer;
 }
 .deleteIcon {
   color: orangered;
-  font-size: 16px;
+  font-size: 1rem;
   cursor: pointer;
 }
 .editQuery {
   color: #081f8f;
-  font-size: 16px;
+  font-size: 1rem;
   cursor: pointer;
 }
 .uploadIcon {
-  font-size: 16px;
+  font-size: 1rem;
   cursor: pointer;
 }
 .payment {

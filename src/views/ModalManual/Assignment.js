@@ -24,7 +24,7 @@ const Assignment = () => {
         <>
          <section id="assignment">
              <Box>
-             <Container>
+             <Container maxWidth= "xl">
             <Card>
                 <CardHeader title={
                     <Typography variant="h5">
@@ -49,7 +49,7 @@ const Assignment = () => {
                  </Box>
        
        <Box>
-       <Container>
+       <Container maxWidth= "xl">
             <Card>
                     <CardContent>
                         <Typography variant="body1">
@@ -72,7 +72,7 @@ const Assignment = () => {
            </Box>
         
         <Box>
-            <Container>
+            <Container maxWidth= "xl">
                 <Card>
                     <CardContent>
                     <table className="table table-bordered p-2">
@@ -134,7 +134,7 @@ const Assignment = () => {
 
 
 <Box>
-    <Container>
+    <Container maxWidth= "xl">
         <Card>
             <CardContent>
             <Typography variant="body1">
@@ -160,7 +160,7 @@ After clicking on
     </Box>
      
     <Box>
-        <Container>
+        <Container maxWidth= "xl">
             <Card>
                 <CardContent>
                 <Typography variant="body1">
@@ -183,7 +183,7 @@ After clicking on
        
         
        <Box>
-           <Container>
+           <Container maxWidth= "xl">
                <Card>
                    <CardContent>
                    <Typography variant="body1">
@@ -223,7 +223,7 @@ After clicking on
             </Typography>
            </Box>
         <Box>
-            <Container>
+            <Container maxWidth= "xl">
                 <Card>
                     <CardContent>
                     <Typography variant="body1">

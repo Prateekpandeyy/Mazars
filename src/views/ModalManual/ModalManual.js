@@ -19,7 +19,7 @@ const ModalManual = ()  => {
         
       <>
     
- <div style={{display: "flex", flexDirection : "column", width:"100%" , height: "600px", overflow: "scroll"}}>
+ <div style={{display: "flex", flexDirection : "column", maxWidth : "1920px",  width:"100%" , height: "600px", overflow: "scroll"}}>
  <Content />
  <Login />
 <Query />

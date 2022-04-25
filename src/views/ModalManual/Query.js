@@ -87,7 +87,7 @@ const Query = () => {
         <>
          <section id="query">
             <Box>
-            <Container>
+            <Container maxWidth= "xl">
                 <Card>
                    
                    
@@ -124,7 +124,7 @@ const Query = () => {
 
             
            <Box>
-           <Container>
+           <Container maxWidth= "xl">
                 <Card>
                     
                   
@@ -145,7 +145,7 @@ const Query = () => {
                </Box>
           <Box>
                   
-            <Container>
+            <Container maxWidth= "xl">
                 <Card>
                         <CardContent>
                         <Typography variant="body1">
@@ -170,7 +170,7 @@ const Query = () => {
          
             
           <Box>
-              <Container>
+              <Container maxWidth= "xl">
                   <Card>
 <CardContent>
 <Typography variant="h6">
@@ -195,7 +195,7 @@ const Query = () => {
            
 
            <Box>
-               <Container>
+               <Container maxWidth= "xl">
                    <Card>
                        <CardContent>
                        <Typography variant="h6">
@@ -293,7 +293,7 @@ const Query = () => {
 
 <Box>
 
-<Container>
+<Container maxWidth= "xl">
                 <Card>
                     <CardHeader 
                     title={
@@ -449,7 +449,7 @@ const Query = () => {
     </Typography>
     </Box>  
     <Box>
-        <Container>
+        <Container maxWidth= "xl">
             <Card>
                 <CardContent>
                 <Typography variant="body1">
@@ -472,7 +472,7 @@ const Query = () => {
            
 
          <Box>
-             <Container>
+             <Container maxWidth= "xl">
                  <Card>
                      <CardContent>
                      <Typography variant="body1">
@@ -556,7 +556,7 @@ const Query = () => {
 
            
            <Box>
-               <Container>
+               <Container maxWidth= "xl">
                    <Card>
                    
                     <CardContent>
@@ -598,7 +598,7 @@ const Query = () => {
                </Box> 
            
 <Box>
-    <Container>
+    <Container maxWidth= "xl">
         <Card>
             <CardContent>
             <CardMedia component="img" src={updateQuery} />
@@ -624,7 +624,7 @@ const Query = () => {
     </Box>
 
        <Box>
-           <Container>
+           <Container maxWidth= "xl">
                <Card>
                    <CardContent>
                    <Typography variant="body1">
@@ -700,7 +700,7 @@ const Query = () => {
            </Box>       
 
             <Box>
-                <Container>
+                <Container maxWidth= "xl">
                     <Card>
                         <CardContent>
                         <Typography variant="body1">
@@ -718,7 +718,7 @@ const Query = () => {
                 </Box>
            
          <Box>
-             <Container>
+             <Container maxWidth= "xl">
                  <Card>
                      <CardContent>
                      <Typography variant="body1">
@@ -748,7 +748,7 @@ const Query = () => {
              </Typography>
              </Box>  
          <Box>
-             <Container>
+             <Container maxWidth= "xl">
                  <Card>
                      <CardContent>
                      <Typography variant="body1">
@@ -771,7 +771,7 @@ const Query = () => {
 
 <Box>
 
-<Container>
+<Container maxWidth= "xl">
                 <Card>
                    
                   

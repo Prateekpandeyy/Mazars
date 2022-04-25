@@ -251,8 +251,10 @@ const rightAli = {
             formatter: function (cell, row) {
                 return (
                     <>
-                        {row.statuscode === "6" ? <div style={{display : "flex", justifyContent : "flex-start"}}>
-                        <div title="Send Message">
+                        {row.statuscode === "6" ? 
+                        <>
+                        <span className="ml-1" title="Send Message">
+                      
                                     <Link
                                         to={{
                                             pathname: `/customer/chatting/${row.q_id}&type=2`,
@@ -268,17 +270,18 @@ const rightAli = {
                                     >
                                        <MessageIcon />
                                     </Link>
-                                </div>
+                                    </span>
+                              <span onClick={() => ViewDiscussionToggel(row.assign_no)} className="ml-1">
+                              <ViewDiscussionIcon />
+                              </span>
 
-                                <div  onClick={() => ViewDiscussionToggel(row.assign_no)} className="ml-2">
-                                  
-                                  <ViewDiscussionIcon />
-                          </div>
-
-                        </div> : (
-                            <div style={{ display: "flex", justifyContent: "flex-start"}}>
                                
-                                    <Link
+
+                        </> : (
+                            <>
+                               
+                               <span className="ml-1" title="Send Message">
+                                   <Link
                                       to={{
                                         pathname: `/customer/chatting/${row.q_id}&type=2`,
                                         index: 0,
@@ -293,20 +296,20 @@ const rightAli = {
                                     >
                                         <MessageIcon />
                                     </Link>
+                                   </span>
                             
 
-                                <div  onClick={() => ViewDiscussionToggel(row.assign_no)} className="ml-2">
-                                  
-                                        <ViewDiscussionIcon />
-                                </div>
+                                   <span onClick={() => ViewDiscussionToggel(row.assign_no)} className="ml-1">
+                              <ViewDiscussionIcon />
+                              </span>
 
-                                <div>
+                               
                                     {
                                         row.statuscode > 6 ?
                                              <>
-                                 <div  onClick={(e) => showProposalModal2(row.q_id)} className="ml-2">
+                                 <span  onClick={(e) => showProposalModal2(row.q_id)} className="ml-1">
                                             <EyeIcon  />
-                                           </div>
+                                           </span>
                               
                                 </>
                                             :
@@ -316,7 +319,7 @@ const rightAli = {
                                     {
                                         row.statuscode == 4
                                             ?
-                                            <div className="ml-2">
+                                            <span className="ml-1">
         
                                                 <Link
                                       to={{
@@ -328,13 +331,13 @@ const rightAli = {
                                     >
                                            <DiscussProposal titleName ="Discussion on Proposal"/>
                                                 </Link>
-                                            </div>
+                                            </span>
                                             :
                                             null
                                     }
-                                </div>
+                               
 
-                            </div>
+                            </>
                         )
                         }
                     </>
@@ -363,7 +366,7 @@ const rightAli = {
               
                     <Records records={records} />
 
- <DataTablepopulated 
+                  <DataTablepopulated 
                    bgColor="#42566a"
                    keyField= {"assign_no"}
                    data={proposalDisplay}

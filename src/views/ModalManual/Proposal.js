@@ -78,7 +78,7 @@ const Proposal = () => {
         <>
          <section id="proposal">
              <Box>
-                 <Container>
+                 <Container maxWidth= "xl">
                      <Card>
                      <CardHeader title={
                     <Typography variant="h5" align="center">
@@ -113,7 +113,7 @@ const Proposal = () => {
                  
 
                  <Box>
-                     <Container>
+                     <Container maxWidth= "xl">
                          <Card>
                              <CardContent>
                              <Typography variant="body1">
@@ -214,7 +214,7 @@ const Proposal = () => {
                      </Box>
         
         <Box>
-            <Container>
+            <Container maxWidth= "xl">
                 <Card>
                     <CardContent>
                    
@@ -262,7 +262,7 @@ const Proposal = () => {
             </Box>
 
 <Box>
-    <Container>
+    <Container maxWidth= "xl">
         <Card>
             <CardContent>
             <Typography variant="body1">
@@ -281,7 +281,7 @@ the basis of terms and conditions mentioned in the proposal, the client can make
                      </Typography>
     </Box>
 <Box>
-    <Container>
+    <Container maxWidth= "xl">
         <Card>
            <CardContent>
            <Typography variant="body1">
@@ -306,7 +306,7 @@ the basis of terms and conditions mentioned in the proposal, the client can make
                      </Typography>
     </Box>
 <Box>
-    <Container>
+    <Container maxWidth= "xl">
         <Card>
             <CardContent>
             <table className="table table-bordered p-2">
@@ -347,7 +347,7 @@ the basis of terms and conditions mentioned in the proposal, the client can make
 
 
 <Box>
-    <Container>
+    <Container maxWidth= "xl">
         <Card>
             <CardContent>
             <Typography variant="body1">
@@ -370,7 +370,7 @@ the basis of terms and conditions mentioned in the proposal, the client can make
 
 
 <Box>
-    <Container>
+    <Container maxWidth= "xl">
         <Card>
             <CardContent>
             <Typography variant="body1">
@@ -391,7 +391,7 @@ the basis of terms and conditions mentioned in the proposal, the client can make
     </Typography>
     </Box>
 <Box>
-    <Container>
+    <Container maxWidth= "xl">
         <Card>
             <CardContent>
             <CardMedia src={restoredQueryView2} component="img" />
@@ -403,7 +403,7 @@ the basis of terms and conditions mentioned in the proposal, the client can make
     </Box>
 
 <Box>
-    <Container>
+    <Container maxWidth= "xl">
         <Card>
             <CardContent>
             <Typography variant="body1">

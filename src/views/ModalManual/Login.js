@@ -31,9 +31,10 @@ const Login = () => {
     const classes = useStyle()
     return(
         <>
+       
              <secton id="login">
            <Box id="onlyLogin">
-           <Container>
+           <Container maxWidth= "xl">
             <Card> 
            <CardHeader  title={
                <>
@@ -52,7 +53,7 @@ const Login = () => {
                 </Container>
               
               
-                <Container>
+                <Container maxWidth= "xl">
                 <Card>
                     <CardHeader  title={
                         <>
@@ -76,7 +77,7 @@ const Login = () => {
                    </Typography>
                </Box>
         <Box>
-        <Container>
+        <Container maxWidth= "xl">
                 <Card>
                     <CardHeader  title={
                         <>
@@ -213,7 +214,7 @@ const Login = () => {
         </Box>
        
         <Box>
-           <Container id="onlyLogin">
+           <Container maxWidth= "xl" id="onlyLogin">
             <Card> 
          
                    
@@ -253,7 +254,7 @@ If the OTP entered is incorrect then Error message window will appear showing â€
              </secton>
         
      
-        
+           
     </>
     )
 }

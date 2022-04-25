@@ -168,9 +168,9 @@ let history = useHistory()
     {sessionTlId ? 
     <Layout TLDashboard="TLDashboard" TLuserId={userid}>
 
-  <Container>
+  <Container maxWidth="xl">
   <Grid container>
-    <Grid item sm={3}>
+    <Grid item lg={3} md={6} sm={6} xs={12}>
       <Box m={1}>
         <Paper>
         <table className="table table-striped first main_table">
@@ -244,7 +244,7 @@ let history = useHistory()
  </Grid>
 
 
-<Grid item sm = {3}>
+<Grid item lg={3} md={6} sm={6} xs={12}>
 <Box m={1}>
   <Paper>
   <table className="table table-striped fifth main_table">
@@ -301,7 +301,7 @@ let history = useHistory()
 
   
 
-<Grid item sm = {3}>
+<Grid item lg={3} md={6} sm={6} xs={12}>
 <Box m={1}>
   <Paper>
   <table className="table table-striped ninth main_table">
@@ -370,7 +370,7 @@ let history = useHistory()
 </Grid>
   
 
-<Grid item sm = {3}>
+<Grid item lg={3} md={6} sm={6} xs={12}>
 <Box m={1}>
   <Paper>
   <table className="table table-striped twelvth main_table">

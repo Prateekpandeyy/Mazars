@@ -29,7 +29,7 @@ return(
     <>
 
 <div style={{display : "flex", height : "80vh", overflow : "scroll"}}>
-<Container>
+<Container maxWidth = "xl">
 <Login />
 <Query />
  <QueryProcessing />

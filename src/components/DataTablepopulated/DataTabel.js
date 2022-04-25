@@ -10,6 +10,8 @@ const DataTablepopulated = (props) => {
 const MyContainer = styled(Container)({
     display: 'flex',
     height : "65vh",
+    maxWidth: "1920px", 
+    width: "100%",
     overflowY : 'auto',
     "& thead": {
         position :"sticky",
@@ -23,13 +25,13 @@ const MyContainer = styled(Container)({
     }, 
     "& thead tr th" : {
      border : "0px",
-     fontSize : "12px",
-     padding: "10px 2px"
+     fontSize : "0.9rem",
+     padding: "5px"
     },
 
     "& tbody tr td" : {
-       
-        fontSize : "11px",
+       padding : "0.50rem",
+        fontSize : "0.77rem",
     }
    
  })

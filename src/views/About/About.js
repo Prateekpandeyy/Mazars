@@ -7,7 +7,7 @@ const About = () => {
     return (
         <Layout custDashboard="custDashboard" custUserId={userId}>
 
-            <Card>
+            <Card style={{margin: "10px"}}>
 
                 <CardHeader>
                     <h4 style={{ textAlign: "center" }} className="contentTitle">About Us</h4>

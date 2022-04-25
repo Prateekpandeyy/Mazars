@@ -55,7 +55,7 @@ const QueryProcessing = () => {
         <>
         <section id="queryProcessing">
        <Box>
-       <Container>
+       <Container maxWidth= "xl">
      
      <Card>
          <CardHeader title={
@@ -151,7 +151,7 @@ const QueryProcessing = () => {
       </Typography>
            </Box>
       <Box>
-          <Container>
+          <Container maxWidth= "xl">
               <Card>
                   <CardContent>
                   <Typography variant="body1">
@@ -180,7 +180,7 @@ const QueryProcessing = () => {
           </Typography>
           </Box>
 <Box>
-    <Container>
+    <Container maxWidth= "xl">
         <Card>
             <CardContent>
             <CardMedia src={customerQuery} component="img"/>
@@ -211,7 +211,7 @@ const QueryProcessing = () => {
     </Box>
 
     <Box>
-    <Container>
+    <Container maxWidth= "xl">
         <Card>
             <CardContent>
             <CardMedia src={customerQuery} component="img"/>

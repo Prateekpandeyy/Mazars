@@ -303,7 +303,7 @@ function Paid() {
           <>
           {row.paid_status === "2" ?
           <>
-       <div style={{display : "flex"}}>
+     
      
                      <Link
                             to={{
@@ -315,13 +315,12 @@ function Paid() {
                                       <Payment />
                   </Link>
                 
-                  <span onClick={() => ViewDiscussionToggel(row.assign_no)}  className="ml-2">
+                  <span onClick={() => ViewDiscussionToggel(row.assign_no)}  className="ml-1">
                                   <ViewDiscussionIcon />
                                 </span>
-                              
-       
-         </div>   </>
-          :  <div style={{display : "flex"}}>
+                                </>
+          :
+            <>
         
             {
               row.paid_status == "0" ?
@@ -378,11 +377,11 @@ function Paid() {
              <MessageIcon />
             </Link>
        
-          <span onClick={() => ViewDiscussionToggel(row.assign_no)}  className="ml-2">
+          <span onClick={() => ViewDiscussionToggel(row.assign_no)}  className="ml-1">
                                   <ViewDiscussionIcon />
                                 </span>
                               
-          </div>
+          </>
       }
           </>
         );
