@@ -164,6 +164,7 @@ function QueriesTab(props) {
           </TabPanel>
           <TabPanel>
             <CompleteData
+            updateTab={updateTab}
             />
           </TabPanel>
          

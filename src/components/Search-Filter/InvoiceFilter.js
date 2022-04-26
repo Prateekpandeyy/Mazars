@@ -106,7 +106,7 @@ const InvoiceFilter = (props) => {
       
         <form onSubmit={handleSubmit(onSubmit)}> 
            <div className="row">
-               <div className="col-md-3">
+               <div className="col-md-3 col-lg-4">
                <input   
             type = "text"
             name="query_no"

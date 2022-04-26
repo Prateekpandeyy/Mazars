@@ -19,7 +19,7 @@ import { useParams, useHistory } from "react-router-dom";
 import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
 import { ActionIcon} from "../../../components/Common/MessageIcon";
 
-function CompletedQuery() {
+function CompletedQuery({updateTab }) {
   const userid = window.localStorage.getItem("tlkey");
 const hist = useHistory();
   const [incompleteData, setInCompleteData] = useState([]);
@@ -265,8 +265,9 @@ Swal.fire({
           
            axios.get(`${baseUrl}/tl/workby?uid=${JSON.parse(userid)}&qid=${id}`).then((res) => {
                    if(res.data.code === 1){
-                     hist.push(`/teamleader/proposal`)
-                   
+                    //  hist.push(`/teamleader/proposal`)
+                    updateTab(3);
+                    getInCompleteAssingment()
                    }
                  })
         }

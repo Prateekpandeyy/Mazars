@@ -167,7 +167,7 @@ let history = useHistory()
   <>
   {sessionTpid ?
     <Layout TPDashboard="TPDashboard" TPuserId={userid}>
-<Container maxWidth="lg">
+<Container maxWidth="xl">
 
 <div className="row">
 

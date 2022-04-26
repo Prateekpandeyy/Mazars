@@ -10,6 +10,7 @@ import InvoiceFilter from "../../../components/Search-Filter/InvoiceFilter"
 import moment from "moment";
 import DescriptionOutlinedIcon from "@material-ui/icons/DescriptionOutlined";
 import FileCopyIcon from '@mui/icons-material/FileCopy';
+import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
 const Generated = () => {
     var rowStyle2 = {}
     const userid = window.localStorage.getItem("tpkey");
@@ -102,12 +103,9 @@ const Generated = () => {
             text: "Installment No",
             dataField: "installment_no",
             sort: true,
-            style: {
-                fontSize: "11px",
-                textAlign : "center"
-            },
+            
             headerStyle: () => {
-                return { fontSize: "11px" , width :"150px"};
+                return {  width :"50px"};
             },
         },
         {
@@ -118,7 +116,7 @@ const Generated = () => {
                 fontSize: "11px",
             },
             headerStyle: () => {
-                return { fontSize: "11px" , width : "150px"};
+                return { fwidth : "150px"};
             },
         },
         {
@@ -128,9 +126,7 @@ const Generated = () => {
             style: {
                 fontSize: "11px",
             },
-            headerStyle: () => {
-                return { fontSize: "11px" , width : "100px"};
-            },
+           
             formatter : function(cell, row){
                 let dueDate=row.due_date.split("-").reverse().join("-")
 
@@ -146,12 +142,7 @@ const Generated = () => {
             text: "Invoice amount",
             dataField: "invoice_amount",
             sort: true,
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
+            
             formatter: function nameFormatter(cell, row){
                 var nfObject = new Intl.NumberFormat('hi-IN')
                  var x = row.invoice_amount;
@@ -165,12 +156,7 @@ const Generated = () => {
             text: "Tds Deducted",
             dataField: "tds_amount",
             sort: true,
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
+          
             formatter: function nameFormatter(cell, row){
                 var nfObject = new Intl.NumberFormat('hi-IN')
                  var x = row.tds_amount;
@@ -188,12 +174,7 @@ const Generated = () => {
             text: "Status",
             dataField: "is_paid",
             sort: true,
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
+          
             formatter : function(cell, row) {
                 return(
                     <>
@@ -298,7 +279,7 @@ const Generated = () => {
                     </CardHeader>
 
                 <CardBody>
-                <div className="tableFixHead">
+                {/* <div className="tableFixHead">
                     <BootstrapTable
                         bootstrap4
                         keyField="id"
@@ -308,8 +289,13 @@ const Generated = () => {
                         rowStyle={ rowStyle2 }
                         classes="table-responsive"
                     />
-                    </div>
-
+                    </div> */}
+  <DataTablepopulated 
+                   bgColor="#42566a"
+                   keyField= {"assign_no"}
+                   data={proposal}
+                   columns={columns}>
+                    </DataTablepopulated>
                    
                   
                     <Tds 

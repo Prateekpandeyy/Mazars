@@ -22,8 +22,7 @@ import BootstrapTable from "react-bootstrap-table-next";
 import { baseUrl2, baseUrl3 } from "../../../config/config";
 import { useParams, Link, useHistory } from "react-router-dom";
 import styled from "styled-components";
-
-import { Typography } from "antd";
+import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
 
 const PayDetails = (props) => {
     let history = useHistory();
@@ -278,7 +277,7 @@ return(
           </Row>
         </CardHeader>
           <CardBody>
-          <div className="tableFixHead">
+          {/* <div className="tableFixHead">
   <BootstrapTable
   bootstrap4
   keyField="id"
@@ -286,7 +285,15 @@ return(
   columns={columns}
   classes="table-responsive"
 /> 
-</div>
+</div> */}
+<DataTablepopulated 
+                   bgColor="#42566a"
+                   keyField= {"assign_no"}
+                   data={paymentDetail}
+                   columns={columns}>
+                    </DataTablepopulated>
+                   
+                  
 </CardBody>
 </Card>}
 </Layout>                  

@@ -55,6 +55,8 @@ const Report = () => {
   const [proposalCheckbox, setProposalCheckbox] = useState(null)
   const [assignmentCheckbox, setAssignmentCheckbox] = useState(null)
   const [paymnetCheckbox, setPaymentCheckbox] = useState(null)
+  const [companyName, setCompanyName] = useState([])
+  const [companyName2, setCompanyName2] = useState([])
   var kk = []
   var pp = []
   var vv = []
@@ -95,12 +97,29 @@ const [item2, setItem2] = useState(current_date)
     };
     getSubCategory();
   }, [store]);
-
+  const getCompany = () => {
+    let company = []
+    let a = {}
+    axios.get(
+      `${baseUrl}/tl/getcompany`
+    )
+    .then((res) => {
+      console.log("response", res)
+      res.data.result.map((i) => {
+        a = {
+          value : i.company_prefix,
+          label : i.name
+        }
+        company.push(a)
+      })
+      setCompanyName(company)
+    })
+  }
   useEffect(() => {
     getTeamLeader();
     getData();
     getupdateQuery()
-
+getCompany()
   }, []);
   useEffect(() => {
 getupdateQuery()
@@ -231,7 +250,10 @@ const resetData = () => {
 }
     const onSubmit = (value) => {
      
-   
+   let comp = []
+   companyName2.map((i) => {
+     comp.push(i.value)
+   })
 
      let basic_info = false
      let proposal_info = false
@@ -321,6 +343,7 @@ const resetData = () => {
         formData.append("dos", Number(value.dos));
         formData.append("invoice_number", Number(value.invoice_number));
         formData.append("search_pay_amount", Number(value.search_pay_amount))
+        formData.append("company", comp)
    axios({
      method : "POST",
      url : `${baseUrl}/report/generateReport?t=${JSON.stringify(Math.floor(Math.random() * 110000))}`,
@@ -431,6 +454,7 @@ const resetData = () => {
       formData.append("dos", Number(value.dos));
       formData.append("invoice_number", Number(value.invoice_number));
       formData.append("search_pay_amount", Number(value.search_pay_amount))
+      formData.append("company", comp)
  axios({
    method : "POST",
    url : `${baseUrl}/report/generateReport?t=${JSON.stringify(Math.floor(Math.random() * 110000))}`,
@@ -587,6 +611,16 @@ setTaxId(i.value)
      }
     }
  
+    // const setCompany = (e) => {
+     
+    //   e.map((i) => {
+    //     console.log(i)
+    //     setCompanyName2((oldData) => {
+    //       return(i.label)
+    //     })
+    //   })
+
+    // }
     return (
         <>
           <Layout adminDashboard="adminDashboard" adminUserId={userid}>
@@ -747,6 +781,16 @@ options={qno} onChange={(e) => queryNumber(e)}/>
   </div>
  
 </div>
+<div className="col-md-3">
+  <div className="mb-3">
+  <label className="form-label">Query Number</label>
+  <Select isMulti = {true} ref={selectInputRef6}
+
+options={companyName} onChange={(e) => setCompanyName2(e)}/>
+
+  </div>
+ 
+</div>
    </div>
    <div className="row">
        <div className="col-md-12">
@@ -793,6 +837,11 @@ options={qno} onChange={(e) => queryNumber(e)}/>
 <input type="checkbox"  ref={register}name="tp_name" id="tp_name" checked disabled></input>
 <label htmlFor="tp_name">Name of Tax Professional</label>
 </span> 
+<span> 
+<input type="checkbox" ref={register} name="companyName" id="companyName" checked disabled></input>
+<label htmlFor="companyName">Company</label>
+
+</span>
                <span>
 <input type="checkbox" name="assessment" ref={register} checked={checkBox} id="assessment"></input>
 <label htmlFor="assessment">Assessment Year(s)</label>

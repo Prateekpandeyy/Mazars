@@ -679,7 +679,10 @@ useEffect(() => {
                     </div>
                     <p className="declined">{zipError}</p>
                   </div>
-
+<div className="col-md-6">
+  <div className="mb-3">
+    </div>
+  </div>
                   <div class="col-md-6">
                     <div className="mb-3">
                       <label className="form-label">Password<span className="declined">*</span></label>
@@ -783,7 +786,7 @@ useEffect(() => {
                       </div>
                       : null
                   }
-                  <div className="col-md-6">
+                  <div className="col-md-12">
                     <label>
                      Choose a password that should be minimum of eight characters,
 including at least one upper case, lower case, special character
