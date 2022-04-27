@@ -12,19 +12,18 @@ import { useForm } from "react-hook-form";
 import classNames from "classnames";
 import { useHistory, useParams } from 'react-router';
 import {
-  Card,
-  CardHeader,
-  CardBody,
-  CardTitle,
   Row,
   Col,
-  Table,
 } from "reactstrap";
-import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import { Markup } from 'interweave';
 import { Spinner } from 'reactstrap';
-import CustomQuillEditor from './CustomQuillEditor';
+import { Quill } from "react-quill-with-table";
+import QuillBetterTable from "quill-better-table";
+import "react-quill-with-table/dist/quill.snow.css";
+import "react-quill-with-table/dist/quill.bubble.css";
+
+Quill.register("modules/better-table", QuillBetterTable);
+
 const MyContainer = styled(Container)({
 
 })
@@ -51,27 +50,47 @@ const CmsContent = () => {
     useEffect(() => {
       getData()
     }, [])
+    useEffect(() => {
+      var snow = new Quill('#snow-container', {
+          theme: 'snow',
+          modules: {
+            table: true,
+          }
+        });
+  
+        const table = snow.getModule('table');
+        snow.on('text-change', function(delta, old, source) {
+          if (source === 'user') {
+         
+            updateOutput();
+          }
+        });
+        
+        function updateOutput() {
+          const snowContent = snow.getContents();
+        }    
+   }, [])
     const getData = (e) => {
      
-      // var quill = new Quill('#editor-container', {
-      //   modules: {
+      var quill = new Quill('#editor-container', {
+        modules: {
           
-      //       toolbar: [
-      //           [{ 'header': '1'}, {'header': '2'}, { 'font': [] }],
-      //           [{size: []}],
-      //           ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-      //           [{'list': 'ordered'}, {'list': 'bullet'}, 
-      //            {'indent': '-1'}, {'indent': '+1'}],
-      //           ['link', 'image', 'video'],
-      //           ['clean']
-      //         ],
+            toolbar: [
+                [{ 'header': '1'}, {'header': '2'}, { 'font': [] }],
+                [{size: []}],
+                ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+                [{'list': 'ordered'}, {'list': 'bullet'}, 
+                 {'indent': '-1'}, {'indent': '+1'}],
+                ['link', 'image', 'video'],
+                ['clean']
+              ],
               
-      //   },
+        },
         
-      //   placeholder: 'Compose an epic...',
-      //   theme: 'snow'  // or 'bubble'
-      // });
-     
+        placeholder: 'Compose an epic...',
+        theme: 'snow'  // or 'bubble'
+      });
+      quill.root.setAttribute('spellcheck', "true")
      if(getId.id !== undefined){
       axios.get(`${baseUrl}/cms/getallarticles?uid=${JSON.parse(userId)}&id=${getId.id}`)
       .then((res) => {
@@ -266,8 +285,14 @@ const getEditValue= (e) => {
              <div className="col-md-12">
              <label className="form-label">Content</label> </div>
              
-             <div className="col-md-12">
-             <CustomQuillEditor />
+             <div className="col-md-12" style={{display : "flex", flexDirection :"column"}}>
+             <div class="container">
+  <div class="panel">
+    <div id="snow-container"></div>
+   
+  </div>
+
+</div>
                  </div>
          </div>
          <div className="row">
@@ -288,7 +313,6 @@ const getEditValue= (e) => {
             <button className="customBtn my-2">Submit</button> } </div>
          </div>
          </form>
-       
       </MyContainer>
       </Layout>
     )

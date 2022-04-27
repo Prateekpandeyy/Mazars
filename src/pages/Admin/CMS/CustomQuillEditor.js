@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import ReactDOM from "react-dom";
-import ReactQuill, { Quill } from "react-quill-with-table";
+import { Quill } from "react-quill-with-table";
 import QuillBetterTable from "quill-better-table";
 import "react-quill-with-table/dist/quill.snow.css";
 import "react-quill-with-table/dist/quill.bubble.css";
