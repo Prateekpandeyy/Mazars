@@ -24,6 +24,7 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { Markup } from 'interweave';
 import { Spinner } from 'reactstrap';
+import CustomQuillEditor from './CustomQuillEditor';
 const MyContainer = styled(Container)({
 
 })
@@ -52,25 +53,25 @@ const CmsContent = () => {
     }, [])
     const getData = (e) => {
      
-      var quill = new Quill('#editor-container', {
-        modules: {
+      // var quill = new Quill('#editor-container', {
+      //   modules: {
           
-            toolbar: [
-                [{ 'header': '1'}, {'header': '2'}, { 'font': [] }],
-                [{size: []}],
-                ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-                [{'list': 'ordered'}, {'list': 'bullet'}, 
-                 {'indent': '-1'}, {'indent': '+1'}],
-                ['link', 'image', 'video'],
-                ['clean']
-              ],
+      //       toolbar: [
+      //           [{ 'header': '1'}, {'header': '2'}, { 'font': [] }],
+      //           [{size: []}],
+      //           ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+      //           [{'list': 'ordered'}, {'list': 'bullet'}, 
+      //            {'indent': '-1'}, {'indent': '+1'}],
+      //           ['link', 'image', 'video'],
+      //           ['clean']
+      //         ],
               
-        },
+      //   },
         
-        placeholder: 'Compose an epic...',
-        theme: 'snow'  // or 'bubble'
-      });
-      quill.root.setAttribute('spellcheck', "true")
+      //   placeholder: 'Compose an epic...',
+      //   theme: 'snow'  // or 'bubble'
+      // });
+     
      if(getId.id !== undefined){
       axios.get(`${baseUrl}/cms/getallarticles?uid=${JSON.parse(userId)}&id=${getId.id}`)
       .then((res) => {
@@ -265,9 +266,8 @@ const getEditValue= (e) => {
              <div className="col-md-12">
              <label className="form-label">Content</label> </div>
              
-             <div className="col-md-12" style={{display : "flex", flexDirection :"column"}}>
-             <div id="editor-container"
-            ></div>
+             <div className="col-md-12">
+             <CustomQuillEditor />
                  </div>
          </div>
          <div className="row">
@@ -288,6 +288,7 @@ const getEditValue= (e) => {
             <button className="customBtn my-2">Submit</button> } </div>
          </div>
          </form>
+       
       </MyContainer>
       </Layout>
     )
