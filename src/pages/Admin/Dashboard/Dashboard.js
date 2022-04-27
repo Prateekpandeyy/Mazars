@@ -164,7 +164,7 @@ let history = useHistory()
       adminsessionId ?
       <Layout adminDashboard="adminDashboard" adminUserId={userId}>
 
-<Container>
+<Container maxWidth="xl">
 <div className="row">
         <div className="col-md-3 content_header">
           <table className="table table-striped first main_table mb-1">

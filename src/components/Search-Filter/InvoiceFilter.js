@@ -103,19 +103,19 @@ const InvoiceFilter = (props) => {
   }
     return(
        <>
-      
-        <form onSubmit={handleSubmit(onSubmit)}> 
-           <div className="row">
-               <div className="col-md-3 col-lg-4">
-               <input   
+         <form onSubmit={handleSubmit(onSubmit)}> 
+         <div className="row">
+           <div className="col-md-12">
+           <input   
             type = "text"
             name="query_no"
             ref={register}
             placeholder="Enter Query Number" 
             className="form-control"/>
-                   </div>
-                   <div className="col-md-2">
-                  <select
+             </div>
+
+             <div className="col-md-12">
+             <select
                    ref={register}
                     className="form-select form-control"
                     style={{ height: "33px" }}
@@ -128,12 +128,13 @@ const InvoiceFilter = (props) => {
                      <option value="4">4th installment</option>
                     
                   </select>
-                       </div>
-                  <div className="col-md-7">
-                  <div className="form-inline">
-             
+               </div>
 
-             <div className="form-group mx-sm-1  mb-2">
+
+               <div className="col-md-6 col-lg-3">
+
+            <div className="row">
+            <div className="form-group mx-sm-1  mb-2">
                <label className="form-select form-control">From</label>
              </div>
 
@@ -146,8 +147,12 @@ const InvoiceFilter = (props) => {
                
                />
              </div>
+              </div>
+                 </div>
 
-             <div className="form-group mx-sm-1  mb-2">
+                 <div className="col-md-6 col-lg-3">
+                   <div className="row">
+                   <div className="form-group mx-sm-1  mb-2">
                <label className="form-select form-control">To</label>
              </div>
 
@@ -161,42 +166,34 @@ const InvoiceFilter = (props) => {
                
                />
              </div>
-</div>
-                    </div>    
-                        
-                
-                      
-           </div>
-          <div className="mt-3">
-        
-           <div className="form-group mx-sm-1  mb-2">
+                     </div>
+                   </div>
+         </div>
+         
          <div className="row">
-      {props.invoice =="tpcreate" || props.invoice == "admincreate" || props.invoice == "create" ? "" :
-        <div className="col-md-2">
+           <div className="col-md-6 col-lg-3">
+           {props.invoice =="tpcreate" || props.invoice == "admincreate" || props.invoice == "create" ? "" :
+       
         <select name="opt" className="form-select form-control" ref={register}  style={{ height: "33px" }}>
         <option value="">Select </option>
            <option value="0">Unpaid</option>
            <option value="1">Paid</option>
            <option value="2">Declined</option>
            </select>
-          </div> }
-           <div className="col-md-3">
-         
-          <button className="customBtn" type="submit"  style={{ height: "33px" }}>Search</button>
+           }
+             </div>
+             <div className="col-md-6 col-lg-3">
+             <button className="customBtn" type="submit"  style={{ height: "33px" }}>Search</button>
            <button className="customBtn mx-2" onClick={() => resetData()}  style={{ height: "33px" }}>Reset</button>
-            </div>
-        
-                 <div className="col-md-4">
-                 <span style={{display : "flex"}}>
+               </div>
+               <div className="col-md-6 col-lg-3">
+               <span style={{display : "flex"}}>
                  <label className="form-select form-control"
                   >Total Records : {props.records}</label>
                  </span>
-                   </div>
-           </div>
-                </div>
-          </div>
-         
-        </form>
+                 </div>
+         </div>
+         </form>
        </>
     )
 
