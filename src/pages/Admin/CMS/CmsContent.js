@@ -48,24 +48,24 @@ const CmsContent = () => {
     }, [])
     const getData = (e) => {
      
-      var quill = new Quill('#editor-container', {
-        modules: {
+      // var quill = new Quill('#editor-container', {
+      //   modules: {
           
-            toolbar: [
-                [{ 'header': '1'}, {'header': '2'}, { 'font': [] }],
-                [{size: []}],
-                ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-                [{'list': 'ordered'}, {'list': 'bullet'}, 
-                 {'indent': '-1'}, {'indent': '+1'}],
-                ['link', 'image', 'video'],
-                ['clean']
-              ],
+      //       toolbar: [
+      //           [{ 'header': '1'}, {'header': '2'}, { 'font': [] }],
+      //           [{size: []}],
+      //           ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+      //           [{'list': 'ordered'}, {'list': 'bullet'}, 
+      //            {'indent': '-1'}, {'indent': '+1'}],
+      //           ['link', 'image', 'video'],
+      //           ['clean']
+      //         ],
               
-        },
+      //   },
         
-        placeholder: 'Compose an epic...',
-        theme: 'snow'  // or 'bubble'
-      });
+      //   placeholder: 'Compose an epic...',
+      //   theme: 'snow'  // or 'bubble'
+      // });
      
      if(getId.id !== undefined){
       axios.get(`${baseUrl}/cms/getallarticles?uid=${JSON.parse(userId)}&id=${getId.id}`)
@@ -262,7 +262,8 @@ const getEditValue= (e) => {
              <label className="form-label">Content</label> </div>
              
              <div className="col-md-12" style={{display : "flex", flexDirection :"column"}}>
-           <CustomQuillEditor />
+           <CustomQuillEditor 
+ content={det} />
                  </div>
          </div>
          <div className="row">
