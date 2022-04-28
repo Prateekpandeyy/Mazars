@@ -781,16 +781,7 @@ options={qno} onChange={(e) => queryNumber(e)}/>
   </div>
  
 </div>
-<div className="col-md-3">
-  <div className="mb-3">
-  <label className="form-label">Query Number</label>
-  <Select isMulti = {true} ref={selectInputRef6}
 
-options={companyName} onChange={(e) => setCompanyName2(e)}/>
-
-  </div>
- 
-</div>
    </div>
    <div className="row">
        <div className="col-md-12">
@@ -837,11 +828,7 @@ options={companyName} onChange={(e) => setCompanyName2(e)}/>
 <input type="checkbox"  ref={register}name="tp_name" id="tp_name" checked disabled></input>
 <label htmlFor="tp_name">Name of Tax Professional</label>
 </span> 
-<span> 
-<input type="checkbox" ref={register} name="companyName" id="companyName" checked disabled></input>
-<label htmlFor="companyName">Company</label>
 
-</span>
                <span>
 <input type="checkbox" name="assessment" ref={register} checked={checkBox} id="assessment"></input>
 <label htmlFor="assessment">Assessment Year(s)</label>
@@ -990,8 +977,38 @@ options={companyName} onChange={(e) => setCompanyName2(e)}/>
 <input type="checkbox" ref={register}  name="search_pay_amount" id="search_pay_amount"></input>
 <label htmlFor="search_pay_amount">Payment Received Record Only</label>
 </span> 
+
+<span>
+ 
+  <Select isMulti = {true} ref={selectInputRef6}
+options={companyName} onChange={(e) => setCompanyName2(e)}/>
+</span>
+{/* 
+<span>
+  <Select 
+   styles={{
+    option: (styles, { data }) => {
+      return {
+        ...styles,
+      backgroundColor : "#fff"
+      };
+    },
+    multiValueLabel: (styles, { data }) => ({
+      ...styles,
+      color: data.value == 2
+        ? "green"
+        : "blue"
+    }),
+  }} />
+</span> */}
                </div>
             <div className="basicFeild">
+
+            <span> 
+<input type="checkbox" ref={register} name="companyName" id="companyName" checked disabled></input>
+<label htmlFor="companyName">Invoicing company</label>
+
+</span>
             <span>
 <input type="checkbox" ref={register} checked={paymnetCheckbox} name="invoice_number" id="invoice_number"></input>
 <label htmlFor="invoice_number">Invoice Number</label>
