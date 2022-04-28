@@ -20,6 +20,7 @@ import {
 import 'react-quill/dist/quill.snow.css';
 import { Spinner } from 'reactstrap';
 import CustomQuillEditor from './CustomQuillEditor';
+import { Markup } from 'interweave';
 const MyContainer = styled(Container)({
 
 })
@@ -78,6 +79,8 @@ const CmsContent = () => {
          setHeading(i.heading)
          setWriter(i.writer)
          setDate(i.publish_date);
+         let a = myFun(i.content)
+         console.log("aaaa", a)
         addDet(i.content) 
         setEmail(i.email)
         
@@ -94,6 +97,12 @@ const CmsContent = () => {
      }
     }
    
+    const myFun = (a) => {
+      console.log("valu22", a)
+      return(
+        <Markup content={a} />
+      )
+    }
    const getToPage = (e) => {
        setTopage(e)
    }
