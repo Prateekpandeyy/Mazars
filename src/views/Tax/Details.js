@@ -134,8 +134,9 @@ const Details = () => {
          
             
              </div>
-     
+     <div id="artContent">
     <Markup content={i.content} />
+    </div>
     <a href={`${baseUrl3}/${i.file}`} target="_blank" 
     className={classes.myLink}>
 

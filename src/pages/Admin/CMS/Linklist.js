@@ -130,7 +130,7 @@ else{
 return (
     <Layout adminDashboard="adminDashboard" adminUserId={userId}>
 
-<Container maxWidth="xl">
+<MyContainer>
 <div className="headingContent">
         <h4>Important Links </h4>
         <button 
@@ -153,7 +153,7 @@ return (
         </CardBody>
         </Card>
    
-    </Container>
+    </MyContainer>
 </Layout>
   );
 }

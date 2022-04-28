@@ -12,6 +12,7 @@ import { baseUrl } from '../../../config/config';
 import DataTablepopulated from '../../../components/DataTablepopulated/DataTabel';
 import  {DeleteIcon, EditQuery,} from "../../../components/Common/MessageIcon";
 import { Link } from 'react-router-dom';
+import myImg from './companyImg.jpeg';
 import Swal from 'sweetalert2';
 const MyContainer = styled(Container)({
 
@@ -214,7 +215,7 @@ return (
                     </DataTablepopulated>
         </CardBody>
         </Card>
-   
+   <a href={`${myImg}`}>Click to imag</a>
     </Container>
 </Layout>
   );
