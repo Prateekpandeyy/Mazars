@@ -16,6 +16,15 @@ function CustomQuillEditor() {
         theme: 'snow',
         modules: {
           table: true,
+          toolbar: [
+            [{ 'header': '1'}, {'header': '2'}, { 'font': [] }],
+            [{size: []}],
+            ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+            [{'list': 'ordered'}, {'list': 'bullet'}, 
+             {'indent': '-1'}, {'indent': '+1'}],
+            ['link', 'image', 'video'],
+            ['clean']
+          ],
         }
       });
 
@@ -33,7 +42,7 @@ function CustomQuillEditor() {
  }, [])
   return (
    <>
- <div class="container">
+ <div class="container" style={{padding: "0px"}}>
   <div class="panel">
     <div id="snow-container"></div>
    

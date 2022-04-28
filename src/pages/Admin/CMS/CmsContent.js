@@ -101,7 +101,7 @@ const CmsContent = () => {
      let message = "Content created successfully"
 console.log("det", det)
   setLoading(true)
-  var myEditor = document.querySelector('#editor-container')
+  var myEditor = document.querySelector('#snow-container')
 var html = myEditor.children[0].innerHTML;
 addDet(html)
       console.log("html", html)  

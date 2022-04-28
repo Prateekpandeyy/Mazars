@@ -44,7 +44,7 @@ const Updates = () =>{
 return (
     <Layout adminDashboard="adminDashboard" adminUserId={userId}>
 
-<MyContainer>
+<Container maxWidth="xl">
 <div className="headingContent">
         <h4>FAQs </h4>
         <Link to={`/cms/faq`}>
@@ -60,7 +60,7 @@ return (
                     <GirdExamplefaq />
           </CardBody>
           </Card>
-    </MyContainer>
+    </Container>
 </Layout>
   );
 }
