@@ -170,7 +170,7 @@ else{
   
     <Layout adminDashboard="adminDashboard" adminUserId={userId}>
 
-    <MyContainer>
+    <Container maxWidth = "xl">
          
         
     <div className="headingContent">
@@ -195,7 +195,7 @@ else{
             </CardBody>
             </Card>
        
-        </MyContainer>
+        </Container>
         {
           play === true ?
                 

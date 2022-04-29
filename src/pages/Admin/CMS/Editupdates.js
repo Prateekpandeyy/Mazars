@@ -20,11 +20,11 @@ import {
     Col,
     Table,
   } from "reactstrap";
-  import AddEditor from './AddEditor';
+  import CustomQuillEditor from './CustomQuillEditor';
 const MyContainer = styled(Container)({
 
 })
-const UpdatesContent = () => {
+const Editupdates = () => {
     const userId = localStorage.getItem("adminkey")
     const { handleSubmit, register, errors, getValues } = useForm();
     const [pages, getPages] = useState([])
@@ -155,7 +155,8 @@ const UpdatesContent = () => {
              <label className="form-label">Content</label> </div>
              
              <div className="col-md-12">
-             <AddEditor />
+             <CustomQuillEditor 
+ content={det} />
                  </div>
          </div>
          <div className="row">
@@ -176,4 +177,4 @@ const UpdatesContent = () => {
       </Layout>
     )
 }
-export default UpdatesContent;
+export default Editupdates;

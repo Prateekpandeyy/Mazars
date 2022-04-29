@@ -193,7 +193,7 @@ const FlashMessage = () => {
 ]
     return (
       <Layout adminDashboard="adminDashboard" adminUserId={userId}>
-        <MyContainer>
+        <Container maxWidth = "xl">
      
       <div className="headingContent">
         <h4>Flash Updates </h4>
@@ -219,7 +219,7 @@ const FlashMessage = () => {
        getList = {getList}
        isEdit={isEdit}
        setMessageBox={setMessageBox} />
-      </MyContainer>
+      </Container>
       </Layout>
     )
    

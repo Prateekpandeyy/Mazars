@@ -22,6 +22,7 @@ import {
   } from "reactstrap";
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import AddEditor from './AddEditor';
 const MyContainer = styled(Container)({
 
 })
@@ -84,7 +85,7 @@ const Faq = () => {
  
     return(
         <Layout adminDashboard="adminDashboard" adminUserId={userId}>
-        <MyContainer>
+        <Container maxWidth="xl">
         <div className="py-2">
       <Row>
           <Col md="4">
@@ -121,23 +122,7 @@ const Faq = () => {
                <label className="form-label">Answer</label> </div>
                
                <div className="col-md-12">
-               <CKEditor
-             id="test"
-                     editor={ ClassicEditor }
-                    
-                    data={det}
-                    rows="10"
-                    name="p_fact"
-                
-                    onChange={ ( event, editor ) => {
-                      addDet(editor.getData());
-                     
-
-                    
-                  } }
-           
-                ></CKEditor>
-               
+               <AddEditor />
                    </div>
            </div>
            <div className="row">
@@ -154,7 +139,7 @@ const Faq = () => {
               <button className="customBtn my-2">Submit</button> </div>
            </div>
            </form>
-        </MyContainer>
+        </Container>
         </Layout>
     )
 }

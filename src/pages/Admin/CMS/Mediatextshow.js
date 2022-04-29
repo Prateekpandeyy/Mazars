@@ -20,9 +20,9 @@ import {
     Col,
     Table,
   } from "reactstrap";
-const MyContainer = styled(Container)({
+  import AddEditor from './AddEditor';
+import CustomQuillEditor from './CustomQuillEditor';
 
-})
 const Mediatextshow = () => {
     const userId = localStorage.getItem("adminkey")
     const { handleSubmit, register, errors, getValues } = useForm();
@@ -96,7 +96,7 @@ const Mediatextshow = () => {
 }
     return(
         <Layout adminDashboard="adminDashboard" adminUserId={userId}>
-      <MyContainer>
+      <Container maxWidth="xl">
       <div className="py-2">
       <Row>
           <Col md="4">
@@ -156,7 +156,7 @@ const Mediatextshow = () => {
              <label className="form-label">Content</label> </div>
              
              <div className="col-md-12">
-             <CKEditor
+             {/* <CKEditor
              id="test"
                      editor={ ClassicEditor }
                     
@@ -171,7 +171,12 @@ const Mediatextshow = () => {
                     
                   } }
            
-                ></CKEditor>
+                ></CKEditor> */}
+                 {
+                   getId.id ? 
+                   <CustomQuillEditor 
+ content={det} />   :  <AddEditor />
+               }
                  </div>
          </div>
          <div className="row">
@@ -188,7 +193,7 @@ const Mediatextshow = () => {
             <button className="customBtn my-2">Submit</button> </div>
          </div>
          </form>
-      </MyContainer>
+      </Container>
       </Layout>
     )
 }

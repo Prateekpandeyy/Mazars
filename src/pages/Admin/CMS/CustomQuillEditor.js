@@ -65,27 +65,15 @@ function CustomQuillEditor(props) {
   return (
    <>
 
- {
-   props.content ?
-   <div class="container" style={{padding: "0px"}}>
-   <div class="panel">
-     <div id="snow-container">
-      <Markup content={props.content} />
-     </div>
-   
-   </div>
- 
- </div>  : 
-   <div class="container" style={{padding: "0px"}}>
-   <div class="panel">
-     <div id="snow-container">
-   
-     </div>
-   
-   </div>
- 
- </div> 
- }
+   <div class="container" style={{padding: "0px", maxWidth: "1920px"}}>
+  <div class="panel">
+    <div id="snow-container">
+     <Markup content={props.content} />
+    </div>
+  
+  </div>
+
+</div> 
    </>
   
   

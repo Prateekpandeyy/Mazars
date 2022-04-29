@@ -162,7 +162,7 @@ return(
     
       <Layout adminDashboard="adminDashboard" adminUserId={userId}>
 
-      <MyContainer>
+      <Container maxWidth = "xl">
            
           
       <div className="headingContent">
@@ -184,7 +184,7 @@ return(
               </CardBody>
               </Card>
          
-          </MyContainer>
+          </Container>
       </Layout>
     )
 }

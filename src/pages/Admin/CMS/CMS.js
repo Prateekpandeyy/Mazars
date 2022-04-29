@@ -202,7 +202,7 @@ return (
         <button 
     
     className="autoWidthBtn rightAlign my-2" onClick={(e) => {
-      history.push("/cms/articles")
+      history.push("/cms/addarticles")
     }}>New Article</button> 
         </div>
     <Card>
@@ -215,7 +215,7 @@ return (
                     </DataTablepopulated>
         </CardBody>
         </Card>
-   <a href={`${myImg}`}>Click to imag</a>
+   {/* <a href={`${myImg}`}>Click to imag</a> */}
     </Container>
 </Layout>
   );

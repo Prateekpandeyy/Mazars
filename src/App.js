@@ -180,6 +180,8 @@ import GroupVideo from "./views/Tax/GroupVideo";
 import EditFaq from "./pages/Admin/CMS/EditFaq";
 import VideoMedia from "./pages/Admin/CMS/VideoMedia";
 import MediaText from "./pages/Admin/CMS/MediaText";
+import AddCmsContent from "./pages/Admin/CMS/AddCmsContent";
+import Editupdates from "./pages/Admin/CMS/Editupdates";
 
 // import PayDetails from "./views/PaymentStatus/PayDetails";
 
@@ -367,7 +369,7 @@ function App() {
             <PrivateRouteAdmin exact path = "/cms/updates" component = {AdminUpdates} />
             <PrivateRouteAdmin exact path = "/cms/articlesedit/:id" component = {CmsContent} />
             <PrivateRouteAdmin exact path = "/cms/updatecontent" component = {UpdatesContent} />
-            <PrivateRouteAdmin exact path = "/cms/editupdates/:id" component = {UpdatesContent} />
+            <PrivateRouteAdmin exact path = "/cms/editupdates/:id" component = {Editupdates} />
             <PrivateRouteAdmin exact path = "/cms/links" component = {Links} />
             <PrivateRouteAdmin exact path = "/cms/linksedit/:id" component = {Links} />
             <PrivateRouteAdmin exact path = "/cms/linklist" component = {Linklist} />
@@ -388,6 +390,7 @@ function App() {
             <PrivateRouteAdmin exact path = "/cms/editvideo/:id" component = {EditVideo} />
              <PrivateRouteAdmin exact path = "/cms/editfaq/:id" component = {EditFaq} />
              <PrivateRouteAdmin exact path = "/cms/videolist" component = {VideoMedia} />
+             <PrivateRouteAdmin exact path = "/cms/addarticles" component = {AddCmsContent} />
              <PrivateRouteAdmin exact path = "/cms/contentlist" component = {MediaText} />
              <PrivateRouteAdmin exaxt path = "/cms/imagelist" component = {MediaContent} />
             <Route exact path="/*" component={PageNotFound} />

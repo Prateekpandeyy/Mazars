@@ -19,6 +19,8 @@ import {
 } from "reactstrap";
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import AddEditor from './AddEditor';
+import CustomQuillEditor from './CustomQuillEditor';
 const MyContainer = styled(Container)({
 
 })
@@ -102,7 +104,7 @@ const FlashContent = () => {
     return (
         <Layout adminDashboard="adminDashboard" adminUserId={userId}>
           
-          <MyContainer>
+          <Container maxWidth = "xl">
       <div className="py-2">
       <Row>
           <Col md="4">
@@ -136,7 +138,7 @@ const FlashContent = () => {
     </div>
 <div className="col-md-12">
     <label>Content</label>
-    <CKEditor
+    {/* <CKEditor
              id="test"
                      editor={ ClassicEditor }
                     
@@ -151,7 +153,12 @@ const FlashContent = () => {
                     
                   } }
            
-                ></CKEditor>
+                ></CKEditor> */}
+               {
+                   getId.id ? 
+                   <CustomQuillEditor 
+ content={det} />   :  <AddEditor />
+               }
     </div>
     <div className="col-md-3">
  
@@ -166,7 +173,7 @@ const FlashContent = () => {
 </div>
 
 </form>
-      </MyContainer>
+      </Container>
         </Layout>
     )
 }
