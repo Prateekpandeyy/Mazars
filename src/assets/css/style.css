@@ -605,7 +605,10 @@ input[type="date"] {
   /* Solution 2 */
   /* min-width: 96%; */
 }
-
+.proposalModal {
+  display: flex !important;
+  height: 100% !important;
+}
 @media (max-width: 767px) {
   footer {
     position: relative !important;

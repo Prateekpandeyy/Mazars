@@ -8,7 +8,8 @@ const ShowProposal = ({setViewProposal, viewProposalModal, showProposalModal2 , 
        
         <>
        
-          <Modal isOpen={viewProposalModal} toggle={showProposalModal2} size="lg" scrollable={true} style={{ height: "100%" }} >
+          <Modal isOpen={viewProposalModal} toggle={showProposalModal2}
+           size="lg" scrollable={true} className="proposalModal">
             <ModalHeader toggle={showProposalModal2}>
 <Typography variant="h6">
 View Proposal

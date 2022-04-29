@@ -204,7 +204,7 @@ const rightAli = {
             },
         },
         {
-            text: "Proposed Amout",
+            text: "Proposed Amount",
             dataField: "ProposedAmount",
             sort: true,
           

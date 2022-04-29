@@ -140,7 +140,7 @@ const Invoice = () => {
                 return a - b; // desc
               },
             formatter: function nameFormatter(cell, row){
-                var nfObject = new Intl.NumberFormat('hi-IN')
+                var nfObject = new Intl.NumberFormat('en-IN')
                  var x = row.paid_amount;
                 
                  return(
