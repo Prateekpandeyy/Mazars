@@ -124,10 +124,13 @@ function AllQuery() {
             formatter: function dateFormat(cell, row) {
                 
                 var oldDate = row.Exp_Delivery_Date;
-                if (oldDate == null) {
+                console.log("ol", oldDate)
+                if (oldDate == "0000-00-00") {
                     return null;
                 }
+               else{
                 return oldDate.toString().split("-").reverse().join("-");
+               }
             },
         },
         {

@@ -25,7 +25,7 @@ function History({ history, toggle,modal, bgColor }) {
   }
   return (
     <div>
-      <Modal isOpen={modal} fade={false} toggle={toggle} size="md">
+      <Modal isOpen={modal} fade={false} toggle={toggle} size="lg">
         <ModalHeader toggle={toggle}>History</ModalHeader>
         <ModalBody>
           <table class="table table-bordered">

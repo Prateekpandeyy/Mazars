@@ -110,6 +110,23 @@ function AllQueriesData({allData}) {
       
     },
     {
+      text: "Delivery Due Date   / Acutal Delivery Date",
+      dataField: "Exp_Delivery_Date",
+      sort: true,
+    
+      formatter: function dateFormat(cell, row) {
+          
+          var oldDate = row.Exp_Delivery_Date;
+          console.log("ol", oldDate)
+          if (oldDate == "0000-00-00") {
+              return null;
+          }
+         else{
+          return oldDate.toString().split("-").reverse().join("-");
+         }
+      },
+  },
+    {
       text: "Status",
       
       formatter: function nameFormatter(cell, row) {

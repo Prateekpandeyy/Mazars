@@ -21,13 +21,19 @@ const Cms = () =>{
   const [list, setList] = useState([])
   const [check, setCheck] = useState(false)
     const userId = window.localStorage.getItem("adminkey");
+    const token = localStorage.getItem("token")
+    const myConfig = {
+      headers : {
+       "token" : token
+      }
+    }
     let history = useHistory()
     useEffect(() => {
       getList()
     }, [])
   
     const getList = () => {
-      axios.get(`${baseUrl}/cms/getallarticles?uid=${JSON.parse(userId)}`)
+      axios.get(`${baseUrl}/cms/getallarticles?uid=${JSON.parse(userId)}`, myConfig)
       .then((res) => {
       
        if(res.data.code === 1){
