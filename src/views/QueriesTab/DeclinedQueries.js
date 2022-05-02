@@ -36,6 +36,11 @@ function DeclinedQueries() {
   const [ViewDiscussion, setViewDiscussion] = useState(false);
   const [openManual, setManual] = useState(false)
   const token = window.localStorage.getItem("clientToken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key)
@@ -51,16 +56,12 @@ function DeclinedQueries() {
   }, []);
 
   const getQueriesData = () => {
-    // axios
-    //   .get(
-    //     `${baseUrl}/customers/declinedQueries?uid=${JSON.parse(userId)}`
-    //   )
-    fetch(`${baseUrl}/customers/declinedQueries?uid=${JSON.parse(userId)}`, {
-      method: "GET",
-      headers: new Headers({
-        uit: token,
-      }),
-    })
+    axios
+      .get(
+        `${baseUrl}/customers/declinedQueries?uid=${JSON.parse(userId)}`
+        , myConfig
+      )
+  
       .then((res) => {
 
         if (res.data.code === 1) {

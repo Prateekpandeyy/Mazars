@@ -64,17 +64,17 @@ const logout = () => {
   localStorage.removeItem("custEmail")
   history.push("/")
 }
+const myConfig = {
+  headers : {
+   "uit" : token
+  }
+}
 console.log("sessionStorage", window.sessionStorage)
   useEffect(() => {
     const getAllQueries = () => {
-      fetch(`${baseUrl}/customers/totalComplete?uid=${JSON.parse(userId)}`, {
-        method: "GET",
-        headers: new Headers({
-          uit: token,
-        }),
-      })
-      // axios
-      //   .get(`${baseUrl}/customers/totalComplete?uid=${JSON.parse(userId)}`)
+    
+       axios
+        .get(`${baseUrl}/customers/totalComplete?uid=${JSON.parse(userId)}`, myConfig)
         .then((response) => {
 
           if (response.data.code === 1) {

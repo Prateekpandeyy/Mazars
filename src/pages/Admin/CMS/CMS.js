@@ -33,16 +33,11 @@ const Cms = () =>{
     }, [])
   
     const getList = () => {
-      // axios.get(`${baseUrl}/cms/getallarticles?uid=${JSON.parse(userId)}`, myConfig)
-       fetch(`${baseUrl}/cms/getallarticles?uid=${JSON.parse(userId)}`, {
-        method: "GET",
-        headers: new Headers({
-          token : token,
-        }),
-      })
+      axios.get(`${baseUrl}/cms/getallarticles?uid=${JSON.parse(userId)}`, myConfig)
+    
       .then((res) => {
       
-       if(res.data){
+       if(res.data.code === 1){
         setList(res.data.result)
        }
       })

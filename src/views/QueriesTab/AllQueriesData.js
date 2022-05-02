@@ -40,6 +40,11 @@ function AllQueriesData() {
     const [ViewDiscussion, setViewDiscussion] = useState(false);
     const [openManual, setManual] = useState(false)
     const token = window.localStorage.getItem("clientToken")
+    const myConfig = {
+        headers : {
+         "uit" : token
+        }
+      }
    let des = false;
     const additionalHandler = (key) => {
        
@@ -66,19 +71,14 @@ function AllQueriesData() {
     useEffect(() => {
         getQueriesData();
     }, []);
-
    
     const getQueriesData = () => {
-        fetch(`${baseUrl}/customers/incompleteAssignments?user=${JSON.parse(userId)}`, {
-            method: "GET",
-            headers: new Headers({
-              uit: token,
-            }),
-          })
-        // axios
-        //     .get(
-        //         `${baseUrl}/customers/incompleteAssignments?user=${JSON.parse(userId)}`
-        //     )
+        
+        axios
+            .get(
+                `${baseUrl}/customers/incompleteAssignments?user=${JSON.parse(userId)}`,
+                myConfig
+            )
             .then((res) => {
 
                 if (res.data.code === 1) {
