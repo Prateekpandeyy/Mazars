@@ -26,7 +26,12 @@ function AssignmentTab(props) {
   const [completeAssignment, setCompleteAssignment] = useState("");
   const [declinedAssignment, setDeclinedAssignment] = useState("");
   const [bgColor, setbgColor] = useState("#615339")
-
+  const token = window.localStorage.getItem("clientToken")
+    const myConfig = {
+        headers : {
+         "uit" : token
+        }
+      }
 
   useEffect(() => {
     getAllAssignment();
@@ -38,7 +43,7 @@ function AssignmentTab(props) {
 
   const getAllAssignment = () => {
     axios
-      .get(`${baseUrl}/customers/completeAssignments?user=${JSON.parse(userId)}`)
+      .get(`${baseUrl}/customers/completeAssignments?user=${JSON.parse(userId)}`, myConfig)
       .then((res) => {
         
         setAllAssignment(res.data.result.length);
@@ -47,7 +52,7 @@ function AssignmentTab(props) {
 
   const getInprogressAssignment = () => {
     axios
-      .get(`${baseUrl}/customers/completeAssignments?user=${JSON.parse(userId)}&status=1`)
+      .get(`${baseUrl}/customers/completeAssignments?user=${JSON.parse(userId)}&status=1`, myConfig)
       .then((response) => {
        
         if (response.data.code === 1) {
@@ -58,7 +63,7 @@ function AssignmentTab(props) {
 
   const getCompletedAssignment = () => {
     axios
-      .get(`${baseUrl}/customers/completeAssignments?user=${JSON.parse(userId)}&status=2`)
+      .get(`${baseUrl}/customers/completeAssignments?user=${JSON.parse(userId)}&status=2`, myConfig)
       .then((res) => {
       
         if (res.data.code === 1) {
@@ -69,7 +74,7 @@ function AssignmentTab(props) {
 
   const getCustomerDeclinedPayment = () => {
     axios
-      .get(`${baseUrl}/customers/completeAssignments?user=${JSON.parse(userId)}&status=3`)
+      .get(`${baseUrl}/customers/completeAssignments?user=${JSON.parse(userId)}&status=3`, myConfig)
       .then((response) => {
      
         if (response.data.code === 1) {

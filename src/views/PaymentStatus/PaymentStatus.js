@@ -25,6 +25,12 @@ function PaymentStatus(props) {
   const [unpaid, setUnpaid] = useState("");
   const [bgColor, setbgColor] = useState("#2b5f55")
   const [tabIndex, setTabIndex] = useState(0);
+  const token = window.localStorage.getItem("clientToken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
   useEffect(() => {
     getAllPaid();
     getPaid();
@@ -34,7 +40,7 @@ function PaymentStatus(props) {
 
   const getAllPaid = () => {
     axios
-      .get(`${baseUrl}/customers/getUploadedProposals?cid=${JSON.parse(userId)}`)
+      .get(`${baseUrl}/customers/getUploadedProposals?cid=${JSON.parse(userId)}`, myConfig)
       .then((res) => {
       
         setAllPayment(res.data.result.length);
@@ -43,7 +49,7 @@ function PaymentStatus(props) {
 
   const getPaid = () => {
     axios
-      .get(`${baseUrl}/customers/getUploadedProposals?cid=${JSON.parse(userId)}&status=1`)
+      .get(`${baseUrl}/customers/getUploadedProposals?cid=${JSON.parse(userId)}&status=1`, myConfig)
       .then((res) => {
       
         setPaid(res.data.result.length);
@@ -52,7 +58,7 @@ function PaymentStatus(props) {
 
   const getUnpaid = () => {
     axios
-      .get(`${baseUrl}/customers/getUploadedProposals?cid=${JSON.parse(userId)}&status=2`)
+      .get(`${baseUrl}/customers/getUploadedProposals?cid=${JSON.parse(userId)}&status=2`, myConfig)
       .then((res) => {
       
         setUnpaid(res.data.result.length);

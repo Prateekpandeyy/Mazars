@@ -30,7 +30,12 @@ function QueriesTab(props) {
   const [declined, setDeclined] = useState("");
   const [bgColor, setbgColor] = useState("#55425F")
 
-
+  const token = window.localStorage.getItem("clientToken")
+    const myConfig = {
+        headers : {
+         "uit" : token
+        }
+      }
   useEffect(() => {
     CountAllQuery();
     CountInprogressAllocation();
@@ -40,7 +45,7 @@ function QueriesTab(props) {
 
 
   const CountAllQuery = (data) => {
-    axios.get(`${baseUrl}/customers/incompleteAssignments?user=${JSON.parse(userId)}`)
+    axios.get(`${baseUrl}/customers/incompleteAssignments?user=${JSON.parse(userId)}`, myConfig)
       .then((res) => {
        
         if (res.data.code === 1) {
@@ -50,7 +55,7 @@ function QueriesTab(props) {
   };
 
   const CountInprogressAllocation = () => {
-    axios.get(`${baseUrl}/customers/incompleteAssignments?user=${JSON.parse(userId)}&status=1`).then((res) => {
+    axios.get(`${baseUrl}/customers/incompleteAssignments?user=${JSON.parse(userId)}&status=1`, myConfig).then((res) => {
      
       if (res.data.code === 1) {
         setInprogressAllocation(res.data.result.length);
@@ -59,7 +64,7 @@ function QueriesTab(props) {
   };
 
   const CountInprogressProposal = () => {
-    axios.get(`${baseUrl}/customers/incompleteAssignments?user=${JSON.parse(userId)}&status=2`).then((res) => {
+    axios.get(`${baseUrl}/customers/incompleteAssignments?user=${JSON.parse(userId)}&status=2`, myConfig).then((res) => {
      
       if (res.data.code === 1) {
         setInprogressProposal(res.data.result.length);
@@ -68,7 +73,7 @@ function QueriesTab(props) {
   };
 
   const CountDeclined = () => {
-    axios.get(`${baseUrl}/customers/declinedQueries?uid=${JSON.parse(userId)}`).then((res) => {
+    axios.get(`${baseUrl}/customers/declinedQueries?uid=${JSON.parse(userId)}`, myConfig).then((res) => {
      
       if (res.data.code === 1) {
         setDeclined(res.data.result.length);

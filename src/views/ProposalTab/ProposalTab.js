@@ -27,7 +27,12 @@ function Proposal(props) {
   const [acceptedProposalCount, setAcceptedProposalCount] = useState("");
   const [declinedProposalCount, setDeclinedProposalCount] = useState("");
   const [bgColor, setbgColor] = useState("#42566a")
-
+  const token = window.localStorage.getItem("clientToken")
+    const myConfig = {
+        headers : {
+         "uit" : token
+        }
+      }
   useEffect(() => {
     getAllProposal();
     getInprogressProposal();
@@ -38,7 +43,7 @@ function Proposal(props) {
 
   const getAllProposal = () => {
     axios
-      .get(`${baseUrl}/customers/getProposals?uid=${JSON.parse(userId)}`)
+      .get(`${baseUrl}/customers/getProposals?uid=${JSON.parse(userId)}`, myConfig)
       .then((res) => {
 
         setAllProposalCount(res.data.result.length);
@@ -47,7 +52,7 @@ function Proposal(props) {
 
   const getInprogressProposal = () => {
     axios
-      .get(`${baseUrl}/customers/getProposals?uid=${JSON.parse(userId)}&status=1`)
+      .get(`${baseUrl}/customers/getProposals?uid=${JSON.parse(userId)}&status=1`, myConfig)
       .then((response) => {
       
         if (response.data.code === 1) {
@@ -58,7 +63,7 @@ function Proposal(props) {
 
   const getAcceptedProposal = () => {
     axios
-      .get(`${baseUrl}/customers/getProposals?uid=${JSON.parse(userId)}&status=2`)
+      .get(`${baseUrl}/customers/getProposals?uid=${JSON.parse(userId)}&status=2`, myConfig)
       .then((res) => {
        
         if (res.data.code === 1) {
@@ -69,7 +74,7 @@ function Proposal(props) {
 
   const getDeclinedProposal = () => {
     axios
-      .get(`${baseUrl}/customers/getProposals?uid=${JSON.parse(userId)}&status=3`)
+      .get(`${baseUrl}/customers/getProposals?uid=${JSON.parse(userId)}&status=3`, myConfig)
       .then((response) => {
         
         if (response.data.code === 1) {
