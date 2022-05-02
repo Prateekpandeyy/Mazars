@@ -42,7 +42,7 @@ const percent = {
   alignItems : "center"
 }
   const getServices = () => {
-    axios.get(`${baseUrl}/tl/getServices`)
+    axios.get(`${baseUrl}/admin/getServices`)
     .then((res) => {
 
       if(res.data.code === 1){

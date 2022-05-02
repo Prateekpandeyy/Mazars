@@ -79,7 +79,7 @@ function QueriesRecevied(props) {
 
   useEffect(() => {
     const getSubmittedAssingment = () => {
-      axios.get(`${baseUrl}/tl/getQueryDetails?id=${id}`).then((res) => {
+      axios.get(`${baseUrl}/admin/getQueryDetails?id=${id}`).then((res) => {
        
         if (res.data.code === 1) {
           

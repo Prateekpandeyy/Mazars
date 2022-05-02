@@ -41,7 +41,7 @@ function InprogressAllocation() {
     setAdditionalQuery(!additionalQuery);
     setAssignNo(key)
   };
-
+  const token = window.localStorage.getItem("clientToken")
 
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
@@ -53,10 +53,16 @@ function InprogressAllocation() {
   }, []);
 
   const getQueriesData = () => {
-    axios
-      .get(
-        `${baseUrl}/customers/incompleteAssignments?user=${JSON.parse(userId)}&status=1`
-      )
+    // axios
+    //   .get(
+    //     `${baseUrl}/customers/incompleteAssignments?user=${JSON.parse(userId)}&status=1`
+    //   )
+    fetch(`${baseUrl}/customers/incompleteAssignments?user=${JSON.parse(userId)}&status=1`, {
+      method: "GET",
+      headers: new Headers({
+        uit: token,
+      }),
+    })
       .then((res) => {
 
         if (res.data.code === 1) {

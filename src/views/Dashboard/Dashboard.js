@@ -8,6 +8,7 @@ import { useHistory } from "react-router";
 import {Container, Grid, Paper, Box} from "@material-ui/core";
 function Dashboard() {
   const userId = window.localStorage.getItem("userid");
+  const token = window.localStorage.getItem("clientToken")
 const sessionId =  window.sessionStorage.getItem("userIdsession")
 let history= useHistory()
   const [allQueries, setAllQueries] = useState({
@@ -66,8 +67,14 @@ const logout = () => {
 console.log("sessionStorage", window.sessionStorage)
   useEffect(() => {
     const getAllQueries = () => {
-      axios
-        .get(`${baseUrl}/customers/totalComplete?uid=${JSON.parse(userId)}`)
+      fetch(`${baseUrl}/customers/totalComplete?uid=${JSON.parse(userId)}`, {
+        method: "GET",
+        headers: new Headers({
+          uit: token,
+        }),
+      })
+      // axios
+      //   .get(`${baseUrl}/customers/totalComplete?uid=${JSON.parse(userId)}`)
         .then((response) => {
 
           if (response.data.code === 1) {

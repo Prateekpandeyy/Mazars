@@ -39,6 +39,7 @@ function AllQueriesData() {
     const [assignNo, setAssignNo] = useState('');
     const [ViewDiscussion, setViewDiscussion] = useState(false);
     const [openManual, setManual] = useState(false)
+    const token = window.localStorage.getItem("clientToken")
    let des = false;
     const additionalHandler = (key) => {
        
@@ -68,10 +69,16 @@ function AllQueriesData() {
 
    
     const getQueriesData = () => {
-        axios
-            .get(
-                `${baseUrl}/customers/incompleteAssignments?user=${JSON.parse(userId)}`
-            )
+        fetch(`${baseUrl}/customers/incompleteAssignments?user=${JSON.parse(userId)}`, {
+            method: "GET",
+            headers: new Headers({
+              uit: token,
+            }),
+          })
+        // axios
+        //     .get(
+        //         `${baseUrl}/customers/incompleteAssignments?user=${JSON.parse(userId)}`
+        //     )
             .then((res) => {
 
                 if (res.data.code === 1) {

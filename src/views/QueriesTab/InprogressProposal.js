@@ -32,6 +32,7 @@ function InprogressProposal() {
   const [records, setRecords] = useState([]);
   const [assignNo, setAssignNo] = useState('');
   const [openManual, setManual] = useState(false)
+  const token = window.localStorage.getItem("clientToken")
   useEffect(() => {
     getQueriesData();
   }, []);
@@ -46,10 +47,16 @@ function InprogressProposal() {
 }
 
   const getQueriesData = () => {
-    axios
-      .get(
-        `${baseUrl}/customers/incompleteAssignments?user=${JSON.parse(userId)}&status=2`
-      )
+    // axios
+    //   .get(
+    //     `${baseUrl}/customers/incompleteAssignments?user=${JSON.parse(userId)}&status=2`
+    //   )
+    fetch(`${baseUrl}/customers/incompleteAssignments?user=${JSON.parse(userId)}&status=2`, {
+      method: "GET",
+      headers: new Headers({
+        uit: token,
+      }),
+    })
       .then((res) => {
        
         if (res.data.code === 1) {

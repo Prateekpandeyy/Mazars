@@ -41,7 +41,7 @@ function AllPayment() {
     }, []);
 
     const getPaymentStatus = () => {
-        axios.get(`${baseUrl}/tl/getUploadedProposals`).then((res) => {
+        axios.get(`${baseUrl}/admin/getUploadedProposals`).then((res) => {
             
             if (res.data.code === 1) {
                 setPayment(res.data.result);
