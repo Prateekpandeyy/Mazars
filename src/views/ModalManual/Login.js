@@ -9,9 +9,9 @@ import successregImg from "../ManualImg/successReg.jpeg";
 import style from './manula.module.css';
 const useStyle = makeStyles(theme => ({
     root : {
-        backgroundColor : "green", 
+        backgroundColor : "#0071ce", 
         color : "white",
-        margin : "10px 0px",
+        margin : "10px",
         outline : "none",
         '&:hover': {
             backgroundColor : "green",
@@ -29,6 +29,13 @@ const useStyle = makeStyles(theme => ({
 }))
 const Login = () => {
     const classes = useStyle()
+    const goToRow = (e) => {
+        console.log("e3", e)
+            const anchor = document.querySelector(e)
+            console.log("an", anchor)
+            anchor.scrollIntoView({ behavior: 'smooth', block: 'center' })
+         
+    }
     return(
         <>
        
@@ -38,8 +45,8 @@ const Login = () => {
             <Card> 
            <CardHeader  title={
                <>
-             <span> visit :  </span>
-               <a href="https://mazars.multitvsolution.com/#/" target="_blank">https://mazars.multitvsolution.com/#/
+             <span className="modalTextHeading"> visit :  </span>
+               <a href="https://masindia.live/#/" target="_blank">https://masindia.live/#/
                </a>
                </>
            } subheader= "(To post a query, visit Mazar’s portal by clicking above link.)"/>
@@ -57,10 +64,15 @@ const Login = () => {
                 <Card>
                     <CardHeader  title={
                         <>
-                        <Typography variant="h4">
+                        <span className="modalTextHeading">
                         For New Client: Click on 
-                        <Button variant="contained" className={classes.root}>Sign Up</Button>
-                            </Typography>
+                        </span>
+                        <Button variant="secondary"
+                        onClick = {() => goToRow("#signUp2")}
+                         className={classes.root}>Sign Up</Button>
+                       
+    
+                            
                         </>
                     } subheader="(Click on sign up icon, mentioned below “For new client” to register.)"/>
                    <CardActionArea>
@@ -87,10 +99,10 @@ const Login = () => {
                  
                    
                 <CardContent>
-                <Typography variant="h6">
+                <span className="modalTextHeading">
                         Provide your basic information to complete the registration.
                        
-                            </Typography>
+                            </span>
                             <Typography variant="body2">
                             (On clicking sign up for registration, 
                     following screen will open to enter basic information.)
@@ -219,20 +231,12 @@ const Login = () => {
          
                    
                <CardContent>
-               <Typography variant="h4">
-        Provide your basic information to complete registration
-        </Typography>
-        <Typography variant='body1' color="primary">
-        (Details of information to be provided.)                                                                
-        </Typography>
-        <Typography variant='body1' color="error">
-        (*Mandatory Fields)
-        </Typography>
+       
         <Typography variant='h5' variantMapping={{
         h5 : "span"
     }}>
     After clicking on  <Button variant="contained" className={classes.root}>Send Otp</Button> Success message will appear.
-     Click ok and enter the OTP to register & click on  <Button variant="contained" className={classes.root2}>Submit</Button>
+     Click ok and enter the OTP to register & click on  <Button variant="contained" className={classes.root}>Submit</Button>
     </Typography>
    
 <CardMedia component="img"  src={successregImg}/>

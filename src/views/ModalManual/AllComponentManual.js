@@ -28,7 +28,7 @@ useEffect(() => {
 return(
     <>
 
-<div style={{display : "flex", height : "80vh", overflow : "scroll"}}>
+<div style={{display : "flex", height : "80vh", overflow : "scroll", fontSize : "#fff"}}>
 <Container maxWidth = "xl">
 <Login />
 <Query />

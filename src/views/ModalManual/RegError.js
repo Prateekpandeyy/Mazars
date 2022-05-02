@@ -56,7 +56,7 @@ return (
            <Card>
                <CardContent>
                    <CardMedia  src={errorImg} component="img"/>
-                   <Button variant="contained" className={classes.root}>Send Otp</Button>
+                   
 <Typography variant='h5' variantMapping={{
     h5 : 'span'
 }} id="existing">
@@ -67,15 +67,15 @@ For Existing Client: Login with your registered Email id & Password.
    <li>
        <Typography variant="body2" color="primary">
        	Enter your registered email id and password, under “For existing client” and click on 
-           </Typography>
+           <Button variant="contained" className={classes.root}>Send Otp</Button>     </Typography>
            </li>
     <li>
         <Typography variant='body2' color="primary">
-        <Button variant="contained" className={classes.root}>Send Otp</Button> The OTP will be sent to your registered email id, valid for 180 Seconds
+         The OTP will be sent to your registered email id, valid for 180 Seconds
             </Typography> </li>
     <li> 
         <Typography variant='body2' color="primary">
-        Enter the OTP so received and click on
+        Enter the OTP so received and click on <Button variant="contained" className={classes.root}>Login</Button>   
         </Typography>
     </li>
     <li> 
@@ -108,9 +108,6 @@ If the OTP entered is incorrect then Error message window will appear showing �
                        05
                    </Typography>
    </Box>
-   
-
-
  <Box>
      <Container maxWidth= "xl">
          <Card>

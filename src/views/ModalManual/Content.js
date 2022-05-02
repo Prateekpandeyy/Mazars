@@ -16,23 +16,16 @@ const Content  = () => {
         <>
          <Container maxWidth= "xl">
          <Card>
-             {/* <CardHeader title={
-                 <>
-                  <Typography variant="h4">
-                  Contents
-               
-                      </Typography>
-                 </>
-             }/> */}
+            
              <div className="row mx-1 my-2">
                  <div className="col-md-6">
-                 <Typography variant="h4">
-                Mazars Contents
+                 <Typography variant="h4" style={{color: "#0071ce", fontSize: "22px", fontWeight: 700}}>
+                Contents
                
                       </Typography>
                  </div>
                  <div className="col-md-6" style={{display: "flex", justifyContent : "flex-end"}}>
-                 <a href={MyPDF} className="btn btn-success" target="_blank"> 
+                 <a href={MyPDF} className="btn btn-secondary" target="_blank"> 
                  Download Manual</a>
                 
                      </div>
@@ -43,135 +36,135 @@ const Content  = () => {
                    
 <table style={{display : "flex", flexDirection : "column", width: "100vw"}}>
     <tr onClick = {() => goToRow("#onlyLogin")} style={{display : 'flex'}}>
-        <td style={{display : "flex",  width: "20vw"}}> 
+        <td className="modalManualTable"> 
             For New Client Registration	
         </td>
-        <td style={{display : "flex",  width: "20vw"}}>
-            ____________________________________________________
+        <td className="modalManualTable">
+          
             </td>
-        <td style={{display : "flex", justifyContent : "flex-end", width: "20vw"}}>
+        <td className="modalManualTablePage">
             02
         </td>
     </tr>
     <tr onClick = {() => goToRow("#existing")} style={{display : 'flex'}}>
-        <td style={{display : "flex",  width: "20vw"}}> 
+        <td className="modalManualTable"> 
         For Existing Client
         </td>
-        <td style={{display : "flex",  width: "20vw"}}>
-            ____________________________________________________
+        <td className="modalManualTable">
+          
             </td>
-        <td style={{display : "flex" , justifyContent : "flex-end", width: "20vw"}}>
+        <td className="modalManualTablePage">
             05
         </td>
     </tr>
 
     <tr onClick = {() => goToRow("#forgetPassword")} style={{display : 'flex'}}>
-        <td style={{display : "flex",  width: "20vw"}}> 
+        <td className="modalManualTable"> 
         Forgot Password 
         </td>
-        <td style={{display : "flex",  width: "20vw"}}>
-            ____________________________________________________
+        <td className="modalManualTable">
+          
             </td>
-        <td style={{display : "flex" , justifyContent : "flex-end", width: "20vw"}}>
+        <td className="modalManualTablePage">
             06
         </td>
     </tr>
     <tr onClick = {() => goToRow("#changePassword")} style={{display : 'flex'}}>
-        <td style={{display : "flex",  width: "20vw"}}> 
+        <td className="modalManualTable"> 
         Change Password	 
         </td>
-        <td style={{display : "flex",  width: "20vw"}}>
-            ____________________________________________________
+        <td className="modalManualTable">
+          
             </td>
-        <td style={{display : "flex" , justifyContent : "flex-end", width: "20vw"}}>
+        <td className="modalManualTablePage">
             11
         </td>
     </tr>
     <tr onClick = {() => goToRow("#freshQuery")} style={{display : 'flex'}}>
-        <td style={{display : "flex",  width: "20vw"}}> 
+        <td className="modalManualTable"> 
         Register Fresh Query
         </td>
-        <td style={{display : "flex",  width: "20vw"}}>
-            ____________________________________________________
+        <td className="modalManualTable">
+          
             </td>
-        <td style={{display : "flex" , justifyContent : "flex-end", width: "20vw"}}>
+        <td className="modalManualTablePage">
             15
         </td>
     </tr>
    
     <tr onClick = {() => goToRow("#proposalProcessing")} style={{display : 'flex'}}>
-        <td style={{display : "flex",  width: "20vw"}}> 
+        <td className="modalManualTable"> 
         Proposal processing  </td>
-        <td style={{display : "flex",  width: "20vw"}}>
-            ____________________________________________________
+        <td className="modalManualTable">
+          
             </td>
-        <td style={{display : "flex" , justifyContent : "flex-end", width: "20vw"}}>
+        <td className="modalManualTablePage">
             29
         </td>
     </tr>
     <tr onClick = {() => goToRow("#assignProcess")} style={{display : 'flex'}}>
-        <td style={{display : "flex",  width: "20vw"}}> 
+        <td className="modalManualTable"> 
         Assignment process
           </td>
-        <td style={{display : "flex",  width: "20vw"}}>
-            ____________________________________________________
+        <td className="modalManualTable">
+          
             </td>
-        <td style={{display : "flex" , justifyContent : "flex-end", width: "20vw"}}>
+        <td className="modalManualTablePage">
             39
         </td>
     </tr>
     <tr onClick = {() => goToRow("#paymentProcess")} style={{display : 'flex'}}>
-        <td style={{display : "flex",  width: "20vw"}}> 
+        <td className="modalManualTable"> 
         Making Payment
           </td>
-        <td style={{display : "flex",  width: "20vw"}}>
-            ____________________________________________________
+        <td className="modalManualTable">
+          
             </td>
-        <td style={{display : "flex" , justifyContent : "flex-end", width: "20vw"}}>
+        <td className="modalManualTablePage">
             46
         </td>
     </tr>
     <tr onClick = {() => goToRow("#mazarDashboard")} style={{display : 'flex'}}>
-        <td style={{display : "flex",  width: "20vw"}}> 
+        <td className="modalManualTable"> 
         Mazars Dashboard
           </td>
-        <td style={{display : "flex",  width: "20vw"}}>
-            ____________________________________________________
+        <td className="modalManualTable">
+          
             </td>
-        <td style={{display : "flex" , justifyContent : "flex-end", width: "20vw"}}>
+        <td className="modalManualTablePage">
             53
         </td>
     </tr>
     <tr onClick = {() => goToRow("#showMessage")} style={{display : 'flex'}}>
-        <td style={{display : "flex",  width: "20vw"}}> 
+        <td className="modalManualTable"> 
         Message Inbox
           </td>
-        <td style={{display : "flex",  width: "20vw"}}>
-            ____________________________________________________
+        <td className="modalManualTable">
+          
             </td>
-        <td style={{display : "flex" , justifyContent : "flex-end", width: "20vw"}}>
+        <td className="modalManualTablePage">
             55
         </td>
     </tr>
     <tr onClick = {() => goToRow("#seceduler")} style={{display : 'flex'}}>
-        <td style={{display : "flex",  width: "20vw"}}> 
+        <td className="modalManualTable"> 
         Scheduling a meeting
           </td>
-        <td style={{display : "flex",  width: "20vw"}}>
-            ____________________________________________________
+        <td className="modalManualTable">
+          
             </td>
-        <td style={{display : "flex" , justifyContent : "flex-end", width: "20vw"}}>
+        <td className="modalManualTablePage">
             56
         </td>
     </tr>
     <tr onClick = {() => goToRow("#feedbackProcess")} style={{display : 'flex'}}>
-        <td style={{display : "flex",  width: "20vw"}}> 
+        <td className="modalManualTable"> 
         Sending feedback
           </td>
-        <td style={{display : "flex",  width: "20vw"}}>
-            ____________________________________________________
+        <td className="modalManualTable">
+          
             </td>
-        <td style={{display : "flex" , justifyContent : "flex-end", width: "20vw"}}>
+        <td className="modalManualTablePage">
             57
         </td>
     </tr>

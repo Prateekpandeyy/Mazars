@@ -90,7 +90,7 @@ function Unpaid() {
     }, []);
 
     const getPaymentStatus = () => {
-        axios.get(`${baseUrl}/tl/getUploadedProposals?cid=${JSON.parse(userId)}&status=2`).then((res) => {
+        axios.get(`${baseUrl}/customers/getUploadedProposals?cid=${JSON.parse(userId)}&status=2`).then((res) => {
 
             if (res.data.code === 1) {
                 setPayment(res.data.result);

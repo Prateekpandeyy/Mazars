@@ -609,6 +609,30 @@ input[type="date"] {
   display: flex !important;
   height: 100% !important;
 }
+.modalManualTable {
+  display: flex;
+  width: 20vw;
+  color: #464b4b;
+  font-size: 18px;
+  cursor: pointer;
+}
+.modalManualTablePage {
+  display: flex;
+  width: 20vw;
+  color: #464b4b;
+  font-size: 18px;
+  justify-content: flex-end;
+  cursor: pointer;
+}
+.modalTextHeading {
+  font-size: 18px;
+  color: #464b4b;
+  font-weight: 700;
+}
+.modalText {
+  font-size: 18px;
+  color: #464b4b;
+}
 @media (max-width: 767px) {
   footer {
     position: relative !important;

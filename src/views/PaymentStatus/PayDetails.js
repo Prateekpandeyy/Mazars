@@ -36,7 +36,7 @@ const PayDetails = (props) => {
     const [modalData, setModalData] = useState()
     const [showTable, setShowTable] = useState(null);
     const paydetails2 = () => {
-axios.get(`${baseUrl}/admin/getPaymentDetail?id=${id}`)
+axios.get(`${baseUrl}/customers/getPaymentDetail?id=${id}`)
 .then((res) => {
     if(res.data.code === 1){
        

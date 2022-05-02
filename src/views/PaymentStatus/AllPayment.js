@@ -91,7 +91,7 @@ function Paid() {
 
     setModal(!modal);
 
-    fetch(`${baseUrl}/admin/getPaymentDetail?id=${key}`, {
+    fetch(`${baseUrl}/customers/getPaymentDetail?id=${key}`, {
       method: "GET",
       headers: new Headers({
         Accept: "application/vnd.github.cloak-preview",
@@ -106,7 +106,7 @@ function Paid() {
   };
 
   const getPaymentStatus = () => {
-    axios.get(`${baseUrl}/tl/getUploadedProposals?cid=${JSON.parse(userId)}`).then((res) => {
+    axios.get(`${baseUrl}/customers/getUploadedProposals?cid=${JSON.parse(userId)}`).then((res) => {
       
       if (res.data.code === 1) {
         setPayment(res.data.result);

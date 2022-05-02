@@ -41,7 +41,7 @@ const RegistrationInfo = () => {
     const classes = useStyle() 
     return (
         <>
-         <Box>
+         <Box id="signUp2">
          <Paper>
            <Card>
                
@@ -61,7 +61,7 @@ const RegistrationInfo = () => {
             </Typography> </li>
     <li> 
         <Typography variant='body2'>
-        <Button variant="contained" className={classes.root}>Submit</Button> On entering the OTP, click on icon to complete the registration
+        On entering the OTP, click on <Button variant="contained" className={classes.root}>Submit</Button>  icon to complete the registration
         </Typography>
     </li>
    </div>

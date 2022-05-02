@@ -34,7 +34,7 @@ function PaymentStatus(props) {
 
   const getAllPaid = () => {
     axios
-      .get(`${baseUrl}/tl/getUploadedProposals?cid=${JSON.parse(userId)}`)
+      .get(`${baseUrl}/customers/getUploadedProposals?cid=${JSON.parse(userId)}`)
       .then((res) => {
       
         setAllPayment(res.data.result.length);
@@ -43,7 +43,7 @@ function PaymentStatus(props) {
 
   const getPaid = () => {
     axios
-      .get(`${baseUrl}/tl/getUploadedProposals?cid=${JSON.parse(userId)}&status=1`)
+      .get(`${baseUrl}/customers/getUploadedProposals?cid=${JSON.parse(userId)}&status=1`)
       .then((res) => {
       
         setPaid(res.data.result.length);
@@ -52,7 +52,7 @@ function PaymentStatus(props) {
 
   const getUnpaid = () => {
     axios
-      .get(`${baseUrl}/tl/getUploadedProposals?cid=${JSON.parse(userId)}&status=2`)
+      .get(`${baseUrl}/customers/getUploadedProposals?cid=${JSON.parse(userId)}&status=2`)
       .then((res) => {
       
         setUnpaid(res.data.result.length);
