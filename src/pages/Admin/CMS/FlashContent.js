@@ -33,11 +33,17 @@ const FlashContent = () => {
     const userId = localStorage.getItem("adminkey")
     let history  = useHistory()
     let getId = useParams()
+    const token = window.localStorage.getItem("token")
+    const myConfig = {
+        headers : {
+         "uit" : token
+        }
+      }
    useEffect(() => {
        getData()
    }, [])
    const getData = () => {
-    axios.get(`${baseUrl}/cms/getallnews?uid=${JSON.parse(userId)}&id=${getId.id}`)
+    axios.get(`${baseUrl}/cms/getallnews?uid=${JSON.parse(userId)}&id=${getId.id}`, myConfig)
     .then((res) => {
      
        res.data.result.map((i) => {

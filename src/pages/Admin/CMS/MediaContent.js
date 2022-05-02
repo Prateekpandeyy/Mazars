@@ -37,12 +37,18 @@ const MediaContent = () => {
   const [galleryData, setGalleryData] = useState([])
   const [large, setLarge] = useState(false)
     const userId = window.localStorage.getItem("adminkey");
+    const token = window.localStorage.getItem("token")
+    const myConfig = {
+        headers : {
+         "uit" : token
+        }
+      }
     useEffect(() => {
       getGalleryData()
     }, [])
     const getGalleryData = () => {
     
-      axios.get(`${baseUrl}/cms/getgallarylist?uid=${JSON.parse(userId)}&type=image`)
+      axios.get(`${baseUrl}/cms/getgallarylist?uid=${JSON.parse(userId)}&type=image`, myConfig)
       .then((res) => {
         console.log("res", res.data.result)
         setGalleryData(res.data.result)

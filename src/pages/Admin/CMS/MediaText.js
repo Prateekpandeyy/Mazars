@@ -22,12 +22,18 @@ const MediaText = () =>{
     const [list, setList] = useState([])
     const [check, setCheck] = useState(false)
     let history = useHistory()
+    const token = window.localStorage.getItem("token")
+    const myConfig = {
+        headers : {
+         "uit" : token
+        }
+      }
     useEffect(() => {
       getList()
     }, [])
   
     const getList = () => {
-      axios.get(`${baseUrl}/cms/getallgalleryupdate?uid=${JSON.parse(userId)}`)
+      axios.get(`${baseUrl}/cms/getallgalleryupdate?uid=${JSON.parse(userId)}`, myConfig)
       .then((res) => {
       console.log("ress", res)
        if(res.data.code === 1){

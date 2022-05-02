@@ -16,8 +16,14 @@ const GirdExamplefaq = () => {
   const [check, setCheck] = useState(false)
    const [rowData, setRowData] = useState([])
   const [order, setOrder] = useState("")
+  const token = window.localStorage.getItem("token")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
    const getList = () => {
-    axios.get(`${baseUrl}/cms/getallfaq?uid=${JSON.parse(userId)}`)
+    axios.get(`${baseUrl}/cms/getallfaq?uid=${JSON.parse(userId)}`, myConfig)
        .then((res) => {
        console.log("ress", res)
         if(res.data.code === 1){

@@ -41,13 +41,19 @@ const VideoMedia = () => {
   const [large, setLarge] = useState(false)
   const [videoId, setVideoId] = useState()
   const [play, isPlay] = useState(false)
+  const token = window.localStorage.getItem("token")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
     const userId = window.localStorage.getItem("adminkey");
     useEffect(() => {
       getGalleryData()
     }, [])
     const getGalleryData = () => {
     
-      axios.get(`${baseUrl}/cms/getgallarylist?uid=${JSON.parse(userId)}&type=video`)
+      axios.get(`${baseUrl}/cms/getgallarylist?uid=${JSON.parse(userId)}&type=video`, myConfig)
       .then((res) => {
         console.log("res", res.data.result)
         setGalleryData(res.data.result)

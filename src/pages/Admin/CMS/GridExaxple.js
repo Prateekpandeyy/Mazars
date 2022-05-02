@@ -11,7 +11,7 @@ const GridExample = () => {
     
    const [rowData, setRowData] = useState([])
   const [order, setOrder] = useState("")
-  const token = window.localStorage.getItem("clientToken")
+  const token = window.localStorage.getItem("token")
   const myConfig = {
       headers : {
        "uit" : token
