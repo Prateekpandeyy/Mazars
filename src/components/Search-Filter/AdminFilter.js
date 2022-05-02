@@ -41,7 +41,7 @@ function AdminFilter(props) {
     const getSubCategory = () => {
       if(selectedData != undefined && selectedData.length > 0){
         axios
-        .get(`${baseUrl}/customers/getCategory?pid=${selectedData}`)
+        .get(`${baseUrl}/admin/getCategory?pid=${selectedData}`)
         .then((res) => {
        
           if (res.data.code === 1) {

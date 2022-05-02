@@ -27,7 +27,7 @@ function PendingAllocation({ CountPendingForAllocation }) {
    
     setModal(!modal);
 
-    fetch(`${baseUrl}/customers/getQueryHistory?q_id=${key}`, {
+    fetch(`${baseUrl}/admin/getQueryHistory?q_id=${key}`, {
       method: "GET",
       headers: new Headers({
         Accept: "application/vnd.github.cloak-preview",

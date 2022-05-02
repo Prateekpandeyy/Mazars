@@ -22,18 +22,30 @@ const Cms = () =>{
   const [check, setCheck] = useState(false)
     const userId = window.localStorage.getItem("adminkey");
     const token = localStorage.getItem("token")
-    const myConfig = {
-      headers : {
-       "token" : token
-      }
-    }
+    // var myHeaders = new Headers();
+    // myHeaders.append("token", token);
+    // const myConfig = {
+    //   headers: { 
+    //     'token': token, 
+    //     'Authorization': 'Basic Og==', 
+    //     'Cookie': 'ci_session=80g4eeqsn81face27e82u6destt88e3v', 
+        
+    //   },
+    // }
+  
     let history = useHistory()
     useEffect(() => {
       getList()
     }, [])
   
     const getList = () => {
-      axios.get(`${baseUrl}/cms/getallarticles?uid=${JSON.parse(userId)}`, myConfig)
+      fetch(`${baseUrl}/cms/getallarticles?uid=${JSON.parse(userId)}`, {
+        method: "GET",
+        headers: new Headers({
+          token: token,
+        }),
+      })
+      // axios.get(`${baseUrl}/cms/getallarticles?uid=${JSON.parse(userId)}`, myConfig)
       .then((res) => {
       
        if(res.data.code === 1){
