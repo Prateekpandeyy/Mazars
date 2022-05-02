@@ -11,12 +11,12 @@ const GridExample = () => {
     
    const [rowData, setRowData] = useState([])
   const [order, setOrder] = useState("")
-  const token = localStorage.getItem("token")
+  const token = window.localStorage.getItem("clientToken")
   const myConfig = {
-    headers : {
-     "uit" : token
+      headers : {
+       "uit" : token
+      }
     }
-  }
    const getList = () => {
        axios.get(`${baseUrl}/cms/getalllinks?uid=${JSON.parse(userId)}`, myConfig)
        .then((res) => {

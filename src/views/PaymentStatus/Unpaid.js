@@ -78,6 +78,12 @@ function Paid() {
   const [assignNo, setAssignNo] = useState('');
   const [ViewDiscussion, setViewDiscussion] = useState(false);
   const [openManual, setManual] = useState(false)
+  const token = window.localStorage.getItem("clientToken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
   const needHelp = () => {
       
       setManual(!openManual)
@@ -93,7 +99,7 @@ function Paid() {
 
 
   const getPaymentStatus = () => {
-    axios.get(`${baseUrl}/customers/getUploadedProposals?cid=${JSON.parse(userId)}&status=1`).then((res) => {
+    axios.get(`${baseUrl}/customers/getUploadedProposals?cid=${JSON.parse(userId)}&status=1`, myConfig).then((res) => {
    
       if (res.data.code === 1) {
         setPayment(res.data.result);

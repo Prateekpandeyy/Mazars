@@ -23,7 +23,12 @@ function FeedbackData(props) {
     const userId = window.localStorage.getItem("userid");
     const [query, setQuery] = useState([]);
 
-
+    const token = window.localStorage.getItem("clientToken")
+    const myConfig = {
+        headers : {
+         "uit" : token
+        }
+      }
     useEffect(() => {
         getMessage();
     }, []);
@@ -32,7 +37,7 @@ function FeedbackData(props) {
     const getMessage = () => {
         axios
             .get(
-                `${baseUrl}/customers/getFeedback?uid=${JSON.parse(userId)}`
+                `${baseUrl}/customers/getFeedback?uid=${JSON.parse(userId)}`, myConfig
             )
             .then((res) => {
             

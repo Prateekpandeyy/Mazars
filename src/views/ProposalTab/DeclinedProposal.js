@@ -30,6 +30,12 @@ function DeclinedProposal() {
     const [id, setId] = useState(null);
     const [reject, setRejected] = useState(true);
     const [openManual, setManual] = useState(false)
+    const token = window.localStorage.getItem("clientToken")
+    const myConfig = {
+        headers : {
+         "uit" : token
+        }
+      }
     const needHelp = () => {
         
         setManual(!openManual)
@@ -42,7 +48,7 @@ function DeclinedProposal() {
 
     const getProposalData = () => {
         axios
-            .get(`${baseUrl}/customers/getProposals?uid=${JSON.parse(userId)}&status=3`)
+            .get(`${baseUrl}/customers/getProposals?uid=${JSON.parse(userId)}&status=3`, myConfig)
             .then((res) => {
               
                 if (res.data.code === 1) {

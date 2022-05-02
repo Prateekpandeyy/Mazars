@@ -35,6 +35,12 @@ function InprogressProposal() {
      const [viewProposalModal, setViewProposalModal] = useState(false)
     const [proposalId, setProposalId] = useState()
     const [openManual, setManual] = useState(false)
+    const token = window.localStorage.getItem("clientToken")
+    const myConfig = {
+        headers : {
+         "uit" : token
+        }
+      }
     const needHelp = () => {
         
         setManual(!openManual)
@@ -54,7 +60,7 @@ function InprogressProposal() {
 
     const getProposalData = () => {
         axios
-            .get(`${baseUrl}/customers/getProposals?uid=${JSON.parse(userId)}&status=1`)
+            .get(`${baseUrl}/customers/getProposals?uid=${JSON.parse(userId)}&status=1`, myConfig)
             .then((res) => {
              
                 if (res.data.code === 1) {

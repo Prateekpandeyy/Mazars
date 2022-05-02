@@ -36,6 +36,12 @@ function AcceptedProposal() {
      const [viewProposalModal, setViewProposalModal] = useState(false)
     const [proposalId, setProposalId] = useState()
     const [openManual, setManual] = useState(false)
+    const token = window.localStorage.getItem("clientToken")
+    const myConfig = {
+        headers : {
+         "uit" : token
+        }
+      }
     const needHelp = () => {
         
         setManual(!openManual)
@@ -55,7 +61,7 @@ function AcceptedProposal() {
   }
     const getProposalData = () => {
         axios
-            .get(`${baseUrl}/customers/getProposals?uid=${JSON.parse(userId)}&status=2`)
+            .get(`${baseUrl}/customers/getProposals?uid=${JSON.parse(userId)}&status=2`, myConfig)
             .then((res) => {
 
                 if (res.data.code === 1) {

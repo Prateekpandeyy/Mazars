@@ -28,6 +28,12 @@ function CustomerDeclinedPayment() {
     const [ViewDiscussion, setViewDiscussion] = useState(false);
     const [reportModal, setReportModal] = useState(false);
     const [openManual, setManual] = useState(false)
+    const token = window.localStorage.getItem("clientToken")
+    const myConfig = {
+        headers : {
+         "uit" : token
+        }
+      }
   const needHelp = () => {
       
       setManual(!openManual)
@@ -54,7 +60,7 @@ function CustomerDeclinedPayment() {
     const getAssignmentData = () => {
         axios
             .get(
-                `${baseUrl}/customers/completeAssignments?user=${JSON.parse(userId)}&status=3`
+                `${baseUrl}/customers/completeAssignments?user=${JSON.parse(userId)}&status=3`, myConfig
             )
             .then((res) => {
                

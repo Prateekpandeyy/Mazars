@@ -29,6 +29,12 @@ function CompleteAssignment() {
   const [assignNo, setAssignNo] = useState('');
   const [ViewDiscussion, setViewDiscussion] = useState(false);
   const [openManual, setManual] = useState(false)
+  const token = window.localStorage.getItem("clientToken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
   const needHelp = () => {
       
       setManual(!openManual)
@@ -59,7 +65,7 @@ function CompleteAssignment() {
   const getAssignmentData = () => {
     axios
       .get(
-        `${baseUrl}/customers/completeAssignments?user=${JSON.parse(userId)}&status=2`
+        `${baseUrl}/customers/completeAssignments?user=${JSON.parse(userId)}&status=2`, myConfig
       )
       .then((res) => {
        

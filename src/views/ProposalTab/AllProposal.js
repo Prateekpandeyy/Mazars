@@ -36,6 +36,12 @@ function ProposalTab() {
      const [viewProposalModal, setViewProposalModal] = useState(false)
      const [openManual, setManual] = useState(false)
     const [proposalId, setProposalId] = useState()
+    const token = window.localStorage.getItem("clientToken")
+    const myConfig = {
+        headers : {
+         "uit" : token
+        }
+      }
     const ViewHandler = (key) => {
 
         setViewModal(!viewModal);
@@ -59,7 +65,7 @@ function ProposalTab() {
 
     const getProposalData = () => {
         axios
-            .get(`${baseUrl}/customers/getProposals?uid=${JSON.parse(userId)}`)
+            .get(`${baseUrl}/customers/getProposals?uid=${JSON.parse(userId)}`, myConfig)
             .then((res) => {
                
                 if (res.data.code === 1) {
