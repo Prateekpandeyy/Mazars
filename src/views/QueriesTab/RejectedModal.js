@@ -21,7 +21,7 @@ function RejectedModal({
     getQueriesData,
     assignNo
 }) {
-
+  const token = window.localStorage.getItem("clientToken")
   const userId = window.localStorage.getItem("userid");
   const { handleSubmit, register, reset, errors } = useForm({
     resolver: yupResolver(Schema),
@@ -41,6 +41,9 @@ function RejectedModal({
    axios({
        method: "POST",
        url: `${baseUrl}/customers/deleteQuery`,
+       headers: {
+         uit : token
+       },
        data: formData,
    })
        .then(function (response) {

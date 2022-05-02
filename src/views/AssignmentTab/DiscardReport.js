@@ -14,14 +14,19 @@ function DiscardReport({
 }) {
   const userId = window.localStorage.getItem("userid");
   const [data, setData] = useState([]);
-
+  const token = window.localStorage.getItem("clientToken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
   useEffect(() => {
     getHistory();
   }, [report]);
 
   const getHistory = () => {
    if(report !== undefined && report.length > 0){
-    axios.get(`${baseUrl}/customers/getMessage?id=${JSON.parse(userId)}&q_no=${report}`).then((res) => {
+    axios.get(`${baseUrl}/customers/getMessage?id=${JSON.parse(userId)}&q_no=${report}`, myConfig).then((res) => {
     
       if (res.data.code === 1) {
         setData(res.data.result);

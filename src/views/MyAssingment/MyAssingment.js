@@ -77,10 +77,15 @@ function MyAssingment(props) {
     },
   ]);
 
-
+  const token = window.localStorage.getItem("clientToken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
   useEffect(() => {
     const getSubmittedAssingment = () => {
-      axios.get(`${baseUrl}/customers/getQueryDetails?id=${id}`).then((res) => {
+      axios.get(`${baseUrl}/customers/getQueryDetails?id=${id}`, myConfig).then((res) => {
 
         if (res.data.code === 1) {
           setqStatus(res.data.result[0].query_status)

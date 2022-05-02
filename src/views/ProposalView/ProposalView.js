@@ -34,7 +34,12 @@ function ProposalView(props) {
   const [assignNo2, setAssignNo2] = useState()
   const { id } = useParams();
   const history = useHistory();
-
+  const token = window.localStorage.getItem("clientToken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
   const [diaplayProposal, setDisplayProposal] = useState({
     amount: "",
     proposal_date: "",
@@ -68,7 +73,7 @@ function ProposalView(props) {
   const getProposalDetails = () => {
     axios
       .get(
-        `${baseUrl}/customers/getQueryDetails?id=${id}`
+        `${baseUrl}/customers/getQueryDetails?id=${id}`, myConfig
       )
       .then((res) => {
       
@@ -133,6 +138,9 @@ function ProposalView(props) {
       axios({
         method: "POST",
         url: `${baseUrl}/customers/ProposalAccept`,
+        headers : {
+          uit : token
+        },
         data: formData,
       })
         .then(function (response) {

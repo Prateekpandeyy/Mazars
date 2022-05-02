@@ -42,7 +42,7 @@ function Chatting(props) {
   const [data, setData] = useState({})
   const [loading, setLoading] = useState(false);
   const { message_type, query_id, query_No, routes } = data
-
+  const token = window.localStorage.getItem("clientToken")
   useEffect(() => {
     
     const dataItem = props.location.obj
@@ -71,6 +71,9 @@ console.log("data", data)
     axios({
       method: "POST",
       url: `${baseUrl}/customers/messageSent`,
+      headers: {
+        uit : token
+      },
       data: formData,
     })
       .then(function (response) {

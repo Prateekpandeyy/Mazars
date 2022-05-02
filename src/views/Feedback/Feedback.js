@@ -33,7 +33,7 @@ function Feedback(props) {
   const { handleSubmit, register, errors, reset } = useForm({
     resolver: yupResolver(Schema),
   });
-
+  const token = window.localStorage.getItem("clientToken")
   const history = useHistory();
   const { id } = useParams();
   const userId = window.localStorage.getItem("userid");
@@ -51,6 +51,9 @@ function Feedback(props) {
     axios({
       method: "POST",
       url: `${baseUrl}/customers/PostUserFeedback`,
+      headers : {
+        uit : token
+      },
       data: formData,
     })
       .then(function (response) {

@@ -45,6 +45,7 @@ function EditQuery(props) {
     const [value2 , setValue2] = useState();
     const [val3, setVal3] = useState()
     const [uploadOrDownloadCount, setUploadOrDownloadCount] = useState(10);
+    const token = window.localStorage.getItem("clientToken")
   const purPoseQuery = (e) => {
     setSelectError("")
     setPurposeOption(e)
@@ -181,6 +182,7 @@ function EditQuery(props) {
         .post(`${baseUrl}/customers/PostEditQuestion`, formData, {
           headers: {
             "content-type": "multipart/form-data",
+            uit : token
           },
         })
         .then(function (response) {

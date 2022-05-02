@@ -24,6 +24,7 @@ import Box from '@material-ui/core/Box';
 import CircularProgress from '@material-ui/core/CircularProgress';
 function AddFreshAssingment(props) {
   const history = useHistory();
+  const token = window.localStorage.getItem("clientToken")
   const { handleSubmit, register, errors, reset, control } = useForm({
     defaultValues: {
       users: [{ query: "" }],
@@ -144,6 +145,7 @@ function AddFreshAssingment(props) {
         .post(`${baseUrl}/customers/PostQuestion`, formData, {
           headers: {
             "content-type": "multipart/form-data",
+            uid: token
             // 'Authorization': 'JWT fefege...'
           },
         })

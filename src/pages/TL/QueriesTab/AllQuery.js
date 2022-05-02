@@ -27,6 +27,12 @@ function AllQuery() {
 
     const [assignNo, setAssignNo] = useState('');
     const [ViewDiscussion, setViewDiscussion] = useState(false);
+    const token = window.localStorage.getItem("tlToken")
+    const myConfig = {
+        headers : {
+         "uit" : token
+        }
+      }
     const ViewDiscussionToggel = (key) => {
         setViewDiscussion(!ViewDiscussion);
         setAssignNo(key)
@@ -38,7 +44,7 @@ function AllQuery() {
 
     const getInCompleteAssingment = () => {
         axios
-            .get(`${baseUrl}/tl/getIncompleteQues?id=${JSON.parse(userid)}`)
+            .get(`${baseUrl}/tl/getIncompleteQues?id=${JSON.parse(userid)}`, myConfig)
             .then((res) => {
 
                 if (res.data.code === 1) {

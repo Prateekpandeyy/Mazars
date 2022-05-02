@@ -66,6 +66,7 @@ function VerifyOtp({ email, uid, loading, setLoading }) {
           Alerts.SuccessLogin("Logged in successfully.")
           localStorage.setItem("tlkey", JSON.stringify(response.data.user_id));
           localStorage.setItem("tlEmail", JSON.stringify(response.data.name));
+          localStorage.setItem("tlToken", response.data.token)
           sessionStorage.setItem("sessionTlid", JSON.stringify(response.data.user_id))
           history.push("/teamleader/dashboard");
         } else {

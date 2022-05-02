@@ -17,7 +17,7 @@ function AdditionalQueryModal({
   des
 }) {
   const { handleSubmit, register } = useForm();
-  
+  const token = window.localStorage.getItem("clientToken")
  // const [loading, setLoading] = useState(false);
 
   const onSubmit = (value) => {
@@ -36,6 +36,9 @@ function AdditionalQueryModal({
     axios({
       method: "POST",
       url: `${baseUrl}/customers/PostAdditionalQuery`,
+      headers: {
+        uit : token
+      },
       data: formData,
     })
       .then(function (response) {

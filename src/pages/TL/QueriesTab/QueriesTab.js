@@ -22,7 +22,12 @@ function QueriesTab(props) {
   const [allQuery, setAllQuery] = useState("");
   const [declined, setDeclined] = useState("");
   const [bgColor, setbgColor] = useState("#55425F")
-
+  const token = window.localStorage.getItem("tlToken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
 
 
   const tableIndex = (index) => {
@@ -62,7 +67,7 @@ function QueriesTab(props) {
   useEffect(() => {
     const AllQuery = () => {
       axios
-        .get(`${baseUrl}/tl/getIncompleteQues?id=${JSON.parse(userid)}`)
+        .get(`${baseUrl}/tl/getIncompleteQues?id=${JSON.parse(userid)}`, myConfig)
         .then((res) => {
           
           if (res.data.code === 1) {
@@ -73,7 +78,7 @@ function QueriesTab(props) {
 
     const getPendindForAccepttence = () => {
       axios
-        .get(`${baseUrl}/tl/pendingQues?id=${JSON.parse(userid)}`)
+        .get(`${baseUrl}/tl/pendingQues?id=${JSON.parse(userid)}`, myConfig)
         .then((res) => {
           
           if (res.data.code === 1) {
@@ -84,7 +89,7 @@ function QueriesTab(props) {
 
     const getIncomplete = () => {
       axios
-        .get(`${baseUrl}/tl/getIncompleteQues?id=${JSON.parse(userid)}&status=1`)
+        .get(`${baseUrl}/tl/getIncompleteQues?id=${JSON.parse(userid)}&status=1`, myConfig)
         .then((res) => {
           
           if (res.data.code === 1) {
@@ -95,7 +100,7 @@ function QueriesTab(props) {
 
     const getComplete = () => {
       axios
-      .get(`${baseUrl}/tl/pendingAllocation?uid=${JSON.parse(userid)}`)
+      .get(`${baseUrl}/tl/pendingAllocation?uid=${JSON.parse(userid)}`, myConfig)
         .then((res) => {
           
           if (res.data.code === 1) {
@@ -106,7 +111,7 @@ function QueriesTab(props) {
 
     const Declined = () => {
       axios
-        .get(`${baseUrl}/tl/declinedQueries?id=${JSON.parse(userid)}`)
+        .get(`${baseUrl}/tl/declinedQueries?id=${JSON.parse(userid)}`, myConfig)
         .then((res) => {
           
           if (res.data.code === 1) {

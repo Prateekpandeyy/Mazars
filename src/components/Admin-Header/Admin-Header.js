@@ -11,6 +11,7 @@ function AdminHeader({ custUserId, adminUserId, TLuserId, TPuserId , feedbackNum
     localStorage.removeItem("userid");
     localStorage.removeItem("custEmail");
     localStorage.removeItem("category");
+    localStorage.removeItem("clientToken")
     history.push("/");
   };
 
@@ -18,6 +19,7 @@ function AdminHeader({ custUserId, adminUserId, TLuserId, TPuserId , feedbackNum
     localStorage.removeItem("adminkey");
     localStorage.removeItem("adminEmail");
     localStorage.removeItem("role")
+    localStorage.removeItem("token")
     history.push("/admin/login");
   };
 

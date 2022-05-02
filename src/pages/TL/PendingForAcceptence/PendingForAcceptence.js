@@ -27,6 +27,12 @@ function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
   });
 
   const [addPaymentModal, setPaymentModal] = useState(false);
+  const token = window.localStorage.getItem("tlToken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
   const rejectHandler = (key) => {
 
     setPaymentModal(!addPaymentModal);
@@ -42,7 +48,7 @@ function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
 
   const getPendingforAcceptance = () => {
     axios
-      .get(`${baseUrl}/tl/pendingQues?id=${JSON.parse(userid)}`)
+      .get(`${baseUrl}/tl/pendingQues?id=${JSON.parse(userid)}`, myConfig)
       .then((res) => {
         
         if (res.data.code === 1) {

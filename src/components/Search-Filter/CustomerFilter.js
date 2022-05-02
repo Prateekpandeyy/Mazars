@@ -34,13 +34,18 @@ const [loading, setLoading] = useState(false)
   var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
   
   const [item] = useState(current_date);
-
+  const token = window.localStorage.getItem("clientToken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
 
   useEffect(() => {
     const getSubCategory = () => {
      if(selectedData != undefined){
       axios
-      .get(`${baseUrl}/customers/getCategory?pid=${selectedData}`)
+      .get(`${baseUrl}/customers/getCategory?pid=${selectedData}`, myConfig)
       .then((res) => {
      
         if (res.data.code === 1) {
@@ -94,7 +99,7 @@ const [loading, setLoading] = useState(false)
           `${baseUrl}/customers/incompleteAssignments?user=${JSON.parse(
             id
           )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
-          }&status=${data.p_status}&pcat_id=${selectedData}`
+          }&status=${data.p_status}&pcat_id=${selectedData}`, myConfig
         )
         .then((res) => {
           
@@ -120,7 +125,7 @@ const [loading, setLoading] = useState(false)
         `${baseUrl}/customers/incompleteAssignments?user=${JSON.parse(
           id
         )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
-        }&status=${data.p_status}&pcat_id=${selectedData}`
+        }&status=${data.p_status}&pcat_id=${selectedData}`, myConfig
       )
       .then((res) => {
 
@@ -142,7 +147,7 @@ const [loading, setLoading] = useState(false)
         `${baseUrl}/customers/incompleteAssignments?user=${JSON.parse(
           id
         )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
-        }&status=1&pcat_id=${selectedData}`
+        }&status=1&pcat_id=${selectedData}`, myConfig
       )
       .then((res) => {
 
@@ -164,7 +169,7 @@ const [loading, setLoading] = useState(false)
       axios
         .get(
           `${baseUrl}/customers/incompleteAssignments?user=${JSON.parse(id)}&status=2&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
-          }&pcat_id=${selectedData}`
+          }&pcat_id=${selectedData}`, myConfig
         )
         .then((res) => {
         
@@ -188,7 +193,7 @@ const [loading, setLoading] = useState(false)
           `${baseUrl}/customers/declinedQueries?uid=${JSON.parse(
             id
           )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
-          }&pcat_id=${selectedData}&status=${data.p_status}`
+          }&pcat_id=${selectedData}&status=${data.p_status}`, myConfig
         )
         .then((res) => {
 
@@ -212,7 +217,7 @@ const [loading, setLoading] = useState(false)
           `${baseUrl}/customers/getProposals?uid=${JSON.parse(
             id
           )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
-          }&status=${data.p_status}&pcat_id=${selectedData}`
+          }&status=${data.p_status}&pcat_id=${selectedData}`, myConfig
         )
         .then((res) => {
          
@@ -237,7 +242,7 @@ const [loading, setLoading] = useState(false)
         `${baseUrl}/customers/getProposals?uid=${JSON.parse(
           id
         )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
-        }&status=${data.p_status}&pcat_id=${selectedData}`
+        }&status=${data.p_status}&pcat_id=${selectedData}`, myConfig
       )
       .then((res) => {
       
@@ -259,7 +264,7 @@ const [loading, setLoading] = useState(false)
         `${baseUrl}/customers/getProposals?uid=${JSON.parse(
           id
         )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
-        }&status=1&pcat_id=${selectedData}`
+        }&status=1&pcat_id=${selectedData}`, myConfig
       )
       .then((res) => {
       
@@ -283,7 +288,7 @@ const [loading, setLoading] = useState(false)
           `${baseUrl}/customers/getProposals?uid=${JSON.parse(
             id
           )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
-          }&status=2&pcat_id=${selectedData}`
+          }&status=2&pcat_id=${selectedData}`, myConfig
         )
         .then((res) => {
          
@@ -306,7 +311,7 @@ const [loading, setLoading] = useState(false)
           `${baseUrl}/customers/getProposals?uid=${JSON.parse(
             id
           )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
-          }&status=3&pcat_id=${selectedData}`
+          }&status=3&pcat_id=${selectedData}`, myConfig
         )
         .then((res) => {
        
@@ -330,7 +335,7 @@ const [loading, setLoading] = useState(false)
           `${baseUrl}/customers/completeAssignments?user=${JSON.parse(
             id
           )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
-          }&status=${data.p_status}&pcat_id=${selectedData}`
+          }&status=${data.p_status}&pcat_id=${selectedData}`, myConfig
         )
         .then((res) => {
        
@@ -352,7 +357,7 @@ const [loading, setLoading] = useState(false)
           `${baseUrl}/customers/completeAssignments?user=${JSON.parse(
             id
           )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
-          }&status=1&pcat_id=${selectedData}`
+          }&status=1&pcat_id=${selectedData}`, myConfig
         )
         .then((res) => {
        
@@ -374,7 +379,7 @@ const [loading, setLoading] = useState(false)
           `${baseUrl}/customers/completeAssignments?user=${JSON.parse(
             id
           )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
-          }&status=2&pcat_id=${selectedData}`
+          }&status=2&pcat_id=${selectedData}`, myConfig
         )
         .then((res) => {
        
@@ -396,7 +401,7 @@ const [loading, setLoading] = useState(false)
           `${baseUrl}/customers/completeAssignments?user=${JSON.parse(
             id
           )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
-          }&status=3&pcat_id=${selectedData}`
+          }&status=3&pcat_id=${selectedData}`, myConfig
         )
         .then((res) => {
        
@@ -416,7 +421,7 @@ const [loading, setLoading] = useState(false)
     if (allPayment == "allPayment") {
       axios
         .get(
-          `${baseUrl}/customers/getUploadedProposals?cid=${JSON.parse(id)}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=${data.p_status}&pcat_id=${selectedData}`
+          `${baseUrl}/customers/getUploadedProposals?cid=${JSON.parse(id)}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=${data.p_status}&pcat_id=${selectedData}`, myConfig
         )
         .then((res) => {
         
@@ -435,7 +440,7 @@ const [loading, setLoading] = useState(false)
     if (unpaid == "unpaid") {
       axios
         .get(
-          `${baseUrl}/customers/getUploadedProposals?cid=${JSON.parse(id)}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=2&pcat_id=${selectedData}`
+          `${baseUrl}/customers/getUploadedProposals?cid=${JSON.parse(id)}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=2&pcat_id=${selectedData}`, myConfig
         )
         .then((res) => {
         
@@ -454,7 +459,7 @@ const [loading, setLoading] = useState(false)
     if (paid == "paid") {
       axios
         .get(
-          `${baseUrl}/customers/getUploadedProposals?cid=${JSON.parse(id)}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=1&pcat_id=${selectedData}`
+          `${baseUrl}/customers/getUploadedProposals?cid=${JSON.parse(id)}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=1&pcat_id=${selectedData}`, myConfig
         )
         .then((res) => {
       

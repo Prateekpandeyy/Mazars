@@ -25,6 +25,12 @@ function InCompleteData({ CountIncomplete }) {
 
   const [assignNo, setAssignNo] = useState('');
   const [ViewDiscussion, setViewDiscussion] = useState(false);
+  const token = window.localStorage.getItem("tlToken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key)
@@ -36,7 +42,7 @@ function InCompleteData({ CountIncomplete }) {
 
   const getInCompleteAssingment = () => {
     axios
-      .get(`${baseUrl}/tl/getIncompleteQues?id=${JSON.parse(userid)}&status=1`)
+      .get(`${baseUrl}/tl/getIncompleteQues?id=${JSON.parse(userid)}&status=1`, myConfig)
       .then((res) => {
        
         if (res.data.code === 1) {
