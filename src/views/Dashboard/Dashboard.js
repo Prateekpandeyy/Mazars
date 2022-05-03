@@ -6,9 +6,10 @@ import axios from "axios";
 import { baseUrl } from "../../config/config";
 import { useHistory } from "react-router";
 import {Container, Grid, Paper, Box} from "@material-ui/core";
+import CommonServices from '../../common/common';
 function Dashboard() {
   const userId = window.localStorage.getItem("userid");
-  const token = window.localStorage.getItem("clientToken")
+
 const sessionId =  window.sessionStorage.getItem("userIdsession")
 let history= useHistory()
   const [allQueries, setAllQueries] = useState({
@@ -64,15 +65,17 @@ const logout = () => {
   localStorage.removeItem("custEmail")
   history.push("/")
 }
-const myConfig = {
-  headers : {
-   "uit" : token
-  }
-}
+
 console.log("sessionStorage", window.sessionStorage)
   useEffect(() => {
     const getAllQueries = () => {
-    
+
+      const token = window.localStorage.getItem("clientToken")
+      const myConfig = {
+        headers : {
+         "uit" : token
+        }
+      }
        axios
         .get(`${baseUrl}/customers/totalComplete?uid=${JSON.parse(userId)}`, myConfig)
         .then((response) => {
@@ -112,6 +115,9 @@ console.log("sessionStorage", window.sessionStorage)
 
 
             })
+          }
+          else if(response.data.code === 0){
+CommonServices.clientLogout(history)
           }
         })
         .catch((error) => {

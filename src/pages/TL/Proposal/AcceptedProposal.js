@@ -43,10 +43,15 @@ function AcceptedProposal() {
     useEffect(() => {
         getProposalList();
     }, []);
-
+    const token = window.localStorage.getItem("tlToken")
+    const myConfig = {
+        headers : {
+         "uit" : token
+        }
+      }
     const getProposalList = () => {
         axios
-            .get(`${baseUrl}/tl/getProposalTl?id=${JSON.parse(userid)}&status=2`)
+            .get(`${baseUrl}/tl/getProposalTl?id=${JSON.parse(userid)}&status=2`, myConfig)
             .then((res) => {
                
                 if (res.data.code === 1) {

@@ -71,12 +71,17 @@ let history = useHistory()
     unpaid,
     totalpayment } = payment;
 
-
+    const token = window.localStorage.getItem("tlToken")
+    const myConfig = {
+        headers : {
+         "uit" : token
+        }
+      }
   useEffect(() => {
 
     const getAllQueries = () => {
       axios
-        .get(`${baseUrl}/admin/totalComplete?tl_id=${JSON.parse(userid)}`)
+        .get(`${baseUrl}/tl/totalComplete?tl_id=${JSON.parse(userid)}`, myConfig)
         .then((response) => {
        
           if (response.data.code === 1) {

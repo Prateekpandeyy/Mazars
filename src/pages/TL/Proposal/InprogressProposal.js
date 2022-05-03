@@ -42,10 +42,15 @@ function InprogressProposal() {
     useEffect(() => {
         getProposalList();
     }, []);
-
+    const token = window.localStorage.getItem("tlToken")
+    const myConfig = {
+        headers : {
+         "uit" : token
+        }
+      }
     const getProposalList = () => {
         axios
-            .get(`${baseUrl}/tl/getProposalTl?id=${JSON.parse(userid)}&status=1`)
+            .get(`${baseUrl}/tl/getProposalTl?id=${JSON.parse(userid)}&status=1`, myConfig)
             .then((res) => {
           
                 if (res.data.code === 1) {

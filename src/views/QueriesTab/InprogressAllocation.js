@@ -25,6 +25,7 @@ import {Modal, ModalHeader, ModalBody} from 'reactstrap';
 import MessageIcon, {DeleteIcon, EditQuery, ViewDiscussionIcon, HelpIcon, 
   UploadDocument, FeedBackICon} from "../../components/Common/MessageIcon";
   import DataTablepopulated from "../../components/DataTablepopulated/DataTabel";
+
 function InprogressAllocation() {
 
   const alert = useAlert();

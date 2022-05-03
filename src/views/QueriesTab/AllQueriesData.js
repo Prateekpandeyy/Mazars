@@ -86,6 +86,7 @@ function AllQueriesData() {
                     setCountQueries(res.data.result.length);
                     setRecords(res.data.result.length);
                 }
+               
             });
     };
 

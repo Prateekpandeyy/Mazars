@@ -53,10 +53,15 @@ function AllProposal() {
     useEffect(() => {
         getProposalList();
     }, []);
-
+    const token = window.localStorage.getItem("tlToken")
+    const myConfig = {
+        headers : {
+         "uit" : token
+        }
+      }
     const getProposalList = () => {
         axios
-            .get(`${baseUrl}/tl/getProposalTl?id=${JSON.parse(userid)}`)
+            .get(`${baseUrl}/tl/getProposalTl?id=${JSON.parse(userid)}`, myConfig)
             .then((res) => {
                
                 if (res.data.code === 1) {

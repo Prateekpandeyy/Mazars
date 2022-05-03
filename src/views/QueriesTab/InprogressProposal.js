@@ -23,7 +23,6 @@ import MessageIcon, { ViewDiscussionIcon, HelpIcon,
   FeedBackICon} from "../../components/Common/MessageIcon";
 import DataTablepopulated from "../../components/DataTablepopulated/DataTabel";
 
-
 function InprogressProposal() {
   const alert = useAlert();
   const userId = window.localStorage.getItem("userid");
@@ -65,6 +64,7 @@ function InprogressProposal() {
           setCountQueries(res.data.result.length);
           setRecords(res.data.result.length);
         }
+       
       });
   };
 
