@@ -73,10 +73,15 @@ function QueriesRecevied(props) {
       date_of_delivery: "",
     },
   ]);
-
+  const token = window.localStorage.getItem("tlToken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
   useEffect(() => {
     const getSubmittedAssingment = () => {
-      axios.get(`${baseUrl}/tl/getQueryDetails?id=${id}`).then((res) => {
+      axios.get(`${baseUrl}/tl/getQueryDetails?id=${id}`, myConfig).then((res) => {
       
         if (res.data.code === 1) {
           setqStatus(res.data.result[0].query_status)
@@ -209,7 +214,7 @@ function QueriesRecevied(props) {
    }
    else{
     axios
-    .get(`${baseUrl}/tl/GetAdditionalQueries?assignno=${assingNo}`)
+    .get(`${baseUrl}/tl/GetAdditionalQueries?assignno=${assingNo}`, myConfig)
     .then((res) => {
 
       if (res.data.code === 1) {

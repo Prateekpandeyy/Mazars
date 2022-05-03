@@ -20,6 +20,7 @@ function ViewReport() {
   const { id } = useParams();
   const history = useHistory();
   const [data, setData] = useState([]);
+  const token = window.localStorage.getItem("tlToken")
 
   useEffect(() => {
     getReport();
@@ -34,6 +35,9 @@ function ViewReport() {
     axios({
       method: "POST",
       url: `${baseUrl}/tl/getstagesinfo`,
+      headers : {
+        uit : token
+      },
       data: formData,
     })
       .then(function (response) {

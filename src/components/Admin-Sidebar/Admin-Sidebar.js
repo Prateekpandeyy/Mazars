@@ -125,9 +125,15 @@ const getFeedback2 = () => {
 
 };
 const getFeedbacktl = () => {
+  const token = window.localStorage.getItem("tlToken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
  if(TLDashboard != undefined){
   axios
-  .get(`${baseUrl}/customers/getFeedback?tl_id=${JSON.parse(tlkey)}&&type=total`)
+  .get(`${baseUrl}/tl/getFeedback?tl_id=${JSON.parse(tlkey)}&type=total`, myConfig)
   .then((res) => {
     setLogo("teamleader/dashboard")
     if(res.data.result != undefined){

@@ -69,10 +69,15 @@ function AssignmentTab() {
   useEffect(() => {
     getAssignmentList();
   }, []);
-
+  const token = window.localStorage.getItem("tlToken")
+    const myConfig = {
+        headers : {
+         "uit" : token
+        }
+      }
   const getAssignmentList = () => {
     axios
-      .get(`${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(userid)}`)
+      .get(`${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(userid)}`, myConfig)
       .then((res) => {
        
         if (res.data.code === 1) {
@@ -88,7 +93,7 @@ function AssignmentTab() {
     const getSubCategory = () => {
      if(selectedData != undefined){
       axios
-      .get(`${baseUrl}/customers/getCategory?pid=${selectedData}`)
+      .get(`${baseUrl}/tl/getCategory?pid=${selectedData}`, myConfig)
       .then((res) => {
      
         if (res.data.code === 1) {
@@ -269,7 +274,7 @@ const resetData = () => {
        finalDate = oldDate1.split(" ")[0].split("-").reverse().join("-")
         }
         var oldDate2 = row.Exp_Delivery_Date;
-       console.log("row", row)
+     
        expectedDate = oldDate2
         if(expectedDate){
          expectedDate= oldDate2.toString().split("-").reverse().join("-")
@@ -493,7 +498,7 @@ else{
           userid
         )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
         }&assignment_status=${status}&stages_status=${data.p_status
-        }&pcat_id=${selectedData}`
+        }&pcat_id=${selectedData}`, myConfig
       )
       .then((res) => {
       
@@ -519,7 +524,7 @@ else{
         userid
       )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
       }&assignment_status=${status}&stages_status=${data.p_status
-      }&pcat_id=${selectedData}`
+      }&pcat_id=${selectedData}`, myConfig
     )
     .then((res) => {
     
@@ -581,23 +586,24 @@ else{
                 </Select>
               </div>
 
+             {tax2.length > 0 ? 
               <div class="form-group mx-sm-1  mb-2">
-                <Select
-                  mode="multiple"
-                  style={{ width: 250 }}
-                  placeholder="Select Sub Category"
-                  defaultValue={[]}
-                  onChange={handleSubCategory}
-                  value={store2}
-                  allowClear
-                >
-                  {tax2.map((p, index) => (
-                    <Option value={p.id} key={index}>
-                      {p.details}
-                    </Option>
-                  ))}
-                </Select>
-              </div>
+              <Select
+                mode="multiple"
+                style={{ width: 250 }}
+                placeholder="Select Sub Category"
+                defaultValue={[]}
+                onChange={handleSubCategory}
+                value={store2}
+                allowClear
+              >
+                {tax2.map((p, index) => (
+                  <Option value={p.id} key={index}>
+                    {p.details}
+                  </Option>
+                ))}
+              </Select>
+            </div> : ""}
               <div>
                 <button
                   type="submit"

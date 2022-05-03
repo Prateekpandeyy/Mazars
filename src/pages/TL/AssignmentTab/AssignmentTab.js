@@ -20,6 +20,12 @@ function QueriesTab(props) {
   const [draft, setDraft] = useState("");
   const [final, setFinal] = useState();
   const [bgColor, setbgColor] = useState("#615339")
+  const token = window.localStorage.getItem("tlToken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
   const tableIndex = (index) => {
     setTabIndex(index)
     console.log(index)
@@ -62,7 +68,7 @@ function QueriesTab(props) {
 
     const AllAssignment = () => {
       axios
-        .get(`${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(userid)}`)
+        .get(`${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(userid)}`, myConfig)
         .then((res) => {
           
           if (res.data.code === 1) {
@@ -73,7 +79,7 @@ function QueriesTab(props) {
 
     const getDraftReports = () => {
       axios
-        .get(`${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(userid)}&assignment_status=Draft_Report&stages_status=1`)
+        .get(`${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(userid)}&assignment_status=Draft_Report&stages_status=1`, myConfig)
         .then((res) => {
           
           if (res.data.code === 1) {
@@ -84,7 +90,7 @@ function QueriesTab(props) {
 
     const getFinalReports = () => {
       axios
-        .get(`${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(userid)}&assignment_status=Delivery_of_report&stages_status=1`)
+        .get(`${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(userid)}&assignment_status=Delivery_of_report&stages_status=1` , myConfig)
         .then((res) => {
           
           if (res.data.code === 1) {

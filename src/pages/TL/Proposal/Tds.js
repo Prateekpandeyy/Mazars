@@ -37,6 +37,12 @@ function Tds (props)  {
    const [disabled, setDisabled] = useState(false)
   const [description, setDiscription] = useState()
 const [loading, setLoading] = useState(false);
+const token = window.localStorage.getItem("tlToken")
+const myConfig = {
+    headers : {
+     "uit" : token
+    }
+  }
 var tdsRate = 10;
 const percent = {
   display : "flex", 
@@ -45,7 +51,7 @@ const percent = {
   alignItems : "center"
 }
   const getServices = () => {
-    axios.get(`${baseUrl}/tl/getServices`)
+    axios.get(`${baseUrl}/tl/getServices`, myConfig)
     .then((res) => {
 
       if(res.data.code === 1){
@@ -421,6 +427,9 @@ const basicFun = (e) => {
         axios({
             method : "POST",
             data : formData,
+            headers : {
+              uit : token
+            },
             url : `${baseUrl}/tl/generateInvoive`
         })
         .then((res) => {

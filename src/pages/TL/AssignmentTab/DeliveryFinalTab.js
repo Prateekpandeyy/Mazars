@@ -64,10 +64,15 @@ function AssignmentTab() {
     useEffect(() => {
         getAssignmentList();
     }, []);
-
+    const token = window.localStorage.getItem("tlToken")
+    const myConfig = {
+        headers : {
+         "uit" : token
+        }
+      }
     const getAssignmentList = () => {
         axios
-            .get(`${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(userid)}&assignment_status=Delivery_of_report&stages_status=1`)
+            .get(`${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(userid)}&assignment_status=Delivery_of_report&stages_status=1`, myConfig)
             .then((res) => {
                 
                 if (res.data.code === 1) {
@@ -83,7 +88,7 @@ function AssignmentTab() {
         const getSubCategory = () => {
             if(selectedData != undefined){
                 axios
-                .get(`${baseUrl}/customers/getCategory?pid=${selectedData}`)
+                .get(`${baseUrl}/tl/getCategory?pid=${selectedData}`, myConfig)
                 .then((res) => {
                     
                     if (res.data.code === 1) {
@@ -420,7 +425,7 @@ const ViewReport = (key) => {
       
         axios
         .get(
-            `${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(userid)}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&assignment_status=Delivery_of_report&stages_status=1&pcat_id=${selectedData}`)
+            `${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(userid)}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&assignment_status=Delivery_of_report&stages_status=1&pcat_id=${selectedData}`, myConfig)
       
           
             .then((res) => {

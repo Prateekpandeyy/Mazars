@@ -35,8 +35,14 @@ const PayDetails = (props) => {
     const [modalData, setModalData] = useState()
     const [paymentUrlcopy, setPaymentUrlCopy] = useState(false)
     const [showTable, setShowTable] = useState(null);
+    const token = window.localStorage.getItem("tlToken")
+    const myConfig = {
+        headers : {
+         "uit" : token
+        }
+      }
     const paydetails2 = () => {
-axios.get(`${baseUrl}//admin/getPaymentDetail?id=${id}`)
+axios.get(`${baseUrl}/tl/getPaymentDetail?id=${id}`, myConfig)
 .then((res) => {
     if(res.data.code === 1){
        

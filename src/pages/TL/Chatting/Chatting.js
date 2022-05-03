@@ -44,7 +44,12 @@ function Chatting(props) {
   const [data, setData] = useState({})
   const { message_type, query_id, query_No, routes } = data
 const [showTl, setShowTl] = useState(false)
-
+const token = window.localStorage.getItem("tlToken")
+    const myConfig = {
+        headers : {
+         "uit" : token
+        }
+      }
   useEffect(() => {
    
     const dataItem = props.location.obj
@@ -69,7 +74,7 @@ const [showTl, setShowTl] = useState(false)
     }
     else{
       axios
-    .get(`${baseUrl}/tl/TlCheckIfAssigned?assignno=${query_No}`).then((res) => {
+    .get(`${baseUrl}/tl/TlCheckIfAssigned?assignno=${query_No}`, myConfig).then((res) => {
            if(res.data.code === 0){
                 setShowTl(false)
            }
@@ -98,6 +103,9 @@ const [showTl, setShowTl] = useState(false)
     axios({
       method: "POST",
       url: `${baseUrl}/tl/messageSent`,
+      headers : {
+        uit : token
+      },
       data: formData,
     })
       .then(function (response) {

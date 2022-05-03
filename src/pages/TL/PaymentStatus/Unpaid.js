@@ -61,9 +61,14 @@ function AllPayment() {
     useEffect(() => {
         getPaymentStatus();
     }, []);
-
+    const token = window.localStorage.getItem("tlToken")
+    const myConfig = {
+        headers : {
+         "uit" : token
+        }
+      }
     const getPaymentStatus = () => {
-        axios.get(`${baseUrl}/tl/getUploadedProposals?uid=${JSON.parse(userid)}&status=1`).then((res) => {
+        axios.get(`${baseUrl}/tl/getUploadedProposals?uid=${JSON.parse(userid)}&status=1`, myConfig).then((res) => {
             
             if (res.data.code === 1) {
                 setPayment(res.data.result);

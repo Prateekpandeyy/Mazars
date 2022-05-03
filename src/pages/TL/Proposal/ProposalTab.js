@@ -24,7 +24,12 @@ function ProposalTab(props) {
     const [bgColor, setbgColor] = useState("#42566a")
 
 
-
+    const token = window.localStorage.getItem("tlToken")
+    const myConfig = {
+        headers : {
+         "uit" : token
+        }
+      }
 
     const tableIndex = (index) => {
         setTabIndex(index)
@@ -64,7 +69,7 @@ function ProposalTab(props) {
 
         const AllProposal = () => {
             axios
-                .get(`${baseUrl}/tl/getProposalTl?id=${JSON.parse(userid)}`)
+                .get(`${baseUrl}/tl/getProposalTl?id=${JSON.parse(userid)}`, myConfig)
                 .then((response) => {
                    
                     if (response.data.code === 1) {
@@ -75,7 +80,7 @@ function ProposalTab(props) {
 
         const InprogressProposal = () => {
             axios
-                .get(`${baseUrl}/tl/getProposalTl?id=${JSON.parse(userid)}&status=1`)
+                .get(`${baseUrl}/tl/getProposalTl?id=${JSON.parse(userid)}&status=1`, myConfig)
                 .then((response) => {
                    
                     if (response.data.code === 1) {
@@ -86,7 +91,7 @@ function ProposalTab(props) {
 
         const AcceptedProposal = () => {
             axios
-                .get(`${baseUrl}/tl/getProposalTl?id=${JSON.parse(userid)}&status=2`)
+                .get(`${baseUrl}/tl/getProposalTl?id=${JSON.parse(userid)}&status=2`, myConfig)
                 .then((response) => {
                    
                     if (response.data.code === 1) {
@@ -97,7 +102,7 @@ function ProposalTab(props) {
 
         const DeclinedProposal = () => {
             axios
-                .get(`${baseUrl}/tl/getProposalTl?id=${JSON.parse(userid)}&status=3`)
+                .get(`${baseUrl}/tl/getProposalTl?id=${JSON.parse(userid)}&status=3`, myConfig)
                 .then((response) => {
                    
                     if (response.data.code === 1) {

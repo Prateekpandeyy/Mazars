@@ -55,10 +55,15 @@ const Generated = () => {
     useEffect(() => {
         getProposalList();
     }, []);
-
+    const token = window.localStorage.getItem("tlToken")
+    const myConfig = {
+        headers : {
+         "uit" : token
+        }
+      }
     const getProposalList = () => {
         axios
-            .get(`${baseUrl}/admin/getPaymentDetail?tl_id=${JSON.parse(userid)}&invoice=1`)
+            .get(`${baseUrl}/tl/getPaymentDetail?tl_id=${JSON.parse(userid)}&invoice=1`, myConfig)
             .then((res) => {
               
                 if (res.data.code === 1) {

@@ -114,7 +114,7 @@ let history = useHistory()
 
     const getAssignment = () => {
       axios
-        .get(`${baseUrl}/admin/getAssignmentsCount?tl_id=${JSON.parse(userid)}`)
+        .get(`${baseUrl}/tl/getAssignmentsCount?tl_id=${JSON.parse(userid)}`, myConfig)
         .then((response) => {
         
           if (response.data.code === 1) {
@@ -137,7 +137,7 @@ let history = useHistory()
 
     const getPayment = () => {
       axios
-        .get(`${baseUrl}/admin/getAssignmentsPaymentCount?tl_id=${JSON.parse(userid)}`)
+        .get(`${baseUrl}/tl/getAssignmentsPaymentCount?tl_id=${JSON.parse(userid)}`, myConfig)
         .then((response) => {
          
           if (response.data.code === 1) {

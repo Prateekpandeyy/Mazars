@@ -20,7 +20,7 @@ function RejectedModal({
   assignNo,
   getPaymentStatus,
 }) {
-
+  const token = window.localStorage.getItem("tlToken")
   const userId = window.localStorage.getItem("tlkey");
   const { handleSubmit, register, reset, errors } = useForm({
     resolver: yupResolver(Schema),
@@ -40,6 +40,9 @@ function RejectedModal({
     axios({
       method: "POST",
       url: `${baseUrl}/tl/declinePayment`,
+      headers: {
+        uit : token
+      },
       data: formData,
     })
       .then(function (response) {

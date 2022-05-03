@@ -28,14 +28,19 @@ function AssignmentForm(props) {
   const [data, setData] = useState([]);
   const [store, setStore] = useState(null);
   const [item, setItem] = useState(null);
-
+  const token = window.localStorage.getItem("tlToken")
+  const myConfig = {
+    headers : {
+     "uit" : token
+    }
+  }
   useEffect(() => {
     getAssignmentList();
   }, []);
 
   const getAssignmentList = () => {
     axios
-      .get(`${baseUrl}/tl/getUploadedProposals?assign_no=${id}`)
+      .get(`${baseUrl}/tl/getUploadedProposals?assign_no=${id}`, myConfig)
       .then((res) => {
       
         if (res.data.code === 1) {
@@ -58,6 +63,9 @@ function AssignmentForm(props) {
     axios({
       method: "POST",
       url: `${baseUrl}/tl/getstagesinfo`,
+      headers: {
+        uit : token
+      },
       data: formData,
     })
       .then(function (response) {
@@ -88,6 +96,9 @@ function AssignmentForm(props) {
     axios({
       method: "POST",
       url: `${baseUrl}/tl/addAssignmentStages`,
+      headers: {
+        uit : token
+      },
       data: formData,
     })
       .then(function (response) {

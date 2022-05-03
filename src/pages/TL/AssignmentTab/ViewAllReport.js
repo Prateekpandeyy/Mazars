@@ -25,20 +25,21 @@ function ViewReport({
   const userId = window.localStorage.getItem("tlkey");
   const [data, setData] = useState([]);
   const [docData, setDocData] = useState({});
-
-
+  const [ViewDiscussion, setViewDiscussion] = useState(false);
   const [nestedModal, setNestedModal] = useState(false);
+  const token = window.localStorage.getItem("tlToken")
+
   const toggleNested = (key) => {
     setNestedModal(!nestedModal);
     setDocData(key)
   }
 
-  const [ViewDiscussion, setViewDiscussion] = useState(false);
+ 
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
     // setDocData(report)
   }
-
+  
 
   //check
   const toggleDiscard = (id) => {
@@ -68,6 +69,9 @@ function ViewReport({
     axios({
       method: "POST",
       url: `${baseUrl}/tl/draftDiscussion`,
+      headers : {
+        uit : token
+      },
       data: formData,
     })
       .then(function (response) {
@@ -98,6 +102,9 @@ function ViewReport({
     axios({
       method: "POST",
       url: `${baseUrl}/tl/getstagesinfo`,
+      headers : {
+        uit : token 
+      },
       data: formData,
     })
       .then(function (response) {

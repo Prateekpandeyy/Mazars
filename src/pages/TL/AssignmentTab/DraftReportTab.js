@@ -45,6 +45,12 @@ function AssignmentTab() {
     const [dataItem, setDataItem] = useState({});
     const [report, setReport] = useState();
     const [reportModal, setReportModal] = useState(false);
+    const token = window.localStorage.getItem("tlToken")
+    const myConfig = {
+        headers : {
+         "uit" : token
+        }
+      }
     var rowStyle2 = {}
     var clcomp= {
       color: "green"
@@ -76,7 +82,7 @@ function AssignmentTab() {
 
     const getAssignmentList = () => {
         axios
-            .get(`${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(userid)}&assignment_status=Draft_Report&stages_status=1`)
+            .get(`${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(userid)}&assignment_status=Draft_Report&stages_status=1`, myConfig)
             .then((res) => {
                 
                 if (res.data.code === 1) {
@@ -92,7 +98,7 @@ function AssignmentTab() {
         const getSubCategory = () => {
             if(selectedData != undefined){
                 axios
-                .get(`${baseUrl}/customers/getCategory?pid=${selectedData}`)
+                .get(`${baseUrl}/tl/getCategory?pid=${selectedData}`, myConfig)
                 .then((res) => {
                     
                     if (res.data.code === 1) {
@@ -415,7 +421,7 @@ rowStyle2 = (row, index) => {
                     userid
                 )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
                 }&assignment_status="Draft_Report"&stages_status=1
-               &pcat_id=${selectedData}`
+               &pcat_id=${selectedData}`, myConfig
             )
             .then((res) => {
                 

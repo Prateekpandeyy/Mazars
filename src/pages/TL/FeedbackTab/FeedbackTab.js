@@ -28,7 +28,7 @@ const history = useHistory();
 
   const getFeedback = () => {
     axios
-      .get(`${baseUrl}/customers/getFeedback?tl_id=${JSON.parse(userid)}`)
+      .get(`${baseUrl}/tl/getFeedback?tl_id=${JSON.parse(userid)}`)
       .then((res) => {
       
         if (res.data.code === 1) {

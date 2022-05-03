@@ -88,14 +88,19 @@ function TeamFilter(props) {
     setTax2([])
     getData();
   };
-
+  const token = window.localStorage.getItem("tlToken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
   const onSubmit = (data) => {
 
 
     if (AllQuery == "AllQuery") {
       axios
         .get(
-          `${baseUrl}/tl/getIncompleteQues?id=${JSON.parse(userid)}&status=${data.p_status}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&pcat_id=${selectedData}`
+          `${baseUrl}/tl/getIncompleteQues?id=${JSON.parse(userid)}&status=${data.p_status}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&pcat_id=${selectedData}`, myConfig
         )
         .then((res) => {
          
@@ -118,7 +123,7 @@ function TeamFilter(props) {
           `${baseUrl}/tl/pendingQues?id=${JSON.parse(
             userid
           )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&pcat_id=${selectedData}`
-        )
+        , myConfig)
         .then((res) => {
         
           if (res.data.code === 1) {
@@ -137,7 +142,7 @@ function TeamFilter(props) {
       axios
         .get(
           `${baseUrl}/tl/getIncompleteQues?id=${JSON.parse(userid)}&status=${status1}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&pcat_id=${selectedData}`
-        )
+        , myConfig)
         .then((res) => {
         
           if (res.data.code === 1) {
@@ -153,7 +158,7 @@ function TeamFilter(props) {
       axios
         .get(
           `${baseUrl}/tl/declinedQueries?id=${JSON.parse(userid)}&status=${data.p_status}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&pcat_id=${selectedData}`
-        )
+        , myConfig)
         .then((res) => {
 
           if (res.data.code === 1) {
@@ -171,7 +176,7 @@ function TeamFilter(props) {
           `${baseUrl}/tl/getCompleteQues?id=${JSON.parse(
             userid
           )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&pcat_id=${selectedData}`
-        )
+        , myConfig)
         .then((res) => {
 
           if (res.data.code === 1) {
@@ -190,7 +195,7 @@ function TeamFilter(props) {
           `${baseUrl}/tl/getProposalTl?id=${JSON.parse(
             userid
           )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
-          }&status=${data.p_status}&pcat_id=${selectedData}`
+          }&status=${data.p_status}&pcat_id=${selectedData}`, myConfig
         )
         .then((res) => {
 
@@ -210,7 +215,7 @@ function TeamFilter(props) {
         `${baseUrl}/tl/getProposalTl?id=${JSON.parse(
           userid
         )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
-        }&status=${data.p_status}&pcat_id=${selectedData}`
+        }&status=${data.p_status}&pcat_id=${selectedData}`, myConfig
       )
       .then((res) => {
        
@@ -228,7 +233,7 @@ function TeamFilter(props) {
         `${baseUrl}/tl/getProposalTl?id=${JSON.parse(
           userid
         )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
-        }&status=1&pcat_id=${selectedData}`
+        }&status=1&pcat_id=${selectedData}`, myConfig
       )
       .then((res) => {
        
@@ -248,7 +253,7 @@ function TeamFilter(props) {
           `${baseUrl}/tl/getProposalTl?id=${JSON.parse(
             userid
           )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
-          }&status=2&pcat_id=${selectedData}`
+          }&status=2&pcat_id=${selectedData}`, myConfig
         )
         .then((res) => {
          
@@ -268,7 +273,7 @@ function TeamFilter(props) {
         `${baseUrl}/tl/getProposalTl?id=${JSON.parse(
           userid
         )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=3&pcat_id=${selectedData}`
-      )
+      , myConfig)
       .then((res) => {
 
         if (res.data.code === 1) {
@@ -286,7 +291,7 @@ function TeamFilter(props) {
           `${baseUrl}/tl/getUploadedProposals?uid=${JSON.parse(
             userid
           )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=${data.p_status}&pcat_id=${selectedData}`
-        )
+        , myConfig)
         .then((res) => {
 
           if (res.data.code === 1) {
@@ -304,7 +309,7 @@ function TeamFilter(props) {
           `${baseUrl}/tl/getUploadedProposals?uid=${JSON.parse(
             userid
           )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=1&pcat_id=${selectedData}`
-        )
+        , myConfig)
         .then((res) => {
          
           if (res.data.code === 1) {
@@ -322,7 +327,7 @@ function TeamFilter(props) {
           `${baseUrl}/tl/getUploadedProposals?uid=${JSON.parse(
             userid
           )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=2&pcat_id=${selectedData}`
-        )
+        , myConfig)
         .then((res) => {
 
           if (res.data.code === 1) {
