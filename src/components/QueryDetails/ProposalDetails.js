@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import CommonServices from "../../common/common";
 import { baseUrl, baseUrl3 } from "../../config/config";
 import DescriptionOutlinedIcon from "@material-ui/icons/DescriptionOutlined";
 
+import axios from "axios";
 import { Markup } from 'interweave';
 function ProposalDetails({
   diaplayProposal,
@@ -38,10 +39,25 @@ function ProposalDetails({
   } = diaplayProposal;
 
   const { tlname, date_of_allocation } = diaplayHistory;
-  console.log("overDueDetails", overDue)
+  
   var nfObject = new Intl.NumberFormat('hi-IN')
-
-
+  const token = window.localStorage.getItem("clientToken")
+    
+  const myConfig = {
+      headers : {
+       "uit" : token
+      },
+      responseType: 'blob'
+    }
+const downloadpdf = () => {
+  axios.get(`${baseUrl}/customers/dounloadpdf?id=${p.id}` , myConfig)
+.then((res) => {
+  console.log("res", res)
+  if(res.status === 200){
+    window.open(URL.createObjectURL(res.data));
+  }
+})
+}
   //installment
   const installAmount = (data) => {
     var item = data.split(',')
@@ -174,13 +190,16 @@ let nd = 0;
                 <div style={{ display: "flex", justifyContent: "space-between" }}>
                   {CommonServices.removeTime(proposal_date)}
                   {proposal_date && (
-                    <a
-                      className="customBtn"
-                      href={`${baseUrl}/customers/dounloadpdf?id=${p.id}`}
-                      role="button"
-                    >
+                    // <a
+                    //   className="customBtn"
+                    //   href={`${baseUrl}/customers/dounloadpdf?id=${p.id}`}
+                    //   role="button"
+                    // >
+                    //   Download
+                    // </a>
+                    <button className="customBtn" onClick={() => downloadpdf()}>
                       Download
-                    </a>
+                      </button>
                   )}
                 </div>
               </td>

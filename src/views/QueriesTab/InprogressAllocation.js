@@ -25,7 +25,7 @@ import {Modal, ModalHeader, ModalBody} from 'reactstrap';
 import MessageIcon, {DeleteIcon, EditQuery, ViewDiscussionIcon, HelpIcon, 
   UploadDocument, FeedBackICon} from "../../components/Common/MessageIcon";
   import DataTablepopulated from "../../components/DataTablepopulated/DataTabel";
-
+import { useHistory } from "react-router";
 function InprogressAllocation() {
 
   const alert = useAlert();
@@ -39,6 +39,7 @@ function InprogressAllocation() {
   const [ViewDiscussion, setViewDiscussion] = useState(false);
   const [openManual, setManual] = useState(false)
   const token = window.localStorage.getItem("clientToken")
+  let history = useHistory()
   const myConfig = {
       headers : {
        "uit" : token
@@ -72,6 +73,9 @@ function InprogressAllocation() {
           setCountQueries(res.data.result.length);
           setRecords(res.data.result.length);
         }
+        else if(res.data.code === 0){
+          CommonServices.clientLogout(history)
+                    }
       });
   };
 

@@ -34,7 +34,12 @@ const hist = useHistory();
       setViewDiscussion(!ViewDiscussion);
       setAssignNo(key)
   }
-
+  const token = window.localStorage.getItem("tlToken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
 
 
   useEffect(() => {
@@ -59,7 +64,7 @@ const hist = useHistory();
   };
   const getInCompleteAssingment = () => {
     axios
-      .get(`${baseUrl}/tl/pendingAllocation?uid=${JSON.parse(userid)}`)
+      .get(`${baseUrl}/tl/pendingAllocation?uid=${JSON.parse(userid)}`, myConfig)
       .then((res) => {
 
         if (res.data.code === 1) {

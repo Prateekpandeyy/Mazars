@@ -26,7 +26,7 @@ import MessageIcon, {DeleteIcon, EditQuery, ViewDiscussionIcon, HelpIcon,
 import './index.css';
 import DataTablepopulated from "../../components/DataTablepopulated/DataTabel";
 
-
+import {useHistory} from 'react-router-dom';
 function AllQueriesData() {
     const userId = window.localStorage.getItem("userid");
     const [query, setQuery] = useState([]);
@@ -39,7 +39,9 @@ function AllQueriesData() {
     const [assignNo, setAssignNo] = useState('');
     const [ViewDiscussion, setViewDiscussion] = useState(false);
     const [openManual, setManual] = useState(false)
+    let history = useHistory();
     const token = window.localStorage.getItem("clientToken")
+    
     const myConfig = {
         headers : {
          "uit" : token
@@ -86,7 +88,9 @@ function AllQueriesData() {
                     setCountQueries(res.data.result.length);
                     setRecords(res.data.result.length);
                 }
-               
+                else if(res.data.code === 0){
+                    CommonServices.clientLogout(history)
+                              }
             });
     };
 

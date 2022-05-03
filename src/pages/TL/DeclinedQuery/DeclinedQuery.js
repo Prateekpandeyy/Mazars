@@ -20,7 +20,12 @@ function DeclinedQuery({ CountIncomplete }) {
   const [incompleteData, setInCompleteData] = useState([]);
   const [records, setRecords] = useState([]);
 
-
+  const token = window.localStorage.getItem("tlToken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
 
   useEffect(() => {
     getInCompleteAssingment();
@@ -28,7 +33,7 @@ function DeclinedQuery({ CountIncomplete }) {
 
   const getInCompleteAssingment = () => {
     axios
-      .get(`${baseUrl}/tl/declinedQueries?id=${JSON.parse(userid)}`)
+      .get(`${baseUrl}/tl/declinedQueries?id=${JSON.parse(userid)}`, myConfig)
       .then((res) => {
       
         if (res.data.code === 1) {
