@@ -60,7 +60,12 @@ const Report = () => {
   var kk = []
   var pp = []
   var vv = []
-
+  const token = window.localStorage.getItem("tlToken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
   var allData1 = {}
   var dir = []
   var indir = []
@@ -88,7 +93,7 @@ const [item2, setItem2] = useState(current_date)
   useEffect(() => {
     const getSubCategory = async () => {
 
-      await axios.get(`${baseUrl}/customers/getCategory?pid=${store}`).then((res) => {
+      await axios.get(`${baseUrl}/customers/getCategory?pid=${store}`, myConfig).then((res) => {
 
         if (res.data.code === 1) {
           setTax2(res.data.result)
@@ -109,7 +114,7 @@ getupdateQuery()
   }, [taxId, taxxId, cname])
 const getupdateQuery = () => {
  
-     axios.get(`${baseUrl}/admin/getAllQueryList?customer=${cname}`)
+     axios.get(`${baseUrl}/admin/getAllQueryList?customer=${cname}`, myConfig)
     .then((res) => {
       if (res.data.code === 1) {
        
@@ -141,7 +146,7 @@ const getupdateQuery = () => {
 //     });
 //   };
 const getTeamLeader = () => {
-  axios.get(`${baseUrl}/tl/getTeamLeader`).then((res) => {
+  axios.get(`${baseUrl}/tl/getTeamLeader`, myConfig).then((res) => {
   
     var dd = []
     if (res.data.code === 1) {
@@ -165,7 +170,7 @@ const getTeamLeader = () => {
 
   const getTaxProf = () => {
     axios
-      .get(`${baseUrl}/tp/getTaxProfessional?tl_id=${JSON.parse(userid)}`)
+      .get(`${baseUrl}/tp/getTaxProfessional?tl_id=${JSON.parse(userid)}`, myConfig)
       .then((res) => {
       
         if (res.data.code === 1) {
@@ -188,7 +193,7 @@ const getTeamLeader = () => {
 
   const getData = () => {
     axios
-    .get(`${baseUrl}/tl/allClient?tl_id=${JSON.parse(userid)}`)
+    .get(`${baseUrl}/tl/allClient?tl_id=${JSON.parse(userid)}`, myConfig)
       .then((res) => {
        
         var a = res.data.result;
@@ -334,6 +339,9 @@ const resetData = () => {
  axios({
    method : "POST",
    url : `${baseUrl}/report/generateReport?t=${JSON.stringify(Math.floor(Math.random() * 110000))}`,
+  headers  : {
+uit  : token
+  },
    data : formData
 
  })
@@ -445,6 +453,9 @@ const resetData = () => {
 axios({
  method : "POST",
  url : `${baseUrl}/report/generateReport?t=${JSON.stringify(Math.floor(Math.random() * 110000))}`,
+ headers  : {
+  uit  : token
+    },
  data : formData
 
 })
