@@ -145,7 +145,7 @@ function AddFreshAssingment(props) {
         .post(`${baseUrl}/customers/PostQuestion`, formData, {
           headers: {
             "content-type": "multipart/form-data",
-            uid: token
+            uit: token
             // 'Authorization': 'JWT fefege...'
           },
         })
