@@ -63,7 +63,7 @@ function VerifyOtp({ email, uid, loading, setLoading }) {
         if (response.data.code == 1) {
           setLoading(false)
           Alerts.SuccessLogin("Logged in successfully.")
-          localStorage.setItem("tpkey", JSON.stringify(response.data["user id"]));
+          localStorage.setItem("tpkey", JSON.stringify(response.data.user_id));
           localStorage.setItem("tpEmail", JSON.stringify(response.data.name));
           localStorage.setItem("tptoken", response.data.token)
           sessionStorage.setItem("sessionTpid", JSON.stringify(response.data["user id"]))
