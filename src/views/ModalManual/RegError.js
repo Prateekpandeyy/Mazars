@@ -10,8 +10,8 @@ import forgetImg from '../ManualImg/forget.png';
 import forgetotpImg from '../ManualImg/forgetOtpImg.png';
 import forgetFreshImg from '../ManualImg/forgetFresh.png';
 import successLoginImg from '../ManualImg/successLoginImg.png';    
-import errorLoginImg from '../ManualImg/errorLoginImg.jpeg';
-import errorLoginImg2 from '../ManualImg/errorLoginImg2.jpeg';
+import errorLoginImg from '../ManualImg/errorLoginImg.png';
+import errorLoginImg2 from '../ManualImg/errorLoginImg2.png';
 const useStyle = makeStyles(theme => ({
     root : {
         backgroundColor : "green", 
