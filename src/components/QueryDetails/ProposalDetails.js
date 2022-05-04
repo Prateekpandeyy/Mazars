@@ -54,7 +54,7 @@ const downloadpdf = () => {
 .then((res) => {
   console.log("res", res)
   if(res.status === 200){
-    window.open(URL.createObjectURL(res.data));
+     window.open(URL.createObjectURL(res.data));
   }
 })
 }

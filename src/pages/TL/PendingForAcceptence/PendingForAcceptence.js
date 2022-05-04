@@ -183,6 +183,9 @@ function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
     axios({
       method: "POST",
       url: `${baseUrl}/tl/AcceptRejectQuery`,
+      headers : {
+        uit : token
+      },
       data: formData,
     })
       .then(function (response) {

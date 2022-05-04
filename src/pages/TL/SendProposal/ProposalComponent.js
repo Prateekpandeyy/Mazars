@@ -51,12 +51,18 @@ function ProposalComponent(props) {
   const [company2, setCompany2] = useState("")
   var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
   const [item] = useState(current_date);
+  const token = window.localStorage.getItem("tlToken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
   const getQuery = () => {
     axios
       .get(
         `${baseUrl}/tl/pendingTlProposal?tl_id=${JSON.parse(
           userid
-        )}&assign_id=${id}`
+        )}&assign_id=${id}`, myConfig
       )
       .then((res) => {
         if (res.data.code === 1) {
@@ -69,7 +75,7 @@ function ProposalComponent(props) {
   };
   const getCompany = () => {
     axios.get(
-      `${baseUrl}/tl/getcompany`
+      `${baseUrl}/tl/getcompany`, myConfig
     )
     .then((res) => {
       console.log("response", res)
@@ -85,7 +91,7 @@ function ProposalComponent(props) {
 
   useEffect(() => {
     const getUser = async () => {
-      const res = await axios.get(`${baseUrl}/customers/allname?id=${id}`);
+      const res = await axios.get(`${baseUrl}/customers/allname?id=${id}`, myConfig);
       setCustName(res.data.name);
       setCustId(res.data.id);
     };
@@ -179,6 +185,9 @@ function ProposalComponent(props) {
                 axios({
                   method: "POST",
                   url: `${baseUrl}/tl/uploadProposal`,
+                  headers : {
+                    uit : token
+                  },
                   data: formData,
                 })
                   .then(function (response) {
@@ -204,6 +213,9 @@ function ProposalComponent(props) {
         axios({
           method: "POST",
           url: `${baseUrl}/tl/uploadProposal`,
+          headers : {
+            uit : token
+          },
           data: formData,
         })
           .then(function (response) {

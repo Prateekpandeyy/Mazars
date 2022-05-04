@@ -20,7 +20,12 @@ function QueriesTab(props) {
   useLayoutEffect(() => {
     setTabIndex(props.location.index || 0);
   }, [props.location.index]);
-
+  const token = window.localStorage.getItem("tlToken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
 
 
   
@@ -35,7 +40,7 @@ function QueriesTab(props) {
 
   const getAllPaid = () => {
     axios
-      .get(`${baseUrl}/tl/getUploadedProposals?uid=${JSON.parse(userId)}`)
+      .get(`${baseUrl}/tl/getUploadedProposals?uid=${JSON.parse(userId)}`, myConfig)
       .then((res) => {
        
         setAllPayment(res.data.result.length);
@@ -44,7 +49,7 @@ function QueriesTab(props) {
 
   const getPaid = () => {
     axios
-      .get(`${baseUrl}/tl/getUploadedProposals?uid=${JSON.parse(userId)}&status=1`)
+      .get(`${baseUrl}/tl/getUploadedProposals?uid=${JSON.parse(userId)}&status=1`, myConfig)
       .then((res) => {
        
         setPaid(res.data.result.length);
@@ -53,7 +58,7 @@ function QueriesTab(props) {
 
   const getUnpaid = () => {
     axios
-      .get(`${baseUrl}/tl/getUploadedProposals?uid=${JSON.parse(userId)}&status=2`)
+      .get(`${baseUrl}/tl/getUploadedProposals?uid=${JSON.parse(userId)}&status=2`, myConfig)
       .then((res) => {
        
         setUnpaid(res.data.result.length);

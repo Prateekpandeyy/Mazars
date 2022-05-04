@@ -75,6 +75,16 @@ const Generated = () => {
     };
 
 
+  
+//   const downloadpdf = () => {
+//     axios.get(`${baseUrl}/customers/dounloadpdf?id=${p.id}` , myConfig)
+//   .then((res) => {
+//     console.log("res", res)
+//     if(res.status === 200){
+//        window.open(URL.createObjectURL(res.data));
+//     }
+//   })
+//   }
     const columns = [
         {
             text: "S.No",

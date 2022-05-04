@@ -29,7 +29,7 @@ let history = useHistory()
   });
 
   const [loading, setLoading] = useState(false);
-
+  const token = window.localStorage.getItem("clientToken")
   const onSubmit = (value) => {
  setLoading(true)
 
@@ -40,6 +40,9 @@ let history = useHistory()
     axios({
       method: "POST",
       url: `${baseUrl}/customers/ProposalAccept`,
+      headers : {
+        uit : token
+      },
       data: formData,
     })
       .then(function (response) {

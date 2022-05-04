@@ -25,7 +25,7 @@ function RejectedModal({
   });
   const [loading, setLoading] = useState(false);
   const { id, allocation_id } = pay;
-
+  const token = window.localStorage.getItem("tlToken")
   
 
   const onSubmit = (value) => {
@@ -42,6 +42,9 @@ function RejectedModal({
     axios({
       method: "POST",
       url: `${baseUrl}/tl/AcceptRejectQuery`,
+      headers : {
+        uit : token
+      },
       data: formData,
     })
       .then(function (response) {

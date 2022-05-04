@@ -67,7 +67,12 @@ function QueryAssingment() {
   var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
  
   const [item] = useState(current_date);
-
+  const token = window.localStorage.getItem("tlToken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
 
   useEffect(() => {
     getTaxProfession();
@@ -76,7 +81,7 @@ function QueryAssingment() {
 
   const getTaxProfession = () => {
     axios
-      .get(`${baseUrl}/tp/getTaxProfessional?tl_id=${JSON.parse(userId)}&&q_id=${id}`)
+      .get(`${baseUrl}/tp/getTaxProfessional?tl_id=${JSON.parse(userId)}&&q_id=${id}`, myConfig)
       .then((res) => {
         
         if (res.data.code === 1) {
@@ -86,7 +91,7 @@ function QueryAssingment() {
   };
 
   const getQueryData = () => {
-    axios.get(`${baseUrl}/tl/GetQueryDetails?id=${id}`).then((res) => {
+    axios.get(`${baseUrl}/tl/GetQueryDetails?id=${id}`, myConfig).then((res) => {
       
       if (res.data.code === 1) {
         setQuerData({
@@ -105,7 +110,7 @@ function QueryAssingment() {
 
   const getQuery = () => {
     axios
-      .get(`${baseUrl}/tl/TlCheckIfAssigned?assignno=${queryNo}`)
+      .get(`${baseUrl}/tl/TlCheckIfAssigned?assignno=${queryNo}`, myConfig)
       .then((res) => {
         
         if (res.data.code === 1) {
@@ -156,6 +161,9 @@ function QueryAssingment() {
     axios({
       method: "POST",
       url: `${baseUrl}/tl/AddQueryAssignment`,
+      headers : {
+        uit : token
+      },
       data: formData,
     })
       .then(function (response) {

@@ -350,6 +350,7 @@ function AllProposal() {
           setViewProposalModal = {setViewProposalModal}
           viewProposalModal = {viewProposalModal}
           showProposalModal2 = {showProposalModal2}
+          panel = "teamleader"
           proposalId = {proposalId}/>
 
                 </CardBody>

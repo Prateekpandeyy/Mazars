@@ -64,12 +64,18 @@ const wrong = {
   background: "blue",
   border: "3px solid red"
 }
+const token = window.localStorage.getItem("tlToken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
 
   const { query, name, description, fixed_amount,
     due_date, installment_amount } = proposal;
  const getCompany = () => {
     axios.get(
-      `${baseUrl}/tl/getcompany`
+      `${baseUrl}/tl/getcompany`, myConfig
     )
     .then((res) => {
       console.log("response", res)
@@ -83,7 +89,7 @@ const wrong = {
 
 
   const getQuery = () => {
-    axios.get(`${baseUrl}/tl/getProposalDetail?id=${id}`).then((res) => {
+    axios.get(`${baseUrl}/tl/getProposalDetail?id=${id}`, myConfig).then((res) => {
 
       if (res.data.code === 1) {
         setCompany2(res.data.result.company)
@@ -119,7 +125,7 @@ setValue2(res.data.result.description)
 
   useEffect(() => {
     const getUser = async () => {
-      const res = await axios.get(`${baseUrl}/customers/allname?id=${id}`);
+      const res = await axios.get(`${baseUrl}/customers/allname?id=${id}`, myConfig);
       setCustId(res.data.id);
     };
     getUser();
@@ -205,6 +211,9 @@ console.log("value2", value2.length)
                 axios({
                   method: "POST",
                   url: `${baseUrl}/tl/updateProposal`,
+                  headers: {
+                    uit : token
+                  },
                   data: formData,
                 })
                   .then(function (response) {
@@ -230,6 +239,9 @@ console.log("value2", value2.length)
         axios({
           method: "POST",
           url: `${baseUrl}/tl/updateProposal`,
+          headers: {
+            uit : token
+          },
           data: formData,
         })
           .then(function (response) {

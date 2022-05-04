@@ -46,6 +46,11 @@ function EditQuery(props) {
     const [val3, setVal3] = useState()
     const [uploadOrDownloadCount, setUploadOrDownloadCount] = useState(10);
     const token = window.localStorage.getItem("clientToken")
+    const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
   const purPoseQuery = (e) => {
     setSelectError("")
     setPurposeOption(e)
@@ -64,7 +69,7 @@ function EditQuery(props) {
  
   const getAssementYear = () => {
     axios
-      .get(`${baseUrl}/customers/getAssesmentYear`)
+      .get(`${baseUrl}/customers/getAssesmentYear`, myConfig)
       .then((res) => {
      
         if (res.data.code === 1) {
@@ -73,7 +78,7 @@ function EditQuery(props) {
       });
   };
   const getQuery = () => {
-    axios.get(`${baseUrl}/customers/getQueryDetails?id=${id}`).then((res) => {
+    axios.get(`${baseUrl}/customers/getQueryDetails?id=${id}`, myConfig).then((res) => {
 
       if (res) {
         var specific = res.data.result[0].specific_query;

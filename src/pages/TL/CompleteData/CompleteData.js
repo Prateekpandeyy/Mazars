@@ -48,19 +48,25 @@ const hist = useHistory();
   const toggle = (key) => {
   
     setModal(!modal);
-
-    fetch(`${baseUrl}/customers/getQueryHistory?q_id=${key}&uid=${JSON.parse(userid)}`, {
-      method: "GET",
-      headers: new Headers({
-        Accept: "application/vnd.github.cloak-preview",
-      }),
-    })
-      .then((res) => res.json())
-      .then((response) => {
+axios.get(`${baseUrl}/tl/getQueryHistory?q_id=${key}&uid=${JSON.parse(userid)}`, myConfig)
+.then((res) => {
+  console.log("response", res)
+  if(res.data.code === 1){
+    setHistory(res.data.result)
+  }
+})
+    // fetch(`${baseUrl}/tl/getQueryHistory?q_id=${key}&uid=${JSON.parse(userid)}`, {
+    //   method: "GET",
+    //   headers: new Headers({
+    //     Accept: "application/vnd.github.cloak-preview",
+    //   }),
+    // })
+    //   .then((res) => res.json())
+    //   .then((response) => {
      
-        setHistory(response.result);
-      })
-      .catch((error) => console.log(error));
+    //     setHistory(response.result);
+    //   })
+    //   .catch((error) => console.log(error));
   };
   const getInCompleteAssingment = () => {
     axios
@@ -268,7 +274,7 @@ Swal.fire({
           hist.push(`/teamleader/queryassing/${id}`)
         }else if(result.dismiss == 'cancel'){
           
-           axios.get(`${baseUrl}/tl/workby?uid=${JSON.parse(userid)}&qid=${id}`).then((res) => {
+           axios.get(`${baseUrl}/tl/workby?uid=${JSON.parse(userid)}&qid=${id}`, myConfig).then((res) => {
                    if(res.data.code === 1){
                     //  hist.push(`/teamleader/proposal`)
                     updateTab(3);

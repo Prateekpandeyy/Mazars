@@ -54,7 +54,7 @@ function ProposalTab() {
         setAssignNo(key)
     }
  const showProposalModal2 = (e) => {
-    console.log("eeee")
+
     setViewProposalModal(!viewProposalModal);
     setProposalId(e)
   }
@@ -243,7 +243,7 @@ const rightAli = {
             formatter: function nameFormatter(cell, row){
                 var nfObject = new Intl.NumberFormat('hi-IN')
                  var x = row.accepted_amount;
-                 console.log(nfObject.format(x))
+
                  return(
                    <p className="rightAli">{nfObject.format(x)}</p>
                  )
@@ -396,6 +396,7 @@ const rightAli = {
           setViewProposalModal = {setViewProposalModal}
           viewProposalModal = {viewProposalModal}
           showProposalModal2 = {showProposalModal2}
+          panel = "client"
           proposalId = {proposalId}/>
              <Modal isOpen={openManual} toggle={needHelp} style={{display : "block", position: "absolute", left:"280px"}} size="lg">
                         <ModalHeader toggle={needHelp}>Mazars</ModalHeader>
