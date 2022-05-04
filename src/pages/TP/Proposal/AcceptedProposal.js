@@ -25,6 +25,12 @@ function AcceptedProposal() {
     const [proposalId, setProposalId] = useState()
     const [ViewDiscussion, setViewDiscussion] = useState(false);
     const [assignNo, setAssignNo] = useState('');
+    const token = window.localStorage.getItem("tptoken")
+    const myConfig = {
+        headers : {
+         "uit" : token
+        }
+      }
     const showProposalModal2 = (e) => {
         console.log("eeee")
         setViewProposalModal(!viewProposalModal);
@@ -43,7 +49,7 @@ function AcceptedProposal() {
 
     const getProposalList = () => {
         axios
-            .get(`${baseUrl}/tl/getProposalTl?tp_id=${JSON.parse(userid)}&status=2`)
+            .get(`${baseUrl}/tl/getProposalTl?tp_id=${JSON.parse(userid)}&status=2`, myConfig)
             .then((res) => {
             
                 if (res.data.code === 1) {

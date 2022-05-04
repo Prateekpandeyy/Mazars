@@ -33,14 +33,19 @@ function AllQuery() {
         setViewDiscussion(!ViewDiscussion);
         setAssignNo(key)
     }
-
+    const token = window.localStorage.getItem("tptoken")
+    const myConfig = {
+        headers : {
+         "uit" : token
+        }
+      }
     useEffect(() => {
         getInCompleteAssingment();
     }, []);
 
     const getInCompleteAssingment = () => {
         axios
-            .get(`${baseUrl}/tl/getIncompleteQues?tp_id=${JSON.parse(userid)}`)
+            .get(`${baseUrl}/tl/getIncompleteQues?tp_id=${JSON.parse(userid)}`, myConfig)
             .then((res) => {
               
                 if (res.data.code === 1) {

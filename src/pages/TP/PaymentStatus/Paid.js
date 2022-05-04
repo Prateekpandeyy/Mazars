@@ -53,7 +53,12 @@ function AllPayment() {
         setAssignNo(key.assign_no)
     };
 
-
+    const token = window.localStorage.getItem("tptoken")
+    const myConfig = {
+        headers : {
+         "uit" : token
+        }
+      }
     useEffect(() => {
         getPaymentStatus();
     }, []);
@@ -63,7 +68,7 @@ function AllPayment() {
         setAssignNo(key)
     }
     const getPaymentStatus = () => {
-        axios.get(`${baseUrl}/tl/getUploadedProposals?tp_id=${JSON.parse(userid)}&status=2`).then((res) => {
+        axios.get(`${baseUrl}/tl/getUploadedProposals?tp_id=${JSON.parse(userid)}&status=2`, myConfig).then((res) => {
           
             if (res.data.code === 1) {
                 setPayment(res.data.result);

@@ -29,10 +29,20 @@ function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
     id: "",
     allocation_id: "",
   });
-
+  const token = window.localStorage.getItem("tptoken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
   const [addPaymentModal, setPaymentModal] = useState(false);
   const rejectHandler = (key) => {
-   
+    const token = window.localStorage.getItem("tptoken")
+    const myConfig = {
+        headers : {
+         "uit" : token
+        }
+      }
     setPaymentModal(!addPaymentModal);
     setPay({
       id: key.id,
@@ -46,7 +56,7 @@ function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
 
   const getPendingforAcceptance = () => {
     axios
-      .get(`${baseUrl}/tl/pendingQues?tp_id=${JSON.parse(userid)}`)
+      .get(`${baseUrl}/tl/pendingQues?tp_id=${JSON.parse(userid)}`, myConfig)
       .then((res) => {
 
         if (res.data.code === 1) {

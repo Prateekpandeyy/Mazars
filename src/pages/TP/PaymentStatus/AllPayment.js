@@ -48,6 +48,12 @@ function AllPayment() {
     // End UseSatate 
     // Global Veriable
     var rowStyle2 = {}
+    const token = window.localStorage.getItem("tptoken")
+    const myConfig = {
+        headers : {
+         "uit" : token
+        }
+      }
     const rejectHandler = (key) => {
        
         setPaymentModal(!addPaymentModal);
@@ -65,7 +71,7 @@ function AllPayment() {
     }, []);
 
     const getPaymentStatus = () => {
-        axios.get(`${baseUrl}/tl/getUploadedProposals?tp_id=${JSON.parse(userid)}`).then((res) => {
+        axios.get(`${baseUrl}/tl/getUploadedProposals?tp_id=${JSON.parse(userid)}`, myConfig).then((res) => {
           
             if (res.data.code === 1) {
                 setPayment(res.data.result);

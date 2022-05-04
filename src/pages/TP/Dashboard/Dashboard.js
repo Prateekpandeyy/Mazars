@@ -71,13 +71,18 @@ let history = useHistory()
     paid,
     unpaid,
     totalpayment } = payment;
-
+    const token = window.localStorage.getItem("tptoken")
+    const myConfig = {
+        headers : {
+         "uit" : token
+        }
+      }
 
   useEffect(() => {
 
     const getAllQueries = () => {
       axios
-        .get(`${baseUrl}/tp/totalComplete?tp_id=${JSON.parse(userid)}`)
+        .get(`${baseUrl}/tp/totalComplete?tp_id=${JSON.parse(userid)}`, myConfig)
         .then((response) => {
        
           if (response.data.code === 1) {
@@ -110,7 +115,7 @@ let history = useHistory()
 
     const getAssignment = () => {
       axios
-        .get(`${baseUrl}/admin/getAssignmentsCount?tp_id=${JSON.parse(userid)}`)
+        .get(`${baseUrl}/admin/getAssignmentsCount?tp_id=${JSON.parse(userid)}`, myConfig)
         .then((response) => {
        
           if (response.data.code === 1) {
@@ -133,7 +138,7 @@ let history = useHistory()
 
     const getPayment = () => {
       axios
-        .get(`${baseUrl}/admin/getAssignmentsPaymentCount?tp_id=${JSON.parse(userid)}`)
+        .get(`${baseUrl}/admin/getAssignmentsPaymentCount?tp_id=${JSON.parse(userid)}`, myConfig)
         .then((response) => {
        
           if (response.data.code === 1) {

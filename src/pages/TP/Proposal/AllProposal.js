@@ -27,6 +27,12 @@ function AllProposal() {
     const [addPaymentModal, setPaymentModal] = useState(false);
     const [viewProposalModal, setViewProposalModal] = useState(false)
     const [proposalId, setProposalId] = useState()
+    const token = window.localStorage.getItem("tptoken")
+    const myConfig = {
+        headers : {
+         "uit" : token
+        }
+      }
     const chatHandler = (key) => {
        
         setPaymentModal(!addPaymentModal);
@@ -53,7 +59,7 @@ function AllProposal() {
 
     const getProposalList = () => {
         axios
-            .get(`${baseUrl}/tl/getProposalTl?tp_id=${JSON.parse(userid)}`)
+            .get(`${baseUrl}/tl/getProposalTl?tp_id=${JSON.parse(userid)}`, myConfig)
             .then((res) => {
               
                 if (res.data.code === 1) {

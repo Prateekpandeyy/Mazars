@@ -25,7 +25,12 @@ function QueriesTab(props) {
   const [declined, setDeclined] = useState("");
   const [bgColor, setbgColor] = useState("#55425F")
 
-
+  const token = window.localStorage.getItem("tptoken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
 
   const tableIndex = (index) => {
     setTabIndex(index)
@@ -66,7 +71,7 @@ function QueriesTab(props) {
   useEffect(() => {
     const AllQuery = () => {
       axios
-        .get(`${baseUrl}/tl/getIncompleteQues?tp_id=${JSON.parse(userid)}`)
+        .get(`${baseUrl}/tl/getIncompleteQues?tp_id=${JSON.parse(userid)}`, myConfig)
         .then((res) => {
          
           if (res.data.code === 1) {
@@ -77,7 +82,7 @@ function QueriesTab(props) {
 
     const getPendindForAccepttence = () => {
       axios
-        .get(`${baseUrl}/tl/pendingQues?tp_id=${JSON.parse(userid)}`)
+        .get(`${baseUrl}/tl/pendingQues?tp_id=${JSON.parse(userid)}`, myConfig)
         .then((res) => {
          
           if (res.data.code === 1) {
@@ -88,7 +93,7 @@ function QueriesTab(props) {
 
     const getIncomplete = () => {
       axios
-        .get(`${baseUrl}/tl/getIncompleteQues?tp_id=${JSON.parse(userid)}&status=1`)
+        .get(`${baseUrl}/tl/getIncompleteQues?tp_id=${JSON.parse(userid)}&status=1`, myConfig)
         .then((res) => {
          
           if (res.data.code === 1) {
@@ -101,7 +106,7 @@ function QueriesTab(props) {
      
       axios
      
-        .get(`${baseUrl}/tl/getIncompleteQues?tp_id=${JSON.parse(userid)}&status=2`)
+        .get(`${baseUrl}/tl/getIncompleteQues?tp_id=${JSON.parse(userid)}&status=2`, myConfig)
         .then((res) => {
     
           if (res.data.code === 1) {
@@ -114,7 +119,7 @@ function QueriesTab(props) {
     const Declined = () => {
    
       axios
-        .get(`${baseUrl}/tl/declinedQueries?tp_id=${JSON.parse(userid)}`)
+        .get(`${baseUrl}/tl/declinedQueries?tp_id=${JSON.parse(userid)}`, myConfig)
         .then((res) => {
          
           if (res.data.code === 1) {

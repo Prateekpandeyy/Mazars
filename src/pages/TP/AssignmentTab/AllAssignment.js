@@ -61,6 +61,12 @@ function AssignmentTab() {
   var clinpro = {
     color : "blue"
   }
+  const token = window.localStorage.getItem("tptoken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
   const ViewReport = (key) => {
   
     setReportModal(!reportModal);
@@ -80,7 +86,7 @@ function AssignmentTab() {
 
   const getAssignmentList = () => {
     axios
-      .get(`${baseUrl}/tl/getAssignments?tp_id=${JSON.parse(userid)}`)
+      .get(`${baseUrl}/tl/getAssignments?tp_id=${JSON.parse(userid)}`, myConfig)
       .then((res) => {
         
         if (res.data.code === 1) {

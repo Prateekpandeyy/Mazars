@@ -157,7 +157,7 @@ const getFeedbacktp = () => {
     .then((res) => {
       setLogo("taxprofessional/dashboard")
       if(res.data.result != undefined){
-        setfeedbackNumbertp(res.data.result[0].total)
+        // setfeedbackNumbertp(res.data.result[0].total)
         setLogo("/#/taxprofessional/dashboard")
       }
     });

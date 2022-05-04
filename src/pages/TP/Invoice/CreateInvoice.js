@@ -26,7 +26,12 @@ const CreateInvoice = () => {
     const [billNo, setBillNo] = useState()
     const [id2, setId2] = useState()
     const [gstNo, setGstinNo] = useState();
- 
+    const token = window.localStorage.getItem("tptoken")
+    const myConfig = {
+        headers : {
+         "uit" : token
+        }
+      }
    const addTdsToggle = (key) => {
       
      setGstinNo(key.gstin_no);
@@ -50,7 +55,7 @@ const CreateInvoice = () => {
 
     const getProposalList = () => {
         axios
-            .get(`${baseUrl}/admin/getPaymentDetail?tp_id=${JSON.parse(userid)}&invoice=0`)
+            .get(`${baseUrl}/admin/getPaymentDetail?tp_id=${JSON.parse(userid)}&invoice=0`, myConfig)
             .then((res) => {
                
                 if (res.data.code === 1) {

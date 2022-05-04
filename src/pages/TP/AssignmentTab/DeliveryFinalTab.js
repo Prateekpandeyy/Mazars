@@ -47,7 +47,12 @@ function AssignmentTab() {
     const [reportModal, setReportModal] = useState(false);
     const [dataItem, setDataItem] = useState({});
     const [loading, setLoading] = useState(false);
-
+    const token = window.localStorage.getItem("tptoken")
+    const myConfig = {
+        headers : {
+         "uit" : token
+        }
+      }
   let des = false;
   var clcomp= {
     color: "green"
@@ -80,7 +85,7 @@ function AssignmentTab() {
 
     const getAssignmentList = () => {
         axios
-            .get(`${baseUrl}/tl/getAssignments?tp_id=${JSON.parse(userid)}&assignment_status=Delivery_of_report&stages_status=1`)
+            .get(`${baseUrl}/tl/getAssignments?tp_id=${JSON.parse(userid)}&assignment_status=Delivery_of_report&stages_status=1`, myConfig)
             .then((res) => {
                
                 if (res.data.code === 1) {

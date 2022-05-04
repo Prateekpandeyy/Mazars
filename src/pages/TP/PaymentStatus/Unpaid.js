@@ -44,7 +44,12 @@ function AllPayment() {
     const [modal, setModal] = useState(false);
     const [addPaymentModal, setPaymentModal] = useState(false);
     const [assignNo, setAssignNo] = useState("");
-
+    const token = window.localStorage.getItem("tptoken")
+    const myConfig = {
+        headers : {
+         "uit" : token
+        }
+      }
 
    
     var rowStyle2 = {}
@@ -60,7 +65,7 @@ function AllPayment() {
     }, []);
 
     const getPaymentStatus = () => {
-        axios.get(`${baseUrl}/tl/getUploadedProposals?tp_id=${JSON.parse(userid)}&status=1`).then((res) => {
+        axios.get(`${baseUrl}/tl/getUploadedProposals?tp_id=${JSON.parse(userid)}&status=1`, myConfig).then((res) => {
            
             if (res.data.code === 1) {
                 setPayment(res.data.result);

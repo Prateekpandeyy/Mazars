@@ -26,6 +26,12 @@ function InprogressProposal() {
     const [assignNo, setAssignNo] = useState('');
     const [ViewDiscussion, setViewDiscussion] = useState(false);
     const [viewProposalModal, setViewProposalModal] = useState(false)
+    const token = window.localStorage.getItem("tptoken")
+    const myConfig = {
+        headers : {
+         "uit" : token
+        }
+      }
     const [proposalId, setProposalId] = useState()
     const chatHandler = (key) => {
      
@@ -50,7 +56,7 @@ function InprogressProposal() {
 
     const getProposalList = () => {
         axios
-            .get(`${baseUrl}/tl/getProposalTl?tp_id=${JSON.parse(userid)}&status=1`)
+            .get(`${baseUrl}/tl/getProposalTl?tp_id=${JSON.parse(userid)}&status=1`, myConfig)
             .then((res) => {
             
                 if (res.data.code === 1) {

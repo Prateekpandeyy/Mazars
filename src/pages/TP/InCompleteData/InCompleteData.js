@@ -29,14 +29,19 @@ function InCompleteData({ CountIncomplete }) {
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key)
   }
-
+  const token = window.localStorage.getItem("tptoken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
   useEffect(() => {
     getInCompleteAssingment();
   }, []);
 
   const getInCompleteAssingment = () => {
     axios
-      .get(`${baseUrl}/tl/getIncompleteQues?tp_id=${JSON.parse(userid)}&status=1`)
+      .get(`${baseUrl}/tl/getIncompleteQues?tp_id=${JSON.parse(userid)}&status=1`, myConfig)
       .then((res) => {
        
         if (res.data.code === 1) {
