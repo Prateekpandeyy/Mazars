@@ -55,7 +55,7 @@ function VerifyOtp({ email, uid, loading, setLoading }) {
 
     axios({
       method: "POST",
-      url: `${baseUrl}/admin/verifyloginotp`,
+      url: `${baseUrl}/tp/verifyloginotp`,
       data: formData,
     })
       .then(function (response) {
