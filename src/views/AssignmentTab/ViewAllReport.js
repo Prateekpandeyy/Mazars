@@ -26,6 +26,7 @@ function ViewReport({
   const [nestedModal, setNestedModal] = useState(false);
   const [modaldoc, setModaldoc] = useState({})
   const [ViewDiscussion, setViewDiscussion] = useState(false);
+  const token = window.localStorage.getItem("clientToken")
   const toggleNested = (key) => {
     setNestedModal(!nestedModal);
     setDocData(key)
@@ -48,6 +49,9 @@ function ViewReport({
     axios({
       method: "POST",
       url: `${baseUrl}/customers/getstagesinfo`,
+      headers: {
+        uit: token
+      },
       data: formData,
     })
       .then(function (response) {

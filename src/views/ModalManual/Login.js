@@ -3,9 +3,9 @@ import {Paper, Box, Container, Typography, Button, Card, CardActionArea, CardHea
 import {makeStyles} from "@material-ui/styles";
 import RegistrationInfo from "./RegistrationInfo";
 import RegError from './RegError';
-import loginImg from "../ManualImg/loginImg.jpeg";
-import IgnologinImg from "../ManualImg/ignologinImg.jpeg";
-import successregImg from "../ManualImg/successReg.jpeg";
+import loginImg from "../ManualImg/loginImg.png";
+import IgnologinImg from "../ManualImg/ignologinImg.png";
+import successregImg from "../ManualImg/successReg.png";
 import style from './manula.module.css';
 const useStyle = makeStyles(theme => ({
     root : {

@@ -43,7 +43,7 @@ const CmsContent = () => {
     var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
     const [item] = useState(current_date);
     const Quill = require("quill");
-   
+    const token = localStorage.getItem("token")
     useEffect(() => {
       getData()
     }, [])
@@ -133,6 +133,9 @@ addDet(html)
       axios({
           method : "POST", 
           url : `${baseUrl}/cms/setarticles`,
+          headers: {
+            uit : token
+          },
           data : formData
       })
       .then((res) => {

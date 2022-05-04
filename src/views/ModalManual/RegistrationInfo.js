@@ -2,7 +2,7 @@ import React from 'react';
 import {Paper, Box, Container, Typography, Button, Card, CardActionArea, CardHeader, CardMedia, CardContent, CardActions }from "@mui/material";
 import style from "./manula.module.css";
 import {makeStyles} from "@material-ui/styles";
-import regImg from "../ManualImg/registrationImage.jpeg";
+import regImg from "../ManualImg/registrationImage.png";
 const useStyle = makeStyles(theme => ({
     root : {
         backgroundColor : "green", 
