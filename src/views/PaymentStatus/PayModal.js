@@ -11,7 +11,7 @@ const PayModal = (props) => {
     const [payValue, setpayValue] = useState()
     const [tdsRate, setTdsRate] = useState();
     const [tdsAmount, setTdsAmount] = useState()
-    
+    const token = window.localStorage.getItem("clientToken")
  
     useEffect(() => {
        if(props.modalData !== undefined){
@@ -39,6 +39,9 @@ const PayModal = (props) => {
         axios({
             method :"POST", 
             url : `${baseUrl}/customers/payCall`,
+            headers: {
+                uit : token
+            },
             data : formData
         })
         .then((res) => {

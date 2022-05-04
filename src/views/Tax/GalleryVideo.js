@@ -64,7 +64,7 @@ const GalleryVideo = () => {
         <div className={classes.articleContent}>
       
         <div className={classes.articlesDetails}>
-            <span style={{textAlign: "left"}}>
+            <span style={{display: "flex", width: "100%", justifyContent: "space-between"}}>
             <Breadcrumbs separator=">" maxItems={3} aria-label="breadcrumb">
   
   <Link underline="hover" color="inherit" to = {`/customer/media`}>
@@ -76,7 +76,13 @@ const GalleryVideo = () => {
   
  
 </Breadcrumbs>
-        
+<button
+                className="autoWidthBtn" 
+                onClick={() => history.goBack()}
+              >
+                <i class="fas fa-arrow-left mr-2"></i>
+                Go Back
+              </button>
               </span>
         <div style={{display: "flex", margin: "20px 0 10px 0", 
         width:"100%", justifyContent: "center", alignItems: "center"}}>
