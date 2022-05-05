@@ -12,7 +12,14 @@ function DraftReport({ des, loading, setLoading, fianlModal, uploadFinalReport, 
   const alert = useAlert();
   const { handleSubmit, register, reset } = useForm();
 
- 
+  const token = window.localStorage.getItem("tptoken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
+
+
 
   const onSubmit = (value) => {
     des = false;
@@ -35,6 +42,7 @@ function DraftReport({ des, loading, setLoading, fianlModal, uploadFinalReport, 
       .post(`${baseUrl}/tl/UploadReport`, formData, {
         headers: {
           "content-type": "multipart/form-data",
+          uit : token
         },
       })
       .then((response) => {

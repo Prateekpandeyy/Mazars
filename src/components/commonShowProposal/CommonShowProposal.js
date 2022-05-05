@@ -33,16 +33,18 @@ import axios from "axios";
 import { Typography } from '@mui/material';
 function ShowProposal({setViewProposal, panel, viewProposalModal, showProposalModal2 , proposalId}) {
   const [url, setUrl] = useState("")
-  const token = window.localStorage.getItem("clientToken")
-  const myConfig = {
-    headers : {
-     "uit" : token
-    },
-    responseType: 'blob'
-  }
+ 
 useEffect(() => {
  
-  axios.get(`${baseUrl}/customers/dounloadpdf?id=${proposalId}&viewpdf=1` , myConfig)
+  if(proposalId && panel === "teamleader"){
+    const token = window.localStorage.getItem("tlToken")
+    const myConfig = {
+      headers : {
+       "uit" : token
+      },
+      responseType: 'blob'
+    }
+    axios.get(`${baseUrl}/tl/dounloadpdf?id=${proposalId}&viewpdf=1` , myConfig)
   .then((res) => {
    
     if(res.status === 200){
@@ -50,6 +52,44 @@ useEffect(() => {
       setUrl(URL.createObjectURL(res.data))
     }
   })
+  }
+  else if (proposalId && panel === "taxprofessional") {
+   
+      const token = window.localStorage.getItem("tptoken")
+      const myConfig = {
+        headers : {
+         "uit" : token
+        },
+        responseType: 'blob'
+      }
+      axios.get(`${baseUrl}/tl/dounloadpdf?id=${proposalId}&viewpdf=1` , myConfig)
+    .then((res) => {
+     
+      if(res.status === 200){
+       
+        setUrl(URL.createObjectURL(res.data))
+      }
+    })
+    
+  }
+  else{
+    const token = window.localStorage.getItem("clientToken")
+    const myConfig = {
+      headers : {
+       "uit" : token
+      },
+      responseType: 'blob'
+    }
+    axios.get(`${baseUrl}/customers/dounloadpdf?id=${proposalId}&viewpdf=1` , myConfig)
+  .then((res) => {
+   
+    if(res.status === 200){
+     
+      setUrl(URL.createObjectURL(res.data))
+    }
+  })
+  }
+  
 }, [proposalId])
 
   return (

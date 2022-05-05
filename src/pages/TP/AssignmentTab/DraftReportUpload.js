@@ -15,6 +15,13 @@ function DraftReport({ loading, setLoading, draftModal, uploadDraftReport, id, g
   const { handleSubmit, register, reset } = useForm();
   
 
+  const token = window.localStorage.getItem("tptoken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
+
 
 
   const onSubmit = (value) => {
@@ -35,7 +42,8 @@ function DraftReport({ loading, setLoading, draftModal, uploadDraftReport, id, g
     formData.append("id", id);
     axios.post(`${baseUrl}/tl/UploadReport`, formData, {
       headers: {
-        'content-type': 'multipart/form-data'
+        'content-type': 'multipart/form-data',
+        uit: token
       }
     }).then(response => {
     

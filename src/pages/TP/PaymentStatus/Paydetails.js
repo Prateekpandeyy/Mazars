@@ -40,7 +40,7 @@ const PayDetails = (props) => {
         }
       }
     const paydetails2 = () => {
-axios.get(`${baseUrl}//admin/getPaymentDetail?id=${id}`, myConfig)
+axios.get(`${baseUrl}/tl/getPaymentDetail?id=${id}`, myConfig)
 .then((res) => {
     if(res.data.code === 1){
        

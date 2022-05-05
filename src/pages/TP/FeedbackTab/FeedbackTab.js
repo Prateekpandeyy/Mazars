@@ -21,6 +21,13 @@ function FeedbackTab() {
 const history = useHistory();
   const userid = window.localStorage.getItem("tpkey");
   const [feedbackData, setFeedBackData] = useState([]);
+  const token = window.localStorage.getItem("tptoken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
+
 
   useEffect(() => {
     getFeedback();
@@ -28,7 +35,7 @@ const history = useHistory();
 
   const getFeedback = () => {
     axios
-      .get(`${baseUrl}/customers/getFeedback?tp_id=${JSON.parse(userid)}`)
+      .get(`${baseUrl}/customers/getFeedback?tp_id=${JSON.parse(userid)}` , myConfig)
       .then((res) => {
      
         if (res.data.code === 1) {
@@ -115,6 +122,9 @@ const history = useHistory();
     axios({
       method: "POST",
       url: `${baseUrl}/customers/markReadFeedback`,
+      headers: {
+        uit : token
+      },
       data: formData,
     })
       .then(function (response) {

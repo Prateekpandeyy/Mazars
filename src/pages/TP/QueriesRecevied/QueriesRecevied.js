@@ -62,10 +62,15 @@ function QueriesRecevied(props) {
       date_of_delivery: "",
     },
   ]);
-
+  const token = window.localStorage.getItem("tptoken")
+    const myConfig = {
+        headers : {
+         "uit" : token
+        }
+      }
   useEffect(() => {
     const getSubmittedAssingment = () => {
-      axios.get(`${baseUrl}/tl/getQueryDetails?id=${id}`).then((res) => {
+      axios.get(`${baseUrl}/tl/getQueryDetails?id=${id}`, myConfig).then((res) => {
 
         if (res.data.code === 1) {
           setqStatus(res.data.result[0].query_status)
@@ -169,19 +174,7 @@ function QueriesRecevied(props) {
   }, [assingNo]);
 
   const getQuery = () => {
-  if(assingNo === undefined){
-    return false
-  }
-  else{
-    axios
-    .get(`${baseUrl}/tp/GetAdditionalQueries?assignno=${assingNo}`)
-    .then((res) => {
-     
-      if (res.data.code === 1) {
-        setDisplayQuery(res.data.result);
-      }
-    });
-  }
+  console.log("done")
   };
 
   return (
@@ -217,7 +210,7 @@ function QueriesRecevied(props) {
                 diaplayProposal={diaplayProposal}
                 diaplayHistory={diaplayHistory}
                 diaplayAssignment={diaplayAssignment}
-                displayQuery={displayQuery}
+              
                 getQuery={getQuery}
                 assingNo={assingNo}
                 queryDocs={queryDocs}

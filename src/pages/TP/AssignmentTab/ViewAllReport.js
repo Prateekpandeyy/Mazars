@@ -38,6 +38,13 @@ function ViewReport({
     setViewDiscussion(!ViewDiscussion);
     // setDocData(report)
   }
+  const token = window.localStorage.getItem("tptoken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
+
 
 
   //check
@@ -69,6 +76,9 @@ function ViewReport({
     axios({
       method: "POST",
       url: `${baseUrl}/tl/draftDiscussion`,
+      headers: {
+        uit : token
+      },
       data: formData,
     })
       .then(function (response) {
@@ -98,6 +108,9 @@ function ViewReport({
     axios({
       method: "POST",
       url: `${baseUrl}/tl/getstagesinfo`,
+      headers: {
+        uit  : token
+      },
       data: formData,
     })
       .then(function (response) {

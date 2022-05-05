@@ -70,10 +70,15 @@ function EditComponent(props) {
     getQuery();
     getCompany()
   }, []);
-
+  const token = window.localStorage.getItem("tptoken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
   const getCompany = () => {
     axios.get(
-      `${baseUrl}/tl/getcompany`
+      `${baseUrl}/tl/getcompany`, myConfig
     )
     .then((res) => {
       console.log("response", res)
@@ -81,7 +86,7 @@ function EditComponent(props) {
     })
   }
   const getQuery = () => {
-    axios.get(`${baseUrl}/tl/getProposalDetail?id=${id}`).then((res) => {
+    axios.get(`${baseUrl}/tl/getProposalDetail?id=${id}`, myConfig).then((res) => {
       if (res.data.code === 1) {
         setCompany2(res.data.result.company)
         setProposal({
@@ -116,7 +121,7 @@ setValue2(res.data.result.description)
 
   useEffect(() => {
     const getUser = async () => {
-      const res = await axios.get(`${baseUrl}/customers/allname?id=${id}`);
+      const res = await axios.get(`${baseUrl}/customers/allname?id=${id}`, myConfig);
       setCustId(res.data.id);
     };
     getUser();
@@ -202,6 +207,9 @@ else{
                 axios({
                   method: "POST",
                   url: `${baseUrl}/tp/updateProposal`,
+                  headers : {
+                    uit : token
+                  },
                   data: formData,
                 })
                   .then(function (response) {
@@ -227,6 +235,9 @@ else{
         axios({
           method: "POST",
           url: `${baseUrl}/tp/updateProposal`,
+          headers: {
+            uit : token
+          },
           data: formData,
         })
           .then(function (response) {

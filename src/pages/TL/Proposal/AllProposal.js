@@ -346,13 +346,17 @@ function AllProposal() {
                     tdsForm = {tdsForm}
                     addTdsToggle = {addTdsToggle}
                     />
-                     <CommonShowProposal
-          setViewProposalModal = {setViewProposalModal}
-          viewProposalModal = {viewProposalModal}
-          showProposalModal2 = {showProposalModal2}
-          panel = "teamleader"
-          proposalId = {proposalId}/>
-
+                    {
+                        viewProposalModal === true ?
+                        <CommonShowProposal
+                        setViewProposalModal = {setViewProposalModal}
+                        viewProposalModal = {viewProposalModal}
+                        showProposalModal2 = {showProposalModal2}
+                        panel = "teamleader"
+                        proposalId = {proposalId}/>
+ : ""              
+                    }
+                 
                 </CardBody>
             </Card>
         </>

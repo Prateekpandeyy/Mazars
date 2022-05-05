@@ -324,11 +324,15 @@ function AllProposal() {
                         getData={getProposalList}
                         headColor="#42566a"
                     />
-                     <CommonShowProposal
-          setViewProposalModal = {setViewProposalModal}
-          viewProposalModal = {viewProposalModal}
-          showProposalModal2 = {showProposalModal2}
-          proposalId = {proposalId}/>
+                   {
+                       viewProposalModal === true ?
+                       <CommonShowProposal
+                       setViewProposalModal = {setViewProposalModal}
+                       viewProposalModal = {viewProposalModal}
+                       showProposalModal2 = {showProposalModal2}
+                       panel = "taxprofessional"
+                       proposalId = {proposalId}/> : ""
+                   }
                 </CardBody>
             </Card>
         </>

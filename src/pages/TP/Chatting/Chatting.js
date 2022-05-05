@@ -42,7 +42,12 @@ function Chatting(props) {
   const [item, setItem] = useState("");
   const [data, setData] = useState({})
   const { message_type, query_id, query_No, routes } = data
-
+  const token = window.localStorage.getItem("tptoken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
 
   useEffect(() => {
    
@@ -74,6 +79,9 @@ function Chatting(props) {
     axios({
       method: "POST",
       url: `${baseUrl}/tp/messageSent`,
+      headers: {
+        uit : token
+      },
       data: formData,
     })
       .then(function (response) {

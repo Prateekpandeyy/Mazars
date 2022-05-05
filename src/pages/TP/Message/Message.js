@@ -26,6 +26,12 @@ function Message(props) {
     const [data, setData] = useState(null);
 const history = useHistory();
     const [addPaymentModal, setPaymentModal] = useState(false);
+    const token = window.localStorage.getItem("tptoken")
+    const myConfig = {
+        headers : {
+         "uit" : token
+        }
+      }
     const paymentHandler = (key) => {
        
         setPaymentModal(!addPaymentModal);
@@ -39,7 +45,7 @@ const history = useHistory();
     const getMessage = () => {
         axios
             .get(
-                `${baseUrl}/customers/getNotification?id=${JSON.parse(userId)}`
+                `${baseUrl}/customers/getNotification?id=${JSON.parse(userId)}` , myConfig
             )
             .then((res) => {
                
@@ -138,7 +144,7 @@ const history = useHistory();
     const readNotification = (id) => {
        
         axios
-            .get(`${baseUrl}/customers/markReadNotification?id=${id}`)
+            .get(`${baseUrl}/tl/markReadNotification?id=${id}` , myConfig)
             .then(function (response) {
                 
             })

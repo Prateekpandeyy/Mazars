@@ -28,6 +28,13 @@ function AddAssingmentStages() {
   const userid = window.localStorage.getItem("tpkey");
   const { id } = useParams();
   const history = useHistory();
+  const token = window.localStorage.getItem("tptoken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
+
 
   useEffect(() => {
     getAssignmentList();
@@ -35,7 +42,7 @@ function AddAssingmentStages() {
 
   const getAssignmentList = () => {
     axios
-      .get(`${baseUrl}/tl/getUploadedProposals?assign_no=${id}&uid=${JSON.parse(userid)}`)
+      .get(`${baseUrl}/tl/getUploadedProposals?assign_no=${id}&uid=${JSON.parse(userid)}`, myConfig)
       .then((res) => {
 
         if (res.data.code === 1) {
@@ -75,6 +82,9 @@ function AddAssingmentStages() {
         axios({
           method: "POST",
           url: `${baseUrl}/tl/postAssignmentStages`,
+          headers: {
+            uit : token
+          },
           data: formData,
         })
           .then(function (response) {
@@ -120,6 +130,9 @@ function AddAssingmentStages() {
       axios({
         method: "POST",
         url: `${baseUrl}/tl/postAssignmentStages`,
+        headers : {
+          uit : token
+        },
         data: formData,
       })
         .then(function (response) {
