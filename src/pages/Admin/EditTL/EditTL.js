@@ -69,14 +69,20 @@ function EditTL() {
     available : '',
     exits : ''
   });
-  const { handleSubmit, register, reset, errors } = useForm({
-    resolver: yupResolver(Schema),
-  });
   const [dd, setDd] = useState({
     direct: [],
     indirect: [],
   });
-
+  const { handleSubmit, register, reset, errors } = useForm({
+    resolver: yupResolver(Schema),
+  });
+  
+  const token = window.localStorage.getItem("adminToken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
   var kk = []
   var vv = []
   var a;
@@ -151,7 +157,7 @@ function EditTL() {
 
   const getSubCategory = () => {
   if(store !== null){
-    console.log("store", store)
+   
     axios.get(`${baseUrl}/customers/getCategory?pid=${store}`).then((res) => {
      
       if (res.data.code === 1) {
@@ -179,22 +185,22 @@ function EditTL() {
 
     if (custCate.length < 1 && data4.length < 1) {
       setError("Please select at least one value")
-      console.log("one", 1)
+     
      
     }
     else if (subData.length < 1 && data5.length < 1) {
       setError2("Please select at least one value")
-      console.log("one", 11)
+    
     }
     else if (invalid || wEmail || indNumError || posError.exits) {
       setDisplay(false)
-      console.log("one", 111)
+      
     }
     else if(parentCategoryName.includes("Direct tax") && dd.direct.length === 0){
-      console.log("one", 1111)
+     
     }
     else if(parentCategoryName.includes("Indirect tax") && dd.indirect.length === 0){
-      console.log("one", 11111)
+     
     }
     
     else {
@@ -222,10 +228,13 @@ function EditTL() {
     
       formData.append("allcat_id", JSON.stringify(dd)) 
       formData.append("id", id);
-console.log("value", categeryList)
+
       axios({
         method: "POST",
-        url: `${baseUrl}/tl/updateTeamLeader`,
+        url: `${baseUrl}/admin/updateTeamLeader`,
+        headers : {
+          uit : token
+        },
         data: formData,
       })
         .then(function (response) {
@@ -315,7 +324,7 @@ console.log("value", categeryList)
     subCategeryData(e)
     setCustcate2(e)
     setError2("")
-    console.log("ee", e)
+
     e.map((i) => {
       i.value < 9 ? dir.push(i.label) : indir.push(i.label)
     })
@@ -368,9 +377,9 @@ console.log("value", categeryList)
 
 
     if (vv.length > 0) {
-      console.log("value", vv)
+     
       if (vv.includes("1") && vv.includes("2")) {
-        console.log("dd", vv)
+      
         let dkkk = []
         let pkk = []
                 for (let i = 0; i < subData.length; i++) {
@@ -378,7 +387,7 @@ console.log("value", categeryList)
                     dkkk.push(subData[i].label)
                   
                 }
-                console.log(subData)
+          
                 setDd({
                   "direct" : dkkk,
                   "indirect" : pkk
@@ -386,7 +395,7 @@ console.log("value", categeryList)
                 subCategeryData(kk)
       }
       else if (vv.includes("1")) {
-        console.log("dd1", vv)
+      
 let dkkk = []
 let pkk = []
         for (let i = 0; i < subData.length; i++) {
@@ -395,7 +404,7 @@ let pkk = []
             dkkk.push(subData[i].label)
           }
         }
-        console.log(subData)
+      
         setDd({
           "direct" : dkkk,
           "indirect" : pkk
@@ -403,7 +412,7 @@ let pkk = []
         subCategeryData(kk)
       }
       else if (vv.includes("2")) {
-        console.log("dd2", vv)
+       
         let pkk = []
         let dkkk = []
         for (let i = 0; i < subData.length; i++) {
@@ -447,7 +456,10 @@ const emailValidation = (key) => {
     formData.append("id", id)
     axios({
       method: "POST",
-      url: `${baseUrl}/tl/validateEditRegistration`,
+      url: `${baseUrl}/admin/validateEditRegistration`,
+      headers : {
+        uit : token
+      },
       data: formData,
     })
       .then(function (response) {
@@ -475,7 +487,7 @@ const defValue = () => {
   let e = 0;
  if(data4){
   const data55 = data4.split(",")
-console.log("done22")
+
 let b;
 if(value.pcat_value){
   b = value.pcat_value.split(",");
@@ -508,8 +520,7 @@ const defSubValue = () => {
  let nnn = ppp.filter((i) => {
    return i < 9
  })
- console.log("nnn", nnn);
- console.log("nnnn", ooo);
+ 
    var subcatgerydefvalue = JSON.parse(value.allcat_id);
    indirvalue = subcatgerydefvalue.indirect;
    dirvalue = subcatgerydefvalue.direct;
@@ -540,8 +551,6 @@ const defSubValue = () => {
   else{
     return false
   }
-  console.log("dir1", dir1)
-  console.log("dir2", dir2)
  
    subdefval = [...dir1, ...dir2]
   // let dircat = [dir1.label]
@@ -560,7 +569,7 @@ const defSubValue = () => {
     "direct" : oo,
     "indirect" : pp
   })
-  console.log("dir22", subdefval)
+  
   }
 }
 

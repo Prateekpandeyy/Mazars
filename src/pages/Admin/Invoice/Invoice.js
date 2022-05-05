@@ -9,6 +9,7 @@ const InvoiceTab = () => {
     const userid = window.localStorage.getItem("adminkey")
     const [tabIndex, setTabIndex] = useState(0);
     const [bgColor, setbgColor] = useState("#42566a")
+    
     const tableIndex = (index) => {
         setTabIndex(index)
         console.log(index)

@@ -26,10 +26,15 @@ function QueriesTab(props) {
     CountInprogressProposal();
     CountDeclined();
   }, []);
-
+  const token = window.localStorage.getItem("adminToken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
 
   const CountAllQuery = (data) => {
-    axios.get(`${baseUrl}/admin/getAllQueries`).then((res) => {
+    axios.get(`${baseUrl}/admin/getAllQueries`, myConfig).then((res) => {
      
       if (res.data.code === 1) {
         setAllQueriesCount(res.data.result.length);
@@ -39,7 +44,7 @@ function QueriesTab(props) {
   };
 
   const CountInprogressAllocation = () => {
-    axios.get(`${baseUrl}/admin/pendingAllocation`).then((res) => {
+    axios.get(`${baseUrl}/admin/pendingAllocation`, myConfig).then((res) => {
      
       if (res.data.code === 1) {
         setInprogressAllocation(res.data.result.length);
@@ -48,7 +53,7 @@ function QueriesTab(props) {
   };
 
   const CountInprogressProposal = () => {
-    axios.get(`${baseUrl}/admin/pendingProposal`).then((res) => {
+    axios.get(`${baseUrl}/admin/pendingProposal`, myConfig).then((res) => {
      
       if (res.data.code === 1) {
         setPendingProposalCount(res.data.result.length);
@@ -57,7 +62,7 @@ function QueriesTab(props) {
   };
 
   const CountDeclined = () => {
-    axios.get(`${baseUrl}/admin/declinedQueries`).then((res) => {
+    axios.get(`${baseUrl}/admin/declinedQueries`, myConfig).then((res) => {
      
       if (res.data.code === 1) {
         setDeclined(res.data.result.length);

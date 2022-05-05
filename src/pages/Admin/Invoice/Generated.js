@@ -16,10 +16,8 @@ const Generated = () => {
     const userid = window.localStorage.getItem("adminkey");
     const [records, setRecords] = useState([]);
     const [proposal, setProposal] = useState([]);
-    const [count, setCount] = useState("");
     const [id, setId] = useState();
     const [assignNo, setAssignNo] = useState('');  
-    const [ViewDiscussion, setViewDiscussion] = useState(false);
     const [tdsForm , setTdsForm] = useState(false)
     const [paidAmount, setPaidAmount] = useState()
     const [installmentNo, setInstallmentNo] = useState();
@@ -28,7 +26,12 @@ const Generated = () => {
     const [gstNo, setGstinNo] = useState();
     const [showCopyUrl, setShowCopyUrl] = useState("click")
  let copyTitle = ""
- 
+ const token = window.localStorage.getItem("adminToken")
+ const myConfig = {
+     headers : {
+      "uit" : token
+     }
+   }
     const addTdsToggle = (key) => {
    
       setGstinNo(key.gstin_no);
@@ -47,7 +50,7 @@ const Generated = () => {
 
     const getProposalList = () => {
         axios
-            .get(`${baseUrl}/admin/getPaymentDetail?&invoice=1`)
+            .get(`${baseUrl}/admin/getPaymentDetail?&invoice=1`, myConfig)
             .then((res) => {
               
                 if (res.data.code === 1) {
@@ -284,18 +287,20 @@ const Generated = () => {
                     </DataTablepopulated>
                    
                   
-                    <Tds 
-                    tdsForm = {tdsForm}
-                    addTdsToggle = {addTdsToggle}
-                    id={id}
-                    paidAmount={paidAmount}
-                    report = {assignNo}
-                    installmentNo = {installmentNo}
-                    billNo = {billNo}
-                    id = {id2}
-                    generated = {"edited"}
-                    gstNo = {gstNo}
-                    />
+                  {tdsForm && (
+                        <Tds 
+                        tdsForm = {tdsForm}
+                        addTdsToggle = {addTdsToggle}
+                        id={id}
+                        paidAmount={paidAmount}
+                        report = {assignNo}
+                        installmentNo = {installmentNo}
+                        billNo = {billNo}
+                        id = {id2}
+                        generated = {"edited"}
+                        gstNo = {gstNo}
+                        />
+                  )}
                 </CardBody>
             </Card>
         </>

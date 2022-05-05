@@ -23,6 +23,12 @@ const CreateInvoice = () => {
     const [id2, setId2] = useState()
     const [gstNo, setGstinNo] = useState();
     const [records, setRecords] = useState([]);
+    const token = window.localStorage.getItem("adminToken")
+    const myConfig = {
+        headers : {
+         "uit" : token
+        }
+      }
    const addTdsToggle = (key) => {
       
      setGstinNo(key.gstin_no);
@@ -46,7 +52,7 @@ const CreateInvoice = () => {
 
     const getProposalList = () => {
         axios
-            .get(`${baseUrl}/admin/getPaymentDetail?&invoice=0`)
+            .get(`${baseUrl}/admin/getPaymentDetail?&invoice=0`, myConfig)
             .then((res) => {
                
                 if (res.data.code === 1) {
@@ -171,17 +177,21 @@ const CreateInvoice = () => {
                         report={assignNo}
                         getData={getProposalList}
                     />
-                    <Tds 
-                    tdsForm = {tdsForm}
-                    addTdsToggle = {addTdsToggle}
-                    id={id}
-                    paidAmount={paidAmount}
-                    report = {assignNo}
-                    installmentNo = {installmentNo}
-                    billNo = {billNo}
-                    id = {id2}
-                    gstNo = {gstNo}
-                    />
+                   {
+                       tdsForm && (
+                        <Tds 
+                        tdsForm = {tdsForm}
+                        addTdsToggle = {addTdsToggle}
+                        id={id}
+                        paidAmount={paidAmount}
+                        report = {assignNo}
+                        installmentNo = {installmentNo}
+                        billNo = {billNo}
+                        id = {id2}
+                        gstNo = {gstNo}
+                        />
+                       )
+                   }
                 </CardBody>
             </Card>
         </>

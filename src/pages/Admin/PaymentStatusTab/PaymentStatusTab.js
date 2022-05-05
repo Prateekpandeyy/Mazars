@@ -26,10 +26,15 @@ function PaymentStatus(props) {
     getUnpaid();
   }, []);
 
-
+  const token = window.localStorage.getItem("adminToken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
   const getAllPaid = () => {
     axios
-      .get(`${baseUrl}/tl/getUploadedProposals`)
+      .get(`${baseUrl}/admin/getUploadedProposals`, myConfig)
       .then((res) => {
      
         if (res.data.code === 1) {
@@ -40,7 +45,7 @@ function PaymentStatus(props) {
 
   const getPaid = () => {
     axios
-      .get(`${baseUrl}/tl/getUploadedProposals?status=1`)
+      .get(`${baseUrl}/admin/getUploadedProposals?status=1`, myConfig)
       .then((res) => {
      
         if (res.data.code === 1) {
@@ -51,7 +56,7 @@ function PaymentStatus(props) {
 
   const getUnpaid = () => {
     axios
-      .get(`${baseUrl}/tl/getUploadedProposals?status=2`)
+      .get(`${baseUrl}/admin/getUploadedProposals?status=2`, myConfig)
       .then((res) => {
      
         if (res.data.code === 1) {

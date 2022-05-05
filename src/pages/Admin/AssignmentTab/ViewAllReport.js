@@ -28,8 +28,8 @@ function ViewReport({
 }) {
   const userId = window.localStorage.getItem("adminkey");
   const [data, setData] = useState([]);
-
   const [ViewDiscussion, setViewDiscussion] = useState(false);
+  const token = window.localStorage.getItem("adminToken")
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
   }
@@ -50,7 +50,10 @@ const viewStyle = {
 
     axios({
       method: "POST",
-      url: `${baseUrl}/tl/getstagesinfo`,
+      url: `${baseUrl}/admin/getstagesinfo`,
+      headers : {
+        uit : token
+      },
       data: formData,
     })
       .then(function (response) {

@@ -30,7 +30,7 @@ function TeamLeaderTab() {
   
 
   const [modal, setModal] = useState(false);
-
+  const token = window.localStorage.getItem("adminToken")
   const toggle = (key) => {
    
     setModal(!modal);
@@ -44,6 +44,7 @@ function TeamLeaderTab() {
         method: "GET",
         headers: new Headers({
           Accept: "application/vnd.github.cloak-preview",
+          uit : token
         }),
       })
         .then((res) => res.json())

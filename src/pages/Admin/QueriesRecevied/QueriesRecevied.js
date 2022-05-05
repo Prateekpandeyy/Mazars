@@ -76,10 +76,15 @@ function QueriesRecevied(props) {
       date_of_delivery: "",
     },
   ]);
-
+  const token = window.localStorage.getItem("adminToken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
   useEffect(() => {
     const getSubmittedAssingment = () => {
-      axios.get(`${baseUrl}/admin/getQueryDetails?id=${id}`).then((res) => {
+      axios.get(`${baseUrl}/admin/getQueryDetails?id=${id}`, myConfig).then((res) => {
        
         if (res.data.code === 1) {
           

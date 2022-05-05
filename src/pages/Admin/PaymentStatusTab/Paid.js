@@ -31,12 +31,18 @@ function Paid() {
     const [records, setRecords] = useState([]);
     const [assignNo, setAssignNo] = useState('');
     const [ViewDiscussion, setViewDiscussion] = useState(false);
+    const token = window.localStorage.getItem("adminToken")
+    const myConfig = {
+        headers : {
+         "uit" : token
+        }
+      }
     useEffect(() => {
         getPaymentStatus();
     }, []);
 
     const getPaymentStatus = () => {
-        axios.get(`${baseUrl}/tl/getUploadedProposals?status=1`).then((res) => {
+        axios.get(`${baseUrl}/admin/getUploadedProposals?status=1`, myConfig).then((res) => {
            
             if (res.data.code === 1) {
                 setPayment(res.data.result);

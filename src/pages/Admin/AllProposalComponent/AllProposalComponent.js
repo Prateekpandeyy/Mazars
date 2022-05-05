@@ -14,6 +14,7 @@ import ViewComponent from "../ViewProposal/ViewComponent";
 import DiscardReport from "../AssignmentTab/DiscardReport";
 import ShowProposal from "./ShowProposal";
 import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
+import CommonShowProposal from '../../../components/commonShowProposal/CommonShowProposal';
 import MessageIcon, {EyeIcon, ViewDiscussionIcon, DiscussProposal, HelpIcon} from "../../../components/Common/MessageIcon";
 function AllProposalComponent({ allProposal }) {
   const [proposalDisplay, setProposalDisplay] = useState([]);
@@ -24,6 +25,12 @@ function AllProposalComponent({ allProposal }) {
   const [retview, setRetview] = useState(false)
   const [viewProposalModal, setViewProposalModal] = useState(false)
   const [proposalId, setProposalId] = useState()
+  const token = window.localStorage.getItem("adminToken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
   const ViewHandler = (key) => {
    
     setViewModal(!viewModal);
@@ -31,7 +38,7 @@ function AllProposalComponent({ allProposal }) {
   };
 
 const showProposalModal2 = (e) => {
-  console.log("eeee")
+ 
   setViewProposalModal(!viewProposalModal);
   setProposalId(e)
 }
@@ -48,7 +55,7 @@ const showProposalModal2 = (e) => {
   }, []);
 
   const getProposalData = () => {
-    axios.get(`${baseUrl}/admin/getProposals`).then((res) => {
+    axios.get(`${baseUrl}/admin/getProposals`, myConfig).then((res) => {
     
       if (res.data.code === 1) {
         setProposalDisplay(res.data.result);
@@ -326,11 +333,15 @@ const retviewProposal = (e) => {
           getProposalData  ={getProposalData}
           assignNo = {assignNo}
          />
-          <ShowProposal 
-          setViewProposalModal = {setViewProposalModal}
-          viewProposalModal = {viewProposalModal}
-          showProposalModal2 = {showProposalModal2}
-          proposalId = {proposalId}/>
+       {
+         showProposalModal2 === true ?
+         <CommonShowProposal 
+         setViewProposalModal = {setViewProposalModal}
+         viewProposalModal = {viewProposalModal}
+         showProposalModal2 = {showProposalModal2}
+         panel = "admin"
+         proposalId = {proposalId} /> : ""
+       }
         </CardBody>
       </Card>
     </>

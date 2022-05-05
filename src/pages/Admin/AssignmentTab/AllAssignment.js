@@ -72,9 +72,14 @@ function AssignmentComponent() {
   useEffect(() => {
     getAssignmentData();
   }, []);
-
+  const token = window.localStorage.getItem("adminToken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
   const getAssignmentData = () => {
-    axios.get(`${baseUrl}/tl/getAssignments`).then((res) => {
+    axios.get(`${baseUrl}/admin/getAssignments`, myConfig).then((res) => {
     
       if (res.data.code === 1) {
         setAssignmentDisplay(res.data.result);

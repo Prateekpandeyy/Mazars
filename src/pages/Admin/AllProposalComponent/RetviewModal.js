@@ -21,7 +21,12 @@ const RetviewModal = ({
     const Schema = yup.object().shape({
         p_reason: yup.string().required(""),
       });
-      
+      const token = window.localStorage.getItem("tlToken")
+      const myConfig = {
+          headers : {
+           "uit" : token
+          }
+        }
     const { handleSubmit, register, reset, errors } = useForm({
         resolver: yupResolver(Schema),
       });
@@ -35,6 +40,9 @@ const RetviewModal = ({
         axios({
           method: "POST",
           url: `${baseUrl}/admin/reactiveProposal`,
+          headers : {
+            uit : token
+          },
           data: formData,
         })
       .then((response) => {

@@ -18,11 +18,16 @@ function Proposal(props) {
   const [declinedProposalCount, setDeclinedProposalCount] = useState("");
   const [bgColor, setbgColor] = useState("#42566a")
 
-
+  const token = window.localStorage.getItem("adminToken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
   useEffect(() => {
     const getAllProposal = () => {
       axios
-        .get(`${baseUrl}/admin/getProposals`)
+        .get(`${baseUrl}/admin/getProposals`, myConfig)
         .then((response) => {
           
           if (response.data.code === 1) {
@@ -36,7 +41,7 @@ function Proposal(props) {
 
     const getAcceptedProposal = () => {
       axios
-        .get(`${baseUrl}/admin/getProposals?status1=2`)
+        .get(`${baseUrl}/admin/getProposals?status1=2`, myConfig)
         .then((response) => {
           
           if (response.data.code === 1) {
@@ -50,7 +55,7 @@ function Proposal(props) {
 
     const getDeclinedProposal = () => {
       axios
-        .get(`${baseUrl}/admin/getProposals?&status=6`)
+        .get(`${baseUrl}/admin/getProposals?&status=6`, myConfig)
         .then((response) => {
           
           if (response.data.code === 1) {
@@ -64,7 +69,7 @@ function Proposal(props) {
 
     const getPendingForAcceptence = () => {
       axios
-        .get(`${baseUrl}/admin/getProposals?status1=1`)
+        .get(`${baseUrl}/admin/getProposals?status1=1`, myConfig)
         .then((response) => {
           
           if (response.data.code === 1) {

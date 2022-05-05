@@ -24,7 +24,12 @@ function AllQueriesData({allData}) {
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key)
   }
-
+  const token = window.localStorage.getItem("adminToken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
 
 
   useEffect(() => {
@@ -32,7 +37,7 @@ function AllQueriesData({allData}) {
   }, [allData]);
 
   const getAllQueriesData = () => {
-    axios.get(`${baseUrl}/admin/getAllQueries`).then((res) => {
+    axios.get(`${baseUrl}/admin/getAllQueries`, myConfig).then((res) => {
      
       if (res.data.code === 1) {
        // setAllQueriesData(res.data.result);

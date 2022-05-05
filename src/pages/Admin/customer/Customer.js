@@ -27,7 +27,7 @@ function Customer() {
   const [myPurpose, setPurpose] = useState([])
   const [history, setHistory] = useState([]);
   const [modal, setModal] = useState(false);
-
+  const token = window.localStorage.getItem("adminToken")
   var digit2 = [];
   useEffect(() => {
     getCustomer();
@@ -56,6 +56,8 @@ function Customer() {
         method: "GET",
         headers: new Headers({
           Accept: "application/vnd.github.cloak-preview",
+          uit : token
+
         }),
       })
         .then((res) => res.json())

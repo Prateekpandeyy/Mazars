@@ -36,7 +36,12 @@ function QueryRejection(props) {
 
     const userId = window.localStorage.getItem("adminkey");
     const [loading, setLoading] = useState(false);
-
+    const token = window.localStorage.getItem("adminToken")
+    const myConfig = {
+        headers : {
+         "uit" : token
+        }
+      }
 
     const onSubmit = (value) => {
       
@@ -49,6 +54,9 @@ function QueryRejection(props) {
         axios({
             method: "POST",
             url: `${baseUrl}/admin/setAdminreject`,
+            headers : {
+                uit : token
+            },
             data: formData,
         })
             .then(function (response) {

@@ -17,6 +17,12 @@ function AssignmentTab(props) {
     const [final, setFinal] = useState();
     const [bgColor, setbgColor] = useState("#615339")
     const [tabIndex, setTabIndex] = useState(0);
+    const token = window.localStorage.getItem("adminToken")
+    const myConfig = {
+        headers : {
+         "uit" : token
+        }
+      }
     useEffect(() => {
         CountAllAssignment();
         CountDraftReport();
@@ -25,7 +31,7 @@ function AssignmentTab(props) {
 
 
     const CountAllAssignment = (data) => {
-        axios.get(`${baseUrl}/tl/getAssignments`).then((res) => {
+        axios.get(`${baseUrl}/admin/getAssignments`, myConfig).then((res) => {
          
             if (res.data.code === 1) {
                 setAllAssignmentCount(res.data.result.length);
@@ -34,7 +40,7 @@ function AssignmentTab(props) {
     };
 
     const CountDraftReport = () => {
-        axios.get(`${baseUrl}/tl/getAssignments?assignment_status=Draft_Report&stages_status=1`).then((res) => {
+        axios.get(`${baseUrl}/admin/getAssignments?assignment_status=Draft_Report&stages_status=1`, myConfig).then((res) => {
           ;
             if (res.data.code === 1) {
                 setDraft(res.data.result.length);
@@ -43,7 +49,7 @@ function AssignmentTab(props) {
     };
 
     const CountFinalReport = () => {
-        axios.get(`${baseUrl}/tl/getAssignments?assignment_status=Delivery_of_report&stages_status=1`).then((res) => {
+        axios.get(`${baseUrl}/admin/getAssignments?assignment_status=Delivery_of_report&stages_status=1`, myConfig).then((res) => {
           ;
             if (res.data.code === 1) {
                 setFinal(res.data.result.length);

@@ -35,8 +35,25 @@ function ShowProposal({setViewProposal, panel, viewProposalModal, showProposalMo
   const [url, setUrl] = useState("")
  
 useEffect(() => {
- 
-  if(proposalId && panel === "teamleader"){
+  if(proposalId && panel === "admin"){
+   
+    const token = window.localStorage.getItem("adminToken")
+    const myConfig = {
+      headers : {
+       "uit" : token
+      },
+      responseType: 'blob'
+    }
+    axios.get(`${baseUrl}/admin/dounloadpdf?id=${proposalId}&viewpdf=1` , myConfig)
+  .then((res) => {
+   
+    if(res.status === 200){
+     
+      setUrl(URL.createObjectURL(res.data))
+    }
+  })
+  }
+  else if(proposalId && panel === "teamleader"){
     const token = window.localStorage.getItem("tlToken")
     const myConfig = {
       headers : {

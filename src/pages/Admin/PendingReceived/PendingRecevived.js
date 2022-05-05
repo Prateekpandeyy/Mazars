@@ -25,10 +25,15 @@ function PendingRecevied() {
   const history = useHistory();
 
   const userid = window.localStorage.getItem("adminkey");
-
+  const token = window.localStorage.getItem("adminToken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
   useEffect(() => {
     const getSubmittedAssingment = () => {
-      axios.get(`${baseUrl}/tl/GetQueryDetails?id=${id}`).then((res) => {
+      axios.get(`${baseUrl}/tl/GetQueryDetails?id=${id}`, myConfig).then((res) => {
         
         if (res.data.code === 1) {
           setSubmitData(res.data.result);

@@ -34,10 +34,15 @@ const PayDetails = (props) => {
     const [modalData, setModalData] = useState(false)
     const [showTable, setShowTable] = useState(null);
     const [paymentUrlcopy, setPaymentUrlCopy] = useState(false)
-   
+    const token = window.localStorage.getItem("adminToken")
+    const myConfig = {
+        headers : {
+         "uit" : token
+        }
+      }
     const paydetails2 = () => {
           console.log("done22")
-axios.get(`${baseUrl}/admin/getPaymentDetail?id=${id}`)
+axios.get(`${baseUrl}/admin/getPaymentDetail?id=${id}`, myConfig)
 
 .then((res) => {
     if(res.data.code === 1){

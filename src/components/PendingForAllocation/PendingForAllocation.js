@@ -22,15 +22,22 @@ function PendingAllocation({ CountPendingForAllocation }) {
   const [records, setRecords] = useState([]);
 
   const [modal, setModal] = useState(false);
-
+  const token = window.localStorage.getItem("adminToken")
+  const myConfig = {
+    headers : {
+     "uit" : token
+    }
+  }
   const toggle = (key) => {
-   
+    
+
     setModal(!modal);
 
     fetch(`${baseUrl}/admin/getQueryHistory?q_id=${key}`, {
       method: "GET",
       headers: new Headers({
         Accept: "application/vnd.github.cloak-preview",
+        uit : token
       }),
     })
       .then((res) => res.json())
@@ -49,7 +56,7 @@ function PendingAllocation({ CountPendingForAllocation }) {
   }, []);
 
   const getPendingForAllocation = () => {
-    axios.get(`${baseUrl}/admin/pendingAllocation`).then((res) => {
+    axios.get(`${baseUrl}/admin/pendingAllocation`, myConfig).then((res) => {
     
       if (res.data.code === 1) {
         // CountPendingForAllocation(res.data.result.length);

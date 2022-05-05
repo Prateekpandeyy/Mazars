@@ -34,15 +34,21 @@ function PendingForProposals({ CountPendingProposal }) {
 
   const [history, setHistory] = useState([]);
   const [modal, setModal] = useState(false);
-
+  const token = window.localStorage.getItem("adminToken")
+  const myConfig = {
+    headers : {
+     "uit" : token
+    }
+  }
   const toggle = (key) => {
    
     setModal(!modal);
 
-    fetch(`${baseUrl}/customers/getQueryHistory?q_id=${key}`, {
+    fetch(`${baseUrl}/admin/getQueryHistory?q_id=${key}`, {
       method: "GET",
       headers: new Headers({
         Accept: "application/vnd.github.cloak-preview",
+        uit : token
       }),
     })
       .then((res) => res.json())
@@ -58,7 +64,7 @@ function PendingForProposals({ CountPendingProposal }) {
   }, []);
 
   const getPendingForProposals = () => {
-    axios.get(`${baseUrl}/admin/pendingProposal`).then((res) => {
+    axios.get(`${baseUrl}/admin/pendingProposal`, myConfig).then((res) => {
       
       if (res.data.code === 1) {
         setNonPendingData(res.data.result);

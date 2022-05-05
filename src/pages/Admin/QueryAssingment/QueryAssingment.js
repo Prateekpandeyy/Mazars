@@ -67,14 +67,19 @@ function QueryAssingment(props) {
 
   var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
   const [item] = useState(current_date);
-
+  const token = window.localStorage.getItem("adminToken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
   useEffect(() => {
     getTaxLeader();
     getQueryData();
   }, []);
 
   const getTaxLeader = () => {
-    axios.get(`${baseUrl}/tl/getTeamLeader`).then((res) => {
+    axios.get(`${baseUrl}/admin/getTeamLeader`, myConfig).then((res) => {
       
       if (res.data.code === 1) {
         setTaxLeaderDisplay(res.data.result);
@@ -83,7 +88,7 @@ function QueryAssingment(props) {
   };
 
   const getQueryData = () => {
-    axios.get(`${baseUrl}/tl/GetQueryDetails?id=${id}`).then((res) => {
+    axios.get(`${baseUrl}/admin/GetQueryDetails?id=${id}`, myConfig).then((res) => {
       
       if (res.data.code === 1) {
         setQuerData({
@@ -102,7 +107,7 @@ function QueryAssingment(props) {
 
   const getQuery = () => {
     axios
-      .get(`${baseUrl}/tl/CheckIfAssigned?assignno=${queryNo}`)
+      .get(`${baseUrl}/admin/CheckIfAssigned?assignno=${queryNo}`, myConfig)
       .then((res) => {
         
         if (res.data.code === 1) {
@@ -149,7 +154,10 @@ function QueryAssingment(props) {
 
     axios({
       method: "POST",
-      url: `${baseUrl}/tl/AddQueryAssignment`,
+      url: `${baseUrl}/admin/AddQueryAssignment`,
+      headers: {
+        uit : token
+      },
       data: formData,
     })
       .then(function (response) {

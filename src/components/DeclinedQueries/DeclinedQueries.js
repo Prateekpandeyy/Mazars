@@ -21,12 +21,18 @@ function DeclinedQueries({ CountPendingForPayment }) {
   const [records, setRecords] = useState([]);
   const [ViewDiscussion, setViewDiscussion] = useState(false);
   const [assignNo, setAssignNo] = useState('');
+  const token = window.localStorage.getItem("adminToken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
   useEffect(() => {
     getPendingForPayment();
   }, []);
 
   const getPendingForPayment = () => {
-    axios.get(`${baseUrl}/admin/declinedQueries`).then((res) => {
+    axios.get(`${baseUrl}/admin/declinedQueries`, myConfig).then((res) => {
     
       if (res.data.code === 1) {
         setPendingData(res.data.result);

@@ -30,6 +30,12 @@ function PendingForAcceptence({ pendingProposal }) {
   const [ViewDiscussion, setViewDiscussion] = useState(false);
   const [viewProposalModal, setViewProposalModal] = useState(false)
   const [proposalId, setProposalId] = useState()
+  const token = window.localStorage.getItem("adminToken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key)
@@ -45,7 +51,7 @@ function PendingForAcceptence({ pendingProposal }) {
   }, []);
 
   const getPendingAcceptedProposal = () => {
-    axios.get(`${baseUrl}/admin/getProposals?status1=1`).then((res) => {
+    axios.get(`${baseUrl}/admin/getProposals?status1=1`, myConfig).then((res) => {
      
       if (res.data.code === 1) {
         setProposalDisplay(res.data.result);
