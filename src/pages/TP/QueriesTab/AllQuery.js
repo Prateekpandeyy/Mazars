@@ -19,7 +19,7 @@ import MessageIcon, { ViewDiscussionIcon} from "../../../components/Common/Messa
 
 
 
-function AllQuery() {
+function AllQuery(props) {
 
     const userid = window.localStorage.getItem("tpkey");
 
@@ -39,9 +39,9 @@ function AllQuery() {
          "uit" : token
         }
       }
-    useEffect(() => {
-        getInCompleteAssingment();
-    }, []);
+    // useEffect(() => {
+    //     getInCompleteAssingment();
+    // }, []);
 
     const getInCompleteAssingment = () => {
         axios
@@ -51,6 +51,7 @@ function AllQuery() {
                 if (res.data.code === 1) {
                     setInCompleteData(res.data.result);
                     setRecords(res.data.result.length);
+                    props.getAllCount(res.data.result.length)
                 }
             });
     };
@@ -224,7 +225,7 @@ function AllQuery() {
                 <DataTablepopulated 
           bgColor="#55425f"
           keyField= {"assign_no"}
-          data={incompleteData}
+          data={props.data}
           
           columns={columns}>
            </DataTablepopulated> 

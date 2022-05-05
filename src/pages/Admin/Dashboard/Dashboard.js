@@ -71,11 +71,17 @@ let history = useHistory()
     paid,
     unpaid } = payment;
 
+    const token = window.localStorage.getItem("adminToken")
+    const myConfig = {
+        headers : {
+         "uit" : token
+        }
+      }
 
   useEffect(() => {
     const getAllQueries = () => {
       axios
-        .get(`${baseUrl}/admin/totalComplete`)
+        .get(`${baseUrl}/admin/totalComplete`, myConfig)
         .then((response) => {
        
           if (response.data.code === 1) {
@@ -108,7 +114,7 @@ let history = useHistory()
 
     const getAssignment = () => {
       axios
-        .get(`${baseUrl}/admin/getAssignmentsCount`)
+        .get(`${baseUrl}/admin/getAssignmentsCount`, myConfig)
         .then((response) => {
          
           if (response.data.code === 1) {
@@ -131,7 +137,7 @@ let history = useHistory()
 
     const getPayment = () => {
       axios
-        .get(`${baseUrl}/admin/getAssignmentsPaymentCount`)
+        .get(`${baseUrl}/admin/getAssignmentsPaymentCount`, myConfig)
         .then((response) => {
         
           if (response.data.code === 1) {

@@ -17,7 +17,7 @@ import DiscardReport from "../AssignmentTab/DiscardReport";
 import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
 import MessageIcon, {ViewDiscussionIcon, } from "../../../components/Common/MessageIcon";
 
-function InCompleteData({ CountIncomplete }) {
+function InCompleteData({ CountIncomplete , data}) {
   const userid = window.localStorage.getItem("tpkey");
 
   const [incompleteData, setInCompleteData] = useState([]);
@@ -219,7 +219,7 @@ routes: "queriestab",
         <DataTablepopulated 
               bgColor="#55425f"
               keyField= {"assign_no"}
-              data={incompleteData}
+              data={data}
               
               columns={columns}>
                </DataTablepopulated> 

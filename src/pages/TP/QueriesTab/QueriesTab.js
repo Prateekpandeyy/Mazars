@@ -16,21 +16,16 @@ function QueriesTab(props) {
   
   const userid = window.localStorage.getItem("tpkey");
   const [tabIndex, setTabIndex] = useState(0);
-
+const [allQdata, setAllQdata] = useState([])
   const [pendindForAccepttence, setPendingForAcceptence] = useState("");
   const [incomplete, setIncomplete] = useState("");
   const [complete, setcomplete] = useState("");
-
+const [incompleteData, setIncompleteData] = useState([])
   const [allQuery, setAllQuery] = useState("");
   const [declined, setDeclined] = useState("");
   const [bgColor, setbgColor] = useState("#55425F")
+const [pendingData, setPendingData] = useState([])
 
-  const token = window.localStorage.getItem("tptoken")
-  const myConfig = {
-      headers : {
-       "uit" : token
-      }
-    }
 
   const tableIndex = (index) => {
     setTabIndex(index)
@@ -67,9 +62,12 @@ function QueriesTab(props) {
   }, [props.location.index]);
 
 
-const getAllCount = (datacount) => {
-  console.log("datacount", datacount)
-}
+  const token = window.localStorage.getItem("tptoken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
   useEffect(() => {
     const AllQuery = () => {
       axios
@@ -78,6 +76,7 @@ const getAllCount = (datacount) => {
          
           if (res.data.code === 1) {
             setAllQuery(res.data.result.length);
+            setAllQdata(res.data.result)
           }
         });
     };
@@ -88,6 +87,7 @@ const getAllCount = (datacount) => {
         .then((res) => {
          
           if (res.data.code === 1) {
+            setPendingData(res.data.result)
             setPendingForAcceptence(res.data.result.length);
           }
         });
@@ -99,6 +99,7 @@ const getAllCount = (datacount) => {
         .then((res) => {
          
           if (res.data.code === 1) {
+            setIncompleteData(res.data.result)
             setIncomplete(res.data.result.length);
           }
         });
@@ -129,12 +130,12 @@ const getAllCount = (datacount) => {
           }
         });
     };
-
+  
     getPendindForAccepttence();
     getIncomplete();
     getComplete();
     AllQuery();
-    Declined()
+   
   }, []);
 
   const updateTab = (key) => {
@@ -160,16 +161,18 @@ const getAllCount = (datacount) => {
 
           <TabPanel>
             <AllQuery
-            getAllCount = {getAllCount}
+           data = {allQdata}
             />
           </TabPanel>
           <TabPanel>
             <PendingForAcceptence
+            data= {pendingData}
               updateTab={updateTab}
             />
           </TabPanel>
           <TabPanel>
             <InCompleteData
+            data={incompleteData}
             />
           </TabPanel>
          

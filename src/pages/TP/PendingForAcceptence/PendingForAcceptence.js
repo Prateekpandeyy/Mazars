@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState} from "react";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import { Link } from "react-router-dom";
@@ -17,7 +17,7 @@ import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel
 import MessageIcon, { Accept, Reject} from "../../../components/Common/MessageIcon";
 
 
-function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
+function PendingForAcceptence(props) {
   let history = useHistory();
   const userid = window.localStorage.getItem("tpkey");
   const [loading, setLoading] = useState(false);
@@ -29,20 +29,10 @@ function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
     id: "",
     allocation_id: "",
   });
-  const token = window.localStorage.getItem("tptoken")
-  const myConfig = {
-      headers : {
-       "uit" : token
-      }
-    }
+
   const [addPaymentModal, setPaymentModal] = useState(false);
   const rejectHandler = (key) => {
-    const token = window.localStorage.getItem("tptoken")
-    const myConfig = {
-        headers : {
-         "uit" : token
-        }
-      }
+   
     setPaymentModal(!addPaymentModal);
     setPay({
       id: key.id,
@@ -50,18 +40,17 @@ function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
     });
   };
 
-  useEffect(() => {
-    getPendingforAcceptance();
-  }, []);
-
+ 
+console.log("done")
   const getPendingforAcceptance = () => {
     axios
-      .get(`${baseUrl}/tl/pendingQues?tp_id=${JSON.parse(userid)}`, myConfig)
+      .get(`${baseUrl}/tl/pendingQues?tp_id=${JSON.parse(userid)}`)
       .then((res) => {
 
         if (res.data.code === 1) {
           setPendingData(res.data.result);
           setRecords(res.data.result.length);
+          props.pendingQueryNumber(res.data.result.length)
           // CountPendingForAcceptence(res.data.result.length);
         }
       });
@@ -237,7 +226,7 @@ function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
               <DataTablepopulated 
               bgColor="#55425f"
               keyField= {"assign_no"}
-              data={pendingData}
+              data={props.pendingData}
               
               columns={columns}>
                </DataTablepopulated> 

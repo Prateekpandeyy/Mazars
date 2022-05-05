@@ -49,7 +49,12 @@ function Chatting(props) {
   const [item, setItem] = useState("");
   const [data, setData] = useState({})
   const { query_id, query_No, routes } = data
-
+  const token = window.localStorage.getItem("adminToken")
+    const myConfig = {
+        headers : {
+         "uit" : token
+        }
+      }
 
 
 
@@ -81,6 +86,9 @@ function Chatting(props) {
     axios({
       method: "POST",
       url: `${baseUrl}/admin/messageSent`,
+      headers : {
+        uit : token
+      },
       data: formData,
     })
       .then(function (response) {
