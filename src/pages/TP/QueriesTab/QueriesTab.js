@@ -67,7 +67,9 @@ function QueriesTab(props) {
   }, [props.location.index]);
 
 
-
+const getAllCount = (datacount) => {
+  console.log("datacount", datacount)
+}
   useEffect(() => {
     const AllQuery = () => {
       axios
@@ -158,6 +160,7 @@ function QueriesTab(props) {
 
           <TabPanel>
             <AllQuery
+            getAllCount = {getAllCount}
             />
           </TabPanel>
           <TabPanel>

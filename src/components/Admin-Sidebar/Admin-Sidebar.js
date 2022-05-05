@@ -125,13 +125,14 @@ const getFeedback2 = () => {
 
 };
 const getFeedbacktl = () => {
+
+ if(TLDashboard !== undefined){
   const token = window.localStorage.getItem("tlToken")
   const myConfig = {
       headers : {
        "uit" : token
       }
     }
- if(TLDashboard != undefined){
   axios
   .get(`${baseUrl}/tl/getFeedback?tl_id=${JSON.parse(tlkey)}&type=total`, myConfig)
   .then((res) => {
@@ -146,18 +147,24 @@ const getFeedbacktl = () => {
   setOpen(true)
 }
 };
-useState(() => {
+useEffect(() => {
   getFeedbacktl();
 }, [TLDashboard])
 
 const getFeedbacktp = () => {
-  if(TPDashboard != undefined){
+  const token = window.localStorage.getItem("tptoken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
+  if(TPDashboard !== undefined){
     axios
-    .get(`${baseUrl}/customers/getFeedback?tp_id=${JSON.parse(tpkey)}&&type=total`)
+    .get(`${baseUrl}/tl/getFeedback?tp_id=${JSON.parse(tpkey)}&&type=total`, myConfig)
     .then((res) => {
       setLogo("taxprofessional/dashboard")
       if(res.data.result != undefined){
-        // setfeedbackNumbertp(res.data.result[0].total)
+         setfeedbackNumbertp(res.data.result[0].total)
         setLogo("/#/taxprofessional/dashboard")
       }
     });
@@ -166,7 +173,7 @@ const getFeedbacktp = () => {
     setOpen(true)
   }
 };
-useState(() => {
+useEffect(() => {
   getFeedbacktp();
 }, [TPDashboard])
 

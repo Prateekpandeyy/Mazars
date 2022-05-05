@@ -60,6 +60,13 @@ const Report = () => {
   const gettpName = Cookies.get("tpName")
   var kk = []
   var pp = []
+  const token = window.localStorage.getItem("tptoken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
+
 
   var vv = []
 const tpName = {
@@ -79,7 +86,7 @@ const history = useHistory()
 const [item2, setItem2] = useState(current_date)
   useEffect(() => {
     const getCategory = async () => {
-      await axios.get(`${baseUrl}/customers/getCategory?pid=0`).then((res) => {
+      await axios.get(`${baseUrl}/customers/getCategory?pid=0`, myConfig).then((res) => {
         if (res.data.code === 1) {
        
           setTax(res.data.result);
@@ -93,7 +100,7 @@ const [item2, setItem2] = useState(current_date)
   useEffect(() => {
     const getSubCategory = async () => {
 
-      await axios.get(`${baseUrl}/customers/getCategory?pid=${store}`).then((res) => {
+      await axios.get(`${baseUrl}/customers/getCategory?pid=${store}`, myConfig).then((res) => {
 
         if (res.data.code === 1) {
           setTax2(res.data.result)
@@ -115,7 +122,7 @@ getTaxProf();
   }, [taxId, taxxId, cname])
 const getupdateQuery = () => {
  
-     axios.get(`${baseUrl}/admin/getAllQueryList?customer=${cname}`)
+     axios.get(`${baseUrl}/admin/getAllQueryList?customer=${cname}` , myConfig)
     .then((res) => {
       if (res.data.code === 1) {
        
@@ -128,7 +135,7 @@ const getupdateQuery = () => {
        
 }
   const getTeamLeader = () => {
-    axios.get(`${baseUrl}/tp/gettpuserinfo?id=${JSON.parse(userid)}`).then((res) => {
+    axios.get(`${baseUrl}/tp/gettpuserinfo?id=${JSON.parse(userid)}`, myConfig).then((res) => {
     
      console.log("res", res.data.result)
      setTlName({
@@ -142,7 +149,7 @@ const getupdateQuery = () => {
 
   const getTaxProf = () => {
     axios
-      .get(`${baseUrl}/tp/getTaxProfessional?tl_id=${JSON.parse(userid)}`)
+      .get(`${baseUrl}/tp/getTaxProfessional?tl_id=${JSON.parse(userid)}`, myConfig)
       .then((res) => {
       
         if (res.data.code === 1) {
@@ -167,7 +174,7 @@ const getupdateQuery = () => {
 
   const getData = () => {
     axios
-    .get(`${baseUrl}/tl/allClient?tp_id=${JSON.parse(userid)}`)
+    .get(`${baseUrl}/tl/allClient?tp_id=${JSON.parse(userid)}`, myConfig)
       .then((res) => {
        console.log("dataClinet", res.data.result)
         var a = res.data.result;
@@ -311,6 +318,9 @@ setQno([])
  axios({
    method : "POST",
    url : `${baseUrl}/report/generateReport?t=${JSON.stringify(Math.floor(Math.random() * 110000))}`,
+  headers: {
+    uit : token
+  },
    data : formData
 
  })
@@ -421,6 +431,9 @@ setQno([])
 axios({
  method : "POST",
  url : `${baseUrl}/report/generateReport?t=${JSON.stringify(Math.floor(Math.random() * 110000))}`,
+headers : {
+  uit : token
+},
  data : formData
 
 })

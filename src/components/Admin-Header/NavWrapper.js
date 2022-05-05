@@ -62,18 +62,18 @@ function NavWrapper(props) {
             <ul className="nav navbar-nav float-right" style={{display: "flex", flexDirection: "row"}}>
 
               {name == "customer" && (
-                <CustomerNotification tokenKey={userId} name={name} />
+                <CustomerNotification panel="client" tokenKey={userId} name={name} />
               )}
 
               {name == "admin" && (
-                <CustomerNotification tokenKey={adminkey} name={name} />
+                <CustomerNotification  panel="admin" tokenKey={adminkey} name={name} />
               )}
 
               {name == "Team Leader" && (
-                <CustomerNotification tokenKey={tlkey} name={name} />
+                <CustomerNotification panel="teamleader" tokenKey={tlkey} name={name} />
               )}
                {name == "Tax Professional" && (
-                <CustomerNotification tokenKey={tpkey} name={name} />
+                <CustomerNotification panel="taxprofessional" tokenKey={tpkey} name={name} />
               )}
 
 

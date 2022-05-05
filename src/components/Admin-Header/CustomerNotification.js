@@ -4,12 +4,13 @@ import { baseUrl } from "../../config/config";
 import { Link , useHistory} from "react-router-dom";
 
 
-function CustomerNotification({ tokenKey, name }) {
+function CustomerNotification({ tokenKey, name , panel}) {
 
 
 
    
     const [countNotification, setCountNotification] = useState("");
+    
    const role = localStorage.getItem("role")
    let history = useHistory()
 
@@ -19,8 +20,31 @@ function CustomerNotification({ tokenKey, name }) {
     }, [tokenKey]);
    
     const getNotification = () => {
+        var token = ""
+        var redir = ""
+        if(panel === "taxprofessional"){
+            token =  window.localStorage.getItem("tptoken")
+            redir = "tl"
+        }
+        else if (token === "teamleader"){
+           token = window.localStorage.getItem("tlToken")
+           redir = "tl"
+        }
+        else if (token === "admin"){
+            token = window.localStorage.getItem("admintoken")
+            redir = "admin"
+        }
+        else {
+           token = window.localStorage.getItem("clientToken")
+           redir = "customers"
+        }
+    const myConfig = {
+        headers : {
+         "uit" : token
+        }
+      }
         axios
-            .get(`${baseUrl}/customers/getNotification?id=${JSON.parse(tokenKey)}&type_list=uread`)
+            .get(`${baseUrl}/${redir}/getNotification?id=${JSON.parse(tokenKey)}&type_list=uread`, myConfig)
             .then((res) => {
                 console.log("roleAdmin", window.location.hash.search("admin"))
                 if(role === "cms" && window.location.hash.search("admin") == 2){
