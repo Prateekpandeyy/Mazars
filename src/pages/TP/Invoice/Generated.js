@@ -321,18 +321,21 @@ const Generated = () => {
                     </DataTablepopulated>
                    
                   
-                    <Tds 
-                    tdsForm = {tdsForm}
-                    addTdsToggle = {addTdsToggle}
-                    id={id}
-                    paidAmount={paidAmount}
-                    report = {assignNo}
-                    installmentNo = {installmentNo}
-                    billNo = {billNo}
-                    id = {id2}
-                    generated = {"edited"}
-                    gstNo = {gstNo}
-                    />
+                  {
+                      tdsForm === true ?
+                      <Tds 
+                      tdsForm = {tdsForm}
+                      addTdsToggle = {addTdsToggle}
+                      id={id}
+                      paidAmount={paidAmount}
+                      report = {assignNo}
+                      installmentNo = {installmentNo}
+                      billNo = {billNo}
+                      id = {id2}
+                      generated = {"edited"}
+                      gstNo = {gstNo}
+                      /> : ""
+                  }
                 </CardBody>
             </Card>
         </>

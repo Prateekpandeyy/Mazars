@@ -100,7 +100,7 @@ function AssignmentTab() {
   //get category
   useEffect(() => {
     const getSubCategory = () => {
-      if(selectedData != undefined){
+      if(selectedData.length > 0){
         axios
         .get(`${baseUrl}/customers/getCategory?pid=${selectedData}`)
         .then((res) => {
@@ -570,15 +570,25 @@ else{
                   style={{ width: 250 }}
                   placeholder="Select Sub Category"
                   defaultValue={[]}
-                  onChange={handleSubCategory}
+                  onChange={(e) => handleSubCategory(e)}
                   value={store2}
                   allowClear
                 >
-                  {tax2.map((p, index) => (
+                  {/* {tax2.map((p, index) => (
                     <Option value={p.id} key={index}>
                       {p.details}
                     </Option>
-                  ))}
+                  ))} */}
+                  {
+                     tax2.length > 0 ?
+                     <>
+                      {tax2?.map((p, index) => (
+                      <Option value={p.id} key={index}>
+                        {p.details}
+                      </Option>
+                    ))}
+                     </> : ""
+                   }
                 </Select>
               </div>
               <div>

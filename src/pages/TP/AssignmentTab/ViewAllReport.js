@@ -100,6 +100,10 @@ function ViewReport({
   }, [report]);
 
   const getData = () => {
+   if(report === undefined){
+
+   }
+   else {
     let formData = new FormData();
     formData.append("assign_no", report);
     formData.append("uid", JSON.parse(userId));
@@ -122,6 +126,7 @@ function ViewReport({
       .catch((error) => {
        
       });
+   }
   }
 
 

@@ -107,7 +107,7 @@ function AssignmentTab() {
     //get category
     useEffect(() => {
         const getSubCategory = () => {
-            if(selectedData != undefined){
+            if(selectedData.length > 0){
                 axios
                 .get(`${baseUrl}/customers/getCategory?pid=${selectedData}`)
                 .then((res) => {

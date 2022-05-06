@@ -218,7 +218,9 @@ const CreateInvoice = () => {
               </DataTablepopulated>
                    
 
-                    <Tds 
+                    {
+                        tdsForm === true ?
+                        <Tds 
                     tdsForm = {tdsForm}
                     addTdsToggle = {addTdsToggle}
                     id={id}
@@ -228,7 +230,8 @@ const CreateInvoice = () => {
                     billNo = {billNo}
                     id = {id2}
                     gstNo = {gstNo}
-                    />
+                    /> : ""
+                    }
                 </CardBody>
             </Card>
         </>
