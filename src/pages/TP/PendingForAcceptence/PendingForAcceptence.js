@@ -41,7 +41,7 @@ function PendingForAcceptence(props) {
   };
 
  
-console.log("done")
+
   const getPendingforAcceptance = () => {
     axios
       .get(`${baseUrl}/tl/pendingQues?tp_id=${JSON.parse(userid)}`)

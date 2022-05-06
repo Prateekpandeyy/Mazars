@@ -107,7 +107,7 @@ function EditTL() {
 
  
   const getTeamLeader = () => {
-    axios.get(`${baseUrl}/tl/getTeamLeader?id=${id}`).then((res) => {
+    axios.get(`${baseUrl}/admin/getTeamLeader?id=${id}`, myConfig).then((res) => {
  
       if (res.data.code === 1) {
        if(JSON.parse(res.data.result[0].allcat_id)){
@@ -583,7 +583,10 @@ const checktlPost = (e) => {
   formData.append("id", id )
   axios({
     method: "POST",
-    url : `${baseUrl}/tl/validateTLEditPost`,
+    url : `${baseUrl}/admin/validateTLEditPost`,
+    headers : {
+      uit : token
+    },
     data: formData,
   })
   .then(function (res) {
@@ -620,7 +623,7 @@ const checktlPost = (e) => {
  }
  const deleteCliente = (id) => {
   axios
-    .get(`${baseUrl}/tl/deleteTeamLeader?id=${id}`)
+    .get(`${baseUrl}/admin/deleteTeamLeader?id=${id}`, myConfig)
     .then(function (response) {
       
       if (response.data.code === 1) {

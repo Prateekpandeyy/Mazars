@@ -103,12 +103,7 @@ function EditTP() {
   const options2 = tax2.map(v => ({
     "value": v.id,
     "label": v.details
-  }))
-
-
- 
-
-  
+  }))  
   var data1 = value.name;
   var data2 = value.personal_email;
   var data3 = value.phone;
@@ -124,10 +119,15 @@ function EditTP() {
   var data10 = value.tl_id
   var data11 = value.tl_name
   var postEmmail = value.tl_post_email;
- 
+  const token = window.localStorage.getItem("adminToken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
   useEffect(() => {
     const getCategory = () => {
-      axios.get(`${baseUrl}/customers/getCategory?pid=0`).then((res) => {
+      axios.get(`${baseUrl}/admin/getCategory?pid=0`, myConfig).then((res) => {
        
         if (res.data.code === 1) {
           setTax(res.data.result);
@@ -142,7 +142,7 @@ function EditTP() {
   }, [id]);
 
   const getTutorial = (id) => {
-   axios.get(`${baseUrl}/tp/getTaxProfessional?id=${id}`)
+   axios.get(`${baseUrl}/admin/getTaxProfessional?id=${id}`, myConfig)
       .then((res) => {
        
         if (res.data.code === 1) {
@@ -158,7 +158,7 @@ function EditTP() {
   };
   useEffect(() => {
     const getSubCategory = () => {
-      axios.get(`${baseUrl}/customers/getCategory?pid=${store}`).then((res) => {
+      axios.get(`${baseUrl}/admin/getCategory?pid=${store}`, myConfig).then((res) => {
         
         if (res.data.code === 1) {
           setTax2(res.data.result);
@@ -239,7 +239,10 @@ function EditTP() {
 
       axios({
         method: "POST",
-        url: `${baseUrl}/tp/updateTP`,
+        url: `${baseUrl}/admin/updateTP`,
+        headers : {
+          uit : token
+        },
         data: formData,
       })
         .then(function (response) {
@@ -394,7 +397,10 @@ function EditTP() {
 
       axios({
         method: "POST",
-        url: `${baseUrl}/tl/validateEditRegistration`,
+        url: `${baseUrl}/admin/validateEditRegistration`,
+        headers : {
+          uit : token
+        },
         data: formData,
       })
       .then(function (response) {
@@ -476,7 +482,7 @@ function EditTP() {
   }
   const deleteCliente = (id) => {
    axios
-     .get(`${baseUrl}/tp/deleteTP?id=${id}`)
+     .get(`${baseUrl}/admin/deleteTP?id=${id}`, myConfig)
      .then(function (response) {
        
        if (response.data.code === 1) {

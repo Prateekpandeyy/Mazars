@@ -89,7 +89,7 @@ const percent = {
 
 const getDataild = () => {
   axios
-  .get(`${baseUrl}/admin/getPaymentDetail?tl_id=${JSON.parse(userid)}&invoice=1&invoice_id=${props.id}`)
+  .get(`${baseUrl}/tl/getPaymentDetail?tl_id=${JSON.parse(userid)}&invoice=1&invoice_id=${props.id}`, myConfig)
 .then((res) => {
 
 if(res.data.payment_detail){

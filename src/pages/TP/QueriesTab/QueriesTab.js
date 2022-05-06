@@ -68,8 +68,7 @@ const [pendingData, setPendingData] = useState([])
        "uit" : token
       }
     }
-  useEffect(() => {
-    const AllQuery = () => {
+    const allQuery22 = () => {
       axios
         .get(`${baseUrl}/tl/getIncompleteQues?tp_id=${JSON.parse(userid)}`, myConfig)
         .then((res) => {
@@ -80,6 +79,8 @@ const [pendingData, setPendingData] = useState([])
           }
         });
     };
+  useEffect(() => {
+    
 
     const getPendindForAccepttence = () => {
       axios
@@ -134,7 +135,7 @@ const [pendingData, setPendingData] = useState([])
     getPendindForAccepttence();
     getIncomplete();
     getComplete();
-    AllQuery();
+    allQuery22();
    
   }, []);
 
@@ -162,6 +163,8 @@ const [pendingData, setPendingData] = useState([])
           <TabPanel>
             <AllQuery
            data = {allQdata}
+           allQuery = {allQuery22}
+           setAllQdata = {setAllQdata}
             />
           </TabPanel>
           <TabPanel>

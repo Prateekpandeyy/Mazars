@@ -44,8 +44,15 @@ const percent = {
   flexDirection : "row",
   alignItems : "center"
 }
+const token = window.localStorage.getItem("tptoken")
+const myConfig = {
+    headers : {
+     "uit" : token
+    }
+  }
+
 const getServices = () => {
-      axios.get(`${baseUrl}/tl/getServices`)
+      axios.get(`${baseUrl}/tl/getServices`, myConfig)
       .then((res) => {
   
         if(res.data.code === 1){
@@ -83,7 +90,7 @@ const getServices = () => {
 
 const getDataild = () => {
   axios
-  .get(`${baseUrl}/admin/getPaymentDetail?tp_id=${JSON.parse(userid)}&invoice=1&invoice_id=${props.id}`)
+  .get(`${baseUrl}/tl/getPaymentDetail?tp_id=${JSON.parse(userid)}&invoice=1&invoice_id=${props.id}`, myConfig)
 .then((res) => {
 
 if(res.data.payment_detail){
@@ -421,6 +428,9 @@ const onSubmit= (value) => {
        axios({
            method : "POST",
            data : formData,
+           headers : {
+             uit : token
+           },
            url : `${baseUrl}/tl/generateInvoive`
        })
        .then((res) => {

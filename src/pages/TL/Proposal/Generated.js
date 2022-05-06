@@ -76,15 +76,21 @@ const Generated = () => {
 
 
   
-//   const downloadpdf = () => {
-//     axios.get(`${baseUrl}/customers/dounloadpdf?id=${p.id}` , myConfig)
-//   .then((res) => {
-//     console.log("res", res)
-//     if(res.status === 200){
-//        window.open(URL.createObjectURL(res.data));
-//     }
-//   })
-//   }
+    const downloadpdf = (qno) => {
+        const myConfig2 = {
+            headers : {
+             "uit" : token
+            },
+            responseType: 'blob'
+          }
+        axios.get(`${baseUrl}/tl/viewinvoicepdf?assign_no=${qno}&invoice_id=${JSON.parse(userid)}` , myConfig2)
+      .then((res) => {
+        console.log("res", res)
+        if(res.status === 200){
+           window.open(URL.createObjectURL(res.data));
+        }
+      })
+      }
     const columns = [
         {
             text: "S.No",
@@ -220,12 +226,15 @@ const Generated = () => {
                 return (
                     <>
                        <div style={{ display: "flex", justifyContent: "flex-start", alignItems : "center" }}>
-                        <a
+                        {/* <a
                     href={`${baseUrl3}/${row.invoice}`}
                     target="_blank"
                   >
                          <DescriptionOutlinedIcon color="secondary" />
-                              </a>
+                              </a> */}
+                                <span onClick={() => downloadpdf(row.assign_no, row.assign_id)}>
+                         <DescriptionOutlinedIcon color="secondary" />
+                         </span>
                               {row.is_paid == "0" ? 
                       
                       <div  className="mx-1" onClick = {() => addTdsToggle(row)}>
@@ -291,6 +300,7 @@ const Generated = () => {
                      getData={getProposalList}
                      invoice="generated" 
                      setRec={setRecords}
+                     panel = "teamleader"
                      records={records}
                      userid = {JSON.parse(userid)}/>
                     </CardHeader>

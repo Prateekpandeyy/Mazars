@@ -55,7 +55,7 @@ const CreateInvoice = () => {
 
     const getProposalList = () => {
         axios
-            .get(`${baseUrl}/admin/getPaymentDetail?tp_id=${JSON.parse(userid)}&invoice=0`, myConfig)
+            .get(`${baseUrl}/tl/getPaymentDetail?tp_id=${JSON.parse(userid)}&invoice=0`, myConfig)
             .then((res) => {
                
                 if (res.data.code === 1) {

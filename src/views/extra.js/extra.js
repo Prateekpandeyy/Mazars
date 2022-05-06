@@ -223,3 +223,5 @@
 
 // console.log(moment().diff(date));
 //     }
+11 pro 11inch
+add fresh query shold be in right

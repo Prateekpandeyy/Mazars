@@ -214,8 +214,8 @@ function AllQuery(props) {
             <Card>
                 <CardHeader>
                     <TaxProfessionalFilter
-                        setData={setInCompleteData}
-                        getData={getInCompleteAssingment}
+                        setData={props.setAllQdata}
+                        getData={props.allQuery}
                         AllQuery="AllQuery"
                         setRecords={setRecords}
                         records={records}

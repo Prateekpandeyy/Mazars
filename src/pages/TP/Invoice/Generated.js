@@ -51,7 +51,7 @@ const Generated = () => {
 
     const getProposalList = () => {
         axios
-            .get(`${baseUrl}/admin/getPaymentDetail?tp_id=${JSON.parse(userid)}&invoice=1`, myConfig)
+            .get(`${baseUrl}/tl/getPaymentDetail?tp_id=${JSON.parse(userid)}&invoice=1`, myConfig)
             .then((res) => {
               
                 if (res.data.code === 1) {
@@ -61,7 +61,21 @@ const Generated = () => {
             });
     };
 
-
+    const downloadpdf = (qno) => {
+        const myConfig2 = {
+            headers : {
+             "uit" : token
+            },
+            responseType: 'blob'
+          }
+        axios.get(`${baseUrl}/tl/viewinvoicepdf?assign_no=${qno}&invoice_id=${JSON.parse(userid)}` , myConfig2)
+      .then((res) => {
+        console.log("res", res)
+        if(res.status === 200){
+           window.open(URL.createObjectURL(res.data));
+        }
+      })
+      }
     const columns = [
         {
             text: "S.No",
@@ -199,15 +213,18 @@ const Generated = () => {
                 return { fontSize: "11px", width: "110px" };
             },
             formatter: function (cell, row) {
+                console.log("row", row)
                 return (
                     <>
                        <div style={{ display: "flex", justifyContent : "flex-start", alignItems:"center" }}>
-                        <a
+                        {/* <a
                     href={`${baseUrl3}/${row.invoice}`}
                     target="_blank"
-                  >
+                  > */}
+                  <span onClick={() => downloadpdf(row.assign_no, row.assign_id)}>
                          <DescriptionOutlinedIcon color="secondary" />
-                              </a>
+                         </span>
+                              {/* </a> */}
                               {row.is_paid == "0" ? 
                         <i
                         class="fa fa-edit"
@@ -278,6 +295,7 @@ const Generated = () => {
                      setData={setProposal}
                      getData={getProposalList}
                      invoice="tpgenerated" 
+                     panel = "taxprofessional"
                      setRec={setRecords}
                      records={records}
                      userid = {JSON.parse(userid)}/>

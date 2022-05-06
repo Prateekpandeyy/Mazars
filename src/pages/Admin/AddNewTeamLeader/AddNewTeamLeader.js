@@ -75,7 +75,12 @@ function AddNew() {
   var kk = []
   var vv = []
 
-
+  const token = window.localStorage.getItem("adminToken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
 
   const options = tax.map(d => (
     {
@@ -93,7 +98,7 @@ function AddNew() {
 
   useEffect(() => {
     const getCategory = async () => {
-      await axios.get(`${baseUrl}/customers/getCategory?pid=0`).then((res) => {
+      await axios.get(`${baseUrl}/admin/getCategory?pid=0`, myConfig).then((res) => {
         if (res.data.code === 1) {
           
           setTax(res.data.result);
@@ -109,7 +114,7 @@ function AddNew() {
   useEffect(() => {
     const getSubCategory = async () => {
 
-      await axios.get(`${baseUrl}/customers/getCategory?pid=${store}`).then((res) => {
+      await axios.get(`${baseUrl}/admin/getCategory?pid=${store}`, myConfig).then((res) => {
 
         if (res.data.code === 1) {
           setTax2(res.data.result)
@@ -177,7 +182,10 @@ function AddNew() {
 
       axios({
         method: "POST",
-        url: `${baseUrl}/tl/AddTeamLead`,
+        url: `${baseUrl}/admin/AddTeamLead`,
+        headers : {
+          uit : myConfig
+        },
         data: formData,
       })
 
@@ -381,7 +389,10 @@ function AddNew() {
 
       axios({
         method: "POST",
-        url: `${baseUrl}/tl/validateregistration`,
+        url: `${baseUrl}/admin/validateregistration`,
+        headers : {
+          uit : token
+        },
         data: formData,
       })
         .then(function (response) {
@@ -412,7 +423,10 @@ function AddNew() {
 
   axios({
     method: "POST",
-    url : `${baseUrl}/tl/validateTLPost`,
+    url : `${baseUrl}/admin/validateTLPost`,
+    headers : {
+      uit : token
+    },
     data: formData,
   })
   .then(function (res) {

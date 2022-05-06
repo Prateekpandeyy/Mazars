@@ -30,7 +30,13 @@ function TeamLeaderTab() {
   
 
   const [modal, setModal] = useState(false);
+ 
   const token = window.localStorage.getItem("adminToken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
   const toggle = (key) => {
    
     setModal(!modal);
@@ -236,7 +242,7 @@ else{
   }, []);
 
   const getTeamLeader = () => {
-    axios.get(`${baseUrl}/tl/getTeamLeader`).then((res) => {
+    axios.get(`${baseUrl}/admin/getTeamLeader`, myConfig).then((res) => {
     
       var dd = []
       if (res.data.code === 1) {

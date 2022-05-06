@@ -26,7 +26,12 @@ function TaxProfessionalsTab() {
   const [tpCount, setTpCount] = useState("");
   const [history, setHistory] = useState([]);
   const userid = window.localStorage.getItem("adminkey");
-  const [myPurpose, setPurpose] = useState([])
+  const token = window.localStorage.getItem("adminToken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
   var digit2 = [];
   useEffect(() => {
     getTaxProf();
@@ -55,6 +60,7 @@ function TaxProfessionalsTab() {
         method: "GET",
         headers: new Headers({
           Accept: "application/vnd.github.cloak-preview",
+          uit : token
         }),
       })
         .then((res) => res.json())
@@ -252,7 +258,7 @@ function TaxProfessionalsTab() {
   const deleteCliente = (id) => {
   
     axios
-      .get(`${baseUrl}/tl/deleteTeamLeader?id=${id}`)
+      .get(`${baseUrl}/admin/deleteTeamLeader?id=${id}`)
       .then(function (response) {
        
         if (response.data.code === 1) {

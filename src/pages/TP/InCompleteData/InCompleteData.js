@@ -35,9 +35,9 @@ function InCompleteData({ CountIncomplete , data}) {
        "uit" : token
       }
     }
-  useEffect(() => {
-    getInCompleteAssingment();
-  }, []);
+  // useEffect(() => {
+  //   getInCompleteAssingment();
+  // }, []);
 
   const getInCompleteAssingment = () => {
     axios

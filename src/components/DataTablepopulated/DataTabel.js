@@ -37,7 +37,9 @@ const MyContainer = styled(Container)({
  })
     return(
         <>
-<MyContainer disableGutters>
+{
+    props.data ?
+    <MyContainer disableGutters>
  
  <BootstrapTable 
   keyField = {props.keyField}
@@ -46,7 +48,8 @@ const MyContainer = styled(Container)({
   rowStyle = {props.rowStyle2}
   rowIndex/>
 
-</MyContainer>
+</MyContainer> : ""
+}
         </>
     )
 

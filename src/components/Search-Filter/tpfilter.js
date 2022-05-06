@@ -39,10 +39,15 @@ function TaxProfessionalFilter(props) {
   var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
   
   const [item] = useState(current_date);
-
+  const token = window.localStorage.getItem("tptoken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
   useEffect(() => {
     const getSubCategory = () => {
-      if(selectedData != undefined){
+      if(selectedData.length > 0){
         axios
         .get(`${baseUrl}/customers/getCategory?pid=${selectedData}`)
         .then((res) => {
@@ -95,11 +100,13 @@ function TaxProfessionalFilter(props) {
       axios
         .get(
           `${baseUrl}/tl/getIncompleteQues?tp_id=${JSON.parse(userid)}&status=${data.p_status}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&pcat_id=${selectedData}`
+          , myConfig
         )
         .then((res) => {
        
           if (res.data.code === 1) {
             if (res.data.result) {
+              console.log("done")
               setData(res.data.result);
               setRecords(res.data.result.length);
 
@@ -334,15 +341,20 @@ function TaxProfessionalFilter(props) {
                     style={{ width: 250 }}
                     placeholder="Select Sub Category"
                     defaultValue={[]}
-                    onChange={handleSubCategory}
+                    onChange={(e) => handleSubCategory(e)}
                     value={store2}
                     allowClear
                   >
-                    {tax2.map((p, index) => (
+                   {
+                     tax2.length > 0 ?
+                     <>
+                      {tax2?.map((p, index) => (
                       <Option value={p.id} key={index}>
                         {p.details}
                       </Option>
                     ))}
+                     </> : ""
+                   }
                   </Select>
                 </div>
 
