@@ -392,12 +392,15 @@ const rightAli = {
                         getData={getProposalData}
                         headColor="#42566a"
                     />
-   <CommonShowProposal
-          setViewProposalModal = {setViewProposalModal}
-          viewProposalModal = {viewProposalModal}
-          showProposalModal2 = {showProposalModal2}
-          panel = "client"
-          proposalId = {proposalId}/>
+ {
+     viewProposalModal === true ?
+     <CommonShowProposal
+     setViewProposalModal = {setViewProposalModal}
+     viewProposalModal = {viewProposalModal}
+     showProposalModal2 = {showProposalModal2}
+     panel = "client"
+     proposalId = {proposalId}/> : ""
+ }
              <Modal isOpen={openManual} toggle={needHelp} style={{display : "block", position: "absolute", left:"280px"}} size="lg">
                         <ModalHeader toggle={needHelp}>Mazars</ModalHeader>
                         <ModalBody>

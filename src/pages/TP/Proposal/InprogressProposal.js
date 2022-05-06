@@ -326,11 +326,14 @@ function InprogressProposal() {
                         getData={getProposalList}
                         headColor="#5f7b97"
                     />
-  <CommonShowProposal
+  {
+      viewProposalModal === true ?
+      <CommonShowProposal
           setViewProposalModal = {setViewProposalModal}
           viewProposalModal = {viewProposalModal}
           showProposalModal2 = {showProposalModal2}
-          proposalId = {proposalId}/>
+          proposalId = {proposalId}/> : ""
+  }
 
                 </CardBody>
             </Card>

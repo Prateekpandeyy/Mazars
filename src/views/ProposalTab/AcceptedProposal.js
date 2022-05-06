@@ -335,11 +335,14 @@ function AcceptedProposal() {
                         headColor="#5f7b97"
                     />
                 </CardBody>
-                <CommonShowProposal
-          setViewProposalModal = {setViewProposalModal}
-          viewProposalModal = {viewProposalModal}
-          showProposalModal2 = {showProposalModal2}
-          proposalId = {proposalId}/>
+{
+    viewProposalModal === true ?
+    <CommonShowProposal
+    setViewProposalModal = {setViewProposalModal}
+    viewProposalModal = {viewProposalModal}
+    showProposalModal2 = {showProposalModal2}
+    proposalId = {proposalId}/> : ""
+}
           <Modal isOpen={openManual} toggle={needHelp} style={{display : "block", position: "absolute", left:"280px"}} size="lg">
                         <ModalHeader toggle={needHelp}>Mazars</ModalHeader>
                         <ModalBody>

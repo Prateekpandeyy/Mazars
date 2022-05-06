@@ -178,13 +178,7 @@ function MyAssingment(props) {
               date_of_delivery: res.data.assignment[0].date_of_delivery,
             });
           }
-          // if (res.data.history_queries.length > 0) {
-          //   setDisplayHistory({
-          //     tlname: res.data.history_queries[0].tname,
-          //     date_of_allocation:
-          //       res.data.history_queries[0].date_of_allocation,
-          //   });
-          // }
+         
           if (res.data.queries_document) {
             if (res.data.queries_document.length > 0) {
               setQueryDocs(res.data.queries_document);
@@ -193,30 +187,16 @@ function MyAssingment(props) {
         }
       });
     };
-    getQuery();
+   
     getSubmittedAssingment();
-  }, [assingNo]);
+  }, []);
 useState(() => {
   if(props.location.routes){
     setRoutesData(props.location.routes)
   }
 }, [])
 
-  const getQuery = () => {
-  if(assingNo === undefined){
-    return false
-  }
-  else{
-    axios
-    .get(`${baseUrl}/tl/GetAdditionalQueries?assignno=${assingNo}`)
-    .then((res) => {
-  
-      if (res.data.code === 1) {
-        setDisplayQuery(res.data.result);
-      }
-    });
-  }
-  };
+
 
 
   return (
@@ -262,7 +242,7 @@ useState(() => {
                 diaplayHistory={diaplayHistory}
                 diaplayAssignment={diaplayAssignment}
                 displayQuery={displayQuery}
-                getQuery={getQuery}
+
                 assingNo={assingNo}
                 customerQuery="customerQuery"
                 queryDocs={queryDocs}

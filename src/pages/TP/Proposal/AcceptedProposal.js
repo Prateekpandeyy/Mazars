@@ -270,11 +270,14 @@ function AcceptedProposal() {
                    data={proposal}
                    columns={columns}>
                     </DataTablepopulated>
-                    <CommonShowProposal
-          setViewProposalModal = {setViewProposalModal}
-          viewProposalModal = {viewProposalModal}
-          showProposalModal2 = {showProposalModal2}
-          proposalId = {proposalId}/>
+                   {
+                       viewProposalModal === true ?
+                       <CommonShowProposal
+                       setViewProposalModal = {setViewProposalModal}
+                       viewProposalModal = {viewProposalModal}
+                       showProposalModal2 = {showProposalModal2}
+                       proposalId = {proposalId}/> : ""
+                   }
            <DiscardReport
                         ViewDiscussionToggel={ViewDiscussionToggel}
                         ViewDiscussion={ViewDiscussion}

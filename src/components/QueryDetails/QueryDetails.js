@@ -173,7 +173,9 @@ function QueryDetails({
               </Col>
             </Row>
           </TabPane>
-       <TabPane tabId="5">
+          {
+            customerQuery === "customerQuery" ? null :
+<TabPane tabId="5">
          <Row>
            <Col sm="12">
              <Card body>
@@ -183,6 +185,8 @@ function QueryDetails({
            </Col>
            </Row>
        </TabPane>
+          }
+       
           
 
         </TabContent>

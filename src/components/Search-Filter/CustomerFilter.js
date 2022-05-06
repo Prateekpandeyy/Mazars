@@ -43,7 +43,7 @@ const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     const getSubCategory = () => {
-     if(selectedData != undefined){
+     if(selectedData.length > 0){
       axios
       .get(`${baseUrl}/customers/getCategory?pid=${selectedData}`, myConfig)
       .then((res) => {

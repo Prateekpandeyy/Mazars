@@ -373,11 +373,14 @@ function InprogressProposal() {
                             <ModalManual tar= {"proposalProcessing"} />
                         </ModalBody>
                     </Modal>
-                    <CommonShowProposal
-          setViewProposalModal = {setViewProposalModal}
-          viewProposalModal = {viewProposalModal}
-          showProposalModal2 = {showProposalModal2}
-          proposalId = {proposalId}/>
+                 {
+                     viewProposalModal === true ?
+                     <CommonShowProposal
+                     setViewProposalModal = {setViewProposalModal}
+                     viewProposalModal = {viewProposalModal}
+                     showProposalModal2 = {showProposalModal2}
+                     proposalId = {proposalId}/> : ""
+                 }
                 </CardBody>
             </Card>
       

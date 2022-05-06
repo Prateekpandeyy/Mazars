@@ -32,6 +32,7 @@ function ProposalView(props) {
   const [valueCheckBox, setValueCheckBox] = useState(false);
   const [rejectedBox, showRejectedBox] = useState(false)
   const [assignNo2, setAssignNo2] = useState()
+  const [addPaymentModal, setPaymentModal] = useState(false);
   const { id } = useParams();
   const history = useHistory();
   const token = window.localStorage.getItem("clientToken")
@@ -106,7 +107,7 @@ function ProposalView(props) {
       });
   };
 
-  const [addPaymentModal, setPaymentModal] = useState(false);
+  
   var nfObject = new Intl.NumberFormat('hi-IN')
   const readTerms = () => {
  
@@ -423,17 +424,21 @@ const amountStyle  = {
 
         </CardBody>
 
+      {addPaymentModal === true ?
         <TermsConditions
-          readTerms={readTerms}
-          addPaymentModal={addPaymentModal}
-          id={id}
-        />
-         <RejectedModal22
-                    showRejectedBox = {showRejectedBox} 
-                    rejectedBox = {rejectedBox}
-                    // getQueriesData = {getQueriesData}
-                    assignNo={assignNo2}
-                    deleteCliente = {deleteCliente}/>
+        readTerms={readTerms}
+        addPaymentModal={addPaymentModal}
+        id={id}
+      /> : ""}
+        {
+          rejectedBox === true ?
+          <RejectedModal22
+          showRejectedBox = {showRejectedBox} 
+          rejectedBox = {rejectedBox}
+          // getQueriesData = {getQueriesData}
+          assignNo={assignNo2}
+          deleteCliente = {deleteCliente}/> : ""
+        }
       </Card>
     </Layout>
   );

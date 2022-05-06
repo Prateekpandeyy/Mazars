@@ -100,6 +100,7 @@ const [item2, setItem2] = useState(current_date)
   useEffect(() => {
     const getSubCategory = async () => {
 
+     if(store.length > 0){
       await axios.get(`${baseUrl}/customers/getCategory?pid=${store}`, myConfig).then((res) => {
 
         if (res.data.code === 1) {
@@ -107,6 +108,7 @@ const [item2, setItem2] = useState(current_date)
         }
       });
     };
+     }
     getSubCategory();
   }, [store]);
 

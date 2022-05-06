@@ -312,11 +312,7 @@ function AllProposal() {
           
           columns={columns}>
            </DataTablepopulated> 
-                    <ChatHistory
-                        chatHandler={chatHandler}
-                        addPaymentModal={addPaymentModal}
-                        qno={id}
-                    />
+                 
                     <DiscardReport
                         ViewDiscussionToggel={ViewDiscussionToggel}
                         ViewDiscussion={ViewDiscussion}
