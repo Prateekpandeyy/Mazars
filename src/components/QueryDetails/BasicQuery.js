@@ -2,13 +2,53 @@ import React, { useState, useEffect } from "react";
 import CommonServices from "../../common/common";
 import { ImageUrl } from "../../config/config";
 import { Markup } from 'interweave';
+import axios from "axios";
+import { baseUrl } from "../../config/config";
 import './queryStyle.css';
 
-function BasicQuery({qstatus, p, diaplaySpecific, queryDocs, year, purpose, declined2,
+function BasicQuery({qstatus, panel, p, diaplaySpecific, queryDocs, year, purpose, declined2,
   declinedStatus }) {
 
 
-
+    const downloadpdf = (qno) => {
+      let userId, token;
+     if(panel === "teamleader"){
+      userId = window.localStorage.getItem("tlkey");
+      token = window.localStorage.getItem("tlToken")
+      const myConfig2 = {
+        headers : {
+         "uit" : token
+        },
+        responseType: 'blob'
+      }
+      axios.get(`${baseUrl}/tl/viewdocument?assign_no=${qno}&id=${JSON.parse(userId)}` , myConfig2)
+      .then((res) => {
+        console.log("res", res)
+        if(res.status === 200){
+           window.open(URL.createObjectURL(res.data));
+        }
+      })
+     }
+     else if(panel === "client"){
+      userId = window.localStorage.getItem("userid");
+      token = window.localStorage.getItem("clientToken")
+      const myConfig2 = {
+        headers : {
+         "uit" : token
+        },
+        responseType: 'blob'
+      }
+      axios.get(`${baseUrl}/customers/viewdocument?assign_no=${qno}&id=${JSON.parse(userId)}` , myConfig2)
+      .then((res) => {
+        console.log("res", res)
+        if(res.status === 200){
+           window.open(URL.createObjectURL(res.data));
+        }
+      })
+     }
+      
+    
+    }
   return (
     <>
       <div className="queryBox">
@@ -70,12 +110,15 @@ function BasicQuery({qstatus, p, diaplaySpecific, queryDocs, year, purpose, decl
               <td>
                 {queryDocs.map((p, i) => (
                   <p style={{ display: "flex" }}>
-                    <a
+                     <span onClick={() => downloadpdf(p.assign_no)}>
+                     <i className="fa fa-photo"></i>
+                       </span>
+                    {/* <a
                       href={`${ImageUrl}/${p.assign_no}/${p.name}`}
                       target="_blank"
                     >
-                    <span>  {i + 1 } </span><i className="fa fa-photo"></i>
-                    </a>
+                    <span>  {i + 1 } </span>
+                    </a> */}
                     <p style={{ marginLeft: "15px" }}>{p.name}</p>
                   </p>
                 ))}

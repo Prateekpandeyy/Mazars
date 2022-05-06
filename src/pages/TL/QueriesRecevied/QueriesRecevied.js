@@ -275,6 +275,7 @@ function QueriesRecevied(props) {
                 finalDate={finalDate}
                 qstatus={qstatus}
                 overDue = {overDue}
+                panel = "teamleader"
               />
             ))}
           </div>

@@ -279,6 +279,7 @@ useState(() => {
                 qstatus={qstatus}
                 finalDate={finalDate}
                 declined2={declined2}
+                panel = "client"
               />
             ))}
         

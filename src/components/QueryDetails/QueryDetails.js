@@ -40,7 +40,8 @@ function QueryDetails({
   declined2,
   declinedStatus, 
   finalDate, 
-  qstatus
+  qstatus,
+  panel
 }) {
  
 
@@ -114,6 +115,7 @@ function QueryDetails({
                     declined2={declined2}
                     declinedStatus={declinedStatus}
                     qstatus={qstatus}
+                    panel = {panel}
                   />
                 </Card>
               </Col>
