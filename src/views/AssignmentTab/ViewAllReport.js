@@ -40,7 +40,26 @@ function ViewReport({
     getData();
   }, [report]);
 
-
+  const downloadpdf = (qid) => {
+    let userId, token;
+  
+    userId = window.localStorage.getItem("userid");
+    token = window.localStorage.getItem("clientToken")
+    const myConfig2 = {
+      headers : {
+       "uit" : token
+      },
+      responseType: 'blob'
+    }
+    axios.get(`${baseUrl}/customers/viewreportdocument?assign_no=${report}&id=${qid}` , myConfig2)
+    .then((res) => {
+     
+      if(res.status === 200){
+         window.open(URL.createObjectURL(res.data));
+      }
+    })
+   }
+    
   const getData = () => {
    if(report === undefined){
 
@@ -105,7 +124,7 @@ function ViewReport({
       });
   };
 
-
+console.log("data", data)
 
   return (
     <div>
@@ -157,12 +176,15 @@ function ViewReport({
                       <tr>
                       {p.document && (
                         <p style={{ display: "flex" }}>
-                          <a
+                          <span onClick={() => downloadpdf(p.docid)}>
+                     <i className="fa fa-photo"></i>
+                       </span>
+                          {/* <a
                             href={`${ReportUrl}/${report}/${p.document}`}
                             target="_blank"
                           >
                             <i class="fa fa-photo"></i>
-                          </a>
+                          </a> */}
                           <p style={{ marginLeft: "15px" }}>{p.document}</p>
                         </p>
                       )}

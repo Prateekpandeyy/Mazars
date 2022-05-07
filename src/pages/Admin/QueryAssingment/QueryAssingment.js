@@ -106,20 +106,22 @@ function QueryAssingment(props) {
   }, [queryNo]);
 
   const getQuery = () => {
+   if(queryNo.length > 0){
     axios
-      .get(`${baseUrl}/admin/CheckIfAssigned?assignno=${queryNo}`, myConfig)
-      .then((res) => {
-        
-        if (res.data.code === 1) {
-          setQuery(false);
-          setHideQuery({
-            name: res.data.meta[0].name,
-            timeline: res.data.meta[0].timeline,
-            date_allocation: res.data.meta[0].date_allocation,
-            expdeliverydate: res.data.meta[0].expdeliverydate,
-          });
-        }
-      });
+    .get(`${baseUrl}/admin/CheckIfAssigned?assignno=${queryNo}`, myConfig)
+    .then((res) => {
+      
+      if (res.data.code === 1) {
+        setQuery(false);
+        setHideQuery({
+          name: res.data.meta[0].name,
+          timeline: res.data.meta[0].timeline,
+          date_allocation: res.data.meta[0].date_allocation,
+          expdeliverydate: res.data.meta[0].expdeliverydate,
+        });
+      }
+    });
+   }
   };
 
   const handleChange = (e) => {

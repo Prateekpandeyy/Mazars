@@ -43,7 +43,9 @@ function PaymentStatus(props) {
       .get(`${baseUrl}/customers/getUploadedProposals?cid=${JSON.parse(userId)}`, myConfig)
       .then((res) => {
       
-        setAllPayment(res.data.result.length);
+        if(res.data.code === 1){
+          setAllPayment(res.data.result.length);
+        }
       });
   };
 
@@ -52,7 +54,9 @@ function PaymentStatus(props) {
       .get(`${baseUrl}/customers/getUploadedProposals?cid=${JSON.parse(userId)}&status=1`, myConfig)
       .then((res) => {
       
-        setPaid(res.data.result.length);
+        if(res.data.code === 1){
+          setPaid(res.data.result.length);
+        }
       });
   };
 
@@ -61,7 +65,9 @@ function PaymentStatus(props) {
       .get(`${baseUrl}/customers/getUploadedProposals?cid=${JSON.parse(userId)}&status=2`, myConfig)
       .then((res) => {
       
+      if(res.data.code === 1){
         setUnpaid(res.data.result.length);
+      }
       });
   };
 

@@ -34,7 +34,7 @@ const InvoiceFilter = (props) => {
        }
       })
     }
-    else if (props.invoice == "create"){
+    else if (props.invoice == "create" && props.usetid !== undefined){
       const token = window.localStorage.getItem("tptoken")
       axios({
         method: "POST",

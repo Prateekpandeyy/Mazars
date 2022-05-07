@@ -680,12 +680,14 @@ const [loading, setLoading] = useState(false)
       <Reset />
 {
 query ?
-<div className="mx-sm-1">
-<Link to="/customer/select-category" style={{color : "#fff", marginLeft : "auto"}}>
+<div className="mx-sm-1" style={{position: "absolute", top: "50%", right: "10px"}}>
+<span>
+<Link to="/customer/select-category" style={{color : "#fff", textAlign: "right"}}>
 <button  className="autoWidthBtn mb-1" style={{marginLeft : "auto", color : "#fff"}}>
 Fresh Query 
 </button> 
 </Link>
+</span>
 </div>
 : ""
 }
