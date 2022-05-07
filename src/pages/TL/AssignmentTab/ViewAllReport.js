@@ -57,7 +57,44 @@ function ViewReport({
       }
     });
   };
-
+  const downloadpdf = (qid) => {
+    let userId, token;
+  
+    userId = window.localStorage.getItem("tlkey");
+    token = window.localStorage.getItem("tlToken")
+    const myConfig2 = {
+      headers : {
+       "uit" : token
+      },
+      responseType: 'blob'
+    }
+    axios.get(`${baseUrl}/customers/viewreportdocument?assign_no=${report}&id=${qid}` , myConfig2)
+    .then((res) => {
+     
+      if(res.status === 200){
+         window.open(URL.createObjectURL(res.data));
+      }
+    })
+   }
+   const downloadpdfclient = (qid) => {
+    let userId, token;
+  
+    userId = window.localStorage.getItem("tlkey");
+    token = window.localStorage.getItem("tlToken")
+    const myConfig2 = {
+      headers : {
+       "uit" : token
+      },
+      responseType: 'blob'
+    }
+    axios.get(`${baseUrl}/customers/viewreportdocument?assign_no=${report}&id=${qid}&document=2` , myConfig2)
+    .then((res) => {
+     
+      if(res.status === 200){
+         window.open(URL.createObjectURL(res.data));
+      }
+    })
+   }
   const deleteCliente = (id) => {
     let formData = new FormData();
     formData.append("uid", JSON.parse(userId));
@@ -152,12 +189,15 @@ function ViewReport({
                       <tr>
                       {p.document && (
                         <p style={{ display: "flex" }}>
-                          <a
+                           <span onClick={() => downloadpdf(p.docid)}>
+                     <i className="fa fa-photo"></i>
+                       </span>
+                          {/* <a
                             href={`${ReportUrl}/${report}/${p.document}`}
                             target="_blank"
                           >
                             <i class="fa fa-photo"></i>
-                          </a>
+                          </a> */}
                           <p style={{ marginLeft: "15px" }}>{p.document}</p>
                         </p>
                       )}
@@ -165,12 +205,10 @@ function ViewReport({
                      {p.customer_files && 
                       <tr>
                      
-                      <a
-                            href={`${ReportUrl}/${report}/${p.customer_files}`}
-                            target="_blank"
-                          >
-                            <i class="fa fa-photo"></i> 
-                          </a> &nbsp; &nbsp; &nbsp;{p.customer_files}
+                     <span onClick={() => downloadpdfclient(p.docid)}>
+                     <i className="fa fa-photo"></i>
+                       </span>
+                        &nbsp; &nbsp; &nbsp;{p.customer_files}
                     </tr> }
                     </td>
                   

@@ -484,11 +484,16 @@ rowStyle2 = (row, index) => {
                                     value={store2}
                                     allowClear
                                 >
-                                    {tax2.map((p, index) => (
+{
+  tax2.length > 0 ?
+  <>
+                                      {tax2.map((p, index) => (
                                         <Option value={p.id} key={index}>
                                             {p.details}
                                         </Option>
                                     ))}
+  </> : ""
+}
                                 </Select>
                             </div>
                             <div>

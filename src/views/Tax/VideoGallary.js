@@ -31,9 +31,26 @@ const Videogallery = () => {
     }, [])
    const getGalleryVideo = () => {
     if(history.location.index){
-     
+     localStorage.setItem("videoId", history.location.index.id)
    
         axios.get(`${baseUrl}/customers/getvideogallery?id=${history.location.index.id}`)
+        .then((res) => {
+        
+          setGalleryData(res.data.result)
+          res.data.result.map((i) => {
+            setTitle(i.title)
+           if(i.name.split(".")[1] === "mp4"){
+             isVideo(true)
+             
+           }
+          })
+          
+        })
+        }
+        else{
+let aa = localStorage.getItem("videoId")
+console.log("aa", aa)
+        axios.get(`${baseUrl}/customers/getvideogallery?id=${aa}`)
         .then((res) => {
         
           setGalleryData(res.data.result)
