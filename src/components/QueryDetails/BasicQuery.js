@@ -12,9 +12,43 @@ function BasicQuery({qstatus, panel, p, diaplaySpecific, queryDocs, year, purpos
 
     const downloadpdf = (qno, qid) => {
       let userId, token;
-     if(panel === "teamleader"){
+      if(panel === "admin"){
+        userId = window.localStorage.getItem("adminkey");
+        token = window.localStorage.getItem("adminToken")
+        const myConfig2 = {
+          headers : {
+           "uit" : token
+          },
+          responseType: 'blob'
+        }
+        axios.get(`${baseUrl}/admin/viewdocument?assign_no=${qno}&id=${qid}` , myConfig2)
+        .then((res) => {
+          console.log("res", res)
+          if(res.status === 200){
+             window.open(URL.createObjectURL(res.data));
+          }
+        })
+       }
+     else if(panel === "teamleader"){
       userId = window.localStorage.getItem("tlkey");
       token = window.localStorage.getItem("tlToken")
+      const myConfig2 = {
+        headers : {
+         "uit" : token
+        },
+        responseType: 'blob'
+      }
+      axios.get(`${baseUrl}/tl/viewdocument?assign_no=${qno}&id=${qid}` , myConfig2)
+      .then((res) => {
+        console.log("res", res)
+        if(res.status === 200){
+           window.open(URL.createObjectURL(res.data));
+        }
+      })
+     }
+     else if(panel === "taxprofessional"){
+      userId = window.localStorage.getItem("tpkey");
+      token = window.localStorage.getItem("tpToken")
       const myConfig2 = {
         headers : {
          "uit" : token
@@ -111,16 +145,12 @@ function BasicQuery({qstatus, panel, p, diaplaySpecific, queryDocs, year, purpos
               <td>
                 {queryDocs.map((p, i) => (
                   <p style={{ display: "flex" }}>
-                     <span onClick={() => downloadpdf(p.assign_no, p.id)}>
+                     <span onClick={() => downloadpdf(p.assign_no, p.id)} style={{display : "flex"}}>
                      <i className="fa fa-photo"></i>
-                       </span>
-                    {/* <a
-                      href={`${ImageUrl}/${p.assign_no}/${p.name}`}
-                      target="_blank"
-                    >
-                    <span>  {i + 1 } </span>
-                    </a> */}
+                      
+                  
                     <p style={{ marginLeft: "15px" }}>{p.name}</p>
+                    </span>
                   </p>
                 ))}
               </td>

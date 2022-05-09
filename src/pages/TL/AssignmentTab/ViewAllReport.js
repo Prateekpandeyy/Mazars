@@ -189,16 +189,12 @@ function ViewReport({
                       <tr>
                       {p.document && (
                         <p style={{ display: "flex" }}>
-                           <span onClick={() => downloadpdf(p.docid)}>
+                           <span onClick={() => downloadpdf(p.docid)} style = {{display : "flex"}}>
                      <i className="fa fa-photo"></i>
-                       </span>
-                          {/* <a
-                            href={`${ReportUrl}/${report}/${p.document}`}
-                            target="_blank"
-                          >
-                            <i class="fa fa-photo"></i>
-                          </a> */}
+                     
+                       
                           <p style={{ marginLeft: "15px" }}>{p.document}</p>
+                          </span>
                         </p>
                       )}
                       </tr>

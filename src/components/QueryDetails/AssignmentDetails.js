@@ -24,7 +24,24 @@ function AssignmentDetails({ p, panel, finalDate, submitData, customerQuery , di
   };
   const downloadpdf = (qno, qid) => {
     let userId, token;
-   if(panel === "teamleader"){
+    if(panel === "admin"){
+      userId = window.localStorage.getItem("adminkey");
+      token = window.localStorage.getItem("adminToken")
+      const myConfig2 = {
+        headers : {
+         "uit" : token
+        },
+        responseType: 'blob'
+      }
+      axios.get(`${baseUrl}/admin/viewdocument?assign_no=${qno}&id=${qid}` , myConfig2)
+      .then((res) => {
+        console.log("res", res)
+        if(res.status === 200){
+           window.open(URL.createObjectURL(res.data));
+        }
+      })
+     }
+  else if(panel === "teamleader"){
     userId = window.localStorage.getItem("tlkey");
     token = window.localStorage.getItem("tlToken")
     const myConfig2 = {
@@ -41,9 +58,9 @@ function AssignmentDetails({ p, panel, finalDate, submitData, customerQuery , di
       }
     })
    }
-   else  if(panel === "teamleader"){
-    userId = window.localStorage.getItem("tlkey");
-    token = window.localStorage.getItem("tlToken")
+   else  if(panel === "taxprofessional"){
+    userId = window.localStorage.getItem("tpkey");
+    token = window.localStorage.getItem("tptoken")
     const myConfig2 = {
       headers : {
        "uit" : token
