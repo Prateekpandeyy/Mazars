@@ -135,6 +135,7 @@ function QueryDetails({
                     tlName2={tlName2}
                     tp22 = {tp22}
                     tpStatus={tpStatus}
+                    panel = {panel}
                     overDue = {overDue}
                   />
                 </Card>

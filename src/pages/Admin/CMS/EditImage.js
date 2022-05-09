@@ -43,6 +43,12 @@ const EditImage = () => {
     const [date, setDate] = useState("")
     const [data, setData] = useState([]) 
     const [images, setImages] = useState([])
+    const token = localStorage.getItem("token")
+    const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
     const { handleSubmit, register, errors, getValues } = useForm();
     let getId = useParams()
     var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
@@ -55,7 +61,7 @@ const EditImage = () => {
     const getData = (e) => {
    
      if(getId.id !== undefined){
-        axios.get(`${baseUrl}/cms/getgallarylist?uid=${JSON.parse(userId)}&type=image&id=${getId.id}`)
+        axios.get(`${baseUrl}/cms/getgallarylist?uid=${JSON.parse(userId)}&type=image&id=${getId.id}`, myConfig)
       .then((res) => {
     
       setData(res.data.result);
@@ -82,7 +88,7 @@ const EditImage = () => {
           confirmButtonText: "Yes, delete it!",
       }).then((result) => {
           if (result.value) {
-            axios.get(`${baseUrl}/cms/deleteimage?uid=${JSON.parse(userId)}&id=${e.imageid}&imageid=${e.id}`)
+            axios.get(`${baseUrl}/cms/deleteimage?uid=${JSON.parse(userId)}&id=${e.imageid}&imageid=${e.id}`, myConfig)
             .then((res) => {
   console.log("response", res)
   if(res.data.code === 1){
@@ -123,6 +129,9 @@ const EditImage = () => {
       axios({
         method : "POST", 
         url : `${baseUrl}/cms/uploadphoto`,
+        headers : {
+          uit : token
+        },
         data : formData
       })
       .then((res) => {

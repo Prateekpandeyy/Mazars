@@ -70,7 +70,7 @@ const MediaContent = () => {
         confirmButtonText: "Yes, delete it!",
     }).then((result) => {
         if (result.value) {
-          axios.get(`${baseUrl}/cms/removegallery?uid=${JSON.parse(userId)}&id=${e.id}`)
+          axios.get(`${baseUrl}/cms/removegallery?uid=${JSON.parse(userId)}&id=${e.id}`, myConfig)
           .then((res) => {
 console.log("response", res)
 if(res.data.code === 1){

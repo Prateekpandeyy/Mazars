@@ -14,6 +14,7 @@ function ProposalDetails({
   tlName2,
   tpStatus,
   tp22, 
+  panel,
   overDue
 }) {
 
@@ -41,6 +42,60 @@ function ProposalDetails({
   const { tlname, date_of_allocation } = diaplayHistory;
   
   var nfObject = new Intl.NumberFormat('hi-IN')
+ 
+const downloadpdf = () => {
+  const token = window.localStorage.getItem("adminToken")
+    
+  const myConfig = {
+      headers : {
+       "uit" : token
+      },
+      responseType: 'blob'
+    }
+ if(panel === "admin"){
+  axios.get(`${baseUrl}/admin/dounloadpdf?id=${p.id}` , myConfig)
+  .then((res) => {
+    console.log("res", res)
+    if(res.status === 200){
+       window.open(URL.createObjectURL(res.data));
+    }
+  })
+ }
+ else if (panel === "teamleader") {
+  const token = window.localStorage.getItem("tlToken")
+    
+  const myConfig = {
+      headers : {
+       "uit" : token
+      },
+      responseType: 'blob'
+    }
+  axios.get(`${baseUrl}/tl/dounloadpdf?id=${p.id}` , myConfig)
+  .then((res) => {
+    console.log("res", res)
+    if(res.status === 200){
+       window.open(URL.createObjectURL(res.data));
+    }
+  })
+ }
+ else if (panel === "taxprofessional"){
+  const token = window.localStorage.getItem("tpToken")
+    
+  const myConfig = {
+      headers : {
+       "uit" : token
+      },
+      responseType: 'blob'
+    }
+  axios.get(`${baseUrl}/tl/dounloadpdf?id=${p.id}` , myConfig)
+  .then((res) => {
+    console.log("res", res)
+    if(res.status === 200){
+       window.open(URL.createObjectURL(res.data));
+    }
+  })
+ }
+ else if (panel === "client"){
   const token = window.localStorage.getItem("clientToken")
     
   const myConfig = {
@@ -49,14 +104,14 @@ function ProposalDetails({
       },
       responseType: 'blob'
     }
-const downloadpdf = () => {
   axios.get(`${baseUrl}/customers/dounloadpdf?id=${p.id}` , myConfig)
-.then((res) => {
-  console.log("res", res)
-  if(res.status === 200){
-     window.open(URL.createObjectURL(res.data));
-  }
-})
+  .then((res) => {
+    console.log("res", res)
+    if(res.status === 200){
+       window.open(URL.createObjectURL(res.data));
+    }
+  })
+ }
 }
   //installment
   const installAmount = (data) => {

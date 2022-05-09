@@ -55,6 +55,7 @@ function VerifyOTP({ email, uid, time, setLoad,
                     localStorage.setItem("custEmail", JSON.stringify(response.data.name));
                     history.push("customer/dashboard");
                     localStorage.setItem("clientToken", response.data.token)
+                    console.log("resToken", response.data.token)
                 } else {
                     Alerts.ErrorNormal("Incorrect OTP") 
                     setLoading(false)

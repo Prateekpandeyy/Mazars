@@ -59,7 +59,31 @@ const Generated = () => {
                 }
             });
     };
-
+    const downloadpdf = (qno) => {
+        const myConfig2 = {
+            headers : {
+             "uit" : token
+            },
+            responseType: 'blob'
+          }
+        axios.get(`${baseUrl}/admin/viewinvoicepdf?assign_no=${qno}&invoice_id=${JSON.parse(userid)}` , myConfig2)
+      .then((res) => {
+        console.log("res", res)
+        if(res.status === 200){
+        //    window.open(URL.createObjectURL(res.data));
+           console.log(URL.createObjectURL(res.data))
+           window.URL = window.URL || window.webkitURL;
+           var url = window.URL.createObjectURL(res.data);
+           var a = document.createElement("a");
+           document.body.appendChild(a);
+           a.style = "display: none";
+           a.href = url;
+           a.download = "invoice"+'.pdf';
+           a.target = '_blank';
+           a.click();
+        }
+      })
+      }
 
     const columns = [
         {
@@ -199,12 +223,9 @@ const Generated = () => {
                     <>
                        {showCopyUrl === "click" ? 
                         <div style={{ display: "flex", justifyContent: "flex-start" }}>
-                        <a
-                    href={`${baseUrl3}/${row.invoice}`}
-                    target="_blank"
-                  >
+                      <span onClick={() => downloadpdf(row.assign_no, row.assign_id)}>
                          <DescriptionOutlinedIcon color="secondary" />
-                              </a>
+                         </span>
                             
                           
                               {row.is_paid == "0" 

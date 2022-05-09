@@ -87,7 +87,17 @@ const Generated = () => {
       .then((res) => {
         console.log("res", res)
         if(res.status === 200){
-           window.open(URL.createObjectURL(res.data));
+        //    window.open(URL.createObjectURL(res.data));
+           console.log(URL.createObjectURL(res.data))
+           window.URL = window.URL || window.webkitURL;
+           var url = window.URL.createObjectURL(res.data);
+           var a = document.createElement("a");
+           document.body.appendChild(a);
+           a.style = "display: none";
+           a.href = url;
+           a.download = "invoice"+'.pdf';
+           a.target = '_blank';
+           a.click();
         }
       })
       }
@@ -226,12 +236,7 @@ const Generated = () => {
                 return (
                     <>
                        <div style={{ display: "flex", justifyContent: "flex-start", alignItems : "center" }}>
-                        {/* <a
-                    href={`${baseUrl3}/${row.invoice}`}
-                    target="_blank"
-                  >
-                         <DescriptionOutlinedIcon color="secondary" />
-                              </a> */}
+                      
                                 <span onClick={() => downloadpdf(row.assign_no, row.assign_id)}>
                          <DescriptionOutlinedIcon color="secondary" />
                          </span>

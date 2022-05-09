@@ -22,7 +22,7 @@ function AssignmentDetails({ p, panel, finalDate, submitData, customerQuery , di
    
    
   };
-  const downloadpdf = (qno, qid) => {
+  const downloadpdf = (qno, qid, name) => {
     let userId, token;
     if(panel === "admin"){
       userId = window.localStorage.getItem("adminkey");
@@ -37,7 +37,16 @@ function AssignmentDetails({ p, panel, finalDate, submitData, customerQuery , di
       .then((res) => {
         console.log("res", res)
         if(res.status === 200){
-           window.open(URL.createObjectURL(res.data));
+          window.URL = window.URL || window.webkitURL;
+             var url = window.URL.createObjectURL(res.data);
+             var a = document.createElement("a");
+             document.body.appendChild(a);
+             a.style = "display: none";
+             a.href = url;
+             console.log(res.headers)
+             a.download = name;
+             a.target = '_blank';
+             a.click();
         }
       })
      }
@@ -54,7 +63,16 @@ function AssignmentDetails({ p, panel, finalDate, submitData, customerQuery , di
     .then((res) => {
       console.log("res", res)
       if(res.status === 200){
-         window.open(URL.createObjectURL(res.data));
+        window.URL = window.URL || window.webkitURL;
+           var url = window.URL.createObjectURL(res.data);
+           var a = document.createElement("a");
+           document.body.appendChild(a);
+           a.style = "display: none";
+           a.href = url;
+           console.log(res.headers)
+           a.download = name;
+           a.target = '_blank';
+           a.click();
       }
     })
    }
@@ -71,7 +89,16 @@ function AssignmentDetails({ p, panel, finalDate, submitData, customerQuery , di
     .then((res) => {
       console.log("res", res)
       if(res.status === 200){
-         window.open(URL.createObjectURL(res.data));
+        window.URL = window.URL || window.webkitURL;
+           var url = window.URL.createObjectURL(res.data);
+           var a = document.createElement("a");
+           document.body.appendChild(a);
+           a.style = "display: none";
+           a.href = url;
+           console.log(res.headers)
+           a.download = name;
+           a.target = '_blank';
+           a.click();
       }
     })
    }
@@ -88,7 +115,16 @@ function AssignmentDetails({ p, panel, finalDate, submitData, customerQuery , di
     .then((res) => {
       console.log("res", res)
       if(res.status === 200){
-         window.open(URL.createObjectURL(res.data));
+        window.URL = window.URL || window.webkitURL;
+           var url = window.URL.createObjectURL(res.data);
+           var a = document.createElement("a");
+           document.body.appendChild(a);
+           a.style = "display: none";
+           a.href = url;
+           console.log(res.headers)
+           a.download = name;
+           a.target = '_blank';
+           a.click();
       }
     })
    }
@@ -193,7 +229,7 @@ function AssignmentDetails({ p, panel, finalDate, submitData, customerQuery , di
                           >
                             <i className="fa fa-photo"></i> {p.document}
                           </a> */}
-                           <span onClick={() => downloadpdf(assingNo, p.docid)}>
+                           <span onClick={() => downloadpdf(assingNo, p.docid, p.document)}>
                      <i className="fa fa-photo"></i> {p.document}
                        </span>
                         </td>

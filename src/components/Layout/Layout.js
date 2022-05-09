@@ -1,11 +1,13 @@
+import React , {useState} from 'react';
 import Sidebar from "../Admin-Sidebar/Admin-Sidebar";
 import Header from "../Admin-Header/Admin-Header";
 import Footer from "../Admin-Footer/Admin-Footer";
 import $ from 'jquery';
-
+import IdleTimeOutHandler from "../IdleTimeOutHandler";
 
 function Layout(props) {
-
+  const[isActive,setIsActive]=useState(true)
+  const[isLogout,setLogout]=useState(false)
   const {
     custDashboard, adminDashboard, TLDashboard,
     TPDashboard,
@@ -29,7 +31,11 @@ $sortable.on('click', function(){
    
     <>
   
-
+  <IdleTimeOutHandler 
+    onActive={()=>{setIsActive(true)}} 
+    onIdle={()=>{setIsActive(false)}}
+    onLogout={()=>{setLogout(true)}}
+    />
 
    
       <Header

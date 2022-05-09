@@ -10,7 +10,7 @@ function BasicQuery({qstatus, panel, p, diaplaySpecific, queryDocs, year, purpos
   declinedStatus }) {
 
 
-    const downloadpdf = (qno, qid) => {
+    const downloadpdf = (qno, qid, name) => {
       let userId, token;
       if(panel === "admin"){
         userId = window.localStorage.getItem("adminkey");
@@ -25,7 +25,16 @@ function BasicQuery({qstatus, panel, p, diaplaySpecific, queryDocs, year, purpos
         .then((res) => {
           console.log("res", res)
           if(res.status === 200){
-             window.open(URL.createObjectURL(res.data));
+            window.URL = window.URL || window.webkitURL;
+               var url = window.URL.createObjectURL(res.data);
+               var a = document.createElement("a");
+               document.body.appendChild(a);
+               a.style = "display: none";
+               a.href = url;
+               console.log(res.headers)
+               a.download = name;
+               a.target = '_blank';
+               a.click();
           }
         })
        }
@@ -42,7 +51,16 @@ function BasicQuery({qstatus, panel, p, diaplaySpecific, queryDocs, year, purpos
       .then((res) => {
         console.log("res", res)
         if(res.status === 200){
-           window.open(URL.createObjectURL(res.data));
+          window.URL = window.URL || window.webkitURL;
+             var url = window.URL.createObjectURL(res.data);
+             var a = document.createElement("a");
+             document.body.appendChild(a);
+             a.style = "display: none";
+             a.href = url;
+             console.log(res.headers)
+             a.download = name;
+             a.target = '_blank';
+             a.click();
         }
       })
      }
@@ -59,7 +77,16 @@ function BasicQuery({qstatus, panel, p, diaplaySpecific, queryDocs, year, purpos
       .then((res) => {
         console.log("res", res)
         if(res.status === 200){
-           window.open(URL.createObjectURL(res.data));
+          window.URL = window.URL || window.webkitURL;
+             var url = window.URL.createObjectURL(res.data);
+             var a = document.createElement("a");
+             document.body.appendChild(a);
+             a.style = "display: none";
+             a.href = url;
+             console.log(res.headers)
+             a.download = name;
+             a.target = '_blank';
+             a.click();
         }
       })
      }
@@ -76,7 +103,16 @@ function BasicQuery({qstatus, panel, p, diaplaySpecific, queryDocs, year, purpos
       .then((res) => {
         console.log("res", res)
         if(res.status === 200){
-           window.open(URL.createObjectURL(res.data));
+          window.URL = window.URL || window.webkitURL;
+             var url = window.URL.createObjectURL(res.data);
+             var a = document.createElement("a");
+             document.body.appendChild(a);
+             a.style = "display: none";
+             a.href = url;
+             console.log(res.headers)
+             a.download = name;
+             a.target = '_blank';
+             a.click();
         }
       })
      }
@@ -145,7 +181,7 @@ function BasicQuery({qstatus, panel, p, diaplaySpecific, queryDocs, year, purpos
               <td>
                 {queryDocs.map((p, i) => (
                   <p style={{ display: "flex" }}>
-                     <span onClick={() => downloadpdf(p.assign_no, p.id)} style={{display : "flex"}}>
+                     <span onClick={() => downloadpdf(p.assign_no, p.id, p.name)} style={{display : "flex"}}>
                      <i className="fa fa-photo"></i>
                       
                   

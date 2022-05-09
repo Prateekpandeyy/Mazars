@@ -40,7 +40,7 @@ function ViewReport({
     getData();
   }, [report]);
 
-  const downloadpdf = (qid) => {
+  const downloadpdf = (qid, name) => {
     let userId, token;
   
     userId = window.localStorage.getItem("userid");
@@ -55,11 +55,20 @@ function ViewReport({
     .then((res) => {
      
       if(res.status === 200){
-         window.open(URL.createObjectURL(res.data));
+        window.URL = window.URL || window.webkitURL;
+           var url = window.URL.createObjectURL(res.data);
+           var a = document.createElement("a");
+           document.body.appendChild(a);
+           a.style = "display: none";
+           a.href = url;
+           console.log(res.headers)
+           a.download = name;
+           a.target = '_blank';
+           a.click();
       }
     })
    }
-   const downloadpdfclient = (qid) => {
+   const downloadpdfclient = (qid, name) => {
     let userId, token;
   
     userId = window.localStorage.getItem("userid");
@@ -74,7 +83,16 @@ function ViewReport({
     .then((res) => {
      
       if(res.status === 200){
-         window.open(URL.createObjectURL(res.data));
+        window.URL = window.URL || window.webkitURL;
+           var url = window.URL.createObjectURL(res.data);
+           var a = document.createElement("a");
+           document.body.appendChild(a);
+           a.style = "display: none";
+           a.href = url;
+           console.log(res.headers)
+           a.download = name;
+           a.target = '_blank';
+           a.click();
       }
     })
    }
@@ -197,7 +215,7 @@ console.log("data", data)
                       <tr>
                       {p.document && (
                         <p style={{ display: "flex" }}>
-                          <span onClick={() => downloadpdf(p.docid)} style={{display: "flex"}}>
+                          <span onClick={() => downloadpdf(p.docid, p.document)} style={{display: "flex"}}>
                      <i className="fa fa-photo"></i>
                       
                          
@@ -208,7 +226,7 @@ console.log("data", data)
                       </tr>
                      {p.customer_files && 
                       <tr>
-                        <span onClick={() => downloadpdfclient(p.docid)} style={{display : "flex"}}>
+                        <span onClick={() => downloadpdfclient(p.docid, p.customer_files)} style={{display : "flex"}}>
                      <i className="fa fa-photo"></i>
                      
                           &nbsp; &nbsp; &nbsp;{p.customer_files}

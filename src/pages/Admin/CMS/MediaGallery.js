@@ -41,7 +41,7 @@ const MediaGallery = () => {
     const { handleSubmit, register, errors, getValues } = useForm();
     var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
     const [item] = useState(current_date);
-  
+    const token = localStorage.getItem("token")
    
     const onSubmit = (value) => {
       let formData = new FormData();
@@ -68,6 +68,9 @@ const MediaGallery = () => {
       axios({
         method : "POST", 
         url : `${baseUrl}/cms/uploadphoto`,
+        headers : {
+          uit : token
+        },
         data : formData
       })
       .then((res) => {

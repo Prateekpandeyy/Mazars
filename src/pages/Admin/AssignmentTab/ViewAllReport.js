@@ -41,7 +41,62 @@ const viewStyle = {
   useEffect(() => {
     getData();
   }, [report]);
-
+  const downloadpdf = (qid, name) => {
+    let userId, token;
+  console.log("dpdf", qid, name)
+    userId = window.localStorage.getItem("adminkey");
+    token = window.localStorage.getItem("adminToken")
+    const myConfig2 = {
+      headers : {
+       "uit" : token
+      },
+      responseType: 'blob'
+    }
+    axios.get(`${baseUrl}/admin/viewreportdocument?assign_no=${report}&id=${qid}` , myConfig2)
+    .then((res) => {
+     
+      if(res.status === 200){
+        window.URL = window.URL || window.webkitURL;
+           var url = window.URL.createObjectURL(res.data);
+           var a = document.createElement("a");
+           document.body.appendChild(a);
+           a.style = "display: none";
+           a.href = url;
+           console.log(res.headers)
+           a.download = name;
+           a.target = '_blank';
+           a.click();
+      }
+    })
+   }
+   const downloadpdfclient = (qid, name) => {
+    let userId, token;
+    console.log("dcpdf", qid, name)
+    userId = window.localStorage.getItem("adminkey");
+    token = window.localStorage.getItem("adminToken")
+    const myConfig2 = {
+      headers : {
+       "uit" : token
+      },
+      responseType: 'blob'
+    }
+    axios.get(`${baseUrl}/admin/viewreportdocument?assign_no=${report}&id=${qid}&document=2` , myConfig2)
+    .then((res) => {
+     
+      if(res.status === 200){
+        window.URL = window.URL || window.webkitURL;
+           var url = window.URL.createObjectURL(res.data);
+           var a = document.createElement("a");
+           document.body.appendChild(a);
+           console.log(res.headers)
+           a.style = "display: none";
+           a.href = url;
+           a.download = name;
+           a.target = '_blank';
+           a.click();
+      }
+    })
+   }
   const getData = () => {
     let formData = new FormData();
     formData.append("assign_no", report);
@@ -101,28 +156,26 @@ const viewStyle = {
                     <td>{CommonServices.removeTime(p.created_date)}</td>
                     <td>
                     
-                      <tr>
+                    <tr>
                       {p.document && (
                         <p style={{ display: "flex" }}>
-                          <a
-                            href={`${ReportUrl}/${report}/${p.document}`}
-                            target="_blank"
-                          >
-                            <i className="fa fa-photo"></i>
-                          </a>
+                           <span onClick={() => downloadpdf(p.docid, p.document)} style = {{display : "flex"}}>
+                     <i className="fa fa-photo"></i>
+                     
+                       
                           <p style={{ marginLeft: "15px" }}>{p.document}</p>
+                          </span>
                         </p>
                       )}
                       </tr>
                      {p.customer_files && 
                       <tr>
-                    
-                      <a
-                            href={`${ReportUrl}/${report}/${p.customer_files}`}
-                            target="_blank"
-                          >
-                            <i className="fa fa-photo"></i> 
-                          </a> &nbsp; &nbsp; &nbsp;{p.customer_files}
+                     
+                     <span onClick={() => downloadpdfclient(p.docid, p.customer_files)} style={{display : "flex"}}>
+                     <i className="fa fa-photo"></i>
+                      
+                        &nbsp; &nbsp; &nbsp;{p.customer_files}
+                        </span>
                     </tr> }
                     </td>
                   

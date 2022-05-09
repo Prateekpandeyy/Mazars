@@ -73,7 +73,7 @@ const GalleryVideo = () => {
   <Link underline="hover" color="inherit" to = {`/customer/media`}>
  Photo Gallery
   </Link>
-  
+  <Typography>{title}</Typography>
  
 </Breadcrumbs>
 <button

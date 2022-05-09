@@ -47,14 +47,19 @@ const EditVideo = () => {
   let getId = useParams()
   var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
   const [item] = useState(current_date);
-
+  const token = localStorage.getItem("token")
+  const myConfig = {
+    headers : {
+     "uit" : token
+    }
+  }
   useEffect(() => {
     getData()
   }, [])
   const getData = (e) => {
 
     if (getId.id !== undefined) {
-      axios.get(`${baseUrl}/cms/getgallarylist?uid=${JSON.parse(userId)}&type=video&id=${getId.id}`)
+      axios.get(`${baseUrl}/cms/getgallarylist?uid=${JSON.parse(userId)}&type=video&id=${getId.id}`, myConfig)
         .then((res) => {
 
           setData(res.data.result);
@@ -87,6 +92,9 @@ const EditVideo = () => {
     axios({
       method: "POST",
       url: `${baseUrl}/cms/uploadphoto`,
+      headers : {
+        uit : token
+      },
       data: formData
     })
       .then((res) => {
@@ -126,7 +134,7 @@ else{
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.value) {
-        axios.get(`${baseUrl}/cms/deletevideo?uid=${JSON.parse(userId)}&id=${e.imageid}&videooid=${e.id}`)
+        axios.get(`${baseUrl}/cms/deletevideo?uid=${JSON.parse(userId)}&id=${e.imageid}&videooid=${e.id}`, myConfig)
           .then((res) => {
             console.log("response", res)
             if (res.data.code === 1) {

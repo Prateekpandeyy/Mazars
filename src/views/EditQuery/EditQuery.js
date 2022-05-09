@@ -226,9 +226,10 @@ function EditQuery(props) {
     }
   };
 
-  const downloadpdf = (qno, qid) => {
-    ;
  
+  
+  const downloadpdf = (qno, qid, name) => {
+   
     const myConfig2 = {
       headers : {
        "uit" : token
@@ -237,15 +238,21 @@ function EditQuery(props) {
     }
     axios.get(`${baseUrl}/customers/viewdocument?assign_no=${qno}&id=${qid}` , myConfig2)
     .then((res) => {
-      console.log("res", res)
+     
       if(res.status === 200){
-         window.open(URL.createObjectURL(res.data));
+        window.URL = window.URL || window.webkitURL;
+           var url = window.URL.createObjectURL(res.data);
+           var a = document.createElement("a");
+           document.body.appendChild(a);
+           a.style = "display: none";
+           a.href = url;
+           console.log(res.headers)
+           a.download = name;
+           a.target = '_blank';
+           a.click();
       }
     })
    }
-    
-  
-  
 
 
   return (
@@ -463,7 +470,7 @@ function EditQuery(props) {
                             {queryDocs.map((p, i) => (
                               <ul style={{listStyle : "none"}}>
                                 <li>
-                                <span onClick={() => downloadpdf(p.assign_no, p.id)}>
+                                <span onClick={() => downloadpdf(p.assign_no, p.id, p.name)}>
                      <i className="fa fa-photo"></i>
                      <span style={{ marginLeft: "10px" }}>{p.name}</span>
                        </span>
