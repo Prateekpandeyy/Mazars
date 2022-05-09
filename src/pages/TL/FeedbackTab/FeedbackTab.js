@@ -21,14 +21,19 @@ function FeedbackTab() {
 const history = useHistory();
   const userid = window.localStorage.getItem("tlkey");
   const [feedbackData, setFeedBackData] = useState([]);
-
+  const token = window.localStorage.getItem("tlToken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
   useEffect(() => {
     getFeedback();
   }, []);
 
   const getFeedback = () => {
     axios
-      .get(`${baseUrl}/tl/getFeedback?tl_id=${JSON.parse(userid)}`)
+      .get(`${baseUrl}/tl/getFeedback?tl_id=${JSON.parse(userid)}`, myConfig)
       .then((res) => {
       
         if (res.data.code === 1) {

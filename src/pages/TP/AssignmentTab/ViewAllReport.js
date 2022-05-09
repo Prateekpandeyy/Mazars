@@ -128,7 +128,44 @@ function ViewReport({
       });
    }
   }
-
+  const downloadpdf = (qid) => {
+    let userId, token;
+  
+    userId = window.localStorage.getItem("tpkey");
+    token = window.localStorage.getItem("tptoken")
+    const myConfig2 = {
+      headers : {
+       "uit" : token
+      },
+      responseType: 'blob'
+    }
+    axios.get(`${baseUrl}/tl/viewreportdocument?assign_no=${report}&id=${qid}` , myConfig2)
+    .then((res) => {
+     
+      if(res.status === 200){
+         window.open(URL.createObjectURL(res.data));
+      }
+    })
+   }
+   const downloadpdfclient = (qid) => {
+    let userId, token;
+  
+    userId = window.localStorage.getItem("tpkey");
+    token = window.localStorage.getItem("tptoken")
+    const myConfig2 = {
+      headers : {
+       "uit" : token
+      },
+      responseType: 'blob'
+    }
+    axios.get(`${baseUrl}/tl/viewreportdocument?assign_no=${report}&id=${qid}&document=2` , myConfig2)
+    .then((res) => {
+     
+      if(res.status === 200){
+         window.open(URL.createObjectURL(res.data));
+      }
+    })
+   }
 
   return (
     <div>
@@ -145,11 +182,11 @@ function ViewReport({
           <table class="table table-bordered">
             <thead>
               <tr>
-                <th style={{border: `1px solid ${headColor}`,  color: "#fff", backgroundColor: `${headColor}`}}>S.No</th>
-                <th style={{border: `1px solid ${headColor}`, color: "#fff", backgroundColor: `${headColor}` , width: "120px"}}>Date</th>
-                <th style={{border: `1px solid ${headColor}`, color: "#fff", backgroundColor: `${headColor}`}}>Document</th>
-                <th style={{border: `1px solid ${headColor}`, color: "#fff", backgroundColor: `${headColor}` , width: "150px"}}>Report Type</th>
-                <th style={{border: `1px solid ${headColor}`, color: "#fff", backgroundColor: `${headColor}` , width: "100px"}}>Action</th>
+                <th style={{border: `1px solid ${headColor}`,  color: "#000", backgroundColor: `${headColor}`}}>S.No</th>
+                <th style={{border: `1px solid ${headColor}`, color: "#000", backgroundColor: `${headColor}` , width: "120px"}}>Date</th>
+                <th style={{border: `1px solid ${headColor}`, color: "#000", backgroundColor: `${headColor}`}}>Document</th>
+                <th style={{border: `1px solid ${headColor}`, color: "#000", backgroundColor: `${headColor}` , width: "150px"}}>Report Type</th>
+                <th style={{border: `1px solid ${headColor}`, color: "#000", backgroundColor: `${headColor}` , width: "100px"}}>Action</th>
               </tr>
             </thead>
 
@@ -160,28 +197,25 @@ function ViewReport({
                     <td>{i + 1}</td>
                     <td>{CommonServices.removeTime(p.created_date)}</td>
                     <td>
-                      <tr>
+                    <tr>
                       {p.document && (
                         <p style={{ display: "flex" }}>
-                          <a
-                            href={`${ReportUrl}/${report}/${p.document}`}
-                            target="_blank"
-                          >
-                            <i class="fa fa-photo"></i>
-                          </a>
+                           <span onClick={() => downloadpdf(p.docid)} style = {{display : "flex"}}>
+                     <i className="fa fa-photo"></i>
+                     
+                       
                           <p style={{ marginLeft: "15px" }}>{p.document}</p>
+                          </span>
                         </p>
                       )}
                       </tr>
                      {p.customer_files && 
                       <tr>
-                    
-                      <a
-                            href={`${ReportUrl}/${report}/${p.customer_files}`}
-                            target="_blank"
-                          >
-                            <i class="fa fa-photo"></i> 
-                          </a> &nbsp; &nbsp; &nbsp;{p.customer_files}
+                     
+                     <span onClick={() => downloadpdfclient(p.docid)}>
+                     <i className="fa fa-photo"></i>
+                       </span>
+                        &nbsp; &nbsp; &nbsp;{p.customer_files}
                     </tr> }
                     </td>
                   
