@@ -226,6 +226,26 @@ function EditQuery(props) {
     }
   };
 
+  const downloadpdf = (qno, qid) => {
+    ;
+ 
+    const myConfig2 = {
+      headers : {
+       "uit" : token
+      },
+      responseType: 'blob'
+    }
+    axios.get(`${baseUrl}/customers/viewdocument?assign_no=${qno}&id=${qid}` , myConfig2)
+    .then((res) => {
+      console.log("res", res)
+      if(res.status === 200){
+         window.open(URL.createObjectURL(res.data));
+      }
+    })
+   }
+    
+  
+  
 
 
   return (
@@ -443,7 +463,11 @@ function EditQuery(props) {
                             {queryDocs.map((p, i) => (
                               <ul style={{listStyle : "none"}}>
                                 <li>
-                                  <a
+                                <span onClick={() => downloadpdf(p.assign_no, p.id)}>
+                     <i className="fa fa-photo"></i>
+                     <span style={{ marginLeft: "10px" }}>{p.name}</span>
+                       </span>
+                                  {/* <a
                                     href={`${ImageUrl}/${p.assign_no}/${p.name}`}
                                     target="_blank"
                                   >
@@ -454,7 +478,7 @@ function EditQuery(props) {
                                       style={{ width: "50", height: "20" }}
                                     ></i>
                                     <span style={{ marginLeft: "10px" }}>{p.name}</span>
-                                  </a>
+                                  </a> */}
                                 </li>
                               </ul>
                             ))}

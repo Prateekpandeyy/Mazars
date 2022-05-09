@@ -15,7 +15,7 @@ function Assignmodal({
 
 }) {
   const { handleSubmit, register } = useForm();
-  
+ const token = window.localStorage.getItem("clientToken")
   const [loading, setLoading] = useState(false);
  
   let history = useHistory();
@@ -40,6 +40,9 @@ function Assignmodal({
     axios({
       method: "POST",
       url: `${baseUrl}/customers/documentAttach`,
+      headers : {
+        uit : token
+      },
       data: formData,
     })
       .then(function (response) {

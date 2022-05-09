@@ -68,7 +68,7 @@ function ViewReport({
       },
       responseType: 'blob'
     }
-    axios.get(`${baseUrl}/customers/viewreportdocument?assign_no=${report}&id=${qid}` , myConfig2)
+    axios.get(`${baseUrl}/tl/viewreportdocument?assign_no=${report}&id=${qid}` , myConfig2)
     .then((res) => {
      
       if(res.status === 200){
@@ -87,7 +87,7 @@ function ViewReport({
       },
       responseType: 'blob'
     }
-    axios.get(`${baseUrl}/customers/viewreportdocument?assign_no=${report}&id=${qid}&document=2` , myConfig2)
+    axios.get(`${baseUrl}/tl/viewreportdocument?assign_no=${report}&id=${qid}&document=2` , myConfig2)
     .then((res) => {
      
       if(res.status === 200){

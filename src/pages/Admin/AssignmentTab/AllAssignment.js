@@ -92,14 +92,16 @@ function AssignmentComponent() {
   //get category
   useEffect(() => {
     const getSubCategory = () => {
+    if(selectedData.length > 0){
       axios
-        .get(`${baseUrl}/customers/getCategory?pid=${selectedData}`)
-        .then((res) => {
-         
-          if (res.data.code === 1) {
-            setTax2(res.data.result);
-          }
-        });
+      .get(`${baseUrl}/admin/getCategory?pid=${selectedData}`, myConfig)
+      .then((res) => {
+       
+        if (res.data.code === 1) {
+          setTax2(res.data.result);
+        }
+      });
+    }
     };
     getSubCategory();
   }, [selectedData]);
@@ -377,7 +379,8 @@ function AssignmentComponent() {
 if(status.length > 0){
   axios
   .get(
-    `${baseUrl}/tl/getAssignments?cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&assignment_status=${status}&stages_status=${data.p_status}&pcat_id=${selectedData}`
+    `${baseUrl}/admin/getAssignments?cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&assignment_status=${status}&stages_status=${data.p_status}&pcat_id=${selectedData}`
+    , myConfig
   )
   .then((res) => {
    
@@ -397,7 +400,8 @@ setError(true)
    else{
     axios
     .get(
-      `${baseUrl}/tl/getAssignments?cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&assignment_status=${status}&stages_status=${data.p_status}&pcat_id=${selectedData}`
+      `${baseUrl}/admin/getAssignments?cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&assignment_status=${status}&stages_status=${data.p_status}&pcat_id=${selectedData}`
+      , myConfig
     )
     .then((res) => {
      
@@ -588,13 +592,16 @@ setError(true)
                    columns={columns}>
                     </DataTablepopulated>
                    
-          <ViewAllReportModal
-            ViewReport={ViewReport}
-            reportModal={reportModal}
-            report={report}
-            getPendingforAcceptance={getAssignmentData}
-            deleiverAble = "#5a625a"
-          />
+{
+  reportModal === true ?
+  <ViewAllReportModal
+  ViewReport={ViewReport}
+  reportModal={reportModal}
+  report={report}
+  getPendingforAcceptance={getAssignmentData}
+  deleiverAble = "#5a625a"
+/> : ""
+}
 
           <DiscardReport
             ViewDiscussionToggel={ViewDiscussionToggel}

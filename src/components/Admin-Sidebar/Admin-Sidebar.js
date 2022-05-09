@@ -97,8 +97,14 @@ const getFeedback4 = () => {
   setLogo("/#/customer/dashboard")
 }
 const getFeedback2 = () => {
-  if(adminDashboard != undefined){
-    axios.get(`${baseUrl}/admin/getFeedback?uid=${JSON.parse(adminkey)}&&type=total`).then((res) => {
+  if(adminDashboard !== undefined){
+    const token = window.localStorage.getItem("adminToken")
+    const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
+    axios.get(`${baseUrl}/admin/getFeedback?uid=${JSON.parse(adminkey)}&&type=total`, myConfig).then((res) => {
       if(role === "cms"){
         setLogo("/#/cms/cms")
        }

@@ -26,15 +26,15 @@ function CustomerNotification({ tokenKey, name , panel}) {
             token =  window.localStorage.getItem("tptoken")
             redir = "tl"
         }
-        else if (token === "teamleader"){
+        else if (panel === "teamleader"){
            token = window.localStorage.getItem("tlToken")
            redir = "tl"
         }
-        else if (token === "admin"){
-            token = window.localStorage.getItem("admintoken")
+        else if (panel === "admin"){
+            token = window.localStorage.getItem("adminToken")
             redir = "admin"
         }
-        else {
+        else if(panel === "client") {
            token = window.localStorage.getItem("clientToken")
            redir = "customers"
         }

@@ -22,6 +22,7 @@ function RejectedModal({
   getData
 }) {
   const userId = window.localStorage.getItem("userid");
+  const token = window.localStorage.getItem("clientToken")
   const { handleSubmit, register, errors } = useForm({
     resolver: yupResolver(Schema),
   });
@@ -44,6 +45,9 @@ function RejectedModal({
     axios({
       method: "POST",
       url: `${baseUrl}/customers/draftAccept`,
+      headers : {
+        uit : token
+      },
       data: formData,
     })
       .then(function (response) {

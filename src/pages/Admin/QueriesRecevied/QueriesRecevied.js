@@ -267,6 +267,7 @@ function QueriesRecevied(props) {
                 declinedStatus={declinedStatus}
                 finalDate={finalDate}
                 overDue = {overDue}
+                panel = "admin"
               />
             ))}
           </div>

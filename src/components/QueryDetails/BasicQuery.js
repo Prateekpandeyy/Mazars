@@ -49,7 +49,7 @@ function BasicQuery({qstatus, panel, p, diaplaySpecific, queryDocs, year, purpos
       
     
     }
-    console.log("ppp", p)
+  
   return (
     <>
       <div className="queryBox">

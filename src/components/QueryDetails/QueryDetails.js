@@ -155,6 +155,7 @@ function QueryDetails({
                     submitData = {submitData}
                     customerQuery = {customerQuery}
                     finalDate={finalDate}
+                    panel = {panel}
                   />
                 </Card>
               </Col>

@@ -1,8 +1,9 @@
 import React from "react";
 import CommonServices from "../../common/common";
 import { ReportUrl } from "../../config/config";
-
-function AssignmentDetails({ p, finalDate, submitData, customerQuery , diaplayAssignment, diaplayProposal, reports, assingNo }) {
+import { baseUrl } from "../../config/config";
+import axios from "axios";
+function AssignmentDetails({ p, panel, finalDate, submitData, customerQuery , diaplayAssignment, diaplayProposal, reports, assingNo }) {
 
   const {
     assignment_number,
@@ -21,7 +22,63 @@ function AssignmentDetails({ p, finalDate, submitData, customerQuery , diaplayAs
    
    
   };
-
+  const downloadpdf = (qno, qid) => {
+    let userId, token;
+   if(panel === "teamleader"){
+    userId = window.localStorage.getItem("tlkey");
+    token = window.localStorage.getItem("tlToken")
+    const myConfig2 = {
+      headers : {
+       "uit" : token
+      },
+      responseType: 'blob'
+    }
+    axios.get(`${baseUrl}/tl/viewdocument?assign_no=${qno}&id=${qid}` , myConfig2)
+    .then((res) => {
+      console.log("res", res)
+      if(res.status === 200){
+         window.open(URL.createObjectURL(res.data));
+      }
+    })
+   }
+   else  if(panel === "teamleader"){
+    userId = window.localStorage.getItem("tlkey");
+    token = window.localStorage.getItem("tlToken")
+    const myConfig2 = {
+      headers : {
+       "uit" : token
+      },
+      responseType: 'blob'
+    }
+    axios.get(`${baseUrl}/tl/viewdocument?assign_no=${qno}&id=${qid}` , myConfig2)
+    .then((res) => {
+      console.log("res", res)
+      if(res.status === 200){
+         window.open(URL.createObjectURL(res.data));
+      }
+    })
+   }
+   else if(panel === "client"){
+    userId = window.localStorage.getItem("userid");
+    token = window.localStorage.getItem("clientToken")
+    const myConfig2 = {
+      headers : {
+       "uit" : token
+      },
+      responseType: 'blob'
+    }
+    axios.get(`${baseUrl}/customers/viewdocument?assign_no=${qno}&id=${qid}` , myConfig2)
+    .then((res) => {
+      console.log("res", res)
+      if(res.status === 200){
+         window.open(URL.createObjectURL(res.data));
+      }
+    })
+   }
+    
+  
+  }
+  console.log("reports", reports)
   return (
     <>
       <div className="queryBox">
@@ -113,12 +170,15 @@ function AssignmentDetails({ p, finalDate, submitData, customerQuery , diaplayAs
                       <tr style={{display : "flex", width : "500px"}}>
                         <td style={{display : "flex", width : "50px"}}>{i + 1}</td>
                         <td style={{display : "flex", width : "200px"}}>
-                          <a
+                          {/* <a
                             href={`${ReportUrl}/${assingNo}/${p.document}`}
                             target="_blank"
                           >
                             <i className="fa fa-photo"></i> {p.document}
-                          </a>
+                          </a> */}
+                           <span onClick={() => downloadpdf(assingNo, p.docid)}>
+                     <i className="fa fa-photo"></i> {p.document}
+                       </span>
                         </td>
                         <td style={{display : "flex", width: "150px", color: "green" }}>
                           {p.stages_type == 2 && p.revise_report == null && "Draft Report" || p.stages_type == 3 && p.revise_report == null && "Final Report" || p.revise_report != null && "Draft Report"}

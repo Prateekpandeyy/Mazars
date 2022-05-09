@@ -21,7 +21,7 @@ const RetviewModal = ({
     const Schema = yup.object().shape({
         p_reason: yup.string().required(""),
       });
-      const token = window.localStorage.getItem("tlToken")
+      const token = window.localStorage.getItem("adminToken")
       const myConfig = {
           headers : {
            "uit" : token
