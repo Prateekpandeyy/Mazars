@@ -162,10 +162,25 @@ const InvoiceFilter = (props) => {
                />
              </div>
                    </div>
+              
                </div>
+              
            </div>
-          
+         
            <div className="row">
+           <div className="col-lg-1 col-md-6 col-sm-12 my-sm-2">
+               <label className="form-select form-control">To</label>
+             </div>
+
+             <div className="col-lg-2 col-md-6 col-sm-12 my-sm-2">
+               <input
+                 type="date"
+                 name="p_dateTo"
+                 className="form-select form-control"
+                 ref={register}
+               
+               />
+             </div>
            <div className="col-lg-3 col-md-6 col-sm-12 my-sm-2">
            {props.invoice =="tpcreate" || props.invoice == "admincreate" || props.invoice == "create" ? "" :
        
@@ -181,7 +196,7 @@ const InvoiceFilter = (props) => {
              <button className="customBtn" type="submit"  style={{ height: "33px" }}>Search</button>
            <button className="customBtn mx-2" onClick={() => resetData()}  style={{ height: "33px" }}>Reset</button>
                </div>
-               <div className="col-md-6 col-lg-3 my-sm-2">
+               <div className="col-lg-3 col-md-6 col-sm-12 my-sm-2">
                <span style={{display : "flex"}}>
                  <label className="form-select form-control"
                   >Total Records : {props.records}</label>
