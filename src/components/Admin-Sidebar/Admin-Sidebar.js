@@ -144,7 +144,7 @@ const getFeedbacktl = () => {
   .then((res) => {
     setLogo("teamleader/dashboard")
     if(res.data.result != undefined){
-     if(res.data.result){
+     if(res.data.result[0]){
       setfeedbackNumbertl(res.data.result[0].total)
      }
       setLogo("/#/teamleader/dashboard")

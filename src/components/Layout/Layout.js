@@ -35,6 +35,10 @@ $sortable.on('click', function(){
     onActive={()=>{setIsActive(true)}} 
     onIdle={()=>{setIsActive(false)}}
     onLogout={()=>{setLogout(true)}}
+    custDashboard = {custDashboard}
+    adminUserId = {adminDashboard}
+    TLuserId = {TLDashboard}
+    TPuserId = {TPDashboard}
     />
 
    

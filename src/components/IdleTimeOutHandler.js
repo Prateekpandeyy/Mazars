@@ -80,17 +80,42 @@ const IdleTimeOutHandler = (props)=>{
         setLogout(false)
     }
     const handleLogout = ()=>{
+        
         removeEvents();
         clearTimeout(timer);
         setLogout(true)
         props.onLogout();
         setShowModal(false)
+      if(props.custDashboard){
         localStorage.removeItem("userid");
         localStorage.removeItem("custEmail");
         localStorage.removeItem("category");
         localStorage.removeItem("clientToken")
         history.push("/");
+      }
+      else if (props.adminUserId){
+        localStorage.removeItem("adminkey");
+        localStorage.removeItem("adminEmail");
+        localStorage.removeItem("category");
+        localStorage.removeItem("adminToken")
+        history.push("/admin/login");
+      }
+      else if(props.TLuserId){
+        localStorage.removeItem("tlkey");
+        localStorage.removeItem("tlEmail");
+        localStorage.removeItem("category");
+        localStorage.removeItem("tlToken")
+        history.push("/teamleader/login");
+      }
+      else if(props.TPuserId){
+        localStorage.removeItem("tpkey");
+        localStorage.removeItem("tpEmail");
+        localStorage.removeItem("category");
+        localStorage.removeItem("tptoken")
+        history.push("/taxprofessional/login");
+      }
     }
+    console.log("props", props)
     
     return(
         <div>
