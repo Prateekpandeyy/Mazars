@@ -31,8 +31,14 @@ const FlashMessage = () => {
     useEffect(() => {
         getList()
     }, [])
+    const token = localStorage.getItem("token")
+ const myConfig = {
+   headers : {
+    "uit" : token
+   }
+ }
     const getList = () => {
-        axios.get(`${baseUrl}/cms/getallnews?uid=${JSON.parse(userId)}`)
+        axios.get(`${baseUrl}/cms/getallnews?uid=${JSON.parse(userId)}`, myConfig)
         .then((res) => {
            setList(res.data.result)
         })
@@ -48,10 +54,7 @@ const FlashMessage = () => {
       isEdit(true)
   }
   const delQuery = (e) => {
-    //   axios.get(`${baseUrl}/admin/removenews?uid=${userId}&id=${e.id}`)
-    //   .then((res) => {
-    //       console.log("response", res)
-    //   })
+   
     Swal.fire({
         title: "Are you sure?",
         text: "do you wnat to delete flash updates",
@@ -61,7 +64,7 @@ const FlashMessage = () => {
         confirmButtonText: "Yes",
       }).then((result) => {
         if (result.value === true) {
-            axios.get(`${baseUrl}/cms/removenews?uid=${JSON.parse(userId)}&id=${e.id}`)
+            axios.get(`${baseUrl}/cms/removenews?uid=${JSON.parse(userId)}&id=${e.id}`, myConfig)
       .then((res) => {
           if(res.data.code === 1){
               Swal.fire({
@@ -87,7 +90,7 @@ const FlashMessage = () => {
         if(e.target.checked === true){
 
             
-            axios.get(`${baseUrl}/cms/setnewsstatus?uid=${JSON.parse(userId)}&id=${row.id}&status=0`)
+            axios.get(`${baseUrl}/cms/setnewsstatus?uid=${JSON.parse(userId)}&id=${row.id}&status=0`, myConfig)
        .then((res) => {
            
            if(res.data.result === 1){
@@ -97,7 +100,7 @@ const FlashMessage = () => {
         }
         else{
            
-            axios.get(`${baseUrl}/cms/setnewsstatus?uid=${JSON.parse(userId)}&id=${row.id}&status=1`)
+            axios.get(`${baseUrl}/cms/setnewsstatus?uid=${JSON.parse(userId)}&id=${row.id}&status=1`, myConfig)
             .then((res) => {
                 
                 setCheck(false)

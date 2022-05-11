@@ -42,7 +42,7 @@ const IdleTimeOutHandler = (props)=>{
             
             let lastInteractionTime=localStorage.getItem('lastInteractionTime')
             const diff = moment.duration(moment().diff(moment(lastInteractionTime)));
-            let timeOutInterval=props.timeOutInterval?props.timeOutInterval:10000;
+            let timeOutInterval=props.timeOutInterval?props.timeOutInterval:600000;
             if(isLogout){
                 clearTimeout(timer)
             }else{

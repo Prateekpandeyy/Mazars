@@ -44,32 +44,20 @@ const AddCmsContent = () => {
     const [item] = useState(current_date);
     const Quill = require("quill");
     const token = localStorage.getItem("token")
+    
+    const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
     useEffect(() => {
       getData()
     }, [])
     const getData = (e) => {
      
-      // var quill = new Quill('#editor-container', {
-      //   modules: {
-          
-      //       toolbar: [
-      //           [{ 'header': '1'}, {'header': '2'}, { 'font': [] }],
-      //           [{size: []}],
-      //           ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-      //           [{'list': 'ordered'}, {'list': 'bullet'}, 
-      //            {'indent': '-1'}, {'indent': '+1'}],
-      //           ['link', 'image', 'video'],
-      //           ['clean']
-      //         ],
-              
-      //   },
-        
-      //   placeholder: 'Compose an epic...',
-      //   theme: 'snow'  // or 'bubble'
-      // });
-     
+
      if(getId.id !== undefined){
-      axios.get(`${baseUrl}/cms/getallarticles?uid=${JSON.parse(userId)}&id=${getId.id}`)
+      axios.get(`${baseUrl}/cms/getallarticles?uid=${JSON.parse(userId)}&id=${getId.id}`, myConfig)
       .then((res) => {
       
        if(res.data.code === 1){

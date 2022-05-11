@@ -37,11 +37,17 @@ const UpdatesContent = () => {
  let getId = useParams()
  var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
  const [item] = useState(current_date);
+ const token = localStorage.getItem("token")
+ const myConfig = {
+   headers : {
+    "uit" : token
+   }
+ }
     useEffect(() => {
         getPageValue()
     }, [])
     const getPageValue = () => {
-        axios.get(`${baseUrl}/cms/getallupdate?uid=${JSON.parse(userId)}&id=${getId.id}`)
+        axios.get(`${baseUrl}/cms/getallupdate?uid=${JSON.parse(userId)}&id=${getId.id}`, myConfig)
         .then((res) =>{
             console.log("ress", res.data.result)
           
@@ -77,6 +83,9 @@ const UpdatesContent = () => {
        axios({
            method : "POST", 
            url : `${baseUrl}/cms/setupdate`,
+           headers : {
+             uit : token
+           },
            data : formData
        })
        .then((res) => {

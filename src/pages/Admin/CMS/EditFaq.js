@@ -34,13 +34,19 @@ const EditFaq = () => {
     let getId = useParams()
     const userId = localStorage.getItem("adminkey")
     const { handleSubmit, register, errors, getValues } = useForm();
+    const token = localStorage.getItem("token")
+ const myConfig = {
+   headers : {
+    "uit" : token
+   }
+ }
     useEffect(() => {
         getData()
       }, [])
       const getData = (e) => {
         console.log("getId", getId.id)
        if(getId.id !== undefined){
-        axios.get(`${baseUrl}/cms/getallfaq?uid=${JSON.parse(userId)}&id=${getId.id}`)
+        axios.get(`${baseUrl}/cms/getallfaq?uid=${JSON.parse(userId)}&id=${getId.id}`, myConfig)
         .then((res) => {
         
          if(res.data.code === 1){
@@ -71,6 +77,9 @@ const EditFaq = () => {
         axios({
             method : "POST", 
             url : `${baseUrl}/cms/setfaq`,
+            headers : {
+              uit : token
+            },
             data : formData
         })
         .then((res) => {

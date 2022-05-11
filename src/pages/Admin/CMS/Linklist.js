@@ -22,20 +22,12 @@ const Updates = () =>{
     const userId = window.localStorage.getItem("adminkey");
     const [list, setList] = useState([])
     let history = useHistory()
-    // useEffect(() => {
-    //   getList()
-    // }, [])
-  
-    // const getList = () => {
-    //   axios.get(`${baseUrl}/cms/getalllinks?uid=${JSON.parse(userId)}`)
-    //   .then((res) => {
-    //   console.log("ress", res)
-    //    if(res.data.code === 1){
-    //     setList(res.data.result)
-        
-    //    }
-    //   })
-    // }
+    const token = localStorage.getItem("token")
+    const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
     const columns = [
       {
         dataField: "",
@@ -104,7 +96,7 @@ const Updates = () =>{
           confirmButtonText: "Yes, delete it!",
       }).then((result) => {
           if (result.value) {
-            axios.get(`${baseUrl}/cms/removelinks?uid=${JSON.parse(userId)}&id=${id}`)
+            axios.get(`${baseUrl}/cms/removelinks?uid=${JSON.parse(userId)}&id=${id}`, myConfig)
             .then((res) => {
 console.log("response", res)
 if(res.data.code === 1){
@@ -142,12 +134,7 @@ return (
     
     <Card>
         <CardBody>
-        {/* <DataTablepopulated 
-                   bgColor="#42566a"
-                   keyField={'id'}
-                   data={list}
-                   columns={columns}>
-                    </DataTablepopulated> */}
+       
                     <GridExample 
                     />
         </CardBody>

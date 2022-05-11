@@ -47,7 +47,7 @@ const Cms = () =>{
         if(e.target.checked === true){
 
             
-            axios.get(`${baseUrl}/cms/setarticlestatus?uid=${JSON.parse(userId)}&id=${row.id}&status=0`)
+            axios.get(`${baseUrl}/cms/setarticlestatus?uid=${JSON.parse(userId)}&id=${row.id}&status=0`, myConfig)
        .then((res) => {
          
            if(res.data.result === 1){
@@ -57,7 +57,7 @@ const Cms = () =>{
         }
         else{
            
-            axios.get(`${baseUrl}/cms/setarticlestatus?uid=${JSON.parse(userId)}&id=${row.id}&status=1`)
+            axios.get(`${baseUrl}/cms/setarticlestatus?uid=${JSON.parse(userId)}&id=${row.id}&status=1`, myConfig)
             .then((res) => {
               
                 setCheck(false)
@@ -176,7 +176,7 @@ return(
           confirmButtonText: "Yes, delete it!",
       }).then((result) => {
           if (result.value) {
-            axios.get(`${baseUrl}/cms/removearticle?uid=${JSON.parse(userId)}&id=${id}`)
+            axios.get(`${baseUrl}/cms/removearticle?uid=${JSON.parse(userId)}&id=${id}`, myConfig)
             .then((res) => {
 console.log("response", res)
 if(res.data.code === 1){

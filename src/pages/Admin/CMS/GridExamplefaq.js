@@ -54,6 +54,9 @@ const allLinkOrder = (e) => {
 
         method : "POST",
         url : `${baseUrl}/cms/faqspace`,
+        headers : {
+          uit : token
+        },
         data : formData
     })
     .then((res) => {
@@ -145,7 +148,7 @@ const [columnDefs] = useState([
       if(e.target.checked === true){
       
           
-          axios.get(`${baseUrl}/cms/setfaqstatus?uid=${JSON.parse(userId)}&id=${row.id}&status=0`)
+          axios.get(`${baseUrl}/cms/setfaqstatus?uid=${JSON.parse(userId)}&id=${row.id}&status=0`, myConfig)
       .then((res) => {
          console.log("res", res)
          if(res.data.result === 1){
@@ -155,7 +158,7 @@ const [columnDefs] = useState([
       }
       else{
          
-          axios.get(`${baseUrl}/cms/setfaqstatus?uid=${JSON.parse(userId)}&id=${row.id}&status=1`)
+          axios.get(`${baseUrl}/cms/setfaqstatus?uid=${JSON.parse(userId)}&id=${row.id}&status=1`, myConfig)
           .then((res) => {
               console.log("res", res)
               setCheck(false)
@@ -177,7 +180,7 @@ const [columnDefs] = useState([
             confirmButtonText: "Yes, delete it!",
         }).then((result) => {
             if (result.value) {
-              axios.get(`${baseUrl}/cms/removefaq?uid=${JSON.parse(userId)}&id=${id.id}`)
+              axios.get(`${baseUrl}/cms/removefaq?uid=${JSON.parse(userId)}&id=${id.id}`, myConfig)
               .then((res) => {
       console.log("response", res)
       if(res.data.code === 1){

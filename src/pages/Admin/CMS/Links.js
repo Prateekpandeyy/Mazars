@@ -49,7 +49,12 @@ const Links = () => {
       direct: [],
      
     });
-  
+    const token = localStorage.getItem("token")
+    const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
     let history = useHistory()
     let getId = useParams()
     const userId = localStorage.getItem("adminkey")
@@ -60,7 +65,7 @@ const Links = () => {
       const getData = (e) => {
         console.log("getId", getId.id)
        if(getId.id !== undefined){
-        axios.get(`${baseUrl}/cms/getalllinks?uid=${JSON.parse(userId)}&id=${getId.id}`)
+        axios.get(`${baseUrl}/cms/getalllinks?uid=${JSON.parse(userId)}&id=${getId.id}`, myConfig)
         .then((res) => {
         
          if(res.data.code === 1){
@@ -94,6 +99,9 @@ if(getId.id){
    axios({
        method : "POST", 
        url : `${baseUrl}/cms/setlinks`,
+       headers : {
+         uit : token
+       },
        data : formData
    })
    .then((res) => {

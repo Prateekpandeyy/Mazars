@@ -84,7 +84,7 @@ function ForgetPassword(props) {
   <OuterloginContainer>
   <Header noSign="cust_sign" />
      <MyContainer>
-     <div className="container" style={{height : "450px"}}>
+     <div className="container">
         <div className="form">
           <div className="heading">
             <h2>Forgot Password</h2>

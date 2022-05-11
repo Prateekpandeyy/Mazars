@@ -78,6 +78,9 @@ const FlashContent = () => {
 
          method : "POST",
          url : `${baseUrl}/cms/setnews`,
+         headers : {
+             uit : token
+         },
          data : formData
      })
      .then((res) => {

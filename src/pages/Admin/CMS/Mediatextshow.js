@@ -35,13 +35,18 @@ const Mediatextshow = () => {
  let getId = useParams()
  var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
     const [item] = useState(current_date);
-  
+    const token = window.localStorage.getItem("token")
+    const myConfig = {
+        headers : {
+         "uit" : token
+        }
+      }
    
     useEffect(() => {
         getPageValue()
     }, [])
     const getPageValue = () => {
-        axios.get(`${baseUrl}/cms/getallgalleryupdate?uid=${JSON.parse(userId)}&id=${getId.id}`)
+        axios.get(`${baseUrl}/cms/getallgalleryupdate?uid=${JSON.parse(userId)}&id=${getId.id}`, myConfig)
         .then((res) =>{
            
           
@@ -77,6 +82,9 @@ const Mediatextshow = () => {
        axios({
            method : "POST", 
            url : `${baseUrl}/cms/setgalleryupdate`,
+           headers : {
+             uit : token
+           },
            data : formData
        })
        .then((res) => {
@@ -156,22 +164,7 @@ const Mediatextshow = () => {
              <label className="form-label">Content</label> </div>
              
              <div className="col-md-12">
-             {/* <CKEditor
-             id="test"
-                     editor={ ClassicEditor }
-                    
-                    data={det}
-                    rows="10"
-                    name="p_fact"
-                
-                    onChange={ ( event, editor ) => {
-                      addDet(editor.getData());
-                     
-
-                    
-                  } }
-           
-                ></CKEditor> */}
+            
                  {
                    getId.id ? 
                    <CustomQuillEditor 

@@ -122,28 +122,11 @@ const MediaText = () =>{
       }
     ]
     const myShowValue = (e, row) => {
-      // console.log("etarget", e.target.checked)
-      //   if(e.target.checked === true){
-      //       e.target.checked = true
-      //       axios.get(`${baseUrl}/cms/setgalleryupdatestatus?uid=${JSON.parse(userId)}&id=${row.id}&status=0`)
-      //  .then((res) => {
-         
-      //      setCheck(true)
-      //  })
-      //   }
-      //   else{
-      //       e.target.checked = false
-      //       axios.get(`${baseUrl}/cms/setgalleryupdatestatus?uid=${JSON.parse(userId)}&id=${row.id}&status=1`)
-      //       .then((res) => {
-               
-      //           setCheck(false)
-      //       })
-      //   }
-          
+
       if(e.target.checked === true){
 
             
-        axios.get(`${baseUrl}/cms/setgalleryupdatestatus?uid=${JSON.parse(userId)}&id=${row.id}&status=0`)
+        axios.get(`${baseUrl}/cms/setgalleryupdatestatus?uid=${JSON.parse(userId)}&id=${row.id}&status=0`, myConfig)
    .then((res) => {
      
        if(res.data.result === 1){
@@ -153,7 +136,7 @@ const MediaText = () =>{
     }
     else{
        
-        axios.get(`${baseUrl}/cms/setgalleryupdatestatus?uid=${JSON.parse(userId)}&id=${row.id}&status=1`)
+        axios.get(`${baseUrl}/cms/setgalleryupdatestatus?uid=${JSON.parse(userId)}&id=${row.id}&status=1`, myConfig)
         .then((res) => {
           
             setCheck(false)
@@ -174,7 +157,7 @@ const MediaText = () =>{
           confirmButtonText: "Yes, delete it!",
       }).then((result) => {
           if (result.value) {
-            axios.get(`${baseUrl}/cms/removemedianews?uid=${JSON.parse(userId)}&id=${id}`)
+            axios.get(`${baseUrl}/cms/removemedianews?uid=${JSON.parse(userId)}&id=${id}`, myConfig)
             .then((res) => {
 console.log("response", res)
 if(res.data.code === 1){

@@ -110,7 +110,7 @@ const Updates = () =>{
     if(e.target.checked === true){
 
         
-        axios.get(`${baseUrl}/cms/setupdatestatus?uid=${JSON.parse(userId)}&id=${row.id}&status=0`)
+        axios.get(`${baseUrl}/cms/setupdatestatus?uid=${JSON.parse(userId)}&id=${row.id}&status=0`, myConfig)
    .then((res) => {
        console.log("res", res)
        if(res.data.result === 1){
@@ -120,7 +120,7 @@ const Updates = () =>{
     }
     else{
        
-        axios.get(`${baseUrl}/cms/setupdatestatus?uid=${JSON.parse(userId)}&id=${row.id}&status=1`)
+        axios.get(`${baseUrl}/cms/setupdatestatus?uid=${JSON.parse(userId)}&id=${row.id}&status=1`, myConfig)
         .then((res) => {
             console.log("res", res)
             setCheck(false)
@@ -142,9 +142,9 @@ const Updates = () =>{
           confirmButtonText: "Yes, delete it!",
       }).then((result) => {
           if (result.value) {
-            axios.get(`${baseUrl}/cms/removeupdate?uid=${JSON.parse(userId)}&id=${id}`)
+            axios.get(`${baseUrl}/cms/removeupdate?uid=${JSON.parse(userId)}&id=${id}`, myConfig)
             .then((res) => {
-console.log("response", res)
+
 if(res.data.code === 1){
   Swal.fire({
     title : "success",
