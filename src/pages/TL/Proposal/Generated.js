@@ -76,14 +76,14 @@ const Generated = () => {
 
 
   
-    const downloadpdf = (qno) => {
+    const downloadpdf = (qno, id, installmentNumber) => {
         const myConfig2 = {
             headers : {
              "uit" : token
             },
             responseType: 'blob'
           }
-        axios.get(`${baseUrl}/tl/viewinvoicepdf?assign_no=${qno}&invoice_id=${JSON.parse(userid)}` , myConfig2)
+        axios.get(`${baseUrl}/tl/viewinvoicepdf?assign_no=${qno}&invoice_id=${id}` , myConfig2)
       .then((res) => {
         console.log("res", res)
         if(res.status === 200){
@@ -95,7 +95,8 @@ const Generated = () => {
            document.body.appendChild(a);
            a.style = "display: none";
            a.href = url;
-           a.download = "invoice"+'.pdf';
+           a.download = `invoice_${qno}_${installmentNumber}.pdf`
+        //    a.download = "invoice"+{qno}+{installmentNumber}+'.pdf';
            a.target = '_blank';
            a.click();
         }
@@ -237,7 +238,7 @@ const Generated = () => {
                     <>
                        <div style={{ display: "flex", justifyContent: "flex-start", alignItems : "center" }}>
                       
-                                <span onClick={() => downloadpdf(row.assign_no, row.assign_id)}>
+                                <span onClick={() => downloadpdf(row.assign_no, row.id, row.installment_no)} style={{cursor : "pointer"}} title="Download Invoice">
                          <DescriptionOutlinedIcon color="secondary" />
                          </span>
                               {row.is_paid == "0" ? 

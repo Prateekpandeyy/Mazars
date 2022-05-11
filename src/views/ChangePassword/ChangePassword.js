@@ -283,10 +283,10 @@ function ChangePassword(props) {
                     <Spinner color="primary" />
                   </div>
                   :
-                  <div class="col-md-6">
+                  <div class="col-md-12">
                     {
                       show ?
-                        <div>
+                        <>
                           {
                             disabled ? null
                               :
@@ -295,7 +295,7 @@ function ChangePassword(props) {
                                 <Cancel />
                               </>
                           }
-                        </div>
+                        </>
                         :
                         <>
                           <button type="submit" class="customBtn" onClick={() => getOtp("otp")}>Get OTP</button>

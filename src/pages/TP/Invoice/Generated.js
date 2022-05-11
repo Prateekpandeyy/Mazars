@@ -61,18 +61,30 @@ const Generated = () => {
             });
     };
 
-    const downloadpdf = (qno) => {
+    
+    const downloadpdf = (qno, id, installmentNumber) => {
         const myConfig2 = {
             headers : {
              "uit" : token
             },
             responseType: 'blob'
           }
-        axios.get(`${baseUrl}/tl/viewinvoicepdf?assign_no=${qno}&invoice_id=${JSON.parse(userid)}` , myConfig2)
+        axios.get(`${baseUrl}/tl/viewinvoicepdf?assign_no=${qno}&invoice_id=${id}` , myConfig2)
       .then((res) => {
         console.log("res", res)
         if(res.status === 200){
-           window.open(URL.createObjectURL(res.data));
+        //    window.open(URL.createObjectURL(res.data));
+           console.log(URL.createObjectURL(res.data))
+           window.URL = window.URL || window.webkitURL;
+           var url = window.URL.createObjectURL(res.data);
+           var a = document.createElement("a");
+           document.body.appendChild(a);
+           a.style = "display: none";
+           a.href = url;
+           a.download = `invoice_${qno}_${installmentNumber}.pdf`
+        //    a.download = "invoice"+{qno}+{installmentNumber}+'.pdf';
+           a.target = '_blank';
+           a.click();
         }
       })
       }
@@ -213,18 +225,13 @@ const Generated = () => {
                 return { fontSize: "11px", width: "110px" };
             },
             formatter: function (cell, row) {
-                console.log("row", row)
+             
                 return (
                     <>
                        <div style={{ display: "flex", justifyContent : "flex-start", alignItems:"center" }}>
-                        {/* <a
-                    href={`${baseUrl3}/${row.invoice}`}
-                    target="_blank"
-                  > */}
-                  <span onClick={() => downloadpdf(row.assign_no, row.assign_id)}>
+                       <span onClick={() => downloadpdf(row.assign_no, row.id, row.installment_no)} style={{cursor : "pointer"}} title="Download Invoice">
                          <DescriptionOutlinedIcon color="secondary" />
                          </span>
-                              {/* </a> */}
                               {row.is_paid == "0" ? 
                         <i
                         class="fa fa-edit"
@@ -315,7 +322,7 @@ const Generated = () => {
                     </div> */}
   <DataTablepopulated 
                    bgColor="#42566a"
-                   keyField= {"assign_no"}
+                   keyField='id'
                    data={proposal}
                    columns={columns}>
                     </DataTablepopulated>

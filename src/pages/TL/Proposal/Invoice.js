@@ -187,7 +187,7 @@ const Invoice = () => {
                      getData={getProposalList}
                      setRec={setRecords}
                      records={records}
-                     invoice = "create" 
+                     invoice = "tlcreate" 
                      userid = {JSON.parse(userid)}/>
                     </CardHeader>
 

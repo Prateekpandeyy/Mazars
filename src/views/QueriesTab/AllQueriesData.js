@@ -368,7 +368,7 @@ function AllQueriesData() {
 
         Swal.fire({
             title: "Are you sure?",
-            text: "Want to delete query? Yes, delete it!",
+            text: "Want to delete query?",
             type: "warning",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",

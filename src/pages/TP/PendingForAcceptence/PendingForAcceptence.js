@@ -39,7 +39,7 @@ function PendingForAcceptence(props) {
       allocation_id: key.allocation_id,
     });
   };
-
+console.log("props123", props.data)
  
 
   const getPendingforAcceptance = () => {
@@ -226,7 +226,7 @@ function PendingForAcceptence(props) {
               <DataTablepopulated 
               bgColor="#55425f"
               keyField= {"assign_no"}
-              data={props.pendingData}
+              data={props.data}
               
               columns={columns}>
                </DataTablepopulated> 

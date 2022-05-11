@@ -181,7 +181,7 @@ function BasicQuery({qstatus, panel, p, diaplaySpecific, queryDocs, year, purpos
               <td>
                 {queryDocs.map((p, i) => (
                   <p style={{ display: "flex" }}>
-                     <span onClick={() => downloadpdf(p.assign_no, p.id, p.name)} style={{display : "flex"}}>
+                     <span onClick={() => downloadpdf(p.assign_no, p.id, p.name)} style={{display : "flex", cursor : "pointer"}}>
                      <i className="fa fa-photo"></i>
                       
                   

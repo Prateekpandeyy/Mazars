@@ -79,7 +79,7 @@ const downloadpdf = () => {
   })
  }
  else if (panel === "taxprofessional"){
-  const token = window.localStorage.getItem("tpToken")
+  const token = window.localStorage.getItem("tptoken")
     
   const myConfig = {
       headers : {

@@ -10,7 +10,7 @@ const InvoiceFilter = (props) => {
   const [item] = useState(current_date);
   
   const onSubmit = (data) => {
-  
+  console.log("propsinvoice", props.invoice)
     let formData = new FormData();
     formData.append("qno", data.query_no);
     formData.append("from", data.p_dateFrom);
@@ -34,8 +34,9 @@ const InvoiceFilter = (props) => {
        }
       })
     }
-    else if (props.invoice == "create" && props.usetid !== undefined){
-      const token = window.localStorage.getItem("tptoken")
+    else if (props.invoice == "tlcreate"){
+      console.log("eree", props.invoice)
+      const token = window.localStorage.getItem("tlToken")
       axios({
         method: "POST",
         url: `${baseUrl}/tl/getPaymentDetail?tl_id=${props.userid}&invoice=0&ststus=${data.opt}`,
@@ -87,9 +88,13 @@ const InvoiceFilter = (props) => {
       })
     }
     else if(props.invoice == "admingenerated"){
+      const token = window.localStorage.getItem("adminToken")
       axios({
         method: "POST",
         url: `${baseUrl}/admin/getPaymentDetail?&invoice=1`,
+        headers : {
+          uit : token
+        },
         data: formData,
       })
       .then((res) => {
@@ -100,9 +105,13 @@ const InvoiceFilter = (props) => {
       })
     }
     else if (props.invoice == "admincreate"){
+      const token = window.localStorage.getItem("adminToken")
       axios({
         method: "POST",
         url: `${baseUrl}/admin/getPaymentDetail?&invoice=0`,
+        headers : {
+          uit : token
+        },
         data: formData,
       })
       .then((res) => {

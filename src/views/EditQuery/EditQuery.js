@@ -470,7 +470,7 @@ function EditQuery(props) {
                             {queryDocs.map((p, i) => (
                               <ul style={{listStyle : "none"}}>
                                 <li>
-                                <span onClick={() => downloadpdf(p.assign_no, p.id, p.name)}>
+                                <span onClick={() => downloadpdf(p.assign_no, p.id, p.name)} style={{display : "flex", cursor : "pointer"}}>
                      <i className="fa fa-photo"></i>
                      <span style={{ marginLeft: "10px" }}>{p.name}</span>
                        </span>

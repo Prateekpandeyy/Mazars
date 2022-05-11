@@ -721,7 +721,10 @@ else{
                    columns={columns}>
                     </DataTablepopulated>
 
-          <DraftReportModal
+         
+        </CardBody>
+      </Card>
+      <DraftReportModal
             draftModal={draftModal}
             uploadDraftReport={uploadDraftReport}
             getAssignmentList={getAssignmentList}
@@ -742,14 +745,7 @@ else{
           />
 
 
-          <ViewAllReportModal
-            ViewReport={ViewReport}
-            reportModal={reportModal}
-            report={report}
-            dataItem={dataItem}k
-            headColor = "#5a625a"
-          />
-
+        
           <DiscardReport
             ViewDiscussionToggel={ViewDiscussionToggel}
             ViewDiscussion={ViewDiscussion}
@@ -757,8 +753,14 @@ else{
             getData={getAssignmentList}
             headColor = "#5a625a"
           />
-        </CardBody>
-      </Card>
+      <ViewAllReportModal
+            ViewReport={ViewReport}
+            reportModal={reportModal}
+            report={report}
+            dataItem={dataItem}k
+            headColor = "#5a625a"
+          />
+
     </>
   );
 }

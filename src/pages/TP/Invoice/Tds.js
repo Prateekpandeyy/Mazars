@@ -25,7 +25,7 @@ function Tds (props)  {
     const [gst, setGst] = useState()
     const [tds2, setTds] = useState()
     const [grandTotal, setgrandTotal] = useState();
-   const [total, setTotal] = useState()
+   const [total, setTotal] = useState(0)
    const [pocketExp, setPocketExp] = useState()
    const [cgetRate, setCgetRate] = useState()
    const [igetRate, setIgetRate] = useState();
@@ -82,12 +82,14 @@ const getServices = () => {
     setSgstTotal(parseInt(0))
     setGst(parseInt(props.paidAmount * 0 / 100))
     setTds(parseInt(props.paidAmount * tdsRate / 100))
-    setTotal(parseInt(props.paidAmount) + parseInt(props.paidAmount * cgetRate / 100))
+    let tot = Number(props.paidAmount) + Number(props.paidAmount * cgetRate / 100)
+    setTotal(tot)
+    // setTotal(Number(parseInt(props.paidAmount) + parseInt(props.paidAmount * cgetRate / 100)))
     setgrandTotal(parseInt(parseInt(props.paidAmount) + parseInt(props.paidAmount * 0 / 100)) - parseInt(props.paidAmount * tdsRate / 100))
     }
   }, [props.paidAmount])
     const { handleSubmit, register, errors, getValues, reset } = useForm();
-
+console.log("propAmount", total)
 const getDataild = () => {
   axios
   .get(`${baseUrl}/tl/getPaymentDetail?tp_id=${JSON.parse(userid)}&invoice=1&invoice_id=${props.id}`, myConfig)

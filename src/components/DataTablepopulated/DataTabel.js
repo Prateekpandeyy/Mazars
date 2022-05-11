@@ -12,6 +12,7 @@ const MyContainer = styled(Container)({
     height : "65vh",
     maxWidth: "1920px", 
     width: "100%",
+   
     overflowY : 'auto',
     "& thead": {
         position :"sticky",

@@ -60,23 +60,18 @@ let history= useHistory()
     paid, unpaid, totalpayment,
   } = allQueries;
 
-const logout = () => {
-  localStorage.removeItem("userid")
-  localStorage.removeItem("custEmail")
-  history.push("/")
-}
-const token = window.localStorage.getItem("clientToken")
-const myConfig = {
-  headers : {
-   "uit" : token
-  }
-}
+
+
 console.log("sessionStorage", window.sessionStorage)
   useEffect(() => {
     const getAllQueries = () => {
-
-     if(token){
-
+      const token = window.localStorage.getItem("clientToken")
+      const myConfig = {
+        headers : {
+         "uit" : token
+        }
+      }
+   console.log("token", token)
       axios
       .get(`${baseUrl}/customers/totalComplete?uid=${JSON.parse(userId)}`, myConfig)
       .then((response) => {
@@ -123,13 +118,17 @@ console.log("sessionStorage", window.sessionStorage)
     
       });
   };
-     }
+     
 
 
     getAllQueries();
   }, []);
 
-
+  const logout = () => {
+    localStorage.removeItem("userid")
+    localStorage.removeItem("custEmail")
+    history.push("/")
+  }
   return (
   <>
   {sessionId ? 

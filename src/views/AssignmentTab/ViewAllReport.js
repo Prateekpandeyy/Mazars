@@ -215,7 +215,7 @@ console.log("data", data)
                       <tr>
                       {p.document && (
                         <p style={{ display: "flex" }}>
-                          <span onClick={() => downloadpdf(p.docid, p.document)} style={{display: "flex"}}>
+                          <span onClick={() => downloadpdf(p.docid, p.document)} style={{display: "flex", cursor : "pointer"}}>
                      <i className="fa fa-photo"></i>
                       
                          

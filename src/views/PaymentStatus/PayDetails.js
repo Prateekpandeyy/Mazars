@@ -70,6 +70,32 @@ axios.get(`${baseUrl}/customers/getPaymentDetail?id=${id}`, myConfig)
 setModal(!modal)
 
     }
+    const downloadpdf = (qno, id, installmentNumber) => {
+        const myConfig2 = {
+            headers : {
+             "uit" : token
+            },
+            responseType: 'blob'
+          }
+        axios.get(`${baseUrl}/customers/viewinvoicepdf?assign_no=${qno}&invoice_id=${id}` , myConfig2)
+      .then((res) => {
+        console.log("res", res)
+        if(res.status === 200){
+        //    window.open(URL.createObjectURL(res.data));
+           console.log(URL.createObjectURL(res.data))
+           window.URL = window.URL || window.webkitURL;
+           var url = window.URL.createObjectURL(res.data);
+           var a = document.createElement("a");
+           document.body.appendChild(a);
+           a.style = "display: none";
+           a.href = url;
+           a.download = `invoice_${qno}_${installmentNumber}.pdf`
+           a.target = '_blank';
+           a.click();
+        }
+      })
+      }
+
     const columns = [
         {
             dataField: "",
@@ -234,8 +260,9 @@ setModal(!modal)
                    <>
                   <div style={{display : "flex", alignItems: "center", justifyContent : "space-between"}}>
                   {row.invoice_generated == "1" ? 
-                    <a href={`${baseUrl3}/${row.invoice}`} target="_blank">
-                          <DescriptionOutlinedIcon color="secondary" /></a> : ""}
+                       <span onClick={() => downloadpdf(row.assign_no, row.id, row.installment_no)} style={{cursor : "pointer"}} title="Download Invoice">
+                       <DescriptionOutlinedIcon color="secondary" />
+                       </span> : ""}
                           
                           {row.is_paid == "0" ? 
 

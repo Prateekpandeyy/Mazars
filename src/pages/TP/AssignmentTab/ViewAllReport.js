@@ -218,7 +218,7 @@ function ViewReport({
                     <tr>
                       {p.document && (
                         <p style={{ display: "flex" }}>
-                           <span onClick={() => downloadpdf(p.docid, p.document)} style = {{display : "flex"}}>
+                           <span onClick={() => downloadpdf(p.docid, p.document)} style={{display: "flex", cursor : "pointer"}}>
                      <i className="fa fa-photo"></i>
                      
                        
@@ -230,7 +230,7 @@ function ViewReport({
                      {p.customer_files && 
                       <tr>
                      
-                     <span onClick={() => downloadpdfclient(p.docid, p.customer_files)} style={{display : "flex"}}>
+                     <span onClick={() => downloadpdfclient(p.docid, p.customer_files)} style={{display: "flex", cursor : "pointer"}}>
                      <i className="fa fa-photo"></i>
                       
                         &nbsp; &nbsp; &nbsp;{p.customer_files}
