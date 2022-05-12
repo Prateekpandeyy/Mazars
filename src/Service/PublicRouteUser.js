@@ -14,7 +14,7 @@ const PublicRouteUser = ({ component: Component, ...rest }) => {
                 var currentTime = Date.now()
                 console.log("previousIme",  nextLogin > currentTime)
                 
-                        if (nextLogin > currentTime) {
+                        if (token && nextLogin > currentTime) {
                     return (
                         <>
                             <Redirect to={"/customer/dashboard"} />

@@ -14,7 +14,7 @@ var nextLogin = Number(previousLoginTime) + Number(600000)
 var currentTime = Date.now()
 console.log("previousIme",  nextLogin > currentTime)
 
-        if (nextLogin > currentTime) {
+        if (token && nextLogin > currentTime) {
   
           return <Component {...props} />;
         } else {

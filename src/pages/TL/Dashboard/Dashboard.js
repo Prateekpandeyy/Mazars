@@ -9,6 +9,7 @@ function Dashboard() {
   const userid = window.localStorage.getItem("tlkey");
 const sessionTlId = window.sessionStorage.getItem("sessionTlid")
 let history = useHistory()
+
   const [allQueries, setAllQueries] = useState({
     total: '',
     inprogress_queries: '',

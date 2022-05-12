@@ -10,7 +10,7 @@ const PrivateRouteAdmin = ({ component: Component, ...rest }) => {
         var previousLoginTime = window.localStorage.getItem("adminloginTime")
         var nextLogin = Number(previousLoginTime) + Number(600000)
         var currentTime = Date.now()
-        if (nextLogin > currentTime) {
+        if (token && nextLogin > currentTime) {
           return <Component {...props} />;
         } else {
           return <Redirect to={"/admin/login"} />;

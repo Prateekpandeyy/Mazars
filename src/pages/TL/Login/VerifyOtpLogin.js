@@ -62,6 +62,8 @@ function VerifyOtp({ email, uid, loading, setLoading }) {
      
 
         if (response.data.code == 1) {
+          var timeStampInMs = Date.now()
+localStorage.setItem("tlloginTime", timeStampInMs)
           setLoading(false)
           Alerts.SuccessLogin("Logged in successfully.")
           localStorage.setItem("tlkey", JSON.stringify(response.data.user_id));

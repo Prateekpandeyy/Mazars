@@ -148,7 +148,7 @@ const [pendingData, setPendingData] = useState([])
     <Tabs selectedIndex={tabIndex} onSelect={(index) => tableIndex(index)}>
           <TabList className="fixedTab">
             <Tab style={tabIndex == 0 ? myStyle2 : myStyle1} className="tabHover">
-              All Query ({allQuery})
+              All Queries ({allQuery})
             </Tab>
             <Tab style={tabIndex == 1 ? myStyle2 : myStyle1} className="tabHover"> 
               Pending For Acceptance ({pendindForAccepttence})

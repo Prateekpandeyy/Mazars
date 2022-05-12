@@ -12,7 +12,10 @@ const PublicRoutesTL = ({ component: Component, ...rest }) => {
             component={(props) => {
                 const token = window.localStorage.getItem("tlkey");
 
-                if (token) {
+                var previousLoginTime = window.localStorage.getItem("tlloginTime")
+                var nextLogin = Number(previousLoginTime) + Number(600000)
+                var currentTime = Date.now()
+                if (token && nextLogin > currentTime) {
                     return (
                         <>
                             <Redirect to={"/teamleader/dashboard"} />

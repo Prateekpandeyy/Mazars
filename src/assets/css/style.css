@@ -29,8 +29,8 @@
 
 .logo {
   display: flex;
-  width: 50%;
-
+  width: 75%;
+  height: 100%;
   padding: 10px;
   max-height: 75px;
 }

@@ -69,6 +69,10 @@ function Login(props) {
           setLoading(false)
           Alerts.ErrorNormal("Invalid email or password.")
         }
+        else if (response.data.code === 2){
+          setLoading(false)
+          Alerts.ErrorNormal(response.data.result)
+        }
       })
       .catch((error) => {
         

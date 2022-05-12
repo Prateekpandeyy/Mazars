@@ -48,6 +48,8 @@ function VerifyOTP({ email, uid, time, setLoad,
                
 
                 if (response.data.code == 1) {
+                    var timeStampInMs = Date.now()
+localStorage.setItem("loginTime", timeStampInMs)
                     setLoading(false)
                     Alerts.SuccessLogin("Login successfully.")
                     localStorage.setItem("userid", JSON.stringify(response.data.user_id));
