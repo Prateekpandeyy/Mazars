@@ -38,7 +38,7 @@ function TaxProfessionalsTab() {
   }, []);
 
   const getTaxProf = () => {
-    axios.get(`${baseUrl}/tp/getTaxProfessional`).then((res) => {
+    axios.get(`${baseUrl}/tl/getTaxProfessional`, myConfig).then((res) => {
     ;
       if (res.data.code === 1) {
         setData(res.data.result);
@@ -258,7 +258,7 @@ function TaxProfessionalsTab() {
   const deleteCliente = (id) => {
   
     axios
-      .get(`${baseUrl}/admin/deleteTeamLeader?id=${id}`)
+      .get(`${baseUrl}/admin/deleteTeamLeader?id=${id}`, myConfig)
       .then(function (response) {
        
         if (response.data.code === 1) {

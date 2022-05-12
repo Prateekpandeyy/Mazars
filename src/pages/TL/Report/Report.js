@@ -30,7 +30,7 @@ const Report = () => {
     const selectInputRef4 = useRef();
     const selectInputRef5 = useRef();
     const selectInputRef6 = useRef();
-    const [subCategory, setSubCategory] = useState([]);
+   
     const [subData, subCategeryData] = useState([])
     const [custCate, setCustcate] = useState([])
     const [tax, setTax] = useState([]);
@@ -79,7 +79,7 @@ const history = useHistory()
 const [item2, setItem2] = useState(current_date)
   useEffect(() => {
     const getCategory = async () => {
-      await axios.get(`${baseUrl}/customers/getCategory?pid=0`).then((res) => {
+      await axios.get(`${baseUrl}/tl/getCategory?pid=0`, myConfig).then((res) => {
         if (res.data.code === 1) {
        
           setTax(res.data.result);
@@ -92,13 +92,14 @@ const [item2, setItem2] = useState(current_date)
 
   useEffect(() => {
     const getSubCategory = async () => {
-
-      await axios.get(`${baseUrl}/customers/getCategory?pid=${store}`, myConfig).then((res) => {
+     if(store.length > 0){
+      await axios.get(`${baseUrl}/tl/getCategory?pid=${store}`, myConfig).then((res) => {
 
         if (res.data.code === 1) {
           setTax2(res.data.result)
         }
       });
+     }
     };
     getSubCategory();
   }, [store]);

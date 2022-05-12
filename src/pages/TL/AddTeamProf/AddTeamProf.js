@@ -21,14 +21,19 @@ function AddTeamProf() {
   const [data, setData] = useState([]);
   const [count, setCount] = useState("");
   const userid = window.localStorage.getItem("tlkey");
-
+  const token = window.localStorage.getItem("tlToken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
   useEffect(() => {
     getTaxProf();
   }, []);
 
   const getTaxProf = () => {
     axios
-      .get(`${baseUrl}/tp/getTaxProfessional?tl_id=${JSON.parse(userid)}`)
+      .get(`${baseUrl}/tl/getTaxProfessional?tl_id=${JSON.parse(userid)}`, myConfig)
       .then((res) => {
       
         if (res.data.code === 1) {

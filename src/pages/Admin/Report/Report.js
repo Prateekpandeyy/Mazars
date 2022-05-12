@@ -60,10 +60,6 @@ const Report = () => {
   var kk = []
   var pp = []
   var vv = []
-
-  var allData1 = {}
-  var dir = []
-  var indir = []
   const [dd, setDd] = useState([]);
 const history = useHistory()
     const { handleSubmit, register, errors, getValues , reset} = useForm();
@@ -71,10 +67,15 @@ const history = useHistory()
     var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
  const firstDay = new Date(date.getFullYear() + + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2));
   const [item] = useState(current_date);
-const [item2, setItem2] = useState(current_date)
+  const token = window.localStorage.getItem("adminToken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
   useEffect(() => {
     const getCategory = async () => {
-      await axios.get(`${baseUrl}/customers/getCategory?pid=0`).then((res) => {
+      await axios.get(`${baseUrl}/admin/getCategory?pid=0`, myConfig).then((res) => {
         if (res.data.code === 1) {
        
           setTax(res.data.result);
@@ -88,12 +89,14 @@ const [item2, setItem2] = useState(current_date)
   useEffect(() => {
     const getSubCategory = async () => {
 
-      await axios.get(`${baseUrl}/customers/getCategory?pid=${store}`).then((res) => {
+      if(store.length > 0) {
+        await axios.get(`${baseUrl}/admin/getCategory?pid=${store}`, myConfig).then((res) => {
 
-        if (res.data.code === 1) {
-          setTax2(res.data.result)
-        }
-      });
+          if (res.data.code === 1) {
+            setTax2(res.data.result)
+          }
+        });
+      }
     };
     getSubCategory();
   }, [store]);
@@ -101,7 +104,7 @@ const [item2, setItem2] = useState(current_date)
     let company = []
     let a = {}
     axios.get(
-      `${baseUrl}/tl/getcompany`
+      `${baseUrl}/admin/getcompany`, myConfig
     )
     .then((res) => {
       console.log("response", res)
@@ -126,7 +129,7 @@ getupdateQuery()
   }, [taxId, taxxId, cname])
 const getupdateQuery = () => {
  
-     axios.get(`${baseUrl}/admin/getAllQueryList?customer=${cname}`)
+     axios.get(`${baseUrl}/admin/getAllQueryList?customer=${cname}`, myConfig)
     .then((res) => {
       if (res.data.code === 1) {
        
@@ -139,7 +142,7 @@ const getupdateQuery = () => {
        
 }
   const getTeamLeader = () => {
-    axios.get(`${baseUrl}/tl/getTeamLeader`).then((res) => {
+    axios.get(`${baseUrl}/admin/getTeamLeader`, myConfig).then((res) => {
     
       var dd = []
       if (res.data.code === 1) {
@@ -158,7 +161,7 @@ const getupdateQuery = () => {
     console.log("teamleader", teamleader44)
     if(teamleader44){
       axios
-      .get(`${baseUrl}/tp/getTaxProfessional?tl_id=${teamleader44}`)
+      .get(`${baseUrl}/admin/getTaxProfessional?tl_id=${teamleader44}`, myConfig)
       .then((res) => {
       
         if (res.data.code === 1) {
@@ -169,7 +172,7 @@ const getupdateQuery = () => {
     }
     else{
       axios
-      .get(`${baseUrl}/tp/getTaxProfessional`)
+      .get(`${baseUrl}/admin/getTaxProfessional`, myConfig)
       .then((res) => {
       
         if (res.data.code === 1) {
@@ -194,7 +197,7 @@ const getupdateQuery = () => {
 
   const getData = () => {
     axios
-    .get(`${baseUrl}//admin/getAllList`)
+    .get(`${baseUrl}/admin/getAllList`, myConfig)
       .then((res) => {
        
         var a = res.data.result;
@@ -347,6 +350,9 @@ const resetData = () => {
    axios({
      method : "POST",
      url : `${baseUrl}/report/generateReport?t=${JSON.stringify(Math.floor(Math.random() * 110000))}`,
+    headers : {
+      uit : token
+    },
      data : formData
 
    })
@@ -458,6 +464,9 @@ const resetData = () => {
  axios({
    method : "POST",
    url : `${baseUrl}/report/generateReport?t=${JSON.stringify(Math.floor(Math.random() * 110000))}`,
+   headers : {
+    uit : token
+  },
    data : formData
 
  })

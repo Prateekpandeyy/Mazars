@@ -20,7 +20,7 @@ function ViewNotification() {
   const userid = window.localStorage.getItem("tlkey");
   const history = useHistory();
   const { id } = useParams();
-
+  const token = window.localStorage.getItem("tlToken")
   const [data, setData] = useState({});
 
   useEffect(() => {
@@ -35,6 +35,9 @@ function ViewNotification() {
     axios({
       method: "POST",
       url: `${baseUrl}/tl/viewNotification`,
+      headers : {
+        uit : token
+      },
       data: formData,
     })
       .then(function (response) {

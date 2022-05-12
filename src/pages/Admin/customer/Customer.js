@@ -28,13 +28,18 @@ function Customer() {
   const [history, setHistory] = useState([]);
   const [modal, setModal] = useState(false);
   const token = window.localStorage.getItem("adminToken")
+  const myConfig = {
+    headers : {
+     "uit" : token
+    }
+  }
   var digit2 = [];
   useEffect(() => {
     getCustomer();
   }, []);
 
   const getCustomer = () => {
-    axios.get(`${baseUrl}/admin/getAllList`).then((res) => {
+    axios.get(`${baseUrl}/admin/getAllList`, myConfig).then((res) => {
      
       if (res.data.code === 1) {
         setData(res.data.result);
@@ -167,7 +172,7 @@ function Customer() {
    else{
     {
       axios.
-      get(`${baseUrl}/customers/totalComplete?uid=${key}`)
+      get(`${baseUrl}/admin/totalComplete?uid=${key}`, myConfig)
         
         .then((response) => {
          
