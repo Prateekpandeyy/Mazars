@@ -65,13 +65,13 @@ let history= useHistory()
 console.log("sessionStorage", window.sessionStorage)
   useEffect(() => {
     const getAllQueries = () => {
-      const token = window.localStorage.getItem("clientToken")
-      const myConfig = {
-        headers : {
-         "uit" : token
-        }
-      }
-   console.log("token", token)
+const token = window.localStorage.getItem("clientToken")
+const myConfig = {
+  headers : {
+   "uit" : token
+  }
+}
+  
       axios
       .get(`${baseUrl}/customers/totalComplete?uid=${JSON.parse(userId)}`, myConfig)
       .then((response) => {
@@ -125,13 +125,31 @@ console.log("sessionStorage", window.sessionStorage)
   }, []);
 
   const logout = () => {
+    const token = window.localStorage.getItem("clientToken")
+    const myConfig = {
+        headers : {
+         "uit" : token
+        }
+      }
+    axios.get(`${baseUrl}/customers/logout`, myConfig)
+    .then((res) => {
+        if(res.data.code === 1){
+     
+          localStorage.removeItem("userid");
+          localStorage.removeItem("custEmail");
+          localStorage.removeItem("category");
+          localStorage.removeItem("clientToken")
+          history.push("/");
+        }
+    })
+
     localStorage.removeItem("userid")
     localStorage.removeItem("custEmail")
     history.push("/")
   }
   return (
   <>
-  {sessionId ? 
+
   <Layout custDashboard="custDashboard" custUserId={userId}>
 
 <Container maxWidth="xl">
@@ -365,9 +383,7 @@ console.log("sessionStorage", window.sessionStorage)
 
  
 </Layout> : 
-<>
-{logout()}
-</>}
+
   </>
   );
 }

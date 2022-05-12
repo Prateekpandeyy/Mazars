@@ -9,9 +9,12 @@ const PrivateRouteUser = ({ component: Component, ...rest }) => {
       {...rest}
       component={(props) => {
         const token = window.localStorage.getItem("userid");
+var previousLoginTime = window.localStorage.getItem("loginTime")
+var nextLogin = Number(previousLoginTime) + Number(600000)
+var currentTime = Date.now()
+console.log("previousIme",  nextLogin > currentTime)
 
-
-        if (token) {
+        if (nextLogin > currentTime) {
   
           return <Component {...props} />;
         } else {
