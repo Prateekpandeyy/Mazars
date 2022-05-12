@@ -84,7 +84,7 @@ function Demo() {
 
   const getData = () => {
     axios
-    .get(`${baseUrl}/tl/videoScheduler?tl_id=1`, myConfig)
+    .get(`${baseUrl}/admin/videoScheduler?tl_id=1`, myConfig)
       .then((res) => {
 
    
@@ -129,7 +129,7 @@ function Demo() {
   };
 
   const getUsers = () => {
-    axios.get(`${baseUrl}/tl/allAttendees?uid=${JSON.parse(userId)}`, myConfig).then((res) => {
+    axios.get(`${baseUrl}/admin/allAttendees?uid=${JSON.parse(userId)}`, myConfig).then((res) => {
 
       if (res.data.code === 1) {
         var data = res.data.result;
@@ -332,7 +332,7 @@ history.push(`/admin/meeting/${data.id}`);
 
       axios({
         method: "POST",
-        url: `${baseUrl}/tl/aminPostCallSchedule`,
+        url: `${baseUrl}/admin/aminPostCallSchedule`,
         headers : {
           uit : token
         },
@@ -396,7 +396,7 @@ history.push(`/admin/meeting/${data.id}`);
 
       axios({
         method: "POST",
-        url: `${baseUrl}/tl/aminPostCallSchedule`,
+        url: `${baseUrl}/admin/aminPostCallSchedule`,
         headers  : {
           uit : token
         },
@@ -451,7 +451,7 @@ history.push(`/admin/meeting/${data.id}`);
         confirmButtonText: "Yes, delete it!",
       }).then((result) => {
         if (result.value) {
-          axios.get(`${baseUrl}/tl/freeslot?id=${deleted}`, myConfig).then((res) => {
+          axios.get(`${baseUrl}/admin/freeslot?id=${deleted}`, myConfig).then((res) => {
            
             if (res.data.code === 1) {
               setLoading(false)
