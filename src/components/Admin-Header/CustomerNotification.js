@@ -20,6 +20,12 @@ function CustomerNotification({ tokenKey, name , panel}) {
     }, [tokenKey]);
    
     const getNotification = () => {
+        var timeStampInMs = Date.now()
+       var previousLogin =  localStorage.getItem("loginTime")
+       var nextLogin = Number(previousLogin) + Number(600000)
+       if(nextLogin){
+           localStorage.setItem("loginTime", timeStampInMs)
+       }
         var token = ""
         var redir = ""
         if(panel === "taxprofessional"){

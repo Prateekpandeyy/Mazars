@@ -12,6 +12,8 @@ function Dashboard() {
 
 const sessionId =  window.sessionStorage.getItem("userIdsession")
 let history= useHistory()
+var timeStampInMs = Date.now()
+localStorage.setItem("loginTime", timeStampInMs)
   const [allQueries, setAllQueries] = useState({
     total: '',
     inprogress_queries: '',
