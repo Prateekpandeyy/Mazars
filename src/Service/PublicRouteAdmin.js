@@ -8,8 +8,10 @@ const PublicRoutesAdmin = ({ component: Component, ...rest }) => {
             {...rest}
             component={(props) => {
                 const token = window.localStorage.getItem("adminkey");
-
-                if (token) {
+                var previousLoginTime = window.localStorage.getItem("adminloginTime")
+                var nextLogin = Number(previousLoginTime) + Number(600000)
+                var currentTime = Date.now()
+                if (nextLogin > currentTime) {
                     return (
                         <>
                             <Redirect to={"/admin/dashboard"} />

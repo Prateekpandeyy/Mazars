@@ -23,8 +23,13 @@ function CustomerNotification({ tokenKey, name , panel}) {
         var timeStampInMs = Date.now()
        var previousLogin =  localStorage.getItem("loginTime")
        var nextLogin = Number(previousLogin) + Number(600000)
-       if(nextLogin){
+       var adminpreviousLogin =  localStorage.getItem("adminloginTime")
+       var adminnextLogin = Number(adminpreviousLogin) + Number(600000)
+       if(nextLogin < timeStampInMs){
            localStorage.setItem("loginTime", timeStampInMs)
+       }
+       else if(adminnextLogin < timeStampInMs){
+        localStorage.setItem("adminloginTime", timeStampInMs)
        }
         var token = ""
         var redir = ""

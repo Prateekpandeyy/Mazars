@@ -10,6 +10,8 @@ import {Container, Grid, Paper, Box} from "@material-ui/core";
 function Dashboard() {
   const userId = window.localStorage.getItem("adminkey");
   const adminsessionId = window.sessionStorage.getItem("adminIdsession")
+  var timeStampInMs = Date.now()
+localStorage.setItem("adminloginTime", timeStampInMs)
 let history = useHistory()
   const [allQueries, setAllQueries] = useState({
     total: '',
@@ -166,8 +168,7 @@ let history = useHistory()
 
   return (
     <>
-    {
-      adminsessionId ?
+   
       <Layout adminDashboard="adminDashboard" adminUserId={userId}>
 
 <Container maxWidth="xl">
@@ -400,10 +401,8 @@ let history = useHistory()
 </Container>
 
     </Layout> : 
-    <>
-    {logout()}
-    </>
-    }
+  
+   
     </>
    
   );
