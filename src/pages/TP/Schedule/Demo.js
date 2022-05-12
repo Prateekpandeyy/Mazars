@@ -42,6 +42,12 @@ function Demo() {
   const [transcode, SetTranscode] = useState("interop");
   const [attendeeMode, SetAttendeeMode] = useState("video");
   const [videoProfile, SetVideoProfile] = useState("240p_4");
+  const token = window.localStorage.getItem("tptoken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
   var date = new Date();
 
   function convert(str) {
@@ -60,7 +66,7 @@ function Demo() {
 
   const getData = () => {
     axios
-      .get(`${baseUrl}/tl/videoScheduler?tl_id=${JSON.parse(userId)}`)
+      .get(`${baseUrl}/tl/videoScheduler?tl_id=${JSON.parse(userId)}`, myConfig)
       .then((res) => {
 
         var a = res.data.result.items;
@@ -86,7 +92,7 @@ function Demo() {
 
   const getAssignmentNo = () => {
     axios
-      .get(`${baseUrl}/admin/getAllQuery?tp_id=${JSON.parse(userId)}`)
+      .get(`${baseUrl}/tl/getAllQuery?tp_id=${JSON.parse(userId)}`, myConfig)
       .then((res) => {
       
         if (res.data.code === 1) {
@@ -103,7 +109,7 @@ function Demo() {
   };
 
   const getUsers = () => {
-    axios.get(`${baseUrl}/tl/allAttendees?uid=${JSON.parse(userId)}`).then((res) => {
+    axios.get(`${baseUrl}/tl/allAttendees?uid=${JSON.parse(userId)}`, myConfig).then((res) => {
   
       if (res.data.code === 1) {
         var data = res.data.result;
@@ -301,6 +307,9 @@ Cookies.set("channel_2", data.question_id);
       axios({
         method: "POST",
         url: `${baseUrl}/tl/PostCallSchedule`,
+        headers : {
+          uit : token
+        },
         data: formData,
       })
         .then(function (response) {
@@ -363,6 +372,9 @@ Cookies.set("channel_2", data.question_id);
       axios({
         method: "POST",
         url: `${baseUrl}/tl/PostCallSchedule`,
+        headers : {
+          uit : token
+        },
         data: formData,
       })
         .then(function (response) {
@@ -414,7 +426,7 @@ Cookies.set("channel_2", data.question_id);
         confirmButtonText: "Yes, delete it!",
       }).then((result) => {
         if (result.value) {
-          axios.get(`${baseUrl}/tl/freeslot?id=${deleted}`).then((res) => {
+          axios.get(`${baseUrl}/tl/freeslot?id=${deleted}`, myConfig).then((res) => {
         
             if (res.data.code === 1) {
               setLoading(false)

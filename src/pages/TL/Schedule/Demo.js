@@ -45,7 +45,12 @@ function Demo() {
   const [attendeeMode, SetAttendeeMode] = useState("video");
   const [videoProfile, SetVideoProfile] = useState("240p_4");
   var date = new Date();
-
+  const token = window.localStorage.getItem("tlToken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
   function convert(str) {
     var date = new Date(str),
       mnth = ("0" + (date.getMonth() + 1)).slice(-2),
@@ -62,7 +67,7 @@ function Demo() {
 
   const getData = () => {
     axios
-      .get(`${baseUrl}/tl/videoScheduler?tl_id=${JSON.parse(userId)}`)
+      .get(`${baseUrl}/tl/videoScheduler?tl_id=${JSON.parse(userId)}`, myConfig)
       .then((res) => {
        
         var a = res.data.result.items;
@@ -88,7 +93,7 @@ function Demo() {
 
   const getAssignmentNo = () => {
     axios
-      .get(`${baseUrl}/admin/getAllQuery?uid=${JSON.parse(userId)}`)
+      .get(`${baseUrl}/tl/getAllQuery?uid=${JSON.parse(userId)}`, myConfig)
       .then((res) => {
       
         if (res.data.code === 1) {
@@ -105,7 +110,7 @@ function Demo() {
   };
 
   const getUsers = () => {
-    axios.get(`${baseUrl}/tl/allAttendees?uid=${JSON.parse(userId)}`).then((res) => {
+    axios.get(`${baseUrl}/tl/allAttendees?uid=${JSON.parse(userId)}`, myConfig).then((res) => {
       
       if (res.data.code === 1) {
         var data = res.data.result;
@@ -307,6 +312,9 @@ console.log("cancle", cancel)
       axios({
         method: "POST",
         url: `${baseUrl}/tl/PostCallSchedule`,
+        headers : {
+          uit : token
+        },
         data: formData,
       })
         .then(function (response) {
@@ -370,6 +378,9 @@ console.log("cancle", cancel)
       axios({
         method: "POST",
         url: `${baseUrl}/tl/PostCallSchedule`,
+        headers : {
+          uit : token
+        },
         data: formData,
       })
         .then(function (response) {
@@ -394,7 +405,7 @@ console.log("cancle", cancel)
     }
 
     if (deleted !== undefined) {
-      console.log("deleted f", deleted);
+      console.log("deleted", deleted);
       setLoading(true)
       var value;
       data.filter((data) => {
@@ -421,7 +432,7 @@ console.log("cancle", cancel)
         confirmButtonText: "Yes, delete it!",
       }).then((result) => {
         if (result.value) {
-          axios.get(`${baseUrl}/tl/freeslot?id=${deleted}`).then((res) => {
+          axios.get(`${baseUrl}/tl/freeslot?id=${deleted}`, myConfig).then((res) => {
             console.log("res -", res);
             if (res.data.code === 1) {
               setLoading(false)

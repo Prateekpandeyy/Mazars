@@ -84,7 +84,7 @@ function Demo() {
 
   const getData = () => {
     axios
-    .get(`${baseUrl}/admin/videoScheduler?tl_id=1`, myConfig)
+    .get(`${baseUrl}/admin/videoScheduler`, myConfig)
       .then((res) => {
 
    
