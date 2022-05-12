@@ -60,6 +60,12 @@ function Demo() {
   const [attendeeMode, SetAttendeeMode] = useState("video");
   const [showVideoIcon, setShowVideoIcon] = useState(false)
   const [videoProfile, SetVideoProfile] = useState("240p_4");
+  const token = window.localStorage.getItem("adminToken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
   var date = new Date();
 
   function convert(str) {
@@ -78,7 +84,7 @@ function Demo() {
 
   const getData = () => {
     axios
-    .get(`${baseUrl}/tl/videoScheduler?tl_id=1`)
+    .get(`${baseUrl}/tl/videoScheduler?tl_id=1`, myConfig)
       .then((res) => {
 
    
@@ -106,7 +112,7 @@ function Demo() {
 
   const getAssignmentNo = () => {
     axios
-    .get(`${baseUrl}/admin/getAllQuery`)
+    .get(`${baseUrl}/admin/getAllQuery`, myConfig)
       .then((res) => {
        
         if (res.data.code === 1) {
@@ -123,7 +129,7 @@ function Demo() {
   };
 
   const getUsers = () => {
-    axios.get(`${baseUrl}/tl/allAttendees?uid=${JSON.parse(userId)}`).then((res) => {
+    axios.get(`${baseUrl}/tl/allAttendees?uid=${JSON.parse(userId)}`, myConfig).then((res) => {
 
       if (res.data.code === 1) {
         var data = res.data.result;
@@ -327,6 +333,9 @@ history.push(`/admin/meeting/${data.id}`);
       axios({
         method: "POST",
         url: `${baseUrl}/tl/aminPostCallSchedule`,
+        headers : {
+          uit : token
+        },
         data: formData,
       })
         .then(function (response) {
@@ -388,6 +397,9 @@ history.push(`/admin/meeting/${data.id}`);
       axios({
         method: "POST",
         url: `${baseUrl}/tl/aminPostCallSchedule`,
+        headers  : {
+          uit : token
+        },
         data: formData,
       })
         .then(function (response) {
@@ -439,7 +451,7 @@ history.push(`/admin/meeting/${data.id}`);
         confirmButtonText: "Yes, delete it!",
       }).then((result) => {
         if (result.value) {
-          axios.get(`${baseUrl}/tl/freeslot?id=${deleted}`).then((res) => {
+          axios.get(`${baseUrl}/tl/freeslot?id=${deleted}`, myConfig).then((res) => {
            
             if (res.data.code === 1) {
               setLoading(false)

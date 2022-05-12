@@ -37,6 +37,12 @@ function Recording() {
         assignid : '',
         id : ''
     })
+    const token = window.localStorage.getItem("adminToken")
+    const myConfig = {
+        headers : {
+         "uit" : token
+        }
+      }
     const openModal = (videoContent) => {
       
         setIsOpen(true);
@@ -53,7 +59,7 @@ function Recording() {
     }
     const getRecording = () => {
         axios
-            .get(`${baseUrl}/tl/callRecordingPostlist?uid=${JSON.parse(userid)}`)
+            .get(`${baseUrl}/tl/callRecordingPostlist?uid=${JSON.parse(userid)}`, myConfig)
             .then((res) => {
              
                 if (res.data.code === 1) {

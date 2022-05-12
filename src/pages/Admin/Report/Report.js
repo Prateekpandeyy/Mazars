@@ -980,8 +980,20 @@ options={qno} onChange={(e) => queryNumber(e)}/>
 
 <span>
  
-  <Select isMulti = {true} ref={selectInputRef6}
-options={companyName} onChange={(e) => setCompanyName2(e)}/>
+  <Select
+  styles={{
+    option: (styles, { data }) => {
+      return {
+        ...styles,
+      backgroundColor : "#fff"
+      };
+    },
+    
+  }}  
+  isMulti = {true} 
+  ref={selectInputRef6}
+options={companyName} 
+onChange={(e) => setCompanyName2(e)}/>
 </span>
 {/* 
 <span>

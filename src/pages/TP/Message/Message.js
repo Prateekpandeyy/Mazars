@@ -45,7 +45,7 @@ const history = useHistory();
     const getMessage = () => {
         axios
             .get(
-                `${baseUrl}/customers/getNotification?id=${JSON.parse(userId)}` , myConfig
+                `${baseUrl}/tl/getNotification?id=${JSON.parse(userId)}` , myConfig
             )
             .then((res) => {
                
@@ -64,7 +64,7 @@ const history = useHistory();
                 return rowIndex + 1;
             },
             headerStyle: () => {
-                return { fontSize: "12px", width: "10px" };
+                return { fontSize: "12px", width: "30px" };
             },
         },
        

@@ -35,7 +35,7 @@ const history = useHistory();
 
   const getFeedback = () => {
     axios
-      .get(`${baseUrl}/customers/getFeedback?tp_id=${JSON.parse(userid)}` , myConfig)
+      .get(`${baseUrl}/tl/getFeedback?tp_id=${JSON.parse(userid)}` , myConfig)
       .then((res) => {
      
         if (res.data.code === 1) {
@@ -121,7 +121,7 @@ const history = useHistory();
 
     axios({
       method: "POST",
-      url: `${baseUrl}/customers/markReadFeedback`,
+      url: `${baseUrl}/tl/markReadFeedback`,
       headers: {
         uit : token
       },

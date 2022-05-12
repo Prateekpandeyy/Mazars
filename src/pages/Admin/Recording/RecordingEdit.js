@@ -7,6 +7,12 @@ import { baseUrl } from '../../../config/config';
 import Swal from 'sweetalert2';
 const RecordingEdit = ({isOpen, recordingHandler, participants, message, assignid, editId, recList}) => {
    const userid = localStorage.getItem("adminkey")
+   const token = window.localStorage.getItem("adminToken")
+   const myConfig = {
+       headers : {
+        "uit" : token
+       }
+     }
     const { handleSubmit, register, errors } = useForm();
     const onSubmit = (value) => {
        let formData = new FormData();
@@ -19,6 +25,9 @@ const RecordingEdit = ({isOpen, recordingHandler, participants, message, assigni
         axios({
             method : "POST",
             url : `${baseUrl}/tl/callRecordingPostEdit`,
+            headers : {
+                uit : token 
+            },
             data: formData,
         })
         .then((res) => {

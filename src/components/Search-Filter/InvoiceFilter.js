@@ -125,7 +125,7 @@ const InvoiceFilter = (props) => {
   }
   const resetData = () => {
     reset();
-    props.getData()
+   
   }
     return(
        <>

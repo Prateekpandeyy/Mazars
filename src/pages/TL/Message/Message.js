@@ -35,12 +35,17 @@ const history = useHistory();
     useEffect(() => {
         getMessage();
     }, []);
-
+    const token = window.localStorage.getItem("tlToken")
+    const myConfig = {
+        headers : {
+         "uit" : token
+        }
+      }
 
     const getMessage = () => {
         axios
             .get(
-                `${baseUrl}/customers/getNotification?id=${JSON.parse(userId)}`
+                `${baseUrl}/tl/getNotification?id=${JSON.parse(userId)}`, myConfig
             )
             .then((res) => {
              
@@ -140,7 +145,7 @@ const history = useHistory();
     const readNotification = (id) => {
        
         axios
-            .get(`${baseUrl}/customers/markReadNotification?id=${id}`)
+            .get(`${baseUrl}/tl/markReadNotification?id=${id}`)
             .then(function (response) {
                 
             })

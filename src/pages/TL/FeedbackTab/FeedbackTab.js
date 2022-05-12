@@ -119,7 +119,10 @@ const history = useHistory();
 
     axios({
       method: "POST",
-      url: `${baseUrl}/customers/markReadFeedback`,
+      url: `${baseUrl}/tl/markReadFeedback`,
+      headers : {
+         uit : token
+      },
       data: formData,
     })
       .then(function (response) {

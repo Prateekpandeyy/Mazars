@@ -25,9 +25,14 @@ function FeedbackTab() {
   useEffect(() => {
     getFeedback();
   }, [userid]);
-
+  const token = window.localStorage.getItem("adminToken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
   const getFeedback = () => {
-    axios.get(`${baseUrl}/customers/getFeedback`).then((res) => {
+    axios.get(`${baseUrl}/admin/getFeedback`, myConfig).then((res) => {
      
       if (res.data.code === 1) {
         setFeedBackData(res.data.result);
@@ -124,7 +129,10 @@ function FeedbackTab() {
 
     axios({
       method: "POST",
-      url: `${baseUrl}/customers/markReadFeedback`,
+      url: `${baseUrl}/admin/markReadFeedback`, 
+      headers : {
+        uit : token
+      },
       data: formData,
     })
       .then(function (response) {

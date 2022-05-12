@@ -437,13 +437,16 @@ const showManual = () => {
                        
                         des = {des}
                     />
-            <DiscardReport
+        {
+            ViewDiscussion === true ?
+                <DiscardReport
                         ViewDiscussionToggel={ViewDiscussionToggel}
                         ViewDiscussion={ViewDiscussion}
                         report={assignNo}
                         getData={getQueriesData}
-                        headColor="#55425f"
-                    />
+                        headColor="#55425f" /> : ""
+        }
+                   
                      <RejectedModal
                     showRejectedBox = {showRejectedBox} 
                     rejectedBox = {rejectedBox}
