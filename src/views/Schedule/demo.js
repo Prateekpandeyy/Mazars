@@ -38,7 +38,13 @@ function Demo() {
   const [transcode, SetTranscode] = useState("interop");
   const [attendeeMode, SetAttendeeMode] = useState("video");
   const [videoProfile, SetVideoProfile] = useState("240p_4");
-
+  const token = window.localStorage.getItem("clientToken")
+    
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
   var date = new Date();
 
   function convert(str) {
@@ -59,7 +65,7 @@ function Demo() {
   const getData = () => {
     axios
       .get(
-        `${baseUrl}/customers/videoScheduler?customer_id=${JSON.parse(userId)}`
+        `${baseUrl}/customers/videoScheduler?customer_id=${JSON.parse(userId)}`, myConfig
       )
       .then((res) => {
      
@@ -87,7 +93,7 @@ function Demo() {
 
   const getAssignmentNo = () => {
     axios
-      .get(`${baseUrl}/customers/getAllQuery?uid=${JSON.parse(userId)}`)
+      .get(`${baseUrl}/customers/getAllQuery?uid=${JSON.parse(userId)}`, myConfig)
       .then((res) => {
         
         if (res.data.code === 1) {
@@ -104,7 +110,7 @@ function Demo() {
 
 
   const getUsers = () => {
-    axios.get(`${baseUrl}/tl/allAttendees?uid=${JSON.parse(userId)}`).then((res) => {
+    axios.get(`${baseUrl}/tl/allAttendees?uid=${JSON.parse(userId)}`, myConfig).then((res) => {
       
       if (res.data.code === 1) {
         var data = res.data.result;

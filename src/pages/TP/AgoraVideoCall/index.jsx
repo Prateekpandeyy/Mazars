@@ -13,12 +13,6 @@ import Cookies from "js-cookie"
 import Swal from "sweetalert2";
 import $ from 'jquery';
 import CommonServices from "../../../common/common";
-const token = window.localStorage.getItem("tptoken")
-  const myConfig = {
-      headers : {
-       "uit" : token
-      }
-    }
 
 const tile_canvas = {
   "1": ["span 12/span 24"],
@@ -77,6 +71,12 @@ const tile_canvas = {
   ],
   
 };
+const token = window.localStorage.getItem("tptoken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
 
 /**
  * @prop appId uid

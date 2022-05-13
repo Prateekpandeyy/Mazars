@@ -71,7 +71,12 @@ const tile_canvas = {
   
   
 };
-
+const token = window.localStorage.getItem("clientToken")
+const myConfig = {
+    headers : {
+     "uit" : token
+    }
+  }
 /**
  * @prop appId uid
  * @prop transcode attendeeMode videoProfile channel baseMode
@@ -463,7 +468,7 @@ if(item.player === undefined){
         });
       }
     });
-    axios.get(`${baseUrl}/tl/setgetschedular?id=${this.props.id}&uid=${JSON.parse(this.userId)}&chname=${this.channelName}`)
+    axios.get(`${baseUrl}/tl/setgetschedular?id=${this.props.id}&uid=${JSON.parse(this.userId)}&chname=${this.channelName}`, myConfig)
     .then((res) => {
      if(res.data.result.rtc_id == uid){
       Swal.fire({

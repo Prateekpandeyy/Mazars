@@ -13,12 +13,7 @@ import Cookies from "js-cookie"
 import Swal from "sweetalert2";
 import $ from 'jquery';
 import CommonServices from "../../../common/common"
-const token = window.localStorage.getItem("tlToken")
-const myConfig = {
-    headers : {
-     "uit" : token
-    }
-  }
+
 const tile_canvas = {
   "1": ["span 12/span 24"],
   "2": ["span 12/span 12/13/25", "span 12/span 12/13/13"],
@@ -76,7 +71,12 @@ const tile_canvas = {
   ],
   
 };
-
+const token = window.localStorage.getItem("tlToken")
+const myConfig = {
+    headers : {
+     "uit" : token
+    }
+  }
 /**
  * @prop appId uid
  * @prop transcode attendeeMode videoProfile channel baseMode
