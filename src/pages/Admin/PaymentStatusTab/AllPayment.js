@@ -348,7 +348,7 @@ const rowStyle2 = (row, index) => {
                     <Modal isOpen={modal} fade={false} toggle={toggle}>
                         <ModalHeader toggle={toggle}>Payment History</ModalHeader>
                         <ModalBody>
-                            <table class="table table-bordered">
+                            <table className="table table-bordered">
                                 <thead>
                                     <tr>
                                         <th scope="row">S.No</th>

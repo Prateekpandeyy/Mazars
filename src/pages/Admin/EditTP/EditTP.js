@@ -503,17 +503,17 @@ function EditTP() {
     <Layout adminDashboard="adminDashboard" adminUserId={userid}>
       <Card>
         <CardHeader>
-          <div class="col-md-12 d-flex justify-content-between">
+          <div className="col-md-12 d-flex justify-content-between">
             <div>
               <button
-                class="autoWidthBtn ml-3"
+                className="autoWidthBtn ml-3"
                 onClick={() => history.goBack()}
               >
-                <i class="fas fa-arrow-left mr-2"></i>
+                <i className="fas fa-arrow-left mr-2"></i>
                 Go Back
               </button>
             </div>
-            <div class="text-center ml-5">
+            <div className="text-center ml-5">
               <h4>Edit Tax Professional</h4>
             </div>
             <div>
@@ -526,9 +526,9 @@ function EditTP() {
           <CardHeader>loading ...</CardHeader>
         ) : (
           <CardHeader>
-            <div class="row mt-3">
-              <div class="col-lg-2 col-xl-2 col-md-12"></div>
-              <div class="col-lg-8 col-xl-8 col-md-12">
+            <div className="row mt-3">
+              <div className="col-lg-2 col-xl-2 col-md-12"></div>
+              <div className="col-lg-8 col-xl-8 col-md-12">
                 <Form
                   name="basic"
                   autoComplete="off"
@@ -541,17 +541,17 @@ function EditTP() {
                   }}
                   onFinish={onFinish}
                 >
-                   <div class="row">
-                  <div class="col-md-6">
-                  <div class="form-group">
+                   <div className="row">
+                  <div className="col-md-6">
+                  <div className="form-group">
                   <label>Team Leader post name <span className="declined">*</span></label>
                   <input type="text" className = "form-control" 
                   defaultValue = {data11} 
               disabled />   
                     </div>
                   </div>
-                    <div class="col-md-6">
-                      <div class="form-group">
+                    <div className="col-md-6">
+                      <div className="form-group">
                       <label> Team Leader post email <span className="declined">*</span></label>
                         <input
                           type="text"
@@ -567,9 +567,9 @@ function EditTP() {
                   </div>
 
 
-                  <div class="row">
-                  <div class="col-md-6">
-                      <div class="form-group">
+                  <div className="row">
+                  <div className="col-md-6">
+                      <div className="form-group">
                       
                       <label>TP post name <span className="declined">*</span></label>
                         <input
@@ -588,8 +588,8 @@ function EditTP() {
                     <p className="declined">{posError.exits}</p>}
                       </div>
                     </div>
-                    <div class="col-md-6">
-                    <div class="form-group">
+                    <div className="col-md-6">
+                    <div className="form-group">
                     
                   
                     <label> TP post email <span className="declined">*</span></label>
@@ -623,9 +623,9 @@ function EditTP() {
                   </div>
 
 
-                  <div class="row">
-                    <div class="col-md-6">
-                      <div class="form-group">
+                  <div className="row">
+                    <div className="col-md-6">
+                      <div className="form-group">
                         <label>Name <span className="declined">*</span></label>
                         <Form.Item name="name">
                           <input
@@ -638,8 +638,8 @@ function EditTP() {
                       </div>
                     </div>
 
-                    <div class="col-md-6">
-                      <div class="form-group">
+                    <div className="col-md-6">
+                      <div className="form-group">
                         <label>Phone  <span className="declined">*</span></label>
                         <Form.Item name="phone">
                           <Input
@@ -657,11 +657,11 @@ function EditTP() {
 
                
 
-                  <div class="row">
-                    <div class="col-md-6">
-                      <div class="form-group">
+                  <div className="row">
+                    <div className="col-md-6">
+                      <div className="form-group">
                         <label>Category <span className="declined">*</span></label>
-                        <div class="form-group">
+                        <div className="form-group">
 
                           <Select  options={options}
                             defaultValue={data4} onChange={category}
@@ -691,8 +691,8 @@ function EditTP() {
                       </div>
                     </div>
 
-                    <div class="col-md-6">
-                      <div class="form-group">
+                    <div className="col-md-6">
+                      <div className="form-group">
                         <label>Sub Category <span className="declined">*</span></label>
 
                         <Select isMulti options={options2}
@@ -722,9 +722,9 @@ function EditTP() {
                       </div>
                     </div>
                   </div>
-                  <div class="row">
-                    <div class="col-md-12">
-                      <div class="form-group">
+                  <div className="row">
+                    <div className="col-md-12">
+                      <div className="form-group">
                         <label>Email <span className="declined">*</span></label>
                         <Form.Item name="email">
                           <Input
@@ -740,9 +740,9 @@ function EditTP() {
                       </div>
                     </div>
                   </div>
-                  <div class="row">
-                    <div class="col-md-6">
-                      <div class="form-group">
+                  <div className="row">
+                    <div className="col-md-6">
+                      <div className="form-group">
                       {
                 loading ?
                   <Spinner color="primary" />

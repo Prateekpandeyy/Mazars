@@ -114,7 +114,7 @@ const history = useHistory();
                                         title="unread"
                                     >
                                         <p>{row.message}</p>
-                                        <i class="fa fa-bullseye" style={{ color: "red" }}></i>
+                                        <i className="fa fa-bullseye" style={{ color: "red" }}></i>
                                     </div>
                                     :
                                     <div
@@ -127,7 +127,7 @@ const history = useHistory();
                                         title="read"
                                     >
                                         <p>{row.message}</p>
-                                        <i class="fa fa-bullseye" style={{ color: "green" }}></i>
+                                        <i className="fa fa-bullseye" style={{ color: "green" }}></i>
                                     </div>
                             }
                         </Link>
@@ -160,7 +160,7 @@ const history = useHistory();
           <Row>
           <Col md="4">
           <button
-                class="autoWidthBtn" 
+                className="autoWidthBtn" 
                 onClick={() => history.goBack()}
               >
                

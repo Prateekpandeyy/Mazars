@@ -80,8 +80,8 @@ function PendingRecevied() {
         <CardHeader>
           <Row>
             <Col md="4">
-              <button class="btn btn-success" onClick={() => history.goBack()}>
-                <i class="fas fa-arrow-left mr-2"></i>
+              <button className="btn btn-success" onClick={() => history.goBack()}>
+                <i className="fas fa-arrow-left mr-2"></i>
                 Go Back
               </button>
             </Col>
@@ -95,8 +95,8 @@ function PendingRecevied() {
         </CardHeader>
         <CardBody>
           {submitData.map((p, i) => (
-            <div class="card-body">
-              <table class="table table-bordered">
+            <div className="card-body">
+              <table className="table table-bordered">
                 <thead>
                   <tr>
                     <th scope="col">Titles</th>
@@ -146,7 +146,7 @@ function PendingRecevied() {
                           <a
                             href={`${baseUrl2}/mazarsapi/assets/image/${p.upload_doc_1}`}
                           >
-                            <i class="fa fa-photo"></i>
+                            <i className="fa fa-photo"></i>
                           </a>
                         </p>
                       )}
@@ -158,7 +158,7 @@ function PendingRecevied() {
                           <a
                             href={`${baseUrl2}/mazarsapi/mazarapi/assets/image/${p.upload_doc_2}`}
                           >
-                            <i class="fa fa-photo"></i>
+                            <i className="fa fa-photo"></i>
                           </a>
                         </p>
                       )}
@@ -170,7 +170,7 @@ function PendingRecevied() {
                           <a
                             href={`${baseUrl2}/mazarsapi/mazarapi/assets/image/${p.upload_doc_3}`}
                           >
-                            <i class="fa fa-photo"></i>
+                            <i className="fa fa-photo"></i>
                           </a>
                         </p>
                       )}
@@ -196,7 +196,7 @@ function PendingRecevied() {
                     <td>
                     {p.allocation_status == "0" || p.allocation_status == "3"  ? (
                         <Link to={`/admin/queryassing/${p.id}`}>
-                        <i class="fa fa-share"></i>
+                        <i className="fa fa-share"></i>
                       </Link>
                       ) : (                  
                        null
@@ -207,7 +207,7 @@ function PendingRecevied() {
                 </tbody>
               </table>
 
-              <table class="table table-bordered">
+              <table className="table table-bordered">
                 {displayQuery.length > 0 && (
                   <thead>
                     <tr>
@@ -233,7 +233,7 @@ function PendingRecevied() {
                             <a
                               href={`${baseUrl2}/mazarsapi/mazarapi/assets/image/${p.upload_doc}`}
                             >
-                              <i class="fa fa-photo"></i>
+                              <i className="fa fa-photo"></i>
                             </a>
                           </p>
                         )}

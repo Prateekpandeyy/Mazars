@@ -116,9 +116,9 @@ const [columnDefs] = useState([
 {
               params.data.status == "1" ?
               <div style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
-              <label class="switch" onChange= {(e) => myShowValue(e, params.data)}>
+              <label className="switch" onChange= {(e) => myShowValue(e, params.data)}>
 <input type="checkbox"  defaultChecked/>
-<span class="slider round"></span>
+<span className="slider round"></span>
 </label>
 
               </div> :
@@ -127,9 +127,9 @@ const [columnDefs] = useState([
             {
               params.data == "0" ?
               <div>
-              <label class="switch" onChange= {(e) => myShowValue(e, params.data)}>
+              <label className="switch" onChange= {(e) => myShowValue(e, params.data)}>
 <input type="checkbox"  />
-<span class="slider round"></span>
+<span className="slider round"></span>
 </label>
 
               </div> : ""

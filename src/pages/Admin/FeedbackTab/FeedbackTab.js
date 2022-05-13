@@ -100,7 +100,7 @@ function FeedbackTab() {
                     title="unread"
                   >
                     <p  onClick={() => readNotification(row.id)}>{row.feedback}  - By {row.name}</p>
-                    <i class="fa fa-bullseye" style={{ color: "red" }}></i>
+                    <i className="fa fa-bullseye" style={{ color: "red" }}></i>
                   </div>
                   :
                   <div
@@ -108,7 +108,7 @@ function FeedbackTab() {
                     title="read"
                   >
                     <p>{row.feedback}  - By {row.name}</p>
-                    <i class="fa fa-bullseye" style={{ color: "green" }}></i>
+                    <i className="fa fa-bullseye" style={{ color: "green" }}></i>
                   </div>
               }
             </div>

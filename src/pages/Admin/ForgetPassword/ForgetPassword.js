@@ -80,7 +80,7 @@ function ForgetPassword(props) {
 
           {
             loading ?
-              <div class="col-md-12">
+              <div className="col-md-12">
                 <Spinner color="primary" />
               </div>
               :

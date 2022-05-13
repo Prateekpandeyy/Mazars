@@ -218,9 +218,9 @@ function QueriesRecevied(props) {
 
   return (
     <Layout adminDashboard="adminDashboard" adminUserId={userid}>
- <div class="row mt-3">
-      <div class="col-xl-12 col-lg-12 col-md-12">
-          <div class="card">
+ <div className="row mt-3">
+      <div className="col-xl-12 col-lg-12 col-md-12">
+          <div className="card">
           <CardHeader>
           <Row>
             <Col md="4">
@@ -230,7 +230,7 @@ function QueriesRecevied(props) {
                     index: props.location.index,
                   }}
                 >
-                  <button class="autoWidthBtn ml-3">Go Back</button>
+                  <button className="autoWidthBtn ml-3">Go Back</button>
                 </Link>
               
             </Col>

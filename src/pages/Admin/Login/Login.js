@@ -102,7 +102,7 @@ function Login(props) {
   return (
     <>
       <Header admin="admin" noAdminSign = "adminSign"/>
-      <div class="container">
+      <div className="container">
 
         {
           show ? <div>
@@ -111,8 +111,8 @@ function Login(props) {
               setLoading={setLoading} />
           </div>
             :
-            <div class="form">
-              <div class="heading">
+            <div className="form">
+              <div className="heading">
                 <h2>ADMIN LOGIN</h2>
               </div>
               <form onSubmit={handleSubmit(onSubmit)}>
@@ -173,7 +173,7 @@ function Login(props) {
 
                 {
                   loading ?
-                    <div class="col-md-12">
+                    <div className="col-md-12">
                       <Spinner color="primary" />
                     </div>
                     :

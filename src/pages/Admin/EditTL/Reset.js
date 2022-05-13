@@ -61,7 +61,7 @@ function Reset() {
   else
     return (
       <>
-        <div class="container">
+        <div className="container">
           <Form
             name="basic"
             initialValues={{

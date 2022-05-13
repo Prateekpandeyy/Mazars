@@ -28,7 +28,7 @@ function History({ history,toggle,modal }) {
       <Modal isOpen={modal} fade={false} toggle={toggle} size="lg">
         <ModalHeader toggle={toggle}>History</ModalHeader>
         <ModalBody>
-          <table class="table table-bordered">
+          <table className="table table-bordered">
             <thead>
               <tr>
                 <th  style={{backgroundColor: "#42566a", color: "#fff", border: "1px solid #42566a"}}>S.No</th>

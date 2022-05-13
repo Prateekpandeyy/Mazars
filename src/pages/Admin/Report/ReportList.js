@@ -103,7 +103,7 @@ const ReportList = () => {
                 <CloudDownloadIcon />
                   </a>
                </div>
-                  <i class="fa-thin fa-file-excel"></i>
+                  <i className="fa-thin fa-file-excel"></i>
 
 <div title="Delete">
 <DeleteIcon color = "danger" onClick = {() =>del(row.id)} />

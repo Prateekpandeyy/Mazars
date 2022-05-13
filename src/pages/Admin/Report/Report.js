@@ -799,7 +799,7 @@ options={qno} onChange={(e) => queryNumber(e)}/>
            <legend className="login-legend">Basic Query Details</legend>
            <div className="basicFeild">
            <span>
-               <input type="checkbox" onClick={(i) => selectAllbasic(i)} name="select_all" class="selectall" id="select_all" ref={register}></input>
+               <input type="checkbox" onClick={(i) => selectAllbasic(i)} name="select_all" className="selectall" id="select_all" ref={register}></input>
                <label htmlFor="select_all">Select All</label>
                </span>
                </div>
@@ -883,7 +883,7 @@ options={qno} onChange={(e) => queryNumber(e)}/>
            <legend className="login-legend">Proposal</legend>
            <div className="basicFeild">
            <span>
-               <input type="checkbox" onClick={(i) => selectAllproposal(i)} name="selectallProposal" class="selectall" id="selectallProposal" ref={register}></input>
+               <input type="checkbox" onClick={(i) => selectAllproposal(i)} name="selectallProposal" className="selectall" id="selectallProposal" ref={register}></input>
                <label htmlFor="selectallProposal">Select All</label>
                </span>
                </div>
@@ -941,7 +941,7 @@ options={qno} onChange={(e) => queryNumber(e)}/>
            <legend className="login-legend">Assignment</legend>
            <div className="basicFeild">
            <span>
-               <input type="checkbox" onClick={(i) => selectAllAssignment(i)} name="selectAllAssignment" class="selectall" id="selectAllAssignment" ref={register}></input>
+               <input type="checkbox" onClick={(i) => selectAllAssignment(i)} name="selectAllAssignment" className="selectall" id="selectAllAssignment" ref={register}></input>
                <label htmlFor="selectAllAssignment">Select All</label>
                </span>
                </div>
@@ -980,7 +980,7 @@ options={qno} onChange={(e) => queryNumber(e)}/>
            <legend className="login-legend">Payment Receipt</legend>  
            <div className="basicFeild">
            <span>
-               <input type="checkbox" onClick={(i) => selectAllPayment(i)} name="selectAllPayment" class="selectall" id="selectAllPayment" ref={register}></input>
+               <input type="checkbox" onClick={(i) => selectAllPayment(i)} name="selectAllPayment" className="selectall" id="selectAllPayment" ref={register}></input>
                <label htmlFor="selectAllPayment">Select All</label>
                </span>
                <span>
@@ -1092,8 +1092,8 @@ onChange={(e) => setCompanyName2(e)}/>
            </fieldset>
            </div>
    </div>
-   <button type="submit" class="autoWidthBtn my-3">Generate Report</button>
-   <button type="button" class="autoWidthBtn m-3" onClick={() => resetData()}>Reset</button>
+   <button type="submit" className="autoWidthBtn my-3">Generate Report</button>
+   <button type="button" className="autoWidthBtn m-3" onClick={() => resetData()}>Reset</button>
   
   </form>
   </div>

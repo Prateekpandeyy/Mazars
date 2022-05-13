@@ -342,7 +342,7 @@ function Paid() {
                     <Modal isOpen={modal} fade={false} toggle={toggle}>
                         <ModalHeader toggle={toggle}>History</ModalHeader>
                         <ModalBody>
-                            <table class="table table-bordered">
+                            <table className="table table-bordered">
                                 <thead>
                                     <tr>
                                         <th scope="row">S.No</th>

@@ -26,12 +26,12 @@ const MessageIcon = () => {
 }
 const DiscussProposal = (props) => {
  return(
-  <i title={props.titleName} class="fa fa-share discussProposal"></i>
+  <i title={props.titleName} className="fa fa-share discussProposal"></i>
  )
 }
 const HelpIcon = () => {
   return(
-    <i title="Help" class="fa fa-question-circle helpIcon"></i>
+    <i title="Help" className="fa fa-question-circle helpIcon"></i>
     
   )
 }
@@ -78,7 +78,7 @@ const Payment = () => {
 const History = (props) =>{
   return(
     <>
-    <i class="fa fa-history historyIcon"   title={props.titleName}></i>
+    <i className="fa fa-history historyIcon"   title={props.titleName}></i>
     </>
   )
 }
@@ -112,19 +112,19 @@ const FinalReportUploadIcon = () => {
 const Accept = (props) => {
   return(
     <i
-    class="fa fa-check acceptIcon" title= {props.titleName} 
+    className="fa fa-check acceptIcon" title= {props.titleName} 
   ></i>
   )
 }
 const Reject = (props) => {
   return(<i
-    class="fa fa-times rejectIcon" title= {props.titleName}
+    className="fa fa-times rejectIcon" title= {props.titleName}
    
   ></i>)
 }
 const ActionIcon = (props) => {
   return(
-   <i title={props.titleName} class="fa fa-share discussProposal"></i>
+   <i title={props.titleName} className="fa fa-share discussProposal"></i>
   )
  }
 export default MessageIcon;

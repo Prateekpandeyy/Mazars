@@ -136,9 +136,9 @@ function Chatting(props) {
               :
               <>
                 <form onSubmit={handleSubmit(onSubmit)}>
-                  <div class="row" style={{ display: "flex", justifyContent: "center" }}>
-                    <div class="col-md-6">
-                      <div class="form-group">
+                  <div className="row" style={{ display: "flex", justifyContent: "center" }}>
+                    <div className="col-md-6">
+                      <div className="form-group">
                         <label>Query No.</label>
                         <input
                           type="text"
@@ -150,7 +150,7 @@ function Chatting(props) {
                         />
                       </div>
 
-                      <div class="form-group">
+                      <div className="form-group">
                         <label>Message Type</label>
                         {
                           item &&
@@ -178,7 +178,7 @@ function Chatting(props) {
                         )}
                       </div>
 
-                      <div class="form-group">
+                      <div className="form-group">
                         <label>To<span className="declined">*</span></label>
                         <select
                           className={classNames("form-control", {
@@ -200,7 +200,7 @@ function Chatting(props) {
                         )}
                       </div>
 
-                      <div class="form-group">
+                      <div className="form-group">
                         <label>Message<span className="declined">*</span></label>
                         <textarea
                           className={classNames("form-control", {

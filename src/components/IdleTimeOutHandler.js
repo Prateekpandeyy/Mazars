@@ -164,7 +164,7 @@ const IdleTimeOutHandler = (props)=>{
               }
             axios.get(`${baseUrl}/customers/logout`, myConfig)
             .then((res) => {
-                if(res.data.code === 1){
+               
                   setShowModal(false)
                   localStorage.removeItem("userid");
                   localStorage.removeItem("custEmail");
@@ -172,7 +172,7 @@ const IdleTimeOutHandler = (props)=>{
                   localStorage.removeItem("clientToken")
                   setShowModal(false)
                   history.push("/");
-                }
+             
             })
         
         }
@@ -185,14 +185,14 @@ const IdleTimeOutHandler = (props)=>{
               }
          axios.get(`${baseUrl}/admin/logout`, myConfig)
          .then((res) => {
-             if(res.data.code === 1){
+            
               localStorage.removeItem("adminkey");
               localStorage.removeItem("adminEmail");
               localStorage.removeItem("category");
               localStorage.removeItem("adminToken")
               setShowModal(false)
               history.push("/admin/login");
-             }
+            
          })
         }
         else if(props.TLuserId){
@@ -204,14 +204,14 @@ const IdleTimeOutHandler = (props)=>{
       }
          axios.get(`${baseUrl}/tl/logout`, myConfig)
          .then((res) => {
-             if(res.data.code === 1){
+         
               localStorage.removeItem("tlkey");
               localStorage.removeItem("tlEmail");
               localStorage.removeItem("category");
               localStorage.removeItem("tlToken")
               setShowModal(false)
               history.push("/teamleader/login");
-             }
+             
          })
         }
         else if(props.TPuserId){
@@ -223,14 +223,14 @@ const IdleTimeOutHandler = (props)=>{
     }
         axios.get(`${baseUrl}/tl/logout`, myConfig)
         .then((res) => {
-            if(res.data.code === 1){
+
               localStorage.removeItem("tpkey");
               localStorage.removeItem("tpEmail");
               localStorage.removeItem("category");
               localStorage.removeItem("tptoken");
               setShowModal(false);
               history.push("/taxprofessional/login");
-            }
+           
         })
         }
         }

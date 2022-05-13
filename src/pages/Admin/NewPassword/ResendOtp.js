@@ -43,7 +43,7 @@ function ResendOtp({ id, setTime, setDisabled, loading, getTime, setLoading }) {
             <form onSubmit={handleSubmit(onSubmit)}>
 {loading === true ? "" :
                 <div style={{ paddingTop: "10px" }}>
-                <button type="submit" class="autoWidthBtn">SEND OTP</button>
+                <button type="submit" className="autoWidthBtn">SEND OTP</button>
             </div>}
             </form>
         </>

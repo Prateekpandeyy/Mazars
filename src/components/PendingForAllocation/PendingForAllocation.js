@@ -29,7 +29,7 @@ function PendingAllocation({ CountPendingForAllocation }) {
     }
   }
   const toggle = (key) => {
-    
+    console.log("keyData", key)
 
     setModal(!modal);
 

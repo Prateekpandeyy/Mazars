@@ -644,17 +644,17 @@ const checktlPost = (e) => {
     <Layout adminDashboard="adminDashboard" adminUserId={userid}>
       <Card>
         <CardHeader>
-          <div class="col-md-12 d-flex justify-content-between">
+          <div className="col-md-12 d-flex justify-content-between">
             <div>
               <button
-                class="autoWidthBtn ml-3"
+                className="autoWidthBtn ml-3"
                 onClick={() => history.goBack()}
               >
-                <i class="fas fa-arrow-left mr-2"></i>
+                <i className="fas fa-arrow-left mr-2"></i>
                 Go Back
               </button>
             </div>
-            <div class="text-center ml-5">
+            <div className="text-center ml-5">
               <h4>Edit Team Leader</h4>
             </div>
             <div>
@@ -667,9 +667,9 @@ const checktlPost = (e) => {
           <CardHeader>loading ...</CardHeader>
         ) : (
           <CardHeader>
-            <div class="row mt-3">
-              <div class="col-lg-2 col-xl-2 col-md-12"></div>
-              <div class="col-lg-8 col-xl-8 col-md-12">
+            <div className="row mt-3">
+              <div className="col-lg-2 col-xl-2 col-md-12"></div>
+              <div className="col-lg-8 col-xl-8 col-md-12">
                 <Form
                 autoComplete="off"
                   name="basic"
@@ -682,9 +682,9 @@ const checktlPost = (e) => {
                   }}
                   onFinish={onFinish}
                 >
-                  <div class="row">
-                    <div class="col-md-6">
-                      <div class="form-group">
+                  <div className="row">
+                    <div className="col-md-6">
+                      <div className="form-group">
                       <label>Team Leader Post Name <span className="declined">*</span></label>
                         <input
                           type="text"
@@ -703,8 +703,8 @@ const checktlPost = (e) => {
                       </div>
                     </div>
 
-                    <div class="col-md-6">
-                      <div class="form-group">
+                    <div className="col-md-6">
+                      <div className="form-group">
                       <label>Team Leader Post Email <span className="declined">*</span></label>
                         <input
                           type="text"
@@ -732,9 +732,9 @@ const checktlPost = (e) => {
                   </div>
 
 
-                  <div class="row">
-                    <div class="col-md-6">
-                      <div class="form-group">
+                  <div className="row">
+                    <div className="col-md-6">
+                      <div className="form-group">
                         <label>Name <span className="declined">*</span></label>
                         <Form.Item name="name">
                           <Input
@@ -746,8 +746,8 @@ const checktlPost = (e) => {
                       </div>
                     </div>
 
-                    <div class="col-md-6">
-                      <div class="form-group">
+                    <div className="col-md-6">
+                      <div className="form-group">
                         <label>Phone  <span className="declined">*</span></label>
                         <Form.Item name="phone">
                           <Input
@@ -774,11 +774,11 @@ const checktlPost = (e) => {
 
                 
 
-                  <div class="row">
-                    <div class="col-md-6">
-                      <div class="form-group">
+                  <div className="row">
+                    <div className="col-md-6">
+                      <div className="form-group">
                         <label>Category <span className="declined">*</span></label>
-                        <div class="form-group">
+                        <div className="form-group">
 
                         <Select isMulti options={options}
                         value = {categoryData}
@@ -809,8 +809,8 @@ const checktlPost = (e) => {
                       </div>
                     </div>
 
-                    <div class="col-md-6">
-                      <div class="form-group">
+                    <div className="col-md-6">
+                      <div className="form-group">
                         <label>Sub Category <span className="declined">*</span></label>
                         <Select isMulti options={options2}
                       onChange={subCategory}
@@ -837,9 +837,9 @@ const checktlPost = (e) => {
                       </div>
                     </div>
                   </div>
-                  <div class="row">
-                    <div class="col-md-12">
-                      <div class="form-group">
+                  <div className="row">
+                    <div className="col-md-12">
+                      <div className="form-group">
                         <label>Email <span className="declined">*</span></label>
                         <Form.Item name="email">
                           <Input
@@ -853,9 +853,9 @@ const checktlPost = (e) => {
                       </div>
                     </div>
                   </div>
-                  <div class="row">
-                    <div class="col-md-6">
-                      <div class="form-group">
+                  <div className="row">
+                    <div className="col-md-6">
+                      <div className="form-group">
                       {
                 loading ?
                   <Spinner color="primary" />

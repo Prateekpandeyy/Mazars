@@ -219,8 +219,8 @@ function QueryAssingment(props) {
                   index: 1,
                 }}
               >
-                <button class="autoWidthBtn ml-3">
-                  <i class="fas fa-arrow-left mr-2"></i>
+                <button className="autoWidthBtn ml-3">
+                  <i className="fas fa-arrow-left mr-2"></i>
                   Go Back
                 </button>
               </Link>
@@ -239,10 +239,10 @@ function QueryAssingment(props) {
               <Loader />
               :
               <>
-                <div class="row mt-3">
-                  <div class="col-md-12">
+                <div className="row mt-3">
+                  <div className="col-md-12">
                     <form onSubmit={handleSubmit(onSubmit)}>
-                      <table class="table">
+                      <table className="table">
                         <thead>
                           <tr>
                             <th scope="col">Query No.</th>
@@ -285,7 +285,7 @@ function QueryAssingment(props) {
                                   ref={register}
                                   name="p_timelines"
                                   value={timelines}
-                                  class="form-control"
+                                  className="form-control"
                                 />
                               </td>
                               <td>
@@ -306,7 +306,7 @@ function QueryAssingment(props) {
                               </td>
 
                               <td>
-                                <button type="submit" class="customBtn">
+                                <button type="submit" className="customBtn">
                                   Assign
                                 </button>
                               </td>
@@ -315,7 +315,7 @@ function QueryAssingment(props) {
                             <tr>
                               <th scope="row">{queryNo}</th>
                               <td>
-                                <select class="form-control w-75 p-0" disabled>
+                                <select className="form-control w-75 p-0" disabled>
                                   <option>{hideQuery.name}</option>
                                 </select>
                               </td>
@@ -325,7 +325,7 @@ function QueryAssingment(props) {
                                   type="text"
                                   ref={register}
                                   name="p_timelines"
-                                  class="form-control"
+                                  className="form-control"
                                   value={hideQuery.timeline}
                                   disabled
                                 />
@@ -335,13 +335,13 @@ function QueryAssingment(props) {
                                   type="text"
                                   ref={register}
                                   name="p_expdeldate"
-                                  class="form-control"
+                                  className="form-control"
                                   value={hideQuery.expdeliverydate}
                                   disabled
                                 />
                               </td>
                               <td>
-                                <button class="autoWidthBtn" disabled>
+                                <button className="autoWidthBtn" disabled>
                                   Assigned
                                 </button>
                               </td>

@@ -34,17 +34,18 @@ function AllQueriesData({allData}) {
 
   useEffect(() => {
     getAllQueriesData();
-  }, [allData]);
+  }, []);
 
   const getAllQueriesData = () => {
     axios.get(`${baseUrl}/admin/getAllQueries`, myConfig).then((res) => {
      
       if (res.data.code === 1) {
+        console.log("querydata")
        // setAllQueriesData(res.data.result);
         setRecords(res.data.result.length);
       }
     });
-    setAllQueriesData(allData)
+   
   };
 
 
@@ -122,7 +123,7 @@ function AllQueriesData({allData}) {
       formatter: function dateFormat(cell, row) {
           
           var oldDate = row.Exp_Delivery_Date;
-          console.log("ol", oldDate)
+        
           if (oldDate == "0000-00-00") {
               return null;
           }
@@ -220,14 +221,14 @@ function AllQueriesData({allData}) {
         </CardHeader>
         <CardBody>
           <Records records={records} />
-         {allQueriesData != undefined ? 
+        
           <DataTablepopulated 
           bgColor="#55425f"
-          keyField= {"assign_no"}
-          data={allQueriesData}
+          keyField= "assign_no"
+          data={allData}
           
           columns={columns}>
-           </DataTablepopulated> : ""}
+           </DataTablepopulated> 
 
 
           <DiscardReport
@@ -244,4 +245,4 @@ function AllQueriesData({allData}) {
   );
 }
 
-export default AllQueriesData;
+export default React.memo(AllQueriesData);

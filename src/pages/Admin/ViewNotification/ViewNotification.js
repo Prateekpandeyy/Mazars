@@ -70,7 +70,7 @@ function ViewNotification() {
           </Row>
         </CardHeader>
         <CardBody>
-          <table class="table table-bordered">
+          <table className="table table-bordered">
             <tbody>
               <tr>
                 <th scope="row">Query No</th>

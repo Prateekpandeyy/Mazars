@@ -225,7 +225,7 @@ function TaxProfessionalsTab() {
           <>
             <button
               type="button"
-              class="autoWidthBtn"
+              className="autoWidthBtn"
               onClick={() => toggle(row.id)}
             >
               History
@@ -283,7 +283,7 @@ function TaxProfessionalsTab() {
               <CardTitle tag="h4">Tax Professionals ({tpCount})</CardTitle>
             </Col>
             <Col md="2">
-              <Link to={"/admin/addnewtp"} class="autoWidthBtn">
+              <Link to={"/admin/addnewtp"} className="autoWidthBtn">
                 Add New
               </Link>
             </Col>

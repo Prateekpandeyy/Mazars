@@ -236,7 +236,7 @@ const classes = useStyle()
               <li className="nav-item">
               
                 <NavLink to={"/cms/cms"} className={classes.myClassHover}>
-                <i class="">
+                <i className="">
                   <ArticleOutlinedIcon className={classes.myTeamleader}
                   />
                 </i>
@@ -248,7 +248,7 @@ const classes = useStyle()
 
               <li className="nav-item">
               <NavLink to={"/cms/linklist"} className={classes.myClassHover}>
-                <i class="">
+                <i className="">
                   <LinkOutlinedIcon className={classes.myTeamleader}
                   />
                 </i>
@@ -261,7 +261,7 @@ const classes = useStyle()
 
               <li className="nav-item">
               <NavLink to={"/cms/updates"} className={classes.myClassHover}>
-                <i class="">
+                <i className="">
                   <TipsAndUpdatesOutlinedIcon className={classes.myTeamleader}
                   />
                 </i>
@@ -276,7 +276,7 @@ const classes = useStyle()
                
                 
      <NavLink to={"/cms/faqlist"} className={classes.myClassHover}>
-                <i class="">
+                <i className="">
                   <QuizOutlinedIcon className={classes.myTeamleader}
                   />
                 </i>
@@ -288,7 +288,7 @@ const classes = useStyle()
 
               <li className="nav-item">
               <NavLink to={"/cms/flash"} className={classes.myClassHover}>
-                <i class="">
+                <i className="">
                   <UnsubscribeOutlinedIcon className={classes.myTeamleader}
                   />
                 </i>
@@ -302,7 +302,7 @@ const classes = useStyle()
               <li className="nav-item">
             
               <NavLink to={"/cms/imagelist"} className={classes.myClassHover}>
-                <i class="">
+                <i className="">
                   <PermMediaOutlinedIcon className={classes.myTeamleader}
                   />
                 </i>
@@ -314,7 +314,7 @@ const classes = useStyle()
               <li className="nav-item">
             
               <NavLink to={"/cms/videolist"} className={classes.myClassHover}>
-                <i class="">
+                <i className="">
                   <MissedVideoCallIcon className={classes.myTeamleader}
                   />
                 </i>
@@ -326,7 +326,7 @@ const classes = useStyle()
               <li className="nav-item">
             
             <NavLink to={"/cms/contentlist"} className={classes.myClassHover}>
-              <i class="">
+              <i className="">
                 <MediaBluetoothOffIcon className={classes.myTeamleader}
                 />
               </i>
@@ -614,7 +614,7 @@ const classes = useStyle()
 
               <li className="nav-item">
                 <NavLink to={"/admin/teamleaders"} className={classes.myClassHover}>
-                <i class="">
+                <i className="">
                   <PersonOutlineIcon className={classes.myTeamleader}
                   />
                 </i>

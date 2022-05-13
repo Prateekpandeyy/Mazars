@@ -207,7 +207,7 @@ function NewPassword(props) {
                     </div>
                   )}
                   {disabled === false ? 
-                  <small class="text-center">
+                  <small className="text-center">
                   Note: OTP is valid for {time} seconds.
                 </small> : ""}
                 </div>
@@ -216,7 +216,7 @@ function NewPassword(props) {
 
             {
               loading ?
-                <div class="col-md-12">
+                <div className="col-md-12">
                   <Spinner color="primary" />
                 </div>
                 :

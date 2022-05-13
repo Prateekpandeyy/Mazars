@@ -127,9 +127,9 @@ function VerifyOtp({ email, uid, loading, setLoading }) {
   return (
     <>
 
-      <div class="container">
-        <div class="otp">
-          <div class="heading text-center">
+      <div className="container">
+        <div className="otp">
+          <div className="heading text-center">
             <h2>Verify Your OTP</h2>
           </div>
           <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
@@ -137,7 +137,7 @@ function VerifyOtp({ email, uid, loading, setLoading }) {
               disabled ?
                 null
                 :
-                <div class="form-group">
+                <div className="form-group">
                   <label className="form-label">Enter OTP <span className="declined">*</span></label>
                   <input
                     type="text"
@@ -156,7 +156,7 @@ function VerifyOtp({ email, uid, loading, setLoading }) {
                       {errors.p_otp.message}
                     </div>
                   )}
-                  <small class="text-center">
+                  <small className="text-center">
                     Note: OTP is valid for {time} seconds.
                   </small>
                   <Mandatory />
@@ -167,12 +167,12 @@ function VerifyOtp({ email, uid, loading, setLoading }) {
               loading ?
                 <Spinner color="primary" />
                 :
-                <div class="text-center">
+                <div className="text-center">
                   {
                     disabled ?
-                      <button type="submit" class="autoWidthBtn" onClick={resendOtp}>SEND OTP</button>
+                      <button type="submit" className="autoWidthBtn" onClick={resendOtp}>SEND OTP</button>
                       :
-                      <button type="submit" class="autoWidthBtn">VERIFY OTP</button>
+                      <button type="submit" className="autoWidthBtn">VERIFY OTP</button>
                   }
                 </div>
             }

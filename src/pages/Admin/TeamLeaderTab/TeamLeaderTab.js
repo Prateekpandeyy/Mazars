@@ -225,7 +225,7 @@ else{
           <>
             <button
               type="button"
-              class="autoWidthBtn"
+              className="autoWidthBtn"
               onClick={() => toggle(row.id)}
             >
               History

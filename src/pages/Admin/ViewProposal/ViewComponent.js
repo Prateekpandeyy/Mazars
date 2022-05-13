@@ -11,7 +11,7 @@ function ViewComponent({ viewModal, ViewHandler, getProposalData, viewData }) {
       <Modal isOpen={viewModal} toggle={ViewHandler} size="md">
         <ModalHeader toggle={ViewHandler}>View Proposal</ModalHeader>
         <ModalBody>
-          <table class="table table-bordered">
+          <table className="table table-bordered">
             <tbody>
               <tr>
                 <th scope="row">Query No</th>

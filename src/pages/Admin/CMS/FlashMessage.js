@@ -166,9 +166,9 @@ const FlashMessage = () => {
                 {
                   row.status == "1" ?
                   <div>
-                  <label class="switch" onChange= {(e) => myShowValue(e, row)}>
+                  <label className="switch" onChange= {(e) => myShowValue(e, row)}>
     <input type="checkbox"  defaultChecked/>
-    <span class="slider round"></span>
+    <span className="slider round"></span>
   </label>
   
                   </div> :
@@ -177,9 +177,9 @@ const FlashMessage = () => {
                 {
                   row.status == "0" ?
                   <div>
-                  <label class="switch" onChange= {(e) => myShowValue(e, row)}>
+                  <label className="switch" onChange= {(e) => myShowValue(e, row)}>
     <input type="checkbox"  />
-    <span class="slider round"></span>
+    <span className="slider round"></span>
   </label>
   
                   </div> : ""

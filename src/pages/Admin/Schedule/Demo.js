@@ -190,7 +190,7 @@ function Demo() {
         <div style={{ display: "flex" }}>
        {showVideoIcon === false ? 
         <i
-        class="fa fa-video-camera"
+        className="fa fa-video-camera"
         onClick={() => handleJoin(data)}
         style={{ fontSize: "18px", padding: "5px" , color: "#fff" }}
       ></i> : ""}

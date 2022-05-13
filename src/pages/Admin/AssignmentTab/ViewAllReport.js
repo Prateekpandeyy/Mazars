@@ -130,7 +130,7 @@ const viewStyle = {
            <Typography variant="h6">
            View All Report 
            </Typography>
-           <button class="autoWidthBtn" onClick={() => ViewDiscussionToggel()}>
+           <button className="autoWidthBtn" onClick={() => ViewDiscussionToggel()}>
                 View Discussion
               </button>
            
@@ -198,7 +198,7 @@ const viewStyle = {
                      p.status === "1" ?
                      <div style={{ cursor: "pointer" }} title="Client Accepted">
                      <i
-                       class="fa fa-check"
+                       className="fa fa-check"
                        style={{
                          color: "blue",
                          fontSize: "16px",
@@ -214,7 +214,7 @@ const viewStyle = {
                    <div style={{ display: "flex", justifyContent: "space-around" }}>
                     <div title="Discussion">
                       <i
-                        class="fa fa-comments-o"
+                        className="fa fa-comments-o"
                         style={{
                           fontSize: 16,
                           cursor: "pointer",
@@ -226,7 +226,7 @@ const viewStyle = {
                     </div>
                     <div title="Discard">
                       <i
-                        class="fa fa-times"
+                        className="fa fa-times"
                         style={{
                           fontSize: 16,
                           cursor: "pointer",

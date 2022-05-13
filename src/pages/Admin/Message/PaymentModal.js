@@ -55,11 +55,11 @@ function PaymentModal({
         <ModalBody>
 
           <form onSubmit={handleSubmit(onSubmit)}>
-            <div class="row">
-              <div class="col-md-12">
-                <div class="form-group">
+            <div className="row">
+              <div className="col-md-12">
+                <div className="form-group">
                   <textarea
-                    class="form-control"
+                    className="form-control"
                     placeholder="Message text here"
                     rows="5"
                     ref={register}

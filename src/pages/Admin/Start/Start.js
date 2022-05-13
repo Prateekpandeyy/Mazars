@@ -8,7 +8,7 @@ function Start() {
   return (
     <>
       <Header admin="admin"/>
-      <div class="content_register">
+      <div className="content_register">
         <Link to="/admin/login"><h1 style={{color: "#2b345f"}}>ADMIN LOGIN</h1></Link>
       </div>
      

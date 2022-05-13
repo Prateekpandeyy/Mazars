@@ -89,8 +89,8 @@ function QueryRejection(props) {
                                     index: 1,
                                 }}
                             >
-                                <button class="autoWidthBtn ml-3">
-                                    <i class="fas fa-arrow-left mr-2"></i>
+                                <button className="autoWidthBtn ml-3">
+                                    <i className="fas fa-arrow-left mr-2"></i>
                                     Go Back
                                 </button>
                             </Link>
@@ -108,13 +108,13 @@ function QueryRejection(props) {
                         :
                         <>
                             <CardHeader>
-                                <div class="row mt-3">
-                                    <div class="col-lg-2 col-xl-2 col-md-12"></div>
-                                    <div class="col-lg-8 col-xl-8 col-md-12">
+                                <div className="row mt-3">
+                                    <div className="col-lg-2 col-xl-2 col-md-12"></div>
+                                    <div className="col-lg-8 col-xl-8 col-md-12">
                                         <form onSubmit={handleSubmit(onSubmit)}>
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
+                                            <div className="row">
+                                                <div className="col-md-6">
+                                                    <div className="form-group">
                                                         <label>Notes<span className="declined">*</span></label>
                                                         <textarea
                                                             className={classNames("form-control", {
@@ -138,7 +138,7 @@ function QueryRejection(props) {
                                             </button>
                                         </form>
                                     </div>
-                                    <div class="col-lg-2 col-xl-2 col-md-12"></div>
+                                    <div className="col-lg-2 col-xl-2 col-md-12"></div>
                                 </div>
                                 <Mandatory />
                             </CardHeader>

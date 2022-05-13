@@ -159,10 +159,10 @@ function AddAssingmentStages() {
           <Row>
             <Col md="4">
               <button
-                class="autoWidthBtn ml-3"
+                className="autoWidthBtn ml-3"
                 onClick={() => history.goBack()}
               >
-                <i class="fas fa-arrow-left mr-2"></i>
+                <i className="fas fa-arrow-left mr-2"></i>
                 Go Back
               </button>
             </Col>
@@ -172,7 +172,7 @@ function AddAssingmentStages() {
           </Row>
         </CardHeader>
         <CardHeader>
-          <div class="row mt-3">
+          <div className="row mt-3">
             {assignmentStages.map((p, i) => (
               <>
                 {p.client_discussion == "completed" &&
@@ -180,13 +180,13 @@ function AddAssingmentStages() {
                   p.draft_report == "completed" &&
                   p.final_discussion == "completed" &&
                   p.other_stage == "completed" ? (
-                  <div class="col-md-12">
-                    <div class="col-md-8">
+                  <div className="col-md-12">
+                    <div className="col-md-8">
                       <br />
                       <form onSubmit={handleSubmit(onSubmit)}>
-                        <div class="row">
-                          <div class="col-md-6">
-                            <div class="form-group">
+                        <div className="row">
+                          <div className="col-md-6">
+                            <div className="form-group">
                               <label
                                 style={{
                                   fontSize: "20px",
@@ -198,10 +198,10 @@ function AddAssingmentStages() {
                               </label>
                             </div>
                           </div>
-                          <div class="col-md-6">
-                            <div class="form-group">
+                          <div className="col-md-6">
+                            <div className="form-group">
                               <select
-                                class="form-control"
+                                className="form-control"
                                 ref={register}
                                 disabled
                               >
@@ -211,9 +211,9 @@ function AddAssingmentStages() {
                           </div>
                         </div>
 
-                        <div class="row">
-                          <div class="col-md-6">
-                            <div class="form-group">
+                        <div className="row">
+                          <div className="col-md-6">
+                            <div className="form-group">
                               <label
                                 style={{
                                   fontSize: "20px",
@@ -225,10 +225,10 @@ function AddAssingmentStages() {
                               </label>
                             </div>
                           </div>
-                          <div class="col-md-6">
-                            <div class="form-group">
+                          <div className="col-md-6">
+                            <div className="form-group">
                               <select
-                                class="form-control"
+                                className="form-control"
                                 ref={register}
                                 disabled
                               >
@@ -238,9 +238,9 @@ function AddAssingmentStages() {
                           </div>
                         </div>
 
-                        <div class="row">
-                          <div class="col-md-6">
-                            <div class="form-group">
+                        <div className="row">
+                          <div className="col-md-6">
+                            <div className="form-group">
                               <label
                                 style={{
                                   fontSize: "20px",
@@ -252,10 +252,10 @@ function AddAssingmentStages() {
                               </label>
                             </div>
                           </div>
-                          <div class="col-md-6">
-                            <div class="form-group">
+                          <div className="col-md-6">
+                            <div className="form-group">
                               <select
-                                class="form-control"
+                                className="form-control"
                                 ref={register}
                                 disabled
                               >
@@ -265,9 +265,9 @@ function AddAssingmentStages() {
                           </div>
                         </div>
 
-                        <div class="row">
-                          <div class="col-md-6">
-                            <div class="form-group">
+                        <div className="row">
+                          <div className="col-md-6">
+                            <div className="form-group">
                               <label
                                 style={{
                                   fontSize: "20px",
@@ -279,10 +279,10 @@ function AddAssingmentStages() {
                               </label>
                             </div>
                           </div>
-                          <div class="col-md-6">
-                            <div class="form-group">
+                          <div className="col-md-6">
+                            <div className="form-group">
                               <select
-                                class="form-control"
+                                className="form-control"
                                 ref={register}
                                 disabled
                               >
@@ -292,9 +292,9 @@ function AddAssingmentStages() {
                           </div>
                         </div>
 
-                        <div class="row">
-                          <div class="col-md-6">
-                            <div class="form-group">
+                        <div className="row">
+                          <div className="col-md-6">
+                            <div className="form-group">
                               <label
                                 style={{
                                   fontSize: "20px",
@@ -306,10 +306,10 @@ function AddAssingmentStages() {
                               </label>
                             </div>
                           </div>
-                          <div class="col-md-6">
-                            <div class="form-group">
+                          <div className="col-md-6">
+                            <div className="form-group">
                               <select
-                                class="form-control"
+                                className="form-control"
                                 ref={register}
                                 disabled
                               >
@@ -320,10 +320,10 @@ function AddAssingmentStages() {
                         </div>
 
                         <br />
-                        <div class="form-group">
+                        <div className="form-group">
                           <button
                             type="submit"
-                            class="customBtn"
+                            className="customBtn"
                             disabled
                           >
                             Submit
@@ -333,11 +333,11 @@ function AddAssingmentStages() {
                     </div>
                   </div>
                 ) : (
-                  <div class="col-md-12">
+                  <div className="col-md-12">
                     <form onSubmit={handleSubmit(onSubmit)}>
-                      <div class="row">
-                        <div class="col-md-4">
-                          <div class="form-group">
+                      <div className="row">
+                        <div className="col-md-4">
+                          <div className="form-group">
                             <label
                               style={{
                                 fontSize: "20px",
@@ -350,10 +350,10 @@ function AddAssingmentStages() {
                           </div>
                         </div>
                        {p.client_discussion === "completed" ? 
-                        <div class="col-md-4">
-                        <div class="form-group">
+                        <div className="col-md-4">
+                        <div className="form-group">
                           <select
-                            class="form-control"
+                            className="form-control"
                             ref={register}
                             name="client_discussion"
                             disabled
@@ -364,10 +364,10 @@ function AddAssingmentStages() {
                           </select>
                         </div>
                       </div> : 
-                       <div class="col-md-4">
-                       <div class="form-group">
+                       <div className="col-md-4">
+                       <div className="form-group">
                          <select
-                           class="form-control"
+                           className="form-control"
                            ref={register}
                            name="client_discussion"
                          >
@@ -382,9 +382,9 @@ function AddAssingmentStages() {
 
                       </div>
 
-                      <div class="row">
-                        <div class="col-md-4">
-                          <div class="form-group">
+                      <div className="row">
+                        <div className="col-md-4">
+                          <div className="form-group">
                             <label
                               style={{
                                 fontSize: "20px",
@@ -398,10 +398,10 @@ function AddAssingmentStages() {
                         </div>
                         {
                           p.client_discussion == "completed" && p.draft_report === "inprogress" ?
-                          <div class="col-md-4">
-                          <div class="form-group">
+                          <div className="col-md-4">
+                          <div className="form-group">
                             <select
-                              class="form-control"
+                              className="form-control"
                               ref={register}
                               name="draft_report"
                             >
@@ -411,10 +411,10 @@ function AddAssingmentStages() {
                             </select>
                           </div>
                         </div> :
-                         <div class="col-md-4">
-                         <div class="form-group">
+                         <div className="col-md-4">
+                         <div className="form-group">
                            <select
-                             class="form-control"
+                             className="form-control"
                              ref={register}
                              disabled
                              defaultValue = "inprogress"
@@ -431,9 +431,9 @@ function AddAssingmentStages() {
                       
                       </div>
 
-                      <div class="row">
-                        <div class="col-md-4">
-                          <div class="form-group">
+                      <div className="row">
+                        <div className="col-md-4">
+                          <div className="form-group">
                             <label
                               style={{
                                 fontSize: "20px",
@@ -446,10 +446,10 @@ function AddAssingmentStages() {
                           </div>
                         </div>
                       {p.client_discussion == "completed" && p.final_discussion === "inprogress" && p.draft_report === "completed" ? 
-                        <div class="col-md-4">
-                        <div class="form-group">
+                        <div className="col-md-4">
+                        <div className="form-group">
                           <select
-                            class="form-control"
+                            className="form-control"
                             ref={register}
                             name="final_discussion"
                           >
@@ -459,10 +459,10 @@ function AddAssingmentStages() {
                           </select>
                         </div>
                       </div> : 
-                        <div class="col-md-4">
-                        <div class="form-group">
+                        <div className="col-md-4">
+                        <div className="form-group">
                           <select
-                            class="form-control"
+                            className="form-control"
                             ref={register}
                             name="final_discussion"
                             disabled
@@ -473,16 +473,16 @@ function AddAssingmentStages() {
                           </select>
                         </div>
                       </div> }
-                        <div class="col-md-4">
-                          <div class="form-group">
+                        <div className="col-md-4">
+                          <div className="form-group">
                             <div></div>
                           </div>
                         </div>
                       </div>
 
-                      <div class="row">
-                        <div class="col-md-4">
-                          <div class="form-group">
+                      <div className="row">
+                        <div className="col-md-4">
+                          <div className="form-group">
                             <label
                               style={{
                                 fontSize: "20px",
@@ -495,10 +495,10 @@ function AddAssingmentStages() {
                           </div>
                         </div>
                         {p.client_discussion == "completed" && p.delivery_report === "inprogress" &&    p.draft_report === "completed" && p.final_discussion === "completed" ?
-                        <div class="col-md-4">
-                        <div class="form-group">
+                        <div className="col-md-4">
+                        <div className="form-group">
                           <select
-                            class="form-control"
+                            className="form-control"
                             ref={register}
                             name="delivery_report"
                           >
@@ -508,10 +508,10 @@ function AddAssingmentStages() {
                           </select>
                         </div>
                       </div> :
-                      <div class="col-md-4">
-                      <div class="form-group">
+                      <div className="col-md-4">
+                      <div className="form-group">
                         <select
-                          class="form-control"
+                          className="form-control"
                           ref={register}
                           name="delivery_report"
                           disabled
@@ -522,17 +522,17 @@ function AddAssingmentStages() {
                         </select>
                       </div>
                     </div>}
-                        <div class="col-md-4">
-                          <div class="form-group">
+                        <div className="col-md-4">
+                          <div className="form-group">
                             <div></div>
                           </div>
                         </div>
                       </div>
 
 
-                      <div class="row">
-                        <div class="col-md-4">
-                          <div class="form-group">
+                      <div className="row">
+                        <div className="col-md-4">
+                          <div className="form-group">
                             <label
                               style={{
                                 fontSize: "20px",
@@ -545,10 +545,10 @@ function AddAssingmentStages() {
                           </div>
                         </div>
                         {p.client_discussion == "completed"  && p.draft_report === "completed" && p.final_discussion === "completed" && p.delivery_report === "completed" 
-                        ? <div class="col-md-4">
-                        <div class="form-group">
+                        ? <div className="col-md-4">
+                        <div className="form-group">
                           <select
-                            class="form-control"
+                            className="form-control"
                             ref={register}
                             name="other_stage"
                           >
@@ -557,10 +557,10 @@ function AddAssingmentStages() {
                           </select>
                         </div>
                       </div>
-                      : <div class="col-md-4">
-                      <div class="form-group">
+                      : <div className="col-md-4">
+                      <div className="form-group">
                         <select
-                          class="form-control"
+                          className="form-control"
                           ref={register}
                           name="other_stage"
                           disabled
@@ -570,20 +570,20 @@ function AddAssingmentStages() {
                         </select>
                       </div>
                     </div>}
-                        <div class="col-md-4">
-                          <div class="form-group">
+                        <div className="col-md-4">
+                          <div className="form-group">
                             <div></div>
                           </div>
                         </div>
                       </div>
 
                       <br />
-                      <div class="form-group">
+                      <div className="form-group">
                         {
                           loading ?
                             <Spinner color="primary" />
                             :
-                            <button type="submit" class="customBtn">
+                            <button type="submit" className="customBtn">
                               Submit
                             </button>
                         }
