@@ -45,10 +45,15 @@ function Recording() {
     useEffect(() => {
         getRecording();
     }, []);
-
+    const token = window.localStorage.getItem("tptoken")
+    const myConfig = {
+        headers : {
+         "uit" : token
+        }
+      }
     const getRecording = () => {
         axios
-            .get(`${baseUrl}/tl/callRecordingPostlist?uid=${JSON.parse(userid)}`)
+            .get(`${baseUrl}/tl/callRecordingPostlist?uid=${JSON.parse(userid)}`, myConfig)
             .then((res) => {
                
                 if (res.data.code === 1) {

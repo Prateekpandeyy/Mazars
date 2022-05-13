@@ -22,11 +22,13 @@ function CustomerNotification({ tokenKey, name , panel}) {
     const getNotification = () => {
         var timeStampInMs = Date.now()
        var previousLogin =  localStorage.getItem("loginTime")
-       var nextLogin = Number(previousLogin) + Number(600000)
+       var nextLogin = Number(previousLogin) + Number(540000)
        var adminpreviousLogin =  localStorage.getItem("adminloginTime")
-       var adminnextLogin = Number(adminpreviousLogin) + Number(600000)
+       var adminnextLogin = Number(adminpreviousLogin) + Number(540000)
        var tlpreviousLogin =  localStorage.getItem("tlloginTime")
-       var tlnextLogin = Number(tlpreviousLogin) + Number(600000)
+       var tlnextLogin = Number(tlpreviousLogin) + Number(540000)
+       var tppreviousLogin =  localStorage.getItem("tploginTime")
+       var tpnextLogin = Number(tppreviousLogin) + Number(540000)
        if(nextLogin < timeStampInMs){
            localStorage.setItem("loginTime", timeStampInMs)
        }
@@ -36,6 +38,9 @@ function CustomerNotification({ tokenKey, name , panel}) {
        else if(tlnextLogin < tlpreviousLogin){
            localStorage.setItem("tlloginTime", timeStampInMs)
        }
+       else if(tpnextLogin < tppreviousLogin){
+        localStorage.setItem("tploginTime", timeStampInMs)
+    }
         var token = ""
         var redir = ""
         if(panel === "taxprofessional"){

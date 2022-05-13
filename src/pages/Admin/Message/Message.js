@@ -31,12 +31,17 @@ const history = useHistory();
     useEffect(() => {
         getMessage();
     }, []);
-
+    const token = window.localStorage.getItem("adminToken")
+    const myConfig = {
+        headers : {
+         "uit" : token
+        }
+      }
 
     const getMessage = () => {
         axios
             .get(
-                `${baseUrl}/customers/getNotification?id=${JSON.parse(userId)}&type_list=all`
+                `${baseUrl}/admin/getNotification?id=${JSON.parse(userId)}&type_list=all`, myConfig
             )
             .then((res) => {
             
@@ -139,7 +144,7 @@ const history = useHistory();
 
         
         axios
-            .get(`${baseUrl}/customers/markReadNotification?id=${id}`)
+            .get(`${baseUrl}/admin/markReadNotification?id=${id}`, myConfig)
             .then(function (response) {
               
             })

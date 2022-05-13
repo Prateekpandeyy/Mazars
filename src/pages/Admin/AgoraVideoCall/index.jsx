@@ -75,7 +75,12 @@ const tile_canvas = {
  * @prop transcode attendeeMode videoProfile channel baseMode
  */
 
-
+ const token = window.localStorage.getItem("adminToken")
+ const myConfig = {
+     headers : {
+      "uit" : token
+     }
+   }
 class AgoraCanvas extends React.Component {
   constructor(props) {
     super(props);
@@ -228,7 +233,7 @@ this.localStream.init(
 
   getSchedulerData =() =>{
        axios
-            .get(`${baseUrl}/tl/videoScheduler?id=${this.props.id}`)
+            .get(`${baseUrl}/admin/videoScheduler?id=${this.props.id}`, myConfig)
             .then((res) => {
                        
                 if (res.data.code === 1) {
@@ -531,7 +536,7 @@ this.localStream.init(
     });
     // console.log("showButton", this.state.showButton)
  
-      axios.get(`${baseUrl}/tl/setgetschedular?id=${this.props.id}&uid=${this.state.showButton}&chname=${this.channelName}`)
+      axios.get(`${baseUrl}/tl/setgetschedular?id=${this.props.id}&uid=${this.state.showButton}&chname=${this.channelName}`, myConfig)
       .then((res) => {
         console.log("evt id", uid)
         if(res.data.result.rtc_id == uid){
@@ -956,7 +961,10 @@ else{
   formData.append("participants", this.state.item.username);
   axios({
     method: "POST",
-    url: `${baseUrl}/tl/callRecordingPost`,
+    url: `${baseUrl}/admin/callRecordingPost`,
+    headers : {
+      uit : token
+    },
     data: formData,
 })
   Swal.fire({
@@ -971,7 +979,7 @@ else{
    cancelButtonText : "Just leave the meeting"
   }).then((result) => {
     if (result.value) {
-      axios.get(`${baseUrl}/tl/setgetschedular?id=${this.props.id}&rtc_id=${this.state.getAdId}&uid=${JSON.parse(this.teamKey)}`)
+      axios.get(`${baseUrl}/tl/setgetschedular?id=${this.props.id}&rtc_id=${this.state.getAdId}&uid=${JSON.parse(this.teamKey)}`, myConfig)
       .then((res) =>{
         if(res){
           this.client && this.client.unpublish(this.localStream);
@@ -987,7 +995,10 @@ else{
    else{
     axios({
       method: "POST",
-      url: `${baseUrl}/tl/callRecordingPost`,
+      url: `${baseUrl}/admin/callRecordingPost`,
+      headers : {
+        uit : token
+      },
       data: formData,
    })
     window.location.hash = "/admin/schedule";

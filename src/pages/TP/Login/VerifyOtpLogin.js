@@ -66,6 +66,8 @@ function VerifyOtp({ email, uid, loading, setLoading }) {
           localStorage.setItem("tpkey", JSON.stringify(response.data.user_id));
           localStorage.setItem("tpEmail", JSON.stringify(response.data.name));
           localStorage.setItem("tptoken", response.data.token)
+          var timeStampInMs = Date.now()
+          localStorage.setItem("tploginTime", timeStampInMs)
           sessionStorage.setItem("sessionTpid", JSON.stringify(response.data["user id"]))
           history.push("/taxprofessional/dashboard");
 

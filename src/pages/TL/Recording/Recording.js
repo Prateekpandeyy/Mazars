@@ -49,9 +49,15 @@ const videoIcon = {
     justifyContent : "space-around", 
     alignItems : "center"
 }
+const token = window.localStorage.getItem("tlToken")
+const myConfig = {
+    headers : {
+     "uit" : token
+    }
+  }
     const getRecording = () => {
         axios
-            .get(`${baseUrl}/tl/callRecordingPostlist?uid=${JSON.parse(userid)}`)
+            .get(`${baseUrl}/tl/callRecordingPostlist?uid=${JSON.parse(userid)}`, myConfig)
             .then((res) => {
              
                 if (res.data.code === 1) {
@@ -92,6 +98,7 @@ const editRecording = (participants, assign_id, message, id) => {
         id : id
     })
 }
+
     const columns = [
         {
             text: "S.No",

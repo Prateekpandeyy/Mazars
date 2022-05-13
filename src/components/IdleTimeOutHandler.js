@@ -170,6 +170,7 @@ const IdleTimeOutHandler = (props)=>{
                   localStorage.removeItem("custEmail");
                   localStorage.removeItem("category");
                   localStorage.removeItem("clientToken")
+                  setShowModal(false)
                   history.push("/");
                 }
             })

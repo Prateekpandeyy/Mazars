@@ -12,7 +12,10 @@ const PublicRoutesTP = ({ component: Component, ...rest }) => {
             component={(props) => {
                 const token = window.localStorage.getItem("tpkey");
 
-                if (token) {
+                var previousLoginTime = window.localStorage.getItem("tploginTime")
+                var nextLogin = Number(previousLoginTime) + Number(600000)
+                var currentTime = Date.now()
+                if (token && nextLogin > currentTime) {
                     return (
                         <>
                             <Redirect to={"/taxprofessional/dashboard"} />

@@ -10,7 +10,7 @@ const PrivateRouteTL = ({ component: Component, ...rest }) => {
         var previousLoginTime = window.localStorage.getItem("tlloginTime")
         var nextLogin = Number(previousLoginTime) + Number(600000)
         var currentTime = Date.now()
-        if (token && nextLogin > currentTime) {
+        if (token) {
           return <Component {...props} />;
         } else {
           return <Redirect to={"/teamleader/login"} />;

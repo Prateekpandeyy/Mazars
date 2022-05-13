@@ -18,7 +18,12 @@ function RecordingModal({
     const history = useHistory();
     const { handleSubmit, register, errors } = useForm();
     const userId = window.localStorage.getItem("adminkey");
-
+    const token = window.localStorage.getItem("adminToken")
+    const myConfig = {
+        headers : {
+         "uit" : token
+        }
+      }
  
 
     const { assign_no, id, username, start } = item
@@ -51,11 +56,14 @@ function RecordingModal({
         
         
 
-axios.get(`${baseUrl}/tl/freeslottime?schedule_id=${id}&&uid=${JSON.parse(userId)}`)
+axios.get(`${baseUrl}/admin/freeslottime?schedule_id=${id}&&uid=${JSON.parse(userId)}`, myConfig)
 
         axios({
             method: "POST",
-            url: `${baseUrl}/tl/callRecordingPost`,
+            url: `${baseUrl}/admin/callRecordingPost`,
+            headers : {
+                uit : token
+            },
             data: formData,
         })
             .then(function (response) {
