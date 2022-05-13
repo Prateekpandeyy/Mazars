@@ -101,7 +101,7 @@ const [item2, setItem2] = useState(current_date)
     const getSubCategory = async () => {
 
      if(store.length > 0){
-      await axios.get(`${baseUrl}/customers/getCategory?pid=${store}`, myConfig).then((res) => {
+      await axios.get(`${baseUrl}/tl/getCategory?pid=${store}`, myConfig).then((res) => {
 
         if (res.data.code === 1) {
           setTax2(res.data.result)
@@ -124,7 +124,7 @@ getTaxProf();
   }, [taxId, taxxId, cname])
 const getupdateQuery = () => {
  
-     axios.get(`${baseUrl}/admin/getAllQueryList?customer=${cname}` , myConfig)
+     axios.get(`${baseUrl}/tl/getAllQueryList?customer=${cname}` , myConfig)
     .then((res) => {
       if (res.data.code === 1) {
        
@@ -137,7 +137,7 @@ const getupdateQuery = () => {
        
 }
   const getTeamLeader = () => {
-    axios.get(`${baseUrl}/tp/gettpuserinfo?id=${JSON.parse(userid)}`, myConfig).then((res) => {
+    axios.get(`${baseUrl}/tl/gettpuserinfo?id=${JSON.parse(userid)}`, myConfig).then((res) => {
     
      console.log("res", res.data.result)
      setTlName({
@@ -151,7 +151,7 @@ const getupdateQuery = () => {
 
   const getTaxProf = () => {
     axios
-      .get(`${baseUrl}/tp/getTaxProfessional?tl_id=${JSON.parse(userid)}`, myConfig)
+      .get(`${baseUrl}/tl/getTaxProfessional?tl_id=${JSON.parse(userid)}`, myConfig)
       .then((res) => {
       
         if (res.data.code === 1) {

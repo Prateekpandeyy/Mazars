@@ -244,4 +244,4 @@ function AllQueriesData({allData}) {
   );
 }
 
-export default React.memo(AllQueriesData);
+export default AllQueriesData;

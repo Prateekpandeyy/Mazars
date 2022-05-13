@@ -27,6 +27,12 @@ function Message(props) {
 
     const [addPaymentModal, setPaymentModal] = useState(false);
     let history = useHistory();
+    const token = window.localStorage.getItem("clientToken")
+    const myConfig = {
+        headers : {
+         "uit" : token
+        }
+      }
     const paymentHandler = (key) => {
       
         setPaymentModal(!addPaymentModal);
@@ -44,7 +50,7 @@ function Message(props) {
         axios
             .get(
                 `${baseUrl}/customers/getNotification?id=${JSON.parse(userId)}
-                &type_list=all`
+                &type_list=all`, myConfig
             )
             .then((res) => {
 
@@ -150,7 +156,7 @@ function Message(props) {
 
 
         axios
-            .get(`${baseUrl}/customers/markReadNotification?id=${id}`)
+            .get(`${baseUrl}/customers/markReadNotification?id=${id}`, myConfig)
             .then(function (response) {
                
             })

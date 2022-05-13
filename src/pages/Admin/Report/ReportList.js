@@ -13,11 +13,17 @@ import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel
 const ReportList = () => {
     const userid = window.localStorage.getItem("adminkey")
     const [data, setData] = useState()
+    const token = window.localStorage.getItem("adminToken")
+    const myConfig = {
+        headers : {
+         "uit" : token
+        }
+      }
     useEffect(() => {
         getData()
     }, [])
     const getData = () => {
-       axios.get(`${baseUrl}/report/getListOfReport?uid=${JSON.parse(userid)}`)
+       axios.get(`${baseUrl}/report/getListOfReport?uid=${JSON.parse(userid)}`, myConfig)
        .then((res) => {
            console.log("myResponse", res.data.result)
            setData(res.data.result)
@@ -39,7 +45,7 @@ const ReportList = () => {
       });
    }
     const delReprot = (e) => {
-        axios.get(`${baseUrl}/report/deleteRecord?id=${e}&uid=${JSON.parse(userid)}`)
+        axios.get(`${baseUrl}/report/deleteRecord?id=${e}&uid=${JSON.parse(userid)}`, myConfig)
         .then((res) => {
             if(res.data.code === 1){
                 Swal.fire({

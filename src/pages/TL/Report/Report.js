@@ -79,7 +79,7 @@ const history = useHistory()
 const [item2, setItem2] = useState(current_date)
   useEffect(() => {
     const getCategory = async () => {
-      await axios.get(`${baseUrl}/tl/getCategory?pid=0`, myConfig).then((res) => {
+      await axios.get(`${baseUrl}/customers/getCategory?pid=0`, myConfig).then((res) => {
         if (res.data.code === 1) {
        
           setTax(res.data.result);
@@ -115,7 +115,7 @@ getupdateQuery()
   }, [taxId, taxxId, cname])
 const getupdateQuery = () => {
  
-     axios.get(`${baseUrl}/admin/getAllQueryList?customer=${cname}`, myConfig)
+     axios.get(`${baseUrl}/tl/getAllQueryList?customer=${cname}`, myConfig)
     .then((res) => {
       if (res.data.code === 1) {
        
@@ -171,7 +171,7 @@ const getTeamLeader = () => {
 
   const getTaxProf = () => {
     axios
-      .get(`${baseUrl}/tp/getTaxProfessional?tl_id=${JSON.parse(userid)}`, myConfig)
+      .get(`${baseUrl}/tl/getTaxProfessional?tl_id=${JSON.parse(userid)}`, myConfig)
       .then((res) => {
       
         if (res.data.code === 1) {
