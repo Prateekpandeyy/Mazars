@@ -12,7 +12,14 @@ import recImg from "../../../loader.gif";
 import Cookies from "js-cookie"
 import Swal from "sweetalert2";
 import $ from 'jquery';
-import CommonServices from "../../../common/common"
+import CommonServices from "../../../common/common";
+const token = window.localStorage.getItem("tptoken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
+
 const tile_canvas = {
   "1": ["span 12/span 24"],
   "2": ["span 12/span 12/13/25", "span 12/span 12/13/13"],
@@ -274,7 +281,7 @@ prevFile;
 
   getSchedulerData =() =>{
        axios
-            .get(`${baseUrl}/tl/videoScheduler?id=${this.props.id}`)
+            .get(`${baseUrl}/tl/videoScheduler?id=${this.props.id}` , myConfig)
             .then((res) => {
                        
               if (res.data.code === 1) {
@@ -568,7 +575,7 @@ if(item.player === undefined){
     });
     // console.log("showButton", this.state.showButton)
   
-      axios.get(`${baseUrl}/tl/setgetschedular?id=${this.props.id}&uid=${this.state.showButton}&chname=${this.channelName}`)
+      axios.get(`${baseUrl}/tl/setgetschedular?id=${this.props.id}&uid=${this.state.showButton}&chname=${this.channelName}`, myConfig)
       .then((res) => {
         console.log("evt id", uid)
         if(res.data.result.rtc_id == uid){
@@ -1046,7 +1053,7 @@ del = (e) => {
       
        if (result.value) {
         if (result.value) {
-          axios.get(`${baseUrl}/tl/setgetschedular?id=${this.props.id}&rtc_id=${this.state.getAdId}&uid=${JSON.parse(this.teamKey)}`)
+          axios.get(`${baseUrl}/tl/setgetschedular?id=${this.props.id}&rtc_id=${this.state.getAdId}&uid=${JSON.parse(this.teamKey)}`, myConfig)
           .then((res) =>{
             if(res){
               this.client && this.client.unpublish(this.localStream);
@@ -1065,6 +1072,9 @@ del = (e) => {
       axios({
         method: "POST",
         url: `${baseUrl}/tl/callRecordingPost`,
+        headers : {
+          uit : token
+        },
         data: formData,
      })
       window.location.hash = "/taxprofessional/schedule";
