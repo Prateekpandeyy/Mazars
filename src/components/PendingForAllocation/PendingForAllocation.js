@@ -29,8 +29,9 @@ function PendingAllocation({ CountPendingForAllocation }) {
     }
   }
   const toggle = (key) => {
-    console.log("keyData", key)
+  
 
+  if(key.length > 0){
     setModal(!modal);
 
     fetch(`${baseUrl}/admin/getQueryHistory?q_id=${key}`, {
@@ -46,6 +47,11 @@ function PendingAllocation({ CountPendingForAllocation }) {
         setHistory(response.result);
       })
       .catch((error) => console.log(error));
+  }
+ else{
+  console.log("done22")
+  setModal(!modal);
+ }
   };
 
 

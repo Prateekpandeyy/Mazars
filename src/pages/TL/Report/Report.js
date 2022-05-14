@@ -57,6 +57,8 @@ const Report = () => {
   const [proposalCheckbox, setProposalCheckbox] = useState(null)
   const [assignmentCheckbox, setAssignmentCheckbox] = useState(null)
   const [paymnetCheckbox, setPaymentCheckbox] = useState(null)
+  const [companyName, setCompanyName] = useState([])
+  const [companyName2, setCompanyName2] = useState([])
   var kk = []
   var pp = []
   var vv = []
@@ -103,11 +105,29 @@ const [item2, setItem2] = useState(current_date)
     };
     getSubCategory();
   }, [store]);
-
+  const getCompany = () => {
+    let company = []
+    let a = {}
+    axios.get(
+      `${baseUrl}/tl/getcompany`, myConfig
+    )
+    .then((res) => {
+      console.log("response", res)
+      res.data.result.map((i) => {
+        a = {
+          value : i.company_prefix,
+          label : i.name
+        }
+        company.push(a)
+      })
+      setCompanyName(company)
+    })
+  }
   useEffect(() => {
     getTeamLeader();
     getData();
     getupdateQuery()
+    getCompany()
 
   }, []);
   useEffect(() => {
@@ -115,16 +135,18 @@ getupdateQuery()
   }, [taxId, taxxId, cname])
 const getupdateQuery = () => {
  
-     axios.get(`${baseUrl}/tl/getAllQueryList?customer=${cname}`, myConfig)
-    .then((res) => {
-      if (res.data.code === 1) {
-       
-        var data = res.data.result;
+if(cname.length > 0){
+  axios.get(`${baseUrl}/tl/getAllQueryList?customer=${cname}`, myConfig)
+  .then((res) => {
+    if (res.data.code === 1) {
      
-         let b = res.data.result
-         setQno(b.map(getqNo))
-      }
-    })
+      var data = res.data.result;
+   
+       let b = res.data.result
+       setQno(b.map(getqNo))
+    }
+  })
+}
        
 }
 //   const getTeamLeader = () => {
@@ -247,7 +269,11 @@ const resetData = () => {
 
 }
     const onSubmit = (value) => {
-     
+      let comp = []
+   companyName2.map((i) => {
+     comp.push(i.value)
+   })
+
    
 
      let basic_info = false
@@ -337,6 +363,8 @@ const resetData = () => {
       formData.append("dos", Number(value.dos));
       formData.append("invoice_number", Number(value.invoice_number));
       formData.append("search_pay_amount", Number(value.search_pay_amount))
+      formData.append("invoicing_company", Number(value.companyName))
+      formData.append("company", comp)
  axios({
    method : "POST",
    url : `${baseUrl}/report/generateReport?t=${JSON.stringify(Math.floor(Math.random() * 110000))}`,
@@ -451,6 +479,8 @@ uit  : token
     formData.append("dos", Number(value.dos));
     formData.append("invoice_number", Number(value.invoice_number));
     formData.append("search_pay_amount", Number(value.search_pay_amount))
+    formData.append("invoicing_company", Number(value.companyName))
+    formData.append("company", comp)
 axios({
  method : "POST",
  url : `${baseUrl}/report/generateReport?t=${JSON.stringify(Math.floor(Math.random() * 110000))}`,
@@ -954,8 +984,31 @@ options={qno} onChange={(e) => queryNumber(e)}/>
 <input type="checkbox" ref={register}  name="search_pay_amount" id="search_pay_amount"></input>
 <label htmlFor="search_pay_amount">Payment Received Record Only</label>
 </span> 
+<span>
+ 
+  <Select
+  styles={{
+    option: (styles, { data }) => {
+      return {
+        ...styles,
+      backgroundColor : "#fff"
+      };
+    },
+    
+  }}  
+  isMulti = {true} 
+  ref={selectInputRef6}
+options={companyName} 
+onChange={(e) => setCompanyName2(e)}/>
+</span>
                </div>
             <div className="basicFeild">
+            <span> 
+<input type="checkbox" ref={register} name="companyName" id="companyName" checked={paymnetCheckbox}></input>
+<label htmlFor="companyName">Invoicing company</label>
+
+</span>
+
             <span>
 <input type="checkbox" ref={register} checked={paymnetCheckbox} name="invoice_number" id="invoice_number"></input>
 <label htmlFor="invoice_number">Invoice Number</label>

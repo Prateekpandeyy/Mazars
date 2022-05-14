@@ -285,6 +285,7 @@ function QueryAssingment(props) {
                                   ref={register}
                                   name="p_timelines"
                                   value={timelines}
+                                  autoComplete="off"
                                   className="form-control"
                                 />
                               </td>

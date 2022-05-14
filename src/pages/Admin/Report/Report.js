@@ -104,7 +104,7 @@ const history = useHistory()
     let company = []
     let a = {}
     axios.get(
-      `${baseUrl}/admin/getcompany`, myConfig
+      `${baseUrl}/tl/getcompany`, myConfig
     )
     .then((res) => {
       console.log("response", res)
@@ -347,6 +347,7 @@ const resetData = () => {
         formData.append("invoice_number", Number(value.invoice_number));
         formData.append("search_pay_amount", Number(value.search_pay_amount))
         formData.append("company", comp)
+        formData.append("invoicing_company", Number(value.companyName))
    axios({
      method : "POST",
      url : `${baseUrl}/report/generateReport?t=${JSON.stringify(Math.floor(Math.random() * 110000))}`,
@@ -461,6 +462,7 @@ const resetData = () => {
       formData.append("invoice_number", Number(value.invoice_number));
       formData.append("search_pay_amount", Number(value.search_pay_amount))
       formData.append("company", comp)
+      formData.append("invoicing_company", Number(value.companyName))
  axios({
    method : "POST",
    url : `${baseUrl}/report/generateReport?t=${JSON.stringify(Math.floor(Math.random() * 110000))}`,
@@ -1027,7 +1029,7 @@ onChange={(e) => setCompanyName2(e)}/>
             <div className="basicFeild">
 
             <span> 
-<input type="checkbox" ref={register} name="companyName" id="companyName" checked disabled></input>
+<input type="checkbox" ref={register} name="companyName" id="companyName" checked={paymnetCheckbox}></input>
 <label htmlFor="companyName">Invoicing company</label>
 
 </span>

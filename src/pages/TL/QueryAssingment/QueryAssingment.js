@@ -265,6 +265,7 @@ function QueryAssingment() {
                                     type="text"
                                     ref={register}
                                     name="p_timelines"
+                                    autoComplete="off"
                                     value={timelines}
                                     class="form-control"
                                   />

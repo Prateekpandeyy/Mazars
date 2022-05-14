@@ -42,6 +42,7 @@ function PendingForProposals({ CountPendingProposal }) {
   }
   const toggle = (key) => {
    
+   if(key.length > 0){
     setModal(!modal);
 
     fetch(`${baseUrl}/admin/getQueryHistory?q_id=${key}`, {
@@ -57,6 +58,10 @@ function PendingForProposals({ CountPendingProposal }) {
         setHistory(response.result);
       })
       .catch((error) => console.log(error));
+   }
+   else {
+    setModal(!modal);
+   }
   };
 
   useEffect(() => {
