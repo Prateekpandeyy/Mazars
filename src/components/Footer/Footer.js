@@ -3,6 +3,7 @@ import "../../assets/css/style.css";
 import MyPDF from "../../views/dFile/LoginManual.pdf";
 import { Link , useHistory} from "react-router-dom";
 import Cookies from "js-cookie";
+import SocialIcons from "../socialicon.js/SocialIcons";
 function Footer(props) {
   let date = new Date()
   let history = useHistory();
@@ -59,7 +60,7 @@ props.showCook("showCookies")
   
      
            
-           
+           <SocialIcons />
              
           </div>
 {`Copyright  @${date.getFullYear()} All right reserved`} 

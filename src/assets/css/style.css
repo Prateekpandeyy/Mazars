@@ -633,6 +633,15 @@ input[type="date"] {
   font-size: 18px;
   color: #464b4b;
 }
+.twitterIcon {
+  display: flex;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+}
+.twitterIcon:hover {
+  background-color: rgba(29, 161, 242, 0.2);
+}
 @media (max-width: 767px) {
   footer {
     position: relative !important;
