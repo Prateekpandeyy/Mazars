@@ -145,7 +145,7 @@ const history = useHistory();
     const readNotification = (id) => {
        
         axios
-            .get(`${baseUrl}/tl/markReadNotification?id=${id}`)
+            .get(`${baseUrl}/tl/markReadNotification?id=${id}`, myConfig)
             .then(function (response) {
                 
             })

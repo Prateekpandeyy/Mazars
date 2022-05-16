@@ -19,7 +19,13 @@ function ViewNotification() {
   const { id } = useParams();
 
   const [data, setData] = useState({});
-
+  const token = window.localStorage.getItem("clientToken")
+    
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
   useEffect(() => {
     getChatting();
   }, [id]);
@@ -31,7 +37,10 @@ function ViewNotification() {
 
     axios({
       method: "POST",
-      url: `${baseUrl}/tl/viewNotification`,
+      url: `${baseUrl}/customers/viewNotification`,
+      headers : {
+        uit : token
+      },
       data: formData,
     })
       .then(function (response) {
