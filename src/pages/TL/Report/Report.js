@@ -95,7 +95,7 @@ const [item2, setItem2] = useState(current_date)
   useEffect(() => {
     const getSubCategory = async () => {
      if(store.length > 0){
-      await axios.get(`${baseUrl}/tl/getCategory?pid=${store}`, myConfig).then((res) => {
+      await axios.get(`${baseUrl}/customers/getCategory?pid=${store}`).then((res) => {
 
         if (res.data.code === 1) {
           setTax2(res.data.result)
