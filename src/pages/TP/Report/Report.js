@@ -56,6 +56,8 @@ const Report = () => {
   const [proposalCheckbox, setProposalCheckbox] = useState(null)
   const [assignmentCheckbox, setAssignmentCheckbox] = useState(null)
   const [paymnetCheckbox, setPaymentCheckbox] = useState(null)
+  const [companyName, setCompanyName] = useState([])
+  const [companyName2, setCompanyName2] = useState([])
   const [tlName, setTlName] = useState()
   const gettpName = Cookies.get("tpName")
   var kk = []
@@ -111,12 +113,30 @@ const [item2, setItem2] = useState(current_date)
      }
     getSubCategory();
   }, [store]);
-
+  const getCompany = () => {
+    let company = []
+    let a = {}
+    axios.get(
+      `${baseUrl}/tl/getcompany`, myConfig
+    )
+    .then((res) => {
+      console.log("response", res)
+      res.data.result.map((i) => {
+        a = {
+          value : i.company_prefix,
+          label : i.name
+        }
+        company.push(a)
+      })
+      setCompanyName(company)
+    })
+  }
   useEffect(() => {
     getTeamLeader();
     getData();
     getupdateQuery()
     getTaxProf();
+    getCompany()
   }, []);
   useEffect(() => {
     getTeamLeader();
@@ -124,7 +144,7 @@ getTaxProf();
   }, [taxId, taxxId, cname])
 const getupdateQuery = () => {
  
-     axios.get(`${baseUrl}/tl/getAllQueryList?customer=${cname}` , myConfig)
+     axios.get(`${baseUrl}/tp/getAllQueryList?customer=${cname}` , myConfig)
     .then((res) => {
       if (res.data.code === 1) {
        
@@ -137,7 +157,7 @@ const getupdateQuery = () => {
        
 }
   const getTeamLeader = () => {
-    axios.get(`${baseUrl}/tl/gettpuserinfo?id=${JSON.parse(userid)}`, myConfig).then((res) => {
+    axios.get(`${baseUrl}/tp/gettpuserinfo?id=${JSON.parse(userid)}`, myConfig).then((res) => {
     
      console.log("res", res.data.result)
      setTlName({
@@ -229,7 +249,10 @@ setQno([])
 }
     const onSubmit = (value) => {
      
-   
+      let comp = []
+      companyName2.map((i) => {
+        comp.push(i.value)
+      })
 
      let basic_info = false
      let proposal_info = false
@@ -317,6 +340,7 @@ setQno([])
       formData.append("dos", Number(value.dos));
       formData.append("invoice_number", Number(value.invoice_number));
       formData.append("search_pay_amount", Number(value.search_pay_amount))
+      formData.append("company", comp)
  axios({
    method : "POST",
    url : `${baseUrl}/report/generateReport?t=${JSON.stringify(Math.floor(Math.random() * 110000))}`,
@@ -430,6 +454,7 @@ setQno([])
     formData.append("dos", Number(value.dos));
     formData.append("invoice_number", Number(value.invoice_number));
     formData.append("search_pay_amount", Number(value.search_pay_amount))
+    formData.append("company", comp)
 axios({
  method : "POST",
  url : `${baseUrl}/report/generateReport?t=${JSON.stringify(Math.floor(Math.random() * 110000))}`,
@@ -599,7 +624,7 @@ let cc = []
                 class="autoWidthBtn" 
                 onClick={() => history.goBack()}
               >
-                <i class="fas fa-arrow-left mr-2"></i>
+              
                 Go Back
               </button>
               
@@ -951,8 +976,31 @@ options={qno} onChange={(e) => queryNumber(e)}/>
 <input type="checkbox" ref={register}  name="search_pay_amount" id="search_pay_amount"></input>
 <label htmlFor="search_pay_amount">Payment Received Record Only</label>
 </span> 
+<span>
+ 
+ <Select
+ styles={{
+   option: (styles, { data }) => {
+     return {
+       ...styles,
+     backgroundColor : "#fff"
+     };
+   },
+   
+ }}  
+ isMulti = {true} 
+ ref={selectInputRef6}
+options={companyName} 
+onChange={(e) => setCompanyName2(e)}/>
+</span>
                </div>
             <div className="basicFeild">
+          
+<span> 
+<input type="checkbox" ref={register} name="companyName" id="companyName" checked={paymnetCheckbox}></input>
+<label htmlFor="companyName">Invoicing company</label>
+
+</span>
             <span>
 <input type="checkbox" ref={register} checked={paymnetCheckbox} name="invoice_number" id="invoice_number"></input>
 <label htmlFor="invoice_number">Invoice Number</label>

@@ -163,7 +163,7 @@ const history = useHistory();
                 class="autoWidthBtn" 
                 onClick={() => history.goBack()}
               >
-                <i class="fas fa-arrow-left mr-2"></i>
+             
                 Go Back
               </button>
               

@@ -189,7 +189,7 @@ console.log("done22")
                 <button
                   class="btn btn-success ml-3"
                 >
-                  <i class="fas fa-arrow-left mr-2"></i>
+               
                   Go Back
                 </button>
               </Link>

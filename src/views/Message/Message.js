@@ -170,22 +170,7 @@ function Message(props) {
         <Layout custDashboard="custDashboard" custUserId={userId}>
             <Card>
                 
-                {/* <CardHeader>
-                    <Row>
-                        <Col md="9">
-                            <CardTitle tag="h4">Message</CardTitle>
-                        </Col>
-                        <Col md="3">
-                        <button
-                class="btn btn-success ml-auto" style={{float : "right"}}
-                onClick={() => history.goBack()}
-              >
-                <i class="fas fa-arrow-left mr-2"></i>
-                Go Back
-              </button>
-                        </Col>
-                    </Row>
-                </CardHeader> */}
+                
                         <CardHeader>
           <Row>
           <Col md="4">
@@ -193,7 +178,7 @@ function Message(props) {
                 className="autoWidthBtn" 
                 onClick={() => history.goBack()}
               >
-                <i class="fas fa-arrow-left mr-2"></i>
+            
                 Go Back
               </button>
               

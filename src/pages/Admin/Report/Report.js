@@ -28,6 +28,7 @@ const Report = () => {
     const selectInputRef4 = useRef();
     const selectInputRef5 = useRef();
     const selectInputRef6 = useRef();
+    const selectInputRef7 = useRef()
     const [subCategory, setSubCategory] = useState([]);
     const [subData, subCategeryData] = useState([])
     const [custCate, setCustcate] = useState([])
@@ -244,6 +245,7 @@ const resetData = () => {
   selectInputRef4.current.select.clearValue();
   selectInputRef5.current.select.clearValue();
   selectInputRef6.current.select.clearValue();
+  selectInputRef7.current.select.clearValue();
   setCheckBox(null);
   setProposalCheckbox(null);
   setAssignmentCheckbox(null);
@@ -1003,7 +1005,7 @@ options={qno} onChange={(e) => queryNumber(e)}/>
     
   }}  
   isMulti = {true} 
-  ref={selectInputRef6}
+  ref={selectInputRef7}
 options={companyName} 
 onChange={(e) => setCompanyName2(e)}/>
 </span>

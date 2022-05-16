@@ -19,24 +19,7 @@ function SelectCategoryPage() {
 
   return (
     <Layout custDashboard="custDashboard" custUserId={userId}>
-      {/* <Card>
-        <CardHeader>
-          <Row>
-            <Col md="4">
-              <button class="btn btn-success" onClick={() => history.goBack()}>
-                <i class="fas fa-arrow-left mr-2"></i>
-                Go Back
-              </button>
-            </Col>
-            <Col md="4" style={{ display: "flex", justifyContent: "center" }}>
-              <p style={{ fontSize: "20px" }}>Add Fresh Query</p>
-            </Col>
-          </Row>
-        </CardHeader>
-        <CardHeader>
-          <CategorySelect addfreshbtn="addfreshbtn" />
-        </CardHeader>
-      </Card> */}
+    
       <Container maxWidth = "lg">
         <Paper>
         <Card>
@@ -44,7 +27,7 @@ function SelectCategoryPage() {
           <Grid container>
             <Grid item sm ={4}>
             <button class="autoWidthBtn" onClick={() => history.goBack()}>
-                <i class="fas fa-arrow-left mr-2"></i>
+            
                 Go Back
               </button>
               </Grid>

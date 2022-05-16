@@ -638,8 +638,8 @@ input[type="date"] {
 .myFacebook,
 .myLinkedIn {
   display: flex;
-  width: 40px;
-  height: 40px;
+  width: 25px;
+  height: 25px;
   cursor: pointer;
   transition: 0.3s all;
   margin: 0 7px;

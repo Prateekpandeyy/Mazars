@@ -183,7 +183,7 @@ function ProposalComponent(props) {
                 class="btn btn-success ml-3"
                 onClick={() => history.goBack()}
               >
-                <i class="fas fa-arrow-left mr-2"></i>
+             
                 Go Back
               </button>
             </Col>

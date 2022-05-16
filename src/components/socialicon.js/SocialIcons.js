@@ -18,8 +18,9 @@ const SocialIcons = () => {
     return(
     <>
 
-      <Box sx={{position : "absolute",  right : "15px", display : "flex"}}>
-          <a href="https://twitter.com/MasindiaL" target="_blank">
+      <Box sx={{display : "flex", width : "100%", justifyContent : "center", margin : "10px 0", alignItems : "flex-end"}}>
+          <span style={{fontSize : "14px", color : "rgba(0, 0, 0, 0.85)", fontWeight : 400,  margin : "0 20px"}}>Follow Us </span>
+      <a href="https://twitter.com/MasindiaL" target="_blank">
       <AiOutlineTwitter className="myTwitter"/></a>
 <a href="https://www.facebook.com/masindia.live/" target="_blank">
         <AiOutlineFacebook className="myFacebook"/>

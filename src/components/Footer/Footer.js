@@ -31,9 +31,10 @@ props.showCook("showCookies")
   }
   return (
     <>
+     <SocialIcons />
       <footer>
-        <div style={{display: "flex", flexDirection: "column", justifyContent: "space-evenly", textAlign: "center"}}>
-        
+        <div style={{display: "flex", flexDirection: "column",  justifyContent: "space-evenly", textAlign: "center"}}>
+     
         <div style={{display: "flex", justifyContent:"center"}}>
         <a onClick = {() => myLink("enquiry")}>
               
@@ -60,13 +61,15 @@ props.showCook("showCookies")
   
      
            
-           <SocialIcons />
+        
              
           </div>
 {`Copyright  @${date.getFullYear()} All right reserved`} 
         </div>
       
-  
+        <div style={{display : "flex", justifyContent : "center"}}>
+      
+         </div>
 
               
       </footer>
