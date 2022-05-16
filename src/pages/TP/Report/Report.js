@@ -103,7 +103,7 @@ const [item2, setItem2] = useState(current_date)
     const getSubCategory = async () => {
 
      if(store.length > 0){
-      await axios.get(`${baseUrl}/tl/getCategory?pid=${store}`, myConfig).then((res) => {
+      await axios.get(`${baseUrl}/customers/getCategory?pid=${store}`).then((res) => {
 
         if (res.data.code === 1) {
           setTax2(res.data.result)
@@ -340,6 +340,7 @@ setQno([])
       formData.append("dos", Number(value.dos));
       formData.append("invoice_number", Number(value.invoice_number));
       formData.append("search_pay_amount", Number(value.search_pay_amount))
+      formData.append("invoicing_company", Number(value.companyName))
       formData.append("company", comp)
  axios({
    method : "POST",
@@ -454,6 +455,7 @@ setQno([])
     formData.append("dos", Number(value.dos));
     formData.append("invoice_number", Number(value.invoice_number));
     formData.append("search_pay_amount", Number(value.search_pay_amount))
+    formData.append("invoicing_company", Number(value.companyName))
     formData.append("company", comp)
 axios({
  method : "POST",
