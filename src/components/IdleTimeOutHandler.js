@@ -8,6 +8,10 @@ const IdleTimeOutHandler = (props)=>{
     const[showModal,setShowModal]=useState(false)
     const[isLogout,setLogout]=useState(false)
     let history = useHistory()
+    const adminkey = localStorage.getItem("adminKey")
+    const tlkey = localStorage.getItem("tlkey")
+    const client = localStorage.getItem("userid")
+    const tpKey = localStorage.getItem("tpkey")
     let timer=undefined;
     const events= ['click','load','keydown']
     const role = localStorage.getItem("role")
@@ -87,6 +91,30 @@ const IdleTimeOutHandler = (props)=>{
     const handleContinueSession = ()=>{
         setShowModal(false)
         setLogout(false)
+        if(props.custDashboard) {
+            axios.get(`${baseUrl}/customers/getNotification?id=${client}&type_list=uread`)
+            .then((res) => {
+                console.log("done")
+            })
+        }
+       else if(props.adminUserId) {
+            axios.get(`${baseUrl}/admin/getNotification?id=${adminkey}&type_list=uread`)
+            .then((res) => {
+                console.log("done")
+            })
+        }
+       else if(props.TLuserId) {
+            axios.get(`${baseUrl}/tl/getNotification?id=${tlkey}&type_list=uread`)
+            .then((res) => {
+                console.log("done")
+            })
+        }
+       else if(props.TPuserId) {
+            axios.get(`${baseUrl}/admin/getNotification?id=${tpKey}&type_list=uread`)
+            .then((res) => {
+                console.log("done")
+            })
+        }
     }
     const handleLogout2 = ()=>{
         removeEvents();

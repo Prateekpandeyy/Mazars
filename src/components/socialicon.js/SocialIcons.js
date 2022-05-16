@@ -20,15 +20,15 @@ const SocialIcons = () => {
 
       <Box sx={{position : "absolute",  right : "15px", display : "flex"}}>
           <a href="https://twitter.com/MasindiaL" target="_blank">
-      <AiOutlineTwitter className="twitterIcon" /></a>
+      <AiOutlineTwitter className="myTwitter"/></a>
 <a href="https://www.facebook.com/masindia.live/" target="_blank">
-        <AiOutlineFacebook className={classes.iconStyle}/>
+        <AiOutlineFacebook className="myFacebook"/>
         </a>
         <a href="https://www.instagram.com/masindia.live/?igshid=YmMyMTA2M2Y=" target="_blank">
-        <FaInstagram className={classes.iconStyle}/>
+        <FaInstagram className="instagramVideo"/>
         </a>
         <a href="https://www.linkedin.com/company/masindia-live/" target="_blank">
-        <AiOutlineLinkedin className={classes.iconStyle} />
+        <AiOutlineLinkedin className="myLinkedIn"/>
         </a>
           </Box>
     </>

@@ -633,14 +633,32 @@ input[type="date"] {
   font-size: 18px;
   color: #464b4b;
 }
-.twitterIcon {
+.myTwitter,
+.instagramVideo,
+.myFacebook,
+.myLinkedIn {
   display: flex;
   width: 40px;
   height: 40px;
   cursor: pointer;
+  transition: 0.3s all;
+  margin: 0 7px;
+  outline: #000;
 }
-.twitterIcon:hover {
-  background-color: rgba(29, 161, 242, 0.2);
+.myFacebook:hover {
+  color: #3b5998;
+}
+.instagramVideo:hover {
+  background: #fff;
+
+  color: #fd5949;
+}
+.myLinkedIn:hover {
+  color: #0077b5;
+}
+.myTwitter:hover {
+  /* background-color: rgba(29, 161, 242, 0.2); */
+  color: #55acee;
 }
 @media (max-width: 767px) {
   footer {

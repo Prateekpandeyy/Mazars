@@ -28,7 +28,7 @@ function ChangePassword(props) {
   const [time, setTime] = useState('')
   const [load, setLoad] = useState(false);
   const [email, setEmail] = useState('');
-
+  const token = window.localStorage.getItem("clientToken")
 
   useEffect(() => {
     getTime()
@@ -86,6 +86,9 @@ function ChangePassword(props) {
       axios({
         method: "POST",
         url: `${baseUrl}/customers/regenrateotp`,
+        headers : {
+          uit : token
+        },
         data: formData,
       })
         .then(function (response) {
@@ -108,6 +111,9 @@ function ChangePassword(props) {
     axios({
       method: "POST",
       url: `${baseUrl}/customers/passChange`,
+      headers : {
+        uit : token
+      },
       data: formData,
     })
       .then(function (response) {
