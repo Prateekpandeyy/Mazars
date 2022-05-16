@@ -31,10 +31,10 @@ props.showCook("showCookies")
   }
   return (
     <>
-     <SocialIcons />
+   
       <footer>
         <div style={{display: "flex", flexDirection: "column",  justifyContent: "space-evenly", textAlign: "center"}}>
-     
+        <SocialIcons />
         <div style={{display: "flex", justifyContent:"center"}}>
         <a onClick = {() => myLink("enquiry")}>
               

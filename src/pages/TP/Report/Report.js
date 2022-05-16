@@ -60,6 +60,7 @@ const Report = () => {
   const [companyName2, setCompanyName2] = useState([])
   const [tlName, setTlName] = useState()
   const gettpName = Cookies.get("tpName")
+  const tpkey = localStorage.getItem("tpkey")
   var kk = []
   var pp = []
   const token = window.localStorage.getItem("tptoken")
@@ -144,7 +145,7 @@ getTaxProf();
   }, [taxId, taxxId, cname])
 const getupdateQuery = () => {
  
-     axios.get(`${baseUrl}/tp/getAllQueryList?customer=${cname}` , myConfig)
+     axios.get(`${baseUrl}/tl/getAllQueryList?taxprofessional=${JSON.parse(userid)}` , myConfig)
     .then((res) => {
       if (res.data.code === 1) {
        
