@@ -482,7 +482,16 @@ const resetData = () => {
      icon : "success"
 
    })
-  window.open(`${baseUrl3}/${response.data.result}`)
+  //  window.URL = window.URL || window.webkitURL;
+  //          var url = window.URL.createObjectURL(`${baseUrl3}/${response.data.result}`);
+  //          var a = document.createElement("a");
+  //          document.body.appendChild(a);
+  //          a.style = "display: none";
+  //          a.href = url;
+  //          a.download = `report.pdf`
+  //          a.target = '_blank';
+  //          a.click();
+   window.open(`${baseUrl3}/${response.data.result}`)
  }
  else{
    Swal.fire({
