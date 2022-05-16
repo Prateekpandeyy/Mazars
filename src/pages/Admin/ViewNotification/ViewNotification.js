@@ -20,7 +20,7 @@ function ViewNotification() {
   const userid = window.localStorage.getItem("adminkey");
   const history = useHistory();
   const { id } = useParams();
-
+  const token = window.localStorage.getItem("adminToken")
   const [data, setData] = useState({});
 
   useEffect(() => {
@@ -34,7 +34,10 @@ function ViewNotification() {
 
     axios({
       method: "POST",
-      url: `${baseUrl}/tl/viewNotification`,
+      url: `${baseUrl}/admin/viewNotification`,
+      headers : {
+        uit : token
+      },
       data: formData,
     })
       .then(function (response) {

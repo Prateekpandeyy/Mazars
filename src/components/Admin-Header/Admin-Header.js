@@ -18,14 +18,13 @@ function AdminHeader({ custUserId, adminUserId, TLuserId, TPuserId , feedbackNum
               }
             axios.get(`${baseUrl}/customers/logout`, myConfig)
             .then((res) => {
-                if(res.data.code === 1){
-                  
+               
                   localStorage.removeItem("userid");
                   localStorage.removeItem("custEmail");
                   localStorage.removeItem("category");
                   localStorage.removeItem("clientToken")
                   history.push("/");
-                }
+                
             })
    
   };
@@ -39,14 +38,14 @@ function AdminHeader({ custUserId, adminUserId, TLuserId, TPuserId , feedbackNum
               }
          axios.get(`${baseUrl}/admin/logout`, myConfig)
          .then((res) => {
-             if(res.data.code === 1){
+            
               localStorage.removeItem("adminkey");
               localStorage.removeItem("adminEmail");
               localStorage.removeItem("category");
               localStorage.removeItem("adminToken")
              
               history.push("/admin/login");
-             }
+            
          })
   };
 
@@ -59,14 +58,14 @@ function AdminHeader({ custUserId, adminUserId, TLuserId, TPuserId , feedbackNum
       }
          axios.get(`${baseUrl}/tl/logout`, myConfig)
          .then((res) => {
-             if(res.data.code === 1){
+           
               localStorage.removeItem("tlkey");
               localStorage.removeItem("tlEmail");
               localStorage.removeItem("category");
               localStorage.removeItem("tlToken")
            
               history.push("/teamleader/login");
-             }
+            
          })
   };
 
@@ -79,14 +78,14 @@ function AdminHeader({ custUserId, adminUserId, TLuserId, TPuserId , feedbackNum
     }
         axios.get(`${baseUrl}/tl/logout`, myConfig)
         .then((res) => {
-            if(res.data.code === 1){
+           
               localStorage.removeItem("tpkey");
               localStorage.removeItem("tpEmail");
               localStorage.removeItem("category");
               localStorage.removeItem("tptoken");
            
               history.push("/taxprofessional/login");
-            }
+           
         })
         
   };

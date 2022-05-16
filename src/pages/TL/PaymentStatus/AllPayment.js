@@ -383,14 +383,17 @@ rowStyle2 = (row, index) => {
                         assignNo={assignNo}
                         getPaymentStatus={getPaymentStatus}
                     />
+{
+    ViewDiscussion === true ?
 
-                    <DiscardReport
-                        ViewDiscussionToggel={ViewDiscussionToggel}
-                        ViewDiscussion={ViewDiscussion}
-                        report={assignNo}
-                        getData={getPaymentStatus}
-                        headColor="#2b5f55"
-                    />
+    <DiscardReport
+    ViewDiscussionToggel={ViewDiscussionToggel}
+    ViewDiscussion={ViewDiscussion}
+    report={assignNo}
+    getData={getPaymentStatus}
+    headColor="#2b5f55"
+/> : ""
+}
                     <Modal isOpen={modal} fade={false} toggle={toggle}>
                         <ModalHeader toggle={toggle}>History</ModalHeader>
                         <ModalBody>
