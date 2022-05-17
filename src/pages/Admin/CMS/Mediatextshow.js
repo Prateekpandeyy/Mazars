@@ -71,7 +71,10 @@ const Mediatextshow = () => {
    const onSubmit = (e) => {
       let message = "Media news added successfully"
        let formData = new FormData();
-       formData.append("content", det);
+       var myEditor = document.querySelector('#snow-container')
+       var html = myEditor.children[0].innerHTML;
+       addDet(html)
+       formData.append("content", html);
        formData.append("status", Number(stats))
        formData.append("heading", heading)
        formData.append("publish_date", date);

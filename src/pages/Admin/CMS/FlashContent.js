@@ -59,10 +59,13 @@ const FlashContent = () => {
     })
    }
     const onSubmit = (value) => {
+        var myEditor = document.querySelector('#snow-container')
+        var html = myEditor.children[0].innerHTML;
+        addDet(html)
         let message = "Flash added successfully"
         let formData = new FormData()
        
-        formData.append("news", det);
+        formData.append("news", html);
         formData.append("heading", value.p_heading)
        {
       stats === true ?

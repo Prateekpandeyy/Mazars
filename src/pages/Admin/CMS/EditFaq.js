@@ -67,11 +67,13 @@ const EditFaq = () => {
        }
       }
     const onSubmit = (e) => {
-      
+      var myEditor = document.querySelector('#snow-container')
+      var html = myEditor.children[0].innerHTML;
+      addDet(html)
         let formData = new FormData();
        
         formData.append("question", question);
-        formData.append("answer", det);
+        formData.append("answer", html);
         formData.append("status", Number(stats))
       formData.append("id", getId.id)
         axios({

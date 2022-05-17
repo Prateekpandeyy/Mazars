@@ -70,9 +70,12 @@ const Editupdates = () => {
        setTopage(e)
    }
    const onSubmit = (e) => {
+    var myEditor = document.querySelector('#snow-container')
+    var html = myEditor.children[0].innerHTML;
+    addDet(html)
        let message = "Updates created successfully"
        let formData = new FormData();
-       formData.append("content", det);
+       formData.append("content", html);
        formData.append("status", Number(stats))
        formData.append("heading", heading)
        formData.append("publish_date", date);

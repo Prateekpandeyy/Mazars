@@ -115,7 +115,7 @@ function AdminHeader({ custUserId, adminUserId, TLuserId, TPuserId , feedbackNum
        "uit" : token
       }
     }
-        axios.get(`${baseUrl}/tl/logout`, myConfig)
+        axios.get(`${baseUrl}/tp/logout`, myConfig)
         .then((res) => {
            
               localStorage.removeItem("tpkey");
