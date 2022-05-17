@@ -110,7 +110,7 @@ const IdleTimeOutHandler = (props)=>{
             })
         }
        else if(props.TPuserId) {
-            axios.get(`${baseUrl}/admin/getNotification?id=${tpKey}&type_list=uread`)
+            axios.get(`${baseUrl}/tl/getNotification?id=${tpKey}&type_list=uread`)
             .then((res) => {
                 console.log("done")
             })
@@ -237,7 +237,7 @@ const IdleTimeOutHandler = (props)=>{
               localStorage.removeItem("adminkey");
               localStorage.removeItem("adminEmail");
               localStorage.removeItem("category");
-              localStorage.removeItem("adminToken")
+              localStorage.removeItem("token")
               setShowModal(false)
               history.push("/cms/login");
             

@@ -97,7 +97,7 @@ const getFeedback4 = () => {
   setLogo("/#/customer/dashboard")
 }
 const getFeedback2 = () => {
-  if(adminDashboard !== undefined){
+  if(role === "admin" && adminDashboard !== undefined){
     const token = window.localStorage.getItem("adminToken")
     const myConfig = {
       headers : {

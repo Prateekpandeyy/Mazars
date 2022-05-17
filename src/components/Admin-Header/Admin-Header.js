@@ -80,7 +80,7 @@ function AdminHeader({ custUserId, adminUserId, TLuserId, TPuserId , feedbackNum
         localStorage.removeItem("adminkey");
         localStorage.removeItem("adminEmail");
         localStorage.removeItem("category");
-        localStorage.removeItem("adminToken")
+        localStorage.removeItem("token")
        
         history.push("/cms/login");
       
