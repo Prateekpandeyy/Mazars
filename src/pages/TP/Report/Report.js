@@ -43,7 +43,7 @@ const Report = () => {
   const [categoryData, setCategoryData] = useState([])
   const [custCate2, setCustcate2] = useState([]);
   const [data, setData] = useState([]);
-  const [data2, setData2] = useState([]);
+  
   const [taxId, setTaxId] = useState("");
   const [taxxId, setTaxxId] = useState("")
   const [teamleader44, setTeamleader44] = useState("") 
@@ -136,12 +136,12 @@ const [item2, setItem2] = useState(current_date)
     getTeamLeader();
     getData();
     getupdateQuery()
-    getTaxProf();
+    
     getCompany()
   }, []);
   useEffect(() => {
     getTeamLeader();
-getTaxProf();
+
   }, [taxId, taxxId, cname])
 const getupdateQuery = () => {
  
@@ -170,18 +170,7 @@ const getupdateQuery = () => {
 
 
 
-  const getTaxProf = () => {
-    axios
-      .get(`${baseUrl}/tl/getTaxProfessional?tl_id=${JSON.parse(userid)}`, myConfig)
-      .then((res) => {
-      
-        if (res.data.code === 1) {
-          console.log("taxprofessional", res.data.result)
-          setData2(res.data.result);
-         
-        }
-      });
-  };
+ 
   let pk = []
   const custName = (a) => {
   
@@ -230,11 +219,7 @@ const getqNo = ((i) => ({
       "value": d.id,
       "label": d.name
     }))
-    const options4 = data2.map(d => (
-      {
-        "value": d.id,
-        "label": d.name
-      }))
+  
 const resetData = () => {
  
 reset()

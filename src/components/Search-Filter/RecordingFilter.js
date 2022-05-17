@@ -47,11 +47,60 @@ function RecordingFilter(props) {
 
   const onSubmit = (data) => {
  
-if(SearchQuery == "SearchQuery") {
-  
+if(SearchQuery == "adminQuery") {
+  const token = window.localStorage.getItem("adminToken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
     axios
         .get(
-          `${baseUrl}/tl/callRecordingPostlist?uid=${JSON.parse(userid)}&assign_id=${data.queryNo}`)
+          `${baseUrl}/admin/callRecordingPostlist?uid=${JSON.parse(userid)}&assign_id=${data.queryNo}`, myConfig)
+        .then((res) => {
+         
+          if (res.data.code === 1) {
+            if (res.data.result) {
+              setData(res.data.result);
+              setRecords(res.data.result.length);
+
+            }
+          }
+        });
+}
+else if(SearchQuery == "tlQuery") {
+  
+  const token = window.localStorage.getItem("tlToken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
+    axios
+        .get(
+          `${baseUrl}/tl/callRecordingPostlist?uid=${JSON.parse(userid)}&assign_id=${data.queryNo}`, myConfig)
+        .then((res) => {
+         
+          if (res.data.code === 1) {
+            if (res.data.result) {
+              setData(res.data.result);
+              setRecords(res.data.result.length);
+
+            }
+          }
+        });
+}
+else if(SearchQuery == "tpQuery") {
+  
+  const token = window.localStorage.getItem("tptoken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
+    axios
+        .get(
+          `${baseUrl}/tl/callRecordingPostlist?uid=${JSON.parse(userid)}&assign_id=${data.queryNo}`, myConfig)
         .then((res) => {
          
           if (res.data.code === 1) {

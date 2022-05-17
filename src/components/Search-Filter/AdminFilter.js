@@ -34,14 +34,19 @@ function AdminFilter(props) {
   var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
   
   const [item] = useState(current_date);
-
+  const token = window.localStorage.getItem("adminToken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
 
   //get category
   useEffect(() => {
     const getSubCategory = () => {
       if(selectedData != undefined && selectedData.length > 0){
         axios
-        .get(`${baseUrl}/admin/getCategory?pid=${selectedData}`)
+        .get(`${baseUrl}/admin/getCategory?pid=${selectedData}`, myConfig)
         .then((res) => {
        
           if (res.data.code === 1) {
@@ -96,6 +101,7 @@ function AdminFilter(props) {
       axios
         .get(
           `${baseUrl}/admin/getProposals?status1=2&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&pcat_id=${selectedData}`
+          , myConfig
         )
         .then((res) => {
 
@@ -112,6 +118,7 @@ function AdminFilter(props) {
       axios
         .get(
           `${baseUrl}/admin/getProposals?status1=${data.p_status}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&pcat_id=${selectedData}`
+          , myConfig
         )
         .then((res) => {
         
@@ -128,6 +135,7 @@ function AdminFilter(props) {
       axios
         .get(
           `${baseUrl}/admin/getProposals?&status=6&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&pcat_id=${selectedData}`
+          , myConfig
         )
         .then((res) => {
 
@@ -144,7 +152,7 @@ function AdminFilter(props) {
       axios
         .get(
           `${baseUrl}/admin/declinedQueries?cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=${data.p_status}&pcat_id=${selectedData}`
-        )
+        , myConfig)
         .then((res) => {
 
           if (res.data.code === 1) {
@@ -160,7 +168,7 @@ function AdminFilter(props) {
       axios
         .get(
           `${baseUrl}/admin/pendingProposal?category=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=${data.p_status}&pcat_id=${selectedData}`
-        )
+        , myConfig)
         .then((res) => {
          
           if (res.data.code === 1) {
@@ -176,7 +184,7 @@ function AdminFilter(props) {
       axios
         .get(
           `${baseUrl}/admin/getAllQueries?cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=${data.p_status}&pcat_id=${selectedData}`
-        )
+       , myConfig )
         .then((res) => {
          
           if (res.data.code === 1) {
@@ -192,7 +200,7 @@ function AdminFilter(props) {
       axios
         .get(
           `${baseUrl}/admin/pendingAllocation?category=${store2}&date1=${data.p_dateFrom}&date2=${data.p_dateTo}&pcat_id=${selectedData}`
-        )
+        , myConfig)
         .then((res) => {
         
           if (res.data.code === 1) {
@@ -208,7 +216,7 @@ function AdminFilter(props) {
       axios
         .get(
           `${baseUrl}/admin/getUploadedProposals?cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=${data.p_status}&pcat_id=${selectedData}`
-        )
+        , myConfig) 
         .then((res) => {
          
           if (res.data.code === 1) {
@@ -224,7 +232,7 @@ function AdminFilter(props) {
       axios
         .get(
           `${baseUrl}/admin/getUploadedProposals?cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=1&pcat_id=${selectedData}`
-        )
+       , myConfig )
         .then((res) => {
          
           if (res.data.code === 1) {
@@ -240,7 +248,7 @@ function AdminFilter(props) {
       axios
         .get(
           `${baseUrl}/admin/getUploadedProposals?cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=2&pcat_id=${selectedData}`
-        )
+       , myConfig)
         .then((res) => {
         
           if (res.data.code === 1) {
@@ -256,7 +264,7 @@ function AdminFilter(props) {
       axios
         .get(
           `${baseUrl}/admin/getProposals?cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status1=${data.p_status}&pcat_id=${selectedData}`
-        )
+        , myConfig)
         .then((res) => {
         
           if (res.data.code === 1) {

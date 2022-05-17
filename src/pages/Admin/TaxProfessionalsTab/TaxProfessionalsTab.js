@@ -38,7 +38,7 @@ function TaxProfessionalsTab() {
   }, []);
 
   const getTaxProf = () => {
-    axios.get(`${baseUrl}/tl/getTaxProfessional`, myConfig).then((res) => {
+    axios.get(`${baseUrl}/admin/getTaxProfessional`, myConfig).then((res) => {
     ;
       if (res.data.code === 1) {
         setData(res.data.result);

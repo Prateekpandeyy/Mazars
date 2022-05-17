@@ -83,8 +83,8 @@ function MyAssingment(props) {
        "uit" : token
       }
     }
-  useEffect(() => {
     const getSubmittedAssingment = () => {
+      
       axios.get(`${baseUrl}/customers/getQueryDetails?id=${id}`, myConfig).then((res) => {
 
         if (res.data.code === 1) {
@@ -188,12 +188,10 @@ function MyAssingment(props) {
       });
     };
    
-    getSubmittedAssingment();
-  }, []);
-useState(() => {
-  if(props.location.routes){
-    setRoutesData(props.location.routes)
-  }
+ 
+useEffect(() => {
+  getSubmittedAssingment();
+  
 }, [])
 
 
@@ -232,7 +230,10 @@ useState(() => {
            
 
            <CardBody>
-           {submitData.map((p, index) => (
+           {
+             submitData.length > 0 ?
+             <>
+             {submitData.map((p, index) => (
               <QueryDetails
                 p={p}
                 key={index}
@@ -262,6 +263,8 @@ useState(() => {
                 panel = "client"
               />
             ))}
+             </>  : ""
+           }
         
            </CardBody>
      

@@ -204,7 +204,7 @@ function Recording() {
                 <RecordingFilter
                        setData={setFeedBackData}
                     //    getData={getInCompleteAssingment}
-                       SearchQuery="SearchQuery"
+                       SearchQuery="adminQuery"
                       setRecords={setRecords}
                        records={records} 
                        userid = {userid}

@@ -233,7 +233,7 @@ const editRecording = (participants, assign_id, message, id) => {
                 <RecordingFilter
                        setData={setFeedBackData}
                     //    getData={getInCompleteAssingment}
-                       SearchQuery="SearchQuery"
+                       SearchQuery="tpQuery"
                       setRecords={setRecords}
                        records={records} 
                        userid = {userid}

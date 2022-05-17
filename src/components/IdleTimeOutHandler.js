@@ -177,6 +177,7 @@ const IdleTimeOutHandler = (props)=>{
         }
     }
     const handleLogout = ()=>{
+        const role = localStorage.getItem("role")
         if(showModal === true){
             removeEvents();
         clearTimeout(timer);
@@ -204,7 +205,7 @@ const IdleTimeOutHandler = (props)=>{
             })
         
         }
-        else if (props.adminUserId){
+        else if (props.adminUserId && role === "admin"){
             const token = window.localStorage.getItem("adminToken")
             const myConfig = {
                 headers : {
@@ -220,6 +221,25 @@ const IdleTimeOutHandler = (props)=>{
               localStorage.removeItem("adminToken")
               setShowModal(false)
               history.push("/admin/login");
+            
+         })
+        }
+        else if (props.adminUserId && role === "cms"){
+            const token = window.localStorage.getItem("token")
+            const myConfig = {
+                headers : {
+                 "uit" : token
+                }
+              }
+         axios.get(`${baseUrl}/cms/logout`, myConfig)
+         .then((res) => {
+            
+              localStorage.removeItem("adminkey");
+              localStorage.removeItem("adminEmail");
+              localStorage.removeItem("category");
+              localStorage.removeItem("adminToken")
+              setShowModal(false)
+              history.push("/cms/login");
             
          })
         }

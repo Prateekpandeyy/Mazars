@@ -30,23 +30,62 @@ function AdminHeader({ custUserId, adminUserId, TLuserId, TPuserId , feedbackNum
   };
 
   const adminLogout = () => {
-    const token = window.localStorage.getItem("adminToken")
-            const myConfig = {
-                headers : {
-                 "uit" : token
-                }
-              }
-         axios.get(`${baseUrl}/admin/logout`, myConfig)
-         .then((res) => {
+    const role = localStorage.getItem("role")
+    // const token = window.localStorage.getItem("adminToken")
+    //         const myConfig = {
+    //             headers : {
+    //              "uit" : token
+    //             }
+    //           }
+    //      axios.get(`${baseUrl}/admin/logout`, myConfig)
+    //      .then((res) => {
             
-              localStorage.removeItem("adminkey");
-              localStorage.removeItem("adminEmail");
-              localStorage.removeItem("category");
-              localStorage.removeItem("adminToken")
+    //           localStorage.removeItem("adminkey");
+    //           localStorage.removeItem("adminEmail");
+    //           localStorage.removeItem("category");
+    //           localStorage.removeItem("adminToken")
              
-              history.push("/admin/login");
+    //           history.push("/admin/login");
             
-         })
+    //      })
+    if (role === "admin"){
+      const token = window.localStorage.getItem("adminToken")
+      const myConfig = {
+          headers : {
+           "uit" : token
+          }
+        }
+   axios.get(`${baseUrl}/admin/logout`, myConfig)
+   .then((res) => {
+      
+        localStorage.removeItem("adminkey");
+        localStorage.removeItem("adminEmail");
+        localStorage.removeItem("category");
+        localStorage.removeItem("adminToken")
+        
+        history.push("/admin/login");
+      
+   })
+  }
+  else if (role === "cms"){
+      const token = window.localStorage.getItem("token")
+      const myConfig = {
+          headers : {
+           "uit" : token
+          }
+        }
+   axios.get(`${baseUrl}/cms/logout`, myConfig)
+   .then((res) => {
+      
+        localStorage.removeItem("adminkey");
+        localStorage.removeItem("adminEmail");
+        localStorage.removeItem("category");
+        localStorage.removeItem("adminToken")
+       
+        history.push("/cms/login");
+      
+   })
+  }
   };
 
   const tlLogout = () => {

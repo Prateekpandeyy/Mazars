@@ -76,7 +76,7 @@ const [loading, setLoading] = useState(false)
     setSelectedData([]);
     setStore2([]);
     setTax2([]);
-    getData();
+   
   };
 
   //reset date
@@ -537,7 +537,7 @@ const [loading, setLoading] = useState(false)
         <button
           type="submit"
           className="btnSearch mb-2 ml-3"
-          onClick={resetCategory}
+          onClick={() => resetCategory()}
         >
           X
         </button>

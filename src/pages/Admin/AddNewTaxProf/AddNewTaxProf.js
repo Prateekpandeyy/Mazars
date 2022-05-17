@@ -65,7 +65,12 @@ function AddNew() {
   const [loading, setLoading] = useState(false);
   const [emailError, setEmailError] = useState(null);
   const [email2, setEmail2] = useState([]);
-  
+  const token = window.localStorage.getItem("adminToken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
   const [posError, setposError] = useState({
     available : '',
     exits : ''
@@ -91,7 +96,7 @@ function AddNew() {
     }))
   useEffect(() => {
     const getTeamLeader = () => {
-      axios.get(`${baseUrl}/tl/getTeamLeader`).then((res) => {
+      axios.get(`${baseUrl}/admin/getTeamLeader`, myConfig).then((res) => {
       
         if (res.data.code === 1) {
           setTeamLeader(res.data.result);
@@ -171,7 +176,10 @@ function AddNew() {
 
       axios({
         method: "POST",
-        url: `${baseUrl}/tp/AddTaxProfessional`,
+        url: `${baseUrl}/admin/AddTaxProfessional`,
+        headers : {
+          uit :token
+        },
         data: formData,
       })
         .then(function (response) {
@@ -335,7 +343,10 @@ function AddNew() {
   
     axios({
       method: "POST",
-      url : `${baseUrl}/tl/validateTLPost`,
+      url : `${baseUrl}/admin/validateTLPost`,
+      headers : {
+        uit : token
+      },
       data: formData,
     })
     .then(function (res) {
