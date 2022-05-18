@@ -47,7 +47,7 @@ const IdleTimeOutHandler = (props)=>{
             
             let lastInteractionTime=localStorage.getItem('lastInteractionTime')
             const diff = moment.duration(moment().diff(moment(lastInteractionTime)));
-            let timeOutInterval=props.timeOutInterval?props.timeOutInterval:180000;
+            let timeOutInterval=props.timeOutInterval?props.timeOutInterval:1800000;
           
             // var ms = timeStampInMs;
             // var d = new Date(1000*Math.round(ms/1000)); // round to nearest second
