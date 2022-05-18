@@ -33,6 +33,7 @@ const Faq = () => {
     let history = useHistory()
     let getId = useParams()
     const userId = localStorage.getItem("adminkey")
+    const token = window.localStorage.getItem("token")
     const { handleSubmit, register, errors, getValues } = useForm();
     // useEffect(() => {
     //     getData()
@@ -55,16 +56,24 @@ const Faq = () => {
     //    }
     //   }
     const onSubmit = (e) => {
-      
+      let message = "Content created successfully"
+      console.log("det", det)
+     
+        var myEditor = document.querySelector('#snow-container')
+      var html = myEditor.children[0].innerHTML;
+      addDet(html)
         let formData = new FormData();
        
         formData.append("question", question);
-        formData.append("answer", det);
+        formData.append("answer", html);
         formData.append("status", Number(stats))
       
         axios({
             method : "POST", 
             url : `${baseUrl}/cms/setfaq`,
+            headers : {
+              uit : token
+            },
             data : formData
         })
         .then((res) => {

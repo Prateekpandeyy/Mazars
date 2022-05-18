@@ -63,7 +63,7 @@ const Groupvideo = () => {
         confirmButtonText: "Yes, delete it!",
     }).then((result) => {
         if (result.value) {
-          axios.get(`${baseUrl}/cms/deleteimage?uid=${JSON.parse(userId)}&id=${e.imageid}&imageid=${e.id}`)
+          axios.get(`${baseUrl}/cms/deleteimage?uid=${JSON.parse(userId)}&id=${e.imageid}&imageid=${e.id}`, myConfig)
           .then((res) => {
 console.log("response", res)
 if(res.data.code === 1){

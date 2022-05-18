@@ -126,10 +126,10 @@ const IdleTimeOutHandler = (props)=>{
                  "uit" : token
                 }
               }
-                // axios.get(`${baseUrl}/admin/getNotification?id=${JSON.parse(adminkey)}&type_list=uread`, myConfig)
-                // .then((res) => {
-                //     console.log("done")
-                // })
+                axios.get(`${baseUrl}/cms/repeatcheck`, myConfig)
+                .then((res) => {
+                    console.log("done")
+                })
             }
        else if(props.TLuserId) {
         const tlkey = localStorage.getItem("tlkey")

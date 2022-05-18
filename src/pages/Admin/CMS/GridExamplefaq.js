@@ -23,24 +23,26 @@ const GirdExamplefaq = () => {
       }
     }
    const getList = () => {
+  if(myConfig){
     axios.get(`${baseUrl}/cms/getallfaq?uid=${JSON.parse(userId)}`, myConfig)
-       .then((res) => {
-       console.log("ress", res)
-        if(res.data.code === 1){
-         setRowData(res.data.result)
-         let linkOrder = []
-         res.data.result.map((i) => {
-             
-             let a = {
-             "position" : i.id
-             }
-             linkOrder.push(a)
-            
-         })
+    .then((res) => {
+    console.log("ress", res)
+     if(res.data.code === 1){
+      setRowData(res.data.result)
+      let linkOrder = []
+      res.data.result.map((i) => {
+          
+          let a = {
+          "position" : i.id
+          }
+          linkOrder.push(a)
          
-       setOrder(linkOrder)
-        }
-       })
+      })
+      
+    setOrder(linkOrder)
+     }
+    })
+  }
      }
      useEffect(() => {
          getList()
@@ -112,8 +114,29 @@ const [columnDefs] = useState([
                      <div onClick = {(e) => del(params.data)}> 
       <DeleteIcon titleName="Delete Flash Update" />
                      </div>
+                     {
+                  params.data.status == "1" ?
+                  <div style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
+                  <label className="switch" onChange= {(e) => myShowValue(e, params.data)}>
+    <input type="checkbox"  defaultChecked/>
+    <span className="slider round"></span>
+  </label>
+  
+                  </div> :
+                  ""
+                }
+                {
+                  params.data.status == "0" ?
+                  <div style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
+                  <label className="switch" onChange= {(e) => myShowValue(e, params.data)}>
+    <input type="checkbox"  />
+    <span className="slider round"></span>
+  </label>
+  
+                  </div> : ""
+                }
                   
-{
+{/* {
               params.data.status == "1" ?
               <div style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
               <label className="switch" onChange= {(e) => myShowValue(e, params.data)}>
@@ -133,7 +156,7 @@ const [columnDefs] = useState([
 </label>
 
               </div> : ""
-            }
+            } */}
          </div>
      
      </>
