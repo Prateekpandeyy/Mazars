@@ -26,7 +26,13 @@ const Groupvideo = () => {
   const [play, isPlay] = useState(false)
   const userId = window.localStorage.getItem("adminkey");
   let history = useHistory();
-  
+  const token = localStorage.getItem("token")
+  const myConfig = {
+    headers : {
+     "uit" : token
+    }
+  }
+ 
     useEffect(() => {
       getImages()
     }, [])
@@ -35,7 +41,7 @@ const Groupvideo = () => {
    if(history.location.index){
      
    
-    axios.get(`${baseUrl}/cms/getgallarylist?uid=${JSON.parse(userId)}&type=video&id=${history.location.index.id}`)
+    axios.get(`${baseUrl}/cms/getgallarylist?uid=${JSON.parse(userId)}&type=video&id=${history.location.index.id}`, myConfig)
     .then((res) => {
      
       setGalleryData(res.data.result)

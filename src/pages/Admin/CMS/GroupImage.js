@@ -21,7 +21,12 @@ const GroupImage = () => {
   const [galleryData, setGalleryData] = useState([])
   const userId = window.localStorage.getItem("adminkey");
   let history = useHistory();
-  
+  const token = localStorage.getItem("token")
+  const myConfig = {
+    headers : {
+     "uit" : token
+    }
+  }
     useEffect(() => {
       getImages()
     }, [])
@@ -30,7 +35,7 @@ const GroupImage = () => {
    if(history.location.index){
      
    
-    axios.get(`${baseUrl}/cms/getgallarylist?uid=${JSON.parse(userId)}&type=image&id=${history.location.index.id}`)
+    axios.get(`${baseUrl}/cms/getgallarylist?uid=${JSON.parse(userId)}&type=image&id=${history.location.index.id}`, myConfig)
     .then((res) => {
      
       setGalleryData(res.data.result)
@@ -52,7 +57,7 @@ const GroupImage = () => {
         confirmButtonText: "Yes, delete it!",
     }).then((result) => {
         if (result.value) {
-          axios.get(`${baseUrl}/cms/deleteimage?uid=${JSON.parse(userId)}&id=${e.imageid}&imageid=${e.id}`)
+          axios.get(`${baseUrl}/cms/deleteimage?uid=${JSON.parse(userId)}&id=${e.imageid}&imageid=${e.id}`, myConfig)
           .then((res) => {
 console.log("response", res)
 if(res.data.code === 1){
