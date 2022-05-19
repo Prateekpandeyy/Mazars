@@ -82,11 +82,11 @@ const Links = () => {
       }
     const onSubmit = (e) => {
    
-      console.log(dd)
+     
     
         let formData = new FormData();
        
-if(error === false){
+
         let message = "Link created successfully"
   formData.append("heading", heading)
   formData.append("position", dd)
@@ -114,7 +114,7 @@ if(getId.id){
           history.push("/cms/linklist")
       }
    })
-}
+
     }
     const myLabel = (e) => {
    
@@ -190,11 +190,11 @@ const myOrder = (e) => {
                   
                   <label className="form-label">Link</label>
                     <input 
-                    type="url"
+                    type="text"
                     className={classNames("form-control", {
                      "is-invalid": errors.p_wirter || error,
                    })}
-                   onBlur = {(e) => ValidURL(e.target.value)}
+                 
                    onChange={(e) => setWriter(e.target.value)}
                    value={writer}
                    ref={register({ required: true })}
