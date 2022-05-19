@@ -36,7 +36,9 @@ const InvoiceTab = () => {
      fontWeight : 1000
       };
     
-     
+      const updateTab = (key) => {
+        setTabIndex(key)
+      }
 return(
     <Layout TLDashboard="TLDashboard" TLuserId={userid}>
   <Tabs selectedIndex={tabIndex} onSelect={(index) => tableIndex(index)}>
@@ -53,10 +55,12 @@ return(
                     </TabList>
 
                     <TabPanel>
-                    <Generated />
+                    <Generated 
+                    updateTab={updateTab}/>
                     </TabPanel>
                     <TabPanel>
-                    <Invoice />
+                    <Invoice 
+                    updateTab={updateTab}/>
                       
                     </TabPanel>
                     

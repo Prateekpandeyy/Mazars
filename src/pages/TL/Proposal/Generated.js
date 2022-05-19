@@ -18,7 +18,7 @@ import FileCopyIcon from '@mui/icons-material/FileCopy';
 import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
 import MessageIcon, {EyeIcon, ViewDiscussionIcon, DiscussProposal, HelpIcon, EditQuery, ActionIcon} from "../../../components/Common/MessageIcon";
 
-const Generated = () => {
+const Generated = ({updateTab}) => {
     var rowStyle2 = {}
     const userid = window.localStorage.getItem("tlkey");
     const [records, setRecords] = useState([]);
@@ -36,15 +36,17 @@ const Generated = () => {
     
  
     const addTdsToggle = (key) => {
-   
-      setGstinNo(key.gstin_no);
         setTdsForm(!tdsForm)
+     if(key){
+        setGstinNo(key.gstin_no);
+      
         setAssignNo(key.assign_no)
         setPaidAmount(key.paid_amount)
         setId(key.id)
         setInstallmentNo(key.installment_no)
         setBillNo(key.billno);
         setId2(key.id)
+     }
     }
     const ViewDiscussionToggel = (key) => {
       
@@ -341,6 +343,7 @@ const Generated = () => {
                     id = {id2}
                     generated = {"edited"}
                     gstNo = {gstNo}
+                    updateTab={updateTab}
                     />
                 </CardBody>
             </Card>

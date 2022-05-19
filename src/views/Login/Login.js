@@ -27,6 +27,7 @@ import MainContainer from "../../components/Common/MainContainer";
 import MyContainer from "../../components/Common/MyContainer";
 import FlashSection from "../../components/Common/FlashSection";
 import MainContent from "../../components/Common/MainContent";
+import CloseIcon from '@material-ui/icons/Close';
 const Schema = yup.object().shape({
   p_email: yup.string().email("invalid email").required(""),
   p_password: yup.string().required(""),
@@ -413,15 +414,20 @@ history.push("/customer/signup")
 {
  showCookie === true ?
  <div className="popup">
-  
+
  <CookieConsent
  debug = {true}
+ declineButtonText = {<CloseIcon />}
+ onDecline={() => {
+   setShowCookie(false)
+ }}
+ enableDeclineButton 
    disableStyles
    location="none"
    buttonText="Agree"
    expires={1}
    overlay
-  
+   declineButtonClasses = "myCookiesdecBtn"
    buttonStyle = {{borderBottomLeftRadius: "1.75rem", position: "absolute",
    top: "10px", right: "10px",
 backgroundColor : "#0071CE", border: "1px solid #0071CE", color: "#fff"

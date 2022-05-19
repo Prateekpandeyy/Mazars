@@ -17,7 +17,7 @@ import DescriptionOutlinedIcon from '@material-ui/icons/DescriptionOutlined';
 import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
 import MessageIcon, {EyeIcon, ViewDiscussionIcon, EditQuery, ActionIcon} from "../../../components/Common/MessageIcon";
 
-const Invoice = () => {
+const Invoice = (updateTab) => {
     const userid = window.localStorage.getItem("tlkey");
     const [records, setRecords] = useState([]);
     const [proposal, setProposal] = useState([]);
@@ -38,15 +38,17 @@ const Invoice = () => {
     const [gstNo, setGstinNo] = useState();
  
    const addTdsToggle = (key) => {
-      
-     setGstinNo(key.gstin_no);
-       setTdsForm(!tdsForm)
-       setAssignNo(key.assign_no)
-       setPaidAmount(key.paid_amount)
-       setId(key.id)
-       setInstallmentNo(key.installment_no)
-       setBillNo(key.billno);
-       setId2(key.id)
+    setTdsForm(!tdsForm)
+    if(key){
+        setGstinNo(key.gstin_no);
+       
+        setAssignNo(key.assign_no)
+        setPaidAmount(key.paid_amount)
+        setId(key.id)
+        setInstallmentNo(key.installment_no)
+        setBillNo(key.billno);
+        setId2(key.id)
+    }
    }
     const ViewDiscussionToggel = (key) => {
       
@@ -216,6 +218,7 @@ const Invoice = () => {
                     id = {id2}
                     gstNo = {gstNo}
                     tabIndex22 = {1}
+                    updateTab={updateTab}
                     />
                 </CardBody>
             </Card>

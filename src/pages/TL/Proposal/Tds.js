@@ -7,7 +7,7 @@ import { useRef } from "react";
 import { useState } from "react";
 import classNames from "classnames";
 import { useHistory } from "react-router";
-import { parseInt } from "lodash";
+import { parseInt, updateWith } from "lodash";
 import Swal from "sweetalert2";
 import {Spinner} from "reactstrap";
 import "./porposalStyle.css";
@@ -35,7 +35,7 @@ function Tds (props)  {
    const [gstNum , setGstNum] = useState();
    const [tdsR, setTdsR] = useState();
    const [disabled, setDisabled] = useState(false)
-  const [description, setDiscription] = useState()
+  const [description, setDiscription] = useState("")
 const [loading, setLoading] = useState(false);
 const token = window.localStorage.getItem("tlToken")
 const myConfig = {
@@ -435,21 +435,34 @@ const basicFun = (e) => {
         .then((res) => {
             setLoading(false);
             if(res.data.code === 1){
+              props.addTdsToggle()
               Swal.fire({
                 title : "success", 
                 html : "Invoice generated successfully",
                 icon : "success"
               })
-             
-                history.push("/teamleader/tlinvoice")
+              // if(props.generated == "edited"){
+              
+              //   props.updateTab(0)
+                
+              // }
+              // else{
+              
+              //   props.updateTab(1)
+                
+              // }
+
             }
            else{
+             
+            props.addTdsToggle()
                  Swal.fire({
                 title : "error", 
                 html : `${res.data.result}`,
                 icon : "error"
               })
-               
+            
+
               }
         })
       
