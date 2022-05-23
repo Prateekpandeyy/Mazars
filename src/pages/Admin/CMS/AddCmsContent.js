@@ -112,6 +112,7 @@ const AddCmsContent = () => {
         for (var i = 0; i < uploadImg.length; i++) {
           let file = uploadImg[i];
           formData.append("content", file);
+          formData.append("content_type", 1)
         }
       }
     }
@@ -120,6 +121,7 @@ const AddCmsContent = () => {
       var html = myEditor.children[0].innerHTML;
       addDet(html)
       formData.append("content", html);
+      formData.append("content_type", 2)
     }
       
    {
