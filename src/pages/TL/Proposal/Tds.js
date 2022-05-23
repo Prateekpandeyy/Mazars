@@ -441,17 +441,7 @@ const basicFun = (e) => {
                 html : "Invoice generated successfully",
                 icon : "success"
               })
-              // if(props.generated == "edited"){
-              
-              //   props.updateTab(0)
-                
-              // }
-              // else{
-              
-              //   props.updateTab(1)
-                
-              // }
-
+           props.getProposalList()
             }
            else{
              
@@ -461,7 +451,7 @@ const basicFun = (e) => {
                 html : `${res.data.result}`,
                 icon : "error"
               })
-            
+             props.getProposalList()
 
               }
         })

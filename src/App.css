@@ -54,3 +54,7 @@ span {
   -webkit-font-smoothing: antialiased;
   font-family: "agGridAlpine" !important;
 }
+.modal-open .modal {
+  overflow: hidden !important;
+  position: fixed !important;
+}

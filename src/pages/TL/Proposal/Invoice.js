@@ -219,6 +219,7 @@ const Invoice = (updateTab) => {
                     gstNo = {gstNo}
                     tabIndex22 = {1}
                     updateTab={updateTab}
+                    getProposalList = {getProposalList}
                     />
                 </CardBody>
             </Card>

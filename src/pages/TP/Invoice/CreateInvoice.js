@@ -33,15 +33,17 @@ const CreateInvoice = () => {
         }
       }
    const addTdsToggle = (key) => {
-      
-     setGstinNo(key.gstin_no);
-       setTdsForm(!tdsForm)
-       setAssignNo(key.assign_no)
-       setPaidAmount(key.paid_amount)
-       setId(key.id)
-       setInstallmentNo(key.installment_no)
-       setBillNo(key.billno);
-       setId2(key.id)
+    setTdsForm(!tdsForm)
+   if(key){
+    setGstinNo(key.gstin_no);
+       
+    setAssignNo(key.assign_no)
+    setPaidAmount(key.paid_amount)
+    setId(key.id)
+    setInstallmentNo(key.installment_no)
+    setBillNo(key.billno);
+    setId2(key.id)
+   }
    }
     const ViewDiscussionToggel = (key) => {
       
@@ -230,6 +232,7 @@ const CreateInvoice = () => {
                     billNo = {billNo}
                     id = {id2}
                     gstNo = {gstNo}
+                    getProposalList={getProposalList}
                     /> : ""
                     }
                 </CardBody>

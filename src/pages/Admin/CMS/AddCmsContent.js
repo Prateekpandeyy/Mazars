@@ -37,6 +37,7 @@ const AddCmsContent = () => {
     const [editData, setEditData] = useState();
     const [editorError, setEditorError] = useState(false)
     const [loading, setLoading] = useState(false);
+    const [showDoc, setShowDoc] = useState(false)
     const [email, setEmail] = useState("")
     let history  = useHistory()
     let getId = useParams()
@@ -68,7 +69,7 @@ const AddCmsContent = () => {
          setWriter(i.writer)
          setDate(i.publish_date);
          let a = myFun(i.content)
-         console.log("aaaa", a)
+       
         addDet(i.content) 
         setEmail(i.email)
         
@@ -86,7 +87,7 @@ const AddCmsContent = () => {
     }
    
     const myFun = (a) => {
-      console.log("valu22", a)
+    
       return(
         <Markup content={a} />
       )
@@ -96,14 +97,27 @@ const AddCmsContent = () => {
    }
    const onSubmit = (e) => {
      let message = "Content created successfully"
-console.log("det", det)
+
   setLoading(true)
-  var myEditor = document.querySelector('#snow-container')
-var html = myEditor.children[0].innerHTML;
-addDet(html)
-      console.log("html", html)  
+ 
+   
       let formData = new FormData();
       formData.append("type", pageto)
+    if(showDoc === true) {
+      var uploadImg = e.p_upload;
+      if (uploadImg) {
+        for (var i = 0; i < uploadImg.length; i++) {
+          let file = uploadImg[i];
+          formData.append("upload[]", file);
+        }
+      }
+    }
+    else {
+      var myEditor = document.querySelector('#snow-container')
+      var html = myEditor.children[0].innerHTML;
+      addDet(html)
+      formData.append("content", html);
+    }
       formData.append("content", html);
    {
      stats === true ?
@@ -256,16 +270,41 @@ const getEditValue= (e) => {
                    />
                  </div>
          </div>
-       
-         <div className="row">
-             <div className="col-md-12">
-             <label className="form-label">Content</label> </div>
-             
-             <div className="col-md-12" style={{display : "flex", flexDirection :"column"}}>
-           <AddEditor />
-                 </div>
+       <div className="row">
+         <div className="col-md-3">
+         <input type="radio" value="Male" name="gender" onChange={() => setShowDoc(true)}/> Upload Content
+      </div>
+      <div className="col-md-3">
+        <input type="radio" value="Female" defaultChecked name="gender" onChange={() => setShowDoc(false)} /> Editor
+           </div>
          </div>
+         {showDoc === true ?
+          <form onSubmit={handleSubmit(onSubmit)}>
+          <div className="mb-3">
+            <label className="form-label">Upload Your Document</label>
+            <input
+             type="file"
+             name="p_upload"
+             ref={register}
+             className="form-control-file"
+           />
+          </div>
+
+          
+        </form>
+         : ""}
+       {
+         showDoc === false ?
          <div className="row">
+         <div className="col-md-12">
+         <label className="form-label">Content</label> </div>
+         
+         <div className="col-md-12" style={{display : "flex", flexDirection :"column"}}>
+       <AddEditor />
+             </div>
+     </div>
+ : ""
+       }         <div className="row">
          <div className="col-md-3">
  
  <span style={{margin : "10px 0"}}>

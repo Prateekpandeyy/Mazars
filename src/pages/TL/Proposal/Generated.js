@@ -33,6 +33,7 @@ const Generated = ({updateTab}) => {
     const [billNo, setBillNo] = useState()
     const [id2, setId2] = useState()
     const [gstNo, setGstinNo] = useState();
+    const [copy, setCopy] = useState(0)
     
  
     const addTdsToggle = (key) => {
@@ -252,7 +253,14 @@ const Generated = ({updateTab}) => {
                           {row.is_paid == "0" 
                 ?   
                 <span title={row.paymenturl}>
-                 <FileCopyIcon onClick={() => {copyFun(row.paymenturl)}} style={noPointer}/>
+                    {
+                        copy == row.id ?
+                        <span style={{color: 'red'}}>Copied</span>
+                        
+                         : 
+                         <FileCopyIcon id={row.id} onClick={() => {copyFun(row.paymenturl, row.id)}} style={noPointer} />
+                    }
+               
                    </span>
               
                     : "" }
@@ -264,8 +272,9 @@ const Generated = ({updateTab}) => {
         },
     ];
     const noPointer = {cursor: 'pointer', color : "blue"};
-    const copyFun = (e)  =>{
-   
+    const copyFun = (e, id)  =>{
+       
+   setCopy(id)
         navigator.clipboard.writeText(e)
        
       }
@@ -344,6 +353,7 @@ const Generated = ({updateTab}) => {
                     generated = {"edited"}
                     gstNo = {gstNo}
                     updateTab={updateTab}
+                    getProposalList = {getProposalList}
                     />
                 </CardBody>
             </Card>

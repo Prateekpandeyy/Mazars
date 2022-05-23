@@ -34,7 +34,9 @@ const InvoiceTab = () => {
      color : "#42566a",
      fontWeight : 1000
       };
-    
+      const updateTab = (key) => {
+        setTabIndex(key)
+      }
 return(
     <Layout TPDashboard="TPDashboard" TPuserId={userid}>
      <Tabs selectedIndex={tabIndex} onSelect={(index) => tableIndex(index)}>
@@ -52,10 +54,12 @@ return(
                     </TabList>
 
                     <TabPanel>
-                    <Generated />
+                    <Generated
+                      updateTab={updateTab} />
                     </TabPanel>
                     <TabPanel>
-                    <CreateInvoice />
+                    <CreateInvoice 
+                      updateTab={updateTab}/>
                       
                     </TabPanel>
                     

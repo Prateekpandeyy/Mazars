@@ -167,7 +167,7 @@ console.log("data", data)
 
   return (
     <div>
-      <Modal isOpen={reportModal} toggle={ViewReport} size="lg" scrollable>
+      <Modal isOpen={reportModal} toggle={ViewReport} size="lg">
         <ModalHeader toggle={ViewReport}>
           
            <Typography variant="h6">

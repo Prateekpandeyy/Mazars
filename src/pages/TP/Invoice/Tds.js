@@ -25,7 +25,7 @@ function Tds (props)  {
     const [gst, setGst] = useState()
     const [tds2, setTds] = useState()
     const [grandTotal, setgrandTotal] = useState();
-   const [total, setTotal] = useState(0)
+   const [total, setTotal] = useState()
    const [pocketExp, setPocketExp] = useState()
    const [cgetRate, setCgetRate] = useState()
    const [igetRate, setIgetRate] = useState();
@@ -83,7 +83,8 @@ const getServices = () => {
     setGst(parseInt(props.paidAmount * 0 / 100))
     setTds(parseInt(props.paidAmount * tdsRate / 100))
     let tot = Number(props.paidAmount) + Number(props.paidAmount * cgetRate / 100)
-    setTotal(tot)
+    console.log("totl", isNaN(parseInt(props.paidAmount)), parseInt(props.paidAmount * cgetRate / 100))
+    setTotal(parseInt(props.paidAmount))
     // setTotal(Number(parseInt(props.paidAmount) + parseInt(props.paidAmount * cgetRate / 100)))
     setgrandTotal(parseInt(parseInt(props.paidAmount) + parseInt(props.paidAmount * 0 / 100)) - parseInt(props.paidAmount * tdsRate / 100))
     }
@@ -437,22 +438,24 @@ const onSubmit= (value) => {
        })
        .then((res) => {
            setLoading(false);
+           props.addTdsToggle()
            if(res.data.code === 1){
              Swal.fire({
                title : "success", 
                html : "Invoice generated successfully",
                icon : "success"
              })
-               
-               history.push("/taxprofessional/tpinvoice")
+               props.getProposalList()
+
            }
           else{
+            props.addTdsToggle()
                 Swal.fire({
                title : "error", 
                html : `${res.data.result}`,
                icon : "error"
              })
-                 
+             props.getProposalList()
              }
        })
         

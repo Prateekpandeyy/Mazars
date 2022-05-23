@@ -12,12 +12,26 @@ function AddEditor() {
   const editor = useRef();
   const [text, setText] = useState("");
  useEffect(() => {
-    var snow = new Quill('#snow-container', {
-        theme: 'snow',
-        modules: {
-          table: true,
-        }
-      });
+  var snow = new Quill('#snow-container', {
+    modules: {
+     table: true,
+        toolbar: [
+            [{ 'header': '1'}, {'header': '2'}, { 'font': [] }],
+            [{size: []}],
+            ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+            [{'list': 'ordered'}, {'list': 'bullet'}, 
+             {'indent': '-1'}, {'indent': '+1'}],
+            ['link', 'image', 'video'],
+            ['clean']
+          ],
+     
+    },
+
+    placeholder: 'Compose an epic...',
+    theme: 'snow'    
+  });
+
+
 
       const table = snow.getModule('table');
       snow.on('text-change', function(delta, old, source) {

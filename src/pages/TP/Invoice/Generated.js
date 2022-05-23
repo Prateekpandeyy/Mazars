@@ -26,6 +26,7 @@ const Generated = () => {
     const [billNo, setBillNo] = useState()
     const [id2, setId2] = useState()
     const [gstNo, setGstinNo] = useState();
+    const [copy, setCopy] = useState(0)
     const token = window.localStorage.getItem("tptoken")
     const myConfig = {
         headers : {
@@ -34,15 +35,17 @@ const Generated = () => {
       }
  
     const addTdsToggle = (key) => {
-   
-      setGstinNo(key.gstin_no);
         setTdsForm(!tdsForm)
+    if(key){
+        setGstinNo(key.gstin_no);
+       
         setAssignNo(key.assign_no)
         setPaidAmount(key.paid_amount)
         setId(key.id)
         setInstallmentNo(key.installment_no)
         setBillNo(key.billno);
         setId2(key.id)
+    }
     }
  
     useEffect(() => {
@@ -246,9 +249,16 @@ const Generated = () => {
                         }
                          {row.is_paid == "0" 
                 ?   
-                 <span title={row.paymenturl}>
-                 <FileCopyIcon onClick={() => {copyFun(row.paymenturl)}} style={noPointer}/>
-                   </span>  
+                <span title={row.paymenturl}>
+                    {
+                        copy == row.id ?
+                        <span style={{color: 'red'}}>Copied</span>
+                        
+                         : 
+                         <FileCopyIcon id={row.id} onClick={() => {copyFun(row.paymenturl, row.id)}} style={noPointer} />
+                    }
+               
+                   </span>
                    
               
                     : "" }
@@ -260,11 +270,12 @@ const Generated = () => {
         },
     ];
     const noPointer = {cursor: 'pointer', color : "blue"};
-    const copyFun = (e)  =>{
-   
-        navigator.clipboard.writeText(e)
+    const copyFun = (e, id)  =>{
        
-      }
+        setCopy(id)
+             navigator.clipboard.writeText(e)
+            
+           }
     rowStyle2 = (row, index) => {
         const style = {}
         var warningDate = moment(row.due_date).subtract(5, 'day').toDate();
@@ -341,6 +352,7 @@ const Generated = () => {
                       id = {id2}
                       generated = {"edited"}
                       gstNo = {gstNo}
+                      getProposalList ={getProposalList}
                       /> : ""
                   }
                 </CardBody>

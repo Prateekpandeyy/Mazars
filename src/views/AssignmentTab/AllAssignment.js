@@ -38,17 +38,40 @@ function AllAssignment() {
       
       setManual(!openManual)
   }
-  const ViewReport = (key) => {
 
+  const ViewReport = (key) => {
+    const body = document.getElementById("veRep");
+    // window.addEventListener('scroll', () => {
+    //   document.documentElement.style.setProperty('--scroll-y', `${body.scrollY}px`);
+    // });
     setReportModal(!reportModal);
     setReport(key.assign_no);
     setDataItem(key)
+    if(!key){
+     
+      document.getElementById("veRep").style.overflowY = "hidden"
+    
+    }
+    else{
+    
+     document.getElementById("veRep").style.overflowY = "auto"
+    }
+    
   };
 
   
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key)
+    if(!key){
+     
+      document.getElementById("veRep").style.overflowY = "hidden"
+    
+    }
+    else{
+    
+     document.getElementById("veRep").style.overflowY = "auto"
+    }
   }
 
   useEffect(() => {
@@ -342,20 +365,24 @@ function AllAssignment() {
                     </Modal>
           
          <DataTablepopulated 
+        
          bgColor = "#5a625a"
           bootstrap4
           keyField="id"
           data={assignmentDisplay}
           columns={columns}>
            </DataTablepopulated>
-          <ViewAllReportModal
-            ViewReport={ViewReport}
-            reportModal={reportModal}
-            report={report}
-            getPendingforAcceptance={getAssignmentData}
-            dataItem={dataItem}
-            deleiverAble = "#5a625a"
-          />
+         {
+           reportModal === true ?
+           <ViewAllReportModal
+           ViewReport={ViewReport}
+           reportModal={reportModal}
+           report={report}
+           getPendingforAcceptance={getAssignmentData}
+           dataItem={dataItem}
+           deleiverAble = "#5a625a"
+         /> : ""
+         }
 
           <DiscardReport
             ViewDiscussionToggel={ViewDiscussionToggel}

@@ -24,6 +24,7 @@ const Generated = () => {
     const [billNo, setBillNo] = useState()
     const [id2, setId2] = useState()
     const [gstNo, setGstinNo] = useState();
+    const [copy, setCopy] = useState(0)
     const [showCopyUrl, setShowCopyUrl] = useState("click")
  let copyTitle = ""
  const token = window.localStorage.getItem("adminToken")
@@ -232,9 +233,16 @@ const Generated = () => {
                 ?   
                
                   
-                    <span title={row.paymenturl}>
-                    <FileCopyIcon onClick={() => {copyFun(row.paymenturl)}}  style={noPointer} />
-                                   </span> 
+                <span title={row.paymenturl}>
+                {
+                    copy == row.id ?
+                    <span style={{color: 'red'}}>Copied</span>
+                    
+                     : 
+                     <FileCopyIcon id={row.id} onClick={() => {copyFun(row.paymenturl, row.id)}} style={noPointer} />
+                }
+           
+               </span>
                   
                 
                    
@@ -249,11 +257,12 @@ const Generated = () => {
     ];
     
     const noPointer = {cursor: 'pointer', color : "blue"};
-    const copyFun = (e)  =>{
-   
-        navigator.clipboard.writeText(e)
-  
-      }
+    const copyFun = (e, id)  =>{
+       
+        setCopy(id)
+             navigator.clipboard.writeText(e)
+            
+           }
     rowStyle2 = (row, index) => {
         const style = {}
         var warningDate = moment(row.due_date).subtract(5, 'day').toDate();
