@@ -71,7 +71,7 @@ const Details = () => {
    if(history.location.index !== undefined){
     axios.get(`${baseUrl}/customers/getarticles?id=${history.location.index}`)
     .then((res) => {
-     
+     console.log("result", res.data.result)
       setData(res.data.result)
       if(history.location.hash == "#direct"){
         setLinkData("direct")

@@ -100,15 +100,18 @@ const AddCmsContent = () => {
 
   setLoading(true)
  
-   
+   console.log("eee" , e)
       let formData = new FormData();
+     
       formData.append("type", pageto)
     if(showDoc === true) {
-      var uploadImg = e.p_upload;
+      var uploadImg = e.p_draft;
+   
+
       if (uploadImg) {
         for (var i = 0; i < uploadImg.length; i++) {
           let file = uploadImg[i];
-          formData.append("upload[]", file);
+          formData.append("content", file);
         }
       }
     }
@@ -118,7 +121,7 @@ const AddCmsContent = () => {
       addDet(html)
       formData.append("content", html);
     }
-      formData.append("content", html);
+      
    {
      stats === true ?
      formData.append("status", 1):
@@ -136,6 +139,7 @@ const AddCmsContent = () => {
           method : "POST", 
           url : `${baseUrl}/cms/setarticles`,
           headers: {
+            'content-type': 'multipart/form-data',
             uit : token
           },
           data : formData
@@ -283,11 +287,12 @@ const getEditValue= (e) => {
           <div className="mb-3">
             <label className="form-label">Upload Your Document</label>
             <input
-             type="file"
-             name="p_upload"
-             ref={register}
-             className="form-control-file"
-           />
+                type="file"
+                name="p_draft"
+                ref={register}
+                className="form-control-file manage_file"
+              
+              />
           </div>
 
           
