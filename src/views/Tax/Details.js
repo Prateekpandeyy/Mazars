@@ -12,7 +12,7 @@ import {  VscFilePdf} from "react-icons/vsc";
 import classes from './design.module.css';
 import ima from "../../mazars_logo.png";
 import { OuterloginContainer } from '../../components/Common/OuterloginContainer';
-import worddoc from './mmmm.docx';
+import worddoc from './purpose2.docx';
 import { Link } from 'react-router-dom';
 const MyContainer = styled(Box)({
     display : "flex", 
@@ -103,8 +103,8 @@ const Details = () => {
 
     return(
        <>
-       <div dangerouslySetInnerHTML={{ __html:  docren}} />
-       {/* <OuterloginContainer>
+     
+       <OuterloginContainer>
        <Header noSign="noSign"/>
         <MyContainer>
    
@@ -137,7 +137,7 @@ const Details = () => {
 <a href="https://www.masindia.live" target="_blank">www.masindia.live</a>
 </RightContent>
   </ArticleHeader>
-           <div>
+           {/* <div>
            <MyHeading>
            <h5>  {CommonServices.capitalizeFirstLetter(i.heading)}</h5>
          
@@ -152,9 +152,10 @@ const Details = () => {
            <h6>Date of publishing :   {i.publish_date.split("-").reverse().join("-")} </h6>
          
             
-             </div>
+             </div> */}
      <div id="artContent">
-    <Markup content={i.content} />
+    {/* <Markup content={i.content} /> */}
+    <div dangerouslySetInnerHTML={{ __html:  docren}} />
     </div>
     <a href={`${baseUrl3}/${i.file}`} target="_blank" 
     className={classes.myLink}>
@@ -172,7 +173,7 @@ const Details = () => {
       
        </MyContainer>
        <Footer />
-       </OuterloginContainer> */}
+       </OuterloginContainer>
        </>
   
     )

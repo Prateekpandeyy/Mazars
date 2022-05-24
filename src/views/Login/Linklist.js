@@ -108,11 +108,6 @@ const showLinkData = () => {
   
   
   
-  if(window.location.origin === "http://masindia.live" && window.location.protocol == 'http:'){
-    window.location.href = window.location.href.replace('http:', 'https:')
-  }
-  
-  
 
  const getData = (e) => {
 setDescription(true);
@@ -134,57 +129,12 @@ const classes = useStyle()
      <MyContainer>
    
   
-   {
-     description === false ? 
+
      <div className={classesCustom.articleContent}>
      <div className={classesCustom.articlesDetails}>
 
-  <>
- {
-   updates === true ?
-  <TableContainer>
-       <Breadcrumbs separator="<" maxItems={3} aria-label="breadcrumb">
-  <Link underline="hover" color="inherit" to={{
-    pathname : "/customer/updates",
-    index : 2
-  }}>
-   Updates
-  </Link>
-  
  
-  </Breadcrumbs>
-    <Table>
-      <TableBody>
-      {
-  linkData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((i, e) => (
-        <TableRow>
-          <TableCell  onClick={(p) => getData(i)}className="tableCellStyle">
-         <span>
-         <span style={{color: "rgb(61, 71, 117"}}>
-           {`${e + 1} .`}
-           </span> <span className="tabHover updatesLink">
-     {` ${i.heading} -    ${i.publish_date.split("-").reverse().join("-")}`}
-      </span>
-  </span>
-          </TableCell>
-        </TableRow>
-         ))
-        }
-      </TableBody>
-    </Table>
-   {
-     linkData.length > 10 ?
-     <TablePagination 
-     rowsPerPageOptions = {[5, 10, 15, 20, 25]}
-     count = {linkData.length}
-     rowsPerPage = {rowsPerPage}
-     page = {page}
-     onChangePage = {onChangePage}
-     onChangeRowsPerPage = {onChangeRowsPerPage}
-      /> : ""
-   }
-  </TableContainer>
-   : 
+
    <>
    
     <TableContainer>
@@ -204,7 +154,7 @@ const classes = useStyle()
    <TableRow>
      <TableCell style= {{width : "50px"}}>S.No</TableCell>
      <TableCell style={{width : "400px"}}>Website</TableCell>
-     <TableCell>Url</TableCell>
+     <TableCell>URL</TableCell>
    </TableRow>
    </TableHead>
       <TableBody>
@@ -233,96 +183,16 @@ const classes = useStyle()
       </TableBody>
     </Table>
     </> : "" }
-    {linkData22 === false ? <>
- {
-   linkData.length > 0 ?
-   <Breadcrumbs separator="<" maxItems={3} aria-label="breadcrumb">
-   <Link underline="hover" color="inherit" to={{
-    pathname : "/customer/updates",
-    index : 4
-  }}>
-   FAQs
-   </Link>
+  
    
-   
-   </Breadcrumbs> : ""
- }
-   {
-     linkData.map((i) => (
-      <Markup className="myFaq" content = {i.content} />
-     ))
-   }
-    </> : "" }
-    {
-      linkData.length > 10 ?
-      <TablePagination 
-        rowsPerPageOptions = {[5, 10, 15, 20, 25]}
-        count = {linkData.length}
-        rowsPerPage = {rowsPerPage}
-        page = {page}
-        onChangePage = {onChangePage}
-        onChangeRowsPerPage = {onChangeRowsPerPage}
-         /> : ""
-    }
   </TableContainer>
    </>
- }
-  </>
+
+
  
    </div>
 
- </div> : 
-   <div className={classesCustom.articleContent}>
-   <div className={classesCustom.articlesDetails}>
-   <Breadcrumbs separator=">" maxItems={3} aria-label="breadcrumb">
-  
-  <Link underline="hover" color="inherit" to = {{
-  pathname : "/customer/updates",
-  index : 2
-}}>
-   Updates
-  </Link>
- 
-  </Breadcrumbs>
-  <div style={{margin: "20px 0 10px 0"}}>
-  <ArticleHeader>
-  <MyLogo>
-<Link to = "/">
-<img className={classesCustom.myLogo} src={`${ima}`}/>
-</Link>
-</MyLogo>
-<RightContent>
-<h4 style={{color: "#081f8f"}}>Mazars Advisory Solutions (MAS)</h4>
-<span style={{color: "#0071ce", fontSize: "18px"}}>Building Lasting Relationships</span>
-<a href="https://www.masindia.live" target="_blank">www.masindia.live.com</a>
-</RightContent>
-  </ArticleHeader>
-  
-  <div>
-           <MyHeading>
-           <h5>  {CommonServices.capitalizeFirstLetter(myData.heading)}</h5>
-           <a href={`${baseUrl3}/${myData.file}`} target="_blank" 
-    className={classes.myLink}>
-
-    <button className="downloadBtnPdf"> Download  <VscFilePdf style={{display: "flex",
-     margin: "0 10px", color: "#e4f0fa", width: "20px", height: "20px"}} /></button>
-    </a> 
-         
-           </MyHeading>
-
-           <h6>Date -   {myData.publish_date.split("-").reverse().join("-")} </h6>
-         
-            
-             </div>
-     
-    <Markup content={myData.content} />
-  </div>
-   
- </div>
-
-</div>
-
-   }
+ </div> 
      </MyContainer>
 
 

@@ -77,6 +77,8 @@ const allLinkOrder = (e) => {
 const [columnDefs] = useState([
         {
             field: 'Url',
+            headerName : "URL",
+            label : "URL",
             rowDrag: true,
             initialWidth: 250,
             cellRenderer: function(params) {
