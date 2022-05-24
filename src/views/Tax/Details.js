@@ -12,6 +12,7 @@ import {  VscFilePdf} from "react-icons/vsc";
 import classes from './design.module.css';
 import ima from "../../mazars_logo.png";
 import { OuterloginContainer } from '../../components/Common/OuterloginContainer';
+import worddoc from './mmmm.docx';
 import { Link } from 'react-router-dom';
 const MyContainer = styled(Box)({
     display : "flex", 
@@ -62,10 +63,27 @@ const Details = () => {
   let getId = useParams();
   const [data, setData] = useState([])
   const [linkdata, setLinkData] = useState("direct")
- 
+ const [docren, setDocren] = useState("")
   useEffect(() => {
     getData()
+    readDoc()
   }, [])
+  const readDoc = () => {
+    var mammoth = require("mammoth");
+    var options = {
+      styleMap: [
+          "p[style-name='Section Title'] => h1:fresh",
+          "p[style-name='Subsection Title'] => h2:fresh"
+      ]
+  };
+    fetch(worddoc).then(res => res.arrayBuffer()).then(ab => 
+      mammoth.convertToHtml({arrayBuffer: ab}, options).then(function(result){
+      var html = result.value; 
+     setDocren(html)
+  })
+  .done()
+  )
+  }
   const getData = (e) => {
    
    if(history.location.index !== undefined){
@@ -85,7 +103,8 @@ const Details = () => {
 
     return(
        <>
-       <OuterloginContainer>
+       <div dangerouslySetInnerHTML={{ __html:  docren}} />
+       {/* <OuterloginContainer>
        <Header noSign="noSign"/>
         <MyContainer>
    
@@ -153,7 +172,7 @@ const Details = () => {
       
        </MyContainer>
        <Footer />
-       </OuterloginContainer>
+       </OuterloginContainer> */}
        </>
   
     )
