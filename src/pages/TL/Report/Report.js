@@ -367,7 +367,8 @@ const resetData = () => {
       formData.append("company", comp)
  axios({
    method : "POST",
-   url : `${baseUrl}/report/generateReport?t=${JSON.stringify(Math.floor(Math.random() * 110000))}`,
+   url : `${baseUrl}/report/viewReport?id=${JSON.parse(userid)}`,
+  //  url : `${baseUrl}/report/generateReport?t=${JSON.stringify(Math.floor(Math.random() * 110000))}`,
   headers  : {
 uit  : token
   },
@@ -483,7 +484,8 @@ uit  : token
     formData.append("company", comp)
 axios({
  method : "POST",
- url : `${baseUrl}/report/generateReport?t=${JSON.stringify(Math.floor(Math.random() * 110000))}`,
+ url : `${baseUrl}/report/viewReport?id=${JSON.parse(userid)}`,
+//  url : `${baseUrl}/report/generateReport?t=${JSON.stringify(Math.floor(Math.random() * 110000))}`,
  headers  : {
   uit  : token
     },
