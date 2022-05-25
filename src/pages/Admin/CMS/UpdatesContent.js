@@ -33,6 +33,7 @@ const UpdatesContent = () => {
     const [heading, setHeading] = useState("")
     const [date, setDate] = useState("")
     const [stats, setStats] = useState(false)
+    const [showDoc, setShowDoc] = useState(false)
  let history = useHistory()
  let getId = useParams()
  var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
@@ -71,11 +72,28 @@ const UpdatesContent = () => {
    }
    const onSubmit = (e) => {
        let message = "Updates created successfully"
-       var myEditor = document.querySelector('#snow-container')
-       var html = myEditor.children[0].innerHTML;
-       addDet(html)
+     
        let formData = new FormData();
-       formData.append("content", html);
+       if(showDoc === true) {
+        var uploadImg = e.p_draft;
+     
+  
+        if (uploadImg) {
+          for (var i = 0; i < uploadImg.length; i++) {
+            let file = uploadImg[i];
+            formData.append("content", file);
+            formData.append("content_type", 1)
+          }
+        }
+      }
+      else {
+        var myEditor = document.querySelector('#snow-container')
+        var html = myEditor.children[0].innerHTML;
+        addDet(html)
+        formData.append("content", html);
+        formData.append("content_type", 2)
+      }
+        
        formData.append("status", Number(stats))
        formData.append("heading", heading)
        formData.append("publish_date", date);
@@ -163,13 +181,41 @@ const UpdatesContent = () => {
                  </div>
          </div>
          <div className="row">
-             <div className="col-md-12">
-             <label className="form-label">Content</label> </div>
-             
-             <div className="col-md-12">
-             <AddEditor />
-                 </div>
+         <div className="col-md-3 my-4">
+         <input type="radio" value="Male" name="gender" onChange={() => setShowDoc(true)}/> Upload Content
+      </div>
+      <div className="col-md-3 my-4">
+        <input type="radio" value="Female" defaultChecked name="gender" onChange={() => setShowDoc(false)} /> Editor
+           </div>
          </div>
+         {showDoc === true ?
+          <form onSubmit={handleSubmit(onSubmit)}>
+          <div className="mb-3">
+            <label className="form-label">Upload Your Document</label>
+            <input
+                type="file"
+                name="p_draft"
+                ref={register}
+                className="form-control-file manage_file"
+              
+              />
+          </div>
+
+          
+        </form>
+         : ""}
+       {
+         showDoc === false ?
+         <div className="row">
+         <div className="col-md-12">
+         <label className="form-label">Content</label> </div>
+         
+         <div className="col-md-12" style={{display : "flex", flexDirection :"column"}}>
+       <AddEditor />
+             </div>
+     </div>
+ : ""
+       }
          <div className="row">
          <div className="col-md-3">
  

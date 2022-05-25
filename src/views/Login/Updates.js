@@ -303,25 +303,32 @@ const classes = useStyle()
 <a href="https://www.masindia.live" target="_blank">www.masindia.live.com</a>
 </RightContent>
   </ArticleHeader>
+  {
+    myData.content ?
+  <>
+    <div>
+    <MyHeading>
+    <h5>  {CommonServices.capitalizeFirstLetter(myData.heading)}</h5>
+    <a href={`${baseUrl3}/${myData.file}`} target="_blank" 
+className={classes.myLink}>
+
+<button className="downloadBtnPdf"> Download  <VscFilePdf style={{display: "flex",
+margin: "0 10px", color: "#e4f0fa", width: "20px", height: "20px"}} /></button>
+</a> 
   
-  <div>
-           <MyHeading>
-           <h5>  {CommonServices.capitalizeFirstLetter(myData.heading)}</h5>
-           <a href={`${baseUrl3}/${myData.file}`} target="_blank" 
-    className={classes.myLink}>
+    </MyHeading>
 
-    <button className="downloadBtnPdf"> Download  <VscFilePdf style={{display: "flex",
-     margin: "0 10px", color: "#e4f0fa", width: "20px", height: "20px"}} /></button>
-    </a> 
-         
-           </MyHeading>
-
-           <h6>Date -   {myData.publish_date.split("-").reverse().join("-")} </h6>
-         
-            
-             </div>
+    <h6>Date -   {myData.publish_date.split("-").reverse().join("-")} </h6>
+  
      
-    <Markup content={myData.content} />
+      </div>
+
+<Markup content={myData.content} />
+  </>
+
+     : 
+     <iframe src={`${baseUrl3}/${myData.file}#toolbar=0`} width="100%" height="500px" />
+  }
     </ArticleWrapper>
   </div>
    

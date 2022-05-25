@@ -12,7 +12,7 @@ import {  VscFilePdf} from "react-icons/vsc";
 import classes from './design.module.css';
 import ima from "../../mazars_logo.png";
 import { OuterloginContainer } from '../../components/Common/OuterloginContainer';
-import worddoc from './purpose2.docx';
+import worddoc from './convertpdf.pdf';
 import { Link } from 'react-router-dom';
 const MyContainer = styled(Box)({
     display : "flex", 
@@ -76,13 +76,14 @@ const Details = () => {
           "p[style-name='Subsection Title'] => h2:fresh"
       ]
   };
-    fetch(worddoc).then(res => res.arrayBuffer()).then(ab => 
-      mammoth.convertToHtml({arrayBuffer: ab}, options).then(function(result){
-      var html = result.value; 
-     setDocren(html)
-  })
-  .done()
-  )
+  //   fetch(worddoc).then(res => res.arrayBuffer()).then(ab => 
+  //     mammoth.convertToHtml({arrayBuffer: ab}, options).then(function(result){
+  //     var html = result.value; 
+  //    setDocren(html)
+  // })
+  // .done()
+  // )
+
   }
   const getData = (e) => {
    
@@ -137,7 +138,10 @@ const Details = () => {
 <a href="https://www.masindia.live" target="_blank">www.masindia.live</a>
 </RightContent>
   </ArticleHeader>
-           {/* <div>
+  {
+    i.content ?
+    <>
+                <div>
            <MyHeading>
            <h5>  {CommonServices.capitalizeFirstLetter(i.heading)}</h5>
          
@@ -152,11 +156,21 @@ const Details = () => {
            <h6>Date of publishing :   {i.publish_date.split("-").reverse().join("-")} </h6>
          
             
-             </div> */}
+             </div> 
      <div id="artContent">
-    {/* <Markup content={i.content} /> */}
-    <div dangerouslySetInnerHTML={{ __html:  docren}} />
+     <Markup content={i.content} /> 
+ 
+  
     </div>
+    </> : 
+    <div id="artContent">
+
+    <iframe src={`${baseUrl3}/${i.file}#toolbar=0`} width="100%" height="500px" />
+
+    </div>
+  }
+        
+     
     <a href={`${baseUrl3}/${i.file}`} target="_blank" 
     className={classes.myLink}>
 

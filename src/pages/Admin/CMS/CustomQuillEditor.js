@@ -13,41 +13,43 @@ function CustomQuillEditor(props) {
   const [text, setText] = useState(props.content);
   
  useEffect(() => {
-   if(props.content){
+  
     
-       var snow = new Quill('#snow-container', {
-             modules: {
-              table: true,
-                 toolbar: [
-                     [{ 'header': '1'}, {'header': '2'}, { 'font': [] }],
-                     [{size: []}],
-                     ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-                     [{'list': 'ordered'}, {'list': 'bullet'}, 
-                      {'indent': '-1'}, {'indent': '+1'}],
-                     ['link', 'image', 'video'],
-                     ['clean']
-                   ],
-              
-             },
-        
-             placeholder: 'Compose an epic...',
-             theme: 'snow'    
-           });
+       if(props.content || props.showEditor === true) {
+        var snow = new Quill('#snow-container', {
+          modules: {
+           table: true,
+              toolbar: [
+                  [{ 'header': '1'}, {'header': '2'}, { 'font': [] }],
+                  [{size: []}],
+                  ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+                  [{'list': 'ordered'}, {'list': 'bullet'}, 
+                   {'indent': '-1'}, {'indent': '+1'}],
+                  ['link', 'image', 'video'],
+                  ['clean']
+                ],
+           
+          },
      
+          placeholder: 'Compose an epic...',
+          theme: 'snow'    
+        });
+  
 
-    const table = snow.getModule('table');
-    snow.on('text-change', function(delta, old, source) {
-      if (source === 'user') {
-     
-        updateOutput();
-      }
-    });
-    
-    function updateOutput() {
-      const snowContent = snow.getContents();
-    }    
+ const table = snow.getModule('table');
+ snow.on('text-change', function(delta, old, source) {
+   if (source === 'user') {
+  
+     updateOutput();
    }
- }, [props.content])
+ });
+ 
+ function updateOutput() {
+   const snowContent = snow.getContents();
+ }    
+
+       }
+ }, [props.content || props.showEditor])
   return (
    <>
 

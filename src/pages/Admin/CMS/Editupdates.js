@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import { Container } from '@material-ui/core';
 import {  styled } from '@mui/material';
 import axios from 'axios';
-import { baseUrl } from '../../../config/config';
+import { baseUrl, baseUrl3 } from '../../../config/config';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import './map.css';
@@ -33,6 +33,8 @@ const Editupdates = () => {
     const [heading, setHeading] = useState("")
     const [date, setDate] = useState("")
     const [stats, setStats] = useState(false)
+    const [file, setFile] = useState("")
+    const [showDoc, setShowDoc] = useState(false)
  let history = useHistory()
  let getId = useParams()
  const token = localStorage.getItem("token")
@@ -56,12 +58,16 @@ const Editupdates = () => {
               setHeading(i.heading)
               addDet(i.content)
               setDate(i.publish_date)
+              setFile(i.file)
               if(i.status == 1){
                 setStats(true)
                }
                else{
                  setStats(false)
                }
+               if(i.file){
+                setShowDoc(true)
+              }
             })
       
         })
@@ -163,14 +169,46 @@ const Editupdates = () => {
                  </div>
          </div>
          <div className="row">
-             <div className="col-md-12">
-             <label className="form-label">Content</label> </div>
-             
-             <div className="col-md-12">
-             <CustomQuillEditor 
- content={det} />
-                 </div>
+         <div className="col-md-3 my-4">
+         <input type="radio" value="Male" name="gender" onChange={() => setShowDoc(true)}/> Upload Content
+      </div>
+      <div className="col-md-3 my-4">
+        <input type="radio" value="Female" defaultChecked name="gender" onChange={() => setShowDoc(false)} /> Editor
+           </div>
          </div>
+         {showDoc === true ?
+          <form onSubmit={handleSubmit(onSubmit)}>
+          <div className="mb-3">
+            <label className="form-label">Upload Your Document</label>
+            <input
+                type="file"
+                name="p_draft"
+                ref={register}
+                className="form-control-file manage_file"
+              
+              />
+          </div>
+
+          <span style={{display : "flex", cursor : "pointer"}}>
+                   <a href={`${baseUrl3}/${file}`} target="_blank">
+                   <i className="fa fa-photo"></i>
+                     <span style={{ marginLeft: "10px" }}>{file}</span>
+                   </a>
+                       </span>
+        </form>
+         : ""}
+        {
+          showDoc === false ?
+          <div className="row">
+          <div className="col-md-12">
+          <label className="form-label">Content</label> </div>
+          
+          <div className="col-md-12">
+          <CustomQuillEditor 
+content={det} />
+              </div>
+      </div> : ""
+        }
          <div className="row">
          <div className="col-md-3">
  

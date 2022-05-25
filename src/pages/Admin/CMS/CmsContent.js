@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import { Container } from '@material-ui/core';
 import {  styled } from '@mui/material';
 import axios from 'axios';
-import { baseUrl } from '../../../config/config';
+import { baseUrl , baseUrl3} from '../../../config/config';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import './map.css';
@@ -38,6 +38,9 @@ const CmsContent = () => {
     const [editorError, setEditorError] = useState(false)
     const [loading, setLoading] = useState(false);
     const [email, setEmail] = useState("")
+    const [showDoc, setShowDoc] = useState(false)
+    const [showEditor, setShowEditor] = useState(false)
+    const [file, setFile] = useState("")
     let history  = useHistory()
     let getId = useParams()
     var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
@@ -67,15 +70,24 @@ const CmsContent = () => {
          setWriter(i.writer)
          setDate(i.publish_date);
          let a = myFun(i.content)
-         console.log("aaaa", a)
-        addDet(i.content) 
-        setEmail(i.email)
+         console.log("aaaa", i)
         
+        setEmail(i.email)
+        setFile(i.file)
          if(i.status == 1){
           setStats(true)
          }
          else{
            setStats(false)
+           addDet(i.content)
+         }
+         if(i.content_type === "1"){
+           setShowDoc(true)
+         }
+         else {
+          addDet(i.content)
+            setShowDoc(false)
+         
          }
         }
       })
@@ -85,7 +97,7 @@ const CmsContent = () => {
     }
    
     const myFun = (a) => {
-      console.log("valu22", a)
+   
       return(
         <Markup content={a} />
       )
@@ -95,15 +107,32 @@ const CmsContent = () => {
    }
    const onSubmit = (e) => {
      let message = "Content created successfully"
-console.log("det", det)
+     setShowEditor(false)
+     let formData = new FormData();
   setLoading(true)
-  var myEditor = document.querySelector('#snow-container')
-var html = myEditor.children[0].innerHTML;
-addDet(html)
-      console.log("html", html)  
-      let formData = new FormData();
+  if(showDoc === true) {
+    var uploadImg = e.p_draft;
+ 
+
+    if (uploadImg) {
+      for (var i = 0; i < uploadImg.length; i++) {
+        let file = uploadImg[i];
+        formData.append("content", file);
+        formData.append("content_type", 1)
+      }
+    }
+  }
+  else {
+    var myEditor = document.querySelector('#snow-container')
+    var html = myEditor.children[0].innerHTML;
+    addDet(html)
+    formData.append("content", html);
+    formData.append("content_type", 2)
+  }
+     
+     
       formData.append("type", pageto)
-      formData.append("content", html);
+     
    {
      stats === true ?
      formData.append("status", 1):
@@ -255,16 +284,65 @@ const getEditValue= (e) => {
                    />
                  </div>
          </div>
-       
+        {
+          showDoc === true ? 
+          <div className="row">
+          <div className="col-md-3 my-4">
+          <input type="radio" value="Male" defaultChecked name="gender" onChange={() => setShowDoc(true)}/> Upload Content
+       </div>
+       <div className="col-md-3 my-4">
+         <input type="radio" value="Female"  name="gender" onChange= {() => {
+           setShowEditor(true)
+           setShowDoc(false)
+         }} /> Editor
+            </div>
+          </div> : ""
+        }
+        {
+          showDoc === false ?
+          <div className="row">
+          <div className="col-md-3 my-4">
+          <input type="radio" value="Male" name="gender" onChange={() => setShowDoc(true)}/> Upload Content
+       </div>
+       <div className="col-md-3 my-4">
+         <input type="radio" value="Female" defaultChecked name="gender" onChange={() => setShowDoc(false)} /> Editor
+            </div>
+          </div> : ""
+        }
+         {showDoc === true ?
+          <form onSubmit={handleSubmit(onSubmit)}>
+          <div className="mb-3">
+            <label className="form-label">Upload Your Document</label>
+            <input
+                type="file"
+                name="p_draft"
+                ref={register}
+                className="form-control-file manage_file"
+              
+              />
+          </div>
+
+          <span style={{display : "flex", cursor : "pointer"}}>
+                   <a href={`${baseUrl3}/${file}`} target="_blank">
+                   <i className="fa fa-photo"></i>
+                     <span style={{ marginLeft: "10px" }}>{file}</span>
+                   </a>
+                       </span>
+        </form>
+         : ""}
+       {
+         showDoc === false ?
          <div className="row">
-             <div className="col-md-12">
-             <label className="form-label">Content</label> </div>
-             
-             <div className="col-md-12" style={{display : "flex", flexDirection :"column"}}>
-           <CustomQuillEditor 
- content={det} />
-                 </div>
-         </div>
+         <div className="col-md-12">
+         <label className="form-label">Content</label> </div>
+         
+         <div className="col-md-12" style={{display : "flex", flexDirection :"column"}}>
+       <CustomQuillEditor 
+content={det}
+showEditor={showEditor} />
+             </div>
+     </div> : ""
+       }
          <div className="row">
          <div className="col-md-3">
  
