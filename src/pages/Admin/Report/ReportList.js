@@ -57,6 +57,12 @@ const ReportList = () => {
             getData()
         })
     }
+    const downloadRep = (id) => {
+      axios.get(`${baseUrl}/report/viewReport?id=${id}`, myConfig)
+      .then((res) => {
+        console.log("response", res)
+      })
+    }
     const columns = [
         {
         dataFeild : "",
@@ -99,9 +105,12 @@ const ReportList = () => {
                   <div style={{display : "flex", justifyContent : "space-around"}}>
                 
                <div title="Download">
-               <a href ={`${baseUrl3}/${row.report_path}`} target="_blank">
-                <CloudDownloadIcon />
-                  </a>
+               {/* <a href ={`${baseUrl3}/${row.report_path}`} target="_blank">
+
+                  </a> */}
+                  <span onClick={() => downloadRep(row.id)}>
+                                  <CloudDownloadIcon />
+                                  </span>
                </div>
                   <i className="fa-thin fa-file-excel"></i>
 
