@@ -134,7 +134,11 @@ const Details = () => {
  
 </Breadcrumbs>
 <ArticleWrapper>
-<ArticleHeader>
+
+  {
+    i.content_type === "2" ?
+    <>
+    <ArticleHeader>
 <MyLogo>
 <Link to = "/">
 <img className={classes.myLogo} src={`${ima}`}/>
@@ -147,9 +151,6 @@ const Details = () => {
 <a href="https://www.masindia.live" target="_blank">www.masindia.live</a>
 </RightContent>
   </ArticleHeader>
-  {
-    i.content ?
-    <>
                 <div>
            <MyHeading>
            <h5>  {CommonServices.capitalizeFirstLetter(i.heading)}</h5>

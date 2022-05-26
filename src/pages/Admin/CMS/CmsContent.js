@@ -111,15 +111,24 @@ const CmsContent = () => {
      let formData = new FormData();
   setLoading(true)
   if(showDoc === true) {
+    console.log("ffff", showDoc)
     var uploadImg = e.p_draft;
- 
+    console.log("ffff222", uploadImg.length)
 
-    if (uploadImg) {
+    if (uploadImg.length > 0) {
       for (var i = 0; i < uploadImg.length; i++) {
         let file = uploadImg[i];
         formData.append("content", file);
         formData.append("content_type", 1)
       }
+    }
+    else if(file.length > 0) {
+      formData.append("content", file);
+      formData.append("content_type", 1)
+    }
+    else{
+      formData.append("content", det);
+      formData.append("content_type", 2)
     }
   }
   else {
@@ -284,21 +293,20 @@ const getEditValue= (e) => {
                    />
                  </div>
          </div>
-        {
-          showDoc === true ? 
+        
           <div className="row">
           <div className="col-md-3 my-4">
-          <input type="radio" value="Male" defaultChecked name="gender" onChange={() => setShowDoc(true)}/> Upload Content
+          <input type="radio" value="Male" defaultChecked={showDoc === true ? true : false} name="gender" onChange={() => setShowDoc(true)}/> Upload Content
        </div>
        <div className="col-md-3 my-4">
-         <input type="radio" value="Female"  name="gender" onChange= {() => {
-           setShowEditor(true)
+         <input type="radio" value="Female" defaultChecked={showDoc === false ? true : false} name="gender" onChange= {() => {
+         
            setShowDoc(false)
          }} /> Editor
             </div>
-          </div> : ""
-        }
-        {
+          </div> 
+
+        {/* {
           showDoc === false ?
           <div className="row">
           <div className="col-md-3 my-4">
@@ -308,7 +316,7 @@ const getEditValue= (e) => {
          <input type="radio" value="Female" defaultChecked name="gender" onChange={() => setShowDoc(false)} /> Editor
             </div>
           </div> : ""
-        }
+        } */}
          {showDoc === true ?
           <form onSubmit={handleSubmit(onSubmit)}>
           <div className="mb-3">

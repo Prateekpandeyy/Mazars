@@ -240,6 +240,9 @@ const EditImage = () => {
                   </div>
             
                   </div>
+                  <div style={{display :"flex", width: "100%", mmargin: "5px 0", justifyContent : "flex-end"}}>
+                    <p>jpeg,gif,png  <sup className="declined"> *</sup></p>
+                    </div>
                 <div className="row">
                   <div className="col-md-12">
                <button className="customBtn mt-5">Submit</button> </div>
