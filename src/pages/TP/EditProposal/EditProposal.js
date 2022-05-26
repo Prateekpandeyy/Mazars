@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
@@ -20,9 +21,11 @@ import Alerts from "../../../common/Alerts";
 import classNames from "classnames";
 import Mandatory from "../../../components/Common/Mandatory";
 import { Spinner } from 'reactstrap';
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import {Link} from 'react-router-dom';
 
-
-function EditComponent() {
+function EditComponent(props) {
 
   const alert = useAlert();
   const { register, handleSubmit, reset, errors } = useForm();
@@ -38,14 +41,16 @@ function EditComponent() {
   const[clearValue, setClearValue] = useState(true)
   const [payment, setPayment] = useState([]);
   const [installment, setInstallment] = useState([]);
-  const [error, setError] = useState('');
+  const [value2, setValue2] = useState('');
   const [diserror, setdiserror] = useState("")
+  const [company2, setCompany2] = useState("")
+  const [companyName, setCompanyName] = useState([])
   const history = useHistory();
   const { id } = useParams();
-  
+
+  const [dateError, setDateError] = useState(false)
   var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
   const [item] = useState(current_date);
-
   const [proposal, setProposal] = useState({
     query: "",
     name: "",
@@ -54,6 +59,7 @@ function EditComponent() {
     description: "",
     installment_amount: "",
     due_date: "",
+    payment : ""
   });
 
 
@@ -62,13 +68,27 @@ function EditComponent() {
 
   useEffect(() => {
     getQuery();
+    getCompany()
   }, []);
-
-
+  const token = window.localStorage.getItem("tptoken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
+  const getCompany = () => {
+    axios.get(
+      `${baseUrl}/tl/getcompany`, myConfig
+    )
+    .then((res) => {
+      console.log("response", res)
+      setCompanyName(res.data.result)
+    })
+  }
   const getQuery = () => {
-    axios.get(`${baseUrl}/tl/getProposalDetail?id=${id}`).then((res) => {
-      console.log(res);
+    axios.get(`${baseUrl}/tl/getProposalDetail?id=${id}`, myConfig).then((res) => {
       if (res.data.code === 1) {
+        setCompany2(res.data.result.company)
         setProposal({
           name: res.data.result.name,
           query: res.data.result.assign_no,
@@ -76,8 +96,9 @@ function EditComponent() {
           description: res.data.result.description,
           installment_amount: res.data.result.installment_amount,
           due_date: res.data.result.due_date,
+          payment : res.data.result.installment_amount
         });
-
+setValue2(res.data.result.description)
         var payment_terms = res.data.result.payment_terms
         var no_of_installment = res.data.result.no_of_installment
 
@@ -91,7 +112,6 @@ function EditComponent() {
           value: no_of_installment,
         }
 
-        // console.log("data1", data1)
         setPayment(data1);
         setInstallment(data2);
       }
@@ -101,7 +121,7 @@ function EditComponent() {
 
   useEffect(() => {
     const getUser = async () => {
-      const res = await axios.get(`${baseUrl}/customers/allname?id=${id}`);
+      const res = await axios.get(`${baseUrl}/customers/allname?id=${id}`, myConfig);
       setCustId(res.data.id);
     };
     getUser();
@@ -111,25 +131,34 @@ function EditComponent() {
 
 
   const onSubmit = (value) => {
-    console.log(value);
-
-    var lumsum = value.p_inst_date
+ 
+if(diserror.length > 0){
+  return false
+}
+else if(dateError === true){
+  Alerts.ErrorNormal("Date must be unique")
+ }
+ else if(value2.length == 0){
+  return false
+ }
+else{
+  var lumsum = value.p_inst_date
     if (payment.label == "lumpsum") {
       setDate(lumsum)
     }
 
     let formData = new FormData();
-    formData.append("assign_no", value.p_assingment);
-    formData.append("name", value.p_name);
-    formData.append("type", "tp");
+    formData.append("assign_no", query);
+    formData.append("name", name);
+    formData.append("type", "tl");
     formData.append("id", JSON.parse(userid));
     formData.append("assign_id", id);
     formData.append("customer_id", custId);
-    formData.append("description", value.description);
+    formData.append("description", value2);
     formData.append("amount_type", "fixed");
     formData.append("amount", value.p_fixed);
     formData.append("installment_amount", amount);
-
+    formData.append("company", value.p_company)
     formData.append("payment_terms", payment.value);
     formData.append("no_of_installment", installment.value);
 
@@ -141,8 +170,7 @@ function EditComponent() {
 
 
     if (payment.length < 1) {
-      console.log("please select payments terms --")
-      // setpaymentError("Please select at lease one")
+     
     } else
       if (payment.value == "installment") {
         if (installment == "") {
@@ -151,9 +179,10 @@ function EditComponent() {
           if (!amount || !date) {
             Alerts.ErrorNormal(`Please enter all fields.`)
           } else if (amount && date) {
-            console.log("all deatils ** here --")
+
             if (installment.value > 0) {
               var a = Number(installment.value)
+             
               for (let i = 0; i < a; i++) {
 
                 if (amount[i] == "" || amount[i] == undefined || amount[i] <= 0) {
@@ -171,20 +200,23 @@ function EditComponent() {
               }
               if (value.p_fixed != sum) {
                 Alerts.ErrorNormal(`Sum of all installments should be equal to ${value.p_fixed}.`)
-                console.log(`Sum of all installments should be equal to ${value.p_fixed}.`)
+
               } else {
-                console.log("call else fine api for installment")
+               
                 setLoading(true)
                 axios({
                   method: "POST",
                   url: `${baseUrl}/tp/updateProposal`,
+                  headers : {
+                    uit : token
+                  },
                   data: formData,
                 })
                   .then(function (response) {
-                    console.log("res-", response);
+
                     if (response.data.code === 1) {
                       setLoading(false)
-                      var variable = "Proposal Updated Successfully "
+                      var variable = "Proposal updated successfully"
                       Alerts.SuccessNormal(variable)
                       history.push("/taxprofessional/proposal");
                     } else if (response.data.code === 0) {
@@ -192,21 +224,24 @@ function EditComponent() {
                     }
                   })
                   .catch((error) => {
-                    console.log("erroror - ", error);
+                  
                   });
               }
             }
           }
       } else if (payment.label == "lumpsum") {
-        console.log("call api for lumshum",)
+
         setLoading(true)
         axios({
           method: "POST",
           url: `${baseUrl}/tp/updateProposal`,
+          headers: {
+            uit : token
+          },
           data: formData,
         })
           .then(function (response) {
-            console.log("res-", response);
+         
             if (response.data.code === 1) {
               setLoading(false)
               var variable = "Proposal Updated Successfully "
@@ -217,16 +252,21 @@ function EditComponent() {
             }
           })
           .catch((error) => {
-            console.log("erroror - ", error);
+          
           });
       }
+}
+    
   };
 
 
   const handleChange = (e) => {
-    console.log("val-", e.target.value);
+
     if (isNaN(e.target.value)) {
-      setdiserror("Please enter digit only");
+      setdiserror("Please enter number only");
+    }
+    else if(e.target.value == "0"){
+      setdiserror("Amount should be greater than zero")
     }
     else {
       setdiserror("");
@@ -235,27 +275,35 @@ function EditComponent() {
 
 
   const paymentAmount = (data) => {
-    console.log("paymentAmount", data)
+   
 
     var array1 = []
     Object.entries(data).map(([key, value]) => {
       array1.push(value)
     });
-    setAmount(array1);
+    setAmount(array1.slice(0, installment.value));
   };
 
   const paymentDate = (data) => {
-    console.log("paymentDate", data)
+   
 
     var array2 = []
     Object.entries(data).map(([key, value]) => {
       array2.push(value)
     });
-    setDate(array2);
+
+    setDate(array2.slice(0, installment.value));
+    if(new Set(array2).size !== array2.length){
+      setDateError(true)
+     Alerts.ErrorNormal("Date must be unique")
+    }
+    else{
+      setDateError(false)
+    }
   };
 
   const installmentHandler = (key) => {
-    console.log("key", key)
+
     setInstallment(key)
     setClearValue(false)
   }
@@ -267,13 +315,14 @@ function EditComponent() {
         <CardHeader>
           <Row>
             <Col md="5">
-              <button
-                class="btn btn-success ml-3"
-                onClick={() => history.goBack()}
-              >
-                <i class="fas fa-arrow-left mr-2"></i>
-                Go Back
-              </button>
+            <Link
+                  to={{
+                    pathname: `/taxprofessional/${props.location.routes}`,
+                    index: props.location.index,
+                  }}
+                >
+                  <button class="autoWidthBtn ml-3">Go Back</button>
+                </Link>
             </Col>
             <Col md="7">
               <div class="btn ml-3">
@@ -284,7 +333,7 @@ function EditComponent() {
         </CardHeader>
 
         <CardBody>
-          <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
+          <form onSubmit={handleSubmit(onSubmit)}>
 
             <div style={{ display: "flex" }}>
               <div class="col-md-6">
@@ -295,11 +344,27 @@ function EditComponent() {
                     type="text"
                     name="p_assingment"
                     class="form-control"
+                    disabled
                     value={query}
                     ref={register}
                   />
                 </div>
-
+                <div class="form-group">
+                  <label>Company</label>
+                  <select
+                    class="form-control"
+                    ref={register}
+                    name="p_company"
+                   value={company2}
+                   onChange= {(e) => setCompany2(e.target.value)}
+                  >
+{
+  companyName.map((i) => (
+    <option value={i.company_prefix}>{i.name}</option>
+  ))
+}
+                  </select>
+                </div>
                 <div class="form-group">
                   <label>Fee</label>
                   <select
@@ -318,7 +383,7 @@ function EditComponent() {
                     type="text"
                     name="p_fixed"
                     className={classNames("form-control", {
-                      "is-invalid": errors.p_fixed,
+                      "is-invalid": errors.p_fixed || diserror,
                     })}
                     ref={register({ required: true })}
                     placeholder="Enter Fixed Price"
@@ -330,7 +395,85 @@ function EditComponent() {
 
                 <div class="form-group">
                   <label>Scope of Work<span className="declined">*</span></label>
-                  <textarea
+                  <CKEditor
+                     editor={ ClassicEditor }
+                     config = {{
+
+                      highlight: {
+                        options: [
+                            {
+                                model: 'greenMarker',
+                                class: 'marker-green',
+                                title: 'Green marker',
+                                color: 'var(--ck-highlight-marker-green)',
+                                type: 'marker'
+                            },
+                            {
+                                model: 'redPen',
+                                class: 'pen-red',
+                                title: 'Red pen',
+                                color: 'var(--ck-highlight-pen-red)',
+                                type: 'pen'
+                            }
+                        ]
+                    },
+                      fontFamily: {
+                        options: [
+                            'default',
+                            'Ubuntu, Arial, sans-serif',
+                            'Ubuntu Mono, Courier New, Courier, monospace'
+                        ]
+                    },
+                    fontColor: {
+                      colors: [
+                          {
+                              color: 'hsl(0, 0%, 0%)',
+                              label: 'Black'
+                          },
+                          {
+                              color: 'hsl(0, 0%, 30%)',
+                              label: 'Dim grey'
+                          },
+                          {
+                              color: 'hsl(0, 0%, 60%)',
+                              label: 'Grey'
+                          },
+                          {
+                              color: 'hsl(0, 0%, 90%)',
+                              label: 'Light grey'
+                          },
+                          {
+                              color: 'hsl(0, 0%, 100%)',
+                              label: 'White',
+                              hasBorder: true
+                          },
+
+                          // ...
+                      ]
+                  },
+                    toolbar: [
+                   ' highlight', 'heading',  'bold', 'fontColor', 'italic',  'bulletedList', 'numberedList', 'undo', 'redo'
+                    ],
+                  
+                    }}
+                    
+                    className={classNames("form-control", {
+                      "is-invalid": errors.description,
+                    })}
+                    id="textarea"
+                    rows="3"
+                    name="description"
+                    data={description}
+                    onChange={ ( event, editor ) => {
+                      setValue2(editor.getData())
+                      // setcustError("")
+                    
+                  } }
+                    //ref={register({ required: true })}
+                >
+                  
+                  </CKEditor>
+                  {/* <textarea
                     className={classNames("form-control", {
                       "is-invalid": errors.description,
                     })}
@@ -339,18 +482,19 @@ function EditComponent() {
                     name="description"
                     defaultValue={description}
                     ref={register({ required: true })}
-                  ></textarea>
+                  ></textarea> */}
                 </div>
               </div>
 
 
               <div class="col-md-6">
                 <div class="form-group">
-                  <label>Customer Name</label>
+                  <label>Client Name</label>
                   <input
                     type="text"
                     name="p_name"
                     class="form-control"
+                    disabled
                     value={name}
                     ref={register}
                   />
@@ -378,7 +522,6 @@ function EditComponent() {
                       ref={register({ required: true })}
                       placeholder="Enter Hourly basis"
                       defaultValue={due_date}
-                      min={item}
                     />
                   </div>
                 ) :
@@ -408,12 +551,8 @@ function EditComponent() {
                       installment_amount={installment_amount}
                       due_date={due_date}
                       getQuery={getQuery}
-
                       item={item}
-
-                    
                       clearValue={clearValue}
-
                     />
                 }
               </div>
@@ -424,7 +563,7 @@ function EditComponent() {
                 loading ?
                   <Spinner color="primary" />
                   :
-                  <button type="submit" class="btn btn-primary">
+                  <button type="submit" class="customBtn">
                     Submit
                   </button>
               }
@@ -466,93 +605,3 @@ const noInstallments = [
   },
 ];
 
-
-
-   // var lumsum = value.p_inst_date
-    // setDate(lumsum)
-
-    // let formData = new FormData();
-    // formData.append("assign_no", value.p_assingment);
-    // formData.append("name", value.p_name);
-    // formData.append("type", "tl");
-    // formData.append("id", JSON.parse(userid));
-    // formData.append("description", value.description);
-    // formData.append("customer_id", custId);
-    // formData.append("assign_id", id);
-    // formData.append("amount_type", "fixed");
-    // formData.append("amount", value.p_fixed);
-    // formData.append("installment_amount", amount);
-    // formData.append("payment_terms", payment.value);
-    // formData.append("no_of_installment", installment.value);
-
-    // payment.label == "lumpsum" ?
-    //   formData.append("due_date", lumsum) :
-    //   payment.label == "installment" ?
-    //     formData.append("due_date", date) :
-    //     formData.append("due_date", "")
-
-
-    // if (payment.value == "installment") {
-    //   if (amount) {
-    //     console.log("amount --", amount)
-
-    //     if (installment.value > 0) {
-    //       console.log("installment** --")
-    //       var a = Number(installment.value)
-    //       for (let i = 0; i < a; i++) {
-    //         if (amount[i] == "" || amount[i] == undefined || amount[i] <= 0) {
-    //           console.log("amount --1", amount[i])
-    //           Alerts.ErrorNormal(`please insert all fields.`)
-    //           return false
-    //         }
-    //       }
-    //     }
-    //   }
-    //   if (amount) {
-    //     var sum = amount.reduce(myFunction)
-    //     function myFunction(total, value) {
-    //       return Number(total) + Number(value);
-    //     }
-    //   }
-    //   if (value.p_fixed != sum) {
-    //     Alerts.ErrorNormal(`Sum of all installments should be equal to ${value.p_fixed}.`)
-    //   }
-    //   else {
-    //     axios({
-    //       method: "POST",
-    //       url: `${baseUrl}/tl/updateProposal`,
-    //       data: formData,
-    //     })
-    //       .then(function (response) {
-    //         console.log("res-", response);
-    //         if (response.data.code === 1) {
-    //           reset();
-    //           var variable = "Proposal Successfully Sent "
-    //           Alerts.SuccessNormal(variable)
-    //           history.push("/teamleader/proposal");
-    //         }
-    //       })
-    //       .catch((error) => {
-    //         console.log("erroror - ", error);
-    //       });
-    //   }
-
-    // }
-    // else {
-    //   axios({
-    //     method: "POST",
-    //     url: `${baseUrl}/tl/updateProposal`,
-    //     data: formData,
-    //   })
-    //     .then(function (response) {
-    //       console.log("res-", response);
-    // if (response.data.code === 1) {
-    //   var variable = "Proposal Updated Successfully "
-    //   Alerts.SuccessNormal(variable)
-    //   history.push("/teamleader/proposal");
-    // }
-    //     })
-    //     .catch((error) => {
-    //       console.log("erroror - ", error);
-    //     });
-    // }

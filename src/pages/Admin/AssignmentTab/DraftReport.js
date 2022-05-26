@@ -6,22 +6,21 @@ import {
   Card,
   CardHeader,
   CardBody,
-  CardTitle,
-  Row,
-  Col,
-  Table,
+ 
 } from "reactstrap";
 import { useForm } from "react-hook-form";
 import "antd/dist/antd.css";
 import { Select } from "antd";
 import { Link } from "react-router-dom";
-import BootstrapTable from "react-bootstrap-table-next";
-import AdminFilter from "../../../components/Search-Filter/AdminFilter";
 import Records from "../../../components/Records/Records";
 import DiscardReport from "../AssignmentTab/DiscardReport";
 import DescriptionOutlinedIcon from '@material-ui/icons/DescriptionOutlined';
 import ViewAllReportModal from "./ViewAllReport";
 import moment from "moment";
+import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
+import MessageIcon, {ViewDiscussionIcon, Payment} from "../../../components/Common/MessageIcon";
+
+
 function DraftReport() {
   const userid = window.localStorage.getItem("adminkey");
 
@@ -48,14 +47,19 @@ var rowStyle2 = {}
     setAssignNo(key)
   }
 
-
+  var clcomp= {
+    color: "green"
+  }
+  var clinpro = {
+    color : "blue"
+  }
   useEffect(() => {
     getAssignmentData();
   }, []);
 
   const getAssignmentData = () => {
     axios.get(`${baseUrl}/tl/getAssignments?assignment_status=Draft_Report&stages_status=1`).then((res) => {
-      console.log(res);
+     
       if (res.data.code === 1) {
         setAssignmentDisplay(res.data.result);
         setCountAssignment(res.data.result.length);
@@ -70,7 +74,7 @@ var rowStyle2 = {}
       axios
         .get(`${baseUrl}/customers/getCategory?pid=${selectedData}`)
         .then((res) => {
-          console.log(res);
+       
           if (res.data.code === 1) {
             setTax2(res.data.result);
           }
@@ -81,20 +85,20 @@ var rowStyle2 = {}
 
   //handleCategory
   const handleCategory = (value) => {
-    console.log(`selected ${value}`);
+   
     setSelectedData(value);
     setStore2([]);
   };
 
   //handleSubCategory
   const handleSubCategory = (value) => {
-    console.log(`selected ${value}`);
+   
     setStore2(value);
   };
 
   //reset category
   const resetCategory = () => {
-    console.log("resetCategory ..");
+ 
     setSelectedData([]);
     setStore2([]);
     getAssignmentData();
@@ -102,7 +106,7 @@ var rowStyle2 = {}
 
   //reset date
   const resetData = () => {
-    console.log("resetData ..");
+   
     reset();
     setStatus([]);
     setSelectedData([]);
@@ -112,12 +116,12 @@ var rowStyle2 = {}
 
   //assingmentStatus
   const assingmentStatus = (value) => {
-    console.log(`selected ${value}`);
+   
     setStatus(value);
   };
   // view report
   const ViewReport = (key) => {
-    console.log("key - ", key);
+  
     setReportModal(!reportModal);
     setReport(key);
   };
@@ -129,18 +133,16 @@ var rowStyle2 = {}
         return rowIndex + 1;
       },
       headerStyle: () => {
-        return { fontSize: "12px", width: "50px" };
+        return { width: "50px" };
       },
     },
     {
       text: "Date",
       dataField: "date_of_query",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
+      
       formatter: function dateFormat(cell, row) {
-        console.log("dt", row.date_of_query);
+       
         var oldDate = row.date_of_query;
         if (oldDate == null) {
           return null;
@@ -151,17 +153,16 @@ var rowStyle2 = {}
     {
       text: "Query No",
       dataField: "assign_no",
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
+      
       formatter: function nameFormatter(cell, row) {
-        console.log(row);
+        
         return (
           <>
-            {/* <Link to={`/admin/queries/${row.q_id}`}>{row.assign_no}</Link> */}
+           
             <Link
               to={{
                 pathname: `/admin/queries/${row.q_id}`,
+                index : 1,
                 routes: "assignment",
               }}
             >
@@ -175,50 +176,58 @@ var rowStyle2 = {}
       text: "Category",
       dataField: "parent_id",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
+      
     },
     {
       text: "Sub Category",
       dataField: "cat_name",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
+      
     },
     {
       dataField: "status",
       text: "Status",
-      style: {
-        fontSize: "11px",
-      },
       headerStyle: () => {
-        return { fontSize: "12px", width: "200px" };
+        return { fontSize: "11px", width: "200px" };
       },
       formatter: function (cell, row) {
         return (
           <>
             <div>
+            {row.paid_status == "2" &&
+                <p>
+                  <span className="declined">Payment Declined</span>
+                </p>
+              }
               <p>
                 <span style={{ fontWeight: "bold" }}>Client Discussion :</span>
-                {row.client_discussion}
+               <span className={row.client_discussion === "completed" ? "completed" : "inprogress"}>
+                                {row.client_discussion}
+                 </span>
               </p>
               <p>
-                <span style={{ fontWeight: "bold" }}>Draft Report :</span>
-                {row.draft_report}
+                <span style={{ fontWeight: "bold" }}>Draft report :</span>
+                <span className={row.draft_report === "completed" ? "completed" : "inprogress"}>
+                      {row.draft_report}
+                 </span>
               </p>
               <p>
                 <span style={{ fontWeight: "bold" }}>Final Discussion :</span>
-                {row.final_discussion}
+                <span className={row.final_discussion === "completed" ? "completed" : "inprogress"}>
+                     {row.final_discussion}
+                 </span>
               </p>
               <p>
                 <span style={{ fontWeight: "bold" }}>Delivery of Final Report :</span>
-                {row.delivery_report}
+                <span className={row.delivery_report === "completed" ? "completed" : "inprogress"}>
+                             {row.delivery_report}
+                 </span>
               </p>
               <p>
-                <span style={{ fontWeight: "bold" }}>Awaiting Completion :</span>
-                {row.other_stage}
+                <span style={{ fontWeight: "bold" }}>Awaiting Completion:</span>
+                <span className={row.other_stage === "completed" ? "completed" : "inprogress"}>
+                            {row.other_stage}
+                 </span>
               </p>
             </div>
           </>
@@ -229,11 +238,9 @@ var rowStyle2 = {}
       dataField: "Exp_Delivery_Date",
       text: "Expected date of delivery",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
+      
       formatter: function dateFormat(cell, row) {
-        console.log("dt", row.Exp_Delivery_Date);
+      
         var oldDate = row.Exp_Delivery_Date;
         if (oldDate == null) {
           return null;
@@ -245,11 +252,9 @@ var rowStyle2 = {}
       dataField: "final_date",
       text: "Actual date of delivery",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
+     
       formatter: function dateFormat(cell, row) {
-        console.log("dt", row.final_date);
+        
         var oldDate = row.final_date;
         if (oldDate == null || oldDate == "0000-00-00 00:00:00") {
           return null;
@@ -257,48 +262,12 @@ var rowStyle2 = {}
         return oldDate.slice(0, 10).toString().split("-").reverse().join("-");
       },
     },
-    // {
-    //   text: "Deliverable",
-    //   dataField: "",
-    //   sort: true,
-    //   headerStyle: () => {
-    //     return { fontSize: "12px" };
-    //   },
-    //   formatter: function (cell, row) {
-    //     return (
-    //       <>
-    //         {!row.final_report == "" ? (
-    //           <div>
-    //             <a
-    //               href={`http://65.0.220.156/mazarapi/assets/upload/report/${row.assign_no}/${row.final_report}`}
-    //               target="_blank"
-    //             >
-    //               <i class="fa fa-file-text" style={{ fontSize: "16px" }}></i>{" "}
-    //               final
-    //             </a>
-    //           </div>
-    //         ) : row.assignement_draft_report ? (
-    //           <div>
-    //             <a
-    //               href={`http://65.0.220.156/mazarapi/assets/upload/report/${row.assign_no}/${row.assignement_draft_report}`}
-    //               target="_blank"
-    //             >
-    //               <i class="fa fa-file-text" style={{ fontSize: "16px" }}></i>{" "}
-    //               draft
-    //             </a>
-    //           </div>
-    //         ) : null}
-    //       </>
-    //     );
-    //   },
-    // },
+   
     {
       text: "Deliverable",
       dataField: "",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
+      
       formatter: function (cell, row) {
         return (
           <>
@@ -325,24 +294,22 @@ var rowStyle2 = {}
       text: "TL name",
       dataField: "tl_name",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
+     
     },
     {
       text: "Action",
-      headerStyle: () => {
-        return { fontSize: "12px", width: "75px" };
-      },
+      
       formatter: function (cell, row) {
         return (
           <>
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <div style={{ display: "flex"}}>
 
-              <div title="Send Message">
+
                 <Link
                   to={{
                     pathname: `/admin/chatting/${row.q_id}`,
+                    index : 1,
+                    routes: "assignment",
                     obj: {
                       message_type: "3",
                       query_No: row.assign_no,
@@ -351,29 +318,14 @@ var rowStyle2 = {}
                     }
                   }}
                 >
-                  <i
-                    class="fa fa-comments-o"
-                    style={{
-                      fontSize: 16,
-                      cursor: "pointer",
-                      marginLeft: "8px",
-                      color: "blue"
-                    }}
-                  ></i>
+                <MessageIcon />
                 </Link>
-              </div>
+            
 
-              <div title="View Discussion Message">
-                <i
-                  class="fa fa-comments-o"
-                  style={{
-                    fontSize: 16,
-                    cursor: "pointer",
-                    color: "orange"
-                  }}
-                  onClick={() => ViewDiscussionToggel(row.assign_no)}
-                ></i>
-              </div>
+              <div  onClick={() => ViewDiscussionToggel(row.assign_no)} className="ml-1">
+                                  
+                                  <ViewDiscussionIcon />
+                          </div>
             </div>
           </>
         );
@@ -400,14 +352,13 @@ var rowStyle2 = {}
     return style;
   }
   const onSubmit = (data) => {
-    console.log("data :", data);
-    console.log("selectedData :", selectedData);
+    
     axios
       .get(
         `${baseUrl}/tl/getAssignments?assignment_status=Draft_Report&stages_status=1&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}`
       )
       .then((res) => {
-        console.log(res);
+     
         if (res.data.code === 1) {
           if (res.data.result) {
             setAssignmentDisplay(res.data.result);
@@ -422,7 +373,7 @@ var rowStyle2 = {}
       <>
         <button
           type="submit"
-          class="btn btn-primary mx-sm-1 mb-2"
+          className="customBtn mb-2"
           onClick={() => resetData()}
         >
           Reset
@@ -436,8 +387,8 @@ var rowStyle2 = {}
       <Card>
         <CardHeader>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <div class="form-inline">
-              <div class="form-group mb-2">
+            <div className="form-inline">
+              <div className="form-group mb-2">
                 <Select
                   style={{ width: 130 }}
                   placeholder="Select Category"
@@ -454,7 +405,7 @@ var rowStyle2 = {}
                 </Select>
               </div>
 
-              <div class="form-group mx-sm-1  mb-2">
+              <div className="form-group mx-sm-1  mb-2">
                 <Select
                   mode="multiple"
                   style={{ width: 250 }}
@@ -474,18 +425,18 @@ var rowStyle2 = {}
               <div>
                 <button
                   type="submit"
-                  class="btn btn-primary mb-2 ml-3"
+                  className="btnSearch mb-2 ml-3"
                   onClick={resetCategory}
                 >
                   X
                 </button>
               </div>
 
-              <div class="form-group mx-sm-1  mb-2">
+              <div className="form-group mx-sm-1  mb-2">
                 <label className="form-select form-control">From</label>
               </div>
 
-              <div class="form-group mx-sm-1  mb-2">
+              <div className="form-group mx-sm-1  mb-2">
                 <input
                   type="date"
                   name="p_dateFrom"
@@ -495,11 +446,11 @@ var rowStyle2 = {}
                 />
               </div>
 
-              <div class="form-group mx-sm-1  mb-2">
+              <div className="form-group mx-sm-1  mb-2">
                 <label className="form-select form-control">To</label>
               </div>
 
-              <div class="form-group mx-sm-1  mb-2">
+              <div className="form-group mx-sm-1  mb-2">
                 <input
                   type="date"
                   name="p_dateTo"
@@ -513,7 +464,7 @@ var rowStyle2 = {}
 
 
 
-              <button type="submit" class="btn btn-primary mx-sm-1 mb-2">
+              <button type="submit" className="customBtn">
                 Search
               </button>
 
@@ -522,27 +473,28 @@ var rowStyle2 = {}
           </form>
         </CardHeader>
 
-        <CardBody>
+        <CardBody className="card-body">
           <Records records={records} />
-          <BootstrapTable
-            bootstrap4
-            keyField="id"
-            data={assignmentDisplay}
-            columns={columns}
-            rowStyle={ rowStyle2 }
-            rowIndex
-          />
+          <DataTablepopulated 
+                   bgColor="#7c887c"
+                   keyField= {"assign_no"}
+                   data={assignmentDisplay}
+                   rowStyle2= {rowStyle2}
+                   columns={columns}>
+                    </DataTablepopulated>
   <ViewAllReportModal
             ViewReport={ViewReport}
             reportModal={reportModal}
             report={report}
             getPendingforAcceptance={getAssignmentData}
+            deleiverAble = "#7c887c"
           />
           <DiscardReport
             ViewDiscussionToggel={ViewDiscussionToggel}
             ViewDiscussion={ViewDiscussion}
             report={assignNo}
             getData={getAssignmentData}
+            headColor="#7c887c"
           />
         </CardBody>
       </Card>

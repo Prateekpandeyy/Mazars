@@ -10,20 +10,27 @@ import { Spinner } from 'reactstrap';
 
 
 
-function DraftReport({ draftModal, uploadDraftReport, id, getAssignmentList }) {
+function DraftReport({ loading, setLoading, draftModal, uploadDraftReport, id, getAssignmentList , des}) {
   const alert = useAlert();
   const { handleSubmit, register, reset } = useForm();
-  const [loading, setLoading] = useState(false);
+  
+
+  const token = window.localStorage.getItem("tptoken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
 
 
 
   const onSubmit = (value) => {
-    console.log("value :", value);
+    des = false;
     setLoading(true)
 
     let formData = new FormData();
     var uploadImg = value.p_draft;
-    console.log("uploadImg", uploadImg);
+   
 
     if (uploadImg) {
       for (var i = 0; i < uploadImg.length; i++) {
@@ -35,11 +42,13 @@ function DraftReport({ draftModal, uploadDraftReport, id, getAssignmentList }) {
     formData.append("id", id);
     axios.post(`${baseUrl}/tl/UploadReport`, formData, {
       headers: {
-        'content-type': 'multipart/form-data'
+        'content-type': 'multipart/form-data',
+        uit: token
       }
     }).then(response => {
-      console.log(response)
-      if (response.data.code === 1) {
+    
+      if (response.data.code === 1 && des === false) {
+        des = true
         setLoading(false)
         var message = response.data.message
         if (message.invalid) {
@@ -100,7 +109,7 @@ function DraftReport({ draftModal, uploadDraftReport, id, getAssignmentList }) {
                   :
                   <button
                     type="submit"
-                    className="btn btn-primary"
+                    className="customBtn"
                   >
                     Upload
                   </button>

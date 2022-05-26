@@ -41,7 +41,13 @@ function Demo() {
   const [baseMode, SetbaseMode] = useState("avc");
   const [transcode, SetTranscode] = useState("interop");
   const [attendeeMode, SetAttendeeMode] = useState("video");
-  const [videoProfile, SetVideoProfile] = useState("480p_4");
+  const [videoProfile, SetVideoProfile] = useState("240p_4");
+  const token = window.localStorage.getItem("tptoken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
   var date = new Date();
 
   function convert(str) {
@@ -60,9 +66,9 @@ function Demo() {
 
   const getData = () => {
     axios
-      .get(`${baseUrl}/tl/videoScheduler?tl_id=${JSON.parse(userId)}`)
+      .get(`${baseUrl}/tl/videoScheduler?tl_id=${JSON.parse(userId)}`, myConfig)
       .then((res) => {
-        console.log("res -", res);
+
         var a = res.data.result.items;
         if (a) {
           setData(a.map(mapAppointmentData));
@@ -86,9 +92,9 @@ function Demo() {
 
   const getAssignmentNo = () => {
     axios
-      .get(`${baseUrl}/admin/getAllQuery?tp_id=${JSON.parse(userId)}`)
+      .get(`${baseUrl}/tl/getAllQuery?tp_id=${JSON.parse(userId)}`, myConfig)
       .then((res) => {
-        console.log(res);
+      
         if (res.data.code === 1) {
           var data = res.data.result;
 
@@ -96,22 +102,22 @@ function Demo() {
             text,
             ...rest,
           }));
-          console.log("dt--", newArrayOfObj);
+          
           setAssignmentData(newArrayOfObj);
         }
       });
   };
 
   const getUsers = () => {
-    axios.get(`${baseUrl}/tl/allAttendees?uid=${JSON.parse(userId)}`).then((res) => {
-      console.log(res);
+    axios.get(`${baseUrl}/tl/allAttendees?uid=${JSON.parse(userId)}`, myConfig).then((res) => {
+  
       if (res.data.code === 1) {
         var data = res.data.result;
         const newOwners = data.map(({ name: text, ...rest }) => ({
           text,
           ...rest,
         }));
-        console.log("dt--", newOwners);
+      
         setOwner(newOwners);
       }
     });
@@ -191,23 +197,80 @@ function Demo() {
 
   //handleJoin
   const handleJoin = (data) => {
-    // console.log("data", data);
+//     // console.log("data", data);
+// //  console.log("data", data)
+// // console.log(data.startDate)
+// var dt = new Date(data.startDate)
+// var dt2 = new Date()
+// let ck = dt.getMonth();
 
-    Cookies.set("channel_2", data.question_id);
-    Cookies.set("baseMode_2", baseMode);
-    Cookies.set("transcode_2", transcode);
-    Cookies.set("attendeeMode_2", attendeeMode);
-    Cookies.set("videoProfile_2", videoProfile);
-    // history.push("/teamleader/meeting/");
-    history.push(`/taxprofessional/meeting/${data.id}`);
+// let pp = dt2.getMonth();
+// let rr = dt2.getHours();
+// let ss = dt.getHours()
+// let mm = dt2.getMinutes() + 20
+// let dd = dt.getMinutes()
+// let ee = dt.getDate();
+// let eee = dt2.getDate()
+// //   console.log("dt", dt)
+// //   console.log(dt2.getDate())
+// //  console.log(dt.getMinutes())
+// //  console.log(dt2.getMinutes() + 20)
+// //  console.log("ck", ck)
+// //   console.log("dt2", dt2)
+// //   console.log("pp", pp)
+// //   console.log("mm", mm)
+// //   console.log("dd", dd)
+// //   console.log("ss", ss)
+// //   console.log("rr", rr)
+// //   console.log(ck == pp)
+// //   console.log(ee === eee)
+// //   console.log(ss == rr)
+// //   console.log(mm > dd)
 
+
+// if(ck == pp && ss == rr && ee == eee){
+
+
+// if(mm > dd){
+//   console.log("passed")
+  
+//   Cookies.set("channel_2", data.question_id);
+//   Cookies.set("baseMode_2", baseMode);
+//   Cookies.set("transcode_2", transcode);
+//   Cookies.set("attendeeMode_2", attendeeMode);
+//   Cookies.set("videoProfile_2", videoProfile);
+//   // history.push("/teamleader/meeting/");
+//   history.push(`/taxprofessional/meeting/${data.id}`);
+
+// }
+// else{
+// // return false
+ 
+// Cookies.set("channel_2", data.question_id);
+// Cookies.set("baseMode_2", baseMode);
+// Cookies.set("transcode_2", transcode);
+// Cookies.set("attendeeMode_2", attendeeMode);
+// Cookies.set("videoProfile_2", videoProfile);
+// // history.push("/teamleader/meeting/");
+// history.push(`/taxprofessional/meeting/${data.id}`);
+
+// }
+// }
+
+Cookies.set("channel_2", data.question_id);
+  Cookies.set("baseMode_2", baseMode);
+  Cookies.set("transcode_2", transcode);
+  Cookies.set("attendeeMode_2", attendeeMode);
+  Cookies.set("videoProfile_2", videoProfile);
+  // history.push("/teamleader/meeting/");
+  history.push(`/taxprofessional/meeting/${data.id}`);
   };
 
   const changeFormat = (d) => {
-    console.log("d ---", d);
+    
 
     if (typeof d === 'object') {
-      console.log("GMT");
+
       return (
         d.getFullYear() +
         "-" +
@@ -218,7 +281,7 @@ function Demo() {
         d.toString().split(" ")[4]
       );
     } else {
-      console.log("d");
+   
       return d;
     }
   };
@@ -227,7 +290,7 @@ function Demo() {
 
     if (added) {
       setLoading(true)
-      console.log("added - ", added);
+
 
       var startDate = added.startDate;
       var endDate = added.endDate;
@@ -244,10 +307,13 @@ function Demo() {
       axios({
         method: "POST",
         url: `${baseUrl}/tl/PostCallSchedule`,
+        headers : {
+          uit : token
+        },
         data: formData,
       })
         .then(function (response) {
-          console.log("res post-", response);
+
           if (response.data.code === 1) {
             setLoading(false)
             Alerts.SuccessNormal("New call scheduled successfully.")
@@ -260,22 +326,21 @@ function Demo() {
           getData();
         })
         .catch((error) => {
-          console.log("erroror - ", error);
+      
         });
     }
     if (changed) {
-      console.log("changed", changed);
+    
       setLoading(true)
       const data2 = data.map((appointment) =>
         changed[appointment.id]
           ? { ...appointment, ...changed[appointment.id] }
           : appointment
       );
-      console.log("data2 - ", data2);
-
+    
       let valuesArray = Object.entries(changed);
       let id = valuesArray[0][0];
-      console.log("id -", id);
+    
       let dataIttem;
 
       for (var i = 0; i < data2.length; i++) {
@@ -283,7 +348,7 @@ function Demo() {
           dataIttem = data2[i];
         }
       }
-      console.log("owner", dataIttem.owner);
+    
 
       var a = dataIttem.startDate
       var b = dataIttem.endDate
@@ -307,10 +372,13 @@ function Demo() {
       axios({
         method: "POST",
         url: `${baseUrl}/tl/PostCallSchedule`,
+        headers : {
+          uit : token
+        },
         data: formData,
       })
         .then(function (response) {
-          console.log("res post-", response);
+       
 
           if (response.data.code === 1) {
             setLoading(false)
@@ -319,29 +387,29 @@ function Demo() {
           }
           else if (response.data.code === 0) {
             setLoading(false)
-            console.log("call 0 code")
+
             var msg = response.data.result
             Alerts.ErrorNormal(msg)
           }
           getData();
         })
         .catch((error) => {
-          console.log("erroror - ", error);
+        
         });
     }
 
     if (deleted !== undefined) {
-      console.log("deleted f", deleted);
+   
       setLoading(true)
       var value;
       data.filter((data) => {
         if (data.id == deleted) {
-          console.log("owner", data.owner);
+        
           value = data.owner
         }
       });
 
-      // console.log("value", value);
+   
       if (!value) {
         var variable = "Error"
         Alerts.ErrorDelete(variable)
@@ -350,7 +418,7 @@ function Demo() {
 
       Swal.fire({
         title: "Are you sure?",
-        text: "It will be permanently deleted !",
+        text: "It will be permanently deleted",
         type: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
@@ -358,8 +426,8 @@ function Demo() {
         confirmButtonText: "Yes, delete it!",
       }).then((result) => {
         if (result.value) {
-          axios.get(`${baseUrl}/tl/freeslot?id=${deleted}`).then((res) => {
-            console.log("res -", res);
+          axios.get(`${baseUrl}/tl/freeslot?id=${deleted}`, myConfig).then((res) => {
+        
             if (res.data.code === 1) {
               setLoading(false)
               Swal.fire("Deleted!", "Scheduled call has been deleted.", "success");
@@ -388,7 +456,7 @@ function Demo() {
 
   //basic layout
   const BasicLayout = ({ onFieldChange, appointmentData, ...restProps }) => {
-    console.log("appointmentData", appointmentData);
+   
     return (
       <AppointmentForm.BasicLayout
         appointmentData={appointmentData}
@@ -414,8 +482,9 @@ function Demo() {
           <Loader />
           :
           <>
+           <div style ={{display : "flex", height : "700px"}}>
             <Paper>
-              <Scheduler data={data} height={570}>
+              <Scheduler data={data} >
                 <ViewState
                   defaultCurrentDate={currentDate}
                   defaultCurrentViewName="Week"
@@ -456,6 +525,7 @@ function Demo() {
                 />
               </Scheduler>
             </Paper>
+            </div>
           </>
       }
     </>

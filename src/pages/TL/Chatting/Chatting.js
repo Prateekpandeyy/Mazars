@@ -21,6 +21,7 @@ import Alerts from "../../../common/Alerts";
 import classNames from "classnames";
 import Mandatory from "../../../components/Common/Mandatory";
 import Loader from "../../../components/Loader/Loader";
+import { Link } from "react-router-dom";
 
 const Schema = yup.object().shape({
   msg_type: yup.string().required(""),
@@ -43,7 +44,12 @@ function Chatting(props) {
   const [data, setData] = useState({})
   const { message_type, query_id, query_No, routes } = data
 const [showTl, setShowTl] = useState(false)
-
+const token = window.localStorage.getItem("tlToken")
+    const myConfig = {
+        headers : {
+         "uit" : token
+        }
+      }
   useEffect(() => {
    
     const dataItem = props.location.obj
@@ -63,8 +69,12 @@ const [showTl, setShowTl] = useState(false)
   }, [item]);
 
   const checkAssigned = () => {
-    axios
-    .get(`${baseUrl}/tl/TlCheckIfAssigned?assignno=${query_No}`).then((res) => {
+    if(query_No === undefined){
+
+    }
+    else{
+      axios
+    .get(`${baseUrl}/tl/TlCheckIfAssigned?assignno=${query_No}`, myConfig).then((res) => {
            if(res.data.code === 0){
                 setShowTl(false)
            }
@@ -72,11 +82,12 @@ const [showTl, setShowTl] = useState(false)
              setShowTl(true)
            }
          })
+    }
   };
 
 
   const onSubmit = (value) => {
-    console.log("value :", value);
+    
     setLoading(true)
     let formData = new FormData();
     formData.append("uid", JSON.parse(userId));
@@ -92,10 +103,13 @@ const [showTl, setShowTl] = useState(false)
     axios({
       method: "POST",
       url: `${baseUrl}/tl/messageSent`,
+      headers : {
+        uit : token
+      },
       data: formData,
     })
       .then(function (response) {
-        console.log("res-", response);
+
         if (response.data.code === 1) {
           reset();
           setLoading(false)
@@ -105,7 +119,7 @@ const [showTl, setShowTl] = useState(false)
         }
       })
       .catch((error) => {
-        console.log("erroror - ", error);
+      
       });
   };
 
@@ -114,14 +128,16 @@ const [showTl, setShowTl] = useState(false)
       <Card>
         <CardHeader>
           <Row>
-            <Col md="4">
-              <button
-                class="btn btn-success ml-3"
-                onClick={() => history.goBack()}
-              >
-                <i class="fas fa-arrow-left mr-2"></i>
-                Go Back
-              </button>
+          <Col md="4">
+            <Link
+                  to={{
+                    pathname: `/teamleader/${props.location.routes}`,
+                    index: props.location.index,
+                  }}
+                >
+                  <button class="customBtn ml-3">Go Back</button>
+                </Link>
+              
             </Col>
             <Col md="8">
               <h4>Message</h4>
@@ -189,7 +205,7 @@ const [showTl, setShowTl] = useState(false)
                           style={{ height: "33px" }}
                         >
                           <option value="">--select--</option>
-                          <option value="customer">Customer</option>
+                          <option value="customer">Client</option>
                         
                           <>
                           <option value="tp">Tax Professional</option>
@@ -236,7 +252,7 @@ type="text"
                           </div>
                         )}
                       </div>
-                      <button type="submit" className="btn btn-primary">
+                      <button type="submit" className="customBtn">
                         Send
                       </button>
                     </div>

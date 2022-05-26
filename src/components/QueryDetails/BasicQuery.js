@@ -1,14 +1,128 @@
 import React, { useState, useEffect } from "react";
 import CommonServices from "../../common/common";
 import { ImageUrl } from "../../config/config";
+import { Markup } from 'interweave';
+import axios from "axios";
+import { baseUrl } from "../../config/config";
+import './queryStyle.css';
+
+function BasicQuery({qstatus, panel, p, diaplaySpecific, queryDocs, year, purpose, declined2,
+  declinedStatus }) {
 
 
-
-function BasicQuery({ p, diaplaySpecific, queryDocs, year, purpose }) {
-  // console.log("p", p);
+    const downloadpdf = (qno, qid, name) => {
+      let userId, token;
+      if(panel === "admin"){
+        userId = window.localStorage.getItem("adminkey");
+        token = window.localStorage.getItem("adminToken")
+        const myConfig2 = {
+          headers : {
+           "uit" : token
+          },
+          responseType: 'blob'
+        }
+        axios.get(`${baseUrl}/admin/viewdocument?assign_no=${qno}&id=${qid}` , myConfig2)
+        .then((res) => {
+          console.log("res", res)
+          if(res.status === 200){
+            window.URL = window.URL || window.webkitURL;
+               var url = window.URL.createObjectURL(res.data);
+               var a = document.createElement("a");
+               document.body.appendChild(a);
+               a.style = "display: none";
+               a.href = url;
+               console.log(res.headers)
+               a.download = name;
+               a.target = '_blank';
+               a.click();
+          }
+        })
+       }
+     else if(panel === "teamleader"){
+      userId = window.localStorage.getItem("tlkey");
+      token = window.localStorage.getItem("tlToken")
+      const myConfig2 = {
+        headers : {
+         "uit" : token
+        },
+        responseType: 'blob'
+      }
+      axios.get(`${baseUrl}/tl/viewdocument?assign_no=${qno}&id=${qid}` , myConfig2)
+      .then((res) => {
+        console.log("res", res)
+        if(res.status === 200){
+          window.URL = window.URL || window.webkitURL;
+             var url = window.URL.createObjectURL(res.data);
+             var a = document.createElement("a");
+             document.body.appendChild(a);
+             a.style = "display: none";
+             a.href = url;
+             console.log(res.headers)
+             a.download = name;
+             a.target = '_blank';
+             a.click();
+        }
+      })
+     }
+     else if(panel === "taxprofessional"){
+      userId = window.localStorage.getItem("tpkey");
+      token = window.localStorage.getItem("tpToken")
+      const myConfig2 = {
+        headers : {
+         "uit" : token
+        },
+        responseType: 'blob'
+      }
+      axios.get(`${baseUrl}/tl/viewdocument?assign_no=${qno}&id=${qid}` , myConfig2)
+      .then((res) => {
+        console.log("res", res)
+        if(res.status === 200){
+          window.URL = window.URL || window.webkitURL;
+             var url = window.URL.createObjectURL(res.data);
+             var a = document.createElement("a");
+             document.body.appendChild(a);
+             a.style = "display: none";
+             a.href = url;
+             console.log(res.headers)
+             a.download = name;
+             a.target = '_blank';
+             a.click();
+        }
+      })
+     }
+     else if(panel === "client"){
+      userId = window.localStorage.getItem("userid");
+      token = window.localStorage.getItem("clientToken")
+      const myConfig2 = {
+        headers : {
+         "uit" : token
+        },
+        responseType: 'blob'
+      }
+      axios.get(`${baseUrl}/customers/viewdocument?assign_no=${qno}&id=${qid}` , myConfig2)
+      .then((res) => {
+        console.log("res", res)
+        if(res.status === 200){
+          window.URL = window.URL || window.webkitURL;
+             var url = window.URL.createObjectURL(res.data);
+             var a = document.createElement("a");
+             document.body.appendChild(a);
+             a.style = "display: none";
+             a.href = url;
+             console.log(res.headers)
+             a.download = name;
+             a.target = '_blank';
+             a.click();
+        }
+      })
+     }
+      
+    
+    }
+  
   return (
     <>
-      <div>
+      <div className="queryBox">
         <p
           style={{
             textAlign: "center",
@@ -18,10 +132,10 @@ function BasicQuery({ p, diaplaySpecific, queryDocs, year, purpose }) {
         >
           Basic Query Information
         </p>
-        <table class="table table-bordered">
+        <table className="table table-bordered p-2">
           <thead>
             <tr>
-              <th scope="col" style={{ width: "400px" }}>Titles</th>
+              <th scope="col">Titles</th> 
               <th scope="col">Data</th>
             </tr>
           </thead>
@@ -35,7 +149,7 @@ function BasicQuery({ p, diaplaySpecific, queryDocs, year, purpose }) {
               <td>{CommonServices.changeFormateDate(p.created)}</td>
             </tr>
             <tr>
-              <th scope="row">Customer ID</th>
+              <th scope="row">Client ID</th>
               <td>{p.email}</td>
             </tr>
             <tr>
@@ -59,21 +173,20 @@ function BasicQuery({ p, diaplaySpecific, queryDocs, year, purpose }) {
               </td>
             </tr>
             <tr>
-              <th scope="row">Fact of the Case</th>
-              <td>{p.fact_case}</td>
+              <th scope="row">Brief fact of the case</th>
+           <td className="tableStyle"> <Markup content={p.fact_case} /></td>
             </tr>
             <tr>
               <th scope="row">Uploaded Documents</th>
               <td>
                 {queryDocs.map((p, i) => (
                   <p style={{ display: "flex" }}>
-                    <a
-                      href={`${ImageUrl}/${p.assign_no}/${p.name}`}
-                      target="_blank"
-                    >
-                      <i class="fa fa-photo"></i>
-                    </a>
+                     <span onClick={() => downloadpdf(p.assign_no, p.id, p.name)} style={{display : "flex", cursor : "pointer"}}>
+                     <i className="fa fa-photo"></i>
+                      
+                  
                     <p style={{ marginLeft: "15px" }}>{p.name}</p>
+                    </span>
                   </p>
                 ))}
               </td>
@@ -87,7 +200,7 @@ function BasicQuery({ p, diaplaySpecific, queryDocs, year, purpose }) {
               </td>
             </tr>
             <tr>
-              <th scope="row">Purpose for which Opinion is sought</th>
+              <th scope="row">Purpose of the query</th>
               <td colspan="1">
                 {purpose.map((p, i) => (
                   <p key={i}>{p.value}</p>
@@ -113,6 +226,11 @@ function BasicQuery({ p, diaplaySpecific, queryDocs, year, purpose }) {
               <th scope="row">Timelines within which Opinion is Required</th>
               <td colspan="1">{p.Timelines}</td>
             </tr>
+            {qstatus == "-1" || p.is_delete == "1" ? 
+            <tr>
+              <th scope="row">Date of Decline</th>
+              <td>{qstatus == "-1" || p.is_delete == "1" ? declined2 : ""}</td>
+              </tr> : ""}
             {
               p.query_status == "-1" ?
                 <tr>
@@ -125,6 +243,20 @@ function BasicQuery({ p, diaplaySpecific, queryDocs, year, purpose }) {
                 </tr>
                 : null
             }
+            {
+              p.is_delete == "1" ?
+                <tr>
+                  <th scope="row">Reasons for client Decline Query</th>
+                  <td colspan="1">
+                    {
+                      p.decline_notes
+                    }
+                  </td>
+                </tr>
+                : null
+            }
+             
+            
           </tbody>
         </table>
       </div>

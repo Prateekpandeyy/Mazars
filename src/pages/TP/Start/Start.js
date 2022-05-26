@@ -10,10 +10,10 @@ function Start() {
       <Header mtp="mtp"/>
       <div class="content_register">
         <Link to="/taxprofessional/login">
-          <h1 style={{color: "#2b345f"}}>MTP LOGIN</h1>
+          <h1 style={{color: "#2b345f"}}>TAX PROFESSIONAL LOGIN</h1>
           </Link>
       </div>
-      <Footer />
+    
     </>
   );
 }

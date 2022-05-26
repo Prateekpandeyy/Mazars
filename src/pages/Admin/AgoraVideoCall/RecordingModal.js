@@ -1,28 +1,33 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from "reactstrap";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
-import CommonServices from "../../../common/common";
-import Alerts from "../../../common/Alerts";
 import { useHistory } from "react-router";
-
+import Swal from "sweetalert2";
 function RecordingModal({
     isOpen,
     toggle,
     data,
     item, 
-    allrecording
+    allrecording,
+    schId,
+    uid,
+    ownerId
 }) {
     const history = useHistory();
     const { handleSubmit, register, errors } = useForm();
     const userId = window.localStorage.getItem("adminkey");
-
-    console.log("item", item)
+    const token = window.localStorage.getItem("adminToken")
+    const myConfig = {
+        headers : {
+         "uit" : token
+        }
+      }
+ 
 
     const { assign_no, id, username, start } = item
-    console.log("assign_no", username)
-
+  
 
     //submit
     const onSubmit = (value) => {
@@ -38,8 +43,8 @@ function RecordingModal({
             completeRecording = serverResponse;
         }
                 const { fileList } = serverResponse
-                console.log("fileList +++ ", completeRecording);
-        
+              
+        let formData2 = new FormData();
                 let formData = new FormData();
                 formData.append("uid", JSON.parse(userId));
                 formData.append("fileList", completeRecording);
@@ -51,42 +56,41 @@ function RecordingModal({
         
         
 
+axios.get(`${baseUrl}/admin/freeslottime?schedule_id=${id}&&uid=${JSON.parse(userId)}`, myConfig)
 
         axios({
             method: "POST",
-            url: `${baseUrl}/tl/callRecordingPost`,
+            url: `${baseUrl}/admin/callRecordingPost`,
+            headers : {
+                uit : token
+            },
             data: formData,
         })
             .then(function (response) {
-                console.log("res-", response);
+              
                 if (response.data.code === 1) {
                     toggle()
-                    history.push('/admin/schedule');
-                    // reset();
-                    // setLoading(false)
-                    // var variable = "Message sent successfully."
-                    // Alerts.SuccessNormal(variable)
-                    // props.history.push(routes);
+                    history.push("/admin/schedule")
                 }
             })
             .catch((error) => {
-                console.log("erroror - ", error);
+               
             });
     };
-
+ 
     return (
         <div>
             <Modal isOpen={isOpen} toggle={toggle} size="md">
-                <ModalHeader toggle={toggle}>
-                    Form
+                <ModalHeader >
+                 Minutes of meeting
                 </ModalHeader>
                 <ModalBody>
                     <form onSubmit={handleSubmit(onSubmit)}>
-                        <div class="row" style={{ display: "flex", justifyContent: "center" }}>
-                            <div class="col-md-10">
-                                <div class="form-group">
+                        <div className="row" style={{ display: "flex", justifyContent: "center" }}>
+                            <div className="col-md-10">
+                                <div className="form-group">
 
-                                    <div class="form-group">
+                                    <div className="form-group">
                                         <label>Query No.</label>
                                         <input
                                             type="text"
@@ -98,7 +102,7 @@ function RecordingModal({
                                         />
                                     </div>
 
-                                    <div class="form-group">
+                                    <div className="form-group">
                                         <label>Participants</label>
                                         <input
                                             type="text"
@@ -128,7 +132,7 @@ function RecordingModal({
 
                                 </div>
 
-                                <div class="form-group">
+                                <div className="form-group">
                                     <label>Summary of Discussion<span className="declined">*</span></label>
                                     <textarea
                                         className="form-control"
@@ -138,6 +142,7 @@ function RecordingModal({
                                         name="p_message"
                                     ></textarea>
                                 </div>
+                              
                                 <button type="submit" className="btn btn-primary">
                                     Submit
                                 </button>
@@ -155,18 +160,3 @@ function RecordingModal({
 
 export default RecordingModal;
 
-
-{/* <Modal isOpen={ViewDiscussion} toggle={ViewDiscussionToggel} size="lg" scrollable>
-        <ModalHeader toggle={ViewDiscussionToggel}>Discussion History </ModalHeader>
-        <ModalBody>
-        
-        </ModalBody>
-        <ModalFooter>
-          <div>
-            <Button color="primary" onClick={ViewDiscussionToggel}>Cancel</Button>
-          </div>
-        </ModalFooter>
-      </Modal > */}
-{/* <ModalFooter>
-                    Modal footer
-                </ModalFooter> */}

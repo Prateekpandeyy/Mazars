@@ -18,7 +18,7 @@ import CustomerListFilter from "../../../components/Search-Filter/CustomerListFi
 import BootstrapTable from "react-bootstrap-table-next";
 import TaxProffesionalService from "../../../config/services/TaxProffesional";
 import History from "./CustHistory";
-
+import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
 function Customer() {
   const alert = useAlert();
   const [data, setData] = useState([]);
@@ -27,15 +27,20 @@ function Customer() {
   const [myPurpose, setPurpose] = useState([])
   const [history, setHistory] = useState([]);
   const [modal, setModal] = useState(false);
-
+  const token = window.localStorage.getItem("adminToken")
+  const myConfig = {
+    headers : {
+     "uit" : token
+    }
+  }
   var digit2 = [];
   useEffect(() => {
     getCustomer();
   }, []);
 
   const getCustomer = () => {
-    axios.get(`${baseUrl}/admin/getAllList`).then((res) => {
-      console.log(res);
+    axios.get(`${baseUrl}/admin/getAllList`, myConfig).then((res) => {
+     
       if (res.data.code === 1) {
         setData(res.data.result);
         setTpCount(res.data.result.length);
@@ -46,21 +51,23 @@ function Customer() {
  
 
   const toggle = (key) => {
-    console.log("key", key);
+   
     setModal(!modal);
     if(typeof(key) == "object") {
-      console.log("cancle")
+    
     }
     else{
       fetch(`${baseUrl}/admin/userhistory?id=${key}`, {
         method: "GET",
         headers: new Headers({
           Accept: "application/vnd.github.cloak-preview",
+          uit : token
+
         }),
       })
         .then((res) => res.json())
         .then((response) => {
-          console.log(response);
+          
           setHistory(response.result);
         })
         .catch((error) => console.log(error));
@@ -78,75 +85,58 @@ function Customer() {
         return rowIndex + 1;
       },
       headerStyle: () => {
-        return { fontSize: "12px", width: "50px" };
+        return {  width: "50px" };
       },
     },
     {
       dataField: "name",
       text: "Name",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
+     
     },
     {
         dataField: "email",
         text: "Email",
         sort: true,
-        headerStyle: () => {
-          return { fontSize: "12px", cursor: "pointer" };
-        },
+      
         
       },
       {
         dataField: "phone",
         text: "Mobile No",
-       
-        headerStyle: () => {
-          return { fontSize: "12px" };
-        },
+     
       },
       {
         dataField: "occupation",
         text: "Occupation",
         sort: true,
-        headerStyle: () => {
-          return { fontSize: "12px" };
-        },
+       
       },
     {
       dataField: "country",
       text: "Country",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
+     
     },
     {
       dataField: "state",
       text: "State",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
+      
     },
 
     {
       dataField: "city",
       text: "City",
       sort: true,
-      headerStyle: () => {
-       return { fontSize: "12px" };
-      },
+     
     },
    
     {
       dataField: "created",
       text: "Date of Registration",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
+      
     },
     
   
@@ -154,9 +144,7 @@ function Customer() {
     {
       dataField: "",
       text: "Action",
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
+      
       formatter: function (cell, row) {
         return (
           <>
@@ -175,21 +163,21 @@ function Customer() {
 
   //check
   const show = (key) => {
-  console.log("showId", key)
+ 
     setModal(!modal);
 
    if(typeof(key) == "object") {
-     console.log("cancle")
+    
    }
    else{
     {
       axios.
-      get(`${baseUrl}/customers/totalComplete?uid=${key}`)
+      get(`${baseUrl}/admin/totalComplete?uid=${key}`, myConfig)
         
         .then((response) => {
          
          if(response.data.code === 1){
-          console.log("response", response.data.result)
+        
            setHistory(response.data.result)
          }
         })
@@ -202,11 +190,11 @@ function Customer() {
 
   // delete data
   const deleteCliente = (id) => {
-    console.log("del", id);
+  
     axios
       .get(`${baseUrl}/tl/deleteTeamLeader?id=${id}`)
       .then(function (response) {
-        console.log("delete-", response);
+      
         if (response.data.code === 1) {
           Swal.fire("Deleted!", "Your file has been deleted.", "success");
           getCustomer();
@@ -215,7 +203,7 @@ function Customer() {
         }
       })
       .catch((error) => {
-        console.log("erroror - ", error);
+       
       });
   };
 
@@ -240,13 +228,12 @@ function Customer() {
         setRecords={setTpCount}
          records={tpCount} 
          getCustomer = {getCustomer} />
-          <BootstrapTable
-            bootstrap4
-            keyField="id"
-            data={data}
-            columns={columns}
-            rowIndex
-          />
+                 <DataTablepopulated 
+                   bgColor="#42566a"
+                   keyField= {"assign_no"}
+                   data={data}
+                   columns={columns}>
+                    </DataTablepopulated>
         </CardBody>
       </Card>
       <History history={history} toggle={toggle} modal={modal} />

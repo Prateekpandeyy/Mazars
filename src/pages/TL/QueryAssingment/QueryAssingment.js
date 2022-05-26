@@ -65,9 +65,14 @@ function QueryAssingment() {
   const { queryNo, timelines, custId, expect_dd } = queryData;
 
   var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
-  console.log("current_date :", current_date);
+ 
   const [item] = useState(current_date);
-
+  const token = window.localStorage.getItem("tlToken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
 
   useEffect(() => {
     getTaxProfession();
@@ -76,9 +81,9 @@ function QueryAssingment() {
 
   const getTaxProfession = () => {
     axios
-      .get(`${baseUrl}/tp/getTaxProfessional?tl_id=${JSON.parse(userId)}`)
+      .get(`${baseUrl}/tp/getTaxProfessional?tl_id=${JSON.parse(userId)}&&q_id=${id}`, myConfig)
       .then((res) => {
-        console.log(res);
+        
         if (res.data.code === 1) {
           setTaxProfessionDisplay(res.data.result);
         }
@@ -86,8 +91,8 @@ function QueryAssingment() {
   };
 
   const getQueryData = () => {
-    axios.get(`${baseUrl}/tl/GetQueryDetails?id=${id}`).then((res) => {
-      console.log(res);
+    axios.get(`${baseUrl}/tl/GetQueryDetails?id=${id}`, myConfig).then((res) => {
+      
       if (res.data.code === 1) {
         setQuerData({
           queryNo: res.data.result[0].assign_no,
@@ -105,9 +110,9 @@ function QueryAssingment() {
 
   const getQuery = () => {
     axios
-      .get(`${baseUrl}/tl/TlCheckIfAssigned?assignno=${queryNo}`)
+      .get(`${baseUrl}/tl/TlCheckIfAssigned?assignno=${queryNo}`, myConfig)
       .then((res) => {
-        console.log(res);
+        
         if (res.data.code === 1) {
           setQuery(false);
           // setHideQuery(res.data.meta);
@@ -122,18 +127,18 @@ function QueryAssingment() {
   };
 
   const handleChange = (e) => {
-    console.log("val-", e.target.value);
+   
     setTaxID(e.target.value)
     var value = taxProfessionDisplay.filter(function (item) {
       return item.id == e.target.value
     })
-    console.log(value[0]);
+  
     setTeamName(value[0].name)
   }
 
 
   const onSubmit = (value) => {
-    console.log("value :", value);
+ 
     setLoading(true)
 
     var expdeliverydate = value.p_expdeldate.replace(
@@ -156,10 +161,13 @@ function QueryAssingment() {
     axios({
       method: "POST",
       url: `${baseUrl}/tl/AddQueryAssignment`,
+      headers : {
+        uit : token
+      },
       data: formData,
     })
       .then(function (response) {
-        console.log("res-", response);
+      
         if (response.data.code === 1) {
           setLoading(false)
           var variable = "Query assigned successfully."
@@ -173,7 +181,7 @@ function QueryAssingment() {
         }
       })
       .catch((error) => {
-        console.log("erroror - ", error);
+     
       });
   };
 
@@ -186,20 +194,20 @@ function QueryAssingment() {
               <Link
                 to={{
                   pathname: `/teamleader/queriestab`,
-                  index: 0,
+                  index: 3,
                 }}
               >
                 <button
-                  class="btn btn-success ml-3"
+                  class="autoWidthBtn ml-3"
                 >
-                  <i class="fas fa-arrow-left mr-2"></i>
+                
                   Go Back
                 </button>
               </Link>
             </Col>
             <Col md="4">
               <div style={{ textAlign: "center" }}>
-                <h2>Query Allocation</h2>
+                <h4>Query Allocation</h4>
               </div>
             </Col>
           </Row>
@@ -241,7 +249,7 @@ function QueryAssingment() {
                                     <option value="">--select--</option>
                                     {taxProfessionDisplay.map((p, index) => (
                                       <option key={index} value={p.id}>
-                                        { p.tl_post_name + "-"   + p.name}
+                                        { p.post_name + "-"   + p.name}
                                       </option>
                                     ))}
                                   </select>
@@ -257,6 +265,7 @@ function QueryAssingment() {
                                     type="text"
                                     ref={register}
                                     name="p_timelines"
+                                    autoComplete="off"
                                     value={timelines}
                                     class="form-control"
                                   />
@@ -280,7 +289,7 @@ function QueryAssingment() {
                                 </td>
 
                                 <td>
-                                  <button type="submit" class="btn btn-success">
+                                  <button type="submit" class="customBtn">
                                     Assign
                                   </button>
                                 </td>
@@ -316,7 +325,7 @@ function QueryAssingment() {
                                 </td>
 
                                 <td>
-                                  <button class="btn btn-success" disabled>
+                                  <button disabled  className="customBtnDisabled">
                                     Assigned
                                   </button>
                                 </td>

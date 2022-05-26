@@ -27,6 +27,12 @@ function Message(props) {
 
     const [addPaymentModal, setPaymentModal] = useState(false);
     let history = useHistory();
+    const token = window.localStorage.getItem("clientToken")
+    const myConfig = {
+        headers : {
+         "uit" : token
+        }
+      }
     const paymentHandler = (key) => {
       
         setPaymentModal(!addPaymentModal);
@@ -44,7 +50,7 @@ function Message(props) {
         axios
             .get(
                 `${baseUrl}/customers/getNotification?id=${JSON.parse(userId)}
-                &type_list=all`
+                &type_list=all`, myConfig
             )
             .then((res) => {
 
@@ -66,7 +72,7 @@ function Message(props) {
                 return rowIndex + 1;
             },
             headerStyle: () => {
-                return { fontSize: "12px", width: "10px" };
+                return { fontSize: "12px", width: "10px" , backgroundColor: "rgb(61, 131, 117)", color: "#fff", border: "1px solid rgb(61, 131, 117)"};
             },
         },
         
@@ -75,25 +81,15 @@ function Message(props) {
     dataField: "setdate",
     sort: true,
     headerStyle: () => {
-        return { fontSize: "12px", width: "60px" };
+        return { fontSize: "12px", width: "60px",  backgroundColor: "rgb(61, 131, 117)", color: "#fff", border: "1px solid rgb(61, 131, 117)" };
     },
-    // formatter : function dateFormatter(cell, row) {
-    //     console.log("row",   row.setdate.toString().split(" ")[0].toString().split("-").reverse().join("-"))
-    //     return(
-    //         <>
-    //      {row.setdate.toString().split(" ")[0].toString().split("-").reverse().join("-")} &nbsp; &nbsp;
-    //     {/* {
-    //        row.setdate.toString().split("-").join("-").split(" ")[1]
-    //     } */}
-    //         </>
-    //     )
-    // }
+
 },
         {
             text: "Query No",
             dataField: "assign_no",      
             headerStyle: () => {
-                return { fontSize: "12px", width: "30px" };
+                return { fontSize: "12px", width: "30px" ,  backgroundColor: "rgb(61, 131, 117)", color: "#fff", border: "1px solid rgb(61, 131, 117)"};
             },
             formatter: function nameFormatter(cell, row) {
                
@@ -108,7 +104,7 @@ function Message(props) {
         {
             text: "Message",
             headerStyle: () => {
-                return { fontSize: "12px", width: "180px" };
+                return { fontSize: "12px", width: "180px",  backgroundColor: "rgb(61, 131, 117)", color: "#fff", border: "1px solid rgb(61, 131, 117)" };
             },
             formatter: function nameFormatter(cell, row) {
                
@@ -120,8 +116,9 @@ function Message(props) {
                                     <div
                                         style={{
                                             cursor: "pointer",
-                                            display: "flex",
-                                            justifyContent: "space-between"
+                                            display : "flex",
+                                            justifyContent : "space-between",
+                                            wordBreak : "break-word"
                                         }}
                                         onClick={() => readNotification(row.id)}
                                         title="unread"
@@ -134,8 +131,9 @@ function Message(props) {
                                     <div
                                         style={{
                                             cursor: "pointer",
-                                            display: "flex",
-                                            justifyContent: "space-between"
+                                            display :"flex",
+                                            justifyContent : "space-between",
+                                            wordBreak : "break-word"
                                         }}
                                         title="read"
                                     >
@@ -158,7 +156,7 @@ function Message(props) {
 
 
         axios
-            .get(`${baseUrl}/customers/markReadNotification?id=${id}`)
+            .get(`${baseUrl}/customers/markReadNotification?id=${id}`, myConfig)
             .then(function (response) {
                
             })
@@ -171,23 +169,30 @@ function Message(props) {
     return (
         <Layout custDashboard="custDashboard" custUserId={userId}>
             <Card>
-                <CardHeader>
-                    <Row>
-                        <Col md="9">
-                            <CardTitle tag="h4">Message</CardTitle>
-                        </Col>
-                        <Col md="3">
-                        <button
-                class="btn btn-success ml-auto" style={{float : "right"}}
+                
+                
+                        <CardHeader>
+          <Row>
+          <Col md="4">
+          <button
+                className="autoWidthBtn" 
                 onClick={() => history.goBack()}
               >
-                <i class="fas fa-arrow-left mr-2"></i>
+            
                 Go Back
               </button>
-                        </Col>
-                    </Row>
-                </CardHeader>
-                <CardBody>
+              
+            </Col>
+            <Col md="4" style={{ display: "flex", justifyContent: "center" }}>
+              <p style={{ fontSize: "20px" }}>Message</p>
+            </Col>
+            <Col
+              md="4"
+              style={{ display: "flex", justifyContent: "flex-end" }}
+            ></Col>
+          </Row>
+        </CardHeader>
+                <CardBody style={{display : "flex", height : "80vh", overflowY : "scroll"}}>
                     <BootstrapTable
                         bootstrap4
                         keyField="id"

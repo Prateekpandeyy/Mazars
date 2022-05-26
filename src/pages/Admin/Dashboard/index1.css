@@ -24,48 +24,160 @@
 }
 
 .left_side{
-	width: 180px;
-	padding-left: 0px
+	width: 80%;
+	padding-left: 0px;
+	font-size: 12px;
 }
 
 
 .query_thead{
-	background-color:#3d4975; 
+	background-color: #55425f; 
 }
-
-.second.table-striped tbody tr,
+.query_thead1{
+	background-color: #6E557B;
+	color: #fff;
+	
+}
+.second.table-striped > tbody tr td, .third.table-striped > tbody tr td
+, .forth.table-striped > tbody tr td, .fifth.table-striped > tbody tr td
+,.sixth.table-striped > tbody tr td, .seventh.table-striped > tbody tr td,
+.eighth.table-striped > tbody tr td{
+	color: #171917;
+}
+.second.table-striped > tbody > tr:nth-child(2n+1){
+	background-color: #E2DAE6;
+	color:#464B4B;
+}
+.second.table-striped > tbody > tr:nth-child(2n){
+	background-color: #E2DAE6;
+	color:#464B4B;
+}
+.third.table-striped > tbody > tr:nth-child(2n+1){
+	background-color: #E2DAE6;
+	color:#464B4B;
+}
+.third.table-striped > tbody > tr:nth-child(2n){
+	background-color: #E2DAE6;
+	color:#464B4B;
+}
+.forth.table-striped > tbody > tr:nth-child(2n+1){
+	background-color: #E2DAE6;
+	color:#464B4B;
+}
+.forth.table-striped > tbody > tr:nth-child(2n){
+	background-color: #E2DAE6;
+	color:#464B4B;
+}
+/* .second.table-striped tbody tr,
 .third.table-striped tbody tr,
 .forth.table-striped tbody tr{
-	background-color:rgba(88, 103, 155, 0.8);
+	background-color: #AD7B7F;
+} */
+/* .first, .second, .third, .forth, .first tr,
+.second  tr, .third  tr, .forth  tr{
+	border:1px solid #3d4975;
+} */
+/* 
+.fifth, .sixth, .seventh, .eight, .fifth tr, .sixth tr, .seventh tr, .eight tr {
+	border:1.5px solid rgb(112, 75, 98)
 }
-
-
-
+.ninth, .tenth, .elevnth, .twelvth, .ninth tr, .tenth tr, .elevnth tr, .twelvth tr{
+	border: 1.5px solid rgb(67, 131, 117)
+}
+.thirteenth , .fortheenth ,  .fiftheenth, .thirteenth tr, .fortheenth tr, .fiftheenth tr{
+	border: 1.5px solid rgba(69, 126, 143)
+} 
+*/
 .proposal_thead{
-	background-color:#704b62;
+	background-color: #42566A;
+	
+} 
+.proposal_thead3{
+	background-color: #5F7B97;
+	color: #FFF;
 }
-
-.sixth.table-striped tbody tr{
+.sixth.table-striped > tbody > tr:nth-child(2n+1){
+	background-color: #D3DBE3;
+	color:#464B4B;
+}
+.sixth.table-striped > tbody > tr:nth-child(2n){
+	background-color: #D3DBE3;
+	color:#464B4B;
+}
+.seventh.table-striped > tbody > tr:nth-child(2n+1){
+	background-color: #D3DBE3;
+	color:#464B4B;
+}
+.seventh.table-striped > tbody > tr:nth-child(2n){
+	background-color: #D3DBE3;
+	color:#464B4B;
+}
+.eighth.table-striped > tbody > tr:nth-child(2n+1){
+	background-color: #D3DBE3;
+	color:#464B4B;
+}
+.eighth.table-striped > tbody > tr:nth-child(2n){
+	background-color: #D3DBE3;
+	color:#464B4B;
+}
+/* .sixth.table-striped tbody tr{
 	background-color:rgba(172, 132, 159, 1);
 }
-
+ */
 
 
 .assignment_thead{
-	background-color:rgba(67 , 131, 117, 1);
+	background-color: #5a625a;
 }
 
+.assignment_thead2{
+	background-color: #7c887c !important;
+	color:#FFF;
+}
+.ninth.table-striped > tbody > tr:nth-child(2n+1){
+	background-color: #7c887c !important;
+	color:#464B4B;
+}
+.ninth.table-striped > tbody > tr:nth-child(2n){
+	background-color: #7c887c !important;
+	color:#464B4B;
+}
+.tenth.table-striped > tbody > tr:nth-child(2n+1){
+	background-color: #d0d9d0  !important;
+	color:#464B4B;
+}
+.tenth.table-striped > tbody > tr:nth-child(2n){
+	background-color: #d0d9d0  !important;
+	color:#464B4B;
+}
+.eleventh.table-striped > tbody > tr:nth-child(2n+1){
+	background-color: #7c887c !important;
+	color:#464B4B;
+}
+.eleventh.table-striped > tbody > tr:nth-child(2n){
+	background-color: #7c887c !important;
+	color:#464B4B;
+}
+.twelvth.table-striped > tbody > tr:nth-child(2n+1){
+	background-color: #7c887c !important;
+	color:#464B4B;
+}
+.twelvth.table-striped > tbody > tr:nth-child(2n){
+	background-color: #7c887c !important;
+	color:#464B4B;
+}
 
-.tenth.table-striped tbody tr{
+/* .tenth.table-striped tbody tr{
 	background-color:rgba(67, 131, 117, 0.8);
-}
+} */
 
 
 
 
 .payment_thead{
-	background-color:rgba(69, 126, 143, 1);
+	background-color:#2B5F55;
 }
 .payment_thead2{
-	background-color:rgba(69, 126, 143, 0.8);
+	background-color: #3E8678;
+	color:#FFF;
 }

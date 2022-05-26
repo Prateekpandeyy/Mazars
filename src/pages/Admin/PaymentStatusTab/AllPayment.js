@@ -5,26 +5,20 @@ import {
     Card,
     CardHeader,
     CardBody,
-    CardTitle,
-    Row,
-    Col,
     Modal,
     ModalHeader,
     ModalBody,
     ModalFooter,
     Button,
 } from "reactstrap";
-import { useForm } from "react-hook-form";
-import "antd/dist/antd.css";
-import { Select } from "antd";
 import { Link } from "react-router-dom";
-import BootstrapTable from "react-bootstrap-table-next";
 import AdminFilter from "../../../components/Search-Filter/AdminFilter";
 import CommonServices from "../../../common/common";
 import Records from "../../../components/Records/Records";
 import DiscardReport from "../AssignmentTab/DiscardReport";
-
-
+import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
+import MessageIcon, {ViewDiscussionIcon, Payment} from "../../../components/Common/MessageIcon";
+import moment from "moment";
 
 function AllPayment() {
 
@@ -36,6 +30,12 @@ function AllPayment() {
 
     const [assignNo, setAssignNo] = useState('');
     const [ViewDiscussion, setViewDiscussion] = useState(false);
+    const token = window.localStorage.getItem("adminToken")
+    const myConfig = {
+        headers : {
+         "uit" : token
+        }
+      }
     const ViewDiscussionToggel = (key) => {
         setViewDiscussion(!ViewDiscussion);
         setAssignNo(key)
@@ -47,8 +47,8 @@ function AllPayment() {
     }, []);
 
     const getPaymentStatus = () => {
-        axios.get(`${baseUrl}/tl/getUploadedProposals`).then((res) => {
-            console.log(res);
+        axios.get(`${baseUrl}/admin/getUploadedProposals` , myConfig).then((res) => {
+            
             if (res.data.code === 1) {
                 setPayment(res.data.result);
                 setPaymentCount(res.data.result.length);
@@ -59,10 +59,13 @@ function AllPayment() {
 
     const [modal, setModal] = useState(false);
     const toggle = (key) => {
-        console.log("key", key);
+    
         setModal(!modal);
+        if(typeof(key) == "object"){
 
-        fetch(`${baseUrl}//admin/getPaymentDetail?id=${key}`, {
+        }
+       else{
+        fetch(`${baseUrl}/admin/getPaymentDetail?id=${key}&&status=1`, {
             method: "GET",
             headers: new Headers({
                 Accept: "application/vnd.github.cloak-preview",
@@ -70,10 +73,11 @@ function AllPayment() {
         })
             .then((res) => res.json())
             .then((response) => {
-                console.log(response);
+               
                 setPay(response.payment_detail);
             })
             .catch((error) => console.log(error));
+       }
     };
 
     const columns = [
@@ -83,25 +87,18 @@ function AllPayment() {
             formatter: (cellContent, row, rowIndex) => {
                 return rowIndex + 1;
             },
-            style: {
-                fontSize: "11px",
-            },
+           
             headerStyle: () => {
-                return { fontSize: "11px" };
+                return { width : "50px" };
             },
         },
         {
             dataField: "query_created_date",
             text: "Date",
             sort: true,
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
+          
             formatter: function dateFormat(cell, row) {
-                console.log("dt", row.query_created_date);
+              
                 var oldDate = row.query_created_date;
                 if (oldDate == null) {
                     return null;
@@ -112,19 +109,15 @@ function AllPayment() {
         {
             dataField: "assign_no",
             text: "Query No",
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
+           
             formatter: function nameFormatter(cell, row) {
-                console.log(row);
+              
                 return (
                     <>
                         <Link
                             to={{
                                 pathname: `/admin/queries/${row.assign_id}`,
+                                index : 0,
                                 routes: "paymentstatus",
                             }}
                         >
@@ -138,36 +131,21 @@ function AllPayment() {
             dataField: "parent_id",
             text: "Category",
             sort: true,
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
+           
         },
         {
             dataField: "cat_name",
             text: "Sub Category",
             sort: true,
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
+           
         },
         {
             text: "Date of acceptance of Proposal",
             dataField: "cust_accept_date",
             sort: true,
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
+           
             formatter: function dateFormat(cell, row) {
-                console.log("dt", row.cust_accept_date);
+               
                 var oldDate = row.cust_accept_date;
                 if (oldDate == null) {
                     return null;
@@ -178,17 +156,12 @@ function AllPayment() {
         {
             text: "Status",
             dataField: "",
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
+            
             formatter : function (cell, row) {
                 return(
                     <>
                     {row.paid_status == "2"  ?
-                    <p style={{color : "red"}}>{row.status} </p> : 
+                    <p className="declined">{row.status} </p> : 
                     <p>{row.status}</p>}
                     </>
                 )
@@ -198,69 +171,73 @@ function AllPayment() {
             dataField: "accepted_amount",
             text: "Accepted Amount ",
             sort: true,
-            style: {
-              fontSize: "11px",
-              color: "#21a3ce",
-            },
+           
             sortFunc: (a, b, order, dataField) => {
               if (order === 'asc') {
                 return b - a;
               }
               return a - b; // desc
             },
-            headerStyle: () => {
-              return { fontSize: "11px", color: "#21a3ce" };
-            },
+          
+            formatter: function nameFormatter(cell, row){
+                var nfObject = new Intl.NumberFormat('hi-IN')
+                 var x = row.accepted_amount;
+                 
+                 return(
+                   <p className="rightAli">{nfObject.format(x)}</p>
+                 )
+               }
         },
         {
             text: "Amount Paid",
             dataField: "paid_amount",
             sort: true,
-            style: {
-              fontSize: "11px",
-              color: "#064606",
-            },
+           
             sortFunc: (a, b, order, dataField) => {
               if (order === 'asc') {
                 return b - a;
               }
               return a - b; // desc
             },
-            headerStyle: () => {
-              return { fontSize: "11px", color: "#064606" };
-            },
+            
+            formatter: function nameFormatter(cell, row){
+                var nfObject = new Intl.NumberFormat('hi-IN')
+                 var x = row.paid_amount;
+                 
+                 return(
+                   <p className="rightAli">{nfObject.format(x)}</p>
+                 )
+               }
         },
 
         {
             text : "Amount Outstanding",
             dataField: "amount_outstanding",
             sort: true,
-            style: {
-              fontSize: "11px",
-              color: "darkred",
-            },
+           
             sortFunc: (a, b, order, dataField) => {
               if (order === 'asc') {
                 return b - a;
               }
               return a - b; // desc
             },
-            headerStyle: () => {
-              return { fontSize: "11px", color: "darkred" };
-            },
+           
+            formatter: function nameFormatter(cell, row){
+                var nfObject = new Intl.NumberFormat('hi-IN')
+                 var x = row.amount_outstanding;
+                 
+                 return(
+                   <p className="rightAli">{nfObject.format(x)}</p>
+                 )
+               }
         },
         {
             text: "Date of Payment",
             dataField: "cust_paid_date",
             sort: true,
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
+           
             formatter: function dateFormat(cell, row) {
-                console.log("dt", row.cust_paid_date);
+                
                 var oldDate = row.cust_paid_date;
                 if (oldDate == null) {
                     return null;
@@ -272,81 +249,77 @@ function AllPayment() {
             dataField: "tl_name",
             text: "TL name",
             sort: true,
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
+           
         },
         {
             text: "Action",
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
+            
             formatter: function (cell, row) {
                 return (
                     <>
                        
-                        <div style={{ display: "flex", justifyContent: "space-between", width: "40px" }}>
-
-
-                        <div style={{ cursor: "pointer" }} title="Payment History">
-                            <i
-                                class="fa fa-credit-card"
-                                style={{ color: "green", fontSize: "16px" }}
-                                onClick={() => toggle(row.assign_id)}
-                            ></i>
-                        </div>
-
-
-                        <div title="View Discussion Message">
-                            <i
-                                class="fa fa-comments-o"
-                                style={{
-                                    fontSize: 16,
-                                    cursor: "pointer",
-                                    color: "orange"
-                                }}
-                                onClick={() => ViewDiscussionToggel(row.assign_no)}
-                            ></i>
-                        </div>
-
-
-                        <div title="Send Message">
-            <Link
-              to={{
-                pathname: `/admin/chatting/${row.id}`,
+                      
+                     <div style={{display: "flex"}}>
+                     <Link
+                            to={{
+                                pathname: `/admin/chatting/${row.assign_id}`,
+                                index : 0,
+                                routes: "paymentstatus",
                 obj: {
                   message_type: "5",
                   query_No: row.assign_no,
-                  query_id: row.id,
+                  query_id: row.assign_id,
                   routes: `/admin/paymentstatus`
                 }
               }}
             >
-              <i
-                class="fa fa-comments-o"
-                style={{
-                  fontSize: 16,
-                  cursor: "pointer",
-                  marginLeft: "8px",
-                  color: "blue"
-                }}
-              ></i>
+          <MessageIcon />
             </Link>
-          </div>
 
-                    </div> 
+
+            <div  onClick={() => ViewDiscussionToggel(row.assign_no)} className="mx-1">
+                                  
+                                  <ViewDiscussionIcon />
+                          </div>
+                      
+                        <Link
+                            to={{
+                                pathname: `/admin/paydetails/${row.assign_id}`,
+                                index : 0,
+                                routes: "paymentstatus",
+               
+              }}
+            >
+                         <Payment />
+                            </Link>
+                        
+
+
+
+
+                     </div>
+                       
+        
+
+                 
                     </>
                 );
             },
         },
     ];
-
+const rowStyle2 = (row, index) => {
+    const style = {}
+    var warningDate = moment(row.Exp_Delivery_Date).subtract(2, 'day').toDate();
+    // var warnformat = warningDate.format("YYYY-MM-DD");
+    var aa = moment().toDate();
+ 
+    if(row.paid_status != "2" && row.status != "Complete" && warningDate < aa)  {
+      style.backgroundColor = "#c1d8f2";
+      style.color = "#000111"
+    }
+  
+    return style;
+  }
 
     return (
         <div>
@@ -363,24 +336,25 @@ function AllPayment() {
                 </CardHeader>
                 <CardBody>
                     <Records records={records} />
-                    <BootstrapTable
-                        bootstrap4
-                        keyField="id"
-                        data={payment}
-                        columns={columns}
-                        classes="table-responsive"
-                        rowIndex
-                    />
-
+                    <DataTablepopulated 
+                   bgColor="#2b5f55"
+                   rowStyle2= {rowStyle2}
+                   keyField= {"assign_no"}
+                   data={payment}
+                   columns={columns}>
+                    </DataTablepopulated>
+                   
+                  
                     <Modal isOpen={modal} fade={false} toggle={toggle}>
-                        <ModalHeader toggle={toggle}>History</ModalHeader>
+                        <ModalHeader toggle={toggle}>Payment History</ModalHeader>
                         <ModalBody>
-                            <table class="table table-bordered">
+                            <table className="table table-bordered">
                                 <thead>
                                     <tr>
                                         <th scope="row">S.No</th>
-                                        <th scope="row">Date</th>
+                                        <th scope="row">Date of Payment</th>
                                         <th scope="row">Amount</th>
+                                        <th scope="row">Payment Receipt</th>
                                     </tr>
                                 </thead>
                                 {pay.length > 0
@@ -390,6 +364,7 @@ function AllPayment() {
                                                 <td>{i + 1}</td>
                                                 <td>{CommonServices.removeTime(p.payment_date)}</td>
                                                 <td>{p.paid_amount}</td>
+                                                <td><a href={p.receipt_url} target="_blank">Payment Receipt</a></td>
                                             </tr>
                                         </tbody>
                                     ))
@@ -408,6 +383,7 @@ function AllPayment() {
                         ViewDiscussion={ViewDiscussion}
                         report={assignNo}
                         getData={getPaymentStatus}
+                        headColor="#2b5f55"
                     />
 
                 </CardBody>

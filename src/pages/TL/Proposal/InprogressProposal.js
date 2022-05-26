@@ -4,12 +4,12 @@ import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import { Card, CardHeader, CardBody, CardTitle, Row, Col } from "reactstrap";
 import { Link } from "react-router-dom";
-import "antd/dist/antd.css";
-import BootstrapTable from "react-bootstrap-table-next";
 import TeamFilter from "../../../components/Search-Filter/tlFilter";
 import ChatHistory from "./ChatHistory";
 import DiscardReport from "../AssignmentTab/DiscardReport";
-
+import CommonShowProposal from "../../../components/commonShowProposal/CommonShowProposal";
+import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
+import MessageIcon, {EyeIcon, ViewDiscussionIcon, EditQuery, ActionIcon} from "../../../components/Common/MessageIcon";
 
 
 function InprogressProposal() {
@@ -20,9 +20,10 @@ function InprogressProposal() {
     const [id, setId] = useState(null);
 
     const [addPaymentModal, setPaymentModal] = useState(false);
+    const [viewProposalModal, setViewProposalModal] = useState(false)
+    const [proposalId, setProposalId] = useState()
     const chatHandler = (key) => {
-        console.log(key);
-        setPaymentModal(!addPaymentModal);
+       setPaymentModal(!addPaymentModal);
         setId(key.assign_no);
     };
 
@@ -32,16 +33,26 @@ function InprogressProposal() {
         setViewDiscussion(!ViewDiscussion);
         setAssignNo(key)
     }
+    const showProposalModal2 = (e) => {
+        console.log("eeee")
+        setViewProposalModal(!viewProposalModal);
+        setProposalId(e)
+      }
 
     useEffect(() => {
         getProposalList();
     }, []);
-
+    const token = window.localStorage.getItem("tlToken")
+    const myConfig = {
+        headers : {
+         "uit" : token
+        }
+      }
     const getProposalList = () => {
         axios
-            .get(`${baseUrl}/tl/getProposalTl?id=${JSON.parse(userid)}&status=1`)
+            .get(`${baseUrl}/tl/getProposalTl?id=${JSON.parse(userid)}&status=1`, myConfig)
             .then((res) => {
-                console.log(res);
+          
                 if (res.data.code === 1) {
                     setProposal(res.data.result);
                     setCount(res.data.result.length);
@@ -62,21 +73,16 @@ function InprogressProposal() {
                 fontSize: "11px",
             },
             headerStyle: () => {
-                return { fontSize: "11px", width: "60px" };
+                return { width: "50px" };
             },
         },
         {
             dataField: "query_date",
-            text: "Date",
+            text: "Query Date",
             sort: true,
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
+          
             formatter: function dateFormat(cell, row) {
-                console.log("dt", row.query_date);
+            
                 var oldDate = row.query_date;
                 if (oldDate == null) {
                     return null;
@@ -87,20 +93,16 @@ function InprogressProposal() {
         {
             text: "Query No",
             dataField: "assign_no",
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
+          
             formatter: function nameFormatter(cell, row) {
-                console.log(row);
+                
                 return (
                     <>
 
                         <Link
                             to={{
                                 pathname: `/teamleader/queries/${row.id}`,
+                                index : 1,
                                 routes: "proposal",
                             }}
                         >
@@ -114,36 +116,21 @@ function InprogressProposal() {
             text: "Category",
             dataField: "parent_id",
             sort: true,
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
+           
         },
         {
             text: "Sub Category",
             dataField: "cat_name",
             sort: true,
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
+           
         },
         {
             text: "Date of Proposal",
             dataField: "DateofProposal",
             sort: true,
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
+           
             formatter: function dateFormat(cell, row) {
-                console.log("dt", row.DateofProposal);
+              
                 var oldDate = row.DateofProposal;
                 if (oldDate == null) {
                     return null;
@@ -155,14 +142,9 @@ function InprogressProposal() {
             text: "Date of acceptance / decline of Proposal",
             dataField: "cust_accept_date",
             sort: true,
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
+         
             formatter: function dateFormat(cell, row) {
-                console.log("dt", row.cust_accept_date);
+              
                 var oldDate = row.cust_accept_date;
                 if (oldDate == null) {
                     return null;
@@ -172,12 +154,7 @@ function InprogressProposal() {
         },
         {
             text: "Status",
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
+           
             formatter: function nameFormatter(cell, row) {
                 return (
                     <>
@@ -212,72 +189,49 @@ function InprogressProposal() {
             dataField: "ProposedAmount",
             text: "Proposed Amount",
             sort: true,
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
+            
+            sortFunc: (a, b, order, dataField) => {
+                if (order === 'asc') {
+                  return b - a;
+                }
+                return a - b; // desc
+              },
+            formatter: function nameFormatter(cell, row){
+                var nfObject = new Intl.NumberFormat('hi-IN')
+                 var x = row.ProposedAmount;
+                 
+                 return(
+                   <p className="rightAli">{nfObject.format(x)}</p>
+                 )
+               }
         },
         {
             dataField: "accepted_amount",
             text: "Accepted Amount ",
             sort: true,
-            style: {
-                fontSize: "11px",
-                color: "#21a3ce",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px", color: "#21a3ce" };
-            },
+           
+            formatter: function nameFormatter(cell, row){
+                var nfObject = new Intl.NumberFormat('hi-IN')
+                 var x = row.accepted_amount;
+                 
+                 return(
+                   <p className="rightAli">{nfObject.format(x)}</p>
+                 )
+               }
         },
         {
             text: "Action",
             dataField: "",
-            headerStyle: () => {
-                return { fontSize: "12px", width: "110px" };
-            },
+            
             formatter: function (cell, row) {
                 return (
                     <>
-                        <div style={{ display: "flex", justifyContent: "space-between" }}>
-                            <div>
-                                {row.status_code == "4" ? (
-                                    <Link to={`/teamleader/edit-proposal/${row.id}`}>
-                                        <i
-                                            className="fa fa-edit"
-                                            style={{
-                                                fontSize: "16px",
-                                                cursor: "pointer",
-                                                color: "green",
-                                            }}
-                                        ></i>
-                                    </Link>
-                                ) : row.status_code == "2" &&  row.work_by != "0" ? (
-                                    <Link to={`/teamleader/sendproposal/${row.id}`}>
-                                        <i
-                                            class="fa fa-mail-forward"
-                                            style={{
-                                                fontSize: "14px",
-                                                cursor: "pointer",
-                                            }}
-                                        ></i>
-                                    </Link>
-                                ) : null}
-                            </div>
-
-                           
-
-
-                            <div>
-                                {
-                                    row.status == "Customer Declined; Proposal" ?
-                                        null
-                                        :
-                                        <div title="Send Message">
-                                            <Link
-                                                to={{
-                                                    pathname: `/teamleader/chatting/${row.id}`,
+                        <div style={{ display: "flex" }}>
+                        <Link
+ to={{
+    pathname: `/teamleader/chatting/${row.id}`,
+    index : 1,
+    routes: "proposal",
                                                     obj: {
                                                         message_type: "2",
                                                         query_No: row.assign_no,
@@ -286,47 +240,53 @@ function InprogressProposal() {
                                                     }
                                                 }}
                                             >
-                                                <i
-                                                    class="fa fa-comments-o"
-                                                    style={{
-                                                        fontSize: 16,
-                                                        cursor: "pointer",
-                                                        marginLeft: "8px",
-                                                        color: "blue"
-                                                    }}
-                                                ></i>
+                                              <MessageIcon />
                                             </Link>
-                                        </div>
-                                }
+                        <div  onClick={() => ViewDiscussionToggel(row.assign_no)} className="ml-1">
+                                  
+                                  <ViewDiscussionIcon />
+                          </div>
+
+                      
+                                         
+                                       
+                                
+                            <div className="ml-2">
+                                {row.status_code == "4" ? (
+ <Link 
+ to={{
+     pathname: `/teamleader/edit-proposal/${row.id}`,
+     index : 1,
+     routes: "proposal" }}>
+     <EditQuery titleName="Edit Proposal"/>
+ </Link>
+                                ) : row.status_code == "2"&& row.work_by != "0" ? (
+                                    <Link 
+                                    to={{
+                                        pathname: `/teamleader/sendproposal/${row.id}`,
+                                        index : 1,
+                                        routes: "proposal" }}>
+                                      <ActionIcon titleName= "Decision on proposal" />
+                                    </Link>
+                                ) : null}
                             </div>
 
-                            {row.status_code > "3" ?
-                                <div style={{ cursor: "pointer", marginLeft: "8px" }} title="View Proposal">
-
-                                    <a
-                                        href={`${baseUrl}/customers/dounloadpdf?id=${row.id}&viewpdf=1`}
-                                        target="_blank"
-                                    >
-                                        <i
-                                            class="fa fa-eye"
-                                            style={{ color: "green", fontSize: "16px" }}
-                                        />
-                                    </a>
-                                </div>
+                            {row.status_code > "3" || row.status_code == "10" ?
+                            <>
+                                 <div   onClick={(e) => showProposalModal2(row.id)} title="View Proposal">
+                
+         <EyeIcon />
+              
+            </div>
+                              
+                                </>
                                 :
                                 null
                             }
-                            <div title="View Discussion Message">
-                                <i
-                                    class="fa fa-comments-o"
-                                    style={{
-                                        fontSize: 16,
-                                        cursor: "pointer",
-                                        color: "orange"
-                                    }}
-                                    onClick={() => ViewDiscussionToggel(row.assign_no)}
-                                ></i>
-                            </div>
+
+
+                          
+                           
                         </div>
                     </>
                 );
@@ -347,13 +307,12 @@ function InprogressProposal() {
                     />
                 </CardHeader>
                 <CardBody>
-                    <BootstrapTable
-                        bootstrap4
-                        keyField="id"
-                        data={proposal}
-                        columns={columns}
-                        rowIndex
-                    />
+                <DataTablepopulated 
+                   bgColor="#5f7b97"
+                   keyField= {"assign_no"}
+                   data={proposal}
+                   columns={columns}>
+                    </DataTablepopulated>
 
                     <ChatHistory
                         chatHandler={chatHandler}
@@ -366,7 +325,13 @@ function InprogressProposal() {
                         ViewDiscussion={ViewDiscussion}
                         report={assignNo}
                         getData={getProposalList}
+                        headColor="#5f7b97"
                     />
+                      <CommonShowProposal
+          setViewProposalModal = {setViewProposalModal}
+          viewProposalModal = {viewProposalModal}
+          showProposalModal2 = {showProposalModal2}
+          proposalId = {proposalId}/>
                 </CardBody>
             </Card>
         </>

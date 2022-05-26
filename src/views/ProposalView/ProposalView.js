@@ -20,23 +20,27 @@ import Alerts from "../../common/Alerts";
 import classNames from "classnames";
 import Swal from "sweetalert2";
 import Loader from "../../components/Loader/Loader";
-
-
+import RejectedModal22 from "./RejectedModal22";
+import {Markup} from "interweave";
 
 function ProposalView(props) {
   const { handleSubmit, register } = useForm();
-
   const [loading, setLoading] = useState(false);
-
   const userId = window.localStorage.getItem("userid");
   const [queryStatus, setQueryStatus] = useState(null);
   const [custcheckError, setCheckerror] = useState(null);
   const [valueCheckBox, setValueCheckBox] = useState(false);
-
-
+  const [rejectedBox, showRejectedBox] = useState(false)
+  const [assignNo2, setAssignNo2] = useState()
+  const [addPaymentModal, setPaymentModal] = useState(false);
   const { id } = useParams();
   const history = useHistory();
-
+  const token = window.localStorage.getItem("clientToken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
   const [diaplayProposal, setDisplayProposal] = useState({
     amount: "",
     proposal_date: "",
@@ -70,12 +74,12 @@ function ProposalView(props) {
   const getProposalDetails = () => {
     axios
       .get(
-        `${baseUrl}/customers/getQueryDetails?id=${id}`
+        `${baseUrl}/customers/getQueryDetails?id=${id}`, myConfig
       )
       .then((res) => {
-        console.log(res);
+      
         if (res.data.code === 1) {
-          console.log(res.data.result[0].query_status);
+        
 
           if (res.data.result[0].query_status) {
             setQueryStatus(res.data.result[0].query_status);
@@ -103,9 +107,10 @@ function ProposalView(props) {
       });
   };
 
-  const [addPaymentModal, setPaymentModal] = useState(false);
+  
+  var nfObject = new Intl.NumberFormat('hi-IN')
   const readTerms = () => {
-    console.log("key");
+ 
     setPaymentModal(!addPaymentModal);
   };
 
@@ -118,10 +123,10 @@ function ProposalView(props) {
 
 
   const onSubmit = (value) => {
-    console.log("value :", value);
+  
 
     if (valueCheckBox === false) {
-      console.log("catch")
+     
       setCheckerror("Please , You have to select")
     }
     else {
@@ -134,13 +139,16 @@ function ProposalView(props) {
       axios({
         method: "POST",
         url: `${baseUrl}/customers/ProposalAccept`,
+        headers : {
+          uit : token
+        },
         data: formData,
       })
         .then(function (response) {
-          console.log("res-", response);
+       
           if (response.data.code === 1) {
             setLoading(false)
-            var variable = "Proposal accepted successfully."
+            var variable = ""
             Alerts.SuccessNormal(variable)
             history.push({
               pathname: `/customer/proposal`,
@@ -152,17 +160,20 @@ function ProposalView(props) {
 
         })
         .catch((error) => {
-          console.log("erroror - ", error);
+       
         });
     }
 
   };
 
-
+const amountStyle  = {
+  display : "block",
+  textAlign : "right",
+ 
+}
   const installAmount = (data) => {
     var item = data.split(',')
-    console.log("item", item);
-
+   
     const dataItem = item.map((p, i) =>
     (
       <>
@@ -171,23 +182,43 @@ function ProposalView(props) {
     ))
     return dataItem;
   }
+  const installAmount2 = (data) => {
+    var item = data.split(',')
+   
+    const dataItem = item.map((p, i) =>
+    (
+      <>
+        <p style={amountStyle}>{nfObject.format(p)}</p>
+      </>
+    ))
+    return dataItem;
+  }
+  // curent date
+  var date = new Date();
+  function convert(str) {
+    var date = new Date(str),
+      mnth = ("0" + (date.getMonth() + 1)).slice(-2),
+      day = ("0" + date.getDate()).slice(-2);
+    return [date.getFullYear(), mnth, day].join("-");
+  }
 
 
   //rejected
   const rejected = (id) => {
-    console.log("del", id);
+   
     if (valueCheckBox === false) {
-      console.log("catch")
+   
       setCheckerror("Please , You have to select")
     } else {
       Swal.fire({
-        title: "Are you sure to reject proposal?",
-        // text: "Want to reject proposal ?",
+        title: "Are you sure",
+         text: "to reject proposal ?",
         type: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, rejected it!",
+        confirmButtonText: "Yes, reject it",
+       
       }).then((result) => {
         if (result.value) {
           deleteCliente(id);
@@ -199,33 +230,9 @@ function ProposalView(props) {
 
   // delete data
   const deleteCliente = (key) => {
-    setLoading(true)
-    let formData = new FormData();
-    formData.append("id", key);
-    formData.append("status", 6);
-
-    axios({
-      method: "POST",
-      url: `${baseUrl}/customers/ProposalAccept`,
-      data: formData,
-    })
-      .then(function (response) {
-        console.log("res-", response);
-        if (response.data.code === 1) {
-          setLoading(false)
-          Swal.fire("Rejected!", "Proposal rejected successfully.", "success");
-          history.push({
-            pathname: `/customer/proposal`,
-            index: 0,
-          });
-        } else {
-          setLoading(false)
-          Swal.fire("Oops...", "Errorr ", "error");
-        }
-      })
-      .catch((error) => {
-        console.log("erroror - ", error);
-      });
+    setAssignNo2(id)
+    showRejectedBox(!rejectedBox)
+    
   };
 
 
@@ -234,11 +241,16 @@ function ProposalView(props) {
       <Card>
         <CardHeader>
           <Row>
-            <Col md="4">
-              <button class="btn btn-success" onClick={() => history.goBack()}>
-                <i class="fas fa-arrow-left mr-2"></i>
-                Go Back
-              </button>
+          <Col md="4">
+            <Link
+                  to={{
+                    pathname: `/customer/${props.location.routes}`,
+                    index: props.location.index,
+                  }}
+                >
+                  <button class="customBtn ml-3">Go Back</button>
+                </Link>
+              
             </Col>
             <Col md="4" style={{ display: "flex", justifyContent: "center" }}>
               <p style={{ fontSize: "20px" }}>Proposal Details</p>
@@ -250,6 +262,7 @@ function ProposalView(props) {
           </Row>
         </CardHeader>
         <CardBody>
+         <div className="queryBox">
           <table class="table table-bordered">
             <tbody>
               <tr>
@@ -262,33 +275,33 @@ function ProposalView(props) {
               </tr>
               <tr>
                 <th scope="row">Proposed Amount</th>
-                <td>{amount}</td>
+                <td>{nfObject.format(amount)}</td>
               </tr>
               <tr>
                 <th scope="row">Scope of Work</th>
-                <td>{description}</td>
+                <td><Markup content={description} /></td>
               </tr>
               <tr>
                 <th scope="row">Amount</th>
                 <td>
-                  <tr>
-                    <th>Amount Type</th>
-                    <th>Price</th>
+                  <tr style={{display : "flex", width : "100%"}}>
+                    <th style={{display : "flex", width : "50%"}}>Amount Type</th>
+                    <th style={{display : "flex", width : "50%"}}>Price</th>
                   </tr>
-                  <tr>
-                    <td>{CommonServices.capitalizeFirstLetter(amount_type)}</td>
-                    <td>
+                  <tr style={{display : "flex", width : "100%"}}>
+                    <td style={{display : "flex", width : "50%"}}>{CommonServices.capitalizeFirstLetter(amount_type)}</td>
+                    <td style={{display : "flex", width : "50%"}}>
                       {
                         amount_type == "fixed" ?
-                          amount
+                          nfObject.format(amount)
                           :
                           amount_type == "hourly" ?
-                            amount_hourly
+                            nfObject.format(amount_hourly)
                             :
                             amount_type == "mixed" ?
                               <div>
-                                <p>Fixed : {amount}</p>
-                                <p>Hourly : {amount_hourly}</p>
+                                <p>Fixed : {nfObject.format(amount)}</p>
+                                <p>Hourly : {nfObject.format(amount_hourly)}</p>
                               </div>
                               :
                               ""
@@ -317,17 +330,17 @@ function ProposalView(props) {
                     :
                     payment_terms == "installment" ?
                       <td>
-                        <tr>
-                          <th>Payment Type</th>
-                          <th>No of Installments</th>
-                          <th>Installment Amount</th>
-                          <th>Due Dates</th>
+                        <tr style={{display : "flex", width : "100%"}}>
+                          <th style={{display : "flex", width : "25%"}}>Payment Type</th>
+                          <th style={{display : "flex", width : "25%"}}>No of Installments</th>
+                          <th style={{display : "flex", width : "25%"}}>Installment Amount</th>
+                          <th style={{display : "flex", width : "25%"}}>Due Dates</th>
                         </tr>
-                        <tr>
-                          <td>{payment_terms}</td>
-                          <td>{no_of_installment}</td>
-                          <td>{installAmount(installment_amount)}</td>
-                          <td>{installAmount(due_date)}</td>
+                        <tr style={{display : "flex", width : "100%"}}>
+                          <td style={{display : "flex", width : "25%"}}>{CommonServices.capitalizeFirstLetter(payment_terms)}</td>
+                          <td style={{display : "flex", width : "25%", justifyContent : "center"}}>{no_of_installment}</td>
+                          <td style={{display : "flex", width : "25%", flexDirection : "column", textAlign : "right"}}>{installAmount2(installment_amount)}</td>
+                        <td style={{display : "flex", width : "25%", flexDirection : "column"}}>{installAmount(due_date)}</td>
                         </tr>
                       </td>
                       :
@@ -348,6 +361,7 @@ function ProposalView(props) {
 
           </table>
 
+         </div>
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="col-md-6">
               <div className="mb-3">
@@ -366,7 +380,7 @@ function ProposalView(props) {
                     title="Read"
                     style={{ cursor: "pointer" }}
                   >
-                    Engagement Letter
+                   Please read engagement letter
                   </label>
                   <p className="declined">{custcheckError}</p>
                 </div>
@@ -381,21 +395,22 @@ function ProposalView(props) {
                         {
                           valueCheckBox ?
                             <div>
-                              <button type="submit" className="btn btn-primary">
+                              <button type="submit" className="customBtn">
                                 Accept
                               </button>
-                              <button type="button" className="btn btn-danger ml-2" onClick={() => rejected(id)}>
+                              <button type="button" className="dangerBtn ml-2" onClick={() => rejected(id)}>
                                 Reject
                               </button>
                             </div>
                             :
-                            <div>
-                              <button type="submit" className="btn btn-primary" disabled>
+                            <div className="proposalBtn">
+                              <button type="submit" disabled  className="customBtnDisabled">
                                 Accept
                               </button>
-                              <button type="button" className="btn btn-danger ml-2" disabled>
+                              <button type="button" disabled  className="dangerBtnDisabled ml-2">
                                 Reject
                               </button>
+                              
                             </div>
                         }
                       </div>
@@ -409,11 +424,21 @@ function ProposalView(props) {
 
         </CardBody>
 
+      {addPaymentModal === true ?
         <TermsConditions
-          readTerms={readTerms}
-          addPaymentModal={addPaymentModal}
-          id={id}
-        />
+        readTerms={readTerms}
+        addPaymentModal={addPaymentModal}
+        id={id}
+      /> : ""}
+        {
+          rejectedBox === true ?
+          <RejectedModal22
+          showRejectedBox = {showRejectedBox} 
+          rejectedBox = {rejectedBox}
+          // getQueriesData = {getQueriesData}
+          assignNo={assignNo2}
+          deleteCliente = {deleteCliente}/> : ""
+        }
       </Card>
     </Layout>
   );

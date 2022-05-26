@@ -21,7 +21,7 @@ function PaymentModal({
 
 
   const onSubmit = (value) => {
-    console.log("value :", value);
+   
 
     let formData = new FormData();
     formData.append("uid", JSON.parse(userId));
@@ -35,7 +35,7 @@ function PaymentModal({
       data: formData,
     })
       .then(function (response) {
-        console.log("res-", response);
+      
         if (response.data.code === 1) {
           reset();
           alert.success(" message successfully send!");
@@ -43,7 +43,7 @@ function PaymentModal({
         }
       })
       .catch((error) => {
-        console.log("erroror - ", error);
+       
       });
   };
 
@@ -55,11 +55,11 @@ function PaymentModal({
         <ModalBody>
 
           <form onSubmit={handleSubmit(onSubmit)}>
-            <div class="row">
-              <div class="col-md-12">
-                <div class="form-group">
+            <div className="row">
+              <div className="col-md-12">
+                <div className="form-group">
                   <textarea
-                    class="form-control"
+                    className="form-control"
                     placeholder="Message text here"
                     rows="5"
                     ref={register}

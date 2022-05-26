@@ -5,20 +5,24 @@ import axios from "axios";
 import { baseUrl } from "../../config/config";
 import Swal from "sweetalert2";
 import { Spinner } from 'reactstrap';
-
+import ShowError from "../../components/LoadingTime/LoadingTime";
 function AdditionalQueryModal({
   additionalQuery,
   additionalHandler,
   assignNo,
   getQueriesData,
+  setLoading2,
+  loading2,
+  
+  des
 }) {
   const { handleSubmit, register } = useForm();
-  
-  const [loading, setLoading] = useState(false);
+  const token = window.localStorage.getItem("clientToken")
+ // const [loading, setLoading] = useState(false);
 
   const onSubmit = (value) => {
-    console.log("value :", value);
-    setLoading(true)
+ des = false
+    setLoading2(true)
 
     let formData = new FormData();
     var uploadImg = value.p_upload;
@@ -29,17 +33,19 @@ function AdditionalQueryModal({
       }
     }
     formData.append("assign_no", assignNo);
-
-
     axios({
       method: "POST",
       url: `${baseUrl}/customers/PostAdditionalQuery`,
+      headers: {
+        uit : token
+      },
       data: formData,
     })
       .then(function (response) {
-        console.log("res-", response);
-        if (response.data.code === 1) {
-          setLoading(false)
+    
+        if (response.data.code === 1 && des === false) {
+          des = true
+          setLoading2(false)
           var message = response.data.message
           if (message.invalid) {
             Swal.fire({
@@ -69,12 +75,12 @@ function AdditionalQueryModal({
           additionalHandler();
           getQueriesData();
         } else if (response.data.code === 0) {
-          setLoading(false)
+          setLoading2(false)
         }
       })
       .catch((error) => {
-        console.log("erroror - ", error);
-      });
+        ShowError.LoadingError(setLoading2)
+       });
   };
 
 
@@ -98,12 +104,12 @@ function AdditionalQueryModal({
 
             <div class="modal-footer">
               {
-                loading ?
+                loading2 ?
                   <Spinner color="primary" />
                   :
                   <button
                     type="submit"
-                    className="btn btn-primary"
+                    className="customBtn"
                   >
                     Submit
                   </button>

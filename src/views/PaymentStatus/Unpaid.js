@@ -6,9 +6,7 @@ import {
   Card,
   CardHeader,
   CardBody,
-  CardTitle,
-  Row,
-  Col,
+ 
   Modal,
   ModalHeader,
   ModalBody,
@@ -18,14 +16,15 @@ import {
 import { useAlert } from "react-alert";
 import { Link, useParams } from "react-router-dom";
 import CommonServices from "../../common/common";
-import BootstrapTable from "react-bootstrap-table-next";
 import CustomerFilter from "../../components/Search-Filter/CustomerFilter";
 import Records from "../../components/Records/Records";
 import DiscardReport from "../AssignmentTab/DiscardReport";
-import PaymentIcon from '@material-ui/icons/Payment';
 import PaymentComponent from './PaymentComponent';
-
-
+import './index.css';
+import ModalManual from "../ModalManual/AllComponentManual";
+import MessageIcon, { ViewDiscussionIcon, HelpIcon, 
+  Payment} from "../../components/Common/MessageIcon";
+import DataTablepopulated from "../../components/DataTablepopulated/DataTabel";
 function Paid() {
   const alert = useAlert();
   const { id } = useParams();
@@ -78,6 +77,17 @@ function Paid() {
 
   const [assignNo, setAssignNo] = useState('');
   const [ViewDiscussion, setViewDiscussion] = useState(false);
+  const [openManual, setManual] = useState(false)
+  const token = window.localStorage.getItem("clientToken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
+  const needHelp = () => {
+      
+      setManual(!openManual)
+  }
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key)
@@ -89,8 +99,8 @@ function Paid() {
 
 
   const getPaymentStatus = () => {
-    axios.get(`${baseUrl}/tl/getUploadedProposals?cid=${JSON.parse(userId)}&status=1`).then((res) => {
-      console.log(res);
+    axios.get(`${baseUrl}/customers/getUploadedProposals?cid=${JSON.parse(userId)}&status=1`, myConfig).then((res) => {
+   
       if (res.data.code === 1) {
         setPayment(res.data.result);
         setCount(res.data.result.length);
@@ -101,7 +111,7 @@ function Paid() {
   };
 
   const toggle = (key) => {
-    console.log("key", key);
+  
     setModal(!modal);
 
     fetch(`${baseUrl}/admin/getPaymentDetail?id=${key}`, {
@@ -112,7 +122,7 @@ function Paid() {
     })
       .then((res) => res.json())
       .then((response) => {
-        console.log(response);
+    
         setPay(response.payment_detail);
       })
       .catch((error) => console.log(error));
@@ -126,91 +136,66 @@ function Paid() {
       formatter: (cellContent, row, rowIndex) => {
           return rowIndex + 1;
       },
-      style: {
-          fontSize: "11px",
-      },
-      headerStyle: () => {
-          return { fontSize: "11px" };
-      },
+      headerStyle : () => {
+        return( {
+            width: "50px"
+        })
+    }
   },
-    {
-      dataField: "query_created_date",
-      text: "Date",
-      sort: true,
-      style: {
-        fontSize: "11px",
-      },
-      headerStyle: () => {
-        return { fontSize: "11px" };
-      },
-      formatter: function dateFormat(cell, row) {
-        console.log("dt", row.query_created_date);
+  {
+    dataField: "query_created_date",
+    text: "Date",
+    sort: true,
+   
+    formatter: function dateFormat(cell, row) {
+     
         var oldDate = row.query_created_date;
         if (oldDate == null) {
-          return null;
+            return null;
         }
         return oldDate.slice(0, 10).toString().split("-").reverse().join("-");
-      },
     },
-    {
-      dataField: "assign_no",
-      text: "Query No",
-      style: {
-        fontSize: "11px",
-      },
-      headerStyle: () => {
-        return { fontSize: "11px" };
-      },
-      formatter: function nameFormatter(cell, row) {
-        console.log(row);
+},
+{
+    dataField: "assign_no",
+    text: "Query No",
+   
+    formatter: function nameFormatter(cell, row) {
+     
         return (
-          <>
-            <Link
-              to={{
-                pathname: `/customer/my-assingment/${row.assign_id}`,
-                routes: "paymentstatus",
-              }}
-            >
-              {row.assign_no}
-            </Link>
-          </>
+            <>
+                   <Link
+                        to={{
+                            pathname: `/customer/my-assingment/${row.assign_id}`,
+                            index : 1,
+                            routes: "paymentstatus",
+                        }}
+                    >
+                        {row.assign_no}
+                    </Link>
+            </>
         );
-      },
     },
+},
     {
       dataField: "parent_id",
       text: "Category",
       sort: true,
-      style: {
-        fontSize: "11px",
-      },
-      headerStyle: () => {
-        return { fontSize: "11px" };
-      },
+      
     },
     {
       dataField: "cat_name",
       text: "Sub Category",
       sort: true,
-      style: {
-        fontSize: "11px",
-      },
-      headerStyle: () => {
-        return { fontSize: "11px" };
-      },
+      
     },
     {
       text: "Date of acceptance of Proposal",
       dataField: "cust_accept_date",
       sort: true,
-      style: {
-        fontSize: "11px",
-      },
-      headerStyle: () => {
-        return { fontSize: "11px" };
-      },
+     
       formatter: function dateFormat(cell, row) {
-        console.log("dt", row.cust_accept_date);
+        
         var oldDate = row.cust_accept_date;
         if (oldDate == null) {
           return null;
@@ -220,82 +205,90 @@ function Paid() {
     },
     {
       text: "Status",
-      dataField: "status",
-      style: {
-        fontSize: "11px",
-      },
-      headerStyle: () => {
-        return { fontSize: "11px" };
-      },
+      dataField: "",
+      
+      formatter : function (cell, row) {
+          return(
+              <>
+              {row.paid_status == "2"  ?
+              <p className="declined">{row.status} </p> : 
+              <p>{row.status}</p>}
+              </>
+          )
+      }
+  },
+  {
+    dataField: "accepted_amount",
+    text: "Accepted Amount ",
+    sort: true,
+   
+    sortFunc: (a, b, order, dataField) => {
+      if (order === 'asc') {
+        return b - a;
+      }
+      return a - b; // desc
     },
-    {
-      dataField: "accepted_amount",
-      text: "Accepted Amount ",
-      sort: true,
-      style: {
-        fontSize: "11px",
-        color: "#21a3ce",
-      },
-      sortFunc: (a, b, order, dataField) => {
-        if (order === 'asc') {
-          return b - a;
-        }
-        return a - b; // desc
-      },
-      headerStyle: () => {
-        return { fontSize: "11px", color: "#21a3ce" };
-      },
-    },
-    {
-      text: "Amount Paid",
-      dataField: "paid_amount",
-      sort: true,
-      style: {
-        fontSize: "11px",
-        color: "#064606",
-      },
-      sortFunc: (a, b, order, dataField) => {
-        if (order === 'asc') {
-          return b - a;
-        }
-        return a - b; // desc
-      },
-      headerStyle: () => {
-        return { fontSize: "11px", color: "#064606" };
-      },
-    },
-
-    {
-      text: "Amount Outstanding",
-      dataField: "amount_outstanding",
-      sort: true,
-      style: {
-        fontSize: "11px",
-        color: "darkred",
-      },
-      sortFunc: (a, b, order, dataField) => {
-        if (order === 'asc') {
-          return b - a;
-        }
-        return a - b; // desc
-      },
-      headerStyle: () => {
-        return { fontSize: "11px", color: "darkred" };
-      },
+   
+    formatter: function nameFormatter(cell, row){
+        var nfObject = new Intl.NumberFormat('hi-IN')
+         var x = row.accepted_amount;
+        
+         return(
+           <p className="rightAli">{nfObject.format(x)}</p>
+         )
+       }
+},
+{
+    text: "Amount Paid",
+    dataField: "paid_amount",
+    sort: true,
     
+    sortFunc: (a, b, order, dataField) => {
+      if (order === 'asc') {
+        return b - a;
+      }
+      return a - b; // desc
     },
+   
+    formatter: function nameFormatter(cell, row){
+        var nfObject = new Intl.NumberFormat('hi-IN')
+         var x = row.paid_amount;
+       
+         return(
+           <p className="rightAli">{nfObject.format(x)}</p>
+         )
+       }
+},
+
+{
+    text : "Amount Outstanding",
+    dataField: "amount_outstanding",
+    sort: true,
+   
+    sortFunc: (a, b, order, dataField) => {
+      if (order === 'asc') {
+        return b - a;
+      }
+      return a - b; // desc
+    },
+    
+    formatter: function nameFormatter(cell, row){
+        var nfObject = new Intl.NumberFormat('hi-IN')
+         var x = row.amount_outstanding;
+     
+         return(
+           <p className="rightAli">{nfObject.format(x)}</p>
+         )
+       }
+},
     {
       text: "Date of Payment",
       dataField: "cust_paid_date",
       sort: true,
-      style: {
-        fontSize: "11px",
-      },
-      headerStyle: () => {
-        return { fontSize: "11px" };
-      },
+     
+     
       formatter: function dateFormat(cell, row) {
-        console.log("dt", row.cust_paid_date);
+      
         var oldDate = row.cust_paid_date;
         if (oldDate == null) {
           return null;
@@ -303,86 +296,200 @@ function Paid() {
         return oldDate.slice(0, 10).toString().split("-").reverse().join("-");
       },
     },
-    {
-      text: "Action",
-      dataField: "",
-      style: {
-        fontSize: "11px",
-      },
-      headerStyle: () => {
-        return { fontSize: "11px", width: "90px" };
-      },
-      formatter: function (cell, row) {
-        return (
-          <>
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
+  //   {
+  //     text: "Action",
+  //     dataField: "",
+      
+  //     formatter: function (cell, row) {
+  //       return (
+  //         <>
+  //         {row.paid_status === "2" ?
+  //         <>
+  //      <div style={{display : "flex"}}>
+     
+  //                    <Link
+  //                           to={{
+  //                               pathname: `/customer/paydetails/${row.assign_id}`,
+  //                               index : 1,
+  //                               routes: "paymentstatus",
+  //                           }}
+  //                       >
+  //                                     <Payment />
+  //                 </Link>
+                
+  //                 <span onClick={() => ViewDiscussionToggel(row.assign_no)}  className="ml-2">
+  //                                 <ViewDiscussionIcon />
+  //                               </span>
+                              
+       
+  //        </div>   </>
+  //         :  <div style={{display : "flex"}}>
+        
+  //           {
+  //             row.paid_status == "0" ?
+                
+  //                   <Link
+  //                           to={{
+  //                               pathname: `/customer/paydetails/${row.assign_id}`,
+  //                               index : 1,
+  //                               routes: "paymentstatus",
+  //                           }}
+  //                       >
+  //                                     <Payment />
+  //                 </Link>   
+  //               :
+  //               null
+  //           }
 
-              <div>
-                {
-                  row.paid_status == "0" ?
-                    <div
-                      style={{ cursor: "pointer" }}
-                      title="Pay Amount"
-                      onClick={() => paymentHandler(row)}>
-                      <PaymentIcon color="primary" />
-                    </div>
-                    :
-                    null
-                }
-              </div>
 
-              {
-                row.paid_amount > 0 ? <div style={{ cursor: "pointer" }} title="Payment History">
-                  <i
-                    class="fa fa-credit-card"
-                    style={{ color: "green", fontSize: "16px" }}
-                    onClick={() => toggle(row.assign_id)}
-                  ></i>
-                </div>
-                  :
-                  null
-              }
+         
+  //           {
+  //             row.paid_amount > 0 && row.paid_status > 0 ?
+  //                 <Link
+  //                           to={{
+  //                               pathname: `/customer/paydetails/${row.assign_id}`,
+  //                               index : 1,
+  //                               routes: "paymentstatus",
+  //                           }}
+  //                       >
+  //                                     <Payment />
+  //                 </Link>   
+              
+  //               :
+  //               null
+  //           }
+        
 
 
-              <div title="Send Message">
-                <Link
-                  to={{
-                    pathname: `/customer/chatting/${row.assign_id}`,
-                    obj: {
-                      message_type: "2",
-                      query_No: row.assign_no,
-                      query_id: row.q_id,
-                      routes: `/customer/proposal`
-                    }
-                  }}
-                >
-                  <i
-                    class="fa fa-comments-o"
-                    style={{
-                      fontSize: 16,
-                      cursor: "pointer",
-                      color: "blue"
-                    }}
-                  ></i>
+         
+  //           <Link className="ml-2"
+  //           to={{
+  //             pathname: `/customer/chatting/${row.assign_id}`,
+  //             index : 1,
+  //             routes: "paymentstatus",
+             
+              
+  //               obj: {
+  //                 message_type: "5",
+  //                 query_No: row.assign_no,
+  //                 query_id: row.assign_id,
+  //                 routes: `/customer/paymentstatus`
+  //               }
+  //             }}
+  //           >
+  //            <MessageIcon />
+  //           </Link>
+       
+  //         <span onClick={() => ViewDiscussionToggel(row.assign_no)}  className="ml-2">
+  //                                 <ViewDiscussionIcon />
+  //                               </span>
+                              
+  //         </div>
+  //     }
+  //         </>
+  //       );
+  //     },
+  //   },
+  // ];
+  {
+    text: "Action",
+    dataField: "",
+   
+    formatter: function (cell, row) {
+      return (
+        <>
+        {row.paid_status === "2" ?
+        <>
+   
+   
+   <Link
+                          to={{
+                              pathname: `/customer/paydetails/${row.assign_id}`,
+                              index : 1,
+                              routes: "paymentstatus",
+                          }}
+                      >
+                                    <Payment />
                 </Link>
-              </div>
-              <div title="View Discussion Message">
-                <i
-                  class="fa fa-comments-o"
-                  style={{
-                    fontSize: 16,
-                    cursor: "pointer",
-                    color: "orange"
-                  }}
-                  onClick={() => ViewDiscussionToggel(row.assign_no)}
-                ></i>
-              </div>
-            </div>
-          </>
-        );
-      },
+              
+              
+                <span onClick={() => ViewDiscussionToggel(row.assign_no)}  className="ml-1">
+                                <ViewDiscussionIcon />
+                              </span>
+                              </>
+        :
+          <>
+      
+          {
+            row.paid_status == "0" ?
+              
+                
+            <Link
+                                     to={{
+                                         pathname: `/customer/paydetails/${row.assign_id}`,
+                                         index : 1,
+                                         routes: "paymentstatus",
+                                     }}
+                                 >
+                                               <Payment />
+                           </Link>
+              :
+              null
+          }
+
+
+       
+          {
+            row.paid_amount > 0 && row.paid_status > 0 ?
+                 
+            <Link
+                                       to={{
+                                           pathname: `/customer/paydetails/${row.assign_id}`,
+                                           index : 1,
+                                           routes: "paymentstatus",
+                                       }}
+                                   >
+                                                 <Payment />
+                             </Link>
+
+            
+              :
+              null
+          }
+      
+
+
+       
+         
+      <Link className="ml-2"
+            to={{
+              pathname: `/customer/chatting/${row.assign_id}`,
+              index : 1,
+              routes: "paymentstatus",
+             
+              
+                obj: {
+                  message_type: "5",
+                  query_No: row.assign_no,
+                  query_id: row.assign_id,
+                  routes: `/customer/paymentstatus`
+                }
+              }}
+            >
+             <MessageIcon />
+            </Link>
+     
+        <span onClick={() => ViewDiscussionToggel(row.assign_no)}  className="ml-1">
+                                <ViewDiscussionIcon />
+                              </span>
+                            
+        </>
+    }
+        </>
+      );
     },
-  ];
+  },
+];
 
 
 
@@ -393,7 +500,8 @@ function Paid() {
         <Card>
 
           <CardHeader>
-            <CustomerFilter
+          <span onClick= {(e) => needHelp()}> <HelpIcon /></span>
+              <CustomerFilter
               setData={setPayment}
               getData={getPaymentStatus}
               paid="paid"
@@ -404,14 +512,14 @@ function Paid() {
           </CardHeader>
 
           <CardBody>
+          
             <Records records={records} />
-            <BootstrapTable
-              bootstrap4
-              keyField="id"
-              data={payment}
-              columns={columns}
-              classes="table-responsive"
-            />
+            <DataTablepopulated 
+                   bgColor="#3e8678"
+                   keyField={"assign_no"}
+                   data={payment}
+                   columns={columns}>
+                    </DataTablepopulated>
 
             <Modal isOpen={modal} fade={false} toggle={toggle}>
               <ModalHeader toggle={toggle}>History</ModalHeader>
@@ -457,8 +565,14 @@ function Paid() {
               ViewDiscussion={ViewDiscussion}
               report={assignNo}
               getData={getPaymentStatus}
+              headColor="#3e8678"
             />
-
+   <Modal isOpen={openManual} toggle={needHelp} style={{display : "block", position: "absolute", left:"280px"}} size="lg">
+                        <ModalHeader toggle={needHelp}>Mazars</ModalHeader>
+                        <ModalBody>
+                            <ModalManual tar= {"paymentProcess"} />
+                        </ModalBody>
+                    </Modal>
           </CardBody>
         </Card>
       </>

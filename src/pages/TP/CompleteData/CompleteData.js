@@ -32,7 +32,7 @@ function CompletedQuery() {
     axios
       .get(`${baseUrl}/tl/getIncompleteQues?tp_id=${JSON.parse(userid)}&status=2`)
       .then((res) => {
-        console.log(res);
+
         if (res.data.code === 1) {
           setInCompleteData(res.data.result);
           setRecords(res.data.result.length);
@@ -67,7 +67,7 @@ function CompletedQuery() {
         return { fontSize: "12px" };
       },
       formatter: function nameFormatter(cell, row) {
-        console.log(row);
+     
         return (
           <>
             <Link
@@ -100,7 +100,7 @@ function CompletedQuery() {
       },
     },
     {
-      text: "Customer Name",
+      text: "Client Name",
       dataField: "name",
       sort: true,
       headerStyle: () => {
@@ -115,7 +115,7 @@ function CompletedQuery() {
         return { fontSize: "12px" };
       },
       formatter: function dateFormat(cell, row) {
-        console.log("dt", row.Exp_Delivery_Date);
+       
         var oldDate = row.Exp_Delivery_Date;
         if (oldDate == null) {
           return null;

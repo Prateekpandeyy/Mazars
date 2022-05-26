@@ -1,3 +1,8 @@
-table.table-bordered > tbody > tr.modalTable > td:nth-child(3) > tr{
+/* table.table-bordered > tbody > tr.modalTable > td:nth-child(3) > tr{
     background-color: green !important;
+} */
+h5.modal-title{
+    display : flex;
+    width : 100%;
+    justify-content: space-between;
 }

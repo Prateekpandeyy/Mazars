@@ -12,7 +12,7 @@ import Alerts from "../../common/Alerts";
 import Mandatory from "../../components/Common/Mandatory";
 import ResendOtp from "./ResendOtp";
 import { Spinner } from "reactstrap";
-
+import ShowError from "../../components/LoadingTime/LoadingTime";
 
 
 function ChangePassword(props) {
@@ -28,14 +28,14 @@ function ChangePassword(props) {
   const [time, setTime] = useState('')
   const [load, setLoad] = useState(false);
   const [email, setEmail] = useState('');
-
+  const token = window.localStorage.getItem("clientToken")
 
   useEffect(() => {
     getTime()
   }, [load]);
 
   const getTime = () => {
-    // console.log("get time")
+
 
     if (load) {
       var timerOn = true;
@@ -65,7 +65,7 @@ function ChangePassword(props) {
   };
 
   const onSubmit = (value) => {
-    console.log("value :", value);
+   
     setLoading(true)
 
     setEmail(value.p_email)
@@ -86,10 +86,13 @@ function ChangePassword(props) {
       axios({
         method: "POST",
         url: `${baseUrl}/customers/regenrateotp`,
+        headers : {
+          uit : token
+        },
         data: formData,
       })
         .then(function (response) {
-          console.log("res-", response);
+         
           if (response.data.code === 1) {
             setLoading(false)
             setLoad(true)
@@ -101,17 +104,20 @@ function ChangePassword(props) {
           }
         })
         .catch((error) => {
-          console.log("erroror - ", error);
+        ShowError.LoadingError(setLoading)
         });
       return false
     }
     axios({
       method: "POST",
       url: `${baseUrl}/customers/passChange`,
+      headers : {
+        uit : token
+      },
       data: formData,
     })
       .then(function (response) {
-        console.log("res-", response);
+     
         if (response.data.code === 1) {
           setLoading(false)
           var variable = "Password changed successfully."
@@ -119,12 +125,12 @@ function ChangePassword(props) {
           props.history.push("/customer/dashboard");
         } else if (response.data.code === 0) {
           setLoading(false)
-          console.log(response.data.result);
+        
           Alerts.ErrorNormal("Incorrect OTP, please try again.")
         }
       })
       .catch((error) => {
-        console.log("erroror - ", error);
+       ShowError.LoadingError(setLoading)
       });
   };
 
@@ -144,11 +150,9 @@ function ChangePassword(props) {
     <Layout custDashboard="custDashboard" custUserId={userId}>
       <div className="container">
         <div className="form">
-          <div className="heading">
-            <h2>Change Password</h2>
-          </div>
+          <h4  className="contentTitle">Change Password</h4>
 
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
             <div className="row">
               <div className="col-md-12">
                 <div className="mb-3">
@@ -197,7 +201,7 @@ function ChangePassword(props) {
                       pattern: {
                         value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,15}$/,
                         message:
-                          "UPassword should be of minimum 8 Characters, including at least 1 upper case, lower case, special character and number.",
+                          "Password should be of minimum 8 Characters, including at least 1 upper case, lower case, special character and number.",
                       },
                     })}
                     autocomplete="off"
@@ -285,22 +289,22 @@ function ChangePassword(props) {
                     <Spinner color="primary" />
                   </div>
                   :
-                  <div class="col-md-6">
+                  <div class="col-md-12">
                     {
                       show ?
-                        <div>
+                        <>
                           {
                             disabled ? null
                               :
                               <>
-                                <button type="submit" className="btn btn-primary" onClick={() => setOtp()}>Submit</button>
+                                <button type="submit" className="customBtn" onClick={() => setOtp()}>Submit</button>
                                 <Cancel />
                               </>
                           }
-                        </div>
+                        </>
                         :
                         <>
-                          <button type="submit" class="btn btn-success" onClick={() => getOtp("otp")}>Get OTP</button>
+                          <button type="submit" class="customBtn" onClick={() => getOtp("otp")}>Get OTP</button>
                           <Cancel />
                         </>
                     }
@@ -336,9 +340,9 @@ const Cancel = () => {
   return (
     <>
       <Link to="/customer/dashboard" style={{ "margin": "10px" }}>
-        <Button variant="contained" color="secondary">
+        <button className="customBtn">
           Cancel
-        </Button>
+        </button>
       </Link>
     </>
   );

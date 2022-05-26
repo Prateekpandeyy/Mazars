@@ -20,7 +20,7 @@ function RejectedModal({
   assignNo,
   getPaymentStatus,
 }) {
-
+  const token = window.localStorage.getItem("tlToken")
   const userId = window.localStorage.getItem("tlkey");
   const { handleSubmit, register, reset, errors } = useForm({
     resolver: yupResolver(Schema),
@@ -29,7 +29,7 @@ function RejectedModal({
   const [loading, setLoading] = useState(false);
 
   const onSubmit = (value) => {
-    console.log("value :", value);
+ 
     setLoading(true)
 
     let formData = new FormData();
@@ -40,13 +40,16 @@ function RejectedModal({
     axios({
       method: "POST",
       url: `${baseUrl}/tl/declinePayment`,
+      headers: {
+        uit : token
+      },
       data: formData,
     })
       .then(function (response) {
-        console.log("res-", response);
+       
         if (response.data.code === 1) {
           setLoading(false)
-          Alerts.SuccessNormal("Marked as customer declined payment.")
+          Alerts.SuccessNormal("Marked as client declined payment.")
           getPaymentStatus();
           rejectHandler();
         } else if (response.data.code === 0) {
@@ -54,14 +57,14 @@ function RejectedModal({
         }
       })
       .catch((error) => {
-        console.log("erroror - ", error);
+      
       });
   };
 
   return (
     <div>
       <Modal isOpen={addPaymentModal} toggle={rejectHandler} size="md">
-        <ModalHeader toggle={rejectHandler}>Decline Payment</ModalHeader>
+        <ModalHeader toggle={rejectHandler}>Please provide the reason</ModalHeader>
         <ModalBody>
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="mb-3">
@@ -81,7 +84,7 @@ function RejectedModal({
                 loading ?
                   <Spinner color="primary" />
                   :
-                  <button type="submit" className="btn btn-primary">
+                  <button type="submit" className="customBtn">
                     Submit
                   </button>
               }

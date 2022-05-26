@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
 import Alerts from "../../common/Alerts";
-
+import ShowError from "../../components/LoadingTime/LoadingTime";
 
 
 function ResendOtp({ email, setDisabled, getTime, setLoad, setLoading, loading }) {
@@ -23,7 +23,7 @@ function ResendOtp({ email, setDisabled, getTime, setLoad, setLoading, loading }
             data: formData,
         })
             .then(function (response) {
-                console.log("res-", response);
+
                 if (response.data.code === 1) {
                     setLoading(false)
                     Alerts.SuccessNormal("As per your request, OTP has been sent to your registered email address.")
@@ -35,16 +35,16 @@ function ResendOtp({ email, setDisabled, getTime, setLoad, setLoading, loading }
                 }
             })
             .catch((error) => {
-                console.log("erroror - ", error);
+              ShowError.LoadingError(setLoading)
             });
     };
 
 
     return (
         <>
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
                 <div style={{ paddingTop: "10px" }}>
-                    <button type="submit" class="btn btn-success">SEND OTP</button>
+                    <button type="submit" class="autoWidthBtn">SEND OTP</button>
                 </div>
             </form>
         </>

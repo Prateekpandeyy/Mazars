@@ -14,7 +14,8 @@ import Alerts from "../../../common/Alerts";
 import Mandatory from "../../../components/Common/Mandatory";
 import VerifyOtpLogin from "./VerifyOtpLogin";
 import { Spinner } from "reactstrap";
-
+import {useHistory} from 'react-router-dom';
+import Cookies from "js-cookie";
 const Schema = yup.object().shape({
   p_email: yup.string().email("invalid email").required("required email"),
   password: yup
@@ -26,6 +27,7 @@ const Schema = yup.object().shape({
 
 function Login(props) {
   const alert = useAlert();
+  let history = useHistory()
   const { handleSubmit, register, reset, errors } = useForm({
     resolver: yupResolver(Schema),
   });
@@ -40,7 +42,7 @@ function Login(props) {
   };
 
   const onSubmit = (value) => {
-    console.log("value :", value);
+  
     setLoading(true)
 
     let formData = new FormData();
@@ -53,8 +55,9 @@ function Login(props) {
       data: formData,
     })
       .then(function (response) {
-        console.log("res-", response);
+       
         if (response.data.code === 1) {
+          Cookies.set("tpName", response.data.display_name)
           setLoading(false)
           setShow(true)
           Swal.fire({
@@ -64,24 +67,37 @@ function Login(props) {
           })
           // Alerts.SuccessNormal("As per your request, OTP has been sent to your registered email address.")
           setUid(response.data["user id"])
+          logout()
         } else if (response.data.code === 0) {
           setLoading(false)
           Alerts.ErrorNormal("Invalid email or password.")
         }
+        else if (response.data.code === 2){
+          setLoading(false)
+          Alerts.ErrorNormal(response.data.result)
+        }
       })
       .catch((error) => {
-        console.log("erroror - ", error);
+       
       });
   };
-
+  const logout = () => {
+    setTimeout(() => {
+      localStorage.removeItem("adminkey");
+      localStorage.removeItem("adminEmail");
+      history.push("/taxprofessional/login");
+    }, 36000000)
+  }
   const handleChange = (e) => {
-    console.log("val-", e.target.value);
+   
     setEmail(e.target.value);
   };
-
+  if(window.location.origin === "http://masindia.live" && window.location.protocol == 'http:'){
+    window.location.href = window.location.href.replace('http:', 'https:')
+  }
   return (
     <>
-      <Header mtp="mtp" />
+      <Header mtp="mtp" noTpSign = "noTpSign"/>
       <div class="container">
 
         {
@@ -95,11 +111,11 @@ function Login(props) {
               <div class="heading">
                 <h2>TAX PROFESSIONAL LOGIN</h2>
               </div>
-              <form onSubmit={handleSubmit(onSubmit)}>
+              <form onSubmit={handleSubmit(onSubmit)}  autocomplete="off">
                 <div className="row">
                   <div className="col-md-12">
                     <div className="mb-3">
-                      <label className="form-label">Email<span className="declined">*</span></label>
+                      <label className="form-label">User Id<span className="declined">*</span></label>
                       <input
                         type="text"
                         className={classNames("form-control", {
@@ -108,7 +124,7 @@ function Login(props) {
                         name="p_email"
                         ref={register}
                         placeholder="Enter Email"
-                        autocomplete="off"
+                       
                         onChange={(e) => handleChange(e)}
                       />
                       {errors.p_email && (
@@ -129,6 +145,14 @@ function Login(props) {
                         name="password"
                         placeholder="Enter Password"
                         ref={register}
+                        onCopy={(e) => {
+                          e.preventDefault();
+                          return false
+                        }}
+                        onPaste={(e) => {
+                          e.preventDefault();
+                          return false
+                        }}
                       />
                       <i
                         className={`fa ${isPasswordShow ? "fa-eye-slash" : "fa-eye"} password-icon`}
@@ -149,7 +173,7 @@ function Login(props) {
                       <Spinner color="primary" />
                     </div>
                     :
-                    <button type="submit" className="btn btn-primary">
+                    <button type="submit" className="customBtn">
                       Submit
                     </button>
                 }
@@ -172,7 +196,7 @@ function Login(props) {
 
 
       </div>
-      <Footer />
+
     </>
   );
 }

@@ -25,11 +25,11 @@ function RejectedModal({
   });
   const [loading, setLoading] = useState(false);
   const { id, allocation_id } = pay;
-
+  const token = window.localStorage.getItem("tlToken")
   
 
   const onSubmit = (value) => {
-    console.log("value :", value);
+  
     setLoading(true)
 
     let formData = new FormData();
@@ -42,10 +42,13 @@ function RejectedModal({
     axios({
       method: "POST",
       url: `${baseUrl}/tl/AcceptRejectQuery`,
+      headers : {
+        uit : token
+      },
       data: formData,
     })
       .then(function (response) {
-        console.log("res-", response);
+      
         if (response.data.code === 1) {
           setLoading(false)
           Alerts.SuccessNormal("Query rejected successfully.")
@@ -56,7 +59,7 @@ function RejectedModal({
         }
       })
       .catch((error) => {
-        console.log("erroror - ", error);
+       
       });
   };
 
@@ -84,7 +87,7 @@ function RejectedModal({
                 loading ?
                   <Spinner color="primary" />
                   :
-                  <button type="submit" className="btn btn-primary">
+                  <button type="submit" className="customBtn">
                     Submit
                   </button>
               }

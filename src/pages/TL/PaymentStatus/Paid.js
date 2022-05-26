@@ -25,7 +25,9 @@ import PaymentIcon from '@material-ui/icons/Payment';
 import RejectedModal from "./RejectedModal";
 import AssessmentIcon from '@material-ui/icons/Assessment';
 import DiscardReport from "../AssignmentTab/DiscardReport";
-
+import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
+import MessageIcon, {PaymentDecline, Payment, ViewDiscussionIcon, DiscussProposal, HelpIcon} from "../../../components/Common/MessageIcon";
+import moment from "moment";
 
 function AllPayment() {
     const alert = useAlert();
@@ -44,19 +46,24 @@ function AllPayment() {
     const [ViewDiscussion, setViewDiscussion] = useState(false);
     const [addPaymentModal, setPaymentModal] = useState(false);
     const rejectHandler = (key) => {
-        console.log("key", key);
+      
         setPaymentModal(!addPaymentModal);
         setAssignNo(key.assign_no)
     };
 
-
+    const token = window.localStorage.getItem("tlToken")
+    const myConfig = {
+        headers : {
+         "uit" : token
+        }
+      }
     useEffect(() => {
         getPaymentStatus();
     }, []);
 
     const getPaymentStatus = () => {
-        axios.get(`${baseUrl}/tl/getUploadedProposals?uid=${JSON.parse(userid)}&status=2`).then((res) => {
-            console.log(res);
+        axios.get(`${baseUrl}/tl/getUploadedProposals?uid=${JSON.parse(userid)}&status=2`, myConfig).then((res) => {
+           
             if (res.data.code === 1) {
                 setPayment(res.data.result);
                 setCount(res.data.result.length);
@@ -72,7 +79,7 @@ function AllPayment() {
     }
 
     const toggle = (key) => {
-        console.log("key", key);
+      
         setModal(!modal);
 
         fetch(`${baseUrl}//admin/getPaymentDetail?id=${key}`, {
@@ -83,7 +90,7 @@ function AllPayment() {
         })
             .then((res) => res.json())
             .then((response) => {
-                console.log(response);
+            
                 setPay(response.payment_detail);
             })
             .catch((error) => console.log(error));
@@ -97,25 +104,18 @@ function AllPayment() {
             formatter: (cellContent, row, rowIndex) => {
                 return rowIndex + 1;
             },
-            style: {
-                fontSize: "11px",
-            },
+
             headerStyle: () => {
-                return { fontSize: "11px" };
+                return { width : "50px" };
             },
         },
         {
             dataField: "query_created_date",
-            text: "Date",
+            text: "Query Date",
             sort: true,
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
+        
             formatter: function dateFormat(cell, row) {
-                console.log("dt", row.query_created_date);
+          
                 var oldDate = row.query_created_date;
                 if (oldDate == null) {
                     return null;
@@ -126,23 +126,16 @@ function AllPayment() {
         {
             dataField: "assign_no",
             text: "Query No",
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
+           
             formatter: function nameFormatter(cell, row) {
-                console.log(row);
+                
                 return (
                     <>
-                        {/* <Link to={`/teamleader/queries/${row.assign_id}`}>
-              {row.assign_no}
-            </Link> */}
 
                         <Link
                             to={{
                                 pathname: `/teamleader/queries/${row.assign_id}`,
+                                index : 2, 
                                 routes: "paymentstatus",
                             }}
                         >
@@ -156,36 +149,21 @@ function AllPayment() {
             dataField: "parent_id",
             text: "Category",
             sort: true,
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
+           
         },
         {
             dataField: "cat_name",
             text: "Sub Category",
             sort: true,
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
+          
         },
         {
             text: "Date of acceptance of Proposal",
             dataField: "cust_accept_date",
             sort: true,
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
+           
             formatter: function dateFormat(cell, row) {
-                console.log("dt", row.cust_accept_date);
+          
                 var oldDate = row.cust_accept_date;
                 if (oldDate == null) {
                     return null;
@@ -196,80 +174,79 @@ function AllPayment() {
         {
             text: "Status",
             dataField: "status",
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
+          
         },
         {
             dataField: "accepted_amount",
             text: "Accepted Amount ",
             sort: true,
-            style: {
-              fontSize: "11px",
-              color: "#21a3ce",
-            },
+            
             sortFunc: (a, b, order, dataField) => {
               if (order === 'asc') {
                 return b - a;
               }
               return a - b; // desc
             },
-            headerStyle: () => {
-              return { fontSize: "11px", color: "#21a3ce" };
-            },
+           
+            formatter: function nameFormatter(cell, row){
+                var nfObject = new Intl.NumberFormat('hi-IN')
+                 var x = row.accepted_amount;
+                 
+                 return(
+                   <p className="rightAli">{nfObject.format(x)}</p>
+                 )
+               }
         },
         {
             text: "Amount Paid",
             dataField: "paid_amount",
             sort: true,
-            style: {
-              fontSize: "11px",
-              color: "#064606",
-            },
+           
             sortFunc: (a, b, order, dataField) => {
               if (order === 'asc') {
                 return b - a;
               }
               return a - b; // desc
             },
-            headerStyle: () => {
-              return { fontSize: "11px", color: "#064606" };
-            },
+           
+            formatter: function nameFormatter(cell, row){
+                var nfObject = new Intl.NumberFormat('hi-IN')
+                 var x = row.paid_amount;
+                 
+                 return(
+                   <p className="rightAli">{nfObject.format(x)}</p>
+                 )
+               }
         },
 
         {
             text: "Outstanding Amount",
             dataField: "amount_outstanding",
             sort: true,
-            style: {
-              fontSize: "11px",
-              color: "darkred",
-            },
+           
             sortFunc: (a, b, order, dataField) => {
               if (order === 'asc') {
                 return b - a;
               }
               return a - b; // desc
             },
-            headerStyle: () => {
-              return { fontSize: "11px", color: "darkred" };
-            },
+           
+            formatter: function nameFormatter(cell, row){
+                var nfObject = new Intl.NumberFormat('hi-IN')
+                 var x = row.amount_outstanding;
+                 
+                 return(
+                   <p className="rightAli">{nfObject.format(x)}</p>
+                 )
+               }
         },
         {
             text: "Date of Payment",
             dataField: "cust_paid_date",
             sort: true,
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
+          
             formatter: function dateFormat(cell, row) {
-                console.log("dt", row.cust_paid_date);
+             
                 var oldDate = row.cust_paid_date;
                 if (oldDate == null) {
                     return null;
@@ -279,145 +256,85 @@ function AllPayment() {
         },
         {
             text: "Action",
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
+        
             formatter: function (cell, row) {
                 return (
                     <>
+                    <div style={{display: "flex"}}>
 
-                        <div style={{ display: "flex", justifyContent: "space-between", width: "90px" }}>
+<Link
+                             to={{
+                                pathname: `/teamleader/chatting/${row.id}`,
+                                index: 2,
+                                routes: "paymentstatus",
+                        
+                              obj: {
+                                  message_type: "4",
+                                  query_No: row.assign_no,
+                                  query_id: row.id,
+                                  routes: `/teamleader/paymentstatus`
+                              }
+                          }}
+                      >
+                          <MessageIcon />
+                      </Link>
+<div  onClick={() => ViewDiscussionToggel(row.assign_no)} className="ml-1">
+                                  
+                                  <ViewDiscussionIcon />
+                          </div>
+                          <Link
+              to={{
+                  pathname: `/teamleader/paydetails/${row.assign_id}`,
+                  index : 2,
+                  routes: "paymentstatus",
+              }}
+            >
+                          <Payment />
+                            </Link>
 
-                            <div title="Payment History"
-                                onClick={() => toggle(row.assign_id)}
-                                style={{ color: "green", fontSize: "16px", cursor: "pointer" }}
-                            >
-                               <i
-                                class="fa fa-credit-card"
-                                style={{ color: "green", fontSize: "16px" }}
-                                onClick={() => toggle(row.assign_id)}></i>
-                            </div>
-                            <div title="Send Message">
-                                <Link
-                                    to={{
-                                        pathname: `/teamleader/chatting/${row.assign_id}`,
-                                        obj: {
-                                            message_type: "5",
-                                            query_No: row.assign_no,
-                                            query_id: row.assign_id,
-                                            routes: `/teamleader/proposal`
-                                        }
-                                    }}
-                                >
-                                    <i
-                                        class="fa fa-comments-o"
-                                        style={{
-                                            fontSize: 18,
-                                            cursor: "pointer",
-                                            color: "blue"
-                                        }}
-                                    ></i>
-                                </Link>
-                            </div>
-                            <div>
-                                {
-                                    row.paid_status == "0" ?
-                                        <div title="Payment decline"
-                                            onClick={() => rejectHandler(row)}
-                                            style={{ color: "red", fontSize: "16px", cursor: "pointer" }}
-                                        >
-                                            <PaymentIcon />
-                                        </div>
-                                        : null
-                                }
-                            </div>
-
-
-                            <div title="View Discussion Message">
-                                <i
-                                    class="fa fa-comments-o"
-                                    style={{
-                                        fontSize: 16,
-                                        cursor: "pointer",
-                                        color: "orange"
-                                    }}
-                                    onClick={() => ViewDiscussionToggel(row.assign_no)}
-                                ></i>
-                            </div>
-
-                        </div>
+                          {
+                               row.paid_status == "0" ?
+                                   <div title="Payment decline" onClick={() => rejectHandler(row)}>
+                                       <PaymentDecline />
+                                   </div>
+                                   : null
+                           }
+                       
+                   </div>
                     </>
                 );
             },
         },
-        // {
-        //     text: "Action",
-        //     style: {
-        //         fontSize: "11px",
-        //     },
-        //     headerStyle: () => {
-        //         return { fontSize: "11px" };
-        //     },
-        //     formatter: function (cell, row) {
-        //         return (
-        //             <>
-
-        //                 <div style={{ display: "flex", justifyContent: "space-between", width: "60px" }}>
-        //                     {
-        //                         row.paid_status == "0" ? null :
-        //                             <div title="Payment History"
-        //                                 onClick={() => toggle(row.assign_id)}
-        //                                 style={{ color: "green", fontSize: "16px", cursor: "pointer" }}
-        //                             >
-        //                                 <ChangeHistoryIcon />
-        //                             </div>
-        //                     }
-
-        //                     {
-        //                         (row.paid_status == "0") ?
-        //                             <div title="Payment decline"
-        //                                 onClick={() => rejectHandler(row)}
-        //                                 style={{ color: "red", fontSize: "16px", cursor: "pointer" }}
-        //                             >
-        //                                 <PaymentIcon />
-        //                             </div>
-        //                             :
-        //                             null
-        //                     }
-
-        //                     <div title="Send Message">
-        //                         <Link
-        //                             to={{
-        //                                 pathname: `/teamleader/chatting/${row.assign_id}`,
-        //                                 obj: {
-        //                                     message_type: "2",
-        //                                     query_No: row.assign_no,
-        //                                     query_id: row.assign_id,
-        //                                     routes: `/teamleader/proposal`
-        //                                 }
-        //                             }}
-        //                         >
-        //                             <i
-        //                                 class="fa fa-comments-o"
-        //                                 style={{
-        //                                     fontSize: 16,
-        //                                     cursor: "pointer",
-        //                                     marginLeft: "8px",
-        //                                     color: "blue"
-        //                                 }}
-        //                             ></i>
-        //                         </Link>
-        //                     </div>
-        //                 </div>
-        //             </>
-        //         );
-        //     },
-        // },
-    ];
-
+    ]
+const rowStyle2 = (row, index) => {
+        const style = {}
+        var warningDate = moment(row.due_date).subtract(5, 'day').toDate();
+        // var warnformat = warningDate.format("YYYY-MM-DD");
+        var aa = moment().toDate();
+         var cc = moment(row.due_date).toDate();
+         if(row.is_paid === "2"){
+            style.backgroundColor = "#fff";
+            style.color = "#000"
+        }
+        else if(row.paid_status != "2" && row.is_paid != "1" && cc < aa){
+            style.backgroundColor = "#bfdfd2";
+          style.color = "#000111"
+        }
+       else if(row.paid_status != "2" && row.is_paid != "1" && row.status != "Complete" && warningDate < aa)  {
+          style.backgroundColor = "#c1d8f2";
+          style.color = "#000111"
+        }
+       
+        else if(row.paid_status != "2" && row.is_paid != "1" && warningDate > aa){
+          style.backgroundColor = "#fff";
+          style.color = "#000"
+        }
+      
+        return style;
+      }
+  
+    
+    
 
     return (
         <>
@@ -433,19 +350,19 @@ function AllPayment() {
                 </CardHeader>
 
                 <CardBody>
-                    <BootstrapTable
-                        bootstrap4
-                        keyField="id"
-                        data={payment}
-                        columns={columns}
-                        classes="table-responsive"
-                    />
-
+                <DataTablepopulated 
+                 bgColor="#3e8678"
+                   keyField= {"assign_no"}
+                   rowStyle2={rowStyle2}
+                   data={payment}
+                   columns={columns}>
+                    </DataTablepopulated>
 <DiscardReport
                         ViewDiscussionToggel={ViewDiscussionToggel}
                         ViewDiscussion={ViewDiscussion}
                         report={assignNo}
                         getData={getPaymentStatus}
+                        headColor="#3e8678"
                     />
                     <RejectedModal
                         rejectHandler={rejectHandler}

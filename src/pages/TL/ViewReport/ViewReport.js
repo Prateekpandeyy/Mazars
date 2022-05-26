@@ -20,6 +20,7 @@ function ViewReport() {
   const { id } = useParams();
   const history = useHistory();
   const [data, setData] = useState([]);
+  const token = window.localStorage.getItem("tlToken")
 
   useEffect(() => {
     getReport();
@@ -34,16 +35,19 @@ function ViewReport() {
     axios({
       method: "POST",
       url: `${baseUrl}/tl/getstagesinfo`,
+      headers : {
+        uit : token
+      },
       data: formData,
     })
       .then(function (response) {
-        console.log("res-", response);
+
         if (response.data.code === 1) {
           setData(response.data.result);
         }
       })
       .catch((error) => {
-        console.log("erroror - ", error);
+       
       });
   };
 
@@ -57,7 +61,7 @@ function ViewReport() {
                 class="btn btn-success ml-3"
                 onClick={() => history.goBack()}
               >
-                <i class="fas fa-arrow-left mr-2"></i>
+                
                 Go Back
               </button>
             </Col>

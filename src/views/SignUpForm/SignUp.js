@@ -1,42 +1,37 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
-import { useAlert } from "react-alert";
 import classNames from "classnames";
 import { Spinner } from "reactstrap";
 import { professionName, country, states } from './data';
 import { cities } from './city';
 import Alerts from "../../common/Alerts";
 import ResendOtp from "./ResendOtp";
-import GetOTP from "./GetOTP";
+import Select from "react-select";
 import Mandatory from "../../components/Common/Mandatory";
-
-
-
-
+import EmailValidation from "../../components/Common/EmailValidation";
+import MyPDF from '../dFile/LoginManual.pdf';
+import  { HelpIcon } from "../../components/Common/MessageIcon";
+import { OuterloginContainer } from "../../components/Common/OuterloginContainer";
 function SignUp(props) {
-  const phone2 = useRef(null)
-  const alert = useAlert();
+  
   const { handleSubmit, register, errors, getValues } = useForm();
 
 
   const [display, setDisplay] = useState(false);
 
   const [load, setLoad] = useState(false);
-  const [store, setStore] = useState(0);
+
   const [password, setPassword] = useState(false);
-  const [passError, setpassError] = useState()
+  
   const [repassword, setRepassword] = useState(false);
   const [show, setShow] = useState(false);
-  const [changeNum, setChangeNum] = useState(false)
   const [State, setState] = useState([]);
   const [city, setCity] = useState([]);
-  const [countryCode, setCountryCode] = useState('')
-  const [showPlus, setShowPlus] = useState(false)
-  const [email, setEmail] = useState('');
+  const [countryCode, setCountryCode] = useState('91')
   const [phone, setPhone] = useState('');
   const [valiEmail, setValiemail] = useState(null)
   const [invalid, setInvalid] = useState(null)
@@ -44,12 +39,10 @@ function SignUp(props) {
   const [numAvail, setNumAvail] = useState(null)
   const [countryName, setCountryName] = useState(null)
   const [stateName, setStateName] = useState(null)
-
   const [countryId, setCountryId] = useState(null)
   const [indNumError, setIndNumError] = useState(null)
   const [zipCode, setZipCode] = useState('')
   const [zipError, setZipError] = useState(null)
-
   const [wEmail, setWemail] = useState();
   const [time, setTime] = useState('')
   const [disabled, setDisabled] = useState(false)
@@ -58,9 +51,13 @@ function SignUp(props) {
   const [phoneError, setPhoneError] = useState(null)
   const [zipError1, setZipError1] = useState(null);
   const [subm, setSub] = useState(false)
-
+  const [dstate, setDstate] = useState()
+const [email2, setEmail2] = useState();
   const [loading, setLoading] = useState(false);
-
+const [estate, setEstate] = useState("");
+const [cityState2, setCityValue2] = useState("")
+const [dstate2, setDstate2] = useState("")
+const [myCount, setMyCount] = useState(101)
   //Css
   const CountryNumStyle = {
     "display": "flex",
@@ -69,8 +66,10 @@ function SignUp(props) {
   }
   // cusSub
   const cusSub = {
-    "display": "flex",
-    "alignItems": "center"
+    display: "flex",
+    width: "100%",
+    alignItems : "center",
+    justifyContent: "center"
   }
   // Toggle Password
   const togglePasssword = () => {
@@ -84,10 +83,24 @@ function SignUp(props) {
   useEffect(() => {
     getTime()
   }, [load]);
-
+useEffect(() => {
+  var arrayState = []
+    let sta = {}
+    states.filter((data) => {
+      if (data.country_id == 101) {
+     
+        sta = {
+          "value" : data.id,
+          "label" : data.name
+        }
+        arrayState.push(sta)
+      }
+    });
+    setState(arrayState)
+}, [])
 
   const getTime = () => {
-    console.log("get time")
+    
     if (load) {
       var timerOn = true;
       function timer(remaining) {
@@ -110,11 +123,20 @@ function SignUp(props) {
 
   //get country
   const getcountry = (key) => {
+    setMyCount(key)
+   
+    setZipCode("")
+    setZipError("")
+    setDstate("");
+    setEstate("")
+    setCityValue2("")
+    setDstate2("")
     setCountryName(key)
-    setShowPlus(true)
+   
     setPhone("")
     setIndNumError("")
     setNumAvail("")
+    
     // setInvalid("")
     if (key == 101) {
       setCountryId(key)
@@ -124,9 +146,14 @@ function SignUp(props) {
     }
 
     var arrayState = []
+    let sta = {}
     states.filter((data) => {
       if (data.country_id == key) {
-        arrayState.push(data)
+        sta = {
+          "value" : data.id,
+          "label" : data.name
+        }
+        arrayState.push(sta)
       }
     });
     setState(arrayState)
@@ -142,6 +169,13 @@ function SignUp(props) {
 
   //get city
   const getCity = (key) => {
+    if(estate.length > 0){
+      setEstate("")
+    }
+  setDstate(key)
+  
+  
+    let sta = {}
     states.filter((p) => {
       if (p.id == key) {
         setStateName(p.name)
@@ -150,62 +184,19 @@ function SignUp(props) {
 
     var arrayCity = []
     cities.filter((data) => {
-      if (data.state_id === key) {
-        arrayCity.push(data)
+      if (data.state_id === key.value) {
+       
+        sta = {
+          "value" : data.id,
+          "label" : data.name
+        }
+        arrayCity.push(sta)
       }
     });
     setCity(arrayCity)
   }
 
 
-  //eamil onchange
-  const emailHandler = (e) => {
-    setEmail(e.target.value);
-    console.log(e.target.value.length)
-    if (e.target.value.length < 1) {
-      setWemail("")
-    }
-  };
-
-
-  //email validaation with api
-  const emailValidation = (key) => {
-
-    var validRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    if (email.match(validRegex)) {
-      setWemail("");
-      setEmailError(false)
-      let formData = new FormData();
-      formData.append("email", email);
-      formData.append("type", 1);
-
-      axios({
-        method: "POST",
-        url: `${baseUrl}/customers/validateregistration`,
-        data: formData,
-      })
-        .then(function (response) {
-          console.log("resEmail-", response);
-          if (response.data.code === 1) {
-            setValiemail(response.data.result)
-            setInvalid('')
-            setEmailError(false)
-          } else if (response.data.code === 0) {
-            setInvalid(response.data.result)
-            setValiemail('')
-            setEmailError(true)
-          }
-        })
-        .catch((error) => {
-          console.log("erroror - ", error);
-        });
-    }
-    else {
-      setEmailError(true)
-      setWemail("invalid email")
-    }
-
-  }
 
 
   //phone onchange
@@ -230,32 +221,32 @@ function SignUp(props) {
   //phone validaation with api
   const phoneValidation = () => {
     setPhoneError(false)
-    console.log(phone.length)
+    
     if (countryId && phone.length > 10) {
-      console.log(phone.length)
+   
       setNumAvail("")
       setNumExist("")
-      setIndNumError("Maximum 10 value should be enter")
+      setIndNumError("Maximum 10 value should be entered.")
       setPhoneError(true)
     }
     else if (countryId && phone.length < 10) {
-      console.log(phone.length)
+     
       setNumAvail("")
       setNumExist("")
-      setIndNumError("Minimum 10 value should be enter")
+      setIndNumError("Minimum 10 value should be entered.")
       setPhoneError(true)
     }
     else if (!countryId && phone.length > 15) {
       setNumAvail("")
       setNumExist("")
       setPhoneError(true)
-      setIndNumError("Maximum 15 value should be enter")
+      setIndNumError("Maximum 15 value should be entered.")
     }
 
     else {
       setPhoneError(false)
       setIndNumError("")
-      console.log(countryId)
+
       let formData = new FormData();
       formData.append("phone", phone);
       formData.append("type", 2);
@@ -265,10 +256,10 @@ function SignUp(props) {
         data: formData,
       })
         .then(function (response) {
-          console.log("res-", response);
+         
           if (response.data.code === 1) {
             // setValiphone(response.data.result)
-            console.log(response.data.result)
+            
             setPhoneError(false)
             setNumExist('')
             setNumAvail(response.data.result);
@@ -276,16 +267,16 @@ function SignUp(props) {
           }
           else if (response.data.code === 0) {
             setPhoneError(true)
-            console.log(response.data.result)
+            
             setNumAvail('')
             setNumExist(response.data.result)
 
-            console.log("mobile" + setNumExist)
+         
           }
 
         })
         .catch((error) => {
-          // console.log("erroror - ", error);
+        
         });
     }
   }
@@ -294,10 +285,11 @@ function SignUp(props) {
 
   //zip oncahnge
   const zipValue = (e) => {
-    console.log("zipValue", e.target.value.length)
-    if (isNaN(e.target.value)) {
+   
+    if (isNaN(e.target.value) && countryId.length > 0) {
 
       setZipError("Please enter number only")
+      setZipCode("")
       setZipError1(true)
       e.target.value = ""
     }
@@ -318,13 +310,13 @@ function SignUp(props) {
     if (countryId && zipCode && zipCode.length < 6) {
       setZipError1(true)
       setZipError("Minumum 6 digit should be there")
-      console.log(zipCode.length)
+
     }
 
     else if (countryId && zipCode && zipCode.length > 6) {
       setZipError1(true)
       setZipError("Maximum 6 digit allowed")
-      console.log(zipCode.length)
+    
     }
     else {
       setZipError1(false)
@@ -343,30 +335,56 @@ function SignUp(props) {
     }
   }
 
+  const getStateValue = (input, reason) => {
+    if (
+      reason.action === "set-value" ||
+      reason.action === "input-blur" ||
+      reason.action === "menu-close"
+    ) {
+      return;
+    }
+ 
+   setEstate(input)
+  }
+
+  const getCityValu2 = (input, reason) => {
+    if (
+      reason.action === "set-value" ||
+      reason.action === "input-blur" ||
+      reason.action === "menu-close"
+    ) {
+      return;
+    }
+  
+   setCityValue2(input)
+  }
 
 
   const onSubmit = (value) => {
 
 
-
     let formData = new FormData();
     formData.append("name", value.p_name);
-    formData.append("email", value.p_email);
+    formData.append("email", email2);
     formData.append("phone", value.p_phone);
     formData.append("occupation", value.p_profession);
-    formData.append("city", value.p_city)
+ {cityState2 && cityState2.length > 0 ?    formData.append("city", cityState2) :
+ formData.append("city", dstate2.label)}
     formData.append("pincode", value.p_zipCode);
     formData.append("password", value.p_password);
     formData.append("rpassword", value.p_confirm_password);
     formData.append("otp", value.p_otp);
     formData.append("country", countryName);
-    formData.append("state", stateName);
+    {estate && estate.length > 0 ?  formData.append("state", estate) :
+    formData.append("state", dstate.label)}
+   
     formData.append("stdcode", countryCode);
+    formData.append("gstin_no", value.p_gstIn);
 
     if (display === true && subm === false) {
       setLoading(true)
       let formData = new FormData();
-      formData.append("email", email);
+      formData.append("email", email2);
       formData.append("phone", phone);
       formData.append("p", "registration");
 
@@ -376,7 +394,7 @@ function SignUp(props) {
         data: formData,
       })
         .then(function (response) {
-          console.log("res-", response);
+         
           if (response.data.code === 1) {
             setLoading(false)
             setLoad(true)
@@ -388,7 +406,7 @@ function SignUp(props) {
           }
         })
         .catch((error) => {
-          console.log("erroror - ", error);
+        
         });
 
     }
@@ -399,7 +417,7 @@ function SignUp(props) {
         data: formData,
       })
         .then(function (response) {
-          console.log("res-", response);
+         
           if (response.data.code === 1) {
             setLoading(false)
             var variable = "Signup successfully."
@@ -409,13 +427,13 @@ function SignUp(props) {
             props.history.push("/customer/select-category");
           } else if (response.data.code === 0) {
             setLoading(false)
-            console.log("res -", response.data.result);
+          
             setLoad(false);
             Alerts.ErrorNormal("Incorrect OTP , please try again.")
           }
         })
         .catch((error) => {
-          console.log("erroror - ", error);
+        
         });
     }
 
@@ -437,17 +455,27 @@ function SignUp(props) {
       setDisplay(true)
     }
   }
+  const getCity22 = (key) => {
+    if(cityState2.length > 0){
+    setCityValue2("")
+    }
+    setDstate2(key)
+  }
 
+// getEmailValue 
 
   return (
     <>
-      <Header cust_sign="cust_sign" />
+      <OuterloginContainer>
+      <Header noSign="noSign" />
       <div className="container">
 
         <div className="form">
-          <div className="heading">
-            <h2>Customer Register</h2>
+          <div className="heading" style={{display : "flex", justifyContent : "space-between"}}> 
+            <h2>Client Registration</h2>
+            <a href={MyPDF} className="tabHover" target="_blank"> <HelpIcon /> </a>
           </div>
+       
           <>
             <div>
               <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
@@ -471,17 +499,15 @@ function SignUp(props) {
                   <div className="col-md-6">
                     <div className="mb-3">
                       <label className="form-label">Email<span className="declined">*</span></label>
-                      <input
-                        type="text"
-                        name="p_email"
-                        className={classNames("form-control", {
-                          "is-invalid": errors.p_email || emailError === true || wEmail || invalid,
-                        })}
-                        onChange={(e) => emailHandler(e)}
-                        onBlur={emailValidation}
-                        placeholder="Enter Your Password"
-                        ref={register({ required: true })}
-                      />
+                     <EmailValidation
+                     setWemail = {setWemail}
+                      wEmail = {wEmail} 
+                      invalid = {invalid}
+                       setEmailError = {setEmailError}
+                        setValiemail = {setValiemail} 
+                        emailError = {emailError} 
+                        setInvalid = {setInvalid}  
+                        setEmail2 = {setEmail2} />
                       {
                         wEmail ? <p className="declined">{wEmail}</p> : <>
                           {valiEmail ?
@@ -506,6 +532,7 @@ function SignUp(props) {
                         name="p_profession"
                         aria-label="Default select example"
                         ref={register({ required: true })}
+                        value={countryId}
                       >
                         <option value="">--select--</option>
                         {professionName.map((p, index) => (
@@ -529,6 +556,7 @@ function SignUp(props) {
                         })}
                         ref={register({ required: true })}
                         onChange={(e) => getcountry(e.target.value)}
+                        value={myCount}
                       >
                         <option value="">--select--</option>
                         {country.map((p) => (
@@ -544,22 +572,19 @@ function SignUp(props) {
                   <div className="col-md-6">
                     <div className="mb-3">
                       <label className="form-label">State<span className="declined">*</span></label>
-                      <select
-                        id="state"
-                        name="p_state"
-                        className={classNames("form-control", {
-                          "is-invalid": errors.p_state,
-                        })}
-                        ref={register({ required: true })}
-                        onChange={(e) => getCity(e.target.value)}
-                      >
-                        <option value="">--select--</option>
-                        {State.map((p) => (
-                          <option key={p.id} value={p.id}>
-                            {p.name}
-                          </option>
-                        ))}
-                      </select>
+                     
+                    <Select
+        closeMenuOnSelect={true}
+        onSelectResetsInput={false}
+        blurInputOnSelect={false}
+        options={State}
+        inputValue={estate}
+        onInputChange={getStateValue}
+     
+        onChange={(e) => getCity(e)}
+        value={dstate}
+      />
+     
                     </div>
                   </div>
 
@@ -567,20 +592,18 @@ function SignUp(props) {
                   <div className="col-md-6">
                     <div className="mb-3">
                       <label className="form-label">City<span className="declined">*</span></label>
-                      <select
-                        className={classNames("form-control", {
-                          "is-invalid": errors.p_city,
-                        })}
-                        name="p_city"
-                        ref={register({ required: true })}
-                      >
-                        <option value="">--select--</option>
-                        {city.map((p, index) => (
-                          <option key={index} value={p.city}>
-                            {p.name}
-                          </option>
-                        ))}
-                      </select>
+                     
+                      <Select
+        closeMenuOnSelect={true}
+        onSelectResetsInput={false}
+        blurInputOnSelect={false}
+        options={city}
+        inputValue={cityState2}
+        onInputChange={getCityValu2}
+     
+        onChange={(e) => getCity22(e)}
+        value={dstate2}
+      />
                     </div>
                   </div>
 
@@ -594,7 +617,7 @@ function SignUp(props) {
                           ref={register({ required: true })}
                         >
                           <option>
-                            {showPlus ? "+" + countryCode : null}
+                            { "+" + countryCode}
                           </option>
                         </select>
                         <input
@@ -637,11 +660,29 @@ function SignUp(props) {
                         placeholder="Enter Zipcode"
                         onChange={(e) => zipValue(e)}
                         onBlur={zipVali2}
+                        value={zipCode}
                       />
                     </div>
                     <p className="declined">{zipError}</p>
                   </div>
-
+                  <div className="col-md-6">
+                    <div className="mb-3">
+                      <label className="form-label">GST IN</label>
+                      <input
+                        type="text"
+                       className="form-control"
+                        name="p_gstIn"
+                        ref={register}
+                        placeholder="Enter GST Code"
+                       
+                      />
+                    </div>
+                    <p className="declined">{zipError}</p>
+                  </div>
+<div className="col-md-6">
+  <div className="mb-3">
+    </div>
+  </div>
                   <div class="col-md-6">
                     <div className="mb-3">
                       <label className="form-label">Password<span className="declined">*</span></label>
@@ -656,7 +697,7 @@ function SignUp(props) {
                           return false
                         }}
                         className={classNames("form-control", {
-                          "is-invalid": errors.p_password || passError,
+                          "is-invalid": errors.p_password ,
                         })}
                         name="p_password"
                         placeholder="Enter Your Password"
@@ -665,7 +706,7 @@ function SignUp(props) {
                           pattern: {
                             value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,15}$/,
                             message:
-                              "Password should be of minimum 8 Characters, including at least 1 upper case, lower case, special character and number.",
+                              "Password should be of minimum 8 characters, including at least 1 upper case, lower case, special character and number.",
                           },
                         })}
 
@@ -675,11 +716,7 @@ function SignUp(props) {
                         className={`fa ${password ? "fa-eye-slash" : "fa-eye"} password-icon`}
                         onClick={togglePasssword}
                       />
-                      {errors.p_password && (
-                        <div className="invalid-feedback">
-                          {errors.p_password.message}
-                        </div>
-                      )}
+                     
                     </div>
                   </div>
 
@@ -705,7 +742,7 @@ function SignUp(props) {
                           required: true,
                           validate: (value) =>
                             value === getValues("p_password") ||
-                            "password doesn 't match",
+                            "Password doesn 't match.",
                         })}
                         autocomplete="off"
                       />
@@ -749,7 +786,15 @@ function SignUp(props) {
                       </div>
                       : null
                   }
-                  {
+                  <div className="col-md-12">
+                    <label>
+                     Choose a password that should be minimum of eight characters,
+including at least one upper case, lower case, special character
+and number
+                    </label>
+                    </div>
+                <div style={{display: "flex", width: "100%", justifyContent: "center"}}>
+                {
                     loading ?
                       <div class="col-md-12" style={cusSub}>
                         <Spinner color="primary" />
@@ -758,26 +803,28 @@ function SignUp(props) {
                       <div class="col-md-6" style={cusSub}>
                         {
                           show ?
-                            <div>
+                            <div style={cusSub}>
                               {
                                 disabled ? null
                                   :
-                                  <button type="submit" className="btn btn-primary" onClick={() => setOtp()}>Submit</button>
+                                  <button type="submit" className="customBtn" onClick={() => setOtp()} style={{marginTop: "1rem"}}>Submit</button>
                               }
                             </div>
                             :
-                            <button type="submit" class="btn btn-success" onClick={() => getOtp("otp")}>SEND OTP</button>
-                        }
+                            <div style={cusSub}>
+                            <button type="submit" class="autoWidthBtn" onClick={() => getOtp("otp")} style={{marginTop: "1rem"}}>SEND OTP</button>
+                       </div> }
                       </div>
                   }
+                  </div>
                 </div>
               </form>
 
               {
                 disabled ?
-                  <ResendOtp setDisabled={setDisabled} getTime={getTime}
-                    email={email} phone={phone} setLoad={setLoad} invalid={invalid} indNumError={indNumError}
-                    wEmail={wEmail} zipError={zipError} passError={passError}
+                  <ResendOtp setDisabled={setDisabled} disabled={disabled} getTime={getTime}
+                    email={email2} phone={phone} setLoad={setLoad} invalid={invalid} indNumError={indNumError}
+                    wEmail={wEmail} zipError={zipError} 
                     setLoading={setLoading} loading={loading}
                     display={display}
                     emailError={emailError}
@@ -793,6 +840,7 @@ function SignUp(props) {
 
       </div>
       <Footer />
+      </OuterloginContainer>
     </>
   );
 }

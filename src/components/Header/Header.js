@@ -1,8 +1,17 @@
-import { Link, useHistory } from "react-router-dom";
+import { Link, NavLink, useHistory } from "react-router-dom";
 import "../../assets/css/style.css";
-import mazars from "../../assets/images/mazars-logo.png";
-
-function Header({ id, cust_sign, admin, mtl, mtp, noSign, loginOTP }) {
+import mazars from "../../mazars_logo.png";
+import { baseUrl } from "../../config/config";
+import axios from "axios";
+import {useState} from 'react';
+import Collapse from '@mui/material/Collapse';
+import ExpandLess from '@mui/icons-material/ExpandLess';
+import ExpandMore from '@mui/icons-material/ExpandMore';
+import ListItemButton from '@mui/material/ListItemButton';
+import List from '@mui/material/List';
+import Cookies from "js-cookie";
+function Header({ id, cust_sign, noAdminSign, noTlSign, 
+  noTpSign, admin, mtl, mtp, noSign, loginOTP, getData, showCook }) {
   let history = useHistory();
 
   const custLogout = () => {
@@ -13,46 +22,49 @@ function Header({ id, cust_sign, admin, mtl, mtp, noSign, loginOTP }) {
     history.push("/customer/signin");
   }
 
-  console.log("hid:", id);
+
 
   return (
     <>
-      <div class="header">
+      <div className="header">
         {id && (
-          <div>
+         
             <Link to="/customer/questionnaire-page">
-              <img src={mazars} class="logo" alt="mazar" />
+              <img src={mazars} className="logo" alt="mazar" />
             </Link>
-          </div>
+         
         )}
 
         {cust_sign && (
-          <div>
+          <div className="noSignINBox">
             <Link to="/">
-              <img src={mazars} class="logo" alt="mazar" />
+              <img className="logo" src="https://www.mazars.co.in/extension/ezmazars_rwdesign/design/mazars2020/images/mazars-logo.png" className="logo" alt="mazar" />
             </Link>
           </div>
         )}
 
         {noSign && (
-          <div>
-            <Link to="/">
-              <img src={mazars} class="logo" alt="mazar" style={{ marginBottom: "12px" }} />
+          <div style = {{display : "flex", width: "100%", alignItems: "center",  justifyContent: "space-between"}}>
+              <Link to="/">
+              <img src={mazars} className="logo" alt="mazar"/>
             </Link>
+          <div>
+        <CmsCont getData= {getData} showCook = {showCook}/>
+            </div>
           </div>
         )}
 
 
         {loginOTP && (
           <div>
-            <img src={mazars} class="logo" alt="mazar" style={{ marginBottom: "12px" }} />
+            <img src={mazars} className="logo" alt="mazar"/>
           </div>
         )}
 
         {admin && (
           <div>
             <Link to="/admin/start">
-              <img src={mazars} class="logo" alt="mazar" />
+              <img src={mazars} className="logo" alt="mazar" />
             </Link>
           </div>
         )}
@@ -60,7 +72,7 @@ function Header({ id, cust_sign, admin, mtl, mtp, noSign, loginOTP }) {
         {mtl && (
           <div>
             <Link to="/teamleader/start">
-              <img src={mazars} class="logo" alt="mazar" />
+              <img src={mazars} className="logo" alt="mazar" />
             </Link>
           </div>
         )}
@@ -68,53 +80,70 @@ function Header({ id, cust_sign, admin, mtl, mtp, noSign, loginOTP }) {
         {mtp && (
           <div>
             <Link to="/taxprofessional/start">
-              <img src={mazars} class="logo" alt="mazar" />
+              <img src={mazars} className="logo" alt="mazar" />
             </Link>
           </div>
         )}
 
-        <div>
+        <div className="noSignINBox">
           {id && (
-            <ul class="menu">
+            <ul className="menu">
               <li style={{ color: "#fff" }}>{id}</li>
               <li onClick={custLogout} style={{ color: "#fff" }}>
-                <i class="fa fa-sign-out">logout</i>
+                <i className="fa fa-sign-out">logout</i>
               </li>
             </ul>
           )}
 
           {cust_sign && (
-            <div>
-              <ul class="menu">
-                <li>
-                  <Link to="/">Signin</Link>
-                </li>             
-              </ul>
-            </div>
+            <button className="customBtn">
+            <Link className="SignUpLink"
+              to={{
+                pathname: "/",
+              }}
+            >
+              Sign In
+            </Link>
+          </button>
+           
+          
+           
           )}
          
-          {admin && (
-            <ul class="menu">
-              <li>
-                <Link to="/admin/login">Signin</Link>
-              </li>
-            </ul>
+          {admin && !noAdminSign && (
+             <button className="customBtn">
+             <Link className="SignUpLink"
+               to={{
+                 pathname: "/admin/login",
+               }}
+             >
+               Sign In
+             </Link>
+           </button>
           )}
 
-          {mtl && (
-            <ul class="menu">
-              <li>
-                <Link to="/teamleader/login">Signin</Link>
-              </li>
-            </ul>
+          {mtl && !noTlSign && (
+  <button className="customBtn">
+  <Link className="SignUpLink"
+    to={{
+      pathname: "/teamleader/login",
+    }}
+  >
+    Sign In
+  </Link>
+</button>
           )}
 
-          {mtp && (
-            <ul class="menu">
-              <li>
-                <Link to="/taxprofessional/login">Signin</Link>
-              </li>
-            </ul>
+          {mtp && !noTpSign && (
+             <button className="customBtn">
+             <Link className="SignUpLink"
+               to={{
+                 pathname: "/taxprofessional/login",
+               }}
+             >
+               Sign In
+             </Link>
+           </button>
           )}
 
 
@@ -126,6 +155,160 @@ function Header({ id, cust_sign, admin, mtl, mtp, noSign, loginOTP }) {
 }
 
 export default Header;
- {/* <li>
-                  <Link to="/customer/signup">SignUp</Link>
-                </li> */}
+
+const CmsCont = (props) => {
+  const [open, setOpen] = useState(false)
+  const [open2, setOpen2] = useState(false)
+  let history = useHistory()
+  const handleClickOn = () => {
+    setOpen(false);
+  };
+  const handleClickOff = () => {
+
+    setOpen(true);
+  };
+  const handleClickOn2 = () => {
+
+    setOpen2(false);
+  };
+  const handleClickOff2 = () => {
+console.log("header fixed")
+    setOpen2(true);
+  };
+  const cookieEnable = Cookies.get("accept")
+  const myLink = (e) => {
+   if(cookieEnable){
+     if(e === "direct"){
+      history.push("/customer/direct")
+     }
+     else if(e === "indirect"){
+       history.push("/customer/indirect")
+     }
+     else if (e === "photo"){
+       history.push("/customer/media")
+     }
+     else if (e === "video"){
+      history.push("/customer/videolist")
+    }
+    else if (e === "mediacontent"){
+      history.push("/customer/mediacontent")
+    }
+    else if (e === "faqlist"){
+      history.push("/customer/faq-question")
+    }
+    else if (e === "linklist"){
+      history.push("/customer/link")
+    }
+     
+    else if (e === "updatelist"){
+      history.push("/customer/updates")
+    }
+   }
+   else{
+    
+props.showCook("showCookies")
+   }
+  }
+  return(
+    <>
+<div className="clientSubMenu">
+  <li className="nav-item tabHoverLinksubMenu"  onMouseEnter={() => handleClickOff()}  onMouseLeave = {() => handleClickOn()}>
+       <ListItemButton>
+       <span className="nav-item">
+                     Articles
+                   </span>
+</ListItemButton>
+   
+         <Collapse in={open}  unmountOnExit>
+           <List component="div" className="myLink22">
+           <ul>
+                
+                  
+                     <li className="tabHover mx-1" onClick = {() => myLink("direct")}>
+                   <span className="menu-title" data-i18n="">
+                  Direct Tax
+                   </span>
+                   </li>
+                 
+                   
+                    
+                    
+                     <li className="tabHover mx-1" onClick = {() => myLink("indirect")}>
+                   <span className="menu-title" data-i18n="">
+                Indirect Tax
+                   </span>
+                   </li>
+                  
+                    
+                   </ul>
+           </List>
+         </Collapse>
+                 </li>
+   
+         <li className="nav-item headerHover" onClick = {() => myLink("updatelist")}> 
+   
+      Updates
+  
+</li>
+
+      <li className="nav-item headerHover" onClick = {() => myLink("linklist")}> 
+   
+       Important Links
+    
+</li>
+      <li className="nav-item tabHoverLinksubMenu" 
+         onMouseLeave = {() => handleClickOn2()}>
+                 
+                 <ListItemButton 
+                 onMouseEnter={() => handleClickOff2()}>
+   <span className="nav-item">
+                  Media Gallery
+                   </span>
+         </ListItemButton>  
+         <Collapse in={open2}  unmountOnExit>
+           <List component="div" className="myLink22">
+           <ul>
+                
+               
+   <li className="tabHover mx-1" onClick = {() => myLink("photo")}>
+                   <span className="menu-title" data-i18n="">
+               Photo Gallery
+                   </span>
+                   </li>
+   
+                   
+                    
+                   
+                     <li className="tabHover mx-1" onClick = {() => myLink("video")}>
+                   <span className="menu-title" data-i18n="">
+              Video Gallery
+                   </span>
+                   </li>
+                   
+                  
+                     <li className="tabHover mx-1" onClick = {() => myLink("mediacontent")}>
+                   <span className="menu-title" data-i18n="">
+                       Media news
+                   </span>
+                   </li>
+                   
+                    
+                   </ul>
+           </List>
+         </Collapse>
+                 </li>
+   
+                 <li className="nav-item headerHover" onClick = {() => myLink("faqlist")}> 
+    {/* <NavLink 
+    to = {{
+  pathname : "/customer/updates",
+  index : 4
+}} > */}
+ 
+      FAQs
+   
+    </li>
+</div>
+    </>
+  )
+}

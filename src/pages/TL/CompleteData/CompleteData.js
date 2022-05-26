@@ -16,8 +16,10 @@ import TeamFilter from "../../../components/Search-Filter/tlFilter";
 import History from "../../../components/PendingForAllocation/History";
 import Swal from "sweetalert2";
 import { useParams, useHistory } from "react-router-dom";
+import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
+import { ActionIcon} from "../../../components/Common/MessageIcon";
 
-function CompletedQuery() {
+function CompletedQuery({updateTab }) {
   const userid = window.localStorage.getItem("tlkey");
 const hist = useHistory();
   const [incompleteData, setInCompleteData] = useState([]);
@@ -32,7 +34,12 @@ const hist = useHistory();
       setViewDiscussion(!ViewDiscussion);
       setAssignNo(key)
   }
-
+  const token = window.localStorage.getItem("tlToken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
 
 
   useEffect(() => {
@@ -41,23 +48,29 @@ const hist = useHistory();
   const toggle = (key) => {
   
     setModal(!modal);
-
-    fetch(`${baseUrl}/customers/getQueryHistory?q_id=${key}&uid=${JSON.parse(userid)}`, {
-      method: "GET",
-      headers: new Headers({
-        Accept: "application/vnd.github.cloak-preview",
-      }),
-    })
-      .then((res) => res.json())
-      .then((response) => {
+axios.get(`${baseUrl}/tl/getQueryHistory?q_id=${key}&uid=${JSON.parse(userid)}`, myConfig)
+.then((res) => {
+  console.log("response", res)
+  if(res.data.code === 1){
+    setHistory(res.data.result)
+  }
+})
+    // fetch(`${baseUrl}/tl/getQueryHistory?q_id=${key}&uid=${JSON.parse(userid)}`, {
+    //   method: "GET",
+    //   headers: new Headers({
+    //     Accept: "application/vnd.github.cloak-preview",
+    //   }),
+    // })
+    //   .then((res) => res.json())
+    //   .then((response) => {
      
-        setHistory(response.result);
-      })
-      .catch((error) => console.log(error));
+    //     setHistory(response.result);
+    //   })
+    //   .catch((error) => console.log(error));
   };
   const getInCompleteAssingment = () => {
     axios
-      .get(`${baseUrl}/tl/pendingAllocation?uid=${JSON.parse(userid)}`)
+      .get(`${baseUrl}/tl/pendingAllocation?uid=${JSON.parse(userid)}`, myConfig)
       .then((res) => {
 
         if (res.data.code === 1) {
@@ -76,23 +89,32 @@ const hist = useHistory();
         return rowIndex + 1;
       },
       headerStyle: () => {
-        return { fontSize: "12px", width: "50px" };
+        return { width: "50px" };
       },
+      style: {
+        fontSize: "11px",
+    },
     },
     {
-      text: "Date",
+      text: "Query Date",
       dataField: "created",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
+     
+      formatter : function(cell, row){
+        let dueDate=row.created.split("-").reverse().join("-")
+     
+        return(
+           
+            <>
+      {dueDate}
+            </>
+        )
+    }
     },
     {
       text: "Query No",
       dataField: "assign_no",
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
+     
       formatter: function nameFormatter(cell, row) {
 
         return (
@@ -100,7 +122,7 @@ const hist = useHistory();
             <Link
               to={{
                 pathname: `/teamleader/queries/${row.id}`,
-                index: 1,
+                index: 3,
                 routes: "queriestab",
               }}
             >
@@ -114,33 +136,25 @@ const hist = useHistory();
       text: "Category",
       dataField: "parent_id",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
+     
     },
     {
       text: "Sub Category",
       dataField: "cat_name",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
+     
     },
     {
-      text: "Customer Name",
+      text: "Client Name",
       dataField: "name",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
+    
     },
     {
-      text: "	Exp. Delivery Date / Actual Delivery Date",
+      text: "Delivery Due Date ",
       dataField: "Exp_Delivery_Date",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
+    
       formatter: function dateFormat(cell, row) {
        
         var oldDate = row.Exp_Delivery_Date;
@@ -152,9 +166,7 @@ const hist = useHistory();
     },
     {
       text: "Status",
-      headerStyle: () => {
-          return { fontSize: "12px" };
-      },
+     
       formatter: function nameFormatter(cell, row) {
           return (
               <>
@@ -190,58 +202,25 @@ const hist = useHistory();
   {
     text: "Action",
     dataField: "",
-    headerStyle: () => {
-      return { fontSize: "12px" };
-    },
+    
     formatter: function (cell, row) {
       return (
         <>
           {row.statuscode === "0" || row.statuscode === "3"? (
            
-           <i onClick ={() => assignConfirm(row.id, row.assign_no)} class="fa fa-share" style={{color : "blue", cursor : "pointer"}}></i>
-          ) : (
+           <div onClick ={() => assignConfirm(row.id, row.assign_no)}>
+<ActionIcon  titleName="Assign to tp" />
+           </div>
+         
+           ) : (
             <div style={{ display: "flex", justifyContent: "space-around" }}>
-              {/* <div title="Assign to">
-               
-
-              </div>
-              <div title="Decline Query">
-                <Link
-                  to={`/teamleader/query_rejection/${row.id}`}
-                >
-                  <i
-                    className="fa fa-trash"
-                  ></i>
-                </Link>
-              </div> */}
-  <p style={{ color: "green", fontSize: "10px" }}>
+            
+  <p className="completed">
 
  Allocated to {row.tname} on
 <p>{row.allocation_time}</p>
 </p>
-              {/* <div title="Send Message">
-                <Link
-                  to={{
-                    pathname: `/teamleader/chatting/${row.id}`,
-                    obj: {
-                      message_type: "4",
-                      query_No: row.assign_no,
-                      query_id: row.id,
-                      routes: `/teamleader/queriestab`
-                    }
-                  }}
-                >
-                  <i
-                    class="fa fa-comments-o"
-                    style={{
-                      fontSize: 16,
-                      cursor: "pointer",
-                      marginLeft: "8px",
-                      color: "blue"
-                    }}
-                  ></i>
-                </Link>
-              </div> */}
+          
 
             </div>
 
@@ -263,7 +242,7 @@ const hist = useHistory();
         <>
           <button
             type="button"
-            class="btn btn-info btn-sm"
+            class="autoWidthBtn"
             onClick={() => toggle(row.id)}
           >
             History
@@ -290,14 +269,16 @@ Swal.fire({
         confirmButtonText: 'Yes, assign it!',
         cancelButtonText: 'No'
     }).then(function(result){
+      console.log("resutl", result)
         if(result.value){
           hist.push(`/teamleader/queryassing/${id}`)
         }else if(result.dismiss == 'cancel'){
           
-           axios.get(`${baseUrl}/tl/workby?uid=${JSON.parse(userid)}&qid=${id}`).then((res) => {
+           axios.get(`${baseUrl}/tl/workby?uid=${JSON.parse(userid)}&qid=${id}`, myConfig).then((res) => {
                    if(res.data.code === 1){
-                     hist.push(`/teamleader/proposal`)
-                   
+                    //  hist.push(`/teamleader/proposal`)
+                    updateTab(3);
+                    getInCompleteAssingment()
                    }
                  })
         }
@@ -319,13 +300,13 @@ Swal.fire({
           />
         </CardHeader>
         <CardBody>
-          <BootstrapTable
-            bootstrap4
-            keyField="id"
-            data={incompleteData}
-            columns={columns}
-            rowIndex
-          />
+        <DataTablepopulated 
+                                 bgColor="#6e557b"
+          keyField= {"assign_no"}
+          data={incompleteData}
+          
+          columns={columns}>
+           </DataTablepopulated> 
             <History history={history} toggle={toggle} modal={modal} />
         </CardBody>
       </Card>

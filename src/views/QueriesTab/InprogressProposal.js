@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from "react";
-import Layout from "../../components/Layout/Layout";
+
 import axios from "axios";
 import { baseUrl } from "../../config/config";
 import { useAlert } from "react-alert";
@@ -7,10 +7,7 @@ import {
   Card,
   CardHeader,
   CardBody,
-  CardTitle,
-  Row,
-  Col,
-  Table,
+ 
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import CustomerFilter from "../../components/Search-Filter/CustomerFilter";
@@ -18,7 +15,14 @@ import BootstrapTable from "react-bootstrap-table-next";
 import Records from "../../components/Records/Records";
 import CommonServices from "../../common/common";
 import moment from "moment";
-import FeedbackIcon from '@material-ui/icons/Feedback';
+import './index.css';
+import DiscardReport from "../AssignmentTab/DiscardReport";
+import ModalManual from "../ModalManual/AllComponentManual";
+import {Modal, ModalHeader, ModalBody} from 'reactstrap';
+import MessageIcon, { ViewDiscussionIcon, HelpIcon, 
+  FeedBackICon} from "../../components/Common/MessageIcon";
+import DataTablepopulated from "../../components/DataTablepopulated/DataTabel";
+
 function InprogressProposal() {
   const alert = useAlert();
   const userId = window.localStorage.getItem("userid");
@@ -26,7 +30,13 @@ function InprogressProposal() {
   const [queriesCount, setCountQueries] = useState(null);
   const [records, setRecords] = useState([]);
   const [assignNo, setAssignNo] = useState('');
-
+  const [openManual, setManual] = useState(false)
+  const token = window.localStorage.getItem("clientToken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
   useEffect(() => {
     getQueriesData();
   }, []);
@@ -35,19 +45,26 @@ function InprogressProposal() {
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key)
   }
+  const needHelp = () => {
+        
+    setManual(!openManual)
+}
 
   const getQueriesData = () => {
     axios
       .get(
-        `${baseUrl}/customers/incompleteAssignments?user=${JSON.parse(userId)}&status=2`
+        `${baseUrl}/customers/incompleteAssignments?user=${JSON.parse(userId)}&status=2`,
+        myConfig
       )
+
       .then((res) => {
-        console.log(res);
+       
         if (res.data.code === 1) {
           setQuery(res.data.result);
           setCountQueries(res.data.result.length);
           setRecords(res.data.result.length);
         }
+       
       });
   };
 
@@ -59,92 +76,81 @@ function InprogressProposal() {
       formatter: (cellContent, row, rowIndex) => {
         return rowIndex + 1;
       },
-      headerStyle: () => {
-        return { fontSize: "12px", width: "50px" };
-      },
+      headerStyle : () => {
+        return( {
+            width: "50px"
+        })
+    }
     },
     {
       text: "Date",
       dataField: "created",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
-      formatter: function dateFormat(cell, row) {
-        console.log("dt", row.created);
-        var oldDate = row.created;
-        if (oldDate == null) {
-          return null;
-        }
-        return oldDate.toString().split("-").reverse().join("-");
-      },
-    },
-    {
+     
+     formatter : function dateFormatter(cell, row) {
+         return(
+             <>
+             {CommonServices.changeFormateDate(row.created)}
+             </>
+         )
+     }
+  },
+  {
       text: "Query No",
       dataField: "assign_no",
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
+      
+      
       formatter: function nameFormatter(cell, row) {
-        console.log(row);
-        return (
-          <>
-            <Link to={`/customer/my-assingment/${row.q_id}`}>
-              {row.assign_no}
-            </Link>
-          </>
-        );
+        
+          return (
+              <>
+                  <Link
+                      to={{
+                          pathname: `/customer/my-assingment/${row.id}`,
+                          index: 2,
+                          routes: "queries",
+                      }}
+                  >
+                      {row.assign_no}
+                  </Link>
+              </>
+          );
       },
-    },
+  },
     {
       text: "Category",
       dataField: "parent_id",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
+     
     },
     {
       text: "Sub Category",
       dataField: "cat_name",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
+     
     },
     {
       text: "Status",
       dataField: "",
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
+    
       formatter: function nameFormatter(cell, row) {
         return (
           <>
             <div className="completed">
               {row.status}
-              {/* {
-                row.status == "Inprogress" ?
-                  <p className="completed">
-                    {row.statusdescription}
-                  </p>
-                  :
-                  null
-              } */}
+            
             </div>
           </>
         );
       },
     },
     {
-      text: "Expected Delivery Date",
-      dataField: "exp_delivery_date",
+      text: "Actual Delivery Date",
+      dataField: "final_date",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
+     
       formatter: function dateFormat(cell, row) {
-        console.log("dt", row.exp_delivery_date);
+        
 
         return (
           <>
@@ -153,7 +159,7 @@ function InprogressProposal() {
                 ? null
                 :
                 row.status_code >= "1" ?
-                  CommonServices.removeTime(row.exp_delivery_date)
+                  CommonServices.removeTime(row.final_date)
                   :
                   null
             }
@@ -163,77 +169,140 @@ function InprogressProposal() {
     },
     {
       text: "Action",
-      headerStyle: () => {
-        return { fontSize: "12px", textAlign: "center", width: "130px" };
-      },
-      formatter: function (cell, row) {
-        var dateMnsFive = moment(row.exp_delivery_date).add(15, 'day').format("YYYY-MM-DD");
-              
-               
-        var curDate = moment().format("YYYY-MM-DD")
      
-        return (
-          <>
-            {
-              row.status == "Declined Query" ?
-                null
-                :
-                <div>
-                 
+    formatter: function (cell, row) {
+          var dateMnsFive = moment(row.exp_delivery_date).add(15, 'day').format("YYYY-MM-DD");
+        
+         
+          var curDate = moment().format("YYYY-MM-DD")
+       
+         
+        
+          
+       
+          return (
+              <>
+                  {   
+                      row.status == "Declined Query" ?
+                      <>
+                     <>
+                     {dateMnsFive > curDate === true ?
+                          <span className="ml-2">
+                         
+                          <Link 
+                           to={{
+                              pathname: `/customer/feedback/${row.assign_no}`,
+                              index: 2,
+                              routes: "queries",
+                          }}>
+                                <FeedBackICon />
+                          </Link>
+                      </span>
+                       : ""} 
+                      
+                      <span onClick={() => ViewDiscussionToggel(row.assign_no)}  className="ml-2">
+                            <ViewDiscussionIcon />
+                          </span>
+                        
 
-                                {
-                                    row.status_code == "4" || 8 < parseInt(row.status_code) || row.status_code == "2" ?
-                                      
-                                      <div style={{ display: "flex", justifyContent: "space-around" }}>
+                     </>
+                      </>
+                          :
+                          <>
+              {
+                  row.status_code == "0" || row.status_code == "1" || row.status_code == "3" ?
+                      <>
 
-                                            {dateMnsFive > curDate === true ?
-                                            <div title="Send Feedback"
-                                            style={{
-                                                cursor: "pointer",
-                                            }}>
-                                            <Link
-                                                to={{
-                                                    pathname: `/customer/feedback/${row.assign_no}`,
-                                                    obj: {
-                                                        routes: `/customer/queries`
-                                                    }
-                                                }}
-                                            >
-                                                <FeedbackIcon />
-                                            </Link>
-                                        </div> : ""}
-                                      
-                    
-                    
-                    {/* <div title="View Discussion Message">
-                      <i
-                        class="fa fa-comments-o"
-                        style={{
-                          fontSize: 16,
-                          cursor: "pointer",
-                          color: "orange"
-                        }}
-                        onClick={() => ViewDiscussionToggel(row.assign_no)}
-                      ></i>
-                    </div> */}
-                  </div>
-                  :
-                  null
+                          <span className="ml-2">
+                              <Link
+                                  to={{
+                                      pathname: `/customer/chatting/${row.id}&type=4`,
+                                      index: 2,
+                              routes: "queries",
+                                      obj: {
+                                          message_type: "4",
+                                          query_No: row.assign_no,
+                                          query_id: row.id,
+                                          routes: `/customer/queries`
+                                      }
+                                  }}
+                              >
+                                 <MessageIcon />
+                              </Link>
+                          </span>
+                          <span onClick={() => ViewDiscussionToggel(row.assign_no)}  className="ml-2">
+                            <ViewDiscussionIcon />
+                          </span>
+
+                      </> :
+                      null
               }
-            </div>
 
-        }
-      </>
-    );
+              {
+                  row.status_code == "4" || 8 < parseInt(row.status_code) || row.status_code == "2" ?
+                      
+                      <>
+
+                          {dateMnsFive > curDate === true ?
+                          <span className = "ml-2"
+                         >
+                          <Link 
+                           to={{
+                              pathname: `/customer/feedback/${row.assign_no}`,
+                              index: 2,
+                              routes: "queries",
+                          }}>
+                                <FeedBackICon />
+                          </Link>
+                      </span> : ""}
+                         
+                          {row.status_code == "10" ? null 
+                          : 
+                          <span className="ml-2">
+                           <Link
+                                  to={{
+                                      pathname: `/customer/chatting/${row.id}&type=4`,
+                                      index: 2,
+                              routes: "queries",
+                                      obj: {
+                                          message_type: "4",
+                                          query_No: row.assign_no,
+                                          query_id: row.id,
+                                          routes: `/customer/queries`
+                                      }
+                                  }}
+                              >
+                              <MessageIcon />
+                          </Link>
+                      </span>
+}
+<span onClick={() => ViewDiscussionToggel(row.assign_no)}  className="ml-2">
+                            <ViewDiscussionIcon />
+                          </span>
+                      
+                      </>
+                      :
+                      null
+              }
+          </>
+
+  }
+              </>
+          );
+      },
   },
-},
-  ];
+];
+
+
+
+
 
   return (
     <div>
       <Card>
         <CardHeader>
-          <CustomerFilter
+        <span onClick= {(e) => needHelp()}> <HelpIcon /></span>
+        <CustomerFilter
             setData={setQuery}
             getData={getQueriesData}
             id={userId}
@@ -243,14 +312,27 @@ function InprogressProposal() {
           />
         </CardHeader>
         <CardBody>
-          <Records records={records} />
-          <BootstrapTable
-            bootstrap4
-            keyField="id"
-            data={query}
-            columns={columns}
-            rowIndex
-          />
+         <Records records={records} />
+         <DataTablepopulated 
+                   bgColor="#6e557b"
+                   keyField= {"assign_no"}
+                   data={query}
+                   columns={columns}>
+                    </DataTablepopulated>
+                              <DiscardReport
+                        ViewDiscussionToggel={ViewDiscussionToggel}
+                        ViewDiscussion={ViewDiscussion}
+                        report={assignNo}
+                        getData={getQueriesData}
+                        headColor="#6e557b"
+                    />
+       
+          <Modal isOpen={openManual} toggle={needHelp} style={{display : "block", position: "absolute", left:"280px"}} size="lg">
+                        <ModalHeader toggle={needHelp}>Mazars</ModalHeader>
+                        <ModalBody>
+                            <ModalManual tar= {"freshQuery"} />
+                        </ModalBody>
+                    </Modal>
         </CardBody>
       </Card>
     </div>

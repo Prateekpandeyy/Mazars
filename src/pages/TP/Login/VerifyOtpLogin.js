@@ -10,7 +10,8 @@ import { useHistory } from "react-router-dom";
 import Alerts from "../../../common/Alerts";
 import Mandatory from "../../../components/Common/Mandatory";
 import { Spinner } from "reactstrap";
-// import {timer} from "../../../components/Verify/Verify.js";
+import LoadingTime from '../../../components/LoadingTime/LoadingTime';
+
 
 const Schema = yup.object().shape({
   p_otp: yup.string().required(""),
@@ -18,9 +19,7 @@ const Schema = yup.object().shape({
 
 
 function VerifyOtp({ email, uid, loading, setLoading }) {
-  console.log("email :", email);
-  console.log("uid :", uid);
-
+ 
 
   const { handleSubmit, register, errors, reset } = useForm({
     resolver: yupResolver(Schema),
@@ -32,43 +31,11 @@ function VerifyOtp({ email, uid, loading, setLoading }) {
 
 
   useEffect(() => {
-    console.log("call useEffect button")
-    var timerOn = true;
-    function timer(remaining) {
-      var s = remaining % 60;
-      s = s < 10 ? '0' + s : s;
-      setTime(remaining)
-      remaining -= 1;
-      if (remaining >= 0 && timerOn) {
-        setTimeout(function () {
-          timer(remaining);
-        }, 1000);
-        return;
-      }
-      setDisabled(true)
-
-    }
-    timer(180);
+    LoadingTime.timer2(setTime, setDisabled)
   }, [num]);
 
   useEffect(() => {
-    console.log("call useEffect")
-    var timerOn = true;
-    function timer(remaining) {
-      var s = remaining % 60;
-      s = s < 10 ? '0' + s : s;
-      setTime(remaining)
-      remaining -= 1;
-      if (remaining >= 0 && timerOn) {
-        setTimeout(function () {
-          timer(remaining);
-        }, 1000);
-        return;
-      }
-      setDisabled(true)
-
-    }
-    timer(180);
+    LoadingTime.timer2(setTime, setDisabled)
   }, []);
 
   const validOtp = (e) => {
@@ -80,7 +47,7 @@ function VerifyOtp({ email, uid, loading, setLoading }) {
 
 
   const onSubmit = (value) => {
-    console.log("value :", value);
+   
     setLoading(true)
     let formData = new FormData();
     formData.append("email", email);
@@ -88,18 +55,20 @@ function VerifyOtp({ email, uid, loading, setLoading }) {
 
     axios({
       method: "POST",
-      url: `${baseUrl}/admin/verifyloginotp`,
+      url: `${baseUrl}/tp/verifyloginotp`,
       data: formData,
     })
       .then(function (response) {
-        console.log("res-", response);
-        console.log("res-", response.data["otp "]);
-
+       
         if (response.data.code == 1) {
           setLoading(false)
           Alerts.SuccessLogin("Logged in successfully.")
-          localStorage.setItem("tpkey", JSON.stringify(response.data["user id"]));
-          localStorage.setItem("tpEmail", JSON.stringify(response.data.name));
+          localStorage.setItem("tpkey", JSON.stringify(response.data.user_id));
+          localStorage.setItem("tpEmail", JSON.stringify(response.data.displayname));
+          localStorage.setItem("tptoken", response.data.token)
+          var timeStampInMs = Date.now()
+          localStorage.setItem("tploginTime", timeStampInMs)
+          sessionStorage.setItem("sessionTpid", JSON.stringify(response.data["user id"]))
           history.push("/taxprofessional/dashboard");
 
         } else {
@@ -109,7 +78,7 @@ function VerifyOtp({ email, uid, loading, setLoading }) {
         }
       })
       .catch((error) => {
-        console.log("erroror - ", error);
+       
       });
   }
 
@@ -127,7 +96,7 @@ function VerifyOtp({ email, uid, loading, setLoading }) {
       data: formData,
     })
       .then(function (response) {
-        console.log("res-", response);
+      
         if (response.data.code === 1) {
           setLoading(false)
           Alerts.SuccessNormal("As per your request, OTP has been sent to your registered email address.")
@@ -139,7 +108,7 @@ function VerifyOtp({ email, uid, loading, setLoading }) {
         }
       })
       .catch((error) => {
-        console.log("erroror - ", error);
+       
       });
   }
 
@@ -191,9 +160,9 @@ function VerifyOtp({ email, uid, loading, setLoading }) {
                 <div class="text-center">
                   {
                     disabled ?
-                      <button type="submit" class="btn btn-success" onClick={resendOtp}>SEND OTP</button>
+                      <button type="submit" class="autoWidthBtn" onClick={resendOtp}>SEND OTP</button>
                       :
-                      <button type="submit" class="btn btn-primary">VERIFY OTP</button>
+                      <button type="submit" class="autoWidthBtn">VERIFY OTP</button>
                   }
                 </div>
             }

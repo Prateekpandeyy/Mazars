@@ -18,26 +18,41 @@ import BootstrapTable from "react-bootstrap-table-next";
 import AdminFilter from "../../components/Search-Filter/AdminFilter";
 import Records from "../../components/Records/Records";
 import DiscardReport from "../../pages/Admin/AssignmentTab/DiscardReport";
-
-
+import RetviewModal from "../../pages/Admin/AllProposalComponent/RetviewModal"
+import ShowProposal from "../../pages/Admin/AllProposalComponent/ShowProposal";
+import DataTablepopulated from "../../components/DataTablepopulated/DataTabel";
+import MessageIcon, {EyeIcon, ViewDiscussionIcon, DiscussProposal, HelpIcon} from "../../components/Common/MessageIcon";
 function PendingForAcceptence({ pendingProposal }) {
   const [proposalDisplay, setProposalDisplay] = useState([]);
   const [records, setRecords] = useState([]);
-
+  const [retview, setRetview] = useState(false)
   const [assignNo, setAssignNo] = useState('');
   const [ViewDiscussion, setViewDiscussion] = useState(false);
+  const [viewProposalModal, setViewProposalModal] = useState(false)
+  const [proposalId, setProposalId] = useState()
+  const token = window.localStorage.getItem("adminToken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key)
   }
 
+  const showProposalModal2 = (e) => {
+    console.log("eeee")
+    setViewProposalModal(!viewProposalModal);
+    setProposalId(e)
+  }
   useEffect(() => {
     getPendingAcceptedProposal();
   }, []);
 
   const getPendingAcceptedProposal = () => {
-    axios.get(`${baseUrl}/admin/getProposals?status1=1`).then((res) => {
-      console.log(res);
+    axios.get(`${baseUrl}/admin/getProposals?status1=1`, myConfig).then((res) => {
+     
       if (res.data.code === 1) {
         setProposalDisplay(res.data.result);
         setRecords(res.data.result.length);
@@ -46,7 +61,10 @@ function PendingForAcceptence({ pendingProposal }) {
     });
   };
 
-
+  const retviewProposal = (e) => {
+    setRetview(!retview);
+    setAssignNo(e)
+  }
   const columns = [
     {
       dataField: "",
@@ -54,25 +72,18 @@ function PendingForAcceptence({ pendingProposal }) {
       formatter: (cellContent, row, rowIndex) => {
         return rowIndex + 1;
       },
-      style: {
-        fontSize: "11px",
-      },
+   
       headerStyle: () => {
-        return { fontSize: "11px" };
+        return { width : "50px"};
       },
     },
     {
       dataField: "created",
       text: "Date",
       sort: true,
-      style: {
-        fontSize: "11px",
-      },
-      headerStyle: () => {
-        return { fontSize: "11px" };
-      },
+
       formatter: function dateFormat(cell, row) {
-        console.log("dt", row.created);
+
         var oldDate = row.created;
         if (oldDate == null) {
           return null;
@@ -83,14 +94,9 @@ function PendingForAcceptence({ pendingProposal }) {
     {
       dataField: "assign_no",
       text: "Query No",
-      style: {
-        fontSize: "11px",
-      },
-      headerStyle: () => {
-        return { fontSize: "11px" };
-      },
+     
       formatter: function nameFormatter(cell, row) {
-        console.log(row);
+      
         return (
           <>
             <Link
@@ -110,36 +116,21 @@ function PendingForAcceptence({ pendingProposal }) {
       dataField: "parent_id",
       text: "Category",
       sort: true,
-      style: {
-        fontSize: "11px",
-      },
-      headerStyle: () => {
-        return { fontSize: "11px" };
-      },
+      
     },
     {
       dataField: "cat_name",
       text: "Sub Category",
       sort: true,
-      style: {
-        fontSize: "11px",
-      },
-      headerStyle: () => {
-        return { fontSize: "11px" };
-      },
+      
     },
     {
       text: "Date of Proposal",
       dataField: "DateofProposal",
       sort: true,
-      style: {
-        fontSize: "11px",
-      },
-      headerStyle: () => {
-        return { fontSize: "11px" };
-      },
+     
       formatter: function dateFormat(cell, row) {
-        console.log("dt", row.DateofProposal);
+
         var oldDate = row.DateofProposal;
         if (oldDate == null) {
           return null;
@@ -151,14 +142,9 @@ function PendingForAcceptence({ pendingProposal }) {
       text: "Date of acceptance of Proposal",
       dataField: "cust_accept_date",
       sort: true,
-      style: {
-        fontSize: "11px",
-      },
-      headerStyle: () => {
-        return { fontSize: "11px" };
-      },
+      
       formatter: function dateFormat(cell, row) {
-        console.log("dt", row.cust_accept_date);
+
         var oldDate = row.cust_accept_date;
         if (oldDate == null) {
           return null;
@@ -168,12 +154,7 @@ function PendingForAcceptence({ pendingProposal }) {
     },
     {
       text: "Status",
-      style: {
-        fontSize: "11px",
-      },
-      headerStyle: () => {
-        return { fontSize: "11px" };
-      },
+     
       formatter: function nameFormatter(cell, row) {
         return (
           <>
@@ -193,15 +174,24 @@ function PendingForAcceptence({ pendingProposal }) {
       },
     },
     {
-      dataField: "ProposedAmount",
+      dataField: "",
       text: "Proposed Amount",
       sort: true,
-      style: {
-        fontSize: "11px",
+     
+      sortFunc: (a, b, order, dataField) => {
+        if (order === 'asc') {
+          return b - a;
+        }
+        return a - b; // desc
       },
-      headerStyle: () => {
-        return { fontSize: "11px" };
-      },
+      formatter: function nameFormatter(cell, row){
+        var nfObject = new Intl.NumberFormat('hi-IN')
+         var x = row.ProposedAmount;
+        
+         return(
+           <p className="rightAli">{nfObject.format(x)}</p>
+         )
+       }
     },
     {
       dataField: "accepted_amount",
@@ -210,54 +200,43 @@ function PendingForAcceptence({ pendingProposal }) {
       style: {
         fontSize: "11px",
         color: "#21a3ce",
+       
       },
-      headerStyle: () => {
-        return { fontSize: "11px", color: "#21a3ce" };
+     
+      sortFunc: (a, b, order, dataField) => {
+        if (order === 'asc') {
+          return b - a;
+        }
+        return a - b; // desc
       },
+      formatter: function nameFormatter(cell, row){
+        var nfObject = new Intl.NumberFormat('hi-IN')
+         var x = row.accepted_amount;
+        
+         return(
+           <p className="rightAli">{nfObject.format(x)}</p>
+         )
+       }
     },
     {
       dataField: "tl_name",
       text: "TL name",
       sort: true,
-      style: {
-        fontSize: "11px",
-      },
-      headerStyle: () => {
-        return { fontSize: "11px" };
-      },
+     
     },
     {
       text: "Action",
-      headerStyle: () => {
-        return { fontSize: "11px", width: "95px" };
-      },
+     
       formatter: function (cell, row) {
         return (
           <>
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
-
-
-              {row.statuscode > "3" ?
-                <div style={{ cursor: "pointer" }} title="View Proposal">
-                  <a
-                    href={`${baseUrl}/customers/dounloadpdf?id=${row.q_id}&viewpdf=1`}
-                    target="_blank"
-                  >
-                    <i
-                      class="fa fa-eye"
-                      style={{ color: "green", fontSize: "16px" }}
-                    />
-                  </a>
-                </div>
-                :
-                null
-              }
-
-
-              <div title="Send Message">
+            <div style={{ display: "flex" }}>
+          
                 <Link
                   to={{
                     pathname: `/admin/chatting/${row.q_id}`,
+                    index: 1,
+                    routes: "proposal",
                     obj: {
                       message_type: "2",
                       query_No: row.assign_no,
@@ -266,29 +245,32 @@ function PendingForAcceptence({ pendingProposal }) {
                     }
                   }}
                 >
-                  <i
-                    class="fa fa-comments-o"
-                    style={{
-                      fontSize: 16,
-                      cursor: "pointer",
-                      marginLeft: "8px",
-                      color: "blue"
-                    }}
-                  ></i>
+                  <MessageIcon />
                 </Link>
-              </div>
+            
+                <div  onClick={() => ViewDiscussionToggel(row.assign_no)} className="ml-1">
+                                  
+                                  <ViewDiscussionIcon />
+                          </div>
 
-              <div title="View Discussion Message">
-                <i
-                  class="fa fa-comments-o"
-                  style={{
-                    fontSize: 16,
-                    cursor: "pointer",
-                    color: "orange"
-                  }}
-                  onClick={() => ViewDiscussionToggel(row.assign_no)}
-                ></i>
+
+              {row.statuscode > "3" ?
+               <div  onClick={(e) => showProposalModal2(row.q_id)} className="ml-1">
+               <EyeIcon  />
               </div>
+                :
+                null
+              }
+
+{
+  row.statuscode == "6" ? 
+  <>
+<div  onClick={(e) => retviewProposal(row.q_id)}>
+<DiscussProposal titleName ="Restore Proposal"/>
+</div>
+  </> : null
+}
+              
 
             </div>
           </>
@@ -314,20 +296,30 @@ function PendingForAcceptence({ pendingProposal }) {
         </CardHeader>
         <CardBody>
           <Records records={records} />
-          <BootstrapTable
-            bootstrap4
-            keyField="id"
-            data={proposalDisplay}
-            columns={columns}
-            classes="table-responsive"
-          />
-
+          <DataTablepopulated 
+                   bgColor="#42566a"
+                   keyField= {"assign_no"}
+                   data={proposalDisplay}
+                   columns={columns}>
+                    </DataTablepopulated>
           <DiscardReport
             ViewDiscussionToggel={ViewDiscussionToggel}
             ViewDiscussion={ViewDiscussion}
             report={assignNo}
             getData={getPendingAcceptedProposal}
+            headColor="#42566a"
           />
+           <RetviewModal 
+          retview = {retview}
+          retviewProposal  = {retviewProposal }
+          getProposalData  ={ getPendingAcceptedProposal}
+          assignNo = {assignNo}
+         />
+         <ShowProposal 
+          setViewProposalModal = {setViewProposalModal}
+          viewProposalModal = {viewProposalModal}
+          showProposalModal2 = {showProposalModal2}
+          proposalId = {proposalId}/>
         </CardBody>
       </Card>
     </div>

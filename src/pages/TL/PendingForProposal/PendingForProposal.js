@@ -30,7 +30,7 @@ function PendingForProposal() {
     axios
       .get(`${baseUrl}/tl/getIncompleteQues?id=${JSON.parse(userid)}`)
       .then((res) => {
-        console.log(res);
+      
         if (res.data.code === 1) {
           setPendingForProposal(res.data.result);
         }
@@ -57,9 +57,9 @@ function PendingForProposal() {
         return { fontSize: "12px" };
       },
       formatter: function dateFormat(cell, row) {
-        console.log("dt", row.query_date);
+     
         var updatedate = row.query_date.split(" ")[0];
-        console.log(updatedate);
+       
         if (updatedate == null) {
           return null;
         }
@@ -73,7 +73,7 @@ function PendingForProposal() {
         return { fontSize: "12px" };
       },
       formatter: function nameFormatter(cell, row) {
-        console.log(row);
+      
         return (
           <>
             <Link to={`/teamleader/queries/${row.id}`}>{row.assign_no}</Link>
@@ -98,7 +98,7 @@ function PendingForProposal() {
       },
     },
     {
-      text: "Customer Name",
+      text: "Client Name",
       dataField: "name",
       sort: true,
       headerStyle: () => {

@@ -22,7 +22,12 @@ function ViewNotification() {
   const { id } = useParams();
 
   const [data, setData] = useState({});
-
+  const token = window.localStorage.getItem("tptoken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
   useEffect(() => {
     getChatting();
   }, [id]);
@@ -35,6 +40,9 @@ function ViewNotification() {
     axios({
       method: "POST",
       url: `${baseUrl}/tl/viewNotification`,
+      headers : {
+        uit : token
+      },
       data: formData,
     })
       .then(function (response) {
@@ -57,16 +65,17 @@ function ViewNotification() {
           <Row>
             <Col md="4">
               <button
-                class="btn btn-success ml-3"
+                class="autoWidthBtn ml-3"
                 onClick={() => history.goBack()}
               >
-                <i class="fas fa-arrow-left mr-2"></i>
+           
                 Go Back
               </button>
             </Col>
-            <Col md="8">
+            <Col md="4" align="center">
               <h4>Message Details</h4>
             </Col>
+            <Col md="4"></Col>
           </Row>
         </CardHeader>
         <CardBody>

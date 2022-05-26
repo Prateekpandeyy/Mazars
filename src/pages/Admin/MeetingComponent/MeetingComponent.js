@@ -5,11 +5,12 @@ import Meeting from "../meeting/index";
 
 function MeetingComponent(props) {
   const userid = window.localStorage.getItem("adminkey");
+  const adminEmail = window.localStorage.getItem("adminkey");
 
-  console.log("ppp", props.match.params.id)
   return (
    
-      <Meeting id={props.match.params.id} />
+      <Meeting id={props.match.params.id}
+      adminEmail = {adminEmail} />
    
    
   );

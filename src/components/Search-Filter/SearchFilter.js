@@ -15,21 +15,21 @@ function SearchFilter(props) {
 
   //search filter
   const handleChange = (value) => {
-    console.log(`selected ${value}`);
+
     setSelectedData(value);
     getData();
   };
 
   //reset date
   const resetData = () => {
-    console.log("resetData ..");
+  
     reset();
     getData();
   };
 
   //reset category
   const resetCategory = () => {
-    console.log("resetData ..");
+  
     setSelectedData([]);
     getData();
   };
@@ -37,8 +37,7 @@ function SearchFilter(props) {
 
   
   const onSubmit = (data) => {
-    console.log("data :", data);
-    console.log("selectedData :", selectedData);
+ 
 
     if (allquery == "allquery") {
       axios
@@ -46,7 +45,7 @@ function SearchFilter(props) {
           `${baseUrl}/admin/getAllQueries?cat_id=${selectedData}&from=${data.p_dateFrom}&to=${data.p_dateTo}`
         )
         .then((res) => {
-          console.log(res);
+        
           if (res.data.code === 1) {
             if (res.data.result) {
               setData(res.data.result);
@@ -61,7 +60,7 @@ function SearchFilter(props) {
           `${baseUrl}/admin/pendingAllocation?category=${selectedData}&date1=${data.p_dateFrom}&date2=${data.p_dateTo}`
         )
         .then((res) => {
-          console.log(res);
+         
           if (res.data.code === 1) {
             if (res.data.result) {
               setData(res.data.result);
@@ -74,7 +73,7 @@ function SearchFilter(props) {
   return (
     <div>
       <div className="row">
-        <div class="col-sm-3 d-flex">
+        <div className="col-sm-3 d-flex">
           <Select
             mode="multiple"
             style={{ width: "100%" }}
@@ -127,7 +126,7 @@ function SearchFilter(props) {
           <div>
             <button
               type="submit"
-              class="btn btn-primary mb-2 ml-3"
+              className="btn btn-primary mb-2 ml-3"
               onClick={resetCategory}
             >
               X
@@ -137,11 +136,11 @@ function SearchFilter(props) {
 
         <div className="col-sm-9 d-flex">
           <div>
-            <form class="form-inline" onSubmit={handleSubmit(onSubmit)}>
-              <div class="form-group mx-sm-3 mb-2">
+            <form className="form-inline" onSubmit={handleSubmit(onSubmit)}>
+              <div className="form-group mx-sm-3 mb-2">
                 <label className="form-select form-control">From</label>
               </div>
-              <div class="form-group mx-sm-3 mb-2">
+              <div className="form-group mx-sm-3 mb-2">
                 <input
                   type="date"
                   name="p_dateFrom"
@@ -150,10 +149,10 @@ function SearchFilter(props) {
                 />
               </div>
 
-              <div class="form-group mx-sm-3 mb-2">
+              <div className="form-group mx-sm-3 mb-2">
                 <label className="form-select form-control">To</label>
               </div>
-              <div class="form-group mx-sm-3 mb-2">
+              <div className="form-group mx-sm-3 mb-2">
                 <input
                   type="date"
                   name="p_dateTo"
@@ -161,7 +160,7 @@ function SearchFilter(props) {
                   ref={register}
                 />
               </div>
-              <button type="submit" class="btn btn-primary mb-2">
+              <button type="submit" className="btn btn-primary mb-2">
                 Search
               </button>
             </form>
@@ -170,7 +169,7 @@ function SearchFilter(props) {
           <div>
             <button
               type="submit"
-              class="btn btn-primary mb-2 ml-3"
+              className="btn btn-primary mb-2 ml-3"
               onClick={resetData}
             >
               Reset

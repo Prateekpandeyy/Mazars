@@ -9,7 +9,12 @@ const PublicRouteUser = ({ component: Component, ...rest }) => {
             component={(props) => {
                 const token = window.localStorage.getItem("userid");
 
-                if (token) {
+                var previousLoginTime = window.localStorage.getItem("loginTime")
+                var nextLogin = Number(previousLoginTime) + Number(600000)
+                var currentTime = Date.now()
+                console.log("previousIme",  nextLogin > currentTime)
+                
+                        if (token && nextLogin > currentTime) {
                     return (
                         <>
                             <Redirect to={"/customer/dashboard"} />

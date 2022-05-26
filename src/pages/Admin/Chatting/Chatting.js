@@ -21,6 +21,7 @@ import Alerts from "../../../common/Alerts";
 import classNames from "classnames";
 import Mandatory from "../../../components/Common/Mandatory";
 import Loader from "../../../components/Loader/Loader";
+import { Link } from "react-router-dom";
 
 
 
@@ -34,7 +35,7 @@ const Schema = yup.object().shape({
 
 function Chatting(props) {
 
-  console.log("props", props)
+ 
 
   const alert = useAlert();
   const history = useHistory();
@@ -48,12 +49,17 @@ function Chatting(props) {
   const [item, setItem] = useState("");
   const [data, setData] = useState({})
   const { query_id, query_No, routes } = data
-
+  const token = window.localStorage.getItem("adminToken")
+    const myConfig = {
+        headers : {
+         "uit" : token
+        }
+      }
 
 
 
   useEffect(() => {
-    console.log("useEffect", props)
+
     const dataItem = props.location.obj
 
     if (dataItem) {
@@ -68,7 +74,7 @@ function Chatting(props) {
 
 
   const onSubmit = (value) => {
-    console.log("value :", value);
+    
     setLoading(true)
     let formData = new FormData();
     formData.append("uid", JSON.parse(userId));
@@ -80,10 +86,13 @@ function Chatting(props) {
     axios({
       method: "POST",
       url: `${baseUrl}/admin/messageSent`,
+      headers : {
+        uit : token
+      },
       data: formData,
     })
       .then(function (response) {
-        console.log("res-", response);
+      
         if (response.data.code === 1) {
           reset();
           setLoading(false)
@@ -95,23 +104,25 @@ function Chatting(props) {
         }
       })
       .catch((error) => {
-        console.log("erroror - ", error);
+       
       });
   };
 
   return (
     <Layout adminDashboard="adminDashboard" adminUserId={userId}>
-      <Card>
+       <Card>
         <CardHeader>
           <Row>
-            <Col md="4">
-              <button
-                class="btn btn-success ml-3"
-                onClick={() => history.goBack()}
-              >
-                <i class="fas fa-arrow-left mr-2"></i>
-                Go Back
-              </button>
+          <Col md="4">
+            <Link
+                  to={{
+                    pathname: `/admin/${props.location.routes}`,
+                    index: props.location.index,
+                  }}
+                >
+                  <button className = "autoWidthBtn ml-2">Go Back</button>
+                </Link>
+              
             </Col>
             <Col md="8">
               <h4>Message</h4>
@@ -125,9 +136,9 @@ function Chatting(props) {
               :
               <>
                 <form onSubmit={handleSubmit(onSubmit)}>
-                  <div class="row" style={{ display: "flex", justifyContent: "center" }}>
-                    <div class="col-md-6">
-                      <div class="form-group">
+                  <div className="row" style={{ display: "flex", justifyContent: "center" }}>
+                    <div className="col-md-6">
+                      <div className="form-group">
                         <label>Query No.</label>
                         <input
                           type="text"
@@ -139,7 +150,7 @@ function Chatting(props) {
                         />
                       </div>
 
-                      <div class="form-group">
+                      <div className="form-group">
                         <label>Message Type</label>
                         {
                           item &&
@@ -167,7 +178,7 @@ function Chatting(props) {
                         )}
                       </div>
 
-                      <div class="form-group">
+                      <div className="form-group">
                         <label>To<span className="declined">*</span></label>
                         <select
                           className={classNames("form-control", {
@@ -178,7 +189,7 @@ function Chatting(props) {
                           style={{ height: "33px" }}
                         >
                           <option value="">--select--</option>
-                          <option value="customer">Customer</option>
+                          <option value="customer">Client</option>
                           <option value="tl">Team Leader</option>
                           <option value="both">Both</option>
                         </select>
@@ -189,7 +200,7 @@ function Chatting(props) {
                         )}
                       </div>
 
-                      <div class="form-group">
+                      <div className="form-group">
                         <label>Message<span className="declined">*</span></label>
                         <textarea
                           className={classNames("form-control", {
@@ -206,7 +217,7 @@ function Chatting(props) {
                           </div>
                         )}
                       </div>
-                      <button type="submit" className="btn btn-primary">
+                      <button type="submit" className="customBtn">
                         Send
                       </button>
                     </div>
@@ -224,33 +235,3 @@ function Chatting(props) {
 }
 
 export default Chatting;
-
-
-{/* <select
-                    class="form-control"
-                    name="p_sms_type"
-                    ref={register}
-                    value={query_No}
-                  >
-                    <option value="">--select--</option>
-                    <option value="1">Information</option>
-                    <option value="2">Proposal Discussion</option>
-                    <option value="3">Assignment Discussion</option>
-                  </select> */}
-
-                    // useEffect(() => {
-  //   const getQuery = () => {
-  //     axios.get(`${baseUrl}/customers/getAssignedAssignments?user=${JSON.parse(userId)}
-  //     &type=1`)
-  //       .then((res) => {
-  //         console.log(res);
-  //         if (res.data.code === 1) {
-  //           // setAssingment(res.data.result);
-  //         }
-  //       });
-  //   };
-
-  //   getQuery();
-  // }, []);
-    // const dataItem = props.location.obj
-  // const { message_type, query_id, query_No, routes } = dataItem

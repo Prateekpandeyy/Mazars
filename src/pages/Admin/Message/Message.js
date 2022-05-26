@@ -17,10 +17,11 @@ import BootstrapTable from "react-bootstrap-table-next";
 import { useHistory } from "react-router";
 // import PaymentModal from "./PaymentModal";
 import CommonServices from "../../../common/common";
+import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
 
 
 function Message(props) {
-    console.log("props", props.location.obj)
+    
 
     const userId = window.localStorage.getItem("adminkey");
     const [query, setQuery] = useState([]);
@@ -30,15 +31,20 @@ const history = useHistory();
     useEffect(() => {
         getMessage();
     }, []);
-
+    const token = window.localStorage.getItem("adminToken")
+    const myConfig = {
+        headers : {
+         "uit" : token
+        }
+      }
 
     const getMessage = () => {
         axios
             .get(
-                `${baseUrl}/customers/getNotification?id=${JSON.parse(userId)}&type_list=all`
+                `${baseUrl}/admin/getNotification?id=${JSON.parse(userId)}&type_list=all`, myConfig
             )
             .then((res) => {
-                console.log(res);
+            
                 if (res.data.code === 1) {
                     setQuery(res.data.result);
                 }
@@ -57,24 +63,7 @@ const history = useHistory();
                 return { fontSize: "12px", width: "20px" };
             },
         },
-        // {
-        //     text: "Date",
-        //     sort: true,
-        //     headerStyle: () => {
-        //         return { fontSize: "12px", width: "50px" };
-        //     },
-        //     formatter: function nameFormatter(cell, row) {
-        //         console.log(row);
-        //         return (
-        //             <>
-        //                 <div style={{ display: "flex" }}>
-        //                     <p>{CommonServices.removeTime(row.setdate)}</p>
-        //                     <p style={{ marginLeft: "15px" }}>{CommonServices.removeDate(row.setdate)}</p>
-        //                 </div>
-        //             </>
-        //         );
-        //     },
-        // },
+       
         {
             text: "Date",
             dataField: "setdate",
@@ -91,7 +80,7 @@ const history = useHistory();
                 return { fontSize: "12px", width: "30px" };
             },
             formatter: function nameFormatter(cell, row) {
-                console.log(row);
+             
                 return (
                     <>
                         {row.assign_no}
@@ -107,7 +96,7 @@ const history = useHistory();
                 return { fontSize: "12px", width: "180px" };
             },
             formatter: function nameFormatter(cell, row) {
-                console.log(row);
+             
                 return (
                     <>
                         <Link to={`/admin/view-notification/${row.id}`}>
@@ -116,21 +105,29 @@ const history = useHistory();
                                     <div
                                         style={{
                                             cursor: "pointer",
-                                            display: "flex", justifyContent: "space-between"
+                                            display : "flex",
+                                            justifyContent : "space-between",
+                                            wordBreak : "break-word"
+                                          
                                         }}
                                         onClick={() => readNotification(row.id)}
                                         title="unread"
                                     >
                                         <p>{row.message}</p>
-                                        <i class="fa fa-bullseye" style={{ color: "red" }}></i>
+                                        <i className="fa fa-bullseye" style={{ color: "red" }}></i>
                                     </div>
                                     :
                                     <div
-                                        style={{ cursor: "pointer", display: "flex", justifyContent: "space-between" }}
+                                        style={{ 
+                                            cursor: "pointer",
+                                            display :"flex",
+                                            justifyContent : "space-between",
+                                            wordBreak : "break-word"
+                                        }}
                                         title="read"
                                     >
                                         <p>{row.message}</p>
-                                        <i class="fa fa-bullseye" style={{ color: "green" }}></i>
+                                        <i className="fa fa-bullseye" style={{ color: "green" }}></i>
                                     </div>
                             }
                         </Link>
@@ -145,14 +142,14 @@ const history = useHistory();
     // readnotification
     const readNotification = (id) => {
 
-        console.log("call", id)
+        
         axios
-            .get(`${baseUrl}/customers/markReadNotification?id=${id}`)
+            .get(`${baseUrl}/admin/markReadNotification?id=${id}`, myConfig)
             .then(function (response) {
-                console.log("delete-", response);
+              
             })
             .catch((error) => {
-                console.log("erroror - ", error);
+                
             });
     };
 
@@ -160,29 +157,29 @@ const history = useHistory();
         <Layout adminDashboard="adminDashboard" adminUserId={userId}>
             <Card>
             <CardHeader>
-                    <Row>
-                        <Col md="9">
-                            <CardTitle tag="h4">Message</CardTitle>
-                        </Col>
-                        <Col md="3">
-                        <button
-                class="btn btn-success ml-auto" style={{float : "right"}}
+          <Row>
+          <Col md="4">
+          <button
+                className="autoWidthBtn" 
                 onClick={() => history.goBack()}
               >
-                <i class="fas fa-arrow-left mr-2"></i>
+               
                 Go Back
               </button>
-                        </Col>
-                    </Row>
-                </CardHeader>
+              
+            </Col>
+            <Col md="8">
+              <h4>Message</h4>
+            </Col>
+          </Row>
+        </CardHeader>
                 <CardBody>
-                    <BootstrapTable
-                        bootstrap4
-                        keyField="id"
-                        data={query}
-                        columns={columns}
-                        rowIndex
-                    />
+                <DataTablepopulated 
+       bgColor="#42566a"
+       keyField= {"assign_no"}
+       data={query}
+       columns={columns}>
+        </DataTablepopulated>
                 </CardBody>
             </Card>
         </Layout>
@@ -190,20 +187,3 @@ const history = useHistory();
 }
 
 export default Message;
-
-{/* <Col md="3">
-                            <div style={{ display: "flex", justifyContent: "space-around" }}
-                                class="btn btn-primary"
-                            // onClick={() => paymentHandler()}
-                            >
-                                <Link
-                                    to={{
-                                        pathname: `/customer/chatting`,
-                                        obj: props.location.obj
-                                    }}
-
-                                >
-                                    Add Message
-                                </Link>
-                            </div>
-                        </Col> */}

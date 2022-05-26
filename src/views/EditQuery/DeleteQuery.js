@@ -4,15 +4,15 @@ import axios from "axios";
 import { baseUrl } from "../../config/config";
 import { useHistory } from "react-router-dom";
 
-function DeleteQuery({ id, setLoad }) {
+function DeleteQuery({ id, setLoading }) {
   const userId = window.localStorage.getItem("userid");
   const history = useHistory();
 
-  //   console.log("id", id);
+
 
   //check
   const del = (id) => {
-    console.log("del", id);
+
 
     Swal.fire({
       title: "Are you sure?",
@@ -21,7 +21,7 @@ function DeleteQuery({ id, setLoad }) {
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, deleted it!",
+      confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.value) {
         deleteCliente(id);
@@ -30,7 +30,7 @@ function DeleteQuery({ id, setLoad }) {
   };
 
   const deleteCliente = (id) => {
-    setLoad(true)
+    setLoading(true)
     let formData = new FormData();
     formData.append("uid", JSON.parse(userId));
     formData.append("id", id);
@@ -41,24 +41,24 @@ function DeleteQuery({ id, setLoad }) {
       data: formData,
     })
       .then(function (response) {
-        console.log("res-", response);
+
         if (response.data.code === 1) {
-          setLoad(false)
+          setLoading(false)
           Swal.fire("", "Query deleted successfully.", "success");
           history.push("/customer/queries");
         } else {
-          setLoad(false)
+          setLoading(false)
           Swal.fire("Oops...", "Query not deleted", "error");
         }
       })
       .catch((error) => {
-        console.log("erroror - ", error);
+     
       });
   };
 
   return (
     <div>
-      <button type="button" class="btn btn-primary" onClick={() => del(id)}>
+      <button type="button" class="customBtn" onClick={() => del(id)}>
         Delete
       </button>
     </div>

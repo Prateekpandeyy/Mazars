@@ -1,0 +1,21 @@
+.mainClass{
+    display: flex;
+    padding: 25px 40px;
+    flex-direction: column;
+}
+.imgBox{
+    display : flex; 
+    width : 100%;
+  
+}
+.manualImg{
+    display: flex;
+    width: 100%;
+    height: auto;
+}
+.registrationTable{
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   flex-direction: column;
+}

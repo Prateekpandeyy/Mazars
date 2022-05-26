@@ -25,6 +25,8 @@ import AssessmentIcon from '@material-ui/icons/Assessment';
 import RejectedModal from "./RejectedModal";
 import DiscardReport from "../AssignmentTab/DiscardReport";
 import moment from "moment";
+import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
+import MessageIcon, {PaymentDecline, Payment, ViewDiscussionIcon, DiscussProposal, HelpIcon} from "../../../components/Common/MessageIcon";
 
 
 
@@ -48,7 +50,7 @@ function AllPayment() {
     var rowStyle2 = {}
 
     const rejectHandler = (key) => {
-        console.log("key", key);
+       
         setPaymentModal(!addPaymentModal);
         setAssignNo(key.assign_no)
     };
@@ -62,10 +64,15 @@ function AllPayment() {
     useEffect(() => {
         getPaymentStatus();
     }, []);
-
+    const token = window.localStorage.getItem("tlToken")
+    const myConfig = {
+        headers : {
+         "uit" : token
+        }
+      }
     const getPaymentStatus = () => {
-        axios.get(`${baseUrl}/tl/getUploadedProposals?uid=${JSON.parse(userid)}`).then((res) => {
-            console.log(res);
+        axios.get(`${baseUrl}/tl/getUploadedProposals?uid=${JSON.parse(userid)}`, myConfig).then((res) => {
+        
             if (res.data.code === 1) {
                 setPayment(res.data.result);
                 setCount(res.data.result.length);
@@ -77,10 +84,14 @@ function AllPayment() {
 
 
     const toggle = (key) => {
-        console.log("key", key);
+   
         setModal(!modal);
 
-        fetch(`${baseUrl}//admin/getPaymentDetail?id=${key}`, {
+       if(typeof(key) == "object"){
+
+       }
+       else{
+        fetch(`${baseUrl}//admin/getPaymentDetail?id=${key}&&status=1`, {
             method: "GET",
             headers: new Headers({
                 Accept: "application/vnd.github.cloak-preview",
@@ -88,23 +99,41 @@ function AllPayment() {
         })
             .then((res) => res.json())
             .then((response) => {
-                console.log(response);
+              
                 setPay(response.payment_detail);
             })
             .catch((error) => console.log(error));
+       }
     };
 
 // Row Style
 rowStyle2 = (row, index) => {
     const style = {}
-
-    if(row.paid_status != "2" && row.status != "Complete" && moment(row.due_date).toDate() > moment().toDate){
-        style.backgroundColor = "#c1d8f2";
-        style.color = "#000111"
+    var warningDate = moment(row.due_date).subtract(5, 'day').toDate();
+    // var warnformat = warningDate.format("YYYY-MM-DD");
+    var aa = moment().toDate();
+     var cc = moment(row.due_date).toDate();
+     if(row.is_paid === "2"){
+        style.backgroundColor = "#fff";
+        style.color = "#000"
+    }
+    else if(row.paid_status != "2" && row.is_paid != "1" && cc < aa){
+        style.backgroundColor = "#bfdfd2";
+      style.color = "#000111"
+    }
+   else if(row.paid_status != "2" && row.is_paid != "1" && row.status != "Complete" && warningDate < aa)  {
+      style.backgroundColor = "#c1d8f2";
+      style.color = "#000111"
     }
    
+    else if(row.paid_status != "2" && row.is_paid != "1" && warningDate > aa){
+      style.backgroundColor = "#fff";
+      style.color = "#000"
+    }
+  
     return style;
   }
+
     const columns = [
         {
             dataField: "",
@@ -112,25 +141,18 @@ rowStyle2 = (row, index) => {
             formatter: (cellContent, row, rowIndex) => {
                 return rowIndex + 1;
             },
-            style: {
-                fontSize: "11px",
-            },
+           
             headerStyle: () => {
-                return { fontSize: "11px" };
+                return {width : "35px" };
             },
         },
         {
             dataField: "query_created_date",
-            text: "Date",
+            text: "Query Date",
             sort: true,
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
+           
             formatter: function dateFormat(cell, row) {
-                console.log("dt", row.query_created_date);
+               
                 var oldDate = row.query_created_date;
                 if (oldDate == null) {
                     return null;
@@ -141,19 +163,15 @@ rowStyle2 = (row, index) => {
         {
             dataField: "assign_no",
             text: "Query No",
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
+            
             formatter: function nameFormatter(cell, row) {
-                console.log(row);
+               
                 return (
                     <>
                         <Link
                             to={{
                                 pathname: `/teamleader/queries/${row.assign_id}`,
+                                index : 0,
                                 routes: "paymentstatus",
                             }}
                         >
@@ -167,36 +185,21 @@ rowStyle2 = (row, index) => {
             dataField: "parent_id",
             text: "Category",
             sort: true,
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
+           
         },
         {
             dataField: "cat_name",
             text: "Sub Category",
             sort: true,
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
+           
         },
         {
             text: "Date of acceptance of Proposal",
             dataField: "cust_accept_date",
             sort: true,
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
+           
             formatter: function dateFormat(cell, row) {
-                console.log("dt", row.cust_accept_date);
+               
                 var oldDate = row.cust_accept_date;
                 if (oldDate == null) {
                     return null;
@@ -207,17 +210,12 @@ rowStyle2 = (row, index) => {
         {
             text: "Status",
             dataField: "",
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
+           
             formatter : function (cell, row) {
                 return(
                     <>
                     {row.paid_status == "2"  ?
-                    <p style={{color : "red"}}>{row.status} </p> : 
+                    <p className="declined">{row.status} </p> : 
                     <p>{row.status}</p>}
                     </>
                 )
@@ -227,69 +225,74 @@ rowStyle2 = (row, index) => {
             dataField: "accepted_amount",
             text: "Accepted Amount ",
             sort: true,
-            style: {
-              fontSize: "11px",
-              color: "#21a3ce",
-            },
+           
             sortFunc: (a, b, order, dataField) => {
               if (order === 'asc') {
                 return b - a;
               }
               return a - b; // desc
             },
-            headerStyle: () => {
-              return { fontSize: "11px", color: "#21a3ce" };
-            },
+         
+            formatter: function nameFormatter(cell, row){
+                var nfObject = new Intl.NumberFormat('hi-IN')
+                 var x = row.accepted_amount;
+                
+                 return(
+                   <p className="rightAli">{nfObject.format(x)}</p>
+                 )
+               }
         },
         {
             text: "Amount Paid",
             dataField: "paid_amount",
             sort: true,
-            style: {
-              fontSize: "11px",
-              color: "#064606",
-            },
+           
             sortFunc: (a, b, order, dataField) => {
               if (order === 'asc') {
                 return b - a;
               }
               return a - b; // desc
             },
-            headerStyle: () => {
-              return { fontSize: "11px", color: "#064606" };
-            },
+           
+            formatter: function nameFormatter(cell, row){
+                var nfObject = new Intl.NumberFormat('hi-IN')
+                 var x = row.paid_amount;
+                
+                 return(
+                   <p className="rightAli">{nfObject.format(x)}</p>
+                 )
+               }
         },
 
         {
             text : "Outstanding Amount",
             dataField: "amount_outstanding",
             sort: true,
-            style: {
-              fontSize: "11px",
-              color: "darkred",
-            },
+           
             sortFunc: (a, b, order, dataField) => {
               if (order === 'asc') {
                 return b - a;
               }
               return a - b; // desc
             },
-            headerStyle: () => {
-              return { fontSize: "11px", color: "darkred" };
-            },
+            
+            formatter: function nameFormatter(cell, row){
+                var nfObject = new Intl.NumberFormat('hi-IN')
+                 var x = row.amount_outstanding;
+                
+                 return(
+                   <p className="rightAli">{nfObject.format(x)}</p>
+                 )
+               }
         },
         {
             text: "Date of Payment",
             dataField: "cust_paid_date",
             sort: true,
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
+           
+            
             formatter: function dateFormat(cell, row) {
-                console.log("dt", row.cust_paid_date);
+             
                 var oldDate = row.cust_paid_date;
                 if (oldDate == null) {
                     return null;
@@ -299,104 +302,51 @@ rowStyle2 = (row, index) => {
         },
         {
             text: "Action",
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
+        
             formatter: function (cell, row) {
                 return (
                     <>
+                    <div style={{display: "flex"}}>
 
-                       {row.paid_status === "2" ? 
-                       <div style={{ display: "flex", justifyContent: "space-between", width: "90px" }}>
+<Link
+                             to={{
+                                pathname: `/teamleader/chatting/${row.id}`,
+                                index: 0,
+                                routes: "paymentstatus",
+                        
+                              obj: {
+                                  message_type: "4",
+                                  query_No: row.assign_no,
+                                  query_id: row.id,
+                                  routes: `/teamleader/paymentstatus`
+                              }
+                          }}
+                      >
+                          <MessageIcon />
+                      </Link>
+<div  onClick={() => ViewDiscussionToggel(row.assign_no)} className="ml-1">
+                                  
+                                  <ViewDiscussionIcon />
+                          </div>
+                          <Link
+              to={{
+                  pathname: `/teamleader/paydetails/${row.assign_id}`,
+                  index : 0,
+                  routes: "paymentstatus",
+              }}
+            >
+                          <Payment />
+                            </Link>
 
-                       <div title="Payment History"
-                         
-                           style={{ color: "green", fontSize: "16px", cursor: "pointer" }}
-                       >
-                           <i
-                           class="fa fa-credit-card"
-                           onClick={() => toggle(row.assign_id)}
-                           style={{ color: "green", fontSize: "16px" }}></i>
-                       </div>
-                       
-
-
-                       <div title="View Discussion Message">
-                           <i
-                               class="fa fa-comments-o"
-                               style={{
-                                   fontSize: 16,
-                                   cursor: "pointer",
-                                   color: "orange"
-                               }}
-                               onClick={() => ViewDiscussionToggel(row.assign_no)}
-                           ></i>
-                       </div>
-
-                   </div>
-                       :  <div style={{ display: "flex", justifyContent: "space-between", width: "90px" }}>
-
-                       <div title="Payment History"
-                         
-                           style={{ color: "green", fontSize: "16px", cursor: "pointer" }}
-                       >
-                           <i
-                           class="fa fa-credit-card"
-                           onClick={() => toggle(row.assign_id)}
-                           style={{ color: "green", fontSize: "16px" }}></i>
-                       </div>
-                       <div title="Send Message">
-                           <Link
-                               to={{
-                                   pathname: `/teamleader/chatting/${row.assign_id}`,
-                                   obj: {
-                                       message_type: "5",
-                                       query_No: row.assign_no,
-                                       query_id: row.assign_id,
-                                       routes: `/teamleader/proposal`
-                                   }
-                               }}
-                           >
-                               <i
-                                   class="fa fa-comments-o"
-                                   style={{
-                                       fontSize: 18,
-                                       cursor: "pointer",
-                                       color: "blue"
-                                   }}
-                               ></i>
-                           </Link>
-                       </div>
-                       <div>
-                           {
+                          {
                                row.paid_status == "0" ?
-                                   <div title="Payment decline"
-                                       onClick={() => rejectHandler(row)}
-                                       style={{ color: "red", fontSize: "16px", cursor: "pointer" }}
-                                   >
-                                       <PaymentIcon />
+                                   <div title="Payment decline" onClick={() => rejectHandler(row)}>
+                                       <PaymentDecline />
                                    </div>
                                    : null
                            }
-                       </div>
-
-
-                       <div title="View Discussion Message">
-                           <i
-                               class="fa fa-comments-o"
-                               style={{
-                                   fontSize: 16,
-                                   cursor: "pointer",
-                                   color: "orange"
-                               }}
-                               onClick={() => ViewDiscussionToggel(row.assign_no)}
-                           ></i>
-                       </div>
-
-                   </div>}
+                       
+                   </div>
                     </>
                 );
             },
@@ -418,16 +368,13 @@ rowStyle2 = (row, index) => {
                 </CardHeader>
 
                 <CardBody>
-                <BootstrapTable
-            bootstrap4
-            keyField="id"
-            data={payment}
-            columns={columns}
-            
-            classes = "table-responsive"
-            rowStyle={ rowStyle2 }
-            rowIndex
-          />
+                <DataTablepopulated 
+                   bgColor="#2b5f55"
+                   keyField= {"assign_no"}
+                   data={payment}
+                   rowStyle2 = {rowStyle2}
+                   columns={columns}>
+                    </DataTablepopulated>
 
 
                     <RejectedModal
@@ -436,22 +383,27 @@ rowStyle2 = (row, index) => {
                         assignNo={assignNo}
                         getPaymentStatus={getPaymentStatus}
                     />
+{
+    ViewDiscussion === true ?
 
-                    <DiscardReport
-                        ViewDiscussionToggel={ViewDiscussionToggel}
-                        ViewDiscussion={ViewDiscussion}
-                        report={assignNo}
-                        getData={getPaymentStatus}
-                    />
+    <DiscardReport
+    ViewDiscussionToggel={ViewDiscussionToggel}
+    ViewDiscussion={ViewDiscussion}
+    report={assignNo}
+    getData={getPaymentStatus}
+    headColor="#2b5f55"
+/> : ""
+}
                     <Modal isOpen={modal} fade={false} toggle={toggle}>
                         <ModalHeader toggle={toggle}>History</ModalHeader>
                         <ModalBody>
                             <table class="table table-bordered">
                                 <thead>
-                                    <tr>
+                                <tr>
                                         <th scope="row">S.No</th>
-                                        <th scope="row">Date</th>
+                                        <th scope="row">Date of Payment</th>
                                         <th scope="row">Amount</th>
+                                        <th scope="row">Payment Receipt</th>
                                     </tr>
                                 </thead>
                                 {pay.length > 0
@@ -461,6 +413,7 @@ rowStyle2 = (row, index) => {
                                                 <td>{i + 1}</td>
                                                 <td>{CommonServices.removeTime(p.payment_date)}</td>
                                                 <td>{p.paid_amount}</td>
+                                                <td><a href={p.receipt_url} target="_blank">Payment Receipt</a></td>
                                             </tr>
                                         </tbody>
                                     ))

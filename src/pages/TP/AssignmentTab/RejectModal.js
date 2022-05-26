@@ -27,10 +27,10 @@ function RejectedModal({
 
 
   const [loading, setLoading] = useState(false);
-  console.log("dataItem :", dataItem);
+ 
 
   const onSubmit = (value) => {
-    console.log("value :", value);
+   console.log(value)
     setLoading(true)
 
     let formData = new FormData();
@@ -47,7 +47,7 @@ function RejectedModal({
       data: formData,
     })
       .then(function (response) {
-        console.log("response-", response);
+        
         if (response.data.code === 1) {
           setLoading(false)
           toggleNested();
@@ -59,7 +59,7 @@ function RejectedModal({
         }
       })
       .catch((error) => {
-        console.log("erroror - ", error);
+       
       });
   };
 
@@ -94,7 +94,7 @@ function RejectedModal({
                     <button type="submit" className="btn btn-primary">
                       Submit
                     </button>
-                    <Button color="primary" onClick={toggleNested}>Cancel</Button>
+                    <Button color="primary"className="btn btn-danger ml-2" onClick={toggleNested}>Cancel</Button>
                   </div>
               }
             </div>

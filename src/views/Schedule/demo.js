@@ -37,8 +37,14 @@ function Demo() {
   const [baseMode, SetbaseMode] = useState("avc");
   const [transcode, SetTranscode] = useState("interop");
   const [attendeeMode, SetAttendeeMode] = useState("video");
-  const [videoProfile, SetVideoProfile] = useState("480p_4");
-
+  const [videoProfile, SetVideoProfile] = useState("240p_4");
+  const token = window.localStorage.getItem("clientToken")
+    
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
   var date = new Date();
 
   function convert(str) {
@@ -59,11 +65,10 @@ function Demo() {
   const getData = () => {
     axios
       .get(
-        `${baseUrl}/customers/videoScheduler?customer_id=${JSON.parse(userId)}`
+        `${baseUrl}/customers/videoScheduler?customer_id=${JSON.parse(userId)}`, myConfig
       )
       .then((res) => {
-        console.log("res -", res);
-        console.log("result -", res.data.result.items);
+     
         var a = res.data.result.items;
         if (a) {
           setData(a.map(mapAppointmentData));
@@ -88,16 +93,16 @@ function Demo() {
 
   const getAssignmentNo = () => {
     axios
-      .get(`${baseUrl}/customers/getAllQuery?uid=${JSON.parse(userId)}`)
+      .get(`${baseUrl}/customers/getAllQuery?uid=${JSON.parse(userId)}`, myConfig)
       .then((res) => {
-        console.log(res);
+        
         if (res.data.code === 1) {
           var data = res.data.result;
           const newArrayOfObj = data.map(({ assign_no: text, ...rest }) => ({
             text,
             ...rest,
           }));
-          console.log("dt--", newArrayOfObj);
+          
           setAssignmentData(newArrayOfObj);
         }
       });
@@ -105,15 +110,15 @@ function Demo() {
 
 
   const getUsers = () => {
-    axios.get(`${baseUrl}/tl/allAttendees?uid=${JSON.parse(userId)}`).then((res) => {
-      console.log(res);
+    axios.get(`${baseUrl}/tl/allAttendees?uid=${JSON.parse(userId)}`, myConfig).then((res) => {
+      
       if (res.data.code === 1) {
         var data = res.data.result;
         const newOwners = data.map(({ name: text, ...rest }) => ({
           text,
           ...rest,
         }));
-        console.log("dt--", newOwners);
+       
         setOwner(newOwners);
       }
     });
@@ -126,18 +131,13 @@ function Demo() {
       title: "Query No",
       instances: assignmentdata,
     },
-    // {
-    //   fieldName: "username",
-    //   title: "Users",
-    //   instances: owner,
-    //   allowMultiple: true,
-    // },
+   
   ];
 
 
 
   const commitChanges = ({ added, changed, deleted }) => {
-    console.log("added", added)
+   
   };
 
 
@@ -167,7 +167,7 @@ function Demo() {
       <div style={{ display: "flex" }}>
       <i
             class="fa fa-video-camera"
-            onClick={() => handleJoin(data.question_id)}
+            onClick={() => handleJoin(data)}
             style={{ fontSize: "18px", padding: "5px" , color: "#fff" }}
           ></i>
         <div>{children}</div>
@@ -195,17 +195,72 @@ function Demo() {
     );
   };
 
-  //handleJoin
-  const handleJoin = (id) => {
-    console.log("id", id);
-    Cookies.set("channel", id);
-    Cookies.set("baseMode", baseMode);
-    Cookies.set("transcode", transcode);
-    Cookies.set("attendeeMode", attendeeMode);
-    Cookies.set("videoProfile", videoProfile);
-    history.push("/customer/meeting");
-  };
+  
+  const handleJoin = (data) => {
+    // console.log("data", data);
+//  console.log("data", data)
+// // console.log(data.startDate)
+// var dt = new Date(data.startDate)
+// var dt2 = new Date()
+// let ck = dt.getMonth();
 
+// let pp = dt2.getMonth();
+// let rr = dt2.getHours();
+// let ss = dt.getHours()
+// let mm = dt2.getMinutes() + 20
+// let dd = dt.getMinutes()
+// let ee = dt.getDate();
+// let eee = dt2.getDate()
+//   console.log("dt", dt)
+//   console.log(dt2.getDate())
+//  console.log(dt.getMinutes())
+//  console.log(dt2.getMinutes() + 20)
+//  console.log("ck", ck)
+//   console.log("dt2", dt2)
+//   console.log("pp", pp)
+//   console.log("mm", mm)
+//   console.log("dd", dd)
+//   console.log("ss", ss)
+//   console.log("rr", rr)
+//   console.log(ck == pp)
+//   console.log(ee === eee)
+//   console.log(ss == rr)
+//   console.log(mm > dd)
+
+
+//if(ck == pp && ss == rr && ee == eee){
+
+
+// if(mm > dd){
+//   console.log("passed")
+  
+//   Cookies.set("channel", data.question_id);
+//   Cookies.set("baseMode", baseMode);
+//   Cookies.set("transcode", transcode);
+//   Cookies.set("attendeeMode", attendeeMode);
+//   Cookies.set("videoProfile", videoProfile);
+//   history.push("/customer/meeting");
+
+// }
+// else{
+// // return false
+// Cookies.set("channel", data.question_id);
+// Cookies.set("baseMode", baseMode);
+// Cookies.set("transcode", transcode);
+// Cookies.set("attendeeMode", attendeeMode);
+// Cookies.set("videoProfile", videoProfile);
+// history.push("/customer/meeting");
+// }
+// }
+Cookies.set("channel", data.question_id);
+Cookies.set("baseMode", baseMode);
+Cookies.set("transcode", transcode);
+Cookies.set("attendeeMode", attendeeMode);
+Cookies.set("videoProfile", videoProfile);
+history.push(`/customer/meeting/${data.id}`);
+
+
+  };
 
   const messages = {
     moreInformationLabel: ""
@@ -226,7 +281,7 @@ function Demo() {
 
   //basic layout
   const BasicLayout = ({ onFieldChange, appointmentData, ...restProps }) => {
-    console.log("appointmentData", appointmentData);
+   
     return (
       <AppointmentForm.BasicLayout
         appointmentData={appointmentData}
@@ -253,17 +308,14 @@ function Demo() {
         />
         <EditingState onCommitChanges={commitChanges} />
         <EditRecurrenceMenu />
-
         <DayView cellDuration={60} startDayHour={0} endDayHour={24} />
         <WeekView cellDuration={60} startDayHour={0} endDayHour={24}  />
-
         <Appointments appointmentComponent={myAppointment} />
 
         <Toolbar />
         <DateNavigator />
         <TodayButton />
         <ViewSwitcher />
-
         <AppointmentTooltip showOpenButton />
 
 
@@ -286,100 +338,3 @@ function Demo() {
 
 export default Demo;
 
-
-
-{/* <AppointmentForm.Label text="Customer Phone" type="title" /> */ }
-// function TitleComponent({ title }) {
-//   return (
-//     <div>
-//       <Link to={`/customer/queries`}>queries - {title}</Link>
-//     </div>
-//   );
-// }
-
-/* <Link to={`/customer/meeting`}>
-          <p style={{ fontSize: "12px",color:"#fff" }}>link</p>
-        </Link> */
-
-
-
-//03-nov-1972
-    // if (added) {
-    //   console.log("added - ", added);
-    //   var startDate = added.startDate;
-    //   var endDate = added.endDate;
-
-    //   let formData = new FormData();
-    //   formData.append("customer_id", JSON.parse(userId));
-    //   formData.append("question_id", added.question_id);
-    //   formData.append("time", changeFormat(startDate));
-    //   formData.append("endtime", changeFormat(endDate));
-    //   formData.append("title", added.title);
-    //   formData.append("notes", added.notes);
-    //   axios({
-    //     method: "POST",
-    //     url: `${baseUrl}/customers/PostCallSchedule`,
-    //     data: formData,
-    //   })
-    //     .then(function (response) {
-    //       console.log("res post-", response);
-    //       getData();
-    //       setLoading(false);
-    //     })
-    //     .catch((error) => {
-    //       console.log("erroror - ", error);
-    //     });
-    // }
-    // if (changed) {
-    //   console.log("changed", changed);
-
-    //   const data2 = data.map((appointment) =>
-    //     changed[appointment.id]
-    //       ? { ...appointment, ...changed[appointment.id] }
-    //       : appointment
-    //   );
-    //   console.log("data2 - ", data2);
-
-    //   let valuesArray = Object.entries(changed);
-    //   let id = valuesArray[0][0];
-    //   console.log("id -", id);
-    //   let dataIttem;
-
-    //   for (var i = 0; i < data2.length; i++) {
-    //     if (data2[i].id === id) {
-    //       dataIttem = data2[i];
-    //     }
-    //   }
-    //   console.log("dataIttem", dataIttem);
-
-    //   let formData = new FormData();
-    //   formData.append("customer_id", JSON.parse(userId));
-    //   formData.append("question_id", dataIttem.question_id);
-    //   formData.append("id", dataIttem.id);
-    //   formData.append("time", dataIttem.startDate);
-    //   formData.append("endtime", dataIttem.endDate);
-    //   formData.append("title", dataIttem.title);
-    //   formData.append("notes", dataIttem.notes);
-
-    //   axios({
-    //     method: "POST",
-    //     url: `${baseUrl}/customers/PostCallSchedule`,
-    //     data: formData,
-    //   })
-    //     .then(function (response) {
-    //       console.log("res post-", response);
-    //       getData();
-    //     })
-    //     .catch((error) => {
-    //       console.log("erroror - ", error);
-    //     });
-    // }
-
-    // if (deleted !== undefined) {
-    //   console.log("deleted f", deleted);
-    //   axios.get(`${baseUrl}/customers/freeslot?id=${deleted}`).then((res) => {
-    //     console.log("res -", res);
-    //     getData();
-    //     setLoading(false);
-    //   });
-    // }

@@ -25,8 +25,7 @@ function TeamLeaderTab() {
   const userid = window.localStorage.getItem("adminkey");
   var kk = []
   var pp = []
-  console.log(data)
-  console.log(pp)
+  
   const columns = [
     {
       dataField: "",
@@ -89,8 +88,7 @@ function TeamLeaderTab() {
       formatter: function nameFormatter(cell, row) {
         var digit2 = [];
         digit2 = row.allpcat_id.split(",")
-        console.log("digit2", digit2)
-        console.log(digit2.includes("Indirect"))
+       
         return (
           <>
 
@@ -116,7 +114,7 @@ function TeamLeaderTab() {
       },
       formatter: function nameFormatter(cell, row) {
         var digit = [];
-        //  console.log(JSON.parse(row.allcat_id))
+     
         digit = JSON.parse(row.allcat_id);
 
 
@@ -170,7 +168,7 @@ function TeamLeaderTab() {
 
   const getTeamLeader = () => {
     axios.get(`${baseUrl}/tl/getTeamLeader`).then((res) => {
-      console.log("Log", res.data.result)
+    
       var dd = []
       if (res.data.code === 1) {
         pp.push(res.data.result)
@@ -183,7 +181,7 @@ function TeamLeaderTab() {
 
   //check
   const del = (id) => {
-    console.log("del", id);
+   
 
     Swal.fire({
       title: "Are you sure?",
@@ -205,7 +203,7 @@ function TeamLeaderTab() {
     axios
       .get(`${baseUrl}/tl/deleteTeamLeader?id=${id}`)
       .then(function (response) {
-        console.log("delete-", response);
+      
         if (response.data.code === 1) {
           Swal.fire("Deleted!", "Your file has been deleted.", "success");
           getTeamLeader();
@@ -215,7 +213,7 @@ function TeamLeaderTab() {
 
       })
       .catch((error) => {
-        console.log("erroror - ", error);
+       
       });
   };
 
@@ -224,7 +222,7 @@ function TeamLeaderTab() {
   return (
 
     <Layout adminDashboard="adminDashboard" adminUserId={userid}>
-      {console.log("Layout")}
+    
       <Card>
         <CardHeader>
           <Row>

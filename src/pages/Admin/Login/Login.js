@@ -14,75 +14,95 @@ import Alerts from "../../../common/Alerts";
 import Mandatory from "../../../components/Common/Mandatory";
 import VerifyOtpLogin from "./VerifyOtpLogin";
 import { Spinner } from "reactstrap";
-
+import {useHistory} from 'react-router-dom';
+import Cookies from "js-cookie"
 
 const Schema = yup.object().shape({
-  p_email: yup.string().email("invalid email").required(""),
+  p_email: yup.string().email("invalid email").required("required email"),
   password: yup
     .string()
-    .required("")
-    // .min(5, "at least 5 digits")
-    // .max(20, "max 20 digits"),
+    .required("required password")
+    .min(5, "at least 5 digits")
+    .max(20, "max 20 digits"),
 });
-
 
 function Login(props) {
   const alert = useAlert();
-
+  let history = useHistory()
   const { handleSubmit, register, reset, errors } = useForm({
     resolver: yupResolver(Schema),
   });
-
   const [email, setEmail] = useState(null);
   const [show, setShow] = useState(false);
   const [uid, setUid] = useState('')
   const [isPasswordShow, setPasswordShow] = useState(false);
   const [loading, setLoading] = useState(false);
-
+ 
   const togglePasssword = () => {
     setPasswordShow(!isPasswordShow)
   };
 
   const onSubmit = (value) => {
-    console.log("value :", value);
+    
     setLoading(true)
 
     let formData = new FormData();
     formData.append("userid", value.p_email);
-    formData.append("password", value.password);
-
-    axios({
-      method: "POST",
-      url: `${baseUrl}/admin/login`,
-      data: formData,
-    })
+      formData.append("password", value.password);
+  
+      axios({
+        method: "POST",
+        url: `${baseUrl}/admin/login`,
+        data: formData,
+      })
       .then(function (response) {
-        console.log("res-", response);
+        
         if (response.data.code === 1) {
           setLoading(false)
           setShow(true)
-          Alerts.SuccessNormal("As per your request, OTP has been sent to your registered email address.")
+          Cookies.set("adminName", response.data.display_name)
+          localStorage.setItem("role", response.data.role)
+          Swal.fire({
+            "title" : "success", 
+            "html" : "As per your request, OTP has been sent to your registered email address.",
+            "icon" : "success"
+          })
+          // Alerts.SuccessNormal("As per your request, OTP has been sent to your registered email address.")
           setUid(response.data["user id"])
+          logout()
         } else if (response.data.code === 0) {
           setLoading(false)
           Alerts.ErrorNormal("Invalid email or password.")
         }
+        else if (response.data.code === 2){
+          setLoading(false)
+          Alerts.ErrorNormal(response.data.result)
+        }
       })
       .catch((error) => {
-        console.log("erroror - ", error);
+      
       });
   };
-
+  const logout = () => {
+    setTimeout(() => {
+      localStorage.removeItem("adminkey");
+      localStorage.removeItem("adminEmail");
+      history.push("/admin/login");
+    }, 36000000)
+  }
   const handleChange = (e) => {
-    console.log("val-", e.target.value);
+  
     setEmail(e.target.value);
   };
-
-
+  if(window.location.origin === "http://masindia.live" && window.location.protocol == 'http:'){
+    window.location.href = window.location.href.replace('http:', 'https:')
+  }
+ 
+  
   return (
     <>
-      <Header admin="admin" />
-      <div class="container">
+      <Header admin="admin" noAdminSign = "adminSign"/>
+      <div className="container">
 
         {
           show ? <div>
@@ -91,15 +111,15 @@ function Login(props) {
               setLoading={setLoading} />
           </div>
             :
-            <div class="form">
-              <div class="heading">
+            <div className="form">
+              <div className="heading">
                 <h2>ADMIN LOGIN</h2>
               </div>
-              <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
+              <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="row">
                   <div className="col-md-12">
                     <div className="mb-3">
-                      <label className="form-label">Email<span className="declined">*</span></label>
+                      <label className="form-label">User Id<span className="declined">*</span></label>
                       <input
                         type="text"
                         className={classNames("form-control", {
@@ -129,6 +149,14 @@ function Login(props) {
                         name="password"
                         placeholder="Enter Password"
                         ref={register}
+                        onCopy={(e) => {
+                          e.preventDefault();
+                          return false
+                        }}
+                        onPaste={(e) => {
+                          e.preventDefault();
+                          return false
+                        }}
                       />
                       <i
                         className={`fa ${isPasswordShow ? "fa-eye-slash" : "fa-eye"} password-icon`}
@@ -145,11 +173,11 @@ function Login(props) {
 
                 {
                   loading ?
-                    <div class="col-md-12">
+                    <div className="col-md-12">
                       <Spinner color="primary" />
                     </div>
                     :
-                    <button type="submit" className="btn btn-primary">
+                    <button type="submit" className="customBtn">
                       Submit
                     </button>
                 }
@@ -172,9 +200,8 @@ function Login(props) {
 
 
       </div>
-      <Footer />
+    
     </>
   );
 }
-
 export default Login;

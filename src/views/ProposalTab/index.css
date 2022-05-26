@@ -11,9 +11,32 @@
 .table-responsive{
   display: block;
   height: 65vh;
+  overflow-x : hidden;
 }
 
-
+.tableFixHead          { overflow: auto; }
+.proposalQueryCusttableFixHead thead th {
+  position: sticky;
+   
+   top: 0;
+    z-index: 1;
+     border: 0px; 
+     background-color:rgb(61, 71, 117) !important;
+      color : #ffffff !important;}
+.rightAli {
+  display:  flex;
+  justify-content:  flex-end;
+  border:  0px;
+}
+.tabHover{
+  transition: all .9s;
+}
+.tabHover:hover{
+ text-decoration: underline;
+  color:#0071CE;
+ 
+  cursor: pointer;
+}
 /* 
 
 .tableFixHead          { overflow-y: auto; height: 100px; }

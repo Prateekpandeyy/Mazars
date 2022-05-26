@@ -12,10 +12,9 @@ import {
   Table,
 } from "reactstrap";
 import BootstrapTable from "react-bootstrap-table-next";
-// import FeedbackService from "../../../config/services/QueryDetails";
-import CommonServices from "../../../common/common";
 import { useAlert } from "react-alert";
 import { useHistory } from "react-router";
+import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
 
 function FeedbackTab() {
   const alert = useAlert();
@@ -26,10 +25,15 @@ function FeedbackTab() {
   useEffect(() => {
     getFeedback();
   }, [userid]);
-
+  const token = window.localStorage.getItem("adminToken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
   const getFeedback = () => {
-    axios.get(`${baseUrl}/customers/getFeedback`).then((res) => {
-      console.log(res);
+    axios.get(`${baseUrl}/admin/getFeedback`, myConfig).then((res) => {
+     
       if (res.data.code === 1) {
         setFeedBackData(res.data.result);
        if(res.data.result != undefined){
@@ -69,7 +73,7 @@ function FeedbackTab() {
         return { fontSize: "12px", width: "40px" };
       },
       formatter: function nameFormatter(cell, row) {
-        console.log(row);
+        
         return <>{row.assign_no}</>;
       },
     },
@@ -81,7 +85,7 @@ function FeedbackTab() {
         return { fontSize: "12px", width: "150px" };
       },
       formatter: function nameFormatter(cell, row) {
-        console.log(row);
+        
         return (
           <>
             <div>
@@ -89,22 +93,22 @@ function FeedbackTab() {
                 row.admin_read == "0" ?
                   <div
                     style={{
-                      cursor: "pointer",
+                      cursor: "pointer", wordBreak : "break-word",
                       display: "flex", justifyContent: "space-between"
                     }}
                    
                     title="unread"
                   >
                     <p  onClick={() => readNotification(row.id)}>{row.feedback}  - By {row.name}</p>
-                    <i class="fa fa-bullseye" style={{ color: "red" }}></i>
+                    <i className="fa fa-bullseye" style={{ color: "red" }}></i>
                   </div>
                   :
                   <div
-                    style={{ cursor: "pointer", display: "flex", justifyContent: "space-between" }}
+                    style={{ cursor: "pointer", wordBreak : "break-word",  display: "flex", justifyContent: "space-between" }}
                     title="read"
                   >
                     <p>{row.feedback}  - By {row.name}</p>
-                    <i class="fa fa-bullseye" style={{ color: "green" }}></i>
+                    <i className="fa fa-bullseye" style={{ color: "green" }}></i>
                   </div>
               }
             </div>
@@ -118,18 +122,21 @@ function FeedbackTab() {
   // readnotification
   const readNotification = (id) => {
 
-    console.log("call", id)
+  
     let formData = new FormData();
     formData.append("id", id);
     formData.append("type", "admin");
 
     axios({
       method: "POST",
-      url: `${baseUrl}/customers/markReadFeedback`,
+      url: `${baseUrl}/admin/markReadFeedback`, 
+      headers : {
+        uit : token
+      },
       data: formData,
     })
       .then(function (response) {
-        console.log("res-", response)
+      
         if (response.data.code === 1) {
        
           getFeedback();
@@ -138,7 +145,7 @@ function FeedbackTab() {
     
       })
       .catch((error) => {
-        console.log("erroror - ", error);
+      
       });
   };
 
@@ -155,13 +162,12 @@ function FeedbackTab() {
             </Row>
           </CardHeader>
           <CardBody>
-            <BootstrapTable
-              bootstrap4
-              keyField="id"
-              data={feedbackData}
-              columns={columns}
-              rowIndex
-            />
+          <DataTablepopulated 
+       bgColor="#081f8f"
+       keyField= {"assign_no"}
+       data={feedbackData}
+       columns={columns}>
+        </DataTablepopulated>
           </CardBody>
         </Card>
       </Layout>

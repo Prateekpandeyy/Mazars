@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Layout from "../../../components/Layout/Layout";
-import ModalVideo from "react-modal-video";
+import RecordingEdit from './RecordingEdit';
 import CloseIcon from '@material-ui/icons/Close';
 import ReactPlayer from "react-player";
 import {
@@ -9,16 +9,17 @@ import {
     CardBody,
     CardTitle,
     Row,
-    Col,
-    Table,
-    Button,
+    Col
 } from "reactstrap";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import BootstrapTable from "react-bootstrap-table-next";
 import "react-modal-video/scss/modal-video.scss";
 import RecordingFilter from "../../../components/Search-Filter/RecordingFilter";
-// import '../../../../node_modules/react-modal-video/scss/modal-video.scss';
+import {Link} from 'react-router-dom';
+import './recording.css';
+import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
+
 
 
 
@@ -28,6 +29,13 @@ function Recording() {
     const [isOpen, setIsOpen] = useState(false);
     const [videoid, setVideoId] = useState(null);
     const [records, setRecords] = useState([]);
+    const [showEditModal, setShowEditModal] = useState(false)
+    const [editData, setEditData] = useState({
+        participant : '',
+        editMessage : '',
+        assignid : '',
+        id : ''
+    })
     const openModal = (videoContent) => {
         setIsOpen(true);
         setVideoId(videoContent);
@@ -41,11 +49,17 @@ const videoIcon = {
     justifyContent : "space-around", 
     alignItems : "center"
 }
+const token = window.localStorage.getItem("tlToken")
+const myConfig = {
+    headers : {
+     "uit" : token
+    }
+  }
     const getRecording = () => {
         axios
-            .get(`${baseUrl}/tl/callRecordingPostlist?uid=${JSON.parse(userid)}`)
+            .get(`${baseUrl}/tl/callRecordingPostlist?uid=${JSON.parse(userid)}`, myConfig)
             .then((res) => {
-                console.log(res);
+             
                 if (res.data.code === 1) {
                     setFeedBackData(res.data.result);
                     setRecords(res.data.result.length)
@@ -54,24 +68,37 @@ const videoIcon = {
     };
     const modalBox = {
         display : "flex",
-        position : "absolute",
-        top : "10%",
-        left : "0%",
-        botttom: "0%", 
-        right: "0%",
-       
+        position : "fixed",
+        top: "50%",
+        left : "50%",
+        transform : "translate(-50%, -50%)",
+      justifyContent : "center",
+      alignItems : "center",
         width : "100%", 
-        height: "auto"
+        height: "auto",
+        flexDirection : "column"
     }
 const canBtn = {
-    position: "absolute",
-    top: "0",
-    right: "10px",
-    left: "90%",
+   
+    display : "flex",
+    width : "50vw",
+    alignItems : "flex-end",
+    justifyContent : "flex-end",
     padding: "20px",
-    cursor : "pointer",
+    cursor : "pointer", 
     color : "red"
 }
+const editRecording = (participants, assign_id, message, id) => {
+   
+    setShowEditModal(!showEditModal)
+    setEditData({
+        participant : participants,
+        editMessage : message,
+        assignid : assign_id,
+        id : id
+    })
+}
+
     const columns = [
         {
             text: "S.No",
@@ -93,10 +120,22 @@ const canBtn = {
         },
         {
             text: "Query No",
-            dataField: "assign_id",
+            dataField: "",
             headerStyle: () => {
                 return { fontSize: "12px", width: "20px" };
             },
+            formatter : function formatter(cell, row){
+                let a = row.assign_id.split("-")[row.assign_id.split("-").length - 1]
+                return <>
+                <Link
+                to = {{
+                    pathname : `/teamleader/queries/${a}`,
+                    routes : "recording"
+                }}>
+                {row.assign_id}
+                </Link>
+                </>
+            }
         },
         
         {
@@ -105,6 +144,14 @@ const canBtn = {
             headerStyle: () => {
                 return { fontSize: "12px", width: "40px" };
             },
+            formatter : function formatterName(cell, row) {
+                
+                 return(
+                     <p>
+                         {row.participants}
+                     </p>
+                 )
+            }
         },
         
         {
@@ -113,6 +160,7 @@ const canBtn = {
             headerStyle: () => {
                 return { fontSize: "12px", width: "80px" };
             },
+           
         },
         {
             text: "Action",
@@ -126,13 +174,27 @@ const canBtn = {
                 let a = 1;
                 return (
                     <>
+                    <div>
+                    {row.record_by === JSON.parse(userid) && row.message === null ?
+                             <i
+                             className="fa fa-edit"
+                             style={{
+                               fontSize: 18,
+                               cursor: "pointer",
+                               marginLeft: "8px",
+                             }}
+                             onClick = {() => editRecording(row.participants, row.assign_id, row.message, row.id)}
+                           ></i> : ""}
+                    </div>
                         <div>
                             {
                                 recording.map((record) => {
                                    return(
-                                <>
+<>
                                 <p style={videoIcon}>
-                                <span>{a++}</span>   <i
+                               {record.length === 0 ? "" : 
+                               <>
+                                 <span>{a++}</span>   <i
                                     className="material-icons"
                                     style={{
                                         cursor: "pointer",
@@ -144,6 +206,9 @@ const canBtn = {
                                     play_circle_outline
                                  
                                 </i>
+                              
+                               </>}
+                              
                                 </p>
                                 </>
                                    )
@@ -159,66 +224,79 @@ const canBtn = {
 
 
 
-    console.log("videourl", videoid)
 
     return (
         <>
         <Layout TLDashboard="TLDashboard" TLuserId={userid}>
-            <div style={{position:"relative", height : "100vh", overflow : "scroll"}}>
-                 <Card>
-                 <CardHeader>
-                     <Row>
-                         <Col md="7">
-                             <CardTitle tag="h4">Recording of Discussion</CardTitle>
-                         </Col>
-                         <Col md="5"></Col>
-                     </Row>
-                 </CardHeader>
-                 <CardBody>
-                 <RecordingFilter
-                        setData={setFeedBackData}
-                     //    getData={getInCompleteAssingment}
-                        SearchQuery="SearchQuery"
-                       setRecords={setRecords}
-                        records={records} 
-                        userid = {userid}
-                        getRecording = {getRecording}
-                     /> 
-                     <BootstrapTable
-                         bootstrap4
-                         keyField="id"
-                         data={feedbackData}
-                         columns={columns}
-                         rowIndex
-                     />
-                 </CardBody>
- 
-             </Card>
-           
-            </div>
-             
-            {isOpen === true ?
-           
-                  
-                  <div style={modalBox}>
-                  <span style={canBtn} onClick= {() => setIsOpen(false)}> <CloseIcon color="red" /> </span>
+        <div style={{position:"relative", height : "100vh", overflow : "scroll"}}>
+                <Card>
+                <CardHeader>
+                    <Row>
+                        <Col md="7">
+                            <CardTitle tag="h4">Recording of Discussion</CardTitle>
+                        </Col>
+                        <Col md="5"></Col>
+                    </Row>
+                </CardHeader>
+                <CardBody>
+                <RecordingFilter
+                       setData={setFeedBackData}
+                    //    getData={getInCompleteAssingment}
+                       SearchQuery="SearchQuery"
+                      setRecords={setRecords}
+                       records={records} 
+                       userid = {userid}
+                       getRecording = {getRecording}
+                    /> 
+                    <DataTablepopulated 
+                   bgColor="#42566a"
+                   keyField= {"assign_no"}
+                   data={feedbackData}
+                   columns={columns}>
+                    </DataTablepopulated>
+                </CardBody>
+
+            </Card>
+          
+           </div>
+            
+          
+          <RecordingEdit 
+          isOpen = {showEditModal}
+          recordingHandler = {editRecording}
+          participants = {editData.participant}
+          message = {editData.editMessage}
+          assignid = {editData.assignid}
+          editId = {editData.id}
+          recList = {getRecording}/>
+                    {isOpen === true ?
+          
                  
-        
-           <div style={{margin: "50px 0 0 0"}}>
-           <ReactPlayer
-             url={videoid}
-             controls={true}
-             playing={true}
-             width='100%'
-             height='100%'
-            />
-               </div>
-             
-            </div>
-          : ""}
-          </Layout>
-            </>
- 
-     );
- }
- export default Recording;
+          <div className="modalBox">
+          <div className="boxContainer">
+          <div className="canBtn"  title="cancel">
+              <h4>Recording Player</h4>
+              <CloseIcon  onClick= {() => setIsOpen(false)} id="myBtn"/> </div>
+         
+
+         <div className="my2">
+         <ReactPlayer
+           url={videoid}
+           controls={true}
+           playing={true}
+           width='100%'
+           height='100%'
+          />
+             </div>
+          </div>
+     
+    </div>
+  : ""}
+         </Layout>
+
+           </>
+
+    );
+}
+
+export default Recording;

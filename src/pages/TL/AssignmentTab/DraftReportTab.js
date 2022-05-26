@@ -10,12 +10,15 @@ import { Link, useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import "antd/dist/antd.css";
 import { Select } from "antd";
-import BootstrapTable from "react-bootstrap-table-next";
+
 import DiscardReport from "../AssignmentTab/DiscardReport";
 import DraftReportModal from "./DraftReportUpload";
 import DescriptionOutlinedIcon from '@material-ui/icons/DescriptionOutlined';
 import ViewAllReportModal from "./ViewAllReport";
 import moment from "moment";
+import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
+import MessageIcon, { ViewDiscussionIcon, DraftReportUploadIcon} from "../../../components/Common/MessageIcon";
+
 function AssignmentTab() {
 
     const history = useHistory();
@@ -26,17 +29,15 @@ function AssignmentTab() {
     const [count, setCount] = useState("");
     const [assignment, setAssignment] = useState([]);
     const [id, setId] = useState("");
-    const [finalId, setFinalId] = useState("");
-
+    const [loading, setLoading] = useState(false)
     const [records, setRecords] = useState([]);
     const [selectedData, setSelectedData] = useState([]);
     const [status, setStatus] = useState([]);
     const [tax2, setTax2] = useState([]);
     const [store2, setStore2] = useState([]);
-    const [hide, setHide] = useState();
-
+   
     var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
-    console.log("current_date :", current_date);
+   
     const [item] = useState(current_date);
     const [assignNo, setAssignNo] = useState('');
     const [ViewDiscussion, setViewDiscussion] = useState(false);
@@ -44,11 +45,32 @@ function AssignmentTab() {
     const [dataItem, setDataItem] = useState({});
     const [report, setReport] = useState();
     const [reportModal, setReportModal] = useState(false);
+    const token = window.localStorage.getItem("tlToken")
+    const myConfig = {
+        headers : {
+         "uit" : token
+        }
+      }
     var rowStyle2 = {}
+    var clcomp= {
+      color: "green"
+    }
+    var clinpro = {
+      color : "blue"
+    }
+    let des = false;
     const uploadDraftReport = (id) => {
-      console.log(id);
-      setDraftModal(!draftModal);
-      setId(id);
+    
+        if(typeof(id) == "object"){
+      
+            let des = true;
+            setLoading(false)
+            setDraftModal(!draftModal);
+          }
+          else{
+            setDraftModal(!draftModal);
+            setId(id);
+          }
     };
     const ViewDiscussionToggel = (key) => {
         setViewDiscussion(!ViewDiscussion);
@@ -60,9 +82,9 @@ function AssignmentTab() {
 
     const getAssignmentList = () => {
         axios
-            .get(`${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(userid)}&assignment_status=Draft_Report&stages_status=1`)
+            .get(`${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(userid)}&assignment_status=Draft_Report&stages_status=1`, myConfig)
             .then((res) => {
-                console.log(res);
+                
                 if (res.data.code === 1) {
                     setAssignment(res.data.result);
                     setCount(res.data.result.length);
@@ -76,9 +98,9 @@ function AssignmentTab() {
         const getSubCategory = () => {
             if(selectedData != undefined){
                 axios
-                .get(`${baseUrl}/customers/getCategory?pid=${selectedData}`)
+                .get(`${baseUrl}/tl/getCategory?pid=${selectedData}`, myConfig)
                 .then((res) => {
-                    console.log(res);
+                    
                     if (res.data.code === 1) {
                         setTax2(res.data.result);
                     }
@@ -90,20 +112,20 @@ function AssignmentTab() {
 
     //handleCategory
     const handleCategory = (value) => {
-        console.log(`selected ${value}`);
+        
         setSelectedData(value);
         setStore2([]);
     };
 
     //handleSubCategory
     const handleSubCategory = (value) => {
-        console.log(`selected ${value}`);
+        
         setStore2(value);
     };
 
     //reset category
     const resetCategory = () => {
-        console.log("resetCategory ..");
+
         setSelectedData([]);
         setStore2([]);
         getAssignmentList();
@@ -111,7 +133,7 @@ function AssignmentTab() {
 
     //reset date
     const resetData = () => {
-        console.log("resetData ..");
+       
         reset();
         setStatus([]);
         setSelectedData([]);
@@ -120,10 +142,7 @@ function AssignmentTab() {
     };
 
     //assingmentStatus
-    const assingmentStatus = (value) => {
-        console.log(`selected ${value}`);
-        setStatus(value);
-    };
+  
 // view report 
 const ViewReport = (key) => {
    
@@ -159,19 +178,18 @@ rowStyle2 = (row, index) => {
             formatter: (cellContent, row, rowIndex) => {
                 return rowIndex + 1;
             },
+        
             headerStyle: () => {
-                return { fontSize: "12px", width: "50px" };
+                return {  width: "50px" };
             },
         },
         {
-            text: "Date",
+            text: "Query Date",
             dataField: "date_of_query",
             sort: true,
-            headerStyle: () => {
-                return { fontSize: "12px" };
-            },
+          
             formatter: function dateFormat(cell, row) {
-                console.log("dt", row.date_of_query);
+            
                 var oldDate = row.date_of_query;
                 if (oldDate == null) {
                     return null;
@@ -182,16 +200,15 @@ rowStyle2 = (row, index) => {
         {
             text: "Query No",
             dataField: "assign_no",
-            headerStyle: () => {
-                return { fontSize: "12px" };
-            },
+           
             formatter: function nameFormatter(cell, row) {
-                console.log(row);
+
                 return (
                     <>
                         <Link
                             to={{
                                 pathname: `/teamleader/queries/${row.q_id}`,
+                                index : 1,
                                 routes: "assignment",
                             }}
                         >
@@ -205,65 +222,73 @@ rowStyle2 = (row, index) => {
             text: "Category",
             dataField: "parent_id",
             sort: true,
-            headerStyle: () => {
-                return { fontSize: "12px" };
-            },
+            
         },
         {
             text: "Sub Category",
             dataField: "cat_name",
             sort: true,
-            headerStyle: () => {
-                return { fontSize: "12px" };
-            },
+           
         },
         {
-            dataField: "status",
-            text: "Status",
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "12px", width: "200px" };
-            },
-            formatter: function (cell, row) {
-                return (
-                    <>
-                        <div>
-                            <p>
-                                <span style={{ fontWeight: "bold" }}>Client Discussion :</span>
-                                {row.client_discussion}
-                            </p>
-                            <p>
-                                <span style={{ fontWeight: "bold" }}>Draft report :</span>
-                                {row.draft_report}
-                            </p>
-                            <p>
-                                <span style={{ fontWeight: "bold" }}>Final Discussion :</span>
-                                {row.final_discussion}
-                            </p>
-                            <p>
-                                <span style={{ fontWeight: "bold" }}>Delivery of Final Report :</span>
-                                {row.delivery_report}
-                            </p>
-                            <p>
-                                <span style={{ fontWeight: "bold" }}>Complete :</span>
+          dataField: "status",
+          text: "Status",
+         
+          headerStyle: () => {
+            return { fontSize: "11px", width: "200px" };
+          },
+    
+          formatter: function (cell, row) {
+            return (
+              <>
+                <div>
+                {row.paid_status == "2" &&
+                    <p>
+                      <span className="declined">Payment Declined</span>
+                    </p>
+                  }
+                  <p>
+                    <span style={{ fontWeight: "bold" }}>Client Discussion :</span>
+                   <span className={row.client_discussion === "completed" ? "completed" : "inprogress"}>
+                                    {row.client_discussion}
+                     </span>
+                  </p>
+                  <p>
+                    <span style={{ fontWeight: "bold" }}>Draft report :</span>
+                    <span className={row.draft_report === "completed" ? "completed" : "inprogress"}>
+                          {row.draft_report}
+                     </span>
+                  </p>
+                  <p>
+                    <span style={{ fontWeight: "bold" }}>Final Discussion :</span>
+                    <span className={row.final_discussion === "completed" ? "completed" : "inprogress"}>
+                         {row.final_discussion}
+                     </span>
+                  </p>
+                  <p>
+                    <span style={{ fontWeight: "bold" }}>Delivery of Final Report :</span>
+                    <span className={row.delivery_report === "completed" ? "completed" : "inprogress"}>
+                                 {row.delivery_report}
+                     </span>
+                  </p>
+                  <p>
+                    <span style={{ fontWeight: "bold" }}>Awaiting Completion:</span>
+                    <span className={row.other_stage === "completed" ? "completed" : "inprogress"}>
                                 {row.other_stage}
-                            </p>
-                        </div>
-                    </>
-                );
-            },
+                     </span>
+                  </p>
+                </div>
+              </>
+            );
+          },
         },
         {
             text: "Expected date of delivery",
             dataField: "Exp_Delivery_Date",
             sort: true,
-            headerStyle: () => {
-                return { fontSize: "12px" };
-            },
+          
             formatter: function dateFormat(cell, row) {
-                console.log("dt", row.Exp_Delivery_Date);
+             
                 var oldDate = row.Exp_Delivery_Date;
                 if (oldDate == null) {
                     return null;
@@ -275,11 +300,9 @@ rowStyle2 = (row, index) => {
             text: "Actual date of delivery",
             dataField: "final_date",
             sort: true,
-            headerStyle: () => {
-                return { fontSize: "12px" };
-            },
+          
             formatter: function dateFormat(cell, row) {
-                console.log("dt", row.final_date);
+           
                 var oldDate = row.final_date;
                 if (oldDate == null || oldDate == "0000-00-00 00:00:00") {
                     return null;
@@ -291,10 +314,7 @@ rowStyle2 = (row, index) => {
             text: "Deliverable",
             dataField: "",
             sort: true,
-            headerStyle: () => {
-              return { fontSize: "12px" };
-            },
-            formatter: function (cell, row) {
+             formatter: function (cell, row) {
               return (
                 <>
                   {
@@ -302,7 +322,7 @@ rowStyle2 = (row, index) => {
                       <div>
                         {row.assignement_draft_report || row.final_report ?
                           <div title="View All Report"
-                            style={{ cursor: "pointer" }}
+                            style={{ cursor: "pointer",  textAlign : "center" }}
                             onClick={() => ViewReport(row)}
                           >
                             <DescriptionOutlinedIcon color="secondary" />
@@ -318,9 +338,7 @@ rowStyle2 = (row, index) => {
           },
         {
             text: "Assignment Stage",
-            headerStyle: () => {
-              return { fontSize: "12px" };
-            },
+           
             formatter: function (cell, row) {
               return (
                 <>
@@ -337,66 +355,18 @@ rowStyle2 = (row, index) => {
               );
             },
           },
-        {
+          {
             text: "Action",
-            headerStyle: () => {
-              return { fontSize: "12px", width: "90px" };
-            },
+            
             formatter: function (cell, row) {
               return (
                 <>
-               {
-                 row.paid_status == "2" ? 
-                "" : 
-                 <div
-                 style={{
-                   display: "flex",
-                   justifyContent: "space-between",
-                 }}
-               >
-                 
-                 
-                    {
-                    row.client_discussion == "completed" && row.draft_report == "inprogress" && row.paid_status !=2 ?
-                    <div title="upload Pdf">
-                    <p
-                      style={{ cursor: "pointer", color: "green" }}
-                      onClick={() => uploadDraftReport(row.id)}
-                    >
-                      <i class="fa fa-upload" style={{ fontSize: "16px" }}></i>
-                      draft
-                    </p>
-                  </div> : null
-                 }
-                  {
-                    row.client_discussion == "completed" && row.draft_report == "completed" && row.final_discussion == "inprogress" ?
-                    <div title="upload Pdf">
-                    <p
-                      style={{ cursor: "pointer", color: "green" }}
-                      onClick={() => uploadDraftReport(row.id)}
-                    >
-                      <i class="fa fa-upload" style={{ fontSize: "16px" }}></i>
-                      draft
-                    </p>
-                  </div> : null
-                 }
-                
-      
-                 <div title="View Discussion Message">
-                   <i
-                     class="fa fa-comments-o"
-                     style={{
-                       fontSize: 16,
-                       cursor: "pointer",
-                       color: "orange"
-                     }}
-                     onClick={() => ViewDiscussionToggel(row.assign_no)}
-                   ></i>
-                 </div>
-                 <div title="Send Message">
-                   <Link
-                     to={{
-                       pathname: `/teamleader/chatting/${row.q_id}`,
+              <div style={{display: "flex"}}>
+              <Link
+                  to={{
+                    pathname: `/teamleader/chatting/${row.q_id}`,
+                    index : 1,
+                    routes: "assignment",
                        obj: {
                          message_type: "3",
                          query_No: row.assign_no,
@@ -405,40 +375,56 @@ rowStyle2 = (row, index) => {
                        }
                      }}
                    >
-                     <i
-                       class="fa fa-comments-o"
-                       style={{
-                         fontSize: 16,
-                         cursor: "pointer",
-                         marginLeft: "8px",
-                         color: "blue"
-                       }}
-                     ></i>
+                    <MessageIcon />
                    </Link>
-                 </div>
+                   <div  onClick={() => ViewDiscussionToggel(row.assign_no)} className="ml-1">
+                                        
+                                        <ViewDiscussionIcon />
+                                </div>
+               {
+                 row.paid_status == "2" ? 
+                null : 
+                 <>
+                 
+                  {
+                    row.client_discussion == "completed" && row.draft_report == "inprogress" && row.final_discussion == "inprogress" &&  row.paid_status !=2  ?
+                   
+                    <p
+                      style={{ display: "flex", flexDirection: "column" , cursor: "pointer", color: "green" }}
+                      onClick={() => uploadDraftReport(row.id)}
+                    >
+                     <DraftReportUploadIcon />
+                      draft
+                    </p>
+                   : null
+                 }
+    
+                
       
-               </div>
+                
+                
+               </>
                }
-                </>
+       
+              </div>
+                
+                         </>
               );
             },
           },
-    ];
-
-
+        ];
     const onSubmit = (data) => {
-        console.log("data :", data);
-        console.log("selectedData :", selectedData);
+      
         axios
             .get(
                 `${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(
                     userid
                 )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
                 }&assignment_status="Draft_Report"&stages_status=1
-               &pcat_id=${selectedData}`
+               &pcat_id=${selectedData}`, myConfig
             )
             .then((res) => {
-                console.log(res);
+                
                 if (res.data.code === 1) {
                     if (res.data.result) {
                         setAssignment(res.data.result);
@@ -455,7 +441,7 @@ rowStyle2 = (row, index) => {
             <>
                 <button
                     type="submit"
-                    class="btn btn-primary mx-sm-1 mb-2"
+                    class="customBtn mx-sm-1 mb-2"
                     onClick={() => resetData()}
                 >
                     Reset
@@ -498,17 +484,22 @@ rowStyle2 = (row, index) => {
                                     value={store2}
                                     allowClear
                                 >
-                                    {tax2.map((p, index) => (
+{
+  tax2.length > 0 ?
+  <>
+                                      {tax2.map((p, index) => (
                                         <Option value={p.id} key={index}>
                                             {p.details}
                                         </Option>
                                     ))}
+  </> : ""
+}
                                 </Select>
                             </div>
                             <div>
                                 <button
                                     type="submit"
-                                    class="btn btn-primary mb-2 ml-3"
+                                    class="btnSearch mb-2 ml-3"
                                     onClick={resetCategory}
                                 >
                                     X
@@ -549,7 +540,7 @@ rowStyle2 = (row, index) => {
                             <div class="form-group mx-sm-1  mb-2">
                                 <label className="form-select form-control">Total Records : {records}</label>
                             </div>
-                            <button type="submit" class="btn btn-primary mx-sm-1 mb-2">
+                            <button type="submit" class="customBtn mx-sm-1 mb-2">
                                 Search
                             </button>
 
@@ -559,25 +550,28 @@ rowStyle2 = (row, index) => {
                 </CardHeader>
 
                 <CardBody>
-                    <BootstrapTable
-                        bootstrap4
-                        keyField="id"
-                        data={assignment}
-                        columns={columns}
-                        rowStyle={ rowStyle2 }
-                        rowIndex
-                    />
+                <DataTablepopulated 
+  bgColor ="#7c887c"
+                   keyField= {"assign_no"}
+                   data={assignment}
+                   rowStyle2 = {rowStyle2}
+                   columns={columns}>
+                    </DataTablepopulated>
   <DraftReportModal
             draftModal={draftModal}
             uploadDraftReport={uploadDraftReport}
             getAssignmentList={getAssignmentList}
             id={id}
+            loading = {loading}
+            setLoading = {setLoading}
+            des = {des}
           />
  <ViewAllReportModal
             ViewReport={ViewReport}
             reportModal={reportModal}
             report={report}
             dataItem={dataItem}
+            headColor ="#7c887c"
           />
 
                     <DiscardReport
@@ -585,6 +579,7 @@ rowStyle2 = (row, index) => {
                         ViewDiscussion={ViewDiscussion}
                         report={assignNo}
                         getData={getAssignmentList}
+                        headColor ="#7c887c"
                     />
                 </CardBody>
             </Card>

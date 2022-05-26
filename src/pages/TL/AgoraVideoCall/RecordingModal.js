@@ -3,25 +3,25 @@ import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from "reactstrap";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
-import CommonServices from "../../../common/common";
-import Alerts from "../../../common/Alerts";
 import { useHistory } from "react-router";
-
+import Swal from "sweetalert2";
 function RecordingModal({
     isOpen,
     toggle,
     data,
     item, 
-    allrecording
+    allrecording,
+    schId,
+    uid,
+    ownerId
 }) {
     const history = useHistory();
     const { handleSubmit, register, errors } = useForm();
     const userId = window.localStorage.getItem("tlkey");
 
-    console.log("item", item)
-
+    
     const { assign_no, id, username, start } = item
-    console.log("assign_no", assign_no)
+   
 
 
     //submit
@@ -40,7 +40,7 @@ else{
     completeRecording = serverResponse;
 }
         const { fileList } = serverResponse
-        console.log("fileList +++ ", fileList);
+        
 
         let formData = new FormData();
         formData.append("uid", JSON.parse(userId));
@@ -51,36 +51,28 @@ else{
         formData.append("participants", username);
         formData.append("schedule_id", id);
 
-
+        axios.get(`${baseUrl}/tl/freeslottime?schedule_id=${id}&&uid=${JSON.parse(userId)}`)
         axios({
             method: "POST",
             url: `${baseUrl}/tl/callRecordingPost`,
             data: formData,
         })
             .then(function (response) {
-                console.log("res-", response);
-                if (response.data.code === 1) {
+                        if (response.data.code === 1) {
                     toggle()
-                    history.push('/teamleader/schedule');
-                    // reset();
-                    // setLoading(false)
-                    // var variable = "Message sent successfully."
-                    // Alerts.SuccessNormal(variable)
-                    // props.history.push(routes);
-                  
+                history.push("/teamleader/schedule")
                 }
                
             })
             .catch((error) => {
-                console.log("erroror - ", error);
-            });
+                       });
     };
-
+  
     return (
         <div>
-            <Modal isOpen={isOpen} toggle={toggle} size="md">
-                <ModalHeader toggle={toggle}>
-                    Form
+            <Modal isOpen={isOpen} size="md">
+                <ModalHeader >
+                Minutes of meeting
                 </ModalHeader>
                 <ModalBody>
                     <form onSubmit={handleSubmit(onSubmit)}>
@@ -140,7 +132,8 @@ else{
                                         name="p_message"
                                     ></textarea>
                                 </div>
-                                <button type="submit" className="btn btn-primary">
+                                {/* <button type="button" className="btn btn-danger" onClick={() => exitBtn2()}>Cancel </button> */}
+                                <button type="submit" className="btn btn-primary mx-2">
                                     Submit
                                 </button>
                             </div>

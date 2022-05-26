@@ -3,11 +3,12 @@ import { merge } from "lodash";
 import AgoraRTC from "agora-rtc-sdk";
 import RecordVoiceOverIcon from '@material-ui/icons/RecordVoiceOver';
 import axios from "axios";
-
 import "./canvas.css";
 import "../../assets/fonts/css/icons.css";
-
-
+import Cookies from "js-cookie";
+import {baseUrl} from "../../config/config";
+import Swal from "sweetalert2";
+import CommonServices from "../../common/common";
 var customer_id = "d339577a294c458c86d8a78b474141fc";
 var customer_secret = "1a61a4bef2144e78be6f671d5cf3fc32";
 
@@ -17,10 +18,10 @@ const tile_canvas = {
   "2": ["span 12/span 12/13/25", "span 12/span 12/13/13"],
   "3": ["span 6/span 12", "span 6/span 12", "span 6/span 12/7/19"],
   "4": [
-    "span 6/span 12",
-    "span 6/span 12",
-    "span 6/span 12",
-    "span 6/span 12/7/13",
+    "span 3/span 4/13/11",
+    "span 3/span 4/13/15",
+    "span 3/span 4/13/19",
+    "span 9/span 16/10/21",
   ],
   "5": [
     "span 3/span 4/13/9",
@@ -46,8 +47,36 @@ const tile_canvas = {
     "span 3/span 4/13/25",
     "span 9/span 16/10/21",
   ],
+  "8": [
+    "span 3/span 4/13/3",
+    "span 3/span 4/13/7",
+    "span 3/span 4/13/11",
+    "span 3/span 4/13/15",
+    "span 3/span 4/13/19",
+    "span 3/span 4/13/23",
+    "span 3/span 4/13/27",
+    "span 9/span 16/10/21",
+  ],
+  "9": [
+    "span 3/span 4/13/1",
+    "span 3/span 4/13/5",
+    "span 3/span 4/13/9",
+    "span 3/span 4/13/13",
+    "span 3/span 4/13/17",
+    "span 3/span 4/13/21",
+    "span 3/span 4/13/25",
+    "span 3/span 4/13/29",
+    "span 9/span 16/10/21",
+  ],
+  
+  
 };
-
+const token = window.localStorage.getItem("clientToken")
+const myConfig = {
+    headers : {
+     "uit" : token
+    }
+  }
 /**
  * @prop appId uid
  * @prop transcode attendeeMode videoProfile channel baseMode
@@ -57,7 +86,9 @@ const tile_canvas = {
 class AgoraCanvas extends React.Component {
   constructor(props) {
     super(props);
+    this.customerName = Cookies.get("custName")
     this.client = {};
+    this.screenTrack = {}
     this.localStream = {};
     this.shareClient = {};
     this.shareStream = {};
@@ -66,43 +97,94 @@ class AgoraCanvas extends React.Component {
       streamList: [],
       readyState: false,
       stateSharing: false,
+      addRemote : null,
+      atCustId: '',
+      disabledVedio : false,
+      vedTrack : null,
+      shareValue : false,
     };
   }
-
-  componentWillMount() {
-    let $ = this.props;
-    // init AgoraRTC local client
-    this.client = AgoraRTC.createClient({ mode: $.transcode });
-    this.client.init($.appId, () => {
-      console.log("AgoraRTC client initialized");
-      this.subscribeStreamEvents();
-
-      this.client.join($.appId, $.channel, $.uid, (uid) => {
-        this.state.uid = uid;
-        console.log("User " + uid + " join channel successfully");
-        console.log("At " + new Date().toLocaleTimeString());
-        // create local stream
-        // It is not recommended to setState in function addStream
-        this.localStream = this.streamInit(uid, $.attendeeMode, $.videoProfile);
-        this.localStream.init(
-          () => {
-            if ($.attendeeMode !== "audience") {
-              this.addStream(this.localStream, true);
-              this.client.publish(this.localStream, (err) => {
-                console.log("Publish local stream error: " + err);
-              });
-            }
-            this.setState({ readyState: true });
-          },
-          (err) => {
-            console.log("getUserMedia failed", err);
-            this.setState({ readyState: true });
-          }
-        );
-      });
-    });
+channelName = this.props.channel
+userId = window.localStorage.getItem("userid");
+custEmail2 = window.localStorage.getItem("custEmail");
+remoteShare2 = false
+componentWillMount() {
+  let $ = this.props;
+  // init AgoraRTC local client
+  this.client = AgoraRTC.createClient({ mode: $.transcode });
+  let show;
+AgoraRTC.getDevices(function(dev){
+  var cameras = dev.filter((e) => {
+    return e.kind === "videoinput"
+  })
+ 
+  if(cameras.length > 0){
+    show = true
   }
+  else{
+    show = false
+  }
+})
+  this.client.init($.appId, () => {
+   
+ 
+    this.client.join($.appId, $.channel, $.uid, (uid) => {
+     
+      var data_post_api = "https://virtualapi.multitvsolution.com/VstreamApi/index.php/api/vstream/userdata?channel_name="+this.channelName+"&rtm_id="+""+"&rtc_id="+uid+"&user_name="+this.customerName;
+ axios.get(`${data_post_api}`).
+ then((res) => {
+  
+ })
 
+ this.setState({getAdId : uid})
+ this.subscribeStreamEvents();
+ 
+ if(show === true){
+   this.localStream = this.streamInit(uid, $.attendeeMode, $.videoProfile)
+   this.localStream.init(
+       
+     () => {
+       if ($.attendeeMode !== "audience") {
+         this.addStream(this.localStream, true);
+         
+ 
+         this.client.publish(this.localStream, (err) => {
+          
+         });
+       }
+       this.setState({ readyState: true });
+     },
+     (err) => {
+     
+       this.setState({ readyState: true });
+     }
+   );
+ }
+ else if(show === false){
+ this.localStream = this.streamInit22(uid, $.attendeeMode, $.videoProfile);
+ this.localStream.init(
+       
+   () => {
+     if ($.attendeeMode !== "audience") {
+       this.addStream(this.localStream, true);
+       
+ 
+       this.client.publish(this.localStream, (err) => {
+        
+       });
+     }
+     this.setState({ readyState: true });
+   },
+   (err) => {
+   
+     this.setState({ readyState: true });
+   }
+ );
+ }
+       
+     });
+   });
+ }
   componentDidMount() {
     // add listener to control btn group
     let canvas = document.querySelector("#ag-canvas");
@@ -116,72 +198,162 @@ class AgoraCanvas extends React.Component {
         btnGroup.classList.remove("active");
       }, 2000);
     });
+    this.subscribeStreamEvents();
   }
-
-  // componentWillUnmount () {
-  //     // remove listener
-  //     let canvas = document.querySelector('#ag-canvas')
-  //     canvas.removeEventListener('mousemove')
-  // }
 
   componentDidUpdate() {
     // rerendering
+   
     let canvas = document.querySelector("#ag-canvas");
     // pip mode (can only use when less than 4 people in channel)
     if (this.state.displayMode === "pip") {
       let no = this.state.streamList.length;
+     
       if (no > 4) {
         this.setState({ displayMode: "tile" });
         return;
       }
       this.state.streamList.map((item, index) => {
+        let txtColor = "myPartName";
         let id = item.getId();
         let dom = document.querySelector("#ag-item-" + id);
+        
+        let dd;
         if (!dom) {
           dom = document.createElement("section");
           dom.setAttribute("id", "ag-item-" + id);
           dom.setAttribute("class", "ag-item");
           canvas.appendChild(dom);
-          item.play("ag-item-" + id);
+          var box22 = document.getElementById("ag-item-" + id)
+          dd = document.createElement("input")
+          dd.setAttribute("id", "name" + id)
+          dd.setAttribute("class", txtColor)
+        box22.appendChild(dd)
+        item.play("ag-item-" + id);
         }
+       
+         
+         
         if (index === no - 1) {
-          dom.setAttribute("style", `grid-area: span 12/span 24/13/25`);
-        } else {
-          dom.setAttribute(
-            "style",
-            `grid-area: span 3/span 4/${4 + 3 * index}/25;
-                    z-index:1;width:calc(100% - 20px);height:calc(100% - 20px)`
-          );
-        }
+          
+        
+            dom.setAttribute("style", `grid-area: span 12/span 24/13/25`);
+           
+          } else {
+            let f = false;
+            dom.setAttribute(
+              "style",
+              `grid-area: span 3/span 4/${4 + 3 * index}/25;
+                      z-index:1;width:calc(100% - 20px);height:calc(100% - 20px)`
+            );
+            dom.addEventListener('click', function (e){
+              if(f === false){
+                f = true
+                dom.setAttribute("style", `grid-area: span 14/span 24/13/25`);
+                let list;
+             
+                list = Array.from(
+                  document.querySelectorAll(`.ag-item:not(#ag-item-${id})`)
+                );
+                list.map((item) => {
+                  
+                    item.style.display = "none"
+                  }) 
+              }
+              else{
+                f = false
+                dom.setAttribute(
+                  "style",
+                  `grid-area: span 3/span 4/${4 + 3 * index}/25;
+                          z-index:1;width:calc(100% - 20px);height:calc(100% - 20px)`
+                );
+                let list;
+             
+                list = Array.from(
+                  document.querySelectorAll(`.ag-item:not(#ag-item-${id})`)
+                );
+                list.map((item) => {
+                  
+                    item.style.display = "block"
+                  }) 
+              }
+            })
+          }
+if(item.player === undefined){
 
+}
+       else{
         item.player.resize && item.player.resize();
+       }
       });
     }
     // tile mode
     else if (this.state.displayMode === "tile") {
+      let f = false;
       let no = this.state.streamList.length;
+      let txtColor = "myPartName";
       this.state.streamList.map((item, index) => {
         let id = item.getId();
         let dom = document.querySelector("#ag-item-" + id);
+       
+        let dd;
         if (!dom) {
           dom = document.createElement("section");
           dom.setAttribute("id", "ag-item-" + id);
           dom.setAttribute("class", "ag-item");
           canvas.appendChild(dom);
-          item.play("ag-item-" + id);
+          var box22 = document.getElementById("ag-item-" + id)
+          dd = document.createElement("input")
+          dd.setAttribute("id", "name" + id)
+          dd.setAttribute("class", txtColor)
+        box22.appendChild(dd)
+        item.play("ag-item-" + id);
         }
         dom.setAttribute("style", `grid-area: ${tile_canvas[no][index]}`);
-        item.player.resize && item.player.resize();
+        dom.addEventListener('click', function (e){
+          if(f === false){
+            f = true
+            dom.setAttribute("style", `grid-area: span 14/span 24/13/25`);
+            let list;
+             
+            list = Array.from(
+              document.querySelectorAll(`.ag-item:not(#ag-item-${id})`)
+            );
+            list.map((item) => {
+              
+                item.style.display = "none"
+              }) 
+          }
+          else{
+            f = false
+            dom.setAttribute("style", `grid-area: ${tile_canvas[no][index]}`);
+            let list;
+             
+            list = Array.from(
+              document.querySelectorAll(`.ag-item:not(#ag-item-${id})`)
+            );
+            list.map((item) => {
+              
+                item.style.display = "block"
+              }) 
+          }
+        })
+        if(item.player === undefined){
+
+        }
+               else{
+                item.player.resize && item.player.resize();
+               }
       });
     }
     // screen share mode (tbd)
     else if (this.state.displayMode === "share") {
+    
     }
   }
-
   componentWillUnmount() {
     this.client && this.client.unpublish(this.localStream);
-    // this.localStream && this.localStream.close();
+     this.localStream && this.localStream.close();
     if (this.state.stateSharing) {
       this.shareClient && this.shareClient.unpublish(this.shareStream);
       this.shareStream && this.shareStream.close();
@@ -189,15 +361,16 @@ class AgoraCanvas extends React.Component {
     this.client &&
       this.client.leave(
         () => {
-          console.log("Client succeed to leave.");
+
         },
         () => {
-          console.log("Client failed to leave.");
+
         }
       );
   }
 
   streamInit = (uid, attendeeMode, videoProfile, config) => {
+  
     let defaultConfig = {
       streamID: uid,
       audio: true,
@@ -223,40 +396,59 @@ class AgoraCanvas extends React.Component {
     return stream;
   };
 
+  streamInit22 = (uid, attendeeMode, videoProfile, config) => {
+  
+    let defaultConfig = {
+      streamID: uid,
+      audio: true,
+      video: false,
+      screen: false,
+    };
+
+    switch (attendeeMode) {
+      case "audio-only":
+        defaultConfig.video = false;
+        break;
+      case "audience":
+        defaultConfig.video = false;
+        defaultConfig.audio = false;
+        break;
+      default:
+      case "video":
+        break;
+    }
+
+    let stream = AgoraRTC.createStream(merge(defaultConfig, config));
+    stream.setVideoProfile(videoProfile);
+    return stream;
+  };
 
   subscribeStreamEvents = () => {
     let rt = this;
     rt.client.on("stream-added", function (evt) {
       let stream = evt.stream;
-      console.log("New stream added: " + stream.getId());
-      console.log("At " + new Date().toLocaleTimeString());
-      console.log("Subscribe ", stream);
+      
       rt.client.subscribe(stream, function (err) {
-        console.log("Subscribe stream failed", err);
+       
       });
     });
 
     rt.client.on("peer-leave", function (evt) {
-      console.log("Peer has left: " + evt.uid);
-      console.log(new Date().toLocaleTimeString());
-      console.log(evt);
+     
       rt.removeStream(evt.uid);
+     
     });
 
     rt.client.on("stream-subscribed", function (evt) {
       let stream = evt.stream;
-      console.log("Got stream-subscribed event");
-      console.log(new Date().toLocaleTimeString());
-      console.log("Subscribe remote stream successfully: " + stream.getId());
-      console.log(evt);
-      rt.addStream(stream);
-    });
+    
+    
+  rt.addStream(stream);
+    }.bind(this));
 
     rt.client.on("stream-removed", function (evt) {
       let stream = evt.stream;
-      console.log("Stream removed: " + stream.getId());
-      console.log(new Date().toLocaleTimeString());
-      console.log(evt);
+     
       rt.removeStream(stream.getId());
     });
   };
@@ -276,9 +468,31 @@ class AgoraCanvas extends React.Component {
         });
       }
     });
+    axios.get(`${baseUrl}/tl/setgetschedular?id=${this.props.id}&uid=${JSON.parse(this.userId)}&chname=${this.channelName}`, myConfig)
+    .then((res) => {
+     if(res.data.result.rtc_id == uid){
+      Swal.fire({
+        title: "success",
+        html : "Thank you for attending this meeting, this meeting is going to be ended by host",
+        icon : "success"
+      })
+      setTimeout((e) =>{
+      this.handleExit("exit");
+        window.location.assign("/#/customer/schedule")
+      }, 3000)
+   
+     }
+    })
+    if(this.remoteShare2 === true){
+      this.remoteShare2 = false
+    } 
   };
 
   addStream = (stream, push = false) => {
+   
+    this.hostId = stream.getId()
+ 
+  
     let repeatition = this.state.streamList.some((item) => {
       return item.getId() === stream.getId();
     });
@@ -294,9 +508,32 @@ class AgoraCanvas extends React.Component {
         streamList: [stream].concat(this.state.streamList),
       });
     }
-  };
+    var apiData = "https://virtualapi.multitvsolution.com/VstreamApi/index.php/api/vstream/getInfoByRTCId?channel_name="+this.channelName+"&rtc_id="+stream.getId()
+    axios.get(`${apiData}`)
+    .then((res) =>{
+      if(res.data.length > 0 && this.state.getAdId !== stream.getId()){
+        var praticipantVar = document.getElementById("name" + stream.getId())
+        praticipantVar.setAttribute("value", res.data[0].user_name);
+        praticipantVar.setAttribute("disabled", true)
+      }
+      else if(res.data.length > 0 && this.state.getAdId === stream.getId()){
+         var praticipantVar = document.getElementById("name" + stream.getId())
+         praticipantVar.setAttribute("value", "You");
+         praticipantVar.setAttribute("disabled", true)
+       }
+       
+      else if(res.data.length == 0){
+        this.remoteShare2 = true
+        var praticipantVar = document.getElementById("name" + stream.getId())
+        praticipantVar.setAttribute("value", "Sharing");
+        praticipantVar.setAttribute("disabled", true)
+        }
+     })};   
 
+ 
+  
   handleCamera = (e) => {
+    this.setState({disabledVedio : !this.state.disabledVedio})
     e.currentTarget.classList.toggle("off");
     this.localStream.isVideoOn()
       ? this.localStream.disableVideo()
@@ -350,9 +587,10 @@ class AgoraCanvas extends React.Component {
   };
 
   handleExit = (e) => {
-    if (e.currentTarget.classList.contains("disabled")) {
-      return;
+    if(this.state.readyState === false){
+
     }
+    else{
     try {
       this.client && this.client.unpublish(this.localStream);
       this.localStream && this.localStream.close();
@@ -363,43 +601,46 @@ class AgoraCanvas extends React.Component {
       this.client &&
         this.client.leave(
           () => {
-            console.log("Client succeed to leave.");
+
           },
           () => {
-            console.log("Client failed to leave.");
+          
           }
         );
     } finally {
       this.setState({ readyState: false });
       this.client = null;
       this.localStream = null;
-      // redirect to index
-      window.location.hash = "/customer/schedule";
+      window.location.assign("/#/customer/schedule")
     }
+  }
   };
 
+  
   sharingScreen = (e) => {
-    if (this.state.stateSharing) {
-      this.shareClient && this.shareClient.unpublish(this.shareStream);
-      this.shareStream && this.shareStream.close();
-      this.state.stateSharing = false;
-    } else {
-      this.state.stateSharing = true;
+    if(this.remoteShare2 === true && this.state.stateSharing === false){
+      Swal.fire({
+        title : "error",
+        html : "Only one screen can be share at a time",
+        icon : "error"
+      })
+    }
+    else if(this.state.stateSharing) {
+       this.shareClient && this.shareClient.unpublish(this.shareStream);
+       this.shareStream && this.shareStream.close();
+       this.setState({stateSharing : false})
+     }
+      else {
+      this.setState({stateSharing : true})
       let $ = this.props;
       // init AgoraRTC local client
       this.shareClient = AgoraRTC.createClient({ mode: $.transcode });
-
       this.shareClient.init($.appId, () => {
-        console.log("AgoraRTC client initialized");
-
-        this.subscribeStreamEvents();
+      // this.subscribeStreamEvents();
         this.shareClient.join($.appId, $.channel, $.uid, (uid) => {
           this.state.uid = uid;
-          console.log("User " + uid + " join channel successfully");
-          console.log("At " + new Date().toLocaleTimeString());
           // create local stream
           // It is not recommended to setState in function addStream
-          
           this.shareStream = this.streamInitSharing(
             uid,
             $.attendeeMode,
@@ -410,13 +651,11 @@ class AgoraCanvas extends React.Component {
               if ($.attendeeMode !== "audience") {
                 this.addStream(this.shareStream, true);
                 this.shareClient.publish(this.shareStream, (err) => {
-                  console.log("Publish local stream error: " + err);
                 });
               }
               this.setState({ readyState: true });
             },
             (err) => {
-              console.log("getUserMedia failed", err);
               this.setState({ readyState: true });
             }
           );
@@ -428,9 +667,10 @@ class AgoraCanvas extends React.Component {
   streamInitSharing = (uid, attendeeMode, videoProfile, config) => {
     let defaultConfig = {
       streamID: uid,
-      audio: true,
+      audio: false,
       video: false,
       screen: true,
+     
     };
 
     switch (attendeeMode) {
@@ -453,39 +693,34 @@ class AgoraCanvas extends React.Component {
 
 
 
-// startRecording = (resourceID) => {
-//   console.log("resourceID - ", resourceID);
-// };
 
-encodedString = "ZDMzOTU3N2EyOTRjNDU4Yzg2ZDhhNzhiNDc0MTQxZmM6MWE2MWE0YmVmMjE0NGU3OGJlNmY2NzFkNWNmM2ZjMzI=";
 
-  recordStream = () => {
-    console.log("recordStream call")
-    var data = JSON.stringify({
-      "cname":"demo",
-      "uid":"527841",
-      "clientRequest":{ "resourceExpiredHour": 24}});
+encodedString = "N2VmMGY4ODg4NjI4NDFhYWIwNWY1NzFjNDM5MzE4OTc6NjU0ZDViYWM5ZDU2NGY4Y2JhOTJmNzJkOGM2N2FjYzI=";
 
-      var config = {
-      method: 'post',
-      url: `https://api.agora.io/v1/apps/${this.props.appId}/cloud_recording/acquire`,
-      headers: { 
-        'Content-Type': 'application/json', 
-        'Authorization': 'Basic '+this.encodedString,
-      },
-      data : data
-      };
-        axios(config)
-        .then(function (response) {
-          console.log(JSON.stringify(response));
-          console.log("resid",response)
-          // var resID = response.data.resourceId
-          // this.startRecording(resID);    
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-  };
+  // recordStream = () => {
+
+  //   var data = JSON.stringify({
+  //     "cname":"demo",
+  //     "uid":"527841",
+  //     "clientRequest":{ "resourceExpiredHour": 24}});
+
+  //     var config = {
+  //     method: 'post',
+  //     url: `https://api.agora.io/v1/apps/${this.props.appId}/cloud_recording/acquire`,
+  //     headers: { 
+  //       'Content-Type': 'application/json', 
+  //       'Authorization': 'Basic '+this.encodedString,
+  //     },
+  //     data : data
+  //     };
+  //       axios(config)
+  //       .then(function (response) {
+        
+  //       })
+  //       .catch(function (error) {
+
+  //       });
+  // };
 
 
   render() {
@@ -572,17 +807,17 @@ encodedString = "ZDMzOTU3N2EyOTRjNDU4Yzg2ZDhhNzhiNDc0MTQxZmM6MWE2MWE0YmVmMjE0NGU
 
 
 
-    const recordingBtn = (
-      <span
-        onClick={this.recordStream}
-        className={
-          this.state.readyState ? "ag-btn exitBtn" : "ag-btn exitBtn disabled"
-        }
-        title="Record"
-      >
-        <RecordVoiceOverIcon />
-      </span>
-    );
+    // const recordingBtn = (
+    //   <span
+    //     onClick={this.recordStream}
+    //     className={
+    //       this.state.readyState ? "ag-btn exitBtn" : "ag-btn exitBtn disabled"
+    //     }
+    //     title="Record"
+    //   >
+    //     <RecordVoiceOverIcon />
+    //   </span>
+    // );
 
 
     return (
@@ -602,7 +837,7 @@ encodedString = "ZDMzOTU3N2EyOTRjNDU4Yzg2ZDhhNzhiNDc0MTQxZmM6MWE2MWE0YmVmMjE0NGU
           }
           {switchDisplayBtn}
           {hideRemoteBtn}
-          {recordingBtn}
+          {/* {recordingBtn} */}
         </div>
       </div>
     );
@@ -610,7 +845,3 @@ encodedString = "ZDMzOTU3N2EyOTRjNDU4Yzg2ZDhhNzhiNDc0MTQxZmM6MWE2MWE0YmVmMjE0NGU
 }
 
 export default AgoraCanvas;
-
-
-// https://mazars.multitvsolution.com/#/customer/dashboard
-

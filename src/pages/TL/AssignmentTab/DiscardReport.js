@@ -11,7 +11,8 @@ function DiscardReport({
   ViewDiscussion,
   ViewDiscussionToggel,
   report,
-  getData
+  getData,
+  headColor
 }) {
   const userId = window.localStorage.getItem("tlkey");
   const [data, setData] = useState([]);
@@ -19,12 +20,17 @@ function DiscardReport({
   useEffect(() => {
     getHistory();
   }, [report]);
-  
+  const token = window.localStorage.getItem("tlToken")
+    const myConfig = {
+        headers : {
+         "uit" : token
+        }
+      }
   const getHistory = () => {
    
-  if(report != undefined && report.length != 0){
+  if(report != undefined && report.length > 0){
    
-    axios.get(`${baseUrl}/tl/getMessage?id=${JSON.parse(userId)}&q_no=${report}`).then((res) => {
+    axios.get(`${baseUrl}/tl/getMessage?id=${JSON.parse(userId)}&q_no=${report}`, myConfig).then((res) => {
     
       if (res.data.code === 1) {
         setData(res.data.result);
@@ -42,10 +48,10 @@ function DiscardReport({
           <table class="table table-bordered">
             <thead>
               <tr>
-                <th scope="row">S.No</th>
-                <th scope="row">Date</th>
-                <th scope="row">Name</th>
-                <th scope="row">Message</th>
+                <th scope="row" style={{border: `1px solid ${headColor}`, backgroundColor: `${headColor}`, color:"#fff"}}>S.No</th>
+                <th scope="row" style={{border: `1px solid ${headColor}`, backgroundColor: `${headColor}`, color:"#fff"}}>Date</th>
+                <th scope="row" style={{border: `1px solid ${headColor}`, backgroundColor: `${headColor}`, color:"#fff"}}>Name</th>
+                <th scope="row" style={{border: `1px solid ${headColor}`, backgroundColor: `${headColor}`, color:"#fff"}}>Message</th>
               </tr>
             </thead>
             {data.length > 0
@@ -55,7 +61,7 @@ function DiscardReport({
                     <td>{i + 1}</td>
                     <td>{CommonServices.removeTime(p.setdate)}</td>
                     <td>{p.sender}</td>
-                    <td>
+                    <td style={{ width : "460px", overflow : "wrap"}}>
                       {
                         p.type == "sent" ?
                           <i class="fa fa-mail-forward" style={{ color: "red", marginLeft: "10px", marginRight: "10px" }}></i>
@@ -72,7 +78,7 @@ function DiscardReport({
         </ModalBody>
         <ModalFooter>
           <div>
-            <Button color="primary" onClick={ViewDiscussionToggel}>Cancel</Button>
+            <button className="customBtn" onClick={ViewDiscussionToggel}>Cancel</button>
           </div>
         </ModalFooter>
       </Modal >

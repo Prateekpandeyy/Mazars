@@ -22,7 +22,7 @@ function ResendOtp({ id, setDisabled, getTime, setLoading }) {
             data: formData,
         })
             .then(function (response) {
-                console.log("res-", response);
+              
                 if (response.data.code === 1) {
                     setLoading(false)
                     Alerts.SuccessNormal("As per your request, OTP has been sent to your registered email address.")
@@ -34,7 +34,7 @@ function ResendOtp({ id, setDisabled, getTime, setLoading }) {
                 }
             })
             .catch((error) => {
-                console.log("erroror - ", error);
+              
             });
     };
 
@@ -43,7 +43,7 @@ function ResendOtp({ id, setDisabled, getTime, setLoading }) {
         <>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div style={{ paddingTop: "10px" }}>
-                    <button type="submit" class="btn btn-success">SEND OTP</button>
+                    <button type="submit" class="autoWidthBtn">SEND OTP</button>
                 </div>
             </form>
         </>

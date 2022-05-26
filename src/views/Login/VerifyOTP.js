@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, {useState } from 'react'
 import axios from 'axios'
 import { baseUrl } from "../../config/config";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -8,7 +8,7 @@ import classNames from "classnames";
 import { useHistory } from "react-router-dom";
 import Alerts from "../../common/Alerts";
 import { Spinner } from 'reactstrap';
-
+import ShowError from "../../components/LoadingTime/LoadingTime";
 
 const Schema = yup.object().shape({
     p_otp: yup.string().required("mandatory"),
@@ -45,15 +45,19 @@ function VerifyOTP({ email, uid, time, setLoad,
             data: formData,
         })
             .then(function (response) {
-                console.log("res-", response);
-                console.log("res-", response.data["otp "]);
+               
 
                 if (response.data.code == 1) {
+                    var timeStampInMs = Date.now()
+localStorage.setItem("loginTime", timeStampInMs)
                     setLoading(false)
-                    Alerts.SuccessLogin("Logged in successfully.")
+                    Alerts.SuccessLogin("Login successfully.")
                     localStorage.setItem("userid", JSON.stringify(response.data.user_id));
+                    sessionStorage.setItem("userIdsession", JSON.stringify(response.data.user_id));
                     localStorage.setItem("custEmail", JSON.stringify(response.data.name));
                     history.push("customer/dashboard");
+                    localStorage.setItem("clientToken", response.data.token)
+                 
                 } else {
                     Alerts.ErrorNormal("Incorrect OTP") 
                     setLoading(false)
@@ -61,7 +65,7 @@ function VerifyOTP({ email, uid, time, setLoad,
                 }
             })
             .catch((error) => {
-                console.log("erroror - ", error);
+                ShowError.LoadingError(setLoading)
             });
     }
 
@@ -79,7 +83,7 @@ function VerifyOTP({ email, uid, time, setLoad,
             data: formData,
         })
             .then(function (response) {
-                console.log("res-", response);
+              
                 if (response.data.code === 1) {
                     setLoading(false)
                     Alerts.SuccessNormal("An OTP has been sent to your registered email address.")
@@ -92,7 +96,7 @@ function VerifyOTP({ email, uid, time, setLoad,
                 }
             })
             .catch((error) => {
-                console.log("erroror - ", error);
+                ShowError.LoadingError(setLoading)
             });
     }
 
@@ -131,9 +135,9 @@ function VerifyOTP({ email, uid, time, setLoad,
                         <div className="form-group">
                             {
                                 disabled ?
-                                    <button type="submit" class="btn btn-success" onClick={resendOtp}>SEND OTP</button>
+                                    <button type="submit" class="customBtn" onClick={resendOtp}>SEND OTP</button>
                                     :
-                                    <button type="submit" className="btn btn-success">
+                                    <button type="submit" className="customBtn">
                                         Login
                                     </button>
                             }

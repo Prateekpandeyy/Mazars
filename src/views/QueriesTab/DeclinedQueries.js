@@ -7,10 +7,7 @@ import {
   Card,
   CardHeader,
   CardBody,
-  CardTitle,
-  Row,
-  Col,
-  Table,
+  
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import CustomerFilter from "../../components/Search-Filter/CustomerFilter";
@@ -18,9 +15,14 @@ import BootstrapTable from "react-bootstrap-table-next";
 import Records from "../../components/Records/Records";
 import CommonServices from "../../common/common";
 import DiscardReport from "../AssignmentTab/DiscardReport";
-import FeedbackIcon from '@material-ui/icons/Feedback';
-import PublishIcon from '@material-ui/icons/Publish';
 
+import './index.css';
+import moment from "moment";
+import ModalManual from "../ModalManual/AllComponentManual";
+import {Modal, ModalHeader, ModalBody} from 'reactstrap';
+import MessageIcon, { ViewDiscussionIcon, HelpIcon, 
+  FeedBackICon} from "../../components/Common/MessageIcon";
+import DataTablepopulated from "../../components/DataTablepopulated/DataTabel";
 
 
 function DeclinedQueries() {
@@ -32,10 +34,22 @@ function DeclinedQueries() {
 
   const [assignNo, setAssignNo] = useState('');
   const [ViewDiscussion, setViewDiscussion] = useState(false);
+  const [openManual, setManual] = useState(false)
+  const token = window.localStorage.getItem("clientToken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key)
   }
+  const needHelp = () => {
+        
+    setManual(!openManual)
+}
+
 
   useEffect(() => {
     getQueriesData();
@@ -45,9 +59,11 @@ function DeclinedQueries() {
     axios
       .get(
         `${baseUrl}/customers/declinedQueries?uid=${JSON.parse(userId)}`
+        , myConfig
       )
+  
       .then((res) => {
-        console.log(res);
+
         if (res.data.code === 1) {
           setQuery(res.data.result);
           setCountQueries(res.data.result.length);
@@ -64,19 +80,19 @@ function DeclinedQueries() {
       formatter: (cellContent, row, rowIndex) => {
         return rowIndex + 1;
       },
-      headerStyle: () => {
-        return { fontSize: "12px", width: "50px" };
-      },
+      headerStyle : () => {
+        return( {
+            width: "50px"
+        })
+    }
     },
     {
       text: "Date",
       dataField: "created",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
+     
       formatter: function dateFormat(cell, row) {
-        console.log("dt", row.created);
+
         var oldDate = row.created;
         if (oldDate == null) {
           return null;
@@ -87,42 +103,40 @@ function DeclinedQueries() {
     {
       text: "Query No",
       dataField: "assign_no",
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
+      
       formatter: function nameFormatter(cell, row) {
-        console.log(row);
+              
         return (
-          <>
-            <Link to={`/customer/my-assingment/${row.id}`}>
-              {row.assign_no}
-            </Link>
-          </>
+            <>
+                <Link
+                    to={{
+                        pathname: `/customer/my-assingment/${row.id}`,
+                        index: 3,
+                        routes: "queries",
+                    }}
+                >
+                    {row.assign_no}
+                </Link>
+            </>
         );
-      },
+    },
     },
     {
       text: "Category",
       dataField: "parent_id",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
+      
     },
     {
       text: "Sub Category",
       dataField: "cat_name",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
+    
     },
     {
       text: "Status",
       dataField: "",
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
+     
       formatter: function nameFormatter(cell, row) {
         return (
           <>
@@ -155,11 +169,9 @@ function DeclinedQueries() {
       text: "Expected Delivery Date",
       dataField: "exp_delivery_date",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
+     
       formatter: function dateFormat(cell, row) {
-        console.log("dt", row.exp_delivery_date);
+   
 
         return (
           <>
@@ -178,17 +190,137 @@ function DeclinedQueries() {
     },
     {
       text: "Action",
-      headerStyle: () => {
-        return { fontSize: "12px", textAlign: "center", width: "130px" };
-      }
-    },
-  ];
+     
+    formatter: function (cell, row) {
+          var dateMnsFive = moment(row.exp_delivery_date).add(15, 'day').format("YYYY-MM-DD");
+        
+         
+          var curDate = moment().format("YYYY-MM-DD")
+       
+         
+        
+          
+       
+          return (
+              <>
+                  {   
+                      row.status == "Declined Query" ?
+                      <>
+                     <>
+                     {dateMnsFive > curDate === true ?
+                          <span className="ml-2">
+                         
+                          <Link 
+                           to={{
+                              pathname: `/customer/feedback/${row.assign_no}`,
+                              index: 3,
+                              routes: "queries",
+                          }}>
+                                <FeedBackICon />
+                          </Link>
+                      </span>
+                       : ""} 
+                      
+                      <span onClick={() => ViewDiscussionToggel(row.assign_no)}  className="ml-2">
+                            <ViewDiscussionIcon />
+                          </span>
+                        
+
+                     </>
+                      </>
+                          :
+                          <>
+              {
+                  row.status_code == "0" || row.status_code == "1" || row.status_code == "3" ?
+                      <>
+
+                          <span className="ml-2">
+                              <Link
+                                  to={{
+                                      pathname: `/customer/chatting/${row.id}&type=4`,
+                                      index: 3,
+                              routes: "queries",
+                                      obj: {
+                                          message_type: "4",
+                                          query_No: row.assign_no,
+                                          query_id: row.id,
+                                          routes: `/customer/queries`
+                                      }
+                                  }}
+                              >
+                                 <MessageIcon />
+                              </Link>
+                          </span>
+                          <span onClick={() => ViewDiscussionToggel(row.assign_no)}  className="ml-2">
+                            <ViewDiscussionIcon />
+                          </span>
+
+                      </> :
+                      null
+              }
+
+              {
+                  row.status_code == "4" || 8 < parseInt(row.status_code) || row.status_code == "2" ?
+                      
+                      <>
+
+                          {dateMnsFive > curDate === true ?
+                          <span className = "ml-2"
+                         >
+                          <Link 
+                           to={{
+                              pathname: `/customer/feedback/${row.assign_no}`,
+                              index: 3,
+                              routes: "queries",
+                          }}>
+                                <FeedBackICon />
+                          </Link>
+                      </span> : ""}
+                         
+                          {row.status_code == "10" ? null 
+                          : 
+                          <span className="ml-2">
+                           <Link
+                                  to={{
+                                      pathname: `/customer/chatting/${row.id}&type=4`,
+                                      index: 2,
+                              routes: "queries",
+                                      obj: {
+                                          message_type: "4",
+                                          query_No: row.assign_no,
+                                          query_id: row.id,
+                                          routes: `/customer/queries`
+                                      }
+                                  }}
+                              >
+                              <MessageIcon />
+                          </Link>
+                      </span>
+}
+<span onClick={() => ViewDiscussionToggel(row.assign_no)}  className="ml-2">
+                            <ViewDiscussionIcon />
+                          </span>
+                      
+                      </>
+                      :
+                      null
+              }
+          </>
+
+  }
+              </>
+          );
+      },
+  },
+];
+
 
   return (
     <div>
       <Card>
         <CardHeader>
-          <CustomerFilter
+        <span onClick= {(e) => needHelp()}> <HelpIcon /></span>
+            <CustomerFilter
             setData={setQuery}
             getData={getQueriesData}
             id={userId}
@@ -199,13 +331,26 @@ function DeclinedQueries() {
         </CardHeader>
         <CardBody>
           <Records records={records} />
-          <BootstrapTable
-            bootstrap4
-            keyField="id"
-            data={query}
-            columns={columns}
-            rowIndex
-          />
+          <DataTablepopulated 
+                   bgColor="#6e557b"
+                   keyField= {"assign_no"}
+                   data={query}
+                   columns={columns}>
+                    </DataTablepopulated>
+          <DiscardReport
+                        ViewDiscussionToggel={ViewDiscussionToggel}
+                        ViewDiscussion={ViewDiscussion}
+                        report={assignNo}
+                        getData={getQueriesData}
+                        headColor="#6e557b"
+                    />
+                     <Modal isOpen={openManual} toggle={needHelp} style={{display : "block", position: "absolute", left:"280px"}} size="lg">
+                        <ModalHeader toggle={needHelp}>Mazars</ModalHeader>
+                        <ModalBody>
+                            <ModalManual tar= {"freshQuery"} />
+                        </ModalBody>
+                    </Modal>
+                  
         </CardBody>
       </Card>
     </div>

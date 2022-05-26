@@ -7,19 +7,14 @@ import { baseUrl } from "../../../config/config";
 export default function App({ uid, selectedOption }) {
   const { register, handleSubmit, reset } = useForm();
 
-  console.log("selectedOption", selectedOption);
-  //   const usersUrl = `${baseUrl}/tl/getTeamLeader?id=${uid}`;
-
+ 
   const [interest, setInterest] = useState(selectedOption);
 
   useEffect(() => {
     const fetchData = async () => {
-      //   const res = await axios.get(usersUrl);
-      //   console.log("data", res.data);
-      // var item = res.data.result[0].name
-      //   console.log("arr", item.name);
+     
       const a = interest.name;
-      console.log("a", a);
+    
 
       reset({
         street: "123 Fake St",
@@ -32,7 +27,7 @@ export default function App({ uid, selectedOption }) {
   }, [reset]);
 
   function onSubmit(data) {
-    console.log(data);
+  
   }
 
   return (

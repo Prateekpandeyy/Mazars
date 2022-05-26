@@ -18,12 +18,17 @@ import CommonServices from "../../common/common";
 
 
 function FeedbackData(props) {
-    console.log("props", props.location.obj)
+
 
     const userId = window.localStorage.getItem("userid");
     const [query, setQuery] = useState([]);
 
-
+    const token = window.localStorage.getItem("clientToken")
+    const myConfig = {
+        headers : {
+         "uit" : token
+        }
+      }
     useEffect(() => {
         getMessage();
     }, []);
@@ -32,10 +37,10 @@ function FeedbackData(props) {
     const getMessage = () => {
         axios
             .get(
-                `${baseUrl}/customers/getFeedback?uid=${JSON.parse(userId)}`
+                `${baseUrl}/customers/getFeedback?uid=${JSON.parse(userId)}`, myConfig
             )
             .then((res) => {
-                console.log(res);
+            
                 if (res.data.code === 1) {
                     setQuery(res.data.result);
                 }
@@ -51,7 +56,7 @@ function FeedbackData(props) {
                 return rowIndex + 1;
             },
             headerStyle: () => {
-                return { fontSize: "12px", width: "10px" };
+                return { fontSize: "12px", width: "10px", border: "1px solid #081f8f", color:"#fff", backgroundColor:"#081f8f" };
             },
         },
         {
@@ -59,29 +64,19 @@ function FeedbackData(props) {
             dataField: "created",
             sort: true,
             headerStyle: () => {
-                return { fontSize: "12px", width: "60px" };
+                return { fontSize: "12px", width: "60px", border: "1px solid #081f8f", color:"#fff", backgroundColor:"#081f8f" };
             },
-            // formatter: function nameFormatter(cell, row) {
-            //     console.log(row);
-            //     return (
-            //         <>
-            //             <div style={{ display: "flex" }}>
-            //                 <p>{CommonServices.removeTime(row.created)}</p>
-            //                 <p style={{ marginLeft: "15px" }}>{CommonServices.removeDate(row.created)}</p>
-            //             </div>
-            //         </>
-            //     );
-            // },
+          
         },
 
         {
             text: "Query No",
             dataField: "assign_no",
             headerStyle: () => {
-                return { fontSize: "12px", width: "40px" };
+                return { fontSize: "12px", width: "40px", border: "1px solid #081f8f", color:"#fff", backgroundColor:"#081f8f" };
             },
             formatter: function nameFormatter(cell, row) {
-                console.log(row);
+               
                 return (
                     <>
                         {row.assign_no}
@@ -94,7 +89,7 @@ function FeedbackData(props) {
             text: "Feedback",
             dataField: "feedback",
             headerStyle: () => {
-                return { fontSize: "12px", width: "150px" };
+                return { fontSize: "12px", width: "150px" , border: "1px solid #081f8f", color:"#fff", backgroundColor:"#081f8f"};
             },
         },
     ];
@@ -108,7 +103,7 @@ function FeedbackData(props) {
                 <CardHeader>
                     <Row>
                         <Col md="9">
-                            <CardTitle tag="h4">Feedback</CardTitle>
+                            <CardTitle tag="h4" className="contentTitle">Feedback</CardTitle>
                         </Col>
                     </Row>
                 </CardHeader>
@@ -128,18 +123,4 @@ function FeedbackData(props) {
 }
 
 export default FeedbackData;
-        // {
-        //     text: "Time",
-        //     sort: true,
-        //     headerStyle: () => {
-        //         return { fontSize: "12px", width: "30px" };
-        //     },
-        //     formatter: function nameFormatter(cell, row) {
-        //         console.log(row);
-        //         return (
-        //             <>
-        //                 {CommonServices.removeDate(row.created)}
-        //             </>
-        //         );
-        //     },
-        // },
+       

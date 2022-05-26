@@ -5,34 +5,44 @@ import {
   Card,
   CardHeader,
   CardBody,
-  CardTitle,
-  Row,
-  Col,
-  Table,
 } from "reactstrap";
-
+import RetviewModal from "./RetviewModal";
 import { Link, NavLink } from "react-router-dom";
 import AdminFilter from "../../../components/Search-Filter/AdminFilter";
-import BootstrapTable from "react-bootstrap-table-next";
 import Records from "../../../components/Records/Records";
 import ViewComponent from "../ViewProposal/ViewComponent";
 import DiscardReport from "../AssignmentTab/DiscardReport";
-
-
+import ShowProposal from "./ShowProposal";
+import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
+import CommonShowProposal from '../../../components/commonShowProposal/CommonShowProposal';
+import MessageIcon, {EyeIcon, ViewDiscussionIcon, DiscussProposal, HelpIcon} from "../../../components/Common/MessageIcon";
 function AllProposalComponent({ allProposal }) {
   const [proposalDisplay, setProposalDisplay] = useState([]);
   const [records, setRecords] = useState([]);
-
+  const [assignNo, setAssignNo] = useState('');
   const [viewData, setViewData] = useState({});
   const [viewModal, setViewModal] = useState(false);
+  const [retview, setRetview] = useState(false)
+  const [viewProposalModal, setViewProposalModal] = useState(false)
+  const [proposalId, setProposalId] = useState()
+  const token = window.localStorage.getItem("adminToken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
   const ViewHandler = (key) => {
-    console.log(key);
+   
     setViewModal(!viewModal);
     setViewData(key);
   };
 
-
-  const [assignNo, setAssignNo] = useState('');
+const showProposalModal2 = (e) => {
+ 
+  setViewProposalModal(!viewProposalModal);
+  setProposalId(e)
+}
+  
 
   const [ViewDiscussion, setViewDiscussion] = useState(false);
   const ViewDiscussionToggel = (key) => {
@@ -45,8 +55,8 @@ function AllProposalComponent({ allProposal }) {
   }, []);
 
   const getProposalData = () => {
-    axios.get(`${baseUrl}/admin/getProposals`).then((res) => {
-      console.log(res);
+    axios.get(`${baseUrl}/admin/getProposals`, myConfig).then((res) => {
+    
       if (res.data.code === 1) {
         setProposalDisplay(res.data.result);
         setRecords(res.data.result.length);
@@ -54,32 +64,28 @@ function AllProposalComponent({ allProposal }) {
     });
   };
 
-
+const retviewProposal = (e) => {
+  setRetview(!retview);
+  setAssignNo(e)
+}
   const columns = [
     {
       text: "S.No",
       formatter: (cellContent, row, rowIndex) => {
         return rowIndex + 1;
       },
-      style: {
-        fontSize: "11px",
-      },
+    
       headerStyle: () => {
-        return { fontSize: "11px" };
+        return { width : "50px"};
       },
     },
     {
       dataField: "created",
       text: "Date",
       sort: true,
-      style: {
-        fontSize: "11px",
-      },
-      headerStyle: () => {
-        return { fontSize: "11px" };
-      },
+    
       formatter: function dateFormat(cell, row) {
-        console.log("dt", row.created);
+    
         var oldDate = row.created;
         if (oldDate == null) {
           return null;
@@ -90,14 +96,9 @@ function AllProposalComponent({ allProposal }) {
     {
       dataField: "assign_no",
       text: "Query No",
-      style: {
-        fontSize: "11px",
-      },
-      headerStyle: () => {
-        return { fontSize: "11px" };
-      },
+    
       formatter: function nameFormatter(cell, row) {
-        console.log(row);
+     
         return (
           <>
             <Link
@@ -117,36 +118,21 @@ function AllProposalComponent({ allProposal }) {
       dataField: "parent_id",
       text: "Category",
       sort: true,
-      style: {
-        fontSize: "11px",
-      },
-      headerStyle: () => {
-        return { fontSize: "11px" };
-      },
+      
     },
     {
       dataField: "cat_name",
       text: "Sub Category",
       sort: true,
-      style: {
-        fontSize: "11px",
-      },
-      headerStyle: () => {
-        return { fontSize: "11px" };
-      },
+      
     },
     {
       text: "Date of Proposal",
       dataField: "DateofProposal",
       sort: true,
-      style: {
-        fontSize: "11px",
-      },
-      headerStyle: () => {
-        return { fontSize: "11px" };
-      },
+      
       formatter: function dateFormat(cell, row) {
-        console.log("dt", row.DateofProposal);
+       
         var oldDate = row.DateofProposal;
         if (oldDate == null) {
           return null;
@@ -158,14 +144,9 @@ function AllProposalComponent({ allProposal }) {
       text: "Date of acceptance / decline of Proposal",
       dataField: "cust_accept_date",
       sort: true,
-      style: {
-        fontSize: "11px",
-      },
-      headerStyle: () => {
-        return { fontSize: "11px" };
-      },
+      
       formatter: function dateFormat(cell, row) {
-        console.log("dt", row.cust_accept_date);
+     
         var oldDate = row.cust_accept_date;
         if (oldDate == null) {
           return null;
@@ -175,12 +156,7 @@ function AllProposalComponent({ allProposal }) {
     },
     {
       text: "Status",
-      style: {
-        fontSize: "11px",
-      },
-      headerStyle: () => {
-        return { fontSize: "11px" };
-      },
+      
       formatter: function nameFormatter(cell, row) {
         return (
           <>
@@ -194,7 +170,7 @@ function AllProposalComponent({ allProposal }) {
                     </p>
                   </div>
                   :
-                  row.status == "Customer Declined; Proposal" ?
+                  row.status == "Client Declined; Proposal" ?
                     <p className="declined">
                       {row.status}
                     </p> :
@@ -213,67 +189,64 @@ function AllProposalComponent({ allProposal }) {
       dataField: "ProposedAmount",
       text: "Proposed Amount",
       sort: true,
-      style: {
-        fontSize: "11px",
+     
+      sortFunc: (a, b, order, dataField) => {
+        if (order === 'asc') {
+          return b - a;
+        }
+        return a - b; // desc
       },
-      headerStyle: () => {
-        return { fontSize: "11px" };
-      },
+      formatter: function nameFormatter(cell, row){
+       var nfObject = new Intl.NumberFormat('hi-IN')
+        var x = row.ProposedAmount;
+        
+        return(
+          <p className="rightAli">{nfObject.format(x)}</p>
+        )
+      }
     },
     {
       dataField: "accepted_amount",
       text: "Accepted Amount ",
       sort: true,
-      style: {
-        fontSize: "11px",
-        color: "#21a3ce",
+     
+      sortFunc: (a, b, order, dataField) => {
+        if (order === 'asc') {
+          return b - a;
+        }
+        return a - b; // desc
       },
-      headerStyle: () => {
-        return { fontSize: "11px", color: "#21a3ce" };
-      },
+      formatter: function nameFormatter(cell, row){
+        var nfObject = new Intl.NumberFormat('hi-IN')
+         var x = row.accepted_amount;
+         
+         return(
+           <p className="rightAli">{nfObject.format(x)}</p>
+         )
+       }
     },
     {
       dataField: "tl_name",
       text: "TL name",
       sort: true,
-      style: {
-        fontSize: "11px",
-      },
-      headerStyle: () => {
-        return { fontSize: "11px" };
-      },
+
     },
     {
       text: "Action",
       headerStyle: () => {
-        return { fontSize: "11px", width: "95px" };
+        return { fontSize: "11px" };
       },
       formatter: function (cell, row) {
         return (
           <>
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
-
-              {row.statuscode > "3" || row.statuscode == "10" ?
-                <div style={{ cursor: "pointer" }} title="View Proposal">
-                  <a
-                    href={`${baseUrl}/customers/dounloadpdf?id=${row.q_id}&viewpdf=1`}
-                    target="_blank"
-                  >
-                    <i
-                      class="fa fa-eye"
-                      style={{ color: "green", fontSize: "16px" }}
-                    />
-                  </a>
-                </div>
-                :
-                null
-              }
-
-
-              <div title="Send Message">
+            <div style={{display: "flex"}}>
+           
                 <Link
-                  to={{
-                    pathname: `/admin/chatting/${row.q_id}`,
+               
+                    to={{
+                      pathname: `/admin/chatting/${row.q_id}`,
+                      index: 0,
+                      routes: "proposal",
                     obj: {
                       message_type: "2",
                       query_No: row.assign_no,
@@ -282,30 +255,34 @@ function AllProposalComponent({ allProposal }) {
                     }
                   }}
                 >
-                  <i
-                    class="fa fa-comments-o"
-                    style={{
-                      fontSize: 16,
-                      cursor: "pointer",
-                      marginLeft: "8px",
-                      color: "blue"
-                    }}
-                  ></i>
+                <MessageIcon />
                 </Link>
-              </div>
+            
 
-              <div title="View Discussion Message">
-                <i
-                  class="fa fa-comments-o"
-                  style={{
-                    fontSize: 16,
-                    cursor: "pointer",
-                    color: "orange"
-                  }}
-                  onClick={() => ViewDiscussionToggel(row.assign_no)}
-                ></i>
-              </div>
+              <div  onClick={() => ViewDiscussionToggel(row.assign_no)} className="ml-1">
+                                  
+                                  <ViewDiscussionIcon />
+                          </div>
 
+
+              {row.statuscode > "3" || row.statuscode == "10" ?
+                <div  onClick={(e) => showProposalModal2(row.q_id)} className="ml-1">
+                <EyeIcon  />
+               </div>
+                :
+                null
+              }
+{
+  row.statuscode == "6" ? 
+  <>
+
+<div  onClick={(e) => retviewProposal(row.q_id)}>
+<DiscussProposal titleName ="Restore Proposal"/>
+</div>
+  </> : null
+}
+
+            
             </div>
           </>
         );
@@ -330,14 +307,12 @@ function AllProposalComponent({ allProposal }) {
 
         <CardBody>
           <Records records={records} />
-          <BootstrapTable
-            bootstrap4
-            keyField="id"
-            data={proposalDisplay}
-            columns={columns}
-            classes="table-responsive"
-          />
-
+          <DataTablepopulated 
+                   bgColor="#42566a"
+                   keyField= {"assign_no"}
+                   data={proposalDisplay}
+                   columns={columns}>
+                    </DataTablepopulated>
           <ViewComponent
             ViewHandler={ViewHandler}
             viewModal={viewModal}
@@ -350,7 +325,23 @@ function AllProposalComponent({ allProposal }) {
             ViewDiscussion={ViewDiscussion}
             report={assignNo}
             getData={getProposalData}
+            headColor="#42566a"
           />
+          <RetviewModal 
+          retview = {retview}
+          retviewProposal  = {retviewProposal }
+          getProposalData  ={getProposalData}
+          assignNo = {assignNo}
+         />
+       {
+         showProposalModal2 === true ?
+         <CommonShowProposal 
+         setViewProposalModal = {setViewProposalModal}
+         viewProposalModal = {viewProposalModal}
+         showProposalModal2 = {showProposalModal2}
+         panel = "admin"
+         proposalId = {proposalId} /> : ""
+       }
         </CardBody>
       </Card>
     </>

@@ -10,7 +10,7 @@ import { Spinner } from 'reactstrap';
 
 function AddAdditionalQuery({ addHandler, addModal, assingNo, getQuery }) {
 
-  console.log("assingNo :", assingNo);
+ 
 
   const alert = useAlert();
   const { handleSubmit, register, reset } = useForm();
@@ -18,7 +18,7 @@ function AddAdditionalQuery({ addHandler, addModal, assingNo, getQuery }) {
   const [loading, setLoading] = useState(false);
 
   const onSubmit = (value) => {
-    console.log("value :", value);
+  
     setLoading(true)
 
     let formData = new FormData();
@@ -31,7 +31,7 @@ function AddAdditionalQuery({ addHandler, addModal, assingNo, getQuery }) {
       data: formData,
     })
       .then(function (response) {
-        console.log("res-", response);
+       
         if (response.data.code === 1) {
           setLoading(false)
           var variable = "File uploaded successfully."
@@ -43,7 +43,7 @@ function AddAdditionalQuery({ addHandler, addModal, assingNo, getQuery }) {
         }
       })
       .catch((error) => {
-        console.log("erroror - ", error);
+
       });
   };
 
@@ -68,7 +68,7 @@ function AddAdditionalQuery({ addHandler, addModal, assingNo, getQuery }) {
               />
             </div>
 
-            <div class="modal-footer">
+            <div className="modal-footer">
               {
                 loading ?
                   <Spinner color="primary" />

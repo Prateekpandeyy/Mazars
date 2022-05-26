@@ -28,6 +28,13 @@ function AddAssingmentStages() {
   const userid = window.localStorage.getItem("tpkey");
   const { id } = useParams();
   const history = useHistory();
+  const token = window.localStorage.getItem("tptoken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
+
 
   useEffect(() => {
     getAssignmentList();
@@ -35,10 +42,8 @@ function AddAssingmentStages() {
 
   const getAssignmentList = () => {
     axios
-      .get(`${baseUrl}/tl/getUploadedProposals?assign_no=${id}&uid=${JSON.parse(userid)}`)
+      .get(`${baseUrl}/tl/getUploadedProposals?assign_no=${id}&uid=${JSON.parse(userid)}`, myConfig)
       .then((res) => {
-        console.log(res);
-        console.log("dt -", res.data.result[0].client_discussion);
 
         if (res.data.code === 1) {
           setAssignmentstages(res.data.result);
@@ -49,12 +54,12 @@ function AddAssingmentStages() {
   };
 
   const onSubmit = (value) => {
-    console.log(value);
+ 
     if(assignmentStages[0].paid_status=='0' && value.other_stage=='completed')
     {    
     Swal.fire({
       title: "Are you sure?",
-      text: "Query no- "+assignmentStages[0].assign_no+" payment is due,Do you still want to process to complete this query !",
+      text: "Query no- "+assignmentStages[0].assign_no+" payment is outstanding. Do you still want to proceed to complete this query?",
       type: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
@@ -77,13 +82,16 @@ function AddAssingmentStages() {
         axios({
           method: "POST",
           url: `${baseUrl}/tl/postAssignmentStages`,
+          headers: {
+            uit : token
+          },
           data: formData,
         })
           .then(function (response) {
-            console.log("res-", response);
+          
             if (response.data.code === 1) {
               setLoading(false)
-              Alerts.SuccessNormal("Assignment Stage updated successfully.")
+              Alerts.SuccessNormal("Assignment status updated successfully.")
               getAssignmentList();
               history.push("/taxprofessional/assignment");
             } else if (response.data.code === 0) {
@@ -91,11 +99,9 @@ function AddAssingmentStages() {
             }
           })
           .catch((error) => {
-            console.log("erroror - ", error);
+        
           });
-      
-      //   history.push("/teamleader/assignment");
-      //  return false;
+     
       }
       else{
         history.push("/taxprofessional/assignment");
@@ -108,22 +114,29 @@ function AddAssingmentStages() {
       setLoading(true)
 
       let formData = new FormData();
-  
+ 
       formData.append("q_id", id);
       formData.append("user_id", JSON.parse(userid));
       formData.append("stage_1_status", value.client_discussion);
-      formData.append("stage_2_status", value.draft_report);
+     
+       formData.append("stage_2_status", value.draft_report);
+     
       formData.append("stage_3_status", value.final_discussion);
-      formData.append("stage_4_status", value.delivery_report);
-      formData.append("stage_5_status", value.other_stage);
+    
+     formData.append("stage_4_status", value.delivery_report);
+     
+       formData.append("stage_5_status", value.other_stage);
   
       axios({
         method: "POST",
         url: `${baseUrl}/tl/postAssignmentStages`,
+        headers : {
+          uit : token
+        },
         data: formData,
       })
         .then(function (response) {
-          console.log("res-", response);
+       
           if (response.data.code === 1) {
             setLoading(false)
             Alerts.SuccessNormal("Assignment Stage updated successfully.")
@@ -134,7 +147,7 @@ function AddAssingmentStages() {
           }
         })
         .catch((error) => {
-          console.log("erroror - ", error);
+        
         });
     
     }
@@ -150,10 +163,10 @@ function AddAssingmentStages() {
           <Row>
             <Col md="4">
               <button
-                class="btn btn-success ml-3"
+                class="autoWidthBtn ml-3"
                 onClick={() => history.goBack()}
               >
-                <i class="fas fa-arrow-left mr-2"></i>
+               
                 Go Back
               </button>
             </Col>
@@ -182,7 +195,7 @@ function AddAssingmentStages() {
                                 style={{
                                   fontSize: "20px",
                                   fontWeight: "500",
-                                  paddingTop: "30px",
+                                
                                 }}
                               >
                                 Client Discussion
@@ -209,7 +222,7 @@ function AddAssingmentStages() {
                                 style={{
                                   fontSize: "20px",
                                   fontWeight: "500",
-                                  paddingTop: "30px",
+                                
                                 }}
                               >
                                 Draft Report
@@ -236,7 +249,7 @@ function AddAssingmentStages() {
                                 style={{
                                   fontSize: "20px",
                                   fontWeight: "500",
-                                  paddingTop: "30px",
+                                
                                 }}
                               >
                                 Final Discussion
@@ -263,10 +276,10 @@ function AddAssingmentStages() {
                                 style={{
                                   fontSize: "20px",
                                   fontWeight: "500",
-                                  paddingTop: "30px",
+                                
                                 }}
                               >
-                                Delivery of report
+                                Delivery of final report
                               </label>
                             </div>
                           </div>
@@ -290,7 +303,7 @@ function AddAssingmentStages() {
                                 style={{
                                   fontSize: "20px",
                                   fontWeight: "500",
-                                  paddingTop: "30px",
+                                
                                 }}
                               >
                                 Awaiting Completion
@@ -314,7 +327,7 @@ function AddAssingmentStages() {
                         <div class="form-group">
                           <button
                             type="submit"
-                            class="btn btn-primary"
+                            class="customBtn"
                             disabled
                           >
                             Submit
@@ -333,42 +346,43 @@ function AddAssingmentStages() {
                               style={{
                                 fontSize: "20px",
                                 fontWeight: "500",
-                                paddingTop: "30px",
+                              
                               }}
                             >
                               Client Discussion
                             </label>
                           </div>
                         </div>
+                       {p.client_discussion === "completed" ? 
                         <div class="col-md-4">
-                          <div class="form-group">
-                            <select
-                              class="form-control"
-                              ref={register}
-                              name="client_discussion"
-                            >
-                              <option value="inprogress">Inprogress</option>
-                              <option value="completed">Completed</option>
-                              
-                            </select>
-                          </div>
-                        </div>
-
-                        {/* <div class="col-md-4">
-                          <div class="form-group">
-                            <div>
-                              <Link
-                                to={{
-                                  pathname: `/teamleader/assignment-form/${p.assign_id}`,
-                                  clients:`${clientDiscussion}`,
-                                }}
-                              >
-                                View Details
-                              </Link>
+                        <div class="form-group">
+                          <select
+                            class="form-control"
+                            ref={register}
+                            name="client_discussion"
+                            disabled
+                          >
+                            <option value="inprogress">Inprogress</option>
+                            <option value="completed">Completed</option>
                             
-                            </div>
-                          </div>
-                        </div> */}
+                          </select>
+                        </div>
+                      </div> : 
+                       <div class="col-md-4">
+                       <div class="form-group">
+                         <select
+                           class="form-control"
+                           ref={register}
+                           name="client_discussion"
+                         >
+                           <option value="inprogress">Inprogress</option>
+                           <option value="completed">Completed</option>
+                           
+                         </select>
+                       </div>
+                     </div>}
+
+                       
 
                       </div>
 
@@ -379,14 +393,16 @@ function AddAssingmentStages() {
                               style={{
                                 fontSize: "20px",
                                 fontWeight: "500",
-                                paddingTop: "30px",
+                              
                               }}
                             >
                               Draft Report
                             </label>
                           </div>
                         </div>
-                        <div class="col-md-4">
+                        {
+                          p.client_discussion == "completed" && p.draft_report === "inprogress" ?
+                          <div class="col-md-4">
                           <div class="form-group">
                             <select
                               class="form-control"
@@ -395,21 +411,28 @@ function AddAssingmentStages() {
                             >
                               <option value="inprogress">Inprogress</option>
                               <option value="completed">Completed</option>
-                             
+                              
                             </select>
                           </div>
-                        </div>
-                        {/* <div class="col-md-4">
-                          <div class="form-group">
-                            <div>
-                              <Link
-                                to={`/teamleader/view-report/${p.assign_no}`}
-                              >
-                                View Report
-                              </Link>
-                            </div>
-                          </div>
-                        </div> */}
+                        </div> :
+                         <div class="col-md-4">
+                         <div class="form-group">
+                           <select
+                             class="form-control"
+                             ref={register}
+                             disabled
+                             defaultValue = "inprogress"
+                             name="draft_report"
+                           >
+                             <option value="inprogress">Inprogress</option>
+                             <option value="completed">Completed</option>
+                             
+                           </select>
+                         </div>
+                       </div>
+                        }
+                       
+                      
                       </div>
 
                       <div class="row">
@@ -419,26 +442,41 @@ function AddAssingmentStages() {
                               style={{
                                 fontSize: "20px",
                                 fontWeight: "500",
-                                paddingTop: "30px",
+                              
                               }}
                             >
                               Final Discussion
                             </label>
                           </div>
                         </div>
+                      {p.client_discussion == "completed" && p.final_discussion === "inprogress" && p.draft_report === "completed" ? 
                         <div class="col-md-4">
-                          <div class="form-group">
-                            <select
-                              class="form-control"
-                              ref={register}
-                              name="final_discussion"
-                            >
-                              <option value="inprogress">Inprogress</option>
-                              <option value="completed">Completed</option>
-                              
-                            </select>
-                          </div>
+                        <div class="form-group">
+                          <select
+                            class="form-control"
+                            ref={register}
+                            name="final_discussion"
+                          >
+                            <option value="inprogress">Inprogress</option>
+                            <option value="completed">Completed</option>
+                           
+                          </select>
                         </div>
+                      </div> : 
+                        <div class="col-md-4">
+                        <div class="form-group">
+                          <select
+                            class="form-control"
+                            ref={register}
+                            name="final_discussion"
+                            disabled
+                          >
+                            <option value="inprogress">Inprogress</option>
+                            <option value="completed">Completed</option>
+                           
+                          </select>
+                        </div>
+                      </div> }
                         <div class="col-md-4">
                           <div class="form-group">
                             <div></div>
@@ -453,26 +491,41 @@ function AddAssingmentStages() {
                               style={{
                                 fontSize: "20px",
                                 fontWeight: "500",
-                                paddingTop: "30px",
+                              
                               }}
                             >
-                              Delivery of report
+                              Delivery of final report
                             </label>
                           </div>
                         </div>
+                        {p.client_discussion == "completed" && p.delivery_report === "inprogress" &&    p.draft_report === "completed" && p.final_discussion === "completed" ?
                         <div class="col-md-4">
-                          <div class="form-group">
-                            <select
-                              class="form-control"
-                              ref={register}
-                              name="delivery_report"
-                            >
-                              <option value="inprogress">Inprogress</option>
-                              <option value="completed">Completed</option>
-                             
-                            </select>
-                          </div>
+                        <div class="form-group">
+                          <select
+                            class="form-control"
+                            ref={register}
+                            name="delivery_report"
+                          >
+                            <option value="inprogress">Inprogress</option>
+                            <option value="completed">Completed</option>
+                            
+                          </select>
                         </div>
+                      </div> :
+                      <div class="col-md-4">
+                      <div class="form-group">
+                        <select
+                          class="form-control"
+                          ref={register}
+                          name="delivery_report"
+                          disabled
+                        >
+                          <option value="inprogress">Inprogress</option>
+                          <option value="completed">Completed</option>
+                          
+                        </select>
+                      </div>
+                    </div>}
                         <div class="col-md-4">
                           <div class="form-group">
                             <div></div>
@@ -488,25 +541,39 @@ function AddAssingmentStages() {
                               style={{
                                 fontSize: "20px",
                                 fontWeight: "500",
-                                paddingTop: "30px",
+                              
                               }}
                             >
                               Awaiting Completion
                             </label>
                           </div>
                         </div>
-                        <div class="col-md-4">
-                          <div class="form-group">
-                            <select
-                              class="form-control"
-                              ref={register}
-                              name="other_stage"
-                            >
-                              <option value="inprogress">Inprogress</option>
-                              <option value="completed">Completed</option>
-                            </select>
-                          </div>
+                        {p.client_discussion == "completed"  && p.draft_report === "completed" && p.final_discussion === "completed" && p.delivery_report === "completed" 
+                        ? <div class="col-md-4">
+                        <div class="form-group">
+                          <select
+                            class="form-control"
+                            ref={register}
+                            name="other_stage"
+                          >
+                            <option value="inprogress">Inprogress</option>
+                            <option value="completed">Completed</option>
+                          </select>
                         </div>
+                      </div>
+                      : <div class="col-md-4">
+                      <div class="form-group">
+                        <select
+                          class="form-control"
+                          ref={register}
+                          name="other_stage"
+                          disabled
+                        >
+                          <option value="inprogress">Inprogress</option>
+                          <option value="completed">Completed</option>
+                        </select>
+                      </div>
+                    </div>}
                         <div class="col-md-4">
                           <div class="form-group">
                             <div></div>
@@ -520,7 +587,7 @@ function AddAssingmentStages() {
                           loading ?
                             <Spinner color="primary" />
                             :
-                            <button type="submit" class="btn btn-primary">
+                            <button type="submit" class="customBtn">
                               Submit
                             </button>
                         }

@@ -48,6 +48,11 @@ function QueryRecording(assingNo) {
         width : "100%", 
         height: "auto"
     }
+    const videoIcon = {
+        display : "flex", 
+        justifyContent : "space-around", 
+        alignItems : "center"
+    }
 const canBtn = {
     position: "absolute",
     top: "0",
@@ -57,21 +62,19 @@ const canBtn = {
     cursor : "pointer",
     color : "red"
 }
-console.log("assignNo", assingNo.assingNo)
+
     const getRecording = () => {
         axios
             .get(`${baseUrl}/tl/callRecordingPostlist?assign_id=${assingNo.assingNo}`)
             .then((res) => {
-                console.log(res);
+              
                 if (res.data.code === 1) {
                     setFeedBackData(res.data.result);
                 }
             });
     };
    
-    // if(assingNo.assingNo != undefined){
-    //     getRecording();
-    // }
+   
     const columns = [
         {
             text: "S.No",
@@ -120,21 +123,34 @@ console.log("assignNo", assingNo.assingNo)
                 return { fontSize: "12px", width: "20px" };
             },
             formatter: function nameFormatter(cell, row) {
-                console.log(row);
+                var recording = row.file.split(",");
+                let a = 1;
                 return (
                     <>
                         <div>
-                            <i
-                                className="material-icons"
-                                style={{
-                                    cursor: "pointer",
-                                    color: "red",
-                                    fontSize: "25px",
-                                }}
-                                onClick={() => openModal(row.file)}
-                            >
-                                play_circle_outline
-                            </i>
+                            {
+                                recording.map((record) => {
+                                   return(
+                                <>
+                                <p style={videoIcon}>
+                                <span>{a++}</span>   <i
+                                    className="material-icons"
+                                    style={{
+                                        cursor: "pointer",
+                                        color: "red",
+                                        fontSize: "25px",
+                                    }}
+                                    onClick={() => openModal(record)}
+                                >
+                                    play_circle_outline
+                                 
+                                </i>
+                                </p>
+                                </>
+                                   )
+                                })
+                            }
+                           
                         </div>
                     </>
                 );
@@ -144,11 +160,11 @@ console.log("assignNo", assingNo.assingNo)
 
 
 
-    console.log("videourl", videoid)
+  
    
     return (
      
-           <div>
+           <div className="queryBox">
                 <Card>
                 <CardHeader>
                     <Row>
@@ -170,49 +186,26 @@ console.log("assignNo", assingNo.assingNo)
             </Card>
             {isOpen === true ?
           
-                 
-          <div style={modalBox}>
-          <span style={canBtn} onClick= {() => setIsOpen(false)}> <CloseIcon color="red" /> </span>
-         {/* <ReactHlsPlayer
-     src={videoid}    autoPlay={false}
-     controls={true}
-     width="100%"
-     height="100%"
-     hlsConfig={{
-         maxLoadingDelay: 4,
-         minAutoBitrate: 0,
-         lowLatencyMode: true,
-       }}
-   /> */}
+          <div className="modalBox">
+          <div className="boxContainer">
+          <div className="canBtn"  title="cancel">
+              <h4>Recording Player</h4>
+              <CloseIcon  onClick= {() => setIsOpen(false)} id="myBtn"/> </div>
+         
 
-   <div style={{margin: "50px 0 0 0"}}>
-   <ReactPlayer
-     url={videoid}
-     controls={true}
-     playing={true}
-     width='100%'
-     height='100%'
-    />
-       </div>
+         <div className="my2">
+         <ReactPlayer
+           url={videoid}
+           controls={true}
+           playing={true}
+           width='100%'
+           height='100%'
+          />
+             </div>
+          </div>
      
-    </div>
-  : ""}
-            {/* <ReactHlsPlayer
-    src={videoid}   
-     autoPlay={false}
-    controls={true}
-    width="100%"
-    height="auto"
-  /> */}
-            {/* <ReactHlsPlayer
-    src={videoid}
-    hlsConfig={{
-      maxLoadingDelay: 4,
-      minAutoBitrate: 0,
-      lowLatencyMode: true,
-    }}
-  /> */}
-  {/* <ReactPlayer url={videoid} /> */}
+    </div>  : ""}
+           
            </div>
 
     );

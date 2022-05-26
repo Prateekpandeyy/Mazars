@@ -21,7 +21,7 @@ import * as yup from "yup";
 import classNames from "classnames";
 import Mandatory from "../../../components/Common/Mandatory";
 import Loader from "../../../components/Loader/Loader";
-
+import { useHistory } from "react-router-dom";
 
 
 const Schema = yup.object().shape({
@@ -31,6 +31,7 @@ const Schema = yup.object().shape({
 
 
 function QueryAssingment(props) {
+  let history22 = useHistory()
   const alert = useAlert();
   const { handleSubmit, register, errors, reset } = useForm({
     resolver: yupResolver(Schema),
@@ -65,17 +66,21 @@ function QueryAssingment(props) {
 
 
   var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
-  console.log("current_date :", current_date);
   const [item] = useState(current_date);
-
+  const token = window.localStorage.getItem("adminToken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
   useEffect(() => {
     getTaxLeader();
     getQueryData();
   }, []);
 
   const getTaxLeader = () => {
-    axios.get(`${baseUrl}/tl/getTeamLeader`).then((res) => {
-      console.log(res);
+    axios.get(`${baseUrl}/admin/getTeamLeader`, myConfig).then((res) => {
+      
       if (res.data.code === 1) {
         setTaxLeaderDisplay(res.data.result);
       }
@@ -83,8 +88,8 @@ function QueryAssingment(props) {
   };
 
   const getQueryData = () => {
-    axios.get(`${baseUrl}/tl/GetQueryDetails?id=${id}`).then((res) => {
-      console.log(res);
+    axios.get(`${baseUrl}/admin/GetQueryDetails?id=${id}`, myConfig).then((res) => {
+      
       if (res.data.code === 1) {
         setQuerData({
           queryNo: res.data.result[0].assign_no,
@@ -101,35 +106,37 @@ function QueryAssingment(props) {
   }, [queryNo]);
 
   const getQuery = () => {
+   if(queryNo.length > 0){
     axios
-      .get(`${baseUrl}/tl/CheckIfAssigned?assignno=${queryNo}`)
-      .then((res) => {
-        console.log(res);
-        if (res.data.code === 1) {
-          setQuery(false);
-          setHideQuery({
-            name: res.data.meta[0].name,
-            timeline: res.data.meta[0].timeline,
-            date_allocation: res.data.meta[0].date_allocation,
-            expdeliverydate: res.data.meta[0].expdeliverydate,
-          });
-        }
-      });
+    .get(`${baseUrl}/admin/CheckIfAssigned?assignno=${queryNo}`, myConfig)
+    .then((res) => {
+      
+      if (res.data.code === 1) {
+        setQuery(false);
+        setHideQuery({
+          name: res.data.meta[0].name,
+          timeline: res.data.meta[0].timeline,
+          date_allocation: res.data.meta[0].date_allocation,
+          expdeliverydate: res.data.meta[0].expdeliverydate,
+        });
+      }
+    });
+   }
   };
 
   const handleChange = (e) => {
-    console.log("val-", e.target.value);
+   
     setTeamID(e.target.value);
     var value = taxLeaderDisplay.filter(function (item) {
       return item.id == e.target.value;
     });
-    console.log(value[0].name);
+    
     setTeamName(value[0].name);
   };
 
   const onSubmit = (value) => {
     setLoading(true)
-    console.log("value :", value);
+  
     var expdeliverydate = value.p_expdeldate.replace(
       /(\d\d)\/(\d\d)\/(\d{4})/,
       "$3-$1-$2"
@@ -149,31 +156,35 @@ function QueryAssingment(props) {
 
     axios({
       method: "POST",
-      url: `${baseUrl}/tl/AddQueryAssignment`,
+      url: `${baseUrl}/admin/AddQueryAssignment`,
+      headers: {
+        uit : token
+      },
       data: formData,
     })
       .then(function (response) {
-        console.log("res-", response);
+     
         if (response.data.code === 1) {
           setLoading(false)
           var variable = "Query assigned successfully."
           Alerts.SuccessNormal(variable)
-          getQuery();
-          props.history.push({
-            pathname: `/admin/queriestab`,
-            index: 1,
-          });
+        //  getQuery();
+          // props.history.push({
+          //   pathname: `/admin/queriestab`,
+          //   index: 2,
+          // });
+          history22.push("/admin/queriestab")
         } if (response.data.code === 0) {
           setLoading(false)
         }
       })
       .catch((error) => {
-        console.log("erroror - ", error);
+        
       });
   };
 
   const expectedDeliveryDate = (key) => {
-    console.log("timlines : ", key);
+  
 
     const d = new Date();
 
@@ -183,18 +194,18 @@ function QueryAssingment(props) {
         d2.getFullYear() + "-" + (d2.getMonth() + 1) + "-" + d2.getDate();
       // d2.getDate() + "/" + (d2.getMonth() + 1) + "/" + d2.getFullYear();
 
-      console.log("Urgent:", new_date);
+     
       setExpectedDate(new_date);
     } else if (key == "Regular (10-12 Working Days)") {
       const d2 = new Date(d.getTime() + 1296000000);
       const new_date =
         d2.getFullYear() + "-" + (d2.getMonth() + 1) + "-" + d2.getDate();
-      console.log("regular:", new_date);
+     
       setExpectedDate(new_date);
     }
   };
 
-  console.log("expectedDate", expectedDate)
+
 
   return (
     <Layout adminDashboard="adminDashboard" adminUserId={userId}>
@@ -208,15 +219,15 @@ function QueryAssingment(props) {
                   index: 1,
                 }}
               >
-                <button class="btn btn-success ml-3">
-                  <i class="fas fa-arrow-left mr-2"></i>
+                <button className="autoWidthBtn ml-3">
+                  <i className="fas fa-arrow-left mr-2"></i>
                   Go Back
                 </button>
               </Link>
             </Col>
             <Col md="4">
               <div style={{ textAlign: "center" }}>
-                <h2>Query Allocation</h2>
+                <h4>Query Allocation</h4>
               </div>
             </Col>
           </Row>
@@ -228,10 +239,10 @@ function QueryAssingment(props) {
               <Loader />
               :
               <>
-                <div class="row mt-3">
-                  <div class="col-md-12">
+                <div className="row mt-3">
+                  <div className="col-md-12">
                     <form onSubmit={handleSubmit(onSubmit)}>
-                      <table class="table">
+                      <table className="table">
                         <thead>
                           <tr>
                             <th scope="col">Query No.</th>
@@ -274,7 +285,8 @@ function QueryAssingment(props) {
                                   ref={register}
                                   name="p_timelines"
                                   value={timelines}
-                                  class="form-control"
+                                  autoComplete="off"
+                                  className="form-control"
                                 />
                               </td>
                               <td>
@@ -295,7 +307,7 @@ function QueryAssingment(props) {
                               </td>
 
                               <td>
-                                <button type="submit" class="btn btn-success">
+                                <button type="submit" className="customBtn">
                                   Assign
                                 </button>
                               </td>
@@ -304,7 +316,7 @@ function QueryAssingment(props) {
                             <tr>
                               <th scope="row">{queryNo}</th>
                               <td>
-                                <select class="form-control w-75 p-0" disabled>
+                                <select className="form-control w-75 p-0" disabled>
                                   <option>{hideQuery.name}</option>
                                 </select>
                               </td>
@@ -314,7 +326,7 @@ function QueryAssingment(props) {
                                   type="text"
                                   ref={register}
                                   name="p_timelines"
-                                  class="form-control"
+                                  className="form-control"
                                   value={hideQuery.timeline}
                                   disabled
                                 />
@@ -324,13 +336,13 @@ function QueryAssingment(props) {
                                   type="text"
                                   ref={register}
                                   name="p_expdeldate"
-                                  class="form-control"
+                                  className="form-control"
                                   value={hideQuery.expdeliverydate}
                                   disabled
                                 />
                               </td>
                               <td>
-                                <button class="btn btn-success" disabled>
+                                <button className="autoWidthBtn" disabled>
                                   Assigned
                                 </button>
                               </td>

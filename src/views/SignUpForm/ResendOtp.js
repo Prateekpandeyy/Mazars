@@ -7,7 +7,7 @@ import Alerts from "../../common/Alerts";
 import { Spinner } from 'reactstrap';
 
 
-function ResendOtp({ invalid, wEmail, indNumError, zipError, passError, email,
+function ResendOtp({ invalid, wEmail, disabled, indNumError, zipError, passError, email,
     phone, setDisabled, getTime, setLoad, loading, emailError, phoneError, zipError1, setLoading }) {
 
     const { handleSubmit, errors, reset } = useForm();
@@ -24,18 +24,18 @@ function ResendOtp({ invalid, wEmail, indNumError, zipError, passError, email,
                 formData.append("p", "registration");
         
                 if (invalid || wEmail || indNumError || zipError || passError) {
-                    console.log("resend false")
+                    
                     setLoad(false)
                 }
                 else {
-                    console.log("send otp true")
+                    
                     axios({
                         method: "POST",
                         url: `${baseUrl}/customers/forgototp`,
                         data: formData,
                     })
                         .then(function (response) {
-                            console.log("res-", response);
+                            
                             if (response.data.code === 1) {
                                 Alerts.SuccessNormal("As per your request , OTP has been sent to your email address.")
                                 setDisabled(false)
@@ -47,7 +47,7 @@ function ResendOtp({ invalid, wEmail, indNumError, zipError, passError, email,
                             }
                         })
                         .catch((error) => {
-                            console.log("erroror - ", error);
+                           
                         });
                     }
                    }
@@ -59,10 +59,15 @@ function ResendOtp({ invalid, wEmail, indNumError, zipError, passError, email,
         <>
             <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
 
-                <div style={{ paddingTop: "10px" }}>
-                    <button type="submit" class="btn btn-success">SEND OTP</button>
-                </div>
-
+                
+                {
+                      loading ?
+                      <span></span>
+                        :
+                        <div style={{ paddingTop: "10px" }}>
+                        <button type="submit" class="autoWidthBtn">SEND OTP</button>
+                    </div>
+                    }
             </form>
         </>
     );

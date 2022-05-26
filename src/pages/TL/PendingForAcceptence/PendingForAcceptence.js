@@ -7,12 +7,12 @@ import {
   CardHeader,
   CardBody,
 } from "reactstrap";
-import BootstrapTable from "react-bootstrap-table-next";
 import TeamFilter from "../../../components/Search-Filter/tlFilter";
 import RejectedModal from "./RejectedModal";
 import Alerts from "../../../common/Alerts";
 import { Spinner } from 'reactstrap';
-
+import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
+import { Accept, Reject} from "../../../components/Common/MessageIcon";
 
 function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
   const userid = window.localStorage.getItem("tlkey");
@@ -27,6 +27,12 @@ function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
   });
 
   const [addPaymentModal, setPaymentModal] = useState(false);
+  const token = window.localStorage.getItem("tlToken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
   const rejectHandler = (key) => {
 
     setPaymentModal(!addPaymentModal);
@@ -42,7 +48,7 @@ function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
 
   const getPendingforAcceptance = () => {
     axios
-      .get(`${baseUrl}/tl/pendingQues?id=${JSON.parse(userid)}`)
+      .get(`${baseUrl}/tl/pendingQues?id=${JSON.parse(userid)}`, myConfig)
       .then((res) => {
         
         if (res.data.code === 1) {
@@ -60,17 +66,15 @@ function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
       formatter: (cellContent, row, rowIndex) => {
         return rowIndex + 1;
       },
+     
       headerStyle: () => {
-        return { fontSize: "12px", width: "50px" };
+        return {  width: "50px" };
       },
     },
     {
-      text: "Date",
+      text: "Query Date",
       dataField: "query_created",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
       formatter: function dateFormat(cell, row) {
       
         var oldDate = row.query_created;
@@ -83,9 +87,6 @@ function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
     {
       text: "Query No",
       dataField: "assign_no",
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
       formatter: function nameFormatter(cell, row) {
        
         return (
@@ -93,7 +94,7 @@ function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
             <Link
               to={{
                 pathname: `/teamleader/queries/${row.id}`,
-                index: 0,
+                index: 2,
                 routes: "queriestab",
               }}
             >
@@ -107,33 +108,24 @@ function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
       text: "Category",
       dataField: "parent_id",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
     },
     {
       text: "Sub Category",
       dataField: "cat_name",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
+
     },
     {
-      text: "Customer Name",
+      text: "Client Name",
       dataField: "name",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
+     
     },
     {
-      text: "	Exp. Delivery Date / Actual Delivery Date",
+      text: "Delivery Due Date ",
       dataField: "Exp_Delivery_Date",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
+     
       formatter: function dateFormat(cell, row) {
       
         var oldDate = row.Exp_Delivery_Date;
@@ -146,9 +138,7 @@ function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
     {
       text: "Accept / Reject",
       dataField: "",
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
+    
       formatter: function (cell, row) {
         return (
           <>
@@ -162,25 +152,16 @@ function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
               id="div1"
             >
               <div
-                id="accept"
-                title="Accept Assignment"
+                
                 onClick={() => acceptHandler(row)}
               >
-                <i
-                  class="fa fa-check"
-                  style={{ color: "green", fontSize: "16px" }}
-                ></i>
+              <Accept titleName= "Accept Assignment"/>
               </div>
               <div
-                id="reject"
-                title="Reject Assignment"
-                // onClick={() => rejectHandler(row)}
+            
                 onClick={() => rejectHandler(row)}
               >
-                <i
-                  class="fa fa-times"
-                  style={{ color: "red", fontSize: "16px" }}
-                ></i>
+               <Reject titleName="Reject Assignment" />
               </div>
             </div>
           </>
@@ -202,6 +183,9 @@ function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
     axios({
       method: "POST",
       url: `${baseUrl}/tl/AcceptRejectQuery`,
+      headers : {
+        uit : token
+      },
       data: formData,
     })
       .then(function (response) {
@@ -210,7 +194,7 @@ function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
           setLoading(false)
           Alerts.SuccessNormal("Query accepted successfully.")
           getPendingforAcceptance();
-          updateTab(3);
+          updateTab(2);
         } else if (response.data.code === 0) {
           setLoading(false)
         }
@@ -239,13 +223,13 @@ function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
             loading ?
               <Spinner color="primary" />
               :
-              <BootstrapTable
-                bootstrap4
-                keyField="id"
-                data={pendingData}
-                columns={columns}
-                rowIndex
-              />
+              <DataTablepopulated 
+              bgColor="#6e557b"
+              keyField= {"assign_no"}
+              data={pendingData}
+              
+              columns={columns}>
+               </DataTablepopulated> 
           }
           <RejectedModal
             rejectHandler={rejectHandler}

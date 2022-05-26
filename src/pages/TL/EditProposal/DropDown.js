@@ -4,7 +4,7 @@ class Select extends Component {
   render() {
     const { label, value, handleChange, data } = this.props;
 
-    console.log("value-",value)
+ 
     return (
       <Fragment>
         <label>

@@ -1,6 +1,4 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { baseUrl } from "../../config/config";
+import React from "react";
 import { Link, useHistory } from "react-router-dom";
 import CustomerNotification from "./CustomerNotification";
 import LockOpenIcon from '@material-ui/icons/LockOpen';
@@ -17,38 +15,36 @@ function NavWrapper(props) {
   const tlkey = window.localStorage.getItem("tlkey");
   const tpkey = window.localStorage.getItem("tpkey")
 
-  // const CustEmail = window.localStorage.getItem("email");
-console.log("porps", email, feedbackNumber)
 
   return (
     <>
-      <div class="navbar-wrapper">
-        <div class="navbar-container" style={{ background: color }}>
-          <div class="collapse navbar-collapse show" id="navbar-mobile">
-            <ul class="nav navbar-nav mr-auto float-left">
-              <li class="nav-item d-block d-md-none">
+      <div className="navbar-wrapper">
+        <div className="navbar-container" style={{ background: color, borderBottom: "2px solid #787878" }}>
+          <div className="collapse navbar-collapse show" id="navbar-mobile">
+            <ul className="nav navbar-nav mr-auto float-left">
+              <li className="nav-item d-block d-md-none">
                 <a
-                  class="nav-link nav-menu-main menu-toggle hidden-xs is-active"
+                  className="nav-link nav-menu-main menu-toggle hidden-xs is-active"
                   href="#"
                 >
-                  <i class="fa fa-bars"></i>
+                  <i className="fa fa-bars"></i>
                 </a>
               </li>
 
-              <li class="nav-item dropdown navbar-search">
-                <ul class="dropdown-menu">
-                  <li class="arrow_box">
+              <li className="nav-item dropdown navbar-search">
+                <ul className="dropdown-menu">
+                  <li className="arrow_box">
                     <form>
-                      <div class="input-group search-box">
-                        <div class="position-relative has-icon-right full-width">
+                      <div className="input-group search-box">
+                        <div className="position-relative has-icon-right full-width">
                           <input
-                            class="form-control"
+                            className="form-control"
                             id="search"
                             type="text"
                             placeholder="Search here..."
                           />
-                          <div class="form-control-position navbar-search-close">
-                            <i class="fa fa-times"> </i>
+                          <div className="form-control-position navbar-search-close">
+                            <i className="fa fa-times"> </i>
                           </div>
                         </div>
                       </div>
@@ -57,38 +53,38 @@ console.log("porps", email, feedbackNumber)
                 </ul>
               </li>
 
-              <li>
-                <h4 class="brand-text text-white">{CommonServices.capitalizeFirstLetter(name)}: {JSON.parse(email)} </h4>
+              <li style={{zIndex: 99, margin: "auto"}}>
+                <h4 className="contentTitle">{name == "customer" ? CommonServices.capitalizeFirstLetter("client") : CommonServices.capitalizeFirstLetter(name)}: {JSON.parse(email)} </h4>
               </li>
              
             </ul>
 
-            <ul class="nav navbar-nav float-right">
+            <ul className="nav navbar-nav float-right" style={{display: "flex", flexDirection: "row"}}>
 
               {name == "customer" && (
-                <CustomerNotification tokenKey={userId} name={name} />
+                <CustomerNotification panel="client" tokenKey={userId} name={name} />
               )}
 
               {name == "admin" && (
-                <CustomerNotification tokenKey={adminkey} name={name} />
+                <CustomerNotification  panel="admin" tokenKey={adminkey} name={name} />
               )}
 
-              {name == "teamleader" && (
-                <CustomerNotification tokenKey={tlkey} name={name} />
+              {name == "Team Leader" && (
+                <CustomerNotification panel="teamleader" tokenKey={tlkey} name={name} />
               )}
-               {name == "taxprofessional" && (
-                <CustomerNotification tokenKey={tpkey} name={name} />
+               {name == "Tax Professional" && (
+                <CustomerNotification panel="taxprofessional" tokenKey={tpkey} name={name} />
               )}
 
 
-              <li class="dropdown dropdown-user nav-item">
+              <li className="dropdown dropdown-user nav-item">
                 <a
-                  class="dropdown-toggle nav-link dropdown-user-link"
+                  className="dropdown-toggle nav-link dropdown-user-link"
                   href="#"
                   data-toggle="dropdown"
                   aria-expanded="false"
                 >
-                  <span class="avatar avatar-online">
+                  <span className="avatar avatar-online">
                     <img
                       src="https://cdn1.vectorstock.com/i/1000x1000/40/30/user-glyph-icon-web-and-mobile-admin-sign-vector-18444030.jpg"
                       alt="avatar"
@@ -97,12 +93,12 @@ console.log("porps", email, feedbackNumber)
                   </span>
                 </a>
 
-                <div class="dropdown-menu dropdown-menu-right">
-                  <div class="arrow_box_right">
+                <div className="dropdown-menu dropdown-menu-right changePassword">
+                  <div className="arrow_box_right">
 
                     {name == "customer" && (
                       <Link to="/customer/change-password">
-                        <div class="dropdown-item"
+                        <div className="dropdown-item" 
                           style={{ cursor: "pointer" }}>
                           <VpnKeyIcon />
                           <span style={{ marginLeft: "3px" }}>Change Password</span>
@@ -111,7 +107,7 @@ console.log("porps", email, feedbackNumber)
                     )}
 
                     <div
-                      class="dropdown-item"
+                      className="dropdown-item"
                       onClick={logout}
                       style={{ cursor: "pointer" }}
                     >
@@ -131,6 +127,5 @@ console.log("porps", email, feedbackNumber)
 }
 
 export default NavWrapper;
-
 
 

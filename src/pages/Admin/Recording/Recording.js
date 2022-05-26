@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import Layout from "../../../components/Layout/Layout";
-import ModalVideo from "react-modal-video";
 import {
     Card,
     CardHeader,
@@ -8,29 +7,42 @@ import {
     CardTitle,
     Row,
     Col,
-    Table,
-    Button,
+   
 } from "reactstrap";
 import CloseIcon from '@material-ui/icons/Close';
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import BootstrapTable from "react-bootstrap-table-next";
 import "react-modal-video/scss/modal-video.scss";
-import ReactHlsPlayer from 'react-hls-player'
-import { VideoLibraryRounded } from "@material-ui/icons";
 import ReactPlayer from "react-player";
-import { padEnd } from "lodash";
+import { useParams } from "react-router";
+import {Link} from 'react-router-dom'
 import RecordingFilter from "../../../components/Search-Filter/RecordingFilter";
-// import '../../../../node_modules/react-modal-video/scss/modal-video.scss';
-
+import RecordingEdit from './RecordingEdit';
+import './recording.css';
+import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
 
 
 function Recording() {
+    const getId = useParams()
     const userid = window.localStorage.getItem("adminkey");
     const [feedbackData, setFeedBackData] = useState([]);
     const [isOpen, setIsOpen] = useState(false);
     const [videoid, setVideoId] = useState(null);
     const [records, setRecords] = useState([]);
+    const [showEditModal, setShowEditModal] = useState(false)
+    const [editData, setEditData] = useState({
+        participant : '',
+        editMessage : '',
+        assignid : '',
+        id : ''
+    })
+    const token = window.localStorage.getItem("adminToken")
+    const myConfig = {
+        headers : {
+         "uit" : token
+        }
+      }
     const openModal = (videoContent) => {
       
         setIsOpen(true);
@@ -47,35 +59,28 @@ function Recording() {
     }
     const getRecording = () => {
         axios
-            .get(`${baseUrl}/tl/callRecordingPostlist?uid=${JSON.parse(userid)}`)
+            .get(`${baseUrl}/admin/callRecordingPostlist?uid=${JSON.parse(userid)}`, myConfig)
             .then((res) => {
-                console.log(res);
+             
                 if (res.data.code === 1) {
                     setFeedBackData(res.data.result);
                     setRecords(res.data.result.length)
                 }
             });
     };
-    const modalBox = {
-        display : "flex",
-        position : "absolute",
-        top : "10%",
-        left : "0%",
-        botttom: "0%", 
-        right: "0%",
-       
-        width : "100%", 
-        height: "auto"
+
+    const editRecording = (participants, assign_id, message, id) => {
+   
+        setShowEditModal(!showEditModal)
+        setEditData({
+            participant : participants,
+            editMessage : message,
+            assignid : assign_id,
+            id : id
+        })
     }
-const canBtn = {
-    position: "absolute",
-    top: "0",
-    right: "10px",
-    left: "90%",
-    padding: "20px",
-    cursor : "pointer", 
-    color : "red"
-}
+   
+
 
     const columns = [
         {
@@ -84,61 +89,75 @@ const canBtn = {
             formatter: (cellContent, row, rowIndex) => {
                 return rowIndex + 1;
             },
-            headerStyle: () => {
-                return { fontSize: "12px", width: "8px", padding : "9px 5px" };
-            },
+          
         },
         {
             text: "Date",
             sort: true,
             dataField: "created_date",
-            headerStyle: () => {
-                return { fontSize: "12px", width: "30px" };
-            },
+          
         },
         {
             text: "Query No",
-            dataField: "assign_id",
-            headerStyle: () => {
-                return { fontSize: "12px", width: "20px" };
-            },
+            dataField: "",
+           
+            formatter : function formatter(cell, row){
+                let a = row.assign_id.split("-")[row.assign_id.split("-").length - 1]
+                return <>
+                <Link
+                to = {{
+                    pathname : `/admin/queries/${a}`,
+                    routes : "recording"
+                }}>
+                {row.assign_id}
+                </Link>
+                </>
+            }
         },
         
 
         {
             text: "Participants",
             dataField: "participants",
-            headerStyle: () => {
-                return { fontSize: "12px", width: "40px" };
-            },
+           
         },
        
         {
             text: "Summary of Discussion",
             dataField: "message",
-            headerStyle: () => {
-                return { fontSize: "12px", width: "80px" };
-            },
+          
         },
         {
             text: "Action",
-            headerStyle: () => {
-                return { fontSize: "12px", width: "20px" };
-                
-            },
+           
             formatter: function nameFormatter(cell, row) {
              
                 var recording = row.file.split(",");
                 let a = 1;
+                console.log(row.file.split(","))
                 return (
                     <>
+                   <div>
+                    {row.record_by === JSON.parse(userid) && row.message === null ?
+                             <i
+                             className="fa fa-edit"
+                             style={{
+                               fontSize: 18,
+                               cursor: "pointer",
+                               marginLeft: "8px",
+                             }}
+                             onClick = {() => editRecording(row.participants, row.assign_id, row.message, row.id)}
+                           ></i> : ""}
+                    </div>
                         <div>
                             {
                                 recording.map((record) => {
                                    return(
                                 <>
                                 <p style={videoIcon}>
-                                <span>{a++}</span>   <i
+                               {record.length === 0 ? "" : 
+                               <>
+                                 <span>{a++}</span>   <i
                                     className="material-icons"
                                     style={{
                                         cursor: "pointer",
@@ -150,6 +169,9 @@ const canBtn = {
                                     play_circle_outline
                                  
                                 </i>
+                              
+                               </>}
+                              
                                 </p>
                                 </>
                                    )
@@ -165,12 +187,10 @@ const canBtn = {
 
 
 
-    console.log("videourl", videoid)
-
     return (
      <>
        <Layout adminDashboard="adminDashboard" adminUserId={userid}>
-           <div style={{position:"relative", height : "100vh", overflow : "scroll"}}>
+       
                 <Card>
                 <CardHeader>
                     <Row>
@@ -184,45 +204,57 @@ const canBtn = {
                 <RecordingFilter
                        setData={setFeedBackData}
                     //    getData={getInCompleteAssingment}
-                       SearchQuery="SearchQuery"
+                       SearchQuery="adminQuery"
                       setRecords={setRecords}
                        records={records} 
                        userid = {userid}
                        getRecording = {getRecording}
                     /> 
-                    <BootstrapTable
-                        bootstrap4
-                        keyField="id"
-                        data={feedbackData}
-                        columns={columns}
-                        rowIndex
-                    />
+                             <DataTablepopulated 
+                   bgColor="#42566a"
+                   keyField= {"assign_no"}
+                   data={feedbackData}
+                   columns={columns}>
+                    </DataTablepopulated>
                 </CardBody>
 
             </Card>
           
-           </div>
             
-           {isOpen === true ?
+          
+          <RecordingEdit 
+          isOpen = {showEditModal}
+          recordingHandler = {editRecording}
+          participants = {editData.participant}
+          message = {editData.editMessage}
+          assignid = {editData.assignid}
+          editId = {editData.id}
+          recList = {getRecording}/>
+                   {isOpen === true ?
           
                  
-                 <div style={modalBox}>
-                 <span style={canBtn} onClick= {() => setIsOpen(false)}> <CloseIcon color="red" /> </span>
-                
-       
-          <div style={{margin: "50px 0 0 0"}}>
-          <ReactPlayer
-            url={videoid}
-            controls={true}
-            playing={true}
-            width='100%'
-            height='100%'
-           />
-              </div>
-            
-           </div>
-         : ""}
+          <div className="modalBox">
+          <div className="boxContainer">
+          <div className="canBtn"  title="cancel">
+              <h4>Recording Player</h4>
+              <CloseIcon  onClick= {() => setIsOpen(false)} id="myBtn"/> </div>
+         
+
+         <div className="my2">
+         <ReactPlayer
+           url={videoid}
+           controls={true}
+           playing={true}
+           width='100%'
+           height='100%'
+          />
+             </div>
+          </div>
+     
+    </div>
+  : ""}
          </Layout>
+
            </>
 
     );

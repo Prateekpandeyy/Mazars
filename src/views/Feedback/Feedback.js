@@ -18,7 +18,9 @@ import classNames from "classnames";
 import Alerts from "../../common/Alerts";
 import Mandatory from "../../components/Common/Mandatory";
 import Loader from "../../components/Loader/Loader";
-
+import { Spinner } from 'reactstrap';
+import ShowError from "../../components/LoadingTime/LoadingTime";
+import { Link } from "react-router-dom";
 
 const Schema = yup.object().shape({
   p_feedback: yup.string().required(""),
@@ -26,20 +28,20 @@ const Schema = yup.object().shape({
 
 
 
-function Feedback() {
+function Feedback(props) {
 
   const { handleSubmit, register, errors, reset } = useForm({
     resolver: yupResolver(Schema),
   });
-
+  const token = window.localStorage.getItem("clientToken")
   const history = useHistory();
   const { id } = useParams();
   const userId = window.localStorage.getItem("userid");
   const [loading, setLoading] = useState(false);
-
+ 
 
   const onSubmit = (value) => {
-    console.log("value :", value)
+
     setLoading(true)
     let formData = new FormData();
     formData.append("assign_no", id);
@@ -49,10 +51,13 @@ function Feedback() {
     axios({
       method: "POST",
       url: `${baseUrl}/customers/PostUserFeedback`,
+      headers : {
+        uit : token
+      },
       data: formData,
     })
       .then(function (response) {
-        console.log("res-", response);
+    
         if (response.data.code === 1) {
           setLoading(false)
           reset();
@@ -66,7 +71,7 @@ function Feedback() {
         }
       })
       .catch((error) => {
-        console.log("erroror - ", error);
+      ShowError.LoadingError(setLoading)
       });
   };
 
@@ -76,14 +81,16 @@ function Feedback() {
       <Card>
         <CardHeader>
           <Row>
-            <Col md="4">
-              <button
-                class="btn btn-success ml-3"
-                onClick={() => history.goBack()}
-              >
-                <ArrowBackIcon />
-                Go Back
-              </button>
+          <Col md="4">
+            <Link
+                  to={{
+                    pathname: `/customer/${props.location.routes}`,
+                    index: props.location.index,
+                  }}
+                >
+                  <button class="customBtn">Go Back</button>
+                </Link>
+              
             </Col>
             <Col md="8">
               <h4>Feedback</h4>
@@ -92,10 +99,7 @@ function Feedback() {
         </CardHeader>
 
         <CardBody>
-          {
-            loading ?
-              <Loader />
-              :
+         
               <>
                 <form onSubmit={handleSubmit(onSubmit)}>
                   <div class="row" style={{ display: "flex", justifyContent: "center" }}>
@@ -130,16 +134,22 @@ function Feedback() {
                           </div>
                         )}
                       </div>
-                      <button type="submit" className="btn btn-primary">
-                        submit
-                      </button>
+                       
+                  {
+                      loading ?
+                        <Spinner color="primary" />
+                        :
+                        <button className="customBtn" type="submit">
+                         Submit
+                        </button>
+                    }
                     </div>
                   </div>
 
                 </form>
                 <Mandatory />
               </>
-          }
+          
         </CardBody>
       </Card>
     </Layout>
@@ -147,30 +157,3 @@ function Feedback() {
 }
 
 export default Feedback;
-
-
-{/* <select
-                      class="form-control"
-                      name="p_assignment"
-                      ref={register}
-                    >
-                      <option value="">--select--</option>
-
-                      {assignment.map((p, i) => (
-                        <option key={i} value={p.assign_no}>
-                          {p.assign_no}
-                        </option>
-                      ))}
-                    </select> */}
- // useEffect(() => {
-  //   const getAssingment = () => {
-  //     axios.get(`${baseUrl}/customers/getAssignedAssignments?user=${JSON.parse(userId)}`).then((res) => {
-  //       console.log(res);
-  //       if (res.data.code === 1) {
-  //         setAssingment(res.data.result);
-  //       }
-  //     });
-  //   };
-
-  //   getAssingment();
-  // }, []);

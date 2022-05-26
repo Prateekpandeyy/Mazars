@@ -13,10 +13,10 @@ import { useHistory } from "react-router-dom";
 import classNames from "classnames";
 import Mandatory from "../../../components/Common/Mandatory";
 import { Spinner } from "reactstrap";
-
+import EmailValidation from "../../../components/Common/EmailValidation";
 const Schema = yup.object().shape({
   p_name: yup.string().required("required name"),
-  p_email: yup.string().email("invalid email").required("required email"),
+  // p_email: yup.string().email("invalid email").required("required email"),
   p_phone: yup
     .string()
     .required("required phone no")
@@ -63,6 +63,18 @@ function AddNew() {
   const [post_na, setPost_na] = useState()
   const [tpEmail, setTpEmail] = useState('')
   const [loading, setLoading] = useState(false);
+  const [emailError, setEmailError] = useState(null);
+  const [email2, setEmail2] = useState([]);
+  const token = window.localStorage.getItem("adminToken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
+  const [posError, setposError] = useState({
+    available : '',
+    exits : ''
+  });
   var kk = []
   var vv = []
   var post_name;
@@ -78,14 +90,14 @@ function AddNew() {
   }))
 
   const teamleader1 = teamleader.map(v => (
-    console.log(v), {
+  {
       "value": v.id,
       "label": v.name
     }))
   useEffect(() => {
     const getTeamLeader = () => {
-      axios.get(`${baseUrl}/tl/getTeamLeader`).then((res) => {
-        console.log(res);
+      axios.get(`${baseUrl}/admin/getTeamLeader`, myConfig).then((res) => {
+      
         if (res.data.code === 1) {
           setTeamLeader(res.data.result);
         }
@@ -97,7 +109,7 @@ function AddNew() {
   useEffect(() => {
     const getCategory = () => {
       axios.get(`${baseUrl}/customers/getCategory?pid=0`).then((res) => {
-        console.log(res);
+
         if (res.data.code === 1) {
           setTax(res.data.result);
         }
@@ -110,7 +122,7 @@ function AddNew() {
   useEffect(() => {
     const getSubCategory = () => {
       axios.get(`${baseUrl}/customers/getCategory?pid=${store}`).then((res) => {
-        console.log(res);
+     
         if (res.data.code === 1) {
           setTax2(res.data.result);
         }
@@ -121,7 +133,7 @@ function AddNew() {
 
   // OnSubmit Function
   const onSubmit = (value) => {
-    console.log("tealId", tl)
+
     var categeryList = []
     var categeryName = []
     var categeryName = []
@@ -132,12 +144,7 @@ function AddNew() {
       categeryList.push(i.value)
       categeryName.push(i.label)
     })
-    //  categoryData.map((i) => {
-    //    kk.push(i.value)
-    //    parentCategoryName.push(i.label)
-    //  })
-
-    console.log("subData", categoryData.label)
+   
     if (custCate.length < 1) {
       setError("Please select at least one value")
     }
@@ -150,7 +157,7 @@ function AddNew() {
     }
 
     else {
-      console.log("value :", value);
+
       setLoading(true)
     
       let formData = new FormData();
@@ -158,10 +165,10 @@ function AddNew() {
       formData.append("name", value.p_name);
       formData.append("phone", value.p_phone);
       formData.append("tp_id", tl);
-      formData.append("email", value.p_email);
+      formData.append("email", email2);
       formData.append("post_name", value.post_name)
+      formData.append("pcat_id", mcategory);
       formData.append("cat_id", categeryList);
-      formData.append("pcat_id", categoryData.value);
       formData.append("allpcat_id", categoryData.label)
       formData.append("allcat_id", categeryName)
       formData.append("type", "tp");
@@ -169,19 +176,22 @@ function AddNew() {
 
       axios({
         method: "POST",
-        url: `${baseUrl}/tp/AddTaxProfessional`,
+        url: `${baseUrl}/admin/AddTaxProfessional`,
+        headers : {
+          uit :token
+        },
         data: formData,
       })
         .then(function (response) {
-          console.log("res-", response);
+        
           if (response.data.code === 1) {
             setLoading(false)
     
-            var variable = "Tax Professional Created Successfully"
+           
 
             Swal.fire({
               "title": "success",
-              "html": "Tax Professional Created Successfully",
+              "html": "Tax Professional created successfully",
               "icon": "success"
             })
  
@@ -201,7 +211,7 @@ function AddNew() {
           }
         })
         .catch((error) => {
-          console.log("erroror - ", error);
+       
         });
     };
   }
@@ -230,19 +240,11 @@ function AddNew() {
     setmcatname((oldData) => {
       return [...oldData, v.label]
     })
-    // v.map((val) => {
-    //   vv.push(val.value)
-    //   setmcategory(val.value);
-    //   setmcatname((oldData) => {
-    //     return [...oldData, val.label]
-    //   })
-    //   setStore(val.value)
-    // })
 
 
     if (vv.length > 0) {
       if (vv.includes("1") && vv.includes("2")) {
-        console.log("hdd")
+
       }
       else if (vv.includes("1")) {
 
@@ -288,15 +290,15 @@ function AddNew() {
 
   // Phone Validation function 
   const phoneValidation = () => {
-    console.log(phone.length)
+   
     if (phone.length > 10) {
-      console.log(phone.length)
+    
       setNumAvail("")
       setNumExist("")
-      setIndNumError("Maximum 10 digit should be enter")
+      setIndNumError("Maximum 10 digits can be entered")
     }
     else if (phone.length < 10) {
-      console.log(phone.length)
+     
       setNumAvail("")
       setNumExist("")
       setIndNumError("Minimum 10 digit should be enter")
@@ -313,101 +315,83 @@ function AddNew() {
     }
   }
 
-  //eamil onchange
-  const emailHandler = (e) => {
-    setEmail(e.target.value);
-    console.log(e.target.value.length)
-    if (e.target.value.length < 1) {
-      setWemail("")
-    }
-  };
-
-
-  //email validaation with api
-  const emailValidation = (key) => {
-
-    var validRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    if (email.match(validRegex)) {
-      setWemail("");
-      let formData = new FormData();
-      formData.append("email", email);
-      formData.append("type", 1);
-
-      axios({
-        method: "POST",
-        url: `${baseUrl}/tl/validateregistration`,
-        data: formData,
-      })
-        .then(function (response) {
-          console.log("resEmail-", response);
-          if (response.data.code === 1) {
-            setValiemail(response.data.result)
-            setInvalid('')
-          } else if (response.data.code === 0) {
-            setInvalid(response.data.result)
-            setValiemail('')
-          }
-        })
-        .catch((error) => {
-          console.log("erroror - ", error);
-        });
-    }
-    else {
-      setWemail("invalid email")
-    }
-
-  }
-
+ 
   // Tl Function 
   const tlFun = (e) => {
     var a;
-    console.log("id", e)
+ 
     teamleader.filter((p) => {
 
       if (p.id == e) {
-        console.log("pdi", p.id)
+      
         setTpEmail(p.email)
         setTl(p.id)
         setPost_na(p.post_name)
         a = p.post_name
-        console.log("aa", a)
+       
       }
     })
 
-    console.log(post_na)
+    
   }
 
-
+  const checktlPost = (e) => {
+    setPostName(e.target.value)
+    let a = e.target.value;
+    let formData = new FormData();
+    formData.append("tlpost", a)
+  
+    axios({
+      method: "POST",
+      url : `${baseUrl}/admin/validateTLPost`,
+      headers : {
+        uit : token
+      },
+      data: formData,
+    })
+    .then(function (res) {
+      if(res.data.code === 1){
+        setposError({
+          available : "Post available"
+        })
+      }
+      else{
+        setposError({
+          exits : "Post already exits"
+        })
+      }
+    })
+    }
   return (
     <Layout adminDashboard="adminDashboard" adminUserId={userid}>
       <Card>
         <CardHeader>
-          <div class="col-md-12 d-flex">
+          <div className="col-md-12 d-flex">
             <div>
               <button
-                class="btn btn-success ml-3"
+                className="autoWidthBtn ml-3"
                 onClick={() => history.goBack()}
               >
-                <i class="fas fa-arrow-left mr-2"></i>
+                <i className="fas fa-arrow-left mr-2"></i>
                 Go Back
               </button>
             </div>
-            <div class="text-center ml-5">
+            <div className="text-center ml-5">
               <h4>Add New Tax Professionals</h4>
             </div>
           </div>
         </CardHeader>
 
         <CardHeader>
-          <div class="row mt-3">
-            <div class="col-lg-2 col-xl-2 col-md-12"></div>
-            <div class="col-lg-8 col-xl-8 col-md-12">
+          <div className="row mt-3">
+            <div className="col-lg-2 col-xl-2 col-md-12"></div>
+            <div className="col-lg-8 col-xl-8 col-md-12">
               <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
 
-                <div class="row">
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label>Teamleader post name <span className="declined">*</span></label>
+                <div className="row">
+                  <div className="col-md-6">
+                    <div className="form-group">
+                      <label>Team Leader post name <span className="declined">*</span></label>
 
                       <select
                         name="p_teamleader"
@@ -420,7 +404,7 @@ function AddNew() {
                         <option value="">--select--</option>
                         {teamleader.map((p) =>
                         (
-                          console.log("pp", p.id),
+
                           <option key={p.Id} value={p.id}>
                             {p.post_name}
                           </option>
@@ -436,17 +420,18 @@ function AddNew() {
 
                   </div>
 
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label> Teamleader post email <span className="declined">*</span></label>
+                  <div className="col-md-6">
+                    <div className="form-group">
+                      <label> Team Leader post email <span className="declined">*</span></label>
                       <input
                         type="email"
+                        name="post_email"
                         className={classNames("form-control", {
-                          "is-invalid": errors.p_email,
+                          "is-invalid": errors.post_email,
                         })}
                         disabled
                         defaultValue={tpEmail}
-                        name="post_email"
+                       
                         ref={register}
 
                       />
@@ -455,43 +440,41 @@ function AddNew() {
                     </div>
                   </div>
                 </div>
-                <div class="row">
-                  <div class="col-md-6">
-                    <div class="form-group">
+                <div className="row">
+                  <div className="col-md-6">
+                    <div className="form-group">
                       <label>TP post name <span className="declined">*</span></label>
                       <input
                         type="text"
                         name="post_name"
-
-
+                        onBlur={(e) => checktlPost(e)}
                         className={classNames("form-control", {
                           "is-invalid": errors.post_name,
                         })}
                         ref={register}
-
-
                       />
-
+ {posError.available ? 
+                    <p className="completed"> {posError.available}</p> : 
+                    <p className="declined">{posError.exits}</p>}
                     </div>
                   </div>
 
-                  <div class="col-md-6">
-                    <div class="form-group">
+                  <div className="col-md-6">
+                    <div className="form-group">
 
 
                       <label> TP post email <span className="declined">*</span></label>
-                      <input
-                        type="text"
-                        name="p_email"
-                        ref={register}
-
-
-                        className={classNames("form-control", {
-                          "is-invalid": errors.post_email,
-                        })}
-                        onChange={(e) => emailHandler(e)}
-                        onBlur={emailValidation}
-                      />
+                      
+                       <EmailValidation
+                     setWemail = {setWemail}
+                      wEmail = {wEmail} 
+                      invalid = {invalid}
+                       setEmailError = {setEmailError}
+                        setValiemail = {setValiemail} 
+                        emailError = {emailError} 
+                        setInvalid = {setInvalid}  
+                        setEmail2 = {setEmail2}
+                        name = "taxprofessional" />
                       {
                         wEmail ? <p className="declined">{wEmail}</p> : <>
                           {valiEmail ?
@@ -506,71 +489,10 @@ function AddNew() {
                   </div>
                 </div>
 
-                <div class="row">
+                <div className="row">
 
-
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label>Name <span className="declined">*</span></label>
-                      <input
-                        type="text"
-                        className={classNames("form-control", {
-                          "is-invalid": errors.p_name,
-                        })}
-                        name="p_name"
-                        ref={register}
-                      />
-
-                    </div>
-                  </div>
-
-                  <div class="col-md-6">
-                    <div class="form-group">
-
-
-                      <label> Email <span className="declined">*</span></label>
-                      <input
-                        type="text"
-                        name="personal_email"
-                        ref={register}
-
-
-                        className={classNames("form-control", {
-                          "is-invalid": errors.post_email,
-                        })}
-                      />
-
-                    </div>
-                  </div>
-
-                </div>
-                <div class="row">
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label>Phone Number <span className="declined">*</span></label>
-                      <input
-                        type="text"
-                        className={classNames("form-control", {
-                          "is-invalid": errors.p_phone,
-                        })}
-                        name="p_phone"
-                        ref={register}
-                        onChange={(e) => phoneHandler(e)}
-                        onBlur={phoneValidation}
-                      />
-                      {indNumError ? <p className="declined">{indNumError}</p> : <>
-                        {
-                          numAvail ?
-                            <p className="completed"> {numAvail}
-                            </p>
-                            :
-                            <p className="declined">{numExist}</p>
-                        }
-                      </>}
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
+                <div className="col-md-6">
+                    <div className="form-group">
                       <label>Category <span className="declined">*</span></label>
                       <Select options={options}
                         className={error ? "customError" : ""}
@@ -594,11 +516,8 @@ function AddNew() {
                       </Select>
                     </div>
                   </div>
-
-                </div>
-                <div className="row">
-                  <div class="col-md-6">
-                    <div class="form-group">
+                  <div className="col-md-6">
+                    <div className="form-group">
                       <label>Sub Category <span className="declined">*</span></label>
                       <Select isMulti options={options2}
                         className={error2 ? "customError" : ""}
@@ -627,16 +546,83 @@ function AddNew() {
                     </div>
                   </div>
                 </div>
+                <div className="row">
+                  <div className="col-md-6">
+                    <div className="form-group">
+                      <label>Phone Number <span className="declined">*</span></label>
+                      <input
+                        type="text"
+                        className={classNames("form-control", {
+                          "is-invalid": errors.p_phone,
+                        })}
+                        name="p_phone"
+                        ref={register}
+                        onChange={(e) => phoneHandler(e)}
+                        onBlur={phoneValidation}
+                      />
+                      {indNumError ? <p className="declined">{indNumError}</p> : <>
+                        {
+                          numAvail ?
+                            <p className="completed"> {numAvail}
+                            </p>
+                            :
+                            <p className="declined">{numExist}</p>
+                        }
+                      </>}
+                    </div>
+                  </div>
+                 
+                  <div className="col-md-6">
+                    <div className="form-group">
+                      <label>Name <span className="declined">*</span></label>
+                      <input
+                        type="text"
+                        className={classNames("form-control", {
+                          "is-invalid": errors.p_name,
+                        })}
+                        name="p_name"
+                        ref={register}
+                      />
+
+                    </div>
+                  </div>
+
+
+                </div>
+
+                <div className="row">
+
+                <div className="col-md-6">
+                    <div className="form-group">
+
+
+                      <label> Email <span className="declined">*</span></label>
+                      <input
+                        type="text"
+                        name="personal_email"
+                        ref={register}
+
+
+                        className={classNames("form-control", {
+                          "is-invalid": errors.post_email,
+                        })}
+                      />
+
+                    </div>
+                  </div>
+
+
+                                 </div>
                 {
                 loading ?
                   <Spinner color="primary" />
                   :
-                <button type="submit" className="btn btn-primary">
+                <button type="submit" className="customBtn">
                   Submit
                 </button> }
               </form>
             </div>
-            <div class="col-lg-2 col-xl-2 col-md-12">
+            <div className="col-lg-2 col-xl-2 col-md-12">
             </div>
 
             <Mandatory />

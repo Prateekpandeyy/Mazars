@@ -19,7 +19,7 @@ export default class YourComponent extends React.Component {
     handleChange1(i, e) {
         const { value } = e.target
         this.temp[i] = value
-        console.log(this.temp)
+
     
         this.setState({
             values: {
@@ -56,18 +56,18 @@ export default class YourComponent extends React.Component {
         var amount = this.props.installment_amount
         var date = this.props.due_date
 
-        const installment_amount = this.props.clearValue === false ? amount.split(',') : []
+        const installment_amount = amount.split(',');
         const due_date = date.split(',');
 
 
         this.props.paymentAmount(installment_amount);
-        this.props.paymentDate(due_date)
+       this.props.paymentDate(due_date)
     }
 
 
 
     render() {
-console.log("dateValue", this.props.clearValue)
+
         var amount = this.props.installment_amount
         var date = this.props.due_date
 

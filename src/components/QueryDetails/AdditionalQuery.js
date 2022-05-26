@@ -14,12 +14,10 @@ function AdditionalQuery({ displayQuery }) {
         >
           ADDITIONAL QUERIES
         </p>
-        <table class="table table-bordered">
+        <table className="table table-bordered">
           <thead>
             <tr>
-              {/* <th scope="col" style={{ width: "33.3%" }}>
-                Additional Queries
-              </th> */}
+             
               <th scope="col">Date Submission</th>
               <th scope="col">Documents</th>
             </tr>
@@ -38,7 +36,7 @@ function AdditionalQuery({ displayQuery }) {
                         href={`http://65.0.220.156/mazarapi/assets/image/${p.assign_no}/${p.upload_doc}`}
                         target="_blank"
                       >
-                        <i class="fa fa-photo"></i>
+                        <i className="fa fa-photo"></i>
                       </a>
                       <p style={{ marginLeft: "15px" }}>{p.upload_doc}</p>
                     </p>

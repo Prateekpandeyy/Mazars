@@ -59,7 +59,7 @@ function CategorySelect({ addfreshbtn, startbtn }, props) {
   useEffect(() => {
     const getCategory = () => {
       axios.get(`${baseUrl}/customers/getCategory?pid=0`).then((res) => {
-        console.log(res);
+      
         if (res.data.code === 1) {
           setTax(res.data.result);
         }
@@ -74,7 +74,7 @@ function CategorySelect({ addfreshbtn, startbtn }, props) {
     const getSubCategory = () => {
      if(store.length != -1){
       axios.get(`${baseUrl}/customers/getCategory?pid=${store}`).then((res) => {
-        console.log(res);
+       
         if (res.data.code === 1) {
           setTax2(res.data.result);
         }
@@ -86,7 +86,7 @@ function CategorySelect({ addfreshbtn, startbtn }, props) {
 
 
   const onSubmit = (value) => {
-    console.log("value :", value);
+
   };
 
   return (
@@ -94,9 +94,9 @@ function CategorySelect({ addfreshbtn, startbtn }, props) {
       <div
         style={{ display: "flex", justifyContent: "center", marginTop: "15px" }}
       >
-        <div class="col-sm-3" style={{ marginTop: "38px" }}>
+        <div className="col-sm-3" style={{ marginTop: "38px" }}>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <div class="form-group">
+            <div className="form-group">
               <label>Category <span className="declined">*</span></label>
               <select
                 className="form-control"
@@ -121,7 +121,7 @@ function CategorySelect({ addfreshbtn, startbtn }, props) {
               )}
             </div>
 
-            <div class="form-group">
+            <div className="form-group">
               <label>Sub Category <span className="declined">*</span></label>
               <select
                 name="p_tax2"
@@ -145,12 +145,12 @@ function CategorySelect({ addfreshbtn, startbtn }, props) {
               )}
             </div>
 
-            <div class="form-group">
+            <div className="form-group">
 
               {startbtn && (
                 <button
                   type="submit"
-                  class="btn btn-primary  btn-block"
+                  className="customBtn"
                   onClick={e => validation()} //
                 >
                   Submit
@@ -160,7 +160,7 @@ function CategorySelect({ addfreshbtn, startbtn }, props) {
               {addfreshbtn && (
                 <button
                   type="submit"
-                  class="btn btn-primary  btn-block"
+                  className="customBtn"
                   onClick={e => validation2()} //
                 >
                   Submit
@@ -182,16 +182,16 @@ function CategorySelect({ addfreshbtn, startbtn }, props) {
             </ModalHeader>
 
             <ModalBody>
-              <div class="modal-body">
+              <div className="modal-body">
                 <h4>Would you like to post a Query ?</h4>
               </div>
             </ModalBody>
 
-            <div class="modal-footer m-auto">
-              <Link to="/customer/register-yourself" class="btn btn-primary">
+            <div className="modal-footer m-auto">
+              <Link to="/customer/register-yourself" className="btn btn-primary">
                 Yes
               </Link>
-              <Link to="/customer/signin" class="btn btn-secondary">
+              <Link to="/customer/signin" className="btn btn-secondary">
                 No
               </Link>
             </div>

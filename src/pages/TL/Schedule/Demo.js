@@ -30,6 +30,8 @@ import Loader from "../../../components/Loader/Loader";
 
 function Demo() {
   const userId = window.localStorage.getItem("tlkey");
+  const userEmail = window.localStorage.getItem("tlEmail")
+  const em = JSON.parse(userEmail)
   const history = useHistory();
 
   const [loading, setLoading] = useState(false);
@@ -41,9 +43,14 @@ function Demo() {
   const [baseMode, SetbaseMode] = useState("avc");
   const [transcode, SetTranscode] = useState("interop");
   const [attendeeMode, SetAttendeeMode] = useState("video");
-  const [videoProfile, SetVideoProfile] = useState("480p_4");
+  const [videoProfile, SetVideoProfile] = useState("240p_4");
   var date = new Date();
-
+  const token = window.localStorage.getItem("tlToken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
   function convert(str) {
     var date = new Date(str),
       mnth = ("0" + (date.getMonth() + 1)).slice(-2),
@@ -60,9 +67,9 @@ function Demo() {
 
   const getData = () => {
     axios
-      .get(`${baseUrl}/tl/videoScheduler?tl_id=${JSON.parse(userId)}`)
+      .get(`${baseUrl}/tl/videoScheduler?tl_id=${JSON.parse(userId)}`, myConfig)
       .then((res) => {
-        console.log("res -", res);
+       
         var a = res.data.result.items;
         if (a) {
           setData(a.map(mapAppointmentData));
@@ -86,9 +93,9 @@ function Demo() {
 
   const getAssignmentNo = () => {
     axios
-      .get(`${baseUrl}/admin/getAllQuery?uid=${JSON.parse(userId)}`)
+      .get(`${baseUrl}/tl/getAllQuery?uid=${JSON.parse(userId)}`, myConfig)
       .then((res) => {
-        console.log(res);
+      
         if (res.data.code === 1) {
           var data = res.data.result;
 
@@ -96,22 +103,22 @@ function Demo() {
             text,
             ...rest,
           }));
-          console.log("dt--", newArrayOfObj);
+         
           setAssignmentData(newArrayOfObj);
         }
       });
   };
 
   const getUsers = () => {
-    axios.get(`${baseUrl}/tl/allAttendees?uid=${JSON.parse(userId)}`).then((res) => {
-      console.log(res);
+    axios.get(`${baseUrl}/tl/allAttendees?uid=${JSON.parse(userId)}`, myConfig).then((res) => {
+      
       if (res.data.code === 1) {
         var data = res.data.result;
         const newOwners = data.map(({ name: text, ...rest }) => ({
           text,
           ...rest,
         }));
-        console.log("dt---", newOwners);
+       
         setOwner(newOwners);
       }
     });
@@ -158,7 +165,7 @@ function Demo() {
     ...restProps
   }) => (
     <div onDoubleClick={() => B(data.owner)}>
-      {console.log("dataOwner", data.owner)}
+    
       <Appointments.Appointment {...restProps}>
         <div style={{ display: "flex" }}>
         <i
@@ -191,15 +198,76 @@ function Demo() {
 
   //handleJoin
   const handleJoin = (data) => {
-    // console.log("data", data);
+//     // console.log("data", data);
+// //  console.log("data", data)
+// // console.log(data.startDate)
+// var dt = new Date(data.startDate)
+// var dt2 = new Date()
+// let ck = dt.getMonth();
 
-    Cookies.set("channel_2", data.question_id);
-    Cookies.set("baseMode_2", baseMode);
-    Cookies.set("transcode_2", transcode);
-    Cookies.set("attendeeMode_2", attendeeMode);
-    Cookies.set("videoProfile_2", videoProfile);
-    // history.push("/teamleader/meeting/");
-    history.push(`/teamleader/meeting/${data.id}`);
+// let pp = dt2.getMonth();
+// let rr = dt2.getHours();
+// let ss = dt.getHours()
+// let mm = dt2.getMinutes() + 20
+// let dd = dt.getMinutes()
+// let ee = dt.getDate();
+// let eee = dt2.getDate()
+// //   console.log("dt", dt)
+// //   console.log(dt2.getDate())
+// //  console.log(dt.getMinutes())
+// //  console.log(dt2.getMinutes() + 20)
+// //  console.log("ck", ck)
+// //   console.log("dt2", dt2)
+// //   console.log("pp", pp)
+// //   console.log("mm", mm)
+// //   console.log("dd", dd)
+// //   console.log("ss", ss)
+// //   console.log("rr", rr)
+// //   console.log(ck == pp)
+// //   console.log(ee === eee)
+// //   console.log(ss == rr)
+// //   console.log(mm > dd)
+
+
+// if(ck == pp && ss == rr && ee == eee){
+
+
+// if(mm > dd){
+//   console.log("passed")
+  
+//   Cookies.set("channel_2", data.question_id);
+//   Cookies.set("baseMode_2", baseMode);
+//   Cookies.set("transcode_2", transcode);
+//   Cookies.set("attendeeMode_2", attendeeMode);
+//   Cookies.set("videoProfile_2", videoProfile);
+//   // history.push("/teamleader/meeting/");
+//   history.push(`/teamleader/meeting/${data.id}`);
+
+// }
+// else{
+// // return false
+// Cookies.set("channel_2", data.question_id);
+//   Cookies.set("baseMode_2", baseMode);
+//   Cookies.set("transcode_2", transcode);
+//   Cookies.set("attendeeMode_2", attendeeMode);
+//   Cookies.set("videoProfile_2", videoProfile);
+//   // history.push("/teamleader/meeting/");
+//   history.push(`/teamleader/meeting/${data.id}`);
+
+// }
+  //}
+  console.log("data", data.id)
+Cookies.set("channel_2", data.question_id);
+Cookies.set("baseMode_2", baseMode);
+Cookies.set("transcode_2", transcode);
+Cookies.set("attendeeMode_2", attendeeMode);
+Cookies.set("videoProfile_2", videoProfile);
+Cookies.set("tlid", data.id)
+// history.push("/teamleader/meeting/");
+history.push(`/teamleader/meeting/${data.id}`);
+
+
+
 
   };
 
@@ -244,6 +312,9 @@ console.log("cancle", cancel)
       axios({
         method: "POST",
         url: `${baseUrl}/tl/PostCallSchedule`,
+        headers : {
+          uit : token
+        },
         data: formData,
       })
         .then(function (response) {
@@ -307,6 +378,9 @@ console.log("cancle", cancel)
       axios({
         method: "POST",
         url: `${baseUrl}/tl/PostCallSchedule`,
+        headers : {
+          uit : token
+        },
         data: formData,
       })
         .then(function (response) {
@@ -331,7 +405,7 @@ console.log("cancle", cancel)
     }
 
     if (deleted !== undefined) {
-      console.log("deleted f", deleted);
+      console.log("deleted", deleted);
       setLoading(true)
       var value;
       data.filter((data) => {
@@ -350,7 +424,7 @@ console.log("cancle", cancel)
 
       Swal.fire({
         title: "Are you sure?",
-        text: "It will be permanently deleted !",
+        text: "It will be permanently deleted",
         type: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
@@ -358,7 +432,7 @@ console.log("cancle", cancel)
         confirmButtonText: "Yes, delete it!",
       }).then((result) => {
         if (result.value) {
-          axios.get(`${baseUrl}/tl/freeslot?id=${deleted}`).then((res) => {
+          axios.get(`${baseUrl}/tl/freeslot?id=${deleted}`, myConfig).then((res) => {
             console.log("res -", res);
             if (res.data.code === 1) {
               setLoading(false)
@@ -414,8 +488,9 @@ console.log("cancle", cancel)
           <Loader />
           :
           <>
-            <Paper>
-              <Scheduler data={data} height={570}>
+       <div style ={{display : "flex", height : "700px"}}>
+          <Paper>
+              <Scheduler data={data} >
                 <ViewState
                   defaultCurrentDate={currentDate}
                   defaultCurrentViewName="Week"
@@ -456,7 +531,11 @@ console.log("cancle", cancel)
                 />
               </Scheduler>
             </Paper>
+          </div>
+           
+          
           </>
+          
       }
     </>
   );

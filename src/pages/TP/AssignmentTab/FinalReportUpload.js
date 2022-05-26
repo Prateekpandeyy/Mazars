@@ -8,15 +8,21 @@ import Swal from "sweetalert2";
 import { Spinner } from 'reactstrap';
 
 
-function DraftReport({ fianlModal, uploadFinalReport, id, getAssignmentList }) {
+function DraftReport({ des, loading, setLoading, fianlModal, uploadFinalReport, id, getAssignmentList }) {
   const alert = useAlert();
   const { handleSubmit, register, reset } = useForm();
 
-  const [loading, setLoading] = useState(false);
+  const token = window.localStorage.getItem("tptoken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
+
 
 
   const onSubmit = (value) => {
-    console.log("value :", value);
+    des = false;
     setLoading(true)
 
     let formData = new FormData();
@@ -36,11 +42,12 @@ function DraftReport({ fianlModal, uploadFinalReport, id, getAssignmentList }) {
       .post(`${baseUrl}/tl/UploadReport`, formData, {
         headers: {
           "content-type": "multipart/form-data",
+          uit : token
         },
       })
       .then((response) => {
-        console.log(response.data);
-        if (response.data.code === 1) {
+      
+        if (response.data.code === 1  && des === false) {
           setLoading(false)
 
           var message = response.data.message
@@ -100,7 +107,7 @@ function DraftReport({ fianlModal, uploadFinalReport, id, getAssignmentList }) {
                 loading ?
                   <Spinner color="primary" />
                   :
-                  <button type="submit" className="btn btn-primary">
+                  <button type="submit" className="customBtn">
                     Upload
                   </button>
               }

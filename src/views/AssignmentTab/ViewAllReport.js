@@ -1,29 +1,22 @@
 import React, { useState, useEffect } from "react";
-import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from "reactstrap";
-import { useForm } from "react-hook-form";
+import { Modal, ModalHeader, ModalBody } from "reactstrap";
 import axios from "axios";
 import { baseUrl, ReportUrl } from "../../config/config";
-import { useAlert } from "react-alert";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
-import classNames from "classnames";
 import CommonServices from "../../common/common";
 import RejectedModal from "./RejectModal";
 import DiscardReport from "./DiscardReport";
 import Assignmodal from "./Assignmodal";
 import PublishIcon from '@material-ui/icons/Publish';
-
-const Schema = yup.object().shape({
-  p_chat: yup.string().required("required discussion"),
-});
-
+import {Typography} from "@material-ui/core";
+import MessageIcon from "../../components/Common/MessageIcon";
 
 function ViewReport({
   reportModal,
   ViewReport,
   report,
   getPendingforAcceptance,
-  dataItem
+  dataItem,
+  deleiverAble
 }) {
   const userId = window.localStorage.getItem("userid");
   const [data, setData] = useState([]);
@@ -32,12 +25,13 @@ function ViewReport({
   const [assignNo, setAssignNo] = useState('');
   const [nestedModal, setNestedModal] = useState(false);
   const [modaldoc, setModaldoc] = useState({})
+  const [ViewDiscussion, setViewDiscussion] = useState(false);
+  const token = window.localStorage.getItem("clientToken")
   const toggleNested = (key) => {
     setNestedModal(!nestedModal);
     setDocData(key)
   }
 
-  const [ViewDiscussion, setViewDiscussion] = useState(false);
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
   }
@@ -46,8 +40,67 @@ function ViewReport({
     getData();
   }, [report]);
 
-
+  const downloadpdf = (qid, name) => {
+    let userId, token;
+  
+    userId = window.localStorage.getItem("userid");
+    token = window.localStorage.getItem("clientToken")
+    const myConfig2 = {
+      headers : {
+       "uit" : token
+      },
+      responseType: 'blob'
+    }
+    axios.get(`${baseUrl}/customers/viewreportdocument?assign_no=${report}&id=${qid}` , myConfig2)
+    .then((res) => {
+     
+      if(res.status === 200){
+        window.URL = window.URL || window.webkitURL;
+           var url = window.URL.createObjectURL(res.data);
+           var a = document.createElement("a");
+           document.body.appendChild(a);
+           a.style = "display: none";
+           a.href = url;
+           console.log(res.headers)
+           a.download = name;
+           a.target = '_blank';
+           a.click();
+      }
+    })
+   }
+   const downloadpdfclient = (qid, name) => {
+    let userId, token;
+  
+    userId = window.localStorage.getItem("userid");
+    token = window.localStorage.getItem("clientToken")
+    const myConfig2 = {
+      headers : {
+       "uit" : token
+      },
+      responseType: 'blob'
+    }
+    axios.get(`${baseUrl}/customers/viewreportdocument?assign_no=${report}&id=${qid}&document=2` , myConfig2)
+    .then((res) => {
+     
+      if(res.status === 200){
+        window.URL = window.URL || window.webkitURL;
+           var url = window.URL.createObjectURL(res.data);
+           var a = document.createElement("a");
+           document.body.appendChild(a);
+           a.style = "display: none";
+           a.href = url;
+           console.log(res.headers)
+           a.download = name;
+           a.target = '_blank';
+           a.click();
+      }
+    })
+   }
   const getData = () => {
+   if(report === undefined){
+
+   }
+   else{
     let formData = new FormData();
     formData.append("assign_no", report);
     formData.append("uid", JSON.parse(userId));
@@ -55,17 +108,21 @@ function ViewReport({
     axios({
       method: "POST",
       url: `${baseUrl}/customers/getstagesinfo`,
+      headers: {
+        uit: token
+      },
       data: formData,
     })
       .then(function (response) {
-        console.log("res-", response);
+       
         if (response.data.code === 1) {
           setData(response.data.result)
         }
       })
       .catch((error) => {
-        console.log("erroror - ", error);
+      
       });
+   }
   }
   const additionalHandler = (p) => {
  setModaldoc(p.docid)
@@ -76,7 +133,7 @@ function ViewReport({
 
   //accept handler
   const acceptHandler = (key) => {
-    console.log("acceptHandler", key);
+   
 
     let formData = new FormData();
     formData.append("uid", JSON.parse(userId));
@@ -89,45 +146,45 @@ function ViewReport({
     axios({
       method: "POST",
       url: `${baseUrl}/customers/draftAccept`,
+      headers : {
+        uit : token
+      },
       data: formData,
     })
       .then(function (response) {
-        console.log("response-", response);
+   
         if (response.data.code === 1) {
           getData();
-          var variable = "Draft accepted successfully "
-          // Alerts.SuccessNormal(variable)
+         
         }
       })
       .catch((error) => {
-        console.log("erroror - ", error);
+     
       });
   };
 
-
+console.log("data", data)
 
   return (
     <div>
-      <Modal isOpen={reportModal} toggle={ViewReport} size="lg" scrollable>
+      <Modal isOpen={reportModal} toggle={ViewReport} size="lg">
         <ModalHeader toggle={ViewReport}>
-          <div style={{ display: "flex", justifyContent: "space-between", width: "55vw" }}>
-            <span>View All Reports</span>
-            <span>
-              <button class="btn btn-success"
-              onClick={() => ViewDiscussionToggel()}
-              >
+          
+           <Typography variant="h6">
+           View All Report 
+           </Typography>
+           <button class="autoWidthBtn" onClick={() => ViewDiscussionToggel()}>
                 View Discussion
               </button>
-            </span>
-          </div>
+           
         </ModalHeader>
         <ModalBody>
           <table class="table table-bordered">
             <thead>
               <tr>
-                <th scope="row">S.No</th>
-                <th scope="row">Date</th>
-                <th scope="row">Document</th>
+                <th scope="row" style={{border: `1px solid ${deleiverAble}`, color: "#fff", backgroundColor: `${deleiverAble}` , width: "50px"}}>S.No</th>
+                <th scope="row" style={{border: `1px solid ${deleiverAble}`, color: "#fff", backgroundColor: `${deleiverAble}`, width: "150px"}}>Date</th>
+                <th scope="row" style={{border: `1px solid ${deleiverAble}`, color: "#fff", backgroundColor: `${deleiverAble}`}}>Document</th>
               
                 {/* {
                   dataItem ?
@@ -135,12 +192,12 @@ function ViewReport({
                     :
                     null
                 } */}
-                <th scope="row">Uploaded file
+                <th scope="row" style={{border: `1px solid ${deleiverAble}`, color: "#fff", backgroundColor: `${deleiverAble}`}}>Uploaded file
                 </th>
                
                 {
                   dataItem ?
-                    dataItem.final_report ? null : <th scope="row">Action</th>
+                    dataItem.final_report ? null : <th scope="row" style={{border: `1px solid ${deleiverAble}`, color: "#fff", width: "100px", backgroundColor: `${deleiverAble}`}}>Action</th>
                     :
                     null
                 }
@@ -158,105 +215,91 @@ function ViewReport({
                       <tr>
                       {p.document && (
                         <p style={{ display: "flex" }}>
-                          <a
-                            href={`${ReportUrl}/${report}/${p.document}`}
-                            target="_blank"
-                          >
-                            <i class="fa fa-photo"></i>
-                          </a>
+                          <span onClick={() => downloadpdf(p.docid, p.document)} style={{display: "flex", cursor : "pointer"}}>
+                     <i className="fa fa-photo"></i>
+                      
+                         
                           <p style={{ marginLeft: "15px" }}>{p.document}</p>
+                          </span>
                         </p>
                       )}
                       </tr>
                      {p.customer_files && 
                       <tr>
+                        <span onClick={() => downloadpdfclient(p.docid, p.customer_files)} style={{display : "flex"}}>
+                     <i className="fa fa-photo"></i>
                      
-                      <a
-                            href={`${ReportUrl}/${report}/${p.customer_files}`}
-                            target="_blank"
-                          >
-                            <i class="fa fa-photo"></i> 
-                          </a> &nbsp; &nbsp; &nbsp;{p.customer_files}
+                          &nbsp; &nbsp; &nbsp;{p.customer_files}
+                          </span>
+                    
                     </tr> }
                     </td>
                   
                     <td>
-                    <p>  {p.stages_type == 2 && "Draft Report" || p.stages_type == 3 && "Final Report"}</p>
+                   {p.stages_type === "2" ?
+                   <p>Draft Report</p> : null}
+                   {p.stages_type === "3" ?
+                   <p>Final Report</p> : null}
                  <br></br> 
                  {p.customer_files === null ?  "" : <p>   Reviewed Report </p> }
                 </td>
-                    {
-                      p.stages_type == "2" ?
-                        <td>
-                          {
-                            p.status == "0" ?
-                              <div style={{ display: "flex", justifyContent: "space-around" }}>
+               
+  {p.stages_type === "2" ?
+ <div className="px-2">
+    <>
+   {
+        p.status === "1" ?
+          <div style={{ cursor: "pointer" }} title="Client Accepted">
+            <i
+              class="fa fa-check"
+              style={{
+                color: "blue",
+                fontSize: "16px",
+              
+              }}
+            ></i>
+          </div> :""}
 
-                                <div style={{ cursor: "pointer" }} title="Accept">
-                                  <i
-                                    class="fa fa-check"
-                                    style={{
-                                      color: "green",
-                                      fontSize: "16px",
-                                    }}
-                                    onClick={() => acceptHandler(p)}
-                                  ></i>
-                                </div>
-                              
-                                                      
-                                                
-                                <div title="Discussion">
-                                  <i
-                                    class="fa fa-comments-o"
-                                    style={{
-                                      fontSize: 16,
-                                      cursor: "pointer",
-                                      marginLeft: "8px",
-                                      color: "green"
-                                    }}
-                                    onClick={() => toggleNested(p)}
-                                  ></i>
-                                </div>
-                                {p.customer_files === null ?
-                                <div title="Upload Additional Documents"
-                                                            style={{ cursor: "pointer" }}
-                                                            onClick={() => additionalHandler(p)}
-                                                           
-                                                        >
-                                                            <PublishIcon color="secondary" />
-                                                        </div> : ""}
-                              </div>
-                              :
-                              p.status == "1" ?
-                                <div style={{ cursor: "pointer" }} title="Customer Accepted">
-                                  <i
-                                    class="fa fa-check"
-                                    style={{
-                                      color: "blue",
-                                      fontSize: "16px",
-                                    }}
-                                  ></i>
-                                </div> :
-                                p.status == "2" ?
-                                  <div title="Discussion">
-                                    <i
-                                      class="fa fa-comments-o"
-                                      style={{
-                                        fontSize: 16,
-                                        cursor: "pointer",
-                                        marginLeft: "8px",
-                                        color: "green"
-                                      }}
-                                      onClick={() => toggleNested(p)}
-                                    ></i>
-                                  </div> :
-                                  null
-                          }
-                        </td>
-                        :
-                        null
-                    }
+          {p.status === "2" && p.customer_files !== null ?
+          <p className="declined">Pending </p> : ""}
 
+
+
+
+         { p.status === "2" || p.status === "0" ?
+              <>
+              <div style={{display : "flex", flexDirection: "row"}}>
+               {p.status === "2" ? null :
+               <>
+             
+              {p.tlstatus ===  "0" ?
+              <div style={{ cursor: "pointer" }} title="Accept">
+<i
+  class="fa fa-check"
+  style={{
+    color: "green",
+    fontSize: "16px",
+  }}
+  onClick={() => acceptHandler(p)}
+></i>
+</div> : null}
+                <div title="Discussion" onClick={() => toggleNested(p)} className="ml-2">
+                
+             <MessageIcon />
+              </div>
+              
+              </> }
+                {p.customer_files === null ?
+<div title="Upload Additional Documents"
+        style={{ cursor: "pointer", display : "inline-flex" }}
+        onClick={() => additionalHandler(p)}
+       
+    >
+        <PublishIcon color="secondary" />
+    </div> : ""}
+    </div>
+    </> :""}</>
+   </div> : null}
                   </tr>
                 </tbody>
               ))
@@ -284,6 +327,7 @@ function ViewReport({
         ViewDiscussionToggel={ViewDiscussionToggel}
         ViewDiscussion={ViewDiscussion}
         report={report}
+        headColor={deleiverAble}
         getData={getData}
       />
     </div>

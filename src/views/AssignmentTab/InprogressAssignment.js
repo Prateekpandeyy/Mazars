@@ -1,61 +1,67 @@
 import React, { useState, useEffect } from "react";
-import Layout from "../../components/Layout/Layout";
 import axios from "axios";
-import { baseUrl, ReportUrl } from "../../config/config";
+import { baseUrl } from "../../config/config";
 import {
   Card,
   CardHeader,
   CardBody,
-  CardTitle,
-  Row,
-  Col,
-  Table,
 } from "reactstrap";
 import CustomerFilter from "../../components/Search-Filter/CustomerFilter";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import BootstrapTable from "react-bootstrap-table-next";
-import * as Cookies from "js-cookie";
-import { useAlert } from "react-alert";
-import FeedbackIcon from '@material-ui/icons/Feedback';
-import PaymentModal from "./PaymentModal";
 import RejectedModal from "./RejectModal";
 import ViewAllReportModal from "./ViewAllReport";
 import Records from "../../components/Records/Records";
 import DescriptionOutlinedIcon from '@material-ui/icons/DescriptionOutlined';
-import Alerts from "../../common/Alerts";
-import PaymentIcon from '@material-ui/icons/Payment';
 import DiscardReport from "../AssignmentTab/DiscardReport";
-
-
-
+import './index.css';
+import ModalManual from "../ModalManual/AllComponentManual";
+import DataTablepopulated from "../../components/DataTablepopulated/DataTabel";
+import {Modal, ModalHeader, ModalBody} from 'reactstrap';
+import MessageIcon, { ViewDiscussionIcon, HelpIcon} from "../../components/Common/MessageIcon";
 function InprogressAssignment() {
   const userId = window.localStorage.getItem("userid");
   const [assignmentDisplay, setAssignmentDisplay] = useState([]);
-  const [assignmentCount, setAssignmentQueries] = useState("");
   const [records, setRecords] = useState([]);
-
-  const [dataItem, setDataItem] = useState({});
+  const [assignNo, setAssignNo] = useState('');
+  const [ViewDiscussion, setViewDiscussion] = useState(false);
+ 
   const [rejectedItem, setRejectedItem] = useState({});
   const [report, setReport] = useState();
-
+  const [reportModal, setReportModal] = useState(false);
 
   const [rejectModal, setRejectModal] = useState(false);
+  const [openManual, setManual] = useState(false)
+  const token = window.localStorage.getItem("clientToken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
+  const needHelp = () => {
+      
+      setManual(!openManual)
+  }
   const rejectHandler = (key) => {
     setRejectModal(!rejectModal);
     setRejectedItem(key);
   };
+  var clcomp= {
+    color: "green"
+  }
+  var clinpro = {
+    color : "blue"
+  }
 
-
-  const [reportModal, setReportModal] = useState(false);
+  
   const ViewReport = (key) => {
     setReportModal(!reportModal);
     setReport(key.assign_no);
-    setDataItem(key)
+  
   };
 
 
-  const [assignNo, setAssignNo] = useState('');
-  const [ViewDiscussion, setViewDiscussion] = useState(false);
+  
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key)
@@ -69,13 +75,12 @@ function InprogressAssignment() {
   const getAssignmentData = () => {
     axios
       .get(
-        `${baseUrl}/customers/completeAssignments?user=${JSON.parse(userId)}&status=1`
+        `${baseUrl}/customers/completeAssignments?user=${JSON.parse(userId)}&status=1`, myConfig
       )
       .then((res) => {
-        console.log(res);
+       
         if (res.data.code === 1) {
           setAssignmentDisplay(res.data.result);
-          setAssignmentQueries(res.data.result.length);
           setRecords(res.data.result.length);
         }
       });
@@ -88,19 +93,19 @@ function InprogressAssignment() {
       formatter: (cellContent, row, rowIndex) => {
         return rowIndex + 1;
       },
-      headerStyle: () => {
-        return { fontSize: "12px", width: "50px" };
-      },
+      headerStyle : () => {
+        return( {
+            width: "50px"
+        })
+    } 
     },
     {
       dataField: "created",
       text: "Date",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
-      formatter: function dateFormat(cell, row) {
-        console.log("dt", row.created);
+      
+       formatter: function dateFormat(cell, row) {
+       
         var oldDate = row.created;
         if (oldDate == null) {
           return null;
@@ -111,54 +116,94 @@ function InprogressAssignment() {
     {
       dataField: "assign_no",
       text: "Query No",
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
+     
       formatter: function nameFormatter(cell, row) {
-        console.log(row);
-        return (
-          <>
-            <Link to={`/customer/my-assingment/${row.id}`}>
-              {row.assign_no}
-            </Link>
-          </>
-        );
+       
+          return (
+              <>
+                     <Link
+                          to={{
+                              pathname: `/customer/my-assingment/${row.id}`,
+                              index : 1,
+                              routes: "assignment",
+                          }}
+                      >
+                          {row.assign_no}
+                      </Link>
+              </>
+          );
       },
+  
     },
     {
       dataField: "parent_id",
       text: "Category",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
+      
     },
     {
       dataField: "cat_name",
       text: "Sub Category",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
+      
     },
     {
       dataField: "status",
       text: "Status",
-      headerStyle: () => {
-        return { fontSize: "12px" };
+     
+      formatter: function (cell, row) {
+        return (
+          <>
+            <div>
+            {row.paid_status == "2" &&
+                <p>
+                  <span className="declined">Payment Declined</span>
+                </p>
+              }
+              <p>
+                <span style={{ fontWeight: "bold" }}>Client Discussion :</span>
+               <span className={row.client_discussion === "completed" ? "completed" : "inprogress"}>
+                                {row.client_discussion}
+                 </span>
+              </p>
+              <p>
+                <span style={{ fontWeight: "bold" }}>Draft report :</span>
+                <span className={row.draft_report === "completed" ? "completed" : "inprogress"}>
+                      {row.draft_report}
+                 </span>
+              </p>
+              <p>
+                <span style={{ fontWeight: "bold" }}>Final Discussion :</span>
+                <span className={row.final_discussion === "completed" ? "completed" : "inprogress"}>
+                     {row.final_discussion}
+                 </span>
+              </p>
+              <p>
+                <span style={{ fontWeight: "bold" }}>Delivery of Final Report :</span>
+                <span className={row.delivery_report === "completed" ? "completed" : "inprogress"}>
+                             {row.delivery_report}
+                 </span>
+              </p>
+              <p>
+                <span style={{ fontWeight: "bold" }}>Awaiting Completion:</span>
+                <span className={row.other_stage === "completed" ? "completed" : "inprogress"}>
+                            {row.other_stage}
+                 </span>
+              </p>
+            </div>
+          </>
+        );
       },
     },
     {
       dataField: "Exp_Delivery_Date",
       text: "Expected date of delivery",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
+      
       formatter: function dateFormat(cell, row) {
-        console.log("dt", row.created);
+       
         var oldDate = row.created;
-        if (oldDate == null) {
+        if (oldDate === null) {
           return null;
         }
         return oldDate.toString().split("-").reverse().join("-");
@@ -168,13 +213,11 @@ function InprogressAssignment() {
       dataField: "final_date",
       text: "Actual date of delivery",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
+     
       formatter: function dateFormat(cell, row) {
-        console.log("dt", row.final_date);
+    
         var oldDate = row.final_date;
-        if (oldDate == null || oldDate == "0000-00-00") {
+        if (oldDate === null || oldDate === "0000-00-00") {
           return null;
         }
         return oldDate.toString().split("-").reverse().join("-");
@@ -183,79 +226,15 @@ function InprogressAssignment() {
     {
       dataField: "",
       text: "Deliverable",
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
+      
       formatter: function (cell, row) {
-        // console.log(row.final_report);
+       
         return (
           <>
 
-            {/* {
-              row.status == "Payment decliend" ? null :
-                <div>
-                  {row.assignment_draft_report || row.final_report ?
-                    <div title="View All Report"
-                      style={{ cursor: "pointer", textAlign: "center" }}
-                      onClick={() => ViewReport(row.assign_no)}
-                    >
-                      <DescriptionOutlinedIcon color="secondary" />
-                    </div>
-                    :
-                    null
-                  }
-
-                  {row.assignment_draft_report && !row.final_report ? (
-                    row.draft_report == "completed" ?
-                      null :
-                      <div style={{ display: "flex", justifyContent: "space-around" }}>
-
-                        <div style={{ cursor: "pointer" }} title="Accepted">
-                          <i
-                            class="fa fa-check"
-                            style={{
-                              color: "green",
-                              fontSize: "16px",
-                            }}
-                            onClick={() => acceptHandler(row)}
-                          ></i>
-                        </div>
-
-                        <div title="Send Message">
-                          <Link
-                            to={{
-                              pathname: `/customer/chatting/${row.id}`,
-                              obj: {
-                                message_type: "3",
-                                query_No: row.assign_no,
-                                query_id: row.id,
-                                routes: `/customer/assignment`
-                              }
-                            }}
-                          >
-                            <i
-                              class="fa fa-comments-o"
-                              style={{
-                                fontSize: 16,
-                                cursor: "pointer",
-                                marginLeft: "8px",
-                                color: "green"
-                              }}
-                            ></i>
-                          </Link>
-                        </div>
-                      </div>
-
-                  ) : null}
-
-                </div>
-            }
-
- */}
-
-
+        
 {
-  row.status == "Payment decliend" || row.paid_status == "2" ? null :
+  row.status === "Payment decliend" || row.paid_status === "2" ? null :
     <div>
       {row.assignment_draft_report || row.final_report ?
         <div title="View All Report"
@@ -275,16 +254,14 @@ function InprogressAssignment() {
     },
     {
       dataField: "",
-      text: "Team Leader name and contact number, email",
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
+      text: "Team Leader",
+      
       formatter: priceFormatter,
     },
     {
       text: "Action",
-      headerStyle: () => {
-        return { fontSize: "12px", textAlign: "center", width: "70px" };
+      headerStyle : () => {
+        return({width: "70px"})
       },
       formatter: function (cell, row) {
         return (
@@ -292,10 +269,13 @@ function InprogressAssignment() {
           {row.paid_status === "2" ? null :
             <div style={{ display: "flex", justifyContent: "space-between" }}>
 
-              <div title="Send Message">
+            
                 <Link
-                  to={{
-                    pathname: `/customer/chatting/${row.id}`,
+                
+                    to={{
+                      pathname: `/customer/chatting/${row.assign_id}`,
+                      index : 1,
+                      routes: "assignment",
                     obj: {
                       message_type: "4",
                       query_No: row.assign_no,
@@ -304,28 +284,12 @@ function InprogressAssignment() {
                     }
                   }}
                 >
-                  <i
-                    class="fa fa-comments-o"
-                    style={{
-                      fontSize: 16,
-                      cursor: "pointer",
-                      color: "blue"
-                    }}
-                  ></i>
+                <MessageIcon />
                 </Link>
-              </div>
-
-              <div title="View Discussion Message">
-                <i
-                  class="fa fa-comments-o"
-                  style={{
-                    fontSize: 16,
-                    cursor: "pointer",
-                    color: "orange"
-                  }}
-                  onClick={() => ViewDiscussionToggel(row.assign_no)}
-                ></i>
-              </div>
+            
+                <div onClick={() => ViewDiscussionToggel(row.assign_no)}  className="ml-2">
+                                  <ViewDiscussionIcon />
+                                </div>
 
             </div> }
           </>
@@ -335,37 +299,11 @@ function InprogressAssignment() {
   ];
 
   //accept handler
-  const acceptHandler = (key) => {
-    console.log("acceptHandler", key);
-
-    let formData = new FormData();
-    formData.append("uid", JSON.parse(userId));
-    formData.append("id", key.id);
-    formData.append("query_no", key.assign_no);
-    formData.append("type", 1);
-
-    axios({
-      method: "POST",
-      url: `${baseUrl}/customers/draftAccept`,
-      data: formData,
-    })
-      .then(function (response) {
-        console.log("response-", response);
-        if (response.data.code === 1) {
-
-          var variable = "Draft accepted successfully "
-          Alerts.SuccessNormal(variable)
-        }
-      })
-      .catch((error) => {
-        console.log("erroror - ", error);
-      });
-  };
-
+ 
 
   //tl,phone,email
   function priceFormatter(cell, row) {
-    console.log("row", row);
+  
     if (row) {
       return (
         <>
@@ -387,32 +325,34 @@ function InprogressAssignment() {
     <>
       <Card>
         <CardHeader>
-          <CustomerFilter
+        <span onClick= {(e) => needHelp()}> <HelpIcon /></span>  <CustomerFilter
             setData={setAssignmentDisplay}
             getData={getAssignmentData}
             id={userId}
-            assignment="assignment"
+            assignment="assignmentInprogress"
             records={records}
             setRecords={setRecords}
           />
         </CardHeader>
 
         <CardBody>
-          <Records records={records} />
-          <BootstrapTable
-            bootstrap4
-            keyField="id"
-            data={assignmentDisplay}
-            columns={columns}
-          />
+         <Records records={records} />
+         <Modal isOpen={openManual} toggle={needHelp} style={{display : "block", position: "absolute", left:"280px"}} size="lg">
+                        <ModalHeader toggle={needHelp}>Mazars</ModalHeader>
+                        <ModalBody>
+                            <ModalManual tar= {"assignProcess"} />
+                        </ModalBody>
+                    </Modal>
+                             
+                    <DataTablepopulated 
+         bgColor ="#7c887c"
+          bootstrap4
+          keyField="id"
+          data={assignmentDisplay}
+          columns={columns}>
+           </DataTablepopulated>
 
-          {/* <PaymentModal
-            paymentHandler={paymentHandler}
-            addPaymentModal={addPaymentModal}
-            pay={pay}
-            getProposalData={getAssignmentData}
-          /> */}
-
+        
           <RejectedModal
             rejectHandler={rejectHandler}
             rejectModal={rejectModal}
@@ -425,6 +365,7 @@ function InprogressAssignment() {
             reportModal={reportModal}
             report={report}
             getPendingforAcceptance={getAssignmentData}
+            deleiverAble = "#7c887c"
           />
 
           <DiscardReport
@@ -432,6 +373,7 @@ function InprogressAssignment() {
             ViewDiscussion={ViewDiscussion}
             report={assignNo}
             getData={getAssignmentData}
+            headColor="#7c887c"
           />
 
 

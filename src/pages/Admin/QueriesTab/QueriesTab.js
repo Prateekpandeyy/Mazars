@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useLayoutEffect } from "react";
+import React, { useState, useEffect, useLayoutEffect , createContext} from "react";
 import Layout from "../../../components/Layout/Layout";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
@@ -9,38 +9,43 @@ import DeclinedQueries from "../../../components/DeclinedQueries/DeclinedQueries
 import AllQueriesData from "../../../components/AllQueriesData/AllQueriesData";
 import { Tab, Tabs, TabPanel, TabList } from "react-tabs";
 
-
 function QueriesTab(props) {
-  // console.log("queries tab: ", props);
+  
 
   const userid = window.localStorage.getItem("adminkey");
-
+  const [allData, setAllData] = useState()
   const [allQueriesCount, setAllQueriesCount] = useState("");
   const [pendingProposalCount, setPendingProposalCount] = useState("");
   const [declined, setDeclined] = useState("");
   const [inprogressAllocation, setInprogressAllocation] = useState();
-
-
+  const [bgColor, setbgColor] = useState("#55425F")
+  const [tabIndex, setTabIndex] = useState(0);
   useEffect(() => {
     CountAllQuery();
     CountInprogressAllocation();
     CountInprogressProposal();
     CountDeclined();
   }, []);
-
+  const token = window.localStorage.getItem("adminToken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
 
   const CountAllQuery = (data) => {
-    axios.get(`${baseUrl}/admin/getAllQueries`).then((res) => {
-      console.log(res);
+    axios.get(`${baseUrl}/admin/getAllQueries`, myConfig).then((res) => {
+     
       if (res.data.code === 1) {
         setAllQueriesCount(res.data.result.length);
+        setAllData(res.data.result);
       }
     });
   };
 
   const CountInprogressAllocation = () => {
-    axios.get(`${baseUrl}/admin/pendingAllocation`).then((res) => {
-      console.log(res);
+    axios.get(`${baseUrl}/admin/pendingAllocation`, myConfig).then((res) => {
+     
       if (res.data.code === 1) {
         setInprogressAllocation(res.data.result.length);
       }
@@ -48,8 +53,8 @@ function QueriesTab(props) {
   };
 
   const CountInprogressProposal = () => {
-    axios.get(`${baseUrl}/admin/pendingProposal`).then((res) => {
-      console.log(res);
+    axios.get(`${baseUrl}/admin/pendingProposal`, myConfig).then((res) => {
+     
       if (res.data.code === 1) {
         setPendingProposalCount(res.data.result.length);
       }
@@ -57,8 +62,8 @@ function QueriesTab(props) {
   };
 
   const CountDeclined = () => {
-    axios.get(`${baseUrl}/admin/declinedQueries`).then((res) => {
-      console.log(res);
+    axios.get(`${baseUrl}/admin/declinedQueries`, myConfig).then((res) => {
+     
       if (res.data.code === 1) {
         setDeclined(res.data.result.length);
       }
@@ -66,59 +71,63 @@ function QueriesTab(props) {
   };
 
 
-  const [tabIndex, setTabIndex] = useState(0);
+
   useLayoutEffect(() => {
     setTabIndex(props.location.index || 0);
   }, [props.location.index]);
 
 
+  const tableIndex = (index) => {
+    setTabIndex(index)
+    console.log(index)
+    if(index === 0){
+      setbgColor("#55425F")
+    }
+    else if(index === 1){
+      setbgColor("#6e557b")
+    }
+    else if(index === 2){
+      setbgColor("#6e557b")
+    }
+    else if(index === 3){
+      setbgColor("#6e557b")
+    }
+  }
+    
   const myStyle1 = {
-    backgroundColor: "grey",
-    padding: "12px",
-    borderRadius: "50px",
-    width: "200px",
-    textAlign: "center",
-    color: "white",
-    cursor: "pointer",
+    margin: "10px auto",
+    fontSize : "14px"
   };
   const myStyle2 = {
-    padding: "12px",
-    borderRadius: "50px",
-    width: "200px",
-    textAlign: "center",
-    backgroundColor: "blue",
-    color: "white",
-    cursor: "pointer",
+  margin: "10px auto",
+  
+  color : "#55425f",
+  fontWeight : 1000
   };
-
+  
   return (
     <Layout adminDashboard="adminDashboard" adminUserId={userid}>
-      <div>
+    
+      
         <Tabs selectedIndex={tabIndex} onSelect={(index) => setTabIndex(index)}>
-          <TabList
-            style={{
-              listStyleType: "none",
-              display: "flex",
-              justifyContent: "space-around",
-            }}
-          >
-            <Tab style={tabIndex == 0 ? myStyle2 : myStyle1}>
+          <TabList className="fixedTab">
+            <Tab style={tabIndex == 0 ? myStyle2 : myStyle1} className="tabHover">
               All Queries ({allQueriesCount})
             </Tab>
-            <Tab style={tabIndex == 1 ? myStyle2 : myStyle1}>
+            <Tab style={tabIndex == 1 ? myStyle2 : myStyle1} className="tabHover">
               Inprogress; Allocation ({inprogressAllocation})
             </Tab>
-            <Tab style={tabIndex == 2 ? myStyle2 : myStyle1}>
+            <Tab style={tabIndex == 2 ? myStyle2 : myStyle1} className="tabHover">
               Inprogress; Proposals ({pendingProposalCount})
             </Tab>
 
-            <Tab style={tabIndex == 3 ? myStyle2 : myStyle1}>
+            <Tab style={tabIndex == 3 ? myStyle2 : myStyle1} className="tabHover">
               Declined Queries ({declined})
             </Tab>
           </TabList>
 
           <TabPanel>
-            <AllQueriesData />
+            <AllQueriesData allData={allData}/>
           </TabPanel>
 
           <TabPanel>
@@ -133,29 +142,10 @@ function QueriesTab(props) {
             <DeclinedQueries />
           </TabPanel>
         </Tabs>
-      </div>
+     
+     
     </Layout>
   );
 }
 
 export default QueriesTab;
-
-
-
-  // const count_PFA = window.localStorage.getItem("count_PFA");
-
-  // const CountAllQuery = (data) => {
-  //   setAllQueriesCount(data);
-  // };
-
-  // const CountPendingProposal = (data) => {
-  //   setPendingProposalCount(data);
-  // };
-
-  // const CountPendingForPayment = (data) => {
-  //   setPendingforPayment(data);
-  // };
-
-  // const CountPendingForAllocation = (data) => {
-  //   setPendingforAllocation(data);
-  // };

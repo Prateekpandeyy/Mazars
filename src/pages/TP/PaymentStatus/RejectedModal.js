@@ -29,7 +29,7 @@ function RejectedModal({
   const [loading, setLoading] = useState(false);
 
   const onSubmit = (value) => {
-    console.log("value :", value);
+    
     setLoading(true)
 
     let formData = new FormData();
@@ -43,10 +43,10 @@ function RejectedModal({
       data: formData,
     })
       .then(function (response) {
-        console.log("res-", response);
+       
         if (response.data.code === 1) {
           setLoading(false)
-          Alerts.SuccessNormal("Marked as customer declined payment.")
+          Alerts.SuccessNormal("Marked as client declined payment.")
           getPaymentStatus();
           rejectHandler();
         } else if (response.data.code === 0) {
@@ -54,7 +54,7 @@ function RejectedModal({
         }
       })
       .catch((error) => {
-        console.log("erroror - ", error);
+      
       });
   };
 

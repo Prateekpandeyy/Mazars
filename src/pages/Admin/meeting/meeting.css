@@ -27,6 +27,8 @@ video {
 
 .meeting .ag-main {
   position: relative;
+  display: flex;
+  height: 100%;
 }
 
 .meeting .ag-footer :first-child {

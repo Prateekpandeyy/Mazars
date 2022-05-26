@@ -6,24 +6,26 @@ import { baseUrl } from "../../../config/config";
 import CommonServices from "../../../common/common";
 import Alerts from "../../../common/Alerts";
 import { useHistory } from "react-router";
-
+import Swal from "sweetalert2";
 function RecordingModal({
-     isOpen,
+    isOpen,
     toggle,
     data,
     item, 
-    allrecording
+    allrecording,
+    schId,
+    uid,
+    ownerId
 }) {
    
     const history = useHistory();
     const { handleSubmit, register, errors } = useForm();
     const userId = window.localStorage.getItem("tpkey");
 
-    console.log("item", item)
+   
 
     const { assign_no, id, username, start } = item
-    console.log("assign_no", assign_no)
-    //submit
+  
     const onSubmit = (value) => {
         var serverResponse = data.serverResponse.fileList
         var completeRecording;
@@ -47,30 +49,30 @@ function RecordingModal({
         formData.append("participants", username);
         formData.append("schedule_id", id);
 
-
+        axios.get(`${baseUrl}/tl/freeslottime?schedule_id=${id}&&uid=${JSON.parse(userId)}`)
         axios({
             method: "POST",
             url: `${baseUrl}/tl/callRecordingPost`,
             data: formData,
         })
             .then(function (response) {
-                console.log("res-", response);
+              
                 if (response.data.code === 1) {
                     toggle();
-                    history.push('/taxprofessional/schedule');
+                    history.push("/taxprofessional/schedule")
                    
                 }
             })
             .catch((error) => {
-                console.log("erroror - ", error);
+               
             });
     };
-
+  
     return (
         <div>
-            <Modal isOpen={isOpen} toggle={toggle} size="md">
-                <ModalHeader toggle={toggle}>
-                    Form
+            <Modal isOpen={isOpen}  size="md">
+                <ModalHeader>
+                Minutes of meeting
                 </ModalHeader>
                 <ModalBody>
                     <form onSubmit={handleSubmit(onSubmit)}>
@@ -130,6 +132,7 @@ function RecordingModal({
                                         name="p_message"
                                     ></textarea>
                                 </div>
+                             
                                 <button type="submit" className="btn btn-primary">
                                     Submit
                                 </button>

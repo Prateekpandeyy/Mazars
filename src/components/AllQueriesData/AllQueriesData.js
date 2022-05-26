@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
 import { Link } from "react-router-dom";
@@ -6,20 +6,14 @@ import {
   Card,
   CardHeader,
   CardBody,
-  CardTitle,
-  Row,
-  Col,
-  Table,
 } from "reactstrap";
-
-
-import BootstrapTable from "react-bootstrap-table-next";
 import AdminFilter from "../../components/Search-Filter/AdminFilter";
 import Records from "../../components/Records/Records";
 import DiscardReport from "../../pages/Admin/AssignmentTab/DiscardReport";
+import DataTablepopulated from "../DataTablepopulated/DataTabel";
+import MessageIcon, { ViewDiscussionIcon} from "../../components/Common/MessageIcon";
 
-
-function AllQueriesData() {
+function AllQueriesData({allData}) {
 
   const [allQueriesData, setAllQueriesData] = useState([])
   const [records, setRecords] = useState([]);
@@ -30,7 +24,12 @@ function AllQueriesData() {
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key)
   }
-
+  const token = window.localStorage.getItem("adminToken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
 
 
   useEffect(() => {
@@ -38,13 +37,15 @@ function AllQueriesData() {
   }, []);
 
   const getAllQueriesData = () => {
-    axios.get(`${baseUrl}/admin/getAllQueries`).then((res) => {
-      console.log(res);
+    axios.get(`${baseUrl}/admin/getAllQueries`, myConfig).then((res) => {
+     
       if (res.data.code === 1) {
-        setAllQueriesData(res.data.result);
+        console.log("querydata")
+       // setAllQueriesData(res.data.result);
         setRecords(res.data.result.length);
       }
     });
+   
   };
 
 
@@ -55,10 +56,11 @@ function AllQueriesData() {
       text: "S.No",
       dataField: "",
       headerStyle: () => {
-        return { fontSize: "12px", width: "50px" };
+        return { width : "50px"};
       },
+ 
       formatter: (cellContent, row, rowIndex, index) => {
-        console.log("rowIndex : ", index);
+
         return <div>{rowIndex + 1}</div>;
       },
     },
@@ -66,9 +68,7 @@ function AllQueriesData() {
       text: "Date",
       dataField: "created",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
+      
       formatter: function dateFormat(cell, row) {
         var oldDate = row.created;
         if (oldDate == null) {
@@ -80,9 +80,7 @@ function AllQueriesData() {
     {
       text: "Query No",
       dataField: "assign_no",
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
+      
       formatter: function nameFormatter(cell, row) {
         return (
           <>
@@ -103,31 +101,40 @@ function AllQueriesData() {
       text: "Category",
       dataField: "parent_id",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
+     
     },
     {
       text: "Sub Category",
       dataField: "cat_name",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
+     
     },
     {
-      text: "Customer Name",
+      text: "Client Name",
       dataField: "name",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
+      
     },
     {
-      text: "Status",
-      headerStyle: () => {
-        return { fontSize: "12px" };
+      text: "Delivery Due Date   / Acutal Delivery Date",
+      dataField: "Exp_Delivery_Date",
+      sort: true,
+    
+      formatter: function dateFormat(cell, row) {
+          
+          var oldDate = row.Exp_Delivery_Date;
+        
+          if (oldDate == "0000-00-00") {
+              return null;
+          }
+         else{
+          return oldDate.toString().split("-").reverse().join("-");
+         }
       },
+  },
+    {
+      text: "Status",
+      
       formatter: function nameFormatter(cell, row) {
         return (
           <>
@@ -159,18 +166,22 @@ function AllQueriesData() {
     },
     {
       text: "Action",
-      headerStyle: () => {
-        return { fontSize: "12px", width: "85px" };
-      },
+     
       formatter: function (cell, row) {
         return (
           <>
-           {row.status == "Declined Query"  ? null : 
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <div title="Send Message">
+           {row.status == "Declined Query"  ? 
+          <span onClick={() => ViewDiscussionToggel(row.assign_no)}  className="ml-1">
+          <ViewDiscussionIcon />
+        </span>: 
+         
+            <>
               <Link
-                to={{
-                  pathname: `/admin/chatting/${row.id}`,
+               to={{
+                pathname: `/admin/chatting/${row.id}`,
+                index: 0,
+                routes: "queriestab",
+              
                   obj: {
                     message_type: "4",
                     query_No: row.assign_no,
@@ -179,30 +190,14 @@ function AllQueriesData() {
                   }
                 }}
               >
-                <i
-                  class="fa fa-comments-o"
-                  style={{
-                    fontSize: 16,
-                    cursor: "pointer",
-                    marginLeft: "8px",
-                    color: "blue"
-                  }}
-                ></i>
+                <MessageIcon />
               </Link>
-            </div>
+            
 
-            <div title="View Discussion Message">
-              <i
-                class="fa fa-comments-o"
-                style={{
-                  fontSize: 16,
-                  cursor: "pointer",
-                  color: "orange"
-                }}
-                onClick={() => ViewDiscussionToggel(row.assign_no)}
-              ></i>
-            </div>
-          </div>
+            <span onClick={() => ViewDiscussionToggel(row.assign_no)}  className="ml-1">
+          <ViewDiscussionIcon />
+        </span>
+          </>
 }
           </>
         );
@@ -212,6 +207,7 @@ function AllQueriesData() {
 
   return (
     <>
+   
       <Card>
         <CardHeader>
           <AdminFilter
@@ -225,14 +221,14 @@ function AllQueriesData() {
         </CardHeader>
         <CardBody>
           <Records records={records} />
-          <BootstrapTable
-            bootstrap4
-            keyField="id"
-            data={allQueriesData}
-            columns={columns}
-            rowIndex
-            wrapperClasses="table-responsive"
-          />
+        
+          <DataTablepopulated 
+          bgColor="#55425f"
+          keyField= "assign_no"
+          data={allData}
+          
+          columns={columns}>
+           </DataTablepopulated> 
 
 
           <DiscardReport
@@ -240,6 +236,7 @@ function AllQueriesData() {
             ViewDiscussion={ViewDiscussion}
             report={assignNo}
             getData={getAllQueriesData}
+            headColor="#55425f"
           />
 
         </CardBody>
@@ -248,17 +245,4 @@ function AllQueriesData() {
   );
 }
 
-export default AllQueriesData;
-
-
-
-{/* <div class="row">
-            <div className="col-9">
-            </div>
-            <div className="col-3">
-              <div class="form-group">
-                <label className="form-select form-control"
-                >Total Records : 12</label>
-              </div>
-            </div>
-          </div> */}
+export default React.memo(AllQueriesData);

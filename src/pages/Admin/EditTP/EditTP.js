@@ -22,7 +22,7 @@ import {
 
 import { Form, Input, Button } from "antd";
 import Select from "react-select";
-import Alerts from "../../../common/Alerts";
+
 import { Spinner } from "reactstrap";
 import Swal from "sweetalert2";
 const Schema = yup.object().shape({
@@ -77,7 +77,13 @@ function EditTP() {
   const [show, setShow] = useState([])
   const [post_na, setPost_na] = useState()
   const [loading, setLoading] = useState(false);
+  const [showDel, setShowDel] = useState(null)
+  const [posError, setposError] = useState({
+    available : '',
+    exits : ''
+  });
   const selectInputRef = useRef();
+  const selectInputRef2 = useRef();
   const { handleSubmit, register, reset, errors } = useForm({
     resolver: yupResolver(Schema),
   });
@@ -97,52 +103,32 @@ function EditTP() {
   const options2 = tax2.map(v => ({
     "value": v.id,
     "label": v.details
-  }))
-
-
-  useEffect(() => {
-    getTeamLeader();
-  }, [id]);
-
-  useEffect(() => {
-    console.log("baseUrl", baseUrl)
-    axios.get(`${baseUrl}/tp/getTaxProfessional`).then((res) => {
-      if (res.data.code === 1) {
-        console.log("myData", res.data.result)
+  }))  
+  var data1 = value.name;
+  var data2 = value.personal_email;
+  var data3 = value.phone;
+  var data4 = {
+    "value" : value.allpcat_id,
+    "label" : value.allpcat_id
+  }
+  var data5 = value.allcat_id;
+  var data6 = value.post_name;
+  var data7 = value.email;
+  var data8 = value.cat_id;
+  var data9 = value.pcat_id
+  var data10 = value.tl_id
+  var data11 = value.tl_name
+  var postEmmail = value.tl_post_email;
+  const token = window.localStorage.getItem("adminToken")
+  const myConfig = {
+      headers : {
+       "uit" : token
       }
-      else {
-        console.log(res.data.result)
-      }
-    })
-  }, [])
-  const getTeamLeader = () => {
-   
-    axios.get(`${baseUrl}/tl/getTeamLeader?id=${id}`).then((res) => {
-      console.log(res);
-      if (res.data.code === 1) {
-        setValue(res.data.result[0]);
-        setStore(res.data.result[0].pcat_id);
-      }
-    });
-  };
-  console.log("value -", value.name);
-  const data1 = value.name;
-  const data2 = value.personal_email;
-  const data3 = value.phone;
-  const data4 = value.allpcat_id;
-  const data5 = value.allcat_id;
-  const data6 = value.post_name;
-  const data7 = value.email;
-  const data8 = value.cat_id;
-  const data9 = value.pcat_id
-  const data10 = value.tl_id
-  const data11 = value.tl_name
-  const postEmmail = value.tl_post_email;
-  console.log(data2)
+    }
   useEffect(() => {
     const getCategory = () => {
-      axios.get(`${baseUrl}/customers/getCategory?pid=0`).then((res) => {
-        console.log(res);
+      axios.get(`${baseUrl}/admin/getCategory?pid=0`, myConfig).then((res) => {
+       
         if (res.data.code === 1) {
           setTax(res.data.result);
         }
@@ -156,41 +142,33 @@ function EditTP() {
   }, [id]);
 
   const getTutorial = (id) => {
-    TaxProffesionalService.get(id)
+   axios.get(`${baseUrl}/admin/getTaxProfessional?id=${id}`, myConfig)
       .then((res) => {
-        console.log(res.data);
+       
         if (res.data.code === 1) {
           setValue(res.data.result[0]);
           setStore(res.data.result[0].pcat_id);
+          setShowDel(res.data.result[0].is_delete)
+          categoryData(res.data.result[0].allcat_id)
         }
       })
       .catch((e) => {
-        console.log(e);
+     
       });
   };
   useEffect(() => {
     const getSubCategory = () => {
-      axios.get(`${baseUrl}/customers/getCategory?pid=${store}`).then((res) => {
-        console.log(res);
+      axios.get(`${baseUrl}/admin/getCategory?pid=${store}`, myConfig).then((res) => {
+        
         if (res.data.code === 1) {
           setTax2(res.data.result);
+          console.log("tax2", res.data.result)
         }
       });
     };
     getSubCategory();
   }, [store]);
 
-  useEffect(() => {
-    const getTeamLeader = () => {
-      axios.get(`${baseUrl}/tl/getTeamLeader`).then((res) => {
-        console.log(res);
-        if (res.data.code === 1) {
-          setTeamLeader(res.data.result);
-        }
-      });
-    };
-    getTeamLeader();
-  }, []);
 
   const onFinish = (value) => {
 
@@ -203,11 +181,7 @@ function EditTP() {
       categeryList.push(i.value)
       categeryName.push(i.label)
     })
-    // categoryData.map((i) => {
-    //   kk.push(i.value)
-    //   parentCategoryName.push(i.label)
-    // })
-    console.log("subData", subData)
+   
     if (custCate.length < 1 && data4.length < 1) {
       setError("Please select at least one value")
     }
@@ -228,23 +202,32 @@ function EditTP() {
       formData.append("phone", value.phone);
     
       formData.append("tp_id", data10);
-      formData.append("email", data7)
-      formData.append("post_name", data6)
+      {email.length > 1 ? 
+        formData.append("email", email) :
+        formData.append("email", data7)}
+        {postValue.length > 1 ?  
+          formData.append("post_name", postValue) :
+          formData.append("post_name", data6)}
+      // {
+      //   categeryList.length > 1 ? formData.append("pcat_id", store) :
+      //   formData.append("pcat_id", data8)
+      // }
       {
-        categeryList.length > 1 ? formData.append("cat_id", categeryList) :
-        formData.append("cat_id", data8)
+        categeryList.length === 0 ? formData.append("pcat_id", data9)
+        : formData.append("pcat_id", store)
       }
+     
 
 
       {
-        categoryData.length === 0 ? formData.append("pcat_id", data9) :
-        formData.append("pcat_id", categoryData.value)
+        categoryData.length === 0 ? formData.append("cat_id", data8) :
+        formData.append("cat_id", categeryList)
       }
 
 
       {
         categoryData.length === 0 ?
-        formData.append("allpcat_id", data4) :
+        formData.append("allpcat_id", data4.label) :
         formData.append("allpcat_id", categoryData.label)
       }
 
@@ -256,16 +239,17 @@ function EditTP() {
 
       axios({
         method: "POST",
-        url: `${baseUrl}/tp/updateTP`,
+        url: `${baseUrl}/admin/updateTP`,
+        headers : {
+          uit : token
+        },
         data: formData,
       })
         .then(function (response) {
-          console.log("res-", response);
+        
           if (response.data.code === 1) {
            setLoading(false)
-            // var variable = "Team Leader details updated successfully."
-            // Alerts.SuccessNormal(variable)
-           
+          
             Swal.fire({
               "title": "Success",
               "html": "Tax Professional details updated successfully",
@@ -287,7 +271,7 @@ function EditTP() {
        
         })
         .catch((error) => {
-          console.log("erroror - ", error);
+         
         });
     }
   };
@@ -314,15 +298,15 @@ function EditTP() {
 
   // Phone Validation function 
   const phoneValidation = () => {
-    console.log(phone.length)
+   
     if (phone.length > 10) {
-      console.log(phone.length)
+     
       setNumAvail("")
       setNumExist("")
       setIndNumError("Maximum 10 digit should be enter")
     }
     else if (phone.length < 10) {
-      console.log(phone.length)
+     
       setNumAvail("")
       setNumExist("")
       setIndNumError("Minimum 10 digit should be enter")
@@ -335,35 +319,7 @@ function EditTP() {
 
     else {
       setIndNumError("")
-      // let formData = new FormData();
-      // formData.append("phone", phone);
-      // formData.append("type", 2);
-      // axios({
-      //   method: "POST",
-      //   url: `${baseUrl}/customers/validateregistration`,
-      //   data: formData,
-      // })
-      //   .then(function (response) {
-      //     console.log("res-", response);
-      //     if (response.data.code === 1) {
-      //       // setValiphone(response.data.result)
-      //       console.log(response.data.result)
-      //       setNumExist('')
-      //       setNumAvail(response.data.result);
-
-      //     }
-      //     else if (response.data.code === 0) {
-      //       console.log(response.data.result)
-      //       setNumAvail('')
-      //       setNumExist(response.data.result)
-
-      //       console.log("mobile" + setNumExist)
-      //     }
-
-      //   })
-      //   .catch((error) => {
-      //     // console.log("erroror - ", error);
-      //   });
+     
     }
   }
 
@@ -377,23 +333,12 @@ function EditTP() {
 
   // Category Function
   const category = (v) => {
+    console.log("vvv", v)
     selectInputRef.current.select.clearValue();
+   
     setCategoryData(v)
-    console.log("MyData", v)
     setError("")
     setCustcate(v)
-
-    // v.map((val) => {
-    //   vv.push(val.value)
-    //   setmcategory((oldData) => {
-    //     return [...oldData, val.value]
-    //   })
-    //   setmcatname((oldData) => {
-    //     return [...oldData, val.label]
-    //   })
-    //   setStore(val.value)
-    // })
-   
     setStore(v.value)
     vv.push(v.value);
     setmcategory(v.value)
@@ -403,7 +348,7 @@ function EditTP() {
     subdefval = {}
     if (vv.length > 0) {
       if (vv.includes("1") && vv.includes("2")) {
-        console.log("hdd")
+        
       }
       else if (vv.includes("1")) {
 
@@ -432,7 +377,7 @@ function EditTP() {
   //eamil onchange
   const emailHandler = (e) => {
     setEmail(e.target.value);
-    console.log(e.target.value.length)
+    data7 = e.target.value
     if (e.target.value.length < 1) {
       setWemail("")
     }
@@ -448,99 +393,132 @@ function EditTP() {
       let formData = new FormData();
       formData.append("email", email);
       formData.append("type", 1);
+      formData.append("id", id)
 
-      // axios({
-      //   method: "POST",
-      //   url: `${baseUrl}/customers/validateregistration`,
-      //   data: formData,
-      // })
-      //   .then(function (response) {
-      //     console.log("resEmail-", response);
-      //     if (response.data.code === 1) {
-      //       setValiemail(response.data.result)
-      //       setInvalid('')
-      //     } else if (response.data.code === 0) {
-      //       setInvalid(response.data.result)
-      //       setValiemail('')
-      //     }
-      //   })
-      //   .catch((error) => {
-      //     console.log("erroror - ", error);
-      //   });
+      axios({
+        method: "POST",
+        url: `${baseUrl}/admin/validateEditRegistration`,
+        headers : {
+          uit : token
+        },
+        data: formData,
+      })
+      .then(function (response) {
+
+        if (response.data.code === 1) {
+          setValiemail(response.data.result)
+          setInvalid('')
+        } else if (response.data.code === 0) {
+          setInvalid(response.data.result)
+          setValiemail('')
+        }
+      })
+      .catch((error) => {
+
+      });
     }
     else {
       setWemail("Invalid email")
     }
   }
 
-  // tlFun Function
-//   const tlFun = (e) => {
-//     var a ;
-//   console.log("id", e)
- 
-//   teamleader.filter((p) => {
-   
-//     if(p.id == e){
-//    console.log(p.post_name)
-//    console.log("teamLeader", p.id)
-//      setTl(p.id)
-//      setPost_na(p.post_name)
-//     }
-//   })
-//  console.log("tlId", tl)
-//     let formData = new FormData()
-//     formData.append("post", post_na)
-//     axios({
-//       method  :"POST",
-//       url  : `${baseUrl}/admin/addTpPost?post=${post_na}`,
-//       data : formData
-//     })
-//     .then(function (response) {
-//       if(response.data.code === 1){
-//         setPost1(response.data.result)
-//       }
-//       else if(response.data.code === 0){
-//         console.log(response.data.result)
-//       }
-//     } )
-//     .catch((error) => {
-//       console.log("erroror - ", error);
-//     });
-//   }
+  
  const defSubValue = () => {
  var k;
  
-   console.log("done2")
    var subcatgerydefvalue = value.allcat_id.split(",");
    value.allpcat_id.includes("Indirect") === true  ? k = 8 : k = 2
  
   subdefval = subcatgerydefvalue.map((i => ({
-   "value" : ++k,
+   "value" : String(++k),
    "label" : i
  }) ))
- console.log("subDefVal33", value.allpcat_id)
+ 
   }
  
  if(data5 != undefined){
    defSubValue();
  }
+
+ const checktlPost = (e) => {
+  setPostName(e.target.value)
+  data6 = e.target.value;
+  let a = e.target.value;
+  let formData = new FormData();
+  formData.append("tlpost", a)
+  formData.append("id", id )
+  axios({
+    method: "POST",
+    url : `${baseUrl}/tl/validateTLEditPost`,
+    data: formData,
+  })
+  .then(function (res) {
+    if(res.data.code === 1){
+      setposError({
+        available : "Post Available"
+      })
+    }
+    else{
+      setposError({
+        exits : "Post already exits"
+      })
+    }
+  })
+  }
+  const del = (e) => {
+    Swal.fire({
+     title: "Are you sure?",
+     text: "It will permanently deleted !",
+     type: "warning",
+     showCancelButton : true,
+     confirmButtonColor: "#3085d6",
+     cancelButtonColor: "#d33",
+     confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+     if (result.value) {
+       deleteCliente(id);
+     }
+   });
+  }
+  const deleteCliente = (id) => {
+   axios
+     .get(`${baseUrl}/admin/deleteTP?id=${id}`, myConfig)
+     .then(function (response) {
+       
+       if (response.data.code === 1) {
+         Swal.fire("Tax Professional has been deleted successfully");
+         history.goBack();
+       } else {
+         Swal.fire("Oops...", "Errorr ", "error");
+         history.goBack();
+       }
+ 
+     })
+     .catch((error) => {
+       
+     });
+ };
+
   return (
     <Layout adminDashboard="adminDashboard" adminUserId={userid}>
       <Card>
         <CardHeader>
-          <div class="col-md-12 d-flex">
+          <div className="col-md-12 d-flex justify-content-between">
             <div>
               <button
-                class="btn btn-success ml-3"
+                className="autoWidthBtn ml-3"
                 onClick={() => history.goBack()}
               >
-                <i class="fas fa-arrow-left mr-2"></i>
+                <i className="fas fa-arrow-left mr-2"></i>
                 Go Back
               </button>
             </div>
-            <div class="text-center ml-5">
+            <div className="text-center ml-5">
               <h4>Edit Tax Professional</h4>
             </div>
+            <div>
+             {showDel == "0" ?  <button className="btn btn-danger" onClick={(e) => del(e)}>Delete</button> : ""}
+              </div>
           </div>
         </CardHeader>
 
@@ -548,9 +526,9 @@ function EditTP() {
           <CardHeader>loading ...</CardHeader>
         ) : (
           <CardHeader>
-            <div class="row mt-3">
-              <div class="col-lg-2 col-xl-2 col-md-12"></div>
-              <div class="col-lg-8 col-xl-8 col-md-12">
+            <div className="row mt-3">
+              <div className="col-lg-2 col-xl-2 col-md-12"></div>
+              <div className="col-lg-8 col-xl-8 col-md-12">
                 <Form
                   name="basic"
                   autoComplete="off"
@@ -563,21 +541,23 @@ function EditTP() {
                   }}
                   onFinish={onFinish}
                 >
-                   <div class="row">
-                  <div class="col-md-6">
-                  <div class="form-group">
-                  <label>Teamleader post name <span className="declined">*</span></label>
-                  <input type="text" className = "form-control" defaultValue = {data11} disabled />   
+                   <div className="row">
+                  <div className="col-md-6">
+                  <div className="form-group">
+                  <label>Team Leader post name <span className="declined">*</span></label>
+                  <input type="text" className = "form-control" 
+                  defaultValue = {data11} 
+              disabled />   
                     </div>
                   </div>
-                    <div class="col-md-6">
-                      <div class="form-group">
-                      <label> Teamleader post email <span className="declined">*</span></label>
+                    <div className="col-md-6">
+                      <div className="form-group">
+                      <label> Team Leader post email <span className="declined">*</span></label>
                         <input
                           type="text"
                           name="post_email"
                           defaultValue = {postEmmail}
-                          disabled
+                         disabled
                           className={classNames("form-control", {
                             "is-invalid": errors.post_email,
                           })}
@@ -587,40 +567,55 @@ function EditTP() {
                   </div>
 
 
-                  <div class="row">
-                  <div class="col-md-6">
-                      <div class="form-group">
+                  <div className="row">
+                  <div className="col-md-6">
+                      <div className="form-group">
                       
                       <label>TP post name <span className="declined">*</span></label>
                         <input
                           type="text"
                           name="post_name"
-                          disabled
+                          onBlur={(e) => checktlPost(e)}
+                          disabled = {showDel == "1" ? true : ""}
                           defaultValue={data6}
+                          onChange={(e) => data6= e.target.value}
                           className={classNames("form-control", {
                             "is-invalid": errors.post_name,
                           })}
                         />
+                         {posError.available ? 
+                    <p className="completed"> {posError.available}</p> : 
+                    <p className="declined">{posError.exits}</p>}
                       </div>
                     </div>
-                    <div class="col-md-6">
-                    <div class="form-group">
+                    <div className="col-md-6">
+                    <div className="form-group">
                     
                   
                     <label> TP post email <span className="declined">*</span></label>
                       <input
-                        type="text"
+                        type="email"
                         name="p_email"
                         ref={register}
-                      disabled
+                        disabled = {showDel == "1" ? true : ""}
                       defaultValue={data7}
+                     
                         className={classNames("form-control", {
                           "is-invalid": errors.post_email,
                         })}
-                        // onChange={(e) => emailHandler(e)}
-                        // onBlur={emailValidation}
+                        onChange={(e) => emailHandler(e)}
+                        onBlur={emailValidation}
                       />
-                     
+                      {
+                        wEmail ? <p className="declined">{wEmail}</p> : <>
+                          {valiEmail ?
+                            <p className="completed">
+                              {valiEmail}
+                            </p>
+                            :
+                            <p className="declined">{invalid}</p>}
+                        </>
+                      } 
                     </div>
                   </div>
                    
@@ -628,9 +623,9 @@ function EditTP() {
                   </div>
 
 
-                  <div class="row">
-                    <div class="col-md-6">
-                      <div class="form-group">
+                  <div className="row">
+                    <div className="col-md-6">
+                      <div className="form-group">
                         <label>Name <span className="declined">*</span></label>
                         <Form.Item name="name">
                           <input
@@ -643,8 +638,8 @@ function EditTP() {
                       </div>
                     </div>
 
-                    <div class="col-md-6">
-                      <div class="form-group">
+                    <div className="col-md-6">
+                      <div className="form-group">
                         <label>Phone  <span className="declined">*</span></label>
                         <Form.Item name="phone">
                           <Input
@@ -660,34 +655,16 @@ function EditTP() {
                     </div>
                   </div>
 
-                  <div class="row">
-                    <div class="col-md-12">
-                      <div class="form-group">
-                        <label>Email <span className="declined">*</span></label>
-                        <Form.Item name="email">
-                          <Input
-                            className={classNames("form-control", {
-                              "is-invalid": errors.p_email || wEmail || invalid,
-                            })}
-                            onBlur={emailValidation}
-                            onChange={(e) => emailHandler(e)} />
-                        </Form.Item>
-                        {
-                          wEmail ? <p className="declined">{wEmail}</p> : ""
-                           
-                        }
-                      </div>
-                    </div>
-                  </div>
+               
 
-                  <div class="row">
-                    <div class="col-md-6">
-                      <div class="form-group">
+                  <div className="row">
+                    <div className="col-md-6">
+                      <div className="form-group">
                         <label>Category <span className="declined">*</span></label>
-                        <div class="form-group">
+                        <div className="form-group">
 
                           <Select  options={options}
-                            defaultInputValue={data4} onChange={category}
+                            defaultValue={data4} onChange={category}
                             styles={{
                               option: (styles, { data }) => {
                                 return {
@@ -697,21 +674,25 @@ function EditTP() {
                                     : "blue"
                                 };
                               },
-                              multiValueLabel: (styles, { data }) => ({
+                              singleValue: (styles, { data }) => ({
                                 ...styles,
-                                color: data.value  == 2
+                                color: data.label  == "Indirect tax"
                                     ? "green"
                                     : "blue"
                               }),
                             }}
+                            ref={selectInputRef2}
+                            // onFocus = {(e) => {
+                            //   selectInputRef2.current.select.clearValue();
+                            // }}
                           >
                           </Select>                  
                         </div>
                       </div>
                     </div>
 
-                    <div class="col-md-6">
-                      <div class="form-group">
+                    <div className="col-md-6">
+                      <div className="form-group">
                         <label>Sub Category <span className="declined">*</span></label>
 
                         <Select isMulti options={options2}
@@ -741,18 +722,35 @@ function EditTP() {
                       </div>
                     </div>
                   </div>
-
-                  <div class="row">
-                    <div class="col-md-6">
-                      <div class="form-group">
+                  <div className="row">
+                    <div className="col-md-12">
+                      <div className="form-group">
+                        <label>Email <span className="declined">*</span></label>
+                        <Form.Item name="email">
+                          <Input
+                          type="email"
+                            className={classNames("form-control", {
+                              "is-invalid": errors.email || wEmail ,
+                            })}/>
+                        </Form.Item>
+                        {
+                          wEmail ? <p className="declined">{wEmail}</p> : ""
+                           
+                        }
+                      </div>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-md-6">
+                      <div className="form-group">
                       {
                 loading ?
                   <Spinner color="primary" />
                   :
                         <Form.Item>
-                          <Button type="primary" htmlType="submit">
+                          <button type="submit" className="customBtn">
                             Update
-                          </Button>
+                          </button>
                         </Form.Item>  }
                       </div>
                     </div>

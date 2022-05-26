@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Layout from "../../components/Layout/Layout";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
 import { useAlert } from "react-alert";
@@ -7,24 +6,20 @@ import {
     Card,
     CardHeader,
     CardBody,
-    CardTitle,
-    Row,
-    Col,
-    Table,
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import "./index.css";
 import CustomerFilter from "../../components/Search-Filter/CustomerFilter";
 import BootstrapTable from "react-bootstrap-table-next";
-import FeedbackIcon from '@material-ui/icons/Feedback';
 import Records from "../../components/Records/Records";
-import Alerts from "../../common/Alerts";
 import Swal from "sweetalert2";
 import ViewComponent from "./ViewComponent";
 import DiscardReport from "../AssignmentTab/DiscardReport";
-
-
-
+import CommonShowProposal from "../../components/commonShowProposal/CommonShowProposal";
+import ModalManual from "../ModalManual/AllComponentManual";
+import {Modal, ModalHeader, ModalBody} from 'reactstrap';
+import MessageIcon, {EyeIcon, ViewDiscussionIcon, DiscussProposal, HelpIcon} from "../../components/Common/MessageIcon";
+import DataTablepopulated from "../../components/DataTablepopulated/DataTabel";
 function ProposalTab() {
     const alert = useAlert();
 
@@ -32,23 +27,37 @@ function ProposalTab() {
     const [proposalDisplay, setProposalDisplay] = useState([]);
     const [proposalCount, setCountProposal] = useState("");
     const [records, setRecords] = useState([]);
-    const [reject, setRejected] = useState(true);
+   
 
     const [viewData, setViewData] = useState({});
     const [viewModal, setViewModal] = useState(false);
+    const [assignNo, setAssignNo] = useState('');
+    const [ViewDiscussion, setViewDiscussion] = useState(false);
+     const [viewProposalModal, setViewProposalModal] = useState(false)
+     const [openManual, setManual] = useState(false)
+    const [proposalId, setProposalId] = useState()
+    const token = window.localStorage.getItem("clientToken")
+    const myConfig = {
+        headers : {
+         "uit" : token
+        }
+      }
     const ViewHandler = (key) => {
-        console.log(key);
+
         setViewModal(!viewModal);
         setViewData(key);
     };
 
-    const [assignNo, setAssignNo] = useState('');
-    const [ViewDiscussion, setViewDiscussion] = useState(false);
+
     const ViewDiscussionToggel = (key) => {
         setViewDiscussion(!ViewDiscussion);
         setAssignNo(key)
     }
+ const showProposalModal2 = (e) => {
 
+    setViewProposalModal(!viewProposalModal);
+    setProposalId(e)
+  }
 
     useEffect(() => {
         getProposalData();
@@ -56,9 +65,9 @@ function ProposalTab() {
 
     const getProposalData = () => {
         axios
-            .get(`${baseUrl}/customers/getProposals?uid=${JSON.parse(userId)}`)
+            .get(`${baseUrl}/customers/getProposals?uid=${JSON.parse(userId)}`, myConfig)
             .then((res) => {
-                console.log(res);
+               
                 if (res.data.code === 1) {
                     setProposalDisplay(res.data.result);
                     setCountProposal(res.data.result.length);
@@ -67,35 +76,36 @@ function ProposalTab() {
             });
     };
 
-
-
+    const needHelp = () => {
+        
+        setManual(!openManual)
+    }
+const rightAli = {
+    display : "flex", 
+    justifyContent : "flex-end", 
+    Border : "0px"
+}
 
     const columns = [
         {
-            text: "S.No",
             dataField: "",
-            style: {
-                fontSize: "11px",
-            },
+            text: "S.No",
             formatter: (cellContent, row, rowIndex) => {
-                return rowIndex + 1;
+              return rowIndex + 1;
             },
-            headerStyle: () => {
-                return { fontSize: "11px", width: "50px" };
-            },
-        },
+            headerStyle : () => {
+                return( {
+                    width: "50px"
+                })
+            }
+          },
         {
             text: "Date",
             dataField: "created",
             sort: true,
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
+          
             formatter: function (cell, row) {
-                console.log("dt", row.created);
+              
                 var oldDate = row.created;
                 if (oldDate == null) {
                     return null;
@@ -106,17 +116,18 @@ function ProposalTab() {
         {
             text: "Query No",
             dataField: "assign_no",
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
+           
             formatter: function nameFormatter(cell, row) {
-                console.log(row);
+              
                 return (
                     <>
-                        <Link to={`/customer/my-assingment/${row.q_id}`}>
+                        <Link
+                            to={{
+                                pathname: `/customer/my-assingment/${row.q_id}`,
+                                index: 0,
+                                routes: "proposal",
+                            }}
+                        >
                             {row.assign_no}
                         </Link>
                     </>
@@ -127,36 +138,21 @@ function ProposalTab() {
             text: "Category",
             dataField: "parent_id",
             sort: true,
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
+           
         },
         {
             text: "Sub Category",
             dataField: "cat_name",
             sort: true,
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
+           
         },
         {
             text: "Date of Proposal",
             dataField: "DateofProposal",
             sort: true,
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
+            
             formatter: function dateFormat(cell, row) {
-                console.log("dt", row.DateofProposal);
+             
                 var oldDate = row.DateofProposal;
                 if (oldDate == null) {
                     return null;
@@ -168,14 +164,9 @@ function ProposalTab() {
             text: "Date of acceptance / decline of Proposal",
             dataField: "cust_accept_date",
             sort: true,
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
+           
             formatter: function dateFormat(cell, row) {
-                console.log("dt", row.cust_accept_date);
+             
                 var oldDate = row.cust_accept_date;
                 if (oldDate == null) {
                     return null;
@@ -185,12 +176,7 @@ function ProposalTab() {
         },
         {
             text: "Status",
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
+           
             formatter: function nameFormatter(cell, row) {
                 return (
                     <>
@@ -224,46 +210,62 @@ function ProposalTab() {
             },
         },
         {
-            text: "Proposed Amout",
+            text: "Proposed Amount",
             dataField: "ProposedAmount",
             sort: true,
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
+          
+            sortFunc: (a, b, order, dataField) => {
+                if (order === 'asc') {
+                  return b - a;
+                }
+                return a - b; // desc
+              },
+            formatter: function nameFormatter(cell, row){
+                var nfObject = new Intl.NumberFormat('hi-IN')
+                 var x = row.ProposedAmount;
+
+                 return(
+                   <p className="rightAli">{nfObject.format(x)}</p>
+                 )
+               }
         },
         {
             text: "Accepted Amount",
             dataField: "accepted_amount",
             sort: true,
-            style: {
-                fontSize: "11px",
-                color: "#21a3ce",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px", color: "#21a3ce" };
-            },
+            
+            sortFunc: (a, b, order, dataField) => {
+                if (order === 'asc') {
+                  return b - a;
+                }
+                return a - b; // desc
+              },
+            formatter: function nameFormatter(cell, row){
+                var nfObject = new Intl.NumberFormat('hi-IN')
+                 var x = row.accepted_amount;
+
+                 return(
+                   <p className="rightAli">{nfObject.format(x)}</p>
+                 )
+               }
         },
+      
         {
             text: "Action",
             dataField: "",
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
+            
             formatter: function (cell, row) {
                 return (
                     <>
-                        {row.statuscode === "6" ? null : (
-                            <div style={{ display: "flex", justifyContent: "space-between", width: "80px" }}>
-                                <div title="Send Message">
+                        {row.statuscode === "6" ? 
+                        <>
+                        <span className="ml-1" title="Send Message">
+                      
                                     <Link
                                         to={{
                                             pathname: `/customer/chatting/${row.q_id}&type=2`,
+                                            index: 0,
+                                            routes: "proposal",
                                             obj: {
                                                 message_type: "3",
                                                 query_No: row.assign_no,
@@ -272,43 +274,50 @@ function ProposalTab() {
                                             }
                                         }}
                                     >
-                                        <i
-                                            class="fa fa-comments-o"
-                                            style={{
-                                                fontSize: 16,
-                                                cursor: "pointer",
-                                                color: "blue"
-                                            }}
-                                        ></i>
+                                       <MessageIcon />
                                     </Link>
-                                </div>
+                                    </span>
+                              <span onClick={() => ViewDiscussionToggel(row.assign_no)} className="ml-1">
+                              <ViewDiscussionIcon />
+                              </span>
 
-                                <div title="View Discussion Message">
-                                    <i
-                                        class="fa fa-comments-o"
-                                        style={{
-                                            fontSize: 16,
-                                            cursor: "pointer",
-                                            color: "orange"
+                               
+
+                        </> : (
+                            <>
+                               
+                               <span className="ml-1" title="Send Message">
+                                   <Link
+                                      to={{
+                                        pathname: `/customer/chatting/${row.q_id}&type=2`,
+                                        index: 0,
+                                        routes: "proposal",     
+                                            obj: {
+                                                message_type: "3",
+                                                query_No: row.assign_no,
+                                                query_id: row.q_id,
+                                                routes: `/customer/proposal`
+                                            }
                                         }}
-                                        onClick={() => ViewDiscussionToggel(row.assign_no)}
-                                    ></i>
-                                </div>
+                                    >
+                                        <MessageIcon />
+                                    </Link>
+                                   </span>
+                            
 
-                                <div>
+                                   <span onClick={() => ViewDiscussionToggel(row.assign_no)} className="ml-1">
+                              <ViewDiscussionIcon />
+                              </span>
+
+                               
                                     {
                                         row.statuscode > 6 ?
-                                            <div style={{ cursor: "pointer" }} title="View EL">
-                                                <a
-                                                    href={`${baseUrl}/customers/dounloadpdf?id=${row.q_id}&viewpdf=1`}
-                                                    target="_blank"
-                                                >
-                                                    <i
-                                                        class="fa fa-eye"
-                                                        style={{ color: "green", fontSize: "16px" }}
-                                                    />
-                                                </a>
-                                            </div>
+                                             <>
+                                 <span  onClick={(e) => showProposalModal2(row.q_id)} className="ml-1">
+                                            <EyeIcon  />
+                                           </span>
+                              
+                                </>
                                             :
                                             null
                                     }
@@ -316,23 +325,25 @@ function ProposalTab() {
                                     {
                                         row.statuscode == 4
                                             ?
-                                            <div style={{ cursor: "pointer" }} title="Dicision on Proposal">
-                                                <Link to={`/customer/proposal_view/${row.q_id}`}>
-                                                    <i
-                                                        class="fa fa-share"
-                                                        style={{
-                                                            color: "blue",
-                                                            fontSize: "13px",
-                                                        }}
-                                                    ></i>
+                                            <span className="ml-1">
+        
+                                                <Link
+                                      to={{
+                                        pathname: `/customer/proposal_view/${row.q_id}`,
+                                        index: 0,
+                                        routes: "proposal",     
+                                            
+                                        }}
+                                    >
+                                           <DiscussProposal titleName ="Discussion on Proposal"/>
                                                 </Link>
-                                            </div>
+                                            </span>
                                             :
                                             null
                                     }
-                                </div>
+                               
 
-                            </div>
+                            </>
                         )
                         }
                     </>
@@ -344,9 +355,10 @@ function ProposalTab() {
 
 
     return (
-        <div>
+     
             <Card>
                 <CardHeader>
+                <span onClick= {(e) => needHelp()}> <HelpIcon /></span>
                     <CustomerFilter
                         setData={setProposalDisplay}
                         getData={getProposalData}
@@ -357,15 +369,15 @@ function ProposalTab() {
                     />
                 </CardHeader>
                 <CardBody>
+              
                     <Records records={records} />
-                    <BootstrapTable
-                        bootstrap4
-                        keyField="id"
-                        data={proposalDisplay}
-                        columns={columns}
-                        classes="table-responsive"
-                    />
 
+                  <DataTablepopulated 
+                   bgColor="#42566a"
+                   keyField= {"assign_no"}
+                   data={proposalDisplay}
+                   columns={columns}>
+                    </DataTablepopulated>
                     <ViewComponent
                         ViewHandler={ViewHandler}
                         viewModal={viewModal}
@@ -378,22 +390,27 @@ function ProposalTab() {
                         ViewDiscussion={ViewDiscussion}
                         report={assignNo}
                         getData={getProposalData}
+                        headColor="#42566a"
                     />
-
+ {
+     viewProposalModal === true ?
+     <CommonShowProposal
+     setViewProposalModal = {setViewProposalModal}
+     viewProposalModal = {viewProposalModal}
+     showProposalModal2 = {showProposalModal2}
+     panel = "client"
+     proposalId = {proposalId}/> : ""
+ }
+             <Modal isOpen={openManual} toggle={needHelp} style={{display : "block", position: "absolute", left:"280px"}} size="lg">
+                        <ModalHeader toggle={needHelp}>Mazars</ModalHeader>
+                        <ModalBody>
+                            <ModalManual tar= {"proposalProcessing"} />
+                        </ModalBody>
+                    </Modal>
                 </CardBody>
             </Card>
-        </div>
+       
     );
 }
 
 export default ProposalTab;
-
-{/* <div style={{ cursor: "pointer" }} title="Rejected">
-                                            <i
-                                                class="fa fa-times"
-                                                style={{ color: "red", fontSize: "16px" }}
-                                                onClick={() => rejected(row.q_id)}
-                                            ></i>
-                                        </div> */}
-//   {row.negotiated_amount === "0" &&
-// row.accepted_amount === "0"

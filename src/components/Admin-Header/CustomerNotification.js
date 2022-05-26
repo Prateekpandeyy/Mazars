@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
-import { Link, useHistory } from "react-router-dom";
-import { components } from "react-select";
+import { Link , useHistory} from "react-router-dom";
 
 
-function CustomerNotification({ tokenKey, name }) {
+function CustomerNotification({ tokenKey, name , panel}) {
 
-    // const userId = window.localStorage.getItem("userid");
 
-    const [notification, setNotification] = useState([]);
-    const [countNotification, setCountNotification] = useState("");
+
    
+    const [countNotification, setCountNotification] = useState("");
+    
+   const role = localStorage.getItem("role")
+   let history = useHistory()
 
     useEffect(() => {
         getNotification();
@@ -19,17 +20,66 @@ function CustomerNotification({ tokenKey, name }) {
     }, [tokenKey]);
    
     const getNotification = () => {
-        axios
-            .get(`${baseUrl}/customers/getNotification?id=${JSON.parse(tokenKey)}&type_list=uread`)
+        var timeStampInMs = Date.now()
+       var previousLogin =  localStorage.getItem("loginTime")
+       var nextLogin = Number(previousLogin) + Number(540000)
+       var adminpreviousLogin =  localStorage.getItem("adminloginTime")
+       var adminnextLogin = Number(adminpreviousLogin) + Number(540000)
+       var tlpreviousLogin =  localStorage.getItem("tlloginTime")
+       var tlnextLogin = Number(tlpreviousLogin) + Number(540000)
+       var tppreviousLogin =  localStorage.getItem("tploginTime")
+       var tpnextLogin = Number(tppreviousLogin) + Number(540000)
+       if(nextLogin < timeStampInMs){
+           localStorage.setItem("loginTime", timeStampInMs)
+       }
+       else if(adminnextLogin < timeStampInMs){
+        localStorage.setItem("adminloginTime", timeStampInMs)
+       }
+       else if(tlnextLogin < tlpreviousLogin){
+           localStorage.setItem("tlloginTime", timeStampInMs)
+       }
+       else if(tpnextLogin < tppreviousLogin){
+        localStorage.setItem("tploginTime", timeStampInMs)
+    }
+        var token = ""
+        var redir = ""
+        if(panel === "taxprofessional"){
+            token =  window.localStorage.getItem("tptoken")
+            redir = "tl"
+        }
+        else if (panel === "teamleader"){
+           token = window.localStorage.getItem("tlToken")
+           redir = "tl"
+        }
+        else if (panel === "admin"){
+            token = window.localStorage.getItem("adminToken")
+            redir = "admin"
+        }
+        else if(panel === "client") {
+           token = window.localStorage.getItem("clientToken")
+           redir = "customers"
+        }
+    const myConfig = {
+        headers : {
+         "uit" : token
+        }
+      }
+      if(role === "cms" && window.location.hash.search("admin") == 2){
+        console.log("cmsfixed")
+        history.push("/*")
+    }
+        else{
+            axios
+            .get(`${baseUrl}/${redir}/getNotification?id=${JSON.parse(tokenKey)}&type_list=uread`, myConfig)
             .then((res) => {
-                console.log(res);
                 if (res.data.code === 1) {
-                    setNotification(res.data.result);
+                   
                    if(res.data.result[0] != undefined){
                     setCountNotification(res.data.result[0].total);
                    }
                 }
             });
+        }
     };
 
 
@@ -37,17 +87,48 @@ function CustomerNotification({ tokenKey, name }) {
 
     return (
         <>
-            <div style={{display : "flex", justifyContent : "center", alignItems : "center"}}>
-                <li class="dropdown dropdown-notification nav-item">
+            <div style={{display : "flex", justifyContent : "center", alignItems : "flex-end", padding: "10px"}}>
+                <li className="dropdown dropdown-notification nav-item">
                     {countNotification ? (
-                     
-                           
-                                <a href="#" class="notification">
-                                <Link to ={`/${name}/message`} style={{color : "white"}}>Inbox</Link>
-                                    <span class="badge">{countNotification}</span>
+                     <>
+                     {
+                         name === "Team Leader" ?
+                         <Link to={`/teamleader/message`} className="notification">
+                         <h4 className="contentTitle">Inbox </h4>
+                               <span className="badge">{countNotification}</span>
+                               
+                           </Link>
+                       : ""
+                     }
+                     {
+                         name === "Tax Professional" ?
+                         <Link to={`/taxprofessional/message`} className="notification">
+                         <h4 className="contentTitle">Inbox </h4>
+                               <span className="badge">{countNotification}</span>
+                               
+                           </Link>
+                       : ""
+                     }
+                         {
+                             name === "customer" ?
+                             <Link to={`/${name}/message`} className="notification">
+                              <h4 className="contentTitle">Inbox </h4>
+                                    <span className="badge">{countNotification}</span>
                                     
-                                </a>
+                                </Link> :""
+                         }
+                         {
+                             name === "admin" && role === "admin" ?
+                             <Link to={`/${name}/message`} className="notification">
+                              <h4 className="contentTitle">Inbox </h4>
+                                    <span className="badge">{countNotification}</span>
+                                    
+                                </Link> : ""
+                         }
                            
+                     </>
+                           
+                            
                          
                            
                                 

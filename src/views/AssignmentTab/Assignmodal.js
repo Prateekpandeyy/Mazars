@@ -1,26 +1,26 @@
-import React, { useState, useEffect } from "react";
-import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+import React, { useState } from "react";
+import { Modal, ModalHeader, ModalBody} from "reactstrap";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
 import Swal from "sweetalert2";
 import { Spinner } from 'reactstrap';
 import { useHistory } from "react-router-dom";
+import ShowError from "../../components/LoadingTime/LoadingTime";
 function Assignmodal({
   additionalQuery,
   additionalHandler,
   assignNo,
   modaldoc,
-  getData,
-  getQueriesData,
+
 }) {
   const { handleSubmit, register } = useForm();
-  
+ const token = window.localStorage.getItem("clientToken")
   const [loading, setLoading] = useState(false);
  
   let history = useHistory();
   const onSubmit = (value) => {
-    console.log("valueAssign :", value.p_upload);
+   
     setLoading(true)
 
     let formData = new FormData();
@@ -40,10 +40,13 @@ function Assignmodal({
     axios({
       method: "POST",
       url: `${baseUrl}/customers/documentAttach`,
+      headers : {
+        uit : token
+      },
       data: formData,
     })
       .then(function (response) {
-        console.log("res-", response);
+       
         if (response.data.code === 1) {
           setLoading(false)
           var message = response.data.message
@@ -80,7 +83,7 @@ function Assignmodal({
        
       })
       .catch((error) => {
-        console.log("erroror - ", error);
+       ShowError.LoadingError(setLoading)
       });
   };
 
@@ -110,7 +113,7 @@ function Assignmodal({
                   :
                   <button
                     type="submit"
-                    className="btn btn-primary"
+                    className="customBtn"
                   >
                     Submit
                   </button>

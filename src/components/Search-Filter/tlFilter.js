@@ -85,16 +85,22 @@ function TeamFilter(props) {
     setSelectedData([]);
     setStore2([]);
     setStatus1(1)
+    setTax2([])
     getData();
   };
-
+  const token = window.localStorage.getItem("tlToken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
   const onSubmit = (data) => {
 
-console.log("search", pendingForAcceptence)
+
     if (AllQuery == "AllQuery") {
       axios
         .get(
-          `${baseUrl}/tl/getIncompleteQues?id=${JSON.parse(userid)}&status=${data.p_status}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&pcat_id=${selectedData}`
+          `${baseUrl}/tl/getIncompleteQues?id=${JSON.parse(userid)}&status=${data.p_status}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&pcat_id=${selectedData}`, myConfig
         )
         .then((res) => {
          
@@ -111,13 +117,13 @@ console.log("search", pendingForAcceptence)
 
 
     if (pendingForAcceptence == "pendingForAcceptence") {
-      console.log("pending for acceptance")
+     
       axios
         .get(
           `${baseUrl}/tl/pendingQues?id=${JSON.parse(
             userid
           )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&pcat_id=${selectedData}`
-        )
+        , myConfig)
         .then((res) => {
         
           if (res.data.code === 1) {
@@ -136,7 +142,7 @@ console.log("search", pendingForAcceptence)
       axios
         .get(
           `${baseUrl}/tl/getIncompleteQues?id=${JSON.parse(userid)}&status=${status1}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&pcat_id=${selectedData}`
-        )
+        , myConfig)
         .then((res) => {
         
           if (res.data.code === 1) {
@@ -152,7 +158,7 @@ console.log("search", pendingForAcceptence)
       axios
         .get(
           `${baseUrl}/tl/declinedQueries?id=${JSON.parse(userid)}&status=${data.p_status}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&pcat_id=${selectedData}`
-        )
+        , myConfig)
         .then((res) => {
 
           if (res.data.code === 1) {
@@ -170,7 +176,7 @@ console.log("search", pendingForAcceptence)
           `${baseUrl}/tl/getCompleteQues?id=${JSON.parse(
             userid
           )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&pcat_id=${selectedData}`
-        )
+        , myConfig)
         .then((res) => {
 
           if (res.data.code === 1) {
@@ -189,7 +195,7 @@ console.log("search", pendingForAcceptence)
           `${baseUrl}/tl/getProposalTl?id=${JSON.parse(
             userid
           )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
-          }&status=${data.p_status}&pcat_id=${selectedData}`
+          }&status=${data.p_status}&pcat_id=${selectedData}`, myConfig
         )
         .then((res) => {
 
@@ -203,12 +209,51 @@ console.log("search", pendingForAcceptence)
     }
 
     if (InprogressProposal == "InprogressProposal") {
+    if(data.p_status.length > 0){
       axios
+      .get(
+        `${baseUrl}/tl/getProposalTl?id=${JSON.parse(
+          userid
+        )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
+        }&status=${data.p_status}&pcat_id=${selectedData}`, myConfig
+      )
+      .then((res) => {
+       
+        if (res.data.code === 1) {
+          if (res.data.result) {
+            setData(res.data.result);
+            setRecords(res.data.result.length);
+          }
+        }
+      });
+    }
+    else{
+      axios
+      .get(
+        `${baseUrl}/tl/getProposalTl?id=${JSON.parse(
+          userid
+        )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
+        }&status=1&pcat_id=${selectedData}`, myConfig
+      )
+      .then((res) => {
+       
+        if (res.data.code === 1) {
+          if (res.data.result) {
+            setData(res.data.result);
+            setRecords(res.data.result.length);
+          }
+        }
+      });
+    }
+    }
+    if (proposal === "acceptedProposal") {
+      
+        axios
         .get(
           `${baseUrl}/tl/getProposalTl?id=${JSON.parse(
             userid
           )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
-          }&status=${data.p_status}&pcat_id=${selectedData}`
+          }&status=2&pcat_id=${selectedData}`, myConfig
         )
         .then((res) => {
          
@@ -219,15 +264,16 @@ console.log("search", pendingForAcceptence)
             }
           }
         });
-    }
-
+      }
+      
+  
     if(proposal == "proposal"){
       axios
       .get(
         `${baseUrl}/tl/getProposalTl?id=${JSON.parse(
           userid
         )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=3&pcat_id=${selectedData}`
-      )
+      , myConfig)
       .then((res) => {
 
         if (res.data.code === 1) {
@@ -245,7 +291,7 @@ console.log("search", pendingForAcceptence)
           `${baseUrl}/tl/getUploadedProposals?uid=${JSON.parse(
             userid
           )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=${data.p_status}&pcat_id=${selectedData}`
-        )
+        , myConfig)
         .then((res) => {
 
           if (res.data.code === 1) {
@@ -263,7 +309,7 @@ console.log("search", pendingForAcceptence)
           `${baseUrl}/tl/getUploadedProposals?uid=${JSON.parse(
             userid
           )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=1&pcat_id=${selectedData}`
-        )
+        , myConfig)
         .then((res) => {
          
           if (res.data.code === 1) {
@@ -281,7 +327,7 @@ console.log("search", pendingForAcceptence)
           `${baseUrl}/tl/getUploadedProposals?uid=${JSON.parse(
             userid
           )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=2&pcat_id=${selectedData}`
-        )
+        , myConfig)
         .then((res) => {
 
           if (res.data.code === 1) {
@@ -300,7 +346,7 @@ console.log("search", pendingForAcceptence)
       <>
         <button
           type="submit"
-          class="btn btn-primary mx-sm-1 mb-2"
+          className="customBtn mx-sm-1 mb-2"
           onClick={() => resetData()}
         >
           Reset
@@ -318,8 +364,8 @@ console.log("search", pendingForAcceptence)
         <div className="col-sm-12 d-flex">
           <div>
             <form onSubmit={handleSubmit(onSubmit)}>
-              <div class="form-inline">
-                <div class="form-group mb-2">
+              <div className="form-inline">
+                <div className="form-group mb-2">
                   <Select
                     style={{ width: 130 }}
                     placeholder="Select Category"
@@ -336,7 +382,7 @@ console.log("search", pendingForAcceptence)
                   </Select>
                 </div>
 
-                <div class="form-group mx-sm-1  mb-2">
+                <div className="form-group mx-sm-1  mb-2">
                   <Select
                     mode="multiple"
                     style={{ width: 250 }}
@@ -357,18 +403,18 @@ console.log("search", pendingForAcceptence)
                 <div>
                   <button
                     type="submit"
-                    class="btn btn-primary mb-2 ml-3"
+                    className="btnSearch mb-2 ml-3"
                     onClick={resetCategory}
                   >
                     X
                   </button>
                 </div>
 
-                <div class="form-group mx-sm-1  mb-2">
+                <div className="form-group mx-sm-1  mb-2">
                   <label className="form-select form-control">From</label>
                 </div>
 
-                <div class="form-group mx-sm-1  mb-2">
+                <div className="form-group mx-sm-1  mb-2">
                   <input
                     type="date"
                     name="p_dateFrom"
@@ -378,11 +424,11 @@ console.log("search", pendingForAcceptence)
                   />
                 </div>
 
-                <div class="form-group mx-sm-1  mb-2">
+                <div className="form-group mx-sm-1  mb-2">
                   <label className="form-select form-control">To</label>
                 </div>
 
-                <div class="form-group mx-sm-1  mb-2">
+                <div className="form-group mx-sm-1  mb-2">
                   <input
                     type="date"
                     name="p_dateTo"
@@ -393,7 +439,7 @@ console.log("search", pendingForAcceptence)
                   />
                 </div>
 
-                <div class="form-group mx-sm-1  mb-2">
+                <div className="form-group mx-sm-1  mb-2">
 
                   {AllQuery == "AllQuery" && (
                     <select
@@ -418,9 +464,9 @@ console.log("search", pendingForAcceptence)
                       onChange={(e) => setStatus1(e.target.value)}
                     >
                       <option value="">--select--</option>
-                      <option value="4">Inprogress; Allocation</option>
-                      <option value="5">Inprogress; Proposals</option>
-                      <option value="6">Inprogress; Assignments</option>
+                      <option value="4">Inprogress Acceptance</option>
+                      <option value="5">Inprogress; Proposal</option>
+                      <option value="6">Inprogress; Assignment</option>
                     </select>
                   )}
 
@@ -433,8 +479,8 @@ console.log("search", pendingForAcceptence)
                       style={{ height: "33px" }}
                     >
                       <option value="">--select--</option>
-                      <option value="3">Customer Declined; Proposals</option>
-                      <option value="4">Customer Declined; Payment</option>
+                      <option value="3">Client Declined; Proposals</option>
+                      <option value="4">Client Declined; Payment</option>
                     </select>
                   )}
 
@@ -448,7 +494,7 @@ console.log("search", pendingForAcceptence)
                       <option value="">--select--</option>
                       <option value="1">Inprogress; Proposals</option>
                       <option value="2">Accepted; Proposals</option>
-                      <option value="3">Customer Declined; Proposals</option>
+                      <option value="3">Client Declined; Proposals</option>
                     </select>
                   )}
 
@@ -475,15 +521,16 @@ console.log("search", pendingForAcceptence)
                       <option value="">--select--</option>
                       <option value="1">Unpaid</option>
                       <option value="2">Paid</option>
+                      <option value="3">Declined</option>
                     </select>
                   )}
                 </div>
 
-                <button type="submit" class="btn btn-primary mx-sm-1 mb-2">
+                <button type="submit" className="customBtn mx-sm-1 mb-2">
                   Search
                 </button>
                 <Reset />
-                <div class="form-group mx-sm-1  mb-2">
+                <div className="form-group mx-sm-1  mb-2">
                   <label className="form-select form-control"
                   >Total Records : {records}</label>
                 </div>

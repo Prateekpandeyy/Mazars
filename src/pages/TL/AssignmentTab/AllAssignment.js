@@ -8,12 +8,15 @@ import {
   Card,
   CardHeader,
   CardBody,
+<<<<<<< HEAD
   CardTitle,
   Row,
   Col,
   Table,
   Tooltip,
   Spinner
+=======
+>>>>>>> fb9983d312e1292b5ef70abe83110c6d79a3c8a3
 } from "reactstrap";
 import DraftReportModal from "./DraftReportUpload";
 import FinalReportUpload from "./FinalReportUpload";
@@ -22,46 +25,42 @@ import { useForm } from "react-hook-form";
 import "antd/dist/antd.css";
 import { Select } from "antd";
 import BootstrapTable from "react-bootstrap-table-next";
-import TeamFilter from "../../../components/Search-Filter/tlFilter";
-import * as Cookies from "js-cookie";
 import DescriptionOutlinedIcon from '@material-ui/icons/DescriptionOutlined';
 import ViewAllReportModal from "./ViewAllReport";
 import DiscardReport from "../AssignmentTab/DiscardReport";
 import moment from "moment";
+import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
+import MessageIcon, { ViewDiscussionIcon, DraftReportUploadIcon, FinalReportUploadIcon} from "../../../components/Common/MessageIcon";
 
 
 function AssignmentTab(props) {
   const [loading, setLoading] = useState(false);
   const history = useHistory();
   const userid = window.localStorage.getItem("tlkey");
-
   const { handleSubmit, register, errors, reset } = useForm();
   const { Option, OptGroup } = Select;
   const [count, setCount] = useState("");
   const [assignment, setAssignment] = useState([]);
   const [id, setId] = useState("");
   const [finalId, setFinalId] = useState("");
-
   const [records, setRecords] = useState([]);
   const [selectedData, setSelectedData] = useState([]);
   const [status, setStatus] = useState([]);
   const [tax2, setTax2] = useState([]);
   const [store2, setStore2] = useState([]);
   const [hide, setHide] = useState();
-
-  var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
-  console.log("current_date :", current_date);
-  const [item] = useState(current_date);
-
-  const [baseMode, SetbaseMode] = useState("avc");
-  const [transcode, SetTranscode] = useState("interop");
-  const [attendeeMode, SetAttendeeMode] = useState("video");
-  const [videoProfile, SetVideoProfile] = useState("480p_4");
+  const [fianlModal, setFianlModal] = useState(false);
+  const [draftModal, setDraftModal] = useState(false);
   const [dataItem, setDataItem] = useState({});
-
   const [report, setReport] = useState();
   const [reportModal, setReportModal] = useState(false);
   const [assignNo, setAssignNo] = useState('');
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(false);
+  var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
+
+  const [item] = useState(current_date);
+  let des = false;
   var rowStyle2 = {}
   const ViewReport = (key) => {
    
@@ -81,12 +80,17 @@ function AssignmentTab(props) {
   useEffect(() => {
     getAssignmentList();
   }, []);
-
+  const token = window.localStorage.getItem("tlToken")
+    const myConfig = {
+        headers : {
+         "uit" : token
+        }
+      }
   const getAssignmentList = () => {
     axios
-      .get(`${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(userid)}`)
+      .get(`${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(userid)}`, myConfig)
       .then((res) => {
-        console.log(res);
+       
         if (res.data.code === 1) {
           setAssignment(res.data.result);
           setCount(res.data.result.length);
@@ -100,9 +104,9 @@ function AssignmentTab(props) {
     const getSubCategory = () => {
      if(selectedData != undefined){
       axios
-      .get(`${baseUrl}/customers/getCategory?pid=${selectedData}`)
+      .get(`${baseUrl}/tl/getCategory?pid=${selectedData}`, myConfig)
       .then((res) => {
-        console.log(res);
+     
         if (res.data.code === 1) {
           setTax2(res.data.result);
         }
@@ -114,38 +118,43 @@ function AssignmentTab(props) {
 
   //handleCategory
   const handleCategory = (value) => {
-    console.log(`selected ${value}`);
+    setError(false)
     setSelectedData(value);
     setStore2([]);
   };
 
   //handleSubCategory
   const handleSubCategory = (value) => {
-    console.log(`selected ${value}`);
+    setError(false)
     setStore2(value);
   };
 
   //reset category
-  const resetCategory = () => {
-    console.log("resetCategory ..");
-    setSelectedData([]);
-    setStore2([]);
-    getAssignmentList();
-  };
+   const resetCategory = () => {
+  setSelectedData([]);
+  setStore2([]);
+  getAssignmentList()
+  setError(false)
+  setTax2([])
+   };
 
-  //reset date
-  const resetData = () => {
-    console.log("resetData ..");
-    reset();
-    setStatus([]);
-    setSelectedData([]);
-    setStore2([]);
-    getAssignmentList();
-  };
+
+//reset date
+const resetData = () => {
+
+  reset();
+   setTax2([])
+  setError(false)
+  setHide("")
+  setStatus([]);
+  setSelectedData([]);
+  setStore2([]);
+  getAssignmentList();
+};
 
   //assingmentStatus
   const assingmentStatus = (value) => {
-    console.log(`selected ${value}`);
+    setError(false)
     setStatus(value);
   };
 
@@ -158,19 +167,18 @@ function AssignmentTab(props) {
       formatter: (cellContent, row, rowIndex) => {
         return rowIndex + 1;
       },
+    
       headerStyle: () => {
-        return { fontSize: "12px", width: "50px" };
+        return { width: "50px" };
       },
     },
     {
-      text: "Date",
+      text: "Query Date",
       dataField: "date_of_query",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
+     
       formatter: function dateFormat(cell, row) {
-        console.log("dt", row.date_of_query);
+    
         var oldDate = row.date_of_query;
         if (oldDate == null) {
           return null;
@@ -181,16 +189,15 @@ function AssignmentTab(props) {
     {
       text: "Query No",
       dataField: "assign_no",
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
+     
       formatter: function nameFormatter(cell, row) {
-        console.log(row);
+      
         return (
           <>
             <Link
               to={{
                 pathname: `/teamleader/queries/${row.q_id}`,
+                index : 0,
                 routes: "assignment",
               }}
             >
@@ -204,55 +211,60 @@ function AssignmentTab(props) {
       text: "Category",
       dataField: "parent_id",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
+    
     },
     {
       text: "Sub Category",
       dataField: "cat_name",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
+     
     },
     {
       dataField: "status",
       text: "Status",
-      style: {
-        fontSize: "11px",
-      },
+     
       headerStyle: () => {
-        return { fontSize: "12px", width: "200px" };
+        return { fontSize: "11px", width: "200px" };
       },
+
       formatter: function (cell, row) {
         return (
           <>
             <div>
             {row.paid_status == "2" &&
                 <p>
-                  <span style={{ color: "red" }}>Payment Declined</span>
+                  <span className="declined">Payment Declined</span>
                 </p>
               }
               <p>
                 <span style={{ fontWeight: "bold" }}>Client Discussion :</span>
-                {row.client_discussion}
+               <span className={row.client_discussion === "completed" ? "completed" : "inprogress"}>
+                                {row.client_discussion}
+                 </span>
               </p>
               <p>
                 <span style={{ fontWeight: "bold" }}>Draft report :</span>
-                {row.draft_report}
+                <span className={row.draft_report === "completed" ? "completed" : "inprogress"}>
+                      {row.draft_report}
+                 </span>
               </p>
               <p>
                 <span style={{ fontWeight: "bold" }}>Final Discussion :</span>
-                {row.final_discussion}
+                <span className={row.final_discussion === "completed" ? "completed" : "inprogress"}>
+                     {row.final_discussion}
+                 </span>
               </p>
               <p>
                 <span style={{ fontWeight: "bold" }}>Delivery of Final Report :</span>
-                {row.delivery_report}
+                <span className={row.delivery_report === "completed" ? "completed" : "inprogress"}>
+                             {row.delivery_report}
+                 </span>
               </p>
               <p>
-                <span style={{ fontWeight: "bold" }}>Complete :</span>
-                {row.other_stage}
+                <span style={{ fontWeight: "bold" }}>Awaiting Completion:</span>
+                <span className={row.other_stage === "completed" ? "completed" : "inprogress"}>
+                            {row.other_stage}
+                 </span>
               </p>
             </div>
           </>
@@ -263,41 +275,56 @@ function AssignmentTab(props) {
       text: "Expected date of delivery",
       dataField: "Exp_Delivery_Date",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
+     
       formatter: function dateFormat(cell, row) {
-        console.log("dt", row.Exp_Delivery_Date);
-        var oldDate = row.Exp_Delivery_Date;
-        if (oldDate == null) {
-          return null;
+       
+        var oldDate1 = row.final_date;
+
+        let finalDate , expectedDate;
+        if(oldDate1 && oldDate1 !== "0000-00-00 00:00:00"){
+       finalDate = oldDate1.split(" ")[0].split("-").reverse().join("-")
         }
-        return oldDate.toString().split("-").reverse().join("-");
+        var oldDate2 = row.Exp_Delivery_Date;
+     
+       expectedDate = oldDate2
+        if(expectedDate){
+         expectedDate= oldDate2.toString().split("-").reverse().join("-")
+        }
+        // console.log("finalDate", finalDate)
+        // console.log("expectedDate", expectedDate)
+        return(
+          <>
+          {finalDate ? 
+          <p>{finalDate}</p> : <p>{expectedDate}</p>}
+          </>
+        )
       },
+    
     },
     {
-      text: "Actual date of delivery",
-      dataField: "final_date",
-      sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
-      formatter: function dateFormat(cell, row) {
-        console.log("dt", row.final_date);
-        var oldDate = row.final_date;
-        if (oldDate == null || oldDate == "0000-00-00 00:00:00") {
-          return null;
-        }
-        return oldDate.slice(0, 10).toString().split("-").reverse().join("-");
-      },
+      text: "TP Name",
+      dataField: "tp_name",
+    
     },
+    // {
+    //   text: "Actual date of delivery",
+    //   dataField: "final_date",
+    //   sort: true,
+    
+    //   formatter: function dateFormat(cell, row) {
+       
+    //     var oldDate = row.final_date;
+    //     if (oldDate == null || oldDate == "0000-00-00 00:00:00") {
+    //       return null;
+    //     }
+    //     return oldDate.slice(0, 10).toString().split("-").reverse().join("-");
+    //   },
+    // },
     {
       text: "Deliverable",
       dataField: "",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
+     
       formatter: function (cell, row) {
         return (
           <>
@@ -306,7 +333,7 @@ function AssignmentTab(props) {
                 <div>
                   {row.assignement_draft_report || row.final_report ?
                     <div title="View All Report"
-                      style={{ cursor: "pointer" }}
+                      style={{ cursor: "pointer", textAlign : "center" }}
                       onClick={() => ViewReport(row)}
                     >
                       <DescriptionOutlinedIcon color="secondary" />
@@ -323,8 +350,11 @@ function AssignmentTab(props) {
     {
       text: "Assignment Stage",
       headerStyle: () => {
-        return { fontSize: "12px" };
+        return { fontSize: "11px" };
+      }, style : {
+        fontSize : "11px"
       },
+
       formatter: function (cell, row) {
         return (
           <>
@@ -343,83 +373,16 @@ function AssignmentTab(props) {
     },
     {
       text: "Action",
-      headerStyle: () => {
-        return { fontSize: "12px", width: "90px" };
-      },
+      
       formatter: function (cell, row) {
         return (
           <>
-         {
-           row.paid_status == "2" ? "" : 
-           <div
-           style={{
-             display: "flex",
-             justifyContent: "space-between",
-           }}
-         >
-           
-           
-              {
-              row.client_discussion == "completed" && row.draft_report == "inprogress" && row.paid_status !=2 ?
-              <div title="upload Pdf">
-              <p
-                style={{ cursor: "pointer", color: "green" }}
-                onClick={() => uploadDraftReport(row.id)}
-              >
-                <i class="fa fa-upload" style={{ fontSize: "16px" }}></i>
-                draft
-              </p>
-            </div> : null
-           }
-            {
-              row.client_discussion == "completed" && row.draft_report == "completed" && row.final_discussion == "inprogress" ?
-              <div title="upload Pdf">
-              <p
-                style={{ cursor: "pointer", color: "green" }}
-                onClick={() => uploadDraftReport(row.id)}
-              >
-                <i class="fa fa-upload" style={{ fontSize: "16px" }}></i>
-                draft
-              </p>
-            </div> : null
-           }
-{
- row.client_discussion == "completed" && row.draft_report == "completed" && row.final_discussion == "completed" && row.delivery_report == "inprogress" ?
-
-<div title="upload Pdf">
- <p
-   style={{ cursor: "pointer", color: "red" }}
-   onClick={() => uploadFinalReport(row)}
- >
- 
-       <div>
-         <i
-           class="fa fa-upload"
-           style={{ fontSize: "16px" }}
-         ></i>
-         final
-       </div>
-    
- </p>
-</div> : null
-}
-          
-
-           <div title="View Discussion Message">
-             <i
-               class="fa fa-comments-o"
-               style={{
-                 fontSize: 16,
-                 cursor: "pointer",
-                 color: "orange"
-               }}
-               onClick={() => ViewDiscussionToggel(row.assign_no)}
-             ></i>
-           </div>
-           <div title="Send Message">
-             <Link
-               to={{
-                 pathname: `/teamleader/chatting/${row.q_id}`,
+        <div style={{display: "flex"}}>
+        <Link
+            to={{
+              pathname: `/teamleader/chatting/${row.q_id}`,
+              index : 0,
+              routes: "assignment",
                  obj: {
                    message_type: "3",
                    query_No: row.assign_no,
@@ -428,21 +391,56 @@ function AssignmentTab(props) {
                  }
                }}
              >
-               <i
-                 class="fa fa-comments-o"
-                 style={{
-                   fontSize: 16,
-                   cursor: "pointer",
-                   marginLeft: "8px",
-                   color: "blue"
-                 }}
-               ></i>
+              <MessageIcon />
              </Link>
-           </div>
+             <div  onClick={() => ViewDiscussionToggel(row.assign_no)} className="ml-1">
+                                  
+                                  <ViewDiscussionIcon />
+                          </div>
+         {
+           row.paid_status == "2" ? 
+          null : 
+           <>
+           
+            {
+              row.client_discussion == "completed" && row.draft_report == "inprogress" && row.final_discussion == "inprogress" &&  row.paid_status !=2  ?
+             
+              <p
+                style={{ display: "flex", flexDirection: "column" , cursor: "pointer", color: "green" }}
+                onClick={() => uploadDraftReport(row.id)}
+              >
+               <DraftReportUploadIcon />
+                draft
+              </p>
+             : null
+           }
+{
+ row.client_discussion == "completed" && row.draft_report == "completed" && row.final_discussion == "completed" && row.delivery_report == "inprogress" ?
 
-         </div>
+
+ <p
+   style={{  display: "flex", flexDirection: "column" , cursor: "pointer", color: "red" }}
+   onClick={() => uploadFinalReport(row)}
+ >
+ 
+      
+        <FinalReportUploadIcon />
+         final
+       
+    
+ </p>
+ : null
+}
+          
+
+          
+          
+         </>
          }
-          </>
+ 
+        </div>
+          
+                   </>
         );
       },
     },
@@ -468,37 +466,60 @@ function AssignmentTab(props) {
   }
 
   // draft modal
-  const [draftModal, setDraftModal] = useState(false);
+ 
   const uploadDraftReport = (id) => {
-    console.log(id);
-    setDraftModal(!draftModal);
-    setId(id);
+    if(typeof(id) == "object"){
+      
+      let des = true;
+      setLoading(false)
+      setDraftModal(!draftModal);
+    }
+    else{
+      setDraftModal(!draftModal);
+      setId(id);
+    }
+  
   };
 
 
   // final modal
-  const [fianlModal, setFianlModal] = useState(false);
-  const uploadFinalReport = (id) => {
-    console.log(id);
-    setFianlModal(!fianlModal);
-    setFinalId(id);
-  };
-
+  
+    const uploadFinalReport = (id) => {
+if(id && id.id === undefined){
+    
+  let des = true;
+  setLoading(false)
+  setFianlModal(!fianlModal);
+}
+else{
+  setFianlModal(!fianlModal);
+      setFinalId(id);
+}
+    
+    };
+  
+    
 
   const onSubmit = (data) => {
+<<<<<<< HEAD
     setLoading(true)
     console.log("data :", data);
     console.log("selectedData :", selectedData);
     axios
+=======
+  if(hide == 1 || hide == 2){
+    if(status.length > 0){
+      axios
+>>>>>>> fb9983d312e1292b5ef70abe83110c6d79a3c8a3
       .get(
         `${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(
           userid
         )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
         }&assignment_status=${status}&stages_status=${data.p_status
-        }&pcat_id=${selectedData}`
+        }&pcat_id=${selectedData}`, myConfig
       )
       .then((res) => {
-        console.log(res);
+      
         if (res.data.code === 1) {
           setLoading(false)
           if (res.data.result) {
@@ -507,6 +528,7 @@ function AssignmentTab(props) {
 
           }
         }
+<<<<<<< HEAD
       })
       .catch((error) => {
         // console.log("erroror - ", error);
@@ -516,6 +538,38 @@ function AssignmentTab(props) {
        },3000);
        });
   };
+=======
+      });
+
+    }
+    else{
+      setError(true)
+      return false;
+    }
+  }
+  else{
+    axios
+    .get(
+      `${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(
+        userid
+      )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
+      }&assignment_status=${status}&stages_status=${data.p_status
+      }&pcat_id=${selectedData}`, myConfig
+    )
+    .then((res) => {
+    
+      if (res.data.code === 1) {
+        if (res.data.result) {
+          setAssignment(res.data.result);
+          setRecords(res.data.result.length);
+
+        }
+      }
+    });
+
+  }
+     };
+>>>>>>> fb9983d312e1292b5ef70abe83110c6d79a3c8a3
 
 
   const Reset = () => {
@@ -523,7 +577,7 @@ function AssignmentTab(props) {
       <>
         <button
           type="submit"
-          class="btn btn-primary mx-sm-1 mb-2"
+          class="customBtn mx-sm-1 mb-2"
           onClick={() => resetData()}
         >
           Reset
@@ -534,6 +588,8 @@ function AssignmentTab(props) {
 
 
   const disabledHandler = (e) => {
+    setStatus([])
+    setError(false)
     setHide(e.target.value);
   };
 
@@ -561,27 +617,28 @@ function AssignmentTab(props) {
                 </Select>
               </div>
 
+             {tax2.length > 0 ? 
               <div class="form-group mx-sm-1  mb-2">
-                <Select
-                  mode="multiple"
-                  style={{ width: 250 }}
-                  placeholder="Select Sub Category"
-                  defaultValue={[]}
-                  onChange={handleSubCategory}
-                  value={store2}
-                  allowClear
-                >
-                  {tax2.map((p, index) => (
-                    <Option value={p.id} key={index}>
-                      {p.details}
-                    </Option>
-                  ))}
-                </Select>
-              </div>
+              <Select
+                mode="multiple"
+                style={{ width: 250 }}
+                placeholder="Select Sub Category"
+                defaultValue={[]}
+                onChange={handleSubCategory}
+                value={store2}
+                allowClear
+              >
+                {tax2.map((p, index) => (
+                  <Option value={p.id} key={index}>
+                    {p.details}
+                  </Option>
+                ))}
+              </Select>
+            </div> : ""}
               <div>
                 <button
                   type="submit"
-                  class="btn btn-primary mb-2 ml-3"
+                  class="btnSearch mb-2 ml-3"
                   onClick={resetCategory}
                 >
                   X
@@ -626,17 +683,16 @@ function AssignmentTab(props) {
                   onChange={(e) => disabledHandler(e)}
                 >
                   <option value="">--select--</option>
-                  <option value="1">Pending</option>
-                  <option value="2">Complete</option>
-                  <option value="3">Payment Decline</option>
+                  <option value="1">Inprogress</option>
+                  <option value="2">Completed</option>
+                  <option value="3">Payment Declined</option>
                 </select>
               </div>
 
               {
-                hide == "3" ?
-                  ""
-                  :
-                  <div class="form-group mx-sm-1  mb-2">
+                hide == "1" || hide == "2" ?
+                 
+                  <div className="form-group mx-sm-1  mb-2">
                     <Select
                       mode="multiple"
                       style={{ width: 210 }}
@@ -645,6 +701,7 @@ function AssignmentTab(props) {
                       onChange={assingmentStatus}
                       value={status}
                       allowClear
+                      className={error ? "customError" : ""}
                     >
                       <Option value="Client_Discussion" label="Compilance">
                         <div className="demo-option-label-item">
@@ -652,7 +709,9 @@ function AssignmentTab(props) {
                         </div>
                       </Option>
                       <Option value="Draft_Report" label="Compilance">
-                        <div className="demo-option-label-item">Draft report</div>
+                        <div className="demo-option-label-item">
+                          Draft reports
+                        </div>
                       </Option>
                       <Option value="Final_Discussion" label="Compilance">
                         <div className="demo-option-label-item">
@@ -661,20 +720,21 @@ function AssignmentTab(props) {
                       </Option>
                       <Option value="Delivery_of_report" label="Compilance">
                         <div className="demo-option-label-item">
-                          Delivery of report
+                          Delivery of Final Reports
                         </div>
                       </Option>
                       <Option value="Completed" label="Compilance">
-                        <div className="demo-option-label-item">Completed</div>
+                        <div className="demo-option-label-item">Awaiting Completion</div>
                       </Option>
                     </Select>
-                  </div>
-              }
+                  </div> : ""
 
+              }
 
               <div class="form-group mx-sm-1  mb-2">
                 <label className="form-select form-control">Total Records : {records}</label>
               </div>
+<<<<<<< HEAD
               {
             loading ?
               // <Loader />
@@ -684,6 +744,9 @@ function AssignmentTab(props) {
               :
 
               <button type="submit" class="btn btn-primary mx-sm-1 mb-2">
+=======
+              <button type="submit" class="customBtn mx-sm-1 mb-2">
+>>>>>>> fb9983d312e1292b5ef70abe83110c6d79a3c8a3
                 Search
               </button>
 }
@@ -693,20 +756,25 @@ function AssignmentTab(props) {
         </CardHeader>
 
         <CardBody>
-          <BootstrapTable
-            bootstrap4
-            keyField="id"
-            data={assignment}
-            columns={columns}
-            rowStyle={ rowStyle2 }
-            rowIndex
-          />
+        <DataTablepopulated 
+                    bgColor = "#5a625a"
+                   keyField= {"assign_no"}
+                   rowStyle2 = {rowStyle2}
+                   data={assignment}
+                   columns={columns}>
+                    </DataTablepopulated>
 
-          <DraftReportModal
+         
+        </CardBody>
+      </Card>
+      <DraftReportModal
             draftModal={draftModal}
             uploadDraftReport={uploadDraftReport}
             getAssignmentList={getAssignmentList}
             id={id}
+            loading = {loading}
+            setLoading = {setLoading}
+            des = {des}
           />
 
           <FinalReportUpload
@@ -714,37 +782,30 @@ function AssignmentTab(props) {
             uploadFinalReport={uploadFinalReport}
             getAssignmentList={getAssignmentList}
             id={finalId}
+            loading = {loading}
+            setLoading = {setLoading}
+            des = {des}
           />
 
 
-          <ViewAllReportModal
-            ViewReport={ViewReport}
-            reportModal={reportModal}
-            report={report}
-            dataItem={dataItem}
-          />
-
+        
           <DiscardReport
             ViewDiscussionToggel={ViewDiscussionToggel}
             ViewDiscussion={ViewDiscussion}
             report={assignNo}
             getData={getAssignmentList}
+            headColor = "#5a625a"
           />
-        </CardBody>
-      </Card>
+      <ViewAllReportModal
+            ViewReport={ViewReport}
+            reportModal={reportModal}
+            report={report}
+            dataItem={dataItem}k
+            headColor = "#5a625a"
+          />
+
     </>
   );
 }
 
 export default AssignmentTab;
-
-
-
-
-
-
-
-
-
-
-

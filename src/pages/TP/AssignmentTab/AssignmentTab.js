@@ -19,26 +19,43 @@ function QueriesTab(props) {
   const [allAssignmentCount, setAllAssignmentCount] = useState("");
   const [draft, setDraft] = useState("");
   const [final, setFinal] = useState();
-
-
+  const [bgColor, setbgColor] = useState("#615339")
+  const token = window.localStorage.getItem("tptoken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
+  const tableIndex = (index) => {
+    setTabIndex(index)
+    console.log(index)
+    if(index === 0){
+      setbgColor("#615339")
+    }
+    else if(index === 1){
+      setbgColor("#907b56")
+    }
+    else if(index === 2){
+      setbgColor("#907b56")
+    }
+    else if(index === 3){
+      setbgColor("#907b56")
+    }
+  }
+    
   const myStyle1 = {
-    backgroundColor: "grey",
-    padding: "12px",
-    borderRadius: "50px",
-    width: "200px",
-    textAlign: "center",
-    color: "white",
-    cursor: "pointer",
+    margin: "10px auto"
   };
   const myStyle2 = {
-    padding: "12px",
-    borderRadius: "50px",
-    width: "200px",
-    textAlign: "center",
-    backgroundColor: "blue",
-    color: "white",
-    cursor: "pointer",
-  };
+    margin: "10px auto",
+ 
+    color : "#5a625a",
+    fontWeight : 1000
+     };
+  
+  
+
+
 
 
   useLayoutEffect(() => {
@@ -52,9 +69,9 @@ function QueriesTab(props) {
 
     const AllAssignment = () => {
       axios
-        .get(`${baseUrl}/tl/getAssignments?tp_id=${JSON.parse(userid)}`)
+        .get(`${baseUrl}/tl/getAssignments?tp_id=${JSON.parse(userid)}`, myConfig)
         .then((res) => {
-          console.log(res);
+          
           if (res.data.code === 1) {
             setAllAssignmentCount(res.data.result.length);
           }
@@ -63,9 +80,9 @@ function QueriesTab(props) {
 
     const getDraftReports = () => {
       axios
-        .get(`${baseUrl}/tl/getAssignments?tp_id=${JSON.parse(userid)}&assignment_status=Draft_Report&stages_status=1`)
+        .get(`${baseUrl}/tl/getAssignments?tp_id=${JSON.parse(userid)}&assignment_status=Draft_Report&stages_status=1`, myConfig)
         .then((res) => {
-          console.log(res);
+          
           if (res.data.code === 1) {
             setDraft(res.data.result.length);
           }
@@ -74,9 +91,9 @@ function QueriesTab(props) {
 
     const getFinalReports = () => {
       axios
-        .get(`${baseUrl}/tl/getAssignments?tp_id=${JSON.parse(userid)}&assignment_status=Delivery_of_report&stages_status=1`)
+        .get(`${baseUrl}/tl/getAssignments?tp_id=${JSON.parse(userid)}&assignment_status=Delivery_of_report&stages_status=1`, myConfig)
         .then((res) => {
-          console.log(res);
+          
           if (res.data.code === 1) {
             setFinal(res.data.result.length);
           }
@@ -92,23 +109,19 @@ function QueriesTab(props) {
 
   return (
     <Layout TPDashboard="TPDashboard" TPuserId={userid}>
-      <div>
-        <Tabs selectedIndex={tabIndex} onSelect={(index) => setTabIndex(index)}>
-          <TabList
-            style={{
-              listStyleType: "none",
-              display: "flex",
-              justifyContent: "space-around",
-            }}
+              <Tabs selectedIndex={tabIndex} onSelect={(index) => tableIndex(index)}>
+      <TabList
+          className="fixedTab"
           >
-            <Tab style={tabIndex == 0 ? myStyle2 : myStyle1}>
+             
+            <Tab style={tabIndex == 0 ? myStyle2 : myStyle1} className="tabHover">
               All Assignments ({allAssignmentCount})
             </Tab>
-            <Tab style={tabIndex == 1 ? myStyle2 : myStyle1}>
+            <Tab style={tabIndex == 1 ? myStyle2 : myStyle1} className="tabHover">
               Inprogress; Draft Reports ({draft})
             </Tab>
-            <Tab style={tabIndex == 2 ? myStyle2 : myStyle1}>
-              Inprogress; Delivery of Final ({final})
+            <Tab style={tabIndex == 2 ? myStyle2 : myStyle1} className="tabHover">
+              Inprogress; Delivery of Final Report ({final})
             </Tab>
           </TabList>
 
@@ -124,7 +137,7 @@ function QueriesTab(props) {
             <DeliveryFinalTab />
           </TabPanel>
         </Tabs>
-      </div>
+ 
     </Layout>
   );
 }

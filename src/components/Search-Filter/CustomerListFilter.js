@@ -23,7 +23,7 @@ function CustomerListFilter(props) {
   const [item] = useState(current_date);
   
   const resetData = () => {
-    console.log("resetData ..");
+   
     reset();
    getCustomer();
   };
@@ -52,8 +52,12 @@ axios
   }&email=${data.email}&occupation=${data.occupation}&from=${data.p_dateFrom}&to=${data.p_dateTo}`
 )
 .then((res) => {
+<<<<<<< HEAD
   console.log("myResult", res.data.result);
   var finalData = res.data.result
+=======
+
+>>>>>>> fb9983d312e1292b5ef70abe83110c6d79a3c8a3
   if (res.data.code === 1) {
     if (res.data.result) {
       setData(res.data.result);
@@ -141,7 +145,7 @@ const exportToExcel = async () => {
         <div>
           <form onSubmit={handleSubmit(onSubmit)}>
           <div className="row my-3">
-        <div class="col-sm-3">
+        <div className="col-sm-3">
             
           <input 
           placeholder="Name"
@@ -151,7 +155,7 @@ const exportToExcel = async () => {
           ref={register}
           />
       </div>
-      <div class="col-sm-3">
+      <div className="col-sm-3">
             
             <input 
             placeholder="Country"
@@ -161,7 +165,7 @@ const exportToExcel = async () => {
             ref={register}
             />
         </div>
-        <div class="col-sm-3">
+        <div className="col-sm-3">
             
             <input 
             placeholder="City"
@@ -171,7 +175,7 @@ const exportToExcel = async () => {
             ref={register}
             />
         </div>
-              <div class="col-sm-3">
+              <div className="col-sm-3">
                   
                   <input 
                   placeholder="State"
@@ -184,8 +188,8 @@ const exportToExcel = async () => {
               
           
           </div>
-          <div class="row my-3">
-          <div class="col-sm-3">
+          <div className="row my-3">
+          <div className="col-sm-3">
                 
                 <input 
                 placeholder="Email"
@@ -194,7 +198,7 @@ const exportToExcel = async () => {
                 className="form-control"
                 ref={register}/>
             </div>
-            <div class="col-sm-3">
+            <div className="col-sm-3">
               
               <input 
               placeholder="Occupation"
@@ -203,14 +207,14 @@ const exportToExcel = async () => {
               className="form-control"
               ref={register}/>
           </div>
-          <div class="form-inline">
+          <div className="form-inline">
              
 
-             <div class="form-group mx-sm-1  mb-2">
+             <div className="form-group mx-sm-1  mb-2">
                <label className="form-select form-control">From</label>
              </div>
 
-             <div class="form-group mx-sm-1  mb-2">
+             <div className="form-group mx-sm-1  mb-2">
                <input
                  type="date"
                  name="p_dateFrom"
@@ -220,11 +224,11 @@ const exportToExcel = async () => {
                />
              </div>
 
-             <div class="form-group mx-sm-1  mb-2">
+             <div className="form-group mx-sm-1  mb-2">
                <label className="form-select form-control">To</label>
              </div>
 
-             <div class="form-group mx-sm-1  mb-2">
+             <div className="form-group mx-sm-1  mb-2">
                <input
                  type="date"
                  name="p_dateTo"
@@ -237,20 +241,20 @@ const exportToExcel = async () => {
 </div>
           </div>
              
-              <div class="row my-3">
+              <div className="row my-3">
              
-             <div class="col-sm-6">
-             <button type="submit" class="btn btn-primary mx-sm-1 mb-2">
+             <div className="col-sm-6">
+             <button type="submit" className="customBtn mx-sm-1 mb-2">
                 Search
               </button>
               <button
           type="submit"
-          class="btn btn-primary mx-sm-1 mb-2"
+          className="customBtn mx-sm-1 mb-2"
           onClick={() => resetData()}
         >
           Reset
         </button>
-        <div class="form-group d-inline-block">
+        <div className="form-group d-inline-block">
                   <label className="form-select form-control"
                   >Total Records : {records}</label>
                 </div>

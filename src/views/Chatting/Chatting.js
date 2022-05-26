@@ -6,6 +6,7 @@ import Layout from "../../components/Layout/Layout";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
 import { useHistory } from "react-router-dom";
+import ShowError from "../../components/LoadingTime/LoadingTime";
 import {
   Card,
   CardHeader,
@@ -20,9 +21,7 @@ import Alerts from "../../common/Alerts";
 import classNames from "classnames";
 import Mandatory from "../../components/Common/Mandatory";
 import Loader from "../../components/Loader/Loader";
-
-
-
+import { Link } from "react-router-dom";
 
 const Schema = yup.object().shape({
   message_type: yup.string().required(""),
@@ -32,7 +31,6 @@ const Schema = yup.object().shape({
 
 function Chatting(props) {
 
-  console.log("props", props)
 
   const history = useHistory();
   const { handleSubmit, register, errors, reset } = useForm({
@@ -40,33 +38,29 @@ function Chatting(props) {
   });
 
   const userId = window.localStorage.getItem("userid");
-
   const [item, setItem] = useState("");
   const [data, setData] = useState({})
   const [loading, setLoading] = useState(false);
-
   const { message_type, query_id, query_No, routes } = data
-
-
+  const token = window.localStorage.getItem("clientToken")
   useEffect(() => {
     
     const dataItem = props.location.obj
-   console.log("dataItem", dataItem)
+ 
     if (dataItem) {
       localStorage.setItem("myDataCust", JSON.stringify(dataItem));
     }
     var myData = localStorage.getItem("myDataCust");
     var data2 = JSON.parse(myData)
-    console.log("data2", data2)
+   
     setData(data2)
     setItem(data2.message_type)
   }, [item]);
 
-
+console.log("data", data)
 
   const onSubmit = (value) => {
-    console.log("value :", value);
-console.log(query_id)
+   
     setLoading(true)
     let formData = new FormData();
     formData.append("uid", JSON.parse(userId));
@@ -77,10 +71,13 @@ console.log(query_id)
     axios({
       method: "POST",
       url: `${baseUrl}/customers/messageSent`,
+      headers: {
+        uit : token
+      },
       data: formData,
     })
       .then(function (response) {
-        console.log("res-", response);
+     
         if (response.data.code === 1) {
           setLoading(false)
           reset();
@@ -93,7 +90,7 @@ console.log(query_id)
         }
       })
       .catch((error) => {
-        console.log("erroror - ", error);
+       ShowError.LoadingError(setLoading)
       });
   };
 
@@ -102,14 +99,16 @@ console.log(query_id)
       <Card>
         <CardHeader>
           <Row>
-            <Col md="4">
-              <button
-                class="btn btn-success ml-3"
-                onClick={() => history.goBack()}
-              >
-                <i class="fas fa-arrow-left mr-2"></i>
-                Go Back
-              </button>
+          <Col md="4">
+            <Link
+                  to={{
+                    pathname: `/customer/${props.location.routes}`,
+                    index: props.location.index,
+                  }}
+                >
+                  <button class="customBtn">Go Back</button>
+                </Link>
+              
             </Col>
             <Col md="8">
               <h4>Message</h4>
@@ -117,10 +116,7 @@ console.log(query_id)
           </Row>
         </CardHeader>
         <CardBody>
-          {
-            loading ?
-              <Loader />
-              :
+         
               <>
                 <form onSubmit={handleSubmit(onSubmit)}>
                   <div class="row" style={{ display: "flex", justifyContent: "center" }}>
@@ -184,16 +180,21 @@ console.log(query_id)
                         )}
                       </div>
 
-                      <button type="submit" className="btn btn-primary">
-                        Send
-                      </button>
+                      
+                  {
+                      loading ?
+                        <Spinner color="primary" />
+                        :
+                        <button className="customBtn" type="submit">
+                         Send
+                        </button>
+                    }
                     </div>
                   </div>
                 </form>
                 <Mandatory />
               </>
-          }
-
+         
         </CardBody>
       </Card>
     </Layout >
@@ -201,19 +202,3 @@ console.log(query_id)
 }
 
 export default Chatting;
-
-
-{/* <select
-                    class="form-control"
-                    name="p_sms_type"
-                    ref={register}
-                    value={query_No}
-                  >
-                    <option value="">--select--</option>
-                    <option value="1">Information</option>
-                    <option value="2">Proposal Discussion</option>
-                    <option value="3">Assignment Discussion</option>
-                  </select> */}
-
-
-                

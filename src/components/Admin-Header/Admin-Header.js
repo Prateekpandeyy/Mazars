@@ -2,33 +2,131 @@ import React from "react";
 import "../../assets/css/style.css";
 import { Link, useHistory } from "react-router-dom";
 import NavWrapper from "./NavWrapper";
+import axios from "axios";
+import { baseUrl } from "../../config/config";
 
 
 function AdminHeader({ custUserId, adminUserId, TLuserId, TPuserId , feedbackNumber}) {
   let history = useHistory();
 
   const custLogout = () => {
-    localStorage.removeItem("userid");
-    localStorage.removeItem("custEmail");
-    localStorage.removeItem("category");
-    history.push("/");
+    const token = window.localStorage.getItem("clientToken")
+            const myConfig = {
+                headers : {
+                 "uit" : token
+                }
+              }
+            axios.get(`${baseUrl}/customers/logout`, myConfig)
+            .then((res) => {
+               
+                  localStorage.removeItem("userid");
+                  localStorage.removeItem("custEmail");
+                  localStorage.removeItem("category");
+                  localStorage.removeItem("clientToken")
+                  history.push("/");
+                
+            })
+   
   };
 
   const adminLogout = () => {
-    localStorage.removeItem("adminkey");
-    localStorage.removeItem("adminEmail");
-    history.push("/admin/login");
+    const role = localStorage.getItem("role")
+    // const token = window.localStorage.getItem("adminToken")
+    //         const myConfig = {
+    //             headers : {
+    //              "uit" : token
+    //             }
+    //           }
+    //      axios.get(`${baseUrl}/admin/logout`, myConfig)
+    //      .then((res) => {
+            
+    //           localStorage.removeItem("adminkey");
+    //           localStorage.removeItem("adminEmail");
+    //           localStorage.removeItem("category");
+    //           localStorage.removeItem("adminToken")
+             
+    //           history.push("/admin/login");
+            
+    //      })
+    if (role === "admin"){
+      const token = window.localStorage.getItem("adminToken")
+      const myConfig = {
+          headers : {
+           "uit" : token
+          }
+        }
+   axios.get(`${baseUrl}/admin/logout`, myConfig)
+   .then((res) => {
+      
+        localStorage.removeItem("adminkey");
+        localStorage.removeItem("adminEmail");
+        localStorage.removeItem("category");
+        localStorage.removeItem("adminToken")
+        
+        history.push("/admin/login");
+      
+   })
+  }
+  else if (role === "cms"){
+      const token = window.localStorage.getItem("token")
+      const myConfig = {
+          headers : {
+           "uit" : token
+          }
+        }
+   axios.get(`${baseUrl}/cms/logout`, myConfig)
+   .then((res) => {
+      
+        localStorage.removeItem("adminkey");
+        localStorage.removeItem("adminEmail");
+        localStorage.removeItem("category");
+        localStorage.removeItem("token")
+       
+        history.push("/cms/login");
+      
+   })
+  }
   };
 
   const tlLogout = () => {
-    localStorage.removeItem("tlkey");
-    localStorage.removeItem("tlEmail");
-    history.push("/teamleader/login");
+    const token = window.localStorage.getItem("tlToken")
+    const myConfig = {
+        headers : {
+         "uit" : token
+        }
+      }
+         axios.get(`${baseUrl}/tl/logout`, myConfig)
+         .then((res) => {
+           
+              localStorage.removeItem("tlkey");
+              localStorage.removeItem("tlEmail");
+              localStorage.removeItem("category");
+              localStorage.removeItem("tlToken")
+           
+              history.push("/teamleader/login");
+            
+         })
   };
 
   const tpLogout = () => {
-    localStorage.removeItem("tpkey");
-    history.push("/taxprofessional/login");
+    const token = window.localStorage.getItem("tptoken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
+        axios.get(`${baseUrl}/tp/logout`, myConfig)
+        .then((res) => {
+           
+              localStorage.removeItem("tpkey");
+              localStorage.removeItem("tpEmail");
+              localStorage.removeItem("category");
+              localStorage.removeItem("tptoken");
+           
+              history.push("/taxprofessional/login");
+           
+        })
+        
   };
 
   const nm = window.localStorage.getItem("name");
@@ -36,7 +134,6 @@ function AdminHeader({ custUserId, adminUserId, TLuserId, TPuserId , feedbackNum
   var name = JSON.parse(nm);
   
 
-console.log("adminHeader", custUserId)
 
   const CustEmail = window.localStorage.getItem("custEmail");
   const adminEmail = window.localStorage.getItem("adminEmail");
@@ -45,35 +142,35 @@ console.log("adminHeader", custUserId)
  
   
   return (
-    <div>
+   
       <nav
-        class="header-navbar navbar-expand-md navbar navbar-with-menu navbar-without-dd-arrow fixed-top navbar-semi-light"
-        sty
+        className="header-navbar navbar-expand-lg navbar navbar-with-menu navbar-without-dd-arrow navbar-semi-light"
+        
       >
         {custUserId && (
           <NavWrapper 
          
-          color="#5E96AE" logout={custLogout}
+          color="#fff" logout={custLogout}
             name="customer" email={CustEmail}
           />
         )}
 
         {adminUserId && (
-          <NavWrapper color="#262d47" logout={adminLogout}
+          <NavWrapper color="#fff" logout={adminLogout}
             name="admin" email={adminEmail}
             feedbackNumber= {feedbackNumber}
           />
         )}
 
-        {TLuserId && <NavWrapper color="#BC85A3" logout={tlLogout}
-          name="teamleader" email={tlEmail}
+        {TLuserId && <NavWrapper color="#fff" logout={tlLogout}
+          name="Team Leader" email={tlEmail}
         />}
 
-        {TPuserId && <NavWrapper color="#9799BA" logout={tpLogout}
-          name="taxprofessional" email={tpEmail}
+        {TPuserId && <NavWrapper color="#fff" logout={tpLogout}
+          name="Tax Professional" email={tpEmail}
         />}
       </nav>
-    </div>
+   
   );
 }
 

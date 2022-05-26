@@ -19,6 +19,9 @@ import Select from "react-select";
 import Alerts from "../../../common/Alerts";
 import Mandatory from "../../../components/Common/Mandatory";
 import { Spinner } from 'reactstrap';
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+
 
 
 
@@ -41,38 +44,55 @@ function ProposalComponent(props) {
   const [error, setError] = useState('');
   const [totalAmount, setTotalAmount] = useState(null);
   const [paymentError, setpaymentError] = useState();
-
+  const [det, addDet] = useState()
   const [date, setDate] = useState();
   const [amount, setAmount] = useState();
-
+  const [companyName, setCompanyName] = useState([])
+  const [company2, setCompany2] = useState("")
+  const [dateError, setDateError] = useState(false)
   var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
   const [item] = useState(current_date);
-
+  const token = window.localStorage.getItem("tptoken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
+  const getQuery = () => {
+    axios
+      .get(
+        `${baseUrl}/tl/pendingTlProposal?tp_id=${JSON.parse(
+          userid
+        )}&assign_id=${id}`, myConfig
+      )
+      .then((res) => {
+        if (res.data.code === 1) {
+          if (res.data.result.length > 0) {
+            setAssingNo(res.data.result[0].assign_no);
+            setAssignID(res.data.result[0].id);
+          }
+        }
+      });
+  };
+  const getCompany = () => {
+    axios.get(
+      `${baseUrl}/tl/getcompany`, myConfig
+    )
+    .then((res) => {
+      console.log("response", res)
+      setCompanyName(res.data.result)
+    })
+  }
 
   useEffect(() => {
-    const getQuery = () => {
-      axios
-        .get(
-          `${baseUrl}/tl/pendingTlProposal?tp_id=${JSON.parse(
-            userid
-          )}&assign_id=${id}`
-        )
-        .then((res) => {
-          if (res.data.code === 1) {
-            if (res.data.result.length > 0) {
-              setAssingNo(res.data.result[0].assign_no);
-              setAssignID(res.data.result[0].id);
-            }
-          }
-        });
-    };
+   getCompany()
     getQuery();
   }, []);
 
 
   useEffect(() => {
     const getUser = async () => {
-      const res = await axios.get(`${baseUrl}/customers/allname?id=${id}`);
+      const res = await axios.get(`${baseUrl}/customers/allname?id=${id}`, myConfig);
       setCustName(res.data.name);
       setCustId(res.data.id);
     };
@@ -82,11 +102,16 @@ function ProposalComponent(props) {
 
 
   const onSubmit = (value) => {
-    console.log(value);
-
-    console.log("amount --", amount)
-    console.log("date --", date)
-
+    if(diserror.length > 0 ){
+      return false
+    }
+    else if(dateError === true){
+     Alerts.ErrorNormal("Date must be unique")
+    }
+    else if(det.length == 0){
+      return false
+     }
+    else{
     var lumsum = value.p_inst_date
     if (payment.label == "lumpsum") {
       setDate(lumsum)
@@ -102,11 +127,11 @@ function ProposalComponent(props) {
     formData.append("id", JSON.parse(userid));
     formData.append("assign_id", assignId);
     formData.append("customer_id", custId);
-    formData.append("description", value.description);
+    formData.append("description", det);
     formData.append("amount_type", "fixed");
     formData.append("amount", value.p_fixed);
     formData.append("installment_amount", amount);
-
+    formData.append("company", value.p_company)
     formData.append("payment_terms", payment.value);
     formData.append("no_of_installment", installment.value);
 
@@ -117,7 +142,7 @@ function ProposalComponent(props) {
         formData.append("due_date", "")
 
     if (payment.length < 1) {
-      console.log("please select payments terms --")
+     
       setpaymentError("Please select at lease one")
     } else
       if (payment.value == "installment") {
@@ -162,16 +187,21 @@ function ProposalComponent(props) {
                 axios({
                   method: "POST",
                   url: `${baseUrl}/tp/uploadProposal`,
+                  headers : {
+                    uit : token
+                  },
                   data: formData,
                 })
                   .then(function (response) {
                     console.log("res-", response);
                     if (response.data.code === 1) {
                       setLoading(false)
-                      Alerts.SuccessNormal("Proposal sent successfully.")
+                      Alerts.SuccessNormal("Proposal created successfully")
                       history.push("/taxprofessional/proposal");
                     } else if (response.data.code === 0) {
                       setLoading(false)
+                      Alerts.ErrorNormal(`${response.data.result}`)
+                      
                     }
                   })
                   .catch((error) => {
@@ -186,6 +216,9 @@ function ProposalComponent(props) {
         axios({
           method: "POST",
           url: `${baseUrl}/tp/uploadProposal`,
+          headers : {
+            uit : token
+          },
           data: formData,
         })
           .then(function (response) {
@@ -203,7 +236,7 @@ function ProposalComponent(props) {
             console.log("erroror - ", error);
           });
       }
-
+    }
 
 
   };
@@ -228,13 +261,23 @@ function ProposalComponent(props) {
       array2.push(value)
     });
     setDate(array2);
+    if(new Set(array2).size !== array2.length){
+      setDateError(true)
+     Alerts.ErrorNormal("Date must be unique")
+    }
+    else{
+      setDateError(false)
+    }
   };
 
 
   const handleChange = (e) => {
     console.log("val-", e.target.value);
     if (isNaN(e.target.value)) {
-      setdiserror("Please enter number only.");
+      setdiserror("Please enter number only");
+    }
+    else if(e.target.value == "0"){
+      setdiserror("Amount should be greater than zero")
     }
     else {
       setdiserror("");
@@ -254,10 +297,10 @@ function ProposalComponent(props) {
           <Row>
             <Col md="5">
               <button
-                class="btn btn-success ml-3"
+                class="autoWidthBtn ml-3"
                 onClick={() => history.goBack()}
               >
-                <i class="fas fa-arrow-left mr-2"></i>
+                
                 Go Back
               </button>
             </Col>
@@ -283,6 +326,22 @@ function ProposalComponent(props) {
                     value={assingNo}
                     ref={register}
                   />
+                </div>
+                <div class="form-group">
+                  <label>Company</label>
+                  <select
+                    class="form-control"
+                    ref={register}
+                    name="p_company"
+                   
+                   onChange= {(e) => setCompany2(e.target.value)}
+                  >
+{
+  companyName.map((i) => (
+    <option value={i.company_prefix}>{i.name}</option>
+  ))
+}
+                  </select>
                 </div>
                 <div class="form-group">
                   <label>Fee</label>
@@ -312,22 +371,91 @@ function ProposalComponent(props) {
                 <p style={{ "color": "red" }}>{diserror}</p>
                 <div class="form-group">
                   <label>Scope of Work<span className="declined">*</span></label>
-                  <textarea
+                  <CKEditor
+                     editor={ ClassicEditor }
+                     config = {{
+
+                      highlight: {
+                        options: [
+                            {
+                                model: 'greenMarker',
+                                class: 'marker-green',
+                                title: 'Green marker',
+                                color: 'var(--ck-highlight-marker-green)',
+                                type: 'marker'
+                            },
+                            {
+                                model: 'redPen',
+                                class: 'pen-red',
+                                title: 'Red pen',
+                                color: 'var(--ck-highlight-pen-red)',
+                                type: 'pen'
+                            }
+                        ]
+                    },
+                      fontFamily: {
+                        options: [
+                            'default',
+                            'Ubuntu, Arial, sans-serif',
+                            'Ubuntu Mono, Courier New, Courier, monospace'
+                        ]
+                    },
+                    fontColor: {
+                      colors: [
+                          {
+                              color: 'hsl(0, 0%, 0%)',
+                              label: 'Black'
+                          },
+                          {
+                              color: 'hsl(0, 0%, 30%)',
+                              label: 'Dim grey'
+                          },
+                          {
+                              color: 'hsl(0, 0%, 60%)',
+                              label: 'Grey'
+                          },
+                          {
+                              color: 'hsl(0, 0%, 90%)',
+                              label: 'Light grey'
+                          },
+                          {
+                              color: 'hsl(0, 0%, 100%)',
+                              label: 'White',
+                              hasBorder: true
+                          },
+
+                          // ...
+                      ]
+                  },
+                    toolbar: [
+                   ' highlight', 'heading',  'bold', 'fontColor', 'italic',  'bulletedList', 'numberedList', 'undo', 'redo'
+                    ],
+                  
+                    }}
+                    
+                    
                     className={classNames("form-control", {
-                      "is-invalid": errors.description,
+                      "is-invalid": errors.p_fact,
                     })}
-                    id="textarea"
-                    rows="3"
-                    name="description"
-                    ref={register({ required: true })}
-                    placeholder="Enter Proposal Description"
-                  ></textarea>
+                    id="textarea22"
+                    rows="6"
+                   
+                
+                    onChange={ ( event, editor ) => {
+                      addDet(editor.getData());
+                     
+
+                    
+                  } }
+
+                ></CKEditor>
+                   
                 </div>
               </div>
 
               <div class="col-md-6">
                 <div class="form-group">
-                  <label>Customer Name</label>
+                  <label>Client Name</label>
                   <input
                     type="text"
                     name="p_name"
@@ -401,7 +529,7 @@ function ProposalComponent(props) {
                 loading ?
                   <Spinner color="primary" />
                   :
-                  <button type="submit" class="btn btn-primary">
+                  <button type="submit" className="customBtn">
                     Submit
                   </button>
               }

@@ -15,22 +15,27 @@ import {
 } from "reactstrap";
 import { useAlert } from "react-alert";
 import BootstrapTable from "react-bootstrap-table-next";
-
+import DataTablepopulated from '../../../components/DataTablepopulated/DataTabel'
 function AddTeamProf() {
   const alert = useAlert();
   const [data, setData] = useState([]);
   const [count, setCount] = useState("");
   const userid = window.localStorage.getItem("tlkey");
-
+  const token = window.localStorage.getItem("tlToken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
   useEffect(() => {
     getTaxProf();
   }, []);
 
   const getTaxProf = () => {
     axios
-      .get(`${baseUrl}/tp/getTaxProfessional?tl_id=${JSON.parse(userid)}`)
+      .get(`${baseUrl}/tl/getTaxProfessional?tl_id=${JSON.parse(userid)}`, myConfig)
       .then((res) => {
-        console.log(res);
+      
         if (res.data.code === 1) {
           setData(res.data.result);
           setCount(res.data.result.length);
@@ -154,18 +159,16 @@ function AddTeamProf() {
   ]
   // delete data
   const del = (id) => {
-    console.log("del", id);
+    
 
     axios
       .get(`${baseUrl}/delete/TaxLead/${id}`)
       .then(function (response) {
-        console.log("delete-", response);
-        alert.success("successfully deleted ");
+                alert.success("successfully deleted ");
         getTaxProf();
       })
       .catch((error) => {
-        console.log("erroror - ", error);
-      });
+              });
   };
 
   return (
@@ -180,34 +183,15 @@ function AddTeamProf() {
           </Row>
         </CardHeader>
         <CardBody>
-          <BootstrapTable
-            bootstrap4
-            keyField="id"
-            data={data}
-            columns={columns}
-            rowIndex
-          />
+        <DataTablepopulated 
+                   bgColor="#42566a"
+                   keyField= {"assign_no"}
+                   data={data}
+                   columns={columns}>
+                    </DataTablepopulated>
+        
 
-          {/* <Table responsive="sm" bordered>
-            <thead>
-              <tr>
-                <th scope="col">S.No</th>
-                <th scope="col">Name</th>
-                <th scope="col">Email</th>
-                <th scope="col">Phone No.</th>
-              </tr>
-            </thead>
-            <tbody>
-              {data.map((p, i) => (
-                <tr>
-                  <th scope="row">{i + 1}</th>
-                  <td>{p.name}</td>
-                  <td>{p.email}</td>
-                  <td>{p.phone}</td>
-                </tr>
-              ))}
-            </tbody>
-          </Table> */}
+      
         </CardBody>
       </Card>
     </Layout>

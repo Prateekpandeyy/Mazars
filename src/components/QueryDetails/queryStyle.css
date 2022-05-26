@@ -1,0 +1,116 @@
+.tableStyle{
+    display: flex;
+    padding: 5px 20px !important;
+}
+.queryBox{
+display: block;
+height: 55vh;
+width: 100%;
+overflow-y: auto;
+}
+.queryBox > .table{
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+}
+.queryBox > .table > thead{
+    display : flex;
+    width : 100%;
+}
+.queryBox > .table >  thead > tr{
+    display : flex;
+    width : 100%;
+    justify-content: start;
+}
+.queryBox > .table thead tr th:nth-child(1){
+    display : flex;
+    width : 30%;
+    color: #464B4B;
+}
+.queryBox > .table thead tr th:nth-child(2){
+    display : flex;
+    width : 70%;
+    color: #464B4B;
+}
+.queryBox > .table > tbody{
+    display : flex;
+    width : 100%;
+    flex-direction: column;
+}
+.queryBox > .table > tbody > tr{
+    display : flex;
+    width : 100%;
+    word-break: break-word;
+}
+.queryBox > .table > tbody > tr > th{
+    display: flex;
+    flex-basis: 30%;
+    border-bottom : 0px;
+    color:#464B4B;
+}
+.queryBox > .table > tbody > tr > td{
+    display : flex;
+    flex-basis: 70%;
+    flex-wrap: wrap;
+    text-align: justify;
+    border-bottom : 0px;
+    flex-direction: column;
+    padding : 0 20px;
+}
+h1, h2, h3, h4, h5, h5{
+    color: #464B4B;
+}
+
+.modalBox{
+    display : flex;
+    position : fixed;
+    top: 50%;
+    left : 50%;
+    transform : translate(-50%, -50%);
+    justify-content:  center;
+    align-items: center;
+   width: 100%;
+   height: auto;
+   flex-direction: column;
+  
+
+}
+.boxContainer{
+   
+    display: flex;
+    display: flex;
+    width: 50vw;
+    height: auto;
+    border: 2px solid greenyellow;
+    flex-direction: column;
+}
+.canBtn{
+    display : flex;
+    width : 100%;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+    cursor : pointer;
+    background-color: rgb(38, 45, 71);
+   
+}
+.canBtn h4{
+    color: #fff;
+}
+.my2{
+    display: flex;
+    width: 100%;
+  
+}
+
+#myBtn{
+    color:red;
+}
+#myBtn:hover{
+    padding: 10px;
+    background-color: red;
+    color: white !important;
+    font-weight: 900;
+    font-size: 40px;
+    border-radius: 50%;
+}

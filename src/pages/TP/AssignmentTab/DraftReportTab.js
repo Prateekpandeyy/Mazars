@@ -15,6 +15,9 @@ import DiscardReport from "../AssignmentTab/DiscardReport";
 import DraftReportModal from "./DraftReportUpload";
 import ViewAllReportModal from "./ViewAllReport";
 import DescriptionOutlinedIcon from '@material-ui/icons/DescriptionOutlined';
+import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
+import MessageIcon, { ViewDiscussionIcon, DraftReportUploadIcon, FinalReportUploadIcon} from "../../../components/Common/MessageIcon";
+import moment from "moment";
 
 
 
@@ -44,17 +47,41 @@ function AssignmentTab() {
     const [assignNo, setAssignNo] = useState('');
     const [report, setReport] = useState();
   const [reportModal, setReportModal] = useState(false);
+  const [loading, setLoading] = useState(false);
+  var clcomp= {
+    color: "green"
+  }
+  var clinpro = {
+    color : "blue"
+  }
+  const token = window.localStorage.getItem("tptoken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
+  let des = false;
     const ViewReport = (key) => {
-        console.log("key - ", key);
+       
         setReportModal(!reportModal);
         setReport(key.assign_no);
         setDataItem(key)
       };
-    const uploadDraftReport = (id) => {
-        console.log(id);
-        setDraftModal(!draftModal);
-        setId(id);
-      };
+ // draft modal
+ const uploadDraftReport = (id) => {
+    if(typeof(id) == "object"){
+      
+      let des = true;
+      setLoading(false)
+      setDraftModal(!draftModal);
+    }
+    else{
+      setDraftModal(!draftModal);
+      setId(id);
+    }
+  
+  };
+
     const [ViewDiscussion, setViewDiscussion] = useState(false);
     const ViewDiscussionToggel = (key) => {
         setViewDiscussion(!ViewDiscussion);
@@ -66,9 +93,9 @@ function AssignmentTab() {
 
     const getAssignmentList = () => {
         axios
-            .get(`${baseUrl}/tl/getAssignments?tp_id=${JSON.parse(userid)}&assignment_status=Draft_Report&stages_status=1`)
+            .get(`${baseUrl}/tl/getAssignments?tp_id=${JSON.parse(userid)}&assignment_status=Draft_Report&stages_status=1`, myConfig)
             .then((res) => {
-                console.log(res);
+              
                 if (res.data.code === 1) {
                     setAssignment(res.data.result);
                     setCount(res.data.result.length);
@@ -80,11 +107,11 @@ function AssignmentTab() {
     //get category
     useEffect(() => {
         const getSubCategory = () => {
-            if(selectedData != undefined){
+            if(selectedData.length > 0){
                 axios
                 .get(`${baseUrl}/customers/getCategory?pid=${selectedData}`)
                 .then((res) => {
-                    console.log(res);
+                  
                     if (res.data.code === 1) {
                         setTax2(res.data.result);
                     }
@@ -96,20 +123,20 @@ function AssignmentTab() {
 
     //handleCategory
     const handleCategory = (value) => {
-        console.log(`selected ${value}`);
+       
         setSelectedData(value);
         setStore2([]);
     };
 
     //handleSubCategory
     const handleSubCategory = (value) => {
-        console.log(`selected ${value}`);
+       
         setStore2(value);
     };
 
     //reset category
     const resetCategory = () => {
-        console.log("resetCategory ..");
+     
         setSelectedData([]);
         setStore2([]);
         getAssignmentList();
@@ -117,7 +144,7 @@ function AssignmentTab() {
 
     //reset date
     const resetData = () => {
-        console.log("resetData ..");
+     
         reset();
         setStatus([]);
         setSelectedData([]);
@@ -126,10 +153,7 @@ function AssignmentTab() {
     };
 
     //assingmentStatus
-    const assingmentStatus = (value) => {
-        console.log(`selected ${value}`);
-        setStatus(value);
-    };
+   
 
 
     //columns
@@ -141,18 +165,17 @@ function AssignmentTab() {
                 return rowIndex + 1;
             },
             headerStyle: () => {
-                return { fontSize: "12px", width: "50px" };
+                return {  width: "50px" };
             },
+            
         },
         {
             text: "Date",
             dataField: "date_of_query",
             sort: true,
-            headerStyle: () => {
-                return { fontSize: "12px" };
-            },
+           
             formatter: function dateFormat(cell, row) {
-                console.log("dt", row.date_of_query);
+              
                 var oldDate = row.date_of_query;
                 if (oldDate == null) {
                     return null;
@@ -163,16 +186,15 @@ function AssignmentTab() {
         {
             text: "Query No",
             dataField: "assign_no",
-            headerStyle: () => {
-                return { fontSize: "12px" };
-            },
+           
             formatter: function nameFormatter(cell, row) {
-                console.log(row);
+              
                 return (
                     <>
                         <Link
                             to={{
                                 pathname: `/taxprofessional/queries/${row.q_id}`,
+                                index : 1,
                                 routes: "assignment",
                             }}
                         >
@@ -186,65 +208,73 @@ function AssignmentTab() {
             text: "Category",
             dataField: "parent_id",
             sort: true,
-            headerStyle: () => {
-                return { fontSize: "12px" };
-            },
+           
         },
         {
             text: "Sub Category",
             dataField: "cat_name",
             sort: true,
-            headerStyle: () => {
-                return { fontSize: "12px" };
-            },
+           
         },
         {
             dataField: "status",
             text: "Status",
-            style: {
-                fontSize: "11px",
-            },
+           
             headerStyle: () => {
-                return { fontSize: "12px", width: "200px" };
+              return { fontSize: "11px", width: "200px" };
             },
+      
             formatter: function (cell, row) {
-                return (
-                    <>
-                        <div>
-                            <p>
-                                <span style={{ fontWeight: "bold" }}>Client Discussion :</span>
-                                {row.client_discussion}
-                            </p>
-                            <p>
-                                <span style={{ fontWeight: "bold" }}>Draft report :</span>
-                                {row.draft_report}
-                            </p>
-                            <p>
-                                <span style={{ fontWeight: "bold" }}>Final Discussion :</span>
-                                {row.final_discussion}
-                            </p>
-                            <p>
-                                <span style={{ fontWeight: "bold" }}>Delivery of Final Report :</span>
-                                {row.delivery_report}
-                            </p>
-                            <p>
-                                <span style={{ fontWeight: "bold" }}>Complete :</span>
-                                {row.other_stage}
-                            </p>
-                        </div>
-                    </>
-                );
+              return (
+                <>
+                  <div>
+                  {row.paid_status == "2" &&
+                      <p>
+                        <span className="declined">Payment Declined</span>
+                      </p>
+                    }
+                    <p>
+                      <span style={{ fontWeight: "bold" }}>Client Discussion :</span>
+                     <span className={row.client_discussion === "completed" ? "completed" : "inprogress"}>
+                                      {row.client_discussion}
+                       </span>
+                    </p>
+                    <p>
+                      <span style={{ fontWeight: "bold" }}>Draft report :</span>
+                      <span className={row.draft_report === "completed" ? "completed" : "inprogress"}>
+                            {row.draft_report}
+                       </span>
+                    </p>
+                    <p>
+                      <span style={{ fontWeight: "bold" }}>Final Discussion :</span>
+                      <span className={row.final_discussion === "completed" ? "completed" : "inprogress"}>
+                           {row.final_discussion}
+                       </span>
+                    </p>
+                    <p>
+                      <span style={{ fontWeight: "bold" }}>Delivery of Final Report :</span>
+                      <span className={row.delivery_report === "completed" ? "completed" : "inprogress"}>
+                                   {row.delivery_report}
+                       </span>
+                    </p>
+                    <p>
+                      <span style={{ fontWeight: "bold" }}>Awaiting Completion:</span>
+                      <span className={row.other_stage === "completed" ? "completed" : "inprogress"}>
+                                  {row.other_stage}
+                       </span>
+                    </p>
+                  </div>
+                </>
+              );
             },
-        },
+          },
         {
             text: "Expected date of delivery",
             dataField: "Exp_Delivery_Date",
             sort: true,
-            headerStyle: () => {
-                return { fontSize: "12px" };
-            },
+          
             formatter: function dateFormat(cell, row) {
-                console.log("dt", row.Exp_Delivery_Date);
+               
                 var oldDate = row.Exp_Delivery_Date;
                 if (oldDate == null) {
                     return null;
@@ -256,11 +286,9 @@ function AssignmentTab() {
             text: "Actual date of delivery",
             dataField: "final_date",
             sort: true,
-            headerStyle: () => {
-                return { fontSize: "12px" };
-            },
+          
             formatter: function dateFormat(cell, row) {
-                console.log("dt", row.final_date);
+            
                 var oldDate = row.final_date;
                 if (oldDate == null || oldDate == "0000-00-00 00:00:00") {
                     return null;
@@ -272,9 +300,7 @@ function AssignmentTab() {
             text: "Deliverable",
             dataField: "",
             sort: true,
-            headerStyle: () => {
-              return { fontSize: "12px" };
-            },
+           
             formatter: function (cell, row) {
               return (
                 <>
@@ -299,9 +325,7 @@ function AssignmentTab() {
           },
           {
             text: "Assignment Stage",
-            headerStyle: () => {
-              return { fontSize: "12px" };
-            },
+           
             formatter: function (cell, row) {
               return (
                 <>
@@ -320,65 +344,18 @@ function AssignmentTab() {
               );
             },
           },
-        {
+          {
             text: "Action",
-            headerStyle: () => {
-                return { fontSize: "12px" };
-            },
+            
             formatter: function (cell, row) {
-                return (
-                    <>
-               {
-                 row.paid_status == "2" ? null : 
-                 <div
-                 style={{
-                   display: "flex",
-                   justifyContent: "space-between",
-                 }}
-               >
-                 
-                 
-                    {
-                    row.client_discussion == "completed" && row.draft_report == "inprogress" && row.paid_status !=2 ?
-                    <div title="upload Pdf">
-                    <p
-                      style={{ cursor: "pointer", color: "green" }}
-                      onClick={() => uploadDraftReport(row.id)}
-                    >
-                      <i class="fa fa-upload" style={{ fontSize: "16px" }}></i>
-                      draft
-                    </p>
-                  </div> : null
-                 }
-                  {
-                    row.client_discussion == "completed" && row.draft_report == "completed" && row.final_discussion == "inprogress" ?
-                    <div title="upload Pdf">
-                    <p
-                      style={{ cursor: "pointer", color: "green" }}
-                      onClick={() => uploadDraftReport(row.id)}
-                    >
-                      <i class="fa fa-upload" style={{ fontSize: "16px" }}></i>
-                      draft
-                    </p>
-                  </div> : null
-                 }
-                
-      
-                 <div title="View Discussion Message">
-                   <i
-                     class="fa fa-comments-o"
-                     style={{
-                       fontSize: 16,
-                       cursor: "pointer",
-                       color: "orange"
-                     }}
-                     onClick={() => ViewDiscussionToggel(row.assign_no)}
-                   ></i>
-                 </div>
-                 <div title="Send Message">
-                   <Link
-                     to={{
-                       pathname: `/taxprofessional/chatting/${row.q_id}`,
+              return (
+                <>
+              <div style={{display: "flex"}}>
+              <Link
+                  to={{
+                    pathname: `/taxprofessional/chatting/${row.q_id}`,
+                    index : 1,
+                    routes: "assignment",
                        obj: {
                          message_type: "3",
                          query_No: row.assign_no,
@@ -387,40 +364,51 @@ function AssignmentTab() {
                        }
                      }}
                    >
-                     <i
-                       class="fa fa-comments-o"
-                       style={{
-                         fontSize: 16,
-                         cursor: "pointer",
-                         marginLeft: "8px",
-                         color: "blue"
-                       }}
-                     ></i>
+                    <MessageIcon />
                    </Link>
-                 </div>
+                   <div  onClick={() => ViewDiscussionToggel(row.assign_no)} className="ml-1">
+                                        
+                                        <ViewDiscussionIcon />
+                                </div>
+               {
+                 row.paid_status == "2" ? 
+                null : 
+                 <>
+                 
+                  {
+                    row.client_discussion == "completed" && row.draft_report == "inprogress" && row.final_discussion == "inprogress" &&  row.paid_status !=2  ?
+                   
+                    <p
+                      style={{ display: "flex", flexDirection: "column" , cursor: "pointer", color: "green" }}
+                      onClick={() => uploadDraftReport(row.id)}
+                    >
+                     <DraftReportUploadIcon />
+                      draft
+                    </p>
+                   : null
+                 }
+     
+                
       
-               </div>
+                
+                
+               </>
                }
-                </>
-                );
+       
+              </div>
+                
+                         </>
+              );
             },
-        },
-    ];
-
-
+          },
+        ];
     const onSubmit = (data) => {
-        console.log("data :", data);
-        console.log("selectedData :", selectedData);
+       
         axios
             .get(
-                `${baseUrl}/tp/getAssignments?tp_id=${JSON.parse(
-                    userid
-                )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
-                }&assignment_status="Draft_Report"&stages_status=1
-               &pcat_id=${selectedData}`
-            )
+                `${baseUrl}/tl/getAssignments?tp_id=${JSON.parse(userid)}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&assignment_status=Draft_Report&stages_status=1&pcat_id=${selectedData}`)
             .then((res) => {
-                console.log(res);
+              
                 if (res.data.code === 1) {
                     if (res.data.result) {
                         setAssignment(res.data.result);
@@ -437,7 +425,7 @@ function AssignmentTab() {
             <>
                 <button
                     type="submit"
-                    class="btn btn-primary mx-sm-1 mb-2"
+                    class="customBtn mx-sm-1 mb-2"
                     onClick={() => resetData()}
                 >
                     Reset
@@ -445,6 +433,26 @@ function AssignmentTab() {
             </>
         );
     };
+    const rowStyle2 = (row, index) => {
+      const style = {}
+      var warningDate = moment(row.Exp_Delivery_Date).subtract(2, 'day').toDate();
+      // var warnformat = warningDate.format("YYYY-MM-DD");
+      var aa = moment().toDate();
+     
+  
+      if(row.paid_status != "2" && row.status != "Complete" && warningDate < aa)  {
+        style.backgroundColor = "#c1d8f2";
+        style.color = "#000111"
+      }
+      else if(row.paid_status != "2" && warningDate > aa){
+        style.backgroundColor = "#fff";
+        style.color = "#000"
+      }
+    
+      return style;
+    }
+  
+  
 
 
     return (
@@ -490,7 +498,7 @@ function AssignmentTab() {
                             <div>
                                 <button
                                     type="submit"
-                                    class="btn btn-primary mb-2 ml-3"
+                                    class="btnSearch mb-2 ml-3"
                                     onClick={resetCategory}
                                 >
                                     X
@@ -531,7 +539,7 @@ function AssignmentTab() {
                             <div class="form-group mx-sm-1  mb-2">
                                 <label className="form-select form-control">Total Records : {records}</label>
                             </div>
-                            <button type="submit" class="btn btn-primary mx-sm-1 mb-2">
+                            <button type="submit" class="customBtn mx-sm-1 mb-2">
                                 Search
                             </button>
 
@@ -541,19 +549,23 @@ function AssignmentTab() {
                 </CardHeader>
 
                 <CardBody>
-                    <BootstrapTable
-                        bootstrap4
-                        keyField="id"
-                        data={assignment}
-                        columns={columns}
-                        rowIndex
-                    />
+                <DataTablepopulated 
+                   bgColor="#42566a"
+                   rowStyle2={rowStyle2}
+                   keyField= {"assign_no"}
+                   data={assignment}
+                   columns={columns}>
+                    </DataTablepopulated>
+
 
 <DraftReportModal
             draftModal={draftModal}
             uploadDraftReport={uploadDraftReport}
             getAssignmentList={getAssignmentList}
             id={id}
+            loading = {loading}
+            setLoading = {setLoading}
+            des = {des}
           />
            <ViewAllReportModal
             ViewReport={ViewReport}
@@ -566,6 +578,7 @@ function AssignmentTab() {
                         ViewDiscussion={ViewDiscussion}
                         report={assignNo}
                         getData={getAssignmentList}
+                        headColor="#42566a"
                     />
                 </CardBody>
             </Card>

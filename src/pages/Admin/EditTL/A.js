@@ -48,7 +48,7 @@ function EditTP() {
   const getTutorial = (id) => {
     TaxProffesionalService.get(id)
       .then((res) => {
-        console.log(res.data);
+
         if (res.data.code === 1) {
           setUser({
             name: res.data.result[0].name,
@@ -58,7 +58,7 @@ function EditTP() {
         }
       })
       .catch((e) => {
-        console.log(e);
+      
       });
   };
 
@@ -67,7 +67,7 @@ function EditTP() {
   useEffect(() => {
     const getTeamLeader = () => {
       axios.get(`${baseUrl}/tl/getTeamLeader`).then((res) => {
-        console.log(res);
+       
         if (res.data.code === 1) {
           setTeamLeader(res.data.result);
         }
@@ -79,7 +79,7 @@ function EditTP() {
   useEffect(() => {
     const getCategory = () => {
       axios.get(`${baseUrl}/customers/getCategory?pid=0`).then((res) => {
-        console.log(res);
+       
         if (res.data.code === 1) {
           setTax(res.data.result);
         }
@@ -92,7 +92,7 @@ function EditTP() {
   useEffect(() => {
     const getSubCategory = () => {
       axios.get(`${baseUrl}/customers/getCategory?pid=${store}`).then((res) => {
-        console.log(res);
+       
         if (res.data.code === 1) {
           setTax2(res.data.result);
         }
@@ -103,7 +103,7 @@ function EditTP() {
 
   
   const onSubmit = (value) => {
-    console.log("value :", value);
+   
     let formData = new FormData();
     formData.append("email", value.p_email);
     formData.append("name", value.p_name);
@@ -119,14 +119,14 @@ function EditTP() {
       data: formData,
     })
       .then(function (response) {
-        console.log("res-", response);
+      
         if (response.data.code === 1) {
           alert.success("TP updated  !");
           history.goBack();
         }
       })
       .catch((error) => {
-        console.log("erroror - ", error);
+       
       });
   };
 

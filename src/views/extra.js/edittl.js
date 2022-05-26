@@ -183,7 +183,7 @@ function ProposalComponent(props) {
                 class="btn btn-success ml-3"
                 onClick={() => history.goBack()}
               >
-                <i class="fas fa-arrow-left mr-2"></i>
+             
                 Go Back
               </button>
             </Col>
@@ -260,7 +260,7 @@ function ProposalComponent(props) {
               <div class="col-md-6">
 
                 <div class="form-group">
-                  <label>Customer Name</label>
+                  <label>Client Name</label>
                   <input
                     type="text"
                     name="p_name"

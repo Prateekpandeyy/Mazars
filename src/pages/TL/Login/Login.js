@@ -14,8 +14,8 @@ import Alerts from "../../../common/Alerts";
 import Mandatory from "../../../components/Common/Mandatory";
 import VerifyOtpLogin from "./VerifyOtpLogin";
 import { Spinner } from "reactstrap";
-
-
+import { useHistory } from "react-router";
+import Cookies from "js-cookie";
 
 const Schema = yup.object().shape({
   p_email: yup.string().email("invalid email").required(""),
@@ -25,6 +25,7 @@ const Schema = yup.object().shape({
 });
 
 function Login(props) {
+  let history = useHistory()
   const alert = useAlert();
   const { handleSubmit, register, reset, errors } = useForm({
     resolver: yupResolver(Schema),
@@ -40,7 +41,7 @@ function Login(props) {
   };
 
   const onSubmit = (value) => {
-    console.log("value :", value);
+  
     setLoading(true)
 
     let formData = new FormData();
@@ -54,29 +55,47 @@ function Login(props) {
       data: formData,
     })
       .then(function (response) {
-        console.log("res-", response);
+       
         if (response.data.code === 1) {
+         
+          logout();
           setShow(true)
           setLoading(false)
+          Cookies.set("tlName", response.data.display_name)
           Alerts.SuccessNormal("As per your request, OTP has been sent to your registered email address.")
           setUid(response.data.user_id)
+         
         } else if (response.data.code === 0) {
           setLoading(false)
           Alerts.ErrorNormal("Invalid email or password.")
         }
+        else if (response.data.code === 2){
+          setLoading(false)
+          Alerts.ErrorNormal(response.data.result)
+        }
       })
       .catch((error) => {
-        console.log("erroror - ", error);
+        
       });
   };
 
   const handleChange = (e) => {
-    console.log("val-", e.target.value);
+    
     setEmail(e.target.value);
   };
+  const logout = () => {
+    setTimeout(() => {
+      localStorage.removeItem("adminkey");
+      localStorage.removeItem("adminEmail");
+      history.push("/admin/login");
+    }, 36000000)
+  }
+  if(window.location.origin === "http://masindia.live" && window.location.protocol == 'http:'){
+    window.location.href = window.location.href.replace('http:', 'https:')
+  }
   return (
     <>
-      <Header mtl="mtl" />
+      <Header mtl="mtl" noTlSign = "noSingIn"/>
       <div className="container">
 
         {
@@ -87,13 +106,13 @@ function Login(props) {
             :
             <div className="form">
               <div className="heading">
-                <h2>MTL Login</h2>
+                <h2>Teamleader Login</h2>
               </div>
               <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
                 <div className="row">
                   <div className="col-md-12">
                     <div className="mb-3">
-                      <label className="form-label">Email</label>
+                      <label className="form-label">User Id</label>
                       <input
                         type="text"
                         className={classNames("form-control", {
@@ -123,6 +142,14 @@ function Login(props) {
                         placeholder="Enter Password"
                         autocomplete="off"
                         ref={register}
+                        onCopy={(e) => {
+                          e.preventDefault();
+                          return false
+                        }}
+                        onPaste={(e) => {
+                          e.preventDefault();
+                          return false
+                        }}
                       />
                       <i
                         className={`fa ${isPasswordShow ? "fa-eye-slash" : "fa-eye"} password-icon`}
@@ -142,7 +169,7 @@ function Login(props) {
                       <Spinner color="primary" />
                     </div>
                     :
-                    <button type="submit" className="btn btn-primary">
+                    <button type="submit" className="customBtn">
                       Submit
                     </button>
                 }
@@ -165,7 +192,7 @@ function Login(props) {
         }
 
       </div>
-      <Footer />
+   
     </>
   );
 }

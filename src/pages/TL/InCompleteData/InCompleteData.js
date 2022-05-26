@@ -11,10 +11,11 @@ import {
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import { Link } from "react-router-dom";
-import BootstrapTable from "react-bootstrap-table-next";
 import TeamFilter from "../../../components/Search-Filter/tlFilter";
 import DiscardReport from "../AssignmentTab/DiscardReport";
-
+import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
+import MessageIcon, {DeleteIcon, EditQuery, ViewDiscussionIcon, HelpIcon, 
+  UploadDocument, FeedBackICon} from "../../../components/Common/MessageIcon";
 
 function InCompleteData({ CountIncomplete }) {
   const userid = window.localStorage.getItem("tlkey");
@@ -24,6 +25,12 @@ function InCompleteData({ CountIncomplete }) {
 
   const [assignNo, setAssignNo] = useState('');
   const [ViewDiscussion, setViewDiscussion] = useState(false);
+  const token = window.localStorage.getItem("tlToken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key)
@@ -35,7 +42,7 @@ function InCompleteData({ CountIncomplete }) {
 
   const getInCompleteAssingment = () => {
     axios
-      .get(`${baseUrl}/tl/getIncompleteQues?id=${JSON.parse(userid)}&status=1`)
+      .get(`${baseUrl}/tl/getIncompleteQues?id=${JSON.parse(userid)}&status=1`, myConfig)
       .then((res) => {
        
         if (res.data.code === 1) {
@@ -54,23 +61,30 @@ function InCompleteData({ CountIncomplete }) {
         return rowIndex + 1;
       },
       headerStyle: () => {
-        return { fontSize: "12px", width: "50px" };
+        return {width: "50px" };
       },
+    
     },
     {
-      text: "Date",
+      text: "Query Date",
       dataField: "created",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
+    
+      formatter : function(cell, row){
+        let dueDate=row.created.split("-").reverse().join("-")
+      
+        return(
+           
+            <>
+      {dueDate}
+            </>
+        )
+    }
     },
     {
       text: "Query No",
       dataField: "assign_no",
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
+     
       formatter: function nameFormatter(cell, row) {
        
         return (
@@ -92,33 +106,25 @@ function InCompleteData({ CountIncomplete }) {
       text: "Category",
       dataField: "parent_id",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
+    
     },
     {
       text: "Sub Category",
       dataField: "cat_name",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
+    
     },
     {
-      text: "Customer Name",
+      text: "Client Name",
       dataField: "name",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
+  
     },
     {
-      text: "	Exp. Delivery Date / Acutal Delivery Date",
+      text: "Delivery Due Date   / Acutal Delivery Date",
       dataField: "Exp_Delivery_Date",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
+    
       formatter: function dateFormat(cell, row) {
 
         var oldDate = row.Exp_Delivery_Date;
@@ -130,9 +136,7 @@ function InCompleteData({ CountIncomplete }) {
     },
     {
       text: "Status",
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
+      
       formatter: function nameFormatter(cell, row) {
         return (
           <>
@@ -165,60 +169,55 @@ function InCompleteData({ CountIncomplete }) {
       text: "Action",
       dataField: "",
       headerStyle: () => {
-        return { fontSize: "12px" };
+          return { fontSize: "12px" , width : "100px"};
       },
+      style: {
+        fontSize: "11px",
+    },
       formatter: function (cell, row) {
+        
+         
         return (
           <>
             {row.status_code == "1" ? null :
+            
             <div
             style={{
-              display: "flex",
-              justifyContent: "space-evenly",
-              color: "green",
+                display: "flex",
+                
             }}
-          >
-            <div title="Send Message">
-              <Link
-                to={{
-                  pathname: `/teamleader/chatting/${row.id}`,
-                  obj: {
-                    message_type: "4",
-                    query_No: row.assign_no,
-                    query_id: row.id,
-                    routes: `/teamleader/proposal`
-                  }
-                }}
-              >
-                <i
-                  class="fa fa-comments-o"
-                  style={{
-                    fontSize: 16,
-                    cursor: "pointer",
-                    marginLeft: "8px",
-                    color: "blue"
-                  }}
-                ></i>
-              </Link>
-            </div>
+        >
+           
 
-            <div title="View Discussion Message">
-              <i
-                class="fa fa-comments-o"
-                style={{
-                  fontSize: 16,
-                  cursor: "pointer",
-                  color: "orange"
+            {row.status == "Declined Query" ? null :
+         
+            <Link
+                   to={{
+                      pathname: `/teamleader/chatting/${row.id}`,
+                      index: 1,
+                      routes: "queriestab",
+              
+                    obj: {
+                        message_type: "4",
+                        query_No: row.assign_no,
+                        query_id: row.id,
+                        routes: `/teamleader/queriestab`
+                    }
                 }}
-                onClick={() => ViewDiscussionToggel(row.assign_no)}
-              ></i>
-            </div>
-          </div>}
-          </>
-        );
-      },
-    },
-  ];
+            >
+                <MessageIcon />
+            </Link>
+       }
+
+<span onClick={() => ViewDiscussionToggel(row.assign_no)}  className="ml-2">
+                        <ViewDiscussionIcon />
+                      </span>
+        </div>
+}                    </>
+      );
+  },
+},
+];
 
   return (
     <>
@@ -233,19 +232,19 @@ function InCompleteData({ CountIncomplete }) {
           />
         </CardHeader>
         <CardBody>
-          <BootstrapTable
-            bootstrap4
-            keyField="id"
-            data={incompleteData}
-            columns={columns}
-            rowIndex
-          />
-
+        <DataTablepopulated 
+                                bgColor="#6e557b"
+          keyField= {"assign_no"}
+          data={incompleteData}
+          
+          columns={columns}>
+           </DataTablepopulated> 
           <DiscardReport
             ViewDiscussionToggel={ViewDiscussionToggel}
             ViewDiscussion={ViewDiscussion}
             report={assignNo}
             getData={getInCompleteAssingment}
+            headColor="#6e557b"
           />
         </CardBody>
       </Card>

@@ -80,8 +80,7 @@
     var sidebarCollapsed = document.querySelector('#collapsed-sidebar');
     $('#collapsed-sidebar').on('change',function(){
 
-        // console.log(sidebarCollapsed.checked);
-        // Toggle menu
+       
         $.app.menu.toggle();
 
         setTimeout(function(){

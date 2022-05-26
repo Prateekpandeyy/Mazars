@@ -14,7 +14,7 @@ import AllPayment from "./AllPayment";
 function PaymentStatus(props) {
   const userId = window.localStorage.getItem("userid");
 
-  const [tabIndex, setTabIndex] = useState(0);
+ 
   useLayoutEffect(() => {
     setTabIndex(props.location.index || 0);
   }, [props.location.index]);
@@ -23,8 +23,14 @@ function PaymentStatus(props) {
   const [allPayment, setAllPayment] = useState("");
   const [paid, setPaid] = useState("");
   const [unpaid, setUnpaid] = useState("");
-
-
+  const [bgColor, setbgColor] = useState("#2b5f55")
+  const [tabIndex, setTabIndex] = useState(0);
+  const token = window.localStorage.getItem("clientToken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
   useEffect(() => {
     getAllPaid();
     getPaid();
@@ -34,75 +40,86 @@ function PaymentStatus(props) {
 
   const getAllPaid = () => {
     axios
-      .get(`${baseUrl}/tl/getUploadedProposals?cid=${JSON.parse(userId)}`)
+      .get(`${baseUrl}/customers/getUploadedProposals?cid=${JSON.parse(userId)}`, myConfig)
       .then((res) => {
-        console.log(res);
-        setAllPayment(res.data.result.length);
+      
+        if(res.data.code === 1){
+          setAllPayment(res.data.result.length);
+        }
       });
   };
 
   const getPaid = () => {
     axios
-      .get(`${baseUrl}/tl/getUploadedProposals?cid=${JSON.parse(userId)}&status=1`)
+      .get(`${baseUrl}/customers/getUploadedProposals?cid=${JSON.parse(userId)}&status=1`, myConfig)
       .then((res) => {
-        console.log(res);
-        setPaid(res.data.result.length);
+      
+        if(res.data.code === 1){
+          setPaid(res.data.result.length);
+        }
       });
   };
 
   const getUnpaid = () => {
     axios
-      .get(`${baseUrl}/tl/getUploadedProposals?cid=${JSON.parse(userId)}&status=2`)
+      .get(`${baseUrl}/customers/getUploadedProposals?cid=${JSON.parse(userId)}&status=2`, myConfig)
       .then((res) => {
-        console.log(res);
+      
+      if(res.data.code === 1){
         setUnpaid(res.data.result.length);
+      }
       });
   };
 
 
 
+  const tableIndex = (index) => {
+    setTabIndex(index)
+    console.log(index)
+    if(index === 0){
+      setbgColor("#2b5f55")
+    }
+    else if(index === 1){
+      setbgColor("#3e8678")
+    }
+    else if(index === 2){
+      setbgColor("#3e8678")
+    }
+    else if(index === 3){
+      setbgColor("#3e8678")
+    }
+  }
+    
   const myStyle1 = {
-    backgroundColor: "grey",
-    padding: "12px",
-    borderRadius: "50px",
-    width: "200px",
-    textAlign: "center",
-    color: "white",
-    cursor: "pointer",
+    margin: "10px auto",
+    fontSize : "14px"
   };
-
   const myStyle2 = {
-    padding: "12px",
-    borderRadius: "50px",
-    width: "200px",
-    textAlign: "center",
-    backgroundColor: "blue",
-    color: "white",
-    cursor: "pointer",
+ margin: "10px auto",
+
+ color : "#2b5f55",
+ fontWeight : 1000
   };
-
-
-
-
-
   return (
     <Layout custDashboard="custDashboard" custUserId={userId}>
-      <div>
-        <Tabs selectedIndex={tabIndex} onSelect={(index) => setTabIndex(index)}>
-          <TabList
+    
+      <Tabs selectedIndex={tabIndex} onSelect={(index) => tableIndex(index)}>
+      <TabList
             style={{
               listStyleType: "none",
               display: "flex",
               justifyContent: "space-around",
+             margin: "0px",
+             padding: "10px"
             }}
           >
-            <Tab style={tabIndex == 0 ? myStyle2 : myStyle1}>
+            <Tab style={tabIndex == 0 ? myStyle2 : myStyle1} className="tabHover">
               All Payment ({allPayment})
             </Tab>
-            <Tab style={tabIndex == 1 ? myStyle2 : myStyle1}>
+            <Tab style={tabIndex == 1 ? myStyle2 : myStyle1} className="tabHover">
               Unpaid ({paid})
             </Tab>
-            <Tab style={tabIndex == 2 ? myStyle2 : myStyle1}>
+            <Tab style={tabIndex == 2 ? myStyle2 : myStyle1} className="tabHover">
               Paid ({unpaid})
             </Tab>
 
@@ -120,7 +137,7 @@ function PaymentStatus(props) {
             <Paid />
           </TabPanel>
         </Tabs>
-      </div>
+     
     </Layout>
   );
 }

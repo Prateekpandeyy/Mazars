@@ -29,7 +29,7 @@ function AddNew() {
   const userid = window.localStorage.getItem("tlkey");
 
   const onSubmit = (value) => {
-    console.log("value :", value);
+    
 
     let formData = new FormData();
     formData.append("email", value.p_email);
@@ -43,14 +43,14 @@ function AddNew() {
       data: formData,
     })
       .then(function (response) {
-        console.log("res-", response);     
+           
         if (response.data.code === 1) {
           alert.success("TP created  !");
           reset();
         }
       })
       .catch((error) => {
-        console.log("erroror - ", error);
+      
       });
 
   };
@@ -59,9 +59,9 @@ function AddNew() {
 
   return (
     <Layout TLDashboard="TLDashboard" TLuserId={userid}>
-      <div class="row mt-3">
-        <div class="col-md-12">
-          <div class="text-center">
+      <div className="row mt-3">
+        <div className="col-md-12">
+          <div className="text-center">
             <h3>Add New Tax Professionals</h3>
           </div>
         </div>
@@ -69,41 +69,41 @@ function AddNew() {
         <br />
         <br />
         <br />
-        <div class="col-lg-2 col-xl-2 col-md-12"></div>
-        <div class="col-lg-8 col-xl-8 col-md-12">
+        <div className="col-lg-2 col-xl-2 col-md-12"></div>
+        <div className="col-lg-8 col-xl-8 col-md-12">
           <div>
           <form onSubmit={handleSubmit(onSubmit)}>   
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="form-group">
+              <div className="row">
+                <div className="col-md-6">
+                  <div className="form-group">
                     <label>Name</label>
                     <input
                       type="text"
-                      class="form-control"
+                      className="form-control"
                       name="p_name"
                       ref={register}
                     />
                    
                   </div>
                 </div>
-                <div class="col-md-6">
-                  <div class="form-group">
+                <div className="col-md-6">
+                  <div className="form-group">
                     <label>Email</label>
                     <input
                       type="email"
-                      class="form-control"
+                      className="form-control"
                       name="p_email"
                     ref={register}
                     />
                     
                   </div>
                 </div>
-                <div class="col-md-12">
-                  <div class="form-group">
+                <div className="col-md-12">
+                  <div className="form-group">
                     <label>Phone Number</label>
                     <input
                       type="text"
-                      class="form-control"
+                      className="form-control"
                       name="p_phone"
                       ref={register}
                     />
@@ -117,7 +117,7 @@ function AddNew() {
             </form>
           </div>
         </div>
-        <div class="col-lg-2 col-xl-2 col-md-12"></div>
+        <div className="col-lg-2 col-xl-2 col-md-12"></div>
       </div>
     </Layout>
   );

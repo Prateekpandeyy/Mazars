@@ -16,6 +16,7 @@ import Feedback from './Feedback'
 
 
 function QueryDetails({
+  overDue,
   p,
   diaplaySpecific,
   diaplayProposal,
@@ -31,17 +32,18 @@ function QueryDetails({
   year,
   feedback,
   reports, 
-  submitData
+  submitData,
+  accept,
+  tlName2,
+  tp22,
+  tpStatus,
+  declined2,
+  declinedStatus, 
+  finalDate, 
+  qstatus,
+  panel
 }) {
-  console.log("p", customerQuery);
-
-  // const history = useHistory();
-
-  // const [addModal, setAddModal] = useState(false);
-  // const addHandler = () => {
-  //   console.log("addhandler")
-  //   setAddModal(!addModal);
-  // }
+ 
 
 
   const [activeTab, setActiveTab] = useState('1');
@@ -95,14 +97,7 @@ function QueryDetails({
               Recording
             </NavLink>
           </NavItem> }
-          {/* <NavItem>
-            <NavLink
-              className={classnames({ active: activeTab === '5' })}
-              onClick={() => { toggle('5'); }}
-            >
-              UPLOAD ADDITIONAL DOCUMENTS
-            </NavLink>
-          </NavItem> */}
+         
 
         </Nav>
 
@@ -117,6 +112,10 @@ function QueryDetails({
                     purpose={purpose}
                     queryDocs={queryDocs}
                     year={year}
+                    declined2={declined2}
+                    declinedStatus={declinedStatus}
+                    qstatus={qstatus}
+                    panel = {panel}
                   />
                 </Card>
               </Col>
@@ -132,6 +131,12 @@ function QueryDetails({
                     diaplayHistory={diaplayHistory}
                     paymentDetails={paymentDetails}
                     p={p}
+                    accept={accept}
+                    tlName2={tlName2}
+                    tp22 = {tp22}
+                    tpStatus={tpStatus}
+                    panel = {panel}
+                    overDue = {overDue}
                   />
                 </Card>
               </Col>
@@ -150,6 +155,8 @@ function QueryDetails({
                     assingNo={assingNo}
                     submitData = {submitData}
                     customerQuery = {customerQuery}
+                    finalDate={finalDate}
+                    panel = {panel}
                   />
                 </Card>
               </Col>
@@ -168,7 +175,9 @@ function QueryDetails({
               </Col>
             </Row>
           </TabPane>
-       <TabPane tabId="5">
+          {
+            customerQuery === "customerQuery" ? null :
+<TabPane tabId="5">
          <Row>
            <Col sm="12">
              <Card body>
@@ -178,6 +187,8 @@ function QueryDetails({
            </Col>
            </Row>
        </TabPane>
+          }
+       
           
 
         </TabContent>

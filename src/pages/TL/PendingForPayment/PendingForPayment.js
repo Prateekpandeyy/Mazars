@@ -29,7 +29,7 @@ function PendingForPayment() {
     axios
       .get(`${baseUrl}/tl/getProposals?uid=${JSON.parse(userid)}`)
       .then((res) => {
-        console.log(res);
+      
         if (res.data.code === 1) {
             setPendingForPayment(res.data.result);
         }
@@ -55,16 +55,7 @@ function PendingForPayment() {
       headerStyle: () => {
         return { fontSize: "12px" };
       },
-      // formatter: function dateFormat(cell, row) {
-      //   console.log("dt", row.query_date);
-      //   var date = row.query_date
-      //   var updatedate = date.split(" ")[0];
-      //   console.log(updatedate);
-      //   if (updatedate == null) {
-      //     return null;
-      //   }
-      //   return updatedate.toString().split("-").reverse().join("-");
-      // },
+   
     },
     {
       text: "Query No",
@@ -73,7 +64,7 @@ function PendingForPayment() {
         return { fontSize: "12px" };
       },
       formatter: function nameFormatter(cell, row) {
-        console.log(row);
+     
         return (
           <>
             <Link to={`/teamleader/queries/${row.id}`}>{row.assign_no}</Link>
@@ -98,7 +89,7 @@ function PendingForPayment() {
       },
     },   
     {
-      text: "Customer Name",
+      text: "Client Name",
       dataField: "name",
       sort: true,
       headerStyle: () => {

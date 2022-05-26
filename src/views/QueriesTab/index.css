@@ -1,0 +1,60 @@
+.declinedPayment {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.table tbody tr td {
+  color: #464b4b;
+}
+.tabHover {
+  transition: all 0.9s;
+}
+.tabHoverLink {
+  transition: all 0.9s;
+  font-weight: 700;
+}
+.tabHover:hover {
+  text-decoration: underline;
+  color: #0071ce;
+
+  cursor: pointer;
+}
+.tabHoverLink:hover {
+  text-decoration: underline;
+  color: #0071ce;
+
+  cursor: pointer;
+}
+.tabHoverLinksubMenu {
+  color: rgb(61, 71, 117);
+  height: 40px;
+  font-weight: 700;
+  list-style: none;
+  text-align: center;
+  z-index: 10;
+  margin: auto;
+}
+.headerHover {
+  color: rgb(61, 71, 117);
+  height: 40px;
+  font-weight: 700;
+  list-style: none;
+  text-align: center;
+  margin: auto;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  font-size: 1rem;
+}
+.headerHover a {
+  color: rgb(61, 71, 117);
+}
+.tabHoverLinksubMenu ul {
+  list-style: none;
+}
+.tabHoverLinksubMenu:hover {
+  color: #0071ce;
+  height: 40px;
+  cursor: pointer;
+  list-style: none;
+}

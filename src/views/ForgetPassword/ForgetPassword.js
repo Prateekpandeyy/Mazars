@@ -14,15 +14,23 @@ import classNames from "classnames";
 import { Link } from "react-router-dom";
 import Alerts from "../../common/Alerts";
 import Mandatory from "../../components/Common/Mandatory";
-
-
+import ShowError from "../../components/LoadingTime/LoadingTime";
+import { OuterloginContainer } from "../../components/Common/OuterloginContainer";
+import { styled , makeStyles} from "@material-ui/styles";
+import {Breadcrumbs, Box, Typography } from "@material-ui/core";
 const Schema = yup.object().shape({
   p_email: yup.string().email("invalid email").required(""),
 });
 
-
+const MyContainer = styled(Box)({
+  display : "flex", 
+  justifyContent : "center", 
+  alignItems : "center", 
+  width: "100%",
+  flexDirection : "column"
+})
 function ForgetPassword(props) {
-  console.log("props : ", props.location.email);
+
 
   const alert = useAlert();
   const { handleSubmit, register, reset, errors } = useForm({
@@ -32,7 +40,7 @@ function ForgetPassword(props) {
 
 
   const onSubmit = (value) => {
-    console.log("value :", value);
+   
     setLoading(true)
 
     let formData = new FormData();
@@ -45,26 +53,26 @@ function ForgetPassword(props) {
       data: formData,
     })
       .then(function (response) {
-        console.log("res-", response);
+       
         if (response.data.code === 1) {
           setLoading(false)
           Alerts.SuccessNormal("As per your request, OTP has been sent to your regsitered email address.")
           props.history.push(`/customer/new-password/${value.p_email}`)
         } else if (response.data.code === 0) {
           setLoading(false)
-          console.log(response.data.result);
+       
           Alerts.ErrorNormal("Invalid email.")
         }
       })
       .catch((error) => {
-        console.log("erroror - ", error);
+       ShowError.LoadingError(setLoading)
       });
   };
 
   const valueHandler = () => {
     var item = props.location.email
     if (item == "undefined") {
-      console.log("item : ", item)
+      
     } else {
       return item
     }
@@ -72,19 +80,17 @@ function ForgetPassword(props) {
 
   return (
     <>
-      <Header cust_sign="cust_sign" />
-      <div className="container">
+
+  <OuterloginContainer>
+  <Header noSign="cust_sign" />
+     <MyContainer>
+     <div className="container">
         <div className="form">
           <div className="heading">
             <h2>Forgot Password</h2>
           </div>
 
-          {
-            loading ?
-              <div class="col-md-12">
-                <Spinner color="primary" />
-              </div>
-              :
+         
               <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
                 <div className="mb-3">
                   <label className="form-label">Email<span className="declined">*</span></label>
@@ -102,23 +108,34 @@ function ForgetPassword(props) {
                     <div className="invalid-feedback">{errors.p_email.message}</div>
                   )}
                 </div>
-
-                <button type="submit" className="btn btn-primary">
-                  Get OTP
-                </button>
-                <Link to="/" style={{ "margin": "10px" }}>
-                  <button type="submit" className="btn btn-secondary">
-                    Cancel
-                  </button>
-                </Link>
+                {
+                      loading ?
+                        <Spinner color="primary" />
+                        :
+                        <>
+                        <button type="submit" className="customBtn">
+                        Get OTP
+                      </button>
+                       <Link to="/" style={{ "margin": "10px" }}>
+                       <button type="button" className="customBtn">
+                         Cancel
+                       </button>
+                     </Link>
+                     </>
+                    }
+                
+               
               </form>
-          }
+          
           <Mandatory />
         </div>
 
       </div>
 
-      <Footer />
+    
+     </MyContainer>
+     <Footer />
+  </OuterloginContainer>
     </>
   );
 }
@@ -128,23 +145,3 @@ export default ForgetPassword;
 
 
 
-
-{
-  /* <Link
-            to={{
-              pathname: `/customer/new-password`,
-              email:`${value.p_email}`
-            }}
-          ></Link>; */
-}
-
-  // const sendEmail = (email) => {
-  //   return (
-  //     <Link
-  //       to={{
-  //         pathname: `/customer/new-password`,
-  //         email: `${email}`,
-  //       }}
-  //     ></Link>
-  //   );
-  // };

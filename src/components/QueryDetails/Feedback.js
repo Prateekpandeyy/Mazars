@@ -3,7 +3,7 @@ import CommonServices from "../../common/common";
 
 
 function Feedback({ feedback }) {
-    console.log("feedback", feedback);
+  
 
     return (
         <div>
@@ -16,7 +16,7 @@ function Feedback({ feedback }) {
             >
                 Feedback
             </p>
-            <table class="table table-bordered">
+            <table className="table table-bordered">
                 <thead>
                     <tr>
                         <th style={{ width: "80px" }}>S.No</th>
@@ -29,7 +29,7 @@ function Feedback({ feedback }) {
                         feedback.map((p, i) => (
                             <tr>
                                 <td>{i + 1}</td>
-                                <td style={{ display: "flex" }}>
+                                <td style={{ display: "flex" , border : "0px"}}>
                                     <p>{CommonServices.removeTime(p.created)}</p>
                                     <p style={{ marginLeft: "15px" }}>{CommonServices.removeDate(p.created)}</p>
                                 </td>

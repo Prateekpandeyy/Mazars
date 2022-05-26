@@ -1,17 +1,23 @@
 import axios from "axios";
+//for local
 // export default axios.create({
-//   baseURL: "http://13.232.121.233/mazarsapi/v1",
+//   baseURL: "http://43.204.16.182/mazarapi/v1",
 //   headers: {
 //     "Content-type": "application/json",
 //   },
 // });
 
-
-// for server 
-
+//for development
 export default axios.create({
-  baseURL: "https://mazarsapi.multitvsolution.com/mazarapi/v1",
+  baseURL: "https://stagingapi.masindia.live/v1",
   headers: {
     "Content-type": "application/json",
   },
-});
+}); 
+// // //for server
+// export default axios.create({
+//   baseURL: "https://api.masindia.live/v1",
+//   headers: {
+//     "Content-type": "application/json",
+//   },
+// }); 

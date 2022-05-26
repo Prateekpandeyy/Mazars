@@ -64,7 +64,7 @@ function QueryAssingment() {
   const { queryNo, timelines, custId, expect_dd } = queryData;
 
   var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
-  console.log("current_date :", current_date);
+  
   const [item] = useState(current_date);
 
 
@@ -77,16 +77,16 @@ function QueryAssingment() {
     axios
       .get(`${baseUrl}/tp/getTaxProfessional?tp_id=${JSON.parse(userId)}`)
       .then((res) => {
-        console.log(res);
+       
         if (res.data.code === 1) {
           setTaxProfessionDisplay(res.data.result);
         }
       });
   };
-
+console.log("done22")
   const getQueryData = () => {
     axios.get(`${baseUrl}/tp/GetQueryDetails?id=${id}`).then((res) => {
-      console.log(res);
+     
       if (res.data.code === 1) {
         setQuerData({
           queryNo: res.data.result[0].assign_no,
@@ -106,7 +106,7 @@ function QueryAssingment() {
     axios
       .get(`${baseUrl}/tp/TpCheckIfAssigned?assignno=${queryNo}`)
       .then((res) => {
-        console.log(res);
+       
         if (res.data.code === 1) {
           setQuery(false);
           // setHideQuery(res.data.meta);
@@ -121,18 +121,18 @@ function QueryAssingment() {
   };
 
   const handleChange = (e) => {
-    console.log("val-", e.target.value);
+   
     setTaxID(e.target.value)
     var value = taxProfessionDisplay.filter(function (item) {
       return item.id == e.target.value
     })
-    console.log(value[0]);
+ 
     setTeamName(value[0].name)
   }
 
 
   const onSubmit = (value) => {
-    console.log("value :", value);
+  
     setLoading(true)
 
     var expdeliverydate = value.p_expdeldate.replace(
@@ -158,7 +158,7 @@ function QueryAssingment() {
       data: formData,
     })
       .then(function (response) {
-        console.log("res-", response);
+      
         if (response.data.code === 1) {
           setLoading(false)
           var variable = "Query assigned successfully."
@@ -170,7 +170,7 @@ function QueryAssingment() {
         }
       })
       .catch((error) => {
-        console.log("erroror - ", error);
+    
       });
   };
 
@@ -189,7 +189,7 @@ function QueryAssingment() {
                 <button
                   class="btn btn-success ml-3"
                 >
-                  <i class="fas fa-arrow-left mr-2"></i>
+               
                   Go Back
                 </button>
               </Link>

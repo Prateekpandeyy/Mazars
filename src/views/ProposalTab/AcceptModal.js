@@ -8,10 +8,10 @@ import { useAlert } from "react-alert";
 function AcceptModal({ acceptedModal, acceptedHandler, id,getProposalData}) {
     const { handleSubmit, register, reset } = useForm();
     const alert = useAlert();
-// console.log("accept-id",id)
+
 
     const onSubmit = (value) => {
-      console.log("value :", value);
+     
 
       let formData = new FormData();
       formData.append("revised_text", value.p_text);
@@ -23,7 +23,7 @@ function AcceptModal({ acceptedModal, acceptedHandler, id,getProposalData}) {
         data: formData,
       })
         .then(function (response) {
-          console.log("res-", response); 
+         
           if (response.data.code === 1) {
             alert.success("Revision Submitted!");
             getProposalData();
@@ -32,7 +32,7 @@ function AcceptModal({ acceptedModal, acceptedHandler, id,getProposalData}) {
                       
         })
         .catch((error) => {
-          console.log("erroror - ", error);
+        
        });
   };
 

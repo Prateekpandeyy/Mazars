@@ -21,28 +21,42 @@ function QueriesTab(props) {
 
   const [allQuery, setAllQuery] = useState("");
   const [declined, setDeclined] = useState("");
+  const [bgColor, setbgColor] = useState("#55425F")
+  const token = window.localStorage.getItem("tlToken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
 
 
-
+  const tableIndex = (index) => {
+    setTabIndex(index)
+    console.log(index)
+    if(index === 0){
+      setbgColor("#55425F")
+    }
+    else if(index === 1){
+      setbgColor("#6e557b")
+    }
+    else if(index === 2){
+      setbgColor("#6e557b")
+    }
+    else if(index === 3){
+      setbgColor("#6e557b")
+    }
+  }
+    
   const myStyle1 = {
-    backgroundColor: "grey",
-    padding: "12px",
-    borderRadius: "50px",
-    width: "200px",
-    textAlign: "center",
-    color: "white",
-    cursor: "pointer",
+    margin: "10px auto",
+    fontSize : "14px"
   };
   const myStyle2 = {
-    padding: "12px",
-    borderRadius: "50px",
-    width: "200px",
-    textAlign: "center",
-    backgroundColor: "blue",
-    color: "white",
-    cursor: "pointer",
+  margin: "10px auto",
+  
+  color : "#55425f",
+  fontWeight : 1000
   };
-
 
   useLayoutEffect(() => {
     setTabIndex(props.location.index || 0);
@@ -53,9 +67,9 @@ function QueriesTab(props) {
   useEffect(() => {
     const AllQuery = () => {
       axios
-        .get(`${baseUrl}/tl/getIncompleteQues?id=${JSON.parse(userid)}`)
+        .get(`${baseUrl}/tl/getIncompleteQues?id=${JSON.parse(userid)}`, myConfig)
         .then((res) => {
-          console.log(res);
+          
           if (res.data.code === 1) {
             setAllQuery(res.data.result.length);
           }
@@ -64,9 +78,9 @@ function QueriesTab(props) {
 
     const getPendindForAccepttence = () => {
       axios
-        .get(`${baseUrl}/tl/pendingQues?id=${JSON.parse(userid)}`)
+        .get(`${baseUrl}/tl/pendingQues?id=${JSON.parse(userid)}`, myConfig)
         .then((res) => {
-          console.log(res);
+          
           if (res.data.code === 1) {
             setPendingForAcceptence(res.data.result.length);
           }
@@ -75,9 +89,9 @@ function QueriesTab(props) {
 
     const getIncomplete = () => {
       axios
-        .get(`${baseUrl}/tl/getIncompleteQues?id=${JSON.parse(userid)}&status=1`)
+        .get(`${baseUrl}/tl/getIncompleteQues?id=${JSON.parse(userid)}&status=1`, myConfig)
         .then((res) => {
-          console.log(res);
+          
           if (res.data.code === 1) {
             setIncomplete(res.data.result.length);
           }
@@ -86,9 +100,9 @@ function QueriesTab(props) {
 
     const getComplete = () => {
       axios
-      .get(`${baseUrl}/tl/pendingAllocation?uid=${JSON.parse(userid)}`)
+      .get(`${baseUrl}/tl/pendingAllocation?uid=${JSON.parse(userid)}`, myConfig)
         .then((res) => {
-          console.log(res);
+          
           if (res.data.code === 1) {
             setcomplete(res.data.result.length);
           }
@@ -97,9 +111,9 @@ function QueriesTab(props) {
 
     const Declined = () => {
       axios
-        .get(`${baseUrl}/tl/declinedQueries?id=${JSON.parse(userid)}`)
+        .get(`${baseUrl}/tl/declinedQueries?id=${JSON.parse(userid)}`, myConfig)
         .then((res) => {
-          console.log(res);
+          
           if (res.data.code === 1) {
             setDeclined(res.data.result.length);
           }
@@ -119,27 +133,21 @@ function QueriesTab(props) {
 
   return (
     <Layout TLDashboard="TLDashboard" TLuserId={userid}>
-      <div>
-        <Tabs selectedIndex={tabIndex} onSelect={(index) => setTabIndex(index)}>
-          <TabList
-            style={{
-              listStyleType: "none",
-              display: "flex",
-              justifyContent: "space-around",
-            }}
-          >
-            <Tab style={tabIndex == 0 ? myStyle2 : myStyle1}>
-              All Query ({allQuery})
+
+      <Tabs selectedIndex={tabIndex} onSelect={(index) => tableIndex(index)}>
+          <TabList className="fixedTab">
+            <Tab style={tabIndex == 0 ? myStyle2 : myStyle1} className="tabHover">
+              All Queries ({allQuery})
             </Tab>
            
-            <Tab style={tabIndex == 1 ? myStyle2 : myStyle1}>
+            <Tab style={tabIndex == 1 ? myStyle2 : myStyle1} className="tabHover">
               Inprogress; Queries ({incomplete})
             </Tab>
-            <Tab style={tabIndex == 2 ? myStyle2 : myStyle1}>
-              Pending For Acceptence ({pendindForAccepttence})
+            <Tab style={tabIndex == 2 ? myStyle2 : myStyle1} className="tabHover">
+              Pending For Acceptance ({pendindForAccepttence})
             </Tab>
-            <Tab style={tabIndex == 3 ? myStyle2 : myStyle1}>
-            Pending for assignment ({complete})
+            <Tab style={tabIndex == 3 ? myStyle2 : myStyle1} className="tabHover">
+            Inprogress Assignment to TP ({complete})
             </Tab>
             
           </TabList>
@@ -161,11 +169,12 @@ function QueriesTab(props) {
           </TabPanel>
           <TabPanel>
             <CompleteData
+            updateTab={updateTab}
             />
           </TabPanel>
          
         </Tabs>
-      </div>
+     
     </Layout>
   );
 }

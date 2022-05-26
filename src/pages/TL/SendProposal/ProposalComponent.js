@@ -19,7 +19,9 @@ import Select from "react-select";
 import Alerts from "../../../common/Alerts";
 import Mandatory from "../../../components/Common/Mandatory";
 import { Spinner } from 'reactstrap';
-
+import Swal from "sweetalert2";
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 
 function ProposalComponent(props) {
@@ -31,7 +33,7 @@ function ProposalComponent(props) {
   const [loading, setLoading] = useState(false);
 
   const [custId, setCustId] = useState("");
-  const [custname, setCustName] = useState();
+  const [custname, setCustName] = useState("");
   const [assignId, setAssignID] = useState("");
   const [assingNo, setAssingNo] = useState("");
   const [store, setStore] = useState(null);
@@ -41,38 +43,55 @@ function ProposalComponent(props) {
   const [error, setError] = useState('');
   const [totalAmount, setTotalAmount] = useState(null);
   const [paymentError, setpaymentError] = useState();
-
+  const [det, addDet] = useState()
   const [date, setDate] = useState();
   const [amount, setAmount] = useState();
-
+  const [companyName, setCompanyName] = useState([])
+  const [dateError, setDateError] = useState(false)
+  const [company2, setCompany2] = useState("")
   var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
   const [item] = useState(current_date);
-
+  const token = window.localStorage.getItem("tlToken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
+  const getQuery = () => {
+    axios
+      .get(
+        `${baseUrl}/tl/pendingTlProposal?tl_id=${JSON.parse(
+          userid
+        )}&assign_id=${id}`, myConfig
+      )
+      .then((res) => {
+        if (res.data.code === 1) {
+          if (res.data.result.length > 0) {
+            setAssingNo(res.data.result[0].assign_no);
+            setAssignID(res.data.result[0].id);
+          }
+        }
+      });
+  };
+  const getCompany = () => {
+    axios.get(
+      `${baseUrl}/tl/getcompany`, myConfig
+    )
+    .then((res) => {
+      console.log("response", res)
+      setCompanyName(res.data.result)
+    })
+  }
 
   useEffect(() => {
-    const getQuery = () => {
-      axios
-        .get(
-          `${baseUrl}/tl/pendingTlProposal?tl_id=${JSON.parse(
-            userid
-          )}&assign_id=${id}`
-        )
-        .then((res) => {
-          if (res.data.code === 1) {
-            if (res.data.result.length > 0) {
-              setAssingNo(res.data.result[0].assign_no);
-              setAssignID(res.data.result[0].id);
-            }
-          }
-        });
-    };
+   getCompany()
     getQuery();
   }, []);
 
 
   useEffect(() => {
     const getUser = async () => {
-      const res = await axios.get(`${baseUrl}/customers/allname?id=${id}`);
+      const res = await axios.get(`${baseUrl}/customers/allname?id=${id}`, myConfig);
       setCustName(res.data.name);
       setCustId(res.data.id);
     };
@@ -82,11 +101,18 @@ function ProposalComponent(props) {
 
 
   const onSubmit = (value) => {
-    console.log(value);
+  
 
-    console.log("amount --", amount)
-    console.log("date --", date)
-
+   if(diserror.length > 0 ){
+     return false
+   }
+   else if(dateError === true){
+    Alerts.ErrorNormal("Date must be unique")
+   }
+   else if(det.length == 0){
+   return false
+  }
+   else{
     var lumsum = value.p_inst_date
     if (payment.label == "lumpsum") {
       setDate(lumsum)
@@ -97,19 +123,19 @@ function ProposalComponent(props) {
 
     let formData = new FormData();
     formData.append("assign_no", assingNo);
-    formData.append("name", value.p_name);
+    formData.append("name", custname);
     formData.append("type", "tl");
     formData.append("id", JSON.parse(userid));
     formData.append("assign_id", assignId);
     formData.append("customer_id", custId);
-    formData.append("description", value.description);
+    formData.append("description", det);
     formData.append("amount_type", "fixed");
     formData.append("amount", value.p_fixed);
     formData.append("installment_amount", amount);
 
     formData.append("payment_terms", payment.value);
     formData.append("no_of_installment", installment.value);
-
+    formData.append("company", value.p_company)
     payment.label == "lumpsum" ?
       formData.append("due_date", lumsum) :
       payment.label == "installment" ?
@@ -117,22 +143,19 @@ function ProposalComponent(props) {
         formData.append("due_date", "")
 
     if (payment.length < 1) {
-      console.log("please select payments terms --")
+     
       setpaymentError("Please select at lease one")
     } else
       if (payment.value == "installment") {
         if (installment == "") {
           Alerts.ErrorNormal(`Please select no of installment .`)
-          console.log("Please select no of installment --", installment)
-        } else
-          if (!amount || !date) {
+        
+        } 
+        else if (!amount || !date) {
             Alerts.ErrorNormal(`Please enter all fields.`)
-            console.log("Please enter all fields")
+            
           } else if (amount && date) {
-            console.log("all deatils ** here --")
-
-            console.log("installment.value -", installment.value)
-
+            
             if (installment.value > 0) {
               var a = Number(installment.value)
               for (let i = 0; i < a; i++) {
@@ -140,12 +163,12 @@ function ProposalComponent(props) {
                 // arrDate.push(date[i])
                 if (amount[i] == "" || amount[i] == undefined || amount[i] <= 0) {
                   Alerts.ErrorNormal(`Please enter amount`)
-                  console.log("Please enter amount")
+               
                   return false
                 }
                 if (date[i] == "" || date[i] == undefined) {
                   Alerts.ErrorNormal(`Please enter date`)
-                  console.log("Please enter date")
+                
                   return false
                 }
               }
@@ -155,41 +178,48 @@ function ProposalComponent(props) {
               }
               if (value.p_fixed != sum) {
                 Alerts.ErrorNormal(`Sum of all installments should be equal to ${value.p_fixed}.`)
-                console.log(`Sum of all installments should be equal to ${value.p_fixed}.`)
+              
               } else {
-                console.log("call else fine api for installment")
+               
                 setLoading(true)
                 axios({
                   method: "POST",
                   url: `${baseUrl}/tl/uploadProposal`,
+                  headers : {
+                    uit : token
+                  },
                   data: formData,
                 })
                   .then(function (response) {
-                    console.log("res-", response);
+               
                     if (response.data.code === 1) {
                       setLoading(false)
-                      Alerts.SuccessNormal("Proposal sent successfully.")
+                      Alerts.SuccessNormal("Proposal created successfully")
                       history.push("/teamleader/proposal");
                     } else if (response.data.code === 0) {
                       setLoading(false)
+                      Alerts.ErrorNormal(`${response.data.result}`)
                     }
                   })
                   .catch((error) => {
-                    console.log("erroror - ", error);
+                   
                   });
               }
             }
           }
       } else if (payment.label == "lumpsum") {
-        console.log("call api for lumshum",)
+     
         setLoading(true)
         axios({
           method: "POST",
           url: `${baseUrl}/tl/uploadProposal`,
+          headers : {
+            uit : token
+          },
           data: formData,
         })
           .then(function (response) {
-            console.log("res-", response);
+          
             if (response.data.code === 1) {
               setLoading(false)
               var variable = "Proposal sent successfully. "
@@ -200,18 +230,19 @@ function ProposalComponent(props) {
             }
           })
           .catch((error) => {
-            console.log("erroror - ", error);
+          
           });
       }
 
 
 
+   }
   };
 
 
 
   const paymentAmount = (data) => {
-    console.log("paymentAmount", data)
+   
 
     var array1 = []
     Object.entries(data).map(([key, value]) => {
@@ -221,20 +252,32 @@ function ProposalComponent(props) {
   };
 
   const paymentDate = (data) => {
-    console.log("paymentDate", data)
-
+  
+   
     var array2 = []
     Object.entries(data).map(([key, value]) => {
       array2.push(value)
     });
     setDate(array2);
+   
+    if(new Set(array2).size !== array2.length){
+      setDateError(true)
+     Alerts.ErrorNormal("Date must be unique")
+    }
+    else{
+      setDateError(false)
+    }
+   
   };
 
 
   const handleChange = (e) => {
-    console.log("val-", e.target.value);
+   
     if (isNaN(e.target.value)) {
-      setdiserror("Please enter number only.");
+      setdiserror("Please enter number only");
+    }
+    else if(e.target.value == "0"){
+      setdiserror("Amount should be greater than zero")
     }
     else {
       setdiserror("");
@@ -243,7 +286,7 @@ function ProposalComponent(props) {
   };
 
   const installmentHandler = (key) => {
-    console.log("key", key)
+   
     setInstallment(key)
   }
 
@@ -254,10 +297,10 @@ function ProposalComponent(props) {
           <Row>
             <Col md="5">
               <button
-                class="btn btn-success ml-3"
+                class="autoWidthBtn ml-3"
                 onClick={() => history.goBack()}
               >
-                <i class="fas fa-arrow-left mr-2"></i>
+             
                 Go Back
               </button>
             </Col>
@@ -282,8 +325,26 @@ function ProposalComponent(props) {
                     className="form-control"
                     value={assingNo}
                     ref={register}
+                    disabled
                   />
                 </div>
+                <div class="form-group">
+                  <label>Company</label>
+                  <select
+                    class="form-control"
+                    ref={register}
+                    name="p_company"
+                   
+                   onChange= {(e) => setCompany2(e.target.value)}
+                  >
+{
+  companyName.map((i) => (
+    <option value={i.company_prefix}>{i.name}</option>
+  ))
+}
+                  </select>
+                </div>
+
                 <div class="form-group">
                   <label>Fee</label>
                   <select
@@ -302,38 +363,111 @@ function ProposalComponent(props) {
                     type="text"
                     name="p_fixed"
                     className={classNames("form-control", {
-                      "is-invalid": errors.p_fixed,
+                      "is-invalid": errors.p_fixed || diserror,
                     })}
                     ref={register({ required: true })}
                     placeholder="Enter Fixed Price"
                     onChange={(e) => handleChange(e)}
                   />
                 </div>
+                
                 <p style={{ "color": "red" }}>{diserror}</p>
                 <div class="form-group">
                   <label>Scope of Work<span className="declined">*</span></label>
-                  <textarea
+
+                  <CKEditor
+                     editor={ ClassicEditor }
+                     height  = "600px"
+                     config = {{
+                    
+                      highlight: {
+                        options: [
+                            {
+                                model: 'greenMarker',
+                                class: 'marker-green',
+                                title: 'Green marker',
+                                color: 'var(--ck-highlight-marker-green)',
+                                type: 'marker'
+                            },
+                            {
+                                model: 'redPen',
+                                class: 'pen-red',
+                                title: 'Red pen',
+                                color: 'var(--ck-highlight-pen-red)',
+                                type: 'pen'
+                            }
+                        ]
+                    },
+                      fontFamily: {
+                        options: [
+                            'default',
+                            'Ubuntu, Arial, sans-serif',
+                            'Ubuntu Mono, Courier New, Courier, monospace'
+                        ]
+                    },
+                    fontColor: {
+                      colors: [
+                          {
+                              color: 'hsl(0, 0%, 0%)',
+                              label: 'Black'
+                          },
+                          {
+                              color: 'hsl(0, 0%, 30%)',
+                              label: 'Dim grey'
+                          },
+                          {
+                              color: 'hsl(0, 0%, 60%)',
+                              label: 'Grey'
+                          },
+                          {
+                              color: 'hsl(0, 0%, 90%)',
+                              label: 'Light grey'
+                          },
+                          {
+                              color: 'hsl(0, 0%, 100%)',
+                              label: 'White',
+                              hasBorder: true
+                          },
+
+                          // ...
+                      ]
+                  },
+                    toolbar: [
+                   ' highlight', 'heading',  'bold', 'fontColor', 'italic',  'bulletedList', 'numberedList', 'undo', 'redo'
+                    ],
+                  
+                    }}
+                    
+                    
                     className={classNames("form-control", {
-                      "is-invalid": errors.description,
+                      "is-invalid": errors.p_fact,
                     })}
-                    id="textarea"
-                    rows="3"
-                    name="description"
-                    ref={register({ required: true })}
-                    placeholder="Enter Proposal Description"
-                  ></textarea>
+                    id="textarea22"
+                    rows="6"
+                   
+                
+                    onChange={ ( event, editor ) => {
+                      addDet(editor.getData());
+                     
+
+                    
+                  } }
+
+                ></CKEditor>
+                   
                 </div>
               </div>
 
               <div class="col-md-6">
                 <div class="form-group">
-                  <label>Customer Name</label>
+                  <label>Client Name</label>
                   <input
                     type="text"
                     name="p_name"
                     className="form-control"
                     value={custname}
                     ref={register}
+                    disabled
                   />
                 </div>
 
@@ -389,6 +523,7 @@ function ProposalComponent(props) {
                       totalAmount={totalAmount}
                       min={item}
                       item={item}
+                      dateError = {dateError}
                     />
                 }
 
@@ -401,7 +536,7 @@ function ProposalComponent(props) {
                 loading ?
                   <Spinner color="primary" />
                   :
-                  <button type="submit" class="btn btn-primary">
+                  <button type="submit" class="customBtn">
                     Submit
                   </button>
               }
@@ -443,130 +578,3 @@ const no_installments = [
     label: "4",
   },
 ];
-
-
-    // if (amount) {
-        //   var sum = amount.reduce(myFunction)
-        //   function myFunction(total, value) {
-        //     return Number(total) + Number(value);
-        //   }
-        // }
-        // if (value.p_fixed != sum) {
-        //   Alerts.ErrorNormal(`Sum of all installments should be equal to ${value.p_fixed}.`)
-        // } else if (!date) {
-        //   console.log("call date")
-        //   Alerts.ErrorNormal(`Please date should be enter`)
-        // }
-
- // var lumsum = value.p_inst_date
-    // setDate(lumsum)
-
-    // if (payment.length < 1) {
-    //   setpaymentError("Please select at lease one")
-    // }
-    // else {
-    //   setpaymentError("")
-    //   let formData = new FormData();
-
-    // formData.append("assign_no", assingNo);
-    // formData.append("name", value.p_name);
-    // formData.append("type", "tl");
-    // formData.append("id", JSON.parse(userid));
-    // formData.append("assign_id", assignId);
-    // formData.append("customer_id", custId);
-    // formData.append("description", value.description);
-
-    // formData.append("amount_type", "fixed");
-    // formData.append("amount", value.p_fixed);
-    // formData.append("installment_amount", amount);
-
-    // formData.append("payment_terms", payment.value);
-    // formData.append("no_of_installment", installment.value);
-
-    // payment.label == "lumpsum" ?
-    //   formData.append("due_date", lumsum) :
-    //   payment.label == "installment" ?
-    //     formData.append("due_date", date) :
-    //     formData.append("due_date", "")
-
-    //   console.log("payment -", payment.label)
-
-    //   if (payment.value == "installment") {
-    //     console.log("amount --", amount)
-    //     console.log("date --", date)
-
-    // if (!amount || !date) {
-    //   Alerts.ErrorNormal(`please enter all fields`)
-    // } else
-    // if (amount && date) {
-    //   if (installment.value > 0) {
-    //     console.log("installment** --")
-
-    //     var a = Number(installment.value)
-    //     for (let i = 0; i < a; i++) {
-    //       // console.log("call for loop", i, amount[i])
-    //       if (amount[i] == "" || amount[i] == undefined || amount[i] <= 0) {
-    //         console.log("amount --1", amount[i])
-    //         Alerts.ErrorNormal(`please insert all fields.`)
-    //         return false
-    //       }
-    //     }
-    //     var sum = amount.reduce(myFunction)
-    //     function myFunction(total, value) {
-    //       return Number(total) + Number(value);
-    //     }
-    //     if (value.p_fixed != sum) {
-    //       Alerts.ErrorNormal(`Sum of all installments should be equal to ${value.p_fixed}.`)
-    //     } else {
-    //       console.log("calll else fine api")
-    //     }
-    //   }
-    //       }
-    //       else {
-    //         console.log("call else")
-    //         return false
-    //         setLoading(true)
-    // axios({
-    //   method: "POST",
-    //   url: `${baseUrl}/tl/uploadProposal`,
-    //   data: formData,
-    // })
-    //   .then(function (response) {
-    //     console.log("res-", response);
-    //     if (response.data.code === 1) {
-    //       setLoading(false)
-    //       Alerts.SuccessNormal("Proposal sent successfully.")
-    //       history.push("/teamleader/proposal");
-    //     } else if (response.data.code === 0) {
-    //       setLoading(false)
-    //     }
-    //   })
-    //   .catch((error) => {
-    //     console.log("erroror - ", error);
-    //   });
-    //       }
-    //   }
-    //   else {
-    // setLoading(true)
-    // axios({
-    //   method: "POST",
-    //   url: `${baseUrl}/tl/uploadProposal`,
-    //   data: formData,
-    // })
-    //   .then(function (response) {
-    //     console.log("res-", response);
-    //     if (response.data.code === 1) {
-    //       setLoading(false)
-
-    //       var variable = "Proposal sent successfully. "
-    //       Alerts.SuccessNormal(variable)
-    //       history.push("/teamleader/proposal");
-    //     } else if (response.data.code === 0) {
-    //       setLoading(false)
-    //     }
-    //   })
-    //   .catch((error) => {
-    //     console.log("erroror - ", error);
-    //   });
-    //   }
-    // }

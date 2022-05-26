@@ -31,7 +31,7 @@ function ForgetPassword(props) {
   const [loading, setLoading] = useState(false);
 
   const onSubmit = (value) => {
-    console.log("value :", value);
+   
     setLoading(true)
 
     let formData = new FormData();
@@ -43,7 +43,7 @@ function ForgetPassword(props) {
       data: formData,
     })
       .then(function (response) {
-        console.log("res-", response);
+      
         if (response.data.code === 1) {
           setLoading(false)
           Alerts.SuccessNormal("As per your request , OTP has been sent to your email address.")
@@ -54,16 +54,16 @@ function ForgetPassword(props) {
         }
       })
       .catch((error) => {
-        console.log("erroror - ", error);
+        
       });
   };
 
   const valueHandler = () => {
     var item = props.location.email
 
-    console.log("item : ", item)
+    
     if (item == "null") {
-      console.log("item : ", item)
+     
     } else {
       return item
     }
@@ -80,7 +80,7 @@ function ForgetPassword(props) {
 
           {
             loading ?
-              <div class="col-md-12">
+              <div className="col-md-12">
                 <Spinner color="primary" />
               </div>
               :
@@ -103,11 +103,11 @@ function ForgetPassword(props) {
                   )}
                 </div>
 
-                <button type="submit" className="btn btn-primary">
+                <button type="submit" className="autoWidthBtn">
                   Get OTP
                 </button>
                 <Link to="/admin/login" style={{ "margin": "10px" }}>
-                  <button type="submit" className="btn btn-secondary">
+                  <button type="submit" className="customBtn">
                     Cancel
                   </button>
                 </Link>
