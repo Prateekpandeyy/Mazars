@@ -361,6 +361,10 @@ const resetData = () => {
    })
    .then(function (response) {
    if(response.data.code === 1){
+    // axios.get(`${baseUrl}/report/viewReport?id=${response.data.id}`, myConfig)
+    // .then((res2) => {
+    //   console.log(res2)
+    // })
      Swal.fire({
        title : "success",
        html : "Report generated successfully",
@@ -476,6 +480,17 @@ const resetData = () => {
  })
  .then(function (response) {
  if(response.data.code === 1){
+ 
+  // axios.get(`${baseUrl}/report/viewReport?id=${response.data.id}`, myConfig)
+  // .then((res2) => {
+  //   console.log(res2)
+  //   const url = window.URL.createObjectURL(new Blob([res2.data]));
+  //   const link = document.createElement('a');
+  //   link.href = url;
+  //   link.setAttribute('download', `Admin.xlsx`);
+  //   document.body.appendChild(link);
+  //   link.click();
+  // })
    Swal.fire({
      title : "success",
      html : "Report generated successfully",

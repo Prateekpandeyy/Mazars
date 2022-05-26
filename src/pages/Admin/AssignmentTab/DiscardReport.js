@@ -39,8 +39,8 @@ function DiscardReport({
 
 
   return (
-    <div>
-      <Modal isOpen={ViewDiscussion} toggle={ViewDiscussionToggel} size="lg" scrollable>
+   
+      <Modal isOpen={ViewDiscussion} toggle={ViewDiscussionToggel} size="lg" scrollable = {true}>
         <ModalHeader toggle={ViewDiscussionToggel}>Discussion History </ModalHeader>
         <ModalBody>
           <table className="table table-bordered">
@@ -82,7 +82,7 @@ function DiscardReport({
         </ModalFooter>
       </Modal >
 
-    </div >
+  
   );
 }
 

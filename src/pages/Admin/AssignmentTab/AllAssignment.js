@@ -58,8 +58,12 @@ function AssignmentComponent(props) {
   const [assignNo, setAssignNo] = useState(null);
   const [ViewDiscussion, setViewDiscussion] = useState(false);
   const ViewDiscussionToggel = (key) => {
+  
+  
     setViewDiscussion(!ViewDiscussion);
+   
     setAssignNo(key)
+
   }
 
   const [viewData, setViewData] = useState({});

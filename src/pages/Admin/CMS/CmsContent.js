@@ -109,34 +109,43 @@ const CmsContent = () => {
      let message = "Content created successfully"
      setShowEditor(false)
      let formData = new FormData();
-  setLoading(true)
+  
   if(showDoc === true) {
-    console.log("ffff", showDoc)
     var uploadImg = e.p_draft;
-    console.log("ffff222", uploadImg.length)
-
     if (uploadImg.length > 0) {
       for (var i = 0; i < uploadImg.length; i++) {
         let file = uploadImg[i];
         formData.append("content", file);
         formData.append("content_type", 1)
       }
+      
     }
-    else if(file.length > 0) {
-      formData.append("content", file);
-      formData.append("content_type", 1)
-    }
-    else{
-      formData.append("content", det);
-      formData.append("content_type", 2)
+    else {
+      Swal.fire({
+        title : "error",
+        html : "Please upload file",
+        icon : "error"
+      })
+      return false
     }
   }
   else {
     var myEditor = document.querySelector('#snow-container')
     var html = myEditor.children[0].innerHTML;
     addDet(html)
-    formData.append("content", html);
+    console.log("html", html)
+    if(html.length > 0){
+      formData.append("content", html);
     formData.append("content_type", 2)
+    }
+    else{
+      Swal.fire({
+        title : "error",
+        html : "Please write content",
+        icon : "error"
+      })
+      return false
+    }
   }
      
      
@@ -147,6 +156,7 @@ const CmsContent = () => {
      formData.append("status", 1):
      formData.append("status", 0)
    }
+   setLoading(true)
       formData.append("heading", heading)
       formData.append("writer", writer);
       formData.append("publish_date", date);
@@ -293,20 +303,69 @@ const getEditValue= (e) => {
                    />
                  </div>
          </div>
-        
-          <div className="row">
+         <div className="row">
           <div className="col-md-3 my-4">
-          <input type="radio" value="Male" defaultChecked={showDoc === true ? true : false} name="gender" onChange={() => setShowDoc(true)}/> Upload Content
+          <input type="radio" value="Male" checked={showDoc} name="gender" onChange={() => setShowDoc(true)}/> Upload Content
        </div>
        <div className="col-md-3 my-4">
-         <input type="radio" value="Female" defaultChecked={showDoc === false ? true : false} name="gender" onChange= {() => {
-         
+         <input type="radio" value="Female" checked={!showDoc} name="gender" onChange= {() => {
+           setShowEditor(true)
            setShowDoc(false)
          }} /> Editor
             </div>
-          </div> 
+            </div>
+            {
+              showDoc === true ?
+              <>
+              <form onSubmit={handleSubmit(onSubmit)}>
+          <div className="mb-3">
+            <label className="form-label">Upload Your Document</label>
+            <input
+                type="file"
+                name="p_draft"
+                ref={register}
+                className="form-control-file manage_file"
+              
+              />
+          </div>
 
+          <span style={{display : "flex", cursor : "pointer"}}>
+                   <a href={`${baseUrl3}/${file}`} target="_blank">
+                   <i className="fa fa-photo"></i>
+                     <span style={{ marginLeft: "10px" }}>Document</span>
+                   </a>
+                       </span>
+        </form>
+
+              </> : 
+              <>
+                <div className="row">
+         <div className="col-md-12">
+         <label className="form-label">Content</label> </div>
+         
+         <div className="col-md-12" style={{display : "flex", flexDirection :"column"}}>
+       <CustomQuillEditor 
+content={det}
+showEditor={showEditor} />
+             </div>
+     </div>
+              </>
+            }
         {/* {
+          showDoc === true ? 
+          <div className="row">
+          <div className="col-md-3 my-4">
+          <input type="radio" value="Male" defaultChecked name="gender" onChange={() => setShowDoc(true)}/> Upload Content
+       </div>
+       <div className="col-md-3 my-4">
+         <input type="radio" value="Female"  name="gender" onChange= {() => {
+           setShowEditor(true)
+           setShowDoc(false)
+         }} /> Editor
+            </div>
+          </div> : ""
+        }
+        {
           showDoc === false ?
           <div className="row">
           <div className="col-md-3 my-4">
@@ -316,7 +375,7 @@ const getEditValue= (e) => {
          <input type="radio" value="Female" defaultChecked name="gender" onChange={() => setShowDoc(false)} /> Editor
             </div>
           </div> : ""
-        } */}
+        }
          {showDoc === true ?
           <form onSubmit={handleSubmit(onSubmit)}>
           <div className="mb-3">
@@ -350,7 +409,7 @@ content={det}
 showEditor={showEditor} />
              </div>
      </div> : ""
-       }
+       } */}
          <div className="row">
          <div className="col-md-3">
  
