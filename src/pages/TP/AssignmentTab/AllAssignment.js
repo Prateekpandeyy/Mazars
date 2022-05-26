@@ -7,15 +7,6 @@ import {
   Card,
   CardHeader,
   CardBody,
-<<<<<<< HEAD
-  CardTitle,
-  Row,
-  Col,
-  Table,
-  Tooltip,
-  Spinner
-=======
->>>>>>> fb9983d312e1292b5ef70abe83110c6d79a3c8a3
 } from "reactstrap";
 import DraftReportModal from "./DraftReportUpload";
 import FinalReportUpload from "./FinalReportUpload";
@@ -31,7 +22,7 @@ import DiscardReport from "../AssignmentTab/DiscardReport";
 import moment from "moment";
 import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
 import MessageIcon, { ViewDiscussionIcon, DraftReportUploadIcon, FinalReportUploadIcon} from "../../../components/Common/MessageIcon";
-
+import {Spinner} from 'reactstrap'
 
 function AssignmentTab(props) {
   const [loading, setLoading] = useState(false);
@@ -62,7 +53,7 @@ function AssignmentTab(props) {
   const [ViewDiscussion, setViewDiscussion] = useState(false);
   const [draftModal, setDraftModal] = useState(false);
   const [fianlModal, setFianlModal] = useState(false);
-  const [loading, setLoading] = useState(false);
+  
   const [error, setError] = useState(false)
   let des = false;
   var rowStyle2 = {}
@@ -480,17 +471,10 @@ else{
 
  
   const onSubmit = (data) => {
-<<<<<<< HEAD
-    setLoading(true)
-    console.log("data :", data);
-    console.log("selectedData :", selectedData);
-    axios
-=======
    
     if(hide == 1 || hide == 2){
 if(status.length > 0){
   axios
->>>>>>> fb9983d312e1292b5ef70abe83110c6d79a3c8a3
       .get(
         `${baseUrl}/tl/getAssignments?tp_id=${JSON.parse(
           userid
@@ -508,16 +492,6 @@ if(status.length > 0){
 
           }
         }
-<<<<<<< HEAD
-      })
-      .catch((error) => {
-        // console.log("erroror - ", error);
-        getErrorMessage();
-         setTimeout(function(){
-         props.history.push(`/taxprofessional/assignment`);
-       },3000);
-       });
-=======
       });
 }
 else{
@@ -545,7 +519,6 @@ else{
       }
       });
     }
->>>>>>> fb9983d312e1292b5ef70abe83110c6d79a3c8a3
   };
 
 
@@ -722,19 +695,7 @@ else{
               <div class="form-group mx-sm-1  mb-2">
                 <label className="form-select form-control">Total Records : {records}</label>
               </div>
-<<<<<<< HEAD
-              {
-            loading ?
-              // <Loader />
-              <div class="col-md-12">
-                    <Spinner color="primary" />
-                  </div>
-              :
-
-              <button type="submit" class="btn btn-primary mx-sm-1 mb-2">
-=======
               <button type="submit" class="customBtn mx-sm-1 mb-2">
->>>>>>> fb9983d312e1292b5ef70abe83110c6d79a3c8a3
                 Search
               </button>
 }

@@ -52,12 +52,6 @@ axios
   }&email=${data.email}&occupation=${data.occupation}&from=${data.p_dateFrom}&to=${data.p_dateTo}`
 )
 .then((res) => {
-<<<<<<< HEAD
-  console.log("myResult", res.data.result);
-  var finalData = res.data.result
-=======
-
->>>>>>> fb9983d312e1292b5ef70abe83110c6d79a3c8a3
   if (res.data.code === 1) {
     if (res.data.result) {
       setData(res.data.result);

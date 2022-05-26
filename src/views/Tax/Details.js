@@ -14,6 +14,15 @@ import ima from "../../mazars_logo.png";
 import { OuterloginContainer } from '../../components/Common/OuterloginContainer';
 import worddoc from './convertpdf.pdf';
 import { Link } from 'react-router-dom';
+import { Viewer } from '@react-pdf-viewer/core'; // install this library
+// Plugins
+// import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout'; // install this library
+// Import the styles
+import '@react-pdf-viewer/core/lib/styles/index.css';
+// import '@react-pdf-viewer/default-layout/lib/styles/index.css';
+// Worker
+import { Worker } from '@react-pdf-viewer/core'; // install this library
+
 const MyContainer = styled(Box)({
     display : "flex", 
     justifyContent : "center", 
@@ -164,8 +173,11 @@ const Details = () => {
     </div>
     </> : 
     <div id="artContent">
-
-    <iframe src={`${baseUrl3}/${i.file}#toolbar=0`} width="100%" height="500px" />
+      <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.6.347/build/pdf.worker.min.js">
+    <Viewer fileUrl={`${baseUrl3}/${i.file}`}>
+      </Viewer>
+      </Worker>
+    {/* <iframe src={`${baseUrl3}/${i.file}#toolbar=0`} width="100%" height="500px" /> */}
 
     </div>
   }

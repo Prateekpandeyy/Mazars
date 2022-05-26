@@ -8,15 +8,6 @@ import {
   Card,
   CardHeader,
   CardBody,
-<<<<<<< HEAD
-  CardTitle,
-  Row,
-  Col,
-  Table,
-  Spinner
-=======
-
->>>>>>> fb9983d312e1292b5ef70abe83110c6d79a3c8a3
 } from "reactstrap";
 import { useForm } from "react-hook-form";
 import "antd/dist/antd.css";
@@ -29,7 +20,7 @@ import DiscardReport from "../AssignmentTab/DiscardReport";
 import moment from "moment";
 import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
 import MessageIcon, {ViewDiscussionIcon, Payment} from "../../../components/Common/MessageIcon";
-
+import { Spinner } from "reactstrap";
 
 function AssignmentComponent(props) {
   const [loading, setLoading] = useState(false);
@@ -46,10 +37,7 @@ function AssignmentComponent(props) {
   const [store2, setStore2] = useState([]);
   const [hide, setHide] = useState();
   const [report, setReport] = useState();
-<<<<<<< HEAD
-=======
   const [error, setError] = useState(false);
->>>>>>> fb9983d312e1292b5ef70abe83110c6d79a3c8a3
   var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
   
   const [item] = useState(current_date);
@@ -387,32 +375,6 @@ function AssignmentComponent(props) {
     return style;
   }
   const onSubmit = (data) => {
-<<<<<<< HEAD
-    setLoading(true)
-    console.log("data :", data);
-    console.log("selectedData :", selectedData);
-    axios
-      .get(
-        `${baseUrl}/tl/getAssignments?cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&assignment_status=${status}&stages_status=${data.p_status}&pcat_id=${selectedData}`
-      )
-      .then((res) => {
-        console.log(res);
-        if (res.data.code === 1) {
-          setLoading(false)
-          if (res.data.result) {
-            setAssignmentDisplay(res.data.result);
-            setRecords(res.data.result.length);
-          }
-        }
-      })
-      .catch((error) => {
-        // console.log("erroror - ", error);
-        getErrorMessage();
-         setTimeout(function(){
-         props.history.push(`/admin/assignment`);
-       },3000);
-       });
-=======
    
    if(hide == 1 || hide == 2){
 if(status.length > 0){
@@ -452,7 +414,6 @@ setError(true)
       }
     });
    }
->>>>>>> fb9983d312e1292b5ef70abe83110c6d79a3c8a3
   };
 
 

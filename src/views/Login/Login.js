@@ -428,8 +428,8 @@ history.push("/customer/signup")
    expires={1}
    overlay
    declineButtonClasses = "myCookiesdecBtn"
-   buttonStyle = {{borderBottomLeftRadius: "1.75rem", position: "absolute",
-   top: "10px", right: "10px",
+   buttonStyle = {{borderBottomLeftRadius: "1.75rem", 
+   margin : "0px auto",
 backgroundColor : "#0071CE", border: "1px solid #0071CE", color: "#fff"
 , cursor : "pointer", fontSize : "1rem", fontWeight: 500,
 minWidth: "100px", minHeight: "3rem", textAlign: "center", display: "block", marginLeft: "auto"}}
