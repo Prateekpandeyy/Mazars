@@ -12,7 +12,7 @@ const PublicRouteUser = ({ component: Component, ...rest }) => {
                 var previousLoginTime = window.localStorage.getItem("loginTime")
                 var nextLogin = Number(previousLoginTime) + Number(600000)
                 var currentTime = Date.now()
-                console.log("previousIme",  nextLogin > currentTime)
+              
                 
                         if (token && nextLogin > currentTime) {
                     return (

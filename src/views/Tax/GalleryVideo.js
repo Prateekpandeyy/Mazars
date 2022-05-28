@@ -26,7 +26,7 @@ const GalleryVideo = () => {
     const getImages = () => {
       let obj = []
      if(typeof(history.location.index) === 'object'){
-     console.log("index", typeof(history.location.index) === 'object' )
+   
       axios.get(`${baseUrl}/customers/getgallery?id=${history.location.index.id}`)
       .then((res) => {
        
@@ -44,6 +44,8 @@ const GalleryVideo = () => {
      
      }
      else{
+     
+       setTitle(history.location.hash.substring(1))
       let  a = {
         original : `${baseUrl3}/assets/gallery/${history.location.index}`,
         thumbnail : `${baseUrl3}/assets/gallery/${history.location.index}`
@@ -53,8 +55,7 @@ const GalleryVideo = () => {
    setImages(obj)
      }
         }
-    
-   console.log("images", images)
+   
     return(
         <>
          <Header noSign="noSign" />
@@ -70,9 +71,16 @@ const GalleryVideo = () => {
   <Link underline="hover" color="inherit" to = {`/customer/media`}>
  Media Gallery
   </Link>
-  <Link underline="hover" color="inherit" to = {`/customer/media`}>
+  {
+    typeof(history.location.index) === 'object' ?
+    <Link underline="hover" color="inherit" to = {`/customer/media`}>
  Photo Gallery
-  </Link>
+  </Link> :
+  <Link underline="hover" color="inherit" to = {`/customer/videogallery`}>
+  Video Gallery
+   </Link>
+  }
+  
   <Typography>{title}</Typography>
  
 </Breadcrumbs>

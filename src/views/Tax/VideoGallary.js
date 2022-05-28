@@ -49,7 +49,6 @@ const Videogallery = () => {
         }
         else{
 let aa = localStorage.getItem("videoId")
-console.log("aa", aa)
         axios.get(`${baseUrl}/customers/getvideogallery?id=${aa}`)
         .then((res) => {
         
@@ -121,7 +120,8 @@ console.log("aa", aa)
        <Link style={{display: "flex", height: "100%"}}
        to = {{
          pathname : "/customer/imagegallery",
-                             index : i.name
+                             index : i.name,
+                             hash : title
                            }}><img 
        
        style={{display : "flex", zIndex: 1, width: "100%"}} id={i.id} src={`${baseUrl3}/assets/gallery/${i.name}`}
