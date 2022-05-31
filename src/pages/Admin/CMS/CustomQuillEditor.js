@@ -25,7 +25,7 @@ function CustomQuillEditor(props) {
                   ['bold', 'italic', 'underline', 'strike', 'blockquote'],
                   [{'list': 'ordered'}, {'list': 'bullet'}, 
                    {'indent': '-1'}, {'indent': '+1'}],
-                  ['link', 'image', 'video'],
+                  ['link', 'image', ],
                   ['clean']
                 ],
            
@@ -53,7 +53,7 @@ function CustomQuillEditor(props) {
   return (
    <>
 
-   <div className="container" style={{padding: "0px", maxWidth: "1920px"}}>
+   <div className="container" style={{padding: "0px", width: "100%", margin: "0px", maxWidth : "210mm"}}>
   <div className="panel">
     <div id="snow-container">
      <Markup content={props.content} />

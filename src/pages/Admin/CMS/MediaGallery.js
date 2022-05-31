@@ -146,7 +146,7 @@ const MediaGallery = () => {
                 <div className="row">
                 <div className="col-md-12 col-sm-12">
                   
-                  <label className="form-label">Photo</label>
+                  <label className="form-label">Photo <sup className="declined"> *</sup></label>
                   <input
                type="file"
                name= "uploadImg"
@@ -159,7 +159,7 @@ const MediaGallery = () => {
             
                   </div>
                   <div style={{display :"flex", width: "100%", mmargin: "5px 0", justifyContent : "flex-end"}}>
-                    <p>jpeg,gif,png  <sup className="declined"> *</sup></p>
+                    <p> <sup className="declined"> *</sup>jpeg,gif,png only</p>
                     </div>
                 <div className="row">
                   <div className="col-md-12">

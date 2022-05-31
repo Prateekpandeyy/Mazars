@@ -71,12 +71,7 @@ const tile_canvas = {
   ],
   
 };
-const token = window.localStorage.getItem("tlToken")
-const myConfig = {
-    headers : {
-     "uit" : token
-    }
-  }
+
 /**
  * @prop appId uid
  * @prop transcode attendeeMode videoProfile channel baseMode
@@ -145,6 +140,12 @@ class AgoraCanvas extends React.Component {
  secretKey = "7RBzqc6Sf5rvlhkrEGRxs80nB7U/Ulu8PoLlH8wd";
 allrecording;
 remoteShare2 = false
+token = window.localStorage.getItem("tlToken")
+myConfig = {
+  headers : {
+   "uit" : this.token
+  }
+}
 prevFile;
 
   componentWillMount() {
@@ -280,7 +281,7 @@ prevFile;
 
   getSchedulerData =() =>{
        axios
-            .get(`${baseUrl}/tl/videoScheduler?id=${this.props.id}`, myConfig)
+            .get(`${baseUrl}/tl/videoScheduler?id=${this.props.id}`, this.myConfig)
             .then((res) => {
                        
               if (res.data.code === 1) {
@@ -574,7 +575,7 @@ if(item.player === undefined){
     });
     // console.log("showButton", this.state.showButton)
   
-      axios.get(`${baseUrl}/tl/setgetschedular?id=${this.props.id}&uid=${this.state.showButton}&chname=${this.channelName}`, myConfig)
+      axios.get(`${baseUrl}/tl/setgetschedular?id=${this.props.id}&uid=${this.state.showButton}&chname=${this.channelName}`, this.myConfig)
       .then((res) => {
         console.log("evt id", uid)
         if(res.data.result.rtc_id == uid){
@@ -1025,7 +1026,14 @@ del = (e) => {
   formData.append("uid", JSON.parse(this.teamKey));
   formData.append("assign_id", this.state.item.assign_no);
   formData.append("participants", this.state.item.username);
- 
+  axios({
+    method: "POST",
+    url: `${baseUrl}/tl/callRecordingPost`,
+    headers : {
+      uit : this.token
+    },
+    data: formData,
+})
   Swal.fire({
     title: "End this vedio call for everyone?",
     // text: "End this vedio call for everyone",
@@ -1040,7 +1048,7 @@ del = (e) => {
     
      if (result.value) {
       if (result.value) {
-        axios.get(`${baseUrl}/tl/setgetschedular?id=${this.props.id}&rtc_id=${this.state.getAdId}&uid=${JSON.parse(this.teamKey)}`, myConfig)
+        axios.get(`${baseUrl}/tl/setgetschedular?id=${this.props.id}&rtc_id=${this.state.getAdId}&uid=${JSON.parse(this.teamKey)}`, this.myConfig)
         .then((res) =>{
           if(res){
             this.client && this.client.unpublish(this.localStream);
@@ -1059,6 +1067,9 @@ del = (e) => {
     axios({
       method: "POST",
       url: `${baseUrl}/tl/callRecordingPost`,
+      headers : {
+        uit : this.token
+      },
       data: formData,
    })
     window.location.hash = "/teamleader/schedule";

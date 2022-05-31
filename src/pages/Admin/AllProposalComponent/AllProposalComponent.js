@@ -334,7 +334,7 @@ const retviewProposal = (e) => {
           assignNo = {assignNo}
          />
        {
-         showProposalModal2 === true ?
+         viewProposalModal === true ?
          <CommonShowProposal 
          setViewProposalModal = {setViewProposalModal}
          viewProposalModal = {viewProposalModal}

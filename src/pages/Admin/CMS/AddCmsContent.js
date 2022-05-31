@@ -26,7 +26,7 @@ const MyContainer = styled(Container)({
 })
 const AddCmsContent = () => {
     const userId = localStorage.getItem("adminkey")
-    const { handleSubmit, register, errors, getValues } = useForm();
+    const { handleSubmit, register, errors, getValues} = useForm();
    
     const [stats, setStats] = useState(false)
     const [det, addDet] = useState("");
@@ -155,6 +155,14 @@ const AddCmsContent = () => {
                  icon : "success"
              })
              history.push("/cms/cms")
+         }
+         else if(res.data.code === 0){
+          setLoading(false)
+          Swal.fire({
+              title : "success",
+              html : `${res.data.message}`,
+              icon : "success"
+          })
          }
       })
     
@@ -307,8 +315,10 @@ const getEditValue= (e) => {
          <label className="form-label">Content</label> </div>
          
          <div className="col-md-12" style={{display : "flex", flexDirection :"column"}}>
-       <AddEditor />
+       <AddEditor
+     />
              </div>
+           
      </div>
  : ""
        }         <div className="row">

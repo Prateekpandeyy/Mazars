@@ -19,7 +19,12 @@ function RecordingModal({
     const { handleSubmit, register, errors } = useForm();
     const userId = window.localStorage.getItem("tlkey");
 
-    
+    const token = window.localStorage.getItem("tlToken")
+    const myConfig = {
+        headers : {
+         "uit" : token
+        }
+      }
     const { assign_no, id, username, start } = item
    
 
@@ -51,7 +56,7 @@ else{
         formData.append("participants", username);
         formData.append("schedule_id", id);
 
-        axios.get(`${baseUrl}/tl/freeslottime?schedule_id=${id}&&uid=${JSON.parse(userId)}`)
+        axios.get(`${baseUrl}/tl/freeslottime?schedule_id=${id}&&uid=${JSON.parse(userId)}`,  myConfig)
         axios({
             method: "POST",
             url: `${baseUrl}/tl/callRecordingPost`,

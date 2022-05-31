@@ -225,6 +225,13 @@ const IdleTimeOutHandler = (props)=>{
               history.push("/cms/login");
             
          })
+
+         localStorage.removeItem("adminkey");
+         localStorage.removeItem("adminEmail");
+         localStorage.removeItem("category");
+         localStorage.removeItem("token")
+         setShowModal(false)
+         history.push("/cms/login");
         }
         else if(props.TLuserId){
             const token = window.localStorage.getItem("tlToken")

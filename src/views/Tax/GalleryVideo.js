@@ -93,7 +93,7 @@ const GalleryVideo = () => {
               </button>
               </span>
         <div style={{display: "flex", margin: "20px 0 10px 0", 
-        width:"100%", justifyContent: "center", alignItems: "center"}}>
+       maxWidth : "100vw" , maxHeight : "100vh", height : "100%", width:"100%", justifyContent: "center", alignItems: "center"}}>
     {images.length > 0 ? 
      <ImageGallery items={images} 
      

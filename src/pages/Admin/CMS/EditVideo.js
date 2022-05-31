@@ -240,7 +240,7 @@ else{
               <div className="row">
                 <div className="col-md-12 col-sm-12">
 
-                  <label className="form-label">Media</label>
+                  <label className="form-label">Media  <sup className="declined"> *</sup></label>
 
                   <input
                     type="file"
@@ -254,7 +254,7 @@ else{
 
               </div>
               <div style={{display :"flex", width: "100%", mmargin: "5px 0", justifyContent : "flex-end"}}>
-                    <p>jpeg,gif,png , mp4,wav,avi,mov,3gp,flv,amv,m4v <sup className="declined"> *</sup></p>
+                    <p> <sup className="declined"> *</sup>jpeg,gif,png , mp4,wav,avi,mov,3gp,flv,amv,m4v only</p>
                     </div>
               <div className="row">
                 <div className="col-md-12">

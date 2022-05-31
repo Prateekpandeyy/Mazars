@@ -33,7 +33,7 @@ function AssignmentDetails({ p, panel, finalDate, submitData, customerQuery , di
         },
         responseType: 'blob'
       }
-      axios.get(`${baseUrl}/admin/viewdocument?assign_no=${qno}&id=${qid}` , myConfig2)
+      axios.get(`${baseUrl}/admin/viewreportdocument?assign_no=${qno}&id=${qid}` , myConfig2)
       .then((res) => {
         console.log("res", res)
         if(res.status === 200){
@@ -59,7 +59,7 @@ function AssignmentDetails({ p, panel, finalDate, submitData, customerQuery , di
       },
       responseType: 'blob'
     }
-    axios.get(`${baseUrl}/tl/viewdocument?assign_no=${qno}&id=${qid}` , myConfig2)
+    axios.get(`${baseUrl}/tl/viewreportdocument?assign_no=${qno}&id=${qid}` , myConfig2)
     .then((res) => {
       console.log("res", res)
       if(res.status === 200){
@@ -85,7 +85,7 @@ function AssignmentDetails({ p, panel, finalDate, submitData, customerQuery , di
       },
       responseType: 'blob'
     }
-    axios.get(`${baseUrl}/tl/viewdocument?assign_no=${qno}&id=${qid}` , myConfig2)
+    axios.get(`${baseUrl}/tl/viewreportdocument?assign_no=${qno}&id=${qid}` , myConfig2)
     .then((res) => {
       console.log("res", res)
       if(res.status === 200){
@@ -111,7 +111,7 @@ function AssignmentDetails({ p, panel, finalDate, submitData, customerQuery , di
       },
       responseType: 'blob'
     }
-    axios.get(`${baseUrl}/customers/viewdocument?assign_no=${qno}&id=${qid}` , myConfig2)
+    axios.get(`${baseUrl}/customers/viewreportdocument?assign_no=${qno}&id=${qid}` , myConfig2)
     .then((res) => {
       console.log("res", res)
       if(res.status === 200){

@@ -228,7 +228,7 @@ const EditImage = () => {
                 <div className="row">
                 <div className="col-md-12 col-sm-12">
                   
-                  <label className="form-label">Media</label>
+                  <label className="form-label">Media  <sup className="declined"> *</sup></label>
                   <input
                type="file"
                name= "uploadImg"
@@ -241,7 +241,7 @@ const EditImage = () => {
             
                   </div>
                   <div style={{display :"flex", width: "100%", mmargin: "5px 0", justifyContent : "flex-end"}}>
-                    <p>jpeg,gif,png  <sup className="declined"> *</sup></p>
+                    <p> <sup className="declined"> *</sup> jpeg,gif,png only</p>
                     </div>
                 <div className="row">
                   <div className="col-md-12">

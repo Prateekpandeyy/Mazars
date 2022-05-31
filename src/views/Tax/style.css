@@ -24,6 +24,11 @@
   border-radius: 10px;
   flex-direction: column;
 }
+#artContent {
+  display: flex;
+  width: 100%;
+  word-break: break-all;
+}
 #artContent table,
 #artContent tr,
 #artContent td {

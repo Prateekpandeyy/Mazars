@@ -75,12 +75,8 @@ const tile_canvas = {
  * @prop transcode attendeeMode videoProfile channel baseMode
  */
 
- const token = window.localStorage.getItem("adminToken")
- const myConfig = {
-     headers : {
-      "uit" : token
-     }
-   }
+ 
+ 
 class AgoraCanvas extends React.Component {
   constructor(props) {
     super(props);
@@ -135,6 +131,12 @@ class AgoraCanvas extends React.Component {
 allrecording;
 localVedioTrack;
 remoteShare2 = false
+token = window.localStorage.getItem("adminToken")
+myConfig = {
+  headers : {
+   "uit" : this.token
+  }
+}
 componentWillMount() {
   let $ = this.props;
   // init AgoraRTC local client
@@ -233,7 +235,7 @@ this.localStream.init(
 
   getSchedulerData =() =>{
        axios
-            .get(`${baseUrl}/admin/videoScheduler?id=${this.props.id}`, myConfig)
+            .get(`${baseUrl}/admin/videoScheduler?id=${this.props.id}`, this.myConfig)
             .then((res) => {
                        
                 if (res.data.code === 1) {
@@ -536,7 +538,7 @@ this.localStream.init(
     });
     // console.log("showButton", this.state.showButton)
  
-      axios.get(`${baseUrl}/tl/setgetschedular?id=${this.props.id}&uid=${this.state.showButton}&chname=${this.channelName}`, myConfig)
+      axios.get(`${baseUrl}/tl/setgetschedular?id=${this.props.id}&uid=${this.state.showButton}&chname=${this.channelName}`, this.myConfig)
       .then((res) => {
         console.log("evt id", uid)
         if(res.data.result.rtc_id == uid){
@@ -963,7 +965,7 @@ else{
     method: "POST",
     url: `${baseUrl}/admin/callRecordingPost`,
     headers : {
-      uit : token
+      uit : this.token
     },
     data: formData,
 })
@@ -979,7 +981,7 @@ else{
    cancelButtonText : "Just leave the meeting"
   }).then((result) => {
     if (result.value) {
-      axios.get(`${baseUrl}/tl/setgetschedular?id=${this.props.id}&rtc_id=${this.state.getAdId}&uid=${JSON.parse(this.teamKey)}`, myConfig)
+      axios.get(`${baseUrl}/tl/setgetschedular?id=${this.props.id}&rtc_id=${this.state.getAdId}&uid=${JSON.parse(this.teamKey)}`, this.myConfig)
       .then((res) =>{
         if(res){
           this.client && this.client.unpublish(this.localStream);
@@ -997,7 +999,7 @@ else{
       method: "POST",
       url: `${baseUrl}/admin/callRecordingPost`,
       headers : {
-        uit : token
+        uit : this.token
       },
       data: formData,
    })
