@@ -80,11 +80,11 @@ function LoginForm() {
   const [linkData, setLinkData] = useState("myData")
   const [showData, setShowData] = useState(false)
   const [news, getNews] = useState([])
-  const [pos,setPos] = useState(1200);   
+  const [pos,setPos] = useState(2200);   
   const [run, setRun] = useState(true);
   const [showCookie, setShowCookie] = useState(false)
   let history = useHistory()
-  let  width = 1200
+  let  width = 2200
   const myData = localStorage.getItem("myArticles")
   const cookieEnable = Cookies.get("accept")
    const togglePasssword = () => {

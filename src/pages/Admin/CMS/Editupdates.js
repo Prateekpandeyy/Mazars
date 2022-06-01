@@ -27,7 +27,7 @@ const MyContainer = styled(Container)({
 const Editupdates = () => {
     const userId = localStorage.getItem("adminkey")
     const { handleSubmit, register, errors, getValues } = useForm();
-    const [pages, getPages] = useState([])
+    const [pages, getPages] = useState("")
     const [det, addDet] = useState();
     const [pageto, setTopage] = useState([])
     const [heading, setHeading] = useState("")
@@ -56,6 +56,7 @@ const Editupdates = () => {
               setHeading(i.heading)
               addDet(i.content)
               setDate(i.publish_date)
+              setTopage(i.type)
               if(i.status == 1){
                 setStats(true)
                }
@@ -79,6 +80,7 @@ const Editupdates = () => {
        formData.append("status", Number(stats))
        formData.append("heading", heading)
        formData.append("publish_date", date);
+       formData.append("type", pageto)
       if(getId.id){
         formData.append("id", getId.id)
         let message = "Updated updated successfully"
@@ -131,6 +133,24 @@ const Editupdates = () => {
        
         
        <div className="row">
+       <div className="col-md-4 col-sm-12">
+                 
+                 <label className="form-label">Category</label>
+                      <select
+                     onChange={(e) => getToPage(e.target.value)}
+                      value={pageto}
+                      multiple = {false}
+                      className={classNames("form-control", {
+                        "is-invalid": errors.p_category,
+                      })}
+                      ref={register({ required: true })}
+                      name="p_category"
+                      >
+                      <option value = "direct">Direct Tax</option>
+                      <option value = "indirect">Indirect Tax</option>
+                      <option value = "miscellenous">Miscellenous</option>
+                          </select>
+                 </div>
        <div className="col-md-4 col-sm-12">
                  
                  <label className="form-label">Heading</label>

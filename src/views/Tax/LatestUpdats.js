@@ -9,6 +9,7 @@ import { useHistory } from 'react-router';
 import { Markup } from 'interweave';
 import Footer from '../../components/Footer/Footer';
 import classes from './design.module.css';
+import FlashSection from "../../components/Common/FlashSection";
 const MyContainer = styled(Box)({
     display : "flex", 
     justifyContent : "center", 
@@ -19,12 +20,12 @@ const MyContainer = styled(Box)({
  
 const LatestUpdates = () => {
     const [news, getNews] = useState([])
-    const [pos,setPos] = useState(1200);   
+    const [pos,setPos] = useState(2200);   
     const [run, setRun] = useState(true);
     const [description, setDescription] = useState({})
     let history = useHistory()
     let getId = history.location.index;
-    let  width = 1200
+    let  width = 2200
     useEffect(() => {
         latestNews()
       }, [])
@@ -66,38 +67,47 @@ const LatestUpdates = () => {
       }
       const styles = {
         position: "relative", 
+       display: "flex",
         fontSize: "1em",
-        right: pos + "px"
+        justifyContent : "center",
+        right: pos + "px",
+       
       };
-
     return(
        <>
         <Header noSign="noSign" />
         <MyContainer>
    
-        <div style={{width: "100%", marginBottom : "15px", 
-  padding: "3px 0px", fontSize: "14px", backgroundColor : "rgb(159 155 155 / 39%)"}}> 
-  <h1 style={styles} 
+        <FlashSection>
+ <h1 style={styles} 
             onMouseEnter={onMouseEnter} 
             onMouseLeave={onMouseLeave} 
         >
   {
      news.map((i, e) => (
 <>
-<span style={{padding: "0px 20px", fontSize: "16px", color: "464b4b"}}> 
 
- <Link className="tabHover" to = {{
-  pathname : "/customer/latestupdates",
-  index : i.id
-                        }}>
+  <span style={{display : "flex"}}>
+  <span style={{padding: "0px 20px", fontSize: "16px", color: "464b4b"}}> 
+
+<Link className="tabHoverflash" to = {{
+ pathname : "/customer/latestupdates",
+ index : i.id
+                       }}>
 {i.heading} 
-</Link> </span> {e < news.length - 1 === true ? <span> | </span> : ""}
+</Link> </span>
+
+{e < news.length - 1 === true ? <span> | </span> : ""}
+ </span>
+  
 </> 
 
      ))
    }
+   
   </h1>
-    </div>
+  </FlashSection>
+   
     <div className={classes.articleContent}>
     <div className={classes.articlesDetails}>
           <h4>{description.heading} </h4>

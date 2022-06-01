@@ -79,6 +79,7 @@ const UpdatesContent = () => {
        formData.append("status", Number(stats))
        formData.append("heading", heading)
        formData.append("publish_date", date);
+       formData.append("type", e.p_category)
       if(getId.id){
         formData.append("id", getId.id)
         let message = "Updated updated successfully"
@@ -131,6 +132,24 @@ const UpdatesContent = () => {
        
         
        <div className="row">
+       <div className="col-md-4 col-sm-12">
+                 
+                 <label className="form-label">Category</label>
+                      <select
+                     onChange={(e) => getToPage(e.target.value)}
+                      value={pageto}
+                      multiple = {false}
+                      className={classNames("form-control", {
+                        "is-invalid": errors.p_category,
+                      })}
+                      ref={register({ required: true })}
+                      name="p_category"
+                      >
+                      <option value = "direct">Direct Tax</option>
+                      <option value = "indirect">Indirect Tax</option>
+                      <option value = "miscellenous">Miscellenous</option>
+                          </select>
+                 </div>
        <div className="col-md-4 col-sm-12">
                  
                  <label className="form-label">Heading</label>

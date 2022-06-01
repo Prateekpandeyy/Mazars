@@ -182,6 +182,9 @@ import VideoMedia from "./pages/Admin/CMS/VideoMedia";
 import MediaText from "./pages/Admin/CMS/MediaText";
 import AddCmsContent from "./pages/Admin/CMS/AddCmsContent";
 import Editupdates from "./pages/Admin/CMS/Editupdates";
+import UpdateDirect from "./views/Tax/UpdateDirect";
+import UpdateIndirect from "./views/Tax/UpdateIndirect";
+import UpdateMiscellenous from "./views/Tax/UpdateMiscellenous";
 
 // import PayDetails from "./views/PaymentStatus/PayDetails";
 
@@ -236,6 +239,9 @@ function WebRoutes() {
      <PublicRouteUser exact path = "/customer/updates" component={Updates} />
         <PublicRouteUser exact path = "/customer/contactbasic" component = {ContactOuter} />
        <PublicRouteUser exact path = "/customer/faq-question" component={FaqQuestion} />
+       <PublicRouteUser exact path = "/customer/updatedirect" component={UpdateDirect} />
+       <PublicRouteUser exact path = "/customer/updateindirect" component={UpdateIndirect} />
+       <PublicRouteUser exact path = "/customer/updatemiscellaneous" component={UpdateMiscellenous} />
           <PublicRouteAdmin exact path = "/customer/link" component = {LinklistUser} />
             <PrivateRouteUser exact path="/customer/select-category" component={SelectCategoryPage} />
             <PrivateRouteUser exact path="/customer/dashboard" component={Dashboard} />

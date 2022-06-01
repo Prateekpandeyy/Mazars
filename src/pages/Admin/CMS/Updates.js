@@ -58,10 +58,31 @@ const Updates = () =>{
         dataField : "heading",
         text : "Heading",
         headerStyle : () => {
-          return{ width: "800px"}
+          return{ width: "700px"}
         },
       },
-     
+      {
+        dataField : "type",
+        text : "Category",
+       formatter : function typeName(cell, row) {
+         return(
+          <>
+          {
+            row.type === "direct" ? 
+            <p>Direct Tax</p> : ""
+          }
+          {
+            row.type === "indirect" ? 
+            <p>Indirect Tax</p> : ""
+          }
+          {
+            row.type === "miscellenous" ? 
+            <p>Miscellenous</p> : ""
+          }
+          </>
+         )
+       }
+      },
       {
         dataField : "",
         text : "Action",

@@ -159,6 +159,7 @@ export default Header;
 const CmsCont = (props) => {
   const [open, setOpen] = useState(false)
   const [open2, setOpen2] = useState(false)
+  const [updateOpen, setUpdateOpen] = useState(false)
   let history = useHistory()
   const handleClickOn = () => {
     setOpen(false);
@@ -175,6 +176,12 @@ const CmsCont = (props) => {
 
     setOpen2(true);
   };
+  const handleClickUpdateOpen = () => {
+    setUpdateOpen(true)
+  }
+  const handleClickUpdateClose = () => {
+    setUpdateOpen(false)
+  }
   const cookieEnable = Cookies.get("accept")
   const myLink = (e) => {
    if(cookieEnable){
@@ -202,6 +209,15 @@ const CmsCont = (props) => {
      
     else if (e === "updatelist"){
       history.push("/customer/updates")
+    }
+    else if (e === "updatedirect"){
+      history.push("/customer/updatedirect")
+    }
+    else if (e === "updateindirect") {
+      history.push("/customer/updateindirect")
+    }
+    else if (e === "updatemiscellaneous"){
+      history.push("/customer/updatemiscellaneous")
     }
    }
    else{
@@ -245,11 +261,49 @@ props.showCook("showCookies")
          </Collapse>
                  </li>
    
-         <li className="nav-item headerHover" onClick = {() => myLink("updatelist")}> 
+                 <li className="nav-item tabHoverLinksubMenu"  onMouseEnter={() => handleClickUpdateOpen()}  onMouseLeave = {() => handleClickUpdateClose()}>
+       <ListItemButton>
+       <span className="nav-item">
+                    Updates
+                   </span>
+</ListItemButton>
+   
+         <Collapse in={updateOpen}  unmountOnExit>
+           <List component="div" className="myLink22">
+           <ul>
+                
+                  
+                     <li className="tabHover mx-1" onClick = {() => myLink("updatedirect")}>
+                   <span className="menu-title" data-i18n="">
+                  Direct 
+                   </span>
+                   </li>
+                 
+                   
+                    
+                    
+                     <li className="tabHover mx-1" onClick = {() => myLink("updateindirect")}>
+                   <span className="menu-title" data-i18n="">
+                Indirect 
+                   </span>
+                   </li>
+                   <li className="tabHover mx-1" onClick = {() => myLink("updatemiscellaneous")}>
+                   <span className="menu-title" data-i18n="">
+                Miscellaneous
+                   </span>
+                   </li>
+                  
+                    
+                   </ul>
+           </List>
+         </Collapse>
+                 </li>
+   
+         {/* <li className="nav-item headerHover" onClick = {() => myLink("updatelist")}> 
    
       Updates
   
-</li>
+</li> */}
 
       <li className="nav-item headerHover" onClick = {() => myLink("linklist")}> 
    
