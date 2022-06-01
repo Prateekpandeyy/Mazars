@@ -57,6 +57,7 @@
     "quill-better-table": "^1.2.10",
     "quill-image-compress": "^1.2.22",
     "quill-image-resize-module": "^3.0.0",
+    "quill-image-resize-module--fix-imports-error": "^3.0.0",
     "quill-paste-smart": "^1.4.10",
     "quill-table-ui": "^1.0.7",
     "react": "^17.0.2",

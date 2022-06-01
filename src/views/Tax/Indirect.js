@@ -62,20 +62,33 @@ const Indirect = () => {
    
     <TableContainer>
         <Table>
+        <TableHead>
+   <TableRow>
+     <TableCell style= {{width : "150px"}}>Publishing Date</TableCell>
+     <TableCell style={{width : "400px", margin: "0 10px"}}>Heading</TableCell>
+     <TableCell>Name of Writer</TableCell>
+   </TableRow>
+   </TableHead>
         <TableBody>
                {
                    data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((i, e) => (
                     <TableRow>
-                    <TableCell className="tableCellStyle">
-                    <Link to = {{
+                        <TableCell style= {{width : "150px"}}>
+                            {i.publish_date.split("-").reverse().join("-")}
+                            </TableCell>
+                    <TableCell style={{width : "400px", margin: "0 10px", wordBreak : "break-all"}} className="tableCellStyle">
+                        <Link to = {{
                             pathname : "/customer/details",
                             index : i.id,
-                            hash : "indirect"
+                            hash : "direct"
                         }}>
-                    {e + 1} {i.heading} {wirtten} <span style={{fontWeight: "bold",  margin:"0 10px"}}>{i.writer}</span>
-                    -  {i.publish_date.split("-").reverse().join("-")}
+                   {`${i.heading}` } 
+                
                         </Link>
                     </TableCell>
+                    <TableCell>
+                            {i.writer}
+                            </TableCell>
                 </TableRow>
                    ))
                }

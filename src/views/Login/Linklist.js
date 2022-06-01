@@ -149,6 +149,9 @@ const classes = useStyle()
   
 
   </Breadcrumbs>
+  <div className={classesCustom.articleContent}>
+     <div className={classesCustom.articlesDetails}>
+
     <Table>
     <TableHead>
    <TableRow>
@@ -159,7 +162,7 @@ const classes = useStyle()
    </TableHead>
       <TableBody>
       {
-  linkData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((i, e) => (
+  linkData.map((i, e) => (
  
  <>
 
@@ -182,9 +185,11 @@ const classes = useStyle()
         }
       </TableBody>
     </Table>
+    </div>
+    </div>
     </> : "" }
   
-   
+    
   </TableContainer>
    </>
 

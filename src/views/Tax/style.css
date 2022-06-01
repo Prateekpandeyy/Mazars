@@ -37,3 +37,10 @@
 #artContent td {
   padding: 10px 15px;
 }
+.rpv-core-inner-page {
+  padding: 0px !important;
+  box-shadow: 0px !important;
+}
+.rpv-core-page-layer {
+  box-shadow: none;
+}
