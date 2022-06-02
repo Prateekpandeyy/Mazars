@@ -12,7 +12,7 @@ import {  VscFilePdf} from "react-icons/vsc";
 import classes from './design.module.css';
 import ima from "../../mazars_logo.png";
 import { OuterloginContainer } from '../../components/Common/OuterloginContainer';
-import worddoc from './convertpdf.pdf';
+
 import { Link } from 'react-router-dom';
 import { Viewer } from '@react-pdf-viewer/core'; // install this library
 // Plugins
@@ -39,7 +39,10 @@ padding: "20px"
   const ArticleWrapper = styled(Box)({
     display: "flex", 
     flexDirection: "column",
-  
+  maxWidth: "700px",
+  justifyContent : "center",
+  alignItems : "center",
+  margin: "auto",
     padding: "5px"
   })
   const ArticleHeader = styled(Box)({
@@ -151,7 +154,7 @@ const Details = () => {
 <a href="https://www.masindia.live" target="_blank">www.masindia.live</a>
 </RightContent>
   </ArticleHeader>
-                <div>
+                <div style={{display : "flex", width: "100%", flexDirection : "column"}}>
            <MyHeading>
            <h5>  {CommonServices.capitalizeFirstLetter(i.heading)}</h5>
          
@@ -173,7 +176,15 @@ const Details = () => {
   
     </div>
     </> : 
-    <div id="artContent">
+    ""  }
+        
+     
+    
+   
+    </ArticleWrapper>
+    {
+      i.content_type === "1" ?
+      <div id="artContent">
       <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.6.347/build/pdf.worker.min.js">
     <Viewer fileUrl={`${baseUrl3}/${i.file}`}>
       </Viewer>
@@ -181,21 +192,19 @@ const Details = () => {
     {/* <iframe src={`${baseUrl3}/${i.file}#toolbar=0`} width="100%" height="500px" /> */}
 
     </div>
-  }
-        
-     
-    <a href={`${baseUrl3}/${i.file}`} target="_blank" 
+ : ""
+    }
+     <a href={`${baseUrl3}/${i.file}`} target="_blank" 
     className={classes.myLink}>
 
     <button className="downloadBtnPdf"> Download  <VscFilePdf style={{display: "flex",
      margin: "0 10px", color: "#e4f0fa", width: "20px", height: "20px"}} /></button>
     </a> 
-   
-    </ArticleWrapper>
             </div>
         
            ))
          }
+        
         </div>
       
        </MyContainer>

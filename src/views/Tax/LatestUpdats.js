@@ -20,12 +20,12 @@ const MyContainer = styled(Box)({
  
 const LatestUpdates = () => {
     const [news, getNews] = useState([])
-    const [pos,setPos] = useState(2200);   
+    const [pos,setPos] = useState(1920);   
     const [run, setRun] = useState(true);
     const [description, setDescription] = useState({})
     let history = useHistory()
     let getId = history.location.index;
-    let  width = 2200
+    let  width = 1920
     useEffect(() => {
         latestNews()
       }, [])

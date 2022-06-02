@@ -185,6 +185,7 @@ import Editupdates from "./pages/Admin/CMS/Editupdates";
 import UpdateDirect from "./views/Tax/UpdateDirect";
 import UpdateIndirect from "./views/Tax/UpdateIndirect";
 import UpdateMiscellenous from "./views/Tax/UpdateMiscellenous";
+import UpdateDetails from "./views/Tax/UpdateDetails";
 
 // import PayDetails from "./views/PaymentStatus/PayDetails";
 
@@ -241,8 +242,10 @@ function WebRoutes() {
        <PublicRouteUser exact path = "/customer/faq-question" component={FaqQuestion} />
        <PublicRouteUser exact path = "/customer/updatedirect" component={UpdateDirect} />
        <PublicRouteUser exact path = "/customer/updateindirect" component={UpdateIndirect} />
-       <PublicRouteUser exact path = "/customer/updatemiscellaneous" component={UpdateMiscellenous} />
-          <PublicRouteAdmin exact path = "/customer/link" component = {LinklistUser} />
+       <PublicRouteUser exact path = "/customer/miscellenous" component={UpdateMiscellenous} />
+          
+           <PublicRouteUser exact path ="/customer/update-details/:id" component={UpdateDetails} />
+           <PublicRouteAdmin exact path = "/customer/link" component = {LinklistUser} />
             <PrivateRouteUser exact path="/customer/select-category" component={SelectCategoryPage} />
             <PrivateRouteUser exact path="/customer/dashboard" component={Dashboard} />
             <PrivateRouteUser exact path="/customer/my-assingment/:id" component={MyAssingment} />

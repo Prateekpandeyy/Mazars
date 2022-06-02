@@ -80,11 +80,11 @@ function LoginForm() {
   const [linkData, setLinkData] = useState("myData")
   const [showData, setShowData] = useState(false)
   const [news, getNews] = useState([])
-  const [pos,setPos] = useState(2200);   
+  const [pos,setPos] = useState(1920);   
   const [run, setRun] = useState(true);
   const [showCookie, setShowCookie] = useState(false)
   let history = useHistory()
-  let  width = 2200
+  var width = 1920
   const myData = localStorage.getItem("myArticles")
   const cookieEnable = Cookies.get("accept")
    const togglePasssword = () => {
@@ -110,7 +110,7 @@ const latestNews = () => {
   .then((res) =>{
   let pp = []
     if(res.data.code === 1){
-      res.data.result.map((i) => {
+         res.data.result.map((i) => {
        pp.push(i)
       
       })

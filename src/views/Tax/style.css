@@ -24,8 +24,15 @@
   border-radius: 10px;
   flex-direction: column;
 }
+#artContent2 {
+  display: flex;
+  max-width: 700px;
+  width: 100%;
+  word-break: break-all;
+}
 #artContent {
   display: flex;
+  max-width: 800px;
   width: 100%;
   word-break: break-all;
 }
