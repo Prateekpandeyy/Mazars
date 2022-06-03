@@ -217,7 +217,7 @@ const CmsCont = (props) => {
       history.push("/customer/updateindirect")
     }
     else if (e === "updatemiscellaneous"){
-      history.push("/customer/miscellenous")
+      history.push("/customer/miscellaneous")
     }
    }
    else{
@@ -289,7 +289,7 @@ props.showCook("showCookies")
                    </li>
                    <li className="tabHover mx-1" onClick = {() => myLink("updatemiscellaneous")}>
                    <span className="menu-title" data-i18n="">
-                   Miscellenous
+                   Miscellaneous
                    </span>
                    </li>
                   

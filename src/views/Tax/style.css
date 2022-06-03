@@ -33,6 +33,7 @@
 #artContent {
   display: flex;
   max-width: 800px;
+  padding: 0 0 0 30px;
   width: 100%;
   word-break: break-all;
 }
@@ -51,3 +52,29 @@
 .rpv-core-page-layer {
   box-shadow: none;
 }
+.image-gallery-content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 600px;
+}
+.image-gallery {
+  display: flex;
+  justify-content: center;
+}
+/* 
+.image-gallery {
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+}
+.image-gallery-content {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+}
+.image-gallery-thumbnails-wrapper {
+  display: flex;
+  max-width: 700px;
+  flex-wrap: wrap;
+} */

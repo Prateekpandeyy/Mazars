@@ -61,13 +61,22 @@ useEffect(() => {
            data.map((i) => (
             <div className={classes.articlesDetails}>
              <Breadcrumbs separator=">" maxItems={3} aria-label="breadcrumb">
-             <Link underline="hover" color="inherit" to="/customer/direct">
-  Articles
+             <Link underline="hover" color="inherit" to="/customer/updatedirect">
+Update
   </Link>
-  <Link underline="hover" color="inherit" to = {`/customer/${history.location.index}`}>
+  {/* <Link underline="hover" color="inherit" to = {`/customer/${history.location.index}`}>
  {history.location.index}
-  </Link>
-  
+  </Link> */}
+  {
+    history.location.index === "miscellaneous" ? 
+    <Link underline="hover" color="inherit" to = {`/customer/${history.location.index}`}>
+ Miscellaneous
+    </Link> 
+    :
+    <Link underline="hover" color="inherit" to = {`/customer/update${history.location.index}`}>
+    {CommonServices.capitalizeFirstLetter(history.location.index) + " Tax"}
+    </Link>
+  }
  
 </Breadcrumbs>
 <ArticleWrapper>

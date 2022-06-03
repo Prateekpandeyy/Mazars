@@ -76,8 +76,8 @@ const Updates = () =>{
             <p>Indirect Tax</p> : ""
           }
           {
-            row.type === "miscellenous" ? 
-            <p>Miscellenous</p> : ""
+            row.type === "miscellaneous" ? 
+            <p>Miscellaneous</p> : ""
           }
           </>
          )

@@ -115,7 +115,7 @@ const onChangeRowsPerPage = (e) => {
     <TableHead>
    <TableRow>
      <TableCell style= {{width : "50px"}}>S.No</TableCell>
-     <TableCell style={{width : "400px"}}>Publish Date</TableCell>
+     <TableCell style={{width : "150px"}}>Publish Date</TableCell>
      <TableCell>Heading </TableCell>
    </TableRow>
    </TableHead>
@@ -132,7 +132,7 @@ const onChangeRowsPerPage = (e) => {
         {e + 1}
       </TableCell>
       <TableCell>
-        {i.publish_date}
+        {i.publish_date.split("-").reverse().join("-")}
       </TableCell>
       <TableCell>
       <Link to = {{

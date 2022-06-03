@@ -39,7 +39,7 @@ padding: "20px"
   const ArticleWrapper = styled(Box)({
     display: "flex", 
     flexDirection: "column",
-  maxWidth: "700px",
+  maxWidth: "758px",
   justifyContent : "center",
   alignItems : "center",
   margin: "auto",

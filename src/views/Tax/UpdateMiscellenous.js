@@ -81,7 +81,7 @@ const UpdateMiscellenous = () => {
   const getData = (e) => {
    
   
-    axios.get(`${baseUrl}/customers/getupdated?type=miscellenous`)
+    axios.get(`${baseUrl}/customers/getupdated?type=miscellaneous`)
     .then((res) => {
      console.log("result", res.data.result)
       setData(res.data.result)
@@ -106,8 +106,8 @@ return(
     <Link underline="hover" color="inherit" to="/customer/updatedirect">
  Update
   </Link>
-  <Link underline="hover" color="inherit" to = {`/customer/miscellenous`}>
- Miscellenous Tax
+  <Link underline="hover" color="inherit" to = {`/customer/miscellaneous`}>
+ Miscellenous 
   </Link>
   
 
@@ -119,7 +119,7 @@ return(
 <TableHead>
 <TableRow>
 <TableCell style= {{width : "50px"}}>S.No</TableCell>
-<TableCell style={{width : "400px"}}>Publish Date</TableCell>
+<TableCell style={{width : "150px"}}>Publish Date</TableCell>
 <TableCell>Heading</TableCell>
 </TableRow>
 </TableHead>
@@ -136,12 +136,12 @@ data && data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((i,
    {e + 1}
  </TableCell>
  <TableCell>
-   {i.publish_date}
+ {i.publish_date.split("-").reverse().join("-")}
  </TableCell>
  <TableCell>
  <Link to = {{
                             pathname : `/customer/update-details/${i.id}`,
-                            index : "miscellenous"
+                            index : "miscellaneous"
                             
                         }}>
  {i.heading}</Link>

@@ -242,7 +242,7 @@ function WebRoutes() {
        <PublicRouteUser exact path = "/customer/faq-question" component={FaqQuestion} />
        <PublicRouteUser exact path = "/customer/updatedirect" component={UpdateDirect} />
        <PublicRouteUser exact path = "/customer/updateindirect" component={UpdateIndirect} />
-       <PublicRouteUser exact path = "/customer/miscellenous" component={UpdateMiscellenous} />
+       <PublicRouteUser exact path = "/customer/miscellaneous" component={UpdateMiscellenous} />
           
            <PublicRouteUser exact path ="/customer/update-details/:id" component={UpdateDetails} />
            <PublicRouteAdmin exact path = "/customer/link" component = {LinklistUser} />

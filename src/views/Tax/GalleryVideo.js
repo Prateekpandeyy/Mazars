@@ -64,7 +64,7 @@ const GalleryVideo = () => {
   
         <div className={classes.articleContent}>
       
-        <div className={classes.articlesDetails}>
+     
             <span style={{display: "flex", width: "100%", justifyContent: "space-between"}}>
             <Breadcrumbs separator=">" maxItems={3} aria-label="breadcrumb">
   
@@ -92,20 +92,17 @@ const GalleryVideo = () => {
                 Go Back
               </button>
               </span>
-        <div style={{display: "flex", margin: "20px 0 10px 0", 
-       maxWidth : "100vw" , maxHeight : "100vh", height : "100%", width:"100%", justifyContent: "center", alignItems: "center"}}>
-    {images.length > 0 ? 
+       
+            
+        
+            {images.length > 0 ? 
      <ImageGallery items={images} 
      
      additionalClass = {classes.myVideo} /> : "" }
-            </div>
-            </div>
-        
-         
         </div>
       
        </MyContainer>
-   
+      
        </>
     )
 }

@@ -147,7 +147,7 @@ const UpdatesContent = () => {
                       >
                       <option value = "direct">Direct Tax</option>
                       <option value = "indirect">Indirect Tax</option>
-                      <option value = "miscellenous">Miscellenous</option>
+                      <option value = "miscellaneous">Miscellaneous</option>
                           </select>
                  </div>
        <div className="col-md-4 col-sm-12">
