@@ -94,11 +94,11 @@ else{
         
         </AccordionSummary>
         <AccordionDetails>
-          <Typography>
+          
             <div id="artContent">
           <Markup content={i.answer} />
           </div>
-          </Typography>
+         
         </AccordionDetails>
       </Accordion>
     
