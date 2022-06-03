@@ -46,9 +46,10 @@ const GalleryVideo = () => {
      else{
      
        setTitle(history.location.hash.substring(1))
+       console.log("location", history.location.index)
       let  a = {
-        original : `${baseUrl3}/assets/gallery/${history.location.index}`,
-        thumbnail : `${baseUrl3}/assets/gallery/${history.location.index}`
+        original : `${baseUrl3}assets/gallery/${history.location.index}`,
+        thumbnail : `${baseUrl3}assets/gallery/${history.location.index}`
       }
       obj.push(a)
     
@@ -65,7 +66,7 @@ const GalleryVideo = () => {
         <div className={classes.articleContent}>
       
      
-            <span style={{display: "flex", width: "100%", justifyContent: "space-between"}}>
+            <span style={{display: "flex", margin : "10px 0px", width: "100%", justifyContent: "space-between"}}>
             <Breadcrumbs separator=">" maxItems={3} aria-label="breadcrumb">
   
   <Link underline="hover" color="inherit" to = {`/customer/media`}>

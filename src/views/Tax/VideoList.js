@@ -43,7 +43,7 @@ const VideoList = () => {
         isPlay(true)
         setVideoId(`${baseUrl3}/assets/gallery/${e}`)
       }
-  
+  console.log("galleryData", galleryData)
     return(
         <>
      <OuterloginContainer>

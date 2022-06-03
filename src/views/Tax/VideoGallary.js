@@ -121,7 +121,7 @@ let aa = localStorage.getItem("videoId")
        to = {{
          pathname : "/customer/imagegallery",
                              index : i.name,
-                             hash : title
+                            
                            }}><img 
        
        style={{display : "flex", zIndex: 1, width: "100%"}} id={i.id} src={`${baseUrl3}/assets/gallery/${i.name}`}

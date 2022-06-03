@@ -62,6 +62,14 @@
   display: flex;
   justify-content: center;
 }
+.image-gallery-content .image-gallery-slide .image-gallery-image {
+  max-height: 300px !important;
+}
+.image-gallery-slide .image-gallery-image {
+  width: 100%;
+  object-fit: cover;
+  height: 400px;
+}
 /* 
 .image-gallery {
   display: flex;
