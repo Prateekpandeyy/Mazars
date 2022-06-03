@@ -71,7 +71,7 @@ const Media = () => {
                    
     <div className="galleryBoxvideo">
     <div style={{display : "flex", justifyContent: "center", height: "70%", width: "100%", alignItems: "center"}}>
-    <Link style={{display: "flex", height: "100%"}}
+    <Link style={{display: "flex"}}
     to = {{
       pathname : "/customer/imagegallery",
                           index : i

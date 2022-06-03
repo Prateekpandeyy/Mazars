@@ -99,7 +99,7 @@ let aa = localStorage.getItem("videoId")
     
                    
     <div className="galleryBoxvideo">
-    <div style={{display : "flex", justifyContent: "center", height: "70%", width: "100%", alignItems: "center"}}>
+    <div style={{display : "flex", justifyContent: "center", height: "100%", width: "100%", alignItems: "center"}}>
     {
                       i.name.split(".")[1] === "mp4" === true ?
                      <>
@@ -117,14 +117,14 @@ let aa = localStorage.getItem("videoId")
                               
                      </>
        :
-       <Link style={{display: "flex", height: "100%"}}
+       <Link style={{display: "flex", width: "100%"}}
        to = {{
          pathname : "/customer/imagegallery",
                              index : i.name,
                             
                            }}><img 
        
-       style={{display : "flex", zIndex: 1, width: "100%"}} id={i.id} src={`${baseUrl3}/assets/gallery/${i.name}`}
+       style={{display : "flex", zIndex: 1, maxWidth : "150px", maxHeight : "100px", height : "100%", width: "100%"}} id={i.id} src={`${baseUrl3}/assets/gallery/${i.name}`}
 />
 </Link>
                      }
