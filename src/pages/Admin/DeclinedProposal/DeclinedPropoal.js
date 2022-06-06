@@ -134,7 +134,7 @@ function DeclinedProposal({ declinedProposal }) {
       },
     },
     {
-      text: "Date of Declined of Proposal",
+      text: "Date of Decline of Proposal",
       dataField: "cust_accept_date",
       sort: true,
       

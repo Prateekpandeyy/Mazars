@@ -214,7 +214,7 @@ function Customer() {
         <CardHeader>
           <Row>
             <Col md="6">
-              <CardTitle tag="h4">Customer ({tpCount})</CardTitle>
+              <CardTitle tag="h4">Client ({tpCount})</CardTitle>
             </Col>
            <Col md="6">
            

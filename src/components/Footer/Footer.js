@@ -21,7 +21,7 @@ function Footer(props) {
        history.push("/customer/aboutbasic")
      }
      else if (e === "needhelp"){
-       history.push(`${MyPDF}`)
+       window.open(MyPDF, "blank")
      }
    }
    else{
@@ -57,14 +57,14 @@ props.showCook("showCookies")
          About Us | &nbsp;
       
       </a>
-      <a href={MyPDF}  target="_blank"> Need help?</a>
+      <a onClick = {() => myLink("needhelp")}> Need help?</a>
   
      
            
         
              
           </div>
-{`ISO certified Copyright  @${date.getFullYear()} All right reserved`} 
+{`ISO 27001 Certified | Copyright  @${date.getFullYear()} All right reserved`} 
         </div>
       
         <div style={{display : "flex", justifyContent : "center"}}>

@@ -115,20 +115,38 @@ function AdminFilter(props) {
     }
 
     if (pendingAcceptedProposal == "pendingAcceptedProposal") {
+     if(data.p_status.length > 0){
       axios
-        .get(
-          `${baseUrl}/admin/getProposals?status1=${data.p_status}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&pcat_id=${selectedData}`
-          , myConfig
-        )
-        .then((res) => {
-        
-          if (res.data.code === 1) {
-            if (res.data.result) {
-              setData(res.data.result);
-              setRecords(res.data.result.length);
-            }
+      .get(
+        `${baseUrl}/admin/getProposals?status1=${data.p_status}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&pcat_id=${selectedData}`
+        , myConfig
+      )
+      .then((res) => {
+      
+        if (res.data.code === 1) {
+          if (res.data.result) {
+            setData(res.data.result);
+            setRecords(res.data.result.length);
           }
-        });
+        }
+      });
+     }
+     else {
+      axios
+      .get(
+        `${baseUrl}/admin/getProposals?status1=1&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&pcat_id=${selectedData}`
+        , myConfig
+      )
+      .then((res) => {
+      
+        if (res.data.code === 1) {
+          if (res.data.result) {
+            setData(res.data.result);
+            setRecords(res.data.result.length);
+          }
+        }
+      });
+     }
     }
 
     if (declinedProposal == "declinedProposal") {

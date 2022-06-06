@@ -266,8 +266,7 @@ var rowStyle2 = {}
     {
       text: "Deliverable",
       dataField: "",
-      sort: true,
-      
+     
       formatter: function (cell, row) {
         return (
           <>
@@ -464,7 +463,7 @@ var rowStyle2 = {}
 
 
 
-              <button type="submit" className="customBtn">
+              <button type="submit" className="customBtn mx-2">
                 Search
               </button>
 

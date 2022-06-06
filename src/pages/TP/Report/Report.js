@@ -339,6 +339,26 @@ setQno([])
  })
  .then(function (response) {
  if(response.data.code === 1){
+  const myConfig2 = {
+    headers : {
+     "uit" : token
+    },
+    responseType: 'blob'
+  }
+  axios.get(`${baseUrl}/report/viewReport?id=${response.data.id}`, myConfig2)
+.then((res2) => {
+  window.URL = window.URL || window.webkitURL;
+         var url = window.URL.createObjectURL(res2.data);
+         var a = document.createElement("a");
+         document.body.appendChild(a);
+         a.style = "display: none";
+         a.href = url;
+         console.log(res2)
+         a.download = 'report.xlsx'
+         a.target = '_blank';
+         a.click();
+    
+})
    Swal.fire({
      title : "success",
      html : "Report generated successfully",
@@ -454,6 +474,26 @@ headers : {
 })
 .then(function (response) {
 if(response.data.code === 1){
+  const myConfig2 = {
+    headers : {
+     "uit" : token
+    },
+    responseType: 'blob'
+  }
+  axios.get(`${baseUrl}/report/viewReport?id=${response.data.id}`, myConfig2)
+.then((res2) => {
+  window.URL = window.URL || window.webkitURL;
+         var url = window.URL.createObjectURL(res2.data);
+         var a = document.createElement("a");
+         document.body.appendChild(a);
+         a.style = "display: none";
+         a.href = url;
+         console.log(res2)
+         a.download = 'report.xlsx'
+         a.target = '_blank';
+         a.click();
+    
+})
  Swal.fire({
    title : "success",
    html : "Report generated successfully",

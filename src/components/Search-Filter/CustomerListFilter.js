@@ -21,7 +21,12 @@ function CustomerListFilter(props) {
   var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
 
   const [item] = useState(current_date);
-  
+  const token = window.localStorage.getItem("adminToken")
+  const myConfig = {
+    headers : {
+     "uit" : token
+    }
+  }
   const resetData = () => {
    
     reset();
@@ -49,7 +54,7 @@ if(searchQuery == "SearchQuery")
 axios
 .get(
   `${baseUrl}/admin/getAllList?&name=${data.name}&country=${data.country}&state=${data.state}&city=${data.city2
-  }&email=${data.email}&occupation=${data.occupation}&from=${data.p_dateFrom}&to=${data.p_dateTo}`
+  }&email=${data.email}&occupation=${data.occupation}&from=${data.p_dateFrom}&to=${data.p_dateTo}`, myConfig
 )
 .then((res) => {
   if (res.data.code === 1) {

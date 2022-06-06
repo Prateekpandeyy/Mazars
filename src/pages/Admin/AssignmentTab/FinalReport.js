@@ -273,7 +273,7 @@ function FinalReport() {
     {
       text: "Deliverable",
       dataField: "",
-      sort: true,
+
       
       formatter: function (cell, row) {
         return (

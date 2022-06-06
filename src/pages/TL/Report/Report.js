@@ -367,8 +367,8 @@ const resetData = () => {
       formData.append("company", comp)
  axios({
    method : "POST",
-   url : `${baseUrl}/report/viewReport?id=${JSON.parse(userid)}`,
-  //  url : `${baseUrl}/report/generateReport?t=${JSON.stringify(Math.floor(Math.random() * 110000))}`,
+  
+   url : `${baseUrl}/report/generateReport?t=${JSON.stringify(Math.floor(Math.random() * 110000))}`,
   headers  : {
 uit  : token
   },
@@ -377,6 +377,26 @@ uit  : token
  })
  .then(function (response) {
  if(response.data.code === 1){
+  const myConfig2 = {
+    headers : {
+     "uit" : token
+    },
+    responseType: 'blob'
+  }
+  axios.get(`${baseUrl}/report/viewReport?id=${response.data.id}`, myConfig2)
+.then((res2) => {
+  window.URL = window.URL || window.webkitURL;
+         var url = window.URL.createObjectURL(res2.data);
+         var a = document.createElement("a");
+         document.body.appendChild(a);
+         a.style = "display: none";
+         a.href = url;
+         console.log(res2)
+         a.download = 'report.xlsx'
+         a.target = '_blank';
+         a.click();
+    
+})
    Swal.fire({
      title : "success",
      html : "Report generated successfully",
@@ -484,8 +504,8 @@ uit  : token
     formData.append("company", comp)
 axios({
  method : "POST",
- url : `${baseUrl}/report/viewReport?id=${JSON.parse(userid)}`,
-//  url : `${baseUrl}/report/generateReport?t=${JSON.stringify(Math.floor(Math.random() * 110000))}`,
+
+  url : `${baseUrl}/report/generateReport?t=${JSON.stringify(Math.floor(Math.random() * 110000))}`,
  headers  : {
   uit  : token
     },
@@ -493,6 +513,27 @@ axios({
 
 })
 .then(function (response) {
+  if(response.data.code === 1){
+    const myConfig2 = {
+      headers : {
+       "uit" : token
+      },
+      responseType: 'blob'
+    }
+    axios.get(`${baseUrl}/report/viewReport?id=${response.data.id}`, myConfig2)
+.then((res2) => {
+  window.URL = window.URL || window.webkitURL;
+         var url = window.URL.createObjectURL(res2.data);
+         var a = document.createElement("a");
+         document.body.appendChild(a);
+         a.style = "display: none";
+         a.href = url;
+         console.log(res2)
+         a.download = 'report.xlsx'
+         a.target = '_blank';
+         a.click();
+    
+})}
 if(response.data.code === 1){
  Swal.fire({
    title : "success",
