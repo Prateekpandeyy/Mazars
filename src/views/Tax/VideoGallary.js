@@ -25,6 +25,7 @@ const Videogallery = () => {
     const [video, isVideo] = useState(false)
     const [play, isPlay] = useState(false)
     const [title, setTitle] = useState("")
+    var aa = localStorage.getItem("videoId")
     let history = useHistory()
     useEffect(() => {
         getGalleryVideo()
@@ -48,7 +49,7 @@ const Videogallery = () => {
         })
         }
         else{
-let aa = localStorage.getItem("videoId")
+
         axios.get(`${baseUrl}/customers/getvideogallery?id=${aa}`)
         .then((res) => {
         
@@ -117,16 +118,31 @@ let aa = localStorage.getItem("videoId")
                               
                      </>
        :
-       <Link style={{display: "flex", width: "100%"}}
-       to = {{
-         pathname : "/customer/imagegallery",
-                             index : i.name,
-                            
-                           }}><img 
-       
-       style={{display : "flex", zIndex: 1, maxWidth : "150px", maxHeight : "100px", height : "100%", width: "100%"}} id={i.id} src={`${baseUrl3}/assets/gallery/${i.name}`}
+      <>
+      {
+        history.location.index ?
+        <Link style={{display: "flex", width: "100%"}}
+        to = {{
+          pathname : "/customer/imagegallery",
+                              index : history.location.index.id,
+                             
+                            }}><img 
+        
+        style={{display : "flex", zIndex: 1, maxWidth : "150px", maxHeight : "100px", height : "100%", width: "100%"}} id={i.id} src={`${baseUrl3}/assets/gallery/${i.name}`}
+ />
+ </Link> :
+  <Link style={{display: "flex", width: "100%"}}
+  to = {{
+    pathname : "/customer/imagegallery",
+                        index : aa,
+                       
+                      }}><img 
+  
+  style={{display : "flex", zIndex: 1, maxWidth : "150px", maxHeight : "100px", height : "100%", width: "100%"}} id={i.id} src={`${baseUrl3}/assets/gallery/${i.name}`}
 />
 </Link>
+      }
+      </>
                      }
       </div>
               

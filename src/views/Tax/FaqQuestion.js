@@ -95,7 +95,7 @@ else{
         </AccordionSummary>
         <AccordionDetails>
           
-            <div id="artContent">
+            <div id="artContent" style={{all: "unset"}}>
           <Markup content={i.answer} />
           </div>
          

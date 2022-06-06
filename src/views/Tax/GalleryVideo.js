@@ -24,10 +24,28 @@ const GalleryVideo = () => {
       getImages()
     }, [])
     const getImages = () => {
+   console.log("history", history)
       let obj = []
-     if(typeof(history.location.index) === 'object'){
-   
-      axios.get(`${baseUrl}/customers/getgallery?id=${history.location.index.id}`)
+      if(history.location.hash === "#images"){
+        axios.get(`${baseUrl}/customers/getgallery?id=${history.location.index.id}`)
+        .then((res) => {
+         
+        res.data.result.map((i) => {
+          setTitle(i.title)
+          let  a = {
+            original : `${baseUrl3}/assets/gallery/${i.name}`,
+            thumbnail : `${baseUrl3}/assets/gallery/${i.name}`
+          }
+          obj.push(a)
+        
+       setImages(obj)
+        })
+        })
+       
+      }
+     else if(typeof(history.location.index) === 'string'){
+    
+      axios.get(`${baseUrl}/customers/getvideogallery?id=${history.location.index}`)
       .then((res) => {
        
       res.data.result.map((i) => {
@@ -46,7 +64,7 @@ const GalleryVideo = () => {
      else{
      
        setTitle(history.location.hash.substring(1))
-       console.log("location", history.location.index)
+       
       let  a = {
         original : `${baseUrl3}assets/gallery/${history.location.index}`,
         thumbnail : `${baseUrl3}assets/gallery/${history.location.index}`

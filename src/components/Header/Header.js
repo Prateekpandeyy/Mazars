@@ -48,9 +48,9 @@ function Header({ id, cust_sign, noAdminSign, noTlSign,
               <Link to="/">
               <img src={mazars} className="logo" alt="mazar"/>
             </Link>
-          <div>
+         
         <CmsCont getData= {getData} showCook = {showCook}/>
-            </div>
+           
           </div>
         )}
 
@@ -299,16 +299,12 @@ props.showCook("showCookies")
          </Collapse>
                  </li>
    
-         {/* <li className="nav-item headerHover" onClick = {() => myLink("updatelist")}> 
-   
-      Updates
-  
-</li> */}
+       
 
-      <li className="nav-item headerHover" onClick = {() => myLink("linklist")}> 
-   
+      <li className="nav-item tabHoverLinksubMenu" onClick = {() => myLink("linklist")}> 
+      <ListItemButton>
        Important Links
-    
+    </ListItemButton>
 </li>
       <li className="nav-item tabHoverLinksubMenu" 
          onMouseLeave = {() => handleClickOn2()}>
@@ -352,15 +348,15 @@ props.showCook("showCookies")
          </Collapse>
                  </li>
    
-                 <li className="nav-item headerHover" onClick = {() => myLink("faqlist")}> 
+                 <li className="nav-item tabHoverLinksubMenu" onClick = {() => myLink("faqlist")}> 
     {/* <NavLink 
     to = {{
   pathname : "/customer/updates",
   index : 4
 }} > */}
- 
+ <ListItemButton>
       FAQs
-   
+   </ListItemButton>
     </li>
 </div>
     </>

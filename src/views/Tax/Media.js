@@ -74,7 +74,8 @@ const Media = () => {
     <Link style={{display: "flex"}}
     to = {{
       pathname : "/customer/imagegallery",
-                          index : i
+                          index : i,
+                          hash : "images"
                         }}>
                           <img src={pngAlbum} 
                           style={{display : "flex", width: "50%", height: "50%", margin: "auto" }}
