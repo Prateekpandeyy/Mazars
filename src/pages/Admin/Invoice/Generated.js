@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { baseUrl, baseUrl3 } from "../../../config/config";
-import { Card, CardHeader, CardBody, CardTitle, Row, Col } from "reactstrap";
+import { baseUrl } from "../../../config/config";
+import { Card, CardHeader, CardBody } from "reactstrap";
 import { Link } from "react-router-dom";
-import BootstrapTable from "react-bootstrap-table-next";
 import Tds from "./Tds";
 import InvoiceFilter from "../../../components/Search-Filter/InvoiceFilter"
 import moment from "moment";
 import DescriptionOutlinedIcon from "@material-ui/icons/DescriptionOutlined";
-import Records from "../../../components/Records/Records";
 import FileCopyIcon from '@mui/icons-material/FileCopy';
 import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
 const Generated = () => {
@@ -126,13 +124,18 @@ const Generated = () => {
             text: "Installment No",
             dataField: "installment_no",
             sort: true,
-            
+            sortFunc: (a, b, order, dataField, rowA, rowB) => {
+                console.log("myValue", a, b, order, dataField, rowA, rowB)
+                if (order === 'asc') {
+                  return b - a;
+                }
+                return a - b; // desc
+              }
         },
         {
             text: "Invoice No",
             dataField: "billno",
-            sort: true,
-           
+         
         },
         {
             text: "Due Date",
@@ -176,6 +179,7 @@ const Generated = () => {
             sort: true,
            
             sortFunc: (a, b, order, dataField) => {
+                console.log("aaaa", a)
                 if (order === 'asc') {
                   return b - a;
                 }
@@ -310,7 +314,7 @@ const Generated = () => {
               
                 <DataTablepopulated 
                    bgColor="#42566a"
-                   keyField= {"assign_no"}
+                   keyField= "id"
                    data={proposal}
                    rowStyle2 = {rowStyle2}
                    columns={columns}>

@@ -220,7 +220,7 @@ function EditTP() {
 
 
       {
-        categoryData.length === 0 ? formData.append("cat_id", data8) :
+        categeryList.length === 0 ? formData.append("cat_id", data8) :
         formData.append("cat_id", categeryList)
       }
 
@@ -232,7 +232,7 @@ function EditTP() {
       }
 
       {
-        categeryName.length > 0 ? formData.append("allcat_id",categeryName) :
+        categeryName.length > 0 ? formData.append("allcat_id", categeryName) :
         formData.append("allcat_id", data5)
       }
       formData.append("id", id);

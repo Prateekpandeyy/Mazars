@@ -41,6 +41,12 @@ function DraftReport() {
   const [ViewDiscussion, setViewDiscussion] = useState(false);
   const [reportModal, setReportModal] = useState(false);
   const [report, setReport] = useState();
+  const token = window.localStorage.getItem("adminToken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
 var rowStyle2 = {}
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
@@ -58,7 +64,7 @@ var rowStyle2 = {}
   }, []);
 
   const getAssignmentData = () => {
-    axios.get(`${baseUrl}/tl/getAssignments?assignment_status=Draft_Report&stages_status=1`).then((res) => {
+    axios.get(`${baseUrl}/admin/getAssignments?assignment_status=Draft_Report&stages_status=1`, myConfig).then((res) => {
      
       if (res.data.code === 1) {
         setAssignmentDisplay(res.data.result);
@@ -354,7 +360,8 @@ var rowStyle2 = {}
     
     axios
       .get(
-        `${baseUrl}/tl/getAssignments?assignment_status=Draft_Report&stages_status=1&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}`
+        `${baseUrl}/admin/getAssignments?assignment_status=Draft_Report&stages_status=1&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}`,
+        myConfig
       )
       .then((res) => {
      

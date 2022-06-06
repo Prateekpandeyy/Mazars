@@ -52,6 +52,12 @@ function FinalReport() {
   var clinpro = {
     color : "blue"
   }
+  const token = window.localStorage.getItem("adminToken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key)
@@ -63,7 +69,7 @@ function FinalReport() {
   }, []);
 
   const getAssignmentData = () => {
-    axios.get(`${baseUrl}/tl/getAssignments?assignment_status=Delivery_of_report&stages_status=1`).then((res) => {
+    axios.get(`${baseUrl}/admin/getAssignments?assignment_status=Delivery_of_report&stages_status=1`, myConfig).then((res) => {
     
       if (res.data.code === 1) {
         setAssignmentDisplay(res.data.result);
