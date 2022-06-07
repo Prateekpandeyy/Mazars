@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { baseUrl } from "../../config/config";
+import { baseUrl, baseUrl3 } from "../../config/config";
 import "antd/dist/antd.css";
 import { Select } from "antd";
 import { useForm } from "react-hook-form";
@@ -66,74 +66,26 @@ axios
 });     
 };
 const exportToExcel = async () => {
-//setData( arr => [...arr, `${arr}`]);
-
-
-// console.log(setData.todo)
-  
-  try {
-    
-    
-   // const myInput = document.getElementById(myInputId);
-    const fileName = "Excel file";
-
-    // creating one worksheet in workbook
-    const worksheet = workbook.addWorksheet(workSheetName);
-
-    // add worksheet columns
-    // each columns contains header and its mapping key from data
-    worksheet.columns = columns;
-
-    // updated the font for first row.
-    worksheet.getRow(1).font = { bold: true };
-
-    // loop through all of the columns and set the alignment with width.
-    worksheet.columns.forEach(column => {
-      column.width = column.header.length + 5;
-      column.alignment = { horizontal: 'center' };
-    });
-
-    // loop through data and add each one to worksheet
-    listData.map(singleData => {
-      worksheet.addRow(singleData);
-    });
-
-    // loop through all of the rows and set the outline style.
-    worksheet.eachRow({ includeEmpty: false }, row => {
-      // store each cell to currentCell
-      const currentCell = row._cells;
-
-      // loop through currentCell to apply border only for the non-empty cell of excel
-      currentCell.forEach(singleCell => {
-        // store the cell address i.e. A1, A2, A3, B1, B2, B3, ...
-        const cellAddress = singleCell._address;
-
-        // apply border
-        worksheet.getCell(cellAddress).border = {
-          top: { style: 'thin' },
-          left: { style: 'thin' },
-          bottom: { style: 'thin' },
-          right: { style: 'thin' }
-        };
-      });
-    });
-
-    // write the content using writeBuffer
-    const buf =  await workbook.xlsx.writeBuffer();
-
-    // download the processed file
-    saveAs(new Blob([buf]), `${fileName}.xlsx`);
-  
- 
-  } 
-   catch (error) {
-    console.error('<<<ERRROR>>>', error);
-    console.error('Something Went Wrong', error.message);
-  } finally {
-    // removing worksheet's instance to create new one
-    workbook.removeWorksheet(workSheetName);
+  const myConfig2 = {
+    headers : {
+     "uit" : token
+    },
+    responseType: 'blob'
   }
-
+  axios.get(`${baseUrl}/admin/exportAllCustomer`, myConfig2)
+.then((res2) => {
+  window.URL = window.URL || window.webkitURL;
+         var url = window.URL.createObjectURL(res2.data);
+         var a = document.createElement("a");
+         document.body.appendChild(a);
+         a.style = "display: none";
+         a.href = url;
+         console.log(res2)
+         a.download = 'report.xlsx'
+         a.target = '_blank';
+         a.click();
+    
+})
  
 };
 
@@ -258,7 +210,7 @@ const exportToExcel = async () => {
                   >Total Records : {records}</label>
                 </div>
                 <button
-          type="submit"
+          type="button"
           class="btn btn-primary mx-sm-1 mb-2"
           onClick={() => exportToExcel()}
         >

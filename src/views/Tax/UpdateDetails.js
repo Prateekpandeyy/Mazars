@@ -82,7 +82,7 @@ Update
 <ArticleWrapper>
 
         
-     <div style={{all: "unset"}}>
+     <div id="artContent" style={{all: "unset"}}>
      <Markup content={i.content} /> 
  
   

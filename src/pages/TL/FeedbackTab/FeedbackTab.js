@@ -130,7 +130,7 @@ const history = useHistory();
         if (response.data.code === 1) {
           // alert.success("successfully read!");
           getFeedback()
-          history.push("/teamleader/feedback")
+       
         }
       })
       .catch((error) => {

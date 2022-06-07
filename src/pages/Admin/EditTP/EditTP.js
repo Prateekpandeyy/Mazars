@@ -232,7 +232,7 @@ function EditTP() {
       }
 
       {
-        categeryName.length > 0 ? formData.append("allcat_id", categeryName) :
+        categeryName.length > 0 ? formData.append("allcat_id",categeryName) :
         formData.append("allcat_id", data5)
       }
       formData.append("id", id);
@@ -425,14 +425,14 @@ function EditTP() {
   
  const defSubValue = () => {
  var k;
- 
+ let val = data8.split(",")
    var subcatgerydefvalue = value.allcat_id.split(",");
    value.allpcat_id.includes("Indirect") === true  ? k = 8 : k = 2
  
-  subdefval = subcatgerydefvalue.map((i => ({
-   "value" : String(++k),
-   "label" : i
- }) ))
+  subdefval = subcatgerydefvalue.map((e, i ) => ({
+    "value" : val[i],
+    "label" : e
+  }))
  
   }
  
@@ -537,7 +537,7 @@ function EditTP() {
                     email: `${data2}`,
                     phone: `${data3}`,
                     category: `${data4}`,
-                    sub_category: `${data5}`,
+            
                   }}
                   onFinish={onFinish}
                 >

@@ -37,6 +37,9 @@
   width: 100%;
   word-break: break-all;
 }
+#artContent p {
+  margin: 0px;
+}
 #artContent table,
 #artContent tr,
 #artContent td {

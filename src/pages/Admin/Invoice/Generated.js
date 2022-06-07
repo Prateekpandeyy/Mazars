@@ -141,17 +141,24 @@ const Generated = () => {
             text: "Due Date",
             dataField: "due_date",
             sort: true,
-           
-            formatter : function(cell, row){
-                let dueDate=row.due_date.split("-").reverse().join("-")
+            sortFunc: (a, b, order) => {
+                if (order === "asc") {
+                  return Date.parse(a) - Date.parse(b);
+                } else if (order === "desc") {
+                  return Date.parse(b) - Date.parse(a);
+                }
+              }
+            
+            // formatter : function(cell, row){
+            //     let dueDate=row.due_date.split("-").reverse().join("-")
 
-                return(
+            //     return(
                    
-                    <>
-              {dueDate}
-                    </>
-                )
-            }
+            //         <>
+            //   {dueDate}
+            //         </>
+            //     )
+            // }
         }, 
         {
             text: "Invoice amount",
@@ -247,7 +254,6 @@ const Generated = () => {
                 }
            
                </span>
-                  
                 
                    
               

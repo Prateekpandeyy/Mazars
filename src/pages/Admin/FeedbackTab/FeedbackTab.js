@@ -80,7 +80,7 @@ function FeedbackTab() {
     {
       text: "Feedback",
       dataField: "feedback",
-   
+   sort : true,
       headerStyle: () => {
         return { fontSize: "12px", width: "150px" };
       },
@@ -140,7 +140,7 @@ function FeedbackTab() {
         if (response.data.code === 1) {
        
           getFeedback();
-          history.push("/admin/feedback")
+         
         }
     
       })
@@ -164,7 +164,7 @@ function FeedbackTab() {
           <CardBody>
           <DataTablepopulated 
        bgColor="#081f8f"
-       keyField= {"assign_no"}
+       keyField= "id"
        data={feedbackData}
        columns={columns}>
         </DataTablepopulated>
