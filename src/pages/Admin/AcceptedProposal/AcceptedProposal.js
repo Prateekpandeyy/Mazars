@@ -18,6 +18,7 @@ import BootstrapTable from "react-bootstrap-table-next";
 import AdminFilter from "../../../components/Search-Filter/AdminFilter";
 import Records from "../../../components/Records/Records";
 import DiscardReport from "../AssignmentTab/DiscardReport";
+import CommonShowProposal from '../../../components/commonShowProposal/CommonShowProposal';
 import ShowProposal from "../AllProposalComponent/ShowProposal";
 import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
 import MessageIcon, {EyeIcon, ViewDiscussionIcon, DiscussProposal, HelpIcon} from "../../../components/Common/MessageIcon";
@@ -290,11 +291,15 @@ function AcceptedProposal({ acceptedProposal }) {
             getData={getAcceptedProposal}
             headColor="#42566a"
           />
-           <ShowProposal 
-          setViewProposalModal = {setViewProposalModal}
-          viewProposalModal = {viewProposalModal}
-          showProposalModal2 = {showProposalModal2}
-          proposalId = {proposalId}/>
+          {
+         viewProposalModal === true ?
+         <CommonShowProposal 
+         setViewProposalModal = {setViewProposalModal}
+         viewProposalModal = {viewProposalModal}
+         showProposalModal2 = {showProposalModal2}
+         panel = "admin"
+         proposalId = {proposalId} /> : ""
+       }
         </CardBody>
       </Card>
     </>

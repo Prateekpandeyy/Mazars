@@ -319,11 +319,16 @@ function DeclinedProposal() {
                         getData={getProposalList}
                         headColor="#5f7b97"
                     />
-                      <CommonShowProposal
-          setViewProposalModal = {setViewProposalModal}
-          viewProposalModal = {viewProposalModal}
-          showProposalModal2 = {showProposalModal2}
-          proposalId = {proposalId}/>
+                   {
+                        viewProposalModal === true ?
+                        <CommonShowProposal
+                        setViewProposalModal = {setViewProposalModal}
+                        viewProposalModal = {viewProposalModal}
+                        showProposalModal2 = {showProposalModal2}
+                        panel = "teamleader"
+                        proposalId = {proposalId}/>
+ : ""              
+                    }
                 </CardBody>
             </Card>
         </>

@@ -21,6 +21,7 @@ import DiscardReport from "../../pages/Admin/AssignmentTab/DiscardReport";
 import RetviewModal from "../../pages/Admin/AllProposalComponent/RetviewModal"
 import ShowProposal from "../../pages/Admin/AllProposalComponent/ShowProposal";
 import DataTablepopulated from "../../components/DataTablepopulated/DataTabel";
+import CommonShowProposal from "../commonShowProposal/CommonShowProposal"
 import MessageIcon, {EyeIcon, ViewDiscussionIcon, DiscussProposal, HelpIcon} from "../../components/Common/MessageIcon";
 function PendingForAcceptence({ pendingProposal }) {
   const [proposalDisplay, setProposalDisplay] = useState([]);
@@ -315,11 +316,20 @@ function PendingForAcceptence({ pendingProposal }) {
           getProposalData  ={ getPendingAcceptedProposal}
           assignNo = {assignNo}
          />
-         <ShowProposal 
+         {/* <ShowProposal 
           setViewProposalModal = {setViewProposalModal}
           viewProposalModal = {viewProposalModal}
           showProposalModal2 = {showProposalModal2}
-          proposalId = {proposalId}/>
+          proposalId = {proposalId}/> */}
+           {
+         viewProposalModal === true ?
+         <CommonShowProposal 
+         setViewProposalModal = {setViewProposalModal}
+         viewProposalModal = {viewProposalModal}
+         showProposalModal2 = {showProposalModal2}
+         panel = "admin"
+         proposalId = {proposalId} /> : ""
+       }
         </CardBody>
       </Card>
     </div>

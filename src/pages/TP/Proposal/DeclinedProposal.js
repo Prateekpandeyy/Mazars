@@ -306,15 +306,15 @@ function DeclinedProposal() {
                         getData={getProposalList}
                         headColor="#5f7b97"
                     />
-{
-    viewProposalModal === true ?
-    <CommonShowProposal
-    setViewProposalModal = {setViewProposalModal}
-    viewProposalModal = {viewProposalModal}
-    showProposalModal2 = {showProposalModal2}
-    proposalId = {proposalId}/> : ""
-}
-                </CardBody>
+                   {
+                       viewProposalModal === true ?
+                       <CommonShowProposal
+                       setViewProposalModal = {setViewProposalModal}
+                       viewProposalModal = {viewProposalModal}
+                       showProposalModal2 = {showProposalModal2}
+                       panel = "taxprofessional"
+                       proposalId = {proposalId}/> : ""
+                   }           </CardBody>
             </Card>
         </>
     );

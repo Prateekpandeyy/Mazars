@@ -270,12 +270,13 @@ function AcceptedProposal() {
                    data={proposal}
                    columns={columns}>
                     </DataTablepopulated>
-                   {
+                    {
                        viewProposalModal === true ?
                        <CommonShowProposal
                        setViewProposalModal = {setViewProposalModal}
                        viewProposalModal = {viewProposalModal}
                        showProposalModal2 = {showProposalModal2}
+                       panel = "taxprofessional"
                        proposalId = {proposalId}/> : ""
                    }
            <DiscardReport

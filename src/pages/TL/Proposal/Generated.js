@@ -327,7 +327,7 @@ const Generated = ({updateTab}) => {
                     
                 <DataTablepopulated 
                    bgColor="#42566a"
-                   keyField= {"assign_no"}
+                   keyField= "id"
                    rowStyle2= {rowStyle2}
                    data={proposal}
                    columns={columns}>

@@ -240,7 +240,10 @@ function AllQuery() {
           columns={columns}>
            </DataTablepopulated> 
 
-                    <DiscardReport
+                   
+                </CardBody>
+            </Card>
+            <DiscardReport
                         ViewDiscussionToggel={ViewDiscussionToggel}
                         ViewDiscussion={ViewDiscussion}
                         report={assignNo}
@@ -248,8 +251,6 @@ function AllQuery() {
                         headColor="#55425f"
                     />
 
-                </CardBody>
-            </Card>
         </>
     );
 }

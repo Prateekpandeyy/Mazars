@@ -15,7 +15,7 @@ import RetviewModal from "../AllProposalComponent/RetviewModal";
 import ShowProposal from "../AllProposalComponent/ShowProposal";
 import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
 import MessageIcon, {EyeIcon, ViewDiscussionIcon, DiscussProposal, HelpIcon} from "../../../components/Common/MessageIcon";
-
+import CommonShowProposal from '../../../components/commonShowProposal/CommonShowProposal';
 function DeclinedProposal({ declinedProposal }) {
   const [proposalDisplay, setProposalDisplay] = useState([]);
   const [records, setRecords] = useState([]);
@@ -311,12 +311,15 @@ function DeclinedProposal({ declinedProposal }) {
           getProposalData  ={ getDeclinedProposal}
           assignNo = {assignNo}
          />
-          
-          <ShowProposal 
-          setViewProposalModal = {setViewProposalModal}
-          viewProposalModal = {viewProposalModal}
-          showProposalModal2 = {showProposalModal2}
-          proposalId = {proposalId}/>
+       {
+         viewProposalModal === true ?
+         <CommonShowProposal 
+         setViewProposalModal = {setViewProposalModal}
+         viewProposalModal = {viewProposalModal}
+         showProposalModal2 = {showProposalModal2}
+         panel = "admin"
+         proposalId = {proposalId} /> : ""
+       }
         </CardBody>
       </Card>
     </>

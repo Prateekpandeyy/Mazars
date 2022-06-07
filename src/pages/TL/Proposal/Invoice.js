@@ -196,7 +196,7 @@ const Invoice = (updateTab) => {
                 <CardBody>
                 <DataTablepopulated 
                    bgColor="#42566a"
-                   keyField= {"assign_no"}
+                   keyField= "id"
                    data={proposal}
                    columns={columns}>
                     </DataTablepopulated>
