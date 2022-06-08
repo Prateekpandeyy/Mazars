@@ -610,7 +610,7 @@ else{
                            onChange={(e) => emailHandler(e)}
                            onBlur={(e) => emailValidation(e)}
                            placeholder="Enter Your Email"
-                           
+                           ref={register()}
                             
                             />
                             
