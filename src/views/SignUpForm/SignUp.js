@@ -41,7 +41,9 @@ function SignUp(props) {
   const [countryCode, setCountryCode] = useState('91')
   const [phone, setPhone] = useState('');
   const [valiEmail, setValiemail] = useState(null)
+  const [valiEmailMulti, setValiemailMulti] = useState(null)
   const [invalid, setInvalid] = useState(null)
+  const [invalidMulti, setInvalidMulti] = useState(null)
   const [numExist, setNumExist] = useState(null)
   const [numAvail, setNumAvail] = useState(null)
   const [countryName, setCountryName] = useState(null)
@@ -51,15 +53,18 @@ function SignUp(props) {
   const [zipCode, setZipCode] = useState('')
   const [zipError, setZipError] = useState(null)
   const [wEmail, setWemail] = useState();
+  const [wEmailmulti, setWemailmulti] = useState()
   const [time, setTime] = useState('')
   const [disabled, setDisabled] = useState(false)
   const [valiOtp, setvaliOtp] = useState()
   const [emailError, setEmailError] = useState(null)
+  const [emailErrorMulti, setEmailErrormulti] = useState(null)
   const [phoneError, setPhoneError] = useState(null)
   const [zipError1, setZipError1] = useState(null);
   const [subm, setSub] = useState(false)
   const [dstate, setDstate] = useState()
 const [email2, setEmail2] = useState();
+const [email2multi2, setEmailmulti2] = useState();
   const [loading, setLoading] = useState(false);
 const [estate, setEstate] = useState("");
 const [cityState2, setCityValue2] = useState("")
@@ -372,7 +377,8 @@ useEffect(() => {
 
     let formData = new FormData();
     formData.append("name", value.p_name);
-    formData.append("email", JSON.stringify(value.p_email));
+    formData.append("email", email2);
+    formData.append("emailmultiple", JSON.stringify(value.p_email));
     formData.append("phone", value.p_phone);
     formData.append("occupation", value.p_profession);
  {cityState2 && cityState2.length > 0 ?    formData.append("city", cityState2) :
@@ -391,7 +397,7 @@ useEffect(() => {
     if (display === true && subm === false) {
       setLoading(true)
       let formData = new FormData();
-      formData.append("email", JSON.stringify(value.p_email));
+      formData.append("email", email2);
       formData.append("phone", phone);
       formData.append("p", "registration");
 
@@ -472,19 +478,19 @@ useEffect(() => {
 // getEmailValue 
 const emailHandler = (e) => {
 console.log("eee", e.target.value)
-setEmail2(e.target.value)
+setEmailmulti2(e.target.value)
     if (e.target.value.length < 1) {
-    setWemail("")
+    setWemailmulti("")
     }
   };
 
   const emailValidation = (key) => {
 
     var validRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    if (email2.length > 0 && email2.match(validRegex)) {
-    setWemail("");
-    console.log("fireed event", email2)
-    setEmailError(false)
+    if (email2multi2.length > 0 && email2multi2.match(validRegex)) {
+    setWemailmulti("");
+    
+    setEmailErrormulti(false)
       let formData = new FormData();
       formData.append("email", email2);
       formData.append("type", 1);
@@ -497,14 +503,14 @@ if(props.name === "teamleader" || props.name =="taxprofessional"){
   .then(function (response) {
          
     if (response.data.code === 1) {
-     setValiemail(response.data.result)
-     setInvalid('')
-     setEmailError(false)
+     setValiemailMulti(response.data.result)
+     setInvalidMulti('')
+     setEmailErrormulti(false)
      
     } else if (response.data.code === 0) {
-     setInvalid(response.data.result)
-     setValiemail('')
-     setEmailError(true)
+     setInvalidMulti(response.data.result)
+     setValiemailMulti('')
+     setEmailErrormulti(true)
     }
   })
   .catch((error) => {
@@ -520,14 +526,14 @@ else{
   .then(function (response) {
          
     if (response.data.code === 1) {
-     setValiemail(response.data.result)
-     setInvalid('')
+     setValiemailMulti(response.data.result)
+     setInvalidMulti('')
      setEmailError(false)
      
     } else if (response.data.code === 0) {
-     setInvalid(response.data.result)
-     setValiemail('')
-     setEmailError(true)
+     setInvalidMulti(response.data.result)
+     setValiemailMulti('')
+     setEmailErrormulti(true)
     }
   })
   .catch((error) => {
@@ -538,8 +544,8 @@ else{
       
     }
     else {
-      setEmailError(true)
-      setWemail("invalid email")
+      setEmailErrormulti(true)
+      setWemailmulti("invalid email")
     }
 
   }
@@ -579,7 +585,7 @@ else{
                   <div className="col-md-6">
                       <div className="question_query mb-2">
                         <label className="form-label">
-                          Email <span className="declined">*</span>
+                          Optional Email 
                         </label>
                         <div
                           className="btn queryPlusIcon"
@@ -599,12 +605,12 @@ else{
                             name={`p_email[${index}].query`}
                           
                            className={classNames("form-control", {
-                             "is-invalid": errors.p_email || props.emailError === true || props.wEmail || props.invalid,
+                             "is-invalid": errors.p_email || props.emailErrorMulti === true || props.wEmailmulti || props.invalid,
                            })}
                            onChange={(e) => emailHandler(e)}
                            onBlur={(e) => emailValidation(e)}
                            placeholder="Enter Your Email"
-                           ref={register({ required: true })}
+                           
                             
                             />
                             
@@ -617,13 +623,13 @@ else{
                           </div>
                         ))}
                       {
-                        wEmail ? <p className="declined">{wEmail}</p> : <>
-                          {valiEmail ?
+                        wEmailmulti ? <p className="declined">{wEmailmulti}</p> : <>
+                          {valiEmailMulti ?
                             <p className="completed">
-                              {valiEmail}
+                              {valiEmailMulti}
                             </p>
                             :
-                            <p className="declined">{invalid}</p>}
+                            <p className="declined">{invalidMulti}</p>}
                         </>
                       }
                     </div>
@@ -788,6 +794,28 @@ else{
                   </div>
 <div className="col-md-6">
   <div className="mb-3">
+  
+                      <label className="form-label">Email<span className="declined">*</span></label>
+                     <EmailValidation
+                     setWemail = {setWemail}
+                      wEmail = {wEmail} 
+                      invalid = {invalid}
+                       setEmailError = {setEmailError}
+                        setValiemail = {setValiemail} 
+                        emailError = {emailError} 
+                        setInvalid = {setInvalid}  
+                        setEmail2 = {setEmail2} />
+                      {
+                        wEmail ? <p className="declined">{wEmail}</p> : <>
+                          {valiEmail ?
+                            <p className="completed">
+                              {valiEmail}
+                            </p>
+                            :
+                            <p className="declined">{invalid}</p>}
+                        </>
+                      }
+                   
     </div>
   </div>
                   <div class="col-md-6">
