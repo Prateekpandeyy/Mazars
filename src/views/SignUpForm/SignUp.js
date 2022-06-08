@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useForm } from "react-hook-form";
+import { useForm ,  useFieldArray } from "react-hook-form";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 import axios from "axios";
@@ -18,9 +18,16 @@ import  { HelpIcon } from "../../components/Common/MessageIcon";
 import { OuterloginContainer } from "../../components/Common/OuterloginContainer";
 function SignUp(props) {
   
-  const { handleSubmit, register, errors, getValues } = useForm();
-
-
+  
+  const { handleSubmit, register, errors, reset, getValues, control } = useForm({
+    defaultValues: {
+      p_email: [{ p_email: "" }],
+    },
+  });
+  const { append, remove, fields} = useFieldArray({
+    control,
+    name: "p_email",
+  });
   const [display, setDisplay] = useState(false);
 
   const [load, setLoad] = useState(false);
@@ -365,7 +372,7 @@ useEffect(() => {
 
     let formData = new FormData();
     formData.append("name", value.p_name);
-    formData.append("email", email2);
+    formData.append("email", JSON.stringify(value.p_email));
     formData.append("phone", value.p_phone);
     formData.append("occupation", value.p_profession);
  {cityState2 && cityState2.length > 0 ?    formData.append("city", cityState2) :
@@ -384,7 +391,7 @@ useEffect(() => {
     if (display === true && subm === false) {
       setLoading(true)
       let formData = new FormData();
-      formData.append("email", email2);
+      formData.append("email", JSON.stringify(value.p_email));
       formData.append("phone", phone);
       formData.append("p", "registration");
 
@@ -463,6 +470,79 @@ useEffect(() => {
   }
 
 // getEmailValue 
+const emailHandler = (e) => {
+console.log("eee", e.target.value)
+setEmail2(e.target.value)
+    if (e.target.value.length < 1) {
+    setWemail("")
+    }
+  };
+
+  const emailValidation = (key) => {
+
+    var validRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if (email2.length > 0 && email2.match(validRegex)) {
+    setWemail("");
+    console.log("fireed event", email2)
+    setEmailError(false)
+      let formData = new FormData();
+      formData.append("email", email2);
+      formData.append("type", 1);
+if(props.name === "teamleader" || props.name =="taxprofessional"){
+  axios({
+    method: "POST",
+    url: `${baseUrl}/tl/validateregistration`,
+    data: formData,
+  })
+  .then(function (response) {
+         
+    if (response.data.code === 1) {
+     setValiemail(response.data.result)
+     setInvalid('')
+     setEmailError(false)
+     
+    } else if (response.data.code === 0) {
+     setInvalid(response.data.result)
+     setValiemail('')
+     setEmailError(true)
+    }
+  })
+  .catch((error) => {
+  
+  });
+}
+else{
+  axios({
+    method: "POST",
+    url: `${baseUrl}/customers/validateregistration`,
+    data: formData,
+  })
+  .then(function (response) {
+         
+    if (response.data.code === 1) {
+     setValiemail(response.data.result)
+     setInvalid('')
+     setEmailError(false)
+     
+    } else if (response.data.code === 0) {
+     setInvalid(response.data.result)
+     setValiemail('')
+     setEmailError(true)
+    }
+  })
+  .catch((error) => {
+  
+  });
+}
+    
+      
+    }
+    else {
+      setEmailError(true)
+      setWemail("invalid email")
+    }
+
+  }
 
   return (
     <>
@@ -497,17 +577,45 @@ useEffect(() => {
                   </div>
 
                   <div className="col-md-6">
-                    <div className="mb-3">
-                      <label className="form-label">Email<span className="declined">*</span></label>
-                     <EmailValidation
-                     setWemail = {setWemail}
-                      wEmail = {wEmail} 
-                      invalid = {invalid}
-                       setEmailError = {setEmailError}
-                        setValiemail = {setValiemail} 
-                        emailError = {emailError} 
-                        setInvalid = {setInvalid}  
-                        setEmail2 = {setEmail2} />
+                      <div className="question_query mb-2">
+                        <label className="form-label">
+                          Email <span className="declined">*</span>
+                        </label>
+                        <div
+                          className="btn queryPlusIcon"
+                          onClick={() => append({ query: "" })}
+                        >
+                          +
+                        </div>
+                      </div>
+
+                      {fields.length > 0 &&
+                        fields.map((item, index) => (
+                          <div
+                            className="question_query_field mb-2"
+                            key={item.id}
+                          >
+                            <input
+                            name={`p_email[${index}].query`}
+                          
+                           className={classNames("form-control", {
+                             "is-invalid": errors.p_email || props.emailError === true || props.wEmail || props.invalid,
+                           })}
+                           onChange={(e) => emailHandler(e)}
+                           onBlur={(e) => emailValidation(e)}
+                           placeholder="Enter Your Email"
+                           ref={register({ required: true })}
+                            
+                            />
+                            
+                            <div
+                              className="btn queryPlusIcon ml-2"
+                              onClick={() => remove(index)}
+                            >
+                              -
+                            </div>
+                          </div>
+                        ))}
                       {
                         wEmail ? <p className="declined">{wEmail}</p> : <>
                           {valiEmail ?
@@ -519,7 +627,6 @@ useEffect(() => {
                         </>
                       }
                     </div>
-                  </div>
 
                   <div className="col-md-6">
                     <div className="mb-3">
