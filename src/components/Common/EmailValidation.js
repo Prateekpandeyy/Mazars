@@ -23,11 +23,12 @@ const [email, setEmail] = useState([])
         if (email.length > 0 && email.match(validRegex)) {
           props.setWemail("");
           props.setEmailError(false)
-          let formData = new FormData();
-          formData.append("user_id" , props.clientId)
-          formData.append("email", email);
-          formData.append("type", 1);
+         
     if(props.name === "teamleader" || props.name =="taxprofessional"){
+      let formData = new FormData();
+    
+      formData.append("email", email);
+      formData.append("type", 1);
       axios({
         method: "POST",
         url: `${baseUrl}/tl/validateregistration`,
@@ -51,6 +52,10 @@ const [email, setEmail] = useState([])
       });
     }
     else if(props.panel === "Clinet" && props.clientId.length > 5){
+      let formData = new FormData();
+      formData.append("user_id" , props.clientId)
+      formData.append("email", email);
+      formData.append("type", 1);
       axios({
         method: "POST",
         url: `${baseUrl}/customers/validateregistration`,

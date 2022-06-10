@@ -149,7 +149,7 @@ function ProposalComponent(props) {
     // var arrDate = []
 
     let formData = new FormData();
-    formData.append("email", email)
+    formData.append("emails", email)
     formData.append("assign_no", assingNo);
     formData.append("name", custname);
     formData.append("type", "tl");
