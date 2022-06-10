@@ -57,7 +57,12 @@ function ForgetPassword(props) {
         if (response.data.code === 1) {
           setLoading(false)
           Alerts.SuccessNormal("As per your request, OTP has been sent to your regsitered email address.")
-          props.history.push(`/customer/new-password/${value.p_email}`)
+          // props.history.push(`/customer/new-password/${value.p_email}`)
+          props.history.push({
+            pathname: `/customer/new-password/${value.p_email}`,
+            index : user
+          
+          })
         } else if (response.data.code === 0) {
           setLoading(false)
        
@@ -77,7 +82,16 @@ function ForgetPassword(props) {
       return item
     }
   }
-
+  const getUser = (e) => {
+    var regEx = /^[0-9a-zA-Z]+$/;
+    if(e.target.value.match(regEx)){
+      setUser(e.target.value.toUpperCase())
+    }
+    else{
+      setUser("")
+    }
+   
+  }
   return (
     <>
 
@@ -98,8 +112,8 @@ function ForgetPassword(props) {
 <label className="form-label">User Id<span className="declined">*</span></label>
 <input
   type="text"
-  onChange={(e) => setUser(e.target.value)}
- 
+  onChange={(e) => getUser(e)}
+ value={user}
   name="p_user"
   ref={register({ required: true })}
   placeholder="Enter User Id"

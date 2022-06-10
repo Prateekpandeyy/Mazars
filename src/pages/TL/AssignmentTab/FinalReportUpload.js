@@ -43,7 +43,7 @@ function DraftReport({ des, loading, setLoading, fianlModal, uploadFinalReport, 
 
   useEffect(() => {
     getClient()
-  }, []);
+  }, [id]);
 
   const onSubmit = (value) => {
     des = false;

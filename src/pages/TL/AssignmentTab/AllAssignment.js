@@ -46,7 +46,7 @@ function AssignmentTab(props) {
   const [report, setReport] = useState();
   const [reportModal, setReportModal] = useState(false);
   const [assignNo, setAssignNo] = useState('');
- 
+  const [qid, setQid] = useState("")
   const [error, setError] = useState(false);
   var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
 
@@ -281,8 +281,7 @@ const resetData = () => {
         if(expectedDate){
          expectedDate= oldDate2.toString().split("-").reverse().join("-")
         }
-        // console.log("finalDate", finalDate)
-        // console.log("expectedDate", expectedDate)
+      
         return(
           <>
           {finalDate ? 
@@ -297,20 +296,7 @@ const resetData = () => {
       dataField: "tp_name",
     
     },
-    // {
-    //   text: "Actual date of delivery",
-    //   dataField: "final_date",
-    //   sort: true,
-    
-    //   formatter: function dateFormat(cell, row) {
-       
-    //     var oldDate = row.final_date;
-    //     if (oldDate == null || oldDate == "0000-00-00 00:00:00") {
-    //       return null;
-    //     }
-    //     return oldDate.slice(0, 10).toString().split("-").reverse().join("-");
-    //   },
-    // },
+  
     {
       text: "Deliverable",
       dataField: "",
@@ -398,7 +384,7 @@ const resetData = () => {
              
               <p
                 style={{ display: "flex", flexDirection: "column" , cursor: "pointer", color: "green" }}
-                onClick={() => uploadDraftReport(row.id)}
+                onClick={() => uploadDraftReport(row)}
               >
                <DraftReportUploadIcon />
                 draft
@@ -459,15 +445,18 @@ const resetData = () => {
   // draft modal
  
   const uploadDraftReport = (id) => {
+    console.log("sss", id.q_id)
     if(typeof(id) == "object"){
       
       let des = true;
+      setQid(id.q_id)
       setLoading(false)
       setDraftModal(!draftModal);
     }
     else{
       setDraftModal(!draftModal);
-      setId(id);
+      setId(id.id);
+     
     }
   
   };
@@ -709,7 +698,7 @@ else{
               <button type="submit" class="customBtn mx-sm-1 mb-2">
                 Search
               </button>
-}
+
               <Reset />
             </div>
           </form>
@@ -735,6 +724,7 @@ else{
             loading = {loading}
             setLoading = {setLoading}
             des = {des}
+            qno = {qid}
           />
 
           <FinalReportUpload

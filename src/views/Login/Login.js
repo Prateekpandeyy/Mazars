@@ -217,6 +217,16 @@ history.push("/customer/signup")
    showCook()
   }
 }
+const getUser = (e) => {
+  var regEx = /^[0-9a-zA-Z]+$/;
+  if(e.target.value.match(regEx)){
+    setUser(e.target.value.toUpperCase())
+  }
+  else{
+    setUser("")
+  }
+ 
+}
   return (
     <>
  
@@ -311,8 +321,8 @@ history.push("/customer/signup")
   <label className="form-label">User Id<span className="declined">*</span></label>
   <input
     type="text"
-    onChange={(e) => setUser(e.target.value)}
-   
+    onChange={(e) => getUser(e)}
+   value={user}
     name="p_user"
     ref={register({ required: true })}
     placeholder="Enter User Id"

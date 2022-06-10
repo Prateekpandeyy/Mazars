@@ -81,7 +81,7 @@ function NewPassword(props) {
     setLoading(true)
 
     let formData = new FormData();
-    formData.append("user_id", value.p_user);
+    formData.append("user_id", props.history.location.index);
     formData.append("email", value.p_email);
     formData.append("code", value.p_code);
     formData.append("password", value.p_password);
@@ -110,6 +110,16 @@ function NewPassword(props) {
         ShowError.LoadingError(setLoading)
       });
   };
+  const getUser = (e) => {
+    var regEx = /^[0-9a-zA-Z]+$/;
+    if(e.target.value.match(regEx)){
+      setUser(e.target.value.toUpperCase())
+    }
+    else{
+      setUser("")
+    }
+   
+  }
 
   return (
     <>
@@ -131,8 +141,9 @@ function NewPassword(props) {
 <label className="form-label">User Id<span className="declined">*</span></label>
 <input
   type="text"
-  onChange={(e) => setUser(e.target.value)}
- 
+  onChange={(e) => getUser(e)}
+ value={props.history.location.index}
+ disabled
   name="p_user"
   ref={register({ required: true })}
   placeholder="Enter User Id"
@@ -152,6 +163,7 @@ function NewPassword(props) {
                       "is-invalid": errors.p_email,
                     })}
                     name="p_email"
+                    disabled
                     placeholder="Enter Email"
                     defaultValue={id}
                     ref={register({

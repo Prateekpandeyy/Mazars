@@ -30,6 +30,9 @@ function VerifyOTP({ email, uid, time, setLoad,
             e.target.value = ""
             noSetText("Please enter number only.")
         }
+        else{
+            noSetText("")
+        }
     }
 
     const onSubmit = (value) => {

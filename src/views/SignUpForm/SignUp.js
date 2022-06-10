@@ -584,7 +584,16 @@ else{
     }
 
   }
-
+const getUser = (e) => {
+  var regEx = /^[0-9a-zA-Z]+$/;
+  if(e.target.value.match(regEx)){
+    setUser(e.target.value.toUpperCase())
+  }
+  else{
+    setUser("")
+  }
+ 
+}
   return (
     <>
       <OuterloginContainer>
@@ -607,7 +616,8 @@ else{
   <label className="form-label">User Id<span className="declined">*</span></label>
   <input
     type="text"
-    onChange={(e) => setUser(e.target.value.toUpperCase())}
+    autoComplete="off"
+    onChange={(e) => getUser(e)}
     onBlur={() => validateUser()}
     name="p_user"
     value={user}
@@ -917,7 +927,7 @@ including at least one upper case, lower case, special character
 and number
                     </label>
                     <div className="row">
-                      <div className="col-md-12">
+                      <div className="col-md-6">
                       <div className="question_query mb-2">
                         <label className="form-label">
                           Optional Email 
