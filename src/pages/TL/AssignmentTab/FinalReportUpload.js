@@ -8,7 +8,7 @@ import Swal from "sweetalert2";
 import { Spinner } from 'reactstrap';
 import Select from "react-select";
 
-function DraftReport({ des, loading, setLoading, fianlModal, uploadFinalReport, id, getAssignmentList }) {
+function DraftReport({ des, qno, loading, setLoading, fianlModal, uploadFinalReport, id, getAssignmentList }) {
   const alert = useAlert();
   const { handleSubmit, register, reset } = useForm();
   const token = window.localStorage.getItem("tlToken")
@@ -22,7 +22,7 @@ function DraftReport({ des, loading, setLoading, fianlModal, uploadFinalReport, 
   const getClient = () => {
     let collectData = []
     axios.get(
-      `${baseUrl}/tl/querycustomers?query_id=${id}`, myConfig
+      `${baseUrl}/tl/querycustomers?query_id=${qno}`, myConfig
     )
     .then((res) => {
       let email = {}
@@ -43,7 +43,7 @@ function DraftReport({ des, loading, setLoading, fianlModal, uploadFinalReport, 
 
   useEffect(() => {
     getClient()
-  }, [id]);
+  }, [fianlModal]);
 
   const onSubmit = (value) => {
     des = false;

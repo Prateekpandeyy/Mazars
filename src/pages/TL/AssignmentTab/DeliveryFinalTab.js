@@ -49,6 +49,7 @@ function AssignmentTab() {
 
     const [report, setReport] = useState();
     const [reportModal, setReportModal] = useState(false);
+    const [qid, setQid] = useState("")
     var rowStyle2 = {}
     var clcomp= {
         color: "green"
@@ -143,6 +144,7 @@ function AssignmentTab() {
         else{
           setFianlModal(!fianlModal);
               setFinalId(id);
+              setQid(id.q_id)
         }
             
             };
@@ -583,6 +585,7 @@ const ViewReport = (key) => {
             loading = {loading}
             setLoading = {setLoading}
             des = {des}
+            qno = {qid}
           />
                 </CardBody>
             </Card>

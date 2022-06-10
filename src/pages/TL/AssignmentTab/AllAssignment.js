@@ -48,9 +48,11 @@ function AssignmentTab(props) {
   const [assignNo, setAssignNo] = useState('');
   const [qid, setQid] = useState("")
   const [error, setError] = useState(false);
+  const [ViewDiscussion, setViewDiscussion] = useState(false);
+  const [item] = useState(current_date);
   var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
 
-  const [item] = useState(current_date);
+ 
   let des = false;
   var rowStyle2 = {}
   const ViewReport = (key) => {
@@ -62,7 +64,7 @@ function AssignmentTab(props) {
 
   
   
-  const [ViewDiscussion, setViewDiscussion] = useState(false);
+ 
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key)
@@ -447,8 +449,6 @@ const resetData = () => {
   const uploadDraftReport = (id) => {
     console.log("sss", id.q_id)
     if(typeof(id) == "object"){
-      
-      let des = true;
       setQid(id.q_id)
       setLoading(false)
       setDraftModal(!draftModal);
@@ -465,15 +465,15 @@ const resetData = () => {
   // final modal
   
     const uploadFinalReport = (id) => {
+      console.log("iddd", id)
 if(id && id.id === undefined){
-    
-  let des = true;
   setLoading(false)
   setFianlModal(!fianlModal);
 }
 else{
   setFianlModal(!fianlModal);
       setFinalId(id);
+      setQid(id.q_id)
 }
     
     };
@@ -735,6 +735,7 @@ else{
             loading = {loading}
             setLoading = {setLoading}
             des = {des}
+            qno = {qid}
           />
 
 

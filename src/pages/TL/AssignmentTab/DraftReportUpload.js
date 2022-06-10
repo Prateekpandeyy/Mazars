@@ -16,6 +16,7 @@ function DraftReport({ loading, qno,  setLoading, draftModal, uploadDraftReport,
   const [client, setClient] = useState([])
   const [email, setEmail] = useState("")
   const token = window.localStorage.getItem("tlToken")
+  console.log("qno", qno)
   const myConfig = {
     headers : {
      "uit" : token

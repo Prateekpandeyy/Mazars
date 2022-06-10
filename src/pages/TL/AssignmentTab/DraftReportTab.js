@@ -45,6 +45,7 @@ function AssignmentTab() {
     const [dataItem, setDataItem] = useState({});
     const [report, setReport] = useState();
     const [reportModal, setReportModal] = useState(false);
+    const [qid, setQid] = useState("")
     const token = window.localStorage.getItem("tlToken")
     const myConfig = {
         headers : {
@@ -63,7 +64,7 @@ function AssignmentTab() {
     
         if(typeof(id) == "object"){
       
-            let des = true;
+          setQid(id.q_id)
             setLoading(false)
             setDraftModal(!draftModal);
           }
@@ -565,6 +566,7 @@ rowStyle2 = (row, index) => {
             loading = {loading}
             setLoading = {setLoading}
             des = {des}
+            qno = {qid}
           />
  <ViewAllReportModal
             ViewReport={ViewReport}
