@@ -24,6 +24,7 @@ const [email, setEmail] = useState([])
           props.setWemail("");
           props.setEmailError(false)
           let formData = new FormData();
+          formData.append("user_id" , props.clientId)
           formData.append("email", email);
           formData.append("type", 1);
     if(props.name === "teamleader" || props.name =="taxprofessional"){
@@ -49,7 +50,7 @@ const [email, setEmail] = useState([])
       
       });
     }
-    else{
+    else if(props.panel === "Clinet" && props.clientId.length > 5){
       axios({
         method: "POST",
         url: `${baseUrl}/customers/validateregistration`,

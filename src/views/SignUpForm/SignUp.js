@@ -70,6 +70,12 @@ const [estate, setEstate] = useState("");
 const [cityState2, setCityValue2] = useState("")
 const [dstate2, setDstate2] = useState("")
 const [myCount, setMyCount] = useState(101)
+const [user, setUser] = useState("")
+const [userError, setUserError] = useState("")
+const [userAvailable, setUserAvailable] = useState({
+  flag : "",
+  message : ""
+})
   //Css
   const CountryNumStyle = {
     "display": "flex",
@@ -376,6 +382,7 @@ useEffect(() => {
 
 
     let formData = new FormData();
+    formData.append("user_id", user);
     formData.append("name", value.p_name);
     formData.append("email", email2);
     formData.append("emailmultiple", JSON.stringify(value.p_email));
@@ -397,6 +404,7 @@ useEffect(() => {
     if (display === true && subm === false) {
       setLoading(true)
       let formData = new FormData();
+      formData.append("user_id", user)
       formData.append("email", email2);
       formData.append("phone", phone);
       formData.append("p", "registration");
@@ -435,8 +443,11 @@ useEffect(() => {
             setLoading(false)
             var variable = "Signup successfully."
             Alerts.SuccessNormal(variable)
-            localStorage.setItem("userid", JSON.stringify(response.data.id));
-            localStorage.setItem("custEmail", JSON.stringify(response.data.user_id));
+            localStorage.setItem("userid", JSON.stringify(response.data.user_id));
+                    sessionStorage.setItem("userIdsession", JSON.stringify(response.data.user_id));
+                    localStorage.setItem("custEmail", JSON.stringify(response.data.name));
+               localStorage.setItem("clientName", JSON.stringify(response.data.dispalyname))
+                    localStorage.setItem("clientToken", response.data.token)
             props.history.push("/customer/select-category");
           } else if (response.data.code === 0) {
             setLoading(false)
@@ -474,7 +485,31 @@ useEffect(() => {
     }
     setDstate2(key)
   }
-
+const validateUser = (e) => {
+  let formData = new FormData()
+  if(user.length < 6){
+    setUserError("Please enter atleast 6 digit user id")
+  }
+  else if(user.length > 16){
+    setUserError("Id could not be greater than 16 number")
+  }
+  else{
+setUserError("")
+formData.append("user_id", user);
+axios({
+  method: "POST",
+  url: `${baseUrl}/customers/validateuserid`,
+  data: formData,
+})
+.then((res) => {
+  console.log("user", res)
+  setUserAvailable({
+    code : res.data.code,
+    message : res.data.result
+  })
+})
+  }
+}
 // getEmailValue 
 const emailHandler = (e) => {
 console.log("eee", e.target.value)
@@ -492,7 +527,7 @@ setEmailmulti2(e.target.value)
     
     setEmailErrormulti(false)
       let formData = new FormData();
-      formData.append("email", email2);
+      formData.append("email", email2multi2);
       formData.append("type", 1);
 if(props.name === "teamleader" || props.name =="taxprofessional"){
   axios({
@@ -566,6 +601,34 @@ else{
             <div>
               <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
                 <div className="row">
+                <div className="col-md-6">
+
+<div className="mb-3">
+  <label className="form-label">User Id<span className="declined">*</span></label>
+  <input
+    type="text"
+    onChange={(e) => setUser(e.target.value.toUpperCase())}
+    onBlur={() => validateUser()}
+    name="p_user"
+    value={user}
+    ref={register({ required: true })}
+    placeholder="Enter Name"
+    className={classNames("form-control", {
+      "is-invalid": errors.p_user || userError.length > 0,
+    })}
+  />
+  {
+  userError.length > 0 ?
+  <p className="declined">{userError}</p>  : ""
+}
+{
+  userAvailable.flag === 0 ?
+  <p className="declined">{userAvailable.message}</p> : 
+  <p className="completed">{userAvailable.message}</p>
+}
+</div>
+
+</div>
                   <div className="col-md-6">
 
                     <div className="mb-3">
@@ -583,55 +646,33 @@ else{
                   </div>
 
                   <div className="col-md-6">
-                      <div className="question_query mb-2">
-                        <label className="form-label">
-                          Optional Email 
-                        </label>
-                        <div
-                          className="btn queryPlusIcon"
-                          onClick={() => append({ query: "" })}
-                        >
-                          +
-                        </div>
-                      </div>
+                  
+                  <div className="mb-3">
+  
+  <label className="form-label">Email<span className="declined">*</span></label>
+ <EmailValidation
+ setWemail = {setWemail}
+  wEmail = {wEmail} 
+  invalid = {invalid}
+   setEmailError = {setEmailError}
+    setValiemail = {setValiemail} 
+    emailError = {emailError} 
+    setInvalid = {setInvalid} 
+    clientId = {user} 
+    panel = "Clinet"
+    setEmail2 = {setEmail2} />
+  {
+    wEmail ? <p className="declined">{wEmail}</p> : <>
+      {valiEmail ?
+        <p className="completed">
+          {valiEmail}
+        </p>
+        :
+        <p className="declined">{invalid}</p>}
+    </>
+  }
 
-                      {fields.length > 0 &&
-                        fields.map((item, index) => (
-                          <div
-                            className="question_query_field mb-2"
-                            key={item.id}
-                          >
-                            <input
-                            name={`p_email[${index}].query`}
-                          
-                           className={classNames("form-control", {
-                             "is-invalid": errors.p_email || props.emailErrorMulti === true || props.wEmailmulti || props.invalid,
-                           })}
-                           onChange={(e) => emailHandler(e)}
-                           onBlur={(e) => emailValidation(e)}
-                           placeholder="Enter Your Email"
-                           ref={register()}
-                            
-                            />
-                            
-                            <div
-                              className="btn queryPlusIcon ml-2"
-                              onClick={() => remove(index)}
-                            >
-                              -
-                            </div>
-                          </div>
-                        ))}
-                      {
-                        wEmailmulti ? <p className="declined">{wEmailmulti}</p> : <>
-                          {valiEmailMulti ?
-                            <p className="completed">
-                              {valiEmailMulti}
-                            </p>
-                            :
-                            <p className="declined">{invalidMulti}</p>}
-                        </>
-                      }
+</div>                  
                     </div>
 
                   <div className="col-md-6">
@@ -645,7 +686,7 @@ else{
                         name="p_profession"
                         aria-label="Default select example"
                         ref={register({ required: true })}
-                        value={countryId}
+                       
                       >
                         <option value="">--select--</option>
                         {professionName.map((p, index) => (
@@ -721,7 +762,7 @@ else{
                   </div>
 
                   <div className="col-md-6">
-                    <div className="mb-3">
+                  <div className="mb-3">
                       <label className="form-label">Mobile number<span className="declined">*</span></label>
                       <div className="mobNumber" style={{ "display": "flex" }}>
                         <select
@@ -792,32 +833,7 @@ else{
                     </div>
                     <p className="declined">{zipError}</p>
                   </div>
-<div className="col-md-6">
-  <div className="mb-3">
-  
-                      <label className="form-label">Email<span className="declined">*</span></label>
-                     <EmailValidation
-                     setWemail = {setWemail}
-                      wEmail = {wEmail} 
-                      invalid = {invalid}
-                       setEmailError = {setEmailError}
-                        setValiemail = {setValiemail} 
-                        emailError = {emailError} 
-                        setInvalid = {setInvalid}  
-                        setEmail2 = {setEmail2} />
-                      {
-                        wEmail ? <p className="declined">{wEmail}</p> : <>
-                          {valiEmail ?
-                            <p className="completed">
-                              {valiEmail}
-                            </p>
-                            :
-                            <p className="declined">{invalid}</p>}
-                        </>
-                      }
-                   
-    </div>
-  </div>
+
                   <div class="col-md-6">
                     <div className="mb-3">
                       <label className="form-label">Password<span className="declined">*</span></label>
@@ -893,7 +909,69 @@ else{
                     </div>
                   </div>
 
-                  {
+                
+                  <div className="col-md-12">
+                    <label>
+                     Choose a password that should be minimum of eight characters,
+including at least one upper case, lower case, special character
+and number
+                    </label>
+                    <div className="row">
+                      <div className="col-md-12">
+                      <div className="question_query mb-2">
+                        <label className="form-label">
+                          Optional Email 
+                        </label>
+                        <div
+                          className="btn queryPlusIcon"
+                          onClick={() => append({ query: "" })}
+                        >
+                          +
+                        </div>
+                      </div>
+
+                      {fields.length > 0 &&
+                        fields.map((item, index) => (
+                          <div
+                            className="question_query_field mb-2"
+                            key={item.id}
+                          >
+                            <input
+                            name={`p_email[${index}].query`}
+                          
+                           className={classNames("form-control", {
+                             "is-invalid": errors.p_email || props.emailErrorMulti === true || props.wEmailmulti || props.invalid,
+                           })}
+                           onChange={(e) => emailHandler(e)}
+                       
+                           placeholder="Enter Your Email"
+                           ref={register()}
+                            
+                            />
+                            
+                            <div
+                              className="btn queryPlusIcon ml-2"
+                              onClick={() => remove(index)}
+                            >
+                              -
+                            </div>
+                          </div>
+                        ))}
+                      {
+                        wEmailmulti ? <p className="declined">{wEmailmulti}</p> : <>
+                          {valiEmailMulti ?
+                            <p className="completed">
+                              {valiEmailMulti}
+                            </p>
+                            :
+                            <p className="declined">{invalidMulti}</p>}
+                        </>
+                      }
+                        </div>
+                      </div>
+
+                    </div>
+                    {
                     show ?
                       <div class="col-md-6">
                         <div className="mb-3">
@@ -921,13 +999,6 @@ else{
                       </div>
                       : null
                   }
-                  <div className="col-md-12">
-                    <label>
-                     Choose a password that should be minimum of eight characters,
-including at least one upper case, lower case, special character
-and number
-                    </label>
-                    </div>
                 <div style={{display: "flex", width: "100%", justifyContent: "center"}}>
                 {
                     loading ?
@@ -962,6 +1033,7 @@ and number
                     wEmail={wEmail} zipError={zipError} 
                     setLoading={setLoading} loading={loading}
                     display={display}
+                    clientId = {user}
                     emailError={emailError}
                     phoneError={phoneError} zipError1={zipError1} />
                   :

@@ -39,7 +39,7 @@ function NewPassword(props) {
   const [time, setTime] = useState('')
   const [disabled, setDisabled] = useState(false)
   const [load, setLoad] = useState(true);
-
+  const [user, setUser] = useState("")
   const togglePasssword = () => {
     setPasswordShow(!isPasswordShow)
   };
@@ -81,7 +81,7 @@ function NewPassword(props) {
     setLoading(true)
 
     let formData = new FormData();
-   
+    formData.append("user_id", value.p_user);
     formData.append("email", value.p_email);
     formData.append("code", value.p_code);
     formData.append("password", value.p_password);
@@ -124,7 +124,25 @@ function NewPassword(props) {
               <h2>Reset Password</h2>
             </div>
             <div className="row">
+<div className="col-md-12">
+<div className="mb-3">
 
+
+<label className="form-label">User Id<span className="declined">*</span></label>
+<input
+  type="text"
+  onChange={(e) => setUser(e.target.value)}
+ 
+  name="p_user"
+  ref={register({ required: true })}
+  placeholder="Enter User Id"
+  className={classNames("form-control", {
+    "is-invalid": errors.p_user 
+  })}
+/>
+
+</div>
+  </div>
               <div className="col-md-12">
                 <div className="mb-3">
                   <label className="form-label">Email<span className="declined">*</span></label>

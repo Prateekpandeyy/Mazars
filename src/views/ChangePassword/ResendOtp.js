@@ -6,7 +6,7 @@ import Alerts from "../../common/Alerts";
 import ShowError from "../../components/LoadingTime/LoadingTime";
 
 
-function ResendOtp({ email, setDisabled, getTime, setLoad, setLoading, loading }) {
+function ResendOtp({ email, clientId, uit,  setDisabled, getTime, setLoad, setLoading, loading }) {
     const userId = window.localStorage.getItem("userid");
 
     const { handleSubmit, errors, reset } = useForm();
@@ -16,10 +16,14 @@ function ResendOtp({ email, setDisabled, getTime, setLoad, setLoading, loading }
         let formData = new FormData();
         formData.append("email", email);
         formData.append("uid", JSON.parse(userId));
+        formData.append("user_id", clientId)
 
         axios({
             method: "POST",
-            url: `${baseUrl}/customers/regenrateotp`,
+            url: `${baseUrl}/customers/regenrateotpchange`,
+            headers : {
+                uit : uit
+            },
             data: formData,
         })
             .then(function (response) {

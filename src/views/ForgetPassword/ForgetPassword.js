@@ -37,7 +37,7 @@ function ForgetPassword(props) {
     resolver: yupResolver(Schema),
   });
   const [loading, setLoading] = useState(false);
-
+  const [user, setUser] = useState("")
 
   const onSubmit = (value) => {
    
@@ -46,7 +46,7 @@ function ForgetPassword(props) {
     let formData = new FormData();
     formData.append("email", value.p_email);
     formData.append("p", "forgot");
-
+    formData.append("user_id", value.p_user);
     axios({
       method: "POST",
       url: `${baseUrl}/customers/forgototp`,
@@ -92,6 +92,23 @@ function ForgetPassword(props) {
 
          
               <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
+              <div className="mb-3">
+
+
+<label className="form-label">User Id<span className="declined">*</span></label>
+<input
+  type="text"
+  onChange={(e) => setUser(e.target.value)}
+ 
+  name="p_user"
+  ref={register({ required: true })}
+  placeholder="Enter User Id"
+  className={classNames("form-control", {
+    "is-invalid": errors.p_user 
+  })}
+/>
+
+</div>
                 <div className="mb-3">
                   <label className="form-label">Email<span className="declined">*</span></label>
                   <input

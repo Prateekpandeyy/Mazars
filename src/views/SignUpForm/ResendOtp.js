@@ -7,7 +7,7 @@ import Alerts from "../../common/Alerts";
 import { Spinner } from 'reactstrap';
 
 
-function ResendOtp({ invalid, wEmail, disabled, indNumError, zipError, passError, email,
+function ResendOtp({ invalid, wEmail, disabled, clientId, indNumError, zipError, passError, email,
     phone, setDisabled, getTime, setLoad, loading, emailError, phoneError, zipError1, setLoading }) {
 
     const { handleSubmit, errors, reset } = useForm();
@@ -22,6 +22,7 @@ function ResendOtp({ invalid, wEmail, disabled, indNumError, zipError, passError
                 formData.append("email", email);
                 formData.append("phone", phone);
                 formData.append("p", "registration");
+                formData.append("user_id", clientId)
         
                 if (invalid || wEmail || indNumError || zipError || passError) {
                     

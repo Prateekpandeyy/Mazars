@@ -28,6 +28,7 @@ function ChangePassword(props) {
   const [time, setTime] = useState('')
   const [load, setLoad] = useState(false);
   const [email, setEmail] = useState('');
+  const [user, setUser] = useState("")
   const token = window.localStorage.getItem("clientToken")
 
   useEffect(() => {
@@ -72,20 +73,20 @@ function ChangePassword(props) {
 
     let formData = new FormData();
     formData.append("id", JSON.parse(userId));
-    formData.append("user_id", value.p_email);
+    formData.append("email", value.p_email);
     formData.append("password", value.p_password);
     formData.append("rpassword", value.p_confirm_password);
     formData.append("otp", value.p_otp);
 
-
+   formData.append("user_id", value.p_user);
     if (display) {
       let formData = new FormData();
       formData.append("email", value.p_email);
       formData.append("uid", JSON.parse(userId));
-
+      formData.append("user_id", value.p_user);
       axios({
         method: "POST",
-        url: `${baseUrl}/customers/regenrateotp`,
+        url: `${baseUrl}/customers/regenrateotpchange`,
         headers : {
           uit : token
         },
@@ -154,6 +155,24 @@ function ChangePassword(props) {
 
           <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
             <div className="row">
+            <div className="col-md-12">
+            <div className="mb-3">
+
+
+<label className="form-label">User Id<span className="declined">*</span></label>
+<input
+  type="text"
+  onChange={(e) => setUser(e.target.value)}
+ 
+  name="p_user"
+  ref={register({ required: true })}
+  placeholder="Enter User Id"
+  className={classNames("form-control", {
+    "is-invalid": errors.p_user 
+  })}
+/>
+</div>
+</div>
               <div className="col-md-12">
                 <div className="mb-3">
                   <label className="form-label">Email<span className="declined">*</span></label>
@@ -316,7 +335,7 @@ function ChangePassword(props) {
 
           {
             disabled ?
-              <ResendOtp setDisabled={setDisabled} getTime={getTime}
+              <ResendOtp setDisabled={setDisabled} getTime={getTime} clientId={user} uit={token}
                 email={email} setLoad={setLoad} setLoading={setLoading} loading={loading} />
               :
               null

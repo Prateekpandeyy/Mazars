@@ -49,6 +49,8 @@ function ProposalComponent(props) {
   const [companyName, setCompanyName] = useState([])
   const [dateError, setDateError] = useState(false)
   const [company2, setCompany2] = useState("")
+  const [client, setClient] = useState([])
+  const [email, setEmail] = useState("")
   var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
   const [item] = useState(current_date);
   const token = window.localStorage.getItem("tlToken")
@@ -74,18 +76,43 @@ function ProposalComponent(props) {
       });
   };
   const getCompany = () => {
+   
     axios.get(
       `${baseUrl}/tl/getcompany`, myConfig
     )
     .then((res) => {
-      console.log("response", res)
+      
+    
       setCompanyName(res.data.result)
+    })
+  
+  }
+  const getClient = () => {
+    let collectData = []
+    axios.get(
+      `${baseUrl}/tl/querycustomers?query_id=${id}`, myConfig
+    )
+    .then((res) => {
+      let email = {}
+      console.log("response", res)
+      res.data.result.map((i) => {
+        console.log("iii", i)
+        email = {
+          label : i.email,
+          value : i.email
+        }
+        collectData.push(email)
+        
+      })
+      console.log("data", collectData)
+      setClient(collectData)
     })
   }
 
   useEffect(() => {
    getCompany()
     getQuery();
+    getClient()
   }, []);
 
 
@@ -122,6 +149,7 @@ function ProposalComponent(props) {
     // var arrDate = []
 
     let formData = new FormData();
+    formData.append("emails", email)
     formData.append("assign_no", assingNo);
     formData.append("name", custname);
     formData.append("type", "tl");
@@ -289,7 +317,14 @@ function ProposalComponent(props) {
    
     setInstallment(key)
   }
-
+const clientFun = (e) => {
+  let a = []
+  e.map((i) => {
+    a.push(i.value)
+  })
+  console.log("eee", e)
+  setEmail(a)
+}
   return (
     <>
       <Card>
@@ -470,7 +505,15 @@ function ProposalComponent(props) {
                     disabled
                   />
                 </div>
+                <div class="form-group">
+                  <label>Client</label>
+                  <Select
+                   isMulti={true}
+                   onChange={(e) => clientFun(e)}
+                    options={client}
+                  />
 
+                </div>
                 <div class="form-group">
                   <label>Payment Terms<span className="declined">*</span></label>
                   <Select

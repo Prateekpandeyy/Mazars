@@ -83,6 +83,7 @@ function LoginForm() {
   const [pos,setPos] = useState(1920);   
   const [run, setRun] = useState(true);
   const [showCookie, setShowCookie] = useState(false)
+  const [user, setUser] = useState("")
   let history = useHistory()
   var width = 1920
   const myData = localStorage.getItem("myArticles")
@@ -135,8 +136,9 @@ const latestNews = () => {
 
     setLoading(true)
     let formData = new FormData();
-    formData.append("user_id", value.p_email);
+    formData.append("email", value.p_email);
     formData.append("password", value.p_password);
+    formData.append("user_id", value.p_user);
 
     axios({
       method: "POST",
@@ -300,10 +302,28 @@ history.push("/customer/signup")
                   loading={loading} />
               </div>
                 :
+              
                 <div className="customForm">
                   <form onSubmit={handleSubmit(onSubmit)} className="signInForm"  autoComplete="off">
+                  <div className="form-group passForm ">
+
+
+  <label className="form-label">User Id<span className="declined">*</span></label>
+  <input
+    type="text"
+    onChange={(e) => setUser(e.target.value)}
+   
+    name="p_user"
+    ref={register({ required: true })}
+    placeholder="Enter User Id"
+    className={classNames("form-control", {
+      "is-invalid": errors.p_user 
+    })}
+  />
+
+</div>
                     <div className="form-group">
-                      <label className="form-label">User Id </label>
+                      <label className="form-label">Email</label>
                       <input
                         type="text"
                         className={classNames("form-control", {
@@ -316,7 +336,7 @@ history.push("/customer/signup")
                         onChange={(e) => handleChange(e)}
                       />
                     </div>
-
+                 
                     <div className="form-group passForm ">
                       <label className="form-label">Password </label>
                       <input

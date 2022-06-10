@@ -8,7 +8,7 @@ import CommonServices from "../../common/common";
 
 function NavWrapper(props) {
   const { color, logout, name, email, feedbackNumber} = props;
-
+const clName = JSON.parse(localStorage.getItem("clientName"))
   const history = useHistory();
   const userId = window.localStorage.getItem("userid");
   const adminkey = window.localStorage.getItem("adminkey");
@@ -54,7 +54,7 @@ function NavWrapper(props) {
               </li>
 
               <li style={{zIndex: 99, margin: "auto"}}>
-                <h4 className="contentTitle">{name == "customer" ? CommonServices.capitalizeFirstLetter("client") : CommonServices.capitalizeFirstLetter(name)}: {JSON.parse(email)} </h4>
+                <h4 className="contentTitle">{name == "customer" ? CommonServices.capitalizeFirstLetter("client") : CommonServices.capitalizeFirstLetter(name)}: {clName + " : "} {JSON.parse(email)} </h4>
               </li>
              
             </ul>
