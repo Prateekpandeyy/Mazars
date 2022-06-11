@@ -45,6 +45,8 @@ function EditComponent(props) {
   const [diserror, setdiserror] = useState("")
   const [company2, setCompany2] = useState("")
   const [companyName, setCompanyName] = useState([])
+  const [client, setClient] = useState([])
+  const [email, setEmail] = useState(["pratee@gmail.com", "pr@gmail.com"])
   const history = useHistory();
   const { id } = useParams();
 
@@ -118,6 +120,30 @@ setValue2(res.data.result.description)
     });
   };
 
+  // const getClient = () => {
+  //   let collectData = []
+  //   axios.get(
+  //     `${baseUrl}/tl/querycustomers?query_id=${id}`, myConfig
+  //   )
+  //   .then((res) => {
+  //     let email = {}
+  //     console.log("response", res)
+  //     res.data.result.map((i) => {
+  //       console.log("iii", i)
+  //       email = {
+  //         label : i.email,
+  //         value : i.email
+  //       }
+  //       collectData.push(email)
+        
+  //     })
+  //     console.log("data", collectData)
+  //     setClient(collectData)
+  //   })
+  // }
+  // useEffect(() => {
+  //   getClient()
+  // }, [])
 
   useEffect(() => {
     const getUser = async () => {
@@ -148,6 +174,7 @@ else{
     }
 
     let formData = new FormData();
+    formData.append("email", email)
     formData.append("assign_no", query);
     formData.append("name", name);
     formData.append("type", "tl");
@@ -308,7 +335,14 @@ else{
     setClearValue(false)
   }
 
-
+  const clientFun = (e) => {
+    let a = []
+    e.map((i) => {
+      a.push(i.value)
+    })
+    console.log("eee", e)
+    setEmail(a)
+  }
   return (
     <Layout TPDashboard="TPDashboard" TPuserId={userid}>
       <Card>
@@ -499,7 +533,15 @@ else{
                     ref={register}
                   />
                 </div>
+                <div class="form-group">
+                  <label>Copy to</label>
+                  <Select
+                   isMulti={true}
+                   onChange={(e) => clientFun(e)}
+                    options={client}
+                  />
 
+                </div>
                 <div class="form-group">
                   <label>Payment Terms<span className="declined">*</span></label>
                   <Select

@@ -61,16 +61,16 @@ function AssignmentTab() {
     }
     let des = false;
     const uploadDraftReport = (id) => {
-    
+    console.log("id", id)
         if(typeof(id) == "object"){
-      
+      console.log("id")
           setQid(id.q_id)
             setLoading(false)
             setDraftModal(!draftModal);
           }
           else{
             setDraftModal(!draftModal);
-            setId(id);
+            setId(id.id);
           }
     };
     const ViewDiscussionToggel = (key) => {
@@ -392,7 +392,7 @@ rowStyle2 = (row, index) => {
                    
                     <p
                       style={{ display: "flex", flexDirection: "column" , cursor: "pointer", color: "green" }}
-                      onClick={() => uploadDraftReport(row.id)}
+                      onClick={() => uploadDraftReport(row)}
                     >
                      <DraftReportUploadIcon />
                       draft

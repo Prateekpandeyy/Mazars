@@ -451,12 +451,13 @@ const resetData = () => {
     if(typeof(id) == "object"){
       setQid(id.q_id)
       setLoading(false)
+      setId(id.id);
       setDraftModal(!draftModal);
     }
     else{
       setDraftModal(!draftModal);
+      
       setId(id.id);
-     
     }
   
   };

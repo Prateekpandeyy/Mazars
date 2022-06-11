@@ -506,7 +506,7 @@ const clientFun = (e) => {
                   />
                 </div>
                 <div class="form-group">
-                  <label>Client</label>
+                  <label>Copy to</label>
                   <Select
                    isMulti={true}
                    onChange={(e) => clientFun(e)}
