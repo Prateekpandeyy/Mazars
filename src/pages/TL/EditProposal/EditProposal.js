@@ -48,6 +48,9 @@ function EditComponent(props) {
 const [scopeError, setScopeError] = useState(false)
   const [dateError, setDateError] = useState(false)
   const [company2, setCompany2] = useState("")
+  const [client, setClient] = useState([])
+  const [client2, setClient2] = useState([])
+  const [email, setEmail] = useState([])
   var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
   const [item] = useState(current_date);
   const [proposal, setProposal] = useState({
@@ -93,6 +96,21 @@ const token = window.localStorage.getItem("tlToken")
 
       if (res.data.code === 1) {
         setCompany2(res.data.result.company)
+        var  collectData = []
+        let a = res.data.result.email.split(",")
+       
+        let email = {}
+      a.map((i) => {
+          console.log("iii", i)
+          email = {
+            label : i,
+            value : i
+          }
+          collectData.push(email)
+          console.log("aaa", collectData)
+        })
+        
+        setClient(collectData)
         setProposal({
           name: res.data.result.name,
           query: res.data.result.assign_no,
@@ -131,7 +149,30 @@ setValue2(res.data.result.description)
     getUser();
   }, [id]);
 
-
+const getClient = () => {
+    let collectData = []
+    axios.get(
+      `${baseUrl}/tl/querycustomers?query_id=${id}`, myConfig
+    )
+    .then((res) => {
+      let email = {}
+      console.log("response", res)
+      res.data.result.map((i) => {
+        console.log("iii", i)
+        email = {
+          label : i.email,
+          value : i.email
+        }
+        collectData.push(email)
+        
+      })
+      console.log("data", collectData)
+      setClient2(collectData)
+    })
+  }
+  useEffect(() => {
+    getClient()
+  }, [])
 
 
   const onSubmit = (value) => {
@@ -152,6 +193,7 @@ else{
     }
 console.log("value2", value2.length)
     let formData = new FormData();
+    formData.append("email", email)
     formData.append("assign_no", query);
     formData.append("name", name);
     formData.append("type", "tl");
@@ -312,7 +354,15 @@ console.log("value2", value2.length)
     setClearValue(false)
   }
 let a = <Markup content= {description} />
-
+const clientFun = (e) => {
+  setClient(e)
+  let a = []
+  e.map((i) => {
+    a.push(i.value)
+  })
+  console.log("eee", e)
+  setEmail(a)
+}
   return (
     <Layout TLDashboard="TLDashboard" TLuserId={userid}>
       <Card>
@@ -488,7 +538,16 @@ let a = <Markup content= {description} />
                     disabled
                   />
                 </div>
+                <div class="form-group">
+                  <label>Copy to</label>
+                  <Select
+                   isMulti={true}
+                   onChange={(e) => clientFun(e)}
+                   value={client}
+                    options={client2}
+                  />
 
+                </div>
                 <div class="form-group">
                   <label>Payment Terms<span className="declined">*</span></label>
                   <Select
