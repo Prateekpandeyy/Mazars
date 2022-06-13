@@ -8,7 +8,7 @@ import Swal from "sweetalert2";
 import { Spinner } from 'reactstrap';
 import Select from 'react-select'
 
-function DraftReport({ des, loading, setLoading, fianlModal, uploadFinalReport, id, getAssignmentList }) {
+function DraftReport({ des,  qno, loading, setLoading, fianlModal, uploadFinalReport, id, getAssignmentList }) {
   const alert = useAlert();
   const { handleSubmit, register, reset } = useForm();
   const [client, setClient] = useState([])
@@ -23,7 +23,7 @@ function DraftReport({ des, loading, setLoading, fianlModal, uploadFinalReport, 
     const getClient = () => {
       let collectData = []
       axios.get(
-        `${baseUrl}/tl/querycustomers?query_id=${id}`, myConfig
+        `${baseUrl}/tl/querycustomers?query_id=${qno}`, myConfig
       )
       .then((res) => {
         let email = {}
@@ -44,7 +44,7 @@ function DraftReport({ des, loading, setLoading, fianlModal, uploadFinalReport, 
   
     useEffect(() => {
       getClient()
-    }, []);
+    }, [fianlModal]);
 
     const clientFun = (e) => {
       let a = []
@@ -126,7 +126,7 @@ function DraftReport({ des, loading, setLoading, fianlModal, uploadFinalReport, 
         <ModalHeader toggle={uploadFinalReport}>Final Report</ModalHeader>
         <ModalBody>
           <form onSubmit={handleSubmit(onSubmit)}>
-          <div class="form-group">
+            <div class="form-group">
           <label>Client</label>
                   <Select
                      isMulti={true}

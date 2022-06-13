@@ -53,7 +53,7 @@ function AssignmentTab(props) {
   const [ViewDiscussion, setViewDiscussion] = useState(false);
   const [draftModal, setDraftModal] = useState(false);
   const [fianlModal, setFianlModal] = useState(false);
-  
+  const [qid, setQid] = useState("")
   const [error, setError] = useState(false)
   let des = false;
   var rowStyle2 = {}
@@ -384,7 +384,7 @@ function AssignmentTab(props) {
              
               <p
                 style={{ display: "flex", flexDirection: "column" , cursor: "pointer", color: "green" }}
-                onClick={() => uploadDraftReport(row.id)}
+                onClick={() => uploadDraftReport(row)}
               >
                <DraftReportUploadIcon />
                 draft
@@ -437,17 +437,18 @@ function AssignmentTab(props) {
     return style;
   }
 
-  // draft modal
   const uploadDraftReport = (id) => {
-    if(typeof(id) == "object"){
-      
-      let des = true;
-      setLoading(false)
+    console.log("sss", id.id)
+    if(id.id !== undefined){
+      setQid(id.q_id)
+     
+      setId(id.id);
       setDraftModal(!draftModal);
     }
     else{
       setDraftModal(!draftModal);
-      setId(id);
+      setLoading(false)
+      setId(id.id);
     }
   
   };
@@ -456,20 +457,21 @@ function AssignmentTab(props) {
   // final modal
   
     const uploadFinalReport = (id) => {
+      console.log("iddd", id)
 if(id && id.id === undefined){
-    
-  let des = true;
   setLoading(false)
   setFianlModal(!fianlModal);
 }
 else{
   setFianlModal(!fianlModal);
       setFinalId(id);
+      setQid(id.q_id)
 }
     
     };
+  
+    
 
- 
   const onSubmit = (data) => {
    
     if(hide == 1 || hide == 2){
@@ -698,7 +700,7 @@ else{
               <button type="submit" class="customBtn mx-sm-1 mb-2">
                 Search
               </button>
-}
+
 
               <Reset />
             </div>
@@ -714,7 +716,7 @@ else{
                    columns={columns}>
                     </DataTablepopulated>
 
-          <DraftReportModal
+                    <DraftReportModal
             draftModal={draftModal}
             uploadDraftReport={uploadDraftReport}
             getAssignmentList={getAssignmentList}
@@ -722,6 +724,8 @@ else{
             loading = {loading}
             setLoading = {setLoading}
             des = {des}
+            qno = {qid}
+            setDraftModal={setDraftModal}
           />
 
           <FinalReportUpload
@@ -732,7 +736,10 @@ else{
             loading = {loading}
             setLoading = {setLoading}
             des = {des}
+            setFianlModal={setFianlModal}
+            qno = {qid}
           />
+
 
 
           <ViewAllReportModal

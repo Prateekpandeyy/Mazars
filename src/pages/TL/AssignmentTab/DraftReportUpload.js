@@ -10,13 +10,13 @@ import Select from 'react-select';
 
 
 
-function DraftReport({ loading, qno,  setLoading, draftModal, uploadDraftReport, id, getAssignmentList , des}) {
+function DraftReport({ loading, qno, setDraftModal,  setLoading, draftModal, uploadDraftReport, id, getAssignmentList , des}) {
   const alert = useAlert();
   const { handleSubmit, register, reset } = useForm();
   const [client, setClient] = useState([])
   const [email, setEmail] = useState("")
   const token = window.localStorage.getItem("tlToken")
-  console.log("qno", qno)
+
   const myConfig = {
     headers : {
      "uit" : token
@@ -101,7 +101,7 @@ des = false;
           })
         }
         getAssignmentList();
-        uploadDraftReport();
+       setDraftModal(!draftModal)
       } else if (response.data.code === 0) {
         setLoading(false)
       }

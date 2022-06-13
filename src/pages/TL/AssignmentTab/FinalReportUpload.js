@@ -8,7 +8,7 @@ import Swal from "sweetalert2";
 import { Spinner } from 'reactstrap';
 import Select from "react-select";
 
-function DraftReport({ des, qno, loading, setLoading, fianlModal, uploadFinalReport, id, getAssignmentList }) {
+function DraftReport({ des, qno, loading, setFinalModal, setLoading, fianlModal, uploadFinalReport, id, getAssignmentList }) {
   const alert = useAlert();
   const { handleSubmit, register, reset } = useForm();
   const token = window.localStorage.getItem("tlToken")

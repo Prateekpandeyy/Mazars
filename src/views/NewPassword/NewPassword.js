@@ -82,7 +82,7 @@ function NewPassword(props) {
 
     let formData = new FormData();
     formData.append("user_id", props.history.location.index);
-    formData.append("email", value.p_email);
+    formData.append("email", id);
     formData.append("code", value.p_code);
     formData.append("password", value.p_password);
     formData.append("rpassword", value.p_confirm_password);

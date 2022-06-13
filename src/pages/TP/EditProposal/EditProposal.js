@@ -46,7 +46,8 @@ function EditComponent(props) {
   const [company2, setCompany2] = useState("")
   const [companyName, setCompanyName] = useState([])
   const [client, setClient] = useState([])
-  const [email, setEmail] = useState(["pratee@gmail.com", "pr@gmail.com"])
+  const [client2, setClient2] = useState([])
+  const [email, setEmail] = useState([])
   const history = useHistory();
   const { id } = useParams();
 
@@ -91,6 +92,22 @@ function EditComponent(props) {
     axios.get(`${baseUrl}/tl/getProposalDetail?id=${id}`, myConfig).then((res) => {
       if (res.data.code === 1) {
         setCompany2(res.data.result.company)
+        setEmail(res.data.result.email)
+        var  collectData = []
+        let a = res.data.result.email.split(",")
+       
+        let email = {}
+      a.map((i) => {
+          console.log("iii", i)
+          email = {
+            label : i,
+            value : i
+          }
+          collectData.push(email)
+          console.log("aaa", collectData)
+        })
+        
+        setClient(collectData)
         setProposal({
           name: res.data.result.name,
           query: res.data.result.assign_no,
@@ -174,7 +191,7 @@ else{
     }
 
     let formData = new FormData();
-    formData.append("email", email)
+    formData.append("emails", email)
     formData.append("assign_no", query);
     formData.append("name", name);
     formData.append("type", "tl");
@@ -286,7 +303,30 @@ else{
     
   };
 
-
+  const getClient = () => {
+    let collectData = []
+    axios.get(
+      `${baseUrl}/tl/querycustomers?query_id=${id}`, myConfig
+    )
+    .then((res) => {
+      let email = {}
+      console.log("response", res)
+      res.data.result.map((i) => {
+        console.log("iii", i)
+        email = {
+          label : i.email,
+          value : i.email
+        }
+        collectData.push(email)
+        
+      })
+      console.log("data", collectData)
+      setClient2(collectData)
+    })
+  }
+  useEffect(() => {
+    getClient()
+  }, [])
   const handleChange = (e) => {
 
     if (isNaN(e.target.value)) {
@@ -336,6 +376,7 @@ else{
   }
 
   const clientFun = (e) => {
+    setClient(e)
     let a = []
     e.map((i) => {
       a.push(i.value)
@@ -538,7 +579,8 @@ else{
                   <Select
                    isMulti={true}
                    onChange={(e) => clientFun(e)}
-                    options={client}
+                   value={client}
+                    options={client2}
                   />
 
                 </div>

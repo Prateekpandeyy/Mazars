@@ -10,7 +10,7 @@ import Select from 'react-select'
 
 
 
-function DraftReport({ loading, setLoading, draftModal, uploadDraftReport, id, getAssignmentList , des}) {
+function DraftReport({ loading,  qno, setDraftModal, setLoading, draftModal, uploadDraftReport, id, getAssignmentList , des}) {
   const alert = useAlert();
   const { handleSubmit, register, reset } = useForm();
   const [client, setClient] = useState([])
@@ -21,10 +21,11 @@ function DraftReport({ loading, setLoading, draftModal, uploadDraftReport, id, g
        "uit" : token
       }
     }
+  
     const getClient = () => {
       let collectData = []
       axios.get(
-        `${baseUrl}/tl/querycustomers?query_id=${id}`, myConfig
+        `${baseUrl}/tl/querycustomers?query_id=${qno}`, myConfig
       )
       .then((res) => {
         let email = {}
@@ -45,15 +46,8 @@ function DraftReport({ loading, setLoading, draftModal, uploadDraftReport, id, g
   
     useEffect(() => {
       getClient()
-    }, []);
-    const clientFun = (e) => {
-      let a = []
-      e.map((i) => {
-        a.push(i.value)
-      })
-      console.log("eee", e)
-      setEmail(a)
-    }  
+    }, [draftModal]);
+  
 
 
   const onSubmit = (value) => {
@@ -109,14 +103,21 @@ function DraftReport({ loading, setLoading, draftModal, uploadDraftReport, id, g
           })
         }
         getAssignmentList();
-        uploadDraftReport();
+        setDraftModal(!draftModal)
       } else if (response.data.code === 0) {
         setLoading(false)
       }
 
     });
   };
-
+  const clientFun = (e) => {
+    let a = []
+    e.map((i) => {
+      a.push(i.value)
+    })
+    console.log("eee", e)
+    setEmail(a)
+  }
 
   return (
     <div>

@@ -96,6 +96,7 @@ const token = window.localStorage.getItem("tlToken")
 
       if (res.data.code === 1) {
         setCompany2(res.data.result.company)
+        setEmail(res.data.result.email)
         var  collectData = []
         let a = res.data.result.email.split(",")
        
@@ -193,7 +194,7 @@ else{
     }
 console.log("value2", value2.length)
     let formData = new FormData();
-    formData.append("email", email)
+    formData.append("emails", email)
     formData.append("assign_no", query);
     formData.append("name", name);
     formData.append("type", "tl");

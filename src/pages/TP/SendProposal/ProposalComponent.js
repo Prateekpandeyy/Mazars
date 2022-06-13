@@ -51,7 +51,7 @@ function ProposalComponent(props) {
   const [company2, setCompany2] = useState("")
   const [dateError, setDateError] = useState(false)
   const [client, setClient] = useState([])
-  const [email, setEmail] = useState(["pratee@gmail.com", "pr@gmail.com"])
+  const [email, setEmail] = useState("")
   var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
   const [item] = useState(current_date);
   const token = window.localStorage.getItem("tptoken")
@@ -106,6 +106,7 @@ function ProposalComponent(props) {
       setClient(collectData)
     })
   }
+
 
   useEffect(() => {
    getCompany()
@@ -497,7 +498,7 @@ function ProposalComponent(props) {
                   />
                 </div>
                 <div class="form-group">
-                  <label>Copy to</label>
+                  <label>Copy To</label>
                   <Select
                    isMulti={true}
                    onChange={(e) => clientFun(e)}

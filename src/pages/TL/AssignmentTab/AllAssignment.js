@@ -447,16 +447,16 @@ const resetData = () => {
   // draft modal
  
   const uploadDraftReport = (id) => {
-    console.log("sss", id.q_id)
-    if(typeof(id) == "object"){
+    console.log("sss", id.id)
+    if(id.id !== undefined){
       setQid(id.q_id)
-      setLoading(false)
+     
       setId(id.id);
       setDraftModal(!draftModal);
     }
     else{
       setDraftModal(!draftModal);
-      
+      setLoading(false)
       setId(id.id);
     }
   
@@ -726,6 +726,7 @@ else{
             setLoading = {setLoading}
             des = {des}
             qno = {qid}
+            setDraftModal={setDraftModal}
           />
 
           <FinalReportUpload
@@ -736,6 +737,7 @@ else{
             loading = {loading}
             setLoading = {setLoading}
             des = {des}
+            setFianlModal={setFianlModal}
             qno = {qid}
           />
 
