@@ -450,27 +450,12 @@ const resetData = () => {
   const uploadDraftReport = (id) => {
     let collectData = []
     if(id.id !== undefined){
-      axios.get(`${baseUrl}/tl/getreportemail?id=${id.id}`, myConfig)
-      .then((res) => {
-        let email = {}
-        console.log("response", res)
-        res.data.result.map((i) => {
-          console.log("iii", i)
-          email = {
-            label : i.email,
-            value : i.email
-          }
-          collectData.push(email)
-          
-        })
-        console.log("data", collectData)
-        setClient(collectData)
+      setClient(collectData)
       
         setQid(id.q_id)
      
         setId(id.id);
         setDraftModal(!draftModal);
-      })
     
     }
     else{

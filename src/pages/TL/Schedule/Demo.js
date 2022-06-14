@@ -25,9 +25,8 @@ import * as Cookies from "js-cookie";
 import Swal from "sweetalert2";
 import Alerts from "../../../common/Alerts";
 import Loader from "../../../components/Loader/Loader";
-
-
-
+import {FcInvite }from 'react-icons/fc';
+import InviteModal from "./InviteModal";
 function Demo() {
   const userId = window.localStorage.getItem("tlkey");
   const userEmail = window.localStorage.getItem("tlEmail")
@@ -38,8 +37,10 @@ function Demo() {
   const [data, setData] = useState([]);
   const [assignmentdata, setAssignmentData] = useState([]);
   const [owner, setOwner] = useState([]);
+  const [invite, setInvite] = useState(false)
   const [read, setRead] = useState(false);
   const [client, setClient] = useState([])
+  const [inviteData, setInviteData] = useState()
   const [baseMode, SetbaseMode] = useState("avc");
   const [transcode, SetTranscode] = useState("interop");
   const [attendeeMode, SetAttendeeMode] = useState("video");
@@ -98,9 +99,9 @@ function Demo() {
     )
     .then((res) => {
       let email = {}
-      console.log("response", res)
+     
       res.data.result.map((i) => {
-        console.log("iii", i)
+       
         email = {
           label : i.email,
           value : i.email
@@ -108,7 +109,7 @@ function Demo() {
         collectData.push(email)
         
       })
-      console.log("data", collectData)
+     
       setClient(collectData)
     })
   }
@@ -183,7 +184,14 @@ function Demo() {
   const B = (key) => {
     setRead(!key)
   }
-
+const showInvite = (data) => {
+  console.log("data", data)
+  if(data){
+    setInviteData(data)
+  }
+  setInvite(!invite)
+ 
+}
   const AppointmentBase = ({
     children,
     data,
@@ -201,8 +209,18 @@ function Demo() {
             class="fa fa-video-camera"
             style={{ fontSize: "18px", padding: "5px" , color: "#fff" }}
           ></i>
+        
           <div>{children}</div>
-          
+          <span onClick = {() => showInvite(data)}>
+          <i class="fa fa-user-plus"
+            style={{ fontSize: "18px", padding: "5px" , color: "#fff" }}
+          ></i>
+          </span>
+          {/* <i
+          onClick={() => handleJoin(data)}
+            class="fa fa-video-camera"
+            style={{ fontSize: "18px", padding: "5px" , color: "#fff" }}
+          ></i> */}
         </div>
       </Appointments.Appointment>
     </div>
@@ -300,10 +318,10 @@ history.push(`/teamleader/meeting/${data.id}`);
   };
 
   const changeFormat = (d) => {
-    console.log("d ---", d);
+    
 
     if (typeof d === 'object') {
-      console.log("GMT");
+     
       return (
         d.getFullYear() +
         "-" +
@@ -314,7 +332,7 @@ history.push(`/teamleader/meeting/${data.id}`);
         d.toString().split(" ")[4]
       );
     } else {
-      console.log("d");
+     
       return d;
     }
   };
@@ -323,8 +341,7 @@ history.push(`/teamleader/meeting/${data.id}`);
 
     if (added) {
       setLoading(true)
-      console.log("added - ", added);
-console.log("cancle", cancel)
+
       var startDate = added.startDate;
       var endDate = added.endDate;
 
@@ -346,7 +363,7 @@ console.log("cancle", cancel)
         data: formData,
       })
         .then(function (response) {
-          console.log("res post-", response);
+         
           if (response.data.code === 1) {
             setLoading(false)
             Alerts.SuccessNormal("New call scheduled successfully.")
@@ -359,22 +376,22 @@ console.log("cancle", cancel)
           getData();
         })
         .catch((error) => {
-          console.log("erroror - ", error);
+         
         });
     }
     if (changed) {
-      console.log("changed", changed);
+     
       setLoading(true)
       const data2 = data.map((appointment) =>
         changed[appointment.id]
           ? { ...appointment, ...changed[appointment.id] }
           : appointment
       );
-      console.log("data2 - ", data2);
+     
 
       let valuesArray = Object.entries(changed);
       let id = valuesArray[0][0];
-      console.log("id -", id);
+     
       let dataIttem;
 
       for (var i = 0; i < data2.length; i++) {
@@ -382,7 +399,7 @@ console.log("cancle", cancel)
           dataIttem = data2[i];
         }
       }
-      console.log("owner", dataIttem.owner);
+     
 
       var a = dataIttem.startDate
       var b = dataIttem.endDate
@@ -412,7 +429,7 @@ console.log("cancle", cancel)
         data: formData,
       })
         .then(function (response) {
-          console.log("res post-", response);
+          
 
           if (response.data.code === 1) {
             setLoading(false)
@@ -420,30 +437,29 @@ console.log("cancle", cancel)
             Alerts.SuccessNormal(msg)
           }
           else if (response.data.code === 0) {
-            setLoading(false)
-            console.log("call 0 code")
+            setLoading(false) 
             var msg = response.data.result
             Alerts.ErrorNormal(msg)
           }
           getData();
         })
         .catch((error) => {
-          console.log("erroror - ", error);
+          
         });
     }
 
     if (deleted !== undefined) {
-      console.log("deleted", deleted);
+     
       setLoading(true)
       var value;
       data.filter((data) => {
         if (data.id == deleted) {
-          console.log("owner", data.owner);
+        
           value = data.owner
         }
       });
 
-      // console.log("value", value);
+     
       if (!value) {
         var variable = "Error"
         Alerts.ErrorDelete(variable)
@@ -490,7 +506,7 @@ console.log("cancle", cancel)
 
   //basic layout
   const BasicLayout = ({ onFieldChange, appointmentData, ...restProps }) => {
-    console.log("appointmentData", appointmentData);
+    
     return (
       <AppointmentForm.BasicLayout
         appointmentData={appointmentData}
@@ -566,6 +582,13 @@ console.log("cancle", cancel)
           </>
           
       }
+     {
+       invite === true ?
+       <InviteModal 
+       inviteData = {inviteData}
+       showInvite = {showInvite}
+       invite={invite} /> : ""
+     }
     </>
   );
 }
