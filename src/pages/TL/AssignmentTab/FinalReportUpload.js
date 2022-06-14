@@ -146,7 +146,7 @@ const selectedUser = () => {
         <ModalBody>
           <form onSubmit={handleSubmit(onSubmit)}>
           <div class="form-group">
-          <label>Client</label>
+          <label>Copy To</label>
           <Select
                      isMulti={true}
                      onChange={(e) => clientFun(e)}

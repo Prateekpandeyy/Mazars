@@ -146,7 +146,7 @@ function DraftReport({ des,  qno, loading, setLoading, fianlModal, uploadFinalRe
         <ModalBody>
           <form onSubmit={handleSubmit(onSubmit)}>
             <div class="form-group">
-          <label>Client</label>
+          <label>Copy To</label>
           <Select
                      isMulti={true}
                      onChange={(e) => clientFun(e)}

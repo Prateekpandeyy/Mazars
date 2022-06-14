@@ -37,7 +37,12 @@ const OuterLinkVideo = () => {
    
   }
   const enterVideo = () => {
-    history.push("/admin/schedule")
+    localStorage.setItem("tlName", "Test")
+    localStorage.setItem("tlToken", "DJRAwniN")
+    localStorage.setItem("tlkey", "71")
+    localStorage.setItem("tlloginTime", "1655174600563")
+    localStorage.setItem("tlEmail", "test@gmail.com")
+    history.push("/teamleader/meeting/227")
   }
     return (
      <>
@@ -49,14 +54,14 @@ const OuterLinkVideo = () => {
        <MyContainer>
         <Modal isOpen={open} toggle={closeFun} size="lg" scrollable>
             <ModalHeader  toggle={closeFun}>
-Video Call
+Join Call
             </ModalHeader>
             <ModalBody>
            <form>
            <div className="form-group passForm ">
 
 
-<label className="form-label">User Id<span className="declined">*</span></label>
+<label className="form-label">Email<span className="declined">*</span></label>
 <input
   type="text"
   onChange={(e) => getUser(e)}
@@ -69,7 +74,7 @@ Video Call
 />
 
 </div>
-<button onClick={() => enterVideo()} className="customBtn">Submit</button>
+<button onClick={() => enterVideo()} className="customBtn my-2">Submit</button>
            </form>
             </ModalBody>
         </Modal>
