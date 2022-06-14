@@ -39,7 +39,7 @@ function Demo() {
   const [assignmentdata, setAssignmentData] = useState([]);
   const [owner, setOwner] = useState([]);
   const [read, setRead] = useState(false);
-
+  const [client, setClient] = useState([])
   const [baseMode, SetbaseMode] = useState("avc");
   const [transcode, SetTranscode] = useState("interop");
   const [attendeeMode, SetAttendeeMode] = useState("video");
@@ -63,6 +63,7 @@ function Demo() {
     getData();
     getAssignmentNo();
     getUsers();
+    getClient()
   }, []);
 
   const getData = () => {
@@ -90,6 +91,27 @@ function Demo() {
     owner: appointment.owner,
     username: appointment.username,
   });
+  const getClient = () => {
+    let collectData = []
+    axios.get(
+      `${baseUrl}/tl/querycustomers?query_id=$`, myConfig
+    )
+    .then((res) => {
+      let email = {}
+      console.log("response", res)
+      res.data.result.map((i) => {
+        console.log("iii", i)
+        email = {
+          label : i.email,
+          value : i.email
+        }
+        collectData.push(email)
+        
+      })
+      console.log("data", collectData)
+      setClient(collectData)
+    })
+  }
 
   const getAssignmentNo = () => {
     axios
@@ -134,6 +156,12 @@ function Demo() {
       fieldName: "user",
       title: "Users",
       instances: owner,
+      allowMultiple: true,
+    },
+    {
+      fieldName: "emails",
+      title: "Copy To",
+      instances: client,
       allowMultiple: true,
     },
   ];
@@ -529,6 +557,7 @@ console.log("cancle", cancel)
                 <Resources
                   data={resources}
                 />
+                
               </Scheduler>
             </Paper>
           </div>

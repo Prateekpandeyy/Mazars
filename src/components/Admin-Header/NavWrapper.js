@@ -54,7 +54,7 @@ const clName = JSON.parse(localStorage.getItem("clientName"))
               </li>
 
               <li style={{zIndex: 99, margin: "auto"}}>
-                <h4 className="contentTitle">{name == "customer" ? `Client : User Id - ${clName} `  : CommonServices.capitalizeFirstLetter(name)}:  {JSON.parse(email)} </h4>
+                <h4 className="contentTitle">{name == "customer" ? `Client :  ${clName} `  : CommonServices.capitalizeFirstLetter(name)}:  {JSON.parse(email)} </h4>
               </li>
              
             </ul>

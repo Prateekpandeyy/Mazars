@@ -55,6 +55,7 @@ function VerifyOTP({ email, uid, time, setLoad,
 localStorage.setItem("loginTime", timeStampInMs)
                     setLoading(false)
                     Alerts.SuccessLogin("Login successfully.")
+                    localStorage.setItem("clientLoginId", JSON.stringify(response.data.loginuid))
                     localStorage.setItem("userid", JSON.stringify(response.data.user_id));
                     sessionStorage.setItem("userIdsession", JSON.stringify(response.data.user_id));
                     localStorage.setItem("custEmail", JSON.stringify(response.data.name));

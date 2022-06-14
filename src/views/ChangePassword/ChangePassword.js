@@ -30,7 +30,7 @@ function ChangePassword(props) {
   const [email, setEmail] = useState('');
   const [user, setUser] = useState("")
   const token = window.localStorage.getItem("clientToken")
-
+const clientLoginId = JSON.parse(localStorage.getItem("clientLoginId"))
   useEffect(() => {
     getTime()
   }, [load]);
@@ -83,7 +83,7 @@ function ChangePassword(props) {
       let formData = new FormData();
       formData.append("email", value.p_email);
       formData.append("uid", JSON.parse(userId));
-      formData.append("user_id", value.p_user);
+      formData.append("user_id", clientLoginId);
       axios({
         method: "POST",
         url: `${baseUrl}/customers/regenrateotpchange`,
@@ -155,7 +155,7 @@ function ChangePassword(props) {
 
           <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
             <div className="row">
-            <div className="col-md-12">
+            {/* <div className="col-md-12">
             <div className="mb-3">
 
 
@@ -172,7 +172,7 @@ function ChangePassword(props) {
   })}
 />
 </div>
-</div>
+</div> */}
               <div className="col-md-12">
                 <div className="mb-3">
                   <label className="form-label">Email<span className="declined">*</span></label>

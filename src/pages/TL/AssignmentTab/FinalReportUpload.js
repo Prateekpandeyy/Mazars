@@ -14,6 +14,7 @@ function DraftReport({ des, qno, loading, setFinalModal, setLoading, fianlModal,
   const token = window.localStorage.getItem("tlToken")
   const [client, setClient] = useState([])
   const [email, setEmail] = useState("")
+  const [copyUser, setCopyUser] = useState([])
   const myConfig = {
     headers : {
      "uit" : token
@@ -40,9 +41,27 @@ function DraftReport({ des, qno, loading, setFinalModal, setLoading, fianlModal,
       setClient(collectData)
     })
   }
-
+const selectedUser = () => {
+  let collectData = []
+  axios.get(`${baseUrl}/tl/getreportemail?id=${qno}`, myConfig)
+  .then((res) => {
+    let email = {}
+    console.log("response", res)
+    res.data.result.map((i) => {
+      console.log("iii", i)
+      email = {
+        label : i.email,
+        value : i.email
+      }
+      collectData.push(email)
+      
+    })
+    setCopyUser(collectData)
+  })
+}
   useEffect(() => {
     getClient()
+    selectedUser()
   }, [fianlModal]);
 
   const onSubmit = (value) => {
@@ -111,6 +130,7 @@ function DraftReport({ des, qno, loading, setFinalModal, setLoading, fianlModal,
   };
 
   const clientFun = (e) => {
+    setCopyUser(e)
     let a = []
     e.map((i) => {
       a.push(i.value)
@@ -118,6 +138,7 @@ function DraftReport({ des, qno, loading, setFinalModal, setLoading, fianlModal,
     console.log("eee", e)
     setEmail(a)
   }
+
   return (
     <div>
       <Modal isOpen={fianlModal} toggle={uploadFinalReport} size="md">
@@ -126,10 +147,11 @@ function DraftReport({ des, qno, loading, setFinalModal, setLoading, fianlModal,
           <form onSubmit={handleSubmit(onSubmit)}>
           <div class="form-group">
           <label>Client</label>
-                  <Select
+          <Select
                      isMulti={true}
                      onChange={(e) => clientFun(e)}
                       options={client}
+                      value={copyUser}
                   />
 
                 </div>

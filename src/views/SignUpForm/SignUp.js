@@ -443,10 +443,11 @@ useEffect(() => {
             setLoading(false)
             var variable = "Signup successfully."
             Alerts.SuccessNormal(variable)
+            console.log("response", response.data)
             localStorage.setItem("userid", JSON.stringify(response.data.user_id));
                     sessionStorage.setItem("userIdsession", JSON.stringify(response.data.user_id));
                     localStorage.setItem("custEmail", JSON.stringify(response.data.name));
-               localStorage.setItem("clientName", JSON.stringify(response.data.dispalyname))
+               localStorage.setItem("clientName", JSON.stringify(response.data.displayname))
                     localStorage.setItem("clientToken", response.data.token)
             props.history.push("/customer/select-category");
           } else if (response.data.code === 0) {

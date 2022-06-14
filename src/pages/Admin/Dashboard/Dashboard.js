@@ -159,12 +159,6 @@ let history = useHistory()
     getAssignment();
   }, []);
 
-  const logout = () => {
-    localStorage.removeItem("adminkey")
-    localStorage.removeItem("adminEmail")
-    history.push("/admin/login")
-    
-  }
 
   return (
     <>

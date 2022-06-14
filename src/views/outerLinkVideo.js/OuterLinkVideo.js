@@ -10,6 +10,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import classNames from 'classnames';
+import { useHistory } from 'react-router';
 const Schema = yup.object().shape({
     p_email: yup.string().email("invalid email").required(""),
     p_password: yup.string().required(""),
@@ -21,6 +22,7 @@ const OuterLinkVideo = () => {
       });
       const [open, isOpen] = useState(true)
       const [user, setUser] = useState("")
+      let history = useHistory()
    const closeFun = () => {
        isOpen(!open)
    } 
@@ -33,6 +35,9 @@ const OuterLinkVideo = () => {
       setUser("")
     }
    
+  }
+  const enterVideo = () => {
+    history.push("/admin/schedule")
   }
     return (
      <>
@@ -64,6 +69,7 @@ Video Call
 />
 
 </div>
+<button onClick={() => enterVideo()} className="customBtn">Submit</button>
            </form>
             </ModalBody>
         </Modal>

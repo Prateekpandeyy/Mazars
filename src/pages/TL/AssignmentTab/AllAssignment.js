@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Layout from "../../../components/Layout/Layout";
 import axios from "axios";
-import { baseUrl } from "../../../config/config";
+import { baseUrl, baseUrl3 } from "../../../config/config";
 import { getErrorMessage } from '../../../constants';
 import Loader from "../../../components/Loader/Loader";
 import {
@@ -50,6 +50,7 @@ function AssignmentTab(props) {
   const [error, setError] = useState(false);
   const [ViewDiscussion, setViewDiscussion] = useState(false);
   const [item] = useState(current_date);
+  const [client, setClient] = useState([])
   var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
 
  
@@ -447,12 +448,30 @@ const resetData = () => {
   // draft modal
  
   const uploadDraftReport = (id) => {
-    console.log("sss", id.id)
+    let collectData = []
     if(id.id !== undefined){
-      setQid(id.q_id)
+      axios.get(`${baseUrl}/tl/getreportemail?id=${id.id}`, myConfig)
+      .then((res) => {
+        let email = {}
+        console.log("response", res)
+        res.data.result.map((i) => {
+          console.log("iii", i)
+          email = {
+            label : i.email,
+            value : i.email
+          }
+          collectData.push(email)
+          
+        })
+        console.log("data", collectData)
+        setClient(collectData)
+      
+        setQid(id.q_id)
      
-      setId(id.id);
-      setDraftModal(!draftModal);
+        setId(id.id);
+        setDraftModal(!draftModal);
+      })
+    
     }
     else{
       setDraftModal(!draftModal);

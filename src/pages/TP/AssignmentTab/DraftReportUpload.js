@@ -15,14 +15,16 @@ function DraftReport({ loading,  qno, setDraftModal, setLoading, draftModal, upl
   const { handleSubmit, register, reset } = useForm();
   const [client, setClient] = useState([])
   const [email, setEmail] = useState("")
+  const [copyUser, setCopyUser] = useState([])
   const token = window.localStorage.getItem("tptoken")
   const myConfig = {
       headers : {
        "uit" : token
       }
     }
-  
+
     const getClient = () => {
+      console.log("done")
       let collectData = []
       axios.get(
         `${baseUrl}/tl/querycustomers?query_id=${qno}`, myConfig
@@ -43,13 +45,29 @@ function DraftReport({ loading,  qno, setDraftModal, setLoading, draftModal, upl
         setClient(collectData)
       })
     }
-  
+  const selectedUser = () => {
+    let collectData = []
+    axios.get(`${baseUrl}/tl/getreportemail?id=${qno}`, myConfig)
+    .then((res) => {
+      let email = {}
+      console.log("response", res)
+      res.data.result.map((i) => {
+        console.log("iii", i)
+        email = {
+          label : i.email,
+          value : i.email
+        }
+        collectData.push(email)
+        
+      })
+      setCopyUser(collectData)
+    })
+  }
     useEffect(() => {
       getClient()
-    }, [draftModal]);
+      selectedUser()
+    }, [draftModal === true]);
   
-
-
   const onSubmit = (value) => {
     des = false;
     setLoading(true)
@@ -111,6 +129,7 @@ function DraftReport({ loading,  qno, setDraftModal, setLoading, draftModal, upl
     });
   };
   const clientFun = (e) => {
+    setCopyUser(e)
     let a = []
     e.map((i) => {
       a.push(i.value)
@@ -118,7 +137,6 @@ function DraftReport({ loading,  qno, setDraftModal, setLoading, draftModal, upl
     console.log("eee", e)
     setEmail(a)
   }
-
   return (
     <div>
       <Modal isOpen={draftModal} toggle={uploadDraftReport} size="md">
@@ -127,11 +145,13 @@ function DraftReport({ loading,  qno, setDraftModal, setLoading, draftModal, upl
           <form onSubmit={handleSubmit(onSubmit)}>
           <div class="form-group">
           <label>Client</label>
-                  <Select
+          <Select
                      isMulti={true}
                      onChange={(e) => clientFun(e)}
                       options={client}
+                      value={copyUser}
                   />
+
 
                 </div>
             <div className="mb-3">
