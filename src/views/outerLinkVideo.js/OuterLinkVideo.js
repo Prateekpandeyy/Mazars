@@ -74,6 +74,7 @@ Join Call
 />
 
 </div>
+
 <button onClick={() => enterVideo()} className="customBtn my-2">Submit</button>
            </form>
             </ModalBody>
