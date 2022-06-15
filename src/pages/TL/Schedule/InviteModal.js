@@ -122,24 +122,10 @@ Swal.fire({
 Join Call
             </ModalHeader>
             <ModalBody>
+              <h4 align="center">{inviteData.title} </h4>
+            <h6 align="center">From {inviteData.startDate} To {inviteData.endDate}</h6>
            <form onSubmit={handleSubmit(onSubmit)}>
-           <div className="form-group passForm ">
-
-
-<label className="form-label">Id<span className="declined">*</span></label>
-<input
-  type="text"
-  onChange={(e) => getUser(e)}
-  defaultValue = {inviteData.id}
-  name="p_user"
-  ref={register({ required: true })}
-  placeholder="Enter User Id"
-  className={classNames("form-control", {
-    "is-invalid": errors.p_user 
-  })}
-/>
-
-</div>
+          
 <div className="row">
 <div className="col-md-12">
 <label className="form-label">Invite Participants</label>
