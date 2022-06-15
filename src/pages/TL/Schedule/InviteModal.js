@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { Modal, ModalHeader, ModalBody, ModalFooter  } from "reactstrap";
 import { useForm ,  useFieldArray } from "react-hook-form";
 import * as yup from "yup";
@@ -10,6 +10,7 @@ import RemoveIcon from '@mui/icons-material/Remove';
 import axios from 'axios';
 import { baseUrl } from "../../../config/config";
 import Swal from 'sweetalert2';
+import Select from 'react-select';
 const Schema = yup.object().shape({
     p_email: yup.string().email("invalid email").required(""),
     p_password: yup.string().required(""),
@@ -21,6 +22,8 @@ const InviteModal = ({invite, showInvite, inviteData}) => {
   const [error, setError] = useState(false)
   const [emailError, setEmailError] = useState(false)
   const [user, setUser] = useState("")
+  const [client, setClient] = useState([])
+  const [part, setPart] = useState([])
   const token = window.localStorage.getItem("tlToken")
   const myConfig = {
       headers : {
@@ -36,9 +39,32 @@ const InviteModal = ({invite, showInvite, inviteData}) => {
         control,
         name: "p_email",
       });
+     useEffect(() => {
+getClient()
+     }, [inviteData])
      
-     
-    
+     const getClient = () => {
+      console.log("done")
+      let collectData = []
+      axios.get(
+        `${baseUrl}/tl/querycustomers?query_id=${inviteData.question_id}`, myConfig
+      )
+      .then((res) => {
+        let email = {}
+        console.log("response", res)
+        res.data.result.map((i) => {
+          console.log("iii", i)
+          email = {
+            label : i.email,
+            value : i.email
+          }
+          collectData.push(email)
+          
+        })
+        console.log("data", collectData)
+        setClient(collectData)
+      })
+    }
    const getUser = (e) => {
     var regEx = /^[0-9a-zA-Z]+$/;
     if(e.target.value.match(regEx)){
@@ -52,12 +78,14 @@ const InviteModal = ({invite, showInvite, inviteData}) => {
  const getParticiapnts = (e) => {
    setEmailError(false)
    setError(false)
-   setParticipants(e.target.value)
+   setParticipants(e.value)
+   setPart(e)
  }
 const addParticipants = () => {
  
    if(particiapnts.length > 0 && emailError === false){
     setParticipants([])
+   
     setAllParticipants((oldData) => {
       return [...oldData, particiapnts]
     })
@@ -82,7 +110,7 @@ setAllParticipants(kp)
     setEmailError(true)
   }
  }
- console.log("inviteData", inviteData)
+ 
  const onSubmit = (data) => {
    let formData = new FormData();
    formData.append("scheduleid", inviteData.id);
@@ -114,12 +142,13 @@ Swal.fire({
      }
    })
  }
+
     return (
      <>
          
         <Modal isOpen={invite} toggle={showInvite} size="md" scrollable>
             <ModalHeader  toggle={showInvite}>
-Join Call
+            Invite Participants
             </ModalHeader>
             <ModalBody>
               <h4 align="center">{inviteData.title} </h4>
@@ -130,7 +159,7 @@ Join Call
 <div className="col-md-12">
 <label className="form-label">Invite Participants</label>
   </div>
-  <div className="col-md-8">
+  {/* <div className="col-md-8">
  
   <input
   type="text"
@@ -149,7 +178,21 @@ value={particiapnts}
   emailError === true ?
   <p className="declined"> Please enter valid email</p> : ""
 }
-    </div>
+    </div> */}
+    <div className="col-md-8">
+    <Select
+  isMulti={true}
+        options={client}
+        // inputValue={particiapnts}
+        // onInputChange={getStateValue}
+        onChange={(e) => getParticiapnts(e)}
+        // closeMenuOnSelect={true}
+        // onSelectResetsInput={false}
+        // blurInputOnSelect={false}
+       value={part}
+      />
+     
+      </div>
     <div className="col-md-4 mb-4">
       <Button variant="contained" onClick={() => addParticipants()}>
         <AddIcon />
