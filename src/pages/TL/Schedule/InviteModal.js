@@ -24,6 +24,7 @@ const InviteModal = ({invite, showInvite, inviteData}) => {
   const [user, setUser] = useState("")
   const [client, setClient] = useState([])
   const [part, setPart] = useState([])
+  const [estate, setEstate] = useState("");
   const token = window.localStorage.getItem("tlToken")
   const myConfig = {
       headers : {
@@ -83,11 +84,18 @@ getClient()
  }
 const addParticipants = () => {
  
-   if(particiapnts.length > 0 && emailError === false){
+   if(particiapnts.length > 0 && estate.length === 0 && emailError === false){
     setParticipants([])
    
     setAllParticipants((oldData) => {
       return [...oldData, particiapnts]
+    })
+   }
+   else if(particiapnts.length === 0 && estate.length > 0 && emailError === false){
+    setParticipants([])
+   
+    setAllParticipants((oldData) => {
+      return [...oldData, estate]
     })
    }
    else if(particiapnts.length === 0 && emailError === false) {
@@ -142,6 +150,18 @@ Swal.fire({
      }
    })
  }
+ const getStateValue = (input, reason) => {
+  if (
+    reason.action === "set-value" ||
+    reason.action === "input-blur" ||
+    reason.action === "menu-close"
+  ) {
+    return;
+  }
+
+ setEstate(input)
+}
+
 
     return (
      <>
@@ -151,13 +171,13 @@ Swal.fire({
             Invite Participants
             </ModalHeader>
             <ModalBody>
-              <h4 align="center">{inviteData.title} </h4>
-            <h6 align="center">From {inviteData.startDate} To {inviteData.endDate}</h6>
+              <h4>{inviteData.title} </h4>
+            <h6><b>From </b> {inviteData.startDate} <b>To </b> {inviteData.endDate}</h6>
            <form onSubmit={handleSubmit(onSubmit)}>
           
 <div className="row">
 <div className="col-md-12">
-<label className="form-label">Invite Participants</label>
+<label className="form-label">Emails</label>
   </div>
   {/* <div className="col-md-8">
  
@@ -181,14 +201,14 @@ value={particiapnts}
     </div> */}
     <div className="col-md-8">
     <Select
-  isMulti={true}
+  isMulti={false}
         options={client}
-        // inputValue={particiapnts}
-        // onInputChange={getStateValue}
+        inputValue={estate}
+        onInputChange={getStateValue}
         onChange={(e) => getParticiapnts(e)}
-        // closeMenuOnSelect={true}
-        // onSelectResetsInput={false}
-        // blurInputOnSelect={false}
+        closeMenuOnSelect={true}
+        onSelectResetsInput={false}
+        blurInputOnSelect={false}
        value={part}
       />
      
