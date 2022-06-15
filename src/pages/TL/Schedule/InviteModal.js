@@ -77,10 +77,16 @@ getClient()
    
   }
  const getParticiapnts = (e) => {
-   setEmailError(false)
-   setError(false)
-   setParticipants(e.value)
-   setPart(e)
+   if(e){
+    setEmailError(false)
+    setError(false)
+    setParticipants(e.value)
+    setPart(e)
+   }
+   else{
+    setEmailError(false)
+    setError(false)
+   }
  }
 const addParticipants = () => {
  
@@ -93,7 +99,8 @@ const addParticipants = () => {
    }
    else if(particiapnts.length === 0 && estate.length > 0 && emailError === false){
     setParticipants([])
-   
+     setEstate([""])
+    getParticiapnts()
     setAllParticipants((oldData) => {
       return [...oldData, estate]
     })
