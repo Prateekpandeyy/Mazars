@@ -24,8 +24,9 @@ class OuterMeeting extends React.Component {
     }
   }
   meetdetails = JSON.parse(localStorage.getItem("meetdetails"))
+  
   render() {
-   
+  console.log("thisDetails", window.location.hash.split("/")[3]) 
     return (
       
       <div className="wrapper meeting" style={{ display : "flex", flexDirection: "column" , height: "100vh" }}>
@@ -40,20 +41,21 @@ class OuterMeeting extends React.Component {
             <span>Video Call</span>
           </div>
           <div className="ag-header-msg">
-            &nbsp;<span id="room-name">{this.meetdetails.scheduleid}</span>
+            &nbsp;<span id="room-name">{this.meetdetails.question_id}</span>
           </div>
         </div>
         <div className="ag-main">
           <div className="ag-container">
             <AgoraVideoCallouter
               videoProfile={this.videoProfile}
-              channel={this.meetdetails.scheduleid}
+              channel={this.meetdetails.question_id}
+              name={this.meetdetails.name}
               transcode={this.transcode}
               attendeeMode={this.attendeeMode}
               baseMode={this.baseMode}
               appId={this.appId}
               uid={this.uid}
-              id={this.props.id}
+              id={window.location.hash.split("/")[3]}
             />
           </div>
         </div>

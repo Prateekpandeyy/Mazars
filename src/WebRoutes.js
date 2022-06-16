@@ -42,7 +42,7 @@ import About from './views/About/About';
 import Media from './views/Tax/Media';
 import FaqQuestion from "./views/Tax/FaqQuestion";
 import LinklistUser from "./views/Login/Linklist";
-import OuterMeetingJoin from "./views/OuterMeeting/index";
+import OuterMeetingJoin from "./views/outerMeeting/index";
 
 //admin routes
 import AdminStart from './pages/Admin/Start/Start'

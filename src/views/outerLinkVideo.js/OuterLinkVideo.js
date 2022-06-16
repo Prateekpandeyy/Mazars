@@ -44,14 +44,15 @@ const OuterLinkVideo = () => {
     axios.get(`${baseUrl}/customers/getcalloauth?t=${key2}&name=${user}`)
 .then((res) => {
  if(res.data.code === 1){
-  history.push(`/customer/meetingouter/${res.data.result.scheduleid}`)
+  Cookies.set("channel", res.data.result.scheduleid);
+  Cookies.set("baseMode", baseMode);
+  Cookies.set("transcode", transcode);
+  Cookies.set("attendeeMode", attendeeMode);
+  Cookies.set("videoProfile", videoProfile);
+  localStorage.setItem("meetdetails", JSON.stringify(res.data.result))
+ 
  }
- Cookies.set("channel_2", res.data.result.scheduleid);
-Cookies.set("baseMode_2", baseMode);
-Cookies.set("transcode_2", transcode);
-Cookies.set("attendeeMode_2", attendeeMode);
-Cookies.set("videoProfile_2", videoProfile);
- localStorage.setItem("meetdetails", JSON.stringify(res.data.result))
+ history.push(`/customer/meetingouter/${res.data.result.scheduleid}`)
 })
     // localStorage.setItem("tlName", "Test")
     // localStorage.setItem("tlToken", "DJRAwniN")

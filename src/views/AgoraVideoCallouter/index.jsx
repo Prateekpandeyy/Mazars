@@ -71,7 +71,12 @@ const tile_canvas = {
   
   
 };
-
+const token = window.localStorage.getItem("clientToken")
+const myConfig = {
+    headers : {
+     "uit" : token
+    }
+  }
 /**
  * @prop appId uid
  * @prop transcode attendeeMode videoProfile channel baseMode
@@ -102,10 +107,8 @@ class AgoraCanvas extends React.Component {
 channelName = this.props.channel
 userId = window.localStorage.getItem("userid");
 custEmail2 = window.localStorage.getItem("custEmail");
-meetdetails = JSON.parse(localStorage.getItem("meetdetails"))
 remoteShare2 = false
 componentWillMount() {
-  console.log("done2")
   let $ = this.props;
   // init AgoraRTC local client
   this.client = AgoraRTC.createClient({ mode: $.transcode });
@@ -127,7 +130,7 @@ AgoraRTC.getDevices(function(dev){
  
     this.client.join($.appId, $.channel, $.uid, (uid) => {
      
-      var data_post_api = "https://virtualapi.multitvsolution.com/VstreamApi/index.php/api/vstream/userdata?channel_name="+this.meetdetails.question_id+"&rtm_id="+""+"&rtc_id="+uid+"&user_name="+this.meetdetails.name;
+      var data_post_api = "https://virtualapi.multitvsolution.com/VstreamApi/index.php/api/vstream/userdata?channel_name="+this.channelName+"&rtm_id="+""+"&rtc_id="+uid+"&user_name="+this.props.name;
  axios.get(`${data_post_api}`).
  then((res) => {
   
@@ -183,7 +186,6 @@ AgoraRTC.getDevices(function(dev){
    });
  }
   componentDidMount() {
-    console.log("done3")
     // add listener to control btn group
     let canvas = document.querySelector("#ag-canvas");
     let btnGroup = document.querySelector(".ag-btn-group");
@@ -466,7 +468,7 @@ if(item.player === undefined){
         });
       }
     });
-    axios.get(`${baseUrl}/tl/setgetschedular?id=${this.props.id}&uid=${JSON.parse(this.userId)}&chname=${this.channelName}`)
+    axios.get(`${baseUrl}/tl/setgetschedular?id=${this.props.id}&uid=${JSON.parse(this.userId)}&chname=${this.channelName}`, myConfig)
     .then((res) => {
      if(res.data.result.rtc_id == uid){
       Swal.fire({
