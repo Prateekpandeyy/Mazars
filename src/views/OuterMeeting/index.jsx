@@ -1,11 +1,11 @@
 import React from "react";
 import * as Cookies from "js-cookie";
 import "./meeting.css";
-import AgoraVideoCall from "../AgoraVideoCallouter/index";
+import AgoraVideoCallouter from "../AgoraVideoCallouter/index";
 import { AGORA_APP_ID } from "../../agora.config";
 import ReactPlayer from "react-player";
 
-class Meeting extends React.Component {
+class OuterMeeting extends React.Component {
   constructor(props) {
     super(props);
 
@@ -23,7 +23,7 @@ class Meeting extends React.Component {
       showmeetingScreen : false
     }
   }
-
+  meetdetails = JSON.parse(localStorage.getItem("meetdetails"))
   render() {
    
     return (
@@ -40,14 +40,14 @@ class Meeting extends React.Component {
             <span>Video Call</span>
           </div>
           <div className="ag-header-msg">
-            &nbsp;<span id="room-name">{this.channel}</span>
+            &nbsp;<span id="room-name">{this.meetdetails.scheduleid}</span>
           </div>
         </div>
         <div className="ag-main">
           <div className="ag-container">
-            <AgoraVideoCall
+            <AgoraVideoCallouter
               videoProfile={this.videoProfile}
-              channel={this.channel}
+              channel={this.meetdetails.scheduleid}
               transcode={this.transcode}
               attendeeMode={this.attendeeMode}
               baseMode={this.baseMode}
@@ -71,4 +71,4 @@ class Meeting extends React.Component {
   }
 }
 
-export default Meeting;
+export default OuterMeeting;

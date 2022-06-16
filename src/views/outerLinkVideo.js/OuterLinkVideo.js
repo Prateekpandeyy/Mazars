@@ -11,7 +11,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import classNames from 'classnames';
 import { useHistory, useParams} from 'react-router';
-
+import * as Cookies from "js-cookie";
 const Schema = yup.object().shape({
     p_email: yup.string().email("invalid email").required(""),
     p_password: yup.string().required(""),
@@ -23,6 +23,10 @@ const OuterLinkVideo = () => {
       });
       const [open, isOpen] = useState(true)
       const [user, setUser] = useState("")
+      const [baseMode, SetbaseMode] = useState("avc");
+      const [transcode, SetTranscode] = useState("interop");
+      const [attendeeMode, SetAttendeeMode] = useState("video");
+      const [videoProfile, SetVideoProfile] = useState("240p_4");
       let history = useHistory()
     let id = useParams()
     console.log("id" , id)
@@ -42,6 +46,12 @@ const OuterLinkVideo = () => {
  if(res.data.code === 1){
   history.push(`/customer/meetingouter/${res.data.result.scheduleid}`)
  }
+ Cookies.set("channel_2", res.data.result.scheduleid);
+Cookies.set("baseMode_2", baseMode);
+Cookies.set("transcode_2", transcode);
+Cookies.set("attendeeMode_2", attendeeMode);
+Cookies.set("videoProfile_2", videoProfile);
+ localStorage.setItem("meetdetails", JSON.stringify(res.data.result))
 })
     // localStorage.setItem("tlName", "Test")
     // localStorage.setItem("tlToken", "DJRAwniN")
