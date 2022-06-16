@@ -244,7 +244,7 @@ function WebRoutes() {
        <PublicRouteUser exact path = "/customer/updatedirect" component={UpdateDirect} />
        <PublicRouteUser exact path = "/customer/updateindirect" component={UpdateIndirect} />
        <PublicRouteUser exact path = "/customer/miscellaneous" component={UpdateMiscellenous} />
-          <PublicRouteUser exact path = "/customer/videolink" component = {OuterLinkVideo} />
+          <PublicRouteUser exact path = "/customer/videocall" component = {OuterLinkVideo} />
            <PublicRouteUser exact path ="/customer/update-details/:id" component={UpdateDetails} />
            <PublicRouteAdmin exact path = "/customer/link" component = {LinklistUser} />
             <PrivateRouteUser exact path="/customer/select-category" component={SelectCategoryPage} />

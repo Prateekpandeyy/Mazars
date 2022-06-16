@@ -254,11 +254,12 @@ const delprevUser = (data) => {
     .then((res) => {
    
       if(res.data.code === 0){
-        let kp = prevPrati.filter((data, key) => {
-          return key != data.id
-        })
-        console.log("kp", kp)
-        setPrevParti(kp)
+        getprevPraticipants()
+        // let kp = prevPrati.filter((data, key) => {
+        //   return key != data.id
+        // })
+        // console.log("kp", kp)
+        // setPrevParti(kp)
       }
     }
     )
