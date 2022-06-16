@@ -58,3 +58,7 @@ span {
   overflow: hidden !important;
   position: fixed !important;
 }
+
+#myClientModal .modal-content {
+  height: 600px;
+}

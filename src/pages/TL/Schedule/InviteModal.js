@@ -25,6 +25,7 @@ const InviteModal = ({invite, showInvite, inviteData}) => {
   const [client, setClient] = useState([])
   const [part, setPart] = useState([])
   const [estate, setEstate] = useState("");
+  const [prevPrati, setPrevParti] = useState([])
   const token = window.localStorage.getItem("tlToken")
   const myConfig = {
       headers : {
@@ -42,19 +43,44 @@ const InviteModal = ({invite, showInvite, inviteData}) => {
       });
      useEffect(() => {
 getClient()
+getprevPraticipants()
      }, [inviteData])
      
+     const getprevPraticipants = () => {
+       let formData = new FormData()
+      formData.append("scheduleid", inviteData.id);
+   formData.append("question_id", inviteData.question_id);
+  
+   axios({
+     method : "POST", 
+     url : `${baseUrl}/tl/invitecalllist`,
+     headers : {
+       uit : token
+     },
+     data : formData
+   })
+   .then((res) => {
+     if(res.data.code === 1){
+      setPrevParti(res.data.result)
+     
+     }
+     else{
+       setPrevParti([])
+     }
+    
+   })
+     }
      const getClient = () => {
-      console.log("done")
+    
       let collectData = []
       axios.get(
         `${baseUrl}/tl/querycustomers?query_id=${inviteData.question_id}`, myConfig
       )
       .then((res) => {
         let email = {}
-        console.log("response", res)
+        
         res.data.result.map((i) => {
-          console.log("iii", i)
+       
           email = {
             label : i.email,
             value : i.email
@@ -62,7 +88,33 @@ getClient()
           collectData.push(email)
           
         })
-        console.log("data", collectData)
+       
+        setClient(collectData)
+      })
+    }
+    const getClient2 = (k) => {
+      console.log("allParticipants", k)
+      let collectData = []
+      axios.get(
+        `${baseUrl}/tl/querycustomers?query_id=${inviteData.question_id}`, myConfig
+      )
+      .then((res) => {
+        let email = {}
+        
+        res.data.result.map((i) => {
+       if(k.includes(i.email)){
+         console.log("fixe", i)
+       }
+         else{
+          email = {
+            label : i.email,
+            value : i.email
+          }
+          collectData.push(email)
+          
+         }
+        })
+       
         setClient(collectData)
       })
     }
@@ -89,21 +141,27 @@ getClient()
    }
  }
 const addParticipants = () => {
- 
+ let kk = []
    if(particiapnts.length > 0 && estate.length === 0 && emailError === false){
     setParticipants([])
-   
+   setPart([])
     setAllParticipants((oldData) => {
+     
       return [...oldData, particiapnts]
     })
+    kk = [...allParticipants, particiapnts]
+    getClient2(kk)
    }
    else if(particiapnts.length === 0 && estate.length > 0 && emailError === false){
     setParticipants([])
      setEstate([""])
     getParticiapnts()
     setAllParticipants((oldData) => {
+    
       return [...oldData, estate]
     })
+    kk = [...allParticipants, estate]
+    getClient2(kk)
    }
    else if(particiapnts.length === 0 && emailError === false) {
      setError(true)
@@ -115,6 +173,8 @@ let kp = allParticipants.filter((data, key) => {
   return key !== id
 })
 setAllParticipants(kp)
+getClient2(kp)
+
  }
  const validateEmail = (e) => {
   var validRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -142,6 +202,7 @@ setAllParticipants(kp)
    .then((res) => {
      
      if(res.data.code === 1){
+      showInvite()
 Swal.fire({
   title : "success",
   message : "Participants added successfully",
@@ -168,44 +229,75 @@ Swal.fire({
 
  setEstate(input)
 }
+const delprevUser = (data) => {
+ 
+    let formData = new FormData();
+    formData.append("token", data.token);
+    formData.append("invite_id", data.id);
 
+    axios({
+      method : "POST", 
+      url : `${baseUrl}/tl/deleteinvitecall`,
+      headers : {
+        uit : token
+      },
+      data : formData
+    })
+    .then((res) => {
+   
+      if(res.data.code === 0){
+        let kp = prevPrati.filter((data, key) => {
+          return key != data.id
+        })
+        console.log("kp", kp)
+        setPrevParti(kp)
+      }
+    }
+    )
+}
 
     return (
      <>
          
-        <Modal isOpen={invite} toggle={showInvite} size="md" scrollable>
+        <Modal isOpen={invite} toggle={showInvite} size="md" id="myClientModal" scrollable={true}>
             <ModalHeader  toggle={showInvite}>
             Invite Participants
             </ModalHeader>
             <ModalBody>
               <h4>{inviteData.title} </h4>
             <h6><b>From </b> {inviteData.startDate} <b>To </b> {inviteData.endDate}</h6>
+<div className="row">
+ <div className="col-md-12">
+ <h4>Invited Participants</h4>
+   </div>
+  {
+   prevPrati?.map((i, e) => (
+    <div className="col-md-12" style={{display : "flex", padding : "0px"}} key = {i.id}
+    id={i.id}>
+    <div className="col-md-8 mb-2">
+    <p>
+    {i.email}
+    </p>
+      </div>
+      <div className="col-md-4">
+      <Button variant="contained" onClick={(d) => delprevUser(i)}>
+     <span>
+     <RemoveIcon />
+     </span>
+      </Button>
+        </div>
+    </div>
+   ))
+ }
+  </div>
            <form onSubmit={handleSubmit(onSubmit)}>
           
 <div className="row">
 <div className="col-md-12">
 <label className="form-label">Emails</label>
   </div>
-  {/* <div className="col-md-8">
- 
-  <input
-  type="text"
-value={particiapnts}
- onChange={(e) => getParticiapnts(e)}
- onBlur = {(e) => validateEmail(e)}
-  ref={register({ required: true })}
-  placeholder="Enter User Id"
-  className={classNames("form-control", {
-    "is-invalid" : error || emailError
-  })}
-/>
-{error === true ?
-<p className="declined"> Please enter Email id</p> : ""}
-{
-  emailError === true ?
-  <p className="declined"> Please enter valid email</p> : ""
-}
-    </div> */}
+  
+   
     <div className="col-md-8">
     <Select
   isMulti={false}
