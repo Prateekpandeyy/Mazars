@@ -153,15 +153,22 @@ const addParticipants = () => {
     getClient2(kk)
    }
    else if(particiapnts.length === 0 && estate.length > 0 && emailError === false){
-    setParticipants([])
-     setEstate([""])
-    getParticiapnts()
+    var validRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+ console.log("estate", estate)
+   if(estate.match(validRegex)){
     setAllParticipants((oldData) => {
     
       return [...oldData, estate]
     })
     kk = [...allParticipants, estate]
+    setParticipants([])
+    setEstate([""])
+   getParticiapnts()
     getClient2(kk)
+   }
+   else{
+    setEmailError(true)
+   }
    }
    else if(particiapnts.length === 0 && emailError === false) {
      setError(true)
@@ -219,6 +226,7 @@ Swal.fire({
    })
  }
  const getStateValue = (input, reason) => {
+   setEmailError(false)
   if (
     reason.action === "set-value" ||
     reason.action === "input-blur" ||
@@ -310,6 +318,10 @@ const delprevUser = (data) => {
         blurInputOnSelect={false}
        value={part}
       />
+      {
+        emailError === true ?
+        <p className="declined">Please enter valid email</p> : ""
+      }
      
       </div>
     <div className="col-md-4 mb-4">
