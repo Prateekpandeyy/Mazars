@@ -42,7 +42,7 @@ import About from './views/About/About';
 import Media from './views/Tax/Media';
 import FaqQuestion from "./views/Tax/FaqQuestion";
 import LinklistUser from "./views/Login/Linklist";
-
+import OuterMeetingJoin from "./views/outerMeeting/index";
 
 //admin routes
 import AdminStart from './pages/Admin/Start/Start'
@@ -243,6 +243,7 @@ function WebRoutes() {
        <PublicRouteUser exact path = "/customer/faq-question" component={FaqQuestion} />
        <PublicRouteUser exact path = "/customer/updatedirect" component={UpdateDirect} />
        <PublicRouteUser exact path = "/customer/updateindirect" component={UpdateIndirect} />
+       <PublicRouteUser exact path="/customer/meetingouter/:id" component={OuterMeetingJoin} />
        <PublicRouteUser exact path = "/customer/miscellaneous" component={UpdateMiscellenous} />
           <PublicRouteUser exact path = "/customer/videocall" component = {OuterLinkVideo} />
            <PublicRouteUser exact path ="/customer/update-details/:id" component={UpdateDetails} />

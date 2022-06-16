@@ -10,7 +10,8 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import classNames from 'classnames';
-import { useHistory } from 'react-router';
+import { useHistory, useParams} from 'react-router';
+
 const Schema = yup.object().shape({
     p_email: yup.string().email("invalid email").required(""),
     p_password: yup.string().required(""),
@@ -23,26 +24,31 @@ const OuterLinkVideo = () => {
       const [open, isOpen] = useState(true)
       const [user, setUser] = useState("")
       let history = useHistory()
+    let id = useParams()
+    console.log("id" , id)
+     
+      let key2 = history.location.search.split("=")[1]
    const closeFun = () => {
        isOpen(!open)
    } 
    const getUser = (e) => {
     var regEx = /^[0-9a-zA-Z]+$/;
-    if(e.target.value.match(regEx)){
-      setUser(e.target.value.toUpperCase())
-    }
-    else{
-      setUser("")
-    }
+   setUser(e.target.value)
    
   }
   const enterVideo = () => {
-    localStorage.setItem("tlName", "Test")
-    localStorage.setItem("tlToken", "DJRAwniN")
-    localStorage.setItem("tlkey", "71")
-    localStorage.setItem("tlloginTime", "1655174600563")
-    localStorage.setItem("tlEmail", "test@gmail.com")
-    history.push("/teamleader/meeting/227")
+    axios.get(`${baseUrl}/customers/getcalloauth?t=${key2}&name=${user}`)
+.then((res) => {
+ if(res.data.code === 1){
+  history.push(`/customer/meetingouter/${res.data.result.scheduleid}`)
+ }
+})
+    // localStorage.setItem("tlName", "Test")
+    // localStorage.setItem("tlToken", "DJRAwniN")
+    // localStorage.setItem("tlkey", "71")
+    // localStorage.setItem("tlloginTime", "1655174600563")
+    // localStorage.setItem("tlEmail", "test@gmail.com")
+    
   }
     return (
      <>
@@ -52,7 +58,7 @@ const OuterLinkVideo = () => {
       <Header noSign="noSign"/>
       
        <MyContainer>
-        <Modal isOpen={open} toggle={closeFun} size="lg" scrollable>
+        <Modal isOpen={open} toggle={closeFun} size="md" scrollable>
             <ModalHeader  toggle={closeFun}>
 Join Call
             </ModalHeader>
@@ -61,21 +67,19 @@ Join Call
            <div className="form-group passForm ">
 
 
-<label className="form-label">Email<span className="declined">*</span></label>
+<label className="form-label">Name<span className="declined">*</span></label>
 <input
   type="text"
   onChange={(e) => getUser(e)}
   name="p_user"
-  ref={register({ required: true })}
+
   placeholder="Enter User Id"
-  className={classNames("form-control", {
-    "is-invalid": errors.p_user 
-  })}
+  className="form-control"
 />
 
 </div>
 
-<button onClick={() => enterVideo()} className="customBtn my-2">Submit</button>
+<button type="button" onClick={() => enterVideo()} className="customBtn my-2">Submit</button>
            </form>
             </ModalBody>
         </Modal>
