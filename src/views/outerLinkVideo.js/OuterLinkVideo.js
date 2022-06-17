@@ -84,7 +84,7 @@ Join Call
   onChange={(e) => getUser(e)}
   name="p_user"
 
-  placeholder="Enter User Id"
+  placeholder="Enter Name"
   className="form-control"
 />
 

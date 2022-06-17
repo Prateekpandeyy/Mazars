@@ -107,6 +107,7 @@ class AgoraCanvas extends React.Component {
 channelName = this.props.channel
 userId = window.localStorage.getItem("userid");
 custEmail2 = window.localStorage.getItem("custEmail");
+meetdetails = JSON.parse(localStorage.getItem("meetdetails"))
 remoteShare2 = false
 componentWillMount() {
   let $ = this.props;
@@ -468,7 +469,7 @@ if(item.player === undefined){
         });
       }
     });
-    axios.get(`${baseUrl}/tl/setgetschedular?id=${this.props.id}&uid=${JSON.parse(this.userId)}&chname=${this.channelName}`, myConfig)
+    axios.get(`${baseUrl}/customers/setgetschedular?id=${this.meetdetails.id}&question_id=${this.channelName}`)
     .then((res) => {
      if(res.data.result.rtc_id == uid){
       Swal.fire({
@@ -724,7 +725,7 @@ encodedString = "N2VmMGY4ODg4NjI4NDFhYWIwNWY1NzFjNDM5MzE4OTc6NjU0ZDViYWM5ZDU2NGY
 
 
   render() {
-
+console.log("meetDetails", this.meetdetails)
     const style = {
       display: "grid",
       gridGap: "50px 26px",

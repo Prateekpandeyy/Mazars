@@ -1,4 +1,4 @@
-//for server
+// //for server
 // export const baseUrl = "https://api.masindia.live/v1";
 // export const ImageUrl = "https://api.masindia.live/assets/image";
 // export const ReportUrl = "https://api.masindia.live/assets/upload/report";
@@ -7,7 +7,7 @@
 // export const baseUrl2 = "https://api.masindia.live/";
 // export const baseUrl3 = "https://api.masindia.live/"
 
-// // // //   //for development
+// // // // //   //for development
 export const baseUrl = "https://stagingapi.masindia.live/v1";
 export const ImageUrl = "https://stagingapi.masindia.live/assets/image";
 export const ReportUrl = "https://stagingapi.masindia.live/assets/upload/report";

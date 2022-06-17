@@ -159,12 +159,7 @@ function Demo() {
       instances: owner,
       allowMultiple: true,
     },
-    {
-      fieldName: "emails",
-      title: "Copy To",
-      instances: client,
-      allowMultiple: true,
-    },
+   
   ];
 
   const styles = (theme) => ({

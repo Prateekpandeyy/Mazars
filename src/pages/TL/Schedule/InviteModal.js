@@ -288,20 +288,26 @@ const delprevUser = (data) => {
     {i.email}
     </p>
       </div>
-      <div className="col-md-4">
+      {
+        inviteData.owner === true ?
+        <div className="col-md-4">
       <Button variant="contained" onClick={(d) => delprevUser(i)}>
      <span>
      <RemoveIcon />
      </span>
       </Button>
-        </div>
+        </div> : ""
+      }
     </div>
    ))
  }
   </div>
-           <form onSubmit={handleSubmit(onSubmit)}>
+           
           
-<div className="row">
+{
+  inviteData.owner === true ?
+  <form onSubmit={handleSubmit(onSubmit)}>
+  <div className="row">
 <div className="col-md-12">
 <label className="form-label">Emails</label>
   </div>
@@ -331,7 +337,7 @@ const delprevUser = (data) => {
       </Button>
       </div>
   </div>
- {
+  {
    allParticipants?.map((i, e) => (
     <div className="row" key = {e}
     id={e}>
@@ -351,7 +357,9 @@ const delprevUser = (data) => {
    ))
  }
 <button className="customBtn my-2">Submit</button>
-           </form>
+           </form> : ""
+}
+
            
             </ModalBody>
            
