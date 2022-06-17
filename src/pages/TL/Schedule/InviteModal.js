@@ -253,7 +253,7 @@ const delprevUser = (data) => {
     })
     .then((res) => {
    
-      if(res.data.code === 0){
+      if(res.data.code === 1){
         getprevPraticipants()
         // let kp = prevPrati.filter((data, key) => {
         //   return key != data.id
