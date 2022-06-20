@@ -211,11 +211,7 @@ const showInvite = (data) => {
             style={{ fontSize: "18px", padding: "5px" , color: "#fff" }}
           ></i>
           </span>
-          {/* <i
-          onClick={() => handleJoin(data)}
-            class="fa fa-video-camera"
-            style={{ fontSize: "18px", padding: "5px" , color: "#fff" }}
-          ></i> */}
+         
         </div>
       </Appointments.Appointment>
     </div>

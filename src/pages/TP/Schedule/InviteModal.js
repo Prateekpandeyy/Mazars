@@ -27,7 +27,7 @@ const InviteModal = ({invite, showInvite, inviteData}) => {
   const [estate, setEstate] = useState("");
   const [invitedParticipant, setInvitedParticipants] = useState([])
   const [prevPrati, setPrevParti] = useState([])
-  const token = window.localStorage.getItem("tlToken")
+  const token = window.localStorage.getItem("tptoken")
   const myConfig = {
       headers : {
        "uit" : token

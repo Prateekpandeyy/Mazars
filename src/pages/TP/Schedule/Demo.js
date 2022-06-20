@@ -25,7 +25,7 @@ import * as Cookies from "js-cookie";
 import Swal from "sweetalert2";
 import Alerts from "../../../common/Alerts";
 import Loader from "../../../components/Loader/Loader";
-
+import InviteModal from "./InviteModal";
 
 
 function Demo() {
@@ -42,6 +42,8 @@ function Demo() {
   const [transcode, SetTranscode] = useState("interop");
   const [attendeeMode, SetAttendeeMode] = useState("video");
   const [videoProfile, SetVideoProfile] = useState("240p_4");
+  const [invite, setInvite] = useState(false)
+  const [inviteData, setInviteData] = useState()
   const token = window.localStorage.getItem("tptoken")
   const myConfig = {
       headers : {
@@ -149,7 +151,14 @@ function Demo() {
       whiteSpace: "nowrap",
     },
   });
-
+  const showInvite = (data) => {
+    console.log("data", data)
+    if(data){
+      setInviteData(data)
+    }
+    setInvite(!invite)
+   
+  }
 
   const B = (key) => {
     setRead(!key)
@@ -165,14 +174,19 @@ function Demo() {
   }) => (
     <div onDoubleClick={() => B(data.owner)}>
       <Appointments.Appointment {...restProps}>
-        <div style={{ display: "flex" }}>
+      <div style={{ display: "flex" }}>
         <i
-         onClick={() => handleJoin(data)}
+          onClick={() => handleJoin(data)}
             class="fa fa-video-camera"
             style={{ fontSize: "18px", padding: "5px" , color: "#fff" }}
           ></i>
+        
           <div>{children}</div>
-          
+          <span onClick = {() => showInvite(data)}>
+          <i class="fa fa-user-plus"
+            style={{ fontSize: "18px", padding: "5px" , color: "#fff" }}
+          ></i>
+          </span>
          
         </div>
       </Appointments.Appointment>
@@ -528,6 +542,13 @@ Cookies.set("channel_2", data.question_id);
             </div>
           </>
       }
+       {
+       invite === true ?
+       <InviteModal 
+       inviteData = {inviteData}
+       showInvite = {showInvite}
+       invite={invite} /> : ""
+     }
     </>
   );
 }
