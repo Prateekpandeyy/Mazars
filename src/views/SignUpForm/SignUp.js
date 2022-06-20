@@ -397,10 +397,9 @@ useEffect(() => {
     formData.append("country", countryName);
     {estate && estate.length > 0 ?  formData.append("state", estate) :
     formData.append("state", dstate.label)}
-   
     formData.append("stdcode", countryCode);
     formData.append("gstin_no", value.p_gstIn);
-
+    formData.append("address", value.p_address)
     if (display === true && subm === false) {
       setLoading(true)
       let formData = new FormData();
@@ -771,7 +770,26 @@ const getUser = (e) => {
       />
                     </div>
                   </div>
+                  <div className="col-md-6">
+                  <div className="mb-3">
+                      <label className="form-label">Address</label>
+                     
+                       
+                        <textarea
+                          type="text"
+                          className="form-control"
+                          name="p_address"
+                         
 
+                          ref={register()}
+                          placeholder="Enter Address"
+                        
+                        />
+
+                    
+        
+                    </div>
+                  </div>
                   <div className="col-md-6">
                   <div className="mb-3">
                       <label className="form-label">Mobile number<span className="declined">*</span></label>
