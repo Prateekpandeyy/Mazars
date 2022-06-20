@@ -63,6 +63,7 @@ const UpdateDirect = () => {
   const [data, setData] = useState([])
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10)
+  let a = 0;
   useEffect(() => {
     getData()
 
@@ -74,12 +75,25 @@ const onChangeRowsPerPage = (e) => {
     setRowsPerPage(e.target.value)
 }
   const getData = (e) => {
-   
-  
+   let dataObj = {}
+  let dataList = []
     axios.get(`${baseUrl}/customers/getupdated?type=direct`)
     .then((res) => {
     
-      setData(res.data.result)
+    res.data.result.map((i, e) => {
+dataObj = {
+  sn : ++e,
+  content : i.content,
+  file : i.file,
+  heading : i.heading,
+  id : i.id,
+  publish_date : i.publish_date,
+  status : i.status,
+  type : i.type
+}
+dataList.push(dataObj)
+    })
+      setData(dataList)
       
     })
   
@@ -129,7 +143,7 @@ const onChangeRowsPerPage = (e) => {
     <TableRow>
       <TableCell style={{padding: "8px 16px"}} className="tableCellStyle">
      
-        {e + 1}
+        {i.sn}
       </TableCell>
       <TableCell>
         {i.publish_date.split("-").reverse().join("-")}
