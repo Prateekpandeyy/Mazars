@@ -80,9 +80,12 @@ Update
  
 </Breadcrumbs>
 <ArticleWrapper>
-
-        
-     <div id="artContent" style={{all: "unset"}}>
+<h6>Date of publishing :   {i.publish_date.split("-").reverse().join("-")} </h6>
+<h5 className="updatesHeding">  {CommonServices.capitalizeFirstLetter(i.heading)}</h5>
+     
+         
+     <div id="artContent" className="updatesContent">
+     
      <Markup content={i.content} /> 
  
   

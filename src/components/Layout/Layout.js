@@ -30,16 +30,20 @@ $sortable.on('click', function(){
   return (
    
     <>
-  
+{
+  custDashboard && (
+      
   <IdleTimeOutHandler 
-    onActive={()=>{setIsActive(true)}} 
-    onIdle={()=>{setIsActive(false)}}
-    onLogout={()=>{setLogout(true)}}
-    custDashboard = {custDashboard}
-    adminUserId = {adminDashboard}
-    TLuserId = {TLDashboard}
-    TPuserId = {TPDashboard}
-    />
+  onActive={()=>{setIsActive(true)}} 
+  onIdle={()=>{setIsActive(false)}}
+  onLogout={()=>{setLogout(true)}}
+  custDashboard = {custDashboard}
+  adminUserId = {adminDashboard}
+  TLuserId = {TLDashboard}
+  TPuserId = {TPDashboard}
+  />
+  )
+}
 
    
       <Header

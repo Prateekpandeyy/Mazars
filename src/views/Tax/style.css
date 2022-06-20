@@ -96,7 +96,19 @@
   height: 100%;
   line-height: 0;
 }
-
+.updatesContent {
+  display: flex;
+  font-family: Arial !important;
+  font-size: 12px;
+  color: #464b4b;
+}
+.updatesHeding {
+  font-family: Arial !important;
+  font-size: 14px;
+  font-weight: 1000;
+  color: #464b4b !important;
+  letter-spacing: 0.0333em;
+}
 /* 
 .image-gallery {
   display: flex;
