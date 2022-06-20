@@ -26,7 +26,8 @@ import * as Cookies from "js-cookie";
 import Swal from "sweetalert2";
 import Alerts from "../../../common/Alerts";
 import Loader from "../../../components/Loader/Loader";
-import {makeStyles} from "@material-ui/styles"
+import {makeStyles} from "@material-ui/styles";
+import InviteModal from "./InviteModal";
 const useStyle = makeStyles(() => ({
   rchStyle : {
     color : "green",
@@ -48,18 +49,18 @@ function Demo() {
    // const userEmail = null
   const em = JSON.parse(userEmail)
   const history = useHistory();
-
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
   const [assignmentdata, setAssignmentData] = useState([]);
   const [owner, setOwner] = useState([]);
   const [read, setRead] = useState(false);
-
   const [baseMode, SetbaseMode] = useState("avc");
   const [transcode, SetTranscode] = useState("interop");
   const [attendeeMode, SetAttendeeMode] = useState("video");
   const [showVideoIcon, setShowVideoIcon] = useState(false)
   const [videoProfile, SetVideoProfile] = useState("240p_4");
+  const [invite, setInvite] = useState(false)
+  const [inviteData, setInviteData] = useState()
   const token = window.localStorage.getItem("adminToken")
   const myConfig = {
       headers : {
@@ -176,7 +177,14 @@ function Demo() {
   const B = (key) => {
     setRead(!key)
   }
-
+  const showInvite = (data) => {
+    console.log("data", data)
+    if(data){
+      setInviteData(data)
+    }
+    setInvite(!invite)
+   
+  }
   const AppointmentBase = ({
     children,
     data,
@@ -187,19 +195,20 @@ function Demo() {
   }) => (
     <div onDoubleClick={() => B(data.owner)}>
       <Appointments.Appointment {...restProps}>
-        <div style={{ display: "flex" }}>
-       {showVideoIcon === false ? 
+      <div style={{ display: "flex" }}>
         <i
-        className="fa fa-video-camera"
-        onClick={() => handleJoin(data)}
-        style={{ fontSize: "18px", padding: "5px" , color: "#fff" }}
-      ></i> : ""}
+          onClick={() => handleJoin(data)}
+            class="fa fa-video-camera"
+            style={{ fontSize: "18px", padding: "5px" , color: "#fff" }}
+          ></i>
+        
           <div>{children}</div>
-          
-          <div
-          
-          >
-          </div>
+          <span onClick = {() => showInvite(data)}>
+          <i class="fa fa-user-plus"
+            style={{ fontSize: "18px", padding: "5px" , color: "#fff" }}
+          ></i>
+          </span>
+         
         </div>
       </Appointments.Appointment>
     </div>
@@ -559,7 +568,13 @@ history.push(`/admin/meeting/${data.id}`);
             </Paper>
         </div>
         
-       
+        {
+       invite === true ?
+       <InviteModal 
+       inviteData = {inviteData}
+       showInvite = {showInvite}
+       invite={invite} /> : ""
+     } 
           </>
   );
 }
