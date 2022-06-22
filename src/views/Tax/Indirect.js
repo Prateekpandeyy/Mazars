@@ -32,9 +32,25 @@ const Indirect = () => {
     const getData =() => {
         axios.get(`${baseUrl}/customers/getarticles?type=indirect`)
         .then((res) => {
-          console.log("response", res)
-          setData(res.data.result)
-        })
+           
+            let dataObj = {}
+            let dataList = []
+            res.data.result.map((i, e) => {
+              dataObj = {
+                sn : ++e,
+                content : i.content,
+                file : i.file,
+                heading : i.heading,
+                id : i.id,
+                publish_date : i.publish_date,
+                status : i.status,
+                type : i.type,
+                writer : i.writer
+              }
+              dataList.push(dataObj)
+                  })
+                  setData(dataList)
+          })
     }
   useEffect(()=> {
       getData()
@@ -64,6 +80,7 @@ const Indirect = () => {
         <Table>
         <TableHead>
    <TableRow>
+   <TableCell style= {{width : "50px"}}>S.No</TableCell>
      <TableCell style= {{width : "150px"}}>Publishing Date</TableCell>
      <TableCell style={{width : "400px", margin: "0 10px"}}>Heading</TableCell>
      <TableCell>Name of Writer</TableCell>
@@ -73,6 +90,10 @@ const Indirect = () => {
                {
                    data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((i, e) => (
                     <TableRow>
+                          <TableCell style={{padding: "8px 16px"}} className="tableCellStyle">
+     
+     {i.sn}
+   </TableCell>
                         <TableCell style= {{width : "150px"}}>
                             {i.publish_date.split("-").reverse().join("-")}
                             </TableCell>

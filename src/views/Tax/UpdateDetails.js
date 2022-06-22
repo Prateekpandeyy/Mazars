@@ -9,9 +9,8 @@ import {Breadcrumbs, Box, Typography } from "@material-ui/core";
 import CommonServices from '../../common/common.js';
 import classes from './design.module.css';
 import { OuterloginContainer } from '../../components/Common/OuterloginContainer';
-
 import { Link , useParams, useHistory} from 'react-router-dom';
-
+import {  VscFilePdf} from "react-icons/vsc";
 const MyContainer = styled(Box)({
     display : "flex", 
     justifyContent : "center", 
@@ -80,9 +79,9 @@ Update
  
 </Breadcrumbs>
 <ArticleWrapper>
-<h6>Date of publishing :   {i.publish_date.split("-").reverse().join("-")} </h6>
+
 <h5 className="updatesHeding">  {CommonServices.capitalizeFirstLetter(i.heading)}</h5>
-     
+<h6>Date of publishing :   {i.publish_date.split("-").reverse().join("-")} </h6>
          
      <div id="artContent" className="updatesContent">
      
@@ -95,6 +94,12 @@ Update
      
 
     </ArticleWrapper>
+    <a href={`${baseUrl3}/${i.file}`} target="_blank" 
+    className={classes.myLink}>
+
+    <button className="downloadBtnPdf"> Download  <VscFilePdf style={{display: "flex",
+     margin: "0 10px", color: "#e4f0fa", width: "20px", height: "20px"}} /></button>
+    </a>
             </div>
         
            ))

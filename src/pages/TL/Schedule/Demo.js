@@ -182,6 +182,7 @@ function Demo() {
 const showInvite = (data) => {
   console.log("data", data)
   if(data){
+    
     setInviteData(data)
   }
   setInvite(!invite)

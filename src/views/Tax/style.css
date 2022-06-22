@@ -33,7 +33,7 @@
 #artContent {
   display: flex;
   /* max-width: 800px; */
-  padding: 0 0 0 30px;
+  /* padding: 0 0 0 30px; */
   width: 100%;
   word-break: break-all;
 }

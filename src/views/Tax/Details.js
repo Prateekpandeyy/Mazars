@@ -156,7 +156,7 @@ const Details = () => {
   </ArticleHeader>
                 <div style={{display : "flex", width: "100%", flexDirection : "column"}}>
            <MyHeading>
-           <h5>  {CommonServices.capitalizeFirstLetter(i.heading)}</h5>
+           <h5 className="updatesHeding">  {CommonServices.capitalizeFirstLetter(i.heading)}</h5>
          
           <a href={`${baseUrl3}/${i.file}`} target="_blank">
           <VscFilePdf style={{display: "flex", width: "40px", height: "40px"}} />

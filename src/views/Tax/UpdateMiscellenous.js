@@ -80,15 +80,32 @@ const UpdateMiscellenous = () => {
   }
   const getData = (e) => {
    
-  
+    let dataObj = {}
+  let dataList = []
     axios.get(`${baseUrl}/customers/getupdated?type=miscellaneous`)
     .then((res) => {
-     console.log("result", res.data.result)
-      setData(res.data.result)
+     
+     
+    
+        res.data.result.map((i, e) => {
+    dataObj = {
+      sn : ++e,
+      content : i.content,
+      file : i.file,
+      heading : i.heading,
+      id : i.id,
+      publish_date : i.publish_date,
+      status : i.status,
+      type : i.type
+    }
+    dataList.push(dataObj)
+        })
+          setData(dataList)
+          
+        })
       
-    })
-  
-}
+    }
+    
 return(
   <>
 

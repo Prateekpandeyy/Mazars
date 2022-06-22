@@ -83,16 +83,32 @@ const UpdateIndirect = () => {
       setRowsPerPage(e.target.value)
   }
   const getData = (e) => {
-   
+    let dataObj = {}
+  let dataList = []
   
     axios.get(`${baseUrl}/customers/getupdated?type=indirect`)
-    .then((res) => {
-     console.log("result", res.data.result)
-      setData(res.data.result)
+    
+      .then((res) => {
+    
+        res.data.result.map((i, e) => {
+    dataObj = {
+      sn : ++e,
+      content : i.content,
+      file : i.file,
+      heading : i.heading,
+      id : i.id,
+      publish_date : i.publish_date,
+      status : i.status,
+      type : i.type
+    }
+    dataList.push(dataObj)
+        })
+          setData(dataList)
+          
+        })
       
-    })
-  
-}
+    }
+    
 return(
   <>
 
@@ -135,10 +151,10 @@ data && data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((i,
 
 
 <TableRow>
- <TableCell style={{padding: "8px 16px"}} className="tableCellStyle">
-
-   {e + 1}
- </TableCell>
+<TableCell style={{padding: "8px 16px"}} className="tableCellStyle">
+     
+     {i.sn}
+   </TableCell>
  <TableCell>
  {i.publish_date.split("-").reverse().join("-")}
  </TableCell>
