@@ -133,10 +133,15 @@ getprevPraticipants()
   }
  const getParticiapnts = (e) => {
    if(e){
+    if(estate.length > 0){
+      setEstate("")
+    }
+    setPart(e)
+  
     setEmailError(false)
     setError(false)
     setParticipants(e.value)
-    setPart(e)
+   
    }
    else{
     setEmailError(false)
@@ -257,6 +262,11 @@ const delprevUser = (data) => {
     .then((res) => {
    
       if(res.data.code === 1){
+        Swal.fire({
+          title : "success",
+          message : "Participants deleted successfully",
+          icon : "success"
+        })
         getprevPraticipants()
         // let kp = prevPrati.filter((data, key) => {
         //   return key != data.id
@@ -279,13 +289,18 @@ console.log("invitet", invitedParticipant)
             <ModalBody>
               <h4>{inviteData.title} </h4>
             <h6><b>From </b> {inviteData.startDate} <b>To </b> {inviteData.endDate}</h6>
-
+           
+          {
+            invitedParticipant && (
+              <h4>Participants</h4>
+            )
+          }
             {
    invitedParticipant?.map((i, e) => (
      <>
      <div className="row">
       <div className="col-md-12">
- <h4>Invited Participants</h4>
+
    </div>
     <div className="col-md-12" style={{display : "flex", padding : "0px"}} key = {i.id}
     id={e}>
@@ -300,12 +315,17 @@ console.log("invitet", invitedParticipant)
 </>
    ))
  }
+ {
+   prevPrati && (
+    <h4>Invited Participants</h4>
+   )
+ }
   {
    prevPrati?.map((i, e) => (
      <>
      <div className="row">
       <div className="col-md-12">
- <h4>Added Participants</h4>
+
    </div>
     <div className="col-md-12" style={{display : "flex", padding : "0px"}} key = {i.id}
     id={i.id}>
@@ -343,14 +363,15 @@ console.log("invitet", invitedParticipant)
    
     <div className="col-md-8">
     <Select
-  isMulti={false}
+    closeMenuOnSelect={true}
+    onSelectResetsInput={false}
+    blurInputOnSelect={false}
+
         options={client}
         inputValue={estate}
         onInputChange={getStateValue}
         onChange={(e) => getParticiapnts(e)}
-        closeMenuOnSelect={true}
-        onSelectResetsInput={false}
-        blurInputOnSelect={false}
+        
        value={part}
       />
       {

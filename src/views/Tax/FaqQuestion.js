@@ -72,7 +72,7 @@ else{
               <Breadcrumbs separator=">" maxItems={3} aria-label="breadcrumb">
            
    <Link underline="hover" color="inherit" to = {`/customer/faq-question`}>
-   {CommonServices.capitalizeFirstLetter("FAQ")}
+   Frequently asked questions (FAQ)
    </Link>
    
   
