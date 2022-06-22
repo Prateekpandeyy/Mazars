@@ -11,6 +11,7 @@ import axios from 'axios';
 import { baseUrl } from "../../../config/config";
 import Swal from 'sweetalert2';
 import Select from 'react-select';
+import CommonServices from "../../../common/common";
 const Schema = yup.object().shape({
     p_email: yup.string().email("invalid email").required(""),
     p_password: yup.string().required(""),
@@ -65,7 +66,8 @@ getprevPraticipants()
      if(res.data.code === 1){
       setPrevParti(res.data.result)
       inv.push(res.data.users)
-      setInvitedParticipants(inv)
+      let pp = res.data.users.split(",")
+      setInvitedParticipants(pp)
      }
      else{
        setPrevParti([])
@@ -133,10 +135,15 @@ getprevPraticipants()
   }
  const getParticiapnts = (e) => {
    if(e){
+    if(estate.length > 0){
+      setEstate("")
+    }
+    setPart(e)
+  
     setEmailError(false)
     setError(false)
     setParticipants(e.value)
-    setPart(e)
+   
    }
    else{
     setEmailError(false)
@@ -248,7 +255,7 @@ const delprevUser = (data) => {
 
     axios({
       method : "POST", 
-      url : `${baseUrl}/tl/deleteinvitecall`,
+      url : `${baseUrl}/admin/deleteinvitecall`,
       headers : {
         uit : token
       },
@@ -257,6 +264,11 @@ const delprevUser = (data) => {
     .then((res) => {
    
       if(res.data.code === 1){
+        Swal.fire({
+          title : "success",
+          message : "Participants deleted successfully",
+          icon : "success"
+        })
         getprevPraticipants()
         // let kp = prevPrati.filter((data, key) => {
         //   return key != data.id
@@ -277,35 +289,53 @@ console.log("invitet", invitedParticipant)
             Invite Participants
             </ModalHeader>
             <ModalBody>
-              <h4>{inviteData.title} </h4>
-            <h6><b>From </b> {inviteData.startDate} <b>To </b> {inviteData.endDate}</h6>
-
+           
+              <h4>{CommonServices.capitalizeFirstLetter(inviteData.title)} </h4>
+            <h6><b>From </b>  {inviteData.startDate.split(" ")[0].split("-").reverse().join("-")} {inviteData.startDate.split(" ")[1]} <b>To </b>  {inviteData.endDate.split(" ")[0].split("-").reverse().join("-")} {inviteData.startDate.split(" ")[1]}</h6>
+           
+          {
+            invitedParticipant && (
+              <h4>Participants</h4>
+            )
+          }
             {
-   invitedParticipant?.map((i, e) => (
+  
      <>
      <div className="row">
       <div className="col-md-12">
- <h4>Invited Participants</h4>
+
    </div>
-    <div className="col-md-12" style={{display : "flex", padding : "0px"}} key = {i.id}
-    id={e}>
-    <div className="col-md-8 mb-2">
-    <h6>
-    {i}
-    </h6>
+    <div className="col-md-12" style={{display : "flex", padding : "0px"}}>
+    <div className="col-md-12 mb-2" style={{display : "flex", flexWrap : "wrap"}}>
+      {
+         invitedParticipant?.map((i, e) => (
+
+          <h6 key = {i.id} className="myParticipantName">
+              {i}
+            </h6>
+          ))
+      }
+   
+  
+   
       </div>
      
     </div>
     </div>
 </>
-   ))
+  
+ }
+ {
+   prevPrati && (
+    <h4>Invited Participants</h4>
+   )
  }
   {
    prevPrati?.map((i, e) => (
      <>
      <div className="row">
       <div className="col-md-12">
- <h4>Added Participants</h4>
+
    </div>
     <div className="col-md-12" style={{display : "flex", padding : "0px"}} key = {i.id}
     id={i.id}>
@@ -343,14 +373,15 @@ console.log("invitet", invitedParticipant)
    
     <div className="col-md-8">
     <Select
-  isMulti={false}
+    closeMenuOnSelect={true}
+    onSelectResetsInput={false}
+    blurInputOnSelect={false}
+
         options={client}
         inputValue={estate}
         onInputChange={getStateValue}
         onChange={(e) => getParticiapnts(e)}
-        closeMenuOnSelect={true}
-        onSelectResetsInput={false}
-        blurInputOnSelect={false}
+        
        value={part}
       />
       {

@@ -182,7 +182,6 @@ function Demo() {
 const showInvite = (data) => {
   console.log("data", data)
   if(data){
-    
     setInviteData(data)
   }
   setInvite(!invite)
@@ -199,14 +198,14 @@ const showInvite = (data) => {
     <div onDoubleClick={() => B(data.owner)}>
     
       <Appointments.Appointment {...restProps}>
-        <div style={{ display: "flex" }}>
+        <div style={{ display: "flex"}}>
         <i
           onClick={() => handleJoin(data)}
             class="fa fa-video-camera"
             style={{ fontSize: "18px", padding: "5px" , color: "#fff" }}
           ></i>
         
-          <div>{children}</div>
+          <div style={{display : "flex", width : "100px", overflow : "hidden"}}>{children}</div>
           <span onClick = {() => showInvite(data)}>
           <i class="fa fa-user-plus"
             style={{ fontSize: "18px", padding: "5px" , color: "#fff" }}
