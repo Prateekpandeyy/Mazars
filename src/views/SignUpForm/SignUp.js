@@ -779,8 +779,7 @@ const getUser = (e) => {
                           type="text"
                           className="form-control"
                           name="p_address"
-                         
-
+                          maxlength="256"
                           ref={register()}
                           placeholder="Enter Address"
                         
