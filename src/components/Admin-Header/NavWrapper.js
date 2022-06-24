@@ -97,6 +97,8 @@ const clName = JSON.parse(localStorage.getItem("clientName"))
                   <div className="arrow_box_right">
 
                     {name == "customer" && (
+                     <>
+                      
                       <Link to="/customer/change-password">
                         <div className="dropdown-item" 
                           style={{ cursor: "pointer" }}>
@@ -104,6 +106,14 @@ const clName = JSON.parse(localStorage.getItem("clientName"))
                           <span style={{ marginLeft: "3px" }}>Change Password</span>
                         </div>
                       </Link>
+                       <Link to="/customer/profile">
+                       <div className="dropdown-item" 
+                         style={{ cursor: "pointer" }}>
+                         <VpnKeyIcon />
+                         <span style={{ marginLeft: "3px" }}>Profile</span>
+                       </div>
+                     </Link>
+                     </>
                     )}
 
                     <div

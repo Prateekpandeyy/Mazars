@@ -194,15 +194,15 @@ function Demo() {
     ...restProps
   }) => (
     <div onDoubleClick={() => B(data.owner)}>
-      <Appointments.Appointment {...restProps}>
-      <div style={{ display: "flex" }}>
+       <Appointments.Appointment {...restProps}>
+        <div style={{ display: "flex"}}>
         <i
           onClick={() => handleJoin(data)}
             class="fa fa-video-camera"
             style={{ fontSize: "18px", padding: "5px" , color: "#fff" }}
           ></i>
         
-          <div>{children}</div>
+          <div style={{display : "flex", width : "100px", overflow : "hidden"}}>{children}</div>
           <span onClick = {() => showInvite(data)}>
           <i class="fa fa-user-plus"
             style={{ fontSize: "18px", padding: "5px" , color: "#fff" }}

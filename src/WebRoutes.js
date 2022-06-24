@@ -43,7 +43,7 @@ import Media from './views/Tax/Media';
 import FaqQuestion from "./views/Tax/FaqQuestion";
 import LinklistUser from "./views/Login/Linklist";
 import OuterMeetingJoin from "./views/outerMeeting/index";
-
+import Profile from './views/Profile/Profile'
 //admin routes
 import AdminStart from './pages/Admin/Start/Start'
 import AdminLogin from './pages/Admin/Login/Login'
@@ -275,6 +275,7 @@ function WebRoutes() {
              <PrivateRouteUser exact path = "/customer/contact" component = {Contact} />
              <PrivateRouteUser exact path = "/customer/mediacontent" component = {Contact} />
             <PrivateRouteUser exact path = "/customer/about" component = {About} />
+            <PrivateRouteUser exact path = "/customer/profile" component = {Profile} />
            
             
             <PublicRouteAdmin exact path="/admin/start" component={AdminStart} />

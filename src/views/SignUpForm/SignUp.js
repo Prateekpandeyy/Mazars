@@ -950,12 +950,17 @@ and number
                         <label className="form-label">
                           Optional Email 
                         </label>
-                        <div
-                          className="btn queryPlusIcon"
-                          onClick={() => append({ query: "" })}
-                        >
-                          +
+                       {
+                         fields.length < 10 ?
+                         <div
+                         className="btn queryPlusIcon"
+                         onClick={() => append({ query: "" })}
+                       >
+                           +
                         </div>
+                        : "" 
+                       }
+                        
                       </div>
 
                       {fields.length > 0 &&
