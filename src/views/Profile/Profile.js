@@ -9,6 +9,7 @@ import Layout from "../../components/Layout/Layout";
 import {CgProfile} from 'react-icons/cg'
 import axios from "axios";
 import { baseUrl } from "../../config/config";
+import Swal from 'sweetalert2';
 const useStyle = makeStyles({
   imgStyle: {
     display: "flex",
@@ -191,12 +192,26 @@ const Profile = () => {
     })
     .then((res) => {
         console.log("done")
+        if(res.data.code === 1){
+          Swal.fire({
+            title : "success",
+            html : "Profile updated successfully",
+            icon : "success"
+          })
+        }
+        else if (res.data.code === 0){
+          Swal.fire({
+            title : "error",
+            html : "Some thing went wrong",
+            icon : "error"
+          })
+        }
     })
   }
   return (
     <Layout custDashboard="custDashboard" custUserId={userId}>
     <MyContent>
-      <ImgBox style={{justifyContent : "space-between"}}>
+      <ImgBox style={{justifyContent : "space-between", padding : "10px"}}>
      <div>
      <CgProfile style={{fontSize : "50px"}} />
       <MyTitle>{data.name}</MyTitle>
@@ -307,12 +322,16 @@ const Profile = () => {
               </MyInputWrapper>
             </Grid>
           </Grid>
-         
           <Grid container className={classes.centerBox}>
-            <Grid item={12}>
-              <MyButton type="button" onClick={sendData}>Save</MyButton>
-            </Grid>
+        {
+          disable === false ?
+          
+          <Grid item={12}>
+            <MyButton type="button" onClick={sendData}>Save</MyButton>
           </Grid>
+         : ""
+        }
+        </Grid>
         </form>
       </MyForm>
     </MyContent>
