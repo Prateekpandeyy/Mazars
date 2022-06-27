@@ -951,7 +951,7 @@ and number
                           Optional Email 
                         </label>
                        {
-                         fields.length < 10 ?
+                         fields.length < 9 ?
                          <div
                          className="btn queryPlusIcon"
                          onClick={() => append({ query: "" })}

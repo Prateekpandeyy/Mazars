@@ -205,7 +205,7 @@ const showInvite = (data) => {
             style={{ fontSize: "18px", padding: "5px" , color: "#fff" }}
           ></i>
         
-          <div style={{display : "flex", width : "100px", overflow : "hidden"}}>{children}</div>
+          <div style={{display : "flex", width : "110px", overflow : "hidden"}}>{children}</div>
           <span onClick = {() => showInvite(data)}>
           <i class="fa fa-user-plus"
             style={{ fontSize: "18px", padding: "5px" , color: "#fff" }}

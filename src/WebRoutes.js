@@ -187,6 +187,8 @@ import UpdateIndirect from "./views/Tax/UpdateIndirect";
 import UpdateMiscellenous from "./views/Tax/UpdateMiscellenous";
 import UpdateDetails from "./views/Tax/UpdateDetails";
 import OuterLinkVideo from "./views/outerLinkVideo.js/OuterLinkVideo";
+import EditProfile from "./views/EditProfile/EditProfile";
+import Drag from "./components/Drag";
 
 // import PayDetails from "./views/PaymentStatus/PayDetails";
 
@@ -242,6 +244,7 @@ function WebRoutes() {
         <PublicRouteUser exact path = "/customer/contactbasic" component = {ContactOuter} />
        <PublicRouteUser exact path = "/customer/faq-question" component={FaqQuestion} />
        <PublicRouteUser exact path = "/customer/updatedirect" component={UpdateDirect} />
+       <PublicRouteUser exact path = "/customer/drag" component = {Drag} />
        <PublicRouteUser exact path = "/customer/updateindirect" component={UpdateIndirect} />
        <PublicRouteUser exact path="/customer/meetingouter/:id" component={OuterMeetingJoin} />
        <PublicRouteUser exact path = "/customer/miscellaneous" component={UpdateMiscellenous} />
@@ -276,7 +279,8 @@ function WebRoutes() {
              <PrivateRouteUser exact path = "/customer/mediacontent" component = {Contact} />
             <PrivateRouteUser exact path = "/customer/about" component = {About} />
             <PrivateRouteUser exact path = "/customer/profile" component = {Profile} />
-           
+            
+           <PrivateRouteUser exact path = "/customer/editprofile" component = {EditProfile} />
             
             <PublicRouteAdmin exact path="/admin/start" component={AdminStart} />
             <PublicRouteAdmin exact path="/admin/login" component={AdminLogin} />

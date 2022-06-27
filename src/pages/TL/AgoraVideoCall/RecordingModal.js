@@ -27,7 +27,7 @@ function RecordingModal({
       }
     const { assign_no, id, username, start } = item
    
-
+const [parti, setParti] = useState("")
 
     //submit
     const onSubmit = (value) => {
@@ -46,14 +46,15 @@ else{
 }
         const { fileList } = serverResponse
         
-
+let a = parti + username
+console.log("aaa",  parti)
         let formData = new FormData();
         formData.append("uid", JSON.parse(userId));
         formData.append("fileList", completeRecording);
         formData.append("message_type", value.msg_type);
         formData.append("message", value.p_message);
         formData.append("assign_id", assign_no);
-        formData.append("participants", username);
+        formData.append("participants", parti);
         formData.append("schedule_id", id);
 
         axios.get(`${baseUrl}/tl/freeslottime?schedule_id=${id}&&uid=${JSON.parse(userId)}`,  myConfig)
@@ -104,6 +105,7 @@ else{
                                             name="p_participants"
                                             className="form-control"
                                             ref={register}
+                                            onChange={(e) => setParti(e.target.value)}
                                             defaultValue={username}
                                         />
                                     </div>

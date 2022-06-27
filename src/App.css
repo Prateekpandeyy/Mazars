@@ -72,3 +72,8 @@ span {
   margin: 8px 5px;
   padding: 5px;
 }
+.formContentWrapper {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}

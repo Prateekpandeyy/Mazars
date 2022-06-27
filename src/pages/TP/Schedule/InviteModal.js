@@ -291,7 +291,7 @@ console.log("invitet", invitedParticipant)
             <ModalBody>
            
               <h4>{CommonServices.capitalizeFirstLetter(inviteData.title)} </h4>
-            <h6><b>From </b>  {inviteData.startDate.split(" ")[0].split("-").reverse().join("-")} {inviteData.startDate.split(" ")[1]} <b>To </b>  {inviteData.endDate.split(" ")[0].split("-").reverse().join("-")} {inviteData.startDate.split(" ")[1]}</h6>
+            <h6><b>From </b>  {inviteData.startDate.split(" ")[0].split("-").reverse().join("-")} {inviteData.startDate.split(" ")[1]} <b>To </b>  {inviteData.endDate.split(" ")[0].split("-").reverse().join("-")} {inviteData.endDate.split(" ")[1]}</h6>
            
           {
             invitedParticipant && (
@@ -349,7 +349,7 @@ console.log("invitet", invitedParticipant)
         <div className="col-md-4">
       <Button variant="contained" onClick={(d) => delprevUser(i)}>
      <span>
-     <RemoveIcon />
+Delete
      </span>
       </Button>
         </div> : ""
@@ -397,10 +397,14 @@ console.log("invitet", invitedParticipant)
       </div>
   </div>
   {
+  allParticipants.length > 0 ?
+   
+<div style={{display : "flex", padding : "10px", flexDirection : "column", width : "100%", border : "1px solid #000"}}>
+{
    allParticipants?.map((i, e) => (
     <div className="row" key = {e}
     id={e}>
-    <div className="col-md-8 mb-2">
+    <div className="col-md-8 mb-2" style={{bordr : "1px solid #000"}}>
     <p>
     {i}
     </p>
@@ -415,6 +419,8 @@ console.log("invitet", invitedParticipant)
     </div>
    ))
  }
+  </div> : ""
+}
 <button className="customBtn my-2">Submit</button>
            </form> : ""
 }

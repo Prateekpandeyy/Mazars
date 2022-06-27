@@ -4,6 +4,7 @@ import CustomerNotification from "./CustomerNotification";
 import LockOpenIcon from '@material-ui/icons/LockOpen';
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
 import './index.css'
+import {CgProfile} from 'react-icons/cg'
 import CommonServices from "../../common/common";
 
 function NavWrapper(props) {
@@ -102,7 +103,7 @@ const clName = JSON.parse(localStorage.getItem("clientName"))
                       <Link to="/customer/change-password">
                         <div className="dropdown-item" 
                           style={{ cursor: "pointer" }}>
-                          <VpnKeyIcon />
+                          <CgProfile />
                           <span style={{ marginLeft: "3px" }}>Change Password</span>
                         </div>
                       </Link>

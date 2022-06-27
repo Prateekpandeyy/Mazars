@@ -76,6 +76,7 @@
     "react-dom": "^17.0.1",
     "react-download-link": "^2.3.0",
     "react-draft-wysiwyg": "^1.14.7",
+    "react-draggable": "^4.4.5",
     "react-dropdown-input": "^0.1.11",
     "react-hls-player": "^3.0.7",
     "react-hook-form": "^6.15.5",

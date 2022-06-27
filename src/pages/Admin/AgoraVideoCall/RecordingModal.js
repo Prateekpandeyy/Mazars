@@ -27,7 +27,7 @@ function RecordingModal({
  
 
     const { assign_no, id, username, start } = item
-  
+  const [parti, setParti] = useState("")
 
     //submit
     const onSubmit = (value) => {
@@ -51,7 +51,7 @@ function RecordingModal({
                 formData.append("message_type", value.msg_type);
                 formData.append("message", value.p_message);
                 formData.append("assign_id", assign_no);
-                formData.append("participants", username);
+                formData.append("participants", parti);
                 formData.append("schedule_id", id);
         
         
@@ -110,6 +110,7 @@ axios.get(`${baseUrl}/admin/freeslottime?schedule_id=${id}&&uid=${JSON.parse(use
                                             className="form-control"
                                             ref={register}
                                             defaultValue={username}
+                                            onChange={(e) => setParti(e.target.value)}
                                         />
                                     </div>
 
