@@ -67,6 +67,10 @@ const AddModal = ({addEmailFun, addEmail, addedEmail, token, getData}) => {
     
     setEmailErrormulti(false)
     }
+    else {
+        setEmailErrormulti(true)
+        setWemailmulti("invalid email")
+      }
 }
     return(
         <Modal isOpen={addEmail} toggle={addEmailFun} size="md">
@@ -111,7 +115,7 @@ const AddModal = ({addEmailFun, addEmail, addedEmail, token, getData}) => {
                         </div>
                       </div>
                       <button className="customBtn" type="submit">
-                          Update
+                          Add
                         </button>
                       </form>
             </ModalBody>
