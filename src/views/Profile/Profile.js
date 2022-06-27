@@ -229,12 +229,9 @@ const Profile = () => {
    
 <span style={{display : "flex", justifyContent : "space-between"}}>
 <h4>Optional Email</h4>
-{
-  addedEmail.length < 9 ?
-  <button
+<button
       onClick={(e) => addEmailFun()}
-      className="customBtn">Add</button> : ""
-}
+      className="customBtn">Add</button>
   </span>
   <span className="profileInfo"> 
  
