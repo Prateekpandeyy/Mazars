@@ -6,6 +6,10 @@ import { baseUrl } from "../../config/config";
 import { Card, CardBody, CardTitle, CardHeader, Row, Col } from 'reactstrap';
 import styled from "styled-components";
 import { useHistory } from 'react-router';
+import Swal from 'sweetalert2';
+import AddModal from './AddModal';
+// import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+ import CloseIcon from '@material-ui/icons/Close';
 const MyFormValue = styled.div`
   display: flex;
   max-width: 600px;
@@ -28,6 +32,9 @@ const Profile = () => {
     const [mobileno, setMobileNo] = useState("")
     const [zipCode, setZipCode] = useState("")
     const [gst, setGst] = useState("")
+    const [allEmails, setAllEmails] = useState([])
+    const [addEmail, setAddEmail] = useState(false)
+    const [addedEmail, setAddedEmail] = useState(null)
     const token = window.localStorage.getItem("clientToken")
     const myConfig = {
         headers : {
@@ -50,11 +57,43 @@ const Profile = () => {
        setAddress(res.data.result.address)
        setZipCode(res.data.result.pincode)
        setGst(res.data.result.gstin_no)
+       setAllEmails(res.data.result.optional_email)
+       setAddedEmail(res.data.result.optional_email.length)
         });
     };
     useEffect(() => {
         getData()
     }, [])
+  const delEmail = (e) => {
+    console.log("delEmails", e)
+    axios.get(`${baseUrl}/customers/deleteoptionalemail?id=${e}`, myConfig)
+    .then((res) => {
+      if(res.data.code === 1){
+        Swal.fire({
+          title : "success",
+          html : "Optional Email deleted successfully",
+         icon : "success"
+        })
+       
+      }
+      else if (res.data.code === 0){
+        Swal.fire({
+          title : "error",
+          html : "Something went wrong, please try again",
+         icon : "error"
+        })
+      }
+      getData() 
+    })
+  }
+  const addEmailFun = (e) => {
+    if(e !== undefined){
+      setAddEmail(!addEmail)
+    }
+    else{
+      setAddEmail(!addEmail)
+    }
+  }
     return (
         <Layout custDashboard="custDashboard" custUserId={userId}>
         <Card style={{margin: "10px"}}>
@@ -183,10 +222,68 @@ const Profile = () => {
 }
 </span>
 </span>
+
+
+<span className="formContentWrapper" style={{display : "flex", padding : "10px", flexDirection : "column", width : "100%", border : "1px solid #000"}}>
+<fieldset>
+   
+<span style={{display : "flex", justifyContent : "space-between"}}>
+<h4>Optional Email</h4>
+{
+  addedEmail.length > 9 ?
+  <button
+      onClick={(e) => addEmailFun()}
+      className="customBtn">Add</button> : ""
+}
+  </span>
+  <span className="profileInfo"> 
+ 
+    </span>
+    <span className="profileInfo2">
+     
+      {
+  allEmails.length > 0 ?
+   
+<div>
+{
+   allEmails?.map((i, e) => (
+    <div className="row" key = {e}
+    id={e.email}>
+    <div className="col-md-8 mb-2">
+    <p>
+    {i.email}
+    </p>
+      </div>
+      <div className="col-md-4">
+     
+     <span onClick={(e) => delEmail(i.id)}>
+     <CloseIcon style={{color : "red", fontSize : "24px"}} />
+     </span>
+     
+        </div>
+    </div>
+   ))
+ }
+  </div> : ""
+}
+      </span>
+      </fieldset>
+</span>
+
     </MyFormValue>
 </div>
 </CardBody>
 </Card>
+{
+  addEmail === true ?
+  <AddModal
+  addEmailFun = {addEmailFun}
+  addEmail = {addEmail}
+  token = {token}
+  addedEmail = {addedEmail}
+  getData = {getData} /> 
+  : ""
+}
         </Layout>
     )
 }

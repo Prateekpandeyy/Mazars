@@ -82,3 +82,8 @@ span {
   display: flex;
   width: 50%;
 }
+.profileInfo2 {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+}

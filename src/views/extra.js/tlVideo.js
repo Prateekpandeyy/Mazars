@@ -839,3 +839,128 @@ console.log(this.state.showRecBtn)
 }
 
 export default AgoraCanvas;
+
+import React , {useState} from 'react';
+import { Modal, ModalHeader, ModalBody, ModalFooter  } from "reactstrap";
+import { useForm, useFieldArray } from "react-hook-form";
+import classNames from "classnames";
+import { baseUrl } from '../../config/config';
+import Swal from 'sweetalert2';
+import axios from 'axios';
+const AddModal = ({addEmailFun, addEmail, addedEmail, token, getData}) => {
+   
+  const { handleSubmit, register, errors, reset, getValues, control } = useForm({
+    defaultValues: {
+      p_email: [{ p_email: "" }],
+    },
+  });
+  const { append, remove, fields} = useFieldArray({
+    control,
+    name: "p_email",
+  });
+  const onSubmit = (value) => {
+      let formData = new FormData()
+    formData.append("email", JSON.stringify(value.p_email));
+    axios({
+       
+        method: "POST",
+        url : `${baseUrl}/customers/addoptionalemail`,
+          headers : {
+             uit : token
+         },
+        data: formData,
+    })
+    .then((res) => {
+        addEmailFun()
+        if(res.data.code === 1){
+            Swal.fire({
+                title : "success",
+                html : "email added successfully",
+                icon : "success"
+            })
+        }
+        else if (res.data.code === 0){
+            Swal.fire({
+                title : "error",
+                html : "Something went wrong, please try again",
+                icon : "error"
+            })
+        }
+        getData()
+    })
+  }
+    return(
+        <Modal isOpen={addEmail} toggle={addEmailFun} size="md">
+            <ModalHeader toggle={addEmailFun}>
+            <h4>Add Modal</h4>
+            </ModalHeader>
+            <ModalBody>
+            <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">    
+            <div className="row">
+                      <div className="col-md-10">
+                      <div className="question_query mb-2">
+                        <label className="form-label">
+                          Optional Email 
+                        </label>
+                       {
+                      addedEmail +  fields.length < 9 ?
+                         <div
+                         className="btn queryPlusIcon"
+                         onClick={() => append({ query: "" })}
+                       >
+                           +
+                        </div>
+                        : "" 
+                       }
+                        
+                      </div>
+
+                      {fields.length > 0 &&
+                        fields.map((item, index) => (
+                          <div
+                            className="question_query_field mb-2"
+                            key={item.id}
+                          >
+                            <input
+                            name={`p_email[${index}].query`}
+                          
+                           className={classNames("form-control", {
+                             "is-invalid": errors.p_email ,
+                           })}
+                        //    onChange={(e) => emailHandler(e)}
+                       
+                           placeholder="Enter Your Email"
+                           ref={register()}
+                            
+                            />
+                            
+                            <div
+                              className="btn queryPlusIcon ml-2"
+                              onClick={() => remove(index)}
+                            >
+                              -
+                            </div>
+                          </div>
+                        ))}
+                      {/* {
+                        wEmailmulti ? <p className="declined">{wEmailmulti}</p> : <>
+                          {valiEmailMulti ?
+                            <p className="completed">
+                              {valiEmailMulti}
+                            </p>
+                            :
+                            <p className="declined">{invalidMulti}</p>}
+                        </>
+                      } */}
+
+                        </div>
+                      </div>
+                      <button className="customBtn" type="submit">
+                          Update
+                        </button>
+                      </form>
+            </ModalBody>
+        </Modal>
+    )
+}
+export default AddModal;
