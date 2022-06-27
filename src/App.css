@@ -77,3 +77,8 @@ span {
   width: 100%;
   justify-content: space-between;
 }
+
+.profileInfo {
+  display: flex;
+  width: 50%;
+}

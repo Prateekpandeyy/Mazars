@@ -9,7 +9,7 @@ import CommonServices from "../../common/common";
 
 function NavWrapper(props) {
   const { color, logout, name, email, feedbackNumber} = props;
-const clName = JSON.parse(localStorage.getItem("clientName"))
+const clName = JSON.parse(localStorage.getItem("clientLoginId"))
   const history = useHistory();
   const userId = window.localStorage.getItem("userid");
   const adminkey = window.localStorage.getItem("adminkey");
@@ -103,14 +103,15 @@ const clName = JSON.parse(localStorage.getItem("clientName"))
                       <Link to="/customer/change-password">
                         <div className="dropdown-item" 
                           style={{ cursor: "pointer" }}>
-                          <CgProfile />
+                           <VpnKeyIcon />
                           <span style={{ marginLeft: "3px" }}>Change Password</span>
                         </div>
                       </Link>
                        <Link to="/customer/profile">
                        <div className="dropdown-item" 
                          style={{ cursor: "pointer" }}>
-                         <VpnKeyIcon />
+                            <CgProfile />
+                       
                          <span style={{ marginLeft: "3px" }}>Profile</span>
                        </div>
                      </Link>
