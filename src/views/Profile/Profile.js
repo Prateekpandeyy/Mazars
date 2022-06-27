@@ -16,6 +16,7 @@ const MyFormValue = styled.div`
 `;
 const Profile = () => {
     const userId = window.localStorage.getItem("userid");
+    const clientId = window.localStorage.getItem("clientLoginId")
     const [data, setData] = useState("");
     const [disable, setDisable] = useState(true)
     const [email, setEmail] = useState("")
@@ -60,10 +61,11 @@ const Profile = () => {
 <CardHeader>
 <div style={{display : "flex", width : "100%", justifyContent : "space-between", alignItems : "center"}}>
 <div>
-     <CgProfile style={{fontSize : "50px"}} />
+     {/* <CgProfile style={{fontSize : "50px"}} /> */}
+     <img src = "https://www.w3schools.com/howto/img_avatar.png" width="100" height = "100" />
       <h4>{data.name}</h4>
          </div>
-         <h6>TEST123</h6>
+         <h6>{JSON.parse(clientId)}</h6>
          <button className="profileBtn" onClick={() => history.push("/customer/editprofile")}>Edit</button>
 
 </div>
