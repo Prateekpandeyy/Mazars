@@ -65,26 +65,48 @@ const Profile = () => {
         getData()
     }, [])
   const delEmail = (e) => {
-    console.log("delEmails", e)
-    axios.get(`${baseUrl}/customers/deleteoptionalemail?id=${e}`, myConfig)
-    .then((res) => {
-      if(res.data.code === 1){
-        Swal.fire({
-          title : "success",
-          html : "Optional Email deleted successfully",
-         icon : "success"
+    Swal.fire({
+      title: "Are you sure?",
+       text: `do you want to delete email`,
+            type: 'warning',
+            showCloseButton:true,
+            showCancelButton: true,
+            confirmButtonColor: '"#3085d6"',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'No'
+        }).then(function(result){
+          console.log("resutl", result)
+            if(result.value){
+              deleteConfirm(e)
+            }
+            else if(result.dismiss == 'cancel'){
+        
+      };
         })
+   
+  }
+  const deleteConfirm = (e) => {
+      console.log("delEmails", e)
+     axios.get(`${baseUrl}/customers/deleteoptionalemail?id=${e}`, myConfig)
+     .then((res) => {
+       if(res.data.code === 1){
+         Swal.fire({
+           title : "success",
+           html : "Optional Email deleted successfully",
+          icon : "success"
+         })
        
-      }
-      else if (res.data.code === 0){
-        Swal.fire({
-          title : "error",
-          html : "Something went wrong, please try again",
-         icon : "error"
-        })
-      }
-      getData() 
-    })
+       }
+       else if (res.data.code === 0){
+         Swal.fire({
+           title : "error",
+           html : "Something went wrong, please try again",
+          icon : "error"
+         })
+       }
+       getData() 
+     })
   }
   const addEmailFun = (e) => {
     if(e !== undefined){
@@ -114,19 +136,20 @@ const Profile = () => {
   
   {/* <CgProfile style={{fontSize : "50px"}} /> */}
   <img src = "https://www.w3schools.com/howto/img_avatar.png" width="100" height = "100" />
+  <h4>{JSON.parse(clientId)}</h4>
    <h4 align="center">{data.name}</h4>
       </div>
     <MyFormValue>
-    <span className="formContentWrapper">
+    {/* <span className="formContentWrapper">
 <span className="profileInfo">
 <h4>User Id</h4>
   </span>
 <span className="profileInfo">
 <h4>{JSON.parse(clientId)}</h4>
   </span>
-</span>
+</span> */}
     <span className="formContentWrapper">
-    <span className="profileInfo">
+    <span className="profileInfo" id="profileInfoLabel">
 <h4>Email</h4>
 </span>
 <span className="profileInfo">
@@ -138,7 +161,7 @@ const Profile = () => {
 </span>
 </span>
 <span className="formContentWrapper">
-<span className="profileInfo">
+<span className="profileInfo" id="profileInfoLabel">
 <h4>Country</h4>
 </span>
 <span className="profileInfo">
@@ -150,7 +173,7 @@ const Profile = () => {
 </span>
 </span>
 <span className="formContentWrapper">
-<span className="profileInfo">
+<span className="profileInfo" id="profileInfoLabel">
 <h4>State</h4>
 </span>
 <span className="profileInfo">
@@ -162,7 +185,7 @@ const Profile = () => {
 </span>
 </span>
 <span className="formContentWrapper">
-<span className="profileInfo">
+<span className="profileInfo" id="profileInfoLabel">
 <h4>City</h4>
 </span>
 <span className="profileInfo">
@@ -175,7 +198,7 @@ const Profile = () => {
 </span>
 </span>
 <span className="formContentWrapper">
-<span className="profileInfo">
+<span className="profileInfo" id="profileInfoLabel">
 <h4>Address</h4>
 </span>
 <span className="profileInfo">
@@ -187,7 +210,7 @@ const Profile = () => {
 </span>
 </span>
 <span className="formContentWrapper">
-<span className="profileInfo">
+<span className="profileInfo" id="profileInfoLabel">
 <h4>Mobile Number</h4>
 </span>
 <span className="profileInfo">
@@ -199,7 +222,7 @@ const Profile = () => {
 </span>
 </span>
 <span className="formContentWrapper">
-<span className="profileInfo">
+<span className="profileInfo" id="profileInfoLabel">
 <h4>Zip Code</h4>
 </span>
 <span className="profileInfo">
@@ -211,7 +234,7 @@ const Profile = () => {
 </span>
 </span>
 <span className="formContentWrapper">
-<span className="profileInfo">
+<span className="profileInfo" id="profileInfoLabel">
 <h4>GST In Number</h4>
 </span>
 <span className="profileInfo">

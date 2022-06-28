@@ -82,6 +82,14 @@ span {
   display: flex;
   width: 50%;
 }
+.profileInfo h4 {
+  font-family: Arial;
+  font-size: 14px;
+  color: #464b4b;
+}
+#profileInfoLabel h4 {
+  font-weight: 700 !important;
+}
 .profileInfo2 {
   display: flex;
   width: 100%;

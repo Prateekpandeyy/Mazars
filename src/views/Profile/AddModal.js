@@ -7,11 +7,10 @@ import Swal from 'sweetalert2';
 import axios from 'axios';
 const AddModal = ({addEmailFun, addEmail, addedEmail, token, getData}) => {
    const [email, setEmail] = useState("")
-   const [wEmailmulti, setWemailmulti] = useState()
-   const [invalidMulti, setInvalidMulti] = useState(null)
-   const [email2multi2, setEmailmulti2] = useState();
-   const [emailErrorMulti, setEmailErrormulti] = useState(null)
-   const [valiEmailMulti, setValiemailMulti] = useState(null)
+   const [emailError, setEmailError] = useState(null)
+   const [wEmail, setWemail] = useState();
+   const [valiEmail, setValiemail] = useState(null)
+   const [invalid, setInvalid] = useState(null)
   const { handleSubmit, register, errors, reset, getValues, control } = useForm({
     defaultValues: {
       p_email: [{ p_email: "" }],
@@ -25,7 +24,7 @@ const AddModal = ({addEmailFun, addEmail, addedEmail, token, getData}) => {
     console.log("eee", e.target.value)
     setEmail(e.target.value)
         if (e.target.value.length < 1) {
-        setWemailmulti("")
+            setWemail("")
         }
       };
   const onSubmit = (value) => {
@@ -62,14 +61,13 @@ const AddModal = ({addEmailFun, addEmail, addedEmail, token, getData}) => {
   const emailValidation = (key) => {
 
     var validRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    if (email.length > 0 && email2multi2.match(validRegex)) {
-    setWemailmulti("");
-    
-    setEmailErrormulti(false)
+    if (email.length > 0 && email.match(validRegex)) {
+       setWemail("");
+       setEmailError(false)
     }
     else {
-        setEmailErrormulti(true)
-        setWemailmulti("invalid email")
+       setEmailError(true)
+       setWemail("invalid email")
       }
 }
     return(
@@ -101,16 +99,16 @@ const AddModal = ({addEmailFun, addEmail, addedEmail, token, getData}) => {
                         ref={register({ required: true })}
                       />
                     
-                      {
-                        wEmailmulti ? <p className="declined">{wEmailmulti}</p> : <>
-                          {valiEmailMulti ?
-                            <p className="completed">
-                              {valiEmailMulti}
-                            </p>
-                            :
-                            <p className="declined">{invalidMulti}</p>}
-                        </>
-                      }
+                    {
+    wEmail ? <p className="declined">{wEmail}</p> : <>
+      {valiEmail ?
+        <p className="completed">
+          {valiEmail}
+        </p>
+        :
+        <p className="declined">{invalid}</p>}
+    </>
+  }
 
                         </div>
                       </div>
