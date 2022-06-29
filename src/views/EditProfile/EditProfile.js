@@ -102,7 +102,7 @@ const EditProfile = () => {
     const sendData = () =>{
         let formData = new FormData();
         formData.append("name", name)
-        formData.append("occuption", occuptation)
+        formData.append("occupation", occuptation)
         formData.append("phone", mobileno)
         formData.append("email", email);
        
@@ -115,7 +115,7 @@ const EditProfile = () => {
        formData.append("address", address);
       formData.append("stdcode", data.stdcode)
        formData.append("pincode", zipCode);
-       formData.append("gstIn_no", gst)
+       formData.append("gstin_no", gst)
     
         axios({
           method: "POST",
@@ -264,17 +264,26 @@ const EditProfile = () => {
 </CardHeader>
 <CardBody>
 <div style={{display : "flex"}}>
-<div>
-  
-  
-  <img src = "https://www.w3schools.com/howto/img_avatar.png" width="100" height = "100" />
-  <h4>{JSON.parse(clientId)}</h4>
-   <h4>{data.name}</h4>
-      </div>
+
       <MyFormValue>
     <span className="formContentWrapper">
 
 <div className="row">
+<div className="col-md-6">
+
+<div className="mb-3">
+  <label className="form-label">User Id</label>
+  <input
+    type="text"
+  
+    value={JSON.parse(clientId)}
+    disabled
+   
+    placeholder="Enter Name"
+    className="form-control"
+  />
+</div>
+</div>
 <div className="col-md-6">
 
 <div className="mb-3">
@@ -322,6 +331,7 @@ const EditProfile = () => {
   <input
     type="email"
     autoComplete="off"
+    disabled
     onChange={(e) => setEmail(e.target.value)}
     name="p_email"
     value={email}
@@ -388,25 +398,12 @@ const EditProfile = () => {
       />
                     </div>
                   </div>
-{/* <div className="col-md-6">
-<label className="form-label">City</label>
-<input
-  type="text"
-  autoComplete="off"
-  onChange={(e) => setCity(e.target.value)}  
-  name="p_city"
-  value={city}
-  ref={register()}
-  placeholder="Enter Name"
-  className={classNames("form-control", {
-    "is-invalid": errors.p_city 
-  })}
-/>
-</div> */}
+
 <div className="col-md-6">
 <label className="form-label">Address</label>
 <input
   type="text"
+
   autoComplete="off"
   onChange={(e) => setAddress(e.target.value)}  
   name="p_address"

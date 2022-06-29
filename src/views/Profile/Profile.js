@@ -21,6 +21,7 @@ const MyFormValue = styled.div`
 `;
 const Profile = () => {
     const userId = window.localStorage.getItem("userid");
+    const mainUser = window.localStorage.getItem("isMail")
     const clientId = window.localStorage.getItem("clientLoginId")
     const [data, setData] = useState("");
     const [disable, setDisable] = useState(true)
@@ -66,7 +67,7 @@ const Profile = () => {
     }, [])
   const delEmail = (e) => {
     Swal.fire({
-      title: "Are you sure?",
+     
        text: `do you want to delete email`,
             type: 'warning',
             showCloseButton:true,
@@ -116,6 +117,7 @@ const Profile = () => {
       setAddEmail(!addEmail)
     }
   }
+  console.log("isMain", JSON.parse(mainUser))
     return (
         <Layout custDashboard="custDashboard" custUserId={userId}>
         <Card style={{margin: "10px"}}>
@@ -126,28 +128,42 @@ const Profile = () => {
 <h4>Profile </h4>
 
          {/* <h6>{JSON.parse(clientId)}</h6> */}
+       {
+         mainUser === 1 ? 
          <button className="profileBtn" onClick={() => history.push("/customer/editprofile")}>Edit</button>
-
+ : " "
+       }
 </div>
 </CardHeader>
 <CardBody>
 <div style={{display : "flex"}}>
-<div>
-  
-  {/* <CgProfile style={{fontSize : "50px"}} /> */}
-  <img src = "https://www.w3schools.com/howto/img_avatar.png" width="100" height = "100" />
-  <h4>{JSON.parse(clientId)}</h4>
-   <h4 align="center">{data.name}</h4>
-      </div>
+
     <MyFormValue>
-    {/* <span className="formContentWrapper">
-<span className="profileInfo">
+    <span className="formContentWrapper">
+<span className="profileInfo" id="profileInfoLabel">
 <h4>User Id</h4>
   </span>
 <span className="profileInfo">
 <h4>{JSON.parse(clientId)}</h4>
   </span>
-</span> */}
+</span>
+    <span className="formContentWrapper">
+<span className="profileInfo" id="profileInfoLabel">
+<h4>Name</h4>
+  </span>
+<span className="profileInfo">
+<h4>{data.name}</h4>
+  </span>
+</span>
+<span className="formContentWrapper">
+<span className="profileInfo" id="profileInfoLabel">
+<h4>Occuptation</h4>
+  </span>
+<span className="profileInfo">
+<h4>{data.occupation}</h4>
+  </span>
+</span>
+
     <span className="formContentWrapper">
     <span className="profileInfo" id="profileInfoLabel">
 <h4>Email</h4>
@@ -253,7 +269,7 @@ const Profile = () => {
 <span style={{display : "flex", justifyContent : "space-between"}}>
 <h4>Optional Email</h4>
 {
-  allEmails && allEmails.length < 9 ?
+ JSON.parse(mainUser === 1) && allEmails && allEmails.length < 9 ?
   <button
       onClick={(e) => addEmailFun()}
       className="customBtn">Add</button> : ""

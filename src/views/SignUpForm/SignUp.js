@@ -46,7 +46,7 @@ function SignUp(props) {
   const [invalidMulti, setInvalidMulti] = useState(null)
   const [numExist, setNumExist] = useState(null)
   const [numAvail, setNumAvail] = useState(null)
-  const [countryName, setCountryName] = useState(null)
+  const [countryName, setCountryName] = useState("India")
   const [stateName, setStateName] = useState(null)
   const [countryId, setCountryId] = useState(null)
   const [indNumError, setIndNumError] = useState(null)
@@ -379,7 +379,7 @@ useEffect(() => {
 
 
   const onSubmit = (value) => {
-
+console.log("counrtrNam", countryName)
 
     let formData = new FormData();
     formData.append("user_id", user);
@@ -779,7 +779,7 @@ const getUser = (e) => {
                           type="text"
                           className="form-control"
                           name="p_address"
-                          maxlength="256"
+                          maxlength="100"
                           ref={register()}
                           placeholder="Enter Address"
                         

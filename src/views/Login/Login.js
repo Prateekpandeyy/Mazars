@@ -309,7 +309,7 @@ const getUser = (e) => {
 
                 <VerifyOTP email={email} uid={uid} time={time} setLoad={setLoad}
                   setDisabled={setDisabled} disabled={disabled} setLoading={setLoading}
-                  loading={loading} />
+                  loading={loading} user = {user} />
               </div>
                 :
               

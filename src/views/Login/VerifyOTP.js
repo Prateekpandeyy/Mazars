@@ -16,7 +16,7 @@ const Schema = yup.object().shape({
 
 
 function VerifyOTP({ email, uid, time, setLoad,
-    setDisabled, disabled, loading, setLoading }) {
+    setDisabled, disabled, loading, setLoading, user }) {
     const { handleSubmit, register, errors, reset } = useForm({
         resolver: yupResolver(Schema),
     });
@@ -41,7 +41,7 @@ function VerifyOTP({ email, uid, time, setLoad,
         let formData = new FormData();
         formData.append("email", email);
         formData.append("otp", value.p_otp);
-
+        formData.append("user_id", user)
         axios({
             method: "POST",
             url: `${baseUrl}/customers/verifyloginotp`,
@@ -54,7 +54,9 @@ function VerifyOTP({ email, uid, time, setLoad,
                     var timeStampInMs = Date.now()
 localStorage.setItem("loginTime", timeStampInMs)
                     setLoading(false)
+
                     Alerts.SuccessLogin("Login successfully.")
+                    localStorage.setItem("isMail", JSON.stringify(response.data.is_mail))
                     localStorage.setItem("clientLoginId", JSON.stringify(response.data.loginuid))
                     localStorage.setItem("userid", JSON.stringify(response.data.user_id));
                     sessionStorage.setItem("userIdsession", JSON.stringify(response.data.user_id));

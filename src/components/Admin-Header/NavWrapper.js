@@ -103,16 +103,16 @@ const clName = JSON.parse(localStorage.getItem("clientLoginId"))
                       <Link to="/customer/change-password">
                         <div className="dropdown-item" 
                           style={{ cursor: "pointer" }}>
-                           <VpnKeyIcon />
-                          <span style={{ marginLeft: "3px" }}>Change Password</span>
+                           <VpnKeyIcon style ={{fontSize : "20px"}}/>
+                          <span style={{ marginLeft: "6px" }}>Change Password</span>
                         </div>
                       </Link>
                        <Link to="/customer/profile">
                        <div className="dropdown-item" 
                          style={{ cursor: "pointer" }}>
-                            <CgProfile />
+                            <CgProfile style ={{fontSize : "20px"}} />
                        
-                         <span style={{ marginLeft: "3px" }}>Profile</span>
+                         <span style={{ marginLeft: "6px" }}>Profile</span>
                        </div>
                      </Link>
                      </>
@@ -123,8 +123,8 @@ const clName = JSON.parse(localStorage.getItem("clientLoginId"))
                       onClick={logout}
                       style={{ cursor: "pointer" }}
                     >
-                      <LockOpenIcon />
-                      <span style={{ marginLeft: "10px" }}>Logout</span>
+                      <LockOpenIcon style ={{fontSize : "20px"}}/>
+                      <span style={{ marginLeft: "6px" }}>Logout</span>
                     </div>
 
                   </div>
