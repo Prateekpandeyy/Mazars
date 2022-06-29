@@ -117,7 +117,7 @@ const Profile = () => {
       setAddEmail(!addEmail)
     }
   }
-  console.log("isMain", JSON.parse(mainUser))
+  console.log("isMain", JSON.parse(mainUser) === "1")
     return (
         <Layout custDashboard="custDashboard" custUserId={userId}>
         <Card style={{margin: "10px"}}>
@@ -129,7 +129,7 @@ const Profile = () => {
 
          {/* <h6>{JSON.parse(clientId)}</h6> */}
        {
-         mainUser === 1 ? 
+         JSON.parse(mainUser) === "1" ? 
          <button className="profileBtn" onClick={() => history.push("/customer/editprofile")}>Edit</button>
  : " "
        }
@@ -269,7 +269,7 @@ const Profile = () => {
 <span style={{display : "flex", justifyContent : "space-between"}}>
 <h4>Optional Email</h4>
 {
- JSON.parse(mainUser === 1) && allEmails && allEmails.length < 9 ?
+ JSON.parse(mainUser) === "1"  && allEmails && allEmails.length < 9 ?
   <button
       onClick={(e) => addEmailFun()}
       className="customBtn">Add</button> : ""
