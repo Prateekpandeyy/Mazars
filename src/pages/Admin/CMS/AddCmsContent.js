@@ -216,7 +216,8 @@ const getEditValue= (e) => {
                       name="p_category"
                       >
                       <option value = "direct">Direct Tax</option>
-                      <option value = "indirect">Indirect Tax</option>I
+                      <option value = "indirect">Indirect Tax</option>
+                      <option value = "direct-indirect">Direct and Indirect Tax</option>
                           </select>
                  </div>
                  <div className="col-md-4 col-sm-12">

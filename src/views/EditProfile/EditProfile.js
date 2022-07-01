@@ -99,7 +99,7 @@ const EditProfile = () => {
     useEffect(() => {
         getData()
     }, [])
-    const sendData = () =>{
+    const onSubmit = () =>{
         let formData = new FormData();
         formData.append("name", name)
         formData.append("occupation", occuptation)
@@ -126,7 +126,7 @@ const EditProfile = () => {
           data: formData,
         })
         .then((res) => {
-            console.log("done")
+           
             if(res.data.code === 1){
               Swal.fire({
                 title : "success",
@@ -148,8 +148,9 @@ const EditProfile = () => {
       // Get Country
       //get country
   const getcountry = (key) => {
+    console.log("key", key)
     setMyCount(key)
-   
+   setAddress("")
     setZipCode("")
     setZipError("")
     setDstate("");
@@ -205,7 +206,8 @@ const EditProfile = () => {
 
   //get city
   const getCity = (key) => {
-   
+    setCityValue2("")
+   setAddress("")
     if(estate.length > 0){
       setEstate("")
     }
@@ -266,6 +268,7 @@ const EditProfile = () => {
 <div style={{display : "flex"}}>
 
       <MyFormValue>
+        <form onSubmit = {handleSubmit(onSubmit)}> 
     <span className="formContentWrapper">
 
 <div className="row">
@@ -401,17 +404,46 @@ const EditProfile = () => {
 
 <div className="col-md-6">
 <label className="form-label">Address</label>
-<input
-  type="text"
-
-  autoComplete="off"
-  onChange={(e) => setAddress(e.target.value)}  
-  name="p_address"
-  value={address}
-  ref={register()}
-  placeholder="Enter Name"
+{/* <input
+type="textarea"
+ autoComplete="off"
+ onChange={(e) => setAddress(e.target.value)}  
+ name="p_address"
+ value={address}
+ maxLength="100"
+ ref={register()}
+ placeholder="Enter Address"
+ className={classNames("form-control", {
+  "is-invalid": errors.p_address,
+})}
+/> */}
+<textarea
+ 
+ name="p_address"
+ value={address}
+ onChange={(e) => setAddress(e.target.value)} 
+    ref={register({ required: true })}
+    placeholder="Enter Name"
   className={classNames("form-control", {
     "is-invalid": errors.p_address 
+  })}
+  >
+    </textarea>
+
+</div>
+
+<div className="col-md-6">
+<label className="form-label">Zip Code</label>
+<input
+  type="text"
+  autoComplete="off"
+  onChange={(e) => setZipCode(e.target.value)}  
+  name="p_zipCode"
+  value={zipCode}
+  ref={register({required : true})}
+  placeholder="Enter Name"
+  className={classNames("form-control", {
+    "is-invalid": errors.p_zipCode 
   })}
 />
 </div>
@@ -423,25 +455,10 @@ const EditProfile = () => {
   onChange={(e) => setMobileNo(e.target.value)}  
   name="p_mobile"
   value={mobileno}
-  ref={register()}
+  ref={register({required : true})}
   placeholder="Enter Name"
   className={classNames("form-control", {
     "is-invalid": errors.p_mobile 
-  })}
-/>
-</div>
-<div className="col-md-6">
-<label className="form-label">Zip Code</label>
-<input
-  type="text"
-  autoComplete="off"
-  onChange={(e) => setZipCode(e.target.value)}  
-  name="p_zipCode"
-  value={zipCode}
-  ref={register()}
-  placeholder="Enter Name"
-  className={classNames("form-control", {
-    "is-invalid": errors.p_zipCode 
   })}
 />
 </div>
@@ -462,8 +479,9 @@ const EditProfile = () => {
 </div>
   </div>
 </span>
-<button className="profileBtn mt-5" onClick={() => sendData()}>
+<button className="profileBtn mt-5">
              Save</button>
+             </form>
     </MyFormValue>
       </div>
    

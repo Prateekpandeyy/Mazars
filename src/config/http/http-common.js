@@ -15,7 +15,7 @@ export default axios.create({
   },
 }); 
 // // // // //for server
-// export default axios.create({
+//  export default axios.create({
 //   baseURL: "https://api.masindia.live/v1",
 //   headers: {
 //     "Content-type": "application/json",

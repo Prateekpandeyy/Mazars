@@ -77,7 +77,7 @@ const Profile = () => {
             confirmButtonText: 'Yes, delete it!',
             cancelButtonText: 'No'
         }).then(function(result){
-          console.log("resutl", result)
+        
             if(result.value){
               deleteConfirm(e)
             }
@@ -88,7 +88,7 @@ const Profile = () => {
    
   }
   const deleteConfirm = (e) => {
-      console.log("delEmails", e)
+     
      axios.get(`${baseUrl}/customers/deleteoptionalemail?id=${e}`, myConfig)
      .then((res) => {
        if(res.data.code === 1){
@@ -117,7 +117,7 @@ const Profile = () => {
       setAddEmail(!addEmail)
     }
   }
-  console.log("isMain", JSON.parse(mainUser) === "1")
+
     return (
         <Layout custDashboard="custDashboard" custUserId={userId}>
         <Card style={{margin: "10px"}}>
@@ -267,7 +267,7 @@ const Profile = () => {
 <fieldset>
    
 <span style={{display : "flex", justifyContent : "space-between"}}>
-<h4>Optional Email</h4>
+<h4>Secondary Email</h4>
 {
  JSON.parse(mainUser) === "1"  && allEmails && allEmails.length < 9 ?
   <button
@@ -294,10 +294,13 @@ const Profile = () => {
     </p>
       </div>
       <div className="col-md-4">
-     
-     <span onClick={(e) => delEmail(i.id)}>
+     {
+       JSON.parse(mainUser) === "1" ?
+       <span onClick={(e) => delEmail(i.id)}>
      <CloseIcon style={{color : "red", fontSize : "24px"}} />
-     </span>
+     </span> : " "
+     }
+     
      
         </div>
     </div>

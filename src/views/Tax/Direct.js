@@ -30,7 +30,7 @@ const Direct = () => {
         setRowsPerPage(e.target.value)
     }
     const getData =() => {
-        axios.get(`${baseUrl}/customers/getarticles?type=direct`)
+        axios.get(`${baseUrl}/customers/getarticles`)
         .then((res) => {
           console.log("response", res)
 
@@ -85,7 +85,9 @@ const Direct = () => {
    <TableRow>
    <TableCell style= {{width : "50px"}}>S.No</TableCell>
      <TableCell style= {{width : "150px"}}>Publishing Date</TableCell>
+     <TableCell style= {{width : "150px"}}>Subject</TableCell>
      <TableCell style={{width : "400px", margin: "0 10px"}}>Heading</TableCell>
+     
      <TableCell>Name of Writer</TableCell>
    </TableRow>
    </TableHead>
@@ -100,6 +102,9 @@ const Direct = () => {
    </TableCell>
                         <TableCell style= {{width : "150px"}}>
                             {i.publish_date.split("-").reverse().join("-")}
+                            </TableCell>
+                            <TableCell style= {{width : "150px"}}>
+                            {i.type}
                             </TableCell>
                     <TableCell style={{width : "400px", margin: "0 10px", wordBreak : "break-all"}} className="tableCellStyle">
                         <Link to = {{

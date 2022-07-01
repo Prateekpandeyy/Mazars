@@ -228,7 +228,7 @@ props.showCook("showCookies")
   return(
     <>
 <div className="clientSubMenu">
-  <li className="nav-item tabHoverLinksubMenu"  onMouseEnter={() => handleClickOff()}  onMouseLeave = {() => handleClickOn()}>
+  {/* <li className="nav-item tabHoverLinksubMenu"  onMouseEnter={() => handleClickOff()}  onMouseLeave = {() => handleClickOn()}>
        <ListItemButton>
        <span className="nav-item">
                      Articles
@@ -260,7 +260,14 @@ props.showCook("showCookies")
            </List>
          </Collapse>
                  </li>
-   
+    */}
+
+<li className="nav-item tabHoverLinksubMenu" onClick = {() => myLink("direct")}> 
+      <ListItemButton>
+     Articles
+    </ListItemButton>
+</li>
+
                  <li className="nav-item tabHoverLinksubMenu"  onMouseEnter={() => handleClickUpdateOpen()}  onMouseLeave = {() => handleClickUpdateClose()}>
        <ListItemButton>
        <span className="nav-item">
