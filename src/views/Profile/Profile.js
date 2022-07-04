@@ -94,7 +94,7 @@ const Profile = () => {
        if(res.data.code === 1){
          Swal.fire({
            title : "success",
-           html : "Optional Email deleted successfully",
+           html : "Secondary Email deleted successfully",
           icon : "success"
          })
        
@@ -194,7 +194,7 @@ const Profile = () => {
 </span>
 <span className="profileInfo">
 {
-  state !== null && state !== "null" ?
+  state !== null && state !== "null" && state !== "undefined" ?
   <h4>{state}</h4> :
   <h4>N/A </h4>
 }
@@ -207,7 +207,7 @@ const Profile = () => {
 <span className="profileInfo">
 
 {
-  city !== null && city !== "null" ?
+  city !== null && city !== "null" && city !== "undefined" ?
   <h4>{city}</h4> : 
   <h4>N/A </h4>
 }

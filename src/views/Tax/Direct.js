@@ -10,6 +10,7 @@ TableHead, TablePagination, TableBody, TableRow, TableCell } from "@material-ui/
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import classesCustom from './design.module.css';
 import { OuterloginContainer } from '../../components/Common/OuterloginContainer';
+import CommonServices from "../../common/common";
 const MyContainer = styled(Box)({
     display: "flex",
   padding : "0 15px",
@@ -18,16 +19,23 @@ const MyContainer = styled(Box)({
   justifyContent: "space-between"
   })
 const Direct = () => {
-    const [page, setPage] = useState(0);
+    const [page, setPage] = useState(1);
     const [rowsPerPage, setRowsPerPage] = useState(10)
     const [data, setData] = useState([])
     const [count2, setCount] = useState(0)
+    const loadpage = localStorage.getItem("prevPage")
     let wirtten = "-"
     const onChangePage = (event, nextPage) => {
         setPage(nextPage)
+        console.log(nextPage)
+        localStorage.setItem("prevPage", nextPage)
     }
     const onChangeRowsPerPage = (e) => {
         setRowsPerPage(e.target.value)
+    }
+    const getPage  = () => {
+      setPage(loadpage)
+      localStorage.removeItem("prevPage")
     }
     const getData =() => {
         axios.get(`${baseUrl}/customers/getarticles`)
@@ -58,6 +66,7 @@ const Direct = () => {
     }
   useEffect(()=> {
       getData()
+      getPage()
   }, [])
     return(
        <>
@@ -72,9 +81,6 @@ const Direct = () => {
           <Breadcrumbs separator=">" maxItems={3} aria-label="breadcrumb">
           <Link underline="hover" color="inherit" to="/customer/direct">
   Articles
-  </Link>
-  <Link underline="hover" color="inherit" to="/customer/direct">
-  Direct Tax
   </Link>
   
   
@@ -104,13 +110,13 @@ const Direct = () => {
                             {i.publish_date.split("-").reverse().join("-")}
                             </TableCell>
                             <TableCell style= {{width : "150px"}}>
-                            {i.type}
+                            {CommonServices.capitalizeFirstLetter(i.type)}
                             </TableCell>
                     <TableCell style={{width : "400px", margin: "0 10px", wordBreak : "break-all"}} className="tableCellStyle">
                         <Link to = {{
                             pathname : "/customer/details",
                             index : i.id,
-                            hash : "direct"
+                            hash : i.type
                         }}>
                    {`${i.heading}` } 
                 

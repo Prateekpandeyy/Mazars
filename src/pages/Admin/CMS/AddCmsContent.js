@@ -215,9 +215,9 @@ const getEditValue= (e) => {
                       ref={register({ required: true })}
                       name="p_category"
                       >
-                      <option value = "direct">Direct Tax</option>
-                      <option value = "indirect">Indirect Tax</option>
-                      <option value = "direct-indirect">Direct and Indirect Tax</option>
+                      <option value = "DT">DT</option>
+                      <option value = "IDT">IDT</option>
+                      <option value = "DT&IDT">DT & IDT</option>
                           </select>
                  </div>
                  <div className="col-md-4 col-sm-12">

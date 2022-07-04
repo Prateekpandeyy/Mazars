@@ -76,6 +76,7 @@ const Details = () => {
   const [data, setData] = useState([])
   const [linkdata, setLinkData] = useState("direct")
  const [docren, setDocren] = useState("")
+ const [subject, setSubject] = useState("")
   useEffect(() => {
     getData()
     readDoc()
@@ -104,11 +105,14 @@ const Details = () => {
     .then((res) => {
      console.log("result", res.data.result)
       setData(res.data.result)
-      if(history.location.hash == "#direct"){
-        setLinkData("direct")
+      if(history.location.hash == "#DT"){
+        setLinkData("Direct Tax")
       }
-      else if(history.location.hash == "#indirect"){
-        setLinkData("indirect")
+      else if(history.location.hash == "#IDT"){
+        setLinkData("Indirect Tax")
+      }
+      else if (history.location.hash === "#DT&IDT"){
+        setLinkData("Direct & Indirect Tax")
       }
     })
   }
@@ -130,9 +134,7 @@ const Details = () => {
              <Link underline="hover" color="inherit" to="/customer/direct">
   Articles
   </Link>
-  <Link underline="hover" color="inherit" to = {`/customer/${linkdata}`}>
-  {CommonServices.capitalizeFirstLetter(linkdata) + " tax"}
-  </Link>
+ 
   
  
 </Breadcrumbs>
@@ -164,6 +166,7 @@ const Details = () => {
          
          
            </MyHeading>
+           <h6>Subject : {linkdata} </h6>
             <h6>Writer :  {i.writer} </h6>
             <h6> Email : {i.email} </h6>
            <h6>Date of publishing :   {i.publish_date.split("-").reverse().join("-")} </h6>
@@ -200,6 +203,7 @@ const Details = () => {
     <button className="downloadBtnPdf"> Download  <VscFilePdf style={{display: "flex",
      margin: "0 10px", color: "#e4f0fa", width: "20px", height: "20px"}} /></button>
     </a> 
+    {/* <button className="customBtn" onClick={() => history.goBack()}>Go Back</button> */}
             </div>
         
            ))

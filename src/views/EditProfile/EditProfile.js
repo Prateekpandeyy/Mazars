@@ -82,8 +82,7 @@ const EditProfile = () => {
             setData(res.data.result)
        setMobileNo(res.data.result.phone)
        setEmail(res.data.result.email)
-       setDstate(res.data.result.state)
-       setEstate(res.data.result.state)
+       
       //  setCountry(res.data.result.country)
       //  setState(res.data.result.state);
       setCityValue2(res.data.result.city)
@@ -94,7 +93,21 @@ const EditProfile = () => {
        setGst(res.data.result.gstin_no)
        setName(res.data.result.name)
        setOccuption(res.data.result.occupation)
+       if(res.data.result.state !== "undefined"){
+        setDstate(res.data.result.state)
+        setEstate(res.data.result.state)
+       }
+       country.map((i) => {
+        
+        if(i.name === res.data.result.country){
+          
+          setMyCount(i.id)
+          setCountryCode(i.phoneCode)
+        }
+      })
         });
+       
+       
     };
     useEffect(() => {
         getData()
@@ -111,12 +124,12 @@ const EditProfile = () => {
       {estate && estate.length > 0 ?  formData.append("state", estate) :
       formData.append("state", dstate.label)}
       {cityState2 && cityState2.length > 0 ?    formData.append("city", cityState2) :
- formData.append("city", dstate2.label)}
-       formData.append("address", address);
-      formData.append("stdcode", data.stdcode)
-       formData.append("pincode", zipCode);
-       formData.append("gstin_no", gst)
-    
+        formData.append("city", dstate2.label)}
+        formData.append("address", address);
+        formData.append("stdcode", data.stdcode)
+        formData.append("pincode", zipCode);
+        formData.append("gstin_no", gst)
+      
         axios({
           method: "POST",
           url: `${baseUrl}/customers/updateclient`,
