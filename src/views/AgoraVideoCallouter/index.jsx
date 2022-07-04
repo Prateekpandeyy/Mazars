@@ -490,25 +490,8 @@ if(item.player === undefined){
   };
 
   addStream = (stream, push = false) => {
-   
+   console.log("addStream execute")
     this.hostId = stream.getId()
- 
-  
-    let repeatition = this.state.streamList.some((item) => {
-      return item.getId() === stream.getId();
-    });
-    if (repeatition) {
-      return;
-    }
-    if (push) {
-      this.setState({
-        streamList: this.state.streamList.concat([stream]),
-      });
-    } else {
-      this.setState({
-        streamList: [stream].concat(this.state.streamList),
-      });
-    }
     var apiData = "https://virtualapi.multitvsolution.com/VstreamApi/index.php/api/vstream/getInfoByRTCId?channel_name="+this.channelName+"&rtc_id="+stream.getId()
     axios.get(`${apiData}`)
     .then((res) =>{
@@ -529,7 +512,26 @@ if(item.player === undefined){
         praticipantVar.setAttribute("value", "Sharing");
         praticipantVar.setAttribute("disabled", true)
         }
-     })};   
+     })
+    
+  
+    let repeatition = this.state.streamList.some((item) => {
+      return item.getId() === stream.getId();
+    });
+    if (repeatition) {
+      return;
+    }
+    if (push) {
+      this.setState({
+        streamList: this.state.streamList.concat([stream]),
+      });
+    } else {
+      this.setState({
+        streamList: [stream].concat(this.state.streamList),
+      });
+    }
+   
+    };   
 
  
   
