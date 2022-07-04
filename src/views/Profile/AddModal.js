@@ -81,7 +81,7 @@ const AddModal = ({addEmailFun, addEmail, addedEmail, token, getData}) => {
                       <div className="col-md-10">
                       <div className="question_query mb-2">
                         <label className="form-label">
-                        Secondry Email 
+                        Secondary Email 
                         </label>
                       
                         
