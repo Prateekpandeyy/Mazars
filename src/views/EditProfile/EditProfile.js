@@ -47,10 +47,11 @@ const EditProfile = () => {
     const [numAvail, setNumAvail] = useState(null)
     const [countryId, setCountryId] = useState(null)
     const [countryCode, setCountryCode] = useState('91')
-    
     const [stateName, setStateName] = useState(null)
     const [name, setName] = useState("")
     const [occuptation, setOccuption] = useState("")
+    const [numExist, setNumExist] = useState(null)
+    const [phoneError, setPhoneError] = useState(null)
     const token = window.localStorage.getItem("clientToken")
     const myConfig = {
         headers : {
@@ -82,7 +83,7 @@ const EditProfile = () => {
             setData(res.data.result)
        setMobileNo(res.data.result.phone)
        setEmail(res.data.result.email)
-       
+       setCountryCode(res.data.result.stdcode)
       //  setCountry(res.data.result.country)
       //  setState(res.data.result.state);
       setCityValue2(res.data.result.city)
@@ -126,7 +127,7 @@ const EditProfile = () => {
       {cityState2 && cityState2.length > 0 ?    formData.append("city", cityState2) :
         formData.append("city", dstate2.label)}
         formData.append("address", address);
-        formData.append("stdcode", data.stdcode)
+        formData.append("stdcode", countryCode)
         formData.append("pincode", zipCode);
         formData.append("gstin_no", gst)
       
@@ -161,7 +162,8 @@ const EditProfile = () => {
       // Get Country
       //get country
   const getcountry = (key) => {
-    console.log("key", key)
+    setMobileNo("")
+    
     setMyCount(key)
    setAddress("")
     setZipCode("")
@@ -263,6 +265,22 @@ const EditProfile = () => {
     setCityValue2("")
     }
     setDstate2(key)
+  }
+  const phoneHandler = (e) => {
+    if (isNaN(e)) {
+      setIndNumError("")
+      setNumAvail("");
+      setNumExist('Please enter number only')
+    
+      setPhone("")
+      setPhoneError(true)
+    }
+    else {
+      setPhoneError(false)
+      setNumAvail("");
+      setNumExist("");
+      setMobileNo(e)
+    }
   }
     return (
         <Layout custDashboard="custDashboard" custUserId={userId}>
@@ -431,7 +449,7 @@ type="textarea"
 })}
 /> */}
 <textarea
- 
+  maxLength="100"
  name="p_address"
  value={address}
  onChange={(e) => setAddress(e.target.value)} 
@@ -461,6 +479,44 @@ type="textarea"
 />
 </div>
 <div className="col-md-6">
+                  <div className="mb-3">
+                      <label className="form-label">Mobile number<span className="declined">*</span></label>
+                      <div className="mobNumber" style={{ "display": "flex" }}>
+                        <select
+                          name="p_code"
+                          disabled={true}
+                          ref={register({ required: true })}
+                        >
+                          <option>
+                            { "+" + countryCode}
+                          </option>
+                        </select>
+                        <input
+                        type="text"
+                        autoComplete="off"
+                        onChange={(e) => phoneHandler(e.target.value)}  
+                        name="p_mobile"
+                        value={mobileno}
+                        ref={register({required : true})}
+                        placeholder="Enter Name"
+                        className={classNames("form-control", {
+                          "is-invalid": errors.p_mobile 
+                        })}
+                        />
+
+                      </div>
+                      {indNumError ? <p className="declined">{indNumError}</p> : <>
+                        {
+                          numAvail ?
+                            <p className="completed"> {numAvail}
+                            </p>
+                            :
+                            <p className="declined">{numExist}</p>
+                        }
+                      </>}
+                    </div>
+                  </div>
+{/* <div className="col-md-6">
 <label className="form-label">Mobile Number</label>
 <input
   type="text"
@@ -474,7 +530,7 @@ type="textarea"
     "is-invalid": errors.p_mobile 
   })}
 />
-</div>
+</div> */}
 <div className="col-md-6">
 <label className="form-label">GST In Number</label>
 <input

@@ -31,6 +31,9 @@ function RecordingModal({
 
     const { assign_no, id, username, start } = item
   const [parti, setParti] = useState("")
+  useEffect(() => {
+    setParti(item.username)
+    }, [isOpen === true])
     const onSubmit = (value) => {
         var serverResponse = data.serverResponse.fileList
         var completeRecording;

@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from "reactstrap";
 import { useForm } from "react-hook-form";
 import axios from "axios";
@@ -28,7 +28,9 @@ function RecordingModal({
 
     const { assign_no, id, username, start } = item
   const [parti, setParti] = useState("")
-
+  useEffect(() => {
+    setParti(item.username)
+    }, [isOpen === true])
     //submit
     const onSubmit = (value) => {
         var serverResponse = data.serverResponse.fileList

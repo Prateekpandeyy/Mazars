@@ -27,8 +27,11 @@ function RecordingModal({
       }
     const { assign_no, id, username, start } = item
    
-const [parti, setParti] = useState("")
-
+const [parti, setParti] = useState()
+useEffect(() => {
+setParti(item.username)
+}, [isOpen === true])
+console.log(item.username, username)
     //submit
     const onSubmit = (value) => {
       

@@ -504,7 +504,7 @@ axios({
 .then((res) => {
   console.log("user", res)
   setUserAvailable({
-    code : res.data.code,
+    flag : res.data.code,
     message : res.data.result
   })
 })
@@ -624,7 +624,7 @@ const getUser = (e) => {
     ref={register({ required: true })}
     placeholder="Enter Name"
     className={classNames("form-control", {
-      "is-invalid": errors.p_user || userError.length > 0,
+      "is-invalid": errors.p_user || userError.length > 0 || userAvailable.flag === 0,
     })}
   />
   {

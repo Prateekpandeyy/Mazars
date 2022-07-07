@@ -621,30 +621,32 @@ if(item.player === undefined){
         streamList: [stream].concat(this.state.streamList),
       });
     }
-    var apiData = "https://virtualapi.multitvsolution.com/VstreamApi/index.php/api/vstream/getInfoByRTCId?channel_name="+this.channelName+"&rtc_id="+stream.getId()
-    axios.get(`${apiData}`)
-    .then((res) =>{
+    // var apiData = "https://virtualapi.multitvsolution.com/VstreamApi/index.php/api/vstream/getInfoByRTCId?channel_name="+this.channelName+"&rtc_id="+stream.getId()
+    // axios.get(`${apiData}`)
+    // .then((res) =>{
      
 
  
-      if(res.data.length > 0 && this.state.getAdId !== stream.getId()){
-        var praticipantVar = document.getElementById("name" + stream.getId())
-        praticipantVar.setAttribute("value", res.data[0].user_name);
-        praticipantVar.setAttribute("disabled", true)
-      }
-      else if(res.data.length > 0 && this.state.getAdId === stream.getId()){
-         var praticipantVar = document.getElementById("name" + stream.getId())
-         praticipantVar.setAttribute("value", "You");
-         praticipantVar.setAttribute("disabled", true)
-       }
+    //   if(res.data.length > 0 && this.state.getAdId !== stream.getId()){
+    //     var praticipantVar = document.getElementById("name" + stream.getId())
+    //     praticipantVar.setAttribute("value", res.data[0].user_name);
+    //     praticipantVar.setAttribute("disabled", true)
+    //   }
+    //   else if(res.data.length > 0 && this.state.getAdId === stream.getId()){
+    //      var praticipantVar = document.getElementById("name" + stream.getId())
+    //      praticipantVar.setAttribute("value", "You");
+    //      praticipantVar.setAttribute("disabled", true)
+    //    }
        
-       else if(res.data.length == 0){
-        this.remoteShare2 = true
-         var praticipantVar = document.getElementById("name" + stream.getId())
-        praticipantVar.setAttribute("value", "Sharing");
-        praticipantVar.setAttribute("disabled", true)
-        }
-     })};
+    //    else if(res.data.length == 0){
+    //     this.remoteShare2 = true
+    //      var praticipantVar = document.getElementById("name" + stream.getId())
+    //     praticipantVar.setAttribute("value", "Sharing");
+    //     praticipantVar.setAttribute("disabled", true)
+    //     }
+    //  })
+    
+    };
 
   handleCamera = (e) => {
     if(this.state.readyState === false){

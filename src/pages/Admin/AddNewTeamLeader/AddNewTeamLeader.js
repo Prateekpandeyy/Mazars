@@ -184,7 +184,7 @@ function AddNew() {
         method: "POST",
         url: `${baseUrl}/admin/AddTeamLead`,
         headers : {
-          uit : myConfig
+          uit : token
         },
         data: formData,
       })

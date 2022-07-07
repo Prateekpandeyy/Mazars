@@ -490,7 +490,7 @@ if(item.player === undefined){
   };
 
   addStream = (stream, push = false) => {
-   
+   console.log("arrr")
     this.hostId = stream.getId()
  
   
