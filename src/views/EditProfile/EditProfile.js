@@ -370,7 +370,7 @@ const EditProfile = () => {
     name="p_email"
     value={email}
     ref={register()}
-    placeholder="Enter Name"
+    placeholder="Enter Email"
     className={classNames("form-control", {
       "is-invalid": errors.p_email 
     })}
@@ -454,7 +454,7 @@ type="textarea"
  value={address}
  onChange={(e) => setAddress(e.target.value)} 
     ref={register({ required: true })}
-    placeholder="Enter Name"
+    placeholder="Enter Address"
   className={classNames("form-control", {
     "is-invalid": errors.p_address 
   })}
@@ -472,7 +472,7 @@ type="textarea"
   name="p_zipCode"
   value={zipCode}
   ref={register({required : true})}
-  placeholder="Enter Name"
+  placeholder="Enter ZipCode"
   className={classNames("form-control", {
     "is-invalid": errors.p_zipCode 
   })}
@@ -498,7 +498,7 @@ type="textarea"
                         name="p_mobile"
                         value={mobileno}
                         ref={register({required : true})}
-                        placeholder="Enter Name"
+                        placeholder="Enter Mobile Number"
                         className={classNames("form-control", {
                           "is-invalid": errors.p_mobile 
                         })}
