@@ -11,15 +11,8 @@ const AddModal = ({addEmailFun, addEmail, addedEmail, token, getData}) => {
    const [wEmail, setWemail] = useState();
    const [valiEmail, setValiemail] = useState(null)
    const [invalid, setInvalid] = useState(null)
-  const { handleSubmit, register, errors, reset, getValues, control } = useForm({
-    defaultValues: {
-      p_email: [{ p_email: "" }],
-    },
-  });
-  const { append, remove, fields} = useFieldArray({
-    control,
-    name: "p_email",
-  });
+  const { handleSubmit, register, errors, reset, getValues, control } = useForm();
+ 
   const emailHandler = (e) => {
     console.log("eee", e.target.value)
     setEmail(e.target.value)
@@ -51,7 +44,7 @@ const AddModal = ({addEmailFun, addEmail, addedEmail, token, getData}) => {
         else if (res.data.code === 0){
             Swal.fire({
                 title : "error",
-                html : "Something went wrong, please try again",
+                html : `${res.data.message}`,
                 icon : "error"
             })
         }
@@ -73,7 +66,7 @@ const AddModal = ({addEmailFun, addEmail, addedEmail, token, getData}) => {
     return(
         <Modal isOpen={addEmail} toggle={addEmailFun} size="md">
             <ModalHeader toggle={addEmailFun}>
-            <h4>Add Modal</h4>
+            <h4>Add Email</h4>
             </ModalHeader>
             <ModalBody>
             <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">    
@@ -88,11 +81,12 @@ const AddModal = ({addEmailFun, addEmail, addedEmail, token, getData}) => {
                       </div>
                       <input
                         type="email"
+                        maxLength = "100"
                         name="p_email"
                         className={classNames("form-control", {
                           "is-invalid": errors.p_email 
                         })}
-                    
+                    value = {email}
                          onChange={(e) => emailHandler(e)}
                         onBlur={(e) => emailValidation(e)}
                         placeholder="Enter Your Password"

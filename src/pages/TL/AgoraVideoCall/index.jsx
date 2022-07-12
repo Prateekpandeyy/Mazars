@@ -12,7 +12,7 @@ import recImg from "../../../loader.gif";
 import Cookies from "js-cookie"
 import Swal from "sweetalert2";
 import $ from 'jquery';
-import CommonServices from "../../../common/common"
+import CommonServices from "../../../common/common";
 
 const tile_canvas = {
   "1": ["span 12/span 24"],
@@ -149,13 +149,13 @@ myConfig = {
 prevFile;
 
   componentWillMount() {
-//  let a = localStorage.getItem("chNametl");
-//  let bb = localStorage.getItem("tlUid")
+//  let a = localStorage.getItem("chNametp");
+//  let bb = localStorage.getItem("tpid")
 //  let b = JSON.parse(bb)
 //  console.log("bbb", b)
-//  let c = localStorage.getItem("resourceIdtl")
-//  let d = localStorage.getItem("sid");
-//  this.prevFile = localStorage.getItem("prevFiletl")
+//  let c = localStorage.getItem("resourceIdtp")
+//  let d = localStorage.getItem("sidtp");
+//  this.prevFile = localStorage.getItem("prevFiletp")
 //  console.log("ddd", b, c)
 //  if(a && b && c && d){
 //   var data = JSON.stringify({
@@ -174,10 +174,10 @@ prevFile;
 //   })
 //   .then(json => 
 //     this.setState({vedOffer : json}),
-//   localStorage.removeItem("resourceIdtl"),
-//   localStorage.removeItem("sid"),
-//   localStorage.removeItem("chNametl"),
-//   localStorage.removeItem("tlUid")
+//   localStorage.removeItem("resourceIdtp"),
+//   localStorage.removeItem("sidtp"),
+//   localStorage.removeItem("chNametp"),
+//   localStorage.removeItem("tpid")
     
 //     ) 
 //     .catch((error) => {
@@ -281,7 +281,7 @@ prevFile;
 
   getSchedulerData =() =>{
        axios
-            .get(`${baseUrl}/tl/videoScheduler?id=${this.props.id}`, this.myConfig)
+            .get(`${baseUrl}/tl/videoScheduler?id=${this.props.id}` , this.myConfig)
             .then((res) => {
                        
               if (res.data.code === 1) {
@@ -621,32 +621,30 @@ if(item.player === undefined){
         streamList: [stream].concat(this.state.streamList),
       });
     }
-    // var apiData = "https://virtualapi.multitvsolution.com/VstreamApi/index.php/api/vstream/getInfoByRTCId?channel_name="+this.channelName+"&rtc_id="+stream.getId()
-    // axios.get(`${apiData}`)
-    // .then((res) =>{
+    var apiData = "https://virtualapi.multitvsolution.com/VstreamApi/index.php/api/vstream/getInfoByRTCId?channel_name="+this.channelName+"&rtc_id="+stream.getId()
+    axios.get(`${apiData}`)
+    .then((res) =>{
      
 
  
-    //   if(res.data.length > 0 && this.state.getAdId !== stream.getId()){
-    //     var praticipantVar = document.getElementById("name" + stream.getId())
-    //     praticipantVar.setAttribute("value", res.data[0].user_name);
-    //     praticipantVar.setAttribute("disabled", true)
-    //   }
-    //   else if(res.data.length > 0 && this.state.getAdId === stream.getId()){
-    //      var praticipantVar = document.getElementById("name" + stream.getId())
-    //      praticipantVar.setAttribute("value", "You");
-    //      praticipantVar.setAttribute("disabled", true)
-    //    }
+      if(res.data.length > 0 && this.state.getAdId !== stream.getId()){
+        var praticipantVar = document.getElementById("name" + stream.getId())
+        praticipantVar.setAttribute("value", res.data[0].user_name);
+        praticipantVar.setAttribute("disabled", true)
+      }
+      else if(res.data.length > 0 && this.state.getAdId === stream.getId()){
+         var praticipantVar = document.getElementById("name" + stream.getId())
+         praticipantVar.setAttribute("value", "You");
+         praticipantVar.setAttribute("disabled", true)
+       }
        
-    //    else if(res.data.length == 0){
-    //     this.remoteShare2 = true
-    //      var praticipantVar = document.getElementById("name" + stream.getId())
-    //     praticipantVar.setAttribute("value", "Sharing");
-    //     praticipantVar.setAttribute("disabled", true)
-    //     }
-    //  })
-    
-    };
+       else if(res.data.length == 0){
+        this.remoteShare2 = true
+         var praticipantVar = document.getElementById("name" + stream.getId())
+        praticipantVar.setAttribute("value", "Sharing");
+        praticipantVar.setAttribute("disabled", true)
+        }
+     })};
 
   handleCamera = (e) => {
     if(this.state.readyState === false){
@@ -713,6 +711,7 @@ if(item.player === undefined){
   };  
   
   handleExit = async() => {
+  if(this.state.readyState === true){
     if(this.state.clickDisable === false){
       this.setState({clickDisable : true})
      var resourceId = localStorage.getItem("resourceId");
@@ -742,6 +741,10 @@ if(item.player === undefined){
        });
     
     }
+  }
+  else {
+    return false;
+  }
    }
 
    sharingScreen = (e) => {
@@ -852,7 +855,9 @@ async GetRecordingStatus(json){
 
   localStorage.setItem("resourceId", resourceId);
   localStorage.setItem("sid", sid);
-
+// if(this.state.showButton === JSON.parse(this.teamKey)){
+//   localStorage.setItem("sidtp", sid)
+// }
   fetch(`https://api.agora.io/v1/apps/${this.props.appId}/cloud_recording/resourceid/${resourceId}/sid/${sid}/mode/mix/query`, {
     method: "GET",
     headers: {
@@ -868,7 +873,9 @@ async GetRecordingStatus(json){
           data:response,
           recordDisplay:!this.state.recordDisplay
         })
-       // localStorage.setItem("prevFiletl", response.serverResponse.fileList)
+        // if(this.state.showButton === JSON.parse(this.teamKey)){
+        //   localStorage.setItem("prevFiletp", response.serverResponse.fileList)
+        // }
         setTimeout(() => {
           this.setState({clickDisable : false})
         }, 1000)
@@ -885,12 +892,13 @@ async startRecording(key){
     this.CreateS3Folder(JSON.stringify(this.uid));
 
     var data =  "{\n\t\"cname\":\""+this.channelName+"\",\n\t\"uid\":\""+this.uid+"\",\n\t\"clientRequest\":{\n\t\t\"recordingConfig\":{\n\t\t\t\"maxIdleTime\":60,\n\t\t\t\"channelType\":1,\n\t\t\t\"transcodingConfig\":{\n\t\t\t\t\"width\":1280,\n\t\t\t\t\"height\":720,\n\t\t\t\t\"fps\":30,\n\t\t\t\t\"bitrate\":3420,\n\t\t\t\t\"mixedVideoLayout\":1,\n\t\t\t\t\"maxResolutionUid\":\""+this.uid+"\"\n\t\t\t\t}\n\t\t\t},\n\t\t\"storageConfig\":{\n\t\t\t\"vendor\":"+this.vendor+",\n\t\t\t\"region\":"+this.region+",\n\t\t\t\"bucket\":\""+this.bucket+"\",\n\t\t\t\"accessKey\":\""+this.accessKey+"\",\n\"fileNamePrefix\": [\"recordings\",\"mp\",\""+this.uid+"\"],\n\t\t\t\"secretKey\":\""+this.secretKey+"\"\n\t\t}\t\n\t}\n} \n"
-    // localStorage.setItem("recBoxtl", data)
-    // localStorage.setItem("chNametl",this.channelName )
-    // localStorage.setItem("tlUid", this.uid)
-    // localStorage.setItem("resourceIdtl", resourceId)
-    // console.log("data", data)
-
+   
+    // if(this.state.showButton === JSON.parse(this.teamKey)){
+    //   localStorage.setItem("chNametp",this.channelName )
+    //   localStorage.setItem("tpid", this.uid)
+    //   localStorage.setItem("resourceIdtp", resourceId)
+    //  }
+   
   await axios({
       method: "POST",
       headers: {
@@ -996,19 +1004,21 @@ else{
   
 };
 del = (e) => {
-//  console.log("tempArray", this.tempArray)
-//  localStorage.removeItem("prevFiletl")
-//  localStorage.removeItem("sid");
-//  localStorage.removeItem("tlUid");
-//  localStorage.removeItem("resourceIdtl")
-//  localStorage.removeItem("resourceId");
-//  localStorage.removeItem("chNametl");
-  var serverResponse = this.state.data.serverResponse.fileList
-  var completeRecording;
-  if(this.tempArray === undefined || this.tempArray.length === 0){
-      completeRecording =  serverResponse;
-  }
-  else if(this.tempArray != undefined || this.tempArray.length > 0){
+ 
+    
+      // localStorage.removeItem("resourceId");
+      // localStorage.removeItem("sid");
+      // localStorage.removeItem("resourceIdtp");
+      // localStorage.removeItem("sidtp");
+      // localStorage.removeItem("chNametp");
+      // localStorage.removeItem("tpid");
+      //   localStorage.removeItem("prevFiletp");
+    var serverResponse = this.state.data.serverResponse.fileList
+    var completeRecording;
+    if(this.tempArray === undefined || this.tempArray.length === 0){
+        completeRecording =  serverResponse;
+    }
+    else if(this.tempArray != undefined || this.tempArray.length > 0){
    if(this.state.showRecBtn === true){
         completeRecording = this.tempArray 
    }
@@ -1016,56 +1026,18 @@ del = (e) => {
         completeRecording = this.tempArray + "," + serverResponse;
    }
   }
-  else{
-      completeRecording = serverResponse;
-  }
-  if(this.prevFile){
-    completeRecording = completeRecording + "," + this.prevFile
-  }
-   let formData = new FormData()
-   formData.append("fileList", completeRecording)
-  formData.append("schedule_id", this.props.id);
-  formData.append("uid", JSON.parse(this.teamKey));
-  formData.append("assign_id", this.state.item.assign_no);
-  formData.append("participants", this.state.item.username);
-  axios({
-    method: "POST",
-    url: `${baseUrl}/tl/callRecordingPost`,
-    headers : {
-      uit : this.token
-    },
-    data: formData,
-})
-  Swal.fire({
-    title: "End this vedio call for everyone?",
-    // text: "End this vedio call for everyone",
-     type: "warning",
-     showCloseButton:true,
-     showCancelButton : true,
-     confirmButtonColor: "#3085d6",
-     cancelButtonColor: "#d33",
-     confirmButtonText: "End the call",
-     cancelButtonText : "Just leave the meeting"
-    }).then((result) => {
-    
-     if (result.value) {
-      if (result.value) {
-        axios.get(`${baseUrl}/tl/setgetschedular?id=${this.props.id}&rtc_id=${this.state.getAdId}&uid=${JSON.parse(this.teamKey)}`, this.myConfig)
-        .then((res) =>{
-          if(res){
-            this.client && this.client.unpublish(this.localStream);
-            this.localStream && this.localStream.close();
-            this.toggleModal()
-          }
-        })
-       
-       }
-     }
-     else if(result.dismiss === "backdrop" || result.dismiss === "close"){
-     
-     return false
+    else{
+        completeRecording = serverResponse;
     }
-   else{
+    if(this.prevFile){
+      completeRecording = completeRecording + "," + this.prevFile
+    }
+     let formData = new FormData()
+     formData.append("fileList", completeRecording)
+    formData.append("schedule_id", this.props.id);
+    formData.append("uid", JSON.parse(this.teamKey));
+    formData.append("assign_id", this.state.item.assign_no);
+    formData.append("participants", this.state.item.username);
     axios({
       method: "POST",
       url: `${baseUrl}/tl/callRecordingPost`,
@@ -1073,13 +1045,52 @@ del = (e) => {
         uit : this.token
       },
       data: formData,
-   })
-    window.location.hash = "/teamleader/schedule";
-   }
-   
- });
- 
-}
+  })
+    Swal.fire({
+      title: "End this vedio call for everyone?",
+      // text: "End this vedio call for everyone",
+       type: "warning",
+       showCloseButton:true,
+       showCancelButton : true,
+       confirmButtonColor: "#3085d6",
+       cancelButtonColor: "#d33",
+       confirmButtonText: "End the call",
+       cancelButtonText : "Just leave the meeting"
+      }).then((result) => {
+      
+       if (result.value) {
+        if (result.value) {
+          axios.get(`${baseUrl}/tl/setgetschedular?id=${this.props.id}&rtc_id=${this.state.getAdId}&uid=${JSON.parse(this.teamKey)}`, this.myConfig)
+          .then((res) =>{
+            if(res){
+              this.client && this.client.unpublish(this.localStream);
+              this.localStream && this.localStream.close();
+              this.toggleModal()
+            }
+          })
+         
+         }
+       }
+       else if(result.dismiss === "backdrop" || result.dismiss === "close"){
+       
+       return false
+      }
+     else{
+      axios({
+        method: "POST",
+        url: `${baseUrl}/tl/callRecordingPost`,
+        headers : {
+          uit : this.token
+        },
+        data: formData,
+     })
+      window.location.hash = "/teamleader/schedule";
+     }
+     
+   });
+    }
+  
+
 
   render() {    
     const style = {

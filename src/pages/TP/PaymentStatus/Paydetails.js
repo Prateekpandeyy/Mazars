@@ -74,7 +74,7 @@ setModal(!modal)
             },
             responseType: 'blob'
           }
-        axios.get(`${baseUrl}/admin/viewinvoicepdf?assign_no=${qno}&invoice_id=${id}` , myConfig2)
+        axios.get(`${baseUrl}/tl/viewinvoicepdf?assign_no=${qno}&invoice_id=${id}` , myConfig2)
       .then((res) => {
         console.log("res", res)
         if(res.status === 200){

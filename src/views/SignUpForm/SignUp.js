@@ -16,6 +16,7 @@ import EmailValidation from "../../components/Common/EmailValidation";
 import MyPDF from '../dFile/LoginManual.pdf';
 import  { HelpIcon } from "../../components/Common/MessageIcon";
 import { OuterloginContainer } from "../../components/Common/OuterloginContainer";
+import Swal from "sweetalert2";
 function SignUp(props) {
   
   
@@ -72,6 +73,8 @@ const [dstate2, setDstate2] = useState("")
 const [myCount, setMyCount] = useState(101)
 const [user, setUser] = useState("")
 const [userError, setUserError] = useState("")
+const [address, setAddress] = useState("")
+const [name, setName] = useState("")
 const [userAvailable, setUserAvailable] = useState({
   flag : "",
   message : ""
@@ -141,8 +144,10 @@ useEffect(() => {
 
   //get country
   const getcountry = (key) => {
+    setPhone("")
+    
     setMyCount(key)
-   
+   setAddress("")
     setZipCode("")
     setZipError("")
     setDstate("");
@@ -154,7 +159,9 @@ useEffect(() => {
     setPhone("")
     setIndNumError("")
     setNumAvail("")
-    
+   
+   
+  
     // setInvalid("")
     if (key == 101) {
       setCountryId(key)
@@ -187,6 +194,10 @@ useEffect(() => {
 
   //get city
   const getCity = (key) => {
+    setCityValue2("")
+    setAddress("")
+    setPhone("")
+    setZipCode("")
     if(estate.length > 0){
       setEstate("")
     }
@@ -300,7 +311,15 @@ useEffect(() => {
   }
 
 
-
+const checkSpecial = (e) => {
+  var regex = new RegExp("^[a-zA-Z0-9.,/ $@()]+$");
+if(regex.test(e.target.value)){
+  setName(e.target.value)
+}
+else{
+  return setName("")
+}
+}
   //zip oncahnge
   const zipValue = (e) => {
    
@@ -361,7 +380,9 @@ useEffect(() => {
     ) {
       return;
     }
- 
+    setCity([])
+    setDstate2("")
+    setCityValue2("")
    setEstate(input)
   }
 
@@ -379,11 +400,27 @@ useEffect(() => {
 
 
   const onSubmit = (value) => {
-console.log("counrtrNam", countryName)
+    if(!dstate && estate.length < 1){
+      Swal.fire({
+        title : "error",
+        html : "Please fill State",
+        icon : "error"
+      })
+
+    }
+    else   if(!dstate2 && cityState2.length < 1){
+     Swal.fire({
+       title : "error",
+       html : "Please fill City",
+       icon : "error"
+     })
+
+   }
+   else {
 
     let formData = new FormData();
     formData.append("user_id", user);
-    formData.append("name", value.p_name);
+    formData.append("name", name);
     formData.append("email", email2);
     formData.append("emailmultiple", JSON.stringify(value.p_email));
     formData.append("phone", value.p_phone);
@@ -399,7 +436,7 @@ console.log("counrtrNam", countryName)
     formData.append("state", dstate.label)}
     formData.append("stdcode", countryCode);
     formData.append("gstin_no", value.p_gstIn);
-    formData.append("address", value.p_address)
+    formData.append("address", address)
     if (display === true && subm === false) {
       setLoading(true)
       let formData = new FormData();
@@ -460,7 +497,7 @@ console.log("counrtrNam", countryName)
         
         });
     }
-
+  }
   };
 
 
@@ -480,6 +517,9 @@ console.log("counrtrNam", countryName)
     }
   }
   const getCity22 = (key) => {
+    setPhone("")
+    setAddress("")
+    setZipCode("")
     if(cityState2.length > 0){
     setCityValue2("")
     }
@@ -619,6 +659,7 @@ const getUser = (e) => {
     autoComplete="off"
     onChange={(e) => getUser(e)}
     onBlur={() => validateUser()}
+    maxLength="16"
     name="p_user"
     value={user}
     ref={register({ required: true })}
@@ -646,6 +687,9 @@ const getUser = (e) => {
                       <input
                         type="text"
                         name="p_name"
+                        value = {name}
+                        maxLength = "100"
+                        onChange = {(e) => checkSpecial(e)}
                         ref={register({ required: true })}
                         placeholder="Enter Name"
                         className={classNames("form-control", {
@@ -779,7 +823,9 @@ const getUser = (e) => {
                           type="text"
                           className="form-control"
                           name="p_address"
-                          maxlength="100"
+                          value={address}
+                          onChange={(e) => setAddress(e.target.value)} 
+                          maxLength="100"
                           ref={register()}
                           placeholder="Enter Address"
                         
@@ -838,6 +884,7 @@ const getUser = (e) => {
                           "is-invalid": errors.p_zipCode || zipError1 === true || zipError,
                         })}
                         name="p_zipCode"
+                        maxLength = "12"
                         ref={register({ required: true })}
                         placeholder="Enter Zipcode"
                         onChange={(e) => zipValue(e)}
@@ -849,14 +896,14 @@ const getUser = (e) => {
                   </div>
                   <div className="col-md-6">
                     <div className="mb-3">
-                      <label className="form-label">GST IN</label>
+                      <label className="form-label">GST Number</label>
                       <input
                         type="text"
                        className="form-control"
                         name="p_gstIn"
                         ref={register}
                         placeholder="Enter GST Code"
-                       
+                       maxLength = "24"
                       />
                     </div>
                     <p className="declined">{zipError}</p>
@@ -948,7 +995,7 @@ and number
                       <div className="col-md-6">
                       <div className="question_query mb-2">
                         <label className="form-label">
-                          Optional Email 
+                          Secondary Email 
                         </label>
                        {
                          fields.length < 9 ?
@@ -971,7 +1018,7 @@ and number
                           >
                             <input
                             name={`p_email[${index}].query`}
-                          
+                            maxlength = "100"
                            className={classNames("form-control", {
                              "is-invalid": errors.p_email || props.emailErrorMulti === true || props.wEmailmulti || props.invalid,
                            })}

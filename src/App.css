@@ -86,7 +86,9 @@ span {
   font-family: Arial;
   font-size: 14px;
   color: #464b4b;
+  word-break: break-word;
 }
+
 #profileInfoLabel h4 {
   font-weight: 700 !important;
 }

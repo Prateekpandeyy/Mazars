@@ -423,7 +423,7 @@ const onSubmit= (value) => {
        formData.append("gst", gst);
        formData.append("tds_total", tds2)
        formData.append("netpaid_amount", grandTotal)
-       formData.append("gstin_no", gstNum);
+      //  formData.append("gstin_no", gstNum);
        formData.append("bill_no", billNo)
        formData.append("invoice_by", JSON.parse(userid))
        {props.generated == "edited" ? formData.append("generate_status", 1) :
@@ -496,6 +496,7 @@ setServices2(k.service)
          ref={register}
          name="gst_in"
          value={gstNum}
+         disabled = {true}
          onChange= {(e) => setGstNum(e.target.value)}
          className="form-control"
           />

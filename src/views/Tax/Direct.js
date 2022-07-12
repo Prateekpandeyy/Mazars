@@ -23,7 +23,7 @@ const Direct = () => {
     const [rowsPerPage, setRowsPerPage] = useState(10)
     const [data, setData] = useState([])
     const [count2, setCount] = useState(0)
-    const loadpage = localStorage.getItem("prevPage")
+    const loadpage = Number(localStorage.getItem("prevPage"))
     let wirtten = "-"
     const onChangePage = (event, nextPage) => {
         setPage(nextPage)

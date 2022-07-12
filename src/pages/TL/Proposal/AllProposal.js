@@ -283,7 +283,7 @@ function AllProposal() {
                                         pathname: `/teamleader/sendproposal/${row.id}`,
                                         index : 0,
                                         routes: "proposal" }}>
-                                      <ActionIcon titleName="Dicision on propsal"/>
+                                      <ActionIcon titleName="Create propsal"/>
                                     </Link>
                                 ) : null}
                             </div>

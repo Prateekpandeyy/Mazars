@@ -333,7 +333,7 @@ const getEditValue= (e) => {
           <span style={{display : "flex", cursor : "pointer"}}>
                    <a href={`${baseUrl3}/${file}`} target="_blank">
                    <i className="fa fa-photo"></i>
-                     <span style={{ marginLeft: "10px" }}>Document</span>
+                     <span style={{ marginLeft: "10px" }}>View Document</span>
                    </a>
                        </span>
         </form>

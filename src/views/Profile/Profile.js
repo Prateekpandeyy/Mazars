@@ -8,6 +8,8 @@ import styled from "styled-components";
 import { useHistory } from 'react-router';
 import Swal from 'sweetalert2';
 import AddModal from './AddModal';
+import MessageIcon, {DeleteIcon, EditQuery, ViewDiscussionIcon, HelpIcon, 
+  UploadDocument, FeedBackICon} from "../../components/Common/MessageIcon";
 // import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
  import CloseIcon from '@material-ui/icons/Close';
 const MyFormValue = styled.div`
@@ -17,7 +19,7 @@ const MyFormValue = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  padding : 0px 15px
+  padding : 0px 0px
 `;
 const Profile = () => {
     const userId = window.localStorage.getItem("userid");
@@ -125,7 +127,7 @@ const Profile = () => {
 <CardHeader>
   
 <div style={{display : "flex", width : "100%", justifyContent : "space-between", alignItems : "center"}}>
-<h4>Profile </h4>
+<h4> Client Profile </h4>
 
          {/* <h6>{JSON.parse(clientId)}</h6> */}
        {
@@ -136,9 +138,11 @@ const Profile = () => {
 </div>
 </CardHeader>
 <CardBody>
-<div style={{display : "flex"}}>
+<div style={{display : "flex", width : "100%", justifyContent : "center"}}>
 
     <MyFormValue>
+    <span className="formContentWrapper" style={{display : "flex", margin: "10px 0px", padding : "10px", flexDirection : "column", width : "100%", border : "1px solid #000"}}>
+
     <span className="formContentWrapper">
 <span className="profileInfo" id="profileInfoLabel">
 <h4>User Id</h4>
@@ -227,18 +231,6 @@ const Profile = () => {
 </span>
 <span className="formContentWrapper">
 <span className="profileInfo" id="profileInfoLabel">
-<h4>Mobile Number</h4>
-</span>
-<span className="profileInfo">
-{
-  mobileno !== null && mobileno !== "null" ?
-  <h4>{mobileno}</h4> : 
-  <h4>N/A </h4>
-}
-</span>
-</span>
-<span className="formContentWrapper">
-<span className="profileInfo" id="profileInfoLabel">
 <h4>Zip Code</h4>
 </span>
 <span className="profileInfo">
@@ -251,7 +243,20 @@ const Profile = () => {
 </span>
 <span className="formContentWrapper">
 <span className="profileInfo" id="profileInfoLabel">
-<h4>GST In Number</h4>
+<h4>Mobile Number</h4>
+</span>
+<span className="profileInfo">
+{
+  mobileno !== null && mobileno !== "null" ?
+  <h4>{mobileno}</h4> : 
+  <h4>N/A </h4>
+}
+</span>
+</span>
+
+<span className="formContentWrapper">
+<span className="profileInfo" id="profileInfoLabel">
+<h4>GST  Number</h4>
 </span>
 <span className="profileInfo">
 {
@@ -261,13 +266,13 @@ const Profile = () => {
 }
 </span>
 </span>
-
+</span>
 
 <span className="formContentWrapper" style={{display : "flex", padding : "10px", flexDirection : "column", width : "100%", border : "1px solid #000"}}>
 <fieldset>
    
-<span style={{display : "flex", justifyContent : "space-between"}}>
-<h4>Secondary Email</h4>
+<span id="profileInfoLabel" style={{display : "flex", margin : "5px 0px", justifyContent : "space-between"}}>
+<h4 style={{fontSize : "14px", fontWeight : "700", color : "#464B4B"}}>Secondary Emails</h4>
 {
  JSON.parse(mainUser) === "1"  && allEmails && allEmails.length < 9 ?
   <button
@@ -275,9 +280,7 @@ const Profile = () => {
       className="customBtn">Add</button> : ""
 }
   </span>
-  <span className="profileInfo"> 
  
-    </span>
     <span className="profileInfo2">
      
       {
@@ -288,16 +291,18 @@ const Profile = () => {
    allEmails?.map((i, e) => (
     <div className="row" key = {e}
     id={e.email}>
-    <div className="col-md-8 mb-2">
-    <p>
+    <div className="col-md-10">
+    <p style={{marginBottom : "5px"}}>
     {i.email}
     </p>
       </div>
-      <div className="col-md-4">
+      <div className="col-md-2">
      {
        JSON.parse(mainUser) === "1" ?
-       <span onClick={(e) => delEmail(i.id)}>
-     <CloseIcon style={{color : "red", fontSize : "24px"}} />
+       <span onClick={(e) => delEmail(i.id)} style={{display : "flex", margin : "0px 10px", width : "100%"}}>
+  
+                                   <DeleteIcon />
+                               
      </span> : " "
      }
      

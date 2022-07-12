@@ -94,6 +94,7 @@ return(
     <input
                         type="text"
                         name="p_email"
+                        maxlength = "100"
                         className={classNames("form-control", {
                           "is-invalid": errors.p_email || props.emailError === true || props.wEmail || props.invalid,
                         })}

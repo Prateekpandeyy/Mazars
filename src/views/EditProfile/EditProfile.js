@@ -30,13 +30,13 @@ const EditProfile = () => {
     // const [country, setCountry] = useState("")
     // const [state, setState] = useState("")
     const [State, setState] = useState([]);
-    const [city, setCity] = useState("")
+    const [city, setCity] = useState([])
     const [address, setAddress] = useState("")
     const [mobileno, setMobileNo] = useState("")
     const [zipCode, setZipCode] = useState("")
     const [gst, setGst] = useState("")
     const [myCount, setMyCount] = useState(101)
-    const [dstate2, setDstate2] = useState("")
+    const [dstate2, setDstate2] = useState()
     const [estate, setEstate] = useState("");
     const [zipError, setZipError] = useState(null)
     const [dstate, setDstate] = useState()
@@ -52,6 +52,9 @@ const EditProfile = () => {
     const [occuptation, setOccuption] = useState("")
     const [numExist, setNumExist] = useState(null)
     const [phoneError, setPhoneError] = useState(null)
+    const [stateError, setStateError] = useState(false)
+    const [cityError, setCityError] = useState(false)
+    const [phoneLength, setPhoneLength] = useState(10)
     const token = window.localStorage.getItem("clientToken")
     const myConfig = {
         headers : {
@@ -75,6 +78,8 @@ const EditProfile = () => {
           setState(arrayState)
       }, [])
     const getData = () => {
+      let sta ;
+      let arrayCity = []
       axios
         .get(
           `${baseUrl}/customers/getclientdata`, myConfig
@@ -88,7 +93,7 @@ const EditProfile = () => {
       //  setState(res.data.result.state);
       setCityValue2(res.data.result.city)
       setDstate2(res.data.result.city)
-       setCity(res.data.result.city);
+      //  setCity(res.data.result.city);
        setAddress(res.data.result.address)
        setZipCode(res.data.result.pincode)
        setGst(res.data.result.gstin_no)
@@ -106,6 +111,24 @@ const EditProfile = () => {
           setCountryCode(i.phoneCode)
         }
       })
+
+      states.map((i) => {
+       
+        if(i.name === res.data.result.state){
+          console.log("iiiiState", i)
+          cities.filter((data) => {
+            if (data.state_id === i.id) {
+             
+              sta = {
+                "value" : data.id,
+                "label" : data.name
+              }
+              arrayCity.push(sta)
+            }
+          });
+          setCity(arrayCity)
+        }
+      })
         });
        
        
@@ -115,6 +138,24 @@ const EditProfile = () => {
     }, [])
     const onSubmit = () =>{
         let formData = new FormData();
+       
+       if(dstate.label === undefined && estate.length < 1){
+         Swal.fire({
+           title : "error",
+           html : "Please fill State",
+           icon : "error"
+         })
+
+       }
+       else   if(dstate2.label === undefined && cityState2.length < 1){
+        Swal.fire({
+          title : "error",
+          html : "Please fill City",
+          icon : "error"
+        })
+
+      }
+       else{
         formData.append("name", name)
         formData.append("occupation", occuptation)
         formData.append("phone", mobileno)
@@ -157,6 +198,8 @@ const EditProfile = () => {
               })
             }
         })
+     
+       }
       }
 
       // Get Country
@@ -181,8 +224,10 @@ const EditProfile = () => {
     // setInvalid("")
     if (key == 101) {
       setCountryId(key)
+      setPhoneLength(10)
     }
     else {
+      setPhoneLength(20)
       setCountryId("")
     }
 
@@ -208,6 +253,7 @@ const EditProfile = () => {
   };
   // get state value 
   const getStateValue = (input, reason) => {
+   
     if (
       reason.action === "set-value" ||
       reason.action === "input-blur" ||
@@ -215,14 +261,21 @@ const EditProfile = () => {
     ) {
       return;
     }
- 
-   setEstate(input)
+ setCity([])
+ setDstate2("")
+ setCityValue2("")
+   if(input.length < 101){
+    setEstate(input)
+   }
   }
 
   //get city
   const getCity = (key) => {
+    console.log("key", key)
     setCityValue2("")
    setAddress("")
+   
+   setZipCode("")
     if(estate.length > 0){
       setEstate("")
     }
@@ -250,6 +303,7 @@ const EditProfile = () => {
     setCity(arrayCity)
   }
   const getCityValu2 = (input, reason) => {
+
     if (
       reason.action === "set-value" ||
       reason.action === "input-blur" ||
@@ -258,9 +312,14 @@ const EditProfile = () => {
       return;
     }
   
-   setCityValue2(input)
+   if(input.length < 101){
+    setCityValue2(input)
+   }
   }
   const getCity22 = (key) => {
+    
+    setZipCode("")
+    setAddress("")
     if(cityState2.length > 0){
     setCityValue2("")
     }
@@ -281,6 +340,15 @@ const EditProfile = () => {
       setNumExist("");
       setMobileNo(e)
     }
+  }
+  const checkSpecial = (e) => {
+    var regex = new RegExp("^[a-zA-Z0-9.,/ $@()]+$");
+  if(regex.test(e.target.value)){
+    setName(e.target.value)
+  }
+  else{
+    return setName("")
+  }
   }
     return (
         <Layout custDashboard="custDashboard" custUserId={userId}>
@@ -309,7 +377,8 @@ const EditProfile = () => {
   <label className="form-label">User Id</label>
   <input
     type="text"
-  
+   
+
     value={JSON.parse(clientId)}
     disabled
    
@@ -326,7 +395,8 @@ const EditProfile = () => {
     type="text"
     name="p_name"
     value={name}
-    onChange={(e) => setName(e.target.value)}
+    maxLength="100"
+    onChange={(e) => checkSpecial(e)}
     ref={register({ required: true })}
     placeholder="Enter Name"
     className={classNames("form-control", {
@@ -453,7 +523,7 @@ type="textarea"
  name="p_address"
  value={address}
  onChange={(e) => setAddress(e.target.value)} 
-    ref={register({ required: true })}
+    ref={register()}
     placeholder="Enter Address"
   className={classNames("form-control", {
     "is-invalid": errors.p_address 
@@ -468,6 +538,7 @@ type="textarea"
 <input
   type="text"
   autoComplete="off"
+  maxLength="12"
   onChange={(e) => setZipCode(e.target.value)}  
   name="p_zipCode"
   value={zipCode}
@@ -494,6 +565,7 @@ type="textarea"
                         <input
                         type="text"
                         autoComplete="off"
+                        maxLength={phoneLength}
                         onChange={(e) => phoneHandler(e.target.value)}  
                         name="p_mobile"
                         value={mobileno}
@@ -532,9 +604,10 @@ type="textarea"
 />
 </div> */}
 <div className="col-md-6">
-<label className="form-label">GST In Number</label>
+<label className="form-label">GST  Number</label>
 <input
   type="text"
+  maxLength="24"
   autoComplete="off"
   onChange={(e) => setGst(e.target.value)}  
   name="p_gstIn"

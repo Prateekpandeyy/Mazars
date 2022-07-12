@@ -2,14 +2,14 @@
 
 export const professionName = [
     { city: "CA" },
-    { city: "ADVOCATE" },
+    { city: "Advocate" },
     { city: "CFO" },
     { city: "CEO" },
-    { city: "FINANCE HEAD" },
-    { city: "ACCOUNTS MANAGER" },
-    { city: "ACCOUNTANT" },
-    { city: "TAX PROFESSIONAL" },
-    { city: "OTHERS" },
+    { city: "Finance Head" },
+    { city: "Accounts Manager" },
+    { city: "Accountant" },
+    { city: "Tax Professional" },
+    { city: "Others" },
 ];
 
 export const country = [

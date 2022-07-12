@@ -33,7 +33,7 @@ const AddCmsContent = () => {
     const [heading, setHeading] = useState("")
     const [writer, setWriter] = useState("")
     const [date, setDate] = useState("")
-    const [pageto, setTopage] = useState("direct")
+    const [pageto, setTopage] = useState("DT")
     const [editData, setEditData] = useState();
     const [editorError, setEditorError] = useState(false)
     const [loading, setLoading] = useState(false);

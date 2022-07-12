@@ -335,7 +335,7 @@ const rightAli = {
                                             
                                         }}
                                     >
-                                           <DiscussProposal titleName ="Prepare Proposal"/>
+                                           <DiscussProposal titleName ="Decision on Proposal"/>
                                                 </Link>
                                             </span>
                                             :
