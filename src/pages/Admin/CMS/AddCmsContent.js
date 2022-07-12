@@ -39,6 +39,7 @@ const AddCmsContent = () => {
     const [loading, setLoading] = useState(false);
     const [showDoc, setShowDoc] = useState(false)
     const [email, setEmail] = useState("")
+    const [contentType, setContentType] = useState("Editor")
     let history  = useHistory()
     let getId = useParams()
     var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
@@ -104,7 +105,7 @@ const AddCmsContent = () => {
       let formData = new FormData();
      
       formData.append("type", pageto)
-    if(showDoc === true) {
+    if(contentType !== "Editor") {
       var uploadImg = e.p_draft;
    
 
@@ -235,6 +236,25 @@ const getEditValue= (e) => {
                    placeholder = "Please enter heading"
                    />
                  </div>
+                 <div className="col-md-4 col-sm-12">
+                 
+                 <label className="form-label">Category</label>
+                      <select
+                      multiple = {false}
+                      onChange = {(e) => setContentType(e.target.value)}
+                      className={classNames("form-control", {
+                        "is-invalid": errors.p_content,
+                      })}
+                      value = {contentType}
+                      ref={register({ required: true })}
+                      name="p_content"
+                      >
+                      <option value = "Editor">Editor</option>
+                      <option value = "Doc_upload">Doc Upload</option>
+                      <option value = "Pdf_upload">Pdf Upload</option>
+                      <option value = "Ppt_upload">Ppt Upload</option>
+                          </select>
+                 </div>
          </div>
        
          <div className="row">
@@ -285,15 +305,15 @@ const getEditValue= (e) => {
                    />
                  </div>
          </div>
-       <div className="row">
+       {/* <div className="row">
          <div className="col-md-3 my-4">
          <input type="radio" value="Male" name="gender" onChange={() => setShowDoc(true)}/> Upload Content
       </div>
       <div className="col-md-3 my-4">
         <input type="radio" value="Female" defaultChecked name="gender" onChange={() => setShowDoc(false)} /> Editor
            </div>
-         </div>
-         {showDoc === true ?
+         </div> */}
+         {contentType !== "Editor" ?
           <form onSubmit={handleSubmit(onSubmit)}>
           <div className="mb-3">
             <label className="form-label">Upload Your Document</label>
@@ -310,7 +330,7 @@ const getEditValue= (e) => {
         </form>
          : ""}
        {
-         showDoc === false ?
+         contentType === "Editor" ?
          <div className="row">
          <div className="col-md-12">
          <label className="form-label">Content</label> </div>
