@@ -480,6 +480,7 @@ else{
             var variable = "Signup successfully."
             Alerts.SuccessNormal(variable)
             console.log("response", response.data)
+            localStorage.setItem("isMail", JSON.stringify(response.data.is_mail))
             localStorage.setItem("userid", JSON.stringify(response.data.user_id));
                     sessionStorage.setItem("userIdsession", JSON.stringify(response.data.user_id));
                     localStorage.setItem("custEmail", JSON.stringify(response.data.name));
