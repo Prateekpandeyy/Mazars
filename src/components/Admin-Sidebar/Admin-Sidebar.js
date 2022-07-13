@@ -335,6 +335,18 @@ const classes = useStyle()
   </span>
   </NavLink>
             </li>
+            <li className="nav-item">
+            
+            <NavLink to={"/cms/uploadlink"} className={classes.myClassHover}>
+              <i className="">
+                <MediaBluetoothOffIcon className={classes.myTeamleader}
+                />
+              </i>
+  <span className="menu-title" data-i18n="">
+ Upload Link
+  </span>
+  </NavLink>
+            </li>
 
 
              

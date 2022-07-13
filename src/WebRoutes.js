@@ -85,6 +85,7 @@ import Linklist from "./pages/Admin/CMS/Linklist";
 import FaqList from "./pages/Admin/CMS/FaqList";
 import CmsLogin from './pages/Admin/cmslogin/Login';
 import GroupImage from "./pages/Admin/CMS/GroupImage";
+import UploadLink from "./pages/Admin/CMS/UploadLink";
 //TL routes
 import TlStart from './pages/TL/Start/Start'
 import TlLogin from './pages/TL/Login/Login'
@@ -189,6 +190,7 @@ import UpdateDetails from "./views/Tax/UpdateDetails";
 import OuterLinkVideo from "./views/outerLinkVideo.js/OuterLinkVideo";
 import EditProfile from "./views/EditProfile/EditProfile";
 import Drag from "./components/Drag";
+import UploadLinkContent from "./pages/Admin/CMS/UploadLInkContent";
 
 // import PayDetails from "./views/PaymentStatus/PayDetails";
 
@@ -409,6 +411,9 @@ function WebRoutes() {
              <PrivateRouteAdmin exact path = "/cms/addarticles" component = {AddCmsContent} />
              <PrivateRouteAdmin exact path = "/cms/contentlist" component = {MediaText} />
              <PrivateRouteAdmin exaxt path = "/cms/imagelist" component = {MediaContent} />
+             <PrivateRouteAdmin exaxt path = "/cms/uploadlink" component = {UploadLink} />
+             <PrivateRouteAdmin exaxt path = "/cms/uploadlinkcontent" component = {UploadLinkContent} />
+          
             <Route exact path="/*" component={PageNotFound} />
 
           </Switch>
