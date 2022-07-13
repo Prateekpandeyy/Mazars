@@ -57,7 +57,7 @@ const UploadLinkContent = () => {
       if (uploadImg) {
         for (var i = 0; i < uploadImg.length; i++) {
            file = uploadImg[i];
-           formData.append("content[]", file);
+           formData.append("content", file);
         }
       }
       
