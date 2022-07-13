@@ -89,10 +89,40 @@ const Editupdates = () => {
        setTopage(e)
    }
    const onSubmit = (e) => {
+    let message = "Updates created successfully"
+    if(contentType !== "Editor") {
+      var uploadImg = e.p_draft;
+      if (uploadImg.length > 0) {
+        if(contentType === "Doc_upload"){
+          formData.append("content_type", 0)
+        }
+        else if(contentType === "Pdf_upload"){
+          formData.append("content_type", 1)
+        }
+        else if(contentType === "Ppt_upload"){
+          formData.append("content_type", 3)
+        }
+        for (var i = 0; i < uploadImg.length; i++) {
+          let file = uploadImg[i];
+          formData.append("content", file);
+         
+        }
+        
+      }
+      else {
+        Swal.fire({
+          title : "error",
+          html : "Please upload file",
+          icon : "error"
+        })
+        return false
+      }
+    }
+    else {
     var myEditor = document.querySelector('#snow-container')
     var html = myEditor.children[0].innerHTML;
     addDet(html)
-       let message = "Updates created successfully"
+      
        let formData = new FormData();
        formData.append("content", html);
        formData.append("status", Number(stats))
@@ -122,6 +152,7 @@ const Editupdates = () => {
           }
        })
    }
+  }
    const myLabel = (e) => {
   
     setStats(!stats)
