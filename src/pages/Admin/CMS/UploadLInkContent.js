@@ -97,7 +97,7 @@ const UploadLinkContent = () => {
               
             </Col>
             <Col md="4" align="center">
-              <h4>Upload Link</h4>
+              <h4>Upload Document</h4>
             </Col>
             </Row>  
   

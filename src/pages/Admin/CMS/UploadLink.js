@@ -30,7 +30,7 @@ const UploadLink = () => {
       }, [])
     
       const getList = () => {
-        axios.get(`${baseUrl}/cms/removedoc?id==${JSON.parse(userId)}`, myConfig)
+        axios.get(`${baseUrl}/cms/documentlist`, myConfig)
       
         .then((res) => {
         
@@ -94,12 +94,12 @@ const UploadLink = () => {
    
   
         <div className="headingContent">
-        <h4>Upload Link </h4>
+        <h4>Documents List </h4>
         <button 
     
     className="autoWidthBtn rightAlign my-2" onClick={(e) => {
       history.push("/cms/uploadlinkcontent")
-    }}>New Link</button> 
+    }}>New Document</button> 
         </div>
     <Card>
         <CardBody>
