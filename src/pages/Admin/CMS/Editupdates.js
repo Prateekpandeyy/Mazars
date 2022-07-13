@@ -89,6 +89,7 @@ const Editupdates = () => {
        setTopage(e)
    }
    const onSubmit = (e) => {
+     let formData = new FormData()
     let message = "Updates created successfully"
     if(contentType !== "Editor") {
       var uploadImg = e.p_draft;
