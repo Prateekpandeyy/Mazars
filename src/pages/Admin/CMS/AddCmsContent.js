@@ -247,7 +247,7 @@ const getEditValue= (e) => {
                  </div>
                  <div className="col-md-4 col-sm-12">
                  
-                 <label className="form-label">Category</label>
+                 <label className="form-label">Type</label>
                       <select
                       multiple = {false}
                       onChange = {(e) => setContentType(e.target.value)}
@@ -259,9 +259,9 @@ const getEditValue= (e) => {
                       name="p_content"
                       >
                       <option value = "Editor">Editor</option>
-                      <option value = "Doc_upload">Doc Upload</option>
-                      <option value = "Pdf_upload">Pdf Upload</option>
-                      <option value = "Ppt_upload">Ppt Upload</option>
+                      <option value = "Doc_upload">Document</option>
+                      <option value = "Pdf_upload">PDF</option>
+                      <option value = "Ppt_upload">PPT</option>
                           </select>
                  </div>
          </div>
