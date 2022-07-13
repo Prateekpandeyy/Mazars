@@ -110,10 +110,19 @@ const AddCmsContent = () => {
    
 
       if (uploadImg) {
+        if(contentType === "Doc_upload"){
+          formData.append("content_type", 0)
+        }
+        else if(contentType === "Pdf_upload"){
+          formData.append("content_type", 1)
+        }
+        else if(contentType === "Ppt_upload"){
+          formData.append("content_type", 3)
+        }
         for (var i = 0; i < uploadImg.length; i++) {
           let file = uploadImg[i];
           formData.append("content", file);
-          formData.append("content_type", 1)
+         
         }
       }
     }
