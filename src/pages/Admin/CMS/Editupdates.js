@@ -33,6 +33,7 @@ const Editupdates = () => {
     const [heading, setHeading] = useState("")
     const [date, setDate] = useState("")
     const [stats, setStats] = useState(false)
+    const [contentType, setContentType] = useState("Editor")
  let history = useHistory()
  let getId = useParams()
  const token = localStorage.getItem("token")
@@ -63,6 +64,23 @@ const Editupdates = () => {
                else{
                  setStats(false)
                }
+               if(i.content_type === "0"){
+                
+                setContentType("Doc_upload")
+              }
+              else if(i.content_type === "2"){
+               addDet(i.content)
+               
+                 setContentType("Editor")
+              
+              }
+              else if(i.content_type === "1"){
+                console.log("done")
+                setContentType("Pdf_upload")
+              }
+              else if(i.content_type === "3"){
+               setContentType("Ppt_upload")
+             }
             })
       
         })
@@ -181,16 +199,59 @@ const Editupdates = () => {
                max={item}
                    />
                  </div>
-         </div>
-         <div className="row">
-             <div className="col-md-12">
-             <label className="form-label">Content</label> </div>
-             
-             <div className="col-md-12">
-             <CustomQuillEditor 
- content={det} />
+                 <div className="col-md-4 col-sm-12">
+                 
+                 <label className="form-label">Type</label>
+                      <select
+                      multiple = {false}
+                      onChange = {(e) => setContentType(e.target.value)}
+                      className={classNames("form-control", {
+                        "is-invalid": errors.p_content,
+                      })}
+                      value = {contentType}
+                      ref={register({ required: true })}
+                      name="p_content"
+                      >
+                      <option value = "Editor">Editor</option>
+                      <option value = "Doc_upload">Document</option>
+                      <option value = "Pdf_upload">PDF</option>
+                      <option value = "Ppt_upload">PPT</option>
+                          </select>
                  </div>
          </div>
+         <div className="row">
+           { 
+           contentType !== "Editor"  ?
+         <div className = "col-md-6">
+            <form onSubmit={handleSubmit(onSubmit)}>
+          <div className="mb-3">
+            <label className="form-label">Upload Your Document</label>
+            <input
+                type="file"
+                name="p_draft"
+                ref={register}
+                className="form-control-file manage_file"
+              
+              />
+          </div>
+
+          
+        </form>
+           </div>
+         : ""}
+           </div>
+        {
+          contentType === "Editor" ?
+          <div className="row">
+          <div className="col-md-12">
+          <label className="form-label">Content</label> </div>
+          
+          <div className="col-md-12">
+          <CustomQuillEditor 
+content={det} />
+              </div>
+      </div> : " "
+        }
          <div className="row">
          <div className="col-md-3">
  

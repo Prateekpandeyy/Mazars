@@ -343,7 +343,7 @@ const classes = useStyle()
                 />
               </i>
   <span className="menu-title" data-i18n="">
- Upload Link
+ Upload Document
   </span>
   </NavLink>
             </li>

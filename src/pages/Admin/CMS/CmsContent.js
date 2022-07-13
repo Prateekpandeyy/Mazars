@@ -41,6 +41,7 @@ const CmsContent = () => {
     const [showDoc, setShowDoc] = useState(false)
     const [showEditor, setShowEditor] = useState(false)
     const [file, setFile] = useState("")
+    const [contentType, setContentType] = useState("Editor")
     let history  = useHistory()
     let getId = useParams()
     var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
@@ -81,14 +82,23 @@ const CmsContent = () => {
            setStats(false)
            addDet(i.content)
          }
-         if(i.content_type === "1"){
+         if(i.content_type === "0"){
            setShowDoc(true)
+           setContentType("Doc_upload")
          }
-         else {
+         else if(i.content_type === "2"){
           addDet(i.content)
             setShowDoc(false)
+            setContentType("Editor")
          
          }
+         else if(i.content_type === "1"){
+           console.log("done")
+           setContentType("Pdf_upload")
+         }
+         else if(i.content_type === "3"){
+          setContentType("Ppt_upload")
+        }
         }
       })
        }
@@ -110,13 +120,22 @@ const CmsContent = () => {
      setShowEditor(false)
      let formData = new FormData();
   
-  if(showDoc === true) {
+  if(contentType !== "Editor") {
     var uploadImg = e.p_draft;
     if (uploadImg.length > 0) {
+      if(contentType === "Doc_upload"){
+        formData.append("content_type", 0)
+      }
+      else if(contentType === "Pdf_upload"){
+        formData.append("content_type", 1)
+      }
+      else if(contentType === "Ppt_upload"){
+        formData.append("content_type", 3)
+      }
       for (var i = 0; i < uploadImg.length; i++) {
         let file = uploadImg[i];
         formData.append("content", file);
-        formData.append("content_type", 1)
+       
       }
       
     }
@@ -254,6 +273,25 @@ const getEditValue= (e) => {
                    placeholder = "Please enter heading"
                    />
                  </div>
+                 <div className="col-md-4 col-sm-12">
+                 
+                 <label className="form-label">Type</label>
+                      <select
+                      multiple = {false}
+                      onChange = {(e) => setContentType(e.target.value)}
+                      className={classNames("form-control", {
+                        "is-invalid": errors.p_content,
+                      })}
+                      value = {contentType}
+                      ref={register({ required: true })}
+                      name="p_content"
+                      >
+                      <option value = "Editor">Editor</option>
+                      <option value = "Doc_upload">Document</option>
+                      <option value = "Pdf_upload">PDF</option>
+                      <option value = "Ppt_upload">PPT</option>
+                          </select>
+                 </div>
          </div>
        
          <div className="row">
@@ -304,7 +342,7 @@ const getEditValue= (e) => {
                    />
                  </div>
          </div>
-         <div className="row">
+         {/* <div className="row">
           <div className="col-md-3 my-4">
           <input type="radio" value="Male" checked={showDoc} name="gender" onChange={() => setShowDoc(true)}/> Upload Content
        </div>
@@ -314,9 +352,9 @@ const getEditValue= (e) => {
            setShowDoc(false)
          }} /> Editor
             </div>
-            </div>
-            {
-              showDoc === true ?
+            </div> */}
+          { 
+          contentType !== "Editor" ?
               <>
               <form onSubmit={handleSubmit(onSubmit)}>
           <div className="mb-3">

@@ -244,6 +244,7 @@ const UpdatesContent = () => {
     const [date, setDate] = useState("")
     const [showDoc, setShowDoc] = useState(false)
     const [stats, setStats] = useState(false)
+    const [contentType, setContentType] = useState("Editor")
  let history = useHistory()
  let getId = useParams()
  var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
@@ -282,26 +283,37 @@ const UpdatesContent = () => {
    }
    const onSubmit = (e) => {
        let message = "Updates created successfully"
-       var myEditor = document.querySelector('#snow-container')
-       var html = myEditor.children[0].innerHTML;
-       addDet(html)
+      
        let formData = new FormData();
-       if(showDoc === true) {
+       if(contentType !== "Editor") {
         var uploadImg = e.p_draft;
      
   
         if (uploadImg) {
+          if(contentType === "Doc_upload"){
+            formData.append("content_type", 0)
+          }
+          else if(contentType === "Pdf_upload"){
+            formData.append("content_type", 1)
+          }
+          else if(contentType === "Ppt_upload"){
+            formData.append("content_type", 3)
+          }
           for (var i = 0; i < uploadImg.length; i++) {
             let file = uploadImg[i];
             formData.append("content", file);
-            formData.append("content_type", 1)
+           
           }
         }
       }
       else{
-
+        var myEditor = document.querySelector('#snow-container')
+        var html = myEditor.children[0].innerHTML;
+        addDet(html)
       
        formData.append("content", html);
+       formData.append("content_type", 2)
+      }
        formData.append("status", Number(stats))
        formData.append("heading", heading)
        formData.append("publish_date", date);
@@ -328,7 +340,7 @@ const UpdatesContent = () => {
               history.push("/cms/updates")
           }
        })
-   }
+   
   }
    const myLabel = (e) => {
   
@@ -407,18 +419,30 @@ const UpdatesContent = () => {
                max={item}
                    />
                  </div>
-             
+                 <div className="col-md-4 col-sm-12">
+                 
+                 <label className="form-label">Type</label>
+                      <select
+                      multiple = {false}
+                      onChange = {(e) => setContentType(e.target.value)}
+                      className={classNames("form-control", {
+                        "is-invalid": errors.p_content,
+                      })}
+                      value = {contentType}
+                      ref={register({ required: true })}
+                      name="p_content"
+                      >
+                      <option value = "Editor">Editor</option>
+                      <option value = "Doc_upload">Document</option>
+                      <option value = "Pdf_upload">PDF</option>
+                      <option value = "Ppt_upload">PPT</option>
+                          </select>
+                 </div>
          </div>
-         <div className="row">
-         <div className="col-md-3 my-4">
-         <input type="radio" value="Male" name="gender" onChange={() => setShowDoc(true)}/> Upload Content
-      </div>
-      <div className="col-md-3 my-4">
-        <input type="radio" value="Female" defaultChecked name="gender" onChange={() => setShowDoc(false)} /> Editor
-           </div>
-           </div>
+
            <div className="row">
-           {showDoc === true ?
+           { 
+           contentType !== "Editor"  ?
          <div className = "col-md-6">
             <form onSubmit={handleSubmit(onSubmit)}>
           <div className="mb-3">
@@ -437,14 +461,18 @@ const UpdatesContent = () => {
            </div>
          : ""}
            </div>
-         <div className="row">
-             <div className="col-md-12">
-             <label className="form-label">Content</label> </div>
-             
-             <div className="col-md-12">
-             <AddEditor />
-                 </div>
-         </div>
+           {
+               contentType === "Editor" ? 
+               <div className="row">
+               <div className="col-md-12">
+               <label className="form-label">Content</label> </div>
+               
+               <div className="col-md-12">
+               <AddEditor />
+                   </div>
+           </div> : " "
+           }
+        
          <div className="row">
          <div className="col-md-3">
  
