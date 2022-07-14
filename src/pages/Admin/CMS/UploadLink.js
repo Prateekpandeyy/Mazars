@@ -111,7 +111,9 @@ const UploadLink = () => {
           {
             dataField : "",
             text : "Action",
-          
+            headerStyle: () => {
+              return { textAlign : "center" };
+            },
             formatter : function CmsAction(cell, row) {
              return(
              <>
