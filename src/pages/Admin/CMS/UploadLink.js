@@ -8,7 +8,7 @@ import {
 import { styled } from "@material-ui/styles";
 import { useHistory } from 'react-router';
 import axios from 'axios';
-import { baseUrl } from '../../../config/config';
+import { baseUrl , baseUrl3} from '../../../config/config';
 import DataTablepopulated from '../../../components/DataTablepopulated/DataTabel';
 import  {DeleteIcon, EditQuery,} from "../../../components/Common/MessageIcon";
 import { Link } from 'react-router-dom';
@@ -52,7 +52,7 @@ const UploadLink = () => {
             confirmButtonText: "Yes, delete it!",
         }).then((result) => {
             if (result.value) {
-              axios.get(`${baseUrl}/cms/removedoc?id=?uid=${JSON.parse(userId)}&id=${id}`, myConfig)
+              axios.get(`${baseUrl}/cms/removedoc?id=${id}`, myConfig)
               .then((res) => {
   console.log("response", res)
   if(res.data.code === 1){
@@ -86,6 +86,46 @@ const UploadLink = () => {
               return { width : "50px" };
             },
           },
+          {
+            dataField : "title",
+            text : "Heading",
+
+            headerStyle: () => {
+              return { width : "150px" };
+            },
+          },
+          
+          {
+            dataField: "",
+            text: "Link",
+            headerStyle: () => {
+              return { width : "500px" };
+            },
+            formatter : function CmsAction(cell, row) {
+              return (
+                <a href = {`${baseUrl3}/${row.file}`} target="_blank">{`${baseUrl3}/${row.file}`}</a>
+              )
+            },
+          
+          },
+          {
+            dataField : "",
+            text : "Action",
+          
+            formatter : function CmsAction(cell, row) {
+             return(
+             <>
+               <div style={{display : "flex", justifyContent : "space-evenly"}}>
+           
+          
+          <span  title="Delete Articles" onClick={() => del(row.id)} className="mx-2">
+           <DeleteIcon />
+        </span>
+                    </div>
+             </>
+             )
+            }
+          }
       ]
     return (
         <Layout adminDashboard="adminDashboard" adminUserId={userId}>

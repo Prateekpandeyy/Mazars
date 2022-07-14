@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import { Container } from '@material-ui/core';
 import {  styled } from '@mui/material';
 import axios from 'axios';
-import { baseUrl } from '../../../config/config';
+import { baseUrl , baseUrl3 } from '../../../config/config';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import './map.css';
@@ -21,6 +21,7 @@ import {
     Table,
   } from "reactstrap";
   import CustomQuillEditor from './CustomQuillEditor';
+  // import { baseUrl } from '../../../config/config';
 const MyContainer = styled(Container)({
 
 })
@@ -34,6 +35,7 @@ const Editupdates = () => {
     const [date, setDate] = useState("")
     const [stats, setStats] = useState(false)
     const [contentType, setContentType] = useState("Editor")
+    const [file, setFile] = useState("")
  let history = useHistory()
  let getId = useParams()
  const token = localStorage.getItem("token")
@@ -58,6 +60,7 @@ const Editupdates = () => {
               addDet(i.content)
               setDate(i.publish_date)
               setTopage(i.type)
+              setFile(i.file)
               if(i.status == 1){
                 setStats(true)
                }
@@ -89,9 +92,11 @@ const Editupdates = () => {
        setTopage(e)
    }
    const onSubmit = (e) => {
+    
      let formData = new FormData()
     let message = "Updates created successfully"
     if(contentType !== "Editor") {
+      
       var uploadImg = e.p_draft;
       if (uploadImg.length > 0) {
         if(contentType === "Doc_upload"){
@@ -127,6 +132,8 @@ const Editupdates = () => {
        let formData = new FormData();
        formData.append("content", html);
        formData.append("status", Number(stats))
+
+    }
        formData.append("heading", heading)
        formData.append("publish_date", date);
        formData.append("type", pageto)
@@ -152,7 +159,7 @@ const Editupdates = () => {
               history.push("/cms/updates")
           }
        })
-   }
+   
   }
    const myLabel = (e) => {
   
@@ -267,7 +274,12 @@ const Editupdates = () => {
               />
           </div>
 
-          
+          <span style={{display : "flex", cursor : "pointer"}}>
+                   <a href={`${baseUrl3}/${file}`} target="_blank">
+                   <i className="fa fa-photo"></i>
+                     <span style={{ marginLeft: "10px" }}>View Document</span>
+                   </a>
+                       </span>
         </form>
            </div>
          : ""}

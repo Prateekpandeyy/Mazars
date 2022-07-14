@@ -11,6 +11,15 @@ import classes from './design.module.css';
 import { OuterloginContainer } from '../../components/Common/OuterloginContainer';
 import { Link , useParams, useHistory} from 'react-router-dom';
 import {  VscFilePdf} from "react-icons/vsc";
+import { Viewer } from '@react-pdf-viewer/core'; // install this library
+// Plugins
+// import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout'; // install this library
+// Import the styles
+import '@react-pdf-viewer/core/lib/styles/index.css';
+// import '@react-pdf-viewer/default-layout/lib/styles/index.css';
+// Worker
+import { Worker } from '@react-pdf-viewer/core'; // install this library
+
 const MyContainer = styled(Box)({
     display : "flex", 
     justifyContent : "center", 
@@ -83,13 +92,27 @@ Update
 <h5 className="updatesHeding">  {CommonServices.capitalizeFirstLetter(i.heading)}</h5>
 <h6>Date of publishing :   {i.publish_date.split("-").reverse().join("-")} </h6>
          
-     <div id="artContent" className="updatesContent">
+{
+  i.content_type === "2" ?
+  <div id="artContent" className="updatesContent">
      
-     <Markup content={i.content} /> 
- 
-  
+  <Markup content={i.content} /> 
+
+
+ </div> : " "
+}
+   {
+      i.content_type === "1" ?
+      <div id="artContent">
+      <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.6.347/build/pdf.worker.min.js">
+    <Viewer fileUrl={`${baseUrl3}/${i.file}`}>
+      </Viewer>
+      </Worker>
+    {/* <iframe src={`${baseUrl3}/${i.file}#toolbar=0`} width="100%" height="500px" /> */}
+
     </div>
-  
+ : ""
+    }
         
      
 

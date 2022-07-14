@@ -76,7 +76,7 @@ const UploadLinkContent = () => {
             html : "Video Gallery added successfully",
             icon :"success"
           })
-          history.push("/cms/videolist")
+          history.push("/cms/uploadlink")
         }
       })
   
