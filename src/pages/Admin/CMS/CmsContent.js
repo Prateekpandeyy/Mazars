@@ -117,7 +117,7 @@ const CmsContent = () => {
    }
    const onSubmit = (e) => {
      let message = "Content created successfully"
-     setShowEditor(false)
+   
      let formData = new FormData();
   
   if(contentType !== "Editor") {
@@ -217,6 +217,12 @@ const getEditValue= (e) => {
   }
 }
 
+const editorShow = (e) => {
+  setContentType(e.target.value)
+ if(e.target.value === "Editor"){
+  setShowEditor(true)
+ }
+}
     return(
         <Layout adminDashboard="adminDashboard" adminUserId={userId}>
           
@@ -278,7 +284,7 @@ const getEditValue= (e) => {
                  <label className="form-label">Type</label>
                       <select
                       multiple = {false}
-                      onChange = {(e) => setContentType(e.target.value)}
+                      onChange = {(e) => editorShow(e)}
                       className={classNames("form-control", {
                         "is-invalid": errors.p_content,
                       })}
@@ -287,9 +293,9 @@ const getEditValue= (e) => {
                       name="p_content"
                       >
                       <option value = "Editor">Editor</option>
-                      <option value = "Doc_upload">Document</option>
+                      <option value = "Doc_upload">Word Document</option>
                       <option value = "Pdf_upload">PDF</option>
-                      <option value = "Ppt_upload">PPT</option>
+                      {/* <option value = "Ppt_upload">PPT</option> */}
                           </select>
                  </div>
          </div>
@@ -338,7 +344,7 @@ const getEditValue= (e) => {
                   onChange={(e) => setEmail(e.target.value)}
                   ref={register({ required: true })}
                   name="p_email"
-                   placeholder = "Please enter heading"
+                   placeholder = "Please enter email"
                    />
                  </div>
          </div>

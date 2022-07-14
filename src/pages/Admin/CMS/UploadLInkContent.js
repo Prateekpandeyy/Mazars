@@ -119,7 +119,7 @@ const UploadLinkContent = () => {
                    onChange={(e) => setHeading(e.target.value)}
                    ref={register({ required: true })}
                    name="p_heading"
-                    placeholder = "Please enter heading"
+                    placeholder = "Please enter title"
                     />
                   </div>
                 </div>

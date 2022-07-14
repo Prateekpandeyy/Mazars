@@ -44,7 +44,7 @@ const UploadLink = () => {
 
         Swal.fire({
             title: "Are you sure?",
-            text: "Want to delete article? Yes, delete it!",
+            text: "Want to delete document? Yes, delete it!",
             type: "warning",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
@@ -58,7 +58,7 @@ const UploadLink = () => {
   if(res.data.code === 1){
     Swal.fire({
       title : "success",
-      html  : "Article deleted successfully",
+      html  : "Document deleted successfully",
       icon : "success"
     })
     getList()
@@ -112,7 +112,7 @@ const UploadLink = () => {
             dataField : "",
             text : "Action",
             headerStyle: () => {
-              return { textAlign : "center" };
+              return { textAlign : "center" , width : "50px" };
             },
             formatter : function CmsAction(cell, row) {
              return(

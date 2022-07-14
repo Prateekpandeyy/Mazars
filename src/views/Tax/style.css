@@ -70,7 +70,7 @@
 }
 .image-gallery-slide .image-gallery-image {
   width: 100%;
-  object-fit: cover;
+  object-fit: fill;
   height: 400px;
 }
 .image-gallery-image .image-gallery-thumbnail .image-gallery-thumbnail-image {

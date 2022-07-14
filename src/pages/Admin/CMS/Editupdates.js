@@ -35,6 +35,7 @@ const Editupdates = () => {
     const [date, setDate] = useState("")
     const [stats, setStats] = useState(false)
     const [contentType, setContentType] = useState("Editor")
+    const [showEditor, setShowEditor] = useState(false)
     const [file, setFile] = useState("")
  let history = useHistory()
  let getId = useParams()
@@ -92,7 +93,7 @@ const Editupdates = () => {
        setTopage(e)
    }
    const onSubmit = (e) => {
-    
+    setShowEditor(false)
      let formData = new FormData()
     let message = "Updates created successfully"
     if(contentType !== "Editor") {
@@ -125,14 +126,15 @@ const Editupdates = () => {
       }
     }
     else {
+      console.log("myValue")
     var myEditor = document.querySelector('#snow-container')
     var html = myEditor.children[0].innerHTML;
     addDet(html)
       
-       let formData = new FormData();
+   
        formData.append("content", html);
        formData.append("status", Number(stats))
-
+       formData.append("content_type", 2)
     }
        formData.append("heading", heading)
        formData.append("publish_date", date);
@@ -164,6 +166,12 @@ const Editupdates = () => {
    const myLabel = (e) => {
   
     setStats(!stats)
+}
+const editorShow = (e) => {
+  setContentType(e.target.value)
+ if(e.target.value === "Editor"){
+  setShowEditor(true)
+ }
 }
     return(
         <Layout adminDashboard="adminDashboard" adminUserId={userId}>
@@ -243,7 +251,7 @@ const Editupdates = () => {
                  <label className="form-label">Type</label>
                       <select
                       multiple = {false}
-                      onChange = {(e) => setContentType(e.target.value)}
+                      onChange = {(e) => editorShow(e)}
                       className={classNames("form-control", {
                         "is-invalid": errors.p_content,
                       })}
@@ -252,9 +260,9 @@ const Editupdates = () => {
                       name="p_content"
                       >
                       <option value = "Editor">Editor</option>
-                      <option value = "Doc_upload">Document</option>
+                      <option value = "Doc_upload">Word Document</option>
                       <option value = "Pdf_upload">PDF</option>
-                      <option value = "Ppt_upload">PPT</option>
+                      {/* <option value = "Ppt_upload">PPT</option> */}
                           </select>
                  </div>
          </div>
@@ -292,7 +300,8 @@ const Editupdates = () => {
           
           <div className="col-md-12">
           <CustomQuillEditor 
-content={det} />
+content={det}
+showEditor={showEditor} />
               </div>
       </div> : " "
         }
