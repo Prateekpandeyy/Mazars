@@ -202,6 +202,14 @@ const CmsContent = () => {
              })
              history.push("/cms/cms")
          }
+         else if (res.data.code === 0){
+          setLoading(false)
+          Swal.fire({
+              title : "error",
+              html : `${res.data.message}`,
+              icon : "error"
+          })
+         }
       })
     
    }
@@ -295,7 +303,7 @@ const editorShow = (e) => {
                       <option value = "Editor">Editor</option>
                       <option value = "Doc_upload">Word Document</option>
                       <option value = "Pdf_upload">PDF</option>
-                      {/* <option value = "Ppt_upload">PPT</option> */}
+                      <option value = "Ppt_upload">PPT</option>
                           </select>
                  </div>
          </div>

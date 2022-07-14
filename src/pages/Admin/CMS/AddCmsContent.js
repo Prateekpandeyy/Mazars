@@ -261,7 +261,7 @@ const getEditValue= (e) => {
                       <option value = "Editor">Editor</option>
                       <option value = "Doc_upload">Word Document</option>
                       <option value = "Pdf_upload">PDF</option>
-                      {/* <option value = "Ppt_upload">PPT</option> */}
+                      <option value = "Ppt_upload">PPT</option>
                           </select>
                  </div>
          </div>

@@ -102,7 +102,7 @@ Update
  </div> : " "
 }
    {
-      i.content_type === "1" ?
+      i.content_type === "0" || i.content_type === "1" ?
       <div id="artContent">
       <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.6.347/build/pdf.worker.min.js">
     <Viewer fileUrl={`${baseUrl3}/${i.file}`}>
@@ -114,7 +114,20 @@ Update
  : ""
     }
         
-     
+        {
+       i.content_type === "3" ?
+       <div id="artContent">
+      <iframe
+        src={`https://view.officeapps.live.com/op/embed.aspx?src=${baseUrl3}/${i.file}`}
+        width="100%"
+        height="600px"
+        frameBorder="0"
+        title="slides"
+      ></iframe>
+  
+    </div>
+ : ""
+    }
 
     </ArticleWrapper>
     <a href={`${baseUrl3}/${i.file}`} target="_blank" 

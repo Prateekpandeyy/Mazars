@@ -22,6 +22,10 @@ import '@react-pdf-viewer/core/lib/styles/index.css';
 // import '@react-pdf-viewer/default-layout/lib/styles/index.css';
 // Worker
 import { Worker } from '@react-pdf-viewer/core'; // install this library
+import {
+  Presentation, Slide, Text,
+  Shape, Image, render
+} from "react-pptx";
 
 const MyContainer = styled(Box)({
     display : "flex", 
@@ -186,7 +190,7 @@ const Details = () => {
    
     </ArticleWrapper>
     {
-      i.content_type === "1" ?
+       i.content_type === "0" || i.content_type === "1" ?
       <div id="artContent">
       <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.6.347/build/pdf.worker.min.js">
     <Viewer fileUrl={`${baseUrl3}/${i.file}`}>
@@ -194,6 +198,20 @@ const Details = () => {
       </Worker>
     {/* <iframe src={`${baseUrl3}/${i.file}#toolbar=0`} width="100%" height="500px" /> */}
 
+    </div>
+ : ""
+    }
+     {
+       i.content_type === "3" ?
+       <div id="artContent">
+      <iframe
+        src={`https://view.officeapps.live.com/op/embed.aspx?src=${baseUrl3}/${i.file}`}
+        width="100%"
+        height="600px"
+        frameBorder="0"
+        title="slides"
+      ></iframe>
+  
     </div>
  : ""
     }

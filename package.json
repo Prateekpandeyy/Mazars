@@ -89,6 +89,7 @@
     "react-modal": "^3.14.3",
     "react-modal-video": "^1.2.8",
     "react-player": "^2.9.0",
+    "react-pptx": "^2.14.1",
     "react-quill": "^2.0.0-beta.4",
     "react-quill-with-table": "^1.3.3",
     "react-router-dom": "^5.2.0",
