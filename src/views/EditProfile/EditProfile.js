@@ -88,6 +88,7 @@ const EditProfile = () => {
             setData(res.data.result)
        setMobileNo(res.data.result.phone)
        setEmail(res.data.result.email)
+       setCountryName(res.data.result.country)
        setCountryCode(res.data.result.stdcode)
       //  setCountry(res.data.result.country)
       //  setState(res.data.result.state);
@@ -103,13 +104,27 @@ const EditProfile = () => {
         setDstate(res.data.result.state)
         setEstate(res.data.result.state)
        }
+       var arrayState = []
+       let sta = {}
        country.map((i) => {
         
         if(i.name === res.data.result.country){
           
           setMyCount(i.id)
           setCountryCode(i.phoneCode)
+          states.filter((data) => {
+            if (data.country_id == i.id) {
+              sta = {
+                "value" : data.id,
+                "label" : data.name
+              }
+              arrayState.push(sta)
+            }
+          });
         }
+       
+       
+        setState(arrayState)
       })
 
       states.map((i) => {

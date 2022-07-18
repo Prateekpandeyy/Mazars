@@ -291,7 +291,7 @@ console.log("invitet", invitedParticipant)
             <ModalBody>
            
               <h4>{CommonServices.capitalizeFirstLetter(inviteData.title)} </h4>
-            <h6><b>From </b>  {inviteData.startDate.split(" ")[0].split("-").reverse().join("-")} {inviteData.startDate.split(" ")[1]} <b>To </b>  {inviteData.endDate.split(" ")[0].split("-").reverse().join("-")} {inviteData.startDate.split(" ")[1]}</h6>
+              <h6><b>From </b>  {inviteData.startDate.split(" ")[0].split("-").reverse().join("-")} {inviteData.startDate.split(" ")[1]} <b>To </b>  {inviteData.endDate.split(" ")[0].split("-").reverse().join("-")} {inviteData.endDate.split(" ")[1]}</h6>
            
           {
             invitedParticipant && (

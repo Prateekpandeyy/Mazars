@@ -92,7 +92,7 @@ const Videogallery = () => {
   
   </Breadcrumbs>
 
-      <div style={{display: "flex", flexWrap: "wrap"}}>
+      <div style={{display: "flex", flexWrap: "wrap", height : "130px", overflow : "hidden"}}>
       {
                      
                      galleryData.map((i) => (
@@ -112,7 +112,7 @@ const Videogallery = () => {
                       <span  onClick = {(e) => playVideo2(i.name)}>
                        <AiOutlinePlaySquare style={{display: "flex", 
                        color: "red", width: "40px", height:"40px", position: "absolute",
-                       top: "20%", left: "50%" }} />
+                       top: "33%", left: "50%" }} />
                        </span>
                         </div>
                               
@@ -161,21 +161,22 @@ const Videogallery = () => {
           play === true ?
                 
           <div className="modalBox">
-          <div className="boxContainer">
+          <div className="boxContainer2">
           <div className="canBtn"  title="cancel">
-              <h4>Recording Player</h4>
+              <h4> Player</h4>
               <CloseIcon  onClick= {() => isPlay(false)} id="myBtn"/> </div>
          
 
-         <div className="my2">
+        
          <ReactPlayer
            url={videoId}
            controls={true}
            playing={true}
            width='100%'
-           height='100%'
+          
+         
           />
-             </div>
+           
           </div>
      
     </div> : ""

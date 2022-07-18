@@ -1,56 +1,74 @@
-.modalBox{
-    display : flex;
-    position : fixed;
-    top: 50%;
-    left : 50%;
-    transform : translate(-50%, -50%);
-    justify-content:  center;
-    align-items: center;
-   width: 100%;
-   height: auto;
-   flex-direction: column;
-   z-index: 99999;
-  
+.modalBox {
+  display: flex;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: auto;
+  flex-direction: column;
+  z-index: 99999;
+}
+.modalBox2 {
+  display: flex;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 200px;
+  flex-direction: column;
+  z-index: 99999;
+}
+.boxContainer {
+  display: flex;
+  display: flex;
+  width: 50vw;
+  height: auto;
+  border: 2px solid greenyellow;
+  flex-direction: column;
+  z-index: 99999;
+}
+.boxContainer2 {
+  display: flex;
+  display: flex;
+  width: 50vw;
 
+  border: 2px solid greenyellow;
+  flex-direction: column;
+  z-index: 99999;
+  overflow: hidden;
 }
-.boxContainer{
-   
-    display: flex;
-    display: flex;
-    width: 50vw;
-    height: auto;
-    border: 2px solid greenyellow;
-    flex-direction: column;
-    z-index: 99999;
+.canBtn {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+  cursor: pointer;
+  background-color: rgb(38, 45, 71);
+  z-index: 99999;
 }
-.canBtn{
-    display : flex;
-    width : 100%;
-    align-items: center;
-    justify-content: space-between;
-    padding: 20px;
-    cursor : pointer;
-    background-color: rgb(38, 45, 71);
-    z-index: 99999;
-   
+.canBtn h4 {
+  color: #fff;
 }
-.canBtn h4{
-    color: #fff;
-}
-.my2{
-    display: flex;
-    width: 100%;
-  
+.my2 {
+  display: flex;
+  width: 100%;
 }
 
-#myBtn{
-    color:red;
+#myBtn {
+  color: red;
 }
-#myBtn:hover{
-    padding: 10px;
-    background-color: red;
-    color: white !important;
-    font-weight: 900;
-    font-size: 40px;
-    border-radius: 50%;
+#myBtn:hover {
+  padding: 10px;
+  background-color: red;
+  color: white !important;
+  font-weight: 900;
+  font-size: 40px;
+  border-radius: 50%;
 }

@@ -90,7 +90,8 @@ const Direct = () => {
     <TableHead>
    <TableRow>
    <TableCell style= {{width : "50px"}}>S.No</TableCell>
-     <TableCell style= {{width : "150px"}}>Publishing Date</TableCell>
+     <TableCell style= {{width : "150px"}}>Date of publishing
+</TableCell>
      <TableCell style= {{width : "150px"}}>Subject</TableCell>
      <TableCell style={{width : "400px", margin: "0 10px"}}>Heading</TableCell>
      

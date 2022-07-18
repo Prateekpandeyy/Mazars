@@ -136,7 +136,8 @@ return(
 <TableHead>
 <TableRow>
 <TableCell style= {{width : "50px"}}>S.No</TableCell>
-<TableCell style={{width : "150px"}}>Publish Date</TableCell>
+<TableCell style={{width : "150px"}}>Date of publishing
+</TableCell>
 <TableCell>Heading</TableCell>
 </TableRow>
 </TableHead>

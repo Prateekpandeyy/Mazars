@@ -383,7 +383,9 @@ else{
     setCity([])
     setDstate2("")
     setCityValue2("")
-   setEstate(input)
+    if(input.length < 101){
+    setEstate(input)
+   }
   }
 
   const getCityValu2 = (input, reason) => {
@@ -395,7 +397,9 @@ else{
       return;
     }
   
-   setCityValue2(input)
+    if(input.length < 101){
+      setCityValue2(input)
+     }
   }
 
 
@@ -486,6 +490,7 @@ else{
                     localStorage.setItem("custEmail", JSON.stringify(response.data.name));
                localStorage.setItem("clientName", JSON.stringify(response.data.displayname))
                     localStorage.setItem("clientToken", response.data.token)
+                    localStorage.setItem("clientLoginId", JSON.stringify(response.data.loginuid))
             props.history.push("/customer/select-category");
           } else if (response.data.code === 0) {
             setLoading(false)
@@ -915,6 +920,7 @@ const getUser = (e) => {
                       <label className="form-label">Password<span className="declined">*</span></label>
                       <input
                         type={password ? "text" : "password"}
+                     
                         onCopy={(e) => {
                           e.preventDefault();
                           return false
@@ -937,7 +943,7 @@ const getUser = (e) => {
                           },
                         })}
 
-                        autocomplete="off"
+                        autocomplete="chrome-off"
                       />
                       <i
                         className={`fa ${password ? "fa-eye-slash" : "fa-eye"} password-icon`}

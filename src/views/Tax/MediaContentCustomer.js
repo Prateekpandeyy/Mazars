@@ -3,7 +3,7 @@ import Header from "../../components/Header/Header";
 import { styled , makeStyles} from "@material-ui/styles";
 import { Link } from 'react-router-dom';
 import { baseUrl } from '../../config/config';
-import {Typography, Breadcrumbs, Table, TableContainer, Box,  
+import {Typography, Breadcrumbs, Table, TableHead,  TableContainer, Box,  
    TablePagination, TableBody, TableRow, TableCell} from "@material-ui/core";
 import axios from 'axios';
 import { Markup } from 'interweave';
@@ -32,10 +32,26 @@ const MediaContentCustomer = () => {
         getMediaData()
     }, [])
     const getMediaData = () => {
+      let dataObj = {}
+      let dataList = []
         axios.get(`${baseUrl}/customers/getgalleryupdated`)
         .then((res) => {
-            console.log("res", res.data.result)
-            setData(res.data.result)
+            // console.log("res", res.data.result)
+            // setData(res.data.result)
+            res.data.result.map((i, e) => {
+              dataObj = {
+                sn : ++e,
+                content : i.content,
+                file : i.file,
+                heading : i.heading,
+                id : i.id,
+                publish_date : i.publish_date,
+                status : i.status,
+                type : i.type
+              }
+              dataList.push(dataObj)
+                  })
+                  setData(dataList)
         })
     }
     const onChangePage = (event, nextPage) => {
@@ -68,7 +84,7 @@ const MediaContentCustomer = () => {
         
        
         </Breadcrumbs>
-          <Table>
+          {/* <Table>
             <TableBody>
             {
         data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((i, e) => (
@@ -88,8 +104,58 @@ const MediaContentCustomer = () => {
                ))
               }
             </TableBody>
-          </Table>
-          {
+          </Table> */}
+       
+    <Table>
+    <TableHead>
+   <TableRow>
+     <TableCell style= {{width : "50px"}}>S.No</TableCell>
+     <TableCell style={{width : "150px"}}>Date of publishing
+</TableCell>
+     <TableCell>Heading </TableCell>
+   </TableRow>
+   </TableHead>
+      <TableBody>
+      {
+ data && data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((i, e) => (
+ 
+ <>
+
+  
+    <TableRow>
+      <TableCell style={{padding: "8px 16px"}} className="tableCellStyle">
+     
+        {i.sn}
+      </TableCell>
+      <TableCell>
+        {i.publish_date.split(" ")[0].split("-").reverse().join("-")}
+      </TableCell>
+      <TableCell>
+     <span onClick={(p) => getData(i)} className="primary" style={{cursor  : "pointer"}}>
+     {i.heading}
+     </span>
+ 
+      </TableCell>
+    </TableRow>
+ 
+ </>
+         ))
+        }
+      </TableBody>
+      {
+                data.length > 10 ?
+                <TablePagination 
+                rowsPerPageOptions = {[5, 10, 15, 20, 25]}
+                count = {data.length}
+                rowsPerPage = {rowsPerPage}
+                page = {page}
+                onChangePage = {onChangePage}
+                onChangeRowsPerPage = {onChangeRowsPerPage} />
+              : ""    
+            }
+    </Table>
+  
+          {/* {
            data.length > 10 ?
            <TablePagination 
            rowsPerPageOptions = {[5, 10, 15, 20, 25]}
@@ -99,7 +165,7 @@ const MediaContentCustomer = () => {
            onChangePage = {onChangePage}
            onChangeRowsPerPage = {onChangeRowsPerPage}
             /> : ""
-         }
+         } */}
           </TableContainer>
               </div>
               </div> : ""
