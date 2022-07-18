@@ -27,9 +27,10 @@ function ChangePassword(props) {
   const [display, setDisplay] = useState(false);
   const [time, setTime] = useState('')
   const [load, setLoad] = useState(false);
-  const [email, setEmail] = useState('');
+  
   const [user, setUser] = useState("")
   const token = window.localStorage.getItem("clientToken")
+  const email = JSON.parse(window.localStorage.getItem("custEmail"))
 const clientLoginId = JSON.parse(localStorage.getItem("clientLoginId"))
   useEffect(() => {
     getTime()
@@ -69,19 +70,18 @@ const clientLoginId = JSON.parse(localStorage.getItem("clientLoginId"))
    
     setLoading(true)
 
-    setEmail(value.p_email)
 
     let formData = new FormData();
     formData.append("id", JSON.parse(userId));
-    formData.append("email", value.p_email);
+    formData.append("email", email);
     formData.append("password", value.p_password);
     formData.append("rpassword", value.p_confirm_password);
     formData.append("otp", value.p_otp);
 
-   formData.append("user_id", value.p_user);
+   formData.append("user_id", clientLoginId);
     if (display) {
       let formData = new FormData();
-      formData.append("email", value.p_email);
+      formData.append("email", email);
       formData.append("uid", JSON.parse(userId));
       formData.append("user_id", clientLoginId);
       axios({
@@ -181,6 +181,8 @@ const clientLoginId = JSON.parse(localStorage.getItem("clientLoginId"))
                     className={classNames("form-control", {
                       "is-invalid": errors.p_email,
                     })}
+                    disabled = {true}
+                    value = {email}
                     name="p_email"
                     placeholder="Enter email id"
                     ref={register({
