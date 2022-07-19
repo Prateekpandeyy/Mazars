@@ -23,12 +23,34 @@ const Direct = () => {
     const [rowsPerPage, setRowsPerPage] = useState(10)
     const [data, setData] = useState([])
     const [count2, setCount] = useState(0)
+    const [dataCount, setDataCount] = useState(0)
     const loadpage = Number(localStorage.getItem("prevPage"))
     let wirtten = "-"
     const onChangePage = (event, nextPage) => {
         setPage(nextPage)
-        console.log(nextPage)
         localStorage.setItem("prevPage", nextPage)
+        axios.get(`${baseUrl}/customers/getarticles?page=${++nextPage}`)
+        .then((res) => {
+          setCount(res.data.result)
+          let dataObj = {}
+          let dataList = []
+          setDataCount(res.data.total)
+          res.data.result.map((i, e) => {
+            dataObj = {
+              sn : ++e,
+              content : i.content,
+              file : i.file,
+              heading : i.heading,
+              id : i.id,
+              publish_date : i.publish_date,
+              status : i.status,
+              type : i.type,
+              writer : i.writer
+            }
+            dataList.push(dataObj)
+                })
+                setData(dataList)
+        })
     }
     const onChangeRowsPerPage = (e) => {
         setRowsPerPage(e.target.value)
@@ -40,10 +62,7 @@ const Direct = () => {
     const getData =() => {
         axios.get(`${baseUrl}/customers/getarticles`)
         .then((res) => {
-          console.log("response", res)
-
-         
-          console.log("resDaata", res.data.result.length)
+          setDataCount(res.data.total)
           setCount(res.data.result)
           let dataObj = {}
           let dataList = []
@@ -101,11 +120,11 @@ const Direct = () => {
 
             <TableBody>
                {
-                   data && data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((i, e) => (
+                   data.map((i, e) => (
                     <TableRow>
                          <TableCell style={{padding: "8px 16px"}} className="tableCellStyle">
      
-     {i.sn}
+     {page * 10 + ++e}
    </TableCell>
                         <TableCell style= {{width : "150px"}}>
                             {i.publish_date.split("-").reverse().join("-")}
@@ -134,10 +153,10 @@ const Direct = () => {
         </Table>
     
             {
-                data.length > 10 ?
+                dataCount > 9 ?
                 <TablePagination 
-                rowsPerPageOptions = {[5, 10, 15, 20, 25]}
-                count = {data.length}
+                rowsPerPageOptions = {[10]}
+                count = {dataCount}
                 rowsPerPage = {rowsPerPage}
                 page = {page}
                 onChangePage = {onChangePage}

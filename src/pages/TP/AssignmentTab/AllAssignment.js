@@ -650,7 +650,7 @@ if(status.length > 0){
                  
                   <div className="form-group mx-sm-1  mb-2">
                     <Select
-                      mode="multiple"
+                      mode="single"
                       style={{ width: 210 }}
                       placeholder="Select stages"
                       defaultValue={[]}
