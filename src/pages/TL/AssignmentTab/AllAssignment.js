@@ -486,7 +486,7 @@ else{
     
 
   const onSubmit = (data) => {
-  if(hide == 1 || hide == 2){
+ 
     if(status.length > 0){
       axios
       .get(
@@ -508,11 +508,7 @@ else{
         }
       });
 
-    }
-    else{
-      setError(true)
-      return false;
-    }
+   
   }
   else{
     axios
@@ -655,12 +651,10 @@ else{
                 </select>
               </div>
 
-              {
-                hide == "1" || hide == "2" ?
                  
                   <div className="form-group mx-sm-1  mb-2">
                     <Select
-                      mode="multiple"
+                      mode="single"
                       style={{ width: 210 }}
                       placeholder="Select stages"
                       defaultValue={[]}
@@ -693,9 +687,7 @@ else{
                         <div className="demo-option-label-item">Awaiting Completion</div>
                       </Option>
                     </Select>
-                  </div> : ""
-
-              }
+                  </div> 
 
               <div class="form-group mx-sm-1  mb-2">
                 <label className="form-select form-control">Total Records : {records}</label>
