@@ -123,6 +123,9 @@ const getFeedback2 = () => {
          }
        }
       }
+      else if (res.data.code === 102){
+        history.push("/admin/login")
+              }
     });
   }
   if(window.location.hash.split("/").slice(-1) == "recording" || window.location.hash.split("/").slice(-1) == "schedule"){
@@ -149,6 +152,9 @@ const getFeedbacktl = () => {
      }
       setLogo("/#/teamleader/dashboard")
     }
+    else if (res.data.code === 102){
+      history.push("/teamleader/login")
+            }
   });
  }
  if(window.location.hash.split("/").slice(-1) == "recording" || window.location.hash.split("/").slice(-1) == "schedule"){
@@ -174,6 +180,9 @@ const getFeedbacktp = () => {
       if(res.data.result != undefined){
          setfeedbackNumbertp(res.data.result[0].total)
         setLogo("/#/taxprofessional/dashboard")
+      }
+      else if (res.data.code === 102){
+history.push("/taxprofessional/login")
       }
     });
   }

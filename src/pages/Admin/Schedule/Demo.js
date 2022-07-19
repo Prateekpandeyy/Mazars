@@ -232,7 +232,7 @@ function Demo() {
 
   //handleJoin
   const handleJoin = (data) => {
-    console.log("dtat22", data)
+    
 // //  console.log("data", data)
 // // console.log(data.startDate)
 //   var dt = new Date(data.startDate)

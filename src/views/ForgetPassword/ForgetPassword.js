@@ -38,7 +38,9 @@ function ForgetPassword(props) {
   });
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState("")
-
+useEffect(() => {
+  valueHandlerUser()
+} , [])
   const onSubmit = (value) => {
    
     setLoading(true)
@@ -82,6 +84,16 @@ function ForgetPassword(props) {
       return item
     }
   }
+  const valueHandlerUser = () => {
+    console.log("props", props)
+    var item = props.location.userId
+    if (item == "undefined") {
+      
+    } else {
+   
+     setUser(item)
+    }
+  }
   const getUser = (e) => {
     var regEx = /^[0-9a-zA-Z]+$/;
     if(e.target.value.match(regEx)){
@@ -120,6 +132,7 @@ function ForgetPassword(props) {
   className={classNames("form-control", {
     "is-invalid": errors.p_user 
   })}
+ 
 />
 
 </div>

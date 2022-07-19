@@ -357,13 +357,7 @@ const EditProfile = () => {
     }
   }
   const checkSpecial = (e) => {
-    var regex = new RegExp("^[a-zA-Z0-9.,/ $@()]+$");
-  if(regex.test(e.target.value)){
-    setName(e.target.value)
-  }
-  else{
-    return setName("")
-  }
+    setName(e.target.value.replace(/[^\w\s]/gi, ""))
   }
     return (
         <Layout custDashboard="custDashboard" custUserId={userId}>

@@ -116,6 +116,7 @@ url={videoId}
 controls={true}
 playing={true}
 width='100%'
+style={{backgroundColor : "#fff"}}
 height='100%'
 />
 </div>

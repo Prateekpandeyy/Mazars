@@ -379,6 +379,7 @@ const getUser = (e) => {
                         to={{
                           pathname: "/customer/forget-password",
                           email: `${email}`,
+                          userId : `${user}`
                         }}
                       >
                         Forgot Password

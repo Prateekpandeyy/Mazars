@@ -79,12 +79,8 @@ const [userAvailable, setUserAvailable] = useState({
   flag : "",
   message : ""
 })
-  //Css
-  const CountryNumStyle = {
-    "display": "flex",
-    "width": "76px",
-    "textAlign": "center"
-  }
+const [phoneLength, setPhoneLength] = useState(10)
+ 
   // cusSub
   const cusSub = {
     display: "flex",
@@ -165,8 +161,10 @@ useEffect(() => {
     // setInvalid("")
     if (key == 101) {
       setCountryId(key)
+      setPhoneLength(10)
     }
     else {
+      setPhoneLength(20)
       setCountryId("")
     }
 
@@ -312,13 +310,14 @@ useEffect(() => {
 
 
 const checkSpecial = (e) => {
-  var regex = new RegExp("^[a-zA-Z0-9.,/ $@()]+$");
-if(regex.test(e.target.value)){
-  setName(e.target.value)
-}
-else{
-  return setName("")
-}
+  setName(e.target.value.replace(/[^\w\s]/gi, ""))
+//   var regex = new RegExp("/[^\w\s]/gi");
+// if(!regex.test(e.target.value)){
+//   setName(e.target.value)
+// }
+// else{
+//   return setName("")
+// }
 }
   //zip oncahnge
   const zipValue = (e) => {
@@ -861,7 +860,7 @@ const getUser = (e) => {
                           })}
                           name="p_phone"
                           value={phone}
-
+                          maxLength = {phoneLength}
                           ref={register({ required: true })}
                           placeholder="Mobile number"
                           onChange={(e) => phoneHandler(e)}
@@ -912,7 +911,7 @@ const getUser = (e) => {
                        maxLength = "24"
                       />
                     </div>
-                    <p className="declined">{zipError}</p>
+                  
                   </div>
 
                   <div class="col-md-6">
