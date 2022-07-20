@@ -7,7 +7,7 @@ import CommonServices from "./../../../common/common";
 const Table = ({ data, rowsPerPage, total, setData }) => {
   const [page, setPage] = useState(1);
   const { slice, range } = useTable(data, page, rowsPerPage, total, setData);
-  console.log("slice", rowsPerPage, range, )
+  console.log("slice", slice )
   return (
     <>
       <table className={styles.table}>
@@ -22,7 +22,7 @@ const Table = ({ data, rowsPerPage, total, setData }) => {
         <tbody>
           {slice.map((el, e) => (
             <tr className={styles.tableRowItems} key={e}>
-                   <td className={styles.tableCell}>{++e}</td>
+                   <td className={styles.tableCell}>{page * rowsPerPage + ++e - 10}</td>
               <td className={styles.tableCell}>   {el.publish_date.split("-").reverse().join("-")}</td>
               <td className={styles.tableCell}> {CommonServices.capitalizeFirstLetter(el.type)}</td>
               <td className={styles.tableCell}>
@@ -39,7 +39,12 @@ const Table = ({ data, rowsPerPage, total, setData }) => {
           ))}
         </tbody>
       </table>
-      <TableFooter setData = {setData} range={range} slice={slice} setPage={setPage} page={page} />
+      <TableFooter 
+       setData = {setData}
+       range={range} 
+       slice={slice} 
+       setPage={setPage}
+       page={page} />
     </>
   );
 };

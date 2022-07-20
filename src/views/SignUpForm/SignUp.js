@@ -942,7 +942,7 @@ const getUser = (e) => {
                           },
                         })}
 
-                        autocomplete="chrome-off"
+                        autoComplete="new-password"
                       />
                       <i
                         className={`fa ${password ? "fa-eye-slash" : "fa-eye"} password-icon`}
