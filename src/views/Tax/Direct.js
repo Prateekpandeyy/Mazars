@@ -5,12 +5,13 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import {baseUrl} from '../../config/config';
 import Footer from '../../components/Footer/Footer';
-import { Button, Box, Typography, Table, TableContainer, TableFooter,
+import { Button, Box, Typography, TableContainer, TableFooter,
 TableHead, TablePagination, TableBody, TableRow, TableCell } from "@material-ui/core";
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import classesCustom from './design.module.css';
 import { OuterloginContainer } from '../../components/Common/OuterloginContainer';
 import CommonServices from "../../common/common";
+import Table from "./Table/Table";
 const MyContainer = styled(Box)({
     display: "flex",
   padding : "0 15px",
@@ -97,6 +98,17 @@ const Direct = () => {
         <div className={classesCustom.articleContent}>
      <div className={classesCustom.articlesDetails}>
 
+
+
+
+
+
+
+
+
+
+
+
           <Breadcrumbs separator=">" maxItems={3} aria-label="breadcrumb">
           <Link underline="hover" color="inherit" to="/customer/direct">
   Articles
@@ -104,7 +116,9 @@ const Direct = () => {
   
   
 </Breadcrumbs>
-    <TableContainer>
+<Table data={data} setData = {setData} total = {dataCount} rowsPerPage={10} />
+
+    {/* <TableContainer>
         <Table>
     <TableHead>
    <TableRow>
@@ -194,45 +208,8 @@ const Direct = () => {
             }
         </Table>
     
-            {/* {
-                dataCount > 9 ?
-                <TablePagination 
-                rowsPerPageOptions = {[10]}
-                count = {dataCount}
-                rowsPerPage = {rowsPerPage}
-                page = {page}
-                showLastButton = {true}
-                showFirstButton = {true}
-                onChangePage = {onChangePage}
-                onChangeRowsPerPage = {onChangeRowsPerPage} 
-                labelRowsPerPage={<span>Rows:</span>}
-                labelDisplayedRows={({ page }) => {
-                  return `Page: ${page}`;
-                }}
-                backIconButtonProps={{
-                  color: "secondary"
-                }}
-                nextIconButtonProps={{ color: "secondary" }}
-                SelectProps={{
-                  inputProps: {
-                    "aria-label": "page number"
-                  }
-                }}
-                sx={{
-                  ".MuiTablePagination-toolbar": {
-                    backgroundColor: "rgba(100,100,100,0.5)"
-                  },
-                  ".MuiTablePagination-selectLabel, .MuiTablePagination-input": {
-                    fontWeight: "bold",
-                    color: "blue"
-                  }
-                }}
-                showFirstButton={true}
-                showLastButton={true}/>
-              : ""    
-            }
-       */}
-    </TableContainer>
+           
+    </TableContainer> */}
           </div>
       
         </div>
