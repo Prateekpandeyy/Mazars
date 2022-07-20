@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import {baseUrl} from '../../config/config';
 import Footer from '../../components/Footer/Footer';
-import { Button, Box, Typography, Table, TableContainer, 
+import { Button, Box, Typography, Table, TableContainer, TableFooter,
 TableHead, TablePagination, TableBody, TableRow, TableCell } from "@material-ui/core";
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import classesCustom from './design.module.css';
@@ -150,20 +150,88 @@ const Direct = () => {
                }
                
             </TableBody>
+            {
+              dataCount > 9 ?
+              <TableFooter>
+              <TableRow>
+                <TablePagination
+                  rowsPerPageOptions={[10]}
+                 
+                  count = {dataCount}
+                  rowsPerPage = {rowsPerPage}
+                  page = {page}
+                  SelectProps={{
+                    inputProps: {
+                      "aria-label": "rows per page"
+                    }
+                  }}
+                  onChangePage = {onChangePage}
+                  onChangeRowsPerPage = {onChangeRowsPerPage} 
+                  //ActionsComponent={TablePaginationActions}
+                  //component={Box}
+                  labelDisplayedRows={({ page }) => {
+                    return `Page: ${++page}`;
+                  }}
+                  backIconButtonProps={{
+                    color: "secondary"
+                  }}
+                  nextIconButtonProps={{ color: "secondary" }}
+                  showFirstButton={true}
+                  showLastButton={true}
+                  labelRowsPerPage={<span>Rows:</span>}
+                  sx={{
+                    ".MuiTablePagination-toolbar": {
+                      backgroundColor: "rgba(100,100,100,0.5)"
+                    },
+                    ".MuiTablePagination-selectLabel, .MuiTablePagination-input": {
+                      fontWeight: "bold",
+                      color: "blue"
+                    }
+                  }}
+                />
+              </TableRow>
+            </TableFooter> : ""
+            }
         </Table>
     
-            {
+            {/* {
                 dataCount > 9 ?
                 <TablePagination 
                 rowsPerPageOptions = {[10]}
                 count = {dataCount}
                 rowsPerPage = {rowsPerPage}
                 page = {page}
+                showLastButton = {true}
+                showFirstButton = {true}
                 onChangePage = {onChangePage}
-                onChangeRowsPerPage = {onChangeRowsPerPage} />
+                onChangeRowsPerPage = {onChangeRowsPerPage} 
+                labelRowsPerPage={<span>Rows:</span>}
+                labelDisplayedRows={({ page }) => {
+                  return `Page: ${page}`;
+                }}
+                backIconButtonProps={{
+                  color: "secondary"
+                }}
+                nextIconButtonProps={{ color: "secondary" }}
+                SelectProps={{
+                  inputProps: {
+                    "aria-label": "page number"
+                  }
+                }}
+                sx={{
+                  ".MuiTablePagination-toolbar": {
+                    backgroundColor: "rgba(100,100,100,0.5)"
+                  },
+                  ".MuiTablePagination-selectLabel, .MuiTablePagination-input": {
+                    fontWeight: "bold",
+                    color: "blue"
+                  }
+                }}
+                showFirstButton={true}
+                showLastButton={true}/>
               : ""    
             }
-      
+       */}
     </TableContainer>
           </div>
       

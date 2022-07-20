@@ -139,14 +139,7 @@ const CmsContent = () => {
       }
       
     }
-    else {
-      Swal.fire({
-        title : "error",
-        html : "Please upload file",
-        icon : "error"
-      })
-      return false
-    }
+   
   }
   else {
     var myEditor = document.querySelector('#snow-container')

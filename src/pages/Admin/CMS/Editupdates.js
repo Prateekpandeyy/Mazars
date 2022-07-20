@@ -116,14 +116,7 @@ const Editupdates = () => {
         }
         
       }
-      else {
-        Swal.fire({
-          title : "error",
-          html : "Please upload file",
-          icon : "error"
-        })
-        return false
-      }
+     
     }
     else {
       console.log("myValue")

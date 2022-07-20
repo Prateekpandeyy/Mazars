@@ -651,43 +651,46 @@ else{
                 </select>
               </div>
 
-                 
-                  <div className="form-group mx-sm-1  mb-2">
-                    <Select
-                      mode="single"
-                      style={{ width: 210 }}
-                      placeholder="Select stages"
-                      defaultValue={[]}
-                      onChange={assingmentStatus}
-                      value={status}
-                      allowClear
-                      className={error ? "customError" : ""}
-                    >
-                      <Option value="Client_Discussion" label="Compilance">
-                        <div className="demo-option-label-item">
-                          Client Discussion
-                        </div>
-                      </Option>
-                      <Option value="Draft_Report" label="Compilance">
-                        <div className="demo-option-label-item">
-                          Draft reports
-                        </div>
-                      </Option>
-                      <Option value="Final_Discussion" label="Compilance">
-                        <div className="demo-option-label-item">
-                          Final Discussion
-                        </div>
-                      </Option>
-                      <Option value="Delivery_of_report" label="Compilance">
-                        <div className="demo-option-label-item">
-                          Delivery of Final Reports
-                        </div>
-                      </Option>
-                      <Option value="Completed" label="Compilance">
-                        <div className="demo-option-label-item">Awaiting Completion</div>
-                      </Option>
-                    </Select>
-                  </div> 
+{
+    hide !== "3" ?
+      
+    <div className="form-group mx-sm-1  mb-2">
+    <Select
+      mode="single"
+      style={{ width: 210 }}
+      placeholder="Select stages"
+      defaultValue={[]}
+      onChange={assingmentStatus}
+      value={status}
+      allowClear
+      className={error ? "customError" : ""}
+    >
+      <Option value="Client_Discussion" label="Compilance">
+        <div className="demo-option-label-item">
+          Client Discussion
+        </div>
+      </Option>
+      <Option value="Draft_Report" label="Compilance">
+        <div className="demo-option-label-item">
+          Draft reports
+        </div>
+      </Option>
+      <Option value="Final_Discussion" label="Compilance">
+        <div className="demo-option-label-item">
+          Final Discussion
+        </div>
+      </Option>
+      <Option value="Delivery_of_report" label="Compilance">
+        <div className="demo-option-label-item">
+          Delivery of Final Reports
+        </div>
+      </Option>
+      <Option value="Completed" label="Compilance">
+        <div className="demo-option-label-item">Awaiting Completion</div>
+      </Option>
+    </Select>
+  </div> : " "
+}               
 
               <div class="form-group mx-sm-1  mb-2">
                 <label className="form-select form-control">Total Records : {records}</label>
