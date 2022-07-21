@@ -95,6 +95,12 @@ function Customer() {
      
     },
     {
+      dataField: "user_id",
+      text: "User Id",
+      sort: true,
+     
+    },
+    {
         dataField: "email",
         text: "Email",
         sort: true,
@@ -131,7 +137,18 @@ function Customer() {
       sort: true,
      
     },
-   
+    {
+      dataField: "gstin_no",
+      text: "GSTIN",
+      sort: true,
+     
+    },
+    {
+      dataField: "secondary_email",
+      text: "Secondary Email",
+      sort: true,
+     
+    },
     {
       dataField: "created",
       text: "Date of Registration",

@@ -62,7 +62,7 @@ const Media = () => {
   
   </Breadcrumbs>
 
-      <div style={{display: "flex", flexWrap: "wrap"}}>
+      <div className={classes.articlesDetailsgallery}>
       {
                      
                      galleryData.map((i) => (

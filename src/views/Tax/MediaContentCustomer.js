@@ -75,7 +75,7 @@ const MediaContentCustomer = () => {
            description === false ?
            <div className={classesCustom.articleContent}>
      <div className={classesCustom.articlesDetails}>
-              <TableContainer>
+            
              <Breadcrumbs separator=">" maxItems={3} aria-label="breadcrumb">
              <Link underline="hover" color="inherit" to="/customer/media">
   Media Gallery
@@ -84,28 +84,7 @@ const MediaContentCustomer = () => {
         
        
         </Breadcrumbs>
-          {/* <Table>
-            <TableBody>
-            {
-        data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((i, e) => (
-              <TableRow key={i.id}>
-               
-               <TableCell key={i.id} className="tableCellStyle" style={{cursor: "pointer"}} onClick={(p) => getData(i)}>
-               <span>
-         <span style={{color: "rgb(61, 71, 117"}}>
-           {`${e + 1} .`}
-           </span> <span className="tabHover updatesLink">
-           {` ${i.heading} -    ${i.publish_date.split(" ")[0].split("-").reverse().join("-")}`}
-      </span>
-  </span>
-  </TableCell>
-       
-              </TableRow>
-               ))
-              }
-            </TableBody>
-          </Table> */}
-       
+           <div className={classesCustom.articlesDetails}>
     <Table>
     <TableHead>
    <TableRow>
@@ -154,19 +133,8 @@ const MediaContentCustomer = () => {
               : ""    
             }
     </Table>
-  
-          {/* {
-           data.length > 10 ?
-           <TablePagination 
-           rowsPerPageOptions = {[5, 10, 15, 20, 25]}
-           count = {data.length}
-           rowsPerPage = {rowsPerPage}
-           page = {page}
-           onChangePage = {onChangePage}
-           onChangeRowsPerPage = {onChangeRowsPerPage}
-            /> : ""
-         } */}
-          </TableContainer>
+  </div>
+                 
               </div>
               </div> : ""
        }

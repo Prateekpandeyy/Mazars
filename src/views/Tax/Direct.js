@@ -116,7 +116,9 @@ const Direct = () => {
   
   
 </Breadcrumbs>
+<div className={classesCustom.articlesDetails}>
 <Table data={data} setData = {setData} total = {dataCount} rowsPerPage={10} />
+</div>
 
     {/* <TableContainer>
         <Table>

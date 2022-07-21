@@ -82,10 +82,10 @@ const GalleryVideo = () => {
    
   
         <div className={classes.articleContent}>
-      
+        <div className={classes.articlesDetails}>
      
-            <span style={{display: "flex", margin : "10px 0px", width: "100%", justifyContent: "space-between"}}>
-            <Breadcrumbs separator=">" maxItems={3} aria-label="breadcrumb">
+         <>
+         <Breadcrumbs separator=">" maxItems={3} aria-label="breadcrumb">
   
   <Link underline="hover" color="inherit" to = {`/customer/media`}>
  Media Gallery
@@ -103,23 +103,25 @@ const GalleryVideo = () => {
   <Typography>{title}</Typography>
  
 </Breadcrumbs>
-<button
-                className="autoWidthBtn" 
+{/* <button
+                className="customBtn" 
                 onClick={() => history.goBack()}
               >
             
                 Go Back
-              </button>
-              </span>
-       
-            
+              </button> */}
+         </>
+         <div className={classes.articleContent}>
+        <div className={classes.articlesDetails}>  
         
             {images.length > 0 ? 
      <ImageGallery items={images} 
      
      additionalClass = {classes.myVideo} /> : "" }
         </div>
-      
+      </div>
+      </div>
+      </div>
        </MyContainer>
       
        </>

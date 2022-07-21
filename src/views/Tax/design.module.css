@@ -13,7 +13,7 @@
   flex-direction: column;
   width: 100%;
   border-radius: 10px;
-  min-height: 400px;
+  min-height: 100vh;
   padding: 20px;
   overflow: auto;
   margin: 10px 0;
@@ -21,10 +21,10 @@
 }
 .articlesDetailsgallery {
   display: flex;
-  flex-direction: column;
+
   width: 100%;
   border-radius: 10px;
-  min-height: 400px;
+  min-height: 100vh;
   padding: 20px;
   overflow: auto;
   margin: 10px 0;

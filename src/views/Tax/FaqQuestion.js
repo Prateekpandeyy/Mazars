@@ -78,7 +78,7 @@ else{
   
  </Breadcrumbs>
  
-        
+ <div className={classes.articleContent}>
             
           {list && list.map((i) => (
                        <>
@@ -107,7 +107,7 @@ else{
                
           ))}
      
-      
+      </div>
    
              </div>
          
