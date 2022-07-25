@@ -5,13 +5,13 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import {baseUrl} from '../../config/config';
 import Footer from '../../components/Footer/Footer';
-import { Button, Box, Typography, TableContainer, TableFooter,
+import { Button, Box, Table,  Typography, TableContainer, TableFooter,
 TableHead, TablePagination, TableBody, TableRow, TableCell } from "@material-ui/core";
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import classesCustom from './design.module.css';
 import { OuterloginContainer } from '../../components/Common/OuterloginContainer';
 import CommonServices from "../../common/common";
-import Table from "./Table/Table";
+
 const MyContainer = styled(Box)({
     display: "flex",
   padding : "0 15px",
@@ -116,11 +116,11 @@ const Direct = () => {
   
   
 </Breadcrumbs>
-<div className={classesCustom.articlesDetails}>
+{/* <div className={classesCustom.articlesDetails}>
 <Table data={data} setData = {setData} total = {dataCount} rowsPerPage={10} />
-</div>
+</div> */}
 
-    {/* <TableContainer>
+    <TableContainer>
         <Table>
     <TableHead>
    <TableRow>
@@ -136,7 +136,7 @@ const Direct = () => {
 
             <TableBody>
                {
-                   data.map((i, e) => (
+                  data && data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((i, e) => (
                     <TableRow>
                          <TableCell style={{padding: "8px 16px"}} className="tableCellStyle">
      
@@ -167,6 +167,17 @@ const Direct = () => {
                
             </TableBody>
             {
+           data.length > 10 ?
+           <TablePagination 
+           rowsPerPageOptions = {[5, 10, 15, 20, 25]}
+           count = {data.length}
+           rowsPerPage = {rowsPerPage}
+           page = {page}
+           onChangePage = {onChangePage}
+           onChangeRowsPerPage = {onChangeRowsPerPage} />
+         : ""    
+       }
+            {/* {
               dataCount > 9 ?
               <TableFooter>
               <TableRow>
@@ -174,7 +185,7 @@ const Direct = () => {
                   rowsPerPageOptions={[10]}
                  
                   count = {dataCount}
-                  rowsPerPage = {rowsPerPage}
+                  rowsPerPage = {10}
                   page = {page}
                   SelectProps={{
                     inputProps: {
@@ -207,11 +218,11 @@ const Direct = () => {
                 />
               </TableRow>
             </TableFooter> : ""
-            }
+            } */}
         </Table>
     
            
-    </TableContainer> */}
+    </TableContainer>
           </div>
       
         </div>

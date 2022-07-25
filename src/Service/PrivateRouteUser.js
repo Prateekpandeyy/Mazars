@@ -12,15 +12,13 @@ const PrivateRouteUser = ({ component: Component, ...rest }) => {
 var previousLoginTime = window.localStorage.getItem("loginTime")
 var nextLogin = Number(previousLoginTime) + Number(600000)
 var currentTime = Date.now()
-console.log("previousIme",  nextLogin > currentTime)
-
-        if (token) {
+   if (token) {
   
           return <Component {...props} />;
         } else {
           return (
             <>
-              <Redirect to={"/"} />
+              <Component {...props} />
             </>
           )
         }

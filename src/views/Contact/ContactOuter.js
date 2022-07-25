@@ -24,7 +24,7 @@ const ContactOuter = () => {
                  <Col md="12">
                    
                    
-                 <h4>106-107, Mercantile House</h4>
+                 <h4>211, Mercantile House, 15</h4>
            <h4>Kasturba Gandhi Marg, Connaught Place</h4>
        
            <h4>New Delhi-110001, India</h4>
@@ -34,7 +34,7 @@ const ContactOuter = () => {
            Email : <a href="mailto: support@masindia.live">support@masindia.live</a>
            </div>
        <div>
-       Tel:<a href="tel:+496170961709"> +91 11-43684444</a>
+       Tel:<a href="tel:+91 11-43684444"> +91-11-43684444</a>
        </div>
                    </Col>
                   

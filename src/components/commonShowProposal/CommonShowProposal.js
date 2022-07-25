@@ -111,7 +111,7 @@ useEffect(() => {
 
   return (
     
-      <Modal isOpen={viewProposalModal} toggle={showProposalModal2} size="lg" scrollable={true} style={{ height: "100%" }}>
+      <Modal isOpen={viewProposalModal} toggle={showProposalModal2} size="lg" scrollable={true} style={{ height: "100%", zIndex : 99999 }}>
       <ModalHeader toggle={showProposalModal2}>
  <Typography variant="h6">
  View Proposal

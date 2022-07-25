@@ -84,10 +84,13 @@ function LoginForm() {
   const [run, setRun] = useState(true);
   const [showCookie, setShowCookie] = useState(false)
   const [user, setUser] = useState("")
+  const token = localStorage.getItem("clientToken")
+  const userEmail = JSON.parse(localStorage.getItem("custEmail"))
   let history = useHistory()
   var width = 1920
   const myData = localStorage.getItem("myArticles")
   const cookieEnable = Cookies.get("accept")
+  const clientLogin = JSON.parse(localStorage.getItem("clientLoginId"))
    const togglePasssword = () => {
     setPasswordShow(!isPasswordShow)
   };
@@ -288,118 +291,143 @@ const getUser = (e) => {
           <div className="signIn">
             <div className="signBtn">
               <div className="boxOverlay">
-                <Typography variant="h4" sx={{color:"#fff"}} style={{ "margin": "5px auto"}}>
+              {
+                token === null ?
+                <>
+                  <Typography variant="h4" sx={{color:"#fff"}} style={{ "margin": "5px auto"}}>
                   For new client
                 </Typography>
-                <button className="customBtn">
-                <a onClick = {() => myCookie2("contactbasic")}>
+                <button className="customBtn"  disabled = {token !== null ? true : false} onClick = {() => myCookie2("contactbasic")}>
+              
                     Sign Up
-                  </a>
+                 
                 </button>
+                </> : " "
+              }
               </div>
             </div>
           </div>
+        {
+          token !== null ?
+          <div className="signUpLogged">
+            <Typography variant="h4" style={{ margin: "5px auto 50px", color: "#464B4B" }}>
+           Already Logged In
+          </Typography>
+           <Typography variant="p" style={{ margin: "5px auto", color: "#464B4B" }}>
+            {clientLogin} : {userEmail}  
+          </Typography>
+          <Typography variant="p" style={{ margin: "5px auto", color: "#464B4B" }}>
+         already logged in , Click here to 
+          </Typography>
+          <button className="customBtnlg" onClick = {(e) => history.push("/customer/dashboard")}  type="button">
+                  Go To Dashboard
+                      </button>
+          </div> :
           <div className="signUp">
-            <Typography variant="h4" style={{ margin: "5px auto", color: "#464B4B" }}>
-              For existing client
-            </Typography>
-            {
-              show ? 
+          <Typography variant="h4" style={{ margin: "5px auto", color: "#464B4B" }}>
+            For existing client
+          </Typography>
+          {
+            show ? 
+            <div className="customForm">
+
+              <VerifyOTP email={email} uid={uid} time={time} setLoad={setLoad}
+                setDisabled={setDisabled} disabled={disabled} setLoading={setLoading}
+                loading={loading} user = {user} />
+            </div>
+              :
+            
               <div className="customForm">
-
-                <VerifyOTP email={email} uid={uid} time={time} setLoad={setLoad}
-                  setDisabled={setDisabled} disabled={disabled} setLoading={setLoading}
-                  loading={loading} user = {user} />
-              </div>
-                :
-              
-                <div className="customForm">
-                  <form onSubmit={handleSubmit(onSubmit)} className="signInForm"  autoComplete="off">
-                  <div className="form-group passForm ">
+                <form onSubmit={handleSubmit(onSubmit)} className="signInForm"  autoComplete="off">
+                <div className="form-group passForm ">
 
 
-  <label className="form-label">User Id<span className="declined">*</span></label>
-  <input
-    type="text"
-    onChange={(e) => getUser(e)}
-   value={user}
-    name="p_user"
-    ref={register({ required: true })}
-    placeholder="Enter User Id"
-    className={classNames("form-control", {
-      "is-invalid": errors.p_user 
-    })}
-  />
+<label className="form-label">User Id<span className="declined">*</span></label>
+<input
+  type="text"
+  onChange={(e) => getUser(e)}
+ value={user}
+ disabled = {token !== null ? true : false}
+  name="p_user"
+  ref={register({ required: true })}
+  placeholder="Enter User Id"
+  className={classNames("form-control", {
+    "is-invalid": errors.p_user 
+  })}
+/>
 
 </div>
-                    <div className="form-group">
-                      <label className="form-label">Email</label>
-                      <input
-                        type="text"
-                        className={classNames("form-control", {
-                          "is-invalid": errors.p_email,
-                        })}
-                        name="p_email"
-                       autoComplete="new-password"
-                        ref={register}
-                        placeholder="Enter Email"
-                        onChange={(e) => handleChange(e)}
-                      />
-                    </div>
-                 
-                    <div className="form-group passForm ">
-                      <label className="form-label">Password </label>
-                      <input
-                        type={isPasswordShow ? "text" : "password"}
-                        className={classNames("form-control", {
-                          "is-invalid": errors.p_password,
-                        })}
-                        name="p_password"
-                       autoComplete="new-password"
-                        placeholder="Enter Password"
-                        ref={register}
-                        onCopy={(e) => {
-                          e.preventDefault();
-                          return false
-                        }}
-                        onPaste={(e) => {
-                          e.preventDefault();
-                          return false
-                        }}
-                      />
-                      
-                      <i
-                        className={`fa ${isPasswordShow ? "fa-eye-slash" : "fa-eye"} password-icon-login`}
-                        onClick={togglePasssword}
-                      />
-                    </div>
+                  <div className="form-group">
+                    <label className="form-label">Email</label>
+                    <input
+                      type="text"
+                      className={classNames("form-control", {
+                        "is-invalid": errors.p_email,
+                      })}
+                      disabled = {token !== null ? true : false}
+                      name="p_email"
+                     autoComplete="new-password"
+                      ref={register}
+                      placeholder="Enter Email"
+                      onChange={(e) => handleChange(e)}
+                    />
+                  </div>
+               
+                  <div className="form-group passForm ">
+                    <label className="form-label">Password </label>
+                    <input
+                      type={isPasswordShow ? "text" : "password"}
+                      className={classNames("form-control", {
+                        "is-invalid": errors.p_password,
+                      })}
+                      disabled = {token !== null ? true : false}
+                      name="p_password"
+                     autoComplete="new-password"
+                      placeholder="Enter Password"
+                      ref={register}
+                      onCopy={(e) => {
+                        e.preventDefault();
+                        return false
+                      }}
+                      onPaste={(e) => {
+                        e.preventDefault();
+                        return false
+                      }}
+                    />
+                    
+                    <i
+                      className={`fa ${isPasswordShow ? "fa-eye-slash" : "fa-eye"} password-icon-login`}
+                      onClick={togglePasssword}
+                    />
+                  </div>
 
-                    <div style={{ display: "flex", margin: "0 0 30px 0", justifyContent: "flex-end" }} className="tabHover">
-                      <Link
-                        to={{
-                          pathname: "/customer/forget-password",
-                          email: `${email}`,
-                          userId : `${user}`
-                        }}
-                      >
-                        Forgot Password
-                      </Link>
-                    </div>
+                  <div style={{ display: "flex", margin: "0 0 30px 0", justifyContent: "flex-end" }} className="tabHover">
+                    <Link
+                      to={{
+                        pathname: "/customer/forget-password",
+                        email: `${email}`,
+                        userId : `${user}`
+                      }}
+                    >
+                      Forgot Password
+                    </Link>
+                  </div>
 
-                    {
-                      loading ?
-                        <Spinner color="primary" />
-                        :
-                        <button className="customBtn" type="submit">
-                          Send OTP
-                        </button>
-                    }
+                  {
+                    loading ?
+                      <Spinner color="primary" />
+                      :
+                      <button className="customBtn"  disabled = {token !== null ? true : false} type="submit">
+                        Send OTP
+                      </button>
+                  }
 
-                  </form>
-                </div>
-            }
-           
-          </div>
+                </form>
+              </div>
+          }
+         
+        </div>
+        }
      
       </MainContent>
         <MyBox>

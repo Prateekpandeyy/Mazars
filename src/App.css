@@ -97,3 +97,6 @@ span {
   width: 100%;
   flex-direction: column;
 }
+.main-menu.menu-fixed {
+  z-index: 99;
+}

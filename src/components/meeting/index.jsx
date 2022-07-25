@@ -31,7 +31,7 @@ class Meeting extends React.Component {
       <div className="wrapper meeting" style={{ display : "flex", flexDirection: "column" , height: "100vh" }}>
                  
          {this.state.showmeetingScreen === true ?
-             <div style={{ display : "flex", flexDirection: "column" , height: "100%" }}>
+             <div style={{ display : "flex", flexDirection: "column" ,  maxHeight : "100vh", height: "100%" }}>
           <div
           className="ag-header"
           style={{ color: "green", fontWeight: "bold" }}

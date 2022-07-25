@@ -17,7 +17,7 @@ const PublicRouteUser = ({ component: Component, ...rest }) => {
                         if (token && nextLogin > currentTime) {
                     return (
                         <>
-                            <Redirect to={"/customer/dashboard"} />
+                             <Component {...props} />
                         </>
                     )
                 } else {

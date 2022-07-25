@@ -3,7 +3,11 @@ import axios from "axios";
 import { baseUrl } from "../../config/config";
 import { useForm } from "react-hook-form";
 import { Select } from "antd";
-
+import 'antd/dist/antd.css';
+import { DatePicker, Space } from 'antd';
+import moment from "moment";
+const dateFormat = 'YYYY/MM/DD';
+const dateFormatList = ['DD/MM/YYYY', 'DD/MM/YY'];
 function AdminFilter(props) {
   const { Option } = Select;
   const { handleSubmit, register, errors, reset } = useForm();
@@ -30,7 +34,9 @@ function AdminFilter(props) {
   const [selectedData, setSelectedData] = useState([]);
   const [tax2, setTax2] = useState([]);
   const [store2, setStore2] = useState([]);
-
+  const [fromDate, setFromDate] = useState("")
+ const [toDate, setToDate] = useState(new Date().toISOString().slice(0, 10))
+const maxDate = moment(new Date().toISOString().slice(0, 10)).add(1, "days")
   var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
   
   const [item] = useState(current_date);
@@ -90,7 +96,9 @@ function AdminFilter(props) {
     getData();
   };
 
-
+  const fromDateFun = (e) => {
+    setFromDate(e.format("YYYY-MM-DD"))
+  }
   const onSubmit = (data) => {
 
    
@@ -100,7 +108,7 @@ function AdminFilter(props) {
     if (acceptedProposal == "acceptedProposal") {
       axios
         .get(
-          `${baseUrl}/admin/getProposals?status1=2&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&pcat_id=${selectedData}`
+          `${baseUrl}/admin/getProposals?status1=2&cat_id=${store2}&from=${fromDate}&to=${toDate}&pcat_id=${selectedData}`
           , myConfig
         )
         .then((res) => {
@@ -118,7 +126,7 @@ function AdminFilter(props) {
      if(data.p_status.length > 0){
       axios
       .get(
-        `${baseUrl}/admin/getProposals?status1=${data.p_status}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&pcat_id=${selectedData}`
+        `${baseUrl}/admin/getProposals?status1=${data.p_status}&cat_id=${store2}&from=${fromDate}&to=${toDate}&pcat_id=${selectedData}`
         , myConfig
       )
       .then((res) => {
@@ -134,7 +142,7 @@ function AdminFilter(props) {
      else {
       axios
       .get(
-        `${baseUrl}/admin/getProposals?status1=1&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&pcat_id=${selectedData}`
+        `${baseUrl}/admin/getProposals?status1=1&cat_id=${store2}&from=${fromDate}&to=${toDate}&pcat_id=${selectedData}`
         , myConfig
       )
       .then((res) => {
@@ -152,7 +160,7 @@ function AdminFilter(props) {
     if (declinedProposal == "declinedProposal") {
       axios
         .get(
-          `${baseUrl}/admin/getProposals?&status=6&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&pcat_id=${selectedData}`
+          `${baseUrl}/admin/getProposals?&status=6&cat_id=${store2}&from=${fromDate}&to=${toDate}&pcat_id=${selectedData}`
           , myConfig
         )
         .then((res) => {
@@ -169,7 +177,7 @@ function AdminFilter(props) {
     if (declinedQueries == "declinedQueries") {
       axios
         .get(
-          `${baseUrl}/admin/declinedQueries?cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=${data.p_status}&pcat_id=${selectedData}`
+          `${baseUrl}/admin/declinedQueries?cat_id=${store2}&from=${fromDate}&to=${toDate}&status=${data.p_status}&pcat_id=${selectedData}`
         , myConfig)
         .then((res) => {
 
@@ -185,7 +193,7 @@ function AdminFilter(props) {
     if (pendingForProposal == "pendingForProposal") {
       axios
         .get(
-          `${baseUrl}/admin/pendingProposal?category=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=${data.p_status}&pcat_id=${selectedData}`
+          `${baseUrl}/admin/pendingProposal?category=${store2}&from=${fromDate}&to=${toDate}&status=${data.p_status}&pcat_id=${selectedData}`
         , myConfig)
         .then((res) => {
          
@@ -201,7 +209,7 @@ function AdminFilter(props) {
     if (allQueries == "allQueries") {
       axios
         .get(
-          `${baseUrl}/admin/getAllQueries?cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=${data.p_status}&pcat_id=${selectedData}`
+          `${baseUrl}/admin/getAllQueries?cat_id=${store2}&from=${fromDate}&to=${toDate}&status=${data.p_status}&pcat_id=${selectedData}`
        , myConfig )
         .then((res) => {
          
@@ -217,7 +225,7 @@ function AdminFilter(props) {
     if (pendingAlloation == "pendingAlloation") {
       axios
         .get(
-          `${baseUrl}/admin/pendingAllocation?category=${store2}&date1=${data.p_dateFrom}&date2=${data.p_dateTo}&pcat_id=${selectedData}`
+          `${baseUrl}/admin/pendingAllocation?category=${store2}&date1=${fromDate}&date2=${toDate}&pcat_id=${selectedData}`
         , myConfig)
         .then((res) => {
         
@@ -233,7 +241,7 @@ function AdminFilter(props) {
     if (AllPayment == "AllPayment") {
       axios
         .get(
-          `${baseUrl}/admin/getUploadedProposals?cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=${data.p_status}&pcat_id=${selectedData}`
+          `${baseUrl}/admin/getUploadedProposals?cat_id=${store2}&from=${fromDate}&to=${toDate}&status=${data.p_status}&pcat_id=${selectedData}`
         , myConfig) 
         .then((res) => {
          
@@ -249,7 +257,7 @@ function AdminFilter(props) {
     if (unpaid == "unpaid") {
       axios
         .get(
-          `${baseUrl}/admin/getUploadedProposals?cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=1&pcat_id=${selectedData}`
+          `${baseUrl}/admin/getUploadedProposals?cat_id=${store2}&from=${fromDate}&to=${toDate}&status=1&pcat_id=${selectedData}`
        , myConfig )
         .then((res) => {
          
@@ -265,7 +273,7 @@ function AdminFilter(props) {
     if (paid == "paid") {
       axios
         .get(
-          `${baseUrl}/admin/getUploadedProposals?cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=2&pcat_id=${selectedData}`
+          `${baseUrl}/admin/getUploadedProposals?cat_id=${store2}&from=${fromDate}&to=${toDate}&status=2&pcat_id=${selectedData}`
        , myConfig)
         .then((res) => {
         
@@ -281,7 +289,7 @@ function AdminFilter(props) {
     if (allProposal == "allProposal") {
       axios
         .get(
-          `${baseUrl}/admin/getProposals?cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status1=${data.p_status}&pcat_id=${selectedData}`
+          `${baseUrl}/admin/getProposals?cat_id=${store2}&from=${fromDate}&to=${toDate}&status1=${data.p_status}&pcat_id=${selectedData}`
         , myConfig)
         .then((res) => {
         
@@ -366,13 +374,18 @@ function AdminFilter(props) {
                 </div>
 
                 <div className="form-group mx-sm-1  mb-2">
-                  <input
+                <DatePicker 
+                 
+                 onChange={(e) =>fromDateFun(e)}
+                 disabledDate={d => !d || d.isAfter(maxDate) }
+                  format={dateFormatList} />
+                  {/* <input
                     type="date"
                     name="p_dateFrom"
                     className="form-select form-control"
                     ref={register}
                     max={item}
-                  />
+                  /> */}
                 </div>
 
                 <div className="form-group mx-sm-1  mb-2">
@@ -380,14 +393,20 @@ function AdminFilter(props) {
                 </div>
 
                 <div className="form-group mx-sm-1  mb-2">
-                  <input
+                  
+                <DatePicker 
+                 onChange={(e) =>setToDate(e.format("YYYY-MM-DD"))}
+                 disabledDate={d => !d || d.isAfter(maxDate) }
+                 defaultValue={moment(new Date(), "DD MM, YYYY")}
+                    format={dateFormatList} />
+                  {/* <input
                     type="date"
                     name="p_dateTo"
                     className="form-select form-control"
                     ref={register}
                     defaultValue={item}
                     max={item}
-                  />
+                  /> */}
                 </div>
 
                 <div className="form-group mx-sm-1  mb-2">

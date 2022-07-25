@@ -36,3 +36,11 @@
 .agree {
   text-align: center;
 }
+.outerAboutBox {
+  display: flex;
+  width: calc(100% / 3 - 20px);
+
+  flex-direction: column;
+  padding: 10px;
+  margin: 5px;
+}

@@ -4,7 +4,11 @@ import { baseUrl } from "../../config/config";
 import "antd/dist/antd.css";
 import { Select } from "antd";
 import { useForm } from "react-hook-form";
-
+import 'antd/dist/antd.css';
+import { DatePicker, Space } from 'antd';
+import moment from "moment";
+const dateFormat = 'YYYY/MM/DD';
+const dateFormatList = ['DD/MM/YYYY', 'DD/MM/YY'];
 function SearchFilter(props) {
   const { handleSubmit, register, errors, reset } = useForm();
   const { Option, OptGroup } = Select;
@@ -12,7 +16,12 @@ function SearchFilter(props) {
   const [selectedData, setSelectedData] = useState([]);
 
   const { setData, getData, allquery, pendingAllocation } = props;
-
+  const [fromDate, setFromDate] = useState("")
+  const [toDate, setToDate] = useState(new Date().toISOString().slice(0, 10))
+ const maxDate = moment(new Date().toISOString().slice(0, 10)).add(1, "days")
+ const fromDateFun = (e) => {
+  setFromDate(e.format("YYYY-MM-DD"))
+}
   //search filter
   const handleChange = (value) => {
 
@@ -42,7 +51,7 @@ function SearchFilter(props) {
     if (allquery == "allquery") {
       axios
         .get(
-          `${baseUrl}/admin/getAllQueries?cat_id=${selectedData}&from=${data.p_dateFrom}&to=${data.p_dateTo}`
+          `${baseUrl}/admin/getAllQueries?cat_id=${selectedData}&from=${fromDate}&to=${toDate}`
         )
         .then((res) => {
         
@@ -57,7 +66,7 @@ function SearchFilter(props) {
     if (pendingAllocation == "pendingAllocation") {
       axios
         .get(
-          `${baseUrl}/admin/pendingAllocation?category=${selectedData}&date1=${data.p_dateFrom}&date2=${data.p_dateTo}`
+          `${baseUrl}/admin/pendingAllocation?category=${selectedData}&date1=${fromDate}&date2=${toDate}`
         )
         .then((res) => {
          
@@ -141,24 +150,34 @@ function SearchFilter(props) {
                 <label className="form-select form-control">From</label>
               </div>
               <div className="form-group mx-sm-3 mb-2">
-                <input
+              <DatePicker 
+                 
+                 onChange={(e) =>fromDateFun(e)}
+                 disabledDate={d => !d || d.isAfter(maxDate) }
+                  format={dateFormatList} />
+                {/* <input
                   type="date"
                   name="p_dateFrom"
                   className="form-select form-control"
                   ref={register}
-                />
+                /> */}
               </div>
 
               <div className="form-group mx-sm-3 mb-2">
                 <label className="form-select form-control">To</label>
               </div>
               <div className="form-group mx-sm-3 mb-2">
-                <input
+                {/* <input
                   type="date"
                   name="p_dateTo"
                   className="form-select form-control"
                   ref={register}
-                />
+                /> */}
+                  <DatePicker 
+                 onChange={(e) =>setToDate(e.format("YYYY-MM-DD"))}
+                 disabledDate={d => !d || d.isAfter(maxDate) }
+                 defaultValue={moment(new Date(), "DD MM, YYYY")}
+                    format={dateFormatList} />
               </div>
               <button type="submit" className="btn btn-primary mb-2">
                 Search

@@ -9,7 +9,7 @@ import axios from "axios";
 
 // //for development
 
-export default axios.create({
+ export default axios.create({
   baseURL: "https://stagingapi.masindia.live/v1",
   headers: {
     "Content-type": "application/json",

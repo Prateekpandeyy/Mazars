@@ -280,7 +280,7 @@ function ProposalComponent(props) {
   };
 
   const paymentDate = (data) => {
-  
+  console.log("Data", data)
    
     var array2 = []
     Object.entries(data).map(([key, value]) => {

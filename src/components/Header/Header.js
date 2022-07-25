@@ -159,6 +159,7 @@ export default Header;
 const CmsCont = (props) => {
   const [open, setOpen] = useState(false)
   const [open2, setOpen2] = useState(false)
+  const [open3, setOpen3] = useState(false)
   const [updateOpen, setUpdateOpen] = useState(false)
   let history = useHistory()
   const handleClickOn = () => {
@@ -175,6 +176,14 @@ const CmsCont = (props) => {
   const handleClickOff2 = () => {
 
     setOpen2(true);
+  };
+  const handleClickOn3 = () => {
+
+    setOpen3(false);
+  };
+  const handleClickOff3 = () => {
+
+    setOpen3(true);
   };
   const handleClickUpdateOpen = () => {
     setUpdateOpen(true)
@@ -218,6 +227,12 @@ const CmsCont = (props) => {
     }
     else if (e === "updatemiscellaneous"){
       history.push("/customer/miscellaneous")
+    }
+    else if (e === "enquiry"){
+      history.push("/customer/customerquery")
+    }
+    else if (e === "contactUs"){
+      history.push("/customer/contactbasic")
     }
    }
    else{
@@ -365,6 +380,43 @@ props.showCook("showCookies")
       FAQs
    </ListItemButton>
     </li>
+    <li className="nav-item tabHoverLinksubMenu" 
+         onMouseLeave = {() => handleClickOn3()}>
+                 
+                 <ListItemButton 
+                 onMouseEnter={() => handleClickOff3()}>
+   <span className="nav-item">
+                  Contact Us
+                   </span>
+         </ListItemButton>  
+         <Collapse in={open3}  unmountOnExit>
+           <List component="div" className="myLink22">
+           <ul>
+                
+                  
+           <li className="tabHover mx-1" onClick = {() => myLink("contactUs")}>
+                   <span className="menu-title" data-i18n="">
+              Our Office
+                   </span>
+                   </li>
+   <li className="tabHover mx-1" onClick = {() => myLink("enquiry")}>
+                   <span className="menu-title" data-i18n="">
+               Enquiry Form
+                   </span>
+                   </li>
+   
+                   
+                    
+                
+                   
+                  
+                  
+                   
+                    
+                   </ul>
+           </List>
+         </Collapse>
+                 </li>
 </div>
     </>
   )

@@ -3,7 +3,12 @@ import axios from "axios";
 import { baseUrl } from "../../config/config";
 import { useForm } from "react-hook-form";
 import { Select } from "antd";
-
+import { Spinner } from 'reactstrap';
+import 'antd/dist/antd.css';
+import { DatePicker, Space } from 'antd';
+import moment from "moment";
+const dateFormat = 'YYYY/MM/DD';
+const dateFormatList = ['DD/MM/YYYY', 'DD/MM/YY'];
 function TeamFilter(props) {
   const { Option } = Select;
   const { handleSubmit, register, errors, reset } = useForm();
@@ -33,8 +38,9 @@ function TeamFilter(props) {
   const [tax2, setTax2] = useState([]);
   const [store2, setStore2] = useState([]);
   const [status1, setStatus1] = useState(1);
-
-
+  const [fromDate, setFromDate] = useState("")
+ const [toDate, setToDate] = useState(new Date().toISOString().slice(0, 10))
+const maxDate = moment(new Date().toISOString().slice(0, 10)).add(1, "days")
   var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
  
   const [item] = useState(current_date);
@@ -42,7 +48,8 @@ function TeamFilter(props) {
   useEffect(() => {
     const getSubCategory = () => {
      if(selectedData.length != 0){
-      
+     
+    
       axios
       .get(`${baseUrl}/customers/getCategory?pid=${selectedData}`)
       .then((res) => {
@@ -100,7 +107,7 @@ function TeamFilter(props) {
     if (AllQuery == "AllQuery") {
       axios
         .get(
-          `${baseUrl}/tl/getIncompleteQues?id=${JSON.parse(userid)}&status=${data.p_status}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&pcat_id=${selectedData}`, myConfig
+          `${baseUrl}/tl/getIncompleteQues?id=${JSON.parse(userid)}&status=${data.p_status}&cat_id=${store2}&from=${fromDate}&to=${toDate}&pcat_id=${selectedData}`, myConfig
         )
         .then((res) => {
          
@@ -122,7 +129,7 @@ function TeamFilter(props) {
         .get(
           `${baseUrl}/tl/pendingQues?id=${JSON.parse(
             userid
-          )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&pcat_id=${selectedData}`
+          )}&cat_id=${store2}&from=${fromDate}&to=${toDate}&pcat_id=${selectedData}`
         , myConfig)
         .then((res) => {
         
@@ -141,7 +148,7 @@ function TeamFilter(props) {
      
       axios
         .get(
-          `${baseUrl}/tl/getIncompleteQues?id=${JSON.parse(userid)}&status=${status1}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&pcat_id=${selectedData}`
+          `${baseUrl}/tl/getIncompleteQues?id=${JSON.parse(userid)}&status=${status1}&cat_id=${store2}&from=${fromDate}&to=${toDate}&pcat_id=${selectedData}`
         , myConfig)
         .then((res) => {
         
@@ -157,7 +164,7 @@ function TeamFilter(props) {
     if (DeclinedQuery == "DeclinedQuery") {
       axios
         .get(
-          `${baseUrl}/tl/declinedQueries?id=${JSON.parse(userid)}&status=${data.p_status}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&pcat_id=${selectedData}`
+          `${baseUrl}/tl/declinedQueries?id=${JSON.parse(userid)}&status=${data.p_status}&cat_id=${store2}&from=${fromDate}&to=${toDate}&pcat_id=${selectedData}`
         , myConfig)
         .then((res) => {
 
@@ -175,7 +182,7 @@ function TeamFilter(props) {
         .get(
           `${baseUrl}/tl/getCompleteQues?id=${JSON.parse(
             userid
-          )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&pcat_id=${selectedData}`
+          )}&cat_id=${store2}&from=${fromDate}&to=${toDate}&pcat_id=${selectedData}`
         , myConfig)
         .then((res) => {
 
@@ -194,7 +201,7 @@ function TeamFilter(props) {
         .get(
           `${baseUrl}/tl/getProposalTl?id=${JSON.parse(
             userid
-          )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
+          )}&cat_id=${store2}&from=${fromDate}&to=${toDate
           }&status=${data.p_status}&pcat_id=${selectedData}`, myConfig
         )
         .then((res) => {
@@ -214,7 +221,7 @@ function TeamFilter(props) {
       .get(
         `${baseUrl}/tl/getProposalTl?id=${JSON.parse(
           userid
-        )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
+        )}&cat_id=${store2}&from=${fromDate}&to=${toDate
         }&status=${data.p_status}&pcat_id=${selectedData}`, myConfig
       )
       .then((res) => {
@@ -232,7 +239,7 @@ function TeamFilter(props) {
       .get(
         `${baseUrl}/tl/getProposalTl?id=${JSON.parse(
           userid
-        )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
+        )}&cat_id=${store2}&from=${fromDate}&to=${toDate
         }&status=1&pcat_id=${selectedData}`, myConfig
       )
       .then((res) => {
@@ -252,7 +259,7 @@ function TeamFilter(props) {
         .get(
           `${baseUrl}/tl/getProposalTl?id=${JSON.parse(
             userid
-          )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
+          )}&cat_id=${store2}&from=${fromDate}&to=${toDate
           }&status=2&pcat_id=${selectedData}`, myConfig
         )
         .then((res) => {
@@ -272,7 +279,7 @@ function TeamFilter(props) {
       .get(
         `${baseUrl}/tl/getProposalTl?id=${JSON.parse(
           userid
-        )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=3&pcat_id=${selectedData}`
+        )}&cat_id=${store2}&from=${fromDate}&to=${toDate}&status=3&pcat_id=${selectedData}`
       , myConfig)
       .then((res) => {
 
@@ -290,7 +297,7 @@ function TeamFilter(props) {
         .get(
           `${baseUrl}/tl/getUploadedProposals?uid=${JSON.parse(
             userid
-          )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=${data.p_status}&pcat_id=${selectedData}`
+          )}&cat_id=${store2}&from=${fromDate}&to=${toDate}&status=${data.p_status}&pcat_id=${selectedData}`
         , myConfig)
         .then((res) => {
 
@@ -308,7 +315,7 @@ function TeamFilter(props) {
         .get(
           `${baseUrl}/tl/getUploadedProposals?uid=${JSON.parse(
             userid
-          )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=1&pcat_id=${selectedData}`
+          )}&cat_id=${store2}&from=${fromDate}&to=${toDate}&status=1&pcat_id=${selectedData}`
         , myConfig)
         .then((res) => {
          
@@ -326,7 +333,7 @@ function TeamFilter(props) {
         .get(
           `${baseUrl}/tl/getUploadedProposals?uid=${JSON.parse(
             userid
-          )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=2&pcat_id=${selectedData}`
+          )}&cat_id=${store2}&from=${fromDate}&to=${toDate}&status=2&pcat_id=${selectedData}`
         , myConfig)
         .then((res) => {
 
@@ -356,7 +363,9 @@ function TeamFilter(props) {
   };
 
 
-
+const fromDateFun = (e) => {
+  setFromDate(e.format("YYYY-MM-DD"))
+}
 
   return (
     <>
@@ -415,13 +424,12 @@ function TeamFilter(props) {
                 </div>
 
                 <div className="form-group mx-sm-1  mb-2">
-                  <input
-                    type="date"
-                    name="p_dateFrom"
-                    className="form-select form-control"
-                    ref={register}
-                    max={item}
-                  />
+                
+                    <DatePicker 
+                 
+                   onChange={(e) =>fromDateFun(e)}
+                   disabledDate={d => !d || d.isAfter(maxDate) }
+                    format={dateFormatList} />
                 </div>
 
                 <div className="form-group mx-sm-1  mb-2">
@@ -429,14 +437,12 @@ function TeamFilter(props) {
                 </div>
 
                 <div className="form-group mx-sm-1  mb-2">
-                  <input
-                    type="date"
-                    name="p_dateTo"
-                    className="form-select form-control"
-                    ref={register}
-                    defaultValue={item}
-                    max={item}
-                  />
+                
+                    <DatePicker 
+                 onChange={(e) =>setToDate(e.format("YYYY-MM-DD"))}
+                 disabledDate={d => !d || d.isAfter(maxDate) }
+                 defaultValue={moment(new Date(), "DD MM, YYYY")}
+                    format={dateFormatList} />
                 </div>
 
                 <div className="form-group mx-sm-1  mb-2">

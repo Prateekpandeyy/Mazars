@@ -178,7 +178,7 @@ const history = useHistory();
                 <CardBody style={{display : "flex", height : "80vh", overflowY : "scroll"}}>
                 <DataTablepopulated 
                    bgColor="#42566a"
-                   keyField= {"assign_no"}
+                   keyField= "assign_no"
                    data={query}
                    columns={columns}>
                     </DataTablepopulated>

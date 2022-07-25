@@ -6717,7 +6717,7 @@ export const states = [
     "country_id": "64"
 },
 {
-    "id": "1050",
+    "id": "",
     "name": "Kafr-ash-Shaykh",
     "country_id": "64"
 },
