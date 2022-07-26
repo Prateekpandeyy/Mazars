@@ -243,7 +243,7 @@ function PendingAllocation({ CountPendingForAllocation }) {
           />
         </CardHeader>
         <CardBody className = "card-body">
-          <Records records={records} />
+          {/* <Records records={records} /> */}
           <DataTablepopulated 
           bgColor="#55425f"
           keyField= {"assign_no"}

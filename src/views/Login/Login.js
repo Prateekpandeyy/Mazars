@@ -230,6 +230,25 @@ const getUser = (e) => {
   }
  
 }
+const custLogout = () => {
+  const token = window.localStorage.getItem("clientToken")
+          const myConfig = {
+              headers : {
+               "uit" : token
+              }
+            }
+          axios.get(`${baseUrl}/customers/logout`, myConfig)
+          .then((res) => {
+             
+                localStorage.removeItem("userid");
+                localStorage.removeItem("custEmail");
+                localStorage.removeItem("category");
+                localStorage.removeItem("clientToken")
+                history.push("/");
+              
+          })
+ 
+};
   return (
     <>
  
@@ -310,17 +329,18 @@ const getUser = (e) => {
         {
           token !== null ?
           <div className="signUpLogged">
-            <Typography variant="h4" style={{ margin: "5px auto 50px", color: "#464B4B" }}>
-           Already Logged In
-          </Typography>
-           <Typography variant="p" style={{ margin: "5px auto", color: "#464B4B" }}>
+         
+           <h4 style={{fontSize: "1.5rem"}}>
             {clientLogin} : {userEmail}  
-          </Typography>
-          <Typography variant="p" style={{ margin: "5px auto", color: "#464B4B" }}>
-         already logged in , Click here to 
-          </Typography>
+          </h4>
+          <h4 style={{fontSize: "1.5rem"}}>
+         logged in 
+          </h4>
           <button className="customBtnlg" onClick = {(e) => history.push("/customer/dashboard")}  type="button">
                   Go To Dashboard
+                      </button>
+                      <button className="logoutBtn" onClick = {(e) => custLogout()}  type="button">
+                  Logout
                       </button>
           </div> :
           <div className="signUp">

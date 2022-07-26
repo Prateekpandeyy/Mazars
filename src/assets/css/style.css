@@ -296,7 +296,28 @@ html body a {
   margin: 50px auto;
   justify-content: center;
   line-height: 1;
-  width: 210px;
+  width: 150px;
+  min-height: 2rem;
+  overflow: hidden;
+  padding: 0.6rem 1rem;
+  position: relative;
+  text-decoration: none;
+  transform: all 0.3s;
+  vertical-align: middle;
+}
+.logoutBtn {
+  border-bottom-left-radius: 1rem;
+  background-color: #0071ce;
+  border: 1px solid #0071ce;
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  justify-content: center;
+  line-height: 1;
+  width: 150px;
   min-height: 2rem;
   overflow: hidden;
   padding: 0.6rem 1rem;

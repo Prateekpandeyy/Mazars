@@ -65,7 +65,7 @@ function CustomerNotification({ tokenKey, name , panel}) {
         }
       }
       if(role === "cms" && window.location.hash.search("admin") == 2){
-        console.log("cmsfixed")
+        console.log("cmsfixed", window.location.hash.search("admin"))
         history.push("/*")
     }
         else{

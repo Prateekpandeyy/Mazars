@@ -220,7 +220,7 @@ function AllQueriesData({allData}) {
 
         </CardHeader>
         <CardBody>
-          <Records records={records} />
+          {/* <Records records={records} /> */}
         
           <DataTablepopulated 
           bgColor="#55425f"

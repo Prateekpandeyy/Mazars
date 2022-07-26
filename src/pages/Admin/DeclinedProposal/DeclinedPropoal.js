@@ -290,7 +290,7 @@ function DeclinedProposal({ declinedProposal }) {
 
         </CardHeader>
         <CardBody>
-          <Records records={records} />
+          {/* <Records records={records} /> */}
           <DataTablepopulated 
                    bgColor="#42566a"
                    keyField= {"assign_no"}

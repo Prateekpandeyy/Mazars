@@ -209,7 +209,8 @@
   padding: 10px 0px;
   width: 50%;
   font-weight: 600;
-  height: 300px;
+  justify-content: center;
+  align-items: center;
 }
 .signUp {
   display: flex;

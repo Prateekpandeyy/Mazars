@@ -500,7 +500,10 @@ const maxDate = moment(new Date().toISOString().slice(0, 10)).add(1, "days")
                       </button>
                 <Reset />
 
-               
+                <div className="form-group mx-sm-1  mb-2">
+                  <label className="form-select form-control"
+                  >Total Records : {records}</label>
+                </div>
               </div>
             </form>
           </div>

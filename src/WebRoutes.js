@@ -191,6 +191,7 @@ import OuterLinkVideo from "./views/outerLinkVideo.js/OuterLinkVideo";
 import EditProfile from "./views/EditProfile/EditProfile";
 import Drag from "./components/Drag";
 import UploadLinkContent from "./pages/Admin/CMS/UploadLInkContent";
+import CommingSoon from "./views/ComingSoon/CommingSoon";
 
 // import PayDetails from "./views/PaymentStatus/PayDetails";
 
@@ -226,6 +227,7 @@ function WebRoutes() {
         <Router>
           <Switch>
 
+            <PublicRouteUser exact path="/customer/comming-soon" component={CommingSoon} />
             <PublicRouteUser exact path="/" component={Login} />
             <PublicRouteUser exact path="/customer/signup" component={SignUp} />
             <PublicRouteUser exact path="/customer/forget-password" component={ForgetPassword} />
