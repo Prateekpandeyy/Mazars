@@ -43,6 +43,7 @@ const EditVideo = () => {
   const [heading, setHeading] = useState("")
   const [date, setDate] = useState("")
   const [data, setData] = useState([])
+  const [imgResult, setImgResult] = useState([])
   const { handleSubmit, register, errors, getValues } = useForm();
   let getId = useParams()
   var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
@@ -62,9 +63,9 @@ const EditVideo = () => {
       axios.get(`${baseUrl}/cms/getgallarylist?uid=${JSON.parse(userId)}&type=video&id=${getId.id}`, myConfig)
         .then((res) => {
 
-          setData(res.data.result);
+          setData(res.data.files);
           res.data.result.map((i) => {
-
+            setImgResult(res.data.result)
             setHeading(i.title)
             console.log(i.created_date.split(" ")[0].split("-").reverse().join("-"))
             setDate(i.created_date.split(" ")[0].split("-").join("-"))
@@ -134,7 +135,7 @@ else{
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.value) {
-        axios.get(`${baseUrl}/cms/deletevideo?uid=${JSON.parse(userId)}&id=${e.imageid}&videooid=${e.id}`, myConfig)
+        axios.get(`${baseUrl}/cms/deletevideo?uid=${JSON.parse(userId)}&id=${imgResult[0].id}&videooid=${e.imageid}`, myConfig)
           .then((res) => {
             console.log("response", res)
             if (res.data.code === 1) {
