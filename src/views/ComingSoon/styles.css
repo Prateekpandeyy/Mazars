@@ -1,9 +1,5 @@
 @import url("https://fonts.googleapis.com/css?family=Roboto+Condensed&display=swap");
-.App {
-  background-image: url("https://images.unsplash.com/photo-1508389377389-b8221c0bcc9e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80");
-  background-position: top top;
-  background-size: cover;
-}
+
 .AppCommingSoon {
   /* background-image: url("https://images.unsplash.com/photo-1508389377389-b8221c0bcc9e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80");
   background-position: top top;
@@ -21,6 +17,9 @@
     rgba(49, 49, 177, 0.2) 50%,
     rgba(49, 49, 177, 0.6) 100%
   );
+  background-image: url("https://images.unsplash.com/photo-1508389377389-b8221c0bcc9e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80");
+  background-position: top top;
+  background-size: cover;
 }
 
 .container {
