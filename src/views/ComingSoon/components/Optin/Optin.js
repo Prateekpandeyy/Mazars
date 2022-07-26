@@ -23,6 +23,7 @@ class Optin extends Component {
   }
 gotoWeb () {
 if(this.state.email.length > 1){
+    sessionStorage.setItem("commingSoon", true)
     this.setState({
         emailError : false
     })
@@ -46,7 +47,7 @@ emailFun (e) {
   render() {
     return (
       <div className="optin">
-        <p>Want to be the first to know when we launch?</p>
+        <p style={{color : "#000"}}>Want to be the first to know when we launch?</p>
         <button onClick={() => this.modal()} id="clickModal">Click Me</button>
      
          <Modal isOpen={this.state.isOpen} toggle={this.modal} >

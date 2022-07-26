@@ -99,8 +99,13 @@ useEffect(() => {
   showLinkData()
 }, [showData])
 const showLinkData = () => {
-  console.log(showData)
+  let comming = sessionStorage.getItem("commingSoon")
+  console.log("comming", comming)
+  if(comming)
   setLinkData(myData)
+  else {
+    history.push("/customer/comming-soon")
+  }
 }
   useEffect(() => {
     getTime()
