@@ -3,7 +3,7 @@ import "../../assets/css/style.css";
 import mazars from "../../mazars_logo.png";
 import { baseUrl } from "../../config/config";
 import axios from "axios";
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import Collapse from '@mui/material/Collapse';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
@@ -161,6 +161,16 @@ const CmsCont = (props) => {
   const [open2, setOpen2] = useState(false)
   const [open3, setOpen3] = useState(false)
   const [updateOpen, setUpdateOpen] = useState(false)
+  useEffect(() => {
+    let comming = sessionStorage.getItem("commingSoon")
+console.log("coing",comming)
+    if(comming) {
+      
+    }
+    else {
+      history.push("/customer/comming-soon")
+    }
+  }, [])
   let history = useHistory()
   const handleClickOn = () => {
     setOpen(false);

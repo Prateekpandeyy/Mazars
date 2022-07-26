@@ -43,6 +43,7 @@ const EditImage = () => {
     const [date, setDate] = useState("")
     const [data, setData] = useState([]) 
     const [images, setImages] = useState([])
+    const [imgResult, setImgResult] = useState([])
     const token = localStorage.getItem("token")
     const myConfig = {
       headers : {
@@ -63,8 +64,8 @@ const EditImage = () => {
      if(getId.id !== undefined){
         axios.get(`${baseUrl}/cms/getgallarylist?uid=${JSON.parse(userId)}&type=image&id=${getId.id}`, myConfig)
       .then((res) => {
-    
-      setData(res.data.result);
+    setImgResult(res.data.result)
+      setData(res.data.files);
      res.data.result.map((i) => {
         
          setHeading(i.title)
@@ -76,11 +77,11 @@ const EditImage = () => {
      }
     }
     const del = (e) => {
- 
+ console.log("eeee", e)
 
       Swal.fire({
           title: "Are you sure?",
-          text: "Want to delete articles? Yes, delete it!",
+          text: "Want to delete image? Yes, delete it!",
           type: "warning",
           showCancelButton: true,
           confirmButtonColor: "#3085d6",
@@ -88,7 +89,7 @@ const EditImage = () => {
           confirmButtonText: "Yes, delete it!",
       }).then((result) => {
           if (result.value) {
-            axios.get(`${baseUrl}/cms/deleteimage?uid=${JSON.parse(userId)}&id=${e.imageid}&imageid=${e.id}`, myConfig)
+            axios.get(`${baseUrl}/cms/deleteimage?uid=${JSON.parse(userId)}&id=${imgResult[0].id}&imageid=${e.imageid}`, myConfig)
             .then((res) => {
   console.log("response", res)
   if(res.data.code === 1){
@@ -241,7 +242,7 @@ const EditImage = () => {
             
                   </div>
                   <div style={{display :"flex", width: "100%", mmargin: "5px 0", justifyContent : "flex-end"}}>
-                    <p> <sup className="declined"> *</sup> jpeg,gif,png only</p>
+                    <p> <sup className="declined"> *</sup> jpeg,png only</p>
                     </div>
                 <div className="row">
                   <div className="col-md-12">

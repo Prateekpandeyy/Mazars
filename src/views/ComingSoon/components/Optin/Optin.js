@@ -2,6 +2,7 @@ import React, { Component , useState} from "react";
 import "./Optin.css";
 import { Modal, ModalHeader, ModalBody , Button } from "reactstrap";
 import { Spinner } from "reactstrap";
+import Swal from "sweetalert2";
 import classNames from "classnames";
 class Optin extends Component {
     constructor(props){
@@ -27,7 +28,20 @@ if(this.state.email.length > 1){
     this.setState({
         emailError : false
     })
-    window.location.hash = "/"
+    if(this.state.email === "ram.vns@gmail.com"){
+      window.location.hash = "/"
+    }
+    else{
+      this.setState({
+        email : ""
+      })
+      Swal.fire({
+        title : "error",
+        html : "Given email is not authorize",
+        icon : "error"
+      })
+      return false
+    }
 
 }
 else{
@@ -63,7 +77,7 @@ emailFun (e) {
               onChange = {(e) => this.emailFun(e) }
                 rows="4"
                 name="p_chat"
-               
+               value = {this.state.email}
                 placeholder="enter email here"
               />
              </div>
