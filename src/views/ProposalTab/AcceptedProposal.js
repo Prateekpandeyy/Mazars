@@ -8,7 +8,7 @@ import {
     CardBody,
    
 } from "reactstrap";
-import { Link } from "react-router-dom";
+import { Link , useHistory} from "react-router-dom";
 import "./index.css";
 import CustomerFilter from "../../components/Search-Filter/CustomerFilter";
 import Records from "../../components/Records/Records";
@@ -18,11 +18,11 @@ import ModalManual from "../ModalManual/AllComponentManual";
 import {Modal, ModalHeader, ModalBody} from 'reactstrap';
 import MessageIcon, {EyeIcon, ViewDiscussionIcon, HelpIcon} from "../../components/Common/MessageIcon";
 import DataTablepopulated from "../../components/DataTablepopulated/DataTabel";
-
+import CommonServices from "../../common/common"
 
 function AcceptedProposal() {
     const alert = useAlert();
-
+let history = useHistory()
     const userId = window.localStorage.getItem("userid");
     const [proposalDisplay, setProposalDisplay] = useState([]);
     const [proposalCount, setCountProposal] = useState("");
@@ -69,6 +69,9 @@ function AcceptedProposal() {
                     setCountProposal(res.data.result.length);
                     setRecords(res.data.result.length);
 
+                }
+                else if (res.data.code === 0){
+                    CommonServices.clientLogout(history)
                 }
             });
     };

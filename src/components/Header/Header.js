@@ -404,18 +404,18 @@ props.showCook("showCookies")
            <ul>
                 
                   
-           <li className="tabHover mx-1" onClick = {() => myLink("contactUs")}>
-                   <span className="menu-title" data-i18n="">
-              Our Office
-                   </span>
-                   </li>
+           
    <li className="tabHover mx-1" onClick = {() => myLink("enquiry")}>
                    <span className="menu-title" data-i18n="">
                Enquiry Form
                    </span>
                    </li>
    
-                   
+                   <li className="tabHover mx-1" onClick = {() => myLink("contactUs")}>
+                   <span className="menu-title" data-i18n="">
+              Our Office
+                   </span>
+                   </li>
                     
                 
                    

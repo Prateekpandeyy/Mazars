@@ -61,11 +61,11 @@ emailFun (e) {
   render() {
     return (
       <div className="optin">
-        <p style={{color : "#000"}}>Want to be the first to know when we launch?</p>
+       
         <button onClick={() => this.modal()} id="clickModal">Click Me</button>
      
          <Modal isOpen={this.state.isOpen} toggle={this.modal} >
-         <ModalHeader>Discussion</ModalHeader>
+         <ModalHeader></ModalHeader>
          <ModalBody>
            <form>
              <div className="mb-3">
@@ -78,7 +78,7 @@ emailFun (e) {
                 rows="4"
                 name="p_chat"
                value = {this.state.email}
-                placeholder="enter email here"
+                placeholder="enter password here"
               />
              </div>
              <div class="modal-footer">

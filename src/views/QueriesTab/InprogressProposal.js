@@ -22,7 +22,7 @@ import {Modal, ModalHeader, ModalBody} from 'reactstrap';
 import MessageIcon, { ViewDiscussionIcon, HelpIcon, 
   FeedBackICon} from "../../components/Common/MessageIcon";
 import DataTablepopulated from "../../components/DataTablepopulated/DataTabel";
-
+import {useHistory} from 'react-router-dom';
 function InprogressProposal() {
   const alert = useAlert();
   const userId = window.localStorage.getItem("userid");
@@ -37,6 +37,7 @@ function InprogressProposal() {
        "uit" : token
       }
     }
+    let history = useHistory()
   useEffect(() => {
     getQueriesData();
   }, []);
@@ -64,7 +65,9 @@ function InprogressProposal() {
           setCountQueries(res.data.result.length);
           setRecords(res.data.result.length);
         }
-       
+       else if(res.data.code === 0){
+        CommonServices.clientLogout(history)
+       }
       });
   };
 
