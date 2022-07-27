@@ -57,7 +57,15 @@ const downloadpdf = () => {
   .then((res) => {
     console.log("res", res)
     if(res.status === 200){
-       window.open(URL.createObjectURL(res.data));
+      window.URL = window.URL || window.webkitURL;
+   var url = window.URL.createObjectURL(res.data);
+   var a = document.createElement("a");
+   document.body.appendChild(a);
+   a.style = "display: none";
+   a.href = url;
+   a.download = `Proposal.pdf`
+   a.target = '_blank';
+   a.click();
     }
   })
  }
@@ -74,7 +82,15 @@ const downloadpdf = () => {
   .then((res) => {
     console.log("res", res)
     if(res.status === 200){
-       window.open(URL.createObjectURL(res.data));
+      window.URL = window.URL || window.webkitURL;
+   var url = window.URL.createObjectURL(res.data);
+   var a = document.createElement("a");
+   document.body.appendChild(a);
+   a.style = "display: none";
+   a.href = url;
+   a.download = `Proposal.pdf`
+   a.target = '_blank';
+   a.click();
     }
   })
  }
@@ -91,7 +107,15 @@ const downloadpdf = () => {
   .then((res) => {
     console.log("res", res)
     if(res.status === 200){
-       window.open(URL.createObjectURL(res.data));
+      window.URL = window.URL || window.webkitURL;
+   var url = window.URL.createObjectURL(res.data);
+   var a = document.createElement("a");
+   document.body.appendChild(a);
+   a.style = "display: none";
+   a.href = url;
+   a.download = `Proposal.pdf`
+   a.target = '_blank';
+   a.click();
     }
   })
  }
@@ -108,7 +132,15 @@ const downloadpdf = () => {
   .then((res) => {
     console.log("res", res)
     if(res.status === 200){
-       window.open(URL.createObjectURL(res.data));
+      window.URL = window.URL || window.webkitURL;
+   var url = window.URL.createObjectURL(res.data);
+   var a = document.createElement("a");
+   document.body.appendChild(a);
+   a.style = "display: none";
+   a.href = url;
+   a.download = `Proposal.pdf`
+   a.target = '_blank';
+   a.click();
     }
   })
  }

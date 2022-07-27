@@ -36,12 +36,3 @@ h1 {
   text-transform: uppercase;
   line-height: 1;
 }
-
-@media (min-width: 768px) {
-  .container {
-    width: 1100px;
-  }
-  h1 {
-    font-size: 58px;
-  }
-}

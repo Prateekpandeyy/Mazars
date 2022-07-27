@@ -100,3 +100,9 @@ span {
 .main-menu.menu-fixed {
   z-index: 99;
 }
+.modal-body {
+  display: flex !important;
+  width: 100% !important;
+  overflow: auto !important;
+  height: 100% !important;
+}
