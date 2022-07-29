@@ -65,6 +65,10 @@
   display: flex;
   justify-content: center;
 }
+.fullscreen img {
+  height: 100vh;
+  width: 100vw;
+}
 /* .image-gallery-content .image-gallery-slide .image-gallery-image {
   max-height: 100vh !important;
 } */

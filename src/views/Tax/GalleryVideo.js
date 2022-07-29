@@ -21,6 +21,13 @@ const GalleryVideo = () => {
   let history = useHistory();
   
     useEffect(() => {
+
+    
+        // document.getElementsByClassName('image-gallery-fullscreen-button')[0].addEventListener("click", (event) => {
+        //   console.log("fullScrennbtn")
+        // })
+   
+      
       getImages()
     }, [])
     const getImages = () => {
@@ -32,9 +39,13 @@ const GalleryVideo = () => {
          
         res.data.result.map((i) => {
           setTitle(i.title)
+          console.log("Iname", i.name.split(".")[0] + "_thumb")
+          let thumb =  i.name.split(".")[0] + "_thumb." + i.name.split(".")[1];
+          let poster = i.name.split(".")[0] + "_poster." + i.name.split(".")[1]
+          console.log("poster", poster)
           let  a = {
-            original : `${baseUrl3}/assets/gallery/${i.name}`,
-            thumbnail : `${baseUrl3}/assets/gallery/${i.name}`
+            original : `${baseUrl3}/assets/gallery/${poster}`,
+            thumbnail : `${baseUrl3}/assets/gallery/${thumb}`
           }
           obj.push(a)
         
@@ -74,7 +85,7 @@ const GalleryVideo = () => {
    setImages(obj)
      }
         }
-   
+
     return(
         <>
          <Header noSign="noSign" />
@@ -103,13 +114,7 @@ const GalleryVideo = () => {
   <Typography>{title}</Typography>
  
 </Breadcrumbs>
-{/* <button
-                className="customBtn" 
-                onClick={() => history.goBack()}
-              >
-            
-                Go Back
-              </button> */}
+
          </>
          <div className={classes.articleContent}>
         <div className={classes.articlesDetails}>  

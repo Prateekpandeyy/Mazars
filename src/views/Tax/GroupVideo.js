@@ -28,8 +28,9 @@ const GroupVideo = () => {
      
       axios.get(`${baseUrl}/customers/getvideogallery?id=${history.location.index.id}`)
       .then((res) => {
-       
+  
       res.data.result.map((i) => {
+
         let  a = {
           original : `${baseUrl3}/assets/gallery/${i.name}`,
           thumbnail : `${baseUrl3}/assets/gallery/${i.name}`

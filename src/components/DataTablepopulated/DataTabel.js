@@ -26,7 +26,7 @@ const MyContainer = styled(Container)({
     }, 
     "& thead tr th" : {
      border : "0px",
-     fontSize : "0.9rem",
+     fontSize : "0.8rem",
      padding: "5px"
     },
 

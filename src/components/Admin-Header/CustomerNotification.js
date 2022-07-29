@@ -19,6 +19,126 @@ function CustomerNotification({ tokenKey, name , panel}) {
        
     }, [tokenKey]);
    
+  const custLogout = () => {
+    const token = window.localStorage.getItem("clientToken")
+            const myConfig = {
+                headers : {
+                 "uit" : token
+                }
+              }
+            axios.get(`${baseUrl}/customers/logout`, myConfig)
+            .then((res) => {
+               
+                  localStorage.removeItem("userid");
+                  localStorage.removeItem("custEmail");
+                  localStorage.removeItem("category");
+                  localStorage.removeItem("clientToken")
+                  history.push("/");
+                
+            })
+   
+  };
+
+  const adminLogout = () => {
+    const role = localStorage.getItem("role")
+    // const token = window.localStorage.getItem("adminToken")
+    //         const myConfig = {
+    //             headers : {
+    //              "uit" : token
+    //             }
+    //           }
+    //      axios.get(`${baseUrl}/admin/logout`, myConfig)
+    //      .then((res) => {
+            
+    //           localStorage.removeItem("adminkey");
+    //           localStorage.removeItem("adminEmail");
+    //           localStorage.removeItem("category");
+    //           localStorage.removeItem("adminToken")
+             
+    //           history.push("/admin/login");
+            
+    //      })
+    if (role === "admin"){
+      const token = window.localStorage.getItem("adminToken")
+      const myConfig = {
+          headers : {
+           "uit" : token
+          }
+        }
+   axios.get(`${baseUrl}/admin/logout`, myConfig)
+   .then((res) => {
+      
+        localStorage.removeItem("adminkey");
+        localStorage.removeItem("adminEmail");
+        localStorage.removeItem("category");
+        localStorage.removeItem("adminToken")
+        
+        history.push("/admin/login");
+      
+   })
+  }
+  else if (role === "cms"){
+      const token = window.localStorage.getItem("token")
+      const myConfig = {
+          headers : {
+           "uit" : token
+          }
+        }
+   axios.get(`${baseUrl}/cms/logout`, myConfig)
+   .then((res) => {
+      
+        localStorage.removeItem("adminkey");
+        localStorage.removeItem("adminEmail");
+        localStorage.removeItem("category");
+        localStorage.removeItem("token")
+       
+        history.push("/cms/login");
+      
+   })
+  }
+  };
+
+  const tlLogout = () => {
+    const token = window.localStorage.getItem("tlToken")
+    const myConfig = {
+        headers : {
+         "uit" : token
+        }
+      }
+         axios.get(`${baseUrl}/tl/logout`, myConfig)
+         .then((res) => {
+           
+              localStorage.removeItem("tlkey");
+              localStorage.removeItem("tlEmail");
+              localStorage.removeItem("category");
+              localStorage.removeItem("tlToken")
+           
+              history.push("/teamleader/login");
+            
+         })
+  };
+
+  const tpLogout = () => {
+    const token = window.localStorage.getItem("tptoken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
+        axios.get(`${baseUrl}/tp/logout`, myConfig)
+        .then((res) => {
+           
+              localStorage.removeItem("tpkey");
+              localStorage.removeItem("tpEmail");
+              localStorage.removeItem("category");
+              localStorage.removeItem("tptoken");
+           
+              history.push("/taxprofessional/login");
+           
+        })
+        
+  };
+
     const getNotification = () => {
         var timeStampInMs = Date.now()
        var previousLogin =  localStorage.getItem("loginTime")
@@ -77,6 +197,18 @@ function CustomerNotification({ tokenKey, name , panel}) {
                    
                    if(res.data.result[0] != undefined){
                     setCountNotification(res.data.result[0].total);
+                   }
+                }
+                else if (res.data.code !== 1){
+                    
+                   if(redir === "admin"){
+                       adminLogout()
+                   }
+                   else if (redir === "tl"){
+                       tlLogout()
+                   }
+                   else if (redir === "tp"){
+                       tpLogout()
                    }
                 }
             });

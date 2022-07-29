@@ -22,10 +22,13 @@ import './index.css';
 import ModalManual from "../ModalManual/AllComponentManual";
 import MessageIcon, { ViewDiscussionIcon, HelpIcon, 
     Payment} from "../../components/Common/MessageIcon";
+
     import DataTablepopulated from "../../components/DataTablepopulated/DataTabel";
+    import {useHistory} from 'react-router-dom';
 function Unpaid() {
 
     const userId = window.localStorage.getItem("userid");
+    let history = useHistory()
     const [records, setRecords] = useState([]);
 
 
@@ -103,6 +106,9 @@ function Unpaid() {
                 setCount(res.data.result.length);
                 setRecords(res.data.result.length);
 
+            }
+            else if (res.data.code === 0){
+                CommonServices.clientLogout(history)
             }
         });
     };

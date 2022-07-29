@@ -269,9 +269,9 @@ function EditQuery(props) {
             <Col md="4" style={{ display: "flex", justifyContent: "center" }}>
               <p style={{ fontSize: "20px" }}>Update Query - {qno}</p>
             </Col>
-            <Col md="4" style={{ display: "flex", justifyContent: "flex-end" }}>
+            {/* <Col md="4" style={{ display: "flex", justifyContent: "flex-end" }}>
               <DeleteQuery id={id} setLoading={setLoading}/>
-            </Col>
+            </Col> */}
           </Row>
          
         </CardHeader>

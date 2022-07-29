@@ -17,8 +17,11 @@ import './index.css'
 import ModalManual from "../ModalManual/AllComponentManual";
 import DataTablepopulated from "../../components/DataTablepopulated/DataTabel";
 import {Modal, ModalHeader, ModalBody} from 'reactstrap';
+import CommonServices from "../../common/common";
+import { useHistory } from "react-router-dom";
 import MessageIcon, { ViewDiscussionIcon, HelpIcon} from "../../components/Common/MessageIcon";
 function AllAssignment() {
+  let history = useHistory()
   const userId = window.localStorage.getItem("userid");
   const [assignmentDisplay, setAssignmentDisplay] = useState([]);
   const [records, setRecords] = useState([]);
@@ -89,6 +92,9 @@ function AllAssignment() {
         if (res.data.code === 1) {
           setAssignmentDisplay(res.data.result);
           setRecords(res.data.result.length);
+        }
+        else if (res.data.code === 2){
+          CommonServices.clientLogout(history)
         }
       });
   };

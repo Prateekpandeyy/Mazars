@@ -7,7 +7,7 @@ import {
   CardBody,
 } from "reactstrap";
 import CustomerFilter from "../../components/Search-Filter/CustomerFilter";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import BootstrapTable from "react-bootstrap-table-next";
 import RejectedModal from "./RejectModal";
 import ViewAllReportModal from "./ViewAllReport";
@@ -18,9 +18,11 @@ import './index.css';
 import ModalManual from "../ModalManual/AllComponentManual";
 import DataTablepopulated from "../../components/DataTablepopulated/DataTabel";
 import {Modal, ModalHeader, ModalBody} from 'reactstrap';
+import CommonServices from '../../common/common';
 import MessageIcon, { ViewDiscussionIcon, HelpIcon} from "../../components/Common/MessageIcon";
 function InprogressAssignment() {
   const userId = window.localStorage.getItem("userid");
+  let history = useHistory()
   const [assignmentDisplay, setAssignmentDisplay] = useState([]);
   const [records, setRecords] = useState([]);
   const [assignNo, setAssignNo] = useState('');
@@ -82,6 +84,9 @@ function InprogressAssignment() {
         if (res.data.code === 1) {
           setAssignmentDisplay(res.data.result);
           setRecords(res.data.result.length);
+        }
+        else if (res.data.code === 0){
+          CommonServices.clientLogout(history)
         }
       });
   };

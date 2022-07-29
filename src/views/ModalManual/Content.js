@@ -37,91 +37,91 @@ const Content  = () => {
 <table style={{display : "flex", flexDirection : "column", width: "100vw"}}>
     <tr onClick = {() => goToRow("#onlyLogin")} style={{display : 'flex'}}>
         <td className="modalManualTable"> 
-            For New Client Registration	
+        New Client Registration
         </td>
         <td className="modalManualTable">
           
             </td>
         <td className="modalManualTablePage">
-            02
+            03
         </td>
     </tr>
     <tr onClick = {() => goToRow("#existing")} style={{display : 'flex'}}>
         <td className="modalManualTable"> 
-        For Existing Client
+        Existing Client & Secondary Email Users Login
         </td>
         <td className="modalManualTable">
           
             </td>
         <td className="modalManualTablePage">
-            05
+            08
         </td>
     </tr>
 
     <tr onClick = {() => goToRow("#forgetPassword")} style={{display : 'flex'}}>
         <td className="modalManualTable"> 
-        Forgot Password 
+        Forgot Password
         </td>
         <td className="modalManualTable">
           
             </td>
         <td className="modalManualTablePage">
-            06
+            10
         </td>
     </tr>
     <tr onClick = {() => goToRow("#changePassword")} style={{display : 'flex'}}>
         <td className="modalManualTable"> 
-        Change Password	 
+        Change Password
         </td>
         <td className="modalManualTable">
           
             </td>
         <td className="modalManualTablePage">
-            11
+            14
         </td>
     </tr>
     <tr onClick = {() => goToRow("#freshQuery")} style={{display : 'flex'}}>
         <td className="modalManualTable"> 
-        Register Fresh Query
+        Registering Fresh Query
         </td>
         <td className="modalManualTable">
           
             </td>
         <td className="modalManualTablePage">
-            15
+            22
         </td>
     </tr>
    
     <tr onClick = {() => goToRow("#proposalProcessing")} style={{display : 'flex'}}>
         <td className="modalManualTable"> 
-        Proposal processing  </td>
+        Proposal Processing  </td>
         <td className="modalManualTable">
           
             </td>
         <td className="modalManualTablePage">
-            29
+         40
         </td>
     </tr>
     <tr onClick = {() => goToRow("#assignProcess")} style={{display : 'flex'}}>
         <td className="modalManualTable"> 
-        Assignment process
+        Assignment Process
           </td>
         <td className="modalManualTable">
           
             </td>
         <td className="modalManualTablePage">
-            39
+           52
         </td>
     </tr>
     <tr onClick = {() => goToRow("#paymentProcess")} style={{display : 'flex'}}>
         <td className="modalManualTable"> 
-        Making Payment
+        Making Payment	
           </td>
         <td className="modalManualTable">
           
             </td>
         <td className="modalManualTablePage">
-            46
+         60
         </td>
     </tr>
     <tr onClick = {() => goToRow("#mazarDashboard")} style={{display : 'flex'}}>
@@ -132,7 +132,7 @@ const Content  = () => {
           
             </td>
         <td className="modalManualTablePage">
-            53
+            68
         </td>
     </tr>
     <tr onClick = {() => goToRow("#showMessage")} style={{display : 'flex'}}>
@@ -143,29 +143,29 @@ const Content  = () => {
           
             </td>
         <td className="modalManualTablePage">
-            55
+            69
         </td>
     </tr>
     <tr onClick = {() => goToRow("#seceduler")} style={{display : 'flex'}}>
         <td className="modalManualTable"> 
-        Scheduling a meeting
+        Scheduling a Video Conference/ Meeting
           </td>
         <td className="modalManualTable">
           
             </td>
         <td className="modalManualTablePage">
-            56
+          71
         </td>
     </tr>
     <tr onClick = {() => goToRow("#feedbackProcess")} style={{display : 'flex'}}>
         <td className="modalManualTable"> 
-        Sending feedback
+        Sending Feedback
           </td>
         <td className="modalManualTable">
           
             </td>
         <td className="modalManualTablePage">
-            57
+           74
         </td>
     </tr>
   

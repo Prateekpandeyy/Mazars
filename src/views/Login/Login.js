@@ -336,7 +336,8 @@ const custLogout = () => {
           <div className="signUpLogged">
          
            <h4 style={{fontSize: "1.5rem"}}>
-            {clientLogin} : {userEmail}  
+            {/* {clientLogin} : {userEmail}   */}
+            {userEmail}
           </h4>
           <h4 style={{fontSize: "1.5rem"}}>
          logged in 

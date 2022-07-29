@@ -298,7 +298,7 @@ console.log("mainUser", mainUser)
       </div>
       <div className="col-md-2">
      {
-       JSON.parse(mainUser) === "1" ?
+                JSON.parse(mainUser) == "1" ? 
        <span onClick={(e) => delEmail(i.id)} style={{display : "flex", margin : "0px 10px", width : "100%"}}>
   
                                    <DeleteIcon />

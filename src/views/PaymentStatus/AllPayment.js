@@ -23,8 +23,10 @@ import ModalManual from "../ModalManual/AllComponentManual";
 import MessageIcon, { ViewDiscussionIcon, HelpIcon, 
   Payment} from "../../components/Common/MessageIcon";
 import DataTablepopulated from "../../components/DataTablepopulated/DataTabel";
+import {useHistory} from 'react-router-dom';
 function Paid() {
   const { id } = useParams();
+  let history = useHistory()
   const userId = window.localStorage.getItem("userid");
 
   const [records, setRecords] = useState([]);
@@ -118,6 +120,9 @@ function Paid() {
         setPayment(res.data.result);
         setCount(res.data.result.length);
         setRecords(res.data.result.length);
+      }
+      else if (res.data.code === 0){
+        CommonServices.clientLogout(history)
       }
     });
   };

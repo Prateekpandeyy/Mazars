@@ -68,8 +68,9 @@ function RejectedModal({
       <Modal isOpen={rejectedBox} toggle={deleteCliente} size="md">
         <ModalHeader toggle={deleteCliente}>Please provide the reason</ModalHeader>
         <ModalBody>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="mb-3">
+          <form onSubmit={handleSubmit(onSubmit)} style={{display  : "flex", flexDirection : "column", width : "100%"}}>
+            <div className="row">
+            <div className="col-lg-12">
               <textarea
                 className={classNames("form-control", {
                   "is-invalid": errors.p_chat,
@@ -81,6 +82,7 @@ function RejectedModal({
                 placeholder="Enter text here..."
               ></textarea>
             </div>
+              </div>
             <div class="modal-footer">
               {
                 loading ?

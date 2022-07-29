@@ -530,201 +530,176 @@ if(item.player === undefined){
         }
      })};   
 
- 
+
+
+
+
+
+
   
-  handleCamera = (e) => {
-    this.setState({disabledVedio : !this.state.disabledVedio})
-    e.currentTarget.classList.toggle("off");
-    this.localStream.isVideoOn()
-      ? this.localStream.disableVideo()
-      : this.localStream.enableVideo();
-  };
-
-  handleMic = (e) => {
-    e.currentTarget.classList.toggle("off");
-    this.localStream.isAudioOn()
-      ? this.localStream.disableAudio()
-      : this.localStream.enableAudio();
-  };
-
-  switchDisplay = (e) => {
-    if (
-      e.currentTarget.classList.contains("disabled") ||
-      this.state.streamList.length <= 1
-    ) {
-      return;
-    }
-    if (this.state.displayMode === "pip") {
-      this.setState({ displayMode: "tile" });
-    } else if (this.state.displayMode === "tile") {
-      this.setState({ displayMode: "pip" });
-    } else if (this.state.displayMode === "share") {
-      // do nothing or alert, tbd
-    } else {
-      console.error("Display Mode can only be tile/pip/share");
-    }
-  };
-
-  hideRemote = (e) => {
-    if (
-      e.currentTarget.classList.contains("disabled") ||
-      this.state.streamList.length <= 1
-    ) {
-      return;
-    }
-    let list;
-    let id = this.state.streamList[this.state.streamList.length - 1].getId();
-    list = Array.from(
-      document.querySelectorAll(`.ag-item:not(#ag-item-${id})`)
-    );
-    list.map((item) => {
-      if (item.style.display !== "none") {
-        item.style.display = "none";
+     handleCamera = (e) => {
+      this.setState({disabledVedio : !this.state.disabledVedio})
+      e.currentTarget.classList.toggle("off");
+      this.localStream.isVideoOn()
+        ? this.localStream.disableVideo()
+        : this.localStream.enableVideo();
+    };
+  
+    handleMic = (e) => {
+      e.currentTarget.classList.toggle("off");
+      this.localStream.isAudioOn()
+        ? this.localStream.disableAudio()
+        : this.localStream.enableAudio();
+    };
+  
+    switchDisplay = (e) => {
+      if (
+        e.currentTarget.classList.contains("disabled") ||
+        this.state.streamList.length <= 1
+      ) {
+        return;
+      }
+      if (this.state.displayMode === "pip") {
+        this.setState({ displayMode: "tile" });
+      } else if (this.state.displayMode === "tile") {
+        this.setState({ displayMode: "pip" });
+      } else if (this.state.displayMode === "share") {
+        // do nothing or alert, tbd
       } else {
-        item.style.display = "block";
+        console.error("Display Mode can only be tile/pip/share");
       }
-    });
-  };
-
-  handleExit = (e) => {
-    if(this.state.readyState === false){
-
-    }
-    else{
-    try {
-      this.client && this.client.unpublish(this.localStream);
-      this.localStream && this.localStream.close();
-      if (this.state.stateSharing) {
-        this.shareClient && this.shareClient.unpublish(this.shareStream);
-        this.shareStream && this.shareStream.close();
-      }
-      this.client &&
-        this.client.leave(
-          () => {
-
-          },
-          () => {
-          
-          }
-        );
-    } finally {
-      this.setState({ readyState: false });
-      this.client = null;
-      this.localStream = null;
-      window.location.assign("/#/customer/schedule")
-    }
-  }
-  };
-
+    };
   
-  sharingScreen = (e) => {
-    if(this.remoteShare2 === true && this.state.stateSharing === false){
-      Swal.fire({
-        title : "error",
-        html : "Only one screen can be share at a time",
-        icon : "error"
-      })
-    }
-    else if(this.state.stateSharing) {
-       this.shareClient && this.shareClient.unpublish(this.shareStream);
-       this.shareStream && this.shareStream.close();
-       this.setState({stateSharing : false})
-     }
-      else {
-      this.setState({stateSharing : true})
-      let $ = this.props;
-      // init AgoraRTC local client
-      this.shareClient = AgoraRTC.createClient({ mode: $.transcode });
-      this.shareClient.init($.appId, () => {
-      // this.subscribeStreamEvents();
-        this.shareClient.join($.appId, $.channel, $.uid, (uid) => {
-          this.state.uid = uid;
-          // create local stream
-          // It is not recommended to setState in function addStream
-          this.shareStream = this.streamInitSharing(
-            uid,
-            $.attendeeMode,
-            $.videoProfile
-          );
-          this.shareStream.init(
+    hideRemote = (e) => {
+      if (
+        e.currentTarget.classList.contains("disabled") ||
+        this.state.streamList.length <= 1
+      ) {
+        return;
+      }
+      let list;
+      let id = this.state.streamList[this.state.streamList.length - 1].getId();
+      list = Array.from(
+        document.querySelectorAll(`.ag-item:not(#ag-item-${id})`)
+      );
+      list.map((item) => {
+        if (item.style.display !== "none") {
+          item.style.display = "none";
+        } else {
+          item.style.display = "block";
+        }
+      });
+    };
+  
+    handleExit = (e) => {
+      if(this.state.readyState === false){
+  
+      }
+      else{
+      try {
+        this.client && this.client.unpublish(this.localStream);
+        this.localStream && this.localStream.close();
+        if (this.state.stateSharing) {
+          this.shareClient && this.shareClient.unpublish(this.shareStream);
+          this.shareStream && this.shareStream.close();
+        }
+        this.client &&
+          this.client.leave(
             () => {
-              if ($.attendeeMode !== "audience") {
-                this.addStream(this.shareStream, true);
-                this.shareClient.publish(this.shareStream, (err) => {
-                });
-              }
-              this.setState({ readyState: true });
+  
             },
-            (err) => {
-              this.setState({ readyState: true });
+            () => {
+            
             }
           );
-        });
-      });
+      } finally {
+        this.setState({ readyState: false });
+        this.client = null;
+        this.localStream = null;
+        window.location.assign("/#/customer/schedule")
+      }
     }
-  };
-
-  streamInitSharing = (uid, attendeeMode, videoProfile, config) => {
-    let defaultConfig = {
-      streamID: uid,
-      audio: false,
-      video: false,
-      screen: true,
-     
     };
-
-    switch (attendeeMode) {
-      case "audio-only":
-        defaultConfig.video = false;
-        break;
-      case "audience":
-        defaultConfig.video = false;
-        defaultConfig.audio = false;
-        break;
-      default:
-      case "video":
-        break;
-    }
-
-    let stream = AgoraRTC.createStream(merge(defaultConfig, config));
-    stream.setVideoProfile(videoProfile);
-    return stream;
-  };
-
-
-
-
-
-encodedString = "N2VmMGY4ODg4NjI4NDFhYWIwNWY1NzFjNDM5MzE4OTc6NjU0ZDViYWM5ZDU2NGY4Y2JhOTJmNzJkOGM2N2FjYzI=";
-
-  // recordStream = () => {
-
-  //   var data = JSON.stringify({
-  //     "cname":"demo",
-  //     "uid":"527841",
-  //     "clientRequest":{ "resourceExpiredHour": 24}});
-
-  //     var config = {
-  //     method: 'post',
-  //     url: `https://api.agora.io/v1/apps/${this.props.appId}/cloud_recording/acquire`,
-  //     headers: { 
-  //       'Content-Type': 'application/json', 
-  //       'Authorization': 'Basic '+this.encodedString,
-  //     },
-  //     data : data
-  //     };
-  //       axios(config)
-  //       .then(function (response) {
-        
-  //       })
-  //       .catch(function (error) {
-
-  //       });
-  // };
-
-
+  
+    
+    sharingScreen = (e) => {
+      if(this.remoteShare2 === true && this.state.stateSharing === false){
+        Swal.fire({
+          title : "error",
+          html : "Only one screen can be share at a time",
+          icon : "error"
+        })
+      }
+      else if(this.state.stateSharing) {
+         this.shareClient && this.shareClient.unpublish(this.shareStream);
+         this.shareStream && this.shareStream.close();
+         this.setState({stateSharing : false})
+       }
+        else {
+        this.setState({stateSharing : true})
+        let $ = this.props;
+        // init AgoraRTC local client
+        this.shareClient = AgoraRTC.createClient({ mode: $.transcode });
+        this.shareClient.init($.appId, () => {
+        // this.subscribeStreamEvents();
+          this.shareClient.join($.appId, $.channel, $.uid, (uid) => {
+            this.state.uid = uid;
+            // create local stream
+            // It is not recommended to setState in function addStream
+            this.shareStream = this.streamInitSharing(
+              uid,
+              $.attendeeMode,
+              $.videoProfile
+            );
+            this.shareStream.init(
+              () => {
+                if ($.attendeeMode !== "audience") {
+                  this.addStream(this.shareStream, true);
+                  this.shareClient.publish(this.shareStream, (err) => {
+                  });
+                }
+                this.setState({ readyState: true });
+              },
+              (err) => {
+                this.setState({ readyState: true });
+              }
+            );
+          });
+        });
+      }
+    };
+  
+    streamInitSharing = (uid, attendeeMode, videoProfile, config) => {
+      let defaultConfig = {
+        streamID: uid,
+        audio: false,
+        video: false,
+        screen: true,
+       
+      };
+  
+      switch (attendeeMode) {
+        case "audio-only":
+          defaultConfig.video = false;
+          break;
+        case "audience":
+          defaultConfig.video = false;
+          defaultConfig.audio = false;
+          break;
+        default:
+        case "video":
+          break;
+      }
+  
+      let stream = AgoraRTC.createStream(merge(defaultConfig, config));
+      stream.setVideoProfile(videoProfile);
+      return stream;
+    };
+  
+ 
   render() {
 
+    
     const style = {
       display: "grid",
       gridGap: "50px 26px",
@@ -738,7 +713,8 @@ encodedString = "N2VmMGY4ODg4NjI4NDFhYWIwNWY1NzFjNDM5MzE4OTc6NjU0ZDViYWM5ZDU2NGY
       this.props.attendeeMode === "video" ? (
         <span
           onClick={this.handleCamera}
-          className="ag-btn videoControlBtn"
+          className={this.state.readyState ? "ag-btn videoControlBtn" : "ag-btn videoControlBtn disabled"}
+         
           title="Enable/Disable Video"
         >
           <i className="ag-icon ag-icon-camera"></i>
@@ -763,7 +739,6 @@ encodedString = "N2VmMGY4ODg4NjI4NDFhYWIwNWY1NzFjNDM5MzE4OTc6NjU0ZDViYWM5ZDU2NGY
         ""
       );
 
-
     const switchDisplayBtn = (
       <span
         onClick={this.switchDisplay}
@@ -777,7 +752,6 @@ encodedString = "N2VmMGY4ODg4NjI4NDFhYWIwNWY1NzFjNDM5MzE4OTc6NjU0ZDViYWM5ZDU2NGY
         <i className="ag-icon ag-icon-switch-display"></i>
       </span>
     );
-
 
     const hideRemoteBtn = (
       <span
@@ -807,22 +781,11 @@ encodedString = "N2VmMGY4ODg4NjI4NDFhYWIwNWY1NzFjNDM5MzE4OTc6NjU0ZDViYWM5ZDU2NGY
 
 
 
-    // const recordingBtn = (
-    //   <span
-    //     onClick={this.recordStream}
-    //     className={
-    //       this.state.readyState ? "ag-btn exitBtn" : "ag-btn exitBtn disabled"
-    //     }
-    //     title="Record"
-    //   >
-    //     <RecordVoiceOverIcon />
-    //   </span>
-    // );
-
 
     return (
-      <div id="ag-canvas" style={style}>
-        <div className="ag-btn-group">
+      <>
+      <div id="ag-canvas" style={style}>   
+      <div className="ag-btn-group">
           {exitBtn}
           {videoControlBtn}
           {audioControlBtn}
@@ -840,6 +803,7 @@ encodedString = "N2VmMGY4ODg4NjI4NDFhYWIwNWY1NzFjNDM5MzE4OTc6NjU0ZDViYWM5ZDU2NGY
           {/* {recordingBtn} */}
         </div>
       </div>
+        </>
     );
   }
 }

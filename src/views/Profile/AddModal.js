@@ -64,21 +64,21 @@ const AddModal = ({addEmailFun, addEmail, addedEmail, token, getData}) => {
       }
 }
     return(
-        <Modal isOpen={addEmail} toggle={addEmailFun} size="md">
+        <Modal isOpen={addEmail} toggle={addEmailFun} size="sm">
             <ModalHeader toggle={addEmailFun}>
             <h4>Add Email</h4>
             </ModalHeader>
             <ModalBody>
             <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">    
             <div className="row">
-                      <div className="col-md-10">
-                      <div className="question_query mb-2">
+                      <div className="col-lg-12">
+                      
                         <label className="form-label">
                         Secondary Email 
                         </label>
                       
                         
-                      </div>
+                     
                       <input
                         type="email"
                         maxLength = "100"
@@ -89,7 +89,7 @@ const AddModal = ({addEmailFun, addEmail, addedEmail, token, getData}) => {
                     value = {email}
                          onChange={(e) => emailHandler(e)}
                         onBlur={(e) => emailValidation(e)}
-                        placeholder="Enter Your Password"
+                        placeholder="Enter Your Email"
                         ref={register({ required: true })}
                       />
                     

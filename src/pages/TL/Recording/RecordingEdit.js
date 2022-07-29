@@ -39,7 +39,7 @@ return (
     <>
     <Modal isOpen = {isOpen} toggle={recordingHandler}>
         <ModalHeader toggle={recordingHandler}>
-        <h1>Recording Edit</h1>
+        <h4>Recording Edit</h4>
         </ModalHeader>
         <ModalBody>
        <form onSubmit = {handleSubmit(onSubmit)}>

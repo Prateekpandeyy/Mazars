@@ -9,7 +9,7 @@ import "./styles.css";
 function CommingSoon() {
   return (
     <div className="AppCommingSoon">
-      <div className="container">
+      <div className="containercomming">
         <h1>
           Website
           <br />
