@@ -106,7 +106,7 @@ const Mediatextshow = () => {
     setStats(!stats)
 }
     return(
-        <Layout adminDashboard="adminDashboard" adminUserId={userId}>
+        <Layout cmsDashboard="cmsDashboard" adminUserId={userId}>
       <Container maxWidth="xl">
       <div className="py-2">
       <Row>

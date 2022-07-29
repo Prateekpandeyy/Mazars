@@ -67,11 +67,9 @@ function VerifyOtp({ email, uid, loading, setLoading }) {
           localStorage.setItem("adminloginTime", timeStampInMs)
           setLoading(false)
           Alerts.SuccessLogin("Logged in successfully.")
-          localStorage.setItem("adminkey", JSON.stringify(response.data["user id"]));
-          sessionStorage.setItem("adminIdsession", JSON.stringify(response.data["user id"]));
-          localStorage.setItem("adminEmail", JSON.stringify(response.data.name));
+        
           localStorage.setItem("token", response.data.token)
-          localStorage.setItem("adminToken", response.data.token)
+        
           if(role === "cms"){
           history.push("/cms/cms")
 

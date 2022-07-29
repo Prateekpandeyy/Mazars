@@ -6,6 +6,8 @@ import RegError from './RegError';
 import loginImg from "../ManualImg/loginImg.png";
 import IgnologinImg from "../ManualImg/ignologinImg.png";
 import successregImg from "../ManualImg/successReg.png";
+import logo2 from '../ManualImg/logo2.png';
+import logo22 from "../ManualImg/logo22.png";
 import style from './manula.module.css';
 const useStyle = makeStyles(theme => ({
     root : {
@@ -45,11 +47,12 @@ const Login = () => {
             <Card> 
            <CardHeader  title={
                <>
+               <h4 style = {{fontWeight : "800", color : "#4472c4"}}>Mazars Advisory Solutions (MAS) </h4>
              <span className="modalTextHeading"> visit :  </span>
                <a href="https://masindia.live/#/" target="_blank">https://masindia.live/#/
                </a>
                </>
-           } subheader= "(To post a query, visit Mazarâ€™s portal by clicking above link.)"/>
+           } subheader= "(To post a query, visit MAS portal by clicking above link.)"/>
                 <CardActionArea>
                    
                <CardContent>
@@ -100,22 +103,37 @@ const Login = () => {
                    
                 <CardContent>
                 <span className="modalTextHeading">
-                        Provide your basic information to complete the registration.
-                       
+                Provide your basic information to complete the registration.
                             </span>
                             <Typography variant="body2">
-                            (On clicking sign up for registration, 
-                    following screen will open to enter basic information.)
+                            (On clicking sign up for registration, following screen will open to enter basic information.)
                                 </Typography>
+                                <div style={{display : "flex", margin : "30px 0px"}}> 
+                            <CardMedia component="img" src={logo2} />
+                            </div>
+                            <CardMedia component="img" src={logo22} style={{display : "flex", margin : "30px 0px"}}/>
+                           
                 <table className="table table-bordered p-2">
 
 <tbody>
+    <tr>
+        <th>User Id <sup className='declined'>*</sup></th>
+        <td className='px-5'>
+            <ul>
+                <li><Typography variant='body2'>
+                Enter minimum 6 alpha numeric characters (no special characters) Enter minimum 6 alpha numeric characters
+                 (no special characters) to form an user id
+                </Typography></li>
+            
+            </ul>
+        </td>
+    </tr>
     <tr>
         <th>Name <sup className='declined'>*</sup></th>
         <td className='px-5'>
             <ul>
                 <li><Typography variant='body2'>
-                Enter full name or any chosen name
+                Enter full name or any chosen name (no special characters allowed)
                 </Typography></li>
                 <li>
                     <Typography variant='body2'>
@@ -126,19 +144,20 @@ const Login = () => {
         </td>
     </tr>
     <tr>
-        <th>Email Address <sup className='declined'>*</sup></th>
+        <th>Email Address<sup className='declined'>*</sup></th>
         <td className='px-5'>
             <ul>
                 <li>
                     <Typography variant='body2'>
-                    Enter personal email address or the email address of any representative or authorized signatory of the business/entity
+                    Enter personal email address or the email address of any representative
+                     or authorized signatory of the business/entity
                     </Typography>
                 </li>
             </ul>
         </td>
     </tr>
     <tr>
-        <th>Occupation/Profession <sup className='declined'>*</sup></th>
+        <th>Occupation/Profession<sup className='declined'>*</sup></th>
        <td className='px-5'>
             <ul>
                 <li>
@@ -148,7 +167,8 @@ const Login = () => {
                 </li>
                 <li>
                     <Typography variant='body2'>
-                    In case of business/entity, select the occupation/ profession of the representative or authorized signatory, who is registering for query
+                    In case of business/entity, select the occupation/ profession
+                     of the representative or authorized signatory, who is registering for query
                     </Typography>
                 </li>
             </ul>
@@ -160,7 +180,19 @@ const Login = () => {
             <ul>
                 <li>
                     <Typography variant='body2'>
-                    From drop down list, select the Country/State/City. City or State may also be entered/typed
+                    From drop down list, select the Country/State/City. City or State may also be entered/typed.
+                    </Typography>
+                </li>
+            </ul>
+        </td>
+    </tr>
+    <tr>
+        <th>Address<sup className='declined'>*</sup></th>
+        <td className='px-5'>
+            <ul>
+                <li>
+                    <Typography variant='body2'>
+                    Enter complete address.
                     </Typography>
                 </li>
             </ul>
@@ -197,7 +229,7 @@ const Login = () => {
                <li>
                    <Typography variant='body2'>
                    Enter the valid 15-digit, PAN based Alpha Numeric GST IN number of the business/entity, if applicable
-                   </Typography>
+                          </Typography>
                </li>
             </ul>
         </td>
@@ -208,13 +240,25 @@ const Login = () => {
             <ul>
                <li>
                    <Typography variant='body2'>
-                   Choose a password that should be minimum of eight characters, including at least one upper case, lower case, special character and number
-                   </Typography>
+                   Choose a password that should be minimum of eight characters,
+                    including at least one upper case, lower case, special character and number.
+                 </Typography>
                </li>
             </ul>
         </td>
     </tr>
-   
+    <tr>
+    <th>Secondary Email</th>
+        <td className='px-5'>
+            <ul>
+               <li>
+                   <Typography variant='body2'>
+                   Enter email address of other person(s) of 
+                   the organization entitled to work on the queries under the User Id code.</Typography>
+               </li>
+            </ul>
+        </td>
+    </tr>
 </tbody>
 </table>
                 <RegistrationInfo />
@@ -254,6 +298,7 @@ If the OTP entered is incorrect then Error message window will appear showing â€
                    </Typography>
                
                </Box>
+            
                <RegError />
              </secton>
         

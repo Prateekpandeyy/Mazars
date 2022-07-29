@@ -23,7 +23,7 @@ import UnsubscribeOutlinedIcon from '@mui/icons-material/UnsubscribeOutlined';
 import PermMediaOutlinedIcon from '@mui/icons-material/PermMediaOutlined';
 import MissedVideoCallIcon from '@mui/icons-material/MissedVideoCall';
 import MediaBluetoothOffIcon from '@mui/icons-material/MediaBluetoothOff';
-function Sidebar({ adminDashboard, custDashboard, TLDashboard, TPDashboard , feedbackNumber}) {
+function Sidebar({ adminDashboard, cmsDashboard ,  custDashboard, TLDashboard, TPDashboard , feedbackNumber}) {
   const [toggleState, setToggleState] = useState(false);
   const [feedbackNumber2, setfeedbackNumber2] = useState();
   const [feedbackNumbertl, setfeedbackNumbertl] = useState();
@@ -34,6 +34,7 @@ function Sidebar({ adminDashboard, custDashboard, TLDashboard, TPDashboard , fee
   const tlkey= window.localStorage.getItem("tlkey");
   const tpkey = window.localStorage.getItem("tpkey");
   const adminkey = window.localStorage.getItem("adminkey")
+  const cmsToken = localStorage.getItem("token")
   let history = useHistory()
   const toggleTab = (index) => {
   
@@ -201,13 +202,44 @@ const handleClick = () => {
 const handleClickCms = () => {
   setOpen2(!open2)
 }
-
+console.log("cmsDashboard", cmsDashboard)
 const classes = useStyle()
   return (
-    <>
-{
- adminDashboard && role === "cms" ?
-  <>
+   
+
+<>
+        <div
+        className="main-menu menu-fixed menu-light menu-accordion  menu-shadow "
+        data-scroll-to-active="true"
+        data-img="https://themeselection.com/demo/ chameleon-free-bootstrap-admin-template/theme-assets/images/backgrounds/02.jpg"
+      >
+        <div className="navbar-header">
+          <ul className="nav navbar-nav flex-row">
+            <li className="nav-item mr-auto">
+              <a className="navbar-brand" href={logo} style={{display: "flex", height: "75px", padding: "4px", justifyContent: "center", alignItems: "center"}}>
+                
+                <img
+                  className="brand-logo"
+                 
+                  src={`${ima}`}
+                  style={{display: "flex",  width: "100%", height: "auto", maxWidth:"100px", objectFit: "contain"}}
+                />
+              
+               
+              </a>
+            </li>
+            <li className="nav-item d-md-none">
+              <a className="nav-link close-navbar">
+                <i className="fa fa-times"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div className="main-menu-content">
+          {
+            cmsDashboard && (
+              <>
     <div
         className="main-menu menu-fixed menu-light menu-accordion  menu-shadow "
         data-scroll-to-active="true"
@@ -366,37 +398,9 @@ const classes = useStyle()
             </ul>
           </div>
 </div>
-  </> :
-  <>
-        <div
-        className="main-menu menu-fixed menu-light menu-accordion  menu-shadow "
-        data-scroll-to-active="true"
-        data-img="https://themeselection.com/demo/ chameleon-free-bootstrap-admin-template/theme-assets/images/backgrounds/02.jpg"
-      >
-        <div className="navbar-header">
-          <ul className="nav navbar-nav flex-row">
-            <li className="nav-item mr-auto">
-              <a className="navbar-brand" href={logo} style={{display: "flex", height: "75px", padding: "4px", justifyContent: "center", alignItems: "center"}}>
-                
-                <img
-                  className="brand-logo"
-                 
-                  src={`${ima}`}
-                  style={{display: "flex",  width: "100%", height: "auto", maxWidth:"100px", objectFit: "contain"}}
-                />
-              
-               
-              </a>
-            </li>
-            <li className="nav-item d-md-none">
-              <a className="nav-link close-navbar">
-                <i className="fa fa-times"></i>
-              </a>
-            </li>
-          </ul>
-        </div>
-
-        <div className="main-menu-content">
+  </> 
+            )
+          }
           {custDashboard && (
             <ul
               className="navigation navigation-main"
@@ -980,8 +984,7 @@ const classes = useStyle()
         <div className="navigation-background"></div>
       </div>
   </>
-}
-    </>
+ 
   );
 }
 

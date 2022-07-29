@@ -4,6 +4,7 @@ import { Modal, ModalHeader, ModalBody , Button } from "reactstrap";
 import { Spinner } from "reactstrap";
 import Swal from "sweetalert2";
 import classNames from "classnames";
+
 class Optin extends Component {
     constructor(props){
         super(props)
@@ -15,6 +16,8 @@ class Optin extends Component {
         }
        
     }
+  x = -50;
+  y = -50;
  
   modal() {
       console.log("click modal")
@@ -62,9 +65,16 @@ emailFun (e) {
     return (
       <div className="optin">
        
-        <button onClick={() => this.modal()} id="clickModal">Click Me</button>
+        <button onClick={() => this.modal()} id="clickModal">Click to Access</button>
      
-         <Modal isOpen={this.state.isOpen} toggle={this.modal} >
+         <Modal style={{
+        position : "absolute",
+        display : "flex",
+        width : "300px",
+        top : "50%",
+        left : "50%",
+        transform: `translate(${this.x}%, ${this.y}%)`
+         }} isOpen={this.state.isOpen} toggle={this.modal} >
          <ModalHeader></ModalHeader>
          <ModalBody>
            <form>

@@ -225,7 +225,7 @@ const editorShow = (e) => {
  }
 }
     return(
-        <Layout adminDashboard="adminDashboard" adminUserId={userId}>
+        <Layout cmsDashboard="cmsDashboard" adminUserId={userId}>
           
       <MyContainer>
       <div className="py-2">

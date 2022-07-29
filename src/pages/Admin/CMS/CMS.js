@@ -200,7 +200,7 @@ else{
   };
   console.log("cmsToken", localStorage.getItem("token"))
 return (
-    <Layout adminDashboard="adminDashboard" adminUserId={userId}>
+    <Layout cmsDashboard= "cmsDashboard" adminUserId={userId}>
 
 <Container maxWidth="xl">
    

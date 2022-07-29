@@ -1,5 +1,7 @@
 .optin {
-  margin-top: 8%;
+  position: absolute;
+  right: 5%;
+  bottom: 5%;
 }
 .optin p {
   font-size: 14px;

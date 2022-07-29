@@ -77,25 +77,7 @@ function CustomerNotification({ tokenKey, name , panel}) {
       
    })
   }
-  else if (role === "cms"){
-      const token = window.localStorage.getItem("token")
-      const myConfig = {
-          headers : {
-           "uit" : token
-          }
-        }
-   axios.get(`${baseUrl}/cms/logout`, myConfig)
-   .then((res) => {
-      
-        localStorage.removeItem("adminkey");
-        localStorage.removeItem("adminEmail");
-        localStorage.removeItem("category");
-        localStorage.removeItem("token")
-       
-        history.push("/cms/login");
-      
-   })
-  }
+ 
   };
 
   const tlLogout = () => {
@@ -184,11 +166,7 @@ function CustomerNotification({ tokenKey, name , panel}) {
          "uit" : token
         }
       }
-      if(role === "cms" && window.location.hash.search("admin") == 2){
-        console.log("cmsfixed", window.location.hash.search("admin"))
-        history.push("/*")
-    }
-        else{
+     
             axios
             .get(`${baseUrl}/${redir}/getNotification?id=${JSON.parse(tokenKey)}&type_list=uread`, myConfig)
             .then((res) => {
@@ -212,7 +190,7 @@ function CustomerNotification({ tokenKey, name , panel}) {
                    }
                 }
             });
-        }
+        
     };
 
 

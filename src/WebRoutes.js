@@ -152,6 +152,7 @@ import PublicRouteUser from './Service/PublicRouteUser'
 import PublicRouteAdmin from './Service/PublicRouteAdmin'
 import PublicRouteTL from './Service/PublicRouteTL'
 import PublicRouteTP from './Service/PublicRouteTP'
+import PrivateRouteCms from "./Service/PrivateRouteCms";
 import AboutOuter from "./views/About/AboutOuter";
 import ContactOuter from "./views/Contact/ContactOuter";
 import QueryContact from "./views/QueryContact/QueryContact";
@@ -192,6 +193,7 @@ import EditProfile from "./views/EditProfile/EditProfile";
 import Drag from "./components/Drag";
 import UploadLinkContent from "./pages/Admin/CMS/UploadLInkContent";
 import CommingSoon from "./views/ComingSoon/CommingSoon";
+import PublicCms from "./Service/PublicCms";
 
 // import PayDetails from "./views/PaymentStatus/PayDetails";
 
@@ -382,39 +384,39 @@ function WebRoutes() {
             <PrivateRouteTP exact path="/taxprofessional/paydetails/:id" component={TppayDetails} />
            
            
-            <PublicRouteAdmin exact path = "/cms/login" component = {CmsLogin} />
-            <PrivateRouteAdmin exact path="/cms/cms" component={Cms} />
-            <PrivateRouteAdmin exact path = "/cms/flash" component = {FlashMessage} />
-            <PrivateRouteAdmin exact path = "/cms/articles" component = {CmsContent} />
-            <PrivateRouteAdmin exact path = "/cms/updates" component = {AdminUpdates} />
-            <PrivateRouteAdmin exact path = "/cms/articlesedit/:id" component = {CmsContent} />
-            <PrivateRouteAdmin exact path = "/cms/updatecontent" component = {UpdatesContent} />
-            <PrivateRouteAdmin exact path = "/cms/editupdates/:id" component = {Editupdates} />
-            <PrivateRouteAdmin exact path = "/cms/links" component = {Links} />
-            <PrivateRouteAdmin exact path = "/cms/linksedit/:id" component = {Links} />
-            <PrivateRouteAdmin exact path = "/cms/linklist" component = {Linklist} />
-            <PrivateRouteAdmin exact path = "/cms/faqlist" component = {FaqList} />
-            <PrivateRouteAdmin exact path = "/cms/mediagallery" component = {MediaGallery} />
-            <PrivateRouteAdmin exact path = "/cms/mediacontent" component = {MediaContent} />
-            <PrivateRouteAdmin exact path = "/cms/flashcontent" component = {FlashContent} />
-            <PrivateRouteAdmin exact path = "/cms/flashcontent/:id" component = {FlashContent} />
-            <PrivateRouteAdmin exact path = "/cms/faqedit/:id" component = {Faq} />
-            <PrivateRouteAdmin exact path = "/cms/faq" component = {Faq} />
-            <PrivateRouteAdmin exact path = "/cms/mediatab" component = {MediaTab} />
-            <PrivateRouteAdmin exact path = "/cms/videocontent" component = {VideoContent} />
-            <PrivateRouteAdmin exact path = "/cms/mediatext" component = {Mediatextshow} />
-            <PrivateRouteAdmin exact path = "/cms/mediatext/:id" component = {Mediatextshow} />
-            <PrivateRouteAdmin exact path = "/cms/imagegallery" component = {GroupImage} />
-            <PrivateRouteAdmin exact path = "/cms/videogallery" component = {Groupvideo} />
-            <PrivateRouteAdmin exact path = "/cms/editimage/:id" component = {EditImage} />
-            <PrivateRouteAdmin exact path = "/cms/editvideo/:id" component = {EditVideo} />
-             <PrivateRouteAdmin exact path = "/cms/editfaq/:id" component = {EditFaq} />
-             <PrivateRouteAdmin exact path = "/cms/videolist" component = {VideoMedia} />
-             <PrivateRouteAdmin exact path = "/cms/addarticles" component = {AddCmsContent} />
-             <PrivateRouteAdmin exact path = "/cms/contentlist" component = {MediaText} />
-             <PrivateRouteAdmin exaxt path = "/cms/imagelist" component = {MediaContent} />
-             <PrivateRouteAdmin exaxt path = "/cms/uploadlink" component = {UploadLink} />
-             <PrivateRouteAdmin exaxt path = "/cms/uploadlinkcontent" component = {UploadLinkContent} />
+            <PublicCms exact path = "/cms/login" component = {CmsLogin} />
+            <PrivateRouteCms exact path="/cms/cms" component={Cms} />
+            <PrivateRouteCms exact path = "/cms/flash" component = {FlashMessage} />
+            <PrivateRouteCms exact path = "/cms/articles" component = {CmsContent} />
+            <PrivateRouteCms exact path = "/cms/updates" component = {AdminUpdates} />
+            <PrivateRouteCms exact path = "/cms/articlesedit/:id" component = {CmsContent} />
+            <PrivateRouteCms exact path = "/cms/updatecontent" component = {UpdatesContent} />
+            <PrivateRouteCms exact path = "/cms/editupdates/:id" component = {Editupdates} />
+            <PrivateRouteCms exact path = "/cms/links" component = {Links} />
+            <PrivateRouteCms exact path = "/cms/linksedit/:id" component = {Links} />
+            <PrivateRouteCms exact path = "/cms/linklist" component = {Linklist} />
+            <PrivateRouteCms exact path = "/cms/faqlist" component = {FaqList} />
+            <PrivateRouteCms exact path = "/cms/mediagallery" component = {MediaGallery} />
+            <PrivateRouteCms exact path = "/cms/mediacontent" component = {MediaContent} />
+            <PrivateRouteCms exact path = "/cms/flashcontent" component = {FlashContent} />
+            <PrivateRouteCms exact path = "/cms/flashcontent/:id" component = {FlashContent} />
+            <PrivateRouteCms exact path = "/cms/faqedit/:id" component = {Faq} />
+            <PrivateRouteCms exact path = "/cms/faq" component = {Faq} />
+            <PrivateRouteCms exact path = "/cms/mediatab" component = {MediaTab} />
+            <PrivateRouteCms exact path = "/cms/videocontent" component = {VideoContent} />
+            <PrivateRouteCms exact path = "/cms/mediatext" component = {Mediatextshow} />
+            <PrivateRouteCms exact path = "/cms/mediatext/:id" component = {Mediatextshow} />
+            <PrivateRouteCms exact path = "/cms/imagegallery" component = {GroupImage} />
+            <PrivateRouteCms exact path = "/cms/videogallery" component = {Groupvideo} />
+            <PrivateRouteCms exact path = "/cms/editimage/:id" component = {EditImage} />
+            <PrivateRouteCms exact path = "/cms/editvideo/:id" component = {EditVideo} />
+             <PrivateRouteCms exact path = "/cms/editfaq/:id" component = {EditFaq} />
+             <PrivateRouteCms exact path = "/cms/videolist" component = {VideoMedia} />
+             <PrivateRouteCms exact path = "/cms/addarticles" component = {AddCmsContent} />
+             <PrivateRouteCms exact path = "/cms/contentlist" component = {MediaText} />
+             <PrivateRouteCms exaxt path = "/cms/imagelist" component = {MediaContent} />
+             <PrivateRouteCms exaxt path = "/cms/uploadlink" component = {UploadLink} />
+             <PrivateRouteCms exaxt path = "/cms/uploadlinkcontent" component = {UploadLinkContent} />
           
             <Route exact path="/*" component={PageNotFound} />
 

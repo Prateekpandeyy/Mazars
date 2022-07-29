@@ -9,7 +9,7 @@ function Layout(props) {
   const[isActive,setIsActive]=useState(true)
   const[isLogout,setLogout]=useState(false)
   const {
-    custDashboard, adminDashboard, TLDashboard,
+    custDashboard, cmsDashboard, adminDashboard, TLDashboard,
     TPDashboard,
     custUserId, adminUserId, TLuserId, TPuserId, feedbackNumber } = props
     var $sortable = $('.sortable');
@@ -59,6 +59,7 @@ $sortable.on('click', function(){
         custDashboard={custDashboard}
         adminDashboard={adminDashboard}
         TLDashboard={TLDashboard}
+        cmsDashboard = {cmsDashboard}
         TPDashboard={TPDashboard}
         feedbackNumber = {feedbackNumber}
       />

@@ -3,7 +3,7 @@ import {Box, Container, Typography, Button, Card, CardActionArea, CardHeader, Ca
 import { makeStyles } from '@material-ui/core';
 import style from  './manula.module.css';
 import errorImg from "../ManualImg/errorMsg.png";
-import loginImage from '../ManualImg/Login22.png';
+import loginImage from '../ManualImg/login222.png';
 import loginError from '../ManualImg/loginError.png';
 import freshLogin from '../ManualImg/freshLogin.png';
 import forgetImg from '../ManualImg/forget.png';
@@ -55,23 +55,35 @@ return (
        <Container maxWidth= "xl">
            <Card>
                <CardContent>
-                   <CardMedia  src={errorImg} component="img"/>
+               <CardMedia  src={errorImg} component="img"/>
+               <Typography variant='h5'>
+               Upon successful registration of a new client, a welcome email will be sent by the MAS team to the 
+               client email address and all secondary email users added by the new client. 
+</Typography>
+<Typography variant='h5'>
+In these emails, for future log in by such users, the User Id (common to all), 
+specific email id (client email id or the secondary email id) along with unique 
+password will be informed to such client and the secondary email users. With such credentials they will be entitled to log in the MAS platform anytime & independently of each other.
+ All users will have full capability to work on the queries under the common User Id.
+            </Typography>
+              
                    
 <Typography variant='h5' variantMapping={{
     h5 : 'span'
 }} id="existing">
-For Existing Client: Login with your registered Email id & Password. 
+For Existing Client (including secondary email users): 
+Login with your registered User Id, Email Id & Password.
     </Typography>
     <ul className={style.registrationTable}>
   
    <li>
        <Typography variant="body2" color="primary">
-       	Enter your registered email id and password, under “For existing client” and click on 
+       Enter your registered user id, email id and password, under “For existing client” and click on
            <Button variant="contained" className={classes.root}>Send Otp</Button>     </Typography>
            </li>
     <li>
         <Typography variant='body2' color="primary">
-         The OTP will be sent to your registered email id, valid for 180 Seconds
+        The OTP will be sent to your registered email id, valid for 180 Seconds.
             </Typography> </li>
     <li> 
         <Typography variant='body2' color="primary">
@@ -85,17 +97,22 @@ For Existing Client: Login with your registered Email id & Password.
     </li>
     <li> 
         <Typography variant='body2' color="primary">
-        In case incorrect OTP has been entered, error message window of “Incorrect OTP” will appear.
-
+        In case incorrect OTP has been entered, error message
+         window of “Incorrect OTP” will appear.
         </Typography>
     </li>
- 
+    <li> 
+        <Typography variant='body2' color="primary">
+        In case the client or any secondary email users of a user id is
+         already logged in, other users of the same user id will not be able to login.
+        </Typography>
+    </li>
 </ul>
 <CardMedia src={loginImage} component="img" />
 <Typography variant="body1">
 After clicking <Button variant="contained" className={classes.root}>Send Otp</Button> on Success message will appear. Click ok and enter the OTP received on your 
 <Button variant="contained" className={classes.root}>Send Otp</Button> email id & click on 
-
+<Button variant="contained" className={classes.root}>Login</Button>
 </Typography>
 <Typography variant="body1">
 If the OTP entered is incorrect then Error message window will appear showing “Incorrect OTP”

@@ -68,7 +68,7 @@ const RegistrationInfo = () => {
 </ul>
     </Container>
     </CardActions>
-    <CardMedia component="img" src={regImg}/>
+   
 
             </Card>
            </Paper>

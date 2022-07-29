@@ -130,7 +130,7 @@ const UploadLink = () => {
           }
       ]
     return (
-        <Layout adminDashboard="adminDashboard" adminUserId={userId}>
+        <Layout cmsDashboard="cmsDashboard" adminUserId={userId}>
 
 <Container maxWidth="xl">
    

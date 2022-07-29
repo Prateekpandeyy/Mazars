@@ -46,7 +46,7 @@ function clientLogout (history)  {
   localStorage.removeItem("category");
   localStorage.removeItem("clientToken")
   history.push("/");
-  alert("unauthorized access")
+ 
 }
 export default {
   changeFormateDate,
