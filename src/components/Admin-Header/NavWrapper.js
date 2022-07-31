@@ -15,6 +15,7 @@ const clName = JSON.parse(localStorage.getItem("clientLoginId"))
   const adminkey = window.localStorage.getItem("adminkey");
   const tlkey = window.localStorage.getItem("tlkey");
   const tpkey = window.localStorage.getItem("tpkey")
+  const cmsKey = window.localStorage.getItem("token")
 
 
   return (
@@ -68,6 +69,9 @@ const clName = JSON.parse(localStorage.getItem("clientLoginId"))
 
               {name == "admin" && (
                 <CustomerNotification  panel="admin" tokenKey={adminkey} name={name} />
+              )}
+               {name == "cms" && (
+                <CustomerNotification  panel="Cms" tokenKey={cmsKey} name={name} />
               )}
 
               {name == "Team Leader" && (

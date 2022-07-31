@@ -173,9 +173,7 @@ else{
     setVideoId(`${baseUrl3}/assets/gallery/${e}`)
   }
     return(
-  
-    <Layout cmsDashboard="cmsDashboard" adminUserId={userId}>
-
+      <Layout cmsDashboard="cmsDashboard">
     <Container maxWidth = "xl">
          
         

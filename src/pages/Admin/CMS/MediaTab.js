@@ -43,8 +43,7 @@ const MediaTab = () => {
       
     
    return (
-    <Layout cmsDashboard="cmsDashboard" adminUserId={userId}>
-
+    <Layout cmsDashboard="cmsDashboard">
     <MyContainer>
     <Tabs selectedIndex={tabIndex} onSelect={(index) => tableIndex(index)}>
       <TabList

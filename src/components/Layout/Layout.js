@@ -52,6 +52,7 @@ $sortable.on('click', function(){
         TLuserId={TLuserId}
         TPuserId={TPuserId}
         feedbackNumber = {feedbackNumber}
+        cmsDashboard = {cmsDashboard}
       />
 
 <div style={{display : "flex", flexDirection : "row"}}>

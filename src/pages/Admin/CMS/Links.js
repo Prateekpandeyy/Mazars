@@ -143,7 +143,7 @@ const myOrder = (e) => {
   })
 }
     return(
-        <Layout cmsDashboard="cmsDashboard" adminUserId={userId}>
+      <Layout cmsDashboard="cmsDashboard">
         <MyContainer>
         <div className="py-2">
       <Row>

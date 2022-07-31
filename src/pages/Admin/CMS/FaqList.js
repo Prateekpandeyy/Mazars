@@ -42,8 +42,7 @@ const Updates = () =>{
  
 
 return (
-    <Layout cmsDashboard="cmsDashboard" adminUserId={userId}>
-
+  <Layout cmsDashboard="cmsDashboard">
 <Container maxWidth="xl">
 <div className="headingContent">
         <h4>FAQs </h4>

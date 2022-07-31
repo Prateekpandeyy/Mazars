@@ -157,6 +157,10 @@ function CustomerNotification({ tokenKey, name , panel}) {
             token = window.localStorage.getItem("adminToken")
             redir = "admin"
         }
+        else if (panel === "Cms"){
+            token = window.localStorage.getItem("token")
+            redir = "cms"
+        }
         else if(panel === "client") {
            token = window.localStorage.getItem("clientToken")
            redir = "customers"
@@ -167,6 +171,7 @@ function CustomerNotification({ tokenKey, name , panel}) {
         }
       }
      
+          if(redir === "Cms"){
             axios
             .get(`${baseUrl}/${redir}/getNotification?id=${JSON.parse(tokenKey)}&type_list=uread`, myConfig)
             .then((res) => {
@@ -191,6 +196,7 @@ function CustomerNotification({ tokenKey, name , panel}) {
                 }
             });
         
+          }
     };
 
 

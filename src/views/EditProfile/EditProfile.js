@@ -357,7 +357,7 @@ const EditProfile = () => {
     }
   }
   const checkSpecial = (e) => {
-    var regEx = /^[0-9a-zA-Z]+$/;
+    var regEx = /^[0-9a-zA-Z .]+$/;
   if(e.target.value.match(regEx)){
     setName(e.target.value)
   }

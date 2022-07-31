@@ -11,7 +11,7 @@ import Alerts from "../../../common/Alerts";
 import Mandatory from "../../../components/Common/Mandatory";
 import { Spinner } from "reactstrap";
 import LoadingTime from '../../../components/LoadingTime/LoadingTime';
-
+import Cookies from "js-cookie";
 
 const Schema = yup.object().shape({
   p_otp: yup.string().required(""),
@@ -62,6 +62,7 @@ function VerifyOtp({ email, uid, loading, setLoading }) {
        
         if (response.data.code == 1) {
           setLoading(false)
+          Cookies.set("tpName", response.data.displayname)
           Alerts.SuccessLogin("Logged in successfully.")
           localStorage.setItem("tpkey", JSON.stringify(response.data.user_id));
           localStorage.setItem("tpEmail", JSON.stringify(response.data.displayname));

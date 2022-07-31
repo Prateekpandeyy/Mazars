@@ -6,7 +6,7 @@ import axios from "axios";
 import { baseUrl } from "../../config/config";
 
 
-function AdminHeader({ custUserId, adminUserId, TLuserId, TPuserId , feedbackNumber}) {
+function AdminHeader({ custUserId, adminUserId, TLuserId, TPuserId , cmsDashboard, feedbackNumber}) {
   let history = useHistory();
 
   const custLogout = () => {
@@ -67,26 +67,25 @@ function AdminHeader({ custUserId, adminUserId, TLuserId, TPuserId , feedbackNum
       
    })
   }
-  else if (role === "cms"){
-      const token = window.localStorage.getItem("token")
-      const myConfig = {
-          headers : {
-           "uit" : token
-          }
-        }
-   axios.get(`${baseUrl}/cms/logout`, myConfig)
-   .then((res) => {
-      
-        localStorage.removeItem("adminkey");
-        localStorage.removeItem("adminEmail");
-        localStorage.removeItem("category");
-        localStorage.removeItem("token")
-       
-        history.push("/cms/login");
-      
-   })
-  }
+ 
   };
+  const cmsLogout = () => {
+    const token = window.localStorage.getItem("token")
+    const myConfig = {
+        headers : {
+         "uit" : token
+        }
+      }
+ axios.get(`${baseUrl}/cms/logout`, myConfig)
+ .then((res) => {
+    
+      
+      localStorage.removeItem("token")
+     
+      history.push("/cms/login");
+    
+ })
+  }
 
   const tlLogout = () => {
     const token = window.localStorage.getItem("tlToken")
@@ -139,6 +138,7 @@ function AdminHeader({ custUserId, adminUserId, TLuserId, TPuserId , feedbackNum
   const adminEmail = window.localStorage.getItem("adminEmail");
   const tlEmail = window.localStorage.getItem("tlEmail");
   const tpEmail = window.localStorage.getItem("tpEmail")
+  const cmsEmail = window.localStorage.getItem("cmsName")
  
   
   return (
@@ -161,7 +161,13 @@ function AdminHeader({ custUserId, adminUserId, TLuserId, TPuserId , feedbackNum
             feedbackNumber= {feedbackNumber}
           />
         )}
-
+{
+  cmsDashboard && 
+  <NavWrapper color="#fff" logout={cmsLogout}
+  name="cms" email={cmsEmail}
+  
+/>
+}
         {TLuserId && <NavWrapper color="#fff" logout={tlLogout}
           name="Team Leader" email={tlEmail}
         />}

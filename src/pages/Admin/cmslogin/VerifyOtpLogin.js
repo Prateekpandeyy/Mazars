@@ -67,7 +67,7 @@ function VerifyOtp({ email, uid, loading, setLoading }) {
           localStorage.setItem("adminloginTime", timeStampInMs)
           setLoading(false)
           Alerts.SuccessLogin("Logged in successfully.")
-        
+        localStorage.setItem("cmsName", JSON.stringify(response.data.name))
           localStorage.setItem("token", response.data.token)
         
           if(role === "cms"){

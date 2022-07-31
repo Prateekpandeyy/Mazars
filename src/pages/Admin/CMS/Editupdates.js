@@ -167,7 +167,7 @@ const editorShow = (e) => {
  }
 }
     return(
-        <Layout cmsDashboard="cmsDashboard" adminUserId={userId}>
+      <Layout cmsDashboard="cmsDashboard">
       <Container maxWidth="xl">
       <div className="py-2">
       <Row>

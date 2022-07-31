@@ -150,8 +150,7 @@ const EditImage = () => {
     
     }
     return(
-        <Layout cmsDashboard="cmsDashboard" adminUserId={userId}>
-
+      <Layout cmsDashboard="cmsDashboard">
         <MyContainer>
         <Row className="py-2">
           <Col md="4">

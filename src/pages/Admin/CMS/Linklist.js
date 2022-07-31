@@ -120,8 +120,7 @@ else{
   };
   
 return (
-    <Layout cmsDashboard="cmsDashboard" adminUserId={userId}>
-
+  <Layout cmsDashboard="cmsDashboard">
 <MyContainer>
 <div className="headingContent">
         <h4>Important Links </h4>

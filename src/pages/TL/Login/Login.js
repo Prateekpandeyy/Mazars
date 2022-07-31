@@ -61,7 +61,7 @@ function Login(props) {
           logout();
           setShow(true)
           setLoading(false)
-          Cookies.set("tlName", response.data.display_name)
+          Cookies.set("tlName", response.data.displayname)
           Alerts.SuccessNormal("As per your request, OTP has been sent to your registered email address.")
           setUid(response.data.user_id)
          

@@ -166,8 +166,7 @@ return(
   ]
     return(
     
-      <Layout cmsDashboard="cmsDashboard" adminUserId={userId}>
-
+      <Layout cmsDashboard="cmsDashboard">
       <Container maxWidth = "xl">
            
           
