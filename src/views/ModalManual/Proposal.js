@@ -3,7 +3,9 @@ import React from "react";
 import rightArrow from '../ManualImg/rightArrow.png';
 import proposalView from '../ManualImg/proposalView.png';
 import showProposal from '../ManualImg/showProposal.png';
+import showProposal2 from "../ManualImg/showProposal2.png";
 import proposalView2 from '../ManualImg/proposalView2.png';
+import proposalView22 from "../ManualImg/proposalView22.png";
 import message from '../ManualImg/message.png';
 import messageHistory from '../ManualImg/messageHistory.png';
 import viewProposalsign from '../ManualImg/viewProposalsign.png';
@@ -24,9 +26,9 @@ import {makeStyles } from '@material-ui/core/styles';
 const Proposal = () => {
     const useStyle = makeStyles(theme => ({
         root: {
-            backgroundColor: "green",
+            backgroundColor: "blue",
             color: "white",
-            margin: "10px 0px",
+            margin: "10px 5px",
             outline: "none",
             '&:hover': {
                 backgroundColor: "green",
@@ -42,7 +44,7 @@ const Proposal = () => {
         root2: {
             backgroundColor: "blue",
             color: "white",
-            margin: "10px 0px",
+            margin: "10px 5px",
             outline: "none",
             '&:hover': {
                 backgroundColor: "blue",
@@ -58,7 +60,7 @@ const Proposal = () => {
         root3: {
             backgroundColor: "red",
             color: "white",
-            margin: "10px 0px",
+            margin: "10px 5px",
             outline: "none",
             '&:hover': {
                 backgroundColor: "blue",
@@ -82,27 +84,31 @@ const Proposal = () => {
                      <Card>
                      <CardHeader title={
                     <Typography variant="h5" align="center">
-                    Processing of Proposal
+                   Processing of query by MAS Team
                             </Typography>
         }/>
                         <CardContent>
                 <Typography variant="body1">
-                Mazars Team, after examining the query, will prepare a proposal & provide it to the client.
-                 An email will also be sent to the client informing about the proposal sent
+                MAS Team will as quickly as possible allocate the query to a Team Leader 
+                for processing. Before any query is allocated to Team Leader,
+                 following status and action buttons will be visible in the query tab
                 </Typography>
                 <Typography variant="body1">
-                By selecting the Proposal Tab, on the left-hand side of the following screen, the client can 
-                view the proposal, by clicking on the blue arrow facing rightwards
-                <Button><CardMedia src={rightArrow} component="img" style={{width: "30px", height: "30px"}} /></Button>
+                Once query is allocated to a Team leader, following status &
+                 action buttons will be visible for the query in the query tab
                 </Typography>
+                <Typography variant="body1">
+                The client can send a message to the MAS Team specifying the secondary email user(s) to whom copy of proposal 
+                may also be sent along with the email message confirming submission of proposal
+                 </Typography>
                 <CardMedia src={proposalView} component="img" />
                 <Typography variant="body1">
                 After clicking on blue arrow facing rightwards (   <Button><CardMedia src={rightArrow} component="img" style={{width: "30px", height: "30px"}} /></Button>), 
                 following window will appear:
              
                 </Typography>
-                <CardMedia src={showProposal} component="img" />
-              
+                <CardMedia src={showProposal} style={{margin : "10px 0px"}} component="img" />
+                <CardMedia src={showProposal2} component="img" />
             </CardContent>
                      </Card>
                  </Container>
@@ -117,11 +123,11 @@ const Proposal = () => {
                          <Card>
                              <CardContent>
                              <Typography variant="body1">
-                Engagement letter box should be checked to view the engagement letter before accepting 
-                or rejecting the proposal by pressing the    
+                             Engagement letter box should be checked to view the engagement
+                              letter before accepting or rejecting the proposal by pressing the
                       <Button varinat="contained" className={classes.root}>Accept</Button>   or    
                       <Button varinat="contained" className={classes.root3}>Reject</Button>        
-                       button respectively. The client can also take no action on the proposal by clicking on  
+                      respectively. The client can also take no action on the proposal by clicking on  
                        <Button varinat="contained" className={classes.root2}>Go Back</Button> button.
                 </Typography>
                 <Typography variant="body1">
@@ -139,7 +145,8 @@ const Proposal = () => {
                 <Typography variant = "body1">
                 Under Proposal Tab, various action buttons will appear as per the screen below:
                 </Typography>
-                <CardMedia src={proposalView2} component="img"/>
+                <CardMedia src={proposalView2} style={{margin : '10px 0px'}} component="img"/>
+                <CardMedia src={proposalView22} style={{margin : '10px 0px'}} component="img"/>
                 <table className="table table-bordered p-2">
 
 <tbody>
@@ -191,7 +198,7 @@ const Proposal = () => {
     </tr>
     <tr>
         <th><CardMedia  component="img"
-        src={viewProposalsign} style={{height: "20px",  width : "20px"}} /></th>
+        src={viewProposalsign} style={{width : "20px"}} /></th>
         <td className='px-5'>
             <ul>
                 <li>
@@ -272,6 +279,10 @@ the basis of terms and conditions mentioned in the proposal, the client can make
            <Button variant="contained" className={classes.root3}>Reject</Button>
                 </Typography>
                 <CardMedia  src={proposalSeen} component="img"/>
+                <Typography variant="body1">
+            If the proposal is acceptable, click  <Button variant="container" className={classes.root}>Accept</Button>                 button. Upon acceptance,
+            Upon acceptance, following success message window will appear showing success message window, click ok
+                </Typography>
                 <CardMedia src={proposalSeen2} component="img" />
             </CardContent>
         </Card>
@@ -284,18 +295,13 @@ the basis of terms and conditions mentioned in the proposal, the client can make
     <Container maxWidth= "xl">
         <Card>
            <CardContent>
-           <Typography variant="body1">
-            If the proposal is acceptable, click  <Button variant="container" className={classes.root}>Accept</Button>                 button. Upon acceptance,
-             following success message window will appear showing “Proposal accepted successfully”.
-                  or            
-         
-                </Typography>
-                <CardMedia  src={acceptProposal} component="img"/>
+           
+               
                 <Typography variant="body1">
-            fter acceptance of proposal, action button right arrow (<CardMedia  component="img"
-        src={rightArrow} style={{height: "20px",  width : "20px"}} />)
+            After acceptance of proposal, action button right arrow (<CardMedia  component="img"
+        src={rightArrow} style={{display: "inline", height: "20px",  width : "20px"}} />)
              will disappear & new eye button (<CardMedia  component="img"
-        src={viewProposalsign} style={{height: "20px",  width : "20px"}} />) will appear to view the accepted proposal as below:
+        src={viewProposalsign} style={{ display: "inline",  width : "20px"}} />) will appear to view the accepted proposal as below:
                 </Typography>
                 <CardMedia  src={acceptProposal22} component="img"/>
                </CardContent> 
@@ -312,7 +318,7 @@ the basis of terms and conditions mentioned in the proposal, the client can make
             <table className="table table-bordered p-2">
             <tr>
         <th><CardMedia  component="img"
-        src={viewProposalsign} style={{height: "20px",  width : "20px"}} /></th>
+        src={viewProposalsign} style={{  width : "20px"}} /></th>
         <td className='px-5'>
             <ul>
                 <li>
@@ -355,10 +361,11 @@ the basis of terms and conditions mentioned in the proposal, the client can make
                             </Typography> 
                             <CardMedia  src={proposal221} component="img"/>
                             <Typography variant="body1">
-            In case of client inadvertently rejecting the proposal,
-             he may send message to the Mazars Team for restoring the pending proposal status by clicking on 
-             <Button> <CardMedia src={message}component="img"/></Button> icon.
-(S.No. 1)   </Typography>
+                            In case of client inadvertently rejecting the proposal, he may 
+                            send message to the MAS Team for restoring the pending proposal status by clicking on
+            
+                  <CardMedia src={message} style={{display : "inline", width : "20px"}} component="img"/> icon.
+  </Typography>
 <CardMedia  src={rejectProposalView} component="img"/>
             </CardContent>
         </Card>
@@ -468,13 +475,16 @@ the basis of terms and conditions mentioned in the proposal, the client can make
                       <td>In case client declines to make payment of outstanding amount, Team Leader can mark the query as payment declined by the client. In this situation, 
                           reasons recorded by the Team Leader for such marking are displayed here.</td>
                   </tr>
-                  <tr>
-                      <td>
-                          <Typography variant="body1" color="primary">
+                 <td>
+
+                 </td>
+                 <td>
+
+                 <Typography variant="body1" color="primary">
                           (After accepting the proposal, the client can view progress of the query under the assignment tab)
                           </Typography>
-                      </td>
-                  </tr>
+                 </td>
+                    
           </table>
             </CardContent>
         </Card>

@@ -12,7 +12,7 @@ const Feedback = () => {
                       <Card>
                           <CardHeader title={
   <Typography variant="h5">
-  Feedback: On clicking feedback   <Button variant="contained"> <CardMedia src={feedBackIcon} component="img" style={{width: "20px", height: "20px" }}/></Button>    
+  Feedback: On clicking feedback  <CardMedia src={feedBackIcon} component="img" style={{display : "inline", margin : "0px 10px",  width: "20px", height: "20px" }}/>
       following screen will display all the feedback messages sent chronologically.
       </Typography>
                           }/>

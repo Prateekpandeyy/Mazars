@@ -35,9 +35,13 @@ const Assignment = () => {
                     <CardContent>
                         <CardMedia src={assignmentImage} component="img" />
                         <Typography variant="body1">
-                       After the Mazars Team has sent online draft reports for discussion with the client, following screen will be visible to the client.
-                        An email will also be sent to the client every time any draft report is uploaded
+                        After the MAS Team has sent online draft reports for discussion with the client, following screen will be visible to the client. An email will also be sent
+                         to the client every time any draft report is uploaded along with the draft report(s).
                         </Typography>
+                        <Typography variant="body1">
+                        The client can send a message specifying the secondary email users to whom draft reports may also be sent. Upon such request, email will be sent to such 
+                        secondary email users along with copy of draft reports
+                       </Typography>
                         <CardMedia src={assignmentImage2} component="img" />
                     </CardContent>
                 
@@ -53,13 +57,15 @@ const Assignment = () => {
             <Card>
                     <CardContent>
                         <Typography variant="body1">
-                      Under the Deliverable, by clicking on the view all report icon  
-                      <Button><CardMedia src={pdfIconImage} component="img" style={{width: "20px", height: "20px" }}/></Button>   the draft reports can be viewed & 
+                        Under the Deliverable, by clicking on the view all report icon
+                    <CardMedia src={pdfIconImage} component="img" style={{display : "inline", width: "20px", height: "20px", margin : "0px 5px" }}/>
+                      the draft reports can be viewed & 
                       downloaded by the client. Following screen will be visible to the client.
                         </Typography>
                         <CardMedia src={assignmentImage21} component="img" />
                         <Typography variant="body1">
-                    After clicking on  <Button><CardMedia src={pdfIconImage} component="img" style={{width: "20px", height: "20px" }}/></Button>    following screen will be visible
+                    After clicking on  <Button><CardMedia src={pdfIconImage} component="img" style={{width: "20px", height: "20px" }}/></Button>  
+                      following screen will be visible
                         </Typography>
                         <CardMedia src={assignmentImage31} component="img" />
                     </CardContent>
@@ -120,9 +126,11 @@ const Assignment = () => {
     </tr>
             </table>
             <Typography variant="body1">
-                      After the discussion on draft report(s) is completed, Mazars Team will mark the progress status of assignment as draft report completed & will move on to finalization of the report. 
-                      At this stage, further discussion with the client may take place, if required.</Typography>
-                      <CardMedia src={finalAssignment} component="img" />
+            After the discussion on draft report(s) is completed, MAS Team will mark the 
+            progress status of assignment as draft report completed & will move on to finalization of the report.
+             At this stage, further discussion with the client may take place, if required.
+                     </Typography>
+                       <CardMedia src={finalAssignment} component="img" />
                     </CardContent>
                 </Card>
             </Container>
@@ -138,16 +146,24 @@ const Assignment = () => {
         <Card>
             <CardContent>
             <Typography variant="body1">
-                        After such discussion, final reports are uploaded by the Mazars Team & are visible to the client under the deliverable’s icon   
-                        <CardMedia src={pdfIconImage} component="img" style={{width: "30px", height: "30px" }}/>  as below. An email alert will also
-                         be sent to the client confirming such uploading of final reports
+            After such discussion, final reports are uploaded by the MAS Team & are visible to the client under the deliverable’s icon
+                        <CardMedia src={pdfIconImage} component="img" style={{display : "inline", margin : "0px 10px", width: "30px", height: "30px" }}/>  as below. An email alert will also
+                        s below. An email will be sent to 
+                        the client along with the final reports as & when uploaded by the MAS Team.
                       </Typography>
+                      <Typography variant="body1">
+                      The client can also specify the secondary email users by sending message to the MAS Team. An email will be sent to all such secondary email users along with the final reports as & when uploaded by the MAS Team.
+
+                          </Typography>
+                          <Typography variant="body1">
+                          An email alert will also be sent to the client & all secondary email users confirming   uploading of all final reports.
+                              </Typography>
                       <CardMedia src={pdfAssignmentImg} component="img" />
                       <Typography variant="body1">
 After clicking on   
-<Button>
-<CardMedia src={pdfIconImage} component="img" style={{widht: "30px", height: "30px" }} />
-    </Button>     following screen will be visible showing final report.
+
+<CardMedia src={pdfIconImage} component="img" style={{display : "inline", margin : "0px 10px", width: "30px", height: "30px" }} />
+     following screen will be visible showing final report.
                        
                       </Typography>
                       <CardMedia src={fileProcessImg} component="img" />
@@ -164,14 +180,13 @@ After clicking on
             <Card>
                 <CardContent>
                 <Typography variant="body1">
-                    After delivery of final reports, Mazars Team will mark the progress status of 
-                    assignment as delivery of final report completed, below screen will be visible
-                        </Typography>
+                After delivery of final reports, MAS Team will mark the progress status of assignment
+                 as delivery of final report completed, below screen will be visible.
+                    </Typography>
                         <CardMedia src={assignment3} component="img"/>
                         <Typography variant="body1">
-                    On receipt of full payment from the client, Mazars Team will mark 
-                    awaiting completion as completed & following screen will be visible to the client
-                   </Typography>
+                        On receipt of full payment from the client, MAS Team will mark awaiting
+                         completion as completed & following screen will be visible to the client.</Typography>
                    <CardMedia src={assignment4} component="img"/>
                 </CardContent>
             </Card>
@@ -249,7 +264,8 @@ After clicking on
                    
                      </table>
                      <Typography variant="body1">
-                    TL name column displays the name of Team Leader.
+                     Note: All actions for payment can be taken by any of the secondary email users along with the client.
+
                     </Typography>
                 </Card>
             </Container>

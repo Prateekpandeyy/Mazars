@@ -8,17 +8,17 @@ import message from '../ManualImg/message.png';
 const Scheduler = () => {
     const useStyle = makeStyles(theme => ({
         root : {
-            backgroundColor : "green", 
+            backgroundColor : "skyblue", 
             color : "white",
             margin : "10px 0px",
             outline : "none",
             '&:hover': {
-                backgroundColor : "green",
+                backgroundColor : "blue",
                 color : "white",
                 outline : "none"
             },
             '&:focus': {
-                backgroundColor : "green",
+                backgroundColor : "blue",
                 color : "white",
                 outline : "none"
             }
@@ -119,7 +119,7 @@ const Scheduler = () => {
 <Typography variant="body1">
                     The client can make request for meeting with the Mazars Team by 
                     sending message after clicking message icon  
-                    <Button><CardMedia component="img" src={message} /></Button>    
+                   <CardMedia component="img" src={message} style={{display : "inline", margin : "0px 10px", width : "20px"}}/>   
                     available in different tabs. During such meeting the client will 
                     be able to discuss and present documents for discussion in the meeting.
 

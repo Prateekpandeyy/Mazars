@@ -14,17 +14,17 @@ import errorLoginImg from '../ManualImg/errorLoginImg.png';
 import errorLoginImg2 from '../ManualImg/errorLoginImg2.png';
 const useStyle = makeStyles(theme => ({
     root : {
-        backgroundColor : "green", 
+        backgroundColor : "blue", 
         color : "white",
-        margin : "10px 0px",
+        margin : "10px 5px",
         outline : "none",
         '&:hover': {
-            backgroundColor : "green",
+            backgroundColor : "blue",
             color : "white",
             outline : "none"
         },
         '&:focus': {
-            backgroundColor : "green",
+            backgroundColor : "blue",
             color : "white",
             outline : "none"
         }
@@ -32,7 +32,7 @@ const useStyle = makeStyles(theme => ({
     root2 : {
         backgroundColor : "blue", 
         color : "white",
-        margin : "10px 0px",
+        margin : "10px 5px",
         outline : "none",
         '&:hover': {
             backgroundColor : "blue",
@@ -56,6 +56,9 @@ return (
            <Card>
                <CardContent>
                <CardMedia  src={errorImg} component="img"/>
+               <Typography variant="h6" align="center">
+                       06
+                   </Typography>
                <Typography variant='h5'>
                Upon successful registration of a new client, a welcome email will be sent by the MAS team to the 
                client email address and all secondary email users added by the new client. 
@@ -81,6 +84,9 @@ Login with your registered User Id, Email Id & Password.
        Enter your registered user id, email id and password, under “For existing client” and click on
            <Button variant="contained" className={classes.root}>Send Otp</Button>     </Typography>
            </li>
+           <Typography variant="h6" align="center">
+                       07
+                   </Typography>
     <li>
         <Typography variant='body2' color="primary">
         The OTP will be sent to your registered email id, valid for 180 Seconds.
@@ -109,6 +115,9 @@ Login with your registered User Id, Email Id & Password.
     </li>
 </ul>
 <CardMedia src={loginImage} component="img" />
+<Typography variant="h6" align="center">
+                       08
+                   </Typography>
 <Typography variant="body1">
 After clicking <Button variant="contained" className={classes.root}>Send Otp</Button> on Success message will appear. Click ok and enter the OTP received on your 
 <Button variant="contained" className={classes.root}>Send Otp</Button> email id & click on 
@@ -121,14 +130,15 @@ If the OTP entered is incorrect then Error message window will appear showing �
                </CardContent>
            </Card>
        </Container>
-       <Typography variant="h6" align="center">
-                       05
-                   </Typography>
+      
    </Box>
  <Box>
      <Container maxWidth= "xl">
          <Card>
          <CardMedia component="img" src={loginError} />
+         <Typography variant="h6" align="center">
+                       09
+                   </Typography>
              <CardHeader title={
                 <Typography variant="h5" id="forgetPassword">
 Forgot Password: If the client forgets the Password, then click on “Forgot Password” under “For existing client”
@@ -140,18 +150,19 @@ Forgot Password: If the client forgets the Password, then click on “Forgot Pas
              </CardContent>
          </Card>
      </Container>
-     <Typography variant="h6" align="center">
-                       06
-                   </Typography>
+     
      </Box>
 <Box>
     <Container maxWidth= "xl">
         <Card>
             <CardContent>
             <Typography variant="body1">
-Forgot Password: Enter your email id and click on <Button variant="contained" className={classes.root2}>Get OTP</Button>
+Forgot Password: Enter your User id & email id and click on <Button variant="contained" className={classes.root2}>Get OTP</Button>
 </Typography>
 <CardMedia src={forgetImg} component="img" />
+<Typography variant="h6" align="center">
+                       10
+                   </Typography>
 <Typography variant="body1">
 Forgot Password: After clicking on  <Button variant="contained" className={classes.root2}> Get OTP</Button>, success message window will appear & then click on OK.
 </Typography>
@@ -166,9 +177,7 @@ one upper case, lower case, special character and number along with the OTP
             </CardContent>
         </Card>
     </Container>
-    <Typography variant="h6" align="center">
-                       07
-                   </Typography>
+    
     </Box>
 
 
@@ -176,6 +185,9 @@ one upper case, lower case, special character and number along with the OTP
     <Container maxWidth= "xl">
         <Card>
             <CardMedia src={forgetFreshImg} component="img" />
+            <Typography variant="h6" align="center">
+                       11
+                   </Typography>
             <CardContent>
             <Typography variant="body1">
 Password Forgot: After clicking on <Button className={classes.root2}> Submit </Button> Success message window will appear, showing password reset 
@@ -186,9 +198,7 @@ successfully. Now login with the new password.
             </CardContent>
         </Card>
     </Container>
-    <Typography variant="h6" align="center">
-                       08
-                   </Typography>
+    
     </Box>
 
 <Box>
@@ -196,10 +206,14 @@ successfully. Now login with the new password.
         <Card>
             <CardContent>
             <Typography variant="body1">
-Incorrect Email Id: At the login page, if the email id entered is incorrect then Error message window will appear showing “Please register before sign-in”.
- Click Ok & login with the correct credentials.
+            Incorrect User Id or Email Id: At the login page, if the user id or email id entered is 
+            incorrect then Error message window will appear
+             showing “Please register before sign-in”. Click Ok & login with the correct credentials.
 </Typography>
 <CardMedia src={errorLoginImg} component="img" />
+<Typography variant="h6" align="center">
+                       12
+                   </Typography>
 <Typography variant="body1">
 Incorrect password: At the login page, if the password entered is incorrect then Error message window will appear showing “Incorrect email or password”. 
 Click Ok & login with the correct credentials.
@@ -208,9 +222,7 @@ Click Ok & login with the correct credentials.
             </CardContent>
         </Card>
     </Container>
-    <Typography variant="h6" align="center">
-                       09
-                   </Typography>
+  
     </Box>
 
 

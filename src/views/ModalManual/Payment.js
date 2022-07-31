@@ -8,6 +8,7 @@ import paymentWeek from '../ManualImg/paymentWeek.png';
 import invoiceOne from '../ManualImg/invoiceOne.png';
 import invoiceTwo from '../ManualImg/invoiceTwo.png';
 import paymentModal from '../ManualImg/paymentModal.png';
+import paymentModal2 from "../ManualImg/paymentmodal2.png";
 import payReceiptImage from '../ManualImg/payReceiptImg.png'
 import rightClickIcon from '../ManualImg/rightClick.png';
 import uipReceipt from '../ManualImg/upiReceiptImg.png';
@@ -22,17 +23,17 @@ import inboxDetails from '../ManualImg/inboxDetails.png';
 const Payment = () => {
     const useStyle = makeStyles(theme => ({
         root : {
-            backgroundColor : "green", 
+            backgroundColor : "blue", 
             color : "white",
             margin : "10px 0px",
             outline : "none",
             '&:hover': {
-                backgroundColor : "green",
+                backgroundColor : "blue",
                 color : "white",
                 outline : "none"
             },
             '&:focus': {
-                backgroundColor : "green",
+                backgroundColor : "blue",
                 color : "white",
                 outline : "none"
             }
@@ -96,8 +97,9 @@ const Payment = () => {
                          <CardHeader title={
                               <Typography variant="h5">
                               Under Payment Status tab, click on pay amount icon   
-                              <Button>
-                                  <CardMedia src={paymentHistory} component="img" style={{widht: "20px", height:"20px" }}/></Button>     to view invoice and make the payment.
+                           
+                                  <CardMedia src={paymentHistory} component="img" style={{display : "inline" , width: "20px", height:"20px", margin: "0px 10px" }}/>
+                                       to view invoice and make the payment.
                                   </Typography>
                          } />
                              
@@ -108,8 +110,8 @@ const Payment = () => {
                         <CardMedia src={mazars} component="img"/>
                         <Typography variant="body1">
                     To view Invoice, click on icon
-                    <Button>
-                        <CardMedia src={pdfIconImage} component="img" style={{widht: "20px", height:"20px" }}/></Button> 
+                   
+                        <CardMedia src={pdfIconImage} component="img" style={{display : "inline" , width: "20px", height:"20px", margin: "0px 10px" }}/>
                         appearing in the Invoice/pay column.
                      </Typography>
                      <CardMedia src={paymentView} component="img"/>
@@ -150,25 +152,27 @@ const Payment = () => {
     icon in the invoice/pay column.
                                          
                      </Typography>
-                     <CardMedia src={paymentWeek} component="img"/>
+                     <CardMedia src={paymentModal} component="img"/>
                
                <Typography variant="body1">
                After clicking on   <Button>
                       <CardMedia src={rightClickIcon} component="img" style={{widht: "20px", height:"20px" }}/></Button>    following window opens.
                                       
                    </Typography>
-                   <CardMedia src={paymentModal} component="img"/>
+                   <CardMedia src={paymentModal2} component="img"/>
                    <Typography variant="body1">
-              The rate of TDS is indicated in the invoice and the payment window. However, the client may choose the rate of TDS,
-               the tax will be appropriately deducted & balance amount will be payable.
-                  </Typography>
+                   The rate of TDS is indicated in the invoice and the payment window. However, the client may choose the 
+                   rate of TDS. The tax will be appropriately deducted & balance amount will be payable.
+               </Typography>
                     <Typography variant="body1">
                     After Clicking on ,<Button variant="contained" className={classes.root}>
                         Pay Now
                         </Button> following screen will
                      appear enabling payment of the payable amount. To make payment, click on Pay.                       
                      </Typography>
-
+<Typography variant="body1">
+In case, client desires to make the payment later on, he may close the “Mobilpay Bill Payment” tab.
+</Typography>
             </CardContent>
         </Card>
     </Container>
@@ -181,10 +185,7 @@ const Payment = () => {
            <Container maxWidth= "xl">
                <Card>
                    <CardContent>
-                   <Typography variant="body1">
-                     In case, client desires to make the payment later on, 
-                     he may close the “Mobilpay Bill Payment” tab.
-                         </Typography>
+                   
                  <CardMedia src={payReceiptImage} component="img"/>
                
                    </CardContent>

@@ -72,9 +72,7 @@ const RegistrationInfo = () => {
 
             </Card>
            </Paper>
-           <Typography variant="h6" align="right">
-                       03
-                   </Typography>
+          
          </Box>
         </>
     )

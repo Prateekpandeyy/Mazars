@@ -189,3 +189,6 @@ span {
 .ag-icon-valid:before {
   content: "\f10e";
 }
+.modalManualTable:hover {
+  color: blue;
+}

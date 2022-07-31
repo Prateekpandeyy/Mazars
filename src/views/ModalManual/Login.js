@@ -61,7 +61,9 @@ const Login = () => {
                 </CardActionArea>
                 </Card>
                 </Container>
-              
+                <Typography variant="h6" align="center">
+                       03
+                   </Typography>
               
                 <Container maxWidth= "xl">
                 <Card>
@@ -87,9 +89,7 @@ const Login = () => {
                     </Card>
         
                     </Container>
-                   <Typography variant="h6" align="center">
-                       02
-                   </Typography>
+                
                </Box>
         <Box>
         <Container maxWidth= "xl">
@@ -111,6 +111,9 @@ const Login = () => {
                                 <div style={{display : "flex", margin : "30px 0px"}}> 
                             <CardMedia component="img" src={logo2} />
                             </div>
+                            <Typography variant="h6" align="center">
+                       04
+                   </Typography>
                             <CardMedia component="img" src={logo22} style={{display : "flex", margin : "30px 0px"}}/>
                            
                 <table className="table table-bordered p-2">
@@ -261,6 +264,9 @@ const Login = () => {
     </tr>
 </tbody>
 </table>
+<Typography variant="h6" align="center">
+                       05
+                   </Typography>
                 <RegistrationInfo />
                 </CardContent>
               
@@ -293,9 +299,7 @@ If the OTP entered is incorrect then Error message window will appear showing â€
                 </Card>
                 </Container>
               
-                <Typography variant="h6" align="center">
-                       04
-                   </Typography>
+                
                
                </Box>
             

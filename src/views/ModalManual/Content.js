@@ -6,7 +6,7 @@ import {mainScroll as scroll} from 'react-scroll';
 import MyPDF from '../ManualImg/manual.pdf';
 const Content  = () => {
     const goToRow = (e) => {
-        console.log("e3", e)
+       
             const anchor = document.querySelector(e)
             console.log("an", anchor)
             anchor.scrollIntoView({ behavior: 'smooth', block: 'center' })
@@ -39,9 +39,7 @@ const Content  = () => {
         <td className="modalManualTable"> 
         New Client Registration
         </td>
-        <td className="modalManualTable">
-          
-            </td>
+       
         <td className="modalManualTablePage">
             03
         </td>
@@ -50,9 +48,7 @@ const Content  = () => {
         <td className="modalManualTable"> 
         Existing Client & Secondary Email Users Login
         </td>
-        <td className="modalManualTable">
-          
-            </td>
+       
         <td className="modalManualTablePage">
             08
         </td>
@@ -62,9 +58,7 @@ const Content  = () => {
         <td className="modalManualTable"> 
         Forgot Password
         </td>
-        <td className="modalManualTable">
-          
-            </td>
+       
         <td className="modalManualTablePage">
             10
         </td>
@@ -73,9 +67,7 @@ const Content  = () => {
         <td className="modalManualTable"> 
         Change Password
         </td>
-        <td className="modalManualTable">
-          
-            </td>
+       
         <td className="modalManualTablePage">
             14
         </td>
@@ -84,9 +76,7 @@ const Content  = () => {
         <td className="modalManualTable"> 
         Registering Fresh Query
         </td>
-        <td className="modalManualTable">
-          
-            </td>
+       
         <td className="modalManualTablePage">
             22
         </td>
@@ -95,9 +85,7 @@ const Content  = () => {
     <tr onClick = {() => goToRow("#proposalProcessing")} style={{display : 'flex'}}>
         <td className="modalManualTable"> 
         Proposal Processing  </td>
-        <td className="modalManualTable">
-          
-            </td>
+       
         <td className="modalManualTablePage">
          40
         </td>
@@ -106,9 +94,7 @@ const Content  = () => {
         <td className="modalManualTable"> 
         Assignment Process
           </td>
-        <td className="modalManualTable">
-          
-            </td>
+       
         <td className="modalManualTablePage">
            52
         </td>
@@ -117,9 +103,7 @@ const Content  = () => {
         <td className="modalManualTable"> 
         Making Payment	
           </td>
-        <td className="modalManualTable">
-          
-            </td>
+       
         <td className="modalManualTablePage">
          60
         </td>
@@ -128,9 +112,7 @@ const Content  = () => {
         <td className="modalManualTable"> 
         Mazars Dashboard
           </td>
-        <td className="modalManualTable">
-          
-            </td>
+       
         <td className="modalManualTablePage">
             68
         </td>
@@ -139,9 +121,7 @@ const Content  = () => {
         <td className="modalManualTable"> 
         Message Inbox
           </td>
-        <td className="modalManualTable">
-          
-            </td>
+       
         <td className="modalManualTablePage">
             69
         </td>
@@ -150,9 +130,7 @@ const Content  = () => {
         <td className="modalManualTable"> 
         Scheduling a Video Conference/ Meeting
           </td>
-        <td className="modalManualTable">
-          
-            </td>
+       
         <td className="modalManualTablePage">
           71
         </td>
@@ -161,9 +139,7 @@ const Content  = () => {
         <td className="modalManualTable"> 
         Sending Feedback
           </td>
-        <td className="modalManualTable">
-          
-            </td>
+       
         <td className="modalManualTablePage">
            74
         </td>

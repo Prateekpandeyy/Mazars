@@ -310,14 +310,14 @@ useEffect(() => {
 
 
 const checkSpecial = (e) => {
-  // setName(e.target.value.replace(/[^\w\s]/gi, ""))
-  var regEx = /^[0-9a-zA-Z]+$/;
-  if(e.target.value.match(regEx)){
-    setName(e.target.value)
-  }
-  else{
-    setName("")
-  }
+   setName(e.target.value.replace(/[^,%*$#@?^<!&>'|/\\\\~\\[\\]{}+=\"-]*/, ""))
+  // var regEx = "[^,%*$#@?^<!&>'|/\\\\~\\[\\]{}+=\"-]*";
+  // if(e.target.value.match(regEx)){
+  //   setName(e.target.value)
+  // }
+  // else{
+  //   setName("")
+  // }
 //   var regex = new RegExp("/[^\w\s]/gi");
 // if(!regex.test(e.target.value)){
 //   setName(e.target.value)
