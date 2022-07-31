@@ -84,24 +84,23 @@ const Proposal = () => {
                      <Card>
                      <CardHeader title={
                     <Typography variant="h5" align="center">
-                   Processing of query by MAS Team
+Processing of Proposal
                             </Typography>
         }/>
                         <CardContent>
                 <Typography variant="body1">
-                MAS Team will as quickly as possible allocate the query to a Team Leader 
-                for processing. Before any query is allocated to Team Leader,
-                 following status and action buttons will be visible in the query tab
+                MAS Team, after examining the query, will prepare a proposal & provide it
+                 to the client. An email will also be sent to the client along with the proposal. Such email will also 
+                be sent to the selected secondary email users along with copy of proposal
                 </Typography>
+           
                 <Typography variant="body1">
-                Once query is allocated to a Team leader, following status &
-                 action buttons will be visible for the query in the query tab
-                </Typography>
-                <Typography variant="body1">
-                The client can send a message to the MAS Team specifying the secondary email user(s) to whom copy of proposal 
-                may also be sent along with the email message confirming submission of proposal
-                 </Typography>
+                By selecting the Proposal Tab, on the left-hand side of the following screen, the client can view the proposal, by clicking on the blue arrow facing rightwards (). All following actions for acceptance/rejection of proposal
+                 can be taken by any of the secondary email users along with the client. </Typography>
                 <CardMedia src={proposalView} component="img" />
+                <Typography variant="h6" align="center">
+                     40
+                 </Typography>
                 <Typography variant="body1">
                 After clicking on blue arrow facing rightwards (   <Button><CardMedia src={rightArrow} component="img" style={{width: "30px", height: "30px"}} /></Button>), 
                 following window will appear:
@@ -109,12 +108,13 @@ const Proposal = () => {
                 </Typography>
                 <CardMedia src={showProposal} style={{margin : "10px 0px"}} component="img" />
                 <CardMedia src={showProposal2} component="img" />
+                <Typography variant="h6" align="center">
+                     41
+                 </Typography>
             </CardContent>
                      </Card>
                  </Container>
-                 <Typography variant="h6" align="center">
-                     29
-                 </Typography>
+               
                  </Box>
                  
 
@@ -146,6 +146,9 @@ const Proposal = () => {
                 Under Proposal Tab, various action buttons will appear as per the screen below:
                 </Typography>
                 <CardMedia src={proposalView2} style={{margin : '10px 0px'}} component="img"/>
+                <Typography variant="h6" align="center">
+                     42
+                 </Typography>
                 <CardMedia src={proposalView22} style={{margin : '10px 0px'}} component="img"/>
                 <table className="table table-bordered p-2">
 
@@ -216,7 +219,7 @@ const Proposal = () => {
                          </Card>
                      </Container>
                      <Typography variant="h6" align="center">
-                         30
+                         43
                      </Typography>
                      </Box>
         
@@ -259,12 +262,13 @@ const Proposal = () => {
            </tr>
            </tbody>
            </table>        
-           <CardMedia component="img" src={showProposal22}/>   
+           <CardMedia component="img" src={showProposal22}/>  
+
                     </CardContent>
                 </Card>
             </Container>
             <Typography variant="h6" align="center">
-                         31
+                         44
                      </Typography>
             </Box>
 
@@ -288,7 +292,7 @@ the basis of terms and conditions mentioned in the proposal, the client can make
         </Card>
     </Container>
     <Typography variant="h6" align="center">
-                         32
+                         45
                      </Typography>
     </Box>
 <Box>
@@ -307,9 +311,7 @@ the basis of terms and conditions mentioned in the proposal, the client can make
                </CardContent> 
         </Card>
     </Container>
-    <Typography variant="h6" align="center">
-                         33
-                     </Typography>
+    
     </Box>
 <Box>
     <Container maxWidth= "xl">
@@ -332,6 +334,9 @@ the basis of terms and conditions mentioned in the proposal, the client can make
         </td>
     </tr>
             </table>
+            <Typography variant="h6" align="center">
+                         46
+                     </Typography>
             <Typography variant="body1">
             If the proposal is not acceptable, click          
             <Button variant="contained" className={classes.root3}>Reject</Button>   button. Rejection message window will appear showing “Are you sure to reject Proposal?”    </Typography>
@@ -347,7 +352,7 @@ the basis of terms and conditions mentioned in the proposal, the client can make
         </Card>
     </Container>
     <Typography variant="h6" align="center">
-                         34
+                         47
                      </Typography>
     </Box>
 
@@ -371,7 +376,7 @@ the basis of terms and conditions mentioned in the proposal, the client can make
         </Card>
     </Container>
     <Typography variant="h6" align="center">
-                         35
+                         48
                      </Typography>
     </Box>
 
@@ -394,7 +399,7 @@ the basis of terms and conditions mentioned in the proposal, the client can make
         </Card>
     </Container>
     <Typography variant="h6" align = "center">
-         36
+         49
     </Typography>
     </Box>
 <Box>
@@ -408,7 +413,9 @@ the basis of terms and conditions mentioned in the proposal, the client can make
         </Card>
     </Container>
     </Box>
-
+    <Typography variant="h6" align = "center">
+         50
+    </Typography>
 <Box>
     <Container maxWidth= "xl">
         <Card>
@@ -490,7 +497,7 @@ the basis of terms and conditions mentioned in the proposal, the client can make
         </Card>
     </Container>
     <Typography align="center" variant="h6" id="assignProcess">
-         38
+         51
     </Typography>
 </Box>
 </section>

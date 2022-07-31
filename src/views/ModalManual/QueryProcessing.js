@@ -15,17 +15,17 @@ import { makeStyles } from '@material-ui/styles';
 const QueryProcessing = () => {
     const useStyle = makeStyles(theme => ({
         root: {
-            backgroundColor: "green",
+            backgroundColor: "blue",
             color: "white",
             margin: "10px 0px",
             outline: "none",
             '&:hover': {
-                backgroundColor: "green",
+                backgroundColor: "blue",
                 color: "white",
                 outline: "none"
             },
             '&:focus': {
-                backgroundColor: "green",
+                backgroundColor: "blue",
                 color: "white",
                 outline: "none"
             }
@@ -58,24 +58,26 @@ const QueryProcessing = () => {
        <Container maxWidth= "xl">
      
      <Card>
-         <CardHeader title={
-             <>
-               <Typography variant="h5" align="center">
-     Processing of query by Mazars Team.
-     </Typography>
-             <Typography variant="body1">
-             Mazars Team will as quickly as possible allocate the query to a Team Leader for processing. 
-             Before any query is allocated to Team Leader, following status and action buttons
-              will be visible in the query tab (S.No. 1 of the list in the screenshot)
-             </Typography>
-             <Typography variant="body1">
-             Once query is allocated to a Team leader, following status & action buttons will be visible 
-             for the query in the query tab (S.No. 2 of the list in the screenshot)
-                 </Typography>
-              
-             </>
-         }/>
+     <CardHeader title={
+                    <Typography variant="h5" align="center">
+                   Processing of query by MAS Team
+                            </Typography>
+        }/>
          <CardContent>
+       
+         <Typography variant="body1">
+                MAS Team will as quickly as possible allocate the query to a Team Leader 
+                for processing. Before any query is allocated to Team Leader,
+                 following status and action buttons will be visible in the query tab
+                </Typography>
+                <Typography variant="body1">
+                Once query is allocated to a Team leader, following status &
+                 action buttons will be visible for the query in the query tab
+                </Typography>
+                <Typography variant="body1">
+                The client can send a message to the MAS Team specifying the secondary email user(s) to whom copy of proposal 
+                may also be sent along with the email message confirming submission of proposal
+                 </Typography>
          <CardMedia component="img" src={processImg}/>
          <Typography variant="body1">
                         Query Tab: Action Buttons:
@@ -147,7 +149,7 @@ const QueryProcessing = () => {
      </Card>
       </Container>
       <Typography variant="h6" align = "center  ">
-          25
+          36
       </Typography>
            </Box>
       <Box>
@@ -176,7 +178,7 @@ const QueryProcessing = () => {
               </Card>
           </Container>
           <Typography variant="h6" align = "center">
-              26
+              37
           </Typography>
           </Box>
 <Box>
@@ -206,7 +208,7 @@ const QueryProcessing = () => {
         </Card>
     </Container>
     <Typography variant="h6" align = "center">
-              27
+              38
           </Typography>
     </Box>
 
@@ -230,7 +232,7 @@ const QueryProcessing = () => {
         </Card>
     </Container>
     <Typography variant="h6" align = "center" id="proposalProcessing">
-              28
+              39
           </Typography>
     </Box>
         </section>

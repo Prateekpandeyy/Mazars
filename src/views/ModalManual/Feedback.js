@@ -23,7 +23,7 @@ const Feedback = () => {
                       </Card>
                   </Container>
                   <Typography variant="h6" align ="center">
-                      58
+                      73
                   </Typography>
                   </Box>
             
@@ -40,7 +40,7 @@ const Feedback = () => {
         </Card>
     </Container>
     <Typography variant="h6" align ="center">
-                      59
+                      74
                   </Typography>
     </Box>
 

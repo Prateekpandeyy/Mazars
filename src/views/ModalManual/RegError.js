@@ -77,6 +77,9 @@ password will be informed to such client and the secondary email users. With suc
 For Existing Client (including secondary email users): 
 Login with your registered User Id, Email Id & Password.
     </Typography>
+    <Typography variant="h6" align="center">
+                       07
+                   </Typography>
     <ul className={style.registrationTable}>
   
    <li>
@@ -84,9 +87,7 @@ Login with your registered User Id, Email Id & Password.
        Enter your registered user id, email id and password, under “For existing client” and click on
            <Button variant="contained" className={classes.root}>Send Otp</Button>     </Typography>
            </li>
-           <Typography variant="h6" align="center">
-                       07
-                   </Typography>
+          
     <li>
         <Typography variant='body2' color="primary">
         The OTP will be sent to your registered email id, valid for 180 Seconds.

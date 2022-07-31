@@ -101,7 +101,7 @@ const Scheduler = () => {
                        </Card>
                    </Container>
                    <Typography variant="h6" align = "center">
-                       56
+                       71
                    </Typography>
                    </Box>
     
@@ -128,7 +128,7 @@ const Scheduler = () => {
         </Card>
     </Container>
     <Typography variant="h6" align = "center" id = "feedbackProcess">
-                       57
+                       72
                    </Typography>
     </Box>
 

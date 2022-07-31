@@ -34,6 +34,9 @@ const Assignment = () => {
                
                     <CardContent>
                         <CardMedia src={assignmentImage} component="img" />
+                        <Typography variant="h6" align = "center">
+            52
+        </Typography>
                         <Typography variant="body1">
                         After the MAS Team has sent online draft reports for discussion with the client, following screen will be visible to the client. An email will also be sent
                          to the client every time any draft report is uploaded along with the draft report(s).
@@ -48,7 +51,7 @@ const Assignment = () => {
             </Card>
         </Container>
         <Typography variant="h6" align = "center">
-            39
+            53
         </Typography>
                  </Box>
        
@@ -73,7 +76,7 @@ const Assignment = () => {
             </Card>
         </Container>
         <Typography variant="h6" align = "center">
-            40
+            54
         </Typography>
            </Box>
         
@@ -125,6 +128,7 @@ const Assignment = () => {
         </td>
     </tr>
             </table>
+           
             <Typography variant="body1">
             After the discussion on draft report(s) is completed, MAS Team will mark the 
             progress status of assignment as draft report completed & will move on to finalization of the report.
@@ -135,7 +139,7 @@ const Assignment = () => {
                 </Card>
             </Container>
             <Typography variant="h6" align = "center">
-                41
+                55
             </Typography>
             </Box>
 
@@ -159,6 +163,9 @@ const Assignment = () => {
                           An email alert will also be sent to the client & all secondary email users confirming   uploading of all final reports.
                               </Typography>
                       <CardMedia src={pdfAssignmentImg} component="img" />
+                      <Typography variant="h6" align = "center">
+            56
+        </Typography>
                       <Typography variant="body1">
 After clicking on   
 
@@ -170,9 +177,7 @@ After clicking on
             </CardContent>
         </Card>
     </Container>
-    <Typography variant="h6" align = "center">
-                42
-            </Typography>
+   
     </Box>
      
     <Box>
@@ -192,8 +197,8 @@ After clicking on
             </Card>
         </Container>
         <Typography variant="h6" align = "center">
-                43
-            </Typography>
+            57
+        </Typography>
         </Box>   
        
         
@@ -205,6 +210,9 @@ After clicking on
                     The Assignment tab under the query details will show following information.
                      </Typography>
                      <CardMedia src={assignmentQuery} component="img"/>
+                     <Typography variant="h6" align = "center">
+            58
+        </Typography>
                      <Typography variant="body1">
                  Query Detail Page: Assignment
                  </Typography>
@@ -234,7 +242,7 @@ After clicking on
                </Card>
            </Container>
            <Typography variant="h6" align = "center">
-                44
+                59
             </Typography>
            </Box>
         <Box>
@@ -270,7 +278,7 @@ After clicking on
                 </Card>
             </Container>
             <Typography variant="h6" align = "center" id="paymentProcess">
-                45
+                60
             </Typography>
             </Box>
        

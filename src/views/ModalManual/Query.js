@@ -210,7 +210,7 @@ const Query = () => {
                    <Card>
                        <CardContent>
                        <Typography variant="h6">
-                         Category and Sub-Category Classificati
+                         Category and Sub-Category Classification
                             </Typography>
                             <table className="table table-bordered p-2">
 
@@ -291,12 +291,13 @@ const Query = () => {
                          
                          
                             </Typography>
+
                             <CardMedia component="img" src={addFreshQuery} />
                        </CardContent>
                    </Card>
                </Container>
                <Typography variant="h6" align="center" id="freshQuery">
-                       14
+                    23
                    </Typography>
                </Box>
 
@@ -462,7 +463,7 @@ const Query = () => {
             </Container> 
 
     <Typography variant="h6" align="center">
-           15
+           24
     </Typography>
     </Box>  
     <Box>
@@ -484,7 +485,7 @@ const Query = () => {
             </Card>
         </Container>
         <Typography variant="h6" align="center">
-            16
+            25
         </Typography>
         </Box>            
            
@@ -568,7 +569,7 @@ const Query = () => {
                  </Card>
              </Container>
              <Typography variant="h6" align="center">
-                 17
+                 26
              </Typography>
              </Box>  
 
@@ -598,7 +599,9 @@ const Query = () => {
                            </Typography>
                               </li>
                               </ul>
-                          
+                              <Typography variant="h6" align="center">
+                       27
+                   </Typography>
                            <CardMedia component="img" src={nextImg} />
                            <Typography variant="body1">
                          After editing the query details, click on 
@@ -608,6 +611,9 @@ const Query = () => {
                          
                             </Typography>
                             <CardMedia component="img" src={queryList222} />
+                            <Typography variant="h6" align="center">
+                       28
+                   </Typography>
                             <Typography variant="body1">
                          In case of any attempt to upload any document/file 
                          already uploaded, following message will be displayed upon clicking on
@@ -616,10 +622,7 @@ const Query = () => {
                          </CardContent>
                    </Card>
                </Container>
-               <Typography variant="h6" align = "center">
-                      18
-               </Typography>
-
+              
                </Box> 
            
 <Box>
@@ -627,6 +630,9 @@ const Query = () => {
         <Card>
             <CardContent>
             <CardMedia component="img" src={updateQuery} />
+            <Typography variant="h6" align="center">
+                       29
+                   </Typography>
             <Typography variant="body1">
                          Action Button: Delete
                          
@@ -644,7 +650,7 @@ const Query = () => {
         </Card>
     </Container>
     <Typography variant="h6" align = "center">
-        19
+      30
     </Typography>
     </Box>
 
@@ -720,7 +726,7 @@ const Query = () => {
                </Card>
            </Container>
            <Typography variant="h6" align = "center">
-        20
+        31
     </Typography>
            </Box>       
 
@@ -738,7 +744,7 @@ const Query = () => {
                     </Card>
                 </Container>
                 <Typography variant="h6" align = "center">
-                    21
+                    32
                 </Typography>
                 </Box>
            
@@ -783,7 +789,7 @@ const Query = () => {
                  </Card>
              </Container>
              <Typography variant="h6" align = "center">
-                 22
+                 33
              </Typography>
              </Box>  
          <Box>
@@ -804,7 +810,7 @@ const Query = () => {
                  </Card>
              </Container>
              <Typography variant="h6" align="center">
-                 23
+                 34
                         </Typography> 
              </Box>
 
@@ -825,7 +831,7 @@ const Query = () => {
                 </Card>
             </Container>
             <Typography variant="h6" align = "center">
-                24
+                35
             </Typography>
     </Box>           
           

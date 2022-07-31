@@ -120,7 +120,7 @@ const Payment = () => {
                      
                   </Container>
                   <Typography variant="h6" align = "center">
-                      46
+                      61
                   </Typography>
                   </Box>
          
@@ -137,7 +137,7 @@ const Payment = () => {
         </Card>
     </Container>
     <Typography variant="h6" align = "center">
-                      47
+                      62
                   </Typography>
     </Box>
        
@@ -160,6 +160,9 @@ const Payment = () => {
                                       
                    </Typography>
                    <CardMedia src={paymentModal2} component="img"/>
+                   <Typography variant="h6" align = "center">
+            63
+        </Typography>
                    <Typography variant="body1">
                    The rate of TDS is indicated in the invoice and the payment window. However, the client may choose the 
                    rate of TDS. The tax will be appropriately deducted & balance amount will be payable.
@@ -176,9 +179,7 @@ In case, client desires to make the payment later on, he may close the “Mobilp
             </CardContent>
         </Card>
     </Container>
-    <Typography align="center" variant="h6">
-        48
-    </Typography>
+  
     </Box>
 
        <Box>
@@ -192,7 +193,7 @@ In case, client desires to make the payment later on, he may close the “Mobilp
                </Card>
            </Container>
            <Typography align="center" variant="h6">
-        49
+        64
     </Typography>
            </Box>
         
@@ -240,7 +241,7 @@ In case, client desires to make the payment later on, he may close the “Mobilp
                 </Card>
             </Container>
             <Typography variant="h6" align = "center">
-                50
+                65
             </Typography>
             </Box>
        
@@ -273,7 +274,7 @@ In case, client desires to make the payment later on, he may close the “Mobilp
                </Card>
                </Container>
        <Typography variant="h6" align = "center">
-                51
+                66
             </Typography>
            </Box>
            
@@ -298,7 +299,7 @@ In case, client desires to make the payment later on, he may close the “Mobilp
                </Card>
                </Container>
            <Typography variant="h6" align = "center" id= "mazarDashboard">
-                52
+                67
             </Typography>    
                </Box>
      
@@ -320,7 +321,7 @@ In case, client desires to make the payment later on, he may close the “Mobilp
                </Card>
                </Container>
        <Typography variant="h6" align = "center" id="showMessage">
-                53
+                68
             </Typography> 
            </Box>
 
@@ -347,7 +348,7 @@ In case, client desires to make the payment later on, he may close the “Mobilp
         </Card>
         </Container>
 <Typography variant="h6" align = "center">
-                54
+                69
             </Typography>
     </Box>
   <Box>
@@ -391,7 +392,7 @@ In case, client desires to make the payment later on, he may close the “Mobilp
 
     
           <Typography variant="h6" align="center" id="seceduler">
-              55
+              70
           </Typography>
           </Box>
        
