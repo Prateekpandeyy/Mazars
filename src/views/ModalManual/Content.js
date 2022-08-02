@@ -1,5 +1,5 @@
 import React from 'react';
-import { makeStyles, Button, Typography, Card, Container, CardHeader, CardActionArea, CardActions, CardMedia, CardContent } from '@material-ui/core';
+import { makeStyles, Button, Box,  Typography, Card, Container, CardHeader, CardActionArea, CardActions, CardMedia, CardContent } from '@material-ui/core';
 // import { Link} from "react-scroll";
 import {Link} from 'react-router-dom';
 import {mainScroll as scroll} from 'react-scroll';
@@ -14,6 +14,9 @@ const Content  = () => {
     }
     return (
         <>
+        <Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+
+        
          <Container maxWidth= "xl">
          <Card>
             
@@ -152,6 +155,7 @@ const Content  = () => {
            
          </Card>
      </Container>
+     </Box>
         </>
     )
 }

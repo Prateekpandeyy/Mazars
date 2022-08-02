@@ -192,7 +192,8 @@ useEffect(() => {
 
   //get city
   const getCity = (key) => {
-    setCityValue2("")
+  
+    
     setAddress("")
     setPhone("")
     setZipCode("")
@@ -206,6 +207,7 @@ useEffect(() => {
     states.filter((p) => {
       if (p.id == key) {
         setStateName(p.name)
+       
       }
     });
 
@@ -217,9 +219,12 @@ useEffect(() => {
           "value" : data.id,
           "label" : data.name
         }
+       
         arrayCity.push(sta)
       }
     });
+    setDstate2('')
+    setCityValue2('')
     setCity(arrayCity)
   }
 
@@ -310,28 +315,16 @@ useEffect(() => {
 
 
 const checkSpecial = (e) => {
+ 
   var regEx = /^[0-9a-zA-Z .]+$/;
   if(e.target.value.match(regEx)){
     setName(e.target.value)
   }
-  else{
+  else if(e.target.value.length === 0){
     setName("")
   }
-  //  setName(e.target.value.replace(/[^,%*$#@?^<!&>'|/\\\\~\\[\\]{}+=\"-]*/, ""))
-  // var regEx = "[^,%*$#@?^<!&>'|/\\\\~\\[\\]{}+=\"-]*";
-  // if(e.target.value.match(regEx)){
-  //   setName(e.target.value)
-  // }
-  // else{
-  //   setName("")
-  // }
-//   var regex = new RegExp("/[^\w\s]/gi");
-// if(!regex.test(e.target.value)){
-//   setName(e.target.value)
-// }
-// else{
-//   return setName("")
-// }
+  
+ 
 }
   //zip oncahnge
   const zipValue = (e) => {
@@ -386,6 +379,7 @@ const checkSpecial = (e) => {
   }
 
   const getStateValue = (input, reason) => {
+   
     if (
       reason.action === "set-value" ||
       reason.action === "input-blur" ||
@@ -476,7 +470,7 @@ const checkSpecial = (e) => {
             Alerts.SuccessNormal("As per your request , OTP has been sent to your email address.")
           } else if (response.data.code === 0) {
             setLoading(false)
-            Alerts.ErrorNormal("Error")
+            Alerts.ErrorNormal(response.data.message)
           }
         })
         .catch((error) => {
@@ -653,6 +647,7 @@ const getUser = (e) => {
   }
  
 }
+
   return (
     <>
       <OuterloginContainer>
@@ -806,9 +801,10 @@ const getUser = (e) => {
         blurInputOnSelect={false}
         options={State}
         inputValue={estate}
+        onChange={(e) => getCity(e)}
         onInputChange={getStateValue}
      
-        onChange={(e) => getCity(e)}
+      
         value={dstate}
       />
      

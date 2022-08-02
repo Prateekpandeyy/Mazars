@@ -7,7 +7,7 @@ const Feedback = () => {
     return(
         <>
           <section id= "feedback">
-              <Box>
+              <Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
                   <Container maxWidth= "xl">
                       <Card>
                           <CardHeader title={
@@ -27,7 +27,7 @@ const Feedback = () => {
                   </Typography>
                   </Box>
             
-<Box>
+<Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
     <Container maxWidth= "xl">
         <Card>
             <CardContent>

@@ -15,33 +15,33 @@ import { makeStyles } from '@material-ui/styles';
 const QueryProcessing = () => {
     const useStyle = makeStyles(theme => ({
         root: {
-            backgroundColor: "blue",
+            backgroundColor: "#0071ce",
             color: "white",
             margin: "10px 0px",
             outline: "none",
             '&:hover': {
-                backgroundColor: "blue",
+                backgroundColor: "#0071ce",
                 color: "white",
                 outline: "none"
             },
             '&:focus': {
-                backgroundColor: "blue",
+                backgroundColor: "#0071ce",
                 color: "white",
                 outline: "none"
             }
         },
         root2: {
-            backgroundColor: "blue",
+            backgroundColor: "#0071ce",
             color: "white",
             margin: "10px 0px",
             outline: "none",
             '&:hover': {
-                backgroundColor: "blue",
+                backgroundColor: "#0071ce",
                 color: "white",
                 outline: "none"
             },
             '&:focus': {
-                backgroundColor: "blue",
+                backgroundColor: "#0071ce",
                 color: "white",
                 outline: "none"
             }
@@ -54,7 +54,7 @@ const QueryProcessing = () => {
         
         <>
         <section id="queryProcessing">
-       <Box>
+       <Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
        <Container maxWidth= "xl">
      
      <Card>
@@ -152,7 +152,7 @@ const QueryProcessing = () => {
           36
       </Typography>
            </Box>
-      <Box>
+      <Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
           <Container maxWidth= "xl">
               <Card>
                   <CardContent>
@@ -181,7 +181,7 @@ const QueryProcessing = () => {
               37
           </Typography>
           </Box>
-<Box>
+<Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
     <Container maxWidth= "xl">
         <Card>
             <CardContent>
@@ -212,7 +212,7 @@ const QueryProcessing = () => {
           </Typography>
     </Box>
 
-    <Box>
+    <Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
     <Container maxWidth= "xl">
         <Card>
             <CardContent>

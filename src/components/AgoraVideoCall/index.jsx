@@ -478,7 +478,7 @@ if(item.player === undefined){
       })
       setTimeout((e) =>{
       this.handleExit("exit");
-        window.location.assign("/#/customer/schedule")
+        window.location.assign("/")
       }, 3000)
    
      }

@@ -23,7 +23,7 @@ const Assignment = () => {
     return(
         <>
          <section id="assignment">
-             <Box>
+             <Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
              <Container maxWidth= "xl">
             <Card>
                 <CardHeader title={
@@ -55,7 +55,7 @@ const Assignment = () => {
         </Typography>
                  </Box>
        
-       <Box>
+       <Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
        <Container maxWidth= "xl">
             <Card>
                     <CardContent>
@@ -80,7 +80,7 @@ const Assignment = () => {
         </Typography>
            </Box>
         
-        <Box>
+        <Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
             <Container maxWidth= "xl">
                 <Card>
                     <CardContent>
@@ -145,7 +145,7 @@ const Assignment = () => {
 
 
 
-<Box>
+<Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
     <Container maxWidth= "xl">
         <Card>
             <CardContent>
@@ -180,7 +180,7 @@ After clicking on
    
     </Box>
      
-    <Box>
+    <Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
         <Container maxWidth= "xl">
             <Card>
                 <CardContent>
@@ -202,7 +202,7 @@ After clicking on
         </Box>   
        
         
-       <Box>
+       <Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
            <Container maxWidth= "xl">
                <Card>
                    <CardContent>
@@ -245,7 +245,7 @@ After clicking on
                 59
             </Typography>
            </Box>
-        <Box>
+        <Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
             <Container maxWidth= "xl">
                 <Card>
                     <CardContent>

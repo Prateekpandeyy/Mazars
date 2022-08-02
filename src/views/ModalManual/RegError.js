@@ -14,33 +14,33 @@ import errorLoginImg from '../ManualImg/errorLoginImg.png';
 import errorLoginImg2 from '../ManualImg/errorLoginImg2.png';
 const useStyle = makeStyles(theme => ({
     root : {
-        backgroundColor : "blue", 
+        backgroundColor : "#0071ce", 
         color : "white",
         margin : "10px 5px",
         outline : "none",
         '&:hover': {
-            backgroundColor : "blue",
+            backgroundColor : "#0071ce",
             color : "white",
             outline : "none"
         },
         '&:focus': {
-            backgroundColor : "blue",
+            backgroundColor : "#0071ce",
             color : "white",
             outline : "none"
         }
     },
     root2 : {
-        backgroundColor : "blue", 
+        backgroundColor : "#0071ce", 
         color : "white",
         margin : "10px 5px",
         outline : "none",
         '&:hover': {
-            backgroundColor : "blue",
+            backgroundColor : "#0071ce",
             color : "white",
             outline : "none"
         },
         '&:focus': {
-            backgroundColor : "blue",
+            backgroundColor : "#0071ce",
             color : "white",
             outline : "none"
         }
@@ -51,7 +51,7 @@ const RegError = () => {
     const classes = useStyle()
 return (
    <>
-   <Box>
+   <Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
        <Container maxWidth= "xl">
            <Card>
                <CardContent>
@@ -133,7 +133,7 @@ If the OTP entered is incorrect then Error message window will appear showing â€
        </Container>
       
    </Box>
- <Box>
+ <Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
      <Container maxWidth= "xl">
          <Card>
          <CardMedia component="img" src={loginError} />
@@ -153,7 +153,7 @@ Forgot Password: If the client forgets the Password, then click on â€œForgot Pas
      </Container>
      
      </Box>
-<Box>
+<Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
     <Container maxWidth= "xl">
         <Card>
             <CardContent>
@@ -182,7 +182,7 @@ one upper case, lower case, special character and number along with the OTP
     </Box>
 
 
-<Box>
+<Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
     <Container maxWidth= "xl">
         <Card>
             <CardMedia src={forgetFreshImg} component="img" />
@@ -202,7 +202,7 @@ successfully. Now login with the new password.
     
     </Box>
 
-<Box>
+<Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
     <Container maxWidth= "xl">
         <Card>
             <CardContent>

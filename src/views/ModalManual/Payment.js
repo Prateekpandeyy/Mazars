@@ -23,49 +23,49 @@ import inboxDetails from '../ManualImg/inboxDetails.png';
 const Payment = () => {
     const useStyle = makeStyles(theme => ({
         root : {
-            backgroundColor : "blue", 
+            backgroundColor : "#0071ce", 
             color : "white",
             margin : "10px 0px",
             outline : "none",
             '&:hover': {
-                backgroundColor : "blue",
+                backgroundColor : "#0071ce",
                 color : "white",
                 outline : "none"
             },
             '&:focus': {
-                backgroundColor : "blue",
+                backgroundColor : "#0071ce",
                 color : "white",
                 outline : "none"
             }
         },
         root2: {
-            backgroundColor: "blue",
+            backgroundColor: "#0071ce",
             color: "white",
             margin: "10px 0px",
             outline: "none",
             '&:hover': {
-                backgroundColor: "blue",
+                backgroundColor: "#0071ce",
                 color: "white",
                 outline: "none"
             },
             '&:focus': {
-                backgroundColor: "blue",
+                backgroundColor: "#0071ce",
                 color: "white",
                 outline: "none"
             }
         },
         root3: {
-            backgroundColor: "blue",
+            backgroundColor: "#0071ce",
             color: "white",
             margin: "10px 0px",
             outline: "none",
             '&:hover': {
-                backgroundColor: "blue",
+                backgroundColor: "#0071ce",
                 color: "white",
                 outline: "none"
             },
             '&:focus': {
-                backgroundColor: "blue",
+                backgroundColor: "#0071ce",
                 color: "white",
                 outline: "none"
             }
@@ -76,12 +76,12 @@ const Payment = () => {
             margin: "10px 0px",
             outline: "none",
             '&:hover': {
-                backgroundColor: "blue",
+                backgroundColor: "#0071ce",
                 color: "white",
                 outline: "none"
             },
             '&:focus': {
-                backgroundColor: "blue",
+                backgroundColor: "#0071ce",
                 color: "white",
                 outline: "none"
             }
@@ -91,7 +91,7 @@ const Payment = () => {
     return(
         <>
           <section id="payment">
-              <Box id="paymentProcess">
+              <Box id="paymentProcess" style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
                   <Container maxWidth= "xl">
                      <Card>
                          <CardHeader title={
@@ -124,7 +124,7 @@ const Payment = () => {
                   </Typography>
                   </Box>
          
-<Box>
+<Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
     <Container maxWidth= "xl">
         <Card>
             <CardContent>
@@ -141,7 +141,7 @@ const Payment = () => {
                   </Typography>
     </Box>
        
-<Box>
+<Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
     <Container maxWidth= "xl">
         <Card>
             <CardContent>
@@ -182,7 +182,7 @@ In case, client desires to make the payment later on, he may close the “Mobilp
   
     </Box>
 
-       <Box>
+       <Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
            <Container maxWidth= "xl">
                <Card>
                    <CardContent>
@@ -198,7 +198,7 @@ In case, client desires to make the payment later on, he may close the “Mobilp
            </Box>
         
 
-        <Box>
+        <Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
             <Container maxWidth= "xl">
                 <Card>
                     <CardContent>
@@ -246,7 +246,7 @@ In case, client desires to make the payment later on, he may close the “Mobilp
             </Box>
        
 
-       <Box>
+       <Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
            <Container maxWidth= "xl">
                <Card>
                    <CardContent>
@@ -280,7 +280,7 @@ In case, client desires to make the payment later on, he may close the “Mobilp
            
 
 
-           <Box>
+           <Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
            <Container maxWidth= "xl">
                <Card>
                    <CardContent>
@@ -303,7 +303,7 @@ In case, client desires to make the payment later on, he may close the “Mobilp
             </Typography>    
                </Box>
      
-       <Box>
+       <Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
            <Container maxWidth= "xl">
                <Card>
                    <CardHeader title={
@@ -326,7 +326,7 @@ In case, client desires to make the payment later on, he may close the “Mobilp
            </Box>
 
        
-<Box>
+<Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
     <Container maxWidth= "xl">
         <Card>
             <CardHeader title={
@@ -351,7 +351,7 @@ In case, client desires to make the payment later on, he may close the “Mobilp
                 69
             </Typography>
     </Box>
-  <Box>
+  <Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
   <Container maxWidth= "xl">
     <Card>
         <CardContent>

@@ -42,10 +42,13 @@ const GalleryVideo = () => {
           console.log("Iname", i.name.split(".")[0] + "_thumb")
           let thumb =  i.name.split(".")[0] + "_thumb." + i.name.split(".")[1];
           let poster = i.name.split(".")[0] + "_poster." + i.name.split(".")[1]
+          let fullScreen = i.name
           console.log("poster", poster)
           let  a = {
+
             original : `${baseUrl3}/assets/gallery/${poster}`,
-            thumbnail : `${baseUrl3}/assets/gallery/${thumb}`
+            thumbnail : `${baseUrl3}/assets/gallery/${thumb}`,
+            fullscreen : `${baseUrl3}/assets/gallery/${fullScreen}`
           }
           obj.push(a)
         
@@ -116,17 +119,14 @@ const GalleryVideo = () => {
 </Breadcrumbs>
 
          </>
-         <div className={classes.articleContent}>
-        <div className={classes.articlesDetails}>  
-        
+      
             {images.length > 0 ? 
      <ImageGallery items={images} 
      
      additionalClass = {classes.myVideo} /> : "" }
         </div>
       </div>
-      </div>
-      </div>
+      
        </MyContainer>
       
        </>

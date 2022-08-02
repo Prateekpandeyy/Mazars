@@ -30,25 +30,7 @@ function AdminHeader({ custUserId, adminUserId, TLuserId, TPuserId , cmsDashboar
   };
 
   const adminLogout = () => {
-    const role = localStorage.getItem("role")
-    // const token = window.localStorage.getItem("adminToken")
-    //         const myConfig = {
-    //             headers : {
-    //              "uit" : token
-    //             }
-    //           }
-    //      axios.get(`${baseUrl}/admin/logout`, myConfig)
-    //      .then((res) => {
-            
-    //           localStorage.removeItem("adminkey");
-    //           localStorage.removeItem("adminEmail");
-    //           localStorage.removeItem("category");
-    //           localStorage.removeItem("adminToken")
-             
-    //           history.push("/admin/login");
-            
-    //      })
-    if (role === "admin"){
+   
       const token = window.localStorage.getItem("adminToken")
       const myConfig = {
           headers : {
@@ -66,7 +48,7 @@ function AdminHeader({ custUserId, adminUserId, TLuserId, TPuserId , cmsDashboar
         history.push("/admin/login");
       
    })
-  }
+  
  
   };
   const cmsLogout = () => {

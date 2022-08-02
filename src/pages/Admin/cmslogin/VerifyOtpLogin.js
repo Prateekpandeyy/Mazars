@@ -70,15 +70,10 @@ function VerifyOtp({ email, uid, loading, setLoading }) {
         localStorage.setItem("cmsName", JSON.stringify(response.data.name))
           localStorage.setItem("token", response.data.token)
         
-          if(role === "cms"){
+       
           history.push("/cms/cms")
 
-         }
-           else{
-            
-        history.push("/admin/dashboard")
-  
-           }
+       
         } else {
           Alerts.ErrorNormal("Incorrect OTP, please try again.")
           setLoading(false)

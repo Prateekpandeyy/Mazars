@@ -40,25 +40,7 @@ function CustomerNotification({ tokenKey, name , panel}) {
   };
 
   const adminLogout = () => {
-    const role = localStorage.getItem("role")
-    // const token = window.localStorage.getItem("adminToken")
-    //         const myConfig = {
-    //             headers : {
-    //              "uit" : token
-    //             }
-    //           }
-    //      axios.get(`${baseUrl}/admin/logout`, myConfig)
-    //      .then((res) => {
-            
-    //           localStorage.removeItem("adminkey");
-    //           localStorage.removeItem("adminEmail");
-    //           localStorage.removeItem("category");
-    //           localStorage.removeItem("adminToken")
-             
-    //           history.push("/admin/login");
-            
-    //      })
-    if (role === "admin"){
+  
       const token = window.localStorage.getItem("adminToken")
       const myConfig = {
           headers : {
@@ -76,7 +58,7 @@ function CustomerNotification({ tokenKey, name , panel}) {
         history.push("/admin/login");
       
    })
-  }
+  
  
   };
 
@@ -171,7 +153,7 @@ function CustomerNotification({ tokenKey, name , panel}) {
         }
       }
      
-          if(redir === "Cms"){
+         
             axios
             .get(`${baseUrl}/${redir}/getNotification?id=${JSON.parse(tokenKey)}&type_list=uread`, myConfig)
             .then((res) => {
@@ -196,11 +178,11 @@ function CustomerNotification({ tokenKey, name , panel}) {
                 }
             });
         
-          }
+          
     };
 
 
-
+console.log("name", name === "admin" , countNotification)
 
     return (
         <>
@@ -235,7 +217,7 @@ function CustomerNotification({ tokenKey, name , panel}) {
                                 </Link> :""
                          }
                          {
-                             name === "admin" && role === "admin" ?
+                             name === "admin" ?
                              <Link to={`/${name}/message`} className="notification">
                               <h4 className="contentTitle">Inbox </h4>
                                     <span className="badge">{countNotification}</span>

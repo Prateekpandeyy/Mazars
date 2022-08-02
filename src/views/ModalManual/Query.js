@@ -39,12 +39,12 @@ const Query = () => {
         margin: "10px 5px",
         outline: "none",
             '&:hover': {
-                backgroundColor: "green",
+                backgroundColor: "#0071ce",
                 color: "white",
                 outline: "none"
             },
             '&:focus': {
-                backgroundColor: "green",
+                backgroundColor: "#0071ce",
                 color: "white",
                 outline: "none"
             }
@@ -55,12 +55,12 @@ const Query = () => {
             margin: "10px 5px",
             outline: "none",
             '&:hover': {
-                backgroundColor: "blue",
+                backgroundColor: "#0071ce",
                 color: "white",
                 outline: "none"
             },
             '&:focus': {
-                backgroundColor: "blue",
+                backgroundColor: "#0071ce",
                 color: "white",
                 outline: "none"
             }
@@ -71,12 +71,12 @@ const Query = () => {
             margin: "10px 0px",
             outline: "none",
             '&:hover': {
-                backgroundColor: "blue",
+                backgroundColor: "#0071ce",
                 color: "white",
                 outline: "none"
             },
             '&:focus': {
-                backgroundColor: "blue",
+                backgroundColor: "#0071ce",
                 color: "white",
                 outline: "none"
             }
@@ -88,7 +88,7 @@ const Query = () => {
 
         <>
          <section id="query">
-            <Box>
+            <Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
             <Container maxWidth= "xl">
                 <Card>
                    
@@ -132,7 +132,7 @@ const Query = () => {
                 </Box>
 
             
-           <Box>
+           <Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
            <Container maxWidth= "xl">
                 <Card>
                     
@@ -153,7 +153,7 @@ const Query = () => {
             </Container>
            
                </Box>
-          <Box>
+          <Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
                   
             <Container maxWidth= "xl">
                 <Card>
@@ -180,7 +180,7 @@ const Query = () => {
               </Box>
          <Editprofile />
             
-          <Box>
+          <Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
               <Container maxWidth= "xl">
                   <Card>
 <CardContent>
@@ -205,7 +205,7 @@ const Query = () => {
               </Box>
            
 
-           <Box>
+           <Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
                <Container maxWidth= "xl">
                    <Card>
                        <CardContent>
@@ -303,7 +303,7 @@ const Query = () => {
 
            
 
-<Box>
+<Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
 
 <Container maxWidth= "xl">
                 <Card>
@@ -466,7 +466,7 @@ const Query = () => {
            24
     </Typography>
     </Box>  
-    <Box>
+    <Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
         <Container maxWidth= "xl">
             <Card>
                 <CardContent>
@@ -490,7 +490,7 @@ const Query = () => {
         </Box>            
            
 
-         <Box>
+         <Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
              <Container maxWidth= "xl">
                  <Card>
                      <CardContent>
@@ -574,7 +574,7 @@ const Query = () => {
              </Box>  
 
            
-           <Box>
+           <Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
                <Container maxWidth= "xl">
                    <Card>
                    
@@ -625,7 +625,7 @@ const Query = () => {
               
                </Box> 
            
-<Box>
+<Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
     <Container maxWidth= "xl">
         <Card>
             <CardContent>
@@ -654,7 +654,7 @@ const Query = () => {
     </Typography>
     </Box>
 
-       <Box>
+       <Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
            <Container maxWidth= "xl">
                <Card>
                    <CardContent>
@@ -730,7 +730,7 @@ const Query = () => {
     </Typography>
            </Box>       
 
-            <Box>
+            <Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
                 <Container maxWidth= "xl">
                     <Card>
                         <CardContent>
@@ -748,7 +748,7 @@ const Query = () => {
                 </Typography>
                 </Box>
            
-         <Box>
+         <Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
              <Container maxWidth= "xl">
                  <Card>
                      <CardContent>
@@ -792,7 +792,7 @@ const Query = () => {
                  33
              </Typography>
              </Box>  
-         <Box>
+         <Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
              <Container maxWidth= "xl">
                  <Card>
                      <CardContent>
@@ -814,7 +814,7 @@ const Query = () => {
                         </Typography> 
              </Box>
 
-<Box>
+<Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
 
 <Container maxWidth= "xl">
                 <Card>

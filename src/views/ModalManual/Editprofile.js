@@ -26,7 +26,7 @@ const useStyle = makeStyles(theme => ({
          const classes = useStyle()
     return (
       <section id="editProfile">
-<Box>
+<Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
     <Container maxWidth = "xl">
         <Card>
         <CardContent>
@@ -52,7 +52,7 @@ const useStyle = makeStyles(theme => ({
                    17
                    </Typography>
 </Box>
-<Box>
+<Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
     <Container maxWidth="xl">
         <Card>
             <CardContent>
@@ -65,7 +65,7 @@ const useStyle = makeStyles(theme => ({
                        18
                    </Typography>
 </Box>
-<Box>
+<Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
     <Container maxWidth="xl">
         <Card>
      
@@ -87,7 +87,7 @@ const useStyle = makeStyles(theme => ({
                        19
                    </Typography>
 </Box>
-<Box>
+<Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
     <Container maxWidth="xl">
         <Card>
      
@@ -102,7 +102,7 @@ const useStyle = makeStyles(theme => ({
                        20
                    </Typography>
 </Box>
-<Box>
+<Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
     <Container maxWidth="xl">
         <Card>
      

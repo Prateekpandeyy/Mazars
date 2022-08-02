@@ -15,7 +15,7 @@ const clName = JSON.parse(localStorage.getItem("clientLoginId"))
   const adminkey = window.localStorage.getItem("adminkey");
   const tlkey = window.localStorage.getItem("tlkey");
   const tpkey = window.localStorage.getItem("tpkey")
-  const cmsKey = window.localStorage.getItem("token")
+  const cmsKey = JSON.stringify(window.localStorage.getItem("token"))
 
 
   return (

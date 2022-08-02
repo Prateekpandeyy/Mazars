@@ -60,7 +60,7 @@ function Login(props) {
         if (response.data.code === 1) {
           setLoading(false)
           setShow(true)
-          Cookies.set("adminName", response.data.display_name)
+        
           localStorage.setItem("role", response.data.role)
           Swal.fire({
             "title" : "success", 

@@ -192,3 +192,10 @@ span {
 .modalManualTable:hover {
   color: blue;
 }
+#login img,
+#signUp2 img {
+  display: flex;
+  max-width: 800px;
+  width: 100%;
+  margin: auto;
+}

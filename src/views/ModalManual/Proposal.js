@@ -26,33 +26,33 @@ import {makeStyles } from '@material-ui/core/styles';
 const Proposal = () => {
     const useStyle = makeStyles(theme => ({
         root: {
-            backgroundColor: "blue",
+            backgroundColor: "#0071ce",
             color: "white",
             margin: "10px 5px",
             outline: "none",
             '&:hover': {
-                backgroundColor: "green",
+                backgroundColor: "#0071ce",
                 color: "white",
                 outline: "none"
             },
             '&:focus': {
-                backgroundColor: "green",
+                backgroundColor: "#0071ce",
                 color: "white",
                 outline: "none"
             }
         },
         root2: {
-            backgroundColor: "blue",
+            backgroundColor: "#0071ce",
             color: "white",
             margin: "10px 5px",
             outline: "none",
             '&:hover': {
-                backgroundColor: "blue",
+                backgroundColor: "#0071ce",
                 color: "white",
                 outline: "none"
             },
             '&:focus': {
-                backgroundColor: "blue",
+                backgroundColor: "#0071ce",
                 color: "white",
                 outline: "none"
             }
@@ -63,12 +63,12 @@ const Proposal = () => {
             margin: "10px 5px",
             outline: "none",
             '&:hover': {
-                backgroundColor: "blue",
+                backgroundColor: "#0071ce",
                 color: "white",
                 outline: "none"
             },
             '&:focus': {
-                backgroundColor: "blue",
+                backgroundColor: "#0071ce",
                 color: "white",
                 outline: "none"
             }
@@ -79,7 +79,7 @@ const Proposal = () => {
     return (
         <>
          <section id="proposal">
-             <Box>
+             <Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
                  <Container maxWidth= "xl">
                      <Card>
                      <CardHeader title={
@@ -118,7 +118,7 @@ Processing of Proposal
                  </Box>
                  
 
-                 <Box>
+                 <Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
                      <Container maxWidth= "xl">
                          <Card>
                              <CardContent>
@@ -223,7 +223,7 @@ Processing of Proposal
                      </Typography>
                      </Box>
         
-        <Box>
+        <Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
             <Container maxWidth= "xl">
                 <Card>
                     <CardContent>
@@ -272,7 +272,7 @@ Processing of Proposal
                      </Typography>
             </Box>
 
-<Box>
+<Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
     <Container maxWidth= "xl">
         <Card>
             <CardContent>
@@ -295,7 +295,7 @@ the basis of terms and conditions mentioned in the proposal, the client can make
                          45
                      </Typography>
     </Box>
-<Box>
+<Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
     <Container maxWidth= "xl">
         <Card>
            <CardContent>
@@ -313,7 +313,7 @@ the basis of terms and conditions mentioned in the proposal, the client can make
     </Container>
     
     </Box>
-<Box>
+<Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
     <Container maxWidth= "xl">
         <Card>
             <CardContent>
@@ -357,7 +357,7 @@ the basis of terms and conditions mentioned in the proposal, the client can make
     </Box>
 
 
-<Box>
+<Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
     <Container maxWidth= "xl">
         <Card>
             <CardContent>
@@ -381,7 +381,7 @@ the basis of terms and conditions mentioned in the proposal, the client can make
     </Box>
 
 
-<Box>
+<Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
     <Container maxWidth= "xl">
         <Card>
             <CardContent>
@@ -402,7 +402,7 @@ the basis of terms and conditions mentioned in the proposal, the client can make
          49
     </Typography>
     </Box>
-<Box>
+<Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
     <Container maxWidth= "xl">
         <Card>
             <CardContent>
@@ -416,7 +416,7 @@ the basis of terms and conditions mentioned in the proposal, the client can make
     <Typography variant="h6" align = "center">
          50
     </Typography>
-<Box>
+<Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
     <Container maxWidth= "xl">
         <Card>
             <CardContent>

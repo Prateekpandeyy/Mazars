@@ -13,44 +13,44 @@ const Scheduler = () => {
             margin : "10px 0px",
             outline : "none",
             '&:hover': {
-                backgroundColor : "blue",
+                backgroundColor : "#0071ce",
                 color : "white",
                 outline : "none"
             },
             '&:focus': {
-                backgroundColor : "blue",
+                backgroundColor : "#0071ce",
                 color : "white",
                 outline : "none"
             }
         },
         root2: {
-            backgroundColor: "blue",
+            backgroundColor: "#0071ce",
             color: "white",
             margin: "10px 0px",
             outline: "none",
             '&:hover': {
-                backgroundColor: "blue",
+                backgroundColor: "#0071ce",
                 color: "white",
                 outline: "none"
             },
             '&:focus': {
-                backgroundColor: "blue",
+                backgroundColor: "#0071ce",
                 color: "white",
                 outline: "none"
             }
         },
         root3: {
-            backgroundColor: "blue",
+            backgroundColor: "#0071ce",
             color: "white",
             margin: "10px 0px",
             outline: "none",
             '&:hover': {
-                backgroundColor: "blue",
+                backgroundColor: "#0071ce",
                 color: "white",
                 outline: "none"
             },
             '&:focus': {
-                backgroundColor: "blue",
+                backgroundColor: "#0071ce",
                 color: "white",
                 outline: "none"
             }
@@ -61,12 +61,12 @@ const Scheduler = () => {
             margin: "10px 0px",
             outline: "none",
             '&:hover': {
-                backgroundColor: "blue",
+                backgroundColor: "#0071ce",
                 color: "white",
                 outline: "none"
             },
             '&:focus': {
-                backgroundColor: "blue",
+                backgroundColor: "#0071ce",
                 color: "white",
                 outline: "none"
             }
@@ -76,7 +76,7 @@ const Scheduler = () => {
     return(
         <>
            <section>
-               <Box>
+               <Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
                    <Container maxWidth= "xl">
                        <Card>
                            <CardHeader  title={
@@ -106,7 +106,7 @@ const Scheduler = () => {
                    </Box>
     
     
-<Box id= "schMeeting">
+<Box id= "schMeeting" style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
     <Container maxWidth= "xl">
         <Card>
             <CardContent>
