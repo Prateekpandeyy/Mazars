@@ -86,7 +86,7 @@ const myConfig = {
 class AgoraCanvas extends React.Component {
   constructor(props) {
     super(props);
-    this.customerName = Cookies.get("custName")
+    this.customerName = window.localStorage.getItem("custName")
     this.client = {};
     this.screenTrack = {}
     this.localStream = {};

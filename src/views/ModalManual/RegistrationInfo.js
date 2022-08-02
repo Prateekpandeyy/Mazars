@@ -41,7 +41,7 @@ const RegistrationInfo = () => {
     const classes = useStyle() 
     return (
         <>
-         <Box id="signUp2" style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+         <Box id="signUp2" style={{display : "flex",  maxWidth: "850px", margin: "auto",  minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
          <Paper>
            <Card>
                
@@ -222,6 +222,10 @@ const RegistrationInfo = () => {
            </Paper>
           
          </Box>
+                     
+<Typography variant="h6" align="center">
+                       05
+                   </Typography>
         </>
     )
 }

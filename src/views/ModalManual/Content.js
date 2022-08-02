@@ -4,6 +4,7 @@ import { makeStyles, Button, Box,  Typography, Card, Container, CardHeader, Card
 import {Link} from 'react-router-dom';
 import {mainScroll as scroll} from 'react-scroll';
 import MyPDF from '../ManualImg/manual.pdf';
+import mainContent from '../ManualImg/mainContent.png';
 const Content  = () => {
     const goToRow = (e) => {
        
@@ -14,20 +15,30 @@ const Content  = () => {
     }
     return (
         <>
-        <Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
-
+  <Box style={{display : "flex", maxWidth: "900px", margin: "auto", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+ <Container maxWidth = "xl">
+     <Card>
+         <CardContent>
+         <CardMedia component="img" src={mainContent} />
+         </CardContent>
+     </Card>
+ </Container>
+        </Box>
+        <Box style={{display : "flex", maxWidth: "900px", margin: "auto", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+ 
         
          <Container maxWidth= "xl">
          <Card>
-            
+        
              <div className="row mx-1 my-2">
+            
                  <div className="col-md-6">
-                 <Typography variant="h4" style={{color: "#0071ce", fontSize: "22px", fontWeight: 700}}>
+                 <Typography variant="h4" style={{color: "#0071ce", margin: "10px 0px", fontSize: "22px", fontWeight: 700}}>
                 Contents
                
                       </Typography>
                  </div>
-                 <div className="col-md-6" style={{display: "flex", justifyContent : "flex-end"}}>
+                 <div className="col-md-6" style={{display: "flex", margin : "10px 0px", justifyContent : "flex-end"}}>
                  <a href={MyPDF} className="btn btn-secondary" target="_blank"> 
                  Download Manual</a>
                 

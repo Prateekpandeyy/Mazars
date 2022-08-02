@@ -161,7 +161,7 @@ const latestNews = () => {
           setShow(true)
           console.log(response.data.display_name)
           setLoad(true)
-          Cookies.set("custName", response.data.display_name)
+          localStorage.setItem("custName", response.data.display_name)
           setUid(response.data.user_id)
         } else if (response.data.code === 0) {
           Alerts.ErrorNormal(response.data.result)

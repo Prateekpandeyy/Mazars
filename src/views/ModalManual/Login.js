@@ -8,6 +8,7 @@ import IgnologinImg from "../ManualImg/ignologinImg.png";
 import successregImg from "../ManualImg/successReg.png";
 import logo2 from '../ManualImg/logo2.png';
 import logo22 from "../ManualImg/logo22.png";
+import errorImg from "../ManualImg/errorMsg.png";
 import style from './manula.module.css';
 const useStyle = makeStyles(theme => ({
     root : {
@@ -42,7 +43,7 @@ const Login = () => {
         <>
        
              <secton id="login">
-           <Box id="onlyLogin" style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+           <Box id="onlyLogin" style={{display : "flex", maxWidth: "900px", margin: "auto",  minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
            <Container maxWidth= "xl">
             <Card> 
            <CardHeader  title={
@@ -92,7 +93,7 @@ const Login = () => {
                <Typography variant="h6" align="center">
                        03
                    </Typography>
-        <Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+        <Box style={{display : "flex", maxWidth: "900px", margin: "auto",  minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
         <Container maxWidth= "xl">
                 <Card>
                     <CardHeader  title={
@@ -128,25 +129,25 @@ const Login = () => {
                        04
                    </Typography>
         <RegistrationInfo />
-        <Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+        <Box style={{display : "flex", maxWidth: "900px", margin: "auto",  minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
            <Container maxWidth= "xl" id="onlyLogin">
             <Card> 
          
                    
                <CardContent>
        
-        <Typography variant='h5' variantMapping={{
-        h5 : "span"
-    }}>
+        <Typography variant='body1' className="modalText">
     After clicking on  <Button variant="contained" className={classes.root}>Send Otp</Button> Success message will appear.
      Click ok and enter the OTP to register & click on  <Button variant="contained" className={classes.root}>Submit</Button>
     </Typography>
    
 <CardMedia component="img"  src={successregImg}/>
-<Typography variant='h5'>
+<Box my={2}>
+<Typography variant='body1' className="modalText">
 If the OTP entered is incorrect then Error message window will appear showing â€œIncorrect OTP, please try again
 </Typography>
-       
+    </Box>
+<CardMedia  src={errorImg} component="img"/>
                </CardContent>
              
                 </Card>
@@ -155,7 +156,9 @@ If the OTP entered is incorrect then Error message window will appear showing â€
                 
                
                </Box>
-            
+               <Typography variant="h6" align="center">
+                       06
+                   </Typography>
                <RegError />
              </secton>
         

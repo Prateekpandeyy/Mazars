@@ -61,7 +61,7 @@ localStorage.setItem("loginTime", timeStampInMs)
                     localStorage.setItem("userid", JSON.stringify(response.data.user_id));
                     sessionStorage.setItem("userIdsession", JSON.stringify(response.data.user_id));
                     localStorage.setItem("custEmail", JSON.stringify(response.data.name));
-                    Cookies.set("custName", response.data.dispalyname)
+                    localStorage.setItem("custName", response.data.dispalyname)
                     history.push("customer/dashboard");
                     localStorage.setItem("clientToken", response.data.token)
                  

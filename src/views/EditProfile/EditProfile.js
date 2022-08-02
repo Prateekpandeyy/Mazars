@@ -54,6 +54,7 @@ const EditProfile = () => {
     const [phoneError, setPhoneError] = useState(null)
     const [stateError, setStateError] = useState(false)
     const [cityError, setCityError] = useState(false)
+    const [zipError1, setZipError1] = useState(null);
     const [phoneLength, setPhoneLength] = useState(10)
     const token = window.localStorage.getItem("clientToken")
     const myConfig = {
@@ -315,6 +316,8 @@ const EditProfile = () => {
         arrayCity.push(sta)
       }
     });
+    setDstate2('')
+    setCityValue2('')
     setCity(arrayCity)
   }
   const getCityValu2 = (input, reason) => {
@@ -356,15 +359,37 @@ const EditProfile = () => {
       setMobileNo(e)
     }
   }
-  const checkSpecial = (e) => {
-    var regEx = /^[0-9a-zA-Z .]+$/;
+ 
+const checkSpecial = (e) => {
+ 
+  var regEx = /^[0-9a-zA-Z .]+$/;
   if(e.target.value.match(regEx)){
     setName(e.target.value)
   }
-  else{
+  else if(e.target.value.length === 0){
     setName("")
   }
+  
+ 
+}
+const zipVali2 = (e) => {
+
+  if (countryId && zipCode && zipCode.length < 6) {
+    setZipError1(true)
+    setZipError("Minumum 6 digit should be there")
+
   }
+
+  else if (countryId && zipCode && zipCode.length > 6) {
+    setZipError1(true)
+    setZipError("Maximum 6 digit allowed")
+  
+  }
+  else {
+    setZipError1(false)
+  }
+}
+
     return (
         <Layout custDashboard="custDashboard" custUserId={userId}>
         <Card style={{margin: "10px"}}>
@@ -555,6 +580,7 @@ type="textarea"
   autoComplete="off"
   maxLength="12"
   onChange={(e) => setZipCode(e.target.value)}  
+  onBlur={zipVali2}
   name="p_zipCode"
   value={zipCode}
   ref={register({required : true})}
@@ -563,6 +589,7 @@ type="textarea"
     "is-invalid": errors.p_zipCode 
   })}
 />
+<p className="declined">{zipError}</p>
 </div>
 <div className="col-md-6">
                   <div className="mb-3">
