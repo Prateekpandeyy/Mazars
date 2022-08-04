@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { Grid, Box, Container} from '@material-ui/core';
 import {useForm} from 'react-hook-form';
 import { useHistory} from 'react-router-dom';
@@ -13,6 +13,7 @@ import Footer from './../../components/Footer/Footer';
 import { yupResolver } from "@hookform/resolvers/yup";
 import { OuterloginContainer } from '../../components/Common/OuterloginContainer';
 import * as yup from "yup";
+
 const Schema = yup.object().shape({
     p_email: yup.string().email("invalid email").required(""),
     p_name: yup.string().required(""),
@@ -29,6 +30,12 @@ const QueryContact = () => {
             resolver: yupResolver(Schema),
         }
     );
+    useEffect(() => {
+axios.get(`${baseUrl}/customers/crateauo`)
+.then((res) => {
+    console.log("done")
+})
+    }, [])
     
     const onSubmit = (value) => {
         console.log("data", value.p_info)

@@ -542,7 +542,7 @@ const checkSpecial = (e) => {
 const validateUser = (e) => {
   let formData = new FormData()
   if(user.length < 6){
-    setUserError("Please enter atleast 6 digit user id")
+    setUserError("Please enter valid user id")
   }
   else if(user.length > 16){
     setUserError("Id could not be greater than 16 number")
@@ -647,6 +647,29 @@ const getUser = (e) => {
     setUser("")
   }
  
+}
+
+const resetFun = () => {
+  setUser("")
+  setUserError("")
+  setName("")
+  setValiemail("")
+  setInvalid("")
+  setUserAvailable([])
+  setDstate([])
+  setEstate([])
+  setDstate2([])
+  setCityValue2([])
+  setCountryCode('91')
+  setMyCount(101)
+  setAddress("")
+  setPhone("")
+  setIndNumError(null)
+  setNumExist(null)
+  setNumAvail(null)
+  setZipCode("")
+  setZipError(null)
+  reset()
 }
 
   return (
@@ -1104,6 +1127,7 @@ and number
                       </div>
                       :
                       <div class="col-md-6" style={cusSub}>
+                       
                         {
                           show ?
                             <div style={cusSub}>
@@ -1117,10 +1141,14 @@ and number
                             <div style={cusSub}>
                             <button type="submit" class="autoWidthBtn" onClick={() => getOtp("otp")} style={{marginTop: "1rem"}}>SEND OTP</button>
                        </div> }
+                       <button type="submit" class="autoWidthBtn" onClick={() => resetFun()} style={{marginTop: "1rem"}}>Reset</button>
+                
                       </div>
                   }
                   </div>
                 </div>
+                <div>
+               </div>
               </form>
 
               {
