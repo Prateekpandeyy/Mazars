@@ -6,13 +6,14 @@ import mazars from "../../assets/images/mazars-logo.png";
 import style from './QueryStyle.module.css';
 import Header from "../../components/Header/Header";
 import axios from 'axios';
-import { baseUrl } from "../../config/config";
+import { baseUrl, baseUrl3 } from "../../config/config";
 import Swal from 'sweetalert2';
 import classNames from 'classnames';
 import Footer from './../../components/Footer/Footer';
 import { yupResolver } from "@hookform/resolvers/yup";
 import { OuterloginContainer } from '../../components/Common/OuterloginContainer';
 import * as yup from "yup";
+import {Markup} from 'interweave';
 
 const Schema = yup.object().shape({
     p_email: yup.string().email("invalid email").required(""),
@@ -24,17 +25,23 @@ const Schema = yup.object().shape({
   });
 const QueryContact = () => {
     const [check, setCheck] = useState(true)
+    const [cpatcha, setCaptcha] = useState("")
+    const [captchValue, setCaptchValue] = useState("")
     let history = useHistory()
     const { handleSubmit, register, errors } = useForm(
         {
             resolver: yupResolver(Schema),
         }
     );
-    useEffect(() => {
-axios.get(`${baseUrl}/customers/crateauo`)
+    const resendCaptcha = () => {
+        axios.get(`${baseUrl}/customers/crateauo`)
 .then((res) => {
-    console.log("done")
+    setCaptcha(res.data.result)
+    
 })
+    }
+    useEffect(() => {
+resendCaptcha()
     }, [])
     
     const onSubmit = (value) => {
@@ -44,6 +51,7 @@ axios.get(`${baseUrl}/customers/crateauo`)
         formData.append("name", value.p_name);
         formData.append("email", value.p_email);
         formData.append("message", value.p_message);
+        formData.append("captcha", captchValue)
      axios({
          method :"POST",
          url : `${baseUrl}/customers/enquirysubmit`,
@@ -157,11 +165,17 @@ className={classNames(`form-check-input`,
                  {
                      "mainCheckBox" : errors.acceptTerms 
                  })} />
+              
 <label className = {style.formChoice} for="flexCheckDefault">
 I accept that MAS will process my personal data for the purpose of handling my request.
 </label>
+
 </div>
-                   </Box>
+<div style={{display : "flex", maxWidth : "500px", width : "100%", justifyContent : "space-between"}}>
+<img src = {`${baseUrl3}/${cpatcha}`} />
+<input type="text" value = {captchValue} onChange = {(e) => setCaptchValue(e.target.value)} />
+    <a onClick = {() => resendCaptcha()} style={{color : "#0071ce", margin : "auto 0px"}}>Resend</a>
+    </div>        </Box>
                   </Grid>
                   <Grid item lg={12}>
                    <Box className={style.myFormBox}>
