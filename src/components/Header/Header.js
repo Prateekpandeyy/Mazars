@@ -161,16 +161,17 @@ const CmsCont = (props) => {
   const [open2, setOpen2] = useState(false)
   const [open3, setOpen3] = useState(false)
   const [updateOpen, setUpdateOpen] = useState(false)
-  useEffect(() => {
-    let comming = sessionStorage.getItem("commingSoon")
-console.log("coing",comming)
-    if(comming) {
-      
-    }
-    else {
-      history.push("/customer/comming-soon")
-    }
-  }, [])
+  // useEffect(() => {
+  //   let comming = sessionStorage.getItem("commingSoon")
+  //   var now = new Date()
+  //   let dd = now.getDay()
+  //   let hour = now.getHours()
+  //   console.log("hours", dd === 3 && 16 > hour)
+  //   if(!comming && dd === 3 && 16 > hour) {
+  //     history.push("/customer/coming-soon")
+  //   }
+   
+  // }, [])
   let history = useHistory()
   const handleClickOn = () => {
     setOpen(false);

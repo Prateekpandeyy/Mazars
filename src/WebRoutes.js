@@ -229,7 +229,7 @@ function WebRoutes() {
         <Router>
           <Switch>
 
-            <PublicRouteUser exact path="/customer/comming-soon" component={CommingSoon} />
+            <PublicRouteUser exact path="/customer/coming-soon" component={CommingSoon} />
             <PublicRouteUser exact path="/" component={Login} />
             <PublicRouteUser exact path="/customer/signup" component={SignUp} />
             <PublicRouteUser exact path="/customer/forget-password" component={ForgetPassword} />

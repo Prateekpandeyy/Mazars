@@ -496,6 +496,7 @@ const checkSpecial = (e) => {
                     sessionStorage.setItem("userIdsession", JSON.stringify(response.data.user_id));
                     localStorage.setItem("custEmail", JSON.stringify(response.data.name));
                localStorage.setItem("clientName", JSON.stringify(response.data.displayname))
+               localStorage.setItem("custName", response.data.displayname)
                     localStorage.setItem("clientToken", response.data.token)
                     localStorage.setItem("clientLoginId", JSON.stringify(response.data.loginuid))
             props.history.push("/customer/select-category");

@@ -63,6 +63,9 @@ const UploadLink = () => {
     })
     getList()
   }
+  else if (res.data.code === 102){
+    history.push("/cms/login")
+  }
   else{
     Swal.fire({
       title :"error",

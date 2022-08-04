@@ -19,7 +19,7 @@ const About = () => {
         </CardHeader> */}
        <Row>
        <Col md="8">
-              <h4>Feedback</h4>
+              <h4>About Us</h4>
             </Col>
          </Row>
 <CardBody style={{textAlign: "center"}}>
@@ -47,14 +47,17 @@ const About = () => {
        Manufacturing and Retail.
   </p>
   <Typography variant="h4" py={2} align="left">
-  Experts behind MAS
+  MAS India
     </Typography>
     <p style={{textAlign : "left"}}>
-    Industry experts form the backbone of MAS Team, collectively possessing:
-
+    MASIndia is backed by experts having immense experience in the taxation field collectively possessing 150+ years of industry experience in direct & indirect tax matters having served 400+ domestic clients and international clients across various sectors. The expert team has a comprehensive exposure of 1,00,000+ hours of tax assessment & litigation matters including special experience of having handled search & seizure cases of 150+ 
+    business groups. They also have 20+ years of thought leadership in transfer pricing.
       </p>
+      <a className="d-flex" href = 'https://api.masindia.live/assets/image/cms/Mazars_Advisory_Solutions(MAS).pdf' target = "_blank">
+      Download the MASIndia brochure for more information.
+      </a>
             </Col>
-           <div style={{display : "flex", width : "100%", flexWrap : "wrap"}}>
+           {/* <div style={{display : "flex", width : "100%", flexWrap : "wrap"}}>
              <div className={classes.outerAboutBox}>
                <Typography variant="h4" py={2} align="left">150+</Typography>
                <span align="left">years of industry experience in		years of thought leadership	domestic & international
@@ -83,7 +86,7 @@ direct & indirect tax matters		in Transfer Pricing		clients across sectors
 </span>
                </div>
 
-           </div>
+           </div> */}
           </Row>
 </CardBody>
 </Card>

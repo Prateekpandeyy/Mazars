@@ -25,7 +25,7 @@ const MyContainer = styled(Container)({
 
 })
 const AddCmsContent = () => {
-    const userId = localStorage.getItem("adminkey")
+    const userId = localStorage.getItem("cmsId")
     const { handleSubmit, register, errors, getValues} = useForm();
    
     const [stats, setStats] = useState(false)
@@ -83,6 +83,10 @@ const AddCmsContent = () => {
         }
       })
        }
+       else if (res.data.code === 102){
+         history.push("/cms/login")
+       }
+     
       })
      }
     }

@@ -156,6 +156,9 @@ if(res.data.code === 1){
   })
   getGalleryData()
 }
+else if (res.data.code === 102){
+  history.push("/cms/login")
+}
 else{
   Swal.fire({
     title :"error",

@@ -339,6 +339,9 @@ const UpdatesContent = () => {
               })
               history.push("/cms/updates")
           }
+          else if (res.data.code === 102){
+            history.push("/cms/login")
+          }
        })
    
   }

@@ -78,6 +78,9 @@ const UploadLinkContent = () => {
           })
           history.push("/cms/uploadlink")
         }
+        else if (res.data.code === 102){
+          history.push("/cms/login")
+        }
       })
   
     }

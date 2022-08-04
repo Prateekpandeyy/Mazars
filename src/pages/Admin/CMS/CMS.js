@@ -20,7 +20,7 @@ const MyContainer = styled(Container)({
 const Cms = () =>{ 
   const [list, setList] = useState([])
   const [check, setCheck] = useState(false)
-    const userId = window.localStorage.getItem("adminkey");
+    const userId = window.localStorage.getItem("cmsId");
     const token = localStorage.getItem("token")
     const myConfig = {
       headers : {
@@ -33,6 +33,7 @@ const Cms = () =>{
     }, [])
   
     const getList = () => {
+   
       axios.get(`${baseUrl}/cms/getallarticles?uid=${JSON.parse(userId)}`, myConfig)
     
       .then((res) => {
@@ -40,7 +41,14 @@ const Cms = () =>{
        if(res.data.code === 1){
         setList(res.data.result)
        }
+       else if (res.data.code === 102){
+      localStorage.removeItem("token")
+        history.push("/cms/login")
+        return false
+      }
+    
       })
+     
     }
     const myShowValue = (e, row) => {
      

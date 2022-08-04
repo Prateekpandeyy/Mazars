@@ -99,6 +99,9 @@ const Mediatextshow = () => {
               })
               history.push("/cms/contentlist")
           }
+          else if (res.data.code === 102){
+            history.push("/cms/login")
+          }
        })
    }
    const myLabel = (e) => {

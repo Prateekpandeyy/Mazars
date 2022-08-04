@@ -154,6 +154,7 @@ function CustomerNotification({ tokenKey, name , panel}) {
       }
      
          
+           if(redir !== "cms"){
             axios
             .get(`${baseUrl}/${redir}/getNotification?id=${JSON.parse(tokenKey)}&type_list=uread`, myConfig)
             .then((res) => {
@@ -177,6 +178,10 @@ function CustomerNotification({ tokenKey, name , panel}) {
                    }
                 }
             });
+           }
+           else {
+               return false
+           }
         
           
     };

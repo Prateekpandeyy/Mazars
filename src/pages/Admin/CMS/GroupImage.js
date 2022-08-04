@@ -19,6 +19,7 @@ const MyContainer = styled(Container)({
 })
 const GroupImage = () => {
   const [galleryData, setGalleryData] = useState([])
+  const [imageId, setImageId] = useState(0)
   const userId = window.localStorage.getItem("adminkey");
   let history = useHistory();
   const token = localStorage.getItem("token")
@@ -37,15 +38,15 @@ const GroupImage = () => {
    
     axios.get(`${baseUrl}/cms/getgallarylist?uid=${JSON.parse(userId)}&type=image&id=${history.location.index.id}`, myConfig)
     .then((res) => {
-     
-      setGalleryData(res.data.result)
+     setImageId(res.data.result)
+      setGalleryData(res.data.files)
       
     })
     }
     
   }
   const del = (e) => {
- 
+ console.log("eee", e)
 
     Swal.fire({
         title: "Are you sure?",
@@ -57,7 +58,7 @@ const GroupImage = () => {
         confirmButtonText: "Yes, delete it!",
     }).then((result) => {
         if (result.value) {
-          axios.get(`${baseUrl}/cms/deleteimage?uid=${JSON.parse(userId)}&id=${e.imageid}&imageid=${e.id}`, myConfig)
+          axios.get(`${baseUrl}/cms/deleteimage?uid=${JSON.parse(userId)}&id=${imageId[0].id}&imageid=${e.imageid}`, myConfig)
           .then((res) => {
 console.log("response", res)
 if(res.data.code === 1){
@@ -67,6 +68,9 @@ Swal.fire({
   icon : "success"
 })
 getImages()
+}
+else if (res.data.code === 102){
+  history.push("/cms/login")
 }
 else{
 Swal.fire({
@@ -101,19 +105,16 @@ Swal.fire({
             </Row>
         </div>
  <div className="galleryContainer">
-                 
+  
  {
                    galleryData.map((i) => (
                     <div className="galleryBox" key={i.id}> 
                     
                   
-                     <Link style={{display : "flex", height : "80%", overflow : "hidden"}} to = {{
-                      pathname : "/cms/imagegallery", 
-                      index : i
-                    }}>
-                    <img  id={i.id} key={i.id} src={`${baseUrl3}/assets/gallery/${i.name}`} />
-                  <h4 style={{margin: "5px 10px"}}>{i.title}</h4>
-                  </Link>
+                     <a src={`${baseUrl3}/assets/gallery/${i.name}`} style={{display : "flex", flexDirection : "column", height : "80%", overflow : "hidden"}} target = "_blank" >
+                    <img  id={i.id} key={i.id} src={`${baseUrl3}/assets/gallery/${i.name.split(".")[0] +  "_thumb." + i.name.split(".")[1]}`} />
+                  <h4 style={{margin: "5px 10px"}}>{imageId[0].title}</h4>
+                  </a>
                    
                   
                   <div className="delIcon">

@@ -96,14 +96,22 @@ const FlashMessage = () => {
            if(res.data.result === 1){
              setCheck(true)
            }
+           else if (res.data.code === 102){
+            history.push("/cms/login")
+          }
        })
         }
         else{
            
             axios.get(`${baseUrl}/cms/setnewsstatus?uid=${JSON.parse(userId)}&id=${row.id}&status=1`, myConfig)
             .then((res) => {
-                
-                setCheck(false)
+                if(res.data.code === 0){
+                  setCheck(false)
+                }
+               
+                else if (res.data.code === 102){
+                  history.push("/cms/login")
+                }
             })
         }
           

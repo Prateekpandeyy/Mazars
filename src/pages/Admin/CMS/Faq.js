@@ -85,6 +85,9 @@ const Faq = () => {
                })
                history.push("/cms/faqlist")
            }
+           else if (res.data.code === 102){
+            history.push("/cms/login")
+          }
         })
     }
     const myLabel = (e) => {

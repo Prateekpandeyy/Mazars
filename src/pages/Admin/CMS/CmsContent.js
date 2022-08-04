@@ -25,7 +25,7 @@ const MyContainer = styled(Container)({
 
 })
 const CmsContent = () => {
-    const userId = localStorage.getItem("adminkey")
+    const userId = localStorage.getItem("cmsId")
     const { handleSubmit, register, errors, getValues } = useForm();
    
     const [stats, setStats] = useState(false)
@@ -102,6 +102,10 @@ const CmsContent = () => {
         }
       })
        }
+       else if (res.data.code === 102){
+        history.push("/cms/login")
+      }
+    
       })
      }
     }
@@ -121,17 +125,18 @@ const CmsContent = () => {
      let formData = new FormData();
   
   if(contentType !== "Editor") {
+    if(contentType === "Doc_upload"){
+      formData.append("content_type", 0)
+    }
+    else if(contentType === "Pdf_upload"){
+      formData.append("content_type", 1)
+    }
+    else if(contentType === "Ppt_upload"){
+      formData.append("content_type", 3)
+    }
     var uploadImg = e.p_draft;
     if (uploadImg.length > 0) {
-      if(contentType === "Doc_upload"){
-        formData.append("content_type", 0)
-      }
-      else if(contentType === "Pdf_upload"){
-        formData.append("content_type", 1)
-      }
-      else if(contentType === "Ppt_upload"){
-        formData.append("content_type", 3)
-      }
+    
       for (var i = 0; i < uploadImg.length; i++) {
         let file = uploadImg[i];
         formData.append("content", file);

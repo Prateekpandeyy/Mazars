@@ -53,8 +53,8 @@ const Editupdates = () => {
     const getPageValue = () => {
         axios.get(`${baseUrl}/cms/getallupdate?uid=${JSON.parse(userId)}&id=${getId.id}`, myConfig)
         .then((res) =>{
-            console.log("ress", res.data.result)
-          
+            console.log("ress", res)
+          if(res.data.code === 1) {
             res.data.result.map((i) => {
               console.log(i.content)
               setHeading(i.heading)
@@ -76,7 +76,7 @@ const Editupdates = () => {
                addDet(i.content)
                
                  setContentType("Editor")
-              
+           
               }
               else if(i.content_type === "1"){
                 console.log("done")
@@ -86,7 +86,11 @@ const Editupdates = () => {
                setContentType("Ppt_upload")
              }
             })
-      
+          }
+           
+            else if (res.data.code === 102){
+              history.push("/cms/login")
+            }
         })
     }
    const getToPage = (e) => {
@@ -153,6 +157,9 @@ const Editupdates = () => {
               })
               history.push("/cms/updates")
           }
+          else if (res.data.code === 102){
+            history.push("/cms/login")
+          }
        })
    
   }
@@ -166,6 +173,7 @@ const editorShow = (e) => {
   setShowEditor(true)
  }
 }
+console.log("heading", heading)
     return(
       <Layout cmsDashboard="cmsDashboard">
       <Container maxWidth="xl">

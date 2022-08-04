@@ -113,6 +113,9 @@ if(getId.id){
           })
           history.push("/cms/linklist")
       }
+      else if (res.data.code === 102){
+        history.push("/cms/login")
+      }
    })
 
     }

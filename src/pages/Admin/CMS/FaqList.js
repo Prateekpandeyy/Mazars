@@ -36,6 +36,9 @@ const Updates = () =>{
         setList(res.data.result)
         
        }
+       else if (res.data.code === 102){
+        history.push("/cms/login")
+      }
       })
     }
    

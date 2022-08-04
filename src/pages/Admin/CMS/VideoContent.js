@@ -79,6 +79,9 @@ const VideoContent = () => {
           })
           history.push("/cms/videolist")
         }
+        else if (res.data.code === 102){
+          history.push("/cms/login")
+        }
       })
   
     }

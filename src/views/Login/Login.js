@@ -95,18 +95,25 @@ function LoginForm() {
     setPasswordShow(!isPasswordShow)
   };
  
-useEffect(() => {
-  showLinkData()
-}, [showData])
-const showLinkData = () => {
-  let comming = sessionStorage.getItem("commingSoon")
-  console.log("comming", comming)
-  if(comming)
-  setLinkData(myData)
-  else {
-    history.push("/customer/comming-soon")
-  }
-}
+// useEffect(() => {
+//   showLinkData()
+// }, [showData])
+// const showLinkData = () => {
+//   let comming = sessionStorage.getItem("commingSoon")
+//   var now = new Date()
+//   let dd = now.getDay()
+//   let hour = now.getHours()
+//   console.log("hours", dd === 3 && 16 > hour)
+//   console.log("hours", comming)
+//   if(!comming && dd === 3 && 19 > hour){
+//     console.log("hours")
+//     history.push("/customer/coming-soon")
+//   }
+  
+//   else {
+//     setLinkData(myData)
+//   }
+// }
   useEffect(() => {
     getTime()
   }, [load]);

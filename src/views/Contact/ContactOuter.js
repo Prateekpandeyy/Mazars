@@ -24,8 +24,8 @@ const ContactOuter = () => {
                  <Col md="12">
                    
                    
-                 <h4>211, Mercantile House, 15</h4>
-           <h4>Kasturba Gandhi Marg, Connaught Place</h4>
+                 <h4>211, Mercantile House</h4>
+           <h4>15, Kasturba Gandhi Marg, Connaught Place</h4>
        
            <h4>New Delhi-110001, India</h4>
        

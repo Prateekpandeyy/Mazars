@@ -84,6 +84,9 @@ const MediaGallery = () => {
           })
           history.push("/cms/imagelist")
         }
+        else if (res.data.code === 102){
+          history.push("/cms/login")
+        }
       })
    
     }
