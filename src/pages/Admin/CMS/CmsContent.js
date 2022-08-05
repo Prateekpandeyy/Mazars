@@ -125,7 +125,7 @@ const CmsContent = () => {
      let formData = new FormData();
   
   if(contentType !== "Editor") {
-    formData.append("content", "")
+  
     if(contentType === "Doc_upload"){
       formData.append("content_type", 0)
     }
@@ -144,6 +144,9 @@ const CmsContent = () => {
        
       }
       
+    }
+    else{
+      formData.append("content", "")
     }
    
   }

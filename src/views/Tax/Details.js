@@ -125,7 +125,7 @@ const Details = () => {
     return(
        <>
      
-       <OuterloginContainer>
+     <OuterloginContainer>
        <Header noSign="noSign"/>
         <MyContainer>
    
@@ -134,7 +134,7 @@ const Details = () => {
          {
            data.map((i) => (
             <div className={classes.articlesDetails}>
-             <Breadcrumbs separator=">" maxItems={3} aria-label="breadcrumb">
+ <Breadcrumbs separator=">" maxItems={3} aria-label="breadcrumb">
              <Link underline="hover" color="inherit" to="/customer/direct">
   Articles
   </Link>
@@ -144,10 +144,11 @@ const Details = () => {
 </Breadcrumbs>
 <ArticleWrapper>
 
-  {
-    i.content_type === "2" ?
-    <>
-    <ArticleHeader>
+  
+{
+  i.content_type === "2" ?
+  <>
+   <ArticleHeader>
 <MyLogo>
 <Link to = "/">
 <img className={classes.myLogo} src={`${ima}`}/>
@@ -160,7 +161,7 @@ const Details = () => {
 <a href="https://www.masindia.live" target="_blank">www.masindia.live</a>
 </RightContent>
   </ArticleHeader>
-                <div style={{display : "flex", width: "100%", flexDirection : "column"}}>
+  <div style={{display : "flex", width: "100%", flexDirection : "column"}}>
            <MyHeading>
            <h5 className="updatesHeding">  {CommonServices.capitalizeFirstLetter(i.heading)}</h5>
          
@@ -177,20 +178,16 @@ const Details = () => {
          
             
              </div> 
-     <div id="artContent">
-     <Markup content={i.content} /> 
- 
-  
-    </div>
-    </> : 
-    ""  }
-        
+  <div id="artContent" className="updatesContent">
      
-    
-   
-    </ArticleWrapper>
-    {
-       i.content_type === "0" || i.content_type === "1" ?
+  <Markup content={i.content} /> 
+
+
+ </div> 
+ </> : " "
+}
+   {
+      i.content_type === "0" || i.content_type === "1" ?
       <div id="artContent">
       <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.6.347/build/pdf.worker.min.js">
     <Viewer fileUrl={`${baseUrl3}/${i.file}`}>
@@ -201,7 +198,8 @@ const Details = () => {
     </div>
  : ""
     }
-     {
+        
+        {
        i.content_type === "3" ?
        <div id="artContent">
       <iframe
@@ -215,18 +213,18 @@ const Details = () => {
     </div>
  : ""
     }
-     <a href={`${baseUrl3}/${i.file}`} target="_blank" 
+
+    </ArticleWrapper>
+    <a href={`${baseUrl3}/${i.file}`} target="_blank" 
     className={classes.myLink}>
 
     <button className="downloadBtnPdf"> Download  <VscFilePdf style={{display: "flex",
      margin: "0 10px", color: "#e4f0fa", width: "20px", height: "20px"}} /></button>
-    </a> 
-    {/* <button className="customBtn" onClick={() => history.goBack()}>Go Back</button> */}
+    </a>
             </div>
         
            ))
          }
-        
         </div>
       
        </MyContainer>

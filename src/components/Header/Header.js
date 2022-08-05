@@ -224,7 +224,7 @@ const CmsCont = (props) => {
       history.push("/customer/faq-question")
     }
     else if (e === "linklist"){
-      history.push("/customer/link")
+      history.push("/customer/outerLinks")
     }
      
     else if (e === "updatelist"){

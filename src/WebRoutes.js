@@ -43,7 +43,8 @@ import Media from './views/Tax/Media';
 import FaqQuestion from "./views/Tax/FaqQuestion";
 import LinklistUser from "./views/Login/Linklist";
 import OuterMeetingJoin from "./views/outerMeeting/index";
-import Profile from './views/Profile/Profile'
+import Profile from './views/Profile/Profile';
+import Links22 from "./views/Tax/LInks";
 //admin routes
 import AdminStart from './pages/Admin/Start/Start'
 import AdminLogin from './pages/Admin/Login/Login'
@@ -232,6 +233,7 @@ function WebRoutes() {
             <PublicRouteUser exact path="/customer/coming-soon" component={CommingSoon} />
             <PublicRouteUser exact path="/" component={Login} />
             <PublicRouteUser exact path="/customer/signup" component={SignUp} />
+            <PublicRouteUser exact path="/customer/outerLinks" component={LinklistUser} />
             <PublicRouteUser exact path="/customer/forget-password" component={ForgetPassword} />
             <PublicRouteUser exact path="/customer/new-password/:id" component={NewPassword} />
              <PublicRouteUser exact path = "/customer/aboutbasic" component={AboutOuter} />
@@ -256,7 +258,7 @@ function WebRoutes() {
        <PublicRouteUser exact path = "/customer/miscellaneous" component={UpdateMiscellenous} />
           <PublicRouteUser exact path = "/customer/videocall" component = {OuterLinkVideo} />
            <PublicRouteUser exact path ="/customer/update-details/:id" component={UpdateDetails} />
-           <PublicRouteAdmin exact path = "/customer/link" component = {LinklistUser} />
+           <PublicRouteAdmin exact path = "/customer/questinlinklist" component = {LinklistUser} />
             <PrivateRouteUser exact path="/customer/select-category" component={SelectCategoryPage} />
             <PrivateRouteUser exact path="/customer/dashboard" component={Dashboard} />
             <PrivateRouteUser exact path="/customer/my-assingment/:id" component={MyAssingment} />

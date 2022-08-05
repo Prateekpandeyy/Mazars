@@ -14,6 +14,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { OuterloginContainer } from '../../components/Common/OuterloginContainer';
 import * as yup from "yup";
 import { Markup } from 'interweave';
+import {BiRefresh} from 'react-icons/bi'
 
 const Schema = yup.object().shape({
     p_email: yup.string().email("invalid email").required(""),
@@ -27,6 +28,7 @@ const QueryContact = () => {
     const [check, setCheck] = useState(true)
     const [cpatcha, setCaptcha] = useState("")
     const [captchValue, setCaptchValue] = useState("")
+    const [captchaError, setCaptchaError] = useState(false)
     let history = useHistory()
     const { handleSubmit, register, errors } = useForm(
         {
@@ -47,11 +49,12 @@ const QueryContact = () => {
     const onSubmit = (value) => {
         console.log("data", captchValue.length)
         if (captchValue.length === 0) {
-            Swal.fire({
-                title: "error",
-                html: "Please fill captcha",
-                icon: "error"
-            })
+            setCaptchaError(true)
+            // Swal.fire({
+            //     title: "error",
+            //     html: "Please fill captcha",
+            //     icon: "error"
+            // })
         }
         else {
             let formData = new FormData();
@@ -87,6 +90,7 @@ const QueryContact = () => {
                 })
         }
     }
+    console.log("captchaError", captchaError)
     return (
         <>
 
@@ -167,10 +171,29 @@ const QueryContact = () => {
                                     <Box className={style.myFormBox}>
                                         <div style={{ display: "flex", maxWidth: "500px", width: "100%", justifyContent: "space-between" }}>
                                             <img src={`${baseUrl3}/${cpatcha}`} />
-                                            <input type="text" value={captchValue} onChange={(e) => setCaptchValue(e.target.value)} />
-                                            <a onClick={() => resendCaptcha()} style={{ color: "#0071ce", margin: "auto 0px" }}>Refresh</a>
+                                            <input 
+                                            type="text" 
+                                            name="p_captcha"
+                                            value={captchValue} 
+                                            style = {{width : "300px"}}
+                                            ref = {register()}
+                                            placeholder = "Please enter captcha"
+                                            className={classNames(`form-control`,
+                                            {
+                                                "mainCheckBox": errors.p_captcha || captchaError === true
+                                            })}
+                                            onChange={(e) => setCaptchValue(e.target.value)} />
+                                          <span title = "Refresh" onClick={() => resendCaptcha()}>
+                                         
+                                                <BiRefresh style={{fontSize : "30px", cursor : "pointer", color: "#0071ce"}}/>
+                                          
+                                          </span>
                                         </div>
-                                        <div className="form-check">
+                                        
+                                        <Grid item lg={12}>
+                                    <Box className={style.myFormBoxaggree}>
+                                   
+                                            <div className="form-check">
                                             <input
                                                 type="checkbox"
                                                 id="flexCheckDefault"
@@ -182,12 +205,14 @@ const QueryContact = () => {
                                                         "mainCheckBox": errors.acceptTerms
                                                     })} />
 
-                                            <label className={style.formChoice} for="flexCheckDefault">
-                                                I accept that MAS will process my personal data for the purpose of handling my request.
-                                            </label>
+                                           
 
                                         </div>
-
+                                        <label className={style.formChoice} for="flexCheckDefault">
+                                                I accept that MAS will process my personal data for the purpose of handling my request.
+                                            </label>
+                                        </Box>
+                                        </Grid>
                                     </Box>
                                 </Grid>
                                 <Grid item lg={12}>
