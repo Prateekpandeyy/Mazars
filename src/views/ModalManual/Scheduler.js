@@ -76,17 +76,28 @@ const Scheduler = () => {
     return(
         <>
            <section>
-               <Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+           <Box style={{display : "flex",  maxWidth: "900px", margin: "auto", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+  
                    <Container maxWidth= "xl">
                        <Card>
-                           <CardHeader  title={
+                           
+                           {/* <CardHeader  title={
                                  <Typography variant="h5">
                                  For organizing Video conferences or meetings with the client & the Mazars Team members,
                                   schedule facility may be used. Whenever, any meeting is organized by the Mazars Team 
                                   on the request of client or otherwise, it will be visible to the client as below.
                                   An email alert will also be sent to the client informing scheduling of the meeting.
                                  </Typography>
-                           }/>
+                           }/> */}
+                               <CardHeader title={
+  <Typography variant="h5">
+   For organizing Video conferences or meetings with the client & the Mazars Team members,
+                                  schedule facility may be used. Whenever, any meeting is organized by the Mazars Team 
+                                  on the request of client or otherwise, it will be visible to the client as below.
+                                  An email alert will also be sent to the client informing scheduling of the meeting.
+                                
+  </Typography>
+                          }/>
                            <CardContent>
                          
                      <CardMedia src={scheduleImg} component="img"/>

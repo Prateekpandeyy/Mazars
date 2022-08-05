@@ -91,7 +91,8 @@ const Payment = () => {
     return(
         <>
           <section id="payment">
-              <Box id="paymentProcess" style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+          <Box style={{display : "flex",  maxWidth: "900px", margin: "auto", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+  
                   <Container maxWidth= "xl">
                      <Card>
                          <CardHeader title={
@@ -124,7 +125,8 @@ const Payment = () => {
                   <Typography variant="h6" align = "center">
                       61
                   </Typography>
-<Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+<Box style={{display : "flex",  maxWidth: "900px", margin: "auto", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+  
     <Container maxWidth= "xl">
         <Card>
             <CardContent>
@@ -141,7 +143,8 @@ const Payment = () => {
     <Typography variant="h6" align = "center">
                       62
                   </Typography>
-<Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+<Box style={{display : "flex",  maxWidth: "900px", margin: "auto", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+  
     <Container maxWidth= "xl">
         <Card>
             <CardContent>
@@ -170,7 +173,8 @@ const Payment = () => {
         </Typography>
     </Box>
 
-       <Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+       <Box style={{display : "flex",  maxWidth: "900px", margin: "auto", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+  
            <Container maxWidth= "xl">
                <Card>
                    <CardContent>
@@ -198,7 +202,8 @@ In case, client desires to make the payment later on, he may close the “Mobilp
         64
     </Typography>
 
-        <Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+        <Box style={{display : "flex",  maxWidth: "900px", margin: "auto", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+  
             <Container maxWidth= "xl">
                 <Card>
                     <CardContent>
@@ -246,7 +251,8 @@ In case, client desires to make the payment later on, he may close the “Mobilp
             <Typography align="center" variant="h6">
         65
     </Typography>
-       <Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+       <Box style={{display : "flex",  maxWidth: "900px", margin: "auto", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+  
            <Container maxWidth= "xl">
                <Card>
                    <CardContent>
@@ -280,7 +286,8 @@ In case, client desires to make the payment later on, he may close the “Mobilp
            
 
 
-           <Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+           <Box style={{display : "flex",  maxWidth: "900px", margin: "auto", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+  
            <Container maxWidth= "xl">
                <Card>
                    <CardContent>
@@ -298,12 +305,13 @@ In case, client desires to make the payment later on, he may close the “Mobilp
                    </CardContent>
                </Card>
                </Container>
-           <Typography variant="h6" align = "center" id= "mazarDashboard">
-                67
-            </Typography>    
+  
                </Box>
-     
-       <Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+               <Typography variant="h6" align = "center" id= "mazarDashboard">
+                67
+            </Typography>  
+       <Box style={{display : "flex",  maxWidth: "900px", margin: "auto", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+  
            <Container maxWidth= "xl">
                <Card>
                    <CardHeader title={
@@ -320,13 +328,14 @@ In case, client desires to make the payment later on, he may close the “Mobilp
                    </CardContent>
                </Card>
                </Container>
-       <Typography variant="h6" align = "center" id="showMessage">
+      
+           </Box>
+           <Typography variant="h6" align = "center" id="showMessage">
                 68
             </Typography> 
-           </Box>
-
        
-<Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+<Box style={{display : "flex",  maxWidth: "900px", margin: "auto", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+  
     <Container maxWidth= "xl">
         <Card>
             <CardHeader title={
@@ -347,11 +356,13 @@ In case, client desires to make the payment later on, he may close the “Mobilp
             </CardContent>
         </Card>
         </Container>
-<Typography variant="h6" align = "center">
+
+    </Box>
+    <Typography variant="h6" align = "center">
                 69
             </Typography>
-    </Box>
-  <Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+  <Box style={{display : "flex",  maxWidth: "900px", margin: "auto", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+  
   <Container maxWidth= "xl">
     <Card>
         <CardContent>
@@ -391,12 +402,12 @@ In case, client desires to make the payment later on, he may close the “Mobilp
     
 
     
+          
+          </Box>
+       
           <Typography variant="h6" align="center" id="seceduler">
               70
           </Typography>
-          </Box>
-       
-        
         </section>
         </>
         

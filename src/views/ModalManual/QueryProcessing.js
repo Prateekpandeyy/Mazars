@@ -54,7 +54,8 @@ const QueryProcessing = () => {
         
         <>
         <section id="queryProcessing">
-       <Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+       <Box style={{display : "flex",  maxWidth: "900px", margin: "auto", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+  
        <Container maxWidth= "xl">
      
      <Card>
@@ -161,7 +162,8 @@ confirming submission of proposal.
            <Typography variant="h6" align = "center  ">
           36
       </Typography>
-      <Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+      <Box style={{display : "flex",  maxWidth: "900px", margin: "auto", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+  
           <Container maxWidth= "xl">
               <Card>
                   <CardContent>
@@ -196,7 +198,8 @@ confirming submission of proposal.
           <Typography variant="h6" align = "center">
               37
           </Typography>
-<Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+<Box style={{display : "flex",  maxWidth: "900px", margin: "auto", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+  
     <Container maxWidth= "xl">
         <Card>
             <CardContent>
@@ -216,7 +219,8 @@ confirming submission of proposal.
     <Typography variant="h6" align = "center">
               38
           </Typography>
-    <Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+    <Box style={{display : "flex",  maxWidth: "900px", margin: "auto", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+  
     <Container maxWidth= "xl">
         <Card>
             <CardContent>

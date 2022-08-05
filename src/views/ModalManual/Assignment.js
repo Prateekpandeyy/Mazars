@@ -23,7 +23,8 @@ const Assignment = () => {
     return(
         <>
          <section id="assignment">
-             <Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+            <Box style={{display : "flex",  maxWidth: "900px", margin: "auto", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+  
              <Container maxWidth= "xl">
             <Card>
                 <CardHeader title={
@@ -45,7 +46,8 @@ const Assignment = () => {
                  <Typography variant="h6" align = "center">
             52
         </Typography>
-       <Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+      <Box style={{display : "flex",  maxWidth: "900px", margin: "auto", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+  
        <Container maxWidth= "xl">
             <Card>
                     <CardContent>
@@ -68,7 +70,8 @@ const Assignment = () => {
            <Typography variant="h6" align = "center">
             53
         </Typography>
-        <Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+       <Box style={{display : "flex",  maxWidth: "900px", margin: "auto", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+  
             <Container maxWidth= "xl">
                 <Card>
                     <CardContent>
@@ -87,9 +90,7 @@ const Assignment = () => {
                      </CardContent>
                 </Card>
             </Container>
-            <Typography variant="h6" align = "center">
-                54
-            </Typography>
+            
             </Box>
             <Typography variant="h6" align = "center">
             54
@@ -177,7 +178,8 @@ After clicking on
     <Typography variant="h6" align = "center">
             55
         </Typography>
-    <Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+   <Box style={{display : "flex",  maxWidth: "900px", margin: "auto", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+  
         <Container maxWidth= "xl">
             <Card>
                 <CardContent>
@@ -204,7 +206,8 @@ After clicking on
         <Typography variant="h6" align = "center">
             56
         </Typography>
-        <Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+       <Box style={{display : "flex",  maxWidth: "900px", margin: "auto", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+  
         <Container maxWidth= "xl">
                <Card>
                    <CardContent>
@@ -220,7 +223,8 @@ After clicking on
            <Typography variant="h6" align = "center">
             57
         </Typography>
-       <Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+      <Box style={{display : "flex",  maxWidth: "900px", margin: "auto", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+  
            <Container maxWidth= "xl">
                <Card>
                    <CardContent>
@@ -242,7 +246,8 @@ After clicking on
                 58
             </Typography>
 
-            <Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+           <Box style={{display : "flex",  maxWidth: "900px", margin: "auto", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+  
            <Container maxWidth= "xl">
                <Card>
                    <CardContent>
@@ -282,8 +287,8 @@ After clicking on
            <Typography variant="h6" align = "center">
                 59
             </Typography>
-        <Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
-            <Container maxWidth= "xl">
+            <Box style={{display : "flex",  maxWidth: "900px", margin: "auto", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+       <Container maxWidth= "xl">
                 <Card>
                     <CardContent>
                     <CardHeader title={

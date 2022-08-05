@@ -79,7 +79,8 @@ const Proposal = () => {
     return (
         <>
          <section id="proposal">
-             <Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+            <Box style={{display : "flex",  maxWidth: "900px", margin: "auto", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+  
                  <Container maxWidth= "xl">
                      <Card>
                      <CardHeader title={
@@ -112,7 +113,8 @@ following actions for acceptance/rejection of proposal can be taken by any of th
                      40
                  </Typography>   
 
-                 <Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+                <Box style={{display : "flex",  maxWidth: "900px", margin: "auto", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+  
                      <Container maxWidth= "xl">
                          <Card>
                              <CardContent>
@@ -133,7 +135,8 @@ following actions for acceptance/rejection of proposal can be taken by any of th
                      <Typography variant="h6" align="center">
                          41
                      </Typography>
-        <Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+       <Box style={{display : "flex",  maxWidth: "900px", margin: "auto", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+  
             <Container maxWidth= "xl">
                 <Card>
                     <CardContent>
@@ -171,7 +174,8 @@ following actions for acceptance/rejection of proposal can be taken by any of th
             <Typography variant="h6" align="center">
                          42
                      </Typography>
-<Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+<Box style={{display : "flex",  maxWidth: "900px", margin: "auto", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+  
     <Container maxWidth= "xl">
         <Card>
             <CardContent>
@@ -252,7 +256,8 @@ following actions for acceptance/rejection of proposal can be taken by any of th
     <Typography variant="h6" align="center">
                          43
                      </Typography>
-<Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+<Box style={{display : "flex",  maxWidth: "900px", margin: "auto", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+  
     <Container maxWidth= "xl">
         <Card>
            <CardContent>
@@ -300,7 +305,8 @@ following actions for acceptance/rejection of proposal can be taken by any of th
     <Typography variant="h6" align="center">
                          44
                      </Typography>
-<Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+<Box style={{display : "flex",  maxWidth: "900px", margin: "auto", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+  
     <Container maxWidth= "xl">
     <Typography variant="body1">
             By selecting the Engagement Letter checkbox, the proposal can be viewed and on
@@ -322,7 +328,8 @@ the basis of terms and conditions mentioned in the proposal, the client can make
     </Box>
 
 
-<Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+<Box style={{display : "flex",  maxWidth: "900px", margin: "auto", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+  
     <Container maxWidth= "xl">
     <Typography variant="body1">
             After acceptance of proposal, action button right arrow (<CardMedia  component="img"
@@ -356,7 +363,8 @@ src={viewProposalsign} style={{  width : "20px"}} /></th>
     <Typography variant="h6" align="center">
                          46
                      </Typography>
-    <Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+   <Box style={{display : "flex",  maxWidth: "900px", margin: "auto", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+  
     <Container maxWidth= "xl">
         <Card>
             <CardContent>
@@ -380,7 +388,8 @@ The client can still review the proposal & go back by clicking
         <Typography variant="h6" align="center">
                          47
                      </Typography>  
-                     <Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+                    <Box style={{display : "flex",  maxWidth: "900px", margin: "auto", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+  
     <Container maxWidth= "xl">
         <Card>
         <CardContent>
@@ -403,7 +412,8 @@ Upon rejection of proposal, following screen will be visible in the Proposal tab
                          48
                      </Typography>  
 
-<Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+<Box style={{display : "flex",  maxWidth: "900px", margin: "auto", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+  
     <Container maxWidth= "xl">
         <Card>
             <CardContent>
@@ -425,7 +435,8 @@ Upon rejection of proposal, following screen will be visible in the Proposal tab
     <Typography variant="h6" align = "center">
          49
     </Typography>
-<Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+<Box style={{display : "flex",  maxWidth: "900px", margin: "auto", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+  
     <Container maxWidth= "xl">
         <Card>
             <CardContent>
@@ -439,7 +450,8 @@ Upon rejection of proposal, following screen will be visible in the Proposal tab
     <Typography variant="h6" align = "center">
          50
     </Typography>
-<Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+<Box style={{display : "flex",  maxWidth: "900px", margin: "auto", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+  
     <Container maxWidth= "xl">
         <Card>
             <CardContent>
