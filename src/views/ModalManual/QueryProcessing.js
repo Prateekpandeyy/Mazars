@@ -66,22 +66,30 @@ const QueryProcessing = () => {
          <CardContent>
        
          <Typography variant="body1">
-                MAS Team will as quickly as possible allocate the query to a Team Leader 
-                for processing. Before any query is allocated to Team Leader,
-                 following status and action buttons will be visible in the query tab
+         MAS Team will as quickly as possible allocate the query to a Team Leader for
+processing. Before any query is allocated to Team Leader, following status and
+action buttons will be visible in the query tab (S.No. 1 of the list in the screenshot). 
                 </Typography>
                 <Typography variant="body1">
-                Once query is allocated to a Team leader, following status &
-                 action buttons will be visible for the query in the query tab
+                Once query is allocated to a Team leader, following status & action buttons will be
+visible for the query in the query tab (S.No. 2 of the list in the screenshot).
                 </Typography>
                 <Typography variant="body1">
-                The client can send a message to the MAS Team specifying the secondary email user(s) to whom copy of proposal 
-                may also be sent along with the email message confirming submission of proposal
-                 </Typography>
-         <CardMedia component="img" src={processImg}/>
-         <Typography variant="body1">
+                The client can send a message to the MAS Team specifying the secondary email
+user(s) to whom copy of proposal may also be sent along with the email message
+confirming submission of proposal.
+                   </Typography>
+         <CardMedia component="img" src={processImg} style={{margin: "10px 0px"}}/>
+         {/* <Typography variant="body1">
                         Query Tab: Action Buttons:
-                        </Typography>
+                        </Typography> */}
+                                   <CardHeader title={
+                <Typography variant='span' variantMapping={{
+                    h5 : "span"
+                }} className="modalTextHeading" id="forgetPassword">
+    Query Tab: Action Buttons:                                      
+</Typography>
+             }/>
                         <table className="table table-bordered p-2">
 
 <tbody>
@@ -148,20 +156,25 @@ const QueryProcessing = () => {
          </CardContent>
      </Card>
       </Container>
-      <Typography variant="h6" align = "center  ">
+      
+           </Box>
+           <Typography variant="h6" align = "center  ">
           36
       </Typography>
-           </Box>
       <Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
           <Container maxWidth= "xl">
               <Card>
                   <CardContent>
-                  <Typography variant="body1">
-                   Action Button: Upload Additional Documents
+                  <CardHeader title={
+                <Typography variant='span' variantMapping={{
+                    h5 : "span"
+                }} className="modalTextHeading" id="forgetPassword">
+   Action Button: Upload Additional Documents
                     <Button variant="contained">
                     <CardMedia src={downloadImg} component="img" />
-                    </Button>
-                       </Typography>
+                    </Button>                                     
+</Typography>
+                  }/>
                        <Typography variant="body1">
                         After clicking on upload additional documents icon,
                          upload documents message window will appear, click on ,
@@ -169,60 +182,64 @@ const QueryProcessing = () => {
                          select the file(s) to be uploaded & click on
                          <Button variant="contained">Submit </Button> 
                             </Typography>
-                        <CardMedia src={uploadMedia} component="img"  />
+                        <CardMedia src={uploadMedia} component="img" style={{margin : "10px 0px"}}  />
                         <Typography variant="body1">
                         After clicking on  <Button variant="contained">Submit </Button>  success message window
                          will appear, showing name of the file(s) & uploaded successfully message. Click ok
                         </Typography>
+                        <CardMedia src={customerQuery} component="img" style={{margin : "10px 0px"}}/>
                   </CardContent>
               </Card>
           </Container>
+         
+          </Box>
           <Typography variant="h6" align = "center">
               37
           </Typography>
-          </Box>
 <Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
     <Container maxWidth= "xl">
         <Card>
             <CardContent>
-            <CardMedia src={customerQuery} component="img"/>
+           
             <Typography variant="body1">
                         In case of any attempt to upload any document/file,
                          already uploaded, following message will be displayed upon clicking 
                          on <Button variant="contained">Submit </Button> 
                       </Typography> 
-                      <CardMedia src={uploadedImg} component="img"/>
-                      <Typography variant="body1">
-                   Action Button: Send Feedback
-                    <Button variant="contained">
-                    <CardMedia src={feedbackImg} component="img" />
-                    </Button>
-                       </Typography>
-                       <Typography variant="body1">
-                        After clicking on Feedback icon, Feedback message window will appear.
-                         Provide your feedback and click on   <Button variant="contained">Submit </Button> 
-                          . Feedback will be sent to the Mazars Team
-                       
-                            </Typography>
+                      <CardMedia src={uploadedImg} component="img" style={{margin : "10px 0px"}}/>
+                     
             </CardContent>
         </Card>
     </Container>
+   
+    </Box>
     <Typography variant="h6" align = "center">
               38
           </Typography>
-    </Box>
-
     <Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
     <Container maxWidth= "xl">
         <Card>
             <CardContent>
-            <CardMedia src={customerQuery} component="img"/>
-           
+            <CardHeader title={
+                <Typography variant='span' variantMapping={{
+                    h5 : "span"
+                }} className="modalTextHeading" id="forgetPassword">
+    Action Button: Send Feedback
+                    <Button variant="contained">
+                    <CardMedia src={feedbackImg} component="img" />
+                    </Button>                                     
+</Typography>
+                  }/>
+            <Typography variant="body1">
+                
+                 
+                       </Typography>
+                      
                             <Typography variant="body1">
                             The client can send feedback from different tabs/windows where
                              feedback icon is available.
                                 </Typography>
-                        <CardMedia src={feedbackImage} component="img"  />
+                        <CardMedia src={feedbackImage} component="img" style={{margin : "10px 0px"}} />
                         <Typography varinat="body1">
               After clicking on <Button variant="contained">Submit </Button>  success message window will
                appear showing “Feedback sent successfully”. Click ok.
@@ -231,10 +248,11 @@ const QueryProcessing = () => {
             </CardContent>
         </Card>
     </Container>
+
+    </Box>
     <Typography variant="h6" align = "center" id="proposalProcessing">
               39
           </Typography>
-    </Box>
         </section>
         
         </>

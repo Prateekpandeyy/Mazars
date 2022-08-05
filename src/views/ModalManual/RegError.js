@@ -11,7 +11,7 @@ import forgetotpImg from '../ManualImg/forgetOtpImg.png';
 import forgetFreshImg from '../ManualImg/forgetFresh.png';
 import successLoginImg from '../ManualImg/successLoginImg.png';    
 import errorLoginImg from '../ManualImg/errorLoginImg.png';
-import errorLoginImg2 from '../ManualImg/errorLoginImg2.png';
+
 const useStyle = makeStyles(theme => ({
     root : {
         backgroundColor : "#0071ce", 
@@ -203,47 +203,43 @@ Forgot Password: Enter new password that should be minimum of eight characters, 
 one upper case, lower case, special character and number along with the OTP
  received on the email id & click on Submit.
 </Typography>
-            <CardMedia src={forgetFreshImg} component="img" />
-            <Typography variant="h6" align="center">
+            <CardMedia src={forgetFreshImg} component="img" style={{margin : "10px 0px"}} />
+            
+            
+            </CardContent>
+        </Card>
+    </Container>
+    
+    </Box>
+    <Typography variant="h6" align="center">
                        11
                    </Typography>
+<Box style={{display : "flex", maxWidth: "900px", margin: "auto",  minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+    <Container maxWidth= "xl">
+        <Card>
+            <CardContent>
             <Typography variant="body1">
 Password Forgot: After clicking on <Button className={classes.root2}> Submit </Button> Success message window will appear, showing password reset 
 successfully. Now login with the new password.
 </Typography>
 <CardMedia src={successLoginImg} component="img" />
 
-            </CardContent>
-        </Card>
-    </Container>
-    
-    </Box>
-
-<Box style={{display : "flex", maxWidth: "900px", margin: "auto",  minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
-    <Container maxWidth= "xl">
-        <Card>
-            <CardContent>
             <Typography variant="body1">
             Incorrect User Id or Email Id: At the login page, if the user id or email id entered is 
             incorrect then Error message window will appear
              showing “Please register before sign-in”. Click Ok & login with the correct credentials.
 </Typography>
 <CardMedia src={errorLoginImg} component="img" />
-<Typography variant="h6" align="center">
-                       12
-                   </Typography>
-<Typography variant="body1">
-Incorrect password: At the login page, if the password entered is incorrect then Error message window will appear showing “Incorrect email or password”. 
-Click Ok & login with the correct credentials.
-</Typography>
-<CardMedia src={errorLoginImg2} component="img" />
+
             </CardContent>
         </Card>
     </Container>
   
     </Box>
 
-
+    <Typography variant="h6" align="center">
+                       12
+                   </Typography>
 
 
 

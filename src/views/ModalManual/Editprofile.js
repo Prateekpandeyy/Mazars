@@ -26,46 +26,57 @@ const useStyle = makeStyles(theme => ({
          const classes = useStyle()
     return (
       <section id="editProfile">
-<Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+ <Box style={{display : "flex", maxWidth: "900px", margin: "auto",  minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+          
     <Container maxWidth = "xl">
         <Card>
         <CardContent>
-                        <Typography variant="body1">
-                        Edit Profile: To view/edit the profile, click on
-                        <CardMedia component="img" src={iconProfile}style={{display : "inline", width : "30px", margin : "0px 5px", height : "30px"}} /> 
-                          located at top right side of the screen and further select 
-                        <CardMedia component="img" src={userProfile}style={{display : "inline", width : "57px"}} /> 
-                          </Typography>
-                          <CardMedia component="img" src={EditProfileDash} />
-                          <Typography variant="h6">
+        <CardHeader title={
+
+<Typography variant='span' variantMapping={{
+                     h5 : "span"
+                 }} className="modalTextHeading">
+Edit Profile: To view/edit the profile, click on
+<CardMedia component="img" src={iconProfile}style={{display : "inline", width : "30px", margin : "0px 5px", height : "30px"}} /> 
+  located at top right side of the screen and further select 
+<CardMedia component="img" src={userProfile}style={{display : "inline", width : "57px"}} /> 
+  </Typography>
+             }/>
+                       
+                          <CardMedia component="img" src={EditProfileDash}  style={{margin : "10px 0px"}} />
+                          <Typography variant="body1">
                           To edit the profile, click on
                          <Button variant="contained" className={classes.submitBtn}>Edit</Button> 
                          Except for user id & email id, all other information can be edited/amended. To save changes click on
                          <Button variant="contained" className={classes.submitBtn}>Save</Button> 
                             </Typography>
-                            <CardMedia component="img" src={showEdit} /> 
+                            <CardMedia component="img" src={showEdit} style={{margin : "10px 0px"}}  /> 
                             </CardContent>
 
         </Card>
     </Container>
-    <Typography variant="h6" align="center" id="changePassword">
+    
+</Box>
+<Typography variant="h6" align="center" id="changePassword">
                    17
                    </Typography>
-</Box>
-<Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+ <Box style={{display : "flex", maxWidth: "900px", margin: "auto",  minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+          
     <Container maxWidth="xl">
         <Card>
             <CardContent>
             <CardMedia component="img" src={editProPage} style={{margin : "10px 0px"}} /> 
-            <CardMedia component="img" src={editProSuccess} /> 
+            <CardMedia component="img" src={editProSuccess} style={{margin : "10px 0px"}}/> 
             </CardContent>
         </Card>
     </Container>
-    <Typography variant="h6" align="center" id="changePassword">
+    
+</Box>
+<Typography variant="h6" align="center" id="changePassword">
                        18
                    </Typography>
-</Box>
-<Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+ <Box style={{display : "flex", maxWidth: "900px", margin: "auto",  minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+          
     <Container maxWidth="xl">
         <Card>
      
@@ -79,37 +90,41 @@ const useStyle = makeStyles(theme => ({
         At any time, not more than 9 secondary emails can be entered
                           </Typography>
             <CardMedia component="img" src={editUpdatepic} style={{margin : "10px 0px"}} /> 
-            <CardMedia component="img" src={addEmail} /> 
+            <CardMedia component="img" src={addEmail} style={{margin : "10px 0px"}} /> 
             </CardContent>
         </Card>
     </Container>
-    <Typography variant="h6" align="center" id="changePassword">
+  
+</Box>
+<Typography variant="h6" align="center" id="changePassword">
                        19
                    </Typography>
-</Box>
-<Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+ <Box style={{display : "flex", maxWidth: "900px", margin: "auto",  minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+          
     <Container maxWidth="xl">
         <Card>
      
             <CardContent>
           
             <CardMedia component="img" src={addedEmail} style={{margin : "10px 0px"}} /> 
-            <CardMedia component="img" src={addedEmail2} /> 
+            <CardMedia component="img" src={addedEmail2} style={{margin : "10px 0px"}}/> 
             </CardContent>
         </Card>
     </Container>
-    <Typography variant="h6" align="center" id="changePassword">
+    
+</Box>
+<Typography variant="h6" align="center" id="changePassword">
                        20
                    </Typography>
-</Box>
-<Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+ <Box style={{display : "flex", maxWidth: "900px", margin: "auto",  minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+          
     <Container maxWidth="xl">
         <Card>
      
             <CardContent>
           
             <CardMedia component="img" src={deleteEmail} style={{margin : "10px 0px"}} /> 
-            <CardMedia component="img" src={deletedEmail} /> 
+            <CardMedia component="img" src={deletedEmail} style={{margin : "10px 0px"}} /> 
             <Typography variant="body1">
             Note: Only the client email id user would be able to edit the profile and add/delete secondary email users.
              The secondary email users would only be able to view the profile.
@@ -117,10 +132,11 @@ const useStyle = makeStyles(theme => ({
             </CardContent>
         </Card>
     </Container>
-    <Typography variant="h6" align="center" id="changePassword">
+   
+</Box>
+<Typography variant="h6" align="center" id="changePassword">
                        21
                    </Typography>
-</Box>
       </section>
     )
 }

@@ -119,11 +119,11 @@ const Payment = () => {
                      </Card>
                      
                   </Container>
+
+                  </Box>
                   <Typography variant="h6" align = "center">
                       61
                   </Typography>
-                  </Box>
-         
 <Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
     <Container maxWidth= "xl">
         <Card>
@@ -136,11 +136,11 @@ const Payment = () => {
             </CardContent>
         </Card>
     </Container>
+
+    </Box>
     <Typography variant="h6" align = "center">
                       62
                   </Typography>
-    </Box>
-       
 <Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
     <Container maxWidth= "xl">
         <Card>
@@ -152,51 +152,51 @@ const Payment = () => {
     icon in the invoice/pay column.
                                          
                      </Typography>
-                     <CardMedia src={paymentModal} component="img"/>
+                     <CardMedia src={paymentModal} component="img" style={{margin : "10px 0px"}} />
                
                <Typography variant="body1">
                After clicking on   <Button>
                       <CardMedia src={rightClickIcon} component="img" style={{widht: "20px", height:"20px" }}/></Button>    following window opens.
                                       
                    </Typography>
-                   <CardMedia src={paymentModal2} component="img"/>
-                   <Typography variant="h6" align = "center">
-            63
-        </Typography>
-                   <Typography variant="body1">
-                   The rate of TDS is indicated in the invoice and the payment window. However, the client may choose the 
-                   rate of TDS. The tax will be appropriately deducted & balance amount will be payable.
-               </Typography>
-                    <Typography variant="body1">
-                    After Clicking on ,<Button variant="contained" className={classes.root}>
-                        Pay Now
-                        </Button> following screen will
-                     appear enabling payment of the payable amount. To make payment, click on Pay.                       
-                     </Typography>
-<Typography variant="body1">
-In case, client desires to make the payment later on, he may close the “Mobilpay Bill Payment” tab.
-</Typography>
+                   <CardMedia src={paymentModal2} component="img" style={{margin : "10px 0px"}} />
+
+                
             </CardContent>
         </Card>
     </Container>
-  
+    <Typography variant="h6" align = "center">
+            63
+        </Typography>
     </Box>
 
        <Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
            <Container maxWidth= "xl">
                <Card>
                    <CardContent>
-                   
+                   <Typography variant="body1" style={{margin : "10px 0px"}}>
+                   The rate of TDS is indicated in the invoice and the payment window. However, the client may choose the 
+                   rate of TDS. The tax will be appropriately deducted & balance amount will be payable.
+               </Typography>
+                    <Typography variant="body1" style={{margin : "10px 0px"}}>
+                    After Clicking on ,<Button variant="contained" className={classes.root}>
+                        Pay Now
+                        </Button> following screen will
+                     appear enabling payment of the payable amount. To make payment, click on Pay.                       
+                     </Typography>
+<Typography variant="body1" style={{margin : "10px 0px"}}>
+In case, client desires to make the payment later on, he may close the “Mobilpay Bill Payment” tab.
+</Typography>
                  <CardMedia src={payReceiptImage} component="img"/>
                
                    </CardContent>
                </Card>
            </Container>
+           
+           </Box>
            <Typography align="center" variant="h6">
         64
     </Typography>
-           </Box>
-        
 
         <Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
             <Container maxWidth= "xl">
@@ -240,12 +240,12 @@ In case, client desires to make the payment later on, he may close the “Mobilp
                     </CardContent>
                 </Card>
             </Container>
-            <Typography variant="h6" align = "center">
-                65
-            </Typography>
+           
             </Box>
        
-
+            <Typography align="center" variant="h6">
+        65
+    </Typography>
        <Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
            <Container maxWidth= "xl">
                <Card>
@@ -266,7 +266,7 @@ In case, client desires to make the payment later on, he may close the “Mobilp
                  URL link of the receipt can also be sent as a Whatsapp message by clicking on
                 
                  </Typography>
-                 <Link to = "" style={{ color: "skyblue", weight: "1000" }}>
+                 <Link to = "" style={{ color: "skyblue", display : "block", weight: "1000" }}>
                      SendToSelf
                      <WhatsappRoundedIcon />
                  </Link>

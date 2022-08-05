@@ -34,32 +34,45 @@ const Assignment = () => {
                
                     <CardContent>
                         <CardMedia src={assignmentImage} component="img" />
-                        <Typography variant="h6" align = "center">
-            52
-        </Typography>
-                        <Typography variant="body1">
-                        After the MAS Team has sent online draft reports for discussion with the client, following screen will be visible to the client. An email will also be sent
-                         to the client every time any draft report is uploaded along with the draft report(s).
-                        </Typography>
-                        <Typography variant="body1">
-                        The client can send a message specifying the secondary email users to whom draft reports may also be sent. Upon such request, email will be sent to such 
-                        secondary email users along with copy of draft reports
-                       </Typography>
-                        <CardMedia src={assignmentImage2} component="img" />
+                       
+                       
                     </CardContent>
                 
             </Card>
         </Container>
-        <Typography variant="h6" align = "center">
-            53
-        </Typography>
+
                  </Box>
-       
+                 <Typography variant="h6" align = "center">
+            52
+        </Typography>
        <Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
        <Container maxWidth= "xl">
             <Card>
                     <CardContent>
-                        <Typography variant="body1">
+                    <Typography variant="body1" style={{margin : "10px 0px"}}>
+                        After the MAS Team has sent online draft reports for discussion with the client, following screen will be visible to the client. An email will also be sent
+                         to the client every time any draft report is uploaded along with the draft report(s).
+                        </Typography>
+                        <Typography variant="body1" style={{margin : "10px 0px"}}>
+                        The client can send a message specifying the secondary email users to whom draft reports may also be sent. Upon such request, email will be sent to such 
+                        secondary email users along with copy of draft reports
+                       </Typography>
+                        <CardMedia src={assignmentImage2} component="img" style={{margin : "10px 0px"}} />
+                       
+                    </CardContent>
+               
+            </Card>
+        </Container>
+       
+           </Box>
+           <Typography variant="h6" align = "center">
+            53
+        </Typography>
+        <Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+            <Container maxWidth= "xl">
+                <Card>
+                    <CardContent>
+                    <Typography variant="body1">
                         Under the Deliverable, by clicking on the view all report icon
                     <CardMedia src={pdfIconImage} component="img" style={{display : "inline", width: "20px", height: "20px", margin : "0px 5px" }}/>
                       the draft reports can be viewed & 
@@ -71,20 +84,28 @@ const Assignment = () => {
                       following screen will be visible
                         </Typography>
                         <CardMedia src={assignmentImage31} component="img" />
-                    </CardContent>
-               
-            </Card>
-        </Container>
-        <Typography variant="h6" align = "center">
+                     </CardContent>
+                </Card>
+            </Container>
+            <Typography variant="h6" align = "center">
+                54
+            </Typography>
+            </Box>
+            <Typography variant="h6" align = "center">
             54
         </Typography>
-           </Box>
-        
-        <Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
-            <Container maxWidth= "xl">
-                <Card>
-                    <CardContent>
-                    <table className="table table-bordered p-2">
+
+
+<Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+    <Container maxWidth= "xl">
+        <Card>
+            <CardContent>
+            <CardHeader title={
+                    <Typography variant="h5">
+                       
+                       View all Reports: Action Buttons</Typography>
+                }/>
+            <table className="table table-bordered p-2">
                 <tr>
         <th><CardMedia  component="img"
         src={rightClickIcon} style={{height: "20px",  width : "20px"}} /></th>
@@ -135,34 +156,8 @@ const Assignment = () => {
              At this stage, further discussion with the client may take place, if required.
                      </Typography>
                        <CardMedia src={finalAssignment} component="img" />
-                    </CardContent>
-                </Card>
-            </Container>
-            <Typography variant="h6" align = "center">
-                55
-            </Typography>
-            </Box>
-
-
-
-<Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
-    <Container maxWidth= "xl">
-        <Card>
-            <CardContent>
-            <Typography variant="body1">
-            After such discussion, final reports are uploaded by the MAS Team & are visible to the client under the deliverable’s icon
-                        <CardMedia src={pdfIconImage} component="img" style={{display : "inline", margin : "0px 10px", width: "30px", height: "30px" }}/>  as below. An email alert will also
-                        s below. An email will be sent to 
-                        the client along with the final reports as & when uploaded by the MAS Team.
-                      </Typography>
-                      <Typography variant="body1">
-                      The client can also specify the secondary email users by sending message to the MAS Team. An email will be sent to all such secondary email users along with the final reports as & when uploaded by the MAS Team.
-
-                          </Typography>
-                          <Typography variant="body1">
-                          An email alert will also be sent to the client & all secondary email users confirming   uploading of all final reports.
-                              </Typography>
-                      <CardMedia src={pdfAssignmentImg} component="img" />
+                   
+           
                       <Typography variant="h6" align = "center">
             56
         </Typography>
@@ -179,82 +174,130 @@ After clicking on
     </Container>
    
     </Box>
-     
+    <Typography variant="h6" align = "center">
+            55
+        </Typography>
     <Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
         <Container maxWidth= "xl">
             <Card>
                 <CardContent>
-                <Typography variant="body1">
+                <Typography variant="body1" style={{margin : "10px 0px"}}>
+            After such discussion, final reports are uploaded by the MAS Team & are visible to the client under the deliverable’s icon
+                        <CardMedia src={pdfIconImage} component="img" style={{display : "inline", margin : "0px 10px", width: "30px", height: "30px" }}/>  as below. An email alert will also
+                        s below. An email will be sent to 
+                        the client along with the final reports as & when uploaded by the MAS Team.
+                      </Typography>
+                      <Typography variant="body1" style={{margin : "10px 0px"}}>
+                      The client can also specify the secondary email users by sending message to the MAS Team. An email will be sent to all such secondary email users along with the final reports as & when uploaded by the MAS Team.
+
+                          </Typography>
+                          <Typography variant="body1" style={{margin : "10px 0px"}}>
+                          An email alert will also be sent to the client & all secondary email users confirming   uploading of all final reports.
+                              </Typography>
+                      <CardMedia src={pdfAssignmentImg} component="img" />
+               
+                </CardContent>
+            </Card>
+        </Container>
+        
+        </Box>   
+        <Typography variant="h6" align = "center">
+            56
+        </Typography>
+        <Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+        <Container maxWidth= "xl">
+               <Card>
+                   <CardContent>
+                   <Typography variant="body1">
                 After delivery of final reports, MAS Team will mark the progress status of assignment
                  as delivery of final report completed, below screen will be visible.
                     </Typography>
                         <CardMedia src={assignment3} component="img"/>
-                        <Typography variant="body1">
-                        On receipt of full payment from the client, MAS Team will mark awaiting
-                         completion as completed & following screen will be visible to the client.</Typography>
-                   <CardMedia src={assignment4} component="img"/>
-                </CardContent>
-            </Card>
-        </Container>
-        <Typography variant="h6" align = "center">
+                       </CardContent>
+               </Card>
+           </Container>
+           </Box>
+           <Typography variant="h6" align = "center">
             57
         </Typography>
-        </Box>   
-       
-        
        <Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
            <Container maxWidth= "xl">
                <Card>
                    <CardContent>
                    <Typography variant="body1">
+                        On receipt of full payment from the client, MAS Team will mark awaiting
+                         completion as completed & following screen will be visible to the client.</Typography>
+                   <CardMedia src={assignment4} component="img"/>
+                  
+                   <Typography variant="body1">
                     The Assignment tab under the query details will show following information.
                      </Typography>
-                     <CardMedia src={assignmentQuery} component="img"/>
-                     <Typography variant="h6" align = "center">
-            58
-        </Typography>
-                     <Typography variant="body1">
-                 Query Detail Page: Assignment
-                 </Typography>
-                 <table className="table table-bordered p-2">
-                     <tr>
-                         <td>Assignment Number</td>
-                         <td>Shows the unique assignment number allotted to the query for ease of tracking.</td>
-                     </tr>
-                     <tr>
-                         <td>Assignment date</td>
-                         <td>Shows the date on which the assignment has been created, i.e., date of acceptance of proposal. </td>
-                     </tr>
-                     <tr>
-                         <td>Proposed date of completion</td>
-                         <td>Shows the expected date of completion of assignment.</td>
-                     </tr>
-                     <tr>
-                         <td>Assignment Status</td>
-                         <td>Shows different stages of progress of the assignment.</td>
-                     </tr>
-                     <tr>
-                         <td>Time taken to complete the assignment </td>
-                         <td>Shows the number of days taken to complete the assignment.</td>
-                     </tr>
-                     </table>
+                   
                    </CardContent>
                </Card>
            </Container>
+          
+           </Box>
+           <Typography variant="h6" align = "center">
+                58
+            </Typography>
+
+            <Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+           <Container maxWidth= "xl">
+               <Card>
+                   <CardContent>
+                   <CardMedia src={assignmentQuery} component="img"/>
+                   <CardHeader title={
+                    <Typography variant="h5">
+                        Query Detail Page: Assignment </Typography>
+                }/>
+               
+                    <table className="table table-bordered p-2">
+                    <tr>
+                        <td>Assignment Number</td>
+                        <td>Shows the unique assignment number allotted to the query for ease of tracking.</td>
+                    </tr>
+                    <tr>
+                        <td>Assignment date</td>
+                        <td>Shows the date on which the assignment has been created, i.e., date of acceptance of proposal. </td>
+                    </tr>
+                    <tr>
+                        <td>Proposed date of completion</td>
+                        <td>Shows the expected date of completion of assignment.</td>
+                    </tr>
+                    <tr>
+                        <td>Assignment Status</td>
+                        <td>Shows different stages of progress of the assignment.</td>
+                    </tr>
+                    <tr>
+                        <td>Time taken to complete the assignment </td>
+                        <td>Shows the number of days taken to complete the assignment.</td>
+                    </tr>
+                    </table>
+                   </CardContent>
+               </Card>
+           </Container>
+          
+           </Box>
            <Typography variant="h6" align = "center">
                 59
             </Typography>
-           </Box>
         <Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
             <Container maxWidth= "xl">
                 <Card>
                     <CardContent>
-                    <Typography variant="body1">
-                    Under Payment Status tab, following screen will be visible after acceptance of proposal.  </Typography>
+                    <CardHeader title={
+                    <Typography variant="h5">
+                      Under Payment Status tab, following screen will be visible after acceptance of proposal.  
+                       </Typography>
+                }/>
+                   
                     <CardMedia src={seeProposal} component="img"/>
-                    <Typography variant="body1">
-                 Under Payment Status tab, following action buttons are visible
-                 </Typography>
+                    <CardHeader title={
+                    <Typography variant="h5">
+                      Under Payment Status tab, following action buttons are visible
+                       </Typography>
+                }/>
                     </CardContent>
                     <table className="table table-bordered p-2">
                      <tr>
@@ -277,11 +320,11 @@ After clicking on
                     </Typography>
                 </Card>
             </Container>
+           
+            </Box>
             <Typography variant="h6" align = "center" id="paymentProcess">
                 60
             </Typography>
-            </Box>
-       
         
         </section>
         </>

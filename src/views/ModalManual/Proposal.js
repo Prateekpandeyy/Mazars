@@ -88,41 +88,56 @@ Processing of Proposal
                             </Typography>
         }/>
                         <CardContent>
-                <Typography variant="body1">
+                <Typography variant="body1" style = {{margin : "10px 0px"}}>
                 MAS Team, after examining the query, will prepare a proposal & provide it
                  to the client. An email will also be sent to the client along with the proposal. Such email will also 
                 be sent to the selected secondary email users along with copy of proposal
                 </Typography>
            
                 <Typography variant="body1">
-                By selecting the Proposal Tab, on the left-hand side of the following screen, the client can view the proposal, by clicking on the blue arrow facing rightwards (). All following actions for acceptance/rejection of proposal
-                 can be taken by any of the secondary email users along with the client. </Typography>
-                <CardMedia src={proposalView} component="img" />
-                <Typography variant="h6" align="center">
-                     40
-                 </Typography>
-                <Typography variant="body1">
-                After clicking on blue arrow facing rightwards (   <Button><CardMedia src={rightArrow} component="img" style={{width: "30px", height: "30px"}} /></Button>), 
-                following window will appear:
-             
-                </Typography>
-                <CardMedia src={showProposal} style={{margin : "10px 0px"}} component="img" />
-                <CardMedia src={showProposal2} component="img" />
-                <Typography variant="h6" align="center">
-                     41
-                 </Typography>
+                By selecting the Proposal Tab, on the left-hand side of the following screen, the
+client can view the proposal, by clicking on the blue arrow facing rightwards ( ). All
+following actions for acceptance/rejection of proposal can be taken by any of the secondry email user alogn with the client.
+</Typography>
+ <CardMedia src={proposalView} component="img" style={{margin : "10px 0px"}} />
+                
+               
+                
             </CardContent>
                      </Card>
                  </Container>
                
                  </Box>
-                 
+                 <Typography variant="h6" align="center">
+                     40
+                 </Typography>   
 
                  <Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
                      <Container maxWidth= "xl">
                          <Card>
                              <CardContent>
                              <Typography variant="body1">
+                After clicking on blue arrow facing rightwards (   <Button><CardMedia src={rightArrow} component="img" style={{width: "30px", height: "30px"}} /></Button>), 
+                following window will appear:
+             
+                </Typography>
+                <CardMedia src={showProposal} style={{margin : "10px 0px"}} component="img" />
+                <CardMedia src={showProposal2} component="img" style={{margin : "10px 0px"}} />
+                       
+              
+                             </CardContent>
+                         </Card>
+                     </Container>
+                     
+                     </Box>
+                     <Typography variant="h6" align="center">
+                         41
+                     </Typography>
+        <Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+            <Container maxWidth= "xl">
+                <Card>
+                    <CardContent>
+                    <Typography variant="body1" style={{margin : "10px 0px"}}>
                              Engagement letter box should be checked to view the engagement
                               letter before accepting or rejecting the proposal by pressing the
                       <Button varinat="contained" className={classes.root}>Accept</Button>   or    
@@ -130,153 +145,164 @@ Processing of Proposal
                       respectively. The client can also take no action on the proposal by clicking on  
                        <Button varinat="contained" className={classes.root2}>Go Back</Button> button.
                 </Typography>
-                <Typography variant="body1">
+                <Typography variant="body1" style={{margin : "10px 0px"}}>
                 Upon checking the engagement letter box,
                  proposed engagement letter will be displayed.
                 </Typography>
-                <Typography variant="body1">
+                <Typography variant="body1" style={{margin : "10px 0px"}}>
                 Acceptance of proposal by the client will amount to acceptance
                  of Engagement letter.
                 </Typography>
-                <Typography variant="body1">
+                <Typography variant="body1" style={{margin : "10px 0px"}}>
                 Before deciding about the proposal, the client can send message to the Mazars Team for any discussion about the proposal and may accept or reject the proposal after such discussion. Conference can also be done by the Mazars Team with the client for any discussion. The Mazars 
                 Team may amend the proposal and submit fresh proposal after such discussion/conference.
                 </Typography>
-                <Typography variant = "body1">
+                <Typography variant = "body1" style={{margin : "10px 0px"}}>
                 Under Proposal Tab, various action buttons will appear as per the screen below:
                 </Typography>
                 <CardMedia src={proposalView2} style={{margin : '10px 0px'}} component="img"/>
-                <Typography variant="h6" align="center">
-                     42
-                 </Typography>
-                <CardMedia src={proposalView22} style={{margin : '10px 0px'}} component="img"/>
-                <table className="table table-bordered p-2">
-
-<tbody>
-    
-    
-    <tr>
-        <th><CardMedia  component="img"
-        src={message} style={{height: "20px",  width : "20px"}} /></th>
-        <td className='px-5'>
-            <ul>
-                <li>
-                    <Typography variant='body2'>
-                    By clicking on this icon, the client can send
-                     message to the Mazars Team regarding any query
-                </Typography>
-                </li>
                 
-            </ul>
-        </td>
-    </tr>
-    <tr>
-        <th><CardMedia  component="img"
-        src={messageHistory} style={{height: "20px",  width : "20px"}} /></th>
-        <td className='px-5'>
-            <ul>
-                <li>
-                    <Typography variant='body2'>
-                    By clicking in this icon, the client can view the messages
-                     history with the Mazars Team
-                </Typography>
-                </li>
-                
-            </ul>
-        </td>
-    </tr>
-    <tr>
-        <th><CardMedia  component="img"
-        src={rightArrow} style={{height: "20px",  width : "20px"}} /></th>
-        <td className='px-5'>
-            <ul>
-                <li>
-                    <Typography variant='body2'>
-                    By clicking on this icon, the client can view proposal and its details
-                </Typography>
-                </li>
-                
-            </ul>
-        </td>
-    </tr>
-    <tr>
-        <th><CardMedia  component="img"
-        src={viewProposalsign} style={{width : "20px"}} /></th>
-        <td className='px-5'>
-            <ul>
-                <li>
-                    <Typography variant='body2'>
-                    By clicking on this icon, the client can view the Engagement letter
-                </Typography>
-                </li>
-                
-            </ul>
-        </td>
-    </tr>
-    </tbody>
-    </table>    
-                             </CardContent>
-                         </Card>
-                     </Container>
-                     <Typography variant="h6" align="center">
-                         43
-                     </Typography>
-                     </Box>
-        
-        <Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
-            <Container maxWidth= "xl">
-                <Card>
-                    <CardContent>
-                   
-           
-           <table className="table table-bordered p-2">
-       
-       <tbody>
-           
-           
-           <tr>
-               <th>Status</th>
-               <th>Interpretation</th>
-               <th>Screenshot listing</th>
-           </tr>
-           <tr>
-              <td>In-progress; Preparation</td>
-              <td>Mazars Team is preparing the proposal</td>
-              <td>At S.No. 1</td>
-           </tr>
-           <tr>
-              <td>In-progress; Acceptance</td>
-              <td>Mazars Team has sent the proposal to the client which is
-                   awaiting acceptance.</td>
-                   <td>At S.No.2</td>
-           </tr>
-           <tr>
-               <td>Declined; Proposal</td>
-               <td>Client has rejected the Proposal</td>
-               <td>At S.No.3</td>
-           </tr>
-           <tr>
-               <td>Accepted; Proposal</td>
-               <td>Client has accepted the proposal.</td>
-               <td>At S.No.4</td>
-           </tr>
-           </tbody>
-           </table>        
-           <CardMedia component="img" src={showProposal22}/>  
-
+                  
                     </CardContent>
                 </Card>
             </Container>
-            <Typography variant="h6" align="center">
-                         44
-                     </Typography>
+            
             </Box>
-
+            <Typography variant="h6" align="center">
+                         42
+                     </Typography>
 <Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
     <Container maxWidth= "xl">
         <Card>
             <CardContent>
-            <Typography variant="body1">
+            <CardMedia src={proposalView22} style={{margin : '10px 0px'}} component="img"/>
+            
+            <table className="table table-bordered p-2">
+
+<tbody>
+
+
+<tr>
+    <th><CardMedia  component="img"
+    src={message} style={{height: "20px",  width : "20px"}} /></th>
+    <td className='px-5'>
+        <ul>
+            <li>
+                <Typography variant='body2'>
+                By clicking on this icon, the client can send
+                 message to the Mazars Team regarding any query
+            </Typography>
+            </li>
+            
+        </ul>
+    </td>
+</tr>
+<tr>
+    <th><CardMedia  component="img"
+    src={messageHistory} style={{height: "20px",  width : "20px"}} /></th>
+    <td className='px-5'>
+        <ul>
+            <li>
+                <Typography variant='body2'>
+                By clicking in this icon, the client can view the messages
+                 history with the Mazars Team
+            </Typography>
+            </li>
+            
+        </ul>
+    </td>
+</tr>
+<tr>
+    <th><CardMedia  component="img"
+    src={rightArrow} style={{height: "20px",  width : "20px"}} /></th>
+    <td className='px-5'>
+        <ul>
+            <li>
+                <Typography variant='body2'>
+                By clicking on this icon, the client can view proposal and its details
+            </Typography>
+            </li>
+            
+        </ul>
+    </td>
+</tr>
+<tr>
+    <th><CardMedia  component="img"
+    src={viewProposalsign} style={{width : "20px"}} /></th>
+    <td className='px-5'>
+        <ul>
+            <li>
+                <Typography variant='body2'>
+                By clicking on this icon, the client can view the Engagement letter
+            </Typography>
+            </li>
+            
+        </ul>
+    </td>
+</tr>
+</tbody>
+</table>    
+               
+     
+            </CardContent>
+        </Card>
+    </Container>
+    
+    </Box>
+    <Typography variant="h6" align="center">
+                         43
+                     </Typography>
+<Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+    <Container maxWidth= "xl">
+        <Card>
+           <CardContent>
+           
+           <table className="table table-bordered p-2">
+   
+   <tbody>
+       
+       
+       <tr>
+           <th>Status</th>
+           <th>Interpretation</th>
+           <th>Screenshot listing</th>
+       </tr>
+       <tr>
+          <td>In-progress; Preparation</td>
+          <td>Mazars Team is preparing the proposal</td>
+          <td>At S.No. 1</td>
+       </tr>
+       <tr>
+          <td>In-progress; Acceptance</td>
+          <td>Mazars Team has sent the proposal to the client which is
+               awaiting acceptance.</td>
+               <td>At S.No.2</td>
+       </tr>
+       <tr>
+           <td>Declined; Proposal</td>
+           <td>Client has rejected the Proposal</td>
+           <td>At S.No.3</td>
+       </tr>
+       <tr>
+           <td>Accepted; Proposal</td>
+           <td>Client has accepted the proposal.</td>
+           <td>At S.No.4</td>
+       </tr>
+       </tbody>
+       </table>        
+       <CardMedia component="img" src={showProposal22}/>  
+
+               </CardContent> 
+        </Card>
+    </Container>
+    
+    </Box>
+    <Typography variant="h6" align="center">
+                         44
+                     </Typography>
+<Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+    <Container maxWidth= "xl">
+    <Typography variant="body1">
             By selecting the Engagement Letter checkbox, the proposal can be viewed and on
 the basis of terms and conditions mentioned in the proposal, the client can make the decision by clicking on 
            <Button variant="container" className={classes.root}>Accept</Button>             or            
@@ -288,98 +314,94 @@ the basis of terms and conditions mentioned in the proposal, the client can make
             Upon acceptance, following success message window will appear showing success message window, click ok
                 </Typography>
                 <CardMedia src={proposalSeen2} component="img" />
-            </CardContent>
-        </Card>
+              
     </Container>
     <Typography variant="h6" align="center">
                          45
                      </Typography>
     </Box>
+
+
 <Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
     <Container maxWidth= "xl">
-        <Card>
-           <CardContent>
-           
-               
-                <Typography variant="body1">
+    <Typography variant="body1">
             After acceptance of proposal, action button right arrow (<CardMedia  component="img"
         src={rightArrow} style={{display: "inline", height: "20px",  width : "20px"}} />)
              will disappear & new eye button (<CardMedia  component="img"
         src={viewProposalsign} style={{ display: "inline",  width : "20px"}} />) will appear to view the accepted proposal as below:
                 </Typography>
                 <CardMedia  src={acceptProposal22} component="img"/>
-               </CardContent> 
-        </Card>
-    </Container>
+                <table className="table table-bordered p-2">
+<tr>
+<th><CardMedia  component="img"
+src={viewProposalsign} style={{  width : "20px"}} /></th>
+<td className='px-5'>
+<ul>
+    <li>
+        <Typography variant='body2'>
+        By clicking on this icon, the client can view the Engagement letter as accepted 
+        by him. His acceptance is also recorded on such engagement letter electronically.
+    </Typography>
+    </li>
     
+</ul>
+</td>
+</tr>
+</table>
+      
+    </Container>
+  
+
     </Box>
-<Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
-    <Container maxWidth= "xl">
-        <Card>
-            <CardContent>
-            <table className="table table-bordered p-2">
-            <tr>
-        <th><CardMedia  component="img"
-        src={viewProposalsign} style={{  width : "20px"}} /></th>
-        <td className='px-5'>
-            <ul>
-                <li>
-                    <Typography variant='body2'>
-                    By clicking on this icon, the client can view the Engagement letter as accepted 
-                    by him. His acceptance is also recorded on such engagement letter electronically.
-                </Typography>
-                </li>
-                
-            </ul>
-        </td>
-    </tr>
-            </table>
-            <Typography variant="h6" align="center">
+    <Typography variant="h6" align="center">
                          46
                      </Typography>
-            <Typography variant="body1">
-            If the proposal is not acceptable, click          
-            <Button variant="contained" className={classes.root3}>Reject</Button>   button. Rejection message window will appear showing “Are you sure to reject Proposal?”    </Typography>
-            <CardMedia  src={proposalConfirm} component="img"/>
-            <Typography variant="body1">
-            The client can still review the proposal & go back by clicking 
-            <Button className={classes.root3}>Cancel</Button>         button. If sure to reject, click 
-            <Button variant="contained" className={classes.root}>Yes Reject it</Button>  
-                            . Upon such rejection following message will appear. Click ok  
-                            </Typography>
-                            <CardMedia  src={rejectProposal} component="img"/>
-            </CardContent>
-        </Card>
-    </Container>
-    <Typography variant="h6" align="center">
-                         47
-                     </Typography>
-    </Box>
-
-
-<Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+    <Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
     <Container maxWidth= "xl">
         <Card>
             <CardContent>
-            <Typography variant="body1">
-            Upon rejection of proposal, following screen will be visible in the Proposal tab details.  
-                            </Typography> 
-                            <CardMedia  src={proposal221} component="img"/>
-                            <Typography variant="body1">
-                            In case of client inadvertently rejecting the proposal, he may 
-                            send message to the MAS Team for restoring the pending proposal status by clicking on
-            
-                  <CardMedia src={message} style={{display : "inline", width : "20px"}} component="img"/> icon.
-  </Typography>
-<CardMedia  src={rejectProposalView} component="img"/>
+                
+<Typography variant="body1">
+If the proposal is not acceptable, click          
+<Button variant="contained" className={classes.root3}>Reject</Button>   button. Rejection message window will appear showing “Are you sure to reject Proposal?”    </Typography>
+<CardMedia  src={proposalConfirm} component="img"/>
+<Typography variant="body1">
+The client can still review the proposal & go back by clicking 
+<Button className={classes.root3}>Cancel</Button>         button. If sure to reject, click 
+<Button variant="contained" className={classes.root}>Yes Reject it</Button>  
+                . Upon such rejection following message will appear. Click ok  
+                </Typography>
+                <CardMedia  src={rejectProposal} component="img"/>
+
             </CardContent>
         </Card>
-    </Container>
-    <Typography variant="h6" align="center">
-                         48
-                     </Typography>
-    </Box>
+        </Container>
+        </Box>
+        <Typography variant="h6" align="center">
+                         47
+                     </Typography>  
+                     <Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+    <Container maxWidth= "xl">
+        <Card>
+        <CardContent>
+<Typography variant="body1">
+Upon rejection of proposal, following screen will be visible in the Proposal tab details.  
+                </Typography> 
+                <CardMedia  src={proposal221} component="img"/>
+                <Typography variant="body1">
+                In case of client inadvertently rejecting the proposal, he may 
+                send message to the MAS Team for restoring the pending proposal status by clicking on
 
+      <CardMedia src={message} style={{display : "inline", width : "20px"}} component="img"/> icon.
+</Typography>
+<CardMedia  src={rejectProposalView} component="img"/>
+</CardContent>
+        </Card>
+        </Container>
+        </Box>
+        <Typography variant="h6" align="center">
+                         48
+                     </Typography>  
 
 <Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
     <Container maxWidth= "xl">
@@ -389,19 +411,20 @@ the basis of terms and conditions mentioned in the proposal, the client can make
             After examining the request, Mazars Team may quickly restore the pending proposal status & 
             it will be visible to the client. An email will also be sent to the client .4
               </Typography>
-              <CardMedia  src={restoredProposalView} component="img"/>
+              <CardMedia  src={restoredProposalView} component="img" style={{margin : "10px 0px"}}/>
               <Typography variant="body1">
             After the acceptance of Proposal, Proposal tab under the Query Details will show the following information.
              The client can also download the proposal by clicking download button 
              <Button className={classes.root}>Download</Button></Typography>
-             <CardMedia  src={restoredQueryView} component="img"/>
+             <CardMedia  src={restoredQueryView} component="img" style={{margin : "10px 0px"}}/>
             </CardContent>
         </Card>
     </Container>
+    
+    </Box>
     <Typography variant="h6" align = "center">
          49
     </Typography>
-    </Box>
 <Box style={{display : "flex", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
     <Container maxWidth= "xl">
         <Card>
@@ -420,9 +443,12 @@ the basis of terms and conditions mentioned in the proposal, the client can make
     <Container maxWidth= "xl">
         <Card>
             <CardContent>
-            <Typography variant="body1">
-          Query Detail Page: Proposal
-              </Typography>
+           
+              <CardHeader title={
+                    <Typography variant="h5" align="center">
+ Query Detail Page: Proposal
+                            </Typography>
+        }/>
           <table className="table table-bordered p-2">
               <tr>
                   <td>Date of allocation</td>
@@ -496,12 +522,14 @@ the basis of terms and conditions mentioned in the proposal, the client can make
             </CardContent>
         </Card>
     </Container>
-    <Typography align="center" variant="h6" id="assignProcess">
+   
+</Box>
+<Typography align="center" variant="h6" id="assignProcess">
          51
     </Typography>
-</Box>
 </section>
 </>
     )
 }
 export default Proposal;
+

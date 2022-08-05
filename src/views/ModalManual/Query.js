@@ -99,36 +99,17 @@ const Query = () => {
                         client or registration of a new client, following screen/window will open.
                             </Typography>
                             <CardMedia component="img" src={successImg}  />
-                            <Typography variant="h6" align="center">
-                       13
-                   </Typography>
-                            <Typography variant="body1">
-                            Change password: To change the password, click on  <CardMedia component="img" src={iconProfile}style={{display : "inline", width : "30px", height : "30px"}} /> located at top right
-                                side of the screen and further select  <CardMedia component="img" src={changePass2} style={{display : "inline", width : "155px", height : "15px"}} />
-                            </Typography>
-                            <CardMedia component="img" src={imgQuery} />
-                            <Typography variant="body1">
-                                Change password window will appear, enter the registered email id along with the new password that
-                                client wants to register for the account & click on
-                                <Button variant="contained" className={classes.root}>Get OTP</Button>
-                            </Typography>
-                            
-                            <CardMedia component="img" src={changePasswordImg} />
-                            <Typography variant="h6" align="center">
-                       14
-                   </Typography>
-                            <Typography variant="body1">
-                                Change password: Success message window will appear showing OTP has been
-                                sent to your registered email address. Click Ok.
-                            </Typography>
-                            <CardMedia component="img" src={successChange} />
+                          
+                          
                         </CardContent>
                     
                 </Card>
             </Container>
 
           
-               
+            <Typography variant="h6" align="center">
+                       13
+                   </Typography>
                 </Box>
 
             
@@ -138,78 +119,125 @@ const Query = () => {
                     
                   
                         <CardContent>
-                            
-                        <Typography variant="h5">
-                                Change password: Enter the OTP received on your registered email address & click on
-                                <Button variant="contained" className={classes.root2}>Submit</Button>
+                        <CardHeader title={
+                <Typography variant='span' variantMapping={{
+                    h5 : "span"
+                }} className="modalTextHeading" id="forgetPassword">
+  Change password: To change the password, click on  <CardMedia component="img" src={iconProfile}style={{display : "inline", width : "30px", height : "30px"}} /> located at top right
+                                side of the screen and further select  <CardMedia component="img" src={changePass2} style={{display : "inline", width : "155px", height : "15px"}} />
+                                          
+</Typography>
+             }/>
+                       
+                            <CardMedia component="img" src={imgQuery} style={{margin : "10px 0px"}} />
+                            <Typography variant="body1">
+                                Change password window will appear, enter the registered email id along with the new password that
+                                client wants to register for the account & click on
+                                <Button variant="contained" className={classes.root}>Get OTP</Button>
                             </Typography>
-                            <CardMedia component="img" src={successChange} />
-                            <Typography variant="h6" align="center">
-                       15
-                   </Typography>
+                            
+                            <CardMedia component="img" src={changePasswordImg} />
+                            
+                        
+                           
                         </CardContent>
                    
                 </Card>
             </Container>
            
                </Box>
+               <Typography variant="h6" align="center">
+                       14
+                   </Typography>
           <Box style={{display : "flex", maxWidth: "900px", margin: "auto",  minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
                   
             <Container maxWidth= "xl">
                 <Card>
                         <CardContent>
                         <Typography variant="body1">
-                                Change password: Success message window will appear showing “Password changed successfully”. Click ok & continue.
+                                Change password: Success message window will appear showing OTP has been
+                                sent to your registered email address. Click Ok.
                             </Typography>
-                            <CardMedia component="img" src={querySuccess} />
-                            <Typography variant="body1">
-                         The new password should be used for future login.
+                            <CardMedia component="img" src={successChange} style={{margin : "10px 0px"}} />
+                        <Typography variant="body1">
+                                Change password: Enter the OTP received on your registered email address & click on
+                                <Button variant="contained" className={classes.root2}>Submit</Button>
                             </Typography>
-                            <Typography variant="body1">
-                            After logging in, Mazars dashboard will appear as below
-                                </Typography>
-                            <CardMedia component="img" src={querySuccess22} />
+                            <CardMedia component="img" src={successChange} style={{margin : "10px 0px"}} />
+                        
                         </CardContent>
                    
                 </Card>
             </Container>
             
-            <Typography variant="h6" align="center">
+            
+              </Box>
+              <Typography variant="h6" align="center">
+                       15
+                   </Typography>
+                   <Box style={{display : "flex", maxWidth: "900px", margin: "auto",  minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+              <Container maxWidth = "xl">
+                  <Card>
+                      <CardContent>
+                      <Typography variant="body1">
+                                Change password: Success message window will appear showing “Password changed successfully”. Click ok & continue.
+                            </Typography>
+                            <CardMedia component="img" src={querySuccess} style={{margin : "10px 0px"}} />
+                            <Typography variant="body1">
+                         The new password should be used for future login.
+                         After logging in, Mazars dashboard will appear as below
+
+                            </Typography>
+                           
+                            <CardMedia component="img" src={querySuccess22} style={{margin : "10px 0px"}} />
+                
+                      </CardContent>
+                  </Card>
+              </Container>
+               </Box>
+               <Typography variant="h6" align="center">
                        16
                    </Typography>
-              </Box>
          <Editprofile />
             
           <Box style={{display : "flex", maxWidth: "900px", margin: "auto",  minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
               <Container maxWidth= "xl">
                   <Card>
 <CardContent>
+<CardHeader title={
+
+<Typography variant='span' variantMapping={{
+                     h5 : "span"
+                 }} className="modalTextHeading">
 <Typography variant="h6">
                          To register a new query, click on ‘Queries’ tab & then
                          <Button variant="contained" className={classes.root2}>Fresh Query</Button> button
                             </Typography>
-                            <CardMedia component="img" src={queryNew} />
-                            <Typography variant="h6">
+ </Typography>
+             }/>
+
+                            <CardMedia component="img" src={queryNew}  style={{margin : "10px 0px"}} />
+                            <Typography variant="body1">
                          Select the category and sub-category from drop down list as per nature of your query & click on    
                          <Button variant="contained" className={classes.root2}>Submit</Button>          
                           . Category & Sub Category should be carefully selected as these cannot be edited later on.
                          
                             </Typography>
-                            <CardMedia component="img" src={newOne2} />
+                            <CardMedia component="img" src={newOne2} src={queryNew}  style={{margin : "10px 0px"}} />
 </CardContent>
                   </Card>
               </Container>
+             
+              </Box>
               <Typography variant="h6" align="center">
                        22
                    </Typography>
-              </Box>
-           
 
            <Box style={{display : "flex", maxWidth: "900px", margin: "auto",  minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
                <Container maxWidth= "xl">
                    <Card>
                        <CardContent>
-                       <Typography variant="h6">
+                       <Typography variant="body1">
                          Category and Sub-Category Classification
                             </Typography>
                             <table className="table table-bordered p-2">
@@ -283,7 +311,7 @@ const Query = () => {
     </tr>
     </tbody>
     </table>
-    <Typography variant="h6">
+    <Typography variant="body1">
                          Enter the complete information about your query and upload all necessary documents & click on .
                          <Button variant="contained" className={classes.root}>Submit</Button> 
                            (please see instructions below for adding fresh query) 
@@ -292,17 +320,17 @@ const Query = () => {
                          
                             </Typography>
 
-                            <CardMedia component="img" src={addFreshQuery} />
+                            <CardMedia component="img" src={addFreshQuery} style={{margin : "10px 0px"}} />
                        </CardContent>
                    </Card>
                </Container>
-               <Typography variant="h6" align="center" id="freshQuery">
-                    23
-                   </Typography>
+             
                </Box>
 
            
-
+               <Typography variant="h6" align="center" id="freshQuery">
+                    23
+                   </Typography>
 <Box style={{display : "flex", maxWidth: "900px", margin: "auto",  minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
 
 <Container maxWidth= "xl">
@@ -462,10 +490,11 @@ const Query = () => {
                 </Card>
             </Container> 
 
+    
+    </Box>  
     <Typography variant="h6" align="center">
            24
     </Typography>
-    </Box>  
     <Box style={{display : "flex", maxWidth: "900px", margin: "auto",  minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
         <Container maxWidth= "xl">
             <Card>
@@ -476,20 +505,20 @@ const Query = () => {
                  an email message informing successful submission of the query. 
                 Such message would be received by all secondary email’s users also.
                             </Typography>
-                            <CardMedia component="img" src={success2} />
+                            <CardMedia component="img" src={success2} style={{margin : "10px 0px"}} />
                             <Typography variant="body1">
                          After clicking on Ok, the query will be reflected under queries Tab
                             </Typography> 
-                            <CardMedia component="img" src={queryList} />
+                            <CardMedia component="img" src={queryList} style={{margin : "10px 0px"}} />
                 </CardContent>
             </Card>
         </Container>
+      
+        </Box>            
+           
         <Typography variant="h6" align="center">
             25
         </Typography>
-        </Box>            
-           
-
          <Box style={{display : "flex", maxWidth: "900px", margin: "auto",  minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
              <Container maxWidth= "xl">
                  <Card>
@@ -499,9 +528,16 @@ const Query = () => {
                       Under Action column, icons are available for different actions as below
                           </Typography>              
                             <CardMedia component="img" src={queryList22} />
-                            <Typography variant="body1">
+                            <CardHeader 
+                    title={
+                        <>
+                         <Typography variant="h5">
                          Query Tab: Action Buttons:
                             </Typography>
+                           
+                        </>
+                    }/>
+                           
                             <table className="table table-bordered p-2">
 
 <tbody>
@@ -568,23 +604,31 @@ const Query = () => {
                      </CardContent>
                  </Card>
              </Container>
+            
+             </Box>  
+
              <Typography variant="h6" align="center">
                  26
              </Typography>
-             </Box>  
-
-           
            <Box style={{display : "flex", maxWidth: "900px", margin: "auto",  minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
                <Container maxWidth= "xl">
                    <Card>
                    
                     <CardContent>
-                    <Typography variant="body1">
+                   
+                              <CardHeader 
+                    title={
+                        <>
+                         <Typography variant="h5">
                          Action Button: Edit
                         
-                             <CardMedia component="img" src={img1234} style={{ margin : "0px 5px", display : "inline", width : "20px"}}/>
-                         
+                        <CardMedia component="img" src={img1234} style={{ margin : "0px 5px", display : "inline", width : "20px"}}/>
+                    
                             </Typography>
+                           
+                        </>
+                    }/>
+                           
                           <ul>
                               <li style={{margin : '0px 10px'}}>
                               <Typography variant="body1" gutterBottom color="primary">
@@ -599,10 +643,8 @@ const Query = () => {
                            </Typography>
                               </li>
                               </ul>
-                              <Typography variant="h6" align="center">
-                       27
-                   </Typography>
-                           <CardMedia component="img" src={nextImg} />
+                              
+                           <CardMedia component="img" src={nextImg} style={{margin : "10px 0px"}} />
                            <Typography variant="body1">
                          After editing the query details, click on 
                          <Button variant="contained" className={classes.root}> Update </Button>
@@ -611,33 +653,53 @@ const Query = () => {
                          
                             </Typography>
                             <CardMedia component="img" src={queryList222} />
-                            <Typography variant="h6" align="center">
-                       28
-                   </Typography>
-                            <Typography variant="body1">
-                         In case of any attempt to upload any document/file 
-                         already uploaded, following message will be displayed upon clicking on
-                         <Button variant="contained" className={classes.root}> Update </Button>
-                            </Typography>  
+                           
                          </CardContent>
                    </Card>
                </Container>
               
                </Box> 
-           
+               <Typography variant="h6" align="center">
+                       27
+                   </Typography>
+                           
 <Box style={{display : "flex", maxWidth: "900px", margin: "auto",  minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
     <Container maxWidth= "xl">
         <Card>
             <CardContent>
-            <CardMedia component="img" src={updateQuery} />
-            <Typography variant="h6" align="center">
-                       29
-                   </Typography>
             <Typography variant="body1">
+                         In case of any attempt to upload any document/file 
+                         already uploaded, following message will be displayed upon clicking on
+                         <Button variant="contained" className={classes.root}> Update </Button>
+                            </Typography>
+            <CardMedia component="img" src={updateQuery} />
+           
+         
+            </CardContent>
+        </Card>
+    </Container>
+    
+    </Box>
+    <Typography variant="h6" align="center">
+                       28
+                   </Typography>
+       <Box style={{display : "flex", maxWidth: "900px", margin: "auto",  minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+           <Container maxWidth= "xl">
+               <Card>
+                   <CardContent>
+               
+                               <CardHeader 
+                    title={
+                        <>
+                         <Typography variant="h5">
                          Action Button: Delete
                          
-                         <CardMedia src={delImg} component="img" style={{display : "inline", width : "20px"}} />
+                         <CardMedia src={delImg} component="img" 
+                         style={{display : "inline", width : "20px"}} />
                             </Typography>
+                           
+                        </>
+                    }/>
                             <Typography variant="h6" color="primary">
                             Click delete icon to delete the query.
                             </Typography>
@@ -646,18 +708,6 @@ const Query = () => {
                         Click   <Button variant="contained" className={classes.root2}> Yes, delete it </Button> if the client wants to delete the query. Otherwise click the 
                         <Button variant="contained" className={classes.root3}> Cancle </Button> button </Typography>
                           <CardMedia component="img" src={deleteImg} />
-            </CardContent>
-        </Card>
-    </Container>
-    <Typography variant="h6" align = "center">
-      30
-    </Typography>
-    </Box>
-
-       <Box style={{display : "flex", maxWidth: "900px", margin: "auto",  minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
-           <Container maxWidth= "xl">
-               <Card>
-                   <CardContent>
                    <Typography variant="body1">
                          After clicking on    
                          <Button variant="contained" className={classes.root3}> Yes, delete it</Button>  following window will appear showing 
@@ -666,15 +716,49 @@ const Query = () => {
                          <Button variant="contained" className={classes.root3}> Submit</Button>
                             </Typography>
                             <CardMedia component="img" src={rejectQuery} />
-                            <Typography variant="body1">
+                           
+                   </CardContent>
+               </Card>
+           </Container>
+           
+           </Box>       
+           <Typography variant="h6" align="center">
+                       29
+                   </Typography>
+            <Box style={{display : "flex", maxWidth: "900px", margin: "auto",  minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+                <Container maxWidth= "xl">
+                    <Card>
+                        <CardContent>
+                        <Typography variant="body1">
                          After clicking on  
                            <Button variant="contained" className={classes.root2}> Submit</Button> , the query will be deleted & message window will appear showing “Query deleted successfully”.   
                                                   </Typography> 
-                                                  <Typography variant="body1">
+                                           
+                        </CardContent>
+                    </Card>
+                </Container>
+                
+                </Box>
+                <Typography variant="h6" align="center">
+                       30
+                   </Typography>
+         <Box style={{display : "flex", maxWidth: "900px", margin: "auto",  minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+             <Container maxWidth= "xl">
+                 <Card>
+                     <CardContent>
+
+                     <CardHeader 
+                    title={
+                        <>
+                                            <Typography variant="h5">
   Action Button: Send message
                          <Button variant="contained"> 
                          <CardMedia component="img" src={message} style={{width: "30px", height: "30px"}}/></Button>
                             </Typography>
+                           
+                        </>
+                    }/>
+
                           <Typography variant="body1" color="primary">
                           Click send message icon to send a message to Mazars Team
                           </Typography>
@@ -722,76 +806,15 @@ const Query = () => {
     </tr>
     </tbody>
     </table>
-                   </CardContent>
-               </Card>
-           </Container>
-           <Typography variant="h6" align = "center">
-        31
-    </Typography>
-           </Box>       
-
-            <Box style={{display : "flex", maxWidth: "900px", margin: "auto",  minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
-                <Container maxWidth= "xl">
-                    <Card>
-                        <CardContent>
-                        <Typography variant="body1">
-                         After clicking on  <Button variant="contained" className={classes.root}> Send </Button>      
-                          Success message window will appear, showing “Message sent successfully”. Click ok.
-                        
-                            </Typography> 
-                            <CardMedia component="img" src={queImgae} />
-                        </CardContent>
-                    </Card>
-                </Container>
-                <Typography variant="h6" align = "center">
-                    32
-                </Typography>
-                </Box>
-           
-         <Box style={{display : "flex", maxWidth: "900px", margin: "auto",  minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
-             <Container maxWidth= "xl">
-                 <Card>
-                     <CardContent>
-                     <Typography variant="body1">
-                         Action Button: View discussion message 
-                          <CardMedia src={messageHistory} component="img" style={{display : "inline", margin : "0px 5px",width : "20px"}} />      
-                       
-                            </Typography> 
-                           <ul style={{padding : "0px 10px"}}>
-                               <li>
-                               <Typography variant="h6" color="primary">
-                        Click view discussion message icon to view history of
-                         messages exchanged between the client & the Mazars team in respect of the query.
-                            </Typography>
-                               </li>
-                               <li>
-                               <Typography variant="h6" color="primary">
-                            Name column specifies the sender/recipient of message.
-                            </Typography>
-                               </li>
-                               <li>
-                               <Typography variant="h6" color="primary">
-                            Red right arrow indicates that the client sent the message &
-                             the recipient is as per name column
-                            </Typography>
-                               </li>
-                               <li>
-                               <Typography variant="h6" color="primary">
-                            Green left arrow indicates that the client received message 
-                            from the sender mentioned in name column.</Typography>
-                               </li>
-                               </ul>
-                            
-                          
-                           
-                            <CardMedia component="img" src={showMessageHistory22} />
+                      
                      </CardContent>
                  </Card>
              </Container>
-             <Typography variant="h6" align = "center">
-                 33
-             </Typography>
+            
              </Box>  
+             <Typography variant="h6" align="center">
+                       31
+                   </Typography>
          <Box style={{display : "flex", maxWidth: "900px", margin: "auto",  minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
              <Container maxWidth= "xl">
                  <Card>
@@ -809,11 +832,11 @@ const Query = () => {
                      </CardContent>
                  </Card>
              </Container>
-             <Typography variant="h6" align="center">
-                 34
-                        </Typography> 
+            
              </Box>
-
+             <Typography variant="h6" align="center">
+                       32
+                   </Typography>
 <Box style={{display : "flex", maxWidth: "900px", margin: "auto",  minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
 
 <Container maxWidth= "xl">
@@ -830,12 +853,12 @@ const Query = () => {
                    
                 </Card>
             </Container>
-            <Typography variant="h6" align = "center">
-                35
-            </Typography>
+          
     </Box>           
           
-
+    <Typography variant="h6" align = "center">
+                35
+            </Typography>
 
 
 </section>

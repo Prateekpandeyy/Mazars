@@ -67,10 +67,12 @@ resendCaptcha()
              })
              history.push("/")
          }
-         else{
+         else if(res.data.code === 0) {
+             setCaptchValue("")
+            resendCaptcha()
              Swal.fire({
                  title : "error",
-                 html :"Something went wrong, please try again",
+                 html : `${res.data.message}`,
                  icon : "error"
              })
          }
@@ -174,7 +176,7 @@ I accept that MAS will process my personal data for the purpose of handling my r
 <div style={{display : "flex", maxWidth : "500px", width : "100%", justifyContent : "space-between"}}>
 <img src = {`${baseUrl3}/${cpatcha}`} />
 <input type="text" value = {captchValue} onChange = {(e) => setCaptchValue(e.target.value)} />
-    <a onClick = {() => resendCaptcha()} style={{color : "#0071ce", margin : "auto 0px"}}>Resend</a>
+    <a onClick = {() => resendCaptcha()} style={{color : "#0071ce", margin : "auto 0px"}}>Refresh</a>
     </div>        </Box>
                   </Grid>
                   <Grid item lg={12}>
