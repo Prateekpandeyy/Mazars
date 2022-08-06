@@ -136,9 +136,10 @@ const Editupdates = () => {
       
    
        formData.append("content", html);
-       formData.append("status", Number(stats))
+     
        formData.append("content_type", 2)
     }
+    formData.append("status", Number(stats))
        formData.append("heading", heading)
        formData.append("publish_date", date);
        formData.append("type", pageto)

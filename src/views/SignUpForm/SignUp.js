@@ -49,11 +49,11 @@ function SignUp(props) {
   const [numAvail, setNumAvail] = useState(null)
   const [countryName, setCountryName] = useState("India")
   const [stateName, setStateName] = useState(null)
-  const [countryId, setCountryId] = useState(null)
+  const [countryId, setCountryId] = useState(101)
   const [indNumError, setIndNumError] = useState(null)
   const [zipCode, setZipCode] = useState('')
   const [zipError, setZipError] = useState(null)
-  const [wEmail, setWemail] = useState();
+  const [wEmail, setWemail] = useState('');
   const [wEmailmulti, setWemailmulti] = useState()
   const [time, setTime] = useState('')
   const [disabled, setDisabled] = useState(false)
@@ -256,26 +256,26 @@ const getState = () => {
   //phone validaation with api
   const phoneValidation = () => {
     setPhoneError(false)
-    
+    console.log("Phone", phone.length, countryId)
     if (countryId && phone.length > 10) {
    
       setNumAvail("")
       setNumExist("")
-      setIndNumError("Maximum 10 value should be entered.")
+      setIndNumError("Please enter valid mobile number")
       setPhoneError(true)
     }
     else if (countryId && phone.length < 10) {
      
       setNumAvail("")
       setNumExist("")
-      setIndNumError("Minimum 10 value should be entered.")
+      setIndNumError("Please enter valid mobile number")
       setPhoneError(true)
     }
-    else if (!countryId && phone.length > 15) {
+    else if (!countryId && phone.length > 20) {
       setNumAvail("")
       setNumExist("")
       setPhoneError(true)
-      setIndNumError("Maximum 15 value should be entered.")
+      setIndNumError("Please enter valid mobile number")
     }
 
     else {
@@ -352,7 +352,7 @@ const checkSpecial = (e) => {
 
   // onblur
   const zipVali2 = (e) => {
-
+console.log(countryId, zipCode, zipCode.length)
     if (countryId && zipCode && zipCode.length < 6) {
       setZipError1(true)
       setZipError("Minumum 6 digit should be there")
@@ -605,35 +605,57 @@ const getUser = (e) => {
 }
 
 const resetFun = () => {
- 
+  setDisplay(false)
+    setLoad(false)
+    setPassword(false)
+    setRepassword(false)
+    setShow(false)
+    setState([])
+    setCity([])
+    setCountryCode('91')
+    setPhone('')
+    setValiemail(null)
+    setValiemailMulti(null)
+    setInvalid(null)
+    setInvalidMulti(null)
+    setNumExist(null)
+    setNumAvail(null)
+    setCountryName("India")
+    setCountryId(101)
+    setIndNumError(null)
+    setZipCode('')
+    setZipError('')
+    setWemail('')
+    setWemailmulti('')
+    setTime('')
+    setDisabled(false)
+    setvaliOtp('')
+    setEmailError(null)
+    setEmailErrormulti(null)
+    setPhoneError(null)
+    setZipError1(null)
+    setSub(false)
+    setDstate('')
+    setEmail2('')
+    setEmailmulti2('')
+    setLoading(false)
+    setEstate("")
+    setCityValue2("")
+    setDstate2("")
+    setMyCount(101)
+    setUser("")
+    setUserError("")
+    setAddress("")
+    setName("")
+    reset()
+    setUser("")
+    setUserAvailable({
+  flag : "",
+  message : ""
+})
+setPhoneLength(10)
   reset()
-  setUser("")
-  setWemailmulti("")
-  setEmailError(null)
-  setUserError("")
-  setName("")
-  setValiemail("")
-  setInvalid("")
-  setUserAvailable([])
-  setDstate([])
-  setEstate([])
-  setDstate2([])
-  setCityValue2([])
-  setCountryCode('91')
-  setMyCount(101)
-  setAddress("")
-  setPhone("")
-  setIndNumError(null)
-  setNumExist(null)
-  setNumAvail(null)
-  setZipCode("")
-  setZipError(null)
-  setWemail("")
   getState()
-  setMyCount(101)
-  setCountryCode('91')
-  setCountryName("India")
-  setPhoneLength(10)
 }
 
   return (
@@ -827,6 +849,7 @@ const resetFun = () => {
                           className="form-control"
                           name="p_address"
                           autoComplete = "off"
+                          autoFill = "off"
                           value={address}
                           onChange={(e) => setAddress(e.target.value)} 
                           maxLength="100"
@@ -859,6 +882,7 @@ const resetFun = () => {
                           })}
                           name="p_phone"
                           value={phone}
+                          autoComplete = "off"
                           maxLength = {phoneLength}
                           ref={register({ required: true })}
                           placeholder="Mobile number"
