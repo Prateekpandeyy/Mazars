@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
 import { useForm } from "react-hook-form";
@@ -38,7 +38,7 @@ function AdminFilter(props) {
  const [toDate, setToDate] = useState(new Date().toISOString().slice(0, 10))
 const maxDate = moment(new Date().toISOString().slice(0, 10)).add(1, "days")
   var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
-  
+  const dateValue = useRef()
   const [item] = useState(current_date);
   const token = window.localStorage.getItem("adminToken")
   const myConfig = {
@@ -94,6 +94,8 @@ const maxDate = moment(new Date().toISOString().slice(0, 10)).add(1, "days")
     setStore2([]);
     setTax2([])
     getData();
+    dateValue.current.clearValue()
+    console.log("currentValue", dateValue.current)
   };
 
   const fromDateFun = (e) => {
@@ -375,17 +377,11 @@ const maxDate = moment(new Date().toISOString().slice(0, 10)).add(1, "days")
 
                 <div className="form-group mx-sm-1  mb-2">
                 <DatePicker 
-                 
+                 ref = {dateValue}
                  onChange={(e) =>fromDateFun(e)}
                  disabledDate={d => !d || d.isAfter(maxDate) }
                   format={dateFormatList} />
-                  {/* <input
-                    type="date"
-                    name="p_dateFrom"
-                    className="form-select form-control"
-                    ref={register}
-                    max={item}
-                  /> */}
+                 
                 </div>
 
                 <div className="form-group mx-sm-1  mb-2">

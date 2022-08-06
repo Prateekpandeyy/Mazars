@@ -83,7 +83,7 @@ const [email, setEmail] = useState([])
         }
         else {
           props.setEmailError(true)
-          props.setWemail("invalid email")
+          props.setWemail("Please enter valid email")
         }
     
       }

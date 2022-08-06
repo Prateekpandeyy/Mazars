@@ -101,20 +101,23 @@ const [phoneLength, setPhoneLength] = useState(10)
     getTime()
   }, [load]);
 useEffect(() => {
-  var arrayState = []
-    let sta = {}
-    states.filter((data) => {
-      if (data.country_id == 101) {
-     
-        sta = {
-          "value" : data.id,
-          "label" : data.name
-        }
-        arrayState.push(sta)
-      }
-    });
-    setState(arrayState)
+ getState()
 }, [])
+const getState = () => {
+  var arrayState = []
+  let sta = {}
+  states.filter((data) => {
+    if (data.country_id == 101) {
+   
+      sta = {
+        "value" : data.id,
+        "label" : data.name
+      }
+      arrayState.push(sta)
+    }
+  });
+  setState(arrayState)
+}
 
   const getTime = () => {
     
@@ -580,61 +583,13 @@ setEmailmulti2(e.target.value)
     setWemailmulti("");
     
     setEmailErrormulti(false)
-      let formData = new FormData();
-      formData.append("email", email2multi2);
-      formData.append("type", 1);
-if(props.name === "teamleader" || props.name =="taxprofessional"){
-  axios({
-    method: "POST",
-    url: `${baseUrl}/tl/validateregistration`,
-    data: formData,
-  })
-  .then(function (response) {
-         
-    if (response.data.code === 1) {
-     setValiemailMulti(response.data.result)
-     setInvalidMulti('')
-     setEmailErrormulti(false)
-     
-    } else if (response.data.code === 0) {
-     setInvalidMulti(response.data.result)
-     setValiemailMulti('')
-     setEmailErrormulti(true)
-    }
-  })
-  .catch((error) => {
-  
-  });
-}
-else{
-  axios({
-    method: "POST",
-    url: `${baseUrl}/customers/validateregistration`,
-    data: formData,
-  })
-  .then(function (response) {
-         
-    if (response.data.code === 1) {
-     setValiemailMulti(response.data.result)
-     setInvalidMulti('')
-     setEmailError(false)
-     
-    } else if (response.data.code === 0) {
-     setInvalidMulti(response.data.result)
-     setValiemailMulti('')
-     setEmailErrormulti(true)
-    }
-  })
-  .catch((error) => {
-  
-  });
-}
+
     
       
     }
     else {
       setEmailErrormulti(true)
-      setWemailmulti("invalid email")
+      setWemailmulti("Please enter valid email")
     }
 
   }
@@ -650,7 +605,11 @@ const getUser = (e) => {
 }
 
 const resetFun = () => {
+ 
+  reset()
   setUser("")
+  setWemailmulti("")
+  setEmailError(null)
   setUserError("")
   setName("")
   setValiemail("")
@@ -669,7 +628,12 @@ const resetFun = () => {
   setNumAvail(null)
   setZipCode("")
   setZipError(null)
-  reset()
+  setWemail("")
+  getState()
+  setMyCount(101)
+  setCountryCode('91')
+  setCountryName("India")
+  setPhoneLength(10)
 }
 
   return (
@@ -862,6 +826,7 @@ const resetFun = () => {
                           type="text"
                           className="form-control"
                           name="p_address"
+                          autoComplete = "off"
                           value={address}
                           onChange={(e) => setAddress(e.target.value)} 
                           maxLength="100"
@@ -1063,7 +1028,7 @@ and number
                              "is-invalid": errors.p_email || props.emailErrorMulti === true || props.wEmailmulti || props.invalid,
                            })}
                            onChange={(e) => emailHandler(e)}
-                       
+                           onBlur = {(e) => emailValidation(e)}
                            placeholder="Enter Your Email"
                            ref={register()}
                             
@@ -1140,8 +1105,9 @@ and number
                             :
                             <div style={cusSub}>
                             <button type="submit" class="autoWidthBtn" onClick={() => getOtp("otp")} style={{marginTop: "1rem"}}>SEND OTP</button>
-                       </div> }
-                       <button type="submit" class="autoWidthBtn" onClick={() => resetFun()} style={{marginTop: "1rem"}}>Reset</button>
+                       </div> 
+                       }
+                       <button type="button" class="customBtn" onClick={() => resetFun()} style={{marginTop: "1rem"}}>Reset</button>
                 
                       </div>
                   }
