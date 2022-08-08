@@ -186,15 +186,14 @@ const Details = () => {
  </div> 
  </> : " "
 }
-   {
+{
       i.content_type === "0" || i.content_type === "1" ?
-      <div id="artContent">
+      <div>
       <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.6.347/build/pdf.worker.min.js">
     <Viewer fileUrl={`${baseUrl3}/${i.file}`}>
       </Viewer>
       </Worker>
-    {/* <iframe src={`${baseUrl3}/${i.file}#toolbar=0`} width="100%" height="500px" /> */}
-
+  
     </div>
  : ""
     }
@@ -213,7 +212,6 @@ const Details = () => {
     </div>
  : ""
     }
-
     </ArticleWrapper>
     <a href={`${baseUrl3}/${i.file}`} target="_blank" 
     className={classes.myLink}>

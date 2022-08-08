@@ -355,13 +355,13 @@ const checkSpecial = (e) => {
 console.log(countryId, zipCode, zipCode.length)
     if (countryId && zipCode && zipCode.length < 6) {
       setZipError1(true)
-      setZipError("Minumum 6 digit should be there")
+      setZipError("Please enter valid zip code")
 
     }
 
     else if (countryId && zipCode && zipCode.length > 6) {
       setZipError1(true)
-      setZipError("Maximum 6 digit allowed")
+      setZipError("Please enter valid zip code")
     
     }
     else {
@@ -907,7 +907,7 @@ setPhoneLength(10)
                     <div className="mb-3">
                       <label className="form-label">Zipcode<span className="declined">*</span></label>
                       <input
-                        type="text"
+                        type="number"
                         className={classNames("form-control", {
                           "is-invalid": errors.p_zipCode || zipError1 === true || zipError,
                         })}
@@ -1108,40 +1108,32 @@ and number
                       </div>
                       : null
                   }
-                <div style={{display: "flex", width: "100%", justifyContent: "center"}}>
+                <div className="col-md-12">
                 {
                     loading ?
-                      <div class="col-md-12" style={cusSub}>
+                      <div className="col-md-12">
                         <Spinner color="primary" />
                       </div>
                       :
-                      <div class="col-md-6" style={cusSub}>
+                      <div className="col-md-12 d-flex justify-content-center">
                        
                         {
                           show ?
-                            <div style={cusSub}>
+                            <>
                               {
                                 disabled ? null
                                   :
-                                  <button type="submit" className="customBtn" onClick={() => setOtp()} style={{marginTop: "1rem"}}>Submit</button>
-                              }
-                            </div>
+                                  
+                                    <button type="submit" className="customBtn mx-4" onClick={() => setOtp()}>Submit</button>
+                          
+                                      }
+                            </>
                             :
-                            <div style={cusSub}>
-                            <button type="submit" class="autoWidthBtn" onClick={() => getOtp("otp")} style={{marginTop: "1rem"}}>SEND OTP</button>
-                       </div> 
+                           
+                            <button type="submit" class="autoWidthBtn mx-4" onClick={() => getOtp("otp")}>SEND OTP</button>
+                     
                        }
-                       <button type="button" class="customBtn" onClick={() => resetFun()} style={{marginTop: "1rem"}}>Reset</button>
-                
-                      </div>
-                  }
-                  </div>
-                </div>
-                <div>
-               </div>
-              </form>
-
-              {
+                          {
                 disabled ?
                   <ResendOtp setDisabled={setDisabled} disabled={disabled} getTime={getTime}
                     email={email2} phone={phone} setLoad={setLoad} invalid={invalid} indNumError={indNumError}
@@ -1154,6 +1146,21 @@ and number
                   :
                   null
               }
+                       <button type="button" class="customBtn" onClick={() => resetFun()}>Reset</button>
+                
+                      </div>
+                  }
+                
+                  </div>
+              
+               
+             
+
+             
+                </div>
+               <div>
+               </div>
+               </form>
               <Mandatory />
             </div>
           </>

@@ -45,7 +45,7 @@ const UpdateDetails = () => {
  const getData = (e) => {
    
   
-  axios.get(`${baseUrl}/customers/getupdated?type=${history.location.index}&id=${id.id}`)
+  axios.get(`${baseUrl}/customers/getupdated?id=${id.id}`)
   .then((res) => {
    console.log("result", res.data.result)
     setData(res.data.result)
@@ -68,25 +68,27 @@ useEffect(() => {
          {
            data.map((i) => (
             <div className={classes.articlesDetails}>
-             <Breadcrumbs separator=">" maxItems={3} aria-label="breadcrumb">
-             <Link underline="hover" color="inherit" to="/customer/updatedirect">
-Update
-  </Link>
-  {/* <Link underline="hover" color="inherit" to = {`/customer/${history.location.index}`}>
- {history.location.index}
-  </Link> */}
-  {
-    history.location.index === "miscellaneous" ? 
-    <Link underline="hover" color="inherit" to = {`/customer/${history.location.index}`}>
- Miscellaneous
-    </Link> 
-    :
-    <Link underline="hover" color="inherit" to = {`/customer/update${history.location.index}`}>
-    {CommonServices.capitalizeFirstLetter(history.location.index) + " Tax"}
-    </Link>
-  }
- 
-</Breadcrumbs>
+            {
+              history.location.index && (
+                <Breadcrumbs separator=">" maxItems={3} aria-label="breadcrumb">
+                <Link underline="hover" color="inherit" to="/customer/updatedirect">
+   Update
+     </Link>
+    
+     {
+       history.location.index === "miscellaneous" ? 
+       <Link underline="hover" color="inherit" to = {`/customer/${history.location.index}`}>
+    Miscellaneous
+       </Link> 
+       :
+       <Link underline="hover" color="inherit" to = {`/customer/update${history.location.index}`}>
+       {CommonServices.capitalizeFirstLetter(history.location.index) + " Tax"}
+       </Link>
+     }
+    
+   </Breadcrumbs>
+              )
+            }
 <ArticleWrapper>
 
 <h5 className="updatesHeding">  {CommonServices.capitalizeFirstLetter(i.heading)}</h5>
@@ -108,8 +110,7 @@ Update
     <Viewer fileUrl={`${baseUrl3}/${i.file}`}>
       </Viewer>
       </Worker>
-    {/* <iframe src={`${baseUrl3}/${i.file}#toolbar=0`} width="100%" height="500px" /> */}
-
+  
     </div>
  : ""
     }

@@ -58,18 +58,18 @@ function ResendOtp({ invalid, wEmail, disabled, clientId, indNumError, zipError,
 
     return (
         <>
-            <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
+           
 
                 
                 {
                       loading ?
                       <span></span>
                         :
-                        <div style={{ paddingTop: "10px" }}>
-                        <button type="submit" class="autoWidthBtn">SEND OTP</button>
-                    </div>
+                       
+                        <button type="button" onClick = {() => onSubmit()} class="autoWidthBtn mx-4">SEND OTP</button>
+                   
                     }
-            </form>
+           
         </>
     );
 }

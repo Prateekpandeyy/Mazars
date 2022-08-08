@@ -10,6 +10,8 @@ import ExpandMore from '@mui/icons-material/ExpandMore';
 import ListItemButton from '@mui/material/ListItemButton';
 import List from '@mui/material/List';
 import Cookies from "js-cookie";
+import CookieConsent from "react-cookie-consent";
+import CloseIcon from '@material-ui/icons/Close';
 function Header({ id, cust_sign, noAdminSign, noTlSign, 
   noTpSign, admin, mtl, mtp, noSign, loginOTP, getData, showCook }) {
   let history = useHistory();
@@ -161,6 +163,11 @@ const CmsCont = (props) => {
   const [open2, setOpen2] = useState(false)
   const [open3, setOpen3] = useState(false)
   const [updateOpen, setUpdateOpen] = useState(false)
+  const [showCookie, setShowCookie] = useState(false)
+  const showCook = () => {
+ 
+    setShowCookie(true)
+  }
   // useEffect(() => {
   //   let comming = sessionStorage.getItem("commingSoon")
   //   var now = new Date()
@@ -429,6 +436,50 @@ props.showCook("showCookies")
          </Collapse>
                  </li>
 </div>
+{
+ showCookie === true ?
+ <div className="popup">
+
+ <CookieConsent
+ debug = {true}
+ declineButtonText = {<CloseIcon />}
+ onDecline={() => {
+   setShowCookie(false)
+ }}
+ enableDeclineButton 
+   disableStyles
+   location="none"
+   buttonText="Agree"
+   expires={1}
+   overlay
+   declineButtonClasses = "myCookiesdecBtn"
+   buttonStyle = {{borderBottomLeftRadius: "1.75rem", 
+   margin : "0px auto",
+backgroundColor : "#0071CE", border: "1px solid #0071CE", color: "#fff"
+, cursor : "pointer", fontSize : "1rem", fontWeight: 500,
+minWidth: "100px", minHeight: "3rem", textAlign: "center", display: "block", marginLeft: "auto"}}
+onAccept={(e) => {
+
+ Cookies.set("accept", "agree")
+}}
+   overlayClasses="overlayclass"
+  
+ >
+ <h4 style={{textAlign: "center"}}>Disclaimer</h4>
+ <h5>By clicking on the "Agree" button below, the user hereby acknowledges having read and understood the disclaimer below:</h5>
+<ul>
+  <li>The user on his own accord wishes to know more about Mazars Advisory Solutions (MAS) and any of its members for his own information and use.</li>
+<li>The user acknowledges that there has been no solicitation, invitation, or inducement of any sort whatsoever from MAS or any of its members to create an Attorney/Consultant-Client relationship.</li>
+<li>The user acknowledges that MAS makes every effort to maintain updated and accurate information on this website and cannot accept responsibility for any prejudice, loss or damage which may occur from use of such information. MAS assumes no liability for the interpretation or use of content or information contained on this website, nor does it offer any warranty of any kind,
+   either express or implied in relation to such content or information.</li>
+<li>    The user acknowledges that MAS does not intend that links / URLs contained on this website re-directing users to third party websites be considered as referrals to, endorsements of, or affiliations with any such third-party website operators. MAS is not responsible for, and makes no representation or warranty, express or implied, about the content or information contained on such third-party websites.
+</li>
+</ul>
+ </CookieConsent>
+</div>
+: ""
+
+}
     </>
   )
 }
