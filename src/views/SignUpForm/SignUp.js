@@ -687,7 +687,7 @@ setPhoneLength(10)
                 <div className="row">
                 <div className="col-md-6">
 
-<div className="mb-3">
+<div className="mb-3" style = {{position : "relative"}}>
   <label className="form-label">User Id<span className="declined">*</span></label>
   <input
     type="text"
@@ -706,9 +706,11 @@ setPhoneLength(10)
     // })}
   
   />
- <span style={{display : "flex", position : "absolute", right : "25px", bottom : "45px",
-color : "#dd4445", borderRadius : "50%"}} title = "Please enter valid user id">
- <GrStatusInfo style = {{visibility : "hidden"}}/>
+ <span style={{display : "flex", position : "absolute",
+  right : "9px", top : "39px",
+color : "#dd4445", borderRadius : "50%"}} 
+title = "Enter minimum 6 alpha numeric character (no special character) to form an user id.">
+ <GrStatusInfo  style = {{visibility : "hidden", zIndex : 99999}}/>
    </span>
   {
   userError.length > 0 ?
@@ -724,7 +726,7 @@ color : "#dd4445", borderRadius : "50%"}} title = "Please enter valid user id">
 </div>
                   <div className="col-md-6">
 
-                    <div className="mb-3">
+                    <div className="mb-3" style = {{position : "relative"}}>
                       <label className="form-label">Name<span className="declined">*</span></label>
                       <input
                         type="text"
@@ -738,16 +740,19 @@ color : "#dd4445", borderRadius : "50%"}} title = "Please enter valid user id">
                           "is-invalid": errors.p_name,
                         })}
                       />
-                      <span style={{display : "flex", position : "absolute", right : "25px", bottom : "45px",
-color : "#dd4445", borderRadius : "50%"}} title = "Please enter valid user name">
- <GrStatusInfo style = {{visibility : "hidden"}}/>
+                      <span style={{display : "flex", position : "absolute", 
+                      right : "9px", top : "39px",
+color : "#dd4445", borderRadius : "50%"}} 
+title = {`• Enter full name or any chosen name (no special characters allowed.) 
+• For registration of business/entity, enter the legal name of the business/entity.`}>
+  <GrStatusInfo  style = {{visibility : "hidden", zIndex : 99999}}/>
    </span>
                     </div>
                   </div>
 
                   <div className="col-md-6">
                   
-                  <div className="mb-3">
+                  <div className="mb-3" style = {{position : "relative"}}>
   
   <label className="form-label">Email<span className="declined">*</span></label>
  <EmailValidation
@@ -771,12 +776,18 @@ color : "#dd4445", borderRadius : "50%"}} title = "Please enter valid user name"
         <p className="declined">{invalid}</p>}
     </>
   }
-
+<span style={{display : "flex", position : "absolute", 
+                      right : "9px", top : "39px",
+color : "#dd4445", borderRadius : "50%"}} 
+title = {`Enter personal email address or the email address of any
+representative or authorized signatory of the business/entity.`}>
+  <GrStatusInfo  style = {{visibility : "hidden", zIndex : 99999}}/>
+   </span>
 </div>                  
                     </div>
 
                   <div className="col-md-6">
-                    <div className="mb-3">
+                    <div className="mb-3" style = {{position : "relative"}}>
                       <label className="form-label">Occupation/ Profession<span className="declined">*</span></label>
                       <br />
                       <select
@@ -796,9 +807,12 @@ color : "#dd4445", borderRadius : "50%"}} title = "Please enter valid user name"
                         ))}
                       </select>
                       <span style={{display : "flex", position : "absolute",
-                       right : "25px", bottom : "28px",
-color : "#dd4445", borderRadius : "50%"}} title = "Please select profession">
- <GrStatusInfo style = {{visibility : "hidden"}}/>
+                       right : "9px", top : "39px",
+color : "#dd4445", borderRadius : "50%"}} 
+title = {`• From drop down list, select your occupation/profession
+• In case of business/entity, select the occupation/ profession of the
+representative or authorized signatory, who is registering for query.`}>
+  <GrStatusInfo  style = {{visibility : "hidden", zIndex : 99999}}/>
    </span>
                     </div>
                   </div>
@@ -890,7 +904,7 @@ color : "#dd4445", borderRadius : "50%"}} title = "Please select profession">
                     </div>
                   </div>
                   <div className="col-md-6">
-                  <div className="mb-3">
+                  <div className="mb-3" style = {{position : "relative"}}>
                       <label className="form-label">Mobile number<span className="declined">*</span></label>
                       <div className="mobNumber" style={{ "display": "flex" }}>
                         <select
@@ -916,9 +930,11 @@ color : "#dd4445", borderRadius : "50%"}} title = "Please select profession">
                           onChange={(e) => phoneHandler(e)}
                           onBlur={phoneValidation}
                         />
-<span style={{display : "flex", position : "absolute", right : "25px", bottom : "24px",
-color : "#dd4445", borderRadius : "50%"}} title = "Please enter valid mobile number">
- <GrStatusInfo style = {{visibility : "hidden"}}/>
+<span style={{display : "flex", position : "absolute", 
+right : "9px", top : "39px",
+color : "#dd4445", borderRadius : "50%"}}
+ title = "Enter the valid numeric mobile number.">
+  <GrStatusInfo  style = {{visibility : "hidden", zIndex : 99999}}/>
    </span>
                       </div>
                       {indNumError ? <p className="declined">{indNumError}</p> : <>
@@ -934,7 +950,7 @@ color : "#dd4445", borderRadius : "50%"}} title = "Please enter valid mobile num
                   </div>
 
                   <div className="col-md-6">
-                    <div className="mb-3">
+                    <div className="mb-3" style = {{position : "relative"}}>
                       <label className="form-label">Zipcode<span className="declined">*</span></label>
                       <input
                         type="text"
@@ -950,9 +966,9 @@ color : "#dd4445", borderRadius : "50%"}} title = "Please enter valid mobile num
                         value={zipCode}
                       />
                       <span style={{display : "flex",
-                       position : "absolute", right : "25px", bottom : "24px",
-color : "#dd4445", borderRadius : "50%"}} title = "Please enter valid zip code">
- <GrStatusInfo style = {{visibility : "hidden"}}/>
+                       position : "absolute", right : "9px", top : "39px",
+color : "#dd4445", borderRadius : "50%"}} title = "Enter the valid Zip Code or Pin Code.">
+  <GrStatusInfo  style = {{visibility : "hidden", zIndex : 99999}}/>
    </span>
                     </div>
                     <p className="declined">{zipError}</p>
@@ -973,7 +989,7 @@ color : "#dd4445", borderRadius : "50%"}} title = "Please enter valid zip code">
                   </div>
 
                   <div class="col-md-6">
-                    <div className="mb-3">
+                    <div className="mb-3" style = {{position : "relative"}}>
                       <label className="form-label">Password<span className="declined">*</span></label>
                       <input
                         type={password ? "text" : "password"}
@@ -1007,16 +1023,19 @@ color : "#dd4445", borderRadius : "50%"}} title = "Please enter valid zip code">
                         onClick={togglePasssword}
                       />
                       <span style={{display : "flex", position : "absolute", 
-                      right : "25px", bottom : "24px",
-color : "#dd4445", borderRadius : "50%"}} title = "Please enter valid password">
- <GrStatusInfo style = {{visibility : "hidden"}}/>
+                      right : "9px", top : "39px",
+color : "#dd4445", borderRadius : "50%"}}
+ title = {`Choose a password that should be minimum of eight characters,
+ including at least one upper case, lower case, special character
+ and number.`}>
+  <GrStatusInfo  style = {{visibility : "hidden", zIndex : 99999}}/>
    </span>
                      
                     </div>
                   </div>
 
                   <div class="col-md-6">
-                    <div className="mb-3">
+                    <div className="mb-3" style = {{position : "relative"}}>
                       <label className="form-label">Confirm Password<span className="declined">*</span></label>
                       <input
                         type={repassword ? "text" : "password"}
@@ -1046,9 +1065,11 @@ color : "#dd4445", borderRadius : "50%"}} title = "Please enter valid password">
                         onClick={togglePasssword2}
                       />
                       <span style={{display : "flex", position : "absolute", 
-                      right : "25px", bottom : "24px",
-color : "#dd4445", borderRadius : "50%"}} title = "Please enter valid password">
- <GrStatusInfo style = {{visibility : "hidden"}}/>
+                      right : "9px", top : "39px",
+color : "#dd4445", borderRadius : "50%"}} 
+title = {`Enter email address of other person(s) of the organization entitled
+to work on the queries under the User Id code.`}>
+  <GrStatusInfo  style = {{visibility : "hidden", zIndex : 99999}}/>
    </span>
                       {errors.p_confirm_password && (
                         <div className="invalid-feedback">
