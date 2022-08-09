@@ -251,6 +251,9 @@ const CmsCont = (props) => {
     else if (e === "contactUs"){
       history.push("/customer/contactbasic")
     }
+    else if (e === "about"){
+      history.push("/customer/aboutbasic")
+    }
    }
    else{
     
@@ -355,13 +358,15 @@ props.showCook("showCookies")
                  </li>
    
                  <li className="nav-item tabHoverLinksubMenu" onClick = {() => myLink("faqlist")}> 
-    {/* <NavLink 
-    to = {{
-  pathname : "/customer/updates",
-  index : 4
-}} > */}
+ 
  <ListItemButton>
       FAQs
+   </ListItemButton>
+    </li>
+    <li className="nav-item tabHoverLinksubMenu" onClick = {() => myLink("about")}> 
+ 
+ <ListItemButton>
+      About Us
    </ListItemButton>
     </li>
     <li className="nav-item tabHoverLinksubMenu" 
@@ -401,6 +406,7 @@ props.showCook("showCookies")
            </List>
          </Collapse>
                  </li>
+                
 </div>
 {
  showCookie === true ?

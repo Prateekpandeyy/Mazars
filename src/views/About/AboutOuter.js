@@ -55,8 +55,8 @@ const AboutOuter = () => {
     MASIndia is backed by experts having immense experience in the taxation field collectively possessing 150+ years of industry experience in direct & indirect tax matters having served 400+ domestic clients and international clients across various sectors. The expert team has a comprehensive exposure of 1,00,000+ hours of tax assessment & litigation matters including special experience of having handled search & seizure cases of 150+ 
     business groups. They also have 20+ years of thought leadership in transfer pricing.
       </p>
-      <a className="d-flex" href = 'https://api.masindia.live/assets/image/cms/Mazars_Advisory_Solutions(MAS).pdf' target = "_blank">
-      Download the MASIndia brochure for more information.
+      <a className="autoWidthBtn" style={{float : "left"}} href = 'https://api.masindia.live/assets/image/cms/Mazars_Advisory_Solutions(MAS).pdf' target = "_blank">
+      Download the MAS India brochure
       </a>
             </Col>
            

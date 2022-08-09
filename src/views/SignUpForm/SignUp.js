@@ -81,7 +81,8 @@ const [userAvailable, setUserAvailable] = useState({
   message : ""
 })
 const [phoneLength, setPhoneLength] = useState(10)
- 
+ const [pass2, setpass2] = useState(false)
+ const [nameError, setNameError] = useState(false)
   // cusSub
   const cusSub = {
     display: "flex",
@@ -322,6 +323,7 @@ const checkSpecial = (e) => {
  
   var regEx = /^[0-9a-zA-Z .]+$/;
   if(e.target.value.match(regEx)){
+    setNameError(false)
     setName(e.target.value)
   }
   else if(e.target.value.length === 0){
@@ -467,6 +469,7 @@ console.log(countryId, zipCode, zipCode.length)
       let formData = new FormData();
       formData.append("user_id", user)
       formData.append("email", email2);
+      formData.append("stdcode", countryCode);
       formData.append("phone", phone);
       formData.append("p", "registration");
 
@@ -660,15 +663,27 @@ const resetFun = () => {
     setName("")
     reset()
     setUser("")
+    setNameError(false)
     setUserAvailable({
   flag : "",
   message : ""
 })
 setPhoneLength(10)
+setpass2(false)
   reset()
   getState()
 }
-
+const checkPassError = (e) => {
+  console.log(e.target.value)
+  if(e.target.value.length < 8){
+    setpass2(true)
+  }
+}
+const checkNameError = (e) => {
+  if(e.target.value.length === 0){
+    setNameError(true)
+  }
+}
   return (
     <>
       <OuterloginContainer>
@@ -699,11 +714,10 @@ setPhoneLength(10)
     value={user}
     ref={register({ required: true })}
     placeholder="Enter Name"
-    className = {`form-control ${errors.p_user ? 'is-invalid' : ''}`}
-    {...register('p_user')}
-    // className={classNames("form-control", {
-    //   "is-invalid": errors.p_user || userError.length > 0 || userAvailable.flag === 0,
-    // })}
+    
+    className={classNames("form-control", {
+      "is-invalid": errors.p_user || userError.length > 0 || userAvailable.flag === 0,
+    })}
   
   />
  <span style={{display : "flex", position : "absolute",
@@ -733,11 +747,12 @@ title = "Enter minimum 6 alpha numeric character (no special character) to form 
                         name="p_name"
                         value = {name}
                         maxLength = "100"
+                        onBlur = {(e) => checkNameError(e)}
                         onChange = {(e) => checkSpecial(e)}
                         ref={register({ required: true })}
                         placeholder="Enter Name"
                         className={classNames("form-control", {
-                          "is-invalid": errors.p_name,
+                          "is-invalid": errors.p_name || nameError === true ,
                         })}
                       />
                       <span style={{display : "flex", position : "absolute", 
@@ -1002,8 +1017,9 @@ color : "#dd4445", borderRadius : "50%"}} title = "Enter the valid Zip Code or P
                           e.preventDefault();
                           return false
                         }}
+                        onBlur = {(e) => checkPassError(e)}
                         className={classNames("form-control", {
-                          "is-invalid": errors.p_password ,
+                          "is-invalid": errors.p_password || pass2 === true,
                         })}
                         name="p_password"
                         placeholder="Enter Your Password"
