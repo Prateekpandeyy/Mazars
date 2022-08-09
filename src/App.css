@@ -199,6 +199,6 @@ span {
   width: 100%;
   margin: auto;
 }
-.form-control.is-invalid {
+/* .form-control.is-invalid {
   background-image: unset !important;
-}
+} */

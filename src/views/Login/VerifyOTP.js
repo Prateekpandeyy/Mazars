@@ -54,7 +54,7 @@ function VerifyOTP({ email, uid, time, setLoad,
                     var timeStampInMs = Date.now()
 localStorage.setItem("loginTime", timeStampInMs)
                     setLoading(false)
-
+                    localStorage.removeItem("myData")
                     Alerts.SuccessLogin("Login successfully.")
                     localStorage.setItem("isMail", JSON.stringify(response.data.is_mail))
                     localStorage.setItem("clientLoginId", JSON.stringify(response.data.loginuid))

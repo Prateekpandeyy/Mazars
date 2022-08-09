@@ -17,6 +17,7 @@ import MyPDF from '../dFile/LoginManual.pdf';
 import  { HelpIcon } from "../../components/Common/MessageIcon";
 import { OuterloginContainer } from "../../components/Common/OuterloginContainer";
 import Swal from "sweetalert2";
+import {GrStatusInfo} from 'react-icons/gr';
 function SignUp(props) {
   
   
@@ -331,22 +332,32 @@ const checkSpecial = (e) => {
 }
   //zip oncahnge
   const zipValue = (e) => {
-   
-    if (isNaN(e.target.value) && countryId.length > 0) {
+    console.log("elend", e.target.value.length)
+    var regEx = /^[0-9a-zA-Z]+$/;
+  if(e.target.value.match(regEx)){
+    setZipCode(e.target.value)
+    setZipError("")
+       setZipError1(false)
+  }
+  else if (e.target.value == 0) {
+    setZipCode("")
+  }
+ 
+    // if (isNaN(e.target.value) && countryId.length > 0) {
 
-      setZipError("Please enter number only")
-      setZipCode("")
-      setZipError1(true)
-      e.target.value = ""
-    }
-    else if (e.target.value.length == 0) {
-      setZipError1(true)
-    }
-    else {
-      setZipCode(e.target.value)
-      setZipError("")
-      setZipError1(false)
-    }
+    //   setZipError("Please enter number only")
+    //   setZipCode("")
+    //   setZipError1(true)
+    //   e.target.value = ""
+    // }
+    // else if (e.target.value.length == 0) {
+    //   setZipError1(true)
+    // }
+    // else {
+    //   setZipCode(e.target.value)
+    //   setZipError("")
+    //   setZipError1(false)
+    // }
   }
 
 
@@ -688,10 +699,17 @@ setPhoneLength(10)
     value={user}
     ref={register({ required: true })}
     placeholder="Enter Name"
-    className={classNames("form-control", {
-      "is-invalid": errors.p_user || userError.length > 0 || userAvailable.flag === 0,
-    })}
+    className = {`form-control ${errors.p_user ? 'is-invalid' : ''}`}
+    {...register('p_user')}
+    // className={classNames("form-control", {
+    //   "is-invalid": errors.p_user || userError.length > 0 || userAvailable.flag === 0,
+    // })}
+  
   />
+ <span style={{display : "flex", position : "absolute", right : "25px", bottom : "45px",
+color : "#dd4445", borderRadius : "50%"}} title = "Please enter valid user id">
+ <GrStatusInfo style = {{visibility : "hidden"}}/>
+   </span>
   {
   userError.length > 0 ?
   <p className="declined">{userError}</p>  : ""
@@ -720,6 +738,10 @@ setPhoneLength(10)
                           "is-invalid": errors.p_name,
                         })}
                       />
+                      <span style={{display : "flex", position : "absolute", right : "25px", bottom : "45px",
+color : "#dd4445", borderRadius : "50%"}} title = "Please enter valid user name">
+ <GrStatusInfo style = {{visibility : "hidden"}}/>
+   </span>
                     </div>
                   </div>
 
@@ -773,6 +795,11 @@ setPhoneLength(10)
                           </option>
                         ))}
                       </select>
+                      <span style={{display : "flex", position : "absolute",
+                       right : "25px", bottom : "28px",
+color : "#dd4445", borderRadius : "50%"}} title = "Please select profession">
+ <GrStatusInfo style = {{visibility : "hidden"}}/>
+   </span>
                     </div>
                   </div>
 
@@ -889,7 +916,10 @@ setPhoneLength(10)
                           onChange={(e) => phoneHandler(e)}
                           onBlur={phoneValidation}
                         />
-
+<span style={{display : "flex", position : "absolute", right : "25px", bottom : "24px",
+color : "#dd4445", borderRadius : "50%"}} title = "Please enter valid mobile number">
+ <GrStatusInfo style = {{visibility : "hidden"}}/>
+   </span>
                       </div>
                       {indNumError ? <p className="declined">{indNumError}</p> : <>
                         {
@@ -907,7 +937,7 @@ setPhoneLength(10)
                     <div className="mb-3">
                       <label className="form-label">Zipcode<span className="declined">*</span></label>
                       <input
-                        type="number"
+                        type="text"
                         className={classNames("form-control", {
                           "is-invalid": errors.p_zipCode || zipError1 === true || zipError,
                         })}
@@ -919,6 +949,11 @@ setPhoneLength(10)
                         onBlur={zipVali2}
                         value={zipCode}
                       />
+                      <span style={{display : "flex",
+                       position : "absolute", right : "25px", bottom : "24px",
+color : "#dd4445", borderRadius : "50%"}} title = "Please enter valid zip code">
+ <GrStatusInfo style = {{visibility : "hidden"}}/>
+   </span>
                     </div>
                     <p className="declined">{zipError}</p>
                   </div>
@@ -971,6 +1006,11 @@ setPhoneLength(10)
                         className={`fa ${password ? "fa-eye-slash" : "fa-eye"} password-icon`}
                         onClick={togglePasssword}
                       />
+                      <span style={{display : "flex", position : "absolute", 
+                      right : "25px", bottom : "24px",
+color : "#dd4445", borderRadius : "50%"}} title = "Please enter valid password">
+ <GrStatusInfo style = {{visibility : "hidden"}}/>
+   </span>
                      
                     </div>
                   </div>
@@ -1005,6 +1045,11 @@ setPhoneLength(10)
                         className={`fa ${repassword ? "fa-eye-slash" : "fa-eye"} password-icon`}
                         onClick={togglePasssword2}
                       />
+                      <span style={{display : "flex", position : "absolute", 
+                      right : "25px", bottom : "24px",
+color : "#dd4445", borderRadius : "50%"}} title = "Please enter valid password">
+ <GrStatusInfo style = {{visibility : "hidden"}}/>
+   </span>
                       {errors.p_confirm_password && (
                         <div className="invalid-feedback">
                           {errors.p_confirm_password.message}

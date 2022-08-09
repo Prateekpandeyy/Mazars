@@ -164,29 +164,28 @@ const CmsCont = (props) => {
   const [open3, setOpen3] = useState(false)
   const [updateOpen, setUpdateOpen] = useState(false)
   const [showCookie, setShowCookie] = useState(false)
+  const cookieEnable = Cookies.get("accept")
+
+  let history = useHistory()
+  useEffect(() => {
+   console.log("history", history)
+    if(history.location.pathname === "/"){
+
+    }
+    else if(cookieEnable){
+      setShowCookie(false)
+        }
+        else{
+      setShowCookie(true)
+        }
+  }, [])
   const showCook = () => {
+    
  
     setShowCookie(true)
   }
-  // useEffect(() => {
-  //   let comming = sessionStorage.getItem("commingSoon")
-  //   var now = new Date()
-  //   let dd = now.getDay()
-  //   let hour = now.getHours()
-  //   console.log("hours", dd === 3 && 16 > hour)
-  //   if(!comming && dd === 3 && 16 > hour) {
-  //     history.push("/customer/coming-soon")
-  //   }
-   
-  // }, [])
-  let history = useHistory()
-  const handleClickOn = () => {
-    setOpen(false);
-  };
-  const handleClickOff = () => {
-
-    setOpen(true);
-  };
+ 
+ 
   const handleClickOn2 = () => {
 
     setOpen2(false);
@@ -209,7 +208,7 @@ const CmsCont = (props) => {
   const handleClickUpdateClose = () => {
     setUpdateOpen(false)
   }
-  const cookieEnable = Cookies.get("accept")
+ 
   const myLink = (e) => {
    if(cookieEnable){
      if(e === "direct"){
@@ -261,40 +260,7 @@ props.showCook("showCookies")
   return(
     <>
 <div className="clientSubMenu">
-  {/* <li className="nav-item tabHoverLinksubMenu"  onMouseEnter={() => handleClickOff()}  onMouseLeave = {() => handleClickOn()}>
-       <ListItemButton>
-       <span className="nav-item">
-                     Articles
-                   </span>
-</ListItemButton>
-   
-         <Collapse in={open}  unmountOnExit>
-           <List component="div" className="myLink22">
-           <ul>
-                
-                  
-                     <li className="tabHover mx-1" onClick = {() => myLink("direct")}>
-                   <span className="menu-title" data-i18n="">
-                  Direct Tax
-                   </span>
-                   </li>
-                 
-                   
-                    
-                    
-                     <li className="tabHover mx-1" onClick = {() => myLink("indirect")}>
-                   <span className="menu-title" data-i18n="">
-                Indirect Tax
-                   </span>
-                   </li>
-                  
-                    
-                   </ul>
-           </List>
-         </Collapse>
-                 </li>
-    */}
-
+ 
 <li className="nav-item tabHoverLinksubMenu" onClick = {() => myLink("direct")}> 
       <ListItemButton>
      Articles
@@ -445,6 +411,7 @@ props.showCook("showCookies")
  declineButtonText = {<CloseIcon />}
  onDecline={() => {
    setShowCookie(false)
+   history.push("/")
  }}
  enableDeclineButton 
    disableStyles
@@ -459,7 +426,7 @@ backgroundColor : "#0071CE", border: "1px solid #0071CE", color: "#fff"
 , cursor : "pointer", fontSize : "1rem", fontWeight: 500,
 minWidth: "100px", minHeight: "3rem", textAlign: "center", display: "block", marginLeft: "auto"}}
 onAccept={(e) => {
-
+localStorage.setItem("myData", "outerLogin")
  Cookies.set("accept", "agree")
 }}
    overlayClasses="overlayclass"

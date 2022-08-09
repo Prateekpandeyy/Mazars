@@ -12,7 +12,7 @@ import {  VscFilePdf} from "react-icons/vsc";
 import classes from './design.module.css';
 import ima from "../../mazars_logo.png";
 import { OuterloginContainer } from '../../components/Common/OuterloginContainer';
-
+import $ from 'jquery';
 import { Link } from 'react-router-dom';
 import { Viewer } from '@react-pdf-viewer/core'; // install this library
 // Plugins
@@ -103,7 +103,7 @@ const Details = () => {
 
   }
   const getData = (e) => {
-   
+    $("#artContent a[href^='http://']").attr("target","_blank");
    if(history.location.index !== undefined){
     axios.get(`${baseUrl}/customers/getarticles?id=${history.location.index}`)
     .then((res) => {
