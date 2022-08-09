@@ -8,7 +8,7 @@ import { Spinner } from 'reactstrap';
 
 
 function ResendOtp({ invalid, wEmail, disabled, clientId, indNumError, zipError, passError, email,
-    phone, setDisabled, getTime, setLoad, loading, emailError, phoneError, zipError1, setLoading }) {
+    phone, setDisabled, getTime, setLoad, loading, countryCode, emailError, phoneError, zipError1, setLoading }) {
 
     const { handleSubmit, errors, reset } = useForm();
 
@@ -23,7 +23,7 @@ function ResendOtp({ invalid, wEmail, disabled, clientId, indNumError, zipError,
                 formData.append("phone", phone);
                 formData.append("p", "registration");
                 formData.append("user_id", clientId)
-        
+                formData.append("stdcode", countryCode);
                 if (invalid || wEmail || indNumError || zipError || passError) {
                     
                     setLoad(false)
