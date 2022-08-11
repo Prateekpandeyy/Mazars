@@ -30,7 +30,7 @@ function ResendOtp({ email, clientId, uit,  setDisabled, getTime, setLoad, setLo
 
                 if (response.data.code === 1) {
                     setLoading(false)
-                    Alerts.SuccessNormal("As per your request, OTP has been sent to your registered email address.")
+                    Alerts.SuccessNormal("As per your request, OTP has been sent to your registered mobile number / email address.")
                     setDisabled(false)
                     getTime();
                     setLoad(true)

@@ -43,7 +43,7 @@ function ForgetPassword(props) {
       
         if (response.data.code === 1) {
           setLoading(false)
-          Alerts.SuccessNormal("As per your request , OTP has been sent to your email address.")
+          Alerts.SuccessNormal("As per your request , OTP has been sent to your mobile number / email address.")
           props.history.push(`/teamleader/new-password/${value.p_email}`)
         } else if (response.data.code === 0) {
           Alerts.ErrorNormal("Please enter correct email address.")

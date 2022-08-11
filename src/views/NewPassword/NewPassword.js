@@ -307,7 +307,7 @@ function NewPassword(props) {
           {
             disabled ?
               <ResendOtp id={id} setDisabled={setDisabled} getTime={getTime}
-                setLoad={setLoad} setLoading={setLoading} />
+              userId = {props.history.location.index}  setLoad={setLoad} setLoading={setLoading} />
               :
               null
           }

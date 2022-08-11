@@ -18,7 +18,7 @@ const Schema = yup.object().shape({
 });
 
 
-function VerifyOtp({ email, uid, loading, setLoading }) {
+function VerifyOtp({ email, uid, loading, setLoading, password }) {
  
 
   const { handleSubmit, register, errors, reset } = useForm({
@@ -88,19 +88,18 @@ function VerifyOtp({ email, uid, loading, setLoading }) {
     setLoading(true)
     changeNum(true)
     let formData = new FormData();
-    formData.append("email", email);
-    formData.append("id", uid);
-
+    formData.append("id", email);
+    formData.append("password", password);
     axios({
       method: "POST",
-      url: `${baseUrl}/tp/regenrateotp`,
+      url: `${baseUrl}/tp/login`,
       data: formData,
     })
       .then(function (response) {
       
         if (response.data.code === 1) {
           setLoading(false)
-          Alerts.SuccessNormal("As per your request, OTP has been sent to your registered email address.")
+          Alerts.SuccessNormal("As per your request, OTP has been sent to your registered mobile number / email address.")
           setDisabled(false)
         }
         else if (response.data.code === 0) {

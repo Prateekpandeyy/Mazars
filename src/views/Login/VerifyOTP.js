@@ -93,7 +93,7 @@ localStorage.setItem("loginTime", timeStampInMs)
               
                 if (response.data.code === 1) {
                     setLoading(false)
-                    Alerts.SuccessNormal("An OTP has been sent to your registered email address.")
+                    Alerts.SuccessNormal("An OTP has been sent to your registered mobile number / email address.")
                     setLoad(true)
                     setDisabled(false)
                 }

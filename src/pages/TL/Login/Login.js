@@ -35,7 +35,7 @@ function Login(props) {
   const [show, setShow] = useState(false);
   const [uid, setUid] = useState('')
   const [isPasswordShow, setPasswordShow] = useState(false);
-
+  const [password, setPassword] = useState("")
   const togglePasssword = () => {
     setPasswordShow(!isPasswordShow)
   };
@@ -62,7 +62,7 @@ function Login(props) {
           setShow(true)
           setLoading(false)
           Cookies.set("tlName", response.data.displayname)
-          Alerts.SuccessNormal("As per your request, OTP has been sent to your registered email address.")
+          Alerts.SuccessNormal("As per your request, OTP has been sent to your registered mobile number / email address.")
           setUid(response.data.user_id)
          
         } else if (response.data.code === 0) {
@@ -101,7 +101,7 @@ function Login(props) {
         {
           show ? <div>
             <VerifyOtpLogin email={email} uid={uid} loading={loading}
-              setLoading={setLoading} />
+          password = {password}    setLoading={setLoading} />
           </div>
             :
             <div className="form">
@@ -138,6 +138,7 @@ function Login(props) {
                         className={classNames("form-control", {
                           "is-invalid": errors.password,
                         })}
+                        onChange = {(e) => setPassword(e.target.value)}
                         name="password"
                         placeholder="Enter Password"
                         autocomplete="off"

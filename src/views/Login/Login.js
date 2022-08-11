@@ -164,7 +164,7 @@ const latestNews = () => {
         
         if (response.data.code === 1) {
           setLoading(false)
-          Alerts.SuccessNormal("As per your request, OTP has been sent to your registered email address.")
+          Alerts.SuccessNormal("As per your request, OTP has been sent to your registered mobile number / email address.")
           setShow(true)
           console.log(response.data.display_name)
           setLoad(true)

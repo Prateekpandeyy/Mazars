@@ -37,7 +37,7 @@ function Login(props) {
   const [uid, setUid] = useState('')
   const [isPasswordShow, setPasswordShow] = useState(false);
   const [loading, setLoading] = useState(false);
- 
+  const [password, setPassword] = useState("")
   const togglePasssword = () => {
     setPasswordShow(!isPasswordShow)
   };
@@ -108,6 +108,7 @@ function Login(props) {
           show ? <div>
             <VerifyOtpLogin email={email} uid={uid}
               loading={loading}
+              password = {password}
               setLoading={setLoading} />
           </div>
             :
@@ -157,6 +158,7 @@ function Login(props) {
                           e.preventDefault();
                           return false
                         }}
+                        onChange = {(e) => setPassword(e.target.value)}
                       />
                       <i
                         className={`fa ${isPasswordShow ? "fa-eye-slash" : "fa-eye"} password-icon`}

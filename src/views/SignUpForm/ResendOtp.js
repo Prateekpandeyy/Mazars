@@ -38,7 +38,7 @@ function ResendOtp({ invalid, wEmail, disabled, clientId, indNumError, zipError,
                         .then(function (response) {
                             
                             if (response.data.code === 1) {
-                                Alerts.SuccessNormal("As per your request , OTP has been sent to your email address.")
+                                Alerts.SuccessNormal("As per your request , OTP has been sent to your mobile number / email address.")
                                 setDisabled(false)
                                 getTime();
                                 setLoad(true)

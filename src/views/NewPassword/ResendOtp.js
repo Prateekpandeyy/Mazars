@@ -6,7 +6,7 @@ import Alerts from "../../common/Alerts";
 import ShowError from "../../components/LoadingTime/LoadingTime";
 
 
-function ResendOtp({ id, setDisabled, getTime, setLoad, setLoading }) {
+function ResendOtp({ id, setDisabled, userId, getTime, setLoad, setLoading }) {
 
     const { handleSubmit, errors, reset } = useForm();
 
@@ -14,6 +14,7 @@ function ResendOtp({ id, setDisabled, getTime, setLoad, setLoading }) {
         setLoading(true)
 
         let formData = new FormData();
+        formData.append("user_id", userId);
         formData.append("email", id);
         formData.append("p", "forgot");
 
@@ -26,7 +27,7 @@ function ResendOtp({ id, setDisabled, getTime, setLoad, setLoading }) {
             
                 if (response.data.code === 1) {
                     setLoading(false)
-                    Alerts.SuccessNormal("As per your request, OTP has been sent to your regsitered email address.")
+                    Alerts.SuccessNormal("As per your request, OTP has been sent to your regsitered mobile number / email address.")
                     setDisabled(false)
                     setLoad(true)
                     getTime();

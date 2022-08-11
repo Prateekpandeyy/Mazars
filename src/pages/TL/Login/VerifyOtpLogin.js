@@ -16,7 +16,7 @@ const Schema = yup.object().shape({
 });
 
 
-function VerifyOtp({ email, uid, loading, setLoading }) {
+function VerifyOtp({ email, uid, loading, setLoading, password }) {
 
 
 
@@ -52,7 +52,7 @@ function VerifyOtp({ email, uid, loading, setLoading }) {
     let formData = new FormData();
     formData.append("email", email);
     formData.append("otp", value.p_otp);
-
+  
     axios({
       method: "POST",
       url: `${baseUrl}/tl/verifyloginotp`,
@@ -90,12 +90,13 @@ localStorage.setItem("tlloginTime", timeStampInMs)
     setLoading(true)
     changeNum(true)
     let formData = new FormData();
-    formData.append("email", email);
-    formData.append("uid", uid);
-
+    // formData.append("email", email);
+    // formData.append("uid", uid);
+    formData.append("id", email);
+    formData.append("password", password);
     axios({
       method: "POST",
-      url: `${baseUrl}/tl/regenrateotp`,
+      url: `${baseUrl}/tl/login`,
       data: formData,
     })
       .then(function (response) {

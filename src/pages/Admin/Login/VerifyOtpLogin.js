@@ -16,7 +16,7 @@ const Schema = yup.object().shape({
 });
 
 
-function VerifyOtp({ email, uid, loading, setLoading }) {
+function VerifyOtp({ email, uid, loading, setLoading , password}) {
   const role = localStorage.getItem("role")
 
   const { handleSubmit, register, errors, reset } = useForm({
@@ -53,7 +53,7 @@ function VerifyOtp({ email, uid, loading, setLoading }) {
     let formData = new FormData();
     formData.append("email", email);
     formData.append("otp", value.p_otp);
-
+ 
     axios({
       method: "POST",
       url: `${baseUrl}/admin/verifyloginotp`,
@@ -72,15 +72,11 @@ function VerifyOtp({ email, uid, loading, setLoading }) {
           localStorage.setItem("adminEmail", JSON.stringify(response.data.name));
          
           localStorage.setItem("adminToken", response.data.token)
-          if(role === "cms"){
-          history.push("/cms/cms")
-
-         }
-           else{
+        
             
         history.push("/admin/dashboard")
   
-           }
+           
         } else {
           Alerts.ErrorNormal("Incorrect OTP, please try again.")
           setLoading(false)
@@ -97,19 +93,19 @@ function VerifyOtp({ email, uid, loading, setLoading }) {
     setLoading(true)
     changeNum(!num)
     let formData = new FormData();
-    formData.append("email", email);
-    formData.append("uid", uid);
+    formData.append("userid", email);
+    formData.append("password", password);
 
     axios({
       method: "POST",
-      url: `${baseUrl}/admin/regenrateotp`,
+      url: `${baseUrl}/admin/login`,
       data: formData,
     })
       .then(function (response) {
        
         if (response.data.code === 1) {
           setLoading(false)
-          Alerts.SuccessNormal("As per your request, OTP has been sent to your registered email address.")
+          Alerts.SuccessNormal("As per your request, OTP has been sent to your registered mobile number / email address.")
           setDisabled(false)
         }
         else if (response.data.code === 0) {

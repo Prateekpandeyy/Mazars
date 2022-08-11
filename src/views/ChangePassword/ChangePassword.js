@@ -98,7 +98,7 @@ const clientLoginId = JSON.parse(localStorage.getItem("clientLoginId"))
             setLoading(false)
             setLoad(true)
             setShow(true)
-            Alerts.SuccessNormal("As per your request, OTP has been sent to your registered email address.")
+            Alerts.SuccessNormal("As per your request, OTP has been sent to your registered mobile number / email address.")
           } else if (response.data.code === 0) {
             setLoading(false)
             Alerts.ErrorNormal("Please enter correct details")

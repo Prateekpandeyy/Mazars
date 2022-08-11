@@ -36,7 +36,7 @@ function Login(props) {
   const [uid, setUid] = useState('')
   const [isPasswordShow, setPasswordShow] = useState(false);
   const [loading, setLoading] = useState(false);
- 
+  const [password, setPassword] = useState("")
   const togglePasssword = () => {
     setPasswordShow(!isPasswordShow)
   };
@@ -62,7 +62,7 @@ function Login(props) {
           setShow(true)
           Swal.fire({
             "title" : "success", 
-            "html" : "As per your request, OTP has been sent to your registered email address.",
+            "html" : "As per your request, OTP has been sent to your registered mobile number / email address.",
             "icon" : "success"
           })
           // Alerts.SuccessNormal("As per your request, OTP has been sent to your registered email address.")
@@ -104,6 +104,7 @@ function Login(props) {
           show ? <div>
             <VerifyOtpLogin email={email} uid={uid}
               loading={loading}
+              password = {password}
               setLoading={setLoading} />
           </div>
             :
@@ -142,6 +143,7 @@ function Login(props) {
                         className={classNames("form-control", {
                           "is-invalid": errors.password,
                         })}
+                        onChange = {(e) => setPassword(e.target.value)}
                         name="password"
                         placeholder="Enter Password"
                         ref={register}

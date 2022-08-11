@@ -365,8 +365,11 @@ const checkSpecial = (e) => {
 
   // onblur
   const zipVali2 = (e) => {
-console.log(countryId, zipCode, zipCode.length)
-    if (countryId && zipCode && zipCode.length < 6) {
+console.log(e.target.value.length)
+if(e.target.value.length === 0){
+  setZipError(true)
+}
+  else if (countryId && zipCode && zipCode.length < 6) {
       setZipError1(true)
       setZipError("Please enter valid zip code")
 
@@ -484,7 +487,7 @@ console.log(countryId, zipCode, zipCode.length)
             setLoading(false)
             setLoad(true)
             setShow(true)
-            Alerts.SuccessNormal("As per your request , OTP has been sent to your email address.")
+            Alerts.SuccessNormal("As per your request , OTP has been sent to your registered mobile number / email address.")
           } else if (response.data.code === 0) {
             setLoading(false)
             Alerts.ErrorNormal(response.data.message)
@@ -677,6 +680,9 @@ const checkPassError = (e) => {
   console.log(e.target.value)
   if(e.target.value.length < 8){
     setpass2(true)
+  }
+  else{
+    setpass2(false)
   }
 }
 const checkNameError = (e) => {
@@ -977,7 +983,7 @@ color : "#dd4445", borderRadius : "50%"}}
                         ref={register({ required: true })}
                         placeholder="Enter Zipcode"
                         onChange={(e) => zipValue(e)}
-                        onBlur={zipVali2}
+                        onBlur={(e) => zipVali2(e)}
                         value={zipCode}
                       />
                       <span style={{display : "flex",
