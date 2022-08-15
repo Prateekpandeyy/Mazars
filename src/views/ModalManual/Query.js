@@ -31,6 +31,12 @@ import successImg from "../ManualImg/successImg222.png";
 import iconProfile from "../ManualImg/profileIcon.png";
 import changePass2 from "../ManualImg/change.png";
 import successChange from "../ManualImg/successChange.png";
+import errorp from "../ManualImg/errorp.png";
+import deleteQuery from "../ManualImg/deleteQuery.png";
+import messageImg from "../ManualImg/messageImg.png";
+import successMsg from "../ManualImg/successMsg.png";
+import messagehistoryicon from "../ManualImg/messagehistoryicon.png";
+import viewDiscussion from "../ManualImg/viewDisuimg.png";
 const Query = () => {
     const useStyle = makeStyles(theme => ({
         root: {
@@ -95,10 +101,17 @@ const Query = () => {
                    
                         <CardContent>
                         <Typography variant="body1">
+                        Incorrect password: At the login page, if the password entered is incorrect then
+Error message window will appear showing “Incorrect email or password”. Click Ok
+& login with the correct credentials.
+                            </Typography>
+                            <CardMedia component="img" src={errorp} style={{margin: "10px 0px"}} />
+                          
+                        <Typography variant="body1">
                         After successful login by an existing 
                         client or registration of a new client, following screen/window will open.
                             </Typography>
-                            <CardMedia component="img" src={successImg}  />
+                            <CardMedia component="img" src={successImg}  style={{margin: "10px 0px"}} />
                           
                           
                         </CardContent>
@@ -211,7 +224,7 @@ const Query = () => {
                  }} className="modalTextHeading">
 <Typography variant="h6">
                          To register a new query, click on ‘Queries’ tab & then
-                         <Button variant="contained" className={classes.root2}>Fresh Query</Button> button
+                         <Button variant="contained" className={classes.root2}>Fresh Query</Button> button.
                             </Typography>
  </Typography>
              }/>
@@ -240,11 +253,14 @@ const Query = () => {
                        <Typography variant="body1">
                          Category and Sub-Category Classification
                             </Typography>
-                            <table className="table table-bordered p-2">
-
+                            <table className="table table-bordered p-2" style={{width : "380px", margin : "auto"}}>
+<thead>
+    <th>Category</th>
+    <th>Sub-Category</th>
+    </thead>
 <tbody>
     <tr>
-        <th>Category<sup className='declined'>*</sup></th>
+        <td>Direct<sup className='declined'>*</sup></td>
         <td className='px-5'>
             <ul>
                 <li><Typography variant='body2'>
@@ -279,7 +295,7 @@ const Query = () => {
         </td>
     </tr>
     <tr>
-        <th>Indirect Tax<sup className='declined'>*</sup></th>
+        <td>Indirect Tax<sup className='declined'>*</sup></td>
         <td className='px-5'>
             <ul>
                 <li><Typography variant='body2'>
@@ -527,7 +543,7 @@ const Query = () => {
                      Query Tab will show the brief status of the query,
                       Under Action column, icons are available for different actions as below
                           </Typography>              
-                            <CardMedia component="img" src={queryList22} />
+                            <CardMedia component="img" src={queryList22} style = {{margin : "10px 0px"}} />
                             <CardHeader 
                     title={
                         <>
@@ -629,7 +645,7 @@ const Query = () => {
                         </>
                     }/>
                            
-                          <ul>
+                          <ul className= "px-5">
                               <li style={{margin : '0px 10px'}}>
                               <Typography variant="body1" gutterBottom color="primary">
                            Click the edit icon to edit query details.
@@ -700,9 +716,13 @@ const Query = () => {
                            
                         </>
                     }/>
+                     <ul className= "px-5">
+                              <li style={{margin : '0px 10px'}}>
                             <Typography variant="h6" color="primary">
                             Click delete icon to delete the query.
                             </Typography>
+                           </li>
+                           </ul>
                             <Typography variant="body1">
                         Delete message window will appear showing “Are you sure? Want to delete query?”. 
                         Click   <Button variant="contained" className={classes.root2}> Yes, delete it </Button> if the client wants to delete the query. Otherwise click the 
@@ -710,12 +730,12 @@ const Query = () => {
                           <CardMedia component="img" src={deleteImg} />
                    <Typography variant="body1">
                          After clicking on    
-                         <Button variant="contained" className={classes.root3}> Yes, delete it</Button>  following window will appear showing 
+                         <Button variant="contained" className={classes.root}> Yes, delete it</Button>  following window will appear showing 
                          “Please provide the reason”, enter the reason(s) 
                          for deleting the query and click
-                         <Button variant="contained" className={classes.root3}> Submit</Button>
+                         <Button variant="contained" className={classes.root}> Submit</Button>
                             </Typography>
-                            <CardMedia component="img" src={rejectQuery} />
+                            <CardMedia component="img" src={rejectQuery}  style = {{margin : "10px 0px"}}/>
                            
                    </CardContent>
                </Card>
@@ -733,7 +753,8 @@ const Query = () => {
                          After clicking on  
                            <Button variant="contained" className={classes.root2}> Submit</Button> , the query will be deleted & message window will appear showing “Query deleted successfully”.   
                                                   </Typography> 
-                                           
+                                                  <CardMedia component="img" src={deleteQuery}  style = {{margin : "10px 0px"}}/>
+                                 
                         </CardContent>
                     </Card>
                 </Container>
@@ -752,23 +773,34 @@ const Query = () => {
                         <>
                                             <Typography variant="h5">
   Action Button: Send message
-                         <Button variant="contained"> 
-                         <CardMedia component="img" src={message} style={{width: "30px", height: "30px"}}/></Button>
+                       
+  <CardMedia src={message} component="img" 
+                         style={{display : "inline", width : "20px"}} />
                             </Typography>
                            
                         </>
                     }/>
-
-                          <Typography variant="body1" color="primary">
+  <ul className= "px-5">
+                              <li style={{margin : '0px 10px'}}>
+                              <Typography variant="body1" color="primary">
                           Click send message icon to send a message to Mazars Team
                           </Typography>
-                          <Typography variant="body1" color="primary">
+                              </li>
+                              <li style={{margin : '0px 10px'}}>
+                              <Typography variant="body1" color="primary">
                           From the drop-down list, select the message type depending on the nature of message.
                           </Typography>
+                          </li>
+                          <li style={{margin : '0px 10px'}}>
                           <Typography variant="body1">
                           Enter the message & click  
                            <Button variant="contained" className={classes.root2}> Send</Button> 
                                                   </Typography>
+                              </li>
+                       </ul>
+                        
+                       <CardMedia component="img" src={messageImg}  style = {{margin : "10px 0px"}}/>
+                           
                                                   <table className="table table-bordered p-2">
 
 <tbody>
@@ -815,6 +847,81 @@ const Query = () => {
              <Typography variant="h6" align="center">
                        31
                    </Typography>
+
+
+                   <Box style={{display : "flex", maxWidth: "900px", margin: "auto",  minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+             <Container maxWidth= "xl">
+                 <Card>
+                     <CardContent>
+                     <Typography variant="body1">
+                     <Typography variant="body1">
+                     After clicking on
+                                <Button variant="contained" className={classes.root}>Send</Button>
+                                Success message window will appear, showing “Message sent successfully”. Click ok.
+                            </Typography>
+                            </Typography>   
+                            <CardMedia component="img" src={successMsg} style={{margin : "10px 0px"}} />
+                           
+                        
+                     </CardContent>
+                 </Card>
+             </Container>
+            
+             </Box>
+
+             <Typography variant="h6" align="center">
+                       32
+                   </Typography>
+
+                   <Box style={{display : "flex", maxWidth: "900px", margin: "auto",  minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+           <Container maxWidth= "xl">
+               <Card>
+                   <CardContent>
+               
+                               <CardHeader 
+                    title={
+                        <>
+                         <Typography variant="h5">
+                         Action Button: View discussion message
+                         
+                         <CardMedia src={messagehistoryicon} component="img" 
+                         style={{display : "inline", width : "20px"}} />
+                            </Typography>
+                           
+                        </>
+                    }/>
+                     <ul className= "px-5">
+                              <li style={{margin : '0px 10px'}}>
+                            <Typography variant="h6" color="primary">
+                            Click view discussion message icon to view history
+                             of messages exchanged between the client & the MAS team in respect of the query.
+                            </Typography>
+                           </li>
+                           <li style={{margin : '0px 10px'}}>
+                            <Typography variant="h6" color="primary">
+                            Name column specifies the sender/recipient of message.  </Typography>
+                           </li>
+                           <li style={{margin : '0px 10px'}}>
+                            <Typography variant="h6" color="primary">
+                            Green left arrow indicates that the client received
+                             message from the sender mentioned in name column.
+                           </Typography>
+                           </li>
+                          
+                           </ul>
+                                  <CardMedia component="img" src={viewDiscussion} />
+                 
+                   </CardContent>
+               </Card>
+           </Container>
+           
+           </Box>   
+
+           <Typography variant="h6" align="center">
+                       33
+                   </Typography>
+
+
          <Box style={{display : "flex", maxWidth: "900px", margin: "auto",  minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
              <Container maxWidth= "xl">
                  <Card>
@@ -823,19 +930,19 @@ const Query = () => {
                          To view the details of query submitted, click on the query number 
                          in the queries tab or in the Proposal, Payment Status or Assignments tab.
                             </Typography>   
-                            <CardMedia component="img" src={showQuery22} />
+                            <CardMedia component="img" src={showQuery22} style={{margin : "10px 0px"}} />
                             <Typography variant="body1">
                          After clicking on the query number, 
                          following details will be displayed in basic query information tab.
                          </Typography> 
-                         <CardMedia component="img" src={queryDetails} />
+                         <CardMedia component="img" src={queryDetails} style={{margin : "10px 0px"}} />
                      </CardContent>
                  </Card>
              </Container>
             
              </Box>
              <Typography variant="h6" align="center">
-                       32
+                       34
                    </Typography>
 <Box style={{display : "flex", maxWidth: "900px", margin: "auto",  minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
 
@@ -847,8 +954,8 @@ const Query = () => {
                            
                         
                          
-                          <CardMedia component="img" src={basicDetails} />
-                          <CardMedia component="img" src={proposalDetails} />
+                          <CardMedia component="img" src={basicDetails} style={{margin : "10px 0px"}}/>
+                          <CardMedia component="img" src={proposalDetails} style={{margin : "10px 0px"}} />
                         </CardContent>
                    
                 </Card>

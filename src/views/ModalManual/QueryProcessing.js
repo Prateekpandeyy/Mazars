@@ -66,24 +66,21 @@ const QueryProcessing = () => {
         }/>
          <CardContent>
        
-         <Typography variant="body1">
+         <Typography variant="body1" style = {{margin : "10px 0px"}}>
          MAS Team will as quickly as possible allocate the query to a Team Leader for
 processing. Before any query is allocated to Team Leader, following status and
 action buttons will be visible in the query tab (S.No. 1 of the list in the screenshot). 
                 </Typography>
-                <Typography variant="body1">
+                <Typography variant="body1"  style = {{margin : "10px 0px"}}>
                 Once query is allocated to a Team leader, following status & action buttons will be
 visible for the query in the query tab (S.No. 2 of the list in the screenshot).
                 </Typography>
-                <Typography variant="body1">
+                <Typography variant="body1"  style = {{margin : "10px 0px"}}>
                 The client can send a message to the MAS Team specifying the secondary email
 user(s) to whom copy of proposal may also be sent along with the email message
 confirming submission of proposal.
                    </Typography>
          <CardMedia component="img" src={processImg} style={{margin: "10px 0px"}}/>
-         {/* <Typography variant="body1">
-                        Query Tab: Action Buttons:
-                        </Typography> */}
                                    <CardHeader title={
                 <Typography variant='span' variantMapping={{
                     h5 : "span"
@@ -172,9 +169,9 @@ confirming submission of proposal.
                     h5 : "span"
                 }} className="modalTextHeading" id="forgetPassword">
    Action Button: Upload Additional Documents
-                    <Button variant="contained">
-                    <CardMedia src={downloadImg} component="img" />
-                    </Button>                                     
+                    
+                    <CardMedia src={downloadImg} component="img"   style={{display : "inline", width : "20px"}}  />
+                                                
 </Typography>
                   }/>
                        <Typography variant="body1">
@@ -229,17 +226,20 @@ confirming submission of proposal.
                     h5 : "span"
                 }} className="modalTextHeading" id="forgetPassword">
     Action Button: Send Feedback
-                    <Button variant="contained">
-                    <CardMedia src={feedbackImg} component="img" />
-                    </Button>                                     
+                    
+                    <CardMedia src={feedbackImg} component="img"   style={{display : "inline", width : "20px"}} />
+                                                       
 </Typography>
                   }/>
-            <Typography variant="body1">
-                
+            <Typography variant="body1" style = {{margin : "10px 0px"}}>
+            After clicking on Feedback icon, Feedback message window will appear. Provide
+your feedback and click on
+                          <Button variant="contained">Submit </Button> 
+                          Feedback will be sent to the MAS Team.   
                  
                        </Typography>
                       
-                            <Typography variant="body1">
+                            <Typography variant="body1" style = {{margin : "10px 0px"}}>
                             The client can send feedback from different tabs/windows where
                              feedback icon is available.
                                 </Typography>
@@ -248,7 +248,7 @@ confirming submission of proposal.
               After clicking on <Button variant="contained">Submit </Button>  success message window will
                appear showing “Feedback sent successfully”. Click ok.
               </Typography>
-              <CardMedia src={successFeedback} component="img"  /> 
+              <CardMedia src={successFeedback} component="img" style = {{margin : "10px 0px"}} /> 
             </CardContent>
         </Card>
     </Container>

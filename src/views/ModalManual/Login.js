@@ -14,8 +14,8 @@ const useStyle = makeStyles(theme => ({
     root : {
         backgroundColor : "#0071ce", 
         color : "white",
-        margin : "10px",
-        outline : "none",
+        margin : "10px 0px !important",
+      outline : "none",
         '&:hover': {
             backgroundColor : "#0071ce",
             color : "white",
@@ -107,7 +107,7 @@ const Login = () => {
                 <span className="modalTextHeading">
                 Provide your basic information to complete the registration.
                             </span>
-                            <Typography variant="body2">
+                            <Typography variant="body2" style={{color : "#0000ff"}}>
                             (On clicking sign up for registration, following screen will open to enter basic information.)
                                 </Typography>
                                 <div style={{display : "flex", margin : "30px 0px"}}> 
@@ -138,7 +138,8 @@ const Login = () => {
        
         <Typography variant='body1' className="modalText">
     After clicking on  <Button variant="contained" className={classes.root}>Send Otp</Button> Success message will appear.
-     Click ok and enter the OTP to register & click on  <Button variant="contained" className={classes.root}>Submit</Button>
+     Click ok and enter the OTP to register & click on 
+     <Button variant="contained" className={classes.root}>Submit</Button>
     </Typography>
    
 <CardMedia component="img"  src={successregImg}/>

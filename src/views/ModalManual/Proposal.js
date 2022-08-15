@@ -21,7 +21,8 @@ import rejectProposalView from '../ManualImg/rejectProposalView.png';
 import restoredProposalView from '../ManualImg/restoredProposalView.png';
 import restoredQueryView2 from '../ManualImg/restoredQueryView2.png';
 import restoredQueryView3 from '../ManualImg/restoredQueryView3.png';
-import restoredQueryView from '../ManualImg/restoredQueryView.png'
+import restoredQueryView from '../ManualImg/restoredQueryView.png';
+import rightIcon from "../ManualImg/rightArrow.png";
 import {makeStyles } from '@material-ui/core/styles';
 const Proposal = () => {
     const useStyle = makeStyles(theme => ({
@@ -97,7 +98,11 @@ Processing of Proposal
            
                 <Typography variant="body1">
                 By selecting the Proposal Tab, on the left-hand side of the following screen, the
-client can view the proposal, by clicking on the blue arrow facing rightwards ( ). All
+client can view the proposal, by clicking on the blue arrow facing rightwards (
+      
+    <CardMedia src={rightIcon} component="img"   style={{display : "inline", width : "20px"}} />  
+                 
+ ). All
 following actions for acceptance/rejection of proposal can be taken by any of the secondry email user alogn with the client.
 </Typography>
  <CardMedia src={proposalView} component="img" style={{margin : "10px 0px"}} />
@@ -295,7 +300,7 @@ following actions for acceptance/rejection of proposal can be taken by any of th
        </tr>
        </tbody>
        </table>        
-       <CardMedia component="img" src={showProposal22}/>  
+       <CardMedia component="img" src={showProposal22} style={{margin : "10px 0px" }}/>  
 
                </CardContent> 
         </Card>
@@ -308,7 +313,9 @@ following actions for acceptance/rejection of proposal can be taken by any of th
 <Box style={{display : "flex",  maxWidth: "900px", margin: "auto", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
   
     <Container maxWidth= "xl">
-    <Typography variant="body1">
+ <Card>
+     <CardContent>
+     <Typography variant="body1">
             By selecting the Engagement Letter checkbox, the proposal can be viewed and on
 the basis of terms and conditions mentioned in the proposal, the client can make the decision by clicking on 
            <Button variant="container" className={classes.root}>Accept</Button>             or            
@@ -319,8 +326,10 @@ the basis of terms and conditions mentioned in the proposal, the client can make
             If the proposal is acceptable, click  <Button variant="container" className={classes.root}>Accept</Button>                 button. Upon acceptance,
             Upon acceptance, following success message window will appear showing success message window, click ok
                 </Typography>
-                <CardMedia src={proposalSeen2} component="img" />
+                <CardMedia src={proposalSeen2} component="img" style={{margin : "10px 0px" }} />
               
+     </CardContent>
+ </Card>
     </Container>
     <Typography variant="h6" align="center">
                          45
@@ -331,13 +340,15 @@ the basis of terms and conditions mentioned in the proposal, the client can make
 <Box style={{display : "flex",  maxWidth: "900px", margin: "auto", minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
   
     <Container maxWidth= "xl">
-    <Typography variant="body1">
+  <Card>
+      <CardContent>
+      <Typography variant="body1">
             After acceptance of proposal, action button right arrow (<CardMedia  component="img"
         src={rightArrow} style={{display: "inline", height: "20px",  width : "20px"}} />)
              will disappear & new eye button (<CardMedia  component="img"
         src={viewProposalsign} style={{ display: "inline",  width : "20px"}} />) will appear to view the accepted proposal as below:
                 </Typography>
-                <CardMedia  src={acceptProposal22} component="img"/>
+                <CardMedia  src={acceptProposal22} component="img" style={{margin : "10px 0px" }}/>
                 <table className="table table-bordered p-2">
 <tr>
 <th><CardMedia  component="img"
@@ -355,6 +366,8 @@ src={viewProposalsign} style={{  width : "20px"}} /></th>
 </td>
 </tr>
 </table>
+      </CardContent>
+  </Card>
       
     </Container>
   
@@ -372,14 +385,14 @@ src={viewProposalsign} style={{  width : "20px"}} /></th>
 <Typography variant="body1">
 If the proposal is not acceptable, click          
 <Button variant="contained" className={classes.root3}>Reject</Button>   button. Rejection message window will appear showing “Are you sure to reject Proposal?”    </Typography>
-<CardMedia  src={proposalConfirm} component="img"/>
+<CardMedia  src={proposalConfirm} component="img" style={{margin : "10px 0px" }}/>
 <Typography variant="body1">
 The client can still review the proposal & go back by clicking 
 <Button className={classes.root3}>Cancel</Button>         button. If sure to reject, click 
 <Button variant="contained" className={classes.root}>Yes Reject it</Button>  
                 . Upon such rejection following message will appear. Click ok  
                 </Typography>
-                <CardMedia  src={rejectProposal} component="img"/>
+                <CardMedia  src={rejectProposal} component="img" style={{margin : "10px 0px" }}/>
 
             </CardContent>
         </Card>
@@ -396,14 +409,14 @@ The client can still review the proposal & go back by clicking
 <Typography variant="body1">
 Upon rejection of proposal, following screen will be visible in the Proposal tab details.  
                 </Typography> 
-                <CardMedia  src={proposal221} component="img"/>
+                <CardMedia  src={proposal221} component="img" style={{margin : "10px 0px" }}/>
                 <Typography variant="body1">
                 In case of client inadvertently rejecting the proposal, he may 
                 send message to the MAS Team for restoring the pending proposal status by clicking on
 
       <CardMedia src={message} style={{display : "inline", width : "20px"}} component="img"/> icon.
 </Typography>
-<CardMedia  src={rejectProposalView} component="img"/>
+<CardMedia  src={rejectProposalView} component="img" style={{margin : "10px 0px" }}/>
 </CardContent>
         </Card>
         </Container>
@@ -440,8 +453,8 @@ Upon rejection of proposal, following screen will be visible in the Proposal tab
     <Container maxWidth= "xl">
         <Card>
             <CardContent>
-            <CardMedia src={restoredQueryView2} component="img" />
-                <CardMedia src={restoredQueryView3} component="img" />
+            <CardMedia src={restoredQueryView2} component="img" style={{margin : "10px 0px" }} />
+                <CardMedia src={restoredQueryView3} component="img" style={{margin : "10px 0px" }}/>
              
             </CardContent>
         </Card>
@@ -463,60 +476,60 @@ Upon rejection of proposal, following screen will be visible in the Proposal tab
         }/>
           <table className="table table-bordered p-2">
               <tr>
-                  <td>Date of allocation</td>
+                  <th>Date of allocation</th>
                   <td>Date of allocation of the query to a Team Leader.</td>
               </tr>
               <tr>
-                  <td>Name of Team Leader</td>
+                  <th>Name of Team Leader</th>
                   <td>Shows the Post & Name of the Team Leader.</td>
               </tr>
               <tr>
-                  <td>Date of Proposal</td>
+                  <th>Date of Proposal</th>
                   <td>Date of online sending of proposal to the client by Mazars Team.</td>
               </tr>
               <tr>
-                  <td>Scope of Work</td>
+                  <th>Scope of Work</th>
                   <td>Scope of work arising from the query.</td>
               </tr>
               <tr>
-                  <td>Amount </td>
+                  <th>Amount </th>
                   <td>Payment terms maybe fixed or monthly recurring payments.</td>
               </tr>
               <tr>
-                  <td>Payment Terms</td>
+                  <th>Payment Terms</th>
                   <td>Shows the payment terms, instalment(s) amount(s) & their due dates, if any.</td>
               </tr>
               <tr>
-                  <td>Proposed Amount</td>
+                  <th>Proposed Amount</th>
                   <td>Amount proposed by the Mazars Team for execution of the query.</td>
               </tr>
               <tr>
-                  <td>Proposal Status</td>
+                  <th>Proposal Status</th>
                   <td>After the proposal is sent to the client, status is shown as in progress & the status changes to accepted or
                        rejected upon acceptance or rejection of the proposal by the client.</td>
               </tr>
               <tr>
-                  <td>Amount accepted</td>
+                  <th>Amount accepted</th>
                   <td>Amount accepted by the client for execution of the query.</td>
               </tr>
               <tr>
-                  <td>Date of Acceptance / Decline</td>
+                  <th>Date of Acceptance / Decline</th>
                   <td>Date of acceptance or decline of the proposal by the client.</td>
               </tr>
               <tr>
-                  <td>Payment History</td>
+                  <th>Payment History</th>
                   <td>Shows the details of payment made by the client.</td>
               </tr>
               <tr>
-                  <td>Payment Received</td>
+                  <th>Payment Received</th>
                   <td>Shows the total amount paid by the client.</td>
                   </tr>
                   <tr>
-                      <td>Payment Outstanding</td>
+                      <th>Payment Outstanding</th>
                       <td>Shows the outstanding amount payable by the client.</td>
                   </tr>
                   <tr>
-                      <td>Payment decline reason</td>
+                      <th>Payment decline reason</th>
                       <td>In case client declines to make payment of outstanding amount, Team Leader can mark the query as payment declined by the client. In this situation, 
                           reasons recorded by the Team Leader for such marking are displayed here.</td>
                   </tr>

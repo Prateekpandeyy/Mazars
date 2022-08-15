@@ -7,7 +7,7 @@ const useStyle = makeStyles(theme => ({
     root : {
         backgroundColor : "#0071ce", 
         color : "white",
-        margin : "10px 0px",
+        margin : "10px !important",
         outline : "none",
         '&:hover': {
             backgroundColor : "#0071ce",
@@ -23,7 +23,7 @@ const useStyle = makeStyles(theme => ({
     root2: {
         backgroundColor: "blue",
         color: "white",
-        margin: "10px 0px",
+        margin: "10px",
         outline: "none",
         '&:hover': {
             backgroundColor: "blue",
@@ -41,14 +41,15 @@ const RegistrationInfo = () => {
     const classes = useStyle() 
     return (
         <>
-         <Box id="signUp2" style={{display : "flex",  maxWidth: "850px", margin: "auto",  minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
-         <Paper>
-           <Card>
+         <Box id="signUp2" style={{display : "flex",  maxWidth: "900px", margin: "auto",  minHeight : "500px", flexDirection : "column", padding: "10px 15px"}}>
+        
+         
                
-                
-<CardActions>
-    <Container>
-    <table className="table table-bordered p-2">
+
+    <Container maxWidth = "xl">
+  <Card>
+      <CardContent>
+      <table className="table table-bordered p-2">
 
 <tbody>
     <tr>
@@ -214,13 +215,10 @@ const RegistrationInfo = () => {
     </li>
    </div>
 </ul>
+      </CardContent>
+  </Card>
     </Container>
-    </CardActions>
-   
-
-            </Card>
-           </Paper>
-          
+    
          </Box>
                      
 <Typography variant="h6" align="center">

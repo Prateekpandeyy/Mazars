@@ -85,9 +85,9 @@ const Media = () => {
                                  
                </Link>
       </div>
-               <div style={{ padding: "5px 10px", width: "100%", justifyContent: "space-between"}}>
-                <h5  style={{textAlign: "center"}}>{i.title}</h5>
-                <h5 style={{textAlign : "center"}}>{i.created_date.split(" ")[0].split("-").reverse().join("-")}</h5>
+               <div style={{ padding: "5px 10px", height: "70px", overflow: "hidden", width: "100%", justifyContent: "space-between"}}>
+                <h6  style={{textAlign: "center"}}>{i.title}</h6>
+                <h6 style={{textAlign : "center"}}>{i.created_date.split(" ")[0].split("-").reverse().join("-")}</h6>
                     </div>
                      </div>  
                     ))

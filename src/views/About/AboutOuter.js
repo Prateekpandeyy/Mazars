@@ -56,7 +56,7 @@ const AboutOuter = () => {
     business groups. They also have 20+ years of thought leadership in transfer pricing.
       </p>
       <a className="autoWidthBtn" style={{float : "left"}} href = 'https://api.masindia.live/assets/image/cms/Mazars_Advisory_Solutions(MAS).pdf' target = "_blank">
-      Download the MAS India brochure
+      Download MAS India brochure
       </a>
             </Col>
            

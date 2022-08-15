@@ -87,7 +87,7 @@ Edit Profile: To view/edit the profile, click on
         & enter a valid email address. A secondary email can be deleted by clicking  
                         <CardMedia component="img" src={deleteIcon} 
                         style={{display : "inline", width : "14px", margin : "0px 5px"}} /> 
-        At any time, not more than 9 secondary emails can be entered
+        At any time, not more than 9 secondary emails can be entered.
                           </Typography>
             <CardMedia component="img" src={editUpdatepic} style={{margin : "10px 0px"}} /> 
             <CardMedia component="img" src={addEmail} style={{margin : "10px 0px"}} /> 
