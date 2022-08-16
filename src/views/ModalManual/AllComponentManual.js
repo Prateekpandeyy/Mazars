@@ -1,4 +1,4 @@
-import React from 'react';
+import React , {useState} from 'react';
 import Query from './Query';
 import QueryProcessing  from './QueryProcessing';
 import Proposal from './Proposal';
@@ -10,8 +10,21 @@ import Content from './Content';
 import Login from './Login';
 import { Container } from '@material-ui/core';
 import { useEffect } from 'react';
+import MyPDF from '../ManualImg/manual.pdf';
+import { Viewer } from '@react-pdf-viewer/core'; // install this library
+// Plugins
+// import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout'; // install this library
+// Import the styles
+import '@react-pdf-viewer/core/lib/styles/index.css';
+// import '@react-pdf-viewer/default-layout/lib/styles/index.css';
+// Worker
+import { Worker } from '@react-pdf-viewer/core'; // install this library
+import QueryPdf from "../dFile/query.pdf";
+import proposalPdf from "../dFile/proposal.pdf";
+import paymentPdf from "../dFile/payment.pdf";
+import assignmentPdf from "../dFile/assignment.pdf";
 const AllComponentManual = (tar) => {
-   
+   const [filepath, setFilepath] = useState("")
     const goToRow = (e) => {
      
 const anchor = document.getElementById(e.tar)
@@ -21,23 +34,45 @@ const anchor = document.getElementById(e.tar)
      }
      
 }
-
+console.log("mypdf url", MyPDF + "#page=4")
 useEffect(() => {
     goToRow(tar)
 }, [])
+console.log("tar", tar.tar)
 return(
     <>
 
 <div style={{display : "flex", height : "80vh", overflow : "scroll", fontSize : "#fff"}}>
 <Container maxWidth = "xl">
-<Login />
-<Query />
- <QueryProcessing />
- <Proposal />
- <Assignment />
- <Payment />
-<Scheduler />
- <Feedback />
+
+<Worker workerUrl="https://unpkg.com/pdfjs-dist@2.6.347/build/pdf.worker.min.js">
+    {
+        tar.tar == "freshQuery" ?
+        <Viewer fileUrl={`${QueryPdf}`}>
+        </Viewer> 
+        : ""
+        
+    }
+   
+      {
+          tar.tar == "proposalProcessing" ?
+          <Viewer fileUrl={`${proposalPdf}`}>
+        </Viewer> 
+        : ""
+      }
+      {
+          tar.tar == "paymentProcess" ?
+          <Viewer fileUrl={`${paymentPdf}`}>
+          </Viewer> 
+          : ""
+        }
+              {
+          tar.tar == "assignProcess" ?
+          <Viewer fileUrl={`${assignmentPdf}`}>
+          </Viewer> 
+          : ""
+        }
+      </Worker>
 </Container>
 </div>
 
