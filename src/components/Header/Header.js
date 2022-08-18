@@ -40,7 +40,8 @@ function Header({ id, cust_sign, noAdminSign, noTlSign,
         {cust_sign && (
           <div className="noSignINBox">
             <Link to="/">
-              <img className="logo" src="https://www.mazars.co.in/extension/ezmazars_rwdesign/design/mazars2020/images/mazars-logo.png" className="logo" alt="mazar" />
+              <img className="logo" src="https://www.mazars.co.in/extension/ezmazars_rwdesign/design/mazars2020/images/mazars-logo.png" 
+              alt="mazar" />
             </Link>
           </div>
         )}
@@ -61,6 +62,7 @@ function Header({ id, cust_sign, noAdminSign, noTlSign,
           <div>
             <img src={mazars} className="logo" alt="mazar"/>
           </div>
+          
         )}
 
         {admin && (
@@ -270,7 +272,7 @@ props.showCook("showCookies")
     </ListItemButton>
 </li>
 
-                 <li className="nav-item tabHoverLinksubMenu"  onMouseEnter={() => handleClickUpdateOpen()}  onMouseLeave = {() => handleClickUpdateClose()}>
+                 <li className="nav-item tabHoverLinksubMenu"  onMouseOver={() => handleClickUpdateOpen()}  onMouseLeave = {() => handleClickUpdateClose()}>
        <ListItemButton>
        <span className="nav-item">
                     Updates
@@ -319,7 +321,7 @@ props.showCook("showCookies")
          onMouseLeave = {() => handleClickOn2()}>
                  
                  <ListItemButton 
-                 onMouseEnter={() => handleClickOff2()}>
+                 onMouseOver={() => handleClickOff2()}>
    <span className="nav-item">
                   Media Gallery
                    </span>
@@ -373,7 +375,7 @@ props.showCook("showCookies")
          onMouseLeave = {() => handleClickOn3()}>
                  
                  <ListItemButton 
-                 onMouseEnter={() => handleClickOff3()}>
+                 onMouseOver={() => handleClickOff3()}>
    <span className="nav-item">
                   Contact Us
                    </span>

@@ -363,7 +363,7 @@ function AllAssignment() {
         <CardBody>
         
           <Records records={records} />
-          <Modal isOpen={openManual} toggle={needHelp} style={{display : "block", position: "absolute", left:"280px"}} size="lg">
+          <Modal isOpen={openManual} toggle={needHelp}  size="lg">
                         <ModalHeader toggle={needHelp}>Mazars</ModalHeader>
                         <ModalBody>
                             <ModalManual tar= {"assignProcess"} />

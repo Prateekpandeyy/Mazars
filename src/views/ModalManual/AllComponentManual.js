@@ -23,6 +23,8 @@ import QueryPdf from "../dFile/query.pdf";
 import proposalPdf from "../dFile/proposal.pdf";
 import paymentPdf from "../dFile/payment.pdf";
 import assignmentPdf from "../dFile/assignment.pdf";
+import schedulePdf from "../dFile/schedule.pdf";
+import feedbackPdf from "../dFile/feedback.pdf";
 const AllComponentManual = (tar) => {
    const [filepath, setFilepath] = useState("")
     const goToRow = (e) => {
@@ -42,7 +44,7 @@ console.log("tar", tar.tar)
 return(
     <>
 
-<div style={{display : "flex", height : "80vh", overflow : "scroll", fontSize : "#fff"}}>
+<div style={{display : "flex", height : "80vh", overflow : "auto", fontSize : "#fff"}}>
 <Container maxWidth = "xl">
 
 <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.6.347/build/pdf.worker.min.js">
@@ -69,6 +71,18 @@ return(
               {
           tar.tar == "assignProcess" ?
           <Viewer fileUrl={`${assignmentPdf}`}>
+          </Viewer> 
+          : ""
+        }
+           {
+          tar.tar == "schedule" ?
+          <Viewer fileUrl={`${schedulePdf}`}>
+          </Viewer> 
+          : ""
+        }
+         {
+          tar.tar == "feedback" ?
+          <Viewer fileUrl={`${feedbackPdf}`}>
           </Viewer> 
           : ""
         }

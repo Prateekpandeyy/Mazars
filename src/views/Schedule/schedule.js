@@ -1,20 +1,26 @@
-import React from "react";
+import React , {useState} from "react";
 import Layout from "../../components/Layout/Layout";
 import {
   Card,
   CardHeader,
- 
+ Modal ,
+ ModalBody, 
+ ModalHeader, 
   CardTitle,
   Row,
   Col,
- 
 } from "reactstrap";
 import Demo from "./demo";
-
-
+import ModalManual from "../ModalManual/AllComponentManual";
+import  {HelpIcon} from "../../components/Common/MessageIcon";
 
 function Schedule() {
+  const [openManual, setManual] = useState(false)
   const userId = window.localStorage.getItem("userid");
+  const needHelp = () => {
+        
+    setManual(!openManual)
+}
 
   return (
     <Layout custDashboard="custDashboard" custUserId={userId}>
@@ -24,7 +30,10 @@ function Schedule() {
             <Col md="7">
               <CardTitle tag="h4" className="contentTitle">Schedule </CardTitle>
             </Col>
-            <Col md="5"></Col>
+            <Col md="5">
+            <span onClick= {(e) => needHelp()}> <HelpIcon /></span>
+            </Col>
+         
           </Row>
       
          
@@ -33,6 +42,12 @@ function Schedule() {
       <Demo />
       
       </Card>
+      <Modal isOpen={openManual} toggle={needHelp} size="lg">
+                        <ModalHeader toggle={needHelp}>Mazars</ModalHeader>
+                        <ModalBody>
+                            <ModalManual tar= {"schedule"} />
+                        </ModalBody>
+                    </Modal>
     </Layout>
   );
 }

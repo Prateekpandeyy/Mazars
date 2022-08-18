@@ -10,19 +10,21 @@ import {
     CardTitle,
     Row,
     Col,
-    Table,
+    Modal ,
+    ModalBody, 
+    ModalHeader, 
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import BootstrapTable from "react-bootstrap-table-next";
 import CommonServices from "../../common/common";
-
-
+import  {HelpIcon} from "../../components/Common/MessageIcon";
+import ModalManual from "../ModalManual/AllComponentManual";
 function FeedbackData(props) {
 
 
     const userId = window.localStorage.getItem("userid");
     const [query, setQuery] = useState([]);
-
+    const [openManual, setManual] = useState(false)
     const token = window.localStorage.getItem("clientToken")
     const myConfig = {
         headers : {
@@ -96,15 +98,21 @@ function FeedbackData(props) {
 
 
 
-
+    const needHelp = () => {
+        
+        setManual(!openManual)
+    }
     return (
         <Layout custDashboard="custDashboard" custUserId={userId}>
             <Card>
                 <CardHeader>
                     <Row>
-                        <Col md="9">
+                        <Col md="7">
                             <CardTitle tag="h4" className="contentTitle">Feedback</CardTitle>
                         </Col>
+                        <Col md="5">
+            <span onClick= {(e) => needHelp()}> <HelpIcon /></span>
+            </Col>
                     </Row>
                 </CardHeader>
                 <CardBody>
@@ -118,6 +126,12 @@ function FeedbackData(props) {
 
                 </CardBody>
             </Card>
+            <Modal isOpen={openManual} toggle={needHelp} size="lg">
+                        <ModalHeader toggle={needHelp}>Mazars</ModalHeader>
+                        <ModalBody>
+                            <ModalManual tar= {"feedback"} />
+                        </ModalBody>
+                    </Modal>
         </Layout>
     );
 }

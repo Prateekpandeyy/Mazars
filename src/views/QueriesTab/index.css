@@ -33,6 +33,7 @@
   text-align: center;
   z-index: 10;
   margin: auto;
+  font-size: 0.875rem;
 }
 .headerHover {
   color: rgb(61, 71, 117);
@@ -44,7 +45,7 @@
   display: inline-flex;
   align-items: center;
   cursor: pointer;
-  font-size: 1rem;
+  font-size: 0.875rem;
 }
 .headerHover a {
   color: rgb(61, 71, 117);

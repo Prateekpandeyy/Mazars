@@ -453,7 +453,7 @@ const showManual = () => {
                     getQueriesData = {getQueriesData}
                     assignNo={assignNo2}
                     deleteCliente = {deleteCliente}/>
-                    <Modal isOpen={openManual} toggle={needHelp} style={{display : "block", position: "absolute", left:"280px"}} size="lg">
+                    <Modal isOpen={openManual} toggle={needHelp} size="lg">
                         <ModalHeader toggle={needHelp}>Mazars</ModalHeader>
                         <ModalBody>
                             <ModalManual tar= {"freshQuery"} />
