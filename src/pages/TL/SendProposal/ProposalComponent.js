@@ -49,10 +49,13 @@ function ProposalComponent(props) {
   const [companyName, setCompanyName] = useState([])
   const [dateError, setDateError] = useState(false)
   const [company2, setCompany2] = useState("")
+  const [startDate, setStartDate] = useState("")
+  const [endDate , setEndDate] = useState("")
   const [client, setClient] = useState([])
   const [email, setEmail] = useState("")
   var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
   const [item] = useState(current_date);
+  const [fromMax, setFromMax] = useState(current_date)
   const token = window.localStorage.getItem("tlToken")
   const myConfig = {
       headers : {
@@ -131,17 +134,20 @@ function ProposalComponent(props) {
   
 
    if(diserror.length > 0 ){
+   
      return false
    }
    else if(dateError === true){
     Alerts.ErrorNormal("Date must be unique")
    }
    else if(det.length == 0){
+   
    return false
   }
    else{
+   
     var lumsum = value.p_inst_date
-    if (payment.label == "lumpsum") {
+    if (store === "1") {
       setDate(lumsum)
     }
     
@@ -160,29 +166,31 @@ function ProposalComponent(props) {
     formData.append("amount_type", "fixed");
     formData.append("amount", value.p_fixed);
     formData.append("installment_amount", amount);
-
-    formData.append("payment_terms", payment.value);
+    formData.append("payment_plan", store);
+    formData.append("start_date", startDate);
+    formData.append("end_date", endDate)
+    // formData.append("payment_terms", payment.value);
     formData.append("no_of_installment", installment.value);
     formData.append("company", value.p_company)
-    payment.label == "lumpsum" ?
+    store === "1" ?
       formData.append("due_date", lumsum) :
-      payment.label == "installment" ?
+      store === "2" ?
         formData.append("due_date", date) :
         formData.append("due_date", "")
-
-    if (payment.length < 1) {
-     
-      setpaymentError("Please select at lease one")
-    } else
+console.log("payment", payment)
+   
       if (payment.value == "installment") {
         if (installment == "") {
           Alerts.ErrorNormal(`Please select no of installment .`)
         
         } 
+
         else if (!amount || !date) {
             Alerts.ErrorNormal(`Please enter all fields.`)
             
-          } else if (amount && date) {
+          }
+
+          else if (amount && date) {
             
             if (installment.value > 0) {
               var a = Number(installment.value)
@@ -235,7 +243,9 @@ function ProposalComponent(props) {
               }
             }
           }
-      } else if (payment.label == "lumpsum") {
+      }
+
+       else if (store === "1") {
      
         setLoading(true)
         axios({
@@ -339,6 +349,15 @@ const placeholder = ({ startDate, endDate }) => {
     </div>
   );
 };
+const startFun = (e) => {
+ 
+  setFromMax(e.target.value)
+  setStartDate(e.target.value)
+}
+const endFun = (e) => {
+  
+  setEndDate(e.target.value)
+}
   return (
     <>
       <Card>
@@ -410,7 +429,7 @@ const placeholder = ({ startDate, endDate }) => {
                 </div>
 
                 <div class="form-group">
-                  <label>Fixed Price<span className="declined">*</span></label>
+                  <label>Amount<span className="declined">*</span></label>
                   <input
                     type="text"
                     name="p_fixed"
@@ -606,10 +625,33 @@ const placeholder = ({ startDate, endDate }) => {
       //   }}
       // />
      <>
-     <label>Please select Date Range </label>
-      <Space direction="vertical" size={12}>
-      <RangePicker />
-      </Space>
+          <div class="form-group">
+                      <label>No of Installments</label>
+                      <Select
+                        options={no_installments}
+                      />
+                    </div>
+   
+     <div className="row">
+     <div class="col-md-6 my-2">
+                    <label>Start Date</label>  
+                        <input
+                            type="date"
+                            className="form-control"
+                            min = {item}
+                           onChange={(e) => startFun(e)}
+                        />
+                    </div>
+                    <div class="col-md-6 my-2">
+                    <label>End Date</label>  
+                        <input
+                            type="date"
+                            className="form-control"
+                           min={fromMax}
+                           onChange = {(e) => endFun(e)}
+                        />
+                    </div>
+     </div>
      </>
       ) : " "
     }
@@ -622,7 +664,7 @@ const placeholder = ({ startDate, endDate }) => {
 {
   store === "4" ? 
   <div class="form-group">
-  <label>Payment Plan </label>
+  <label>Date of month </label>
   <select
     class="form-control"
     ref={register}

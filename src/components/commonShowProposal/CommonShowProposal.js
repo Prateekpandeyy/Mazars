@@ -1,31 +1,3 @@
-// import React from 'react';
-// import {Modal, ModalHeader, ModalBody, ModalFooter, Button} from 'reactstrap';
-// import { baseUrl } from "../../config/config";
-// import { Typography } from '@mui/material';
-// const ShowProposal = ({setViewProposal, viewProposalModal, showProposalModal2 , proposalId}) => {
-  
-//     return(
-       
-//         <>
-       
-//           <Modal isOpen={viewProposalModal} toggle={showProposalModal2} size="lg" scrollable={true} style={{ height: "100%" }} >
-//             <ModalHeader toggle={showProposalModal2}>
-// <Typography variant="h6">
-// View Proposal
-// </Typography>
-//             </ModalHeader>
-//             <ModalBody>
-//           <iframe src={`${baseUrl}/customers/dounloadpdf?id=${proposalId}&viewpdf=1`}
-//             height="100%" width="100%" />
-//         </ModalBody>
-           
-//         </Modal>
-       
-       
-//         </>
-//     )
-// }
-// export default ShowProposal;
 import React, { useState, useEffect } from "react";
 import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from "reactstrap";
 import { baseUrl } from "../../config/config";
@@ -57,9 +29,15 @@ useEffect(() => {
    
     if(res.status === 200){
    
-     var url2 = window.URL.createObjectURL(res.data);
-     console.log("response", url2)
-      setUrl(window.URL.createObjectURL(res.data))
+      window.URL = window.URL || window.webkitURL;
+     var url = window.URL.createObjectURL(res.data);
+     var a = document.createElement("a");
+     document.body.appendChild(a);
+     a.style = "display: none";
+     a.href = url;
+     a.download = `Proposal.pdf`
+     a.target = '_blank';
+     a.click();
     }
   })
   }
@@ -76,7 +54,15 @@ useEffect(() => {
    
     if(res.status === 200){
      
-      setUrl(URL.createObjectURL(res.data))
+      window.URL = window.URL || window.webkitURL;
+     var url = window.URL.createObjectURL(res.data);
+     var a = document.createElement("a");
+     document.body.appendChild(a);
+     a.style = "display: none";
+     a.href = url;
+     a.download = `Proposal.pdf`
+     a.target = '_blank';
+     a.click();
     }
   })
   }
@@ -94,7 +80,15 @@ useEffect(() => {
      
       if(res.status === 200){
        
-        setUrl(URL.createObjectURL(res.data))
+        window.URL = window.URL || window.webkitURL;
+        var url = window.URL.createObjectURL(res.data);
+        var a = document.createElement("a");
+        document.body.appendChild(a);
+        a.style = "display: none";
+        a.href = url;
+        a.download = `Proposal.pdf`
+        a.target = '_blank';
+        a.click();
       }
     })
     
@@ -112,7 +106,15 @@ useEffect(() => {
    
     if(res.status === 200){
      
-      setUrl(URL.createObjectURL(res.data))
+      window.URL = window.URL || window.webkitURL;
+      var url = window.URL.createObjectURL(res.data);
+      var a = document.createElement("a");
+      document.body.appendChild(a);
+      a.style = "display: none";
+      a.href = url;
+      a.download = `Proposal.pdf`
+      a.target = '_blank';
+      a.click();
     }
   })
   }
@@ -121,26 +123,8 @@ useEffect(() => {
 console.log("url", url)
   return (
     
-      <Modal isOpen={viewProposalModal} toggle={showProposalModal2} size="lg" scrollable={true} style={{ height: "100%", zIndex : 99999 }}>
-      <ModalHeader toggle={showProposalModal2}>
- <Typography variant="h6">
- View Proposal
- </Typography>
-             </ModalHeader>
-        <ModalBody>
-        {/* <div style={{display : "flex", maxHeight : "100vh", overflow : "auto"}}>
-        <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.6.347/build/pdf.worker.min.js">
-    <Viewer fileUrl={`${url}`}>
-      </Viewer>
-      </Worker>
-      </div> */}
-      
-          <iframe src={url}
-            height="100%" width="100%" style= {{width : "100%", height : "100%", overflow : "auto"}} />
-        </ModalBody>
-        
-
-      </Modal>
+     <>
+     </>
    
   );
 }
