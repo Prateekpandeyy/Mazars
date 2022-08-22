@@ -545,7 +545,7 @@ const clientFun = (e) => {
                     />
                   </div>
                 ) :
-                  payment.label == "installment" ? (
+                  store === "2" ? (
                     <div class="form-group">
                       <label>No of Installments</label>
                       <Select
