@@ -22,13 +22,13 @@ import { Spinner } from 'reactstrap';
 import Swal from "sweetalert2";
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import RangePicker from "react-range-picker";
-
+// import RangePicker from "react-range-picker";
+import { DatePicker, Space } from 'antd';
 function ProposalComponent(props) {
   const { id } = props;
   const history = useHistory();
   const { handleSubmit, register, errors } = useForm();
-
+  const { RangePicker } = DatePicker;
   const userid = window.localStorage.getItem("tlkey");
   const [loading, setLoading] = useState(false);
 
@@ -587,26 +587,33 @@ const placeholder = ({ startDate, endDate }) => {
                 }
                 <div className="row">
 
-<div className="col-md-6">
+<div className="col-md-12">
 {
   store === "3" ? (
     <div className="row">
 
-    <div className="col-md-6">
+    <div className="col-md-12 d-flex flex-column">
     {
       store === "3" ? (
-        <RangePicker
+      //   <RangePicker
       
-        selectTime
-        onDateSelected={(f, l) => {
-          console.log(f, l);
-        }}
-        onClose={() => {
-          console.log(" closed ");
-        }}
-      />
+      //   selectTime
+      //   onDateSelected={(f, l) => {
+      //     console.log(f, l);
+      //   }}
+      //   onClose={() => {
+      //     console.log(" closed ");
+      //   }}
+      // />
+     <>
+     <label className="form-label">Please select Date Range </label>
+      <Space direction="vertical" size={12}>
+      <RangePicker />
+      </Space>
+     </>
       ) : " "
     }
+
     </div>
     </div>
              
