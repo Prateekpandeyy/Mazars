@@ -571,19 +571,19 @@ const placeholder = ({ startDate, endDate }) => {
                 }
 
                 {
-                 store === "1"
+                 store === "2"
                     ?
-                    ""
-                    :
                     <Payment
-                      installment={installment.label}
-                      paymentAmount={paymentAmount}
-                      paymentDate={paymentDate}
-                      totalAmount={totalAmount}
-                      min={item}
-                      item={item}
-                      dateError = {dateError}
-                    />
+                    installment={installment.label}
+                    paymentAmount={paymentAmount}
+                    paymentDate={paymentDate}
+                    totalAmount={totalAmount}
+                    min={item}
+                    item={item}
+                    dateError = {dateError}
+                  />
+                    :
+                  ""
                 }
                 <div className="row">
 
@@ -606,7 +606,7 @@ const placeholder = ({ startDate, endDate }) => {
       //   }}
       // />
      <>
-     <label className="form-label">Please select Date Range </label>
+     <label>Please select Date Range </label>
       <Space direction="vertical" size={12}>
       <RangePicker />
       </Space>
@@ -618,6 +618,51 @@ const placeholder = ({ startDate, endDate }) => {
     </div>
              
   ) : " "
+}
+{
+  store === "4" ? 
+  <div class="form-group">
+  <label>Payment Plan </label>
+  <select
+    class="form-control"
+    ref={register}
+    name="p_individual"
+    
+  >
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="1">5</option>
+    <option value="2">6</option>
+    <option value="3">7</option>
+    <option value="4">8</option>
+    <option value="1">9</option>
+    <option value="2">10</option>
+    <option value="3">11</option>
+    <option value="4">12</option>
+    <option value="1">13</option>
+    <option value="2">14</option>
+    <option value="3">15</option>
+    <option value="4">16</option>
+    <option value="1">17</option>
+    <option value="2">18</option>
+    <option value="3">19</option>
+    <option value="4">20</option>
+    <option value="1">21</option>
+    <option value="2">22</option>
+    <option value="3">23</option>
+    <option value="4">24</option>
+    <option value="1">25</option>
+    <option value="2">26</option>
+    <option value="3">27</option>
+    <option value="4">28</option>
+    <option value="1">29</option>
+    <option value="2">30</option>
+    <option value="3">31</option>
+   
+  </select>
+</div> : " "
 }
 </div>
 </div>
