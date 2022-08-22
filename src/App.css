@@ -202,3 +202,7 @@ span {
 /* .form-control.is-invalid {
   background-image: unset !important;
 } */
+.downloadManual{
+  display: flex;
+  margin: 10px 10px 10px auto;
+}

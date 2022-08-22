@@ -24,6 +24,7 @@ const ModalManual = ()  => {
     return(
         <Layout custDashboard="custDashboard" custUserId={userId}>   
       <>
+   
  <div style={{
     display: "flex",
     flexDirection : "column",
@@ -31,6 +32,10 @@ const ModalManual = ()  => {
     width:"100%",
     height: "600px",
     overflow: "auto"}}>
+          <span className='downloadManual'>
+     <a href={finalPdf} className="autoWidthBtn" target="_blank"> 
+                 Download Manual</a>
+     </span>
  <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.6.347/build/pdf.worker.min.js">
         <Viewer fileUrl={`${finalPdf}`}>
         </Viewer> 

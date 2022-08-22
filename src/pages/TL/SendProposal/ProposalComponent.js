@@ -36,7 +36,7 @@ function ProposalComponent(props) {
   const [custname, setCustName] = useState("");
   const [assignId, setAssignID] = useState("");
   const [assingNo, setAssingNo] = useState("");
-  const [store, setStore] = useState(null);
+  const [store, setStore] = useState("1");
   const [diserror, setdiserror] = useState("")
   const [payment, setPayment] = useState([]);
   const [installment, setInstallment] = useState([]);
@@ -381,14 +381,17 @@ const clientFun = (e) => {
                 </div>
 
                 <div class="form-group">
-                  <label>Fee</label>
+                  <label>Payment Plan </label>
                   <select
                     class="form-control"
                     ref={register}
                     name="p_type"
                     onChange={(e) => setStore(e.target.value)}
                   >
-                    <option value="fixed">Fixed Price</option>
+                    <option value="1">Amount-Lumpsum payment</option>
+                    <option value="2">Amount-Instalment plan</option>
+                    <option value="3">Retainership plan-specified period</option>
+                    <option value="4">Retainership plan-unspecified period</option>
                   </select>
                 </div>
 
@@ -514,7 +517,7 @@ const clientFun = (e) => {
                   />
 
                 </div>
-                <div class="form-group">
+                {/* <div class="form-group">
                   <label>Payment Terms<span className="declined">*</span></label>
                   <Select
                     className={paymentError ? "customError" : ""}
@@ -525,9 +528,9 @@ const clientFun = (e) => {
                     options={payment_terms}
                   />
 
-                </div>
+                </div> */}
 
-                {payment.label == "lumpsum" ? (
+                { store === "1" ? (
                   <div class="form-group">
                     <label>Due Dates</label>
                     <input
