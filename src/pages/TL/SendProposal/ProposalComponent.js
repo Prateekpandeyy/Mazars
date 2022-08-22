@@ -22,7 +22,7 @@ import { Spinner } from 'reactstrap';
 import Swal from "sweetalert2";
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-
+import RangePicker from "react-range-picker";
 
 function ProposalComponent(props) {
   const { id } = props;
@@ -324,7 +324,21 @@ const clientFun = (e) => {
   })
   console.log("eee", e)
   setEmail(a)
+ 
 }
+const placeholder = ({ startDate, endDate }) => {
+  if (!startDate) {
+    return <div className="placeholder"> Select date and time range </div>;
+  }
+  return (
+    <div className="placeholderWrap">
+      <div className="placeholder">From - {startDate.toLocaleString()}</div>
+      {endDate && (
+        <div className="placeholder">To - {endDate.toLocaleString()}</div>
+      )}
+    </div>
+  );
+};
   return (
     <>
       <Card>
@@ -515,7 +529,6 @@ const clientFun = (e) => {
                    onChange={(e) => clientFun(e)}
                     options={client}
                   />
-
                 </div>
                 {/* <div class="form-group">
                   <label>Payment Terms<span className="declined">*</span></label>
@@ -528,7 +541,7 @@ const clientFun = (e) => {
                     options={payment_terms}
                   />
 
-                </div> */}
+                </div> */ }
 
                 { store === "1" ? (
                   <div class="form-group">
@@ -558,7 +571,7 @@ const clientFun = (e) => {
                 }
 
                 {
-                  payment.label == "lumpsum"
+                 store === "1"
                     ?
                     ""
                     :
@@ -572,10 +585,38 @@ const clientFun = (e) => {
                       dateError = {dateError}
                     />
                 }
+                <div className="row">
 
-              </div>
+<div className="col-md-6">
+{
+  store === "3" ? (
+    <div className="row">
+
+    <div className="col-md-6">
+    {
+      store === "3" ? (
+        <RangePicker
+      
+        selectTime
+        onDateSelected={(f, l) => {
+          console.log(f, l);
+        }}
+        onClose={() => {
+          console.log(" closed ");
+        }}
+      />
+      ) : " "
+    }
+    </div>
+    </div>
+             
+  ) : " "
+}
+</div>
+</div>
+         
+     </div>
             </div>
-
 
             <div class="form-group col-md-6">
               {

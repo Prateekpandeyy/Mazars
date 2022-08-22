@@ -206,3 +206,7 @@ span {
   display: flex;
   margin: 10px 10px 10px auto;
 }
+.calendar.visible{
+  top : 20% !important;
+  left: 50% !important;
+}
