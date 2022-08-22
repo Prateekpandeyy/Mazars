@@ -84,6 +84,7 @@ function LoginForm() {
   const [run, setRun] = useState(true);
   const [showCookie, setShowCookie] = useState(false)
   const [user, setUser] = useState("")
+  const [password , setPassword] = useState("")
   const token = localStorage.getItem("clientToken")
   const userEmail = JSON.parse(localStorage.getItem("custEmail"))
   let history = useHistory()
@@ -366,7 +367,8 @@ const custLogout = () => {
 
               <VerifyOTP email={email} uid={uid} time={time} setLoad={setLoad}
                 setDisabled={setDisabled} disabled={disabled} setLoading={setLoading}
-                loading={loading} user = {user} />
+                loading={loading} user = {user} 
+                password = {password} />
             </div>
               :
             
@@ -413,6 +415,7 @@ const custLogout = () => {
                       className={classNames("form-control", {
                         "is-invalid": errors.p_password,
                       })}
+                      onChange = {(e) => setPassword(e.target.value)}
                       disabled = {token !== null ? true : false}
                       name="p_password"
                      autoComplete="new-password"

@@ -592,10 +592,7 @@ if(item.player === undefined){
     };
   
     handleExit = (e) => {
-      if(this.state.readyState === false){
-  
-      }
-      else{
+     
       try {
         this.client && this.client.unpublish(this.localStream);
         this.localStream && this.localStream.close();
@@ -618,7 +615,7 @@ if(item.player === undefined){
         this.localStream = null;
         window.location.assign("/#/customer/schedule")
       }
-    }
+    
     };
   
     

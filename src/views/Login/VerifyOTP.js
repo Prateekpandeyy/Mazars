@@ -16,7 +16,7 @@ const Schema = yup.object().shape({
 
 
 function VerifyOTP({ email, uid, time, setLoad,
-    setDisabled, disabled, loading, setLoading, user }) {
+    setDisabled, disabled, loading, setLoading, user , password}) {
     const { handleSubmit, register, errors, reset } = useForm({
         resolver: yupResolver(Schema),
     });
@@ -82,8 +82,9 @@ localStorage.setItem("loginTime", timeStampInMs)
         noSetText(" ")
         let formData = new FormData();
         formData.append("email", email);
-        formData.append("uid", uid);
-
+        formData.append("password", password);
+        formData.append("user_id", user);
+    
         axios({
             method: "POST",
             url: `${baseUrl}/customers/regenrateotp`,
@@ -142,7 +143,7 @@ localStorage.setItem("loginTime", timeStampInMs)
                         <div className="form-group">
                             {
                                 disabled ?
-                                    <button type="submit" class="customBtn" onClick={resendOtp}>SEND OTP</button>
+                                    <button type="submit" class="autoWidthBtn" onClick={resendOtp}>SEND OTP</button>
                                     :
                                     <button type="submit" className="customBtn">
                                         Login
