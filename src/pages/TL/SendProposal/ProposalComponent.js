@@ -431,19 +431,7 @@ const endFun = (e) => {
                   </select>
                 </div>
 
-                <div class="form-group">
-                  <label>Amount<span className="declined">*</span></label>
-                  <input
-                    type="text"
-                    name="p_fixed"
-                    className={classNames("form-control", {
-                      "is-invalid": errors.p_fixed || diserror,
-                    })}
-                    ref={register({ required: true })}
-                    placeholder="Enter Amount"
-                    onChange={(e) => handleChange(e)}
-                  />
-                </div>
+           
                 
                 <p style={{ "color": "red" }}>{diserror}</p>
                 <div class="form-group">
@@ -552,19 +540,20 @@ const endFun = (e) => {
                     options={client}
                   />
                 </div>
-                {/* <div class="form-group">
-                  <label>Payment Terms<span className="declined">*</span></label>
-                  <Select
-                    className={paymentError ? "customError" : ""}
-                    onChange={(e) => {
-                      setPayment(e)
-                      setpaymentError("")
-                    }}
-                    options={payment_terms}
+                <div class="form-group">
+                  <label>Amount<span className="declined">*</span></label>
+                  <input
+                    type="text"
+                    name="p_fixed"
+                    className={classNames("form-control", {
+                      "is-invalid": errors.p_fixed || diserror,
+                    })}
+                    ref={register({ required: true })}
+                    placeholder="Enter Amount"
+                    onChange={(e) => handleChange(e)}
                   />
-
-                </div> */ }
-
+                </div>
+             
                 { store === "1" ? (
                   <div class="form-group">
                     <label>Due Dates</label>
@@ -591,12 +580,12 @@ const endFun = (e) => {
                   )
                     : ""
                 }
-<div className="col-md-12">
+<div>
 {
   store === "3" ? (
-    <div className="row">
+   
 
-    <div className="col-md-12 d-flex flex-column">
+    <>
     {
       store === "3" ? (
      
@@ -634,13 +623,14 @@ const endFun = (e) => {
       ) : " "
     }
 
-    </div>
-    </div>
+    </>
+    
              
   ) : " "
 }
 {
   store === "4" ? 
+ <>
   <div class="form-group">
   <label>Due Date- Date of month
  </label>
@@ -683,7 +673,23 @@ const endFun = (e) => {
     <option value="3">31</option>
    
   </select>
-</div> : " "
+</div> 
+<div class="form-group">
+                    <label>Due Dates</label>
+                    <input
+                      type="date"
+                      name="p_inst_date"
+                      className={classNames("form-control", {
+                        "is-invalid": errors.p_inst_date
+                      })}
+                      ref={register({ required: true })}
+                      placeholder="Enter Hourly basis"
+                      min={item}
+                    />
+                  </div>
+ </>
+
+: " "
 }
 </div>
                 {
