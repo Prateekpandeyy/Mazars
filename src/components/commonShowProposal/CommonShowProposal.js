@@ -38,6 +38,7 @@ useEffect(() => {
      a.download = `Proposal.pdf`
      a.target = '_blank';
      a.click();
+     document.body.removeChild(a);
     }
   })
   }
@@ -63,6 +64,7 @@ useEffect(() => {
      a.download = `Proposal.pdf`
      a.target = '_blank';
      a.click();
+     document.body.removeChild(a);
     }
   })
   }
@@ -89,6 +91,7 @@ useEffect(() => {
         a.download = `Proposal.pdf`
         a.target = '_blank';
         a.click();
+        document.body.removeChild(a);
       }
     })
     
@@ -101,18 +104,20 @@ useEffect(() => {
       },
       responseType: 'blob'
     }
+  
     axios.get(`${baseUrl}/customers/dounloadpdf?id=${proposalId}&viewpdf=1` , myConfig)
   .then((res) => {
    
     if(res.status === 200){
      
+      console.log(URL.createObjectURL(res.data))
       window.URL = window.URL || window.webkitURL;
       var url = window.URL.createObjectURL(res.data);
       var a = document.createElement("a");
       document.body.appendChild(a);
       a.style = "display: none";
       a.href = url;
-      a.download = `Proposal.pdf`
+      a.download = `invoice_1.pdf`
       a.target = '_blank';
       a.click();
     }

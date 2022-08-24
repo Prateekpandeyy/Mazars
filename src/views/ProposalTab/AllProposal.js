@@ -55,8 +55,37 @@ let history = useHistory()
     }
  const showProposalModal2 = (e) => {
 
-    setViewProposalModal(!viewProposalModal);
-    setProposalId(e)
+    // setViewProposalModal(!viewProposalModal);
+    // setProposalId(e)
+    const token = window.localStorage.getItem("clientToken")
+    const myConfig = {
+      headers : {
+       "uit" : token,
+       "Content-Type" : "application/octet-stream"
+      },
+      responseType: 'blob',
+
+    
+    }
+  
+    axios.get(`${baseUrl}/customers/dounloadpdf?id=${e}&viewpdf=1` , myConfig)
+  .then((res) => {
+   
+    if(res.status === 200){
+     
+      console.log(URL.createObjectURL(res.data))
+      window.URL = window.URL || window.webkitURL;
+      var url = window.URL.createObjectURL(res.data);
+      var a = document.createElement("a");
+      document.body.appendChild(a);
+      a.style = "display: none";
+      a.href = url;
+    a.setAttribute('download',"download")
+      a.setAttribute('target', '_blank');
+      a.click();
+    }
+  })
+  
   }
 
     useEffect(() => {

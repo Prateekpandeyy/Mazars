@@ -42,7 +42,20 @@ function ProposalDetails({
   const { tlname, date_of_allocation } = diaplayHistory;
   
   var nfObject = new Intl.NumberFormat('hi-IN')
- 
+
+ const checkDevice = () => {
+  return [
+    'iPad Simulator',
+    'iPhone Simulator',
+    'iPod Simulator',
+    'iPad',
+    'iPhone',
+    'iPod'
+  ].includes(navigator.platform)
+  // iPad on iOS 13 detection
+  || (navigator.userAgent.includes("Mac") && "ontouchend" in document)
+
+ }
 const downloadpdf = () => {
   const token = window.localStorage.getItem("adminToken")
     
@@ -66,6 +79,7 @@ const downloadpdf = () => {
    a.download = `Proposal.pdf`
    a.target = '_blank';
    a.click();
+   document.body.removeChild(a);
     }
   })
  }
@@ -91,6 +105,7 @@ const downloadpdf = () => {
    a.download = `Proposal.pdf`
    a.target = '_blank';
    a.click();
+   document.body.removeChild(a);
     }
   })
  }
@@ -114,8 +129,10 @@ const downloadpdf = () => {
    a.style = "display: none";
    a.href = url;
    a.download = `Proposal.pdf`
-   a.target = '_blank';
+   
+  //  a.target = '_blank';
    a.click();
+   document.body.removeChild(a);
     }
   })
  }
@@ -132,16 +149,17 @@ const downloadpdf = () => {
   .then((res) => {
     console.log("res", res)
     if(res.status === 200){
+      console.log(URL.createObjectURL(res.data))
       window.URL = window.URL || window.webkitURL;
-   var url = window.URL.createObjectURL(res.data);
-   var a = document.createElement("a");
-   document.body.appendChild(a);
-   a.style = "display: none";
-   a.href = url;
-   a.download = `Proposal.pdf`
-   a.target = '_blank';
-   a.click();
-    }
+      var url = window.URL.createObjectURL(res.data);
+      var a = document.createElement("a");
+      document.body.appendChild(a);
+      a.style = "display: none";
+      a.href = url;
+      a.download = `invoice_1.pdf`
+      a.target = '_blank';
+      a.click();
+     }
   })
  }
 }

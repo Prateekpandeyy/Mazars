@@ -179,7 +179,7 @@ function ProposalComponent(props) {
         formData.append("due_date", "")
 console.log("payment", payment)
    
-      if (payment.value == "installment") {
+      if (store === "2") {
         if (installment == "") {
           Alerts.ErrorNormal(`Please select no of installment .`)
         
@@ -419,10 +419,13 @@ const endFun = (e) => {
                     class="form-control"
                     ref={register}
                     name="p_type"
-                    onChange={(e) => setStore(e.target.value)}
+                    onChange={(e) => {
+                      setInstallment([])
+                      setStore(e.target.value)
+                    }}
                   >
-                    <option value="1">Amount-Lumpsum payment</option>
-                    <option value="2">Amount-Instalment plan</option>
+                    <option value="1">Fixed Amount-Lumpsum payment</option>
+                    <option value="2">Fixed Amount-Instalment plan</option>
                     <option value="3">Retainership plan-specified period</option>
                     <option value="4">Retainership plan-unspecified period</option>
                   </select>
@@ -437,7 +440,7 @@ const endFun = (e) => {
                       "is-invalid": errors.p_fixed || diserror,
                     })}
                     ref={register({ required: true })}
-                    placeholder="Enter Fixed Price"
+                    placeholder="Enter Amount"
                     onChange={(e) => handleChange(e)}
                   />
                 </div>
@@ -588,24 +591,6 @@ const endFun = (e) => {
                   )
                     : ""
                 }
-
-                {
-                 store === "2"
-                    ?
-                    <Payment
-                    installment={installment.label}
-                    paymentAmount={paymentAmount}
-                    paymentDate={paymentDate}
-                    totalAmount={totalAmount}
-                    min={item}
-                    item={item}
-                    dateError = {dateError}
-                  />
-                    :
-                  ""
-                }
-                <div className="row">
-
 <div className="col-md-12">
 {
   store === "3" ? (
@@ -614,23 +599,9 @@ const endFun = (e) => {
     <div className="col-md-12 d-flex flex-column">
     {
       store === "3" ? (
-      //   <RangePicker
-      
-      //   selectTime
-      //   onDateSelected={(f, l) => {
-      //     console.log(f, l);
-      //   }}
-      //   onClose={() => {
-      //     console.log(" closed ");
-      //   }}
-      // />
+     
      <>
-          <div class="form-group">
-                      <label>No of Installments</label>
-                      <Select
-                        options={no_installments}
-                      />
-                    </div>
+         
    
      <div className="row">
      <div class="col-md-6 my-2">
@@ -652,6 +623,13 @@ const endFun = (e) => {
                         />
                     </div>
      </div>
+     <div class="form-group">
+                      <label>No of Installments</label>
+                      <Select
+                        onChange={(e => installmentHandler(e))}
+                        options={no_installmentRange}
+                      />
+                    </div>
      </>
       ) : " "
     }
@@ -664,7 +642,8 @@ const endFun = (e) => {
 {
   store === "4" ? 
   <div class="form-group">
-  <label>Date of month </label>
+  <label>Due Date- Date of month
+ </label>
   <select
     class="form-control"
     ref={register}
@@ -707,6 +686,40 @@ const endFun = (e) => {
 </div> : " "
 }
 </div>
+                {
+                 store === "2"
+                    ?
+                    <Payment
+                    installment={installment.label}
+                    paymentAmount={paymentAmount}
+                    paymentDate={paymentDate}
+                    totalAmount={totalAmount}
+                    min={item}
+                    item={item}
+                    dateError = {dateError}
+                  />
+                    :
+                  ""
+                }
+
+{
+                 store === "3"
+                    ?
+                    <Payment
+                    installment={installment.label}
+                    paymentAmount={paymentAmount}
+                    paymentDate={paymentDate}
+                    totalAmount={totalAmount}
+                    min={item}
+                    item={item}
+                    dateError = {dateError}
+                  />
+                    :
+                  ""
+                }
+                <div className="row">
+
+
 </div>
          
      </div>
@@ -758,4 +771,147 @@ const no_installments = [
     value: "4",
     label: "4",
   },
+];
+const no_installmentRange = [
+  {
+    value: "2",
+    label: "2",
+  },
+  {
+    value: "3",
+    label: "3",
+  },
+  {
+    value: "4",
+    label: "4",
+  },
+  {
+    value: "5",
+    label: "5",
+  },
+  {
+    value: "6",
+    label: "6",
+  },
+  {
+    value: "7",
+    label: "7",
+  },
+  {
+    value: "8",
+    label: "8",
+  },
+  {
+    value: "9",
+    label: "9",
+  },
+  {
+    value: "10",
+    label: "10",
+  },
+  {
+    value: "11",
+    label: "11",
+  },
+  {
+    value: "12",
+    label: "12",
+  },
+  {
+    value: "13",
+    label: "13",
+  },
+  {
+    value: "14",
+    label: "14",
+  },
+  {
+    value: "15",
+    label: "15",
+  },
+  {
+    value: "16",
+    label: "16",
+  },
+  {
+    value: "17",
+    label: "17",
+  },
+  {
+    value: "18",
+    label: "18",
+  },
+  {
+    value: "19",
+    label: "19",
+  },
+  {
+    value: "20",
+    label: "20",
+  },
+  {
+    value: "21",
+    label: "21",
+  },
+  {
+    value: "22",
+    label: "22",
+  },
+  {
+    value: "23",
+    label: "23",
+  },
+  {
+    value: "24",
+    label: "24",
+  },
+  {
+    value: "25",
+    label: "25",
+  },
+  {
+    value: "26",
+    label: "26",
+  },
+  {
+    value: "27",
+    label: "27",
+  },
+  {
+    value: "28",
+    label: "28",
+  },
+  {
+    value: "29",
+    label: "29",
+  },
+  {
+    value: "30",
+    label: "30",
+  },
+  {
+    value: "31",
+    label: "31",
+  },
+  {
+    value: "32",
+    label: "32",
+  },
+  {
+    value: "33",
+    label: "33",
+  },
+  {
+    value: "34",
+    label: "34",
+  },
+  {
+    value: "35",
+    label: "35",
+  },
+  {
+    value: "36",
+    label: "36",
+  },
+ 
 ];

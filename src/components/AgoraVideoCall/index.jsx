@@ -628,6 +628,7 @@ if(item.player === undefined){
         })
       }
       else if(this.state.stateSharing) {
+        alert("Plase share fixed")
          this.shareClient && this.shareClient.unpublish(this.shareStream);
          this.shareStream && this.shareStream.close();
          this.setState({stateSharing : false})

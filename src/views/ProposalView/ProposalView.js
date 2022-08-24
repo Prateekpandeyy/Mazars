@@ -116,9 +116,33 @@ function ProposalView(props) {
 
 
   const updateCheckbox = ({ checked }) => {
+    console.log("checked", checked)
     setValueCheckBox(checked)
     setPaymentModal(checked);
     setCheckerror("")
+    const token = window.localStorage.getItem("clientToken")
+    const myConfig = {
+      headers : {
+       "uit" : token
+      },
+      responseType: 'blob'
+    }
+    axios.get(`${baseUrl}/customers/dounloadpdf?id=${id}&viewpdf=1` , myConfig)
+  .then((res) => {
+   
+    if(res.status === 200){
+     
+      window.URL = window.URL || window.webkitURL;
+      var url = window.URL.createObjectURL(res.data);
+      var a = document.createElement("a");
+      document.body.appendChild(a);
+      a.style = "display: none";
+      a.href = url;
+      a.download = `Proposal.pdf`
+      a.target = "_blank";
+      a.click();
+    }
+  })
   }
 
 
@@ -424,12 +448,12 @@ const amountStyle  = {
 
         </CardBody>
 
-      {addPaymentModal === true ?
+      {/* {addPaymentModal === true ?
         <TermsConditions
         readTerms={readTerms}
         addPaymentModal={addPaymentModal}
         id={id}
-      /> : ""}
+      /> : ""} */}
         {
           rejectedBox === true ?
           <RejectedModal22

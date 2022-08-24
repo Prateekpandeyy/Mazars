@@ -336,7 +336,7 @@ const Generated = () => {
                         report = {assignNo}
                         installmentNo = {installmentNo}
                         billNo = {billNo}
-                        id = {id2}
+                     
                         generated = {"edited"}
                         gstNo = {gstNo}
                         />

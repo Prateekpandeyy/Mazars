@@ -593,7 +593,7 @@ const classes = useStyle()
 
               <li className="nav-item">
                  
-              <ListItemButton  onMouseEnter={() => handleClick()}>
+              <ListItemButton   onMouseOver={() => handleClick()}>
         
     
 <i className="listStyle">
@@ -771,7 +771,7 @@ const classes = useStyle()
    
               <li className="nav-item">
                  
-              <ListItemButton onMouseEnter={() => handleClick()}>
+              <ListItemButton  onMouseOver={() => handleClick()}>
               <i className="listStyle">
                   <span className="scheduleMenu"></span>
                 </i>
@@ -918,7 +918,7 @@ const classes = useStyle()
 
               <li className="nav-item">
                  
-              <ListItemButton onMouseEnter={() => handleClick()}>
+              <ListItemButton  onMouseOver={() => handleClick()}>
         
       
               <i className="listStyle">
