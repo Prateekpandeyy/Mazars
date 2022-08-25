@@ -140,7 +140,7 @@ function ProposalComponent(props) {
    else if(dateError === true){
     Alerts.ErrorNormal("Date must be unique")
    }
-   else if(det.length == 0){
+   else if(det && det.length == 0){
    
    return false
   }
@@ -179,7 +179,7 @@ function ProposalComponent(props) {
         formData.append("due_date", "")
 console.log("payment", payment)
    
-      if (store === "2") {
+      if (store === "2" || store === "3") {
         if (installment == "") {
           Alerts.ErrorNormal(`Please select no of installment .`)
         

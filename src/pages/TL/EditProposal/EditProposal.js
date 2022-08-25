@@ -182,13 +182,13 @@ const getClient = () => {
 
   const onSubmit = (value) => {
  
-if(diserror.length > 0){
+if(diserror && diserror.length > 0){
   return false
 }
 else if(dateError === true){
   Alerts.ErrorNormal("Date must be unique")
  }
-else if(value2.length == 0){
+else if(value2 && value2.length == 0){
   setScopeError(true)
 }
 else{
@@ -196,7 +196,7 @@ else{
     if (store === "1") {
       setDate(lumsum)
     }
-console.log("value2", value2.length)
+
     let formData = new FormData();
     formData.append("emails", email)
     formData.append("assign_no", query);
@@ -223,7 +223,7 @@ console.log("value2", value2.length)
     if (payment.length < 1) {
      
     } else
-      if (store === "2") {
+      if (store === "2" || store === "3") {
         if (installment == "") {
           Alerts.ErrorNormal(`Please select no of installment .`)
         } else
