@@ -598,7 +598,7 @@ const endFun = (e) => {
                         <input
                             type="date"
                             className="form-control"
-                            min = {item}
+                         
                            onChange={(e) => startFun(e)}
                         />
                     </div>
