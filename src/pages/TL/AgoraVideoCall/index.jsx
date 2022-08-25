@@ -751,7 +751,7 @@ if(item.player === undefined){
     if(this.remoteShare2 === true && this.state.stateSharing === false){
       Swal.fire({
         title : "error",
-        html : "Only one screen can be share at a time",
+        html : "Only one screen can be shared at a time",
         icon : "error"
       })
     }

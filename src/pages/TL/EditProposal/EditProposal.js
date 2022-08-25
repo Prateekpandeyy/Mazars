@@ -53,6 +53,9 @@ const [scopeError, setScopeError] = useState(false)
   const [email, setEmail] = useState([])
   var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
   const [item] = useState(current_date);
+  const [startDate, setStartDate] = useState("")
+  const [endDate , setEndDate] = useState("")
+  const [fromMax, setFromMax] = useState(current_date)
   const [proposal, setProposal] = useState({
     query: "",
     name: "",
@@ -121,6 +124,7 @@ const token = window.localStorage.getItem("tlToken")
           due_date: res.data.result.due_date,
           payment : res.data.result.installment_amount
         });
+        setStore(res.data.result.payment_plan)
 setValue2(res.data.result.description)
         var payment_terms = res.data.result.payment_terms
         var no_of_installment = res.data.result.no_of_installment
@@ -189,7 +193,7 @@ else if(value2.length == 0){
 }
 else{
   var lumsum = value.p_inst_date
-    if (payment.label == "lumpsum") {
+    if (store === "1") {
       setDate(lumsum)
     }
 console.log("value2", value2.length)
@@ -206,12 +210,12 @@ console.log("value2", value2.length)
     formData.append("amount", value.p_fixed);
     formData.append("installment_amount", amount);
     formData.append("company", value.p_company)
-    formData.append("payment_terms", payment.value);
+    formData.append("payment_plan", store);
     formData.append("no_of_installment", installment.value);
 
-    payment.label == "lumpsum" ?
+    store === "1" ?
       formData.append("due_date", lumsum) :
-      payment.label == "installment" ?
+      store === "2" ?
         formData.append("due_date", date) :
         formData.append("due_date", "")
 
@@ -219,7 +223,7 @@ console.log("value2", value2.length)
     if (payment.length < 1) {
      
     } else
-      if (payment.value == "installment") {
+      if (store === "2") {
         if (installment == "") {
           Alerts.ErrorNormal(`Please select no of installment .`)
         } else
@@ -276,7 +280,8 @@ console.log("value2", value2.length)
               }
             }
           }
-      } else if (payment.label == "lumpsum") {
+      } 
+      else if (store === "1") {
 
         setLoading(true)
         axios({
@@ -364,6 +369,15 @@ const clientFun = (e) => {
   console.log("eee", e)
   setEmail(a)
 }
+const startFun = (e) => {
+ 
+  setFromMax(e.target.value)
+  setStartDate(e.target.value)
+}
+const endFun = (e) => {
+  
+  setEndDate(e.target.value)
+}
   return (
     <Layout TLDashboard="TLDashboard" TLuserId={userid}>
       <Card>
@@ -420,8 +434,25 @@ const clientFun = (e) => {
 }
                   </select>
                 </div>
-
                 <div class="form-group">
+                  <label>Payment Plan </label>
+                  <select
+                    class="form-control"
+                    ref={register}
+                    name="p_type"
+                    onChange={(e) => {
+                      setInstallment([])
+                      setStore(e.target.value)
+                    }}
+                  >
+                    <option value="1">Fixed Amount-Lumpsum payment</option>
+                    <option value="2">Fixed Amount-Instalment plan</option>
+                    <option value="3">Retainership plan-specified period</option>
+                    <option value="4">Retainership plan-unspecified period</option>
+                  </select>
+                </div>
+
+                {/* <div class="form-group">
                   <label>Fee</label>
                   <select
                     class="form-control"
@@ -431,9 +462,9 @@ const clientFun = (e) => {
                   >
                     <option value="fixed">Fixed Price</option>
                   </select>
-                </div>
+                </div> */}
 
-                <div class="form-group">
+                {/* <div class="form-group">
                   <label>Fixed Price<span className="declined">*</span></label>
                   <input
                     type="text"
@@ -447,7 +478,7 @@ const clientFun = (e) => {
                     onChange={handleChange}
                   />
                 </div>
-                <p style={{ "color": "red" }}>{diserror}</p>
+                <p style={{ "color": "red" }}>{diserror}</p> */}
 
                 <div class="form-group">
                   <label>Scope of Work<span className="declined">*</span></label>
@@ -549,7 +580,7 @@ const clientFun = (e) => {
                   />
 
                 </div>
-                <div class="form-group">
+                {/* <div class="form-group">
                   <label>Payment Terms<span className="declined">*</span></label>
                   <Select
                     closeMenuOnSelect={true}
@@ -557,9 +588,21 @@ const clientFun = (e) => {
                     value={payment}
                     options={paymentsTerms}
                   />
+                </div> */}
+  <div class="form-group">
+                  <label>Amount<span className="declined">*</span></label>
+                  <input
+                    type="text"
+                    name="p_fixed"
+                    className={classNames("form-control", {
+                      "is-invalid": errors.p_fixed || diserror,
+                    })}
+                    ref={register({ required: true })}
+                    placeholder="Enter Amount"
+                    onChange={(e) => handleChange(e)}
+                  />
                 </div>
-
-                {payment.label == "lumpsum" ? (
+                {store === "1" ? (
                   <div class="form-group">
                     <label>Due Dates</label>
                     <input
@@ -574,7 +617,7 @@ const clientFun = (e) => {
                     />
                   </div>
                 ) :
-                  payment.label == "installment" ? (
+                store === "2"  ? (
                     <div class="form-group">
                       <label>No of Installments</label>
                       <Select
@@ -587,9 +630,138 @@ const clientFun = (e) => {
                   )
                     : ""
                 }
+                <div>
+{
+  store === "3" ? (
+   
+
+    <>
+    {
+      store === "3" ? (
+     
+     <>
+         
+   
+     <div className="row">
+     <div class="col-md-6 my-2">
+                    <label>Start Date</label>  
+                        <input
+                            type="date"
+                            className="form-control"
+                            min = {item}
+                           onChange={(e) => startFun(e)}
+                        />
+                    </div>
+                    <div class="col-md-6 my-2">
+                    <label>End Date</label>  
+                        <input
+                            type="date"
+                            className="form-control"
+                           min={fromMax}
+                           onChange = {(e) => endFun(e)}
+                        />
+                    </div>
+     </div>
+     <div class="form-group">
+                      <label>No of Installments</label>
+                      <Select
+                        onChange={(e => installmentHandler(e))}
+                        options={no_installmentRange}
+                      />
+                    </div>
+     </>
+      ) : " "
+    }
+
+    </>
+    
+             
+  ) : " "
+}
+{
+  store === "4" ? 
+ <>
+  <div class="form-group">
+  <label>Due Date- Date of month
+ </label>
+  <select
+    class="form-control"
+    ref={register}
+    name="p_individual"
+    
+  >
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="1">5</option>
+    <option value="2">6</option>
+    <option value="3">7</option>
+    <option value="4">8</option>
+    <option value="1">9</option>
+    <option value="2">10</option>
+    <option value="3">11</option>
+    <option value="4">12</option>
+    <option value="1">13</option>
+    <option value="2">14</option>
+    <option value="3">15</option>
+    <option value="4">16</option>
+    <option value="1">17</option>
+    <option value="2">18</option>
+    <option value="3">19</option>
+    <option value="4">20</option>
+    <option value="1">21</option>
+    <option value="2">22</option>
+    <option value="3">23</option>
+    <option value="4">24</option>
+    <option value="1">25</option>
+    <option value="2">26</option>
+    <option value="3">27</option>
+    <option value="4">28</option>
+    <option value="1">29</option>
+    <option value="2">30</option>
+    <option value="3">31</option>
+   
+  </select>
+</div> 
+<div class="form-group">
+                    <label>Due Dates</label>
+                    <input
+                      type="date"
+                      name="p_inst_date"
+                      className={classNames("form-control", {
+                        "is-invalid": errors.p_inst_date
+                      })}
+                      ref={register({ required: true })}
+                      placeholder="Enter Hourly basis"
+                      min={item}
+                    />
+                  </div>
+ </>
+
+: " "
+}
+</div>
                 {
-                  payment.label == "lumpsum"
-                    ?
+                   store === "2"
+                   ?
+                    ""
+                    :
+                    installment_amount && due_date &&
+                    <Payment
+                      installment={installment.label}
+                      paymentAmount={paymentAmount}
+                      paymentDate={paymentDate}
+                      installment_amount={installment_amount}
+                      due_date={due_date}
+                      getQuery={getQuery}
+                      item={item}
+                      clearValue={clearValue}
+                    />
+                }
+                                {
+                   store === "3"
+                   ?
                     ""
                     :
                     installment_amount && due_date &&
@@ -605,6 +777,7 @@ const clientFun = (e) => {
                     />
                 }
               </div>
+
             </div>
 
             <div class="form-group col-md-6">
@@ -653,4 +826,146 @@ const noInstallments = [
     label: "4",
   },
 ];
-
+const no_installmentRange = [
+  {
+    value: "2",
+    label: "2",
+  },
+  {
+    value: "3",
+    label: "3",
+  },
+  {
+    value: "4",
+    label: "4",
+  },
+  {
+    value: "5",
+    label: "5",
+  },
+  {
+    value: "6",
+    label: "6",
+  },
+  {
+    value: "7",
+    label: "7",
+  },
+  {
+    value: "8",
+    label: "8",
+  },
+  {
+    value: "9",
+    label: "9",
+  },
+  {
+    value: "10",
+    label: "10",
+  },
+  {
+    value: "11",
+    label: "11",
+  },
+  {
+    value: "12",
+    label: "12",
+  },
+  {
+    value: "13",
+    label: "13",
+  },
+  {
+    value: "14",
+    label: "14",
+  },
+  {
+    value: "15",
+    label: "15",
+  },
+  {
+    value: "16",
+    label: "16",
+  },
+  {
+    value: "17",
+    label: "17",
+  },
+  {
+    value: "18",
+    label: "18",
+  },
+  {
+    value: "19",
+    label: "19",
+  },
+  {
+    value: "20",
+    label: "20",
+  },
+  {
+    value: "21",
+    label: "21",
+  },
+  {
+    value: "22",
+    label: "22",
+  },
+  {
+    value: "23",
+    label: "23",
+  },
+  {
+    value: "24",
+    label: "24",
+  },
+  {
+    value: "25",
+    label: "25",
+  },
+  {
+    value: "26",
+    label: "26",
+  },
+  {
+    value: "27",
+    label: "27",
+  },
+  {
+    value: "28",
+    label: "28",
+  },
+  {
+    value: "29",
+    label: "29",
+  },
+  {
+    value: "30",
+    label: "30",
+  },
+  {
+    value: "31",
+    label: "31",
+  },
+  {
+    value: "32",
+    label: "32",
+  },
+  {
+    value: "33",
+    label: "33",
+  },
+  {
+    value: "34",
+    label: "34",
+  },
+  {
+    value: "35",
+    label: "35",
+  },
+  {
+    value: "36",
+    label: "36",
+  },
+ 
+];
