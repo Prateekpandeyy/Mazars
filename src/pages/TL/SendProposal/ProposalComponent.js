@@ -174,7 +174,7 @@ function ProposalComponent(props) {
     formData.append("company", value.p_company)
     store === "1" ?
       formData.append("due_date", lumsum) :
-      store === "2" ?
+      store === "2" || store === "3" ?
         formData.append("due_date", date) :
         formData.append("due_date", "")
 console.log("payment", payment)
