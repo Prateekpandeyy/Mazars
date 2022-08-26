@@ -61,6 +61,7 @@ export default class Payment extends React.Component {
                             name={this.state.dates[i]}
                             onChange={this.handleChange2.bind(this, i)}
                             min={this.props.item}
+                            max={this.props.max}
                         />
                     </div>
                 </div >

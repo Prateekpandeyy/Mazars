@@ -50,11 +50,12 @@ function ProposalComponent(props) {
   const [dateError, setDateError] = useState(false)
   const [company2, setCompany2] = useState("")
   const [startDate, setStartDate] = useState("")
-  const [endDate , setEndDate] = useState("")
+ 
   const [client, setClient] = useState([])
   const [email, setEmail] = useState("")
   var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
   const [item] = useState(current_date);
+  const [endDate , setEndDate] = useState("")
   const [fromMax, setFromMax] = useState(current_date)
   const token = window.localStorage.getItem("tlToken")
   const myConfig = {
@@ -180,17 +181,17 @@ function ProposalComponent(props) {
 console.log("payment", payment)
    
       if (store === "2" || store === "3") {
-        if (installment == "") {
+        if (store !== "4" && installment == "") {
           Alerts.ErrorNormal(`Please select no of installment .`)
         
         } 
 
-        else if (!amount || !date) {
+        else if (store !== "4" && !amount || !date) {
             Alerts.ErrorNormal(`Please enter all fields.`)
             
           }
 
-          else if (amount && date) {
+          else if (store !== "4" && amount && date) {
             
             if (installment.value > 0) {
               var a = Number(installment.value)
@@ -245,7 +246,7 @@ console.log("payment", payment)
           }
       }
 
-       else if (store === "1") {
+       else if (store === "1" || store === "4") {
      
         setLoading(true)
         axios({
@@ -351,7 +352,7 @@ const placeholder = ({ startDate, endDate }) => {
 };
 const startFun = (e) => {
  
-  setFromMax(e.target.value)
+ setFromMax(e.target.value)
   setStartDate(e.target.value)
 }
 const endFun = (e) => {
@@ -421,7 +422,14 @@ const endFun = (e) => {
                     name="p_type"
                     onChange={(e) => {
                       setInstallment([])
+                      setFromMax("")
+                      setStartDate("")
+                        setEndDate("")
                       setStore(e.target.value)
+                      if(e.target.value === "3"){
+                        setFromMax(current_date)
+                       
+                      }
                     }}
                   >
                     <option value="1">Fixed Amount-Lumpsum payment</option>
@@ -553,6 +561,20 @@ const endFun = (e) => {
                     onChange={(e) => handleChange(e)}
                   />
                 </div>
+                {
+                  store === "4" ? (
+                    <div class="form-group">
+                    <label>Start Date</label>  
+                        <input
+                            type="date"
+                            className="form-control"
+                           value = {startDate}
+                             min = {item}
+                           onChange={(e) => startFun(e)}
+                        />
+                    </div>
+                  ) : " "
+                }
              
                 { store === "1" ? (
                   <div class="form-group">
@@ -598,7 +620,9 @@ const endFun = (e) => {
                         <input
                             type="date"
                             className="form-control"
-                         
+                             max={endDate}
+                             value = {startDate}
+                             min = {item}
                            onChange={(e) => startFun(e)}
                         />
                     </div>
@@ -606,6 +630,7 @@ const endFun = (e) => {
                     <label>End Date</label>  
                         <input
                             type="date"
+                            value = {endDate}
                             className="form-control"
                            min={fromMax}
                            onChange = {(e) => endFun(e)}
@@ -674,19 +699,7 @@ const endFun = (e) => {
    
   </select>
 </div> 
-<div class="form-group">
-                    <label>Due Dates</label>
-                    <input
-                      type="date"
-                      name="p_inst_date"
-                      className={classNames("form-control", {
-                        "is-invalid": errors.p_inst_date
-                      })}
-                      ref={register({ required: true })}
-                      placeholder="Enter Hourly basis"
-                      min={item}
-                    />
-                  </div>
+
  </>
 
 : " "
@@ -716,8 +729,9 @@ const endFun = (e) => {
                     paymentAmount={paymentAmount}
                     paymentDate={paymentDate}
                     totalAmount={totalAmount}
-                    min={item}
-                    item={item}
+                    min={startDate}
+                    max={endDate}
+                    item={startDate}
                     dateError = {dateError}
                   />
                     :
