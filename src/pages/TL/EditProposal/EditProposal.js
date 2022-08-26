@@ -212,7 +212,7 @@ else{
     formData.append("company", value.p_company)
     formData.append("payment_plan", store);
     formData.append("no_of_installment", installment.value);
-
+    formData.append("date_month", value.date_month)
     store === "1" ?
       formData.append("due_date", lumsum) :
       store === "2" ?
@@ -281,7 +281,7 @@ else{
             }
           }
       } 
-      else if (store === "1") {
+      else if (store === "1" || store === "4") {
 
         setLoading(true)
         axios({
