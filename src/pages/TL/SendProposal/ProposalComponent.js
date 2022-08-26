@@ -160,6 +160,7 @@ function ProposalComponent(props) {
     formData.append("assign_no", assingNo);
     formData.append("name", custname);
     formData.append("type", "tl");
+    formData.append("date_month", value.date_month)
     formData.append("id", JSON.parse(userid));
     formData.append("assign_id", assignId);
     formData.append("customer_id", custId);
@@ -548,19 +549,7 @@ const endFun = (e) => {
                     options={client}
                   />
                 </div>
-                <div class="form-group">
-                  <label>Amount<span className="declined">*</span></label>
-                  <input
-                    type="text"
-                    name="p_fixed"
-                    className={classNames("form-control", {
-                      "is-invalid": errors.p_fixed || diserror,
-                    })}
-                    ref={register({ required: true })}
-                    placeholder="Enter Amount"
-                    onChange={(e) => handleChange(e)}
-                  />
-                </div>
+             
                 {
                   store === "4" ? (
                     <div class="form-group">
@@ -662,7 +651,7 @@ const endFun = (e) => {
   <select
     class="form-control"
     ref={register}
-    name="p_individual"
+    name="date_month"
     
   >
     <option value="1">1</option>
@@ -705,6 +694,19 @@ const endFun = (e) => {
 : " "
 }
 </div>
+<div class="form-group">
+                  <label>Amount<span className="declined">*</span></label>
+                  <input
+                    type="text"
+                    name="p_fixed"
+                    className={classNames("form-control", {
+                      "is-invalid": errors.p_fixed || diserror,
+                    })}
+                    ref={register({ required: true })}
+                    placeholder="Enter Amount"
+                    onChange={(e) => handleChange(e)}
+                  />
+                </div>
                 {
                  store === "2"
                     ?

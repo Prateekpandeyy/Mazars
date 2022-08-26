@@ -627,8 +627,8 @@ if(item.player === undefined){
           icon : "error"
         })
       }
-      else if(this.state.stateSharing) {
-        alert("Plase share fixed")
+      else if(this.state.stateSharing === true) {
+       
          this.shareClient && this.shareClient.unpublish(this.shareStream);
          this.shareStream && this.shareStream.close();
          this.setState({stateSharing : false})
