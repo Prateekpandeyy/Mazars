@@ -58,6 +58,7 @@ const [scopeError, setScopeError] = useState(false)
   const [totalAmount, setTotalAmount] = useState("")
   const [dateMonth, setDateMonth] = useState("")
   const [fromMax, setFromMax] = useState(current_date)
+  const [invoice, setInvice] = useState("")
   const [proposal, setProposal] = useState({
     query: "",
     name: "",
@@ -135,10 +136,11 @@ setValue2(res.data.result.description)
 setTotalAmount(res.data.result.amount)
 setStore(res.data.result.payment_plan)
 setInstallment(res.data.result.no_of_installment)
-setDateMonth(res.data.result.date_month)
+setDateMonth(res.data.result.due_date)
 setStartDate(res.data.result.start_date)
 setEndDate(res.data.result.end_date)
 setDate(res.data.result.due_date)
+setInvice(res.data.result.invice)
         var payment_terms = res.data.result.payment_terms
         var no_of_installment = res.data.result.no_of_installment
 
@@ -227,13 +229,14 @@ else{
     formData.append("start_date", startDate);
     formData.append("end_date", endDate)
     formData.append("no_of_installment", installment.value);
-    // formData.append("date_month", dateMonth)
+    formData.append("date_month", dateMonth)
+    formData.append("invice", invoice)
     store === "1" ?
       formData.append("due_date", lumsum) :
       store === "2" || store === "3" ?
         formData.append("due_date", date)
          :
-        formData.append("due_date", dateMonth)
+        formData.append("due_date", "")
 
 
     if (payment.length < 1) {
@@ -401,6 +404,10 @@ const myMonthValue = (e) => {
  
   setDateMonth(e.target.value)
 }
+const getInviceValue = (e) => {
+ 
+  setInvice(e.target.value)
+}
   return (
     <Layout TLDashboard="TLDashboard" TLuserId={userid}>
       <Card>
@@ -482,7 +489,27 @@ const myMonthValue = (e) => {
                     <option value="4">Retainership plan-unspecified period</option>
                   </select>
                 </div>
-
+              {
+                invoice === "0" ?
+                <div class="form-group">
+                <label>Whether invoice(s) can be issued before acceptance of proposal by client</label>
+                <div onChange={(e) => getInviceValue(e)} className="myInvice">
+              <input 
+              type="radio" value="0" defaultChecked name="yes" />Yes
+                 <input 
+              type="radio" value="1" name = "yes"/>No
+              </div>
+              </div> :
+                <div class="form-group">
+                <label>Whether invoice(s) can be issued before acceptance of proposal by client</label>
+                <div onChange={(e) => getInviceValue(e)} className="myInvice">
+              <input 
+              type="radio" value="0" name="yes" />Yes
+                 <input 
+              type="radio" defaultChecked  value="1" name = "yes"/>No
+              </div>
+              </div>
+              }
              
                 <div class="form-group">
                   <label>Scope of Work<span className="declined">*</span></label>

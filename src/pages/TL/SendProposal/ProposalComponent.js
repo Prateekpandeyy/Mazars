@@ -56,6 +56,8 @@ function ProposalComponent(props) {
   var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
   const [item] = useState(current_date);
   const [endDate , setEndDate] = useState("")
+  const [dateMonth, setDateMonth] = useState("")
+  const [invoice, setInvice] = useState("")
   const [fromMax, setFromMax] = useState(current_date)
   const token = window.localStorage.getItem("tlToken")
   const myConfig = {
@@ -174,12 +176,14 @@ function ProposalComponent(props) {
     // formData.append("payment_terms", payment.value);
     formData.append("no_of_installment", installment.value);
     formData.append("company", value.p_company)
+    formData.append("date_month", dateMonth)
+    formData.append("invice", invoice)
     store === "1" ?
-      formData.append("due_date", lumsum) :
+      formData.append("due_date", date) :
       store === "2" || store === "3" ?
         formData.append("due_date", date) :
         formData.append("due_date", "")
-console.log("payment", payment)
+
    
       if (store === "2" || store === "3") {
         if (store !== "4" && installment == "") {
@@ -360,6 +364,14 @@ const endFun = (e) => {
   
   setEndDate(e.target.value)
 }
+const myMonthValue = (e) => {
+ 
+  setDateMonth(e.target.value)
+}
+const getInviceValue = (e) => {
+
+  setInvice(e.target.value)
+}
   return (
     <>
       <Card>
@@ -440,9 +452,17 @@ const endFun = (e) => {
                   </select>
                 </div>
 
-           
+                <div class="form-group">
+                  <label>Whether invoice(s) can be issued before acceptance of proposal by client</label>
+                  <div onChange={(e) => getInviceValue(e)} className="myInvice">
+                <input 
+                type="radio" value="0" name="yes" />Yes
+                   <input 
+                type="radio" value="1" name = "yes"/>No
+                </div>
+                </div>
                 
-                <p style={{ "color": "red" }}>{diserror}</p>
+              
                 <div class="form-group">
                   <label>Scope of Work<span className="declined">*</span></label>
 
@@ -549,7 +569,19 @@ const endFun = (e) => {
                     options={client}
                   />
                 </div>
-             
+                <div class="form-group">
+                  <label>Amount<span className="declined">*</span></label>
+                  <input
+                    type="text"
+                    name="p_fixed"
+                    className={classNames("form-control", {
+                      "is-invalid": errors.p_fixed || diserror,
+                    })}
+                    ref={register({ required: true })}
+                    placeholder="Enter Amount"
+                    onChange={(e) => handleChange(e)}
+                  />
+                </div>
                 {
                   store === "4" ? (
                     <div class="form-group">
@@ -574,6 +606,7 @@ const endFun = (e) => {
                       className={classNames("form-control", {
                         "is-invalid": errors.p_inst_date
                       })}
+                      onChange={(e) => setDate(e.target.value)}
                       ref={register({ required: true })}
                       placeholder="Enter Hourly basis"
                       min={item}
@@ -652,39 +685,39 @@ const endFun = (e) => {
     class="form-control"
     ref={register}
     name="date_month"
-    
+    onChange={(e) => myMonthValue(e)}
   >
-    <option value="1">1</option>
+     <option value="1">1</option>
     <option value="2">2</option>
     <option value="3">3</option>
     <option value="4">4</option>
-    <option value="1">5</option>
-    <option value="2">6</option>
-    <option value="3">7</option>
-    <option value="4">8</option>
-    <option value="1">9</option>
-    <option value="2">10</option>
-    <option value="3">11</option>
-    <option value="4">12</option>
-    <option value="1">13</option>
-    <option value="2">14</option>
-    <option value="3">15</option>
-    <option value="4">16</option>
-    <option value="1">17</option>
-    <option value="2">18</option>
-    <option value="3">19</option>
-    <option value="4">20</option>
-    <option value="1">21</option>
-    <option value="2">22</option>
-    <option value="3">23</option>
-    <option value="4">24</option>
-    <option value="1">25</option>
-    <option value="2">26</option>
-    <option value="3">27</option>
-    <option value="4">28</option>
-    <option value="1">29</option>
-    <option value="2">30</option>
-    <option value="3">31</option>
+    <option value="5">5</option>
+    <option value="6">6</option>
+    <option value="7">7</option>
+    <option value="8">8</option>
+    <option value="9">9</option>
+    <option value="10">10</option>
+    <option value="11">11</option>
+    <option value="12">12</option>
+    <option value="13">13</option>
+    <option value="14">14</option>
+    <option value="15">15</option>
+    <option value="16">16</option>
+    <option value="17">17</option>
+    <option value="18">18</option>
+    <option value="19">19</option>
+    <option value="20">20</option>
+    <option value="21">21</option>
+    <option value="22">22</option>
+    <option value="23">23</option>
+    <option value="24">24</option>
+    <option value="25">25</option>
+    <option value="26">26</option>
+    <option value="27">27</option>
+    <option value="28">28</option>
+    <option value="29">29</option>
+    <option value="30">30</option>
+    <option value="31">31</option>
    
   </select>
 </div> 
@@ -694,19 +727,7 @@ const endFun = (e) => {
 : " "
 }
 </div>
-<div class="form-group">
-                  <label>Amount<span className="declined">*</span></label>
-                  <input
-                    type="text"
-                    name="p_fixed"
-                    className={classNames("form-control", {
-                      "is-invalid": errors.p_fixed || diserror,
-                    })}
-                    ref={register({ required: true })}
-                    placeholder="Enter Amount"
-                    onChange={(e) => handleChange(e)}
-                  />
-                </div>
+
                 {
                  store === "2"
                     ?
@@ -739,10 +760,7 @@ const endFun = (e) => {
                     :
                   ""
                 }
-                <div className="row">
-
-
-</div>
+                
          
      </div>
             </div>
