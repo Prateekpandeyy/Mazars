@@ -34,9 +34,9 @@ function EditComponent(props) {
 
   const [custId, setCustId] = useState("");
   const [store, setStore] = useState("1");
-  const [amount, setAmount] = useState();
-  const [date, setDate] = useState();
-  const [load, setLoad] = useState(true);
+  const [amount, setAmount] = useState("");
+  const [date, setDate] = useState("");
+ 
   const [companyName, setCompanyName] = useState([])
   const[clearValue, setClearValue] = useState(true)
   const [payment, setPayment] = useState([]);
@@ -56,7 +56,7 @@ const [scopeError, setScopeError] = useState(false)
   const [startDate, setStartDate] = useState("")
   const [endDate , setEndDate] = useState("")
   const [totalAmount, setTotalAmount] = useState("")
-  const [dateMonth, setDateMonth] = useState(" ")
+  const [dateMonth, setDateMonth] = useState("")
   const [fromMax, setFromMax] = useState(current_date)
   const [proposal, setProposal] = useState({
     query: "",
@@ -86,7 +86,7 @@ const token = window.localStorage.getItem("tlToken")
       `${baseUrl}/tl/getcompany`, myConfig
     )
     .then((res) => {
-      console.log("response", res)
+    
       setCompanyName(res.data.result)
     })
   }
@@ -107,7 +107,7 @@ const token = window.localStorage.getItem("tlToken")
        
         let email = {}
     if(res.data.result.email.length > 0){
-      console.log("done", res.data.result.email.length)
+   
       a.map((i) => {
       
         email = {
@@ -184,7 +184,7 @@ const getClient = () => {
         collectData.push(email)
         
       })
-      console.log("data", collectData)
+     
       setClient2(collectData)
     })
   }
@@ -227,13 +227,13 @@ else{
     formData.append("start_date", startDate);
     formData.append("end_date", endDate)
     formData.append("no_of_installment", installment.value);
-    formData.append("date_month", dateMonth)
+    // formData.append("date_month", dateMonth)
     store === "1" ?
       formData.append("due_date", lumsum) :
       store === "2" || store === "3" ?
         formData.append("due_date", date)
          :
-        formData.append("due_date", "")
+        formData.append("due_date", dateMonth)
 
 
     if (payment.length < 1) {
@@ -385,7 +385,7 @@ const clientFun = (e) => {
   e.map((i) => {
     a.push(i.value)
   })
-  console.log("eee", e)
+ 
   setEmail(a)
 }
 const startFun = (e) => {
@@ -396,6 +396,10 @@ const startFun = (e) => {
 const endFun = (e) => {
   
   setEndDate(e.target.value)
+}
+const myMonthValue = (e) => {
+ 
+  setDateMonth(e.target.value)
 }
   return (
     <Layout TLDashboard="TLDashboard" TLuserId={userid}>
@@ -544,16 +548,7 @@ const endFun = (e) => {
                 >
                   
                   </CKEditor>
-                  {/* <textarea
-                    className={classNames("form-control", {
-                      "is-invalid": errors.description,
-                    })}
-                    id="textarea"
-                    rows="3"
-                    name="description"
-                    defaultValue={description}
-                    ref={register({ required: true })}
-                  ></textarea> */}
+                 
                 </div>
               </div>
 
@@ -703,7 +698,7 @@ const endFun = (e) => {
     class="form-control"
     ref={register}
     name="date_month"
-    onChange={(e) => setDateMonth(e.target.value)}
+    onChange={(e) => myMonthValue(e)}
     value = {dateMonth}
     
   >
@@ -711,33 +706,33 @@ const endFun = (e) => {
     <option value="2">2</option>
     <option value="3">3</option>
     <option value="4">4</option>
-    <option value="1">5</option>
-    <option value="2">6</option>
-    <option value="3">7</option>
-    <option value="4">8</option>
-    <option value="1">9</option>
-    <option value="2">10</option>
-    <option value="3">11</option>
-    <option value="4">12</option>
-    <option value="1">13</option>
-    <option value="2">14</option>
-    <option value="3">15</option>
-    <option value="4">16</option>
-    <option value="1">17</option>
-    <option value="2">18</option>
-    <option value="3">19</option>
-    <option value="4">20</option>
-    <option value="1">21</option>
-    <option value="2">22</option>
-    <option value="3">23</option>
-    <option value="4">24</option>
-    <option value="1">25</option>
-    <option value="2">26</option>
-    <option value="3">27</option>
-    <option value="4">28</option>
-    <option value="1">29</option>
-    <option value="2">30</option>
-    <option value="3">31</option>
+    <option value="5">5</option>
+    <option value="6">6</option>
+    <option value="7">7</option>
+    <option value="8">8</option>
+    <option value="9">9</option>
+    <option value="10">10</option>
+    <option value="11">11</option>
+    <option value="12">12</option>
+    <option value="13">13</option>
+    <option value="14">14</option>
+    <option value="15">15</option>
+    <option value="16">16</option>
+    <option value="17">17</option>
+    <option value="18">18</option>
+    <option value="19">19</option>
+    <option value="20">20</option>
+    <option value="21">21</option>
+    <option value="22">22</option>
+    <option value="23">23</option>
+    <option value="24">24</option>
+    <option value="25">25</option>
+    <option value="26">26</option>
+    <option value="27">27</option>
+    <option value="28">28</option>
+    <option value="29">29</option>
+    <option value="30">30</option>
+    <option value="31">31</option>
    
   </select>
 </div> 
