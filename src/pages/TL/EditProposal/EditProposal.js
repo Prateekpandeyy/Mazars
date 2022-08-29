@@ -33,7 +33,7 @@ function EditComponent(props) {
   const [loading, setLoading] = useState(false);
 
   const [custId, setCustId] = useState("");
-  const [store, setStore] = useState(null);
+  const [store, setStore] = useState("1");
   const [amount, setAmount] = useState();
   const [date, setDate] = useState();
   const [load, setLoad] = useState(true);
@@ -55,6 +55,8 @@ const [scopeError, setScopeError] = useState(false)
   const [item] = useState(current_date);
   const [startDate, setStartDate] = useState("")
   const [endDate , setEndDate] = useState("")
+  const [totalAmount, setTotalAmount] = useState("")
+  const [dateMonth, setDateMonth] = useState(" ")
   const [fromMax, setFromMax] = useState(current_date)
   const [proposal, setProposal] = useState({
     query: "",
@@ -104,17 +106,19 @@ const token = window.localStorage.getItem("tlToken")
         let a = res.data.result.email.split(",")
        
         let email = {}
+    if(a.length > 0){
       a.map((i) => {
-          console.log("iii", i)
-          email = {
-            label : i,
-            value : i
-          }
-          collectData.push(email)
-          console.log("aaa", collectData)
-        })
-        
+        console.log("iii", i)
+        email = {
+          label : i,
+          value : i
+        }
+        collectData.push(email)
         setClient(collectData)
+      })
+    }
+        
+      
         setProposal({
           name: res.data.result.name,
           query: res.data.result.assign_no,
@@ -124,8 +128,15 @@ const token = window.localStorage.getItem("tlToken")
           due_date: res.data.result.due_date,
           payment : res.data.result.installment_amount
         });
-        setStore(res.data.result.payment_plan)
+        
 setValue2(res.data.result.description)
+setTotalAmount(res.data.result.amount)
+setStore(res.data.result.payment_plan)
+setInstallment(res.data.result.no_of_installment)
+setDateMonth(res.data.result.date_month)
+setStartDate(res.data.result.start_date)
+setEndDate(res.data.result.end_date)
+setDate(res.data.result.due_date)
         var payment_terms = res.data.result.payment_terms
         var no_of_installment = res.data.result.no_of_installment
 
@@ -207,16 +218,19 @@ else{
     formData.append("customer_id", custId);
     formData.append("description", value2);
     formData.append("amount_type", "fixed");
-    formData.append("amount", value.p_fixed);
+    formData.append("amount", totalAmount);
     formData.append("installment_amount", amount);
-    formData.append("company", value.p_company)
+    formData.append("company", company2)
     formData.append("payment_plan", store);
+    formData.append("start_date", startDate);
+    formData.append("end_date", endDate)
     formData.append("no_of_installment", installment.value);
-    formData.append("date_month", value.date_month)
+    formData.append("date_month", dateMonth)
     store === "1" ?
       formData.append("due_date", lumsum) :
-      store === "2" ?
-        formData.append("due_date", date) :
+      store === "2" || store === "3" ?
+        formData.append("due_date", date)
+         :
         formData.append("due_date", "")
 
 
@@ -315,12 +329,15 @@ else{
   const handleChange = (e) => {
 
     if (isNaN(e.target.value)) {
+      setTotalAmount("")
       setdiserror("Please enter number only");
     }
     else if(e.target.value == "0"){
+      setTotalAmount(e.target.value)
       setdiserror("Amount should be greater than zero")
     }
     else {
+      setTotalAmount(e.target.value)
       setdiserror("");
     }
   };
@@ -439,6 +456,7 @@ const endFun = (e) => {
                   <select
                     class="form-control"
                     ref={register}
+                    value = {store}
                     name="p_type"
                     onChange={(e) => {
                       setInstallment([])
@@ -586,9 +604,11 @@ const endFun = (e) => {
                       className={classNames("form-control", {
                         "is-invalid": errors.p_inst_date
                       })}
+                      onChange={(e) => setDate(e.target.value)}
                       ref={register({ required: true })}
                       placeholder="Enter Hourly basis"
                       min={item}
+                      value={date}
                     />
                   </div>
                 ) :
@@ -597,6 +617,7 @@ const endFun = (e) => {
                       <label>No of Installments</label>
                       <Select
                         onChange={(e => installmentHandler(e))}
+                        value = {installment}
                         options={noInstallments}
                       />
                     </div>
@@ -604,6 +625,20 @@ const endFun = (e) => {
                     : ""
                 }
 <div>
+<div class="form-group">
+                  <label>Amount<span className="declined">*</span></label>
+                  <input
+                    type="text"
+                    name="p_fixed"
+                    className={classNames("form-control", {
+                      "is-invalid": errors.p_fixed || diserror,
+                    })}
+                    ref={register({ required: true })}
+                    placeholder="Enter Amount"
+                    onChange={(e) => handleChange(e)}
+                    value = {totalAmount}
+                  />
+                </div>
 {
   store === "3" ? (
    
@@ -638,10 +673,12 @@ const endFun = (e) => {
                         />
                     </div>
      </div>
+   
      <div class="form-group">
                       <label>No of Installments</label>
                       <Select
                         onChange={(e => installmentHandler(e))}
+                        value = {installment}
                         options={no_installmentRange}
                       />
                     </div>
@@ -664,6 +701,8 @@ const endFun = (e) => {
     class="form-control"
     ref={register}
     name="date_month"
+    onChange={(e) => setDateMonth(e.target.value)}
+    value = {dateMonth}
     
   >
     <option value="1">1</option>
@@ -706,19 +745,7 @@ const endFun = (e) => {
 : " "
 }
 </div>
-<div class="form-group">
-                  <label>Amount<span className="declined">*</span></label>
-                  <input
-                    type="text"
-                    name="p_fixed"
-                    className={classNames("form-control", {
-                      "is-invalid": errors.p_fixed || diserror,
-                    })}
-                    ref={register({ required: true })}
-                    placeholder="Enter Amount"
-                    onChange={(e) => handleChange(e)}
-                  />
-                </div>
+
                 {
                    store === "2"
                    ?
