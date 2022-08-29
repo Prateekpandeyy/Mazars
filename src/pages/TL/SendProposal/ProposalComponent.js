@@ -177,7 +177,7 @@ function ProposalComponent(props) {
     formData.append("no_of_installment", installment.value);
     formData.append("company", value.p_company)
     formData.append("date_month", dateMonth)
-    formData.append("invice", invoice)
+    formData.append("tl_iba", invoice)
     store === "1" ?
       formData.append("due_date", date) :
       store === "2" || store === "3" ?
@@ -686,6 +686,7 @@ const getInviceValue = (e) => {
     ref={register}
     name="date_month"
     onChange={(e) => myMonthValue(e)}
+    min = {item}
   >
      <option value="1">1</option>
     <option value="2">2</option>

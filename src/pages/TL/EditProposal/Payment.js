@@ -113,7 +113,9 @@ export default class YourComponent extends React.Component {
                name={this.state.dates[i]}
                onChange={this.handleChange2.bind(this, i)}
                defaultValue={due_date[i]}
+            
                min={this.props.item}
+               max={this.props.max}
            />
        </div> : ""}  
        {this.props.clearValue == false ? 
@@ -127,6 +129,7 @@ export default class YourComponent extends React.Component {
                onChange={this.handleChange2.bind(this, i)}
                defaultValue= ""
                min={this.props.item}
+               max={this.props.max}
            />
        </div> : ""}         
                    

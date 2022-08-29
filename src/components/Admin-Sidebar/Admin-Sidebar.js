@@ -593,7 +593,7 @@ const classes = useStyle()
 
               <li className="nav-item">
                  
-              <ListItemButton   onMouseOver={() => handleClick()}>
+              <ListItemButton   onMouseOver={(e) => handleClick(e)}>
         
     
 <i className="listStyle">
@@ -604,7 +604,10 @@ const classes = useStyle()
                 <span className="menu-title" data-i18n="">
                   Schedule
                 </span>
-                {open ? <ExpandLess /> : <ExpandMore />}
+                {open ? 
+                <ExpandLess /> : <ExpandMore />
+                
+                }
              
 
       

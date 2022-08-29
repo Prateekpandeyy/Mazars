@@ -140,7 +140,7 @@ setDateMonth(res.data.result.due_date)
 setStartDate(res.data.result.start_date)
 setEndDate(res.data.result.end_date)
 setDate(res.data.result.due_date)
-setInvice(res.data.result.invice)
+setInvice(res.data.result.tl_iba)
         var payment_terms = res.data.result.payment_terms
         var no_of_installment = res.data.result.no_of_installment
 
@@ -230,7 +230,7 @@ else{
     formData.append("end_date", endDate)
     formData.append("no_of_installment", installment.value);
     formData.append("date_month", dateMonth)
-    formData.append("invice", invoice)
+    formData.append("tl_iba", invoice)
     store === "1" ?
       formData.append("due_date", lumsum) :
       store === "2" || store === "3" ?
@@ -241,8 +241,8 @@ else{
 
     if (payment.length < 1) {
      
-    } else
-      if (store === "2" || store === "3") {
+    }
+     else if (store === "2" || store === "3") {
         if (installment == "") {
           Alerts.ErrorNormal(`Please select no of installment .`)
         } else
@@ -405,9 +405,10 @@ const myMonthValue = (e) => {
   setDateMonth(e.target.value)
 }
 const getInviceValue = (e) => {
- 
+ console.log("invoiceValue", e.target.value)
   setInvice(e.target.value)
 }
+console.log("invoiceValue", invoice === "0")
   return (
     <Layout TLDashboard="TLDashboard" TLuserId={userid}>
       <Card>
@@ -489,27 +490,15 @@ const getInviceValue = (e) => {
                     <option value="4">Retainership plan-unspecified period</option>
                   </select>
                 </div>
-              {
-                invoice === "0" ?
                 <div class="form-group">
                 <label>Whether invoice(s) can be issued before acceptance of proposal by client</label>
                 <div onChange={(e) => getInviceValue(e)} className="myInvice">
               <input 
-              type="radio" value="0" defaultChecked name="yes" />Yes
+              type="radio" value="0" checked = {invoice === "0" ? true : false} name="yes" />Yes
                  <input 
-              type="radio" value="1" name = "yes"/>No
-              </div>
-              </div> :
-                <div class="form-group">
-                <label>Whether invoice(s) can be issued before acceptance of proposal by client</label>
-                <div onChange={(e) => getInviceValue(e)} className="myInvice">
-              <input 
-              type="radio" value="0" name="yes" />Yes
-                 <input 
-              type="radio" defaultChecked  value="1" name = "yes"/>No
+              type="radio" value="1" checked = {invoice  === "1" ? true : false} name = "yes"/>No
               </div>
               </div>
-              }
              
                 <div class="form-group">
                   <label>Scope of Work<span className="declined">*</span></label>
@@ -625,7 +614,7 @@ const getInviceValue = (e) => {
                             type="date"
                             className="form-control"
                            value = {startDate}
-                             min = {item}
+                           min = {item}
                            onChange={(e) => startFun(e)}
                         />
                     </div>
@@ -680,9 +669,9 @@ const getInviceValue = (e) => {
                         <input
                             type="date"
                             className="form-control"
-                             max={endDate}
-                             value = {startDate}
-                             min = {item}
+                            max={endDate}
+                            value = {startDate}
+                            min = {item}
                            onChange={(e) => startFun(e)}
                         />
                     </div>
@@ -692,7 +681,7 @@ const getInviceValue = (e) => {
                             type="date"
                             value = {endDate}
                             className="form-control"
-                           min={fromMax}
+                            min={fromMax}
                            onChange = {(e) => endFun(e)}
                         />
                     </div>
@@ -784,6 +773,9 @@ const getInviceValue = (e) => {
                       getQuery={getQuery}
                       item={item}
                       clearValue={clearValue}
+                      totalAmount={totalAmount}
+                      min={item}
+                      dateError = {dateError}
                     /> 
                     : ""
                 }
@@ -797,8 +789,13 @@ const getInviceValue = (e) => {
                    installment_amount={installment_amount}
                    due_date={due_date}
                    getQuery={getQuery}
-                   item={item}
+                  
                    clearValue={clearValue}
+                   totalAmount={totalAmount}
+                   min={startDate}
+                   max={endDate}
+                   item={startDate}
+                   dateError = {dateError}
                  /> : ""
                 }
               </div>
