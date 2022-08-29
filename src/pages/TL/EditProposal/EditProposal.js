@@ -106,9 +106,10 @@ const token = window.localStorage.getItem("tlToken")
         let a = res.data.result.email.split(",")
        
         let email = {}
-    if(a.length > 0){
+    if(res.data.result.email.length > 0){
+      console.log("done", res.data.result.email.length)
       a.map((i) => {
-        console.log("iii", i)
+      
         email = {
           label : i,
           value : i
@@ -118,7 +119,8 @@ const token = window.localStorage.getItem("tlToken")
       })
     }
         
-      
+    
+    
         setProposal({
           name: res.data.result.name,
           query: res.data.result.assign_no,
@@ -172,9 +174,9 @@ const getClient = () => {
     )
     .then((res) => {
       let email = {}
-      console.log("response", res)
+      
       res.data.result.map((i) => {
-        console.log("iii", i)
+     
         email = {
           label : i.email,
           value : i.email
@@ -578,7 +580,20 @@ const endFun = (e) => {
                   />
 
                 </div>
-              
+                <div class="form-group">
+                  <label>Amount<span className="declined">*</span></label>
+                  <input
+                    type="text"
+                    name="p_fixed"
+                    className={classNames("form-control", {
+                      "is-invalid": errors.p_fixed || diserror,
+                    })}
+                    ref={register({ required: true })}
+                    placeholder="Enter Amount"
+                    onChange={(e) => handleChange(e)}
+                    value = {totalAmount}
+                  />
+                </div>
 
                 {
                   store === "4" ? (
@@ -625,20 +640,7 @@ const endFun = (e) => {
                     : ""
                 }
 <div>
-<div class="form-group">
-                  <label>Amount<span className="declined">*</span></label>
-                  <input
-                    type="text"
-                    name="p_fixed"
-                    className={classNames("form-control", {
-                      "is-invalid": errors.p_fixed || diserror,
-                    })}
-                    ref={register({ required: true })}
-                    placeholder="Enter Amount"
-                    onChange={(e) => handleChange(e)}
-                    value = {totalAmount}
-                  />
-                </div>
+
 {
   store === "3" ? (
    
