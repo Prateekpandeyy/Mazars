@@ -63,6 +63,7 @@ const [scopeError, setScopeError] = useState(false)
   const [invoiceAdmin, setInvoiceAdmin] = useState("")
   const [tlDisable, setTlDisable] = useState("");
   const [tpDisable, setTpDisable] = useState("")
+  const [allAmount, setAllAmount] = useState([])
   const [proposal, setProposal] = useState({
     query: "",
     name: "",
@@ -135,7 +136,7 @@ const token = window.localStorage.getItem("tlToken")
           due_date: res.data.result.due_date,
           payment : res.data.result.installment_amount
         });
-        
+ setAllAmount(res.data.result.installment_amount.split(","))       
 setValue2(res.data.result.description)
 setTotalAmount(res.data.result.amount)
 setStore(res.data.result.payment_plan)
@@ -145,13 +146,13 @@ setStartDate(res.data.result.start_date)
 setEndDate(res.data.result.end_date)
 setDate(res.data.result.due_date)
 setInvice(res.data.result.tl_iba)
-if(res.data.result.tl_iba === null){
+if(res.data.result.admin_iba === null){
   setTlDisable(false)
 }
 else {
   setTlDisable(true)
 }
-if(res.data.result.tp_iba === null){
+if(res.data.result.admin_iba === null){
   setTpDisable(false)
 }
 else{
@@ -239,7 +240,11 @@ else{
     formData.append("description", value2);
     formData.append("amount_type", "fixed");
     formData.append("amount", totalAmount);
-    formData.append("installment_amount", amount);
+    {
+      amount.length > 0 ?
+      formData.append("installment_amount", amount) :
+      formData.append("installment_amount", allAmount);
+    }
     formData.append("company", company2)
     formData.append("payment_plan", store);
     formData.append("start_date", startDate);
@@ -274,15 +279,24 @@ else{
               for (let i = 0; i < a; i++) {
 
                 if (amount[i] == "" || amount[i] == undefined || amount[i] <= 0) {
+                 if(allAmount.length < 0){
                   Alerts.ErrorNormal(`Please enter amount`)
                   return false
+                 }
+                  
                 }
                 if (date[i] == "" || date[i] == undefined) {
                   Alerts.ErrorNormal(`Please enter date`)
                   return false
                 }
               }
-              var sum = amount.reduce(myFunction)
+              var sum  = 0;
+              if(amount.length > 0){
+                sum = amount.reduce(myFunction)
+              }
+              else {
+                sum = allAmount.reduce(myFunction)
+              }
               function myFunction(total, value) {
                 return Number(total) + Number(value);
               }
@@ -367,7 +381,7 @@ else{
 
 
   const paymentAmount = (data) => {
-   
+   console.log("data", data)
 
     var array1 = []
     Object.entries(data).map(([key, value]) => {
@@ -396,19 +410,21 @@ else{
 
   const installmentHandler = (key) => {
 let amount = totalAmount;
-let a = parseInt(totalAmount / key.value)
+let a = Math.round(totalAmount / key.value)
 let dd = []
-while (amount < 0) {
+while (amount > a) {
    amount = amount - a;
-   dd.push(amount)
+   dd.push(a)
 }
+dd.push(amount)
 
     setInstallment(key)
     setClearValue(false)
-    console.log("ddd", dd)
+   
+    setAllAmount(dd)
   }
 
-  
+ 
 const clientFun = (e) => {
   setClient(e)
   let a = []
@@ -526,27 +542,27 @@ const getInvoicetl  = (e) => {
                   <label>Whether invoice(s) can be issued before acceptance of proposal by client</label>
                   <div onChange={(e) => getInviceValue(e)} className="myInvice">
                 <input 
-                type="radio" disabled = {tpDisable} value="0" name="yes" />Yes
+                type="radio" disabled = {tpDisable} value="0" name="yesclient" />Yes
                    <input 
-                type="radio" disabled = {tpDisable} value="1" name = "yes"/>No
+                type="radio" disabled = {tpDisable} value="1" name = "yesclient"/>No
                 </div>
                 </div>
                 <div class="form-group">
                   <label>Approval of Team Leader for such issue of invoice(s)</label>
                   <div onChange={(e) => getInvoicetl(e)} className="myInvice">
                 <input 
-                type="radio" disabled = {tlDisable} value="0" name="yes" />Yes
+                type="radio" disabled = {tlDisable} value="0" name="yestl" />Yes
                    <input 
-                type="radio" disabled = {tlDisable} value="1" name = "yes"/>No
+                type="radio" disabled = {tlDisable} value="1" name = "yestl"/>No
                 </div>
                 </div>
                 <div class="form-group">
                   <label>Approval of Admin for such issue of invoice(s)</label>
                   <div onChange={(e) => getInvoiceAdmin(e)} className="myInvice">
                 <input 
-                type="radio" value="0" disabled name="yes" />Yes
+                type="radio" value="0" disabled name="yesadmin" />Yes
                    <input 
-                type="radio" value="1" disabled name = "yes"/>No
+                type="radio" value="1" disabled name = "yesadmin"/>No
                 </div>
                 </div>
              
@@ -818,7 +834,7 @@ const getInvoicetl  = (e) => {
                       installment={installment.label}
                       paymentAmount={paymentAmount}
                       paymentDate={paymentDate}
-                      installment_amount={installment_amount}
+                      installment_amount={allAmount}
                       due_date={due_date}
                       getQuery={getQuery}
                       item={item}
@@ -826,6 +842,7 @@ const getInvoicetl  = (e) => {
                       totalAmount={totalAmount}
                       min={item}
                       dateError = {dateError}
+                      allAmount = {allAmount}
                     /> 
                     : ""
                 }
@@ -836,7 +853,7 @@ const getInvoicetl  = (e) => {
                    installment={installment.label}
                    paymentAmount={paymentAmount}
                    paymentDate={paymentDate}
-                   installment_amount={installment_amount}
+                   installment_amount={allAmount}
                    due_date={due_date}
                    getQuery={getQuery}
                   

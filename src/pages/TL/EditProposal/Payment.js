@@ -13,7 +13,7 @@ export default class YourComponent extends React.Component {
 
 
     amount = this.props.installment_amount
-    installment_amount = this.amount.split(',');
+    installment_amount = this.amount
     temp = this.installment_amount
     tamp2;
     handleChange1(i, e) {
@@ -52,11 +52,14 @@ export default class YourComponent extends React.Component {
 
     componentDidMount() {
         this.setState({ isLoading: false });
-        
+       
         var amount = this.props.installment_amount
+        
         var date = this.props.due_date
-
-        const installment_amount = amount.split(',');
+        this.props.paymentAmount(amount)
+       var installment_amount = amount
+      
+       
         const due_date = date.split(',');
 
 
@@ -70,10 +73,10 @@ export default class YourComponent extends React.Component {
 
         var amount = this.props.installment_amount
         var date = this.props.due_date
-
-        const installment_amount = amount.split(',');
-        const due_date = date.split(',');
-
+     
+         let installment_amount;
+       
+        const due_date = date.split(',')
         var fieldsArray = [];
 
 
@@ -88,7 +91,7 @@ export default class YourComponent extends React.Component {
                        className="form-control"
                        name={this.state.values[i]}
                        onChange={this.handleChange1.bind(this, i)}
-                      defaultValue={installment_amount[i]}
+                      defaultValue={amount[i]}
                    />
                </div> :   ""
 }
@@ -100,7 +103,7 @@ export default class YourComponent extends React.Component {
                            className="form-control"
                            name={this.state.values[i]}
                            onChange={this.handleChange1.bind(this, i)}
-                           defaultValue=""
+                           defaultValue={amount[i]}
                        />
                    </div> : ""}
           {this.props.clearValue == true ? 
