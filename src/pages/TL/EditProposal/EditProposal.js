@@ -292,7 +292,7 @@ else{
               }
               var sum  = 0;
               if(amount.length > 0){
-                sum = amount.reduce(myFunction)
+                sum = allAmount.reduce(myFunction)
               }
               else {
                 sum = allAmount.reduce(myFunction)
