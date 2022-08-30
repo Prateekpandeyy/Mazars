@@ -58,6 +58,8 @@ function ProposalComponent(props) {
   const [endDate , setEndDate] = useState("")
   const [dateMonth, setDateMonth] = useState("")
   const [invoice, setInvice] = useState("")
+  const [invoiceTl, setInvoicetl] = useState("")
+  const [invoiceAdmin, setInvoiceAdmin] = useState("")
   const [fromMax, setFromMax] = useState(current_date)
   const token = window.localStorage.getItem("tlToken")
   const myConfig = {
@@ -177,7 +179,9 @@ function ProposalComponent(props) {
     formData.append("no_of_installment", installment.value);
     formData.append("company", value.p_company)
     formData.append("date_month", dateMonth)
-    formData.append("tl_iba", invoice)
+    formData.append("tl_iba", invoiceTl)
+    formData.append("tp_iba", invoice)
+    formData.append("admin_iba", invoiceAdmin)
     store === "1" ?
       formData.append("due_date", date) :
       store === "2" || store === "3" ?
@@ -372,6 +376,12 @@ const getInviceValue = (e) => {
 
   setInvice(e.target.value)
 }
+const getInvoiceAdmin  = (e) => {
+  setInvoiceAdmin(e.target.value)
+}
+const getInvoicetl  = (e) => {
+  setInvoicetl(e.target.value)
+}
   return (
     <>
       <Card>
@@ -396,7 +406,7 @@ const getInviceValue = (e) => {
 
         <CardBody>
           <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
-            <p style={{ color: "red" }}>{error}</p>
+            
             <div style={{ display: "flex" }}>
               <div class="col-md-6">
                 <div class="form-group">
@@ -461,7 +471,24 @@ const getInviceValue = (e) => {
                 type="radio" value="1" name = "yes"/>No
                 </div>
                 </div>
-                
+                <div class="form-group">
+                  <label>Approval of Team Leader for such issue of invoice(s)</label>
+                  <div onChange={(e) => getInvoicetl(e)} className="myInvice">
+                <input 
+                type="radio" value="0" name="yes" />Yes
+                   <input 
+                type="radio" value="1" name = "yes"/>No
+                </div>
+                </div>
+                <div class="form-group">
+                  <label>Approval of Admin for such issue of invoice(s)</label>
+                  <div onChange={(e) => getInvoiceAdmin(e)} className="myInvice">
+                <input 
+                type="radio" disabled value="0" name="yes" />Yes
+                   <input 
+                type="radio" disabled value="1" name = "yes"/>No
+                </div>
+                </div>
               
                 <div class="form-group">
                   <label>Scope of Work<span className="declined">*</span></label>

@@ -59,6 +59,10 @@ const [scopeError, setScopeError] = useState(false)
   const [dateMonth, setDateMonth] = useState("")
   const [fromMax, setFromMax] = useState(current_date)
   const [invoice, setInvice] = useState("")
+  const [invoiceTl, setInvoicetl] = useState("")
+  const [invoiceAdmin, setInvoiceAdmin] = useState("")
+  const [tlDisable, setTlDisable] = useState("");
+  const [tpDisable, setTpDisable] = useState("")
   const [proposal, setProposal] = useState({
     query: "",
     name: "",
@@ -141,6 +145,18 @@ setStartDate(res.data.result.start_date)
 setEndDate(res.data.result.end_date)
 setDate(res.data.result.due_date)
 setInvice(res.data.result.tl_iba)
+if(res.data.result.tl_iba === null){
+  setTlDisable(false)
+}
+else {
+  setTlDisable(true)
+}
+if(res.data.result.tp_iba === null){
+  setTpDisable(false)
+}
+else{
+  setTpDisable(true)
+}
         var payment_terms = res.data.result.payment_terms
         var no_of_installment = res.data.result.no_of_installment
 
@@ -230,7 +246,9 @@ else{
     formData.append("end_date", endDate)
     formData.append("no_of_installment", installment.value);
     formData.append("date_month", dateMonth)
-    formData.append("tl_iba", invoice)
+    formData.append("tl_iba", invoiceTl)
+    formData.append("tp_iba", invoice)
+    formData.append("admin_iba", invoiceAdmin)
     store === "1" ?
       formData.append("due_date", lumsum) :
       store === "2" || store === "3" ?
@@ -377,11 +395,20 @@ else{
   };
 
   const installmentHandler = (key) => {
+let amount = totalAmount;
+let a = parseInt(totalAmount / key.value)
+let dd = []
+while (amount < 0) {
+   amount = amount - a;
+   dd.push(amount)
+}
 
     setInstallment(key)
     setClearValue(false)
+    console.log("ddd", dd)
   }
-let a = <Markup content= {description} />
+
+  
 const clientFun = (e) => {
   setClient(e)
   let a = []
@@ -405,10 +432,15 @@ const myMonthValue = (e) => {
   setDateMonth(e.target.value)
 }
 const getInviceValue = (e) => {
- console.log("invoiceValue", e.target.value)
+
   setInvice(e.target.value)
 }
-console.log("invoiceValue", invoice === "0")
+const getInvoiceAdmin  = (e) => {
+  setInvoiceAdmin(e.target.value)
+}
+const getInvoicetl  = (e) => {
+  setInvoicetl(e.target.value)
+}
   return (
     <Layout TLDashboard="TLDashboard" TLuserId={userid}>
       <Card>
@@ -491,14 +523,32 @@ console.log("invoiceValue", invoice === "0")
                   </select>
                 </div>
                 <div class="form-group">
-                <label>Whether invoice(s) can be issued before acceptance of proposal by client</label>
-                <div onChange={(e) => getInviceValue(e)} className="myInvice">
-              <input 
-              type="radio" value="0" checked = {invoice === "0" ? true : false} name="yes" />Yes
-                 <input 
-              type="radio" value="1" checked = {invoice  === "1" ? true : false} name = "yes"/>No
-              </div>
-              </div>
+                  <label>Whether invoice(s) can be issued before acceptance of proposal by client</label>
+                  <div onChange={(e) => getInviceValue(e)} className="myInvice">
+                <input 
+                type="radio" disabled = {tpDisable} value="0" name="yes" />Yes
+                   <input 
+                type="radio" disabled = {tpDisable} value="1" name = "yes"/>No
+                </div>
+                </div>
+                <div class="form-group">
+                  <label>Approval of Team Leader for such issue of invoice(s)</label>
+                  <div onChange={(e) => getInvoicetl(e)} className="myInvice">
+                <input 
+                type="radio" disabled = {tlDisable} value="0" name="yes" />Yes
+                   <input 
+                type="radio" disabled = {tlDisable} value="1" name = "yes"/>No
+                </div>
+                </div>
+                <div class="form-group">
+                  <label>Approval of Admin for such issue of invoice(s)</label>
+                  <div onChange={(e) => getInvoiceAdmin(e)} className="myInvice">
+                <input 
+                type="radio" value="0" disabled name="yes" />Yes
+                   <input 
+                type="radio" value="1" disabled name = "yes"/>No
+                </div>
+                </div>
              
                 <div class="form-group">
                   <label>Scope of Work<span className="declined">*</span></label>

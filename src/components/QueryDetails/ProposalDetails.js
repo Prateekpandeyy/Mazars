@@ -156,7 +156,7 @@ const downloadpdf = () => {
       document.body.appendChild(a);
       a.style = "display: none";
       a.href = url;
-      a.download = `invoice_1.pdf`
+      a.download = `proposal.pdf`
       a.target = '_blank';
       a.click();
      }
