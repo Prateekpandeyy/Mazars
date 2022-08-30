@@ -64,6 +64,8 @@ const [scopeError, setScopeError] = useState(false)
   const [tlDisable, setTlDisable] = useState("");
   const [tpDisable, setTpDisable] = useState("")
   const [allAmount, setAllAmount] = useState([])
+  const [tlChecked, setTlChecked] = useState("")
+  const [tpCheckd, setTpChecked] = useState("")
   const [proposal, setProposal] = useState({
     query: "",
     name: "",
@@ -145,7 +147,9 @@ setDateMonth(res.data.result.due_date)
 setStartDate(res.data.result.start_date)
 setEndDate(res.data.result.end_date)
 setDate(res.data.result.due_date)
-setInvice(res.data.result.tl_iba)
+setInvice(res.data.result.tp_iba)
+setInvoicetl(res.data.result.tl_iba);
+
 if(res.data.result.admin_iba === null){
   setTlDisable(false)
 }
@@ -447,15 +451,17 @@ const myMonthValue = (e) => {
   setDateMonth(e.target.value)
 }
 const getInviceValue = (e) => {
-
+console.log("etv", e.target.value)
   setInvice(e.target.value)
 }
 const getInvoiceAdmin  = (e) => {
   setInvoiceAdmin(e.target.value)
 }
 const getInvoicetl  = (e) => {
+  
   setInvoicetl(e.target.value)
 }
+console.log("invoie", invoice)
   return (
     <Layout TLDashboard="TLDashboard" TLuserId={userid}>
       <Card>
@@ -537,24 +543,112 @@ const getInvoicetl  = (e) => {
                     <option value="4">Retainership plan-unspecified period</option>
                   </select>
                 </div>
+           
+              <div class="form-group">
+              <label>Whether invoice(s) can be issued before acceptance of proposal by client</label>
+              <div className="myInvice">
+             {
+              invoice === "1" ?
+              <label> 
+              <input 
+              type="radio"
+               defaultChecked 
+               onChange={(e) => getInviceValue(e)}
+               disabled = {tpDisable} 
+               value="1" name="yesclient" />Yes
+               
+    </label>  : 
+         <label> 
+         <input 
+          type="radio"
+            disabled = {tpDisable}
+            onChange={(e) => getInviceValue(e)}
+            value="1" 
+            name = "yesclient"/>Yes
+          
+    
+</label> 
+             }
+              {
+              invoice === "0" ?
+              <label> 
+              <input 
+              type="radio"
+              
+               onChange={(e) => getInviceValue(e)}
+               disabled = {tpDisable} 
+               value="0" name="yesclient" />No
+               
+    </label>  : 
+         <label> 
+         <input 
+          type="radio"
+          defaultChecked 
+            disabled = {tpDisable}
+            onChange={(e) => getInviceValue(e)}
+            value="0" 
+            name = "yesclient"/>No
+          
+    
+</label> 
+             }
+         </div>
+            </div>
+            
+             
                 <div class="form-group">
-                  <label>Whether invoice(s) can be issued before acceptance of proposal by client</label>
-                  <div onChange={(e) => getInviceValue(e)} className="myInvice">
-                <input 
-                type="radio" disabled = {tpDisable} value="0" name="yesclient" />Yes
-                   <input 
-                type="radio" disabled = {tpDisable} value="1" name = "yesclient"/>No
-                </div>
-                </div>
-                <div class="form-group">
-                  <label>Approval of Team Leader for such issue of invoice(s)</label>
-                  <div onChange={(e) => getInvoicetl(e)} className="myInvice">
-                <input 
-                type="radio" disabled = {tlDisable} value="0" name="yestl" />Yes
-                   <input 
-                type="radio" disabled = {tlDisable} value="1" name = "yestl"/>No
-                </div>
-                </div>
+                <label>Approval of Team Leader for such issue of invoice(s)</label>
+               
+                  <div className="myInvice">
+                   
+                  {
+                    invoiceTl === "1" ?
+                    <label> 
+                    <input 
+              type="radio"
+               defaultChecked
+               onChange={(e) => getInvoicetl(e)}
+                disabled = {tlDisable} 
+                value="1" 
+                name="yestl" />Yes
+               
+          </label> :
+            <label> 
+            <input 
+      type="radio"
+      
+       onChange={(e) => getInvoicetl(e)}
+        disabled = {tlDisable} 
+        value="1" 
+        name="yestl" />Yes
+       
+  </label>
+                  }
+        {
+          invoiceTl === "0" ?
+          <label> 
+          <input 
+              type="radio" 
+              onChange={(e) => getInvoicetl(e)}
+              defaultChecked
+              disabled = {tlDisable}
+               value="0" 
+               name = "yestl"/>No
+             
+          </label> :
+            <label> 
+            <input 
+                type="radio" 
+                onChange={(e) => getInvoicetl(e)}
+                disabled = {tlDisable}
+                 value="0" 
+                 name = "yestl"/>No
+               
+            </label>
+        }
+                </div> 
+               
+              </div> 
                 <div class="form-group">
                   <label>Approval of Admin for such issue of invoice(s)</label>
                   <div onChange={(e) => getInvoiceAdmin(e)} className="myInvice">

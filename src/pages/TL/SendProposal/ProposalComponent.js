@@ -466,27 +466,27 @@ const getInvoicetl  = (e) => {
                   <label>Whether invoice(s) can be issued before acceptance of proposal by client</label>
                   <div onChange={(e) => getInviceValue(e)} className="myInvice">
                 <input 
-                type="radio" value="0" name="yesclient" />Yes
+                type="radio" value="1" name="yesclient" />Yes
                    <input 
-                type="radio" value="1" name = "yesclient"/>No
+                type="radio" value="0" name = "yesclient"/>No
                 </div>
                 </div>
                 <div class="form-group">
                   <label>Approval of Team Leader for such issue of invoice(s)</label>
                   <div onChange={(e) => getInvoicetl(e)} className="myInvice">
                 <input 
-                type="radio" value="0" name="yestl" />Yes
+                type="radio" value="1" name="yestl" />Yes
                    <input 
-                type="radio" value="1" name = "yestl"/>No
+                type="radio" value="0" name = "yestl"/>No
                 </div>
                 </div>
                 <div class="form-group">
                   <label>Approval of Admin for such issue of invoice(s)</label>
                   <div onChange={(e) => getInvoiceAdmin(e)} className="myInvice">
                 <input 
-                type="radio" disabled value="0" name="yesadmin" />Yes
+                type="radio" disabled value="1" name="yesadmin" />Yes
                    <input 
-                type="radio" disabled value="1" name = "yesadmin"/>No
+                type="radio" disabled value="0" name = "yesadmin"/>No
                 </div>
                 </div>
               
