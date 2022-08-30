@@ -240,11 +240,10 @@ else{
     formData.append("description", value2);
     formData.append("amount_type", "fixed");
     formData.append("amount", totalAmount);
-    {
-      amount.length > 0 ?
-      formData.append("installment_amount", amount) :
+   
+   
       formData.append("installment_amount", allAmount);
-    }
+   
     formData.append("company", company2)
     formData.append("payment_plan", store);
     formData.append("start_date", startDate);
