@@ -543,8 +543,9 @@ console.log("invoie", invoice)
                     <option value="4">Retainership plan-unspecified period</option>
                   </select>
                 </div>
-           
-              <div class="form-group">
+          <div className="myproposaloption">
+             
+          {/* <div class="form-group">
               <label>Whether invoice(s) can be issued before acceptance of proposal by client</label>
               <div className="myInvice">
              {
@@ -593,8 +594,59 @@ console.log("invoie", invoice)
 </label> 
              }
          </div>
-            </div>
-            
+            </div> */}
+               <div class="form-group">
+               <label>Whether invoice(s) can be issued before acceptance of proposal by client</label>
+                  <div className="myInvice">
+                   
+                  {
+                    invoice === "1" ?
+                    <label> 
+                    <input 
+              type="radio"
+               defaultChecked
+               onChange={(e) => getInviceValue(e)}
+               disabled = {tpDisable} 
+                value="1" 
+                name="yesclient" />Yes
+               
+          </label> :
+            <label> 
+            <input 
+      type="radio"
+      
+       onChange={(e) => getInviceValue(e)}
+       disabled = {tpDisable} 
+        value="1" 
+        name="yesclient" />Yes
+       
+  </label>
+                  }
+        {
+          invoice === "0" ?
+          <label> 
+          <input 
+              type="radio" 
+              onChange={(e) => getInviceValue(e)}
+              defaultChecked
+              disabled = {tpDisable} 
+               value="0" 
+                name="yesclient"/>No
+             
+          </label> :
+            <label> 
+            <input 
+                type="radio" 
+                onChange={(e) => getInviceValue(e)}
+                disabled = {tpDisable} 
+                 value="0" 
+                  name="yesclient"/>No
+               
+            </label>
+        }
+                </div> 
+               
+              </div> 
              
                 <div class="form-group">
                 <label>Approval of Team Leader for such issue of invoice(s)</label>
@@ -610,7 +662,7 @@ console.log("invoie", invoice)
                onChange={(e) => getInvoicetl(e)}
                 disabled = {tlDisable} 
                 value="1" 
-                name="yestl" />Yes
+                name = "yestl" />Yes
                
           </label> :
             <label> 
@@ -620,7 +672,7 @@ console.log("invoie", invoice)
        onChange={(e) => getInvoicetl(e)}
         disabled = {tlDisable} 
         value="1" 
-        name="yestl" />Yes
+        name = "yestl" />Yes
        
   </label>
                   }
@@ -658,6 +710,7 @@ console.log("invoie", invoice)
                 type="radio" value="1" disabled name = "yesadmin"/>No
                 </div>
                 </div>
+          </div>
              
                 <div class="form-group">
                   <label>Scope of Work<span className="declined">*</span></label>

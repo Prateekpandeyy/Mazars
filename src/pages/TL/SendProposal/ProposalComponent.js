@@ -462,7 +462,8 @@ const getInvoicetl  = (e) => {
                   </select>
                 </div>
 
-                <div class="form-group">
+               <div className="myproposaloption">
+               <div class="form-group">
                   <label>Whether invoice(s) can be issued before acceptance of proposal by client</label>
                   <div onChange={(e) => getInviceValue(e)} className="myInvice">
                 <input 
@@ -489,6 +490,7 @@ const getInvoicetl  = (e) => {
                 type="radio" disabled value="0" name = "yesadmin"/>No
                 </div>
                 </div>
+               </div>
               
                 <div class="form-group">
                   <label>Scope of Work<span className="declined">*</span></label>
