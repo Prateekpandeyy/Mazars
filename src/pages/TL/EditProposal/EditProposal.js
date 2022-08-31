@@ -149,7 +149,9 @@ setEndDate(res.data.result.end_date)
 setDate(res.data.result.due_date)
 setInvice(res.data.result.tp_iba)
 setInvoicetl(res.data.result.tl_iba);
-
+if(res.data.result.tp_iba === "0"){
+  setTlDisable(true)
+}
 if(res.data.result.admin_iba === null){
   setTlDisable(false)
 }
@@ -452,6 +454,12 @@ const myMonthValue = (e) => {
 }
 const getInviceValue = (e) => {
 console.log("etv", e.target.value)
+if(e.target.value === "0"){
+  setTlDisable(true)
+}
+else{
+  setTlDisable(false)
+}
   setInvice(e.target.value)
 }
 const getInvoiceAdmin  = (e) => {

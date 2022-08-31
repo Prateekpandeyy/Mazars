@@ -254,6 +254,20 @@ let nd = 0;
       }
     }
   }
+  const getInviceValue = (e) => {
+    let val = e.target.value
+   let formData = new FormData()
+   formData.append("admin_iba", val);
+   formData.append("assign_no", p.id)
+   axios({
+    method : "POST",
+    url :  `${baseUrl}/admin/setiba`,
+    data : formData
+   })
+   .then((res) => {
+    console.log(res)
+   })
+  }
   return (
     <>
       <div className="queryBox">
@@ -315,6 +329,35 @@ let nd = 0;
             </tr>
 
             <tr>
+              <th scope="row">Approval of Admin for such issue of invoice(s)</th>
+              <td className="tableStyle"> 
+              <div class="form-group">
+                
+                  <div className="myInvice">
+                  <label> 
+          <input 
+              type="radio" 
+              onChange={(e) => getInviceValue(e)}
+            
+               value="1" 
+                name="yesclient"/>Yes
+             
+          </label> :
+            <label> 
+            <input 
+                type="radio" 
+                onChange={(e) => getInviceValue(e)}
+               
+                 value="0" 
+                  name="yesclient"/>No
+               
+            </label>
+                </div>
+                </div></td>
+            </tr>
+
+
+            <tr>
               <th scope="row">Amount</th>
               <td>
                 <tr style={{display : "flex", width : "100%"}}>
@@ -350,7 +393,7 @@ let nd = 0;
                 payment_terms == "lumpsum" ?
                   <td>
                     <tr>
-                      <th>Payment Type</th>
+                      <th>Payment Plan</th>
                       <th>Due Dates</th>
                     </tr>
                     <tr>
@@ -364,7 +407,7 @@ let nd = 0;
                   payment_terms == "installment" ?
                     <td>
                       <tr style={{display : "flex", width : "100%"}}>
-                        <th style={{display : "flex", width : "25%"}}>Payment Type</th>
+                        <th style={{display : "flex", width : "25%"}}>Payment Plan</th>
                         <th style={{display : "flex", width : "25%"}}>No of Installments</th>
                         <th style={{display : "flex", width : "25%"}}>Installment Amount</th>
                         <th style={{display : "flex", width : "25%"}}>Due Dates</th>
