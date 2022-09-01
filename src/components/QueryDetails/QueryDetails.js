@@ -41,7 +41,8 @@ function QueryDetails({
   declinedStatus, 
   finalDate, 
   qstatus,
-  panel
+  panel,
+  admininvoice
 }) {
  
 
@@ -137,6 +138,7 @@ function QueryDetails({
                     tpStatus={tpStatus}
                     panel = {panel}
                     overDue = {overDue}
+                    admininvoice = {admininvoice}
                   />
                 </Card>
               </Col>

@@ -15,7 +15,8 @@ function ProposalDetails({
   tpStatus,
   tp22, 
   panel,
-  overDue
+  overDue,
+  admininvoice
 }) {
 
   const {
@@ -42,7 +43,8 @@ function ProposalDetails({
   const { tlname, date_of_allocation } = diaplayHistory;
   
   var nfObject = new Intl.NumberFormat('hi-IN')
-
+  
+  // checkDevice
  const checkDevice = () => {
   return [
     'iPad Simulator',
@@ -255,6 +257,7 @@ let nd = 0;
     }
   }
   const getInviceValue = (e) => {
+    const token = window.localStorage.getItem("adminToken")
     let val = e.target.value
    let formData = new FormData()
    formData.append("admin_iba", val);
@@ -262,12 +265,16 @@ let nd = 0;
    axios({
     method : "POST",
     url :  `${baseUrl}/admin/setiba`,
+    headers : {
+      uit : token
+  },
     data : formData
    })
    .then((res) => {
     console.log(res)
    })
   }
+  console.log("pppp", admininvoice)
   return (
     <>
       <div className="queryBox">
@@ -309,13 +316,7 @@ let nd = 0;
                 <div style={{ display: "flex", justifyContent: "space-between" }}>
                   {CommonServices.removeTime(proposal_date)}
                   {proposal_date && (
-                    // <a
-                    //   className="customBtn"
-                    //   href={`${baseUrl}/customers/dounloadpdf?id=${p.id}`}
-                    //   role="button"
-                    // >
-                    //   Download
-                    // </a>
+                  
                     <button className="customBtn" onClick={() => downloadpdf()}>
                       Download
                       </button>
@@ -328,35 +329,93 @@ let nd = 0;
               <td className="tableStyle"> <Markup content={description} /></td>
             </tr>
 
+          {
+            panel === "admin" ?
             <tr>
-              <th scope="row">Approval of Admin for such issue of invoice(s)</th>
-              <td className="tableStyle"> 
-              <div class="form-group">
-                
+            <th scope="row">Approval of Admin for such issue of invoice(s)</th>
+            <td className="tableStyle"> 
+            <div class="form-group">
+                <label>Approval of Team Leader for such issue of invoice(s)</label>
+               
                   <div className="myInvice">
-                  <label> 
+                   
+                  {
+                    admininvoice === "1" ?
+                    <label> 
+                    <input 
+              type="radio"
+               defaultChecked
+               onChange={(e) => getInviceValue(e)}
+                
+                value="1" 
+                name = "yestl" />Yes
+               
+          </label> :
+            <label> 
+            <input 
+      type="radio"
+      
+       onChange={(e) => getInviceValue(e)}
+        
+        value="1" 
+        name = "yestl" />Yes
+       
+  </label>
+                  }
+        {
+          admininvoice === "0" ?
+          <label> 
           <input 
               type="radio" 
               onChange={(e) => getInviceValue(e)}
+              defaultChecked
             
-               value="1" 
-                name="yesclient"/>Yes
+               value="0" 
+               name = "yestl"/>No
              
           </label> :
             <label> 
             <input 
                 type="radio" 
                 onChange={(e) => getInviceValue(e)}
-               
+              
                  value="0" 
-                  name="yesclient"/>No
+                 name = "yestl"/>No
                
             </label>
+        }
+                </div> 
+               
+              </div>
+              </td>
+          </tr> : ""
+          }
+            <tr>
+              <th scope="row">Whether invoice(s) can be issued before acceptance of proposal by client</th>
+              <td className="tableStyle"> 
+              <div class="form-group">
+                
+                  <div className="myInvice">
+                 {
+                  p.tp_iba === "1" ?
+                  "Yes" : "No"
+                 }
                 </div>
                 </div></td>
             </tr>
-
-
+            <tr>
+              <th scope="row">Approval of Team Leader for such issue of invoice(s)</th>
+              <td className="tableStyle"> 
+              <div class="form-group">
+                
+                  <div className="myInvice">
+                 {
+                  p.tl_iba === "1" ?
+                  "Yes" : "No"
+                 }
+                </div>
+                </div></td>
+            </tr>
             <tr>
               <th scope="row">Amount</th>
               <td>
@@ -386,22 +445,28 @@ let nd = 0;
                 </tr>
               </td>
             </tr>
-
+           
             <tr>
               <th scope="row">Payment Terms</th>
               {
                 payment_terms == "lumpsum" ?
                   <td>
-                    <tr>
-                      <th>Payment Plan</th>
-                      <th>Due Dates</th>
-                    </tr>
-                    <tr>
+                    <tr style={{display : "flex", width : "100%"}}>
+                  <th style={{display : "flex", width : "50%"}}>Payment Plan</th>
+                  <th style={{display : "flex", width : "50%"}}>Due Dates</th>
+                </tr>
+                <tr style={{display : "flex", width : "100%"}}>
+                  <td style={{display : "flex", width : "50%"}}>{CommonServices.capitalizeFirstLetter(payment_terms)}</td>
+                  <td style={{display : "flex", width : "50%", justifyContent : "flex-start"}}>
+                  {CommonServices.removeTime(due_date)}
+                  </td>
+                </tr>
+                    {/* <tr>
                       <td>{CommonServices.capitalizeFirstLetter(payment_terms)}</td>
                       <td>
                         {CommonServices.removeTime(due_date)}
                       </td>
-                    </tr>
+                    </tr> */}
                   </td>
                   :
                   payment_terms == "installment" ?

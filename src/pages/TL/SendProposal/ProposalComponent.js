@@ -60,6 +60,7 @@ function ProposalComponent(props) {
   const [invoice, setInvice] = useState("")
   const [invoiceTl, setInvoicetl] = useState("")
   const [invoiceAdmin, setInvoiceAdmin] = useState("")
+  const [allAmount, setAllAmount] = useState([])
   const [fromMax, setFromMax] = useState(current_date)
   const token = window.localStorage.getItem("tlToken")
   const myConfig = {
@@ -171,7 +172,7 @@ function ProposalComponent(props) {
     formData.append("description", det);
     formData.append("amount_type", "fixed");
     formData.append("amount", value.p_fixed);
-    formData.append("installment_amount", amount);
+    formData.append("installment_amount", allAmount);
     formData.append("payment_plan", store);
     formData.append("start_date", startDate);
     formData.append("end_date", endDate)
@@ -195,19 +196,19 @@ function ProposalComponent(props) {
         
         } 
 
-        else if (store !== "4" && !amount || !date) {
+        else if (store !== "4" && !allAmount || !date) {
             Alerts.ErrorNormal(`Please enter all fields.`)
             
           }
 
-          else if (store !== "4" && amount && date) {
+          else if (store !== "4" && allAmount && date) {
             
             if (installment.value > 0) {
               var a = Number(installment.value)
               for (let i = 0; i < a; i++) {
                 // arrAmount.push(amount[i])
                 // arrDate.push(date[i])
-                if (amount[i] == "" || amount[i] == undefined || amount[i] <= 0) {
+                if (allAmount[i] == "" || allAmount[i] == undefined || allAmount[i] <= 0) {
                   Alerts.ErrorNormal(`Please enter amount`)
                
                   return false
@@ -218,7 +219,7 @@ function ProposalComponent(props) {
                   return false
                 }
               }
-              var sum = amount.reduce(myFunction)
+              var sum = allAmount.reduce(myFunction)
               function myFunction(total, value) {
                 return Number(total) + Number(value);
               }
@@ -297,6 +298,7 @@ function ProposalComponent(props) {
       array1.push(value)
     });
     setAmount(array1);
+    setAllAmount(array1)
   };
 
   const paymentDate = (data) => {
@@ -334,8 +336,17 @@ function ProposalComponent(props) {
   };
 
   const installmentHandler = (key) => {
-   
+    let amount = totalAmount;
+    let a = Math.round(totalAmount / key.value)
+    let dd = []
+    while (amount > a) {
+       amount = amount - a;
+       dd.push(a)
+    }
+    dd.push(amount)
+    
     setInstallment(key)
+    setAllAmount(dd)
   }
 const clientFun = (e) => {
   let a = []
@@ -766,6 +777,7 @@ const getInvoicetl  = (e) => {
                     paymentAmount={paymentAmount}
                     paymentDate={paymentDate}
                     totalAmount={totalAmount}
+                    installment_amount={allAmount}
                     min={item}
                     item={item}
                     dateError = {dateError}
@@ -782,6 +794,7 @@ const getInvoicetl  = (e) => {
                     paymentAmount={paymentAmount}
                     paymentDate={paymentDate}
                     totalAmount={totalAmount}
+                    installment_amount={allAmount}
                     min={startDate}
                     max={endDate}
                     item={startDate}

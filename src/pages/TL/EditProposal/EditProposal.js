@@ -386,13 +386,13 @@ else{
 
 
   const paymentAmount = (data) => {
-   console.log("data", data)
-
+  
     var array1 = []
     Object.entries(data).map(([key, value]) => {
       array1.push(value)
     });
     setAmount(array1.slice(0, installment.value));
+    setAllAmount(array1.slice(0, installment.value))
   };
 
   const paymentDate = (data) => {
