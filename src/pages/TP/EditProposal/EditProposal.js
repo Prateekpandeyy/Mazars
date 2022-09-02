@@ -688,4 +688,3 @@ const noInstallments = [
     label: "4",
   },
 ];
-
