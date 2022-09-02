@@ -52,7 +52,6 @@ function ProposalView(props) {
     amount_hourly: "",
 
     payment_terms: "",
-    payment_plan : "",
     no_of_installment: "",
     installment_amount: "",
     due_date: "",
@@ -62,7 +61,6 @@ function ProposalView(props) {
     name, description,
     amount_type, amount_fixed, amount_hourly,
     payment_terms,
-    payment_plan,
     no_of_installment,
     installment_amount,
     due_date,
@@ -99,7 +97,6 @@ function ProposalView(props) {
               amount_hourly: res.data.proposal_queries[0].amount_hourly,
 
               payment_terms: res.data.proposal_queries[0].payment_terms,
-              payment_plan : res.data.proposal_queries[0].payment_plan,
               no_of_installment: res.data.proposal_queries[0].no_of_installment,
               installment_amount: res.data.proposal_queries[0].installment_amount,
               due_date: res.data.proposal_queries[0].due_date,
@@ -312,26 +309,27 @@ const amountStyle  = {
                 <th scope="row">Amount</th>
                 <td>
                   <tr style={{display : "flex", width : "100%"}}>
-                    <th style={{display : "flex", width : "50%"}}>Payment Plan</th>
-                    {
-                      payment_plan === "4" ?
-                      <th style={{display : "flex", width : "50%"}}>Amount of monthly fee </th> :
-                      <th style={{display : "flex", width : "50%"}}>Amount of  fee </th>
-                    }
-                   
+                    <th style={{display : "flex", width : "50%"}}>Amount Type</th>
+                    <th style={{display : "flex", width : "50%"}}>Price</th>
                   </tr>
                   <tr style={{display : "flex", width : "100%"}}>
                     <td style={{display : "flex", width : "50%"}}>{CommonServices.capitalizeFirstLetter(amount_type)}</td>
                     <td style={{display : "flex", width : "50%"}}>
-                     {
-                      payment_plan === "4" ?
-                      <>
-                      {`Rs. ${nfObject.format(amount)} per month payable before ${CommonServices.removeTime(due_date)} day of following month`}
-                      </>
-                       :
-                      nfObject.format(amount)
-                     }
-                      
+                      {
+                        amount_type == "fixed" ?
+                          nfObject.format(amount)
+                          :
+                          amount_type == "hourly" ?
+                            nfObject.format(amount_hourly)
+                            :
+                            amount_type == "mixed" ?
+                              <div>
+                                <p>Fixed : {nfObject.format(amount)}</p>
+                                <p>Hourly : {nfObject.format(amount_hourly)}</p>
+                              </div>
+                              :
+                              ""
+                      }
                     </td>
                   </tr>
                 </td>
@@ -340,32 +338,30 @@ const amountStyle  = {
               <tr>
                 <th scope="row">Payment Terms</th>
                 {
-                  payment_plan == "1"  ?
+                  payment_terms == "lumpsum" ?
                     <td>
-                     
-                      <tr style={{display : "flex", width : "100%"}}>
-                    <th style={{display : "flex", width : "50%"}}>Payment Plan</th>
-                    <th style={{display : "flex", width : "50%"}}>Due Dates </th>
-                  </tr>
-                  <tr style={{display : "flex", width : "100%"}}>
-                    <td style={{display : "flex", width : "50%"}}>
-                      {CommonServices.capitalizeFirstLetter(amount_type)}</td>
-                    <td style={{display : "flex", width : "50%"}}>
-                    {CommonServices.removeTime(due_date)}
-                      </td>
+                      <tr>
+                        <th>Payment Type</th>
+                        <th>Due Dates</th>
+                      </tr>
+                      <tr>
+                        <td>{CommonServices.capitalizeFirstLetter(payment_terms)}</td>
+                        <td>
+                          {CommonServices.removeTime(due_date)}
+                        </td>
                       </tr>
                     </td>
                     :
-                   payment_plan == "2" || payment_plan == "3" ?
+                    payment_terms == "installment" ?
                       <td>
                         <tr style={{display : "flex", width : "100%"}}>
-                          <th style={{display : "flex", width : "25%"}}>Payment Plan</th>
+                          <th style={{display : "flex", width : "25%"}}>Payment Type</th>
                           <th style={{display : "flex", width : "25%"}}>No of Installments</th>
                           <th style={{display : "flex", width : "25%"}}>Installment Amount</th>
                           <th style={{display : "flex", width : "25%"}}>Due Dates</th>
                         </tr>
                         <tr style={{display : "flex", width : "100%"}}>
-                          <td style={{display : "flex", width : "25%", wordBreak : "break-all"}}>{CommonServices.capitalizeFirstLetter(amount_type)}</td>
+                          <td style={{display : "flex", width : "25%"}}>{CommonServices.capitalizeFirstLetter(payment_terms)}</td>
                           <td style={{display : "flex", width : "25%", justifyContent : "center"}}>{no_of_installment}</td>
                           <td style={{display : "flex", width : "25%", flexDirection : "column", textAlign : "right"}}>{installAmount2(installment_amount)}</td>
                         <td style={{display : "flex", width : "25%", flexDirection : "column"}}>{installAmount(due_date)}</td>

@@ -158,7 +158,7 @@ function CustomerNotification({ tokenKey, name , panel}) {
             axios
             .get(`${baseUrl}/${redir}/getNotification?id=${JSON.parse(tokenKey)}&type_list=uread`, myConfig)
             .then((res) => {
-           
+                console.log("resCode", res.data.code)
                 if (res.data.code === 1) {
                    
                    if(res.data.result[0] != undefined){
@@ -186,6 +186,8 @@ function CustomerNotification({ tokenKey, name , panel}) {
           
     };
 
+
+console.log("name", name === "admin" , countNotification)
 
     return (
         <>

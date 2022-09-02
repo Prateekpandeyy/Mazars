@@ -15,14 +15,8 @@ import ima from "../../mazars_logo.png";
 import { OuterloginContainer } from '../../components/Common/OuterloginContainer';
 import { Link } from 'react-router-dom';
 import { Viewer } from '@react-pdf-viewer/core'; // install this library
+import MyContainer from "../../components/Common/MyContainer";
 
-const MyContainer = styled(Box)({
-    display : "flex", 
-    justifyContent : "center", 
-    alignItems : "center", 
-    width: "100%",
-    flexDirection : "column"
-  })
   const Disclamair = styled(Box)({
 display: "flex",
 flexDirection: "column",

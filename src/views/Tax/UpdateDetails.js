@@ -19,15 +19,7 @@ import '@react-pdf-viewer/core/lib/styles/index.css';
 // import '@react-pdf-viewer/default-layout/lib/styles/index.css';
 // Worker
 import { Worker } from '@react-pdf-viewer/core'; // install this library
-
-const MyContainer = styled(Box)({
-    display : "flex", 
-    justifyContent : "center", 
-    alignItems : "center", 
-    width: "100%",
-    flexDirection : "column"
-  })
- 
+import MyContainer from "../../components/Common/MyContainer";
   const ArticleWrapper = styled(Box)({
     display: "flex", 
     flexDirection: "column",

@@ -210,15 +210,3 @@ span {
   top : 20% !important;
   left: 50% !important;
 }
-.myInvice {
-  display: flex;
-  max-width: 100px;
-  width: 100%;
-  justify-content: space-around;
-
-}
-.myproposaloption{
-  border : 1px solid #ccc;
-  border-radius: 5px;
-  padding: 10px;;
-}

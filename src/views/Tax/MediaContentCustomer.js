@@ -11,13 +11,7 @@ import Footer from '../../components/Footer/Footer';
 import CommonServices from '../../common/common.js';
 import classesCustom from './design.module.css';
 import { OuterloginContainer } from '../../components/Common/OuterloginContainer';
-const MyContainer = styled(Box)({
-    display : "flex", 
-    justifyContent : "center", 
-    alignItems : "center", 
-    width: "100%",
-    flexDirection : "column"
-  })
+import MyContainer from "../../components/Common/MyContainer";
   const MyHeading = styled(Box)({
     display : "flex",
     justifyContent: "space-between"

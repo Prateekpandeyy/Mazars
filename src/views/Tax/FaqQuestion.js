@@ -16,19 +16,9 @@ import classes from './design.module.css';
 import AddIcon from "@material-ui/icons/Add";
 import RemoveIcon from "@material-ui/icons/Remove";
 import { OuterloginContainer } from '../../components/Common/OuterloginContainer';
-const MyContainer = styled(Box)({
-    display : "flex", 
-    justifyContent : "center", 
-    alignItems : "center", 
-    width: "100%",
-    flexDirection : "column"
-  })
-
+import MyContainer from "../../components/Common/MyContainer";
 const FaqQuestion = () => {
-    const [data, setData] = useState(["1"])
     const [list, setList] = useState([])
-    const [heading, setHeading] = useState("")
-   
     const [expanded, setExpanded] = useState([]);
     const getList = () => {
       axios.get(`${baseUrl}/customers/getfaq`)

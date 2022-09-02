@@ -10,14 +10,8 @@ import { Markup } from 'interweave';
 import Footer from '../../components/Footer/Footer';
 import classes from './design.module.css';
 import FlashSection from "../../components/Common/FlashSection";
-const MyContainer = styled(Box)({
-    display : "flex", 
-    justifyContent : "center", 
-    alignItems : "center", 
-    width: "100%",
-    flexDirection : "column"
-  })
- 
+import { OuterloginContainer } from '../../components/Common/OuterloginContainer';
+import MyContainer from "../../components/Common/MyContainer";
 const LatestUpdates = () => {
     const [news, getNews] = useState([])
     const [pos,setPos] = useState(1920);   
@@ -75,7 +69,8 @@ const LatestUpdates = () => {
       };
     return(
        <>
-        <Header noSign="noSign" />
+       <OuterloginContainer>
+       <Header noSign="noSign" />
         <MyContainer>
    
         <FlashSection>
@@ -119,6 +114,8 @@ const LatestUpdates = () => {
       
        </MyContainer>
        <Footer />
+       </OuterloginContainer>
+      
        </>
   
     )

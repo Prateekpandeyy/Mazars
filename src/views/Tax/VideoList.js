@@ -2,7 +2,6 @@ import React , {useState, useEffect} from 'react';
 import Header from "../../components/Header/Header";
 import { styled , makeStyles} from "@material-ui/styles";
 import { Link } from 'react-router-dom';
-import Data from './directData.js';
 import Footer from '../../components/Footer/Footer';
 import { useHistory, useParams  } from 'react-router';
 import axios from 'axios';
@@ -14,13 +13,7 @@ import {Breadcrumbs, Box, Typography  } from "@material-ui/core";
 import pngAlbum from './album.png';
 import classes from './design.module.css';
 import { OuterloginContainer } from '../../components/Common/OuterloginContainer';
-const MyContainer = styled(Box)({
-    display : "flex", 
-    justifyContent : "center", 
-    alignItems : "center", 
-    width: "100%",
-    flexDirection : "column"
-  })
+import MyContainer from "../../components/Common/MyContainer";
 const VideoList = () => {
     const [galleryData, setGalleryData] = useState([])
     const userId = window.localStorage.getItem("adminkey");

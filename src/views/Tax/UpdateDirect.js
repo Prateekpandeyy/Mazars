@@ -5,21 +5,13 @@ import Footer from '../../components/Footer/Footer';
 import { useHistory, useParams  } from 'react-router';
 import axios from 'axios';
 import { baseUrl,} from '../../config/config';
-
 import classes from './design.module.css';
 import { OuterloginContainer } from '../../components/Common/OuterloginContainer';
-
 import { Link } from 'react-router-dom';
-
 import {Box, Breadcrumbs, Table, TableContainer, 
   TableHead, TablePagination, TableBody, TableRow, TableCell} from "@material-ui/core";
-const MyContainer = styled(Box)({
-    display : "flex", 
-    justifyContent : "center", 
-    alignItems : "center", 
-    width: "100%",
-    flexDirection : "column"
-  })
+import MyContainer from "../../components/Common/MyContainer";
+
   const Disclamair = styled(Box)({
 display: "flex",
 flexDirection: "column",

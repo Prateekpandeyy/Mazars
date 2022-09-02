@@ -11,14 +11,8 @@ import Breadcrumbs from '@mui/material/Breadcrumbs';
 import classesCustom from './design.module.css';
 import { OuterloginContainer } from '../../components/Common/OuterloginContainer';
 import CommonServices from "../../common/common";
+import MyContainer from "../../components/Common/MyContainer";
 
-const MyContainer = styled(Box)({
-    display: "flex",
-  padding : "0 15px",
-  height: "100%",
-  flexDirection: "column",
-  justifyContent: "space-between"
-  })
 const Direct = () => {
     const [page, setPage] = useState(1);
     const [rowsPerPage, setRowsPerPage] = useState(10)
@@ -97,18 +91,6 @@ const Direct = () => {
   
         <div className={classesCustom.articleContent}>
      <div className={classesCustom.articlesDetails}>
-
-
-
-
-
-
-
-
-
-
-
-
           <Breadcrumbs separator=">" maxItems={3} aria-label="breadcrumb">
           <Link underline="hover" color="inherit" to="/customer/direct">
   Articles
@@ -116,9 +98,6 @@ const Direct = () => {
   
   
 </Breadcrumbs>
-{/* <div className={classesCustom.articlesDetails}>
-<Table data={data} setData = {setData} total = {dataCount} rowsPerPage={10} />
-</div> */}
 
     <TableContainer>
         <Table>

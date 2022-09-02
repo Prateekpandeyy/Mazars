@@ -13,7 +13,7 @@ export default class YourComponent extends React.Component {
 
 
     amount = this.props.installment_amount
-    installment_amount = this.amount
+    installment_amount = this.amount.split(',');
     temp = this.installment_amount
     tamp2;
     handleChange1(i, e) {
@@ -52,14 +52,11 @@ export default class YourComponent extends React.Component {
 
     componentDidMount() {
         this.setState({ isLoading: false });
-       
-        var amount = this.props.installment_amount
         
+        var amount = this.props.installment_amount
         var date = this.props.due_date
-        this.props.paymentAmount(amount)
-       var installment_amount = amount
-      
-       
+
+        const installment_amount = amount.split(',');
         const due_date = date.split(',');
 
 
@@ -73,10 +70,10 @@ export default class YourComponent extends React.Component {
 
         var amount = this.props.installment_amount
         var date = this.props.due_date
-     
-         let installment_amount;
-       
-        const due_date = date.split(',')
+
+        const installment_amount = amount.split(',');
+        const due_date = date.split(',');
+
         var fieldsArray = [];
 
 
@@ -91,7 +88,7 @@ export default class YourComponent extends React.Component {
                        className="form-control"
                        name={this.state.values[i]}
                        onChange={this.handleChange1.bind(this, i)}
-                      defaultValue={amount[i]}
+                      defaultValue={installment_amount[i]}
                    />
                </div> :   ""
 }
@@ -103,7 +100,7 @@ export default class YourComponent extends React.Component {
                            className="form-control"
                            name={this.state.values[i]}
                            onChange={this.handleChange1.bind(this, i)}
-                           defaultValue={amount[i]}
+                           defaultValue=""
                        />
                    </div> : ""}
           {this.props.clearValue == true ? 
@@ -116,9 +113,7 @@ export default class YourComponent extends React.Component {
                name={this.state.dates[i]}
                onChange={this.handleChange2.bind(this, i)}
                defaultValue={due_date[i]}
-            
                min={this.props.item}
-               max={this.props.max}
            />
        </div> : ""}  
        {this.props.clearValue == false ? 
@@ -132,7 +127,6 @@ export default class YourComponent extends React.Component {
                onChange={this.handleChange2.bind(this, i)}
                defaultValue= ""
                min={this.props.item}
-               max={this.props.max}
            />
        </div> : ""}         
                    
@@ -158,5 +152,6 @@ export default class YourComponent extends React.Component {
         );
     }
 }
+
 
 

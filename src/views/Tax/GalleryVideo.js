@@ -8,26 +8,14 @@ import { baseUrl, baseUrl3 } from "../../config/config";
 import axios from "axios";
 import './style.css';
 import classes from './design.module.css';
-    const MyContainer = styled(Box)({
-        display : "flex", 
-        justifyContent : "center", 
-        alignItems : "center", 
-        width: "100%",
-        flexDirection : "column"
-      })
+import MyContainer from "../../components/Common/MyContainer";
+import { OuterloginContainer } from '../../components/Common/OuterloginContainer';
 const GalleryVideo = () => {
   const [images, setImages] = useState([])
   const [title, setTitle] = useState("")
   let history = useHistory();
   
     useEffect(() => {
-
-    
-        // document.getElementsByClassName('image-gallery-fullscreen-button')[0].addEventListener("click", (event) => {
-        //   console.log("fullScrennbtn")
-        // })
-   
-      
       getImages()
     }, [])
     const getImages = () => {
@@ -91,7 +79,8 @@ const GalleryVideo = () => {
 
     return(
         <>
-         <Header noSign="noSign" />
+        <OuterloginContainer>
+        <Header noSign="noSign" />
         <MyContainer>
    
   
@@ -128,6 +117,7 @@ const GalleryVideo = () => {
       </div>
       
        </MyContainer>
+        </OuterloginContainer>
       
        </>
     )

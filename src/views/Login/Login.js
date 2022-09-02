@@ -314,7 +314,7 @@ const custLogout = () => {
   </h1>
     </FlashSection> : ""}
    <span className="loginHeading">
-   <h2 className = "my-3"> Mazars Advisory Solutions (MAS) </h2>
+   <h2 className = "my-3"> Mazars Advisory Solutions </h2>
    </span>
     
       <div className="StartPage">
@@ -468,7 +468,7 @@ const custLogout = () => {
       </MainContent>
         <MyBox>
          
-          <h4 style={{fontSize: "1.5rem"}}>MAS backed by group of professionals with extensive industry knowledge and experience in
+          <h4 style={{fontSize: "1.5rem"}}>Mazars Advisory Solutions backed by group of professionals with extensive industry knowledge and experience in
              taxation matters, provides solutions to all direct & indirect tax queries.  </h4>
     <div style={{display: 'flex'}}>
     <ImgBox>

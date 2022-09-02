@@ -18,6 +18,7 @@ import  { HelpIcon } from "../../components/Common/MessageIcon";
 import { OuterloginContainer } from "../../components/Common/OuterloginContainer";
 import Swal from "sweetalert2";
 import {GrStatusInfo} from 'react-icons/gr';
+import MyContainer from "../../components/Common/MyContainer";
 function SignUp(props) {
   
   
@@ -694,569 +695,569 @@ const checkNameError = (e) => {
     <>
       <OuterloginContainer>
       <Header noSign="noSign" />
-      <div className="container">
+    <MyContainer>
+    
+<div className="form">
+  <div className="heading" style={{display : "flex", justifyContent : "space-between"}}> 
+    <h2>Client Registration</h2>
+    <a href={MyPDF} className="tabHover" target="_blank"> <HelpIcon /> </a>
+  </div>
 
-        <div className="form">
-          <div className="heading" style={{display : "flex", justifyContent : "space-between"}}> 
-            <h2>Client Registration</h2>
-            <a href={MyPDF} className="tabHover" target="_blank"> <HelpIcon /> </a>
-          </div>
-       
-          <>
-            <div>
-              <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
-                <div className="row">
-                <div className="col-md-6">
+  <>
+    <div>
+      <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
+        <div className="row">
+        <div className="col-md-6">
 
 <div className="mb-3" style = {{position : "relative"}}>
-  <label className="form-label">User Id<span className="declined">*</span></label>
-  <input
-    type="text"
-    autoComplete="off"
-    onChange={(e) => getUser(e)}
-    onBlur={() => validateUser()}
-    maxLength="16"
-    name="p_user"
-    value={user}
-    ref={register({ required: true })}
-    placeholder="Enter Name"
-    
-    className={classNames("form-control", {
-      "is-invalid": errors.p_user || userError.length > 0 || userAvailable.flag === 0,
-    })}
-  
-  />
- <span style={{display : "flex", position : "absolute",
-  right : "9px", top : "39px",
+<label className="form-label">User Id<span className="declined">*</span></label>
+<input
+type="text"
+autoComplete="off"
+onChange={(e) => getUser(e)}
+onBlur={() => validateUser()}
+maxLength="16"
+name="p_user"
+value={user}
+ref={register({ required: true })}
+placeholder="Enter Name"
+
+className={classNames("form-control", {
+"is-invalid": errors.p_user || userError.length > 0 || userAvailable.flag === 0,
+})}
+
+/>
+<span style={{display : "flex", position : "absolute",
+right : "9px", top : "39px",
 color : "#dd4445", borderRadius : "50%"}} 
 title = "Enter minimum 6 alpha numeric character (no special character) to form an user id.">
- <GrStatusInfo  style = {{visibility : "hidden", zIndex : 99999}}/>
-   </span>
-  {
-  userError.length > 0 ?
-  <p className="declined">{userError}</p>  : ""
+<GrStatusInfo  style = {{visibility : "hidden", zIndex : 99999}}/>
+</span>
+{
+userError.length > 0 ?
+<p className="declined">{userError}</p>  : ""
 }
 {
-  userAvailable.flag === 0 ?
-  <p className="declined">{userAvailable.message}</p> : 
-  <p className="completed">{userAvailable.message}</p>
+userAvailable.flag === 0 ?
+<p className="declined">{userAvailable.message}</p> : 
+<p className="completed">{userAvailable.message}</p>
 }
 </div>
 
 </div>
-                  <div className="col-md-6">
+          <div className="col-md-6">
 
-                    <div className="mb-3" style = {{position : "relative"}}>
-                      <label className="form-label">Name<span className="declined">*</span></label>
-                      <input
-                        type="text"
-                        name="p_name"
-                        value = {name}
-                        maxLength = "100"
-                        onBlur = {(e) => checkNameError(e)}
-                        onChange = {(e) => checkSpecial(e)}
-                        ref={register({ required: true })}
-                        placeholder="Enter Name"
-                        className={classNames("form-control", {
-                          "is-invalid": errors.p_name || nameError === true ,
-                        })}
-                      />
-                      <span style={{display : "flex", position : "absolute", 
-                      right : "9px", top : "39px",
+            <div className="mb-3" style = {{position : "relative"}}>
+              <label className="form-label">Name<span className="declined">*</span></label>
+              <input
+                type="text"
+                name="p_name"
+                value = {name}
+                maxLength = "100"
+                onBlur = {(e) => checkNameError(e)}
+                onChange = {(e) => checkSpecial(e)}
+                ref={register({ required: true })}
+                placeholder="Enter Name"
+                className={classNames("form-control", {
+                  "is-invalid": errors.p_name || nameError === true ,
+                })}
+              />
+              <span style={{display : "flex", position : "absolute", 
+              right : "9px", top : "39px",
 color : "#dd4445", borderRadius : "50%"}} 
 title = {`• Enter full name or any chosen name (no special characters allowed.) 
 • For registration of business/entity, enter the legal name of the business/entity.`}>
-  <GrStatusInfo  style = {{visibility : "hidden", zIndex : 99999}}/>
-   </span>
-                    </div>
-                  </div>
+<GrStatusInfo  style = {{visibility : "hidden", zIndex : 99999}}/>
+</span>
+            </div>
+          </div>
 
-                  <div className="col-md-6">
-                  
-                  <div className="mb-3" style = {{position : "relative"}}>
-  
-  <label className="form-label">Email<span className="declined">*</span></label>
- <EmailValidation
- setWemail = {setWemail}
-  wEmail = {wEmail} 
-  invalid = {invalid}
-   setEmailError = {setEmailError}
-    setValiemail = {setValiemail} 
-    emailError = {emailError} 
-    setInvalid = {setInvalid} 
-    clientId = {user} 
-    panel = "Clinet"
-    setEmail2 = {setEmail2} />
-  {
-    wEmail ? <p className="declined">{wEmail}</p> : <>
-      {valiEmail ?
-        <p className="completed">
-          {valiEmail}
-        </p>
-        :
-        <p className="declined">{invalid}</p>}
-    </>
-  }
+          <div className="col-md-6">
+          
+          <div className="mb-3" style = {{position : "relative"}}>
+
+<label className="form-label">Email<span className="declined">*</span></label>
+<EmailValidation
+setWemail = {setWemail}
+wEmail = {wEmail} 
+invalid = {invalid}
+setEmailError = {setEmailError}
+setValiemail = {setValiemail} 
+emailError = {emailError} 
+setInvalid = {setInvalid} 
+clientId = {user} 
+panel = "Clinet"
+setEmail2 = {setEmail2} />
+{
+wEmail ? <p className="declined">{wEmail}</p> : <>
+{valiEmail ?
+<p className="completed">
+  {valiEmail}
+</p>
+:
+<p className="declined">{invalid}</p>}
+</>
+}
 <span style={{display : "flex", position : "absolute", 
-                      right : "9px", top : "39px",
+              right : "9px", top : "39px",
 color : "#dd4445", borderRadius : "50%"}} 
 title = {`Enter personal email address or the email address of any
 representative or authorized signatory of the business/entity.`}>
-  <GrStatusInfo  style = {{visibility : "hidden", zIndex : 99999}}/>
-   </span>
+<GrStatusInfo  style = {{visibility : "hidden", zIndex : 99999}}/>
+</span>
 </div>                  
-                    </div>
+            </div>
 
-                  <div className="col-md-6">
-                    <div className="mb-3" style = {{position : "relative"}}>
-                      <label className="form-label">Occupation/ Profession<span className="declined">*</span></label>
-                      <br />
-                      <select
-                        className={classNames("form-control", {
-                          "is-invalid": errors.p_profession,
-                        })}
-                        name="p_profession"
-                        aria-label="Default select example"
-                        ref={register({ required: true })}
-                       
-                      >
-                        <option value="">--select--</option>
-                        {professionName.map((p, index) => (
-                          <option key={index} value={p.city}>
-                            {p.city}
-                          </option>
-                        ))}
-                      </select>
-                      <span style={{display : "flex", position : "absolute",
-                       right : "9px", top : "39px",
+          <div className="col-md-6">
+            <div className="mb-3" style = {{position : "relative"}}>
+              <label className="form-label">Occupation/ Profession<span className="declined">*</span></label>
+              <br />
+              <select
+                className={classNames("form-control", {
+                  "is-invalid": errors.p_profession,
+                })}
+                name="p_profession"
+                aria-label="Default select example"
+                ref={register({ required: true })}
+               
+              >
+                <option value="">--select--</option>
+                {professionName.map((p, index) => (
+                  <option key={index} value={p.city}>
+                    {p.city}
+                  </option>
+                ))}
+              </select>
+              <span style={{display : "flex", position : "absolute",
+               right : "9px", top : "39px",
 color : "#dd4445", borderRadius : "50%"}} 
 title = {`• From drop down list, select your occupation/profession
 • In case of business/entity, select the occupation/ profession of the
 representative or authorized signatory, who is registering for query.`}>
-  <GrStatusInfo  style = {{visibility : "hidden", zIndex : 99999}}/>
-   </span>
-                    </div>
-                  </div>
+<GrStatusInfo  style = {{visibility : "hidden", zIndex : 99999}}/>
+</span>
+            </div>
+          </div>
 
 
-                  <div className="col-md-6">
-                    <div className="mb-3">
-                      <label className="form-label">Country<span className="declined">*</span></label>
-                      <select
-                        id="state"
-                        name="p_country"
-                        className={classNames("form-control", {
-                          "is-invalid": errors.p_country,
-                        })}
-                        ref={register({ required: true })}
-                        onChange={(e) => getcountry(e.target.value)}
-                        value={myCount}
-                      >
-                        <option value="">--select--</option>
-                        {country.map((p) => (
-                          <option key={p.id} value={p.id}>
-                            {p.name}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                  </div>
+          <div className="col-md-6">
+            <div className="mb-3">
+              <label className="form-label">Country<span className="declined">*</span></label>
+              <select
+                id="state"
+                name="p_country"
+                className={classNames("form-control", {
+                  "is-invalid": errors.p_country,
+                })}
+                ref={register({ required: true })}
+                onChange={(e) => getcountry(e.target.value)}
+                value={myCount}
+              >
+                <option value="">--select--</option>
+                {country.map((p) => (
+                  <option key={p.id} value={p.id}>
+                    {p.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
 
 
-                  <div className="col-md-6">
-                    <div className="mb-3">
-                      <label className="form-label">State<span className="declined">*</span></label>
-                     
-                    <Select
-        closeMenuOnSelect={true}
-        onSelectResetsInput={false}
-        blurInputOnSelect={false}
-        options={State}
-        inputValue={estate}
-        onChange={(e) => getCity(e)}
-        onInputChange={getStateValue}
-     
-      
-        value={dstate}
-      />
-     
-                    </div>
-                  </div>
+          <div className="col-md-6">
+            <div className="mb-3">
+              <label className="form-label">State<span className="declined">*</span></label>
+             
+            <Select
+closeMenuOnSelect={true}
+onSelectResetsInput={false}
+blurInputOnSelect={false}
+options={State}
+inputValue={estate}
+onChange={(e) => getCity(e)}
+onInputChange={getStateValue}
 
 
-                  <div className="col-md-6">
-                    <div className="mb-3">
-                      <label className="form-label">City<span className="declined">*</span></label>
-                     
-                      <Select
-        closeMenuOnSelect={true}
-        onSelectResetsInput={false}
-        blurInputOnSelect={false}
-        options={city}
-        inputValue={cityState2}
-        onInputChange={getCityValu2}
-     
-        onChange={(e) => getCity22(e)}
-        value={dstate2}
-      />
-                    </div>
-                  </div>
-                  <div className="col-md-6">
-                  <div className="mb-3">
-                      <label className="form-label">Address</label>
-                     
-                       
-                        <textarea
-                          type="text"
-                          className="form-control"
-                          name="p_address"
-                          autoComplete = "off"
-                          autoFill = "off"
-                          value={address}
-                          onChange={(e) => setAddress(e.target.value)} 
-                          maxLength="100"
-                          ref={register()}
-                          placeholder="Enter Address"
-                        
-                        />
+value={dstate}
+/>
 
-                    
-        
-                    </div>
-                  </div>
-                  <div className="col-md-6">
-                  <div className="mb-3" style = {{position : "relative"}}>
-                      <label className="form-label">Mobile number<span className="declined">*</span></label>
-                      <div className="mobNumber" style={{ "display": "flex" }}>
-                        <select
-                          name="p_code"
-                          disabled={true}
-                          ref={register({ required: true })}
-                        >
-                          <option>
-                            { "+" + countryCode}
-                          </option>
-                        </select>
-                        <input
-                          type="text"
-                          className={classNames("form-control", {
-                            "is-invalid": errors.p_phone || phoneError === true || indNumError,
-                          })}
-                          name="p_phone"
-                          value={phone}
-                          autoComplete = "off"
-                          maxLength = {phoneLength}
-                          ref={register({ required: true })}
-                          placeholder="Mobile number"
-                          onChange={(e) => phoneHandler(e)}
-                          onBlur={phoneValidation}
-                        />
+            </div>
+          </div>
+
+
+          <div className="col-md-6">
+            <div className="mb-3">
+              <label className="form-label">City<span className="declined">*</span></label>
+             
+              <Select
+closeMenuOnSelect={true}
+onSelectResetsInput={false}
+blurInputOnSelect={false}
+options={city}
+inputValue={cityState2}
+onInputChange={getCityValu2}
+
+onChange={(e) => getCity22(e)}
+value={dstate2}
+/>
+            </div>
+          </div>
+          <div className="col-md-6">
+          <div className="mb-3">
+              <label className="form-label">Address</label>
+             
+               
+                <textarea
+                  type="text"
+                  className="form-control"
+                  name="p_address"
+                  autoComplete = "off"
+                  autoFill = "off"
+                  value={address}
+                  onChange={(e) => setAddress(e.target.value)} 
+                  maxLength="100"
+                  ref={register()}
+                  placeholder="Enter Address"
+                
+                />
+
+            
+
+            </div>
+          </div>
+          <div className="col-md-6">
+          <div className="mb-3" style = {{position : "relative"}}>
+              <label className="form-label">Mobile number<span className="declined">*</span></label>
+              <div className="mobNumber" style={{ "display": "flex" }}>
+                <select
+                  name="p_code"
+                  disabled={true}
+                  ref={register({ required: true })}
+                >
+                  <option>
+                    { "+" + countryCode}
+                  </option>
+                </select>
+                <input
+                  type="text"
+                  className={classNames("form-control", {
+                    "is-invalid": errors.p_phone || phoneError === true || indNumError,
+                  })}
+                  name="p_phone"
+                  value={phone}
+                  autoComplete = "off"
+                  maxLength = {phoneLength}
+                  ref={register({ required: true })}
+                  placeholder="Mobile number"
+                  onChange={(e) => phoneHandler(e)}
+                  onBlur={phoneValidation}
+                />
 <span style={{display : "flex", position : "absolute", 
 right : "9px", top : "39px",
 color : "#dd4445", borderRadius : "50%"}}
- title = "Enter the valid numeric mobile number.">
-  <GrStatusInfo  style = {{visibility : "hidden", zIndex : 99999}}/>
-   </span>
-                      </div>
-                      {indNumError ? <p className="declined">{indNumError}</p> : <>
-                        {
-                          numAvail ?
-                            <p className="completed"> {numAvail}
-                            </p>
-                            :
-                            <p className="declined">{numExist}</p>
-                        }
-                      </>}
-                    </div>
-                  </div>
+title = "Enter the valid numeric mobile number.">
+<GrStatusInfo  style = {{visibility : "hidden", zIndex : 99999}}/>
+</span>
+              </div>
+              {indNumError ? <p className="declined">{indNumError}</p> : <>
+                {
+                  numAvail ?
+                    <p className="completed"> {numAvail}
+                    </p>
+                    :
+                    <p className="declined">{numExist}</p>
+                }
+              </>}
+            </div>
+          </div>
 
-                  <div className="col-md-6">
-                    <div className="mb-3" style = {{position : "relative"}}>
-                      <label className="form-label">Zipcode<span className="declined">*</span></label>
-                      <input
-                        type="text"
-                        className={classNames("form-control", {
-                          "is-invalid": errors.p_zipCode || zipError1 === true || zipError,
-                        })}
-                        name="p_zipCode"
-                        maxLength = "12"
-                        ref={register({ required: true })}
-                        placeholder="Enter Zipcode"
-                        onChange={(e) => zipValue(e)}
-                        onBlur={(e) => zipVali2(e)}
-                        value={zipCode}
-                      />
-                      <span style={{display : "flex",
-                       position : "absolute", right : "9px", top : "39px",
+          <div className="col-md-6">
+            <div className="mb-3" style = {{position : "relative"}}>
+              <label className="form-label">Zipcode<span className="declined">*</span></label>
+              <input
+                type="text"
+                className={classNames("form-control", {
+                  "is-invalid": errors.p_zipCode || zipError1 === true || zipError,
+                })}
+                name="p_zipCode"
+                maxLength = "12"
+                ref={register({ required: true })}
+                placeholder="Enter Zipcode"
+                onChange={(e) => zipValue(e)}
+                onBlur={(e) => zipVali2(e)}
+                value={zipCode}
+              />
+              <span style={{display : "flex",
+               position : "absolute", right : "9px", top : "39px",
 color : "#dd4445", borderRadius : "50%"}} title = "Enter the valid Zip Code or Pin Code.">
-  <GrStatusInfo  style = {{visibility : "hidden", zIndex : 99999}}/>
-   </span>
-                    </div>
-                    <p className="declined">{zipError}</p>
-                  </div>
-                  <div className="col-md-6">
-                    <div className="mb-3">
-                      <label className="form-label">GST Number</label>
-                      <input
-                        type="text"
-                       className="form-control"
-                        name="p_gstIn"
-                        ref={register}
-                        placeholder="Enter GST Code"
-                       maxLength = "24"
-                      />
-                    </div>
-                  
-                  </div>
+<GrStatusInfo  style = {{visibility : "hidden", zIndex : 99999}}/>
+</span>
+            </div>
+            <p className="declined">{zipError}</p>
+          </div>
+          <div className="col-md-6">
+            <div className="mb-3">
+              <label className="form-label">GST Number</label>
+              <input
+                type="text"
+               className="form-control"
+                name="p_gstIn"
+                ref={register}
+                placeholder="Enter GST Code"
+               maxLength = "24"
+              />
+            </div>
+          
+          </div>
 
-                  <div class="col-md-6">
-                    <div className="mb-3" style = {{position : "relative"}}>
-                      <label className="form-label">Password<span className="declined">*</span></label>
-                      <input
-                        type={password ? "text" : "password"}
-                     
-                        onCopy={(e) => {
-                          e.preventDefault();
-                          return false
-                        }}
-                        onPaste={(e) => {
-                          e.preventDefault();
-                          return false
-                        }}
-                        onBlur = {(e) => checkPassError(e)}
-                        className={classNames("form-control", {
-                          "is-invalid": errors.p_password || pass2 === true,
-                        })}
-                        name="p_password"
-                        placeholder="Enter Your Password"
-                        ref={register({
-                          required: true,
-                          pattern: {
-                            value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,15}$/,
-                            message:
-                              "Password should be of minimum 8 characters, including at least 1 upper case, lower case, special character and number.",
-                          },
-                        })}
+          <div class="col-md-6">
+            <div className="mb-3" style = {{position : "relative"}}>
+              <label className="form-label">Password<span className="declined">*</span></label>
+              <input
+                type={password ? "text" : "password"}
+             
+                onCopy={(e) => {
+                  e.preventDefault();
+                  return false
+                }}
+                onPaste={(e) => {
+                  e.preventDefault();
+                  return false
+                }}
+                onBlur = {(e) => checkPassError(e)}
+                className={classNames("form-control", {
+                  "is-invalid": errors.p_password || pass2 === true,
+                })}
+                name="p_password"
+                placeholder="Enter Your Password"
+                ref={register({
+                  required: true,
+                  pattern: {
+                    value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,15}$/,
+                    message:
+                      "Password should be of minimum 8 characters, including at least 1 upper case, lower case, special character and number.",
+                  },
+                })}
 
-                        autoComplete="new-password"
-                      />
-                      <i
-                        className={`fa ${password ? "fa-eye-slash" : "fa-eye"} password-icon`}
-                        onClick={togglePasssword}
-                      />
-                      <span style={{display : "flex", position : "absolute", 
-                      right : "9px", top : "39px",
+                autoComplete="new-password"
+              />
+              <i
+                className={`fa ${password ? "fa-eye-slash" : "fa-eye"} password-icon`}
+                onClick={togglePasssword}
+              />
+              <span style={{display : "flex", position : "absolute", 
+              right : "9px", top : "39px",
 color : "#dd4445", borderRadius : "50%"}}
- title = {`Choose a password that should be minimum of eight characters,
- including at least one upper case, lower case, special character
- and number.`}>
-  <GrStatusInfo  style = {{visibility : "hidden", zIndex : 99999}}/>
-   </span>
-                     
-                    </div>
-                  </div>
+title = {`Choose a password that should be minimum of eight characters,
+including at least one upper case, lower case, special character
+and number.`}>
+<GrStatusInfo  style = {{visibility : "hidden", zIndex : 99999}}/>
+</span>
+             
+            </div>
+          </div>
 
-                  <div class="col-md-6">
-                    <div className="mb-3" style = {{position : "relative"}}>
-                      <label className="form-label">Confirm Password<span className="declined">*</span></label>
-                      <input
-                        type={repassword ? "text" : "password"}
-                        className={classNames("form-control", {
-                          "is-invalid": errors.p_confirm_password,
-                        })}
-                        onCopy={(e) => {
-                          e.preventDefault();
-                          return false
-                        }}
-                        onPaste={(e) => {
-                          e.preventDefault();
-                          return false
-                        }}
-                        placeholder="Confirm Password"
-                        name="p_confirm_password"
-                        ref={register({
-                          required: true,
-                          validate: (value) =>
-                            value === getValues("p_password") ||
-                            "Password doesn 't match.",
-                        })}
-                        autocomplete="off"
-                      />
-                      <i
-                        className={`fa ${repassword ? "fa-eye-slash" : "fa-eye"} password-icon`}
-                        onClick={togglePasssword2}
-                      />
-                      <span style={{display : "flex", position : "absolute", 
-                      right : "9px", top : "39px",
+          <div class="col-md-6">
+            <div className="mb-3" style = {{position : "relative"}}>
+              <label className="form-label">Confirm Password<span className="declined">*</span></label>
+              <input
+                type={repassword ? "text" : "password"}
+                className={classNames("form-control", {
+                  "is-invalid": errors.p_confirm_password,
+                })}
+                onCopy={(e) => {
+                  e.preventDefault();
+                  return false
+                }}
+                onPaste={(e) => {
+                  e.preventDefault();
+                  return false
+                }}
+                placeholder="Confirm Password"
+                name="p_confirm_password"
+                ref={register({
+                  required: true,
+                  validate: (value) =>
+                    value === getValues("p_password") ||
+                    "Password doesn 't match.",
+                })}
+                autocomplete="off"
+              />
+              <i
+                className={`fa ${repassword ? "fa-eye-slash" : "fa-eye"} password-icon`}
+                onClick={togglePasssword2}
+              />
+              <span style={{display : "flex", position : "absolute", 
+              right : "9px", top : "39px",
 color : "#dd4445", borderRadius : "50%"}} 
 title = {`Enter email address of other person(s) of the organization entitled
 to work on the queries under the User Id code.`}>
-  <GrStatusInfo  style = {{visibility : "hidden", zIndex : 99999}}/>
-   </span>
-                      {errors.p_confirm_password && (
-                        <div className="invalid-feedback">
-                          {errors.p_confirm_password.message}
-                        </div>
-                      )}
-                    </div>
-                  </div>
+<GrStatusInfo  style = {{visibility : "hidden", zIndex : 99999}}/>
+</span>
+              {errors.p_confirm_password && (
+                <div className="invalid-feedback">
+                  {errors.p_confirm_password.message}
+                </div>
+              )}
+            </div>
+          </div>
 
-                
-                  <div className="col-md-12">
-                    <label>
-                     Choose a password that should be minimum of eight characters,
+        
+          <div className="col-md-12">
+            <label>
+             Choose a password that should be minimum of eight characters,
 including at least one upper case, lower case, special character
 and number
-                    </label>
-                    <div className="row">
-                      <div className="col-md-6">
-                      <div className="question_query mb-2">
-                        <label className="form-label">
-                          Secondary Email 
-                        </label>
-                       {
-                         fields.length < 9 ?
-                         <div
-                         className="btn queryPlusIcon"
-                         onClick={() => append({ query: "" })}
-                       >
-                           +
-                        </div>
-                        : "" 
-                       }
-                        
-                      </div>
-
-                      {fields.length > 0 &&
-                        fields.map((item, index) => (
-                          <div
-                            className="question_query_field mb-2"
-                            key={item.id}
-                          >
-                            <input
-                            name={`p_email[${index}].query`}
-                            maxlength = "100"
-                           className={classNames("form-control", {
-                             "is-invalid": errors.p_email || props.emailErrorMulti === true || props.wEmailmulti || props.invalid,
-                           })}
-                           onChange={(e) => emailHandler(e)}
-                           onBlur = {(e) => emailValidation(e)}
-                           placeholder="Enter Your Email"
-                           ref={register()}
-                            
-                            />
-                            
-                            <div
-                              className="btn queryPlusIcon ml-2"
-                              onClick={() => remove(index)}
-                            >
-                              -
-                            </div>
-                          </div>
-                        ))}
-                      {
-                        wEmailmulti ? <p className="declined">{wEmailmulti}</p> : <>
-                          {valiEmailMulti ?
-                            <p className="completed">
-                              {valiEmailMulti}
-                            </p>
-                            :
-                            <p className="declined">{invalidMulti}</p>}
-                        </>
-                      }
-                        </div>
-                      </div>
-
-                    </div>
-                    {
-                    show ?
-                      <div class="col-md-6">
-                        <div className="mb-3">
-                          <label className="form-label">OTP<span className="declined">*</span></label>
-                          <input
-                            type="text"
-                            className={classNames("form-control", {
-                              "is-invalid": errors.p_otp,
-                            })}
-                            name="p_otp"
-                            ref={register({ required: true })}
-                            onChange={otpVali}
-                            placeholder="Enter your OTP"
-                            autocomplete="off"
-                          />
-                          <p className="declined"> {valiOtp ? valiOtp : ""}</p>
-                          {
-                            disabled ? null
-                              :
-                              <small class="text-center">
-                                Note: OTP is valid for {time} seconds.
-                              </small>
-                          }
-                        </div>
-                      </div>
-                      : null
-                  }
-                <div className="col-md-12">
-                {
-                    loading ?
-                      <div className="col-md-12">
-                        <Spinner color="primary" />
-                      </div>
-                      :
-                      <div className="col-md-12 d-flex justify-content-center">
-                       
-                        {
-                          show ?
-                            <>
-                              {
-                                disabled ? null
-                                  :
-                                  
-                                    <button type="submit" className="customBtn mx-4" onClick={() => setOtp()}>Submit</button>
-                          
-                                      }
-                            </>
-                            :
-                           
-                            <button type="submit" class="autoWidthBtn mx-4" onClick={() => getOtp("otp")}>SEND OTP</button>
-                     
-                       }
-                          {
-                disabled ?
-                  <ResendOtp setDisabled={setDisabled} disabled={disabled} getTime={getTime}
-                    email={email2} phone={phone} setLoad={setLoad} invalid={invalid} indNumError={indNumError}
-                    wEmail={wEmail} zipError={zipError} 
-                    setLoading={setLoading} loading={loading}
-                    display={display}
-                    clientId = {user}
-                    countryCode = {countryCode}
-                    emailError={emailError}
-                    phoneError={phoneError} zipError1={zipError1} />
-                  :
-                  null
-              }
-                       <button type="button" class="customBtn" onClick={() => resetFun()}>Reset</button>
-                
-                      </div>
-                  }
-                
-                  </div>
-              
-               
-             
-
-             
+            </label>
+            <div className="row">
+              <div className="col-md-6">
+              <div className="question_query mb-2">
+                <label className="form-label">
+                  Secondary Email 
+                </label>
+               {
+                 fields.length < 9 ?
+                 <div
+                 className="btn queryPlusIcon"
+                 onClick={() => append({ query: "" })}
+               >
+                   +
                 </div>
-               <div>
-               </div>
-               </form>
-              <Mandatory />
+                : "" 
+               }
+                
+              </div>
+
+              {fields.length > 0 &&
+                fields.map((item, index) => (
+                  <div
+                    className="question_query_field mb-2"
+                    key={item.id}
+                  >
+                    <input
+                    name={`p_email[${index}].query`}
+                    maxlength = "100"
+                   className={classNames("form-control", {
+                     "is-invalid": errors.p_email || props.emailErrorMulti === true || props.wEmailmulti || props.invalid,
+                   })}
+                   onChange={(e) => emailHandler(e)}
+                   onBlur = {(e) => emailValidation(e)}
+                   placeholder="Enter Your Email"
+                   ref={register()}
+                    
+                    />
+                    
+                    <div
+                      className="btn queryPlusIcon ml-2"
+                      onClick={() => remove(index)}
+                    >
+                      -
+                    </div>
+                  </div>
+                ))}
+              {
+                wEmailmulti ? <p className="declined">{wEmailmulti}</p> : <>
+                  {valiEmailMulti ?
+                    <p className="completed">
+                      {valiEmailMulti}
+                    </p>
+                    :
+                    <p className="declined">{invalidMulti}</p>}
+                </>
+              }
+                </div>
+              </div>
+
             </div>
-          </>
+            {
+            show ?
+              <div class="col-md-6">
+                <div className="mb-3">
+                  <label className="form-label">OTP<span className="declined">*</span></label>
+                  <input
+                    type="text"
+                    className={classNames("form-control", {
+                      "is-invalid": errors.p_otp,
+                    })}
+                    name="p_otp"
+                    ref={register({ required: true })}
+                    onChange={otpVali}
+                    placeholder="Enter your OTP"
+                    autocomplete="off"
+                  />
+                  <p className="declined"> {valiOtp ? valiOtp : ""}</p>
+                  {
+                    disabled ? null
+                      :
+                      <small class="text-center">
+                        Note: OTP is valid for {time} seconds.
+                      </small>
+                  }
+                </div>
+              </div>
+              : null
+          }
+        <div className="col-md-12">
+        {
+            loading ?
+              <div className="col-md-12">
+                <Spinner color="primary" />
+              </div>
+              :
+              <div className="col-md-12 d-flex justify-content-center">
+               
+                {
+                  show ?
+                    <>
+                      {
+                        disabled ? null
+                          :
+                          
+                            <button type="submit" className="customBtn mx-4" onClick={() => setOtp()}>Submit</button>
+                  
+                              }
+                    </>
+                    :
+                   
+                    <button type="submit" class="autoWidthBtn mx-4" onClick={() => getOtp("otp")}>SEND OTP</button>
+             
+               }
+                  {
+        disabled ?
+          <ResendOtp setDisabled={setDisabled} disabled={disabled} getTime={getTime}
+            email={email2} phone={phone} setLoad={setLoad} invalid={invalid} indNumError={indNumError}
+            wEmail={wEmail} zipError={zipError} 
+            setLoading={setLoading} loading={loading}
+            display={display}
+            clientId = {user}
+            countryCode = {countryCode}
+            emailError={emailError}
+            phoneError={phoneError} zipError1={zipError1} />
+          :
+          null
+      }
+               <button type="button" class="customBtn" onClick={() => resetFun()}>Reset</button>
+        
+              </div>
+          }
+        
+          </div>
+      
+       
+     
 
+     
         </div>
+       <div>
+       </div>
+       </form>
+      <Mandatory />
+    </div>
+  </>
 
-      </div>
+</div>
+
+    </MyContainer>
       <Footer />
       </OuterloginContainer>
     </>

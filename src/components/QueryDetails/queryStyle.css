@@ -44,13 +44,13 @@
 }
 .queryBox > .table > tbody > tr > th {
   display: flex;
-  flex-basis: 20%;
+  flex-basis: 30%;
   border-bottom: 0px;
   color: #464b4b;
 }
 .queryBox > .table > tbody > tr > td {
   display: flex;
-  flex-basis: 80%;
+  flex-basis: 70%;
   flex-wrap: wrap;
   text-align: justify;
   border-bottom: 0px;

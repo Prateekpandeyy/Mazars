@@ -15,65 +15,7 @@ import {  VscFilePdf} from "react-icons/vsc";
 import { OuterloginContainer } from "../../components/Common/OuterloginContainer";
 import {Typography, Breadcrumbs, Table, TableContainer, 
   TableHead, TablePagination, TableBody, TableRow, TableCell} from "@material-ui/core";
-const MyBox = styled(Box)({
-  display: "flex", 
- width: "1000px",
- margin: "10px 0px",
-  justifyContent : "space-between",
- 
-  padding : "10px"
-})
-const ImgBox = styled(Box)({
-display: "flex",
-width: "20%",
-flexDirection: "column",
-minHeight: "200px",
-alignItems : "center",
-padding : "10px"
-})
-const MyContainer = styled(Box)({
-  display : "flex", 
-  justifyContent : "center", 
-  alignItems : "center", 
-  width: "100%",
-  flexDirection : "column"
-})
-const ArticleHeader = styled(Box)({
-  display : "flex",
-  width: "100%",
-  justifyContent: "space-between",
-  alignItems: "center",
-  backgroundColor: "#e4f0fa",
-
-  padding: "10px 5px",
-  margin: "8px 0px"
-})
-const MyLogo = styled(Box)({
-  display : "flex",
-  width: "100%",
-  height: "auto",
-  maxWidth: "100px",
-  objectFit: "contain"
-})
-const MyHeading = styled(Box)({
-  display : "flex",
-  justifyContent: "space-between"
-})
-const RightContent = styled(Box)({
-  display: "flex",
-  flexDirection: "column"
-})
-const useStyle = makeStyles({
-  imgResponsive : {
-    display : "flex",
-    maxWidth: "25%",
-    height : "50px", 
-    cursor : "pointer",
-   alignItems : "space-between",
-    justifyContent: "center",
-    textAlign : "justify"
-  }
-})
+import MyContainer from "../../components/Common/MyContainer";
 
 function Linklist() {
  
@@ -107,21 +49,6 @@ const showLinkData = () => {
   }
   
   
-  
-
- const getData = (e) => {
-setDescription(true);
-setMyData(e)
- }
- const onChangePage = (event, nextPage) => {
-  setPage(nextPage)
-}
-const onChangeRowsPerPage = (e) => {
-  setRowsPerPage(e.target.value)
-}
-  
-const classes = useStyle()
-
   return (
     <>
     <OuterloginContainer>

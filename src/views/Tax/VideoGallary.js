@@ -11,13 +11,8 @@ import CloseIcon from '@material-ui/icons/Close';
 import {Breadcrumbs,  Box, Typography } from "@material-ui/core";
 import { AiOutlinePlaySquare } from 'react-icons/ai';
 import classes from './design.module.css';
-const MyContainer = styled(Box)({
-    display : "flex", 
-    justifyContent : "center", 
-    alignItems : "center", 
-    width: "100%",
-    flexDirection : "column"
-  })
+import MyContainer from "../../components/Common/MyContainer";
+import { OuterloginContainer } from '../../components/Common/OuterloginContainer';
 const Videogallery = () => {
     const [galleryData, setGalleryData] = useState([])
     const userId = window.localStorage.getItem("adminkey");
@@ -73,7 +68,8 @@ const Videogallery = () => {
     return(
         <>
 
-                  <Header noSign="noSign" />
+              <OuterloginContainer>
+              <Header noSign="noSign" />
                <MyContainer>
    
   
@@ -183,6 +179,7 @@ const Videogallery = () => {
         }
   </MyContainer>
                 <Footer />
+              </OuterloginContainer>
                </>
     )
 }

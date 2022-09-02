@@ -7,12 +7,13 @@ import { Card, CardBody, CardTitle, CardHeader, Row, Col } from 'reactstrap';
 import { Button, Typography } from "@material-ui/core";
 import { OuterloginContainer } from '../../components/Common/OuterloginContainer';
 import classes from './design.module.css';
-
+import MyContainer from "../../components/Common/MyContainer";
 const AboutOuter = () => {
     return(
         <>
 <OuterloginContainer>
 <Header noSign="noSign"/>
+<MyContainer>
 <div className={classes.articleContent}>
 <div className={classes.articlesDetails}>
           <Card style={{display : "flex", width: "100%", boxShadow: "none", border: "1px solid #fff"}}>
@@ -66,6 +67,7 @@ const AboutOuter = () => {
   
           </div>
         </div>
+</MyContainer>
         <Footer />
 </OuterloginContainer>
       </>

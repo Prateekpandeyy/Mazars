@@ -8,63 +8,13 @@ import { baseUrl, baseUrl3 } from '../../config/config';
 import { Box, Breadcrumbs, Table, TableContainer, 
   TableHead, TablePagination, TableBody, TableRow, TableCell} from "@material-ui/core";
 import classes from './design.module.css';
-
 import { OuterloginContainer } from '../../components/Common/OuterloginContainer';
-
 import { Link } from 'react-router-dom';
 import { Viewer } from '@react-pdf-viewer/core'; // install this library
-// Plugins
-// import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout'; // install this library
-// Import the styles
 import '@react-pdf-viewer/core/lib/styles/index.css';
-// import '@react-pdf-viewer/default-layout/lib/styles/index.css';
-// Worker
 import { Worker } from '@react-pdf-viewer/core'; // install this library
-
-const MyContainer = styled(Box)({
-    display : "flex", 
-    justifyContent : "center", 
-    alignItems : "center", 
-    width: "100%",
-    flexDirection : "column"
-  })
-  const Disclamair = styled(Box)({
-display: "flex",
-flexDirection: "column",
-width:"100%",
-padding: "20px"
-  })
-  const ArticleWrapper = styled(Box)({
-    display: "flex", 
-    flexDirection: "column",
-  
-    padding: "5px"
-  })
-  const ArticleHeader = styled(Box)({
-    display : "flex",
-    width: "100%",
-    justifyContent: "space-between",
-   
-    backgroundColor: "#e4f0fa",
-  
-    padding: "10px 5px",
-    margin: "8px 0px"
-  })
-  const MyLogo = styled(Box)({
-    display : "flex",
-    width: "100%",
-    height: "auto",
-    maxWidth: "100px",
-    objectFit: "contain"
-  })
-  const MyHeading = styled(Box)({
-    display : "flex",
-    justifyContent: "space-between"
-  })
-  const RightContent = styled(Box)({
-    display: "flex",
-    flexDirection: "column"
-  })
+import MyContainer from "../../components/Common/MyContainer";
+ 
 const UpdateIndirect = () => {
  
   const [page, setPage] = useState(0);
@@ -75,7 +25,7 @@ const UpdateIndirect = () => {
     getData()
 
   }, [])
-  let wirtten = "-"
+ 
   const onChangePage = (event, nextPage) => {
       setPage(nextPage)
   }

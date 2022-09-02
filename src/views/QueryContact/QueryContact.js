@@ -15,7 +15,7 @@ import { OuterloginContainer } from '../../components/Common/OuterloginContainer
 import * as yup from "yup";
 import { Markup } from 'interweave';
 import {BiRefresh} from 'react-icons/bi'
-
+import MyContainer from "../../components/Common/MyContainer";
 const Schema = yup.object().shape({
     p_email: yup.string().email("invalid email").required(""),
     p_name: yup.string().required(""),
@@ -98,7 +98,8 @@ const QueryContact = () => {
                 <Header noSign="noSign" />
 
 
-                <Container maxWidth="md">
+              <MyContainer>
+              <Container maxWidth="md">
                     <Grid container justify="center">
                         <Grid item lg={12} sm={12}>
 
@@ -107,7 +108,7 @@ const QueryContact = () => {
                                 <Grid item lg={12}>
                                     <Box className={style.myFormBox}>
                                         <label className={style.formFieldLegend}>
-                                            MAS Enquiry Form
+                                        Mazars Advisory Solutions Enquiry Form
                                         </label>
 
                                         <select
@@ -117,8 +118,8 @@ const QueryContact = () => {
                                                 "is-invalid": errors.p_info,
                                             })}>
 
-                                            <option value="General enquiries - MAS">General enquiries - MAS </option>
-                                            <option value="Business Advisory Services - MAS">Business Advisory Services - MAS </option>
+                                            <option value="General enquiries - MAS">General enquiries - Mazars Advisory Solutions </option>
+                                            <option value="Business Advisory Services - MAS">Business Advisory Services - Mazars Advisory Solutions </option>
                                         </select>
                                     </Box>
                                 </Grid>
@@ -209,7 +210,7 @@ const QueryContact = () => {
 
                                         </div>
                                         <label className={style.formChoice} for="flexCheckDefault">
-                                                I accept that MAS will process my personal data for the purpose of handling my request.
+                                                I accept that Mazars Advisory Solutions will process my personal data for the purpose of handling my request.
                                             </label>
                                         </Box>
                                         </Grid>
@@ -227,6 +228,7 @@ const QueryContact = () => {
                     </Grid>
 
                 </Container>
+              </MyContainer>
                 <Footer />
             </OuterloginContainer>
         </>

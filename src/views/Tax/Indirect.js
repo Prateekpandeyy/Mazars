@@ -3,7 +3,6 @@ import React , {useState, useEffect} from 'react';
 import Header from "../../components/Header/Header";
 import { styled , makeStyles} from "@material-ui/styles";
 import { Link } from 'react-router-dom';
-import Data from './directData.js';
 import axios from 'axios';
 import { baseUrl } from '../../config/config';
 import Footer from '../../components/Footer/Footer';

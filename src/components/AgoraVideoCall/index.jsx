@@ -621,53 +621,45 @@ if(item.player === undefined){
     
     sharingScreen = (e) => {
       if(this.remoteShare2 === true && this.state.stateSharing === false){
-      
         Swal.fire({
           title : "error",
           html : "Only one screen can be shared at a time",
           icon : "error"
         })
       }
-      else if(this.state.stateSharing === true) {
-      
+      else if(this.state.stateSharing) {
+        alert("Plase share fixed")
          this.shareClient && this.shareClient.unpublish(this.shareStream);
          this.shareStream && this.shareStream.close();
          this.setState({stateSharing : false})
        }
         else {
-         
         this.setState({stateSharing : true})
         let $ = this.props;
         // init AgoraRTC local client
         this.shareClient = AgoraRTC.createClient({ mode: $.transcode });
-        console.log("shareClient", this.shareClient)
         this.shareClient.init($.appId, () => {
         // this.subscribeStreamEvents();
           this.shareClient.join($.appId, $.channel, $.uid, (uid) => {
             this.state.uid = uid;
             // create local stream
             // It is not recommended to setState in function addStream
-            
             this.shareStream = this.streamInitSharing(
               uid,
               $.attendeeMode,
               $.videoProfile
             );
             this.shareStream.init(
-            
               () => {
-                console.log("hasScreen" , this.shareStream.hasScreen())
                 if ($.attendeeMode !== "audience") {
-                 
                   this.addStream(this.shareStream, true);
                   this.shareClient.publish(this.shareStream, (err) => {
                   });
                 }
-                console.log("create stream")
                 this.setState({ readyState: true });
               },
               (err) => {
-                this.setState({ readyState: false });
+                this.setState({ readyState: true });
               }
             );
           });
@@ -697,9 +689,8 @@ if(item.player === undefined){
           break;
       }
   
-      let stream = AgoraRTC.createStream(merge(defaultConfig));
+      let stream = AgoraRTC.createStream(merge(defaultConfig, config));
       stream.setVideoProfile(videoProfile);
-      console.log("createStreame", stream)
       return stream;
     };
   

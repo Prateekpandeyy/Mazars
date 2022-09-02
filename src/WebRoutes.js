@@ -44,7 +44,7 @@ import FaqQuestion from "./views/Tax/FaqQuestion";
 import LinklistUser from "./views/Login/Linklist";
 import OuterMeetingJoin from "./views/outerMeeting/index";
 import Profile from './views/Profile/Profile';
-import Links22 from "./views/Tax/LInks";
+
 //admin routes
 import AdminStart from './pages/Admin/Start/Start'
 import AdminLogin from './pages/Admin/Login/Login'

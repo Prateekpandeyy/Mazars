@@ -7,13 +7,7 @@ import ImageGallery from 'react-image-gallery';
 import { baseUrl, baseUrl3 } from "../../config/config";
 import axios from "axios";
 import './style.css';
-    const MyContainer = styled(Box)({
-        display : "flex", 
-        justifyContent : "center", 
-        alignItems : "center", 
-        width: "100%",
-        flexDirection : "column"
-      })
+import MyContainer from "../../components/Common/MyContainer";
 const GroupVideo = () => {
   const [images, setImages] = useState([])
   

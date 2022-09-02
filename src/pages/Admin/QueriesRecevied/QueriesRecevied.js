@@ -42,7 +42,6 @@ function QueriesRecevied(props) {
   const [declinedStatus, setDeclinedStatus] = useState(false)
   const [finalDate, setFinalDate] = useState()
   const [qstatus, setqStatus] = useState();
-  const [admininvoice, setAdminAdvoice] = useState("")
   const [overDue, setOverDue] = useState("")
   const [diaplayProposal, setDisplayProposal] = useState({
     amount: "",
@@ -94,7 +93,6 @@ function QueriesRecevied(props) {
           setAccept(res.data.result[0].query_status)
           setTlname(res.data.result[0].tlname);
           setTp22(res.data.result[0].tpname);
-         
           if(res.data.history_queries[0] === undefined){
 
           }
@@ -165,11 +163,8 @@ function QueriesRecevied(props) {
           }
          
           if (res.data.proposal_queries.length > 0) {
-          
             setOverDue(res.data.result[0].overdueamount)
-            setAdminAdvoice(res.data.proposal_queries[0].admin_iba)
             setDisplayProposal({
-              
               accepted_amount: res.data.proposal_queries[0].accepted_amount,
               payment_received: res.data.proposal_queries[0].paid_amount,
               amount: res.data.proposal_queries[0].amount,
@@ -272,7 +267,6 @@ function QueriesRecevied(props) {
                 declinedStatus={declinedStatus}
                 finalDate={finalDate}
                 overDue = {overDue}
-                admininvoice = {admininvoice}
                 panel = "admin"
               />
             ))}

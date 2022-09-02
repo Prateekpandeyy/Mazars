@@ -4,13 +4,15 @@ import Footer from '../../components/Footer/Footer';
 import { Card, CardBody, CardTitle, CardHeader, Row, Col } from 'reactstrap';
 import { OuterloginContainer } from '../../components/Common/OuterloginContainer';
 import classes from './../About/design.module.css';
+import MyContainer from "../../components/Common/MyContainer";
 const ContactOuter = () => {
     return(
         <>
 <OuterloginContainer>
 <Header noSign="noSign"/>
         
-        
+ <MyContainer>
+         
 <div className={classes.articleContent}>
 <div className={classes.articlesDetails}>
                  <Card style={{display : "flex", width: "100%", border : "1px solid #fff",
@@ -44,7 +46,8 @@ const ContactOuter = () => {
          
                  </div>
                </div>
-         
+     
+  </MyContainer>    
          
                <Footer />
 </OuterloginContainer>

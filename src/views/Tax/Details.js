@@ -26,14 +26,7 @@ import {
   Presentation, Slide, Text,
   Shape, Image, render
 } from "react-pptx";
-
-const MyContainer = styled(Box)({
-    display : "flex", 
-    justifyContent : "center", 
-    alignItems : "center", 
-    width: "100%",
-    flexDirection : "column"
-  })
+import MyContainer from "../../components/Common/MyContainer";
   const Disclamair = styled(Box)({
 display: "flex",
 flexDirection: "column",
@@ -83,25 +76,9 @@ const Details = () => {
  const [subject, setSubject] = useState("")
   useEffect(() => {
     getData()
-    readDoc()
+   
   }, [])
-  const readDoc = () => {
-  //   var mammoth = require("mammoth");
-  //   var options = {
-  //     styleMap: [
-  //         "p[style-name='Section Title'] => h1:fresh",
-  //         "p[style-name='Subsection Title'] => h2:fresh"
-  //     ]
-  // };
-  //   fetch(worddoc).then(res => res.arrayBuffer()).then(ab => 
-  //     mammoth.convertToHtml({arrayBuffer: ab}, options).then(function(result){
-  //     var html = result.value; 
-  //    setDocren(html)
-  // })
-  // .done()
-  // )
-
-  }
+ 
   const getData = (e) => {
     $("#artContent a[href^='http://']").attr("target","_blank");
    if(history.location.index !== undefined){

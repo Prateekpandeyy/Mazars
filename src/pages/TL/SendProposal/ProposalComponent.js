@@ -56,11 +56,6 @@ function ProposalComponent(props) {
   var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
   const [item] = useState(current_date);
   const [endDate , setEndDate] = useState("")
-  const [dateMonth, setDateMonth] = useState("")
-  const [invoice, setInvice] = useState("")
-  const [invoiceTl, setInvoicetl] = useState("")
-  const [invoiceAdmin, setInvoiceAdmin] = useState("")
-  const [allAmount, setAllAmount] = useState([])
   const [fromMax, setFromMax] = useState(current_date)
   const token = window.localStorage.getItem("tlToken")
   const myConfig = {
@@ -165,30 +160,25 @@ function ProposalComponent(props) {
     formData.append("assign_no", assingNo);
     formData.append("name", custname);
     formData.append("type", "tl");
-    formData.append("date_month", value.date_month)
     formData.append("id", JSON.parse(userid));
     formData.append("assign_id", assignId);
     formData.append("customer_id", custId);
     formData.append("description", det);
     formData.append("amount_type", "fixed");
     formData.append("amount", value.p_fixed);
-    formData.append("installment_amount", allAmount);
+    formData.append("installment_amount", amount);
     formData.append("payment_plan", store);
     formData.append("start_date", startDate);
     formData.append("end_date", endDate)
     // formData.append("payment_terms", payment.value);
     formData.append("no_of_installment", installment.value);
     formData.append("company", value.p_company)
-    formData.append("date_month", dateMonth)
-    formData.append("tl_iba", invoiceTl)
-    formData.append("tp_iba", invoice)
-    formData.append("admin_iba", invoiceAdmin)
     store === "1" ?
-      formData.append("due_date", date) :
+      formData.append("due_date", lumsum) :
       store === "2" || store === "3" ?
         formData.append("due_date", date) :
         formData.append("due_date", "")
-
+console.log("payment", payment)
    
       if (store === "2" || store === "3") {
         if (store !== "4" && installment == "") {
@@ -196,19 +186,19 @@ function ProposalComponent(props) {
         
         } 
 
-        else if (store !== "4" && !allAmount || !date) {
+        else if (store !== "4" && !amount || !date) {
             Alerts.ErrorNormal(`Please enter all fields.`)
             
           }
 
-          else if (store !== "4" && allAmount && date) {
+          else if (store !== "4" && amount && date) {
             
             if (installment.value > 0) {
               var a = Number(installment.value)
               for (let i = 0; i < a; i++) {
                 // arrAmount.push(amount[i])
                 // arrDate.push(date[i])
-                if (allAmount[i] == "" || allAmount[i] == undefined || allAmount[i] <= 0) {
+                if (amount[i] == "" || amount[i] == undefined || amount[i] <= 0) {
                   Alerts.ErrorNormal(`Please enter amount`)
                
                   return false
@@ -219,7 +209,7 @@ function ProposalComponent(props) {
                   return false
                 }
               }
-              var sum = allAmount.reduce(myFunction)
+              var sum = amount.reduce(myFunction)
               function myFunction(total, value) {
                 return Number(total) + Number(value);
               }
@@ -298,7 +288,6 @@ function ProposalComponent(props) {
       array1.push(value)
     });
     setAmount(array1);
-    setAllAmount(array1)
   };
 
   const paymentDate = (data) => {
@@ -336,17 +325,8 @@ function ProposalComponent(props) {
   };
 
   const installmentHandler = (key) => {
-    let amount = totalAmount;
-    let a = Math.round(totalAmount / key.value)
-    let dd = []
-    while (amount > a) {
-       amount = amount - a;
-       dd.push(a)
-    }
-    dd.push(amount)
-    
+   
     setInstallment(key)
-    setAllAmount(dd)
   }
 const clientFun = (e) => {
   let a = []
@@ -379,20 +359,6 @@ const endFun = (e) => {
   
   setEndDate(e.target.value)
 }
-const myMonthValue = (e) => {
- 
-  setDateMonth(e.target.value)
-}
-const getInviceValue = (e) => {
-
-  setInvice(e.target.value)
-}
-const getInvoiceAdmin  = (e) => {
-  setInvoiceAdmin(e.target.value)
-}
-const getInvoicetl  = (e) => {
-  setInvoicetl(e.target.value)
-}
   return (
     <>
       <Card>
@@ -417,7 +383,7 @@ const getInvoicetl  = (e) => {
 
         <CardBody>
           <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
-            
+            <p style={{ color: "red" }}>{error}</p>
             <div style={{ display: "flex" }}>
               <div class="col-md-6">
                 <div class="form-group">
@@ -473,36 +439,9 @@ const getInvoicetl  = (e) => {
                   </select>
                 </div>
 
-               <div className="myproposaloption">
-               <div class="form-group">
-                  <label>Whether invoice(s) can be issued before acceptance of proposal by client</label>
-                  <div onChange={(e) => getInviceValue(e)} className="myInvice">
-                <input 
-                type="radio" value="1" name="yesclient" />Yes
-                   <input 
-                type="radio" value="0" name = "yesclient"/>No
-                </div>
-                </div>
-                <div class="form-group">
-                  <label>Approval of Team Leader for such issue of invoice(s)</label>
-                  <div onChange={(e) => getInvoicetl(e)} className="myInvice">
-                <input 
-                type="radio" value="1" name="yestl" />Yes
-                   <input 
-                type="radio" value="0" name = "yestl"/>No
-                </div>
-                </div>
-                <div class="form-group">
-                  <label>Approval of Admin for such issue of invoice(s)</label>
-                  <div onChange={(e) => getInvoiceAdmin(e)} className="myInvice">
-                <input 
-                type="radio" disabled value="1" name="yesadmin" />Yes
-                   <input 
-                type="radio" disabled value="0" name = "yesadmin"/>No
-                </div>
-                </div>
-               </div>
-              
+           
+                
+                <p style={{ "color": "red" }}>{diserror}</p>
                 <div class="form-group">
                   <label>Scope of Work<span className="declined">*</span></label>
 
@@ -646,7 +585,6 @@ const getInvoicetl  = (e) => {
                       className={classNames("form-control", {
                         "is-invalid": errors.p_inst_date
                       })}
-                      onChange={(e) => setDate(e.target.value)}
                       ref={register({ required: true })}
                       placeholder="Enter Hourly basis"
                       min={item}
@@ -724,41 +662,40 @@ const getInvoicetl  = (e) => {
   <select
     class="form-control"
     ref={register}
-    name="date_month"
-    onChange={(e) => myMonthValue(e)}
-    min = {item}
+    name="p_individual"
+    
   >
-     <option value="1">1</option>
+    <option value="1">1</option>
     <option value="2">2</option>
     <option value="3">3</option>
     <option value="4">4</option>
-    <option value="5">5</option>
-    <option value="6">6</option>
-    <option value="7">7</option>
-    <option value="8">8</option>
-    <option value="9">9</option>
-    <option value="10">10</option>
-    <option value="11">11</option>
-    <option value="12">12</option>
-    <option value="13">13</option>
-    <option value="14">14</option>
-    <option value="15">15</option>
-    <option value="16">16</option>
-    <option value="17">17</option>
-    <option value="18">18</option>
-    <option value="19">19</option>
-    <option value="20">20</option>
-    <option value="21">21</option>
-    <option value="22">22</option>
-    <option value="23">23</option>
-    <option value="24">24</option>
-    <option value="25">25</option>
-    <option value="26">26</option>
-    <option value="27">27</option>
-    <option value="28">28</option>
-    <option value="29">29</option>
-    <option value="30">30</option>
-    <option value="31">31</option>
+    <option value="1">5</option>
+    <option value="2">6</option>
+    <option value="3">7</option>
+    <option value="4">8</option>
+    <option value="1">9</option>
+    <option value="2">10</option>
+    <option value="3">11</option>
+    <option value="4">12</option>
+    <option value="1">13</option>
+    <option value="2">14</option>
+    <option value="3">15</option>
+    <option value="4">16</option>
+    <option value="1">17</option>
+    <option value="2">18</option>
+    <option value="3">19</option>
+    <option value="4">20</option>
+    <option value="1">21</option>
+    <option value="2">22</option>
+    <option value="3">23</option>
+    <option value="4">24</option>
+    <option value="1">25</option>
+    <option value="2">26</option>
+    <option value="3">27</option>
+    <option value="4">28</option>
+    <option value="1">29</option>
+    <option value="2">30</option>
+    <option value="3">31</option>
    
   </select>
 </div> 
@@ -768,7 +705,6 @@ const getInvoicetl  = (e) => {
 : " "
 }
 </div>
-
                 {
                  store === "2"
                     ?
@@ -777,7 +713,6 @@ const getInvoicetl  = (e) => {
                     paymentAmount={paymentAmount}
                     paymentDate={paymentDate}
                     totalAmount={totalAmount}
-                    installment_amount={allAmount}
                     min={item}
                     item={item}
                     dateError = {dateError}
@@ -794,7 +729,6 @@ const getInvoicetl  = (e) => {
                     paymentAmount={paymentAmount}
                     paymentDate={paymentDate}
                     totalAmount={totalAmount}
-                    installment_amount={allAmount}
                     min={startDate}
                     max={endDate}
                     item={startDate}
@@ -803,7 +737,10 @@ const getInvoicetl  = (e) => {
                     :
                   ""
                 }
-                
+                <div className="row">
+
+
+</div>
          
      </div>
             </div>
