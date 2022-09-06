@@ -5,7 +5,7 @@ const MainContent  = styled.div`
 display: flex;
 width: 100%;
 flex-direction: column;
-margin : 100px 0px 0px 0px;
+margin : 20px 0px 0px 0px;
 justify-content: center;
 flex-wrap: wrap;
 @media (max-width: 1024px) {

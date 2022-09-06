@@ -1,4 +1,10 @@
 @import "~react-image-gallery/styles/css/image-gallery.css";
+@font-face {
+  font-family: "Halyard";
+  src: local("Halyard"),
+   url("./Fonts/HalyardTextBook.otf") format("truetype");
+  
+  }
 /* @font-face {
   font-family: "icons";
   src: url("../fonts/icons.eot?7aedd013e072110dcc3400637dd0f69d");
@@ -26,7 +32,7 @@ body {
   background: #f0f0f0 !important;
   position: relative;
   min-height: 100vh;
-  font-family: Arial !important;
+  font-family: "Halyard" !important;
 }
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
@@ -50,7 +56,7 @@ th,
 td,
 div,
 span {
-  font-family: Arial !important;
+  font-family: "Halyard" !important;
 }
 .ag-theme-alpine .ag-icon {
   font-family: "agGridAlpine";
@@ -93,7 +99,7 @@ span {
   width: 50%;
 }
 .profileInfo h4 {
-  font-family: Arial;
+  font-family: "Halyard";
   font-size: 14px;
   color: #464b4b;
   word-break: break-word;

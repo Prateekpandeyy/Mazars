@@ -111,13 +111,13 @@ localStorage.setItem("loginTime", timeStampInMs)
     return (
 
         <div>
-            <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
+            <form onSubmit={handleSubmit(onSubmit)} className="signInForm" autoComplete="off">
                 {
                     disabled ?
                         null
                         :
-                        <div className="form-group">
-                            <label className="form-label">Enter Your OTP <span className="declined">*</span></label>
+                        <div className="form-group passForm">
+                            <label className="labelColor">Enter Your OTP <span className="declined">*</span></label>
                             <input
                                 type="text"
                                 className={classNames("form-control", {
@@ -129,7 +129,7 @@ localStorage.setItem("loginTime", timeStampInMs)
                                 onChange={(e) => validOtp(e)}
                             />
                             <p className="declinedmsg">{setText ? setText : ""}</p>
-                            <small class="text-center">
+                            <small className='labelColor'>
                                 Note: OTP is valid for {time} seconds.
                             </small>
 
@@ -145,7 +145,7 @@ localStorage.setItem("loginTime", timeStampInMs)
                                 disabled ?
                                     <button type="submit" class="autoWidthBtn" onClick={resendOtp}>SEND OTP</button>
                                     :
-                                    <button type="submit" className="customBtn">
+                                    <button type="submit" className="customBtn my-4">
                                         Login
                                     </button>
                             }

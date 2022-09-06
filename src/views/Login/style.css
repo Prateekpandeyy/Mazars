@@ -186,11 +186,11 @@
 .customForm {
   display: flex;
   width: 90%;
-  justify-content: center;
-  align-items: center;
+ background-color: #5A6A6B;
   margin: auto;
   min-height: 320px;
   height: 100%;
+  flex-direction: column;
 }
 
 .signInForm {
@@ -215,10 +215,11 @@
 .signUp {
   display: flex;
   flex-direction: column;
-  padding: 10px 0px;
+ 
   width: 50%;
   font-weight: 600;
-  height: 300px;
+ 
+  
 }
 .password-icon-login {
   position: relative;
@@ -379,4 +380,7 @@
 .myCookiesdecBtn:focus {
   outline: none;
   border: 1px solid #d9d9d9;
+}
+.labelColor {
+color: #ffffff;
 }

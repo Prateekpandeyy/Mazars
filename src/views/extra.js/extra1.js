@@ -92,3 +92,23 @@ width: "100%",
 overflow: "auto"}}
 we would charge professional fees of rupees 600000, payable in monthly installments of rupees 
 50000 falling due on 16th day of the following month. 
+Halyard book
+large 
+font changes - 
+dark background: white (#ffffff)
+light background: outer space grey (#464646)
+general font size - 14px;
+underline line should not come by default through out product
+everything should be left align
+remove bold from news flash in home page
+remove background from vactors
+color of vactors will be change in vactors
+icons color should be outer space
+background color of entire website((#E5F0FA))
+footer background color should be same like mazars.co.in
+signin background color  - #5A6A6B
+enquiry page should be like about and contact us page
+heading background should be remove from contact us and about us page
+hover color should be #0071CE through out product 
+media imagge icons should be changed
+Question font size will be increase to difference from Question in FAQ and remove bold from Question

@@ -6,9 +6,12 @@ const MainContent = styled(Box)({
     height: "100%",
     flexDirection: "column",
     justifyContent: "space-between",
-    position: "relative"
+    position: "relative",
+    backgroundColor : "#fff",
+  
   })
   const MainContainer = (props) => {
+  
       return (
           <MainContent>
               {props.children}

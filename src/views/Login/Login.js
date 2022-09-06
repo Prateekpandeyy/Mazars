@@ -331,7 +331,7 @@ const custLogout = () => {
                 </Typography>
                 <button className="customBtn"  disabled = {token !== null ? true : false} onClick = {() => myCookie2("contactbasic")}>
               
-                    Sign Up
+                    Sign up
                  
                 </button>
                 </> : " "
@@ -358,13 +358,13 @@ const custLogout = () => {
                       </button>
           </div> :
           <div className="signUp">
-          <Typography variant="h4" style={{ margin: "5px auto", color: "#464B4B" }}>
-            For existing client
-          </Typography>
+        
           {
             show ? 
             <div className="customForm">
-
+  <Typography variant="h4" style={{ margin: "5px 25px", color: "#fff" }}>
+            For existing client
+          </Typography>
               <VerifyOTP email={email} uid={uid} time={time} setLoad={setLoad}
                 setDisabled={setDisabled} disabled={disabled} setLoading={setLoading}
                 loading={loading} user = {user} 
@@ -373,11 +373,14 @@ const custLogout = () => {
               :
             
               <div className="customForm">
+                  <Typography variant="h4" style={{ margin: "5px 25px", color: "#fff" }}>
+            For existing client
+          </Typography>
                 <form onSubmit={handleSubmit(onSubmit)} className="signInForm"  autoComplete="off">
-                <div className="form-group passForm ">
+                <div className="form-group passForm">
 
 
-<label className="form-label">User Id<span className="declined">*</span></label>
+<label className="labelColor">User Id<span className="declined">*</span></label>
 <input
   type="text"
   onChange={(e) => getUser(e)}
@@ -393,7 +396,7 @@ const custLogout = () => {
 
 </div>
                   <div className="form-group">
-                    <label className="form-label">Email</label>
+                    <label className="labelColor">Email</label>
                     <input
                       type="text"
                       className={classNames("form-control", {
@@ -409,7 +412,7 @@ const custLogout = () => {
                   </div>
                
                   <div className="form-group passForm ">
-                    <label className="form-label">Password </label>
+                    <label className="labelColor">Password </label>
                     <input
                       type={isPasswordShow ? "text" : "password"}
                       className={classNames("form-control", {
@@ -437,8 +440,9 @@ const custLogout = () => {
                     />
                   </div>
 
-                  <div style={{ display: "flex", margin: "0 0 30px 0", justifyContent: "flex-end" }} className="tabHover">
+                  <div style={{ display: "flex", margin: "0 0 30px 0"}} className="tabHover">
                     <Link
+                   className = "labelColor"
                       to={{
                         pathname: "/customer/forget-password",
                         email: `${email}`,
