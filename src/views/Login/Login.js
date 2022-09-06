@@ -472,39 +472,39 @@ const custLogout = () => {
       </MainContent>
         <MyBox>
          
-          <h4 style={{fontSize: "1.5rem"}}>Mazars Advisory Solutions backed by group of professionals with extensive industry knowledge and experience in
+          <h4 style={{fontSize: "1.5rem", textAlign : "left"}}>Mazars Advisory Solutions backed by group of professionals with extensive industry knowledge and experience in
              taxation matters, provides solutions to all direct & indirect tax queries.  </h4>
     <div style={{display: 'flex'}}>
     <ImgBox>
       <img src = {servicesImg}
       className = {classes.imgResponsive} />
       <h5 style={{margin: "10px 0", fontSize: "1.1rem"}}>Services</h5>
-      <p style={{textAlign : "center", fontSize: "1rem"}}>
+      <p style={{textAlign : "left", fontSize: "1rem"}}>
       Offers solutions to all compliance requirements, transfer pricing matters, assessment proceedings, appeal & litigation matters, opinions and other advisory needs. </p>
       </ImgBox>
       
       <ImgBox>
       <img src = {costEffective} className = {classes.imgResponsive} />
       <h5 style={{margin: "10px 0", fontSize: "1.1rem"}}>Cost Effective</h5>
-      <p style={{textAlign : "center", fontSize: "1rem"}}>
+      <p style={{textAlign : "left", fontSize: "1rem"}}>
       Provides cost effective solution, designed exclusively for client.
       </p>
       </ImgBox> 
       <ImgBox>
       <img src = {whatp} className = {classes.imgResponsive} />
       <h5 style={{margin: "10px 0", fontSize: "1.1rem"}}>Video Conference</h5>
-      <p style={{textAlign : "center", fontSize: "1rem"}}>
+      <p style={{textAlign : "left", fontSize: "1rem"}}>
       Offers video conferencing facility to hold meetings with clients.
       </p>
       </ImgBox> 
       <ImgBox>
       <img src = {CloudImg} className = {classes.imgResponsive} />
       <h5 style={{margin: "10px 0", fontSize: "1.1rem"}}>Secure Platform</h5>
-      <p style={{textAlign : "center", fontSize: "1rem"}}>Ensures total privacy of client’s data.</p>
+      <p style={{textAlign : "left", fontSize: "1rem"}}>Ensures total privacy of client’s data.</p>
       </ImgBox> <ImgBox>
       <img src = {PaperLess} className = {classes.imgResponsive} />
       <h5 style={{margin: "10px 0", fontSize: "1.1rem"}}>Paperless</h5>
-      <p style={{textAlign : "center", fontSize: "1rem"}}>Operates completely in paperless environment.</p>
+      <p style={{textAlign : "left", fontSize: "1rem"}}>Operates completely in paperless environment.</p>
       </ImgBox>
     </div>
       </MyBox>

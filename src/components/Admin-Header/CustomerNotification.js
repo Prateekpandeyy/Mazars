@@ -186,9 +186,6 @@ function CustomerNotification({ tokenKey, name , panel}) {
           
     };
 
-
-console.log("name", name === "admin" , countNotification)
-
     return (
         <>
             <div style={{display : "flex", justifyContent : "center", alignItems : "flex-end", padding: "10px"}}>

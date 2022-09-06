@@ -286,7 +286,7 @@ props.showCook("showCookies")
                   
                      <li className="tabHover mx-1" onClick = {() => myLink("updatedirect")}>
                    <span className="menu-title" data-i18n="">
-                  Direct Tax
+                  Direct tax
                    </span>
                    </li>
                  
@@ -295,7 +295,7 @@ props.showCook("showCookies")
                     
                      <li className="tabHover mx-1" onClick = {() => myLink("updateindirect")}>
                    <span className="menu-title" data-i18n="">
-                Indirect Tax
+                Indirect tax
                    </span>
                    </li>
                    <li className="tabHover mx-1" onClick = {() => myLink("updatemiscellaneous")}>
@@ -314,7 +314,7 @@ props.showCook("showCookies")
 
       <li className="nav-item tabHoverLinksubMenu" onClick = {() => myLink("linklist")}> 
       <ListItemButton>
-       Important Links
+       Important links
     </ListItemButton>
 </li>
       <li className="nav-item tabHoverLinksubMenu" 
@@ -323,7 +323,7 @@ props.showCook("showCookies")
                  <ListItemButton 
                  onMouseOver={() => handleClickOff2()}>
    <span className="nav-item">
-                  Media Gallery
+                  Media gallery
                    </span>
          </ListItemButton>  
          <Collapse in={open2}  unmountOnExit>
@@ -333,7 +333,7 @@ props.showCook("showCookies")
                
    <li className="tabHover mx-1" onClick = {() => myLink("photo")}>
                    <span className="menu-title" data-i18n="">
-               Photo Gallery
+               Photo gallery
                    </span>
                    </li>
    
@@ -342,7 +342,7 @@ props.showCook("showCookies")
                    
                      <li className="tabHover mx-1" onClick = {() => myLink("video")}>
                    <span className="menu-title" data-i18n="">
-              Video Gallery
+              Video gallery
                    </span>
                    </li>
                    
@@ -368,7 +368,7 @@ props.showCook("showCookies")
     <li className="nav-item tabHoverLinksubMenu" onClick = {() => myLink("about")}> 
  
  <ListItemButton>
-      About Us
+      About us
    </ListItemButton>
     </li>
     <li className="nav-item tabHoverLinksubMenu" 
@@ -377,7 +377,7 @@ props.showCook("showCookies")
                  <ListItemButton 
                  onMouseOver={() => handleClickOff3()}>
    <span className="nav-item">
-                  Contact Us
+                  Contact us
                    </span>
          </ListItemButton>  
          <Collapse in={open3}  unmountOnExit>
@@ -388,13 +388,13 @@ props.showCook("showCookies")
            
    <li className="tabHover mx-1" onClick = {() => myLink("enquiry")}>
                    <span className="menu-title" data-i18n="">
-               Enquiry Form
+               Enquiry form
                    </span>
                    </li>
    
                    <li className="tabHover mx-1" onClick = {() => myLink("contactUs")}>
                    <span className="menu-title" data-i18n="">
-              Our Office
+              Our office
                    </span>
                    </li>
                     
