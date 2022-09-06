@@ -47,7 +47,7 @@ function Header({ id, cust_sign, noAdminSign, noTlSign,
         )}
 
         {noSign && (
-          <div style = {{display : "flex", width: "100%", alignItems: "center",  justifyContent: "space-between"}}>
+          <div  id = "myP" style = {{display : "flex", width: "100%", alignItems: "center",  justifyContent: "space-between"}}>
               <Link to="/">
               <img src={mazars} className="logo" alt="mazar"/>
             </Link>
@@ -284,7 +284,7 @@ props.showCook("showCookies")
            <ul>
                 
                   
-                     <li className="tabHover mx-1" onClick = {() => myLink("updatedirect")}>
+                     <li className="tabHover subMenuHeader" onClick = {() => myLink("updatedirect")}>
                    <span className="menu-title" data-i18n="">
                   Direct tax
                    </span>
@@ -293,12 +293,12 @@ props.showCook("showCookies")
                    
                     
                     
-                     <li className="tabHover mx-1" onClick = {() => myLink("updateindirect")}>
+                     <li className="tabHover subMenuHeader" onClick = {() => myLink("updateindirect")}>
                    <span className="menu-title" data-i18n="">
                 Indirect tax
                    </span>
                    </li>
-                   <li className="tabHover mx-1" onClick = {() => myLink("updatemiscellaneous")}>
+                   <li className="tabHover subMenuHeader" onClick = {() => myLink("updatemiscellaneous")}>
                    <span className="menu-title" data-i18n="">
                    Miscellaneous
                    </span>
@@ -331,7 +331,7 @@ props.showCook("showCookies")
            <ul>
                 
                
-   <li className="tabHover mx-1" onClick = {() => myLink("photo")}>
+   <li className="tabHover subMenuHeader" onClick = {() => myLink("photo")}>
                    <span className="menu-title" data-i18n="">
                Photo gallery
                    </span>
@@ -340,14 +340,14 @@ props.showCook("showCookies")
                    
                     
                    
-                     <li className="tabHover mx-1" onClick = {() => myLink("video")}>
+                     <li className="tabHover subMenuHeader" onClick = {() => myLink("video")}>
                    <span className="menu-title" data-i18n="">
               Video gallery
                    </span>
                    </li>
                    
                   
-                     <li className="tabHover mx-1" onClick = {() => myLink("mediacontent")}>
+                     <li className="tabHover subMenuHeader" onClick = {() => myLink("mediacontent")}>
                    <span className="menu-title" data-i18n="">
                        Media news
                    </span>
@@ -386,13 +386,13 @@ props.showCook("showCookies")
                 
                   
            
-   <li className="tabHover mx-1" onClick = {() => myLink("enquiry")}>
+   <li className="tabHover subMenuHeader" onClick = {() => myLink("enquiry")}>
                    <span className="menu-title" data-i18n="">
                Enquiry form
                    </span>
                    </li>
    
-                   <li className="tabHover mx-1" onClick = {() => myLink("contactUs")}>
+                   <li className="tabHover subMenuHeader" onClick = {() => myLink("contactUs")}>
                    <span className="menu-title" data-i18n="">
               Our office
                    </span>

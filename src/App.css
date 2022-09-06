@@ -216,3 +216,7 @@ span {
   top : 20% !important;
   left: 50% !important;
 }
+.subMenuHeader{
+  text-align: left;
+  padding: 0rem 1rem;
+}

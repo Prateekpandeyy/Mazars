@@ -17,7 +17,7 @@ import ShowError from "../../components/LoadingTime/LoadingTime";
 import LoadingTime from "../../components/LoadingTime/LoadingTime";
 import Cookies from "js-cookie";
 import CloudImg from './images/cloud1.jpeg';
-import PaperLess from './images/paperLess.jpeg';
+import PaperLess from './images/ppp.jpeg';
 import whatp from './images/video.jpeg';
 import costEffective from './images/costEffective.jpeg';
 import servicesImg from './images/services.jpeg';
@@ -48,7 +48,7 @@ const ImgBox = styled(Box)({
 display: "flex",
 width: "20%",
 flexDirection: "column",
-alignItems : "center",
+
 padding : "10px"
 })
 
@@ -329,7 +329,7 @@ const custLogout = () => {
                   <Typography variant="h4" sx={{color:"#fff"}} style={{ "margin": "5px auto"}}>
                   For new client
                 </Typography>
-                <button className="customBtn"  disabled = {token !== null ? true : false} onClick = {() => myCookie2("contactbasic")}>
+                <button className="btnWhite"  disabled = {token !== null ? true : false} onClick = {() => myCookie2("contactbasic")}>
               
                     Sign up
                  
@@ -457,7 +457,7 @@ const custLogout = () => {
                     loading ?
                       <Spinner color="primary" />
                       :
-                      <button className="customBtn"  disabled = {token !== null ? true : false} type="submit">
+                      <button className="btnWhite"  disabled = {token !== null ? true : false} type="submit">
                         Send OTP
                       </button>
                   }
@@ -485,21 +485,21 @@ const custLogout = () => {
       
       <ImgBox>
       <img src = {costEffective} className = {classes.imgResponsive} />
-      <h5 style={{margin: "10px 0", fontSize: "1.1rem"}}>Cost Effective</h5>
+      <h5 style={{margin: "10px 0", fontSize: "1.1rem"}}>Cost effective</h5>
       <p style={{textAlign : "left", fontSize: "1rem"}}>
       Provides cost effective solution, designed exclusively for client.
       </p>
       </ImgBox> 
       <ImgBox>
       <img src = {whatp} className = {classes.imgResponsive} />
-      <h5 style={{margin: "10px 0", fontSize: "1.1rem"}}>Video Conference</h5>
+      <h5 style={{margin: "10px 0", fontSize: "1.1rem"}}>Video conference</h5>
       <p style={{textAlign : "left", fontSize: "1rem"}}>
       Offers video conferencing facility to hold meetings with clients.
       </p>
       </ImgBox> 
       <ImgBox>
       <img src = {CloudImg} className = {classes.imgResponsive} />
-      <h5 style={{margin: "10px 0", fontSize: "1.1rem"}}>Secure Platform</h5>
+      <h5 style={{margin: "10px 0", fontSize: "1.1rem"}}>Secure platform</h5>
       <p style={{textAlign : "left", fontSize: "1rem"}}>Ensures total privacy of client’s data.</p>
       </ImgBox> <ImgBox>
       <img src = {PaperLess} className = {classes.imgResponsive} />
