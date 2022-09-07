@@ -72,9 +72,9 @@ const MediaContentCustomer = () => {
             
              <Breadcrumbs separator=">" maxItems={3} aria-label="breadcrumb">
              <Link underline="hover" color="inherit" to="/customer/media">
-  Media Gallery
+  Media gallery
   </Link>
-  <Typography color="text.primary">  Media News</Typography>
+  <Typography color="text.primary">  Media news</Typography>
         
        
         </Breadcrumbs>

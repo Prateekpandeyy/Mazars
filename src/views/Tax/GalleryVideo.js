@@ -91,15 +91,15 @@ const GalleryVideo = () => {
          <Breadcrumbs separator=">" maxItems={3} aria-label="breadcrumb">
   
   <Link underline="hover" color="inherit" to = {`/customer/media`}>
- Media Gallery
+ Media gallery
   </Link>
   {
     typeof(history.location.index) === 'object' ?
     <Link underline="hover" color="inherit" to = {`/customer/media`}>
- Photo Gallery
+ Photo gallery
   </Link> :
   <Link underline="hover" color="inherit" to = {`/customer/videogallery`}>
-  Video Gallery
+  Video gallery
    </Link>
   }
   

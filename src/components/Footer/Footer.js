@@ -64,7 +64,7 @@ props.showCook("showCookies")
         
              
           </div>
-{`ISO 27001 Certified | Copyright  @${date.getFullYear()} All right reserved`} 
+{`ISO 27001 certified | Copyright  @${date.getFullYear()} All right reserved`} 
         </div>
       
         <div style={{display : "flex", justifyContent : "center"}}>

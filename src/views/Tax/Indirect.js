@@ -69,7 +69,7 @@ const Indirect = () => {
   Articles
   </Link>
   <Link underline="hover" color="inherit" to="/customer/indirect">
-  Indirect Tax
+  Indirect tax
   </Link>
   
  

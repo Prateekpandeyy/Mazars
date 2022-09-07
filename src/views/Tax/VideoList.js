@@ -51,9 +51,9 @@ const VideoList = () => {
 <div className={classes.articlesDetails}>
 <Breadcrumbs separator=">" maxItems={3} aria-label="breadcrumb">
 <Link underline="hover" color="inherit" to="/customer/media">
-Media Gallery
+Media gallery
 </Link>
-<Typography color="text.primary">  Video Gallery</Typography>
+<Typography color="text.primary">  Video gallery</Typography>
 
 </Breadcrumbs>
 

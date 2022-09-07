@@ -54,13 +54,13 @@ const GroupVideo = () => {
             <Breadcrumbs separator=">" maxItems={3} aria-label="breadcrumb">
   
   <Link underline="hover" color="inherit" to = {`/customer/media`}>
- Media Gallery
+ Media gallery
   </Link>
   <Link underline="hover" color="inherit" to = {`/customer/media`}>
- Photo Gallery
+ Photo gallery
   </Link>
   
-  <Typography color="text.primary"> Nature Image(Make your life easy)</Typography>
+  
 </Breadcrumbs>
         
               </span>

@@ -57,7 +57,7 @@ const useStyle = makeStyles({
     display : "flex",
     maxWidth: "25%",
     height : "50px", 
-    cursor : "pointer",
+
    alignItems : "space-between",
     justifyContent: "center",
     textAlign : "justify"
@@ -326,7 +326,7 @@ const custLogout = () => {
               {
                 token === null ?
                 <>
-                  <Typography variant="h4"  style={{ marginX : "5px", color:"#fff"}}>
+                  <Typography variant="h4"  style={{ margin : "5px 0px", color:"#fff"}}>
                   For new client
                 </Typography>
                 <button className="btnWhite"  disabled = {token !== null ? true : false} onClick = {() => myCookie2("contactbasic")}>
@@ -395,7 +395,7 @@ const custLogout = () => {
 />
 
 </div>
-                  <div className="form-group">
+                  <div className="form-group passForm">
                     <label className="labelColor">Email</label>
                     <input
                       type="text"

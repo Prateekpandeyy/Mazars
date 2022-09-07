@@ -699,7 +699,7 @@ const checkNameError = (e) => {
     
 <div className="form">
   <div className="heading" style={{display : "flex", justifyContent : "space-between"}}> 
-    <h2>Client Registration</h2>
+    <h2>Client registration</h2>
     <a href={MyPDF} className="tabHover" target="_blank"> <HelpIcon /> </a>
   </div>
 
@@ -997,7 +997,7 @@ color : "#dd4445", borderRadius : "50%"}} title = "Enter the valid Zip Code or P
           </div>
           <div className="col-md-6">
             <div className="mb-3">
-              <label className="form-label">GST Number</label>
+              <label className="form-label">GST number</label>
               <input
                 type="text"
                className="form-control"
@@ -1059,7 +1059,7 @@ and number.`}>
 
           <div class="col-md-6">
             <div className="mb-3" style = {{position : "relative"}}>
-              <label className="form-label">Confirm Password<span className="declined">*</span></label>
+              <label className="form-label">Confirm password<span className="declined">*</span></label>
               <input
                 type={repassword ? "text" : "password"}
                 className={classNames("form-control", {
@@ -1113,7 +1113,7 @@ and number
               <div className="col-md-6">
               <div className="question_query mb-2">
                 <label className="form-label">
-                  Secondary Email 
+                  Secondary email 
                 </label>
                {
                  fields.length < 9 ?

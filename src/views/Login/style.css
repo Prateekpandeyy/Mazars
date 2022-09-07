@@ -201,7 +201,7 @@
 }
 .passForm {
   line-height: 10px;
-  margin-bottom: 0px !important;
+  margin : 1px 0px;
 }
 .signUpLogged {
   display: flex;

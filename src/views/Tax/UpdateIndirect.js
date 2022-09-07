@@ -77,7 +77,7 @@ return(
  Update
   </Link>
   <Link underline="hover" color="inherit" to = {`/customer/updateindirect`}>
- Indirect Tax
+ Indirect tax
   </Link>
   
 

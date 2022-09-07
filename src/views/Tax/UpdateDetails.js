@@ -74,7 +74,7 @@ useEffect(() => {
        </Link> 
        :
        <Link underline="hover" color="inherit" to = {`/customer/update${history.location.index}`}>
-       {CommonServices.capitalizeFirstLetter(history.location.index) + " Tax"}
+       {CommonServices.capitalizeFirstLetter(history.location.index) + " tax"}
        </Link>
      }
     

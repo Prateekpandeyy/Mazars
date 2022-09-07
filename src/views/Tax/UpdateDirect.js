@@ -109,7 +109,7 @@ dataList.push(dataObj)
  Update
   </Link>
   <Link underline="hover" color="inherit" to = {`/customer/updatedirect`}>
- Direct Tax
+ Direct tax
   </Link>
   
 
