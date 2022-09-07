@@ -326,7 +326,7 @@ const custLogout = () => {
               {
                 token === null ?
                 <>
-                  <Typography variant="h4" sx={{color:"#fff"}} style={{ "margin": "5px"}}>
+                  <Typography variant="h4"  style={{ marginX : "5px", color:"#fff"}}>
                   For new client
                 </Typography>
                 <button className="btnWhite"  disabled = {token !== null ? true : false} onClick = {() => myCookie2("contactbasic")}>

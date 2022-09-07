@@ -26,10 +26,10 @@ const ContactOuter = () => {
                  <Col md="12">
                    
                    
-                 <h4>211, Mercantile House</h4>
-           <h4>15, Kasturba Gandhi Marg, Connaught Place</h4>
+                 <h6>211, Mercantile House</h6>
+           <h6>15, Kasturba Gandhi Marg, Connaught Place</h6>
        
-           <h4>New Delhi-110001, India</h4>
+           <h6>New Delhi-110001, India</h6>
        
        <div>
            {/* Email : <a href="mailto: support@masindia.live">support@masindia.live</a> */}
