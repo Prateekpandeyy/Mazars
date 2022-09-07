@@ -14,6 +14,7 @@ import CookieConsent from "react-cookie-consent";
 import CloseIcon from '@material-ui/icons/Close';
 function Header({ id, cust_sign, noAdminSign, noTlSign, 
   noTpSign, admin, mtl, mtp, noSign, loginOTP, getData, showCook }) {
+    const [logomin, setLogimin] = useState(false)
   let history = useHistory();
 
   const custLogout = () => {
@@ -23,6 +24,25 @@ function Header({ id, cust_sign, noAdminSign, noTlSign,
     localStorage.removeItem("category");
     history.push("/customer/signin");
   }
+  useEffect(() => {
+  
+    const handleScroll = event => {
+      console.log('window.scrollY', window.scrollY);
+      if(window.scrollY > 70){
+      
+        setLogimin(true)
+      }
+      else {
+        setLogimin(false)
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
 
 
@@ -32,7 +52,7 @@ function Header({ id, cust_sign, noAdminSign, noTlSign,
         {id && (
          
             <Link to="/customer/questionnaire-page">
-              <img src={mazars} className="logo" alt="mazar" />
+              <img src={mazars} className={logomin === true ? "logomin" : "logo"} alt="mazar" />
             </Link>
          
         )}
@@ -40,7 +60,7 @@ function Header({ id, cust_sign, noAdminSign, noTlSign,
         {cust_sign && (
           <div className="noSignINBox">
             <Link to="/">
-              <img className="logo" src="https://www.mazars.co.in/extension/ezmazars_rwdesign/design/mazars2020/images/mazars-logo.png" 
+              <img className={logomin === true ? "logomin" : "logo"} src="https://www.mazars.co.in/extension/ezmazars_rwdesign/design/mazars2020/images/mazars-logo.png" 
               alt="mazar" />
             </Link>
           </div>
@@ -49,7 +69,7 @@ function Header({ id, cust_sign, noAdminSign, noTlSign,
         {noSign && (
           <div  id = "myP" style = {{display : "flex", width: "100%", alignItems: "center",  justifyContent: "space-between"}}>
               <Link to="/">
-              <img src={mazars} className="logo" alt="mazar"/>
+              <img src={mazars} className={logomin === true ? "logomin" : "logo"} alt="mazar"/>
             </Link>
          
         <CmsCont getData= {getData} showCook = {showCook}/>
@@ -60,7 +80,7 @@ function Header({ id, cust_sign, noAdminSign, noTlSign,
 
         {loginOTP && (
           <div>
-            <img src={mazars} className="logo" alt="mazar"/>
+            <img src={mazars} className={logomin === true ? "logomin" : "logo"} alt="mazar"/>
           </div>
           
         )}
@@ -68,7 +88,7 @@ function Header({ id, cust_sign, noAdminSign, noTlSign,
         {admin && (
           <div>
             <Link to="/admin/start">
-              <img src={mazars} className="logo" alt="mazar" />
+              <img src={mazars} className={logomin === true ? "logomin" : "logo"} alt="mazar" />
             </Link>
           </div>
         )}
@@ -76,7 +96,7 @@ function Header({ id, cust_sign, noAdminSign, noTlSign,
         {mtl && (
           <div>
             <Link to="/teamleader/start">
-              <img src={mazars} className="logo" alt="mazar" />
+              <img src={mazars} className={logomin === true ? "logomin" : "logo"} alt="mazar" />
             </Link>
           </div>
         )}
@@ -84,7 +104,7 @@ function Header({ id, cust_sign, noAdminSign, noTlSign,
         {mtp && (
           <div>
             <Link to="/taxprofessional/start">
-              <img src={mazars} className="logo" alt="mazar" />
+              <img src={mazars} className={logomin === true ? "logomin" : "logo"} alt="mazar" />
             </Link>
           </div>
         )}

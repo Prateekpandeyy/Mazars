@@ -46,6 +46,18 @@
     width: 100%;
     margin : 22px;
 }
+.logomin {
+  display: block;
+    height: 100%;
+    max-width: 12rem;
+    -o-object-fit: contain;
+    object-fit: contain;
+    -o-object-position: bottom left;
+    object-position: bottom left;
+    transition: all .3s;
+    width: 100%;
+    margin : 22px;
+}
 
 .menu {
   list-style: none;

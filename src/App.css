@@ -5,71 +5,60 @@
    url("./Fonts/HalyardTextBook.otf") format("truetype");
   
   }
-/* @font-face {
-  font-family: "icons";
-  src: url("../fonts/icons.eot?7aedd013e072110dcc3400637dd0f69d");
-  src: url("../fonts/icons.eot?#iefix") format("embedded-opentype"),
-    url("../fonts/icons.woff?7aedd013e072110dcc3400637dd0f69d") format("woff"),
-    url("../fonts/icons.ttf?7aedd013e072110dcc3400637dd0f69d")
-      format("truetype");
-  font-weight: normal;
-  font-style: normal;
-} */
-* {
-  margin: 0;
-  padding: 0;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-}
-
-html,
-body {
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden;
-  color: #3f3f3f;
-  font-family: Montserrat;
-  background: #f0f0f0 !important;
-  position: relative;
-  min-height: 100vh;
-  font-family: "Halyard" !important;
-}
-input[type="number"]::-webkit-inner-spin-button,
-input[type="number"]::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  margin: 0;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p,
-label,
-a,
-button,
-th,
-td,
-div,
-span {
-  font-family: "Halyard" !important;
-}
-.ag-theme-alpine .ag-icon {
-  font-family: "agGridAlpine";
-  font-size: 16px;
-  line-height: 16px;
-  font-style: normal;
-  font-weight: normal;
-  font-feature-settings: normal;
-  font-variant: normal;
-  text-transform: none;
-  -webkit-font-smoothing: antialiased;
-  font-family: "agGridAlpine" !important;
-}
+  * {
+    margin: 0;
+    padding: 0;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+  }
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+ 
+    color: #3f3f3f;
+   
+    background: #f0f0f0 !important;
+    position: relative;
+    min-height: 100vh;
+  
+  }
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0;
+  }
+  
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p,
+  label,
+  a,
+  button,
+  th,
+  td,
+  div,
+  span {
+    font-family: "Halyard" !important;
+  }
+  .ag-theme-alpine .ag-icon {
+    font-family: "agGridAlpine";
+    font-size: 16px;
+    line-height: 16px;
+    font-style: normal;
+    font-weight: normal;
+    font-feature-settings: normal;
+    font-variant: normal;
+    text-transform: none;
+    -webkit-font-smoothing: antialiased;
+    font-family: "agGridAlpine" !important;
+  }
 .modal-open .modal {
   overflow: hidden !important;
   position: fixed !important;
