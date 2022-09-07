@@ -187,12 +187,12 @@ function Paid() {
     },
     {
         dataField: "cat_name",
-        text: "Sub Category",
+        text: "Sub category",
         sort: true,
        
     },
     {
-        text: "Date of acceptance of Proposal",
+        text: "Date of acceptance of proposal",
         dataField: "cust_accept_date",
         sort: true,
       
@@ -221,7 +221,7 @@ function Paid() {
   },
   {
     dataField: "accepted_amount",
-    text: "Accepted Amount ",
+    text: "Accepted amount ",
     sort: true,
    
     sortFunc: (a, b, order, dataField) => {
@@ -241,7 +241,7 @@ function Paid() {
        }
 },
 {
-    text: "Amount Paid",
+    text: "Amount paid",
     dataField: "paid_amount",
     sort: true,
    
@@ -263,7 +263,7 @@ function Paid() {
 },
 
 {
-    text : "Amount Outstanding",
+    text : "Amount outstanding",
     dataField: "amount_outstanding",
     sort: true,
   //  headerStyle: () => {
@@ -286,7 +286,7 @@ function Paid() {
        }
 },
     {
-        text: "Date of Payment",
+        text: "Date of payment",
         dataField: "cust_paid_date",
         sort: true,
        

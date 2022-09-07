@@ -46,9 +46,9 @@ const Media = () => {
        <div className={classes.articlesDetails}>
         <Breadcrumbs separator=">" maxItems={3} aria-label="breadcrumb">
   <Link underline="hover" color="inherit" to="/customer/media">
-  Media Gallery
+  Media gallery
   </Link>
-  <Typography color="text.primary">  Photo Gallery</Typography>
+  <Typography color="text.primary">  Photo gallery</Typography>
   
   </Breadcrumbs>
 
@@ -68,7 +68,7 @@ const Media = () => {
                           hash : "images"
                         }}>
                           <img src={pngAlbum} 
-                          style={{display : "flex", width: "50%", height: "50%", margin: "auto" }}
+                          style={{display : "flex", width: "50%", height: "50%"}}
                            id={i.id} 
                           />
     
@@ -76,8 +76,8 @@ const Media = () => {
                </Link>
       </div>
                <div style={{ padding: "5px 10px", height: "70px", overflow: "hidden", width: "100%", justifyContent: "space-between"}}>
-                <h6  style={{textAlign: "center"}}>{i.title}</h6>
-                <h6 style={{textAlign : "center"}}>{i.created_date.split(" ")[0].split("-").reverse().join("-")}</h6>
+                <h6>{i.title}</h6>
+                <h6>{i.created_date.split(" ")[0].split("-").reverse().join("-")}</h6>
                     </div>
                      </div>  
                     ))

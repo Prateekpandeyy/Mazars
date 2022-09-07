@@ -268,13 +268,16 @@ props.showCook("showCookies")
  
 <li className="nav-item tabHoverLinksubMenu" onClick = {() => myLink("direct")}> 
       <ListItemButton>
-     Articles
+        <span className = "headerMenu">
+        Articles
+        </span>
+    
     </ListItemButton>
 </li>
 
                  <li className="nav-item tabHoverLinksubMenu"  onMouseOver={() => handleClickUpdateOpen()}  onMouseLeave = {() => handleClickUpdateClose()}>
        <ListItemButton>
-       <span className="nav-item">
+       <span className = "headerMenu">
                     Updates
                    </span>
 </ListItemButton>
@@ -285,7 +288,7 @@ props.showCook("showCookies")
                 
                   
                      <li className="tabHover subMenuHeader" onClick = {() => myLink("updatedirect")}>
-                   <span className="menu-title" data-i18n="">
+                     <span className = "headerMenu">
                   Direct tax
                    </span>
                    </li>
@@ -294,12 +297,12 @@ props.showCook("showCookies")
                     
                     
                      <li className="tabHover subMenuHeader" onClick = {() => myLink("updateindirect")}>
-                   <span className="menu-title" data-i18n="">
+                   <span className = "headerMenu">
                 Indirect tax
                    </span>
                    </li>
                    <li className="tabHover subMenuHeader" onClick = {() => myLink("updatemiscellaneous")}>
-                   <span className="menu-title" data-i18n="">
+                   <span className = "headerMenu">
                    Miscellaneous
                    </span>
                    </li>
@@ -314,7 +317,9 @@ props.showCook("showCookies")
 
       <li className="nav-item tabHoverLinksubMenu" onClick = {() => myLink("linklist")}> 
       <ListItemButton>
+      <span className = "headerMenu">
        Important links
+       </span>
     </ListItemButton>
 </li>
       <li className="nav-item tabHoverLinksubMenu" 
@@ -322,7 +327,7 @@ props.showCook("showCookies")
                  
                  <ListItemButton 
                  onMouseOver={() => handleClickOff2()}>
-   <span className="nav-item">
+ <span className = "headerMenu">
                   Media gallery
                    </span>
          </ListItemButton>  
@@ -332,7 +337,7 @@ props.showCook("showCookies")
                 
                
    <li className="tabHover subMenuHeader" onClick = {() => myLink("photo")}>
-                   <span className="menu-title" data-i18n="">
+                 <span className = "headerMenu">
                Photo gallery
                    </span>
                    </li>
@@ -341,14 +346,14 @@ props.showCook("showCookies")
                     
                    
                      <li className="tabHover subMenuHeader" onClick = {() => myLink("video")}>
-                   <span className="menu-title" data-i18n="">
+                 <span className = "headerMenu">
               Video gallery
                    </span>
                    </li>
                    
                   
                      <li className="tabHover subMenuHeader" onClick = {() => myLink("mediacontent")}>
-                   <span className="menu-title" data-i18n="">
+                 <span className = "headerMenu">
                        Media news
                    </span>
                    </li>
@@ -362,13 +367,17 @@ props.showCook("showCookies")
                  <li className="nav-item tabHoverLinksubMenu" onClick = {() => myLink("faqlist")}> 
  
  <ListItemButton>
+ <span className = "headerMenu">
       FAQs
+      </span>
    </ListItemButton>
     </li>
     <li className="nav-item tabHoverLinksubMenu" onClick = {() => myLink("about")}> 
  
  <ListItemButton>
+ <span className = "headerMenu">
       About us
+      </span>
    </ListItemButton>
     </li>
     <li className="nav-item tabHoverLinksubMenu" 
@@ -376,7 +385,7 @@ props.showCook("showCookies")
                  
                  <ListItemButton 
                  onMouseOver={() => handleClickOff3()}>
-   <span className="nav-item">
+ <span className = "headerMenu">
                   Contact us
                    </span>
          </ListItemButton>  
@@ -387,23 +396,16 @@ props.showCook("showCookies")
                   
            
    <li className="tabHover subMenuHeader" onClick = {() => myLink("enquiry")}>
-                   <span className="menu-title" data-i18n="">
+                   <span className = "headerMenu">
                Enquiry form
                    </span>
                    </li>
    
                    <li className="tabHover subMenuHeader" onClick = {() => myLink("contactUs")}>
-                   <span className="menu-title" data-i18n="">
+                   <span className = "headerMenu">
               Our office
                    </span>
-                   </li>
-                    
-                
-                   
-                  
-                  
-                   
-                    
+                   </li> 
                    </ul>
            </List>
          </Collapse>

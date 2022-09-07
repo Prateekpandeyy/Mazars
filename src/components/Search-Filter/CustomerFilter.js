@@ -532,16 +532,16 @@ const [loading, setLoading] = useState(false)
           ))}
         </Select>
       </div>
-      <div className="form-group mx-sm-1  mb-2">
-      <div>
+      <div className="form-group mx-sm-1 mb-2">
+     
         <button
           type="submit"
-          className="btnSearch mb-2 ml-3"
+          className="btnSearch mx-2"
           onClick={() => resetCategory()}
         >
           X
         </button>
-        </div>
+      
         </div>
         <div className="form-group mx-sm-1  mb-2">
         <label className="form-select form-control">From</label>
@@ -680,11 +680,11 @@ const [loading, setLoading] = useState(false)
       <Reset />
 {
 query ?
-<div className="mx-sm-1" style={{position: "absolute", top: "50%", right: "10px"}}>
+<div className="mx-sm-1" style={{position: "absolute", top: "50%", right: "120px"}}>
 <span>
 <Link to="/customer/select-category" style={{color : "#fff", textAlign: "right"}}>
 <button  className="autoWidthBtn mb-1" style={{marginLeft : "auto", color : "#fff"}}>
-Fresh Query 
+Fresh query 
 </button> 
 </Link>
 </span>

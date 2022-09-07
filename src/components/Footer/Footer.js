@@ -45,7 +45,7 @@ props.showCook("showCookies")
         <a onClick = {() => myLink("contactbasic")}>
               
               
-              Contact Us | &nbsp; 
+              Contact us | &nbsp; 
             
            </a>
            
@@ -54,7 +54,7 @@ props.showCook("showCookies")
              <a onClick = {() => myLink("aboutbasic")}>
         
       
-         About Us | &nbsp;
+         About us | &nbsp;
       
       </a>
       <a onClick = {() => myLink("needhelp")}> Need help?</a>

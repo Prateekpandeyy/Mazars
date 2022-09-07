@@ -154,7 +154,7 @@ function AllQueriesData() {
             
         },
         {
-            text: "Sub Category",
+            text: "Sub category",
             dataField: "cat_name",
             sort: true,
             
@@ -192,7 +192,7 @@ function AllQueriesData() {
             },
         },
         {
-            text: "Expected / Actual Delivery Date",
+            text: "Expected / Actual delivery date",
             dataField: "exp_delivery_date",
             sort: true,
            

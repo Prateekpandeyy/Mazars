@@ -124,18 +124,18 @@ function AssignmentTab(props) {
           className="fixedTab"
           >
             <Tab style={tabIndex === 0 ? myStyle2 : myStyle1} className="tabHover">
-              All Assignment ({allassignment})
+              All assignment ({allassignment})
             </Tab>
             <Tab style={tabIndex === 1 ? myStyle2 : myStyle1} className="tabHover">
-              Inprogress; Assignments ({inprogressAssignmentCount})
+              Inprogress; assignments ({inprogressAssignmentCount})
             </Tab>
 
             <Tab style={tabIndex === 2 ? myStyle2 : myStyle1} className="tabHover">
-              Completed; Assignments ({completeAssignment})
+              Completed; assignments ({completeAssignment})
             </Tab>
 
             <Tab style={tabIndex === 3 ? myStyle2 : myStyle1} className="tabHover">
-              Client Declined; Payment ({declinedAssignment})
+              Client declined; payment ({declinedAssignment})
             </Tab>
           </TabList>
 

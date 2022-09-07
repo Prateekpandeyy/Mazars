@@ -173,13 +173,13 @@ const rightAli = {
            
         },
         {
-            text: "Sub Category",
+            text: "Sub category",
             dataField: "cat_name",
             sort: true,
            
         },
         {
-            text: "Date of Proposal",
+            text: "Date of proposal",
             dataField: "DateofProposal",
             sort: true,
             
@@ -193,7 +193,7 @@ const rightAli = {
             },
         },
         {
-            text: "Date of acceptance / decline of Proposal",
+            text: "Date of acceptance / decline of proposal",
             dataField: "cust_accept_date",
             sort: true,
            
@@ -242,7 +242,7 @@ const rightAli = {
             },
         },
         {
-            text: "Proposed Amount",
+            text: "Proposed amount",
             dataField: "ProposedAmount",
             sort: true,
           
@@ -262,7 +262,7 @@ const rightAli = {
                }
         },
         {
-            text: "Accepted Amount",
+            text: "Accepted amount",
             dataField: "accepted_amount",
             sort: true,
             

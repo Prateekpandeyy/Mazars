@@ -7,14 +7,14 @@ color:#4B4646;
 .notification .badge {
   position: absolute;
   display: flex;
-  top: -20px;
-  right: -10px;
+ bottom: 25px;
+ left: 25px;
   justify-content: center;
   align-items: center;
   width: 50px;
   height: 25px;
   
-  border-radius: 50%;
+ 
   background-color: rgb(61, 131, 117);
   color: white;
   padding: 10px;

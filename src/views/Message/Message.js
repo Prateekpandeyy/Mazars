@@ -124,7 +124,7 @@ function Message(props) {
                                         title="unread"
                                     >
                                         <p>{row.message}</p>
-                                        <i class="fa fa-bullseye" style={{ color: "red" }}></i>
+                                        <i class="fa fa-bullseye" style={{ color: "#BC363D" }}></i>
                                     </div>
 
                                     :
@@ -138,7 +138,7 @@ function Message(props) {
                                         title="read"
                                     >
                                         <p>{row.message}</p>
-                                        <i class="fa fa-bullseye" style={{ color: "green" }}></i>
+                                        <i class="fa fa-bullseye" style={{ color: "#348719" }}></i>
                                     </div>
 
                             }

@@ -115,17 +115,17 @@ fontWeight : 1000
         <Tabs selectedIndex={tabIndex} onSelect={(index) => tableIndex(index)}>
           <TabList className="fixedTab">
             <Tab style={tabIndex == 0 ? myStyle2 : myStyle1} className="tabHover">
-              All Queries ({allQueriesCount})
+              All queries ({allQueriesCount})
             </Tab>
             <Tab style={tabIndex == 1 ? myStyle2 : myStyle1} className="tabHover">
-              Inprogress; Queries({inprogressAllocation})
+              Inprogress; queries({inprogressAllocation})
             </Tab>
             <Tab style={tabIndex == 2 ? myStyle2 : myStyle1} className="tabHover">
-              Completed; Queries ({inprogressProposal})
+              Completed; queries ({inprogressProposal})
             </Tab>
 
             <Tab style={tabIndex == 3 ? myStyle2 : myStyle1} className="tabHover">
-              Declined; Queries ({declined})
+              Declined; queries ({declined})
             </Tab>
           </TabList>
 

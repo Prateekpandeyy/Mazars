@@ -108,7 +108,7 @@ const QueryContact = () => {
                                 <Grid item lg={12}>
                                     <Box className={style.myFormBox}>
                                         <label className={style.formFieldLegend}>
-                                        Mazars Advisory Solutions Enquiry Form
+                                        Mazars Advisory Solutions enquiry form
                                         </label>
 
                                         <select

@@ -191,12 +191,12 @@ html body a {
   cursor: pointer;
 }
 .discussionMessage {
-  color: orange;
+  color: #B63C00;
   font-size: 1rem;
   cursor: pointer;
 }
 .discussProposal {
-  color: #081f8f;
+  color: #393470;
   font-size: 1rem;
   cursor: pointer;
 }
@@ -204,7 +204,7 @@ html body a {
   font-size: 2rem;
   cursor: pointer;
   float: right;
-  color: rgb(56, 39, 49);
+  color: #464b4b;
 }
 
 .viewDiscusion {
@@ -230,6 +230,7 @@ html body a {
 .uploadIcon {
   font-size: 1rem;
   cursor: pointer;
+  color: #BC363D;
 }
 .payment {
   color: rgb(61, 71, 117) !important;
@@ -747,6 +748,7 @@ input[type="date"] {
   transition: 0.3s all;
   margin: 0 7px;
   outline: #000;
+  color: #464b4b;
 }
 .myFacebook:hover {
   color: #3b5998;

@@ -18,13 +18,13 @@ const AboutOuter = () => {
 <div className={classes.articlesDetails}>
           <Card style={{display : "flex", width: "100%", boxShadow: "none", border: "1px solid #fff"}}>
 
-<CardHeader>
-<h3 style={{textAlign: "center", width: "100%"}}>About Us</h3>    
-        </CardHeader>
-<CardBody style={{textAlign: "center"}}>
+          <Typography variant="h4" style={{ margin: "5px 15px"}}>
+        About us
+          </Typography>
+<CardBody>
 <Row>
           <Col md="12">
-          <Typography variant="h4" py={2} align="left">
+          <Typography variant="h6" py={2} align="left">
     Mazars
     </Typography>    
 
@@ -35,7 +35,7 @@ const AboutOuter = () => {
     partnership and 16,000+ via the Mazars North America
     Alliance to assist clients of all sizes at every stage in their development.
          </p>
-         <Typography variant="h4" py={2} align="left">
+         <Typography variant="h6" py={2} align="left">
          Mazars in India
     </Typography>
    <p style={{textAlign : "left"}}>
@@ -45,7 +45,7 @@ const AboutOuter = () => {
       like Energy, Telecom, BFSI, Automobiles, Technology, Real Estate, Shipping, Services,
        Manufacturing and Retail.
   </p>
-  <Typography variant="h4" py={2} align="left">
+  <Typography variant="h6" py={2} align="left">
   MAS India
     </Typography>
     <p style={{textAlign : "left"}}>

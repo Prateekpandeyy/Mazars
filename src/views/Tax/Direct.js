@@ -109,7 +109,7 @@ const Direct = () => {
      <TableCell style= {{width : "150px"}}>Subject</TableCell>
      <TableCell style={{width : "400px", margin: "0 10px"}}>Heading</TableCell>
      
-     <TableCell>Name of Writer</TableCell>
+     <TableCell>Name of writer</TableCell>
    </TableRow>
    </TableHead>
 
