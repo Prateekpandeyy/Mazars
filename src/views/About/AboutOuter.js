@@ -49,7 +49,7 @@ const AboutOuter = () => {
   MAS India
     </Typography>
     <p style={{textAlign : "left"}}>
-    Industry experts form the backbone of MAS Team, collectively possessing:
+    Industry experts form the backbone of MAS team, collectively possessing:
 
       </p>
       <p style={{textAlign : "left"}}>

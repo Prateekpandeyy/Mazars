@@ -71,7 +71,7 @@ const showLinkData = () => {
     pathname : "/customer/updates",
     index : 3
   }}>
-  Important Links
+  Important links
   </Link>
   
 
