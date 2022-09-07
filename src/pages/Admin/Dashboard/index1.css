@@ -46,27 +46,27 @@
 }
 .second.table-striped > tbody > tr:nth-child(2n+1){
 	background-color: #E2DAE6;
-	color:#464B4B;
+	color:#464646;
 }
 .second.table-striped > tbody > tr:nth-child(2n){
 	background-color: #E2DAE6;
-	color:#464B4B;
+	color:#464646;
 }
 .third.table-striped > tbody > tr:nth-child(2n+1){
 	background-color: #E2DAE6;
-	color:#464B4B;
+	color:#464646;
 }
 .third.table-striped > tbody > tr:nth-child(2n){
 	background-color: #E2DAE6;
-	color:#464B4B;
+	color:#464646;
 }
 .forth.table-striped > tbody > tr:nth-child(2n+1){
 	background-color: #E2DAE6;
-	color:#464B4B;
+	color:#464646;
 }
 .forth.table-striped > tbody > tr:nth-child(2n){
 	background-color: #E2DAE6;
-	color:#464B4B;
+	color:#464646;
 }
 /* .second.table-striped tbody tr,
 .third.table-striped tbody tr,
@@ -98,27 +98,27 @@
 }
 .sixth.table-striped > tbody > tr:nth-child(2n+1){
 	background-color: #D3DBE3;
-	color:#464B4B;
+	color:#464646;
 }
 .sixth.table-striped > tbody > tr:nth-child(2n){
 	background-color: #D3DBE3;
-	color:#464B4B;
+	color:#464646;
 }
 .seventh.table-striped > tbody > tr:nth-child(2n+1){
 	background-color: #D3DBE3;
-	color:#464B4B;
+	color:#464646;
 }
 .seventh.table-striped > tbody > tr:nth-child(2n){
 	background-color: #D3DBE3;
-	color:#464B4B;
+	color:#464646;
 }
 .eighth.table-striped > tbody > tr:nth-child(2n+1){
 	background-color: #D3DBE3;
-	color:#464B4B;
+	color:#464646;
 }
 .eighth.table-striped > tbody > tr:nth-child(2n){
 	background-color: #D3DBE3;
-	color:#464B4B;
+	color:#464646;
 }
 /* .sixth.table-striped tbody tr{
 	background-color:rgba(172, 132, 159, 1);
@@ -136,35 +136,35 @@
 }
 .ninth.table-striped > tbody > tr:nth-child(2n+1){
 	background-color: #7c887c !important;
-	color:#464B4B;
+	color:#464646;
 }
 .ninth.table-striped > tbody > tr:nth-child(2n){
 	background-color: #7c887c !important;
-	color:#464B4B;
+	color:#464646;
 }
 .tenth.table-striped > tbody > tr:nth-child(2n+1){
 	background-color: #d0d9d0  !important;
-	color:#464B4B;
+	color:#464646;
 }
 .tenth.table-striped > tbody > tr:nth-child(2n){
 	background-color: #d0d9d0  !important;
-	color:#464B4B;
+	color:#464646;
 }
 .eleventh.table-striped > tbody > tr:nth-child(2n+1){
 	background-color: #7c887c !important;
-	color:#464B4B;
+	color:#464646;
 }
 .eleventh.table-striped > tbody > tr:nth-child(2n){
 	background-color: #7c887c !important;
-	color:#464B4B;
+	color:#464646;
 }
 .twelvth.table-striped > tbody > tr:nth-child(2n+1){
 	background-color: #7c887c !important;
-	color:#464B4B;
+	color:#464646;
 }
 .twelvth.table-striped > tbody > tr:nth-child(2n){
 	background-color: #7c887c !important;
-	color:#464B4B;
+	color:#464646;
 }
 
 /* .tenth.table-striped tbody tr{

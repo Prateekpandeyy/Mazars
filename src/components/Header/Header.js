@@ -25,16 +25,20 @@ function Header({ id, cust_sign, noAdminSign, noTlSign,
     history.push("/customer/signin");
   }
   useEffect(() => {
-  
+    
+    // if(window.location.hash === "#/admin/login" || window.location.hash === "#/admin/start"){
+    //   setLogimin(true)
+    // }
     const handleScroll = event => {
-      console.log('window.scrollY', window.scrollY);
-      if(window.scrollY > 70){
+      // console.log('window.scrollY', window.pageYOffset);
+      if(window.pageYOffset > 65){
       
         setLogimin(true)
       }
-      else {
+      else if (window.pageXOffset < 40) {
         setLogimin(false)
       }
+    
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -48,7 +52,7 @@ function Header({ id, cust_sign, noAdminSign, noTlSign,
 
   return (
     <>
-      <div className="header">
+      <div className={logomin === true ? "headerMin" : "header"}>
         {id && (
          
             <Link to="/customer/questionnaire-page">

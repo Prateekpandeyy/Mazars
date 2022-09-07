@@ -121,12 +121,12 @@
   display: flex;
   font-family: Arial !important;
   font-size: 12px;
-  color: #464b4b;
+  color: #464646;
 }
 .updatesHeding {
   font-family: Arial !important;
   font-size: 14px;
   font-weight: 1000;
-  color: #464b4b !important;
+  color: #464646 !important;
   letter-spacing: 0.0333em;
 }

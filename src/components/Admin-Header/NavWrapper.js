@@ -108,7 +108,7 @@ const clName = JSON.parse(localStorage.getItem("clientLoginId"))
                         <div className="dropdown-item" 
                           style={{ cursor: "pointer" }}>
                            <VpnKeyIcon style ={{fontSize : "20px"}}/>
-                          <span style={{ marginLeft: "6px" }}>Change Password</span>
+                          <span style={{ marginLeft: "6px" }}>Change password</span>
                         </div>
                       </Link>
                        <Link to="/customer/profile">

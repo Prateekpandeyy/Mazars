@@ -163,7 +163,7 @@ const myConfig = {
        <table className="table table-striped  first main_table">
         <thead className="query_thead">
           <tr>
-            <th className="left_side"> All Queries</th>
+            <th className="left_side"> All queries</th>
             <th>{total}</th>
           </tr>
         </thead>
@@ -171,22 +171,22 @@ const myConfig = {
       <table className="table table-striped  second main_table">
         <thead className="query_thead query_thead1">
           <tr>
-            <th className="left_side">Inprogress; Queries</th>
+            <th className="left_side">Inprogress; queries</th>
             <th>{inprogress_queries}</th>
           </tr>
         </thead>
 
         <tbody className="table_body">
           <tr>
-            <td className="left_side">Inprogress; Allocation</td>
+            <td className="left_side">Inprogress; allocation</td>
             <td>{inprogress_allocation}</td>
           </tr>
           <tr>
-            <td className="left_side">Inprogress; Proposals</td>
+            <td className="left_side">Inprogress; proposals</td>
             <td>{inprogress_proposal}</td>
           </tr>
           <tr>
-            <td className="left_side">Inprogress; Assignments</td>
+            <td className="left_side">Inprogress; assignments</td>
             <td>{inprogress_assignment}</td>
           </tr>
         </tbody>
@@ -196,13 +196,13 @@ const myConfig = {
         <table className="table table-striped  third main_table">
           <thead className="query_thead query_thead1">
             <tr>
-              <th className="left_side">Completed; Queries</th>
+              <th className="left_side">Completed; queries</th>
               <th>{complete_query}</th>
             </tr>
           </thead>
           <tbody className="table_body">
             <tr>
-              <td className="left_side">Completed; Assignments</td>
+              <td className="left_side">Completed; assignments</td>
               <td>{complete_query}</td>
             </tr>
           </tbody>
@@ -212,26 +212,26 @@ const myConfig = {
           <table className="table table-striped  forth main_table">
             <thead className="query_thead query_thead1">
               <tr>
-                <th className="left_side">Declined; Queries</th>
+                <th className="left_side">Declined; queries</th>
                 <th>{declined_queries}</th>
               </tr>
             </thead>
 
             <tbody className="table_body">
               <tr>
-                <td className="left_side">Admin Declined; Queries</td>
+                <td className="left_side">Admin declined; queries</td>
                 <td>{admin_declined_query}</td>
               </tr>
               <tr>
-                <td className="left_side">Client Declined; Queries</td>
+                <td className="left_side">Client declined; queries</td>
                 <td>{customer_declined_Query}</td>
               </tr>
               <tr>
-                <td className="left_side">Client Declined; Proposals</td>
+                <td className="left_side">Client declined; proposals</td>
                 <td>{customer_declined_proposal}</td>
               </tr>
               <tr>
-                <td className="left_side">Client Declined; Payment</td>
+                <td className="left_side">Client declined; payment</td>
                 <td>{Customer_declined_payment}</td>
               </tr>
             </tbody>
@@ -249,7 +249,7 @@ const myConfig = {
        <table className="table table-striped fifth main_table">
           <thead className="proposal_thead">
             <tr>
-              <th className="left_side">All Proposals</th>
+              <th className="left_side">All proposals</th>
               <th>{allproposal}</th>
 
             </tr>
@@ -259,17 +259,17 @@ const myConfig = {
         <table className="table table-striped  sixth main_table">
           <thead className="proposal_thead3">
             <tr>
-              <th className="left_side">Inprogress; Proposals</th>
+              <th className="left_side">Inprogress; proposals</th>
               <th>{InProgress}</th>
             </tr>
           </thead>
           <tbody classNameName="table_body">
             <tr>
-              <td className="left_side">Inprogress; Preparation</td>
+              <td className="left_side">Inprogress; preparation</td>
               <td>{inprogress_preparation}</td>
             </tr>
             <tr>
-              <td className="left_side">Inprogress; Acceptance</td>
+              <td className="left_side">Inprogress; acceptance</td>
               <td>{inprogress_acceptance}</td>
             </tr>
           </tbody>
@@ -278,7 +278,7 @@ const myConfig = {
         <table className="table table-striped seventh main_table">
           <thead className="proposal_thead3">
             <tr>
-              <th className="left_side">Accepted; Proposals </th>
+              <th className="left_side">Accepted; proposals </th>
               <th>{accepted_proposals}</th>
             </tr>
           </thead>
@@ -287,7 +287,7 @@ const myConfig = {
         <table className="table table-striped eight main_table">
           <thead className="proposal_thead3">
             <tr>
-              <th className="left_side">Client Declined; Proposals</th>
+              <th className="left_side">Client declined; proposals</th>
               <th>{declined}</th>
             </tr>
           </thead>
@@ -304,7 +304,7 @@ const myConfig = {
            <table className="table table-striped ninth main_table">
             <thead className="assignment_thead">
               <tr>
-                <th className="left_side">All Assignments</th>
+                <th className="left_side">All assignments</th>
                 <th>{allassignment}</th>
               </tr>
             </thead>
@@ -314,7 +314,7 @@ const myConfig = {
             <thead className="assignment_thead2">
 
               <tr>
-                <th className="left_side">Inprogress; Assignments</th>
+                <th className="left_side">Inprogress; assignments</th>
                 <th>{inprogress}</th>
               </tr>
             </thead>
@@ -324,7 +324,7 @@ const myConfig = {
             <thead className="assignment_thead2">
 
               <tr>
-                <th className="left_side">Completed; Assignments</th>
+                <th className="left_side">Completed; assignments</th>
                 <th>{complete}</th>
               </tr>
             </thead>
@@ -334,7 +334,7 @@ const myConfig = {
             <thead className="assignment_thead2">
 
               <tr>
-                <th className="left_side">Client Declined; Payment</th>
+                <th className="left_side">Client declined; payment</th>
                 <th>{customer_declined_Pay}</th>
               </tr>
             </thead>
@@ -352,7 +352,7 @@ const myConfig = {
              <table className="table table-striped thirteenth main_table">
               <thead className="payment_thead">
                 <tr>
-                  <th className="left_side">All Payments</th>
+                  <th className="left_side">All payments</th>
                   <th>{totalpayment}</th>
                 </tr>
               </thead>

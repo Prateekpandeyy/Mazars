@@ -25,12 +25,12 @@
 .queryBox > .table thead tr th:nth-child(1) {
   display: flex;
   width: 30%;
-  color: #464b4b;
+  color: #464646;
 }
 .queryBox > .table thead tr th:nth-child(2) {
   display: flex;
   width: 70%;
-  color: #464b4b;
+  color: #464646;
 }
 .queryBox > .table > tbody {
   display: flex;
@@ -46,7 +46,7 @@
   display: flex;
   flex-basis: 30%;
   border-bottom: 0px;
-  color: #464b4b;
+  color: #464646;
 }
 .queryBox > .table > tbody > tr > td {
   display: flex;
@@ -63,7 +63,7 @@ h3,
 h4,
 h5,
 h5 {
-  color: #464b4b;
+  color: #464646;
 }
 
 .modalBox {

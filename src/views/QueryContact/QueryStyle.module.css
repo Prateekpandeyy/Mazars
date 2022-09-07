@@ -49,10 +49,10 @@
   display: flex;
   width: 100%;
   padding: 10px;
-  border: 1px solid #464b4b;
+  border: 1px solid #464646;
   border-bottom-left-radius: 1.75rem;
   background-color: #f0f0f0;
-  outline: #464b4b;
+  outline: #464646;
 }
 .myNameBox {
   display: flex;
@@ -60,19 +60,19 @@
   padding: 10px;
   border: 0px;
   background-color: #f0f0f0;
-  border-bottom: 1px solid #464b4b;
-  outline: #464b4b;
+  border-bottom: 1px solid #464646;
+  outline: #464646;
 }
 .myMessageBox {
   display: flex;
   width: 100%;
   padding: 10px;
-  border: 1px solid #464b4b;
+  border: 1px solid #464646;
   background-color: #f0f0f0;
-  outline: #464b4b;
+  outline: #464646;
 }
 .formFieldLegend {
-  color: #464b4b;
+  color: #464646;
   display: block;
   font-size: 1.5rem;
   font-weight: 300;
@@ -89,7 +89,7 @@
   user-select: none;
   font-size: 1.5rem;
   font-weight: 300;
-  color: #464b4b;
+  color: #464646;
 }
 .formFieldSelect {
   -webkit-appearance: none;
@@ -97,7 +97,7 @@
   appearance: none;
   background-color: transparent;
   border: 0;
-  color: #464b4b;
+  color: #464646;
   line-height: 1.5;
   min-height: 3rem;
   outline: none !important;
@@ -105,10 +105,10 @@
   padding: 0.75rem 2rem 0.75rem 1rem;
   text-overflow: ellipsis;
   width: 100%;
-  border: 1px solid #464b4b;
+  border: 1px solid #464646;
   border-bottom-left-radius: 1.75rem;
   background-color: #f0f0f0;
-  outline: #464b4b;
+  outline: #464646;
 }
 .formButton {
   align-items: center;
@@ -137,7 +137,7 @@
   line-height: 1.4;
   padding: 0.75rem 1.5rem;
   background-color: transparent;
-  color: #464b4b;
+  color: #464646;
   width: 100%;
   min-height: 120px;
 }

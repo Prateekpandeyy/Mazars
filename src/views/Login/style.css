@@ -250,10 +250,10 @@
   background-color: #438375 !important;
 }
 .form-label {
-  color: #464b4b;
+  color: #464646;
 }
 .nav-tabs .nav-item a {
-  color: #464b4b !important;
+  color: #464646 !important;
 }
 .myLinkStyle {
   display: flex;
@@ -366,7 +366,7 @@
   right: 10px;
   background-color: #d9d9d9;
   border: 1px solid #d9d9d9;
-  color: #464b4b;
+  color: #464646;
   cursor: pointer;
   font-size: 10px;
   font-weight: 500;

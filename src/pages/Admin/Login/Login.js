@@ -16,7 +16,7 @@ import VerifyOtpLogin from "./VerifyOtpLogin";
 import { Spinner } from "reactstrap";
 import {useHistory} from 'react-router-dom';
 import Cookies from "js-cookie"
-
+import MainContainer from "../../../components/Common/MainContainer";
 const Schema = yup.object().shape({
   p_email: yup.string().email("invalid email").required("required email"),
   password: yup
@@ -101,7 +101,8 @@ function Login(props) {
   
   return (
     <>
-      <Header admin="admin" noAdminSign = "adminSign"/>
+   <MainContainer>
+   <Header admin="admin" noAdminSign = "adminSign"/>
       <div className="container">
 
         {
@@ -202,6 +203,7 @@ function Login(props) {
 
 
       </div>
+   </MainContainer>
     
     </>
   );

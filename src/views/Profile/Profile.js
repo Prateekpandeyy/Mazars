@@ -127,7 +127,7 @@ console.log("mainUser", mainUser)
 <CardHeader>
   
 <div style={{display : "flex", width : "100%", justifyContent : "space-between", alignItems : "center"}}>
-<h4> Client Profile </h4>
+<h4> Client profile </h4>
 
          {/* <h6>{JSON.parse(clientId)}</h6> */}
        {
@@ -231,7 +231,7 @@ console.log("mainUser", mainUser)
 </span>
 <span className="formContentWrapper">
 <span className="profileInfo" id="profileInfoLabel">
-<h4>Zip Code</h4>
+<h4>Zip code</h4>
 </span>
 <span className="profileInfo">
 {
@@ -243,7 +243,7 @@ console.log("mainUser", mainUser)
 </span>
 <span className="formContentWrapper">
 <span className="profileInfo" id="profileInfoLabel">
-<h4>Mobile Number</h4>
+<h4>Mobile number</h4>
 </span>
 <span className="profileInfo">
 {
@@ -256,7 +256,7 @@ console.log("mainUser", mainUser)
 
 <span className="formContentWrapper">
 <span className="profileInfo" id="profileInfoLabel">
-<h4>GST  Number</h4>
+<h4>GST  number</h4>
 </span>
 <span className="profileInfo">
 {
@@ -272,7 +272,7 @@ console.log("mainUser", mainUser)
 <fieldset>
    
 <span id="profileInfoLabel" style={{display : "flex", margin : "5px 0px", justifyContent : "space-between"}}>
-<h4 style={{fontSize : "14px", fontWeight : "700", color : "#464B4B"}}>Secondary Emails</h4>
+<h4 style={{fontSize : "14px",  color : "#464646"}}>Secondary emails</h4>
 {
  JSON.parse(mainUser) == "1"  && allEmails && allEmails.length < 9 ?
   <button

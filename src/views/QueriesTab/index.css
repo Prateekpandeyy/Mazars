@@ -4,7 +4,7 @@
   align-items: center;
 }
 .table tbody tr td {
-  color: #464b4b;
+  color: #464646;
 }
 .tabHover {
   transition: all 0.9s;
