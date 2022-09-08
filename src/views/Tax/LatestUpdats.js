@@ -12,6 +12,8 @@ import classes from './design.module.css';
 import FlashSection from "../../components/Common/FlashSection";
 import { OuterloginContainer } from '../../components/Common/OuterloginContainer';
 import MyContainer from "../../components/Common/MyContainer";
+import SubHeading from "../../components/Common/SubHeading";
+import CustomTypography from "../../components/Common/CustomTypography"
 const LatestUpdates = () => {
     const [news, getNews] = useState([])
     const [pos,setPos] = useState(1920);   
@@ -105,7 +107,9 @@ const LatestUpdates = () => {
    
     <div className={classes.articleContent}>
     <div className={classes.articlesDetails}>
-          <h4>{description.heading} </h4>
+        <CustomTypography>
+        {description.heading}
+        </CustomTypography>
    <Markup content={description.news} />
 
           </div>

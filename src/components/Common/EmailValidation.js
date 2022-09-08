@@ -100,7 +100,7 @@ return(
                         })}
                         onChange={(e) => emailHandler(e)}
                         onBlur={(e) => emailValidation(e)}
-                        placeholder="Enter Your Password"
+                        placeholder="Enter your email"
                         ref={register({ required: true })}
                       />
                       

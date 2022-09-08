@@ -724,7 +724,7 @@ maxLength="16"
 name="p_user"
 value={user}
 ref={register({ required: true })}
-placeholder="Enter Name"
+placeholder="Enter user Id"
 
 className={classNames("form-control", {
 "is-invalid": errors.p_user || userError.length > 0 || userAvailable.flag === 0,
@@ -761,7 +761,7 @@ userAvailable.flag === 0 ?
                 onBlur = {(e) => checkNameError(e)}
                 onChange = {(e) => checkSpecial(e)}
                 ref={register({ required: true })}
-                placeholder="Enter Name"
+                placeholder="Enter name"
                 className={classNames("form-control", {
                   "is-invalid": errors.p_name || nameError === true ,
                 })}
@@ -921,7 +921,7 @@ value={dstate2}
                   onChange={(e) => setAddress(e.target.value)} 
                   maxLength="100"
                   ref={register()}
-                  placeholder="Enter Address"
+                  placeholder="Enter address"
                 
                 />
 
@@ -986,7 +986,7 @@ title = "Enter the valid numeric mobile number.">
                 name="p_zipCode"
                 maxLength = "12"
                 ref={register({ required: true })}
-                placeholder="Enter Zipcode"
+                placeholder="Enter zipcode"
                 onChange={(e) => zipValue(e)}
                 onBlur={(e) => zipVali2(e)}
                 value={zipCode}
@@ -1007,7 +1007,7 @@ color : "#dd4445", borderRadius : "50%"}} title = "Enter the valid Zip Code or P
                className="form-control"
                 name="p_gstIn"
                 ref={register}
-                placeholder="Enter GST Code"
+                placeholder="Enter gst code"
                maxLength = "24"
               />
             </div>
@@ -1033,7 +1033,7 @@ color : "#dd4445", borderRadius : "50%"}} title = "Enter the valid Zip Code or P
                   "is-invalid": errors.p_password || pass2 === true,
                 })}
                 name="p_password"
-                placeholder="Enter Your Password"
+                placeholder="Enter your password"
                 ref={register({
                   required: true,
                   pattern: {
@@ -1077,7 +1077,7 @@ and number.`}>
                   e.preventDefault();
                   return false
                 }}
-                placeholder="Confirm Password"
+                placeholder="Confirm password"
                 name="p_confirm_password"
                 ref={register({
                   required: true,
@@ -1146,7 +1146,7 @@ and number
                    })}
                    onChange={(e) => emailHandler(e)}
                    onBlur = {(e) => emailValidation(e)}
-                   placeholder="Enter Your Email"
+                   placeholder="Enter your email"
                    ref={register()}
                     
                     />

@@ -32,7 +32,7 @@ function SelectCategoryPage() {
               </button>
               </Grid>
               <Grid item sm = {4} align="center">
-              <h4 className="contentTitle"> Add Fresh Query </h4>
+              <h4 className="contentTitle"> Add fresh query </h4>
                 </Grid>
                 <Grid item sm = {4}>
            

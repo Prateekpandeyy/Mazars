@@ -319,11 +319,13 @@ const custLogout = () => {
                  </CustomHeading>
                  
               
+                <div stye={{display : "flex", maxWidth : "200px"}}>
                 <button className="btnWhite"  disabled = {token !== null ? true : false} onClick = {() => myCookie2("contactbasic")}>
               
-                    Sign up
-                 
-                </button>
+              Sign up
+           
+          </button>
+                </div>
                 </> : " "
               }
               </div>
@@ -333,23 +335,27 @@ const custLogout = () => {
           token !== null ?
           <div className="signUpLogged">
          
-           <h4 style={{fontSize: "1.5rem"}}>
+           
           
           <CustomHeading 
           color = "#fff">
           {userEmail}
           </CustomHeading>
-          </h4>
+        
           <CustomHeading 
                  color = "#fff">
          logged in 
           </CustomHeading>
-          <button className="btnWhite" onClick = {(e) => history.push("/customer/dashboard")}  type="button">
+        <div style={{display : "flex", maxWidth : "150px"}}>
+        <button className="btnWhite" onClick = {(e) => history.push("/customer/dashboard")}  type="button">
                   Go To Dashboard
                       </button>
+        </div>
+        <div style={{display : "flex", maxWidth : "150px"}}>
                       <button className="btnWhite" onClick = {(e) => custLogout()}  type="button">
                   Logout
                       </button>
+                      </div>
           </div> :
           <div className="signUp">
         
@@ -378,7 +384,7 @@ const custLogout = () => {
                 <div className="form-group passForm">
 
 
-<label className="labelColor">User Id<span className="declined">*</span></label>
+<label className="labelColor">User Id</label>
 <input
   type="text"
   onChange={(e) => getUser(e)}
@@ -386,7 +392,7 @@ const custLogout = () => {
  disabled = {token !== null ? true : false}
   name="p_user"
   ref={register({ required: true })}
-  placeholder="Enter User Id"
+  placeholder="Enter user Id"
   className={classNames("form-control", {
     "is-invalid": errors.p_user 
   })}
@@ -404,7 +410,7 @@ const custLogout = () => {
                       name="p_email"
                      autoComplete="new-password"
                       ref={register}
-                      placeholder="Enter Email"
+                      placeholder="Enter email"
                       onChange={(e) => handleChange(e)}
                     />
                   </div>
@@ -420,7 +426,7 @@ const custLogout = () => {
                       disabled = {token !== null ? true : false}
                       name="p_password"
                      autoComplete="new-password"
-                      placeholder="Enter Password"
+                      placeholder="Enter password"
                       ref={register}
                       onCopy={(e) => {
                         e.preventDefault();
@@ -478,7 +484,7 @@ const custLogout = () => {
     <ImgBox>
       <img src = {servicesImg}
       className = {classes.imgResponsive} />
-      {/* <h5 style={{margin: "10px 0", fontSize: "1.1rem"}}>Services</h5> */}
+      
       <SubHeading>
       Services
       </SubHeading>

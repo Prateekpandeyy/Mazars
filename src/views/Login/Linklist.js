@@ -121,7 +121,7 @@ const showLinkData = () => {
       </TableCell>
       <TableCell>
       <CustomTypography>
-      <a href={i.url} target="_blank">{i.url}</a>
+      <a href={i.url} target="_blank" className="tabHoverLinksubMenu">{i.url}</a>
       </CustomTypography>
       </TableCell>
     </TableRow>

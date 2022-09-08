@@ -53,8 +53,8 @@
 .tabHoverLinksubMenu ul {
   list-style: none;
 }
-.tabHoverLinksubMenu:hover {
-  color: #0071ce;
+.tabHoverLinksubMenu:hover, .tabHoverLink:hover {
+  color: #0071ce !important;
   height: 40px;
   cursor: pointer;
   list-style: none;

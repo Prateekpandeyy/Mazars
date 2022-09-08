@@ -206,11 +206,11 @@
 .signUpLogged {
   display: flex;
   flex-direction: column;
-  padding: 10px 0px;
+  padding: 10px;
   width: 50%;
-  font-weight: 600;
+ 
   justify-content: center;
-  align-items: center;
+ 
   background-color: #5A6A6B;
 }
 .signUp {

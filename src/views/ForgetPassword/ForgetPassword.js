@@ -133,7 +133,7 @@ useEffect(() => {
  value={user}
   name="p_user"
   ref={register({ required: true })}
-  placeholder="Enter User Id"
+  placeholder="Enter user Id"
   className={classNames("form-control", {
     "is-invalid": errors.p_user 
   })}
@@ -150,7 +150,7 @@ useEffect(() => {
                     })}
                     name="p_email"
                     ref={register}
-                    placeholder="Enter Email"
+                    placeholder="Enter email"
                     defaultValue={valueHandler()}
                   />
                   {errors.p_email && (

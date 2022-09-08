@@ -99,7 +99,7 @@ function CategorySelect({ addfreshbtn, startbtn }, props) {
             <div className="form-group">
               <label>Category <span className="declined">*</span></label>
               <select
-                className="form-control"
+               
                 name="p_tax"
                 className={classNames("form-control", {
                   "is-invalid": errors.p_tax,
@@ -107,7 +107,7 @@ function CategorySelect({ addfreshbtn, startbtn }, props) {
                 ref={register}
                 onChange={(e) => setStore(e.target.value)}
               >
-                <option value="">--Select Category--</option>
+                <option value="">--Select category--</option>
                 {tax.map((p, index) => (
                   <option key={index} value={p.id}>
                     {p.details}
@@ -122,7 +122,7 @@ function CategorySelect({ addfreshbtn, startbtn }, props) {
             </div>
 
             <div className="form-group">
-              <label>Sub Category <span className="declined">*</span></label>
+              <label>Sub category <span className="declined">*</span></label>
               <select
                 name="p_tax2"
                 className={classNames("form-control", {
@@ -131,7 +131,7 @@ function CategorySelect({ addfreshbtn, startbtn }, props) {
                 ref={register}
                 onChange={(e) => setStore2(e.target.value)}
               >
-                <option value="">--Select Sub-Category--</option>
+                <option value="">--Select sub-category--</option>
                 {tax2.map((p, index) => (
                   <option key={index} value={p.id}>
                     {p.details}
