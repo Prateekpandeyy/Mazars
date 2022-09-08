@@ -61,7 +61,7 @@ const useStyle = makeStyles({
     display : "flex",
     maxWidth: "25%",
     height : "50px", 
-
+   margin : "10px 0px",
    alignItems : "space-between",
     justifyContent: "center",
     textAlign : "justify"
@@ -488,7 +488,7 @@ const custLogout = () => {
       <SubHeading>
       Services
       </SubHeading>
-     <CustomTypography>
+     <CustomTypography margin= "10px">
      Offers solutions to all compliance requirements, 
      transfer pricing matters, assessment proceedings, appeal & litigation matters, opinions and other advisory needs. 
      </CustomTypography>
@@ -499,7 +499,7 @@ const custLogout = () => {
      <SubHeading>
      Cost effective
      </SubHeading>
-     <CustomTypography>
+     <CustomTypography margin= "10px">
      Provides cost effective solution, designed exclusively for client.
      </CustomTypography>
       </ImgBox> 
@@ -508,7 +508,7 @@ const custLogout = () => {
       <SubHeading>
       Video conference
         </SubHeading>
-      <CustomTypography>
+      <CustomTypography margin= "10px">
       Offers video conferencing facility to hold meetings with clients.
       </CustomTypography>
       </ImgBox> 
@@ -517,7 +517,7 @@ const custLogout = () => {
     <SubHeading>
     Secure platform
     </SubHeading>
-      <CustomTypography>
+      <CustomTypography margin= "10px">
       Ensures total privacy of client’s data.
       </CustomTypography>
       </ImgBox> <ImgBox>
@@ -525,7 +525,7 @@ const custLogout = () => {
      <SubHeading>
      Paperless
      </SubHeading>
-<CustomTypography>
+<CustomTypography margin= "10px">
 Operates completely in paperless environment.
 </CustomTypography>
       </ImgBox>
