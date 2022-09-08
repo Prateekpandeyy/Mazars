@@ -1208,7 +1208,7 @@ and number
                 <Spinner color="primary" />
               </div>
               :
-              <div className="col-md-12 d-flex justify-content-center">
+              <>
                
                 {
                   show ?
@@ -1217,13 +1217,13 @@ and number
                         disabled ? null
                           :
                           
-                            <button type="submit" className="customBtn mx-4" onClick={() => setOtp()}>Submit</button>
+                            <button type="submit" className="customBtn mr-4" onClick={() => setOtp()}>Submit</button>
                   
                               }
                     </>
                     :
                    
-                    <button type="submit" class="autoWidthBtn mx-4" onClick={() => getOtp("otp")}>SEND OTP</button>
+                    <button type="submit" class="autoWidthBtn mr-4" onClick={() => getOtp("otp")}>SEND OTP</button>
              
                }
                   {
@@ -1242,7 +1242,7 @@ and number
       }
                <button type="button" class="customBtn" onClick={() => resetFun()}>Reset</button>
         
-              </div>
+              </>
           }
         
           </div>
