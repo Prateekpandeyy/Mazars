@@ -4,6 +4,7 @@ import MyPDF from "../../views/dFile/LoginManual.pdf";
 import { Link , useHistory} from "react-router-dom";
 import Cookies from "js-cookie";
 import SocialIcons from "../socialicon.js/SocialIcons";
+import CustomTypography from "../Common/CustomTypography";
 function Footer(props) {
   let date = new Date()
   let history = useHistory();
@@ -36,35 +37,47 @@ props.showCook("showCookies")
         <div style={{display: "flex", flexDirection: "column",  justifyContent: "space-evenly", textAlign: "center"}}>
         <SocialIcons />
         <div style={{display: "flex", justifyContent:"center"}}>
+        <CustomTypography>
         <a onClick = {() => myLink("enquiry")}>
               
               
               Enquiry | &nbsp; 
             
            </a>
+        </CustomTypography>
+        <CustomTypography>
+      
         <a onClick = {() => myLink("contactbasic")}>
               
               
               Contact us | &nbsp; 
             
            </a>
+        </CustomTypography>
+        
            
            
            
+             <CustomTypography>
              <a onClick = {() => myLink("aboutbasic")}>
         
       
-         About us | &nbsp;
-      
-      </a>
+        About us | &nbsp;
+     
+     </a>
+              </CustomTypography>
+      <CustomTypography>
       <a onClick = {() => myLink("needhelp")}> Need help?</a>
   
+      </CustomTypography>
      
            
         
              
           </div>
+<CustomTypography>
 {`ISO 27001 certified | Copyright  @${date.getFullYear()} All right reserved`} 
+</CustomTypography>
         </div>
       
         <div style={{display : "flex", justifyContent : "center"}}>

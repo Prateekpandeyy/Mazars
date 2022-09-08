@@ -269,7 +269,7 @@ const custLogout = () => {
 {
   cookieEnable ? <>
   <span style={{display : "flex"}}>
-  <span style={{padding: "0px 20px", fontSize: "16px", color: "464b4b"}}> 
+  <span style={{padding: "0px 20px", fontSize: "16px", color: "#464646"}}> 
 
 <Link className="tabHoverflash" to = {{
  pathname : "/customer/latestupdates",
@@ -283,7 +283,7 @@ const custLogout = () => {
   </> : 
   <>
  <span style={{display : "flex"}}>
-<span style={{padding: "0px 20px", fontSize: "16px", color: "464b4b"}}> 
+<span style={{padding: "0px 20px", fontSize: "16px", color: "#464646"}}> 
 
 <span onClick = {() => myCookie2("contactbasic")} className="tabHoverflash">
 {i.heading} 
