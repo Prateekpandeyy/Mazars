@@ -14,7 +14,9 @@ import { Viewer } from '@react-pdf-viewer/core'; // install this library
 import '@react-pdf-viewer/core/lib/styles/index.css';
 import { Worker } from '@react-pdf-viewer/core'; // install this library
 import MyContainer from "../../components/Common/MyContainer";
- 
+import CustomHeading from "../../components/Common/CustomHeading";
+import CustomTypography from "../../components/Common/CustomTypography";
+import SubHeading from "../../components/Common/SubHeading";
 const UpdateIndirect = () => {
  
   const [page, setPage] = useState(0);
@@ -74,10 +76,14 @@ return(
 <>
 <Breadcrumbs separator=">" maxItems={3} aria-label="breadcrumb">
     <Link underline="hover" color="inherit" to="/customer/updatedirect">
- Update
+
+Update
+ 
   </Link>
   <Link underline="hover" color="inherit" to = {`/customer/updateindirect`}>
+ 
  Indirect tax
+
   </Link>
   
 
@@ -87,13 +93,26 @@ return(
 
 <Table>
 <TableHead>
-<TableRow>
-<TableCell style= {{width : "50px"}}>S.No</TableCell>
-<TableCell style={{width : "150px"}}>Date of publishing
+   <TableRow>
+     <TableCell style= {{width : "50px"}}>
+      <SubHeading>
+      S.No
+        
+      </SubHeading>
+     </TableCell>
+     <TableCell style={{width : "200px"}}>
+      <SubHeading>
+      Date of publishing
+      </SubHeading>
 </TableCell>
-<TableCell>Heading </TableCell>
-</TableRow>
-</TableHead>
+     <TableCell> 
+      <SubHeading>
+      Heading 
+        
+      </SubHeading>
+     </TableCell>
+   </TableRow>
+   </TableHead>
  <TableBody>
  {
 data && data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((i, e) => (
@@ -104,10 +123,15 @@ data && data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((i,
 <TableRow>
 <TableCell style={{padding: "8px 16px"}} className="tableCellStyle">
      
-     {i.sn}
+   <CustomTypography>
+   {i.sn}
+   </CustomTypography>
    </TableCell>
  <TableCell>
+ <CustomTypography>
  {i.publish_date.split("-").reverse().join("-")}
+ </CustomTypography>
+
  </TableCell>
  <TableCell>
 
@@ -116,7 +140,10 @@ data && data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((i,
                             index : "indirect"
                             
                         }}>
- {i.heading}</Link>
+<CustomTypography>
+{i.heading}
+  </CustomTypography>
+</Link>
  </TableCell>
 </TableRow>
 

@@ -217,7 +217,7 @@
   flex-direction: column;
  
   width: 50%;
-  font-weight: 600;
+
  
   
 }
@@ -235,10 +235,7 @@
   margin: auto;
 }
 .signUp p {
-  font-size: 20px;
-  font-weight: 800;
-  color: #000;
-  text-align: center;
+ margin: 0px 25px;
 }
 .signUp .declinedmsg {
   color: red !important;

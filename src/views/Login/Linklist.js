@@ -16,7 +16,8 @@ import { OuterloginContainer } from "../../components/Common/OuterloginContainer
 import {Typography, Breadcrumbs, Table, TableContainer, 
   TableHead, TablePagination, TableBody, TableRow, TableCell} from "@material-ui/core";
 import MyContainer from "../../components/Common/MyContainer";
-
+import CustomTypography from "../../components/Common/CustomTypography";
+import SubHeading from "../../components/Common/SubHeading";
 function Linklist() {
  
   const [page, setPage] = useState(0);
@@ -82,9 +83,21 @@ const showLinkData = () => {
     <Table>
     <TableHead>
    <TableRow>
-     <TableCell style= {{width : "50px"}}>S.No</TableCell>
-     <TableCell style={{width : "400px"}}>Website</TableCell>
-     <TableCell>URL</TableCell>
+     <TableCell style= {{width : "50px"}}>
+      <SubHeading>
+      S.No
+      </SubHeading>
+     </TableCell>
+     <TableCell style={{width : "400px"}}>
+      <SubHeading>
+      Website
+      </SubHeading>
+     </TableCell>
+     <TableCell>
+      <SubHeading>
+      URL
+      </SubHeading>
+     </TableCell>
    </TableRow>
    </TableHead>
       <TableBody>
@@ -97,13 +110,19 @@ const showLinkData = () => {
     <TableRow>
       <TableCell style={{padding: "8px 16px"}} className="tableCellStyle">
      
-        {e + 1}
+     <CustomTypography>
+     {e + 1}
+     </CustomTypography>
       </TableCell>
       <TableCell>
-        {i.heading}
+       <CustomTypography>
+       {i.heading}
+       </CustomTypography>
       </TableCell>
       <TableCell>
-        <a href={i.url} target="_blank">{i.url}</a>
+      <CustomTypography>
+      <a href={i.url} target="_blank">{i.url}</a>
+      </CustomTypography>
       </TableCell>
     </TableRow>
  

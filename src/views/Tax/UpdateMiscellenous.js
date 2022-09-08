@@ -16,7 +16,9 @@ import { OuterloginContainer } from '../../components/Common/OuterloginContainer
 import { Link } from 'react-router-dom';
 import { Viewer } from '@react-pdf-viewer/core'; // install this library
 import MyContainer from "../../components/Common/MyContainer";
-
+import CustomHeading from "../../components/Common/CustomHeading";
+import CustomTypography from "../../components/Common/CustomTypography";
+import SubHeading from "../../components/Common/SubHeading";
   const Disclamair = styled(Box)({
 display: "flex",
 flexDirection: "column",
@@ -128,13 +130,26 @@ return(
 
 <Table>
 <TableHead>
-<TableRow>
-<TableCell style= {{width : "50px"}}>S.No</TableCell>
-<TableCell style={{width : "150px"}}>Date of publishing
+   <TableRow>
+     <TableCell style= {{width : "50px"}}>
+      <SubHeading>
+      S.No
+        
+      </SubHeading>
+     </TableCell>
+     <TableCell style={{width : "200px"}}>
+      <SubHeading>
+      Date of publishing
+      </SubHeading>
 </TableCell>
-<TableCell>Heading</TableCell>
-</TableRow>
-</TableHead>
+     <TableCell> 
+      <SubHeading>
+      Heading 
+        
+      </SubHeading>
+     </TableCell>
+   </TableRow>
+   </TableHead>
  <TableBody>
  {
 data && data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((i, e) => (
@@ -145,10 +160,14 @@ data && data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((i,
 <TableRow>
  <TableCell style={{padding: "8px 16px"}} className="tableCellStyle">
 
-   {e + 1}
+ <CustomTypography>
+ {e + 1}
+  </CustomTypography>
  </TableCell>
  <TableCell>
+ <CustomTypography>
  {i.publish_date.split("-").reverse().join("-")}
+ </CustomTypography>
  </TableCell>
  <TableCell>
  <Link to = {{
@@ -156,7 +175,10 @@ data && data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((i,
                             index : "miscellaneous"
                             
                         }}>
- {i.heading}</Link>
+ <CustomTypography>
+ {i.heading}
+ </CustomTypography>
+ </Link>
  </TableCell>
 </TableRow>
 

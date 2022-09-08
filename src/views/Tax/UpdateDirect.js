@@ -11,7 +11,9 @@ import { Link } from 'react-router-dom';
 import {Box, Breadcrumbs, Table, TableContainer, 
   TableHead, TablePagination, TableBody, TableRow, TableCell} from "@material-ui/core";
 import MyContainer from "../../components/Common/MyContainer";
-
+import CustomHeading from "../../components/Common/CustomHeading";
+import CustomTypography from "../../components/Common/CustomTypography";
+import SubHeading from "../../components/Common/SubHeading";
   const Disclamair = styled(Box)({
 display: "flex",
 flexDirection: "column",
@@ -106,10 +108,14 @@ dataList.push(dataObj)
    <>
     <Breadcrumbs separator=">" maxItems={3} aria-label="breadcrumb">
     <Link underline="hover" color="inherit" to="/customer/updatedirect">
+ 
  Update
+  
   </Link>
   <Link underline="hover" color="inherit" to = {`/customer/updatedirect`}>
- Direct tax
+
+Direct tax
+ 
   </Link>
   
 
@@ -120,10 +126,23 @@ dataList.push(dataObj)
     <Table>
     <TableHead>
    <TableRow>
-     <TableCell style= {{width : "50px"}}>S.No</TableCell>
-     <TableCell style={{width : "150px"}}>Date of publishing
+     <TableCell style= {{width : "50px"}}>
+      <SubHeading>
+      S.No
+        
+      </SubHeading>
+     </TableCell>
+     <TableCell style={{width : "200px"}}>
+      <SubHeading>
+      Date of publishing
+      </SubHeading>
 </TableCell>
-     <TableCell>Heading </TableCell>
+     <TableCell> 
+      <SubHeading>
+      Heading 
+        
+      </SubHeading>
+     </TableCell>
    </TableRow>
    </TableHead>
       <TableBody>
@@ -136,10 +155,14 @@ dataList.push(dataObj)
     <TableRow>
       <TableCell style={{padding: "8px 16px"}} className="tableCellStyle">
      
+        <CustomTypography>
         {i.sn}
+        </CustomTypography>
       </TableCell>
       <TableCell>
-        {i.publish_date.split("-").reverse().join("-")}
+       <CustomTypography>
+       {i.publish_date.split("-").reverse().join("-")}
+       </CustomTypography>
       </TableCell>
       <TableCell>
       <Link to = {{
@@ -147,7 +170,11 @@ dataList.push(dataObj)
                             index : "direct"
                             
                         }}>
- {i.heading}</Link>
+ <CustomTypography>
+ {i.heading}
+ </CustomTypography>
+
+ </Link>
       </TableCell>
     </TableRow>
  

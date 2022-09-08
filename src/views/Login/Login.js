@@ -28,6 +28,10 @@ import MyContainer from "../../components/Common/MyContainer";
 import FlashSection from "../../components/Common/FlashSection";
 import MainContent from "../../components/Common/MainContent";
 import CloseIcon from '@material-ui/icons/Close';
+import CustomHeading from "../../components/Common/CustomHeading";
+import MainHeading from "../../components/Common/MainHeading";
+import CustomTypography from "../../components/Common/CustomTypography";
+import SubHeading from "../../components/Common/SubHeading";
 const Schema = yup.object().shape({
   p_email: yup.string().email("invalid email").required(""),
   p_password: yup.string().required(""),
@@ -96,25 +100,6 @@ function LoginForm() {
     setPasswordShow(!isPasswordShow)
   };
  
-// useEffect(() => {
-//   showLinkData()
-// }, [showData])
-// const showLinkData = () => {
-//   let comming = sessionStorage.getItem("commingSoon")
-//   var now = new Date()
-//   let dd = now.getDay()
-//   let hour = now.getHours()
-//   console.log("hours", dd === 3 && 16 > hour)
-//   console.log("hours", comming)
-//   if(!comming && dd === 3 && 19 > hour){
-//     console.log("hours")
-//     history.push("/customer/coming-soon")
-//   }
-  
-//   else {
-//     setLinkData(myData)
-//   }
-// }
   useEffect(() => {
     getTime()
   }, [load]);
@@ -313,10 +298,12 @@ const custLogout = () => {
    }
   </h1>
     </FlashSection> : ""}
-   <span className="loginHeading">
-   <h2 className = "my-3"> Mazars Advisory Solutions </h2>
+    <span className="loginHeading">
+    <MainHeading>
+    Mazars Advisory Solutions
+    </MainHeading>
    </span>
-    
+   
       <div className="StartPage">
         <MainContent>
         
@@ -326,9 +313,12 @@ const custLogout = () => {
               {
                 token === null ?
                 <>
-                  <Typography variant="h4"  style={{ margin : "5px 0px", color:"#fff"}}>
-                  For new client
-                </Typography>
+                 <CustomHeading 
+                 color = "#fff">
+                 For new client
+                 </CustomHeading>
+                 
+              
                 <button className="btnWhite"  disabled = {token !== null ? true : false} onClick = {() => myCookie2("contactbasic")}>
               
                     Sign up
@@ -362,9 +352,11 @@ const custLogout = () => {
           {
             show ? 
             <div className="customForm">
-  <Typography variant="h4" style={{ margin: "5px 25px", color: "#fff" }}>
-            For existing client
-          </Typography>
+               <CustomHeading 
+                 color = "#fff">
+                For existing client
+                 </CustomHeading>
+
               <VerifyOTP email={email} uid={uid} time={time} setLoad={setLoad}
                 setDisabled={setDisabled} disabled={disabled} setLoading={setLoading}
                 loading={loading} user = {user} 
@@ -373,9 +365,11 @@ const custLogout = () => {
               :
             
               <div className="customForm">
-                  <Typography variant="h4" style={{ margin: "5px 25px", color: "#fff" }}>
-            For existing client
-          </Typography>
+                  <CustomHeading 
+                 color = "#fff">
+                For existing client
+                 </CustomHeading>
+
                 <form onSubmit={handleSubmit(onSubmit)} className="signInForm"  autoComplete="off">
                 <div className="form-group passForm">
 
@@ -472,39 +466,58 @@ const custLogout = () => {
       </MainContent>
         <MyBox>
          
-          <h4 style={{fontSize: "1.5rem", textAlign : "left"}}>Mazars Advisory Solutions backed by group of professionals with extensive industry knowledge and experience in
-             taxation matters, provides solutions to all direct & indirect tax queries.  </h4>
+          <CustomTypography>
+          Mazars Advisory Solutions backed by group of professionals with extensive industry knowledge and experience in
+             taxation matters, provides solutions to all direct & indirect tax queries.
+          </CustomTypography>
     <div style={{display: 'flex'}}>
     <ImgBox>
       <img src = {servicesImg}
       className = {classes.imgResponsive} />
-      <h5 style={{margin: "10px 0", fontSize: "1.1rem"}}>Services</h5>
-      <p style={{textAlign : "left", fontSize: "1rem"}}>
-      Offers solutions to all compliance requirements, transfer pricing matters, assessment proceedings, appeal & litigation matters, opinions and other advisory needs. </p>
+      {/* <h5 style={{margin: "10px 0", fontSize: "1.1rem"}}>Services</h5> */}
+      <SubHeading>
+      Services
+      </SubHeading>
+     <CustomTypography>
+     Offers solutions to all compliance requirements, 
+     transfer pricing matters, assessment proceedings, appeal & litigation matters, opinions and other advisory needs. 
+     </CustomTypography>
       </ImgBox>
       
       <ImgBox>
       <img src = {costEffective} className = {classes.imgResponsive} />
-      <h5 style={{margin: "10px 0", fontSize: "1.1rem"}}>Cost effective</h5>
-      <p style={{textAlign : "left", fontSize: "1rem"}}>
-      Provides cost effective solution, designed exclusively for client.
-      </p>
+     <SubHeading>
+     Cost effective
+     </SubHeading>
+     <CustomTypography>
+     Provides cost effective solution, designed exclusively for client.
+     </CustomTypography>
       </ImgBox> 
       <ImgBox>
       <img src = {whatp} className = {classes.imgResponsive} />
-      <h5 style={{margin: "10px 0", fontSize: "1.1rem"}}>Video conference</h5>
-      <p style={{textAlign : "left", fontSize: "1rem"}}>
+      <SubHeading>
+      Video conference
+        </SubHeading>
+      <CustomTypography>
       Offers video conferencing facility to hold meetings with clients.
-      </p>
+      </CustomTypography>
       </ImgBox> 
       <ImgBox>
       <img src = {CloudImg} className = {classes.imgResponsive} />
-      <h5 style={{margin: "10px 0", fontSize: "1.1rem"}}>Secure platform</h5>
-      <p style={{textAlign : "left", fontSize: "1rem"}}>Ensures total privacy of client’s data.</p>
+    <SubHeading>
+    Secure platform
+    </SubHeading>
+      <CustomTypography>
+      Ensures total privacy of client’s data.
+      </CustomTypography>
       </ImgBox> <ImgBox>
       <img src = {PaperLess} className = {classes.imgResponsive} />
-      <h5 style={{margin: "10px 0", fontSize: "1.1rem"}}>Paperless</h5>
-      <p style={{textAlign : "left", fontSize: "1rem"}}>Operates completely in paperless environment.</p>
+     <SubHeading>
+     Paperless
+     </SubHeading>
+<CustomTypography>
+Operates completely in paperless environment.
+</CustomTypography>
       </ImgBox>
     </div>
       </MyBox>

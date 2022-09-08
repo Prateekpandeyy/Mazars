@@ -17,6 +17,8 @@ import AddIcon from "@material-ui/icons/Add";
 import RemoveIcon from "@material-ui/icons/Remove";
 import { OuterloginContainer } from '../../components/Common/OuterloginContainer';
 import MyContainer from "../../components/Common/MyContainer";
+import CustomTypography from "../../components/Common/CustomTypography";
+import SubHeading from "../../components/Common/SubHeading";
 const FaqQuestion = () => {
     const [list, setList] = useState([])
     const [expanded, setExpanded] = useState([]);
@@ -78,10 +80,13 @@ else{
           aria-controls={i.id}
           id={i.id}
         >
-          <Typography style={{display : "flex", width: '100%', flexShrink: 0 , fontWeight: 200, fontSize: "18px"}} variant="subtitle2">
+          {/* <Typography style={{display : "flex", width: '100%', flexShrink: 0 , fontWeight: 200, fontSize: "18px"}} variant="subtitle2">
 {i.question}
-          </Typography>
-        
+          </Typography> */}
+        <SubHeading>
+        {i.question}
+        </SubHeading>
+
         </AccordionSummary>
         <AccordionDetails>
           

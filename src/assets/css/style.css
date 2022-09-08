@@ -195,7 +195,7 @@ h3 h4,
 h5,
 h6,
 p {
-  color: #464646 !important;
+  color: #464646;
 }
 .form-control:focus {
   border-color: rgb(61, 71, 117) !important;
@@ -386,9 +386,9 @@ html body a {
 }
 .btnWhite{
   border-bottom-left-radius: 1rem;
-  background-color: #fff;
+  background-color: rgba(0, 0, 0, 0.01);
   border: 1px solid #fff;
-  color: #000;
+  color: #fff;
   display: inline-flex;
   align-items: center;
   cursor: pointer;

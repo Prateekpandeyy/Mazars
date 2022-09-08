@@ -12,7 +12,9 @@ import classesCustom from './design.module.css';
 import { OuterloginContainer } from '../../components/Common/OuterloginContainer';
 import CommonServices from "../../common/common";
 import MyContainer from "../../components/Common/MyContainer";
-
+import CustomHeading from "../../components/Common/CustomHeading";
+import CustomTypography from "../../components/Common/CustomTypography";
+import SubHeading from "../../components/Common/SubHeading";
 const Direct = () => {
     const [page, setPage] = useState(1);
     const [rowsPerPage, setRowsPerPage] = useState(10)
@@ -93,7 +95,9 @@ const Direct = () => {
      <div className={classesCustom.articlesDetails}>
           <Breadcrumbs separator=">" maxItems={3} aria-label="breadcrumb">
           <Link underline="hover" color="inherit" to="/customer/direct">
+ 
   Articles
+ 
   </Link>
   
   
@@ -103,13 +107,33 @@ const Direct = () => {
         <Table>
     <TableHead>
    <TableRow>
-   <TableCell style= {{width : "50px"}}>S.No</TableCell>
-     <TableCell style= {{width : "150px"}}>Date of publishing
+   <TableCell style= {{width : "50px"}}>
+    <SubHeading>
+    S.No
+    </SubHeading>
+   </TableCell>
+     <TableCell style= {{width : "200px"}}>
+     <SubHeading>
+     Date of publishing
+    </SubHeading>
 </TableCell>
-     <TableCell style= {{width : "150px"}}>Subject</TableCell>
-     <TableCell style={{width : "400px", margin: "0 10px"}}>Heading</TableCell>
+     <TableCell style= {{width : "150px"}}>
+      <SubHeading>
+      Subject
+      </SubHeading>
+      </TableCell>
+     <TableCell style={{width : "400px", margin: "0 10px"}}>
+      <SubHeading>
+      Heading
+      </SubHeading>
+
+     </TableCell>
      
-     <TableCell>Name of writer</TableCell>
+     <TableCell>
+      <SubHeading>
+      Name of writer
+      </SubHeading>
+     </TableCell>
    </TableRow>
    </TableHead>
 
@@ -122,10 +146,14 @@ const Direct = () => {
      {page * 10 + ++e}
    </TableCell>
                         <TableCell style= {{width : "150px"}}>
-                            {i.publish_date.split("-").reverse().join("-")}
+                         <CustomTypography>
+                         {i.publish_date.split("-").reverse().join("-")}
+                         </CustomTypography>
                             </TableCell>
                             <TableCell style= {{width : "150px"}}>
-                            {CommonServices.capitalizeFirstLetter(i.type)}
+                           <CustomTypography>
+                           {CommonServices.capitalizeFirstLetter(i.type)}
+                           </CustomTypography>
                             </TableCell>
                     <TableCell style={{width : "400px", margin: "0 10px", wordBreak : "break-all"}} className="tableCellStyle">
                         <Link to = {{
@@ -133,12 +161,16 @@ const Direct = () => {
                             index : i.id,
                             hash : i.type
                         }}>
-                   {`${i.heading}` } 
+                  <CustomTypography>
+                  {`${i.heading}` } 
+                  </CustomTypography>
                 
                         </Link>
                     </TableCell>
                     <TableCell>
-                            {i.writer}
+                       <CustomTypography>
+                       {i.writer}
+                       </CustomTypography>
                             </TableCell>
                 </TableRow>
                    ))

@@ -14,6 +14,7 @@ import pngAlbum from './album.png';
 import classes from './design.module.css';
 import { OuterloginContainer } from '../../components/Common/OuterloginContainer';
 import MyContainer from "../../components/Common/MyContainer";
+import CustomTypography from "../../components/Common/CustomTypography";
 const VideoList = () => {
     const [galleryData, setGalleryData] = useState([])
     const userId = window.localStorage.getItem("adminkey");
@@ -72,16 +73,20 @@ to = {{
                     index : i
                   }}>
      <img src={pngAlbum} 
-  style={{display : "flex", width: "50%", height: "50%", margin: "auto" }}
+  style={{display : "flex", width: "50%", height: "50%" }}
    id={i.id} 
   />
                            
          </Link>
 </div>
          <div style={{ padding: "5px 10px", width: "100%", justifyContent: "space-between"}}>
-          <h5 style={{textAlign: "center"}}>{i.title}</h5>
-          <h5 style={{textAlign: "center"}}>{i.created_date.split(" ")[0].split("-").reverse().join("-")}</h5>
-              </div>
+         <CustomTypography>
+                {i.title}
+                </CustomTypography>
+              <CustomTypography>
+              {i.created_date.split(" ")[0].split("-").reverse().join("-")}
+              </CustomTypography>
+                  </div>
                </div>
 ))
 }

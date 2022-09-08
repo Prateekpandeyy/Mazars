@@ -12,6 +12,7 @@ import classes from './design.module.css';
 import {Breadcrumbs, Button, Box, Typography, } from "@material-ui/core";
 import { OuterloginContainer } from '../../components/Common/OuterloginContainer';
 import MyContainer from "../../components/Common/MyContainer";
+import CustomTypography from "../../components/Common/CustomTypography";
 const Media = () => {
     const [galleryData, setGalleryData] = useState([])
   
@@ -76,8 +77,12 @@ const Media = () => {
                </Link>
       </div>
                <div style={{ padding: "5px 10px", height: "70px", overflow: "hidden", width: "100%", justifyContent: "space-between"}}>
-                <h6>{i.title}</h6>
-                <h6>{i.created_date.split(" ")[0].split("-").reverse().join("-")}</h6>
+                <CustomTypography>
+                {i.title}
+                </CustomTypography>
+              <CustomTypography>
+              {i.created_date.split(" ")[0].split("-").reverse().join("-")}
+              </CustomTypography>
                     </div>
                      </div>  
                     ))

@@ -12,6 +12,8 @@ import CommonServices from '../../common/common.js';
 import classesCustom from './design.module.css';
 import { OuterloginContainer } from '../../components/Common/OuterloginContainer';
 import MyContainer from "../../components/Common/MyContainer";
+import CustomTypography from "../../components/Common/CustomTypography";
+import SubHeading from "../../components/Common/SubHeading";
   const MyHeading = styled(Box)({
     display : "flex",
     justifyContent: "space-between"
@@ -82,10 +84,20 @@ const MediaContentCustomer = () => {
     <Table>
     <TableHead>
    <TableRow>
-     <TableCell style= {{width : "50px"}}>S.No</TableCell>
-     <TableCell style={{width : "150px"}}>Date of publishing
+     <TableCell style= {{width : "50px"}}>
+      <SubHeading>
+      S.No
+      </SubHeading>
+     </TableCell>
+     <TableCell style={{width : "200px"}}>
+      <SubHeading>
+      Date of publishing
+      </SubHeading>
 </TableCell>
-     <TableCell>Heading </TableCell>
+     <TableCell>
+      <SubHeading>
+      Heading
+      </SubHeading> </TableCell>
    </TableRow>
    </TableHead>
       <TableBody>
@@ -98,14 +110,20 @@ const MediaContentCustomer = () => {
     <TableRow>
       <TableCell style={{padding: "8px 16px"}} className="tableCellStyle">
      
-        {i.sn}
+       <CustomTypography>
+       {i.sn}
+       </CustomTypography>
       </TableCell>
       <TableCell>
-        {i.publish_date.split(" ")[0].split("-").reverse().join("-")}
+      <CustomTypography>
+      {i.publish_date.split(" ")[0].split("-").reverse().join("-")}
+      </CustomTypography>
       </TableCell>
       <TableCell>
      <span onClick={(p) => getData(i)} className="primary" style={{cursor  : "pointer"}}>
+     <CustomTypography>
      {i.heading}
+     </CustomTypography>
      </span>
  
       </TableCell>
