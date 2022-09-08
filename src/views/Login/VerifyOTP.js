@@ -143,9 +143,9 @@ localStorage.setItem("loginTime", timeStampInMs)
                         <div className="form-group">
                             {
                                 disabled ?
-                                    <button type="submit" class="autoWidthBtn" onClick={resendOtp}>SEND OTP</button>
+                                    <button type="submit" class="btnWhite" onClick={resendOtp}>SEND OTP</button>
                                     :
-                                    <button type="submit" className="customBtn my-4">
+                                    <button type="submit" className="btnWhite my-4">
                                         Login
                                     </button>
                             }

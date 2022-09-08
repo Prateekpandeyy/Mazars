@@ -18,6 +18,7 @@ import  { HelpIcon } from "../../components/Common/MessageIcon";
 import { OuterloginContainer } from "../../components/Common/OuterloginContainer";
 import Swal from "sweetalert2";
 import {GrStatusInfo} from 'react-icons/gr';
+import CustomHeading from "../../components/Common/CustomHeading";
 import MyContainer from "../../components/Common/MyContainer";
 function SignUp(props) {
   
@@ -699,7 +700,10 @@ const checkNameError = (e) => {
     
 <div className="form">
   <div className="heading" style={{display : "flex", justifyContent : "space-between"}}> 
-    <h2>Client registration</h2>
+   
+    <CustomHeading>
+    Client registration
+    </CustomHeading>
     <a href={MyPDF} className="tabHover" target="_blank"> <HelpIcon /> </a>
   </div>
 
@@ -1047,7 +1051,7 @@ color : "#dd4445", borderRadius : "50%"}} title = "Enter the valid Zip Code or P
               />
               <span style={{display : "flex", position : "absolute", 
               right : "9px", top : "39px",
-color : "#dd4445", borderRadius : "50%"}}
+color : "#464646", fontSize : "14px", borderRadius : "50%"}}
 title = {`Choose a password that should be minimum of eight characters,
 including at least one upper case, lower case, special character
 and number.`}>

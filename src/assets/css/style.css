@@ -42,9 +42,7 @@
   border-radius: 15px;
 }
 
-.form-label {
-  font-weight: bold;
-}
+
 .modal {
   position: absolute;
   left: 50px;
@@ -470,12 +468,18 @@ html body a {
 .autoWidthBtn:focus,
 .queryPlusIcon:focus,
 .btnSearch:focus,
-.btnWhite:hover,
+
 .helpIcon:focus {
   background-color: #081f8f !important;
   border: 1px solid #081f8f !important;
   color: #fff !important;
   outline: 1px solid #081f8f;
+}
+.btnWhite:hover{
+  background-color: #fff !important;
+  border: 1px solid #fff !important;
+  color: #464646 !important;
+  outline: 1px solid #fff;
 }
 .signInBtn {
   border-bottom-left-radius: 1rem;

@@ -5,6 +5,7 @@ import {AiOutlineFacebook} from 'react-icons/ai'
 import {FaInstagram} from 'react-icons/fa';
 import {AiOutlineLinkedin} from 'react-icons/ai';
 import { makeStyles } from "@material-ui/core";
+import CustomTypography from "../Common/CustomTypography";
 const useStyle = makeStyles({
     iconStyle : {
         display : "flex", 
@@ -19,7 +20,10 @@ const SocialIcons = () => {
     <>
 
       <Box sx={{display : "flex", width : "100%", justifyContent : "center", margin : "10px 0", alignItems : "flex-end"}}>
-          <span style={{fontSize : "14px", color : "rgba(0, 0, 0, 0.85)", fontWeight : 400,  margin : "0 10px"}}>Follow us </span>
+        <CustomTypography>
+            Follow us
+        </CustomTypography>
+          {/* <span style={{fontSize : "14px", color : "rgba(0, 0, 0, 0.85)", fontWeight : 400,  margin : "0 10px"}}>Follow us </span> */}
       <a href="https://twitter.com/MasindiaL" target="_blank">
       <AiOutlineTwitter className="myTwitter"/></a>
 <a href="https://www.facebook.com/masindia.live/" target="_blank">
