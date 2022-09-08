@@ -20,11 +20,17 @@ const AboutOuter = () => {
 <div className={classes.articleContent}>
 <div className={classes.articlesDetails}>
           <Card style={{display : "flex", width: "100%", boxShadow: "none", border: "1px solid #fff"}}>
+        
 
-        <CustomHeading>
+      
+<CardBody>
+<Row>
+          <Col md="12">
+          <CustomHeading>
         About us
         </CustomHeading>
-<CardBody>
+            </Col>
+            </Row>
 <Row>
           <Col md="12">
           {/* <Typography variant="h6" py={2} align="left">

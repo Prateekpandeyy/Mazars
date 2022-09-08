@@ -20,9 +20,10 @@ const SocialIcons = () => {
     <>
 
       <Box sx={{display : "flex", width : "100%", justifyContent : "center", margin : "10px 0", alignItems : "flex-end"}}>
-        <CustomTypography>
-            Follow us
-        </CustomTypography>
+        {/* <CustomTypography>
+          
+        </CustomTypography> */}
+          Follow us
           {/* <span style={{fontSize : "14px", color : "rgba(0, 0, 0, 0.85)", fontWeight : 400,  margin : "0 10px"}}>Follow us </span> */}
       <a href="https://twitter.com/MasindiaL" target="_blank">
       <AiOutlineTwitter className="myTwitter"/></a>

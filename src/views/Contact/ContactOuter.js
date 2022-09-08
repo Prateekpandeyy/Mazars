@@ -20,10 +20,16 @@ const ContactOuter = () => {
 <div className={classes.articlesDetails}>
                  <Card style={{display : "flex", width: "100%", border : "1px solid #fff",
                boxShadow : "none"}}>
- <CustomHeading>
- Contact us
- </CustomHeading>
+              
+
        <CardBody>
+       <Row>
+          <Col md="12">
+          <CustomHeading>
+          Contact us
+        </CustomHeading>
+            </Col>
+            </Row>
        <Row>
                  <Col md="12">
                    

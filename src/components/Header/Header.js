@@ -35,7 +35,7 @@ function Header({ id, cust_sign, noAdminSign, noTlSign,
       
         setLogimin(true)
       }
-      else if (window.pageXOffset < 40) {
+      else if (window.pageXOffset < 66) {
         setLogimin(false)
       }
     

@@ -206,7 +206,7 @@
 .signUpLogged {
   display: flex;
   flex-direction: column;
-  padding: 10px;
+  padding: 10px 28px;
   width: 50%;
  
   justify-content: center;
@@ -230,7 +230,7 @@
 }
 .signUp button {
   display: flex;
-  margin: auto;
+ 
 }
 .signUp p {
  margin: 0px 25px;

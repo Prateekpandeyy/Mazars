@@ -461,9 +461,11 @@ const custLogout = () => {
                     loading ?
                       <Spinner color="primary" />
                       :
-                      <button className="btnWhite"  disabled = {token !== null ? true : false} type="submit">
+                      <div style={{display : "flex", maxWidth : "150px", width : "100%"}}>
+                        <button className="btnWhite"  disabled = {token !== null ? true : false} type="submit">
                         Send OTP
                       </button>
+                      </div>
                   }
 
                 </form>
