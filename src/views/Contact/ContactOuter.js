@@ -6,6 +6,8 @@ import { OuterloginContainer } from '../../components/Common/OuterloginContainer
 import classes from './../About/design.module.css';
 import MyContainer from "../../components/Common/MyContainer";
 import { Typography } from '@mui/material';
+import CustomHeading from "../../components/Common/CustomHeading";
+import CustomTypography from "../../components/Common/CustomTypography";
 const ContactOuter = () => {
     return(
         <>
@@ -18,25 +20,35 @@ const ContactOuter = () => {
 <div className={classes.articlesDetails}>
                  <Card style={{display : "flex", width: "100%", border : "1px solid #fff",
                boxShadow : "none"}}>
- <Typography variant="h4" style={{ margin: "5px 15px"}}>
-      Contact us
-          </Typography>
+ <CustomHeading>
+ Contact us
+ </CustomHeading>
        <CardBody>
        <Row>
                  <Col md="12">
                    
-                   
-                 <h6>211, Mercantile House</h6>
-           <h6>15, Kasturba Gandhi Marg, Connaught Place</h6>
+              <CustomTypography>
+              211, Mercantile House
+                </CustomTypography>     
+                <CustomTypography>
+                15, Kasturba Gandhi Marg, Connaught Place
+                </CustomTypography> 
+                <CustomTypography>
+                New Delhi-110001, India
+                </CustomTypography>
        
-           <h6>New Delhi-110001, India</h6>
-       
-       <div>
-           {/* Email : <a href="mailto: support@masindia.live">support@masindia.live</a> */}
+           
+    
+           <CustomTypography>
            Email : <a href="mailto: support@masindia.live">support@masindia.live</a>
-           </div>
+           </CustomTypography>
+         
+        
        <div>
+       <CustomTypography>
        Tel:<a href="tel:+91 11-43684444"> +91-11-43684444</a>
+           </CustomTypography>
+      
        </div>
                    </Col>
                   

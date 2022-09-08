@@ -17,8 +17,8 @@ import AddIcon from "@material-ui/icons/Add";
 import RemoveIcon from "@material-ui/icons/Remove";
 import { OuterloginContainer } from '../../components/Common/OuterloginContainer';
 import MyContainer from "../../components/Common/MyContainer";
-import CustomTypography from "../../components/Common/CustomTypography";
 import SubHeading from "../../components/Common/SubHeading";
+import CustomHeading from '../../components/Common/CustomHeading';
 const FaqQuestion = () => {
     const [list, setList] = useState([])
     const [expanded, setExpanded] = useState([]);
@@ -62,12 +62,10 @@ else{
         
              <div className={classes.articlesDetails}>
               <Breadcrumbs separator=">" maxItems={3} aria-label="breadcrumb">
-           
-   <Link underline="hover" color="inherit" to = {`/customer/faq-question`}>
-   Frequently asked questions (FAQ)
-   </Link>
-   
-  
+              <CustomHeading>
+              Frequently asked questions (FAQ)
+ </CustomHeading>    
+ 
  </Breadcrumbs>
  
  <div className={classes.articleContent}>
@@ -80,9 +78,7 @@ else{
           aria-controls={i.id}
           id={i.id}
         >
-          {/* <Typography style={{display : "flex", width: '100%', flexShrink: 0 , fontWeight: 200, fontSize: "18px"}} variant="subtitle2">
-{i.question}
-          </Typography> */}
+        
         <SubHeading>
         {i.question}
         </SubHeading>
