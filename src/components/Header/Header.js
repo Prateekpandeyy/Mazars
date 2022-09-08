@@ -291,7 +291,7 @@ props.showCook("showCookies")
 <div className="clientSubMenu">
  
 <li className="nav-item tabHoverLinksubMenu" onClick = {() => myLink("direct")}> 
-      <ListItemButton>
+      <ListItemButton style={{backgroundColor : "#fff"}}>
         <span className = "headerMenu">
         Articles
         </span>
@@ -300,7 +300,7 @@ props.showCook("showCookies")
 </li>
 
                  <li className="nav-item tabHoverLinksubMenu"  onMouseOver={() => handleClickUpdateOpen()}  onMouseLeave = {() => handleClickUpdateClose()}>
-       <ListItemButton>
+       <ListItemButton style={{backgroundColor : "#fff"}}>
        <span className = "headerMenu">
                     Updates
                    </span>
@@ -340,7 +340,7 @@ props.showCook("showCookies")
        
 
       <li className="nav-item tabHoverLinksubMenu" onClick = {() => myLink("linklist")}> 
-      <ListItemButton>
+      <ListItemButton style={{backgroundColor : "#fff"}}>
       <span className = "headerMenu">
        Important links
        </span>
@@ -350,6 +350,7 @@ props.showCook("showCookies")
          onMouseLeave = {() => handleClickOn2()}>
                  
                  <ListItemButton 
+                 style={{backgroundColor : "#fff"}} 
                  onMouseOver={() => handleClickOff2()}>
  <span className = "headerMenu">
                   Media gallery
@@ -390,7 +391,7 @@ props.showCook("showCookies")
    
                  <li className="nav-item tabHoverLinksubMenu" onClick = {() => myLink("faqlist")}> 
  
- <ListItemButton>
+ <ListItemButton style={{backgroundColor : "#fff"}}>
  <span className = "headerMenu">
       FAQs
       </span>
@@ -398,7 +399,7 @@ props.showCook("showCookies")
     </li>
     <li className="nav-item tabHoverLinksubMenu" onClick = {() => myLink("about")}> 
  
- <ListItemButton>
+ <ListItemButton style={{backgroundColor : "#fff"}}>
  <span className = "headerMenu">
       About us
       </span>
@@ -408,6 +409,7 @@ props.showCook("showCookies")
          onMouseLeave = {() => handleClickOn3()}>
                  
                  <ListItemButton 
+                 style={{backgroundColor : "#fff"}}
                  onMouseOver={() => handleClickOff3()}>
  <span className = "headerMenu">
                   Contact us
