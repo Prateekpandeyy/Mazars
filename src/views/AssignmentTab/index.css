@@ -36,6 +36,7 @@ h5.modal-title {
 }
 .tabHoverflash {
   white-space: nowrap;
+  text-transform: none;
   display: flex;
   flex-direction: row;
   width: 100%;
