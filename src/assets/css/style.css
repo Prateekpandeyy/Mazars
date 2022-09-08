@@ -396,7 +396,7 @@ html body a {
   font-weight: 500;
   justify-content: center;
   line-height: 1;
-  width: 100px;
+ margin : 10px 0px;
   min-height: 2rem;
   overflow: hidden;
   padding: 0.6rem 1rem;

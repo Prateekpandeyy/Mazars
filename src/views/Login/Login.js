@@ -334,16 +334,20 @@ const custLogout = () => {
           <div className="signUpLogged">
          
            <h4 style={{fontSize: "1.5rem"}}>
-            {/* {clientLogin} : {userEmail}   */}
-            {userEmail}
+          
+          <CustomHeading 
+          color = "#fff">
+          {userEmail}
+          </CustomHeading>
           </h4>
-          <h4 style={{fontSize: "1.5rem"}}>
+          <CustomHeading 
+                 color = "#fff">
          logged in 
-          </h4>
-          <button className="customBtnlg" onClick = {(e) => history.push("/customer/dashboard")}  type="button">
+          </CustomHeading>
+          <button className="btnWhite" onClick = {(e) => history.push("/customer/dashboard")}  type="button">
                   Go To Dashboard
                       </button>
-                      <button className="logoutBtn" onClick = {(e) => custLogout()}  type="button">
+                      <button className="btnWhite" onClick = {(e) => custLogout()}  type="button">
                   Logout
                       </button>
           </div> :

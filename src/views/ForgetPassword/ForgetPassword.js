@@ -18,6 +18,9 @@ import ShowError from "../../components/LoadingTime/LoadingTime";
 import { OuterloginContainer } from "../../components/Common/OuterloginContainer";
 import { styled , makeStyles} from "@material-ui/styles";
 import {Breadcrumbs, Box, Typography } from "@material-ui/core";
+import CustomHeading from "../../components/Common/CustomHeading";
+import CustomTypography from "../../components/Common/CustomTypography";
+import SubHeading from "../../components/Common/SubHeading";
 const Schema = yup.object().shape({
   p_email: yup.string().email("invalid email").required(""),
 });
@@ -113,7 +116,9 @@ useEffect(() => {
      <div className="container">
         <div className="form">
           <div className="heading">
-            <h2>Forgot Password</h2>
+           <CustomHeading>
+           Forgot Password
+            </CustomHeading>
           </div>
 
          
