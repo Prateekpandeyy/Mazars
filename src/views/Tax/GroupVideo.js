@@ -51,7 +51,7 @@ const GroupVideo = () => {
             <div style={{display : "flex", width:"1000px", justifyContent: "center",
           alignItems: "flex-start", flexDirection: "column", padding: "5px 0px"}}>
             <span style={{textAlign: "left"}}>
-            <Breadcrumbs separator=">" maxItems={3} aria-label="breadcrumb">
+            <Breadcrumbs separator=">" maxItems={3} aria-label="breadcrumb" style={{fontSize : "18px"}}>
   
   <Link underline="hover" color="inherit" to = {`/customer/media`}>
  Media gallery

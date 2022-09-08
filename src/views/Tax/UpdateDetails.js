@@ -20,6 +20,7 @@ import '@react-pdf-viewer/core/lib/styles/index.css';
 // Worker
 import { Worker } from '@react-pdf-viewer/core'; // install this library
 import MyContainer from "../../components/Common/MyContainer";
+import SubHeading from "../../components/Common/SubHeading";
   const ArticleWrapper = styled(Box)({
     display: "flex", 
     flexDirection: "column",
@@ -62,7 +63,7 @@ useEffect(() => {
             <div className={classes.articlesDetails}>
             {
               history.location.index && (
-                <Breadcrumbs separator=">" maxItems={3} aria-label="breadcrumb">
+                <Breadcrumbs separator=">" maxItems={3} aria-label="breadcrumb" style={{fontSize : "18px"}}>
                 <Link underline="hover" color="inherit" to="/customer/updatedirect">
    Update
      </Link>
@@ -83,8 +84,13 @@ useEffect(() => {
             }
 <ArticleWrapper>
 
-<h5 className="updatesHeding">  {CommonServices.capitalizeFirstLetter(i.heading)}</h5>
-<h6>Date of publishing :   {i.publish_date.split("-").reverse().join("-")} </h6>
+<SubHeading>
+{CommonServices.capitalizeFirstLetter(i.heading)}
+</SubHeading>
+
+<SubHeading>
+Date of publishing :   {i.publish_date.split("-").reverse().join("-")} 
+</SubHeading>
          
 {
   i.content_type === "2" ?

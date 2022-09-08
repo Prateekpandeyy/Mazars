@@ -93,7 +93,7 @@ const Direct = () => {
   
         <div className={classesCustom.articleContent}>
      <div className={classesCustom.articlesDetails}>
-          <Breadcrumbs separator=">" maxItems={3} aria-label="breadcrumb">
+          <Breadcrumbs separator=">" maxItems={3} aria-label="breadcrumb" style={{fontSize : "18px"}}>
           <Link underline="hover" color="inherit" to="/customer/direct">
  
   Articles

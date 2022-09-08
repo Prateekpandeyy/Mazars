@@ -67,7 +67,7 @@ const showLinkData = () => {
    
     <TableContainer>
     {linkData22 === true ? <>
-    <Breadcrumbs separator="<" maxItems={3} aria-label="breadcrumb">
+    <Breadcrumbs separator="<" maxItems={3} aria-label="breadcrumb" style={{fontSize : "18px"}}>
   <Link underline="hover" color="inherit" to={{
     pathname : "/customer/updates",
     index : 3

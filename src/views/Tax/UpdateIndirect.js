@@ -74,7 +74,7 @@ return(
        <div className={classes.articlesDetails}>
        <TableContainer>
 <>
-<Breadcrumbs separator=">" maxItems={3} aria-label="breadcrumb">
+<Breadcrumbs separator=">" maxItems={3} aria-label="breadcrumb" style={{fontSize : "18px"}}>
     <Link underline="hover" color="inherit" to="/customer/updatedirect">
 
 Update
