@@ -116,6 +116,7 @@ localStorage.setItem("loginTime", timeStampInMs)
                     disabled ?
                         null
                         :
+                       <>
                         <div className="form-group passForm">
                             <label className="labelColor">Enter Your OTP <span className="declined">*</span></label>
                             <input
@@ -129,11 +130,14 @@ localStorage.setItem("loginTime", timeStampInMs)
                                 onChange={(e) => validOtp(e)}
                             />
                             <p className="declinedmsg">{setText ? setText : ""}</p>
-                            <small className='labelColor'>
-                                Note: OTP is valid for {time} seconds.
-                            </small>
-
+                           
                         </div>
+                         <small className='labelColor'>
+                         Note: OTP is valid for {time} seconds.
+                     </small>
+                       </>
+
+
                 }
 
                 {

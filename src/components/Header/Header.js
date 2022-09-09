@@ -26,16 +26,15 @@ function Header({ id, cust_sign, noAdminSign, noTlSign,
   }
   useEffect(() => {
     
-    // if(window.location.hash === "#/admin/login" || window.location.hash === "#/admin/start"){
-    //   setLogimin(true)
-    // }
+    
     const handleScroll = event => {
-      // console.log('window.scrollY', window.pageYOffset);
-      if(window.pageYOffset > 65){
-      
+
+      if(window.pageYOffset > 120){
+        console.log("windowPage1", window.pageYOffset)
         setLogimin(true)
       }
-      else if (window.pageXOffset < 66) {
+      else if (window.pageXOffset < 80) {
+        console.log("windowPage2", window.pageYOffset)
         setLogimin(false)
       }
     

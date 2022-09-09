@@ -20,7 +20,8 @@ import '@react-pdf-viewer/core/lib/styles/index.css';
 // Worker
 import { Worker } from '@react-pdf-viewer/core'; // install this library
 import MyContainer from "../../components/Common/MyContainer";
-import SubHeading from "../../components/Common/SubHeading";
+import CustomHeading from "../../components/Common/CustomHeading";
+import MainText from '../../components/Common/MainText';
   const ArticleWrapper = styled(Box)({
     display: "flex", 
     flexDirection: "column",
@@ -84,13 +85,13 @@ useEffect(() => {
             }
 <ArticleWrapper>
 
-<SubHeading>
+<MainText>
 {CommonServices.capitalizeFirstLetter(i.heading)}
-</SubHeading>
+</MainText>
 
-<SubHeading>
+<MainText style={{margin : "8px 0px 12px 0px"}}>
 Date of publishing :   {i.publish_date.split("-").reverse().join("-")} 
-</SubHeading>
+</MainText>
          
 {
   i.content_type === "2" ?
