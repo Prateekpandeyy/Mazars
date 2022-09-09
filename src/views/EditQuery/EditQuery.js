@@ -131,7 +131,7 @@ function EditQuery(props) {
   };
 
   const onSubmit = (value) => {
-  
+console.log("done21")  
     
     if (purposeOption < 1) {
       setSelectError("At least one value should be enter")

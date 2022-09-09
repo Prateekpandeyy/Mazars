@@ -148,6 +148,7 @@ const myConfig = {
     localStorage.removeItem("custEmail")
     history.push("/")
   }
+  console.log("dddd")
   return (
   <>
 

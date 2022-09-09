@@ -13,7 +13,7 @@ import Mandatory from "../../components/Common/Mandatory";
 import ResendOtp from "./ResendOtp";
 import { Spinner } from "reactstrap";
 import ShowError from "../../components/LoadingTime/LoadingTime";
-
+import CustomHeading from "../../components/Common/CustomHeading";
 
 function ChangePassword(props) {
   const userId = window.localStorage.getItem("userid");
@@ -151,7 +151,9 @@ const clientLoginId = JSON.parse(localStorage.getItem("clientLoginId"))
     <Layout custDashboard="custDashboard" custUserId={userId}>
       <div className="container">
         <div className="form">
-          <h4  className="contentTitle">Change Password</h4>
+          <CustomHeading>
+          Change Password
+          </CustomHeading>
 
           <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
             <div className="row">
