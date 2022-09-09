@@ -21,7 +21,7 @@ import Loader from "../../components/Loader/Loader";
 import { Spinner } from 'reactstrap';
 import ShowError from "../../components/LoadingTime/LoadingTime";
 import { Link } from "react-router-dom";
-
+import CustomHeading from "../../components/Common/CustomHeading";
 const Schema = yup.object().shape({
   p_feedback: yup.string().required(""),
 });
@@ -93,7 +93,9 @@ function Feedback(props) {
               
             </Col>
             <Col md="8">
-              <h4>Feedback</h4>
+              <CustomHeading>
+                Feedback
+              </CustomHeading>
             </Col>
           </Row>
         </CardHeader>
