@@ -20,6 +20,7 @@ import {
   Table,
 } from "reactstrap";
 import Swal from 'sweetalert2';
+import CustomHeading from '../../../components/Common/CustomHeading';
 const Report = () => {
     const userid = window.localStorage.getItem("adminkey");
     const selectInputRef = useRef();
@@ -707,7 +708,9 @@ setTaxId(i.value)
               
             </Col>
             <Col md="4">
-              <h4>Report</h4>
+             <CustomHeading>
+             Report
+             </CustomHeading>
             </Col>
             <Col md= "4">
             <label className="form-label">Report Name</label>
@@ -866,7 +869,7 @@ options={qno} onChange={(e) => queryNumber(e)}/>
             <div className="basicFeild">
             
             <span>
-               <input type="checkbox" name="sno" id="sno" ref={register} checked disabled ref={register}></input>
+               <input type="checkbox" name="sno" id="sno" ref={register} checked disabled></input>
                <label htmlFor="sno">S.No</label>
                </span>
                <span>

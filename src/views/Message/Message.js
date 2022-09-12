@@ -17,7 +17,7 @@ import BootstrapTable from "react-bootstrap-table-next";
 import PaymentModal from "./PaymentModal";
 import CommonServices from "../../common/common";
 import { useHistory } from "react-router";
-
+import CustomHeading from "../../components/Common/CustomHeading";
 function Message(props) {
     
 
@@ -172,24 +172,21 @@ function Message(props) {
                 
                 
                         <CardHeader>
-          <Row>
-          <Col md="4">
-          <button
-                className="autoWidthBtn" 
-                onClick={() => history.goBack()}
-              >
-            
+                        <Row>
+            <Col md="4">
+              <button class="autoWidthBtn" onClick={() => history.goBack()}>
+              
                 Go Back
               </button>
-              
             </Col>
             <Col md="4" style={{ display: "flex", justifyContent: "center" }}>
-              <p style={{ fontSize: "20px" }}>Message</p>
+            <CustomHeading>
+           Message
+            </CustomHeading>
             </Col>
-            <Col
-              md="4"
-              style={{ display: "flex", justifyContent: "flex-end" }}
-            ></Col>
+            {/* <Col md="4" style={{ display: "flex", justifyContent: "flex-end" }}>
+              <DeleteQuery id={id} setLoading={setLoading}/>
+            </Col> */}
           </Row>
         </CardHeader>
                 <CardBody style={{display : "flex", height : "80vh", overflowY : "scroll"}}>

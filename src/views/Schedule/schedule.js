@@ -13,7 +13,7 @@ import {
 import Demo from "./demo";
 import ModalManual from "../ModalManual/AllComponentManual";
 import  {HelpIcon} from "../../components/Common/MessageIcon";
-
+import CustomHeading from "../../components/Common/CustomHeading";
 function Schedule() {
   const [openManual, setManual] = useState(false)
   const userId = window.localStorage.getItem("userid");
@@ -28,7 +28,9 @@ function Schedule() {
         <CardHeader>
         <Row>
             <Col md="7">
-              <CardTitle tag="h4" className="contentTitle">Schedule </CardTitle>
+              <CustomHeading>
+                Schedule
+              </CustomHeading>
             </Col>
             <Col md="5">
             <span onClick= {(e) => needHelp()}> <HelpIcon /></span>

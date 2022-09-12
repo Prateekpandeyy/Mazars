@@ -5,6 +5,7 @@ import axios from 'axios';
 import classNames from 'classnames';
 import { baseUrl } from '../../../config/config';
 import Swal from 'sweetalert2';
+import CustomHeading from "../../../components/Common/CustomHeading";
 const RecordingEdit = ({isOpen, recordingHandler, participants, message, assignid, editId, recList}) => {
    const userid = localStorage.getItem("adminkey")
    const token = window.localStorage.getItem("adminToken")
@@ -48,7 +49,9 @@ return (
     <>
     <Modal isOpen = {isOpen} toggle={recordingHandler}>
         <ModalHeader toggle={recordingHandler}>
-        <h4>Recording Edit</h4>
+      <CustomHeading>
+      Recording Edit
+      </CustomHeading>
         </ModalHeader>
         <ModalBody>
        <form onSubmit = {handleSubmit(onSubmit)}>
@@ -77,12 +80,12 @@ return (
                             
                           >
                             <option value="">--select--</option>
-                                        <option value="Query Discussion">Query Discussion</option>
-                                        <option value="Proposal Discussion">Proposal Discussion</option>
-                                        <option value="Payment Discussion">Payment Discussion</option>
-                                        <option value="Client Discussion">Client Discussion</option>
-                                        <option value="Draft Reports">Draft Reports</option>
-                                        <option value="Final Discussion">Final Discussion</option>
+                                        <option value="Query Discussion">Query discussion</option>
+                                        <option value="Proposal Discussion">Proposal discussion</option>
+                                        <option value="Payment Discussion">Payment discussion</option>
+                                        <option value="Client Discussion">Client discussion</option>
+                                        <option value="Draft Reports">Draft reports</option>
+                                        <option value="Final Discussion">Final discussion</option>
                                         <option value="Others">Others</option>
                           </select>
     </div>
@@ -98,7 +101,7 @@ return (
         defaultValue = {message}/>
         </div>
 </div>
-<button className="btn btn-primary my-2">
+<button className="customBtn my-2">
     Submit
 </button>
        </form>

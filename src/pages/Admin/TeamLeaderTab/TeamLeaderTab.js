@@ -18,6 +18,7 @@ import Swal from "sweetalert2";
 import History from './History.js';
 import {EditQuery} from "../../../components/Common/MessageIcon";
 import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
+import CustomHeading from "../../../components/Common/CustomHeading";
 function TeamLeaderTab() {
   const alert = useAlert();
   const [data, setData] = useState([]);
@@ -302,7 +303,9 @@ else{
         <CardHeader>
           <Row>
             <Col md="10">
-              <CardTitle tag="h4">Team Leaders ({tlCount})</CardTitle>
+              <CustomHeading>
+              Team Leaders ({tlCount})
+              </CustomHeading>
             </Col>
             <Col md="2">
               <Link to={"/admin/addnewtl"} className="customBtn">

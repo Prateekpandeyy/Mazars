@@ -13,7 +13,8 @@ import {
   ModalFooter,
   Button,
 } from "reactstrap";
-
+import CustomTypography from "../../../components/Common/CustomTypography";
+import CustomHeading from "../../../components/Common/CustomHeading";
 function History({ history, toggle,modal, bgColor }) {
   //change date format
   function ChangeFormateDate(oldDate) {
@@ -26,7 +27,11 @@ function History({ history, toggle,modal, bgColor }) {
   return (
     <div>
       <Modal isOpen={modal} fade={false} toggle={toggle} size="lg">
-        <ModalHeader toggle={toggle}>History</ModalHeader>
+        <ModalHeader toggle={toggle}>
+          <CustomHeading>
+            History
+          </CustomHeading>
+        </ModalHeader>
         <ModalBody>
           <table className="table table-bordered">
             <thead>
@@ -44,12 +49,36 @@ function History({ history, toggle,modal, bgColor }) {
               ? history.map((p, i) => (
                   <tbody>
                     <tr>
-                      <td>{i + 1}</td>
-                      <td>{p.from_date}</td>
-                      <td>{p.to_date}</td>
-                      <td>{p.name}</td>
-                      <td>{p.personal_email}</td>
-                      <td>{p.phone}</td>
+                      <td>
+                        <CustomTypography>
+                        {i + 1}
+                        </CustomTypography>
+                      </td>
+                      <td>
+                        <CustomTypography>
+                        {p.from_date}
+                        </CustomTypography>
+                      </td>
+                      <td>
+                        <CustomTypography>
+                        {p.to_date}
+                        </CustomTypography>
+                      </td>
+                      <td>
+                        <CustomTypography>
+                        {p.name}
+                        </CustomTypography>
+                      </td>
+                      <td>
+                        <CustomTypography>
+                        {p.personal_email}
+                        </CustomTypography>
+                      </td>
+                      <td>
+                        <CustomTypography>
+                        {p.phone}
+                        </CustomTypography>
+                      </td>
                     </tr>
                   </tbody>
                 ))

@@ -15,7 +15,7 @@ import BootstrapTable from "react-bootstrap-table-next";
 import { useAlert } from "react-alert";
 import { useHistory } from "react-router";
 import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
-
+import CustomHeading from "../../../components/Common/CustomHeading";
 function FeedbackTab() {
   const alert = useAlert();
   const history = useHistory();
@@ -156,7 +156,9 @@ function FeedbackTab() {
           <CardHeader>
             <Row>
               <Col md="7">
-                <CardTitle tag="h4">Feedback</CardTitle>
+           <CustomHeading>
+           Feedback
+           </CustomHeading>
               </Col>
               <Col md="5"></Col>
             </Row>

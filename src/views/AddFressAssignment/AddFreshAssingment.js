@@ -22,6 +22,7 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import PublishIcon from '@material-ui/icons/Publish';
 import Box from '@material-ui/core/Box';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import CustomHeading from "../../components/Common/CustomHeading";
 function AddFreshAssingment(props) {
   const history = useHistory();
   const token = window.localStorage.getItem("clientToken")
@@ -209,7 +210,9 @@ function AddFreshAssingment(props) {
                 </button>
               </Col>
               <Col md="4" style={{ display: "flex", justifyContent: "center" }}>
-                <p style={{ fontSize: "20px" }}>Add Fresh Query</p>
+               <CustomHeading>
+               Add fresh auery
+                </CustomHeading>
               </Col>
             </Row>
 
@@ -309,7 +312,7 @@ function AddFreshAssingment(props) {
                     <div className="col-md-6">
                       <div className="question_query mb-2">
                         <label className="form-label">
-                          Specific Questions for advisory <span className="declined">*</span>
+                          Specific questions for advisory <span className="declined">*</span>
                         </label>
                         <div
                           className="btn queryPlusIcon"
@@ -383,7 +386,7 @@ function AddFreshAssingment(props) {
                     <div className="col-md-6">
                       <div className="mb-3">
                         <label className="form-label">
-                          Format in which Opinion is required <span className="declined">*</span>
+                          Format in which opinion is required <span className="declined">*</span>
                         </label>
                         <br />
                         <div className="form-check">
@@ -412,7 +415,7 @@ function AddFreshAssingment(props) {
                             onChange={remError}
                           />
                           <label className="form-check-label" htmlFor="a2">
-                            SoftCopy- Digitally Signed
+                            SoftCopy- Digitally signed
                           </label>
                         </div>
                         <div className="form-check">
@@ -425,7 +428,7 @@ function AddFreshAssingment(props) {
                             onChange={remError}
                           />
                           <label className="form-check-label" htmlFor="a3">
-                            Printout- Physically Signed
+                            Printout- Physically signed
                           </label>
                         </div>
                         <p className="declined">{custcheckError}</p>
@@ -447,7 +450,7 @@ function AddFreshAssingment(props) {
                     <div className="col-md-6">
                     <div className="mb-3">
                         <label className="form-label">
-                          Timelines within which Opinion is required
+                          Timelines within which opinion is required
                         </label>
                         <br />
                         <div className="form-check">

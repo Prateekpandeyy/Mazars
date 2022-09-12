@@ -3,7 +3,7 @@ import Layout from "../../components/Layout/Layout";
 import { Card, CardBody, CardTitle, CardHeader, Row, Col } from 'reactstrap';
 import { Typography } from '@material-ui/core';
 import classes from './design.module.css';
-
+import CustomHeading from "../../components/Common/CustomHeading";
 const About = () => {
     const userId = window.localStorage.getItem("userid")
     return (
@@ -14,9 +14,9 @@ const About = () => {
 <div className={classes.articlesDetails}>
 <Card style={{display : "flex", width: "100%", boxShadow: "none", border: "1px solid #fff"}}>
 
-<Typography variant="h4" style={{ margin: "5px 15px"}}>
-About us
-</Typography>
+<CustomHeading>
+  About us
+</CustomHeading>
 <CardBody>
 <Row>
 <Col md="12">

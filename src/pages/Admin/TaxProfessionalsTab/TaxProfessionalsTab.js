@@ -8,18 +8,17 @@ import {
   CardTitle,
   Row,
   Col,
-  Table,
+  
 } from "reactstrap";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import { Link } from "react-router-dom";
 import { useAlert } from "react-alert";
 import Swal from "sweetalert2";
-import BootstrapTable from "react-bootstrap-table-next";
-import TaxProffesionalService from "../../../config/services/TaxProffesional";
 import History from './History.js';
 import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
 import {EditQuery} from "../../../components/Common/MessageIcon";
+import CustomHeading from "../../../components/Common/CustomHeading";
 function TaxProfessionalsTab() {
   const alert = useAlert();
   const [data, setData] = useState([]);
@@ -280,7 +279,9 @@ function TaxProfessionalsTab() {
         <CardHeader>
           <Row>
             <Col md="10">
-              <CardTitle tag="h4">Tax Professionals ({tpCount})</CardTitle>
+              <CustomHeading>
+              Tax professionals ({tpCount})
+              </CustomHeading>
             </Col>
             <Col md="2">
               <Link to={"/admin/addnewtp"} className="autoWidthBtn">

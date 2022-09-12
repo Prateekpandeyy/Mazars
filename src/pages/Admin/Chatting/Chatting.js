@@ -22,6 +22,7 @@ import classNames from "classnames";
 import Mandatory from "../../../components/Common/Mandatory";
 import Loader from "../../../components/Loader/Loader";
 import { Link } from "react-router-dom";
+import CustomHeading from "../../../components/Common/CustomHeading";
 
 
 
@@ -125,7 +126,9 @@ function Chatting(props) {
               
             </Col>
             <Col md="8">
-              <h4>Message</h4>
+            <CustomHeading>
+                Message
+            </CustomHeading>
             </Col>
           </Row>
         </CardHeader>
@@ -164,10 +167,10 @@ function Chatting(props) {
                             defaultValue={item}
                           >
                             <option value="">--select--</option>
-                            <option value="4">Query Discussion</option>
-                            <option value="2">Proposal Discussion</option>
-                            <option value="5">Payment Discussion</option>
-                            <option value="3">Assignment Discussion</option>
+                            <option value="4">Query discussion</option>
+                            <option value="2">Proposal discussion</option>
+                            <option value="5">Payment discussion</option>
+                            <option value="3">Assignment discussion</option>
                             <option value="1">Others</option>
                           </select>
                         }
@@ -190,7 +193,7 @@ function Chatting(props) {
                         >
                           <option value="">--select--</option>
                           <option value="customer">Client</option>
-                          <option value="tl">Team Leader</option>
+                          <option value="tl">Team leader</option>
                           <option value="both">Both</option>
                         </select>
                         {errors.p_to && (

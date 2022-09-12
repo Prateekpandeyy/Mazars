@@ -28,8 +28,14 @@ function Header({ id, cust_sign, noAdminSign, noTlSign,
     history.push("/customer/signin");
   }
   useEffect(() => {
-    
-    
+    console.log("mainWindow", window.location.hash.split("/")[1].length)
+   if (window.location.hash.split("/")[1] === "customer" || window.location.hash.split("/")[1].length === 0) {
+     
+      setLogimin(false)
+    }
+    else {
+      setLogimin(true)
+    }
     const handleScroll = event => {
 
       // if(window.pageYOffset > 150){
@@ -40,10 +46,12 @@ function Header({ id, cust_sign, noAdminSign, noTlSign,
       //   console.log("windowPage2", window.pageYOffset)
       //   setLogimin(false)
       // }
+     
     if(window.pageYOffset > 0){
       setLogimin(true)
     }
-    else {
+    else if (window.location.hash.split("/")[1] === "customer" || window.location.hash.split("/")[1].length === 0) {
+     
       setLogimin(false)
     }
     };
@@ -99,7 +107,7 @@ function Header({ id, cust_sign, noAdminSign, noTlSign,
         {admin && (
           <div>
             <Link to="/admin/start">
-              <img src={mazars} className={logomin === true ? "logomin" : "logo"} alt="mazar" />
+              <img src={mazars} className="logo" alt="mazar" />
             </Link>
           </div>
         )}
@@ -107,7 +115,7 @@ function Header({ id, cust_sign, noAdminSign, noTlSign,
         {mtl && (
           <div>
             <Link to="/teamleader/start">
-              <img src={mazars} className={logomin === true ? "logomin" : "logo"} alt="mazar" />
+              <img src={mazars} className="logo" alt="mazar" />
             </Link>
           </div>
         )}
@@ -115,7 +123,7 @@ function Header({ id, cust_sign, noAdminSign, noTlSign,
         {mtp && (
           <div>
             <Link to="/taxprofessional/start">
-              <img src={mazars} className={logomin === true ? "logomin" : "logo"} alt="mazar" />
+              <img src={mazars} className="logo" alt="mazar" />
             </Link>
           </div>
         )}

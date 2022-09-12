@@ -18,7 +18,7 @@ import { useHistory } from "react-router";
 // import PaymentModal from "./PaymentModal";
 import CommonServices from "../../../common/common";
 import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
-
+import CustomHeading from "../../../components/Common/CustomHeading";
 
 function Message(props) {
     
@@ -169,7 +169,9 @@ const history = useHistory();
               
             </Col>
             <Col md="8">
-              <h4>Message</h4>
+            <CustomHeading>
+                Message
+            </CustomHeading>
             </Col>
           </Row>
         </CardHeader>

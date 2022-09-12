@@ -13,7 +13,8 @@ import {
   ModalFooter,
   Button,
 } from "reactstrap";
-
+import CustomHeading from "../Common/CustomHeading";
+import CustomTypography from "../Common/CustomTypography";
 function History({ history,toggle,modal }) {
   //change date format
   function ChangeFormateDate(oldDate) {
@@ -26,7 +27,11 @@ function History({ history,toggle,modal }) {
   return (
     <div>
       <Modal isOpen={modal} fade={false} toggle={toggle} size="lg">
-        <ModalHeader toggle={toggle}>History</ModalHeader>
+        <ModalHeader toggle={toggle}>
+          <CustomHeading>
+          History
+          </CustomHeading>
+        </ModalHeader>
         <ModalBody>
           <table className="table table-bordered">
             <thead>
@@ -35,7 +40,7 @@ function History({ history,toggle,modal }) {
                 <th scope="row">Name</th>
                 <th scope="row">Query No</th>
                 <th scope="row">Status</th>
-                <th scope="row">Date of Allocation</th>
+                <th scope="row">Date of allocation</th>
                 <th scope="row">Notes</th>
               </tr>
             </thead>
@@ -44,12 +49,36 @@ function History({ history,toggle,modal }) {
               ? history.map((p, i) => (
                   <tbody>
                     <tr>
-                      <td>{i + 1}</td>
-                      <td>{p.name}</td>
-                      <td>{p.assign_no}</td>
-                      <td>{p.status}</td>
-                      <td>{p.date_of_allocation}</td>
-                      <td>{p.notes}</td>
+                      
+                      <td>
+                      <CustomTypography>
+                      {i + 1}
+                        </CustomTypography></td>
+                      <td>
+                        <CustomTypography>
+                        {p.name}
+                        </CustomTypography>
+                      </td>
+                      <td>
+                        <CustomTypography>
+                        {p.assign_no}
+                        </CustomTypography>
+                      </td>
+                      <td>
+                        <CustomTypography>
+                        {p.status}
+                        </CustomTypography>
+                      </td>
+                      <td>
+                        <CustomTypography>
+                        {p.date_of_allocation}
+                        </CustomTypography>
+                      </td>
+                      <td>
+                        <CustomTypography>
+                        {p.notes}
+                        </CustomTypography>
+                      </td>
                     </tr>
                   </tbody>
                 ))

@@ -11,14 +11,12 @@ import {
 } from "reactstrap";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
-import { Link } from "react-router-dom";
 import { useAlert } from "react-alert";
 import Swal from "sweetalert2";
 import CustomerListFilter from "../../../components/Search-Filter/CustomerListFilter";
-import BootstrapTable from "react-bootstrap-table-next";
-import TaxProffesionalService from "../../../config/services/TaxProffesional";
 import History from "./CustHistory";
 import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
+import CustomHeading from "../../../components/Common/CustomHeading";
 function Customer() {
   const alert = useAlert();
   const [data, setData] = useState([]);
@@ -231,7 +229,9 @@ function Customer() {
         <CardHeader>
           <Row>
             <Col md="6">
-              <CardTitle tag="h4">Client ({tpCount})</CardTitle>
+            <CustomHeading>
+            Client ({tpCount})
+            </CustomHeading>
             </Col>
            <Col md="6">
            

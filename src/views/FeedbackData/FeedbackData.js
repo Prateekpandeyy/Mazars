@@ -19,6 +19,7 @@ import BootstrapTable from "react-bootstrap-table-next";
 import CommonServices from "../../common/common";
 import  {HelpIcon} from "../../components/Common/MessageIcon";
 import ModalManual from "../ModalManual/AllComponentManual";
+import CustomHeading from "../../components/Common/CustomHeading";
 function FeedbackData(props) {
 
 
@@ -108,7 +109,9 @@ function FeedbackData(props) {
                 <CardHeader>
                     <Row>
                         <Col md="7">
-                            <CardTitle tag="h4" className="contentTitle">Feedback</CardTitle>
+                         <CustomHeading>
+                            Feedback
+                         </CustomHeading>
                         </Col>
                         <Col md="5">
             <span onClick= {(e) => needHelp()}> <HelpIcon /></span>

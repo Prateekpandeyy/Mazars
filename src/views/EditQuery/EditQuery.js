@@ -16,6 +16,7 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import PublishIcon from '@material-ui/icons/Publish';
 import Box from '@material-ui/core/Box';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import CustomHeading from "../../components/Common/CustomHeading";
 function EditQuery(props) {
 
   const history = useHistory();
@@ -267,7 +268,9 @@ console.log("done21")
               </button>
             </Col>
             <Col md="4" style={{ display: "flex", justifyContent: "center" }}>
-              <p style={{ fontSize: "20px" }}>Update Query - {qno}</p>
+            <CustomHeading>
+            Update Query - {qno}
+            </CustomHeading>
             </Col>
             {/* <Col md="4" style={{ display: "flex", justifyContent: "flex-end" }}>
               <DeleteQuery id={id} setLoading={setLoading}/>
@@ -313,7 +316,7 @@ console.log("done21")
                     <div className="col-md-6">
                       <div className="question_query mb-2">
                         <label className="form-label">
-                          Specific Questions for advisory <span className="declined">*</span>
+                          Specific questions for advisory <span className="declined">*</span>
                         </label>
                         <div
                           className="btn queryPlusIcon"
@@ -330,7 +333,7 @@ console.log("done21")
                             className={classNames("form-control", {
                               "is-invalid": errors.users,
                             })}
-                            ref={register}
+                          
                             name={`users[${index}].query`}
                             defaultValue={`${item.query}`}
                             placeholder="Specify your query"
@@ -462,7 +465,7 @@ console.log("done21")
 
                     <div className="col-md-6">
                       <div className="mb-3">
-                        <label className="form-label">Display Documents</label>
+                        <label className="form-label">Display documents</label>
                         <br />
 
                         <>

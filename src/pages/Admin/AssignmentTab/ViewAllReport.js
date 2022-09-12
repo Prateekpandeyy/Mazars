@@ -7,7 +7,8 @@ import CommonServices from "../../../common/common";
 import DiscardReport from "./DiscardReport";
 import './modalSty.css';
 import { makeStyles } from '@material-ui/core';
-import {Typography} from "@material-ui/core"
+import CustomTypography from "../../../components/Common/CustomTypography";
+import CustomHeading from "../../../components/Common/CustomHeading";
 const Schema = yup.object().shape({
   p_chat: yup.string().required(""),
 });
@@ -127,24 +128,37 @@ const viewStyle = {
       <Modal isOpen={reportModal} toggle={ViewReport} size="lg" scrollable>
        <ModalHeader toggle={ViewReport} className = {classes.modalHeaderStyle}>
            
-           <Typography variant="h6">
+        
+           <CustomHeading>
            View All Report 
-           </Typography>
-           <button className="autoWidthBtn" onClick={() => ViewDiscussionToggel()}>
+           </CustomHeading>
+        <div style={{display : "flex", maxHeight : "2.5rem", height : "100%"}}>
+        <button className="autoWidthBtn" onClick={() => ViewDiscussionToggel()}>
                 View Discussion
               </button>
+        </div>
            
         </ModalHeader>
         <ModalBody>
           <table className="table table-bordered">
             <thead>
               <tr>
-                <th style={{border: `1px solid ${deleiverAble}`, color: "#fff", backgroundColor: `${deleiverAble}`}}>S.No</th>
-                <th style={{border: `1px solid ${deleiverAble}`, color: "#fff", backgroundColor: `${deleiverAble}`,  width:"120px"}}>Date</th>
-                <th style={{border: `1px solid ${deleiverAble}`, color: "#fff", backgroundColor: `${deleiverAble}`}}>Document</th>
+                <th style={{border: `1px solid ${deleiverAble}`, color: "#fff", backgroundColor: `${deleiverAble}`}}>
+                  S.No
+                  </th>
+                <th style={{border: `1px solid ${deleiverAble}`, color: "#fff", backgroundColor: `${deleiverAble}`,  width:"120px"}}>
+                  Date
+                  </th>
+                <th style={{border: `1px solid ${deleiverAble}`, color: "#fff", backgroundColor: `${deleiverAble}`}}>
+                  Document
+                  </th>
                
-                <th style={{border: `1px solid ${deleiverAble}`, color: "#fff", backgroundColor: `${deleiverAble}` , width: "150px"}}>Report Type</th>
-                <th style={{border: `1px solid ${deleiverAble}`, color: "#fff", backgroundColor: `${deleiverAble}`, width: "100px"}}>Action</th>
+                <th style={{border: `1px solid ${deleiverAble}`, color: "#fff", backgroundColor: `${deleiverAble}` , width: "150px"}}>
+                  Report type
+                  </th>
+                <th style={{border: `1px solid ${deleiverAble}`, color: "#fff", backgroundColor: `${deleiverAble}`, width: "100px"}}>
+                  Action
+                  </th>
               </tr>
             </thead>
 
@@ -152,8 +166,16 @@ const viewStyle = {
               ? data.map((p, i) => (
                 <tbody>
                   <tr className="modalTable">
-                    <td>{i + 1}</td>
-                    <td>{CommonServices.removeTime(p.created_date)}</td>
+                    <td>
+                      <CustomTypography>
+                      {i + 1}
+                      </CustomTypography>
+                    </td>
+                    <td>
+                     <CustomTypography>
+                     {CommonServices.removeTime(p.created_date)}
+                     </CustomTypography>
+                      </td>
                     <td>
                     
                     <tr>
@@ -163,7 +185,9 @@ const viewStyle = {
                      <i className="fa fa-photo"></i>
                      
                        
-                          <p style={{ marginLeft: "15px" }}>{p.document}</p>
+                          <p style={{ marginLeft: "15px" }}><CustomTypography>
+                          {p.document}
+                          </CustomTypography></p>
                           </span>
                         </p>
                       )}
@@ -174,7 +198,9 @@ const viewStyle = {
                      <span onClick={() => downloadpdfclient(p.docid, p.customer_files)} style={{display: "flex", cursor : "pointer"}}>
                      <i className="fa fa-photo"></i>
                       
-                        &nbsp; &nbsp; &nbsp;{p.customer_files}
+                        &nbsp; &nbsp; &nbsp; <CustomTypography>
+                        {p.customer_files}
+                        </CustomTypography>
                         </span>
                     </tr> }
                     </td>
@@ -184,15 +210,22 @@ const viewStyle = {
                    
 
                     <td>
-                  <p>    {p.stages_type == 2 && "Draft Report" || p.stages_type == 3 && "Final Report"}</p>
+                 <CustomTypography>
+                 {p.stages_type == 2 && "Draft Report" || p.stages_type == 3 && "Final Report"}
+                 </CustomTypography>
                   
                   <br>
                   </br> 
-                  {p.customer_files === null ?  "" : <p>   Reviewed Report </p> }</td>
+                  {p.customer_files === null ?  "" : <CustomTypography>
+                  Reviewed Report 
+                  </CustomTypography> }</td>
                   <td>
                   {p.stages_type === "2" ? <>
                   {p.status === "3" ? 
-                   <p className="declined"> Discarded</p> : 
+                 
+                   <CustomTypography className="declined">
+                   Discarded
+                   </CustomTypography> : 
                    null}
                    {
                      p.status === "1" ?
@@ -210,7 +243,10 @@ const viewStyle = {
                    {p.status === "0" || p.status === "2" ?
                    <>
                    {p.tlstatus === "0" ?
-                   <p className="declined">Pending</p> :
+                   <CustomTypography className="declined">
+Pending
+                   </CustomTypography>
+                 :
                    <div style={{ display: "flex", justifyContent: "space-around" }}>
                     <div title="Discussion">
                       <i

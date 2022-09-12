@@ -22,6 +22,7 @@ import classNames from "classnames";
 import Mandatory from "../../../components/Common/Mandatory";
 import Loader from "../../../components/Loader/Loader";
 import { useHistory } from "react-router-dom";
+import CustomHeading from "../../../components/Common/CustomHeading";
 
 
 const Schema = yup.object().shape({
@@ -220,15 +221,18 @@ function QueryAssingment(props) {
                 }}
               >
                 <button className="autoWidthBtn ml-3">
-                  <i className="fas fa-arrow-left mr-2"></i>
+                 
                   Go Back
                 </button>
               </Link>
             </Col>
             <Col md="4">
-              <div style={{ textAlign: "center" }}>
+              {/* <div style={{ textAlign: "center" }}>
                 <h4>Query Allocation</h4>
-              </div>
+              </div> */}
+              <CustomHeading>
+              Query allocation
+            </CustomHeading>
             </Col>
           </Row>
         </CardHeader>
