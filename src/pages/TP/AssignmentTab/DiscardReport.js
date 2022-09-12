@@ -5,8 +5,8 @@ import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import CommonServices from "../../../common/common";
 import Alerts from "../../../common/Alerts";
-
-
+import CustomTypography from "../../../components/Common/CustomTypography";
+import CustomHeading from "../../../components/Common/CustomHeading";
 function DiscardReport({
   ViewDiscussion,
   ViewDiscussionToggel,
@@ -42,7 +42,11 @@ function DiscardReport({
   return (
     <div>
       <Modal isOpen={ViewDiscussion} toggle={ViewDiscussionToggel} size="lg" scrollable>
-        <ModalHeader toggle={ViewDiscussionToggel}>Discussion History </ModalHeader>
+        <ModalHeader toggle={ViewDiscussionToggel}>
+        <CustomHeading>
+          Discussion History 
+          </CustomHeading>
+        </ModalHeader>
         <ModalBody>
           <table class="table table-bordered">
             <thead>
@@ -57,17 +61,31 @@ function DiscardReport({
               ? data.map((p, i) => (
                 <tbody>
                   <tr className={p.type == "sent" ? "send" : "received"}>
-                    <td>{i + 1}</td>
-                    <td>{CommonServices.removeTime(p.setdate)}</td>
-                    <td>{p.sender}</td>
+                    <td>
+                    <CustomTypography>
+                      {i + 1}
+                      </CustomTypography>
+                    </td>
+                    <td>  
+                      <CustomTypography>
+                      {CommonServices.removeTime(p.setdate)}
+                      </CustomTypography></td>
+                    <td>
+                    <CustomTypography>
+                      {p.sender}
+                      </CustomTypography>
+                    </td>
                     <td style={{width : "460px", overflow : "wrap"}}>
-                      {
+                     
+                        <CustomTypography>
+                        {
                         p.type == "sent" ?
                           <i class="fa fa-mail-forward" style={{ color: "red", marginLeft: "10px", marginRight: "10px" }}></i>
                           :
                           <i class="fa fa-mail-reply" style={{ color: "green", marginLeft: "10px", marginRight: "10px" }}></i>
                       }
                       {p.message}
+                      </CustomTypography>
                     </td>
                   </tr>
                 </tbody>

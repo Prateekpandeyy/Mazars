@@ -108,7 +108,7 @@ const editRecording = (participants, assign_id, message, id) => {
                 return rowIndex + 1;
             },
             headerStyle: () => {
-                return { fontSize: "12px", width: "8px", padding : "9px 5px" };
+                return {  width: "8px", padding : "9px 5px" };
             },
         },
         {
@@ -116,14 +116,14 @@ const editRecording = (participants, assign_id, message, id) => {
             sort: true,
             dataField: "created_date",
             headerStyle: () => {
-                return { fontSize: "12px", width: "30px" };
+                return {  width: "30px" };
             },
         },
         {
-            text: "Query No",
+            text: "Query no",
             dataField: "",
             headerStyle: () => {
-                return { fontSize: "12px", width: "20px" };
+                return {  width: "20px" };
             },
             formatter : function formatter(cell, row){
                 let a = row.assign_id.split("-")[row.assign_id.split("-").length - 1]
@@ -144,21 +144,21 @@ const editRecording = (participants, assign_id, message, id) => {
             text: "Participants",
             dataField: "participants",
             headerStyle: () => {
-                return { fontSize: "12px", width: "40px" };
+                return { width: "40px" };
             },
         },
        
         {
-            text: "Summary of Discussion",
+            text: "Summary of discussion",
             dataField: "message",
             headerStyle: () => {
-                return { fontSize: "12px", width: "80px" };
+                return { width: "80px" };
             },
         },
         {
             text: "Action",
             headerStyle: () => {
-                return { fontSize: "12px", width: "20px" };
+                return {  width: "20px" };
                 
             },
             formatter: function nameFormatter(cell, row) {

@@ -16,6 +16,7 @@ import BootstrapTable from "react-bootstrap-table-next";
 import { useAlert } from "react-alert";
 import { useHistory } from "react-router";
 import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
+import CustomHeading from "../../../components/Common/CustomHeading";
 function FeedbackTab() {
   const alert = useAlert();
 const history = useHistory();
@@ -51,7 +52,7 @@ const history = useHistory();
         return rowIndex + 1;
       },
       headerStyle: () => {
-        return { fontSize: "12px", width: "10px" };
+        return {width: "10px" };
       },
     },
     {
@@ -59,21 +60,21 @@ const history = useHistory();
       dataField: "created",
       sort: true,
       headerStyle: () => {
-        return { fontSize: "12px", width: "60px" };
+        return {  width: "60px" };
       },
      
     },
     {
-      text: "Query No",
+      text: "Query no",
       dataField: "assign_no",
       headerStyle: () => {
-        return { fontSize: "12px", width: "40px" };
+        return {  width: "40px" };
       },
     },
     {
       text: "Feedback",
       headerStyle: () => {
-        return { fontSize: "12px", width: "150px" };
+        return {  width: "150px" };
       },
       formatter: function nameFormatter(cell, row) {
       
@@ -148,7 +149,9 @@ const history = useHistory();
           <CardHeader>
             <Row>
               <Col md="7">
-                <CardTitle tag="h4">Feedback</CardTitle>
+             <CustomHeading>
+             Feedback
+             </CustomHeading>
               </Col>
               <Col md="5"></Col>
             </Row>

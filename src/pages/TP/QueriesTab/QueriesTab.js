@@ -46,13 +46,15 @@ const [pendingData, setPendingData] = useState([])
     
   const myStyle1 = {
     margin: "10px auto",
-    fontSize : "14px"
+    fontSize : "18px",
+    cursor : "pointer"
   };
   const myStyle2 = {
   margin: "10px auto",
-  
+  fontSize : "18px",
   color : "#55425f",
-  fontWeight : 1000
+  cursor : "pointer"
+  
   };
 
 
@@ -147,13 +149,13 @@ const [pendingData, setPendingData] = useState([])
     <Layout TPDashboard="TPDashboard" TPuserId={userid}>
     <Tabs selectedIndex={tabIndex} onSelect={(index) => tableIndex(index)}>
           <TabList className="fixedTab">
-            <Tab style={tabIndex == 0 ? myStyle2 : myStyle1} className="tabHover">
+            <Tab style={tabIndex == 0 ? myStyle2 : myStyle1}>
               All queries ({allQuery})
             </Tab>
-            <Tab style={tabIndex == 1 ? myStyle2 : myStyle1} className="tabHover"> 
+            <Tab style={tabIndex == 1 ? myStyle2 : myStyle1}> 
               Pending for acceptance ({pendindForAccepttence})
             </Tab>
-            <Tab style={tabIndex == 2 ? myStyle2 : myStyle1} className="tabHover">
+            <Tab style={tabIndex == 2 ? myStyle2 : myStyle1}>
               Inprogress; queries ({incomplete})
             </Tab>
        

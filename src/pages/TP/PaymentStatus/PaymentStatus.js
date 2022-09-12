@@ -84,13 +84,13 @@ function QueriesTab(props) {
     
   const myStyle1 = {
     margin: "10px auto",
-    fontSize : "14px"
+    fontSize : "18px",
+    cursor : "pointer"
   };
   const myStyle2 = {
  margin: "10px auto",
-
- color : "#2b5f55",
- fontWeight : 1000
+ fontSize : "18px",
+ cursor : "pointer"
   };
 
 

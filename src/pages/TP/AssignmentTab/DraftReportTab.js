@@ -234,31 +234,31 @@ function AssignmentTab() {
                       </p>
                     }
                     <p>
-                      <span style={{ fontWeight: "bold" }}>Client Discussion :</span>
+                      <span>Client Discussion :</span>
                      <span className={row.client_discussion === "completed" ? "completed" : "inprogress"}>
                                       {row.client_discussion}
                        </span>
                     </p>
                     <p>
-                      <span style={{ fontWeight: "bold" }}>Draft report :</span>
+                      <span>Draft report :</span>
                       <span className={row.draft_report === "completed" ? "completed" : "inprogress"}>
                             {row.draft_report}
                        </span>
                     </p>
                     <p>
-                      <span style={{ fontWeight: "bold" }}>Final Discussion :</span>
+                      <span>Final Discussion :</span>
                       <span className={row.final_discussion === "completed" ? "completed" : "inprogress"}>
                            {row.final_discussion}
                        </span>
                     </p>
                     <p>
-                      <span style={{ fontWeight: "bold" }}>Delivery of Final Report :</span>
+                      <span>Delivery of Final Report :</span>
                       <span className={row.delivery_report === "completed" ? "completed" : "inprogress"}>
                                    {row.delivery_report}
                        </span>
                     </p>
                     <p>
-                      <span style={{ fontWeight: "bold" }}>Awaiting Completion:</span>
+                      <span>Awaiting Completion:</span>
                       <span className={row.other_stage === "completed" ? "completed" : "inprogress"}>
                                   {row.other_stage}
                        </span>
