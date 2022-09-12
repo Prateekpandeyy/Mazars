@@ -12,7 +12,7 @@ import Mandatory from "../../../components/Common/Mandatory";
 import { Spinner } from "reactstrap";
 import LoadingTime from '../../../components/LoadingTime/LoadingTime';
 import Cookies from "js-cookie";
-
+import CustomHeading from "../../../components/Common/CustomHeading";
 const Schema = yup.object().shape({
   p_otp: yup.string().required(""),
 });
@@ -119,9 +119,12 @@ function VerifyOtp({ email, uid, loading, setLoading, password }) {
 
       <div class="container">
         <div class="otp">
-          <div class="heading text-center">
+          {/* <div class="heading text-center">
             <h2>Verify Your OTP</h2>
-          </div>
+          </div> */}
+          <CustomHeading>
+          Verify your OTP
+          </CustomHeading>
           <form onSubmit={handleSubmit(onSubmit)}>
             {
               disabled ?

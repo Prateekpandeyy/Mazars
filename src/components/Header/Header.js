@@ -121,9 +121,9 @@ function Header({ id, cust_sign, noAdminSign, noTlSign,
         )}
 
         {mtp && (
-          <div>
+          <div style = {{display : "flex", width: "100%", alignItems: "center",  justifyContent: "space-between"}}>
             <Link to="/taxprofessional/start">
-              <img src={mazars} className="logo" alt="mazar" />
+              <img src={mazars} className="logomin" alt="mazar" />
             </Link>
           </div>
         )}

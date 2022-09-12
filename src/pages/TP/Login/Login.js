@@ -16,6 +16,7 @@ import VerifyOtpLogin from "./VerifyOtpLogin";
 import { Spinner } from "reactstrap";
 import {useHistory} from 'react-router-dom';
 import Cookies from "js-cookie";
+import CustomHeading from "../../../components/Common/CustomHeading";
 const Schema = yup.object().shape({
   p_email: yup.string().email("invalid email").required("required email"),
   password: yup
@@ -109,9 +110,9 @@ function Login(props) {
           </div>
             :
             <div class="form">
-              <div class="heading">
-                <h2>TAX PROFESSIONAL LOGIN</h2>
-              </div>
+             <CustomHeading>
+             Tax professional login
+             </CustomHeading>
               <form onSubmit={handleSubmit(onSubmit)}  autocomplete="off">
                 <div className="row">
                   <div className="col-md-12">

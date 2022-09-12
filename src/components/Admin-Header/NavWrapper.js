@@ -6,6 +6,7 @@ import VpnKeyIcon from '@material-ui/icons/VpnKey';
 import './index.css'
 import {CgProfile} from 'react-icons/cg'
 import CommonServices from "../../common/common";
+import CustomHeading from "../Common/CustomHeading";
 
 function NavWrapper(props) {
   const { color, logout, name, email, feedbackNumber} = props;
@@ -56,7 +57,10 @@ const clName = JSON.parse(localStorage.getItem("clientLoginId"))
               </li>
 
               <li style={{zIndex: 99, margin: "auto"}}>
-                <h4 className="contentTitle">{name == "customer" ? `Client :  ${clName} `  : CommonServices.capitalizeFirstLetter(name)}:  {JSON.parse(email)} </h4>
+                <CustomHeading>
+                {name == "customer" ? `Client :  ${clName} `  : CommonServices.capitalizeFirstLetter(name)}:  {JSON.parse(email)} 
+                </CustomHeading>
+
               </li>
              
             </ul>
