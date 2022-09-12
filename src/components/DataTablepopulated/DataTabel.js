@@ -26,13 +26,16 @@ const MyContainer = styled(Container)({
     }, 
     "& thead tr th" : {
      border : "0px",
-     fontSize : "0.8rem",
-     padding: "5px"
+     fontSize : "14px",
+     padding: "5px",
+     fontFamily : "Halyard",
+     verticalAlign : "top"
     },
 
     "& tbody tr td" : {
        padding : "0.50rem",
-        fontSize : "0.77rem",
+        fontSize : "14px",
+        fontFamily : "Halyard"
     }
    
  })

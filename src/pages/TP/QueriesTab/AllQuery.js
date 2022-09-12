@@ -69,13 +69,13 @@ function AllQuery(props) {
            
         },
         {
-            text: "Query Date",
+            text: "Query date",
             dataField: "created",
             sort: true,
           
         },
         {
-            text: "Query No",
+            text: "Query no",
             dataField: "assign_no",
            
             formatter: function nameFormatter(cell, row) {
@@ -103,19 +103,19 @@ function AllQuery(props) {
           
         },
         {
-            text: "Sub Category",
+            text: "Sub category",
             dataField: "cat_name",
             sort: true,
             
         },
         {
-            text: "Client Name",
+            text: "Client name",
             dataField: "name",
             sort: true,
            
         },
         {
-            text: "Delivery due date / Actual Delivery date",
+            text: "Delivery due date / Actual delivery date",
             dataField: "Exp_Delivery_Date",
             sort: true,
            

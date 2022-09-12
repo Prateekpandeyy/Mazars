@@ -63,7 +63,7 @@ console.log("props123", props.data)
 
   const columns = [
     {
-      text: "S.No",
+      text: "S.no",
       dataField: "",
       formatter: (cellContent, row, rowIndex) => {
         return rowIndex + 1;
@@ -88,7 +88,7 @@ console.log("props123", props.data)
       },
     },
     {
-      text: "Query No",
+      text: "Query no",
       dataField: "assign_no",
       
       formatter: function nameFormatter(cell, row) {
@@ -115,19 +115,19 @@ console.log("props123", props.data)
       
     },
     {
-      text: "Sub Category",
+      text: "Sub category",
       dataField: "cat_name",
       sort: true,
 
     },
     {
-      text: "Client Name",
+      text: "Client name",
       dataField: "name",
       sort: true,
      
     },
     {
-      text: "Delivery due date / Actual Delivery date",
+      text: "Delivery due date / Actual delivery date",
       dataField: "Exp_Delivery_Date",
       sort: true,
      

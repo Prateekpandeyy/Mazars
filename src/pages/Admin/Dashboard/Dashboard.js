@@ -5,7 +5,7 @@ import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import { useHistory } from "react-router-dom";
 import {Container, Grid, Paper, Box} from "@material-ui/core";
-
+import CustomTypography from "../../../components/Common/CustomTypography"
 
 function Dashboard() {
   const userId = window.localStorage.getItem("adminkey");
@@ -171,7 +171,7 @@ let history = useHistory()
           <table className="table table-striped first main_table mb-1">
             <thead className="query_thead">
               <tr>
-                <th className="left_side">All queries</th>
+                <th className="left_side"><CustomTypography color="#ffffff">All queries</CustomTypography></th>
                 <th>{total}</th>
               </tr>
             </thead>
@@ -179,22 +179,22 @@ let history = useHistory()
           <table className="table table-striped second main_table mb-1">
             <thead className="query_thead1">
               <tr>
-                <th className="left_side">Inprogress; queries</th>
-                <th>{inprogress_queries}</th>
+                <th className="left_side"><CustomTypography color="#ffffff">Inprogress; queries</CustomTypography></th>
+                <th >{inprogress_queries}</th>
               </tr>
             </thead>
 
             <tbody className="table_body">
               <tr>
-                <td className="left_side">Inprogress; allocation</td>
-                <td>{inprogress_allocation}</td>
+                <td className="left_side"><CustomTypography>Inprogress; allocation</CustomTypography></td>
+                <td><CustomTypography>{inprogress_allocation}</CustomTypography></td>
               </tr>
               <tr>
-                <td className="left_side">Inprogress; proposals</td>
-                <td>{inprogress_proposal}</td>
+                <td className="left_side"><CustomTypography>Inprogress; proposals</CustomTypography></td>
+                <td><CustomTypography>{inprogress_proposal}</CustomTypography></td>
               </tr>
               <tr>
-                <td className="left_side">Inprogress; assignments</td>
+                <td className="left_side"><CustomTypography>Inprogress; assignments</CustomTypography></td>
                 <td>{inprogress_assignment}</td>
               </tr>
             </tbody>
@@ -204,13 +204,13 @@ let history = useHistory()
           <table className="table table-striped third main_table mb-1">
             <thead className="query_thead1">
               <tr>
-                <th className="left_side">Completed; queries</th>
+                <th className="left_side"><CustomTypography color="#ffffff">Completed; queries</CustomTypography></th>
                 <th>{complete_query}</th>
               </tr>
             </thead>
             <tbody className="table_body">
               <tr>
-                <td className="left_side">Completed; assignments</td>
+                <td className="left_side"><CustomTypography>Completed; assignments</CustomTypography></td>
                 <td>{complete_query}</td>
               </tr>
             </tbody>
@@ -220,26 +220,26 @@ let history = useHistory()
           <table className="table table-striped forth main_table mb-1">
             <thead className="query_thead1">
               <tr>
-                <th className="left_side">Declined; queries</th>
+                <th className="left_side"><CustomTypography color="#ffffff">Declined; queries</CustomTypography></th>
                 <th>{declined_queries}</th>
               </tr>
             </thead>
 
             <tbody className="table_body">
               <tr>
-                <td className="left_side">Admin Declined; queries</td>
+                <td className="left_side"><CustomTypography>Admin Declined; queries</CustomTypography></td>
                 <td>{admin_declined_query}</td>
               </tr>
               <tr>
-                <td className="left_side"> Client Declined; queries</td>
+                <td className="left_side"><CustomTypography>Client Declined; queries</CustomTypography></td>
                 <td>{customer_declined_Query}</td>
               </tr>
               <tr>
-                <td className="left_side">Client Declined; proposals</td>
+                <td className="left_side"><CustomTypography>Client Declined; proposals</CustomTypography></td>
                 <td>{customer_declined_proposal}</td>
               </tr>
               <tr>
-                <td className="left_side">Client Declined; payment</td>
+                <td className="left_side"><CustomTypography>Client Declined; payment</CustomTypography></td>
                 <td>{Customer_declined_payment}</td>
               </tr>
             </tbody>
@@ -251,7 +251,7 @@ let history = useHistory()
           <table className="table table-striped fifth main_table mb-1">
             <thead className="proposal_thead">
               <tr>
-                <th className="left_side">All proposals</th>
+                <th className="left_side"><CustomTypography color="#ffffff">All proposals</CustomTypography></th>
                 <th>{allproposal}</th>
 
               </tr>
@@ -261,17 +261,17 @@ let history = useHistory()
           <table className="table table-striped sixth main_table mb-1">
             <thead className="proposal_thead3">
               <tr>
-                <th className="left_side">Inprogress; proposals</th>
+                <th className="left_side"><CustomTypography color="#ffffff">Inprogress; proposals</CustomTypography></th>
                 <th>{InProgress}</th>
               </tr>
             </thead>
             <tbody classNameName="table_body">
               <tr>
-                <td className="left_side">Inprogress; preparation</td>
+                <td className="left_side"><CustomTypography>Inprogress; preparation</CustomTypography></td>
                 <td>{inprogress_preparation}</td>
               </tr>
               <tr>
-                <td className="left_side">Inprogress; acceptance</td>
+                <td className="left_side"><CustomTypography>Inprogress; acceptance</CustomTypography></td>
                 <td>{inprogress_acceptance}</td>
               </tr>
             </tbody>
@@ -280,7 +280,7 @@ let history = useHistory()
           <table className="table table-striped seventh main_table mb-1">
             <thead className="proposal_thead3">
               <tr>
-                <th className="left_side">Accepted; proposals </th>
+                <th className="left_side"><CustomTypography color="#ffffff">Accepted; proposals</CustomTypography> </th>
                 <th>{accepted_proposals}</th>
               </tr>
             </thead>
@@ -289,7 +289,7 @@ let history = useHistory()
           <table className="table table-striped eight main_table mb-1">
             <thead className="proposal_thead3">
               <tr>
-                <th className="left_side">Client declined; proposals</th>
+                <th className="left_side"><CustomTypography color="#ffffff">Client declined; proposals</CustomTypography></th>
                 <th>{declined}</th>
               </tr>
             </thead>
@@ -302,7 +302,7 @@ let history = useHistory()
           <table className="table table-striped ninth main_table mb-1">
             <thead className="assignment_thead">
               <tr>
-                <th className="left_side">All assignments</th>
+                <th className="left_side"><CustomTypography color="#ffffff">All assignments</CustomTypography></th>
                 <th>{inprogress + complete + +(customer_declined_payment)}</th>
               </tr>
             </thead>
@@ -312,30 +312,30 @@ let history = useHistory()
             <thead className="assignment_thead2">
 
               <tr>
-                <th className="left_side">Inprogress; assignments</th>
+                <th className="left_side"><CustomTypography color="#ffffff">Inprogress; assignments</CustomTypography></th>
                 <th>{inprogress}</th>
               </tr>
             </thead>
 
             <tbody classNameName="table_body">
               <tr>
-                <td className="left_side">Client discussion</td>
+                <td className="left_side"><CustomTypography>Client discussion</CustomTypography></td>
                 <td>{client_discussion}</td>
               </tr>
               <tr>
-                <td className="left_side">Draft reports</td>
+                <td className="left_side"><CustomTypography>Draft reports</CustomTypography></td>
                 <td>{draft_report}</td>
               </tr>
               <tr>
-                <td className="left_side">Final discussion</td>
+                <td className="left_side"><CustomTypography>Final discussion</CustomTypography></td>
                 <td>{final_discussion}</td>
               </tr>
               <tr>
-                <td className="left_side">Delivery of final reports</td>
+                <td className="left_side"><CustomTypography>Delivery of final reports</CustomTypography></td>
                 <td>{final_report}</td>
               </tr>
               <tr>
-                <td className="left_side">Awaiting completion</td>
+                <td className="left_side"><CustomTypography>Awaiting completion</CustomTypography></td>
                 <td>{complete_inprocess}</td>
               </tr>
             </tbody>
@@ -345,7 +345,7 @@ let history = useHistory()
             <thead className="assignment_thead2">
 
               <tr>
-                <th className="left_side">Completed; assignments</th>
+                <th className="left_side"><CustomTypography color="#ffffff">Completed; assignments</CustomTypography></th>
                 <th>{complete}</th>
               </tr>
             </thead>
@@ -355,7 +355,7 @@ let history = useHistory()
             <thead className="assignment_thead2">
 
               <tr>
-                <th className="left_side">Client declined; payment</th>
+                <th className="left_side"><CustomTypography color="#ffffff">Client declined; payment</CustomTypography></th>
                 <th>{customer_declined_payment}</th>
               </tr>
             </thead>
@@ -368,7 +368,7 @@ let history = useHistory()
           <table className="table table-striped twelvth main_table mb-1">
             <thead className="payment_thead">
               <tr>
-                <th className="left_side">All payments</th>
+                <th className="left_side"><CustomTypography color="#ffffff">All payments</CustomTypography></th>
                 <th>{unpaid + paid}</th>
               </tr>
             </thead>
@@ -376,7 +376,7 @@ let history = useHistory()
           <table className="table table-striped thirteen main_table mb-1">
             <thead className="payment_thead2">
               <tr>
-                <th className="left_side">Paid</th>
+                <th className="left_side"><CustomTypography>Paid</CustomTypography></th>
                 <th>{paid}</th>
               </tr>
             </thead>
@@ -385,7 +385,7 @@ let history = useHistory()
           <table className="table table-striped thirteen main_table mb-1">
             <thead className="payment_thead2">
               <tr>
-                <th className="left_side">Unpaid</th>
+                <th className="left_side"><CustomTypography>Unpaid</CustomTypography></th>
                 <th>{unpaid}</th>
               </tr>
             </thead>
@@ -403,4 +403,3 @@ let history = useHistory()
 }
 
 export default Dashboard;
-

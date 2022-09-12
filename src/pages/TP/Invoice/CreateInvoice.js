@@ -69,7 +69,7 @@ const CreateInvoice = () => {
 
     const columns = [
         {
-            text: "S.No",
+            text: "S.no",
             dataField: "",
             formatter: (cellContent, row, rowIndex) => {
                 return rowIndex + 1;
@@ -83,7 +83,7 @@ const CreateInvoice = () => {
         },
        
         {
-            text: "Query No",
+            text: "Query no",
             dataField: "assign_no",
             style: {
                 fontSize: "11px",
@@ -110,7 +110,7 @@ const CreateInvoice = () => {
             },
         },
         {
-            text: "Installment No",
+            text: "Installment no",
             dataField: "installment_no",
             sort: true,
             style: {
@@ -122,7 +122,7 @@ const CreateInvoice = () => {
             },
         }, 
         {
-            text: "Due Date",
+            text: "Due date",
             dataField: "due_date",
             sort: true,
             style: {
@@ -230,7 +230,7 @@ const CreateInvoice = () => {
                     report = {assignNo}
                     installmentNo = {installmentNo}
                     billNo = {billNo}
-                    id = {id2}
+                    
                     gstNo = {gstNo}
                     getProposalList={getProposalList}
                     /> : ""

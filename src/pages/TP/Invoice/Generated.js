@@ -93,7 +93,7 @@ const Generated = () => {
       }
     const columns = [
         {
-            text: "S.No",
+            text: "S.no",
             dataField: "",
             formatter: (cellContent, row, rowIndex) => {
                 return rowIndex + 1;
@@ -107,7 +107,7 @@ const Generated = () => {
         },
        
         {
-            text: "Query No",
+            text: "Query no",
             dataField: "assign_no",
             style: {
                 fontSize: "11px",
@@ -134,7 +134,7 @@ const Generated = () => {
             },
         },
         {
-            text: "Installment No",
+            text: "Installment no",
             dataField: "installment_no",
             sort: true,
             
@@ -143,7 +143,7 @@ const Generated = () => {
             },
         },
         {
-            text: "Invoice No",
+            text: "Invoice no",
             dataField: "billno",
             sort: true,
             style: {
@@ -154,7 +154,7 @@ const Generated = () => {
             },
         },
         {
-            text: "Due Date",
+            text: "Due date",
             dataField: "due_date",
             sort: true,
             style: {
@@ -187,7 +187,7 @@ const Generated = () => {
                }
         },
         {
-            text: "Tds Deducted",
+            text: "Tds deducted",
             dataField: "tds_amount",
             sort: true,
           
@@ -349,7 +349,7 @@ const Generated = () => {
                       report = {assignNo}
                       installmentNo = {installmentNo}
                       billNo = {billNo}
-                      id = {id2}
+                   
                       generated = {"edited"}
                       gstNo = {gstNo}
                       getProposalList ={getProposalList}

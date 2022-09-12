@@ -67,7 +67,7 @@ function DeclinedProposal() {
 
     const columns = [
         {
-            text: "S.No",
+            text: "S.no",
             dataField: "",
             formatter: (cellContent, row, rowIndex) => {
                 return rowIndex + 1;
@@ -79,7 +79,7 @@ function DeclinedProposal() {
         },
         {
             dataField: "query_date",
-            text: "Query Date",
+            text: "Query date",
             sort: true,
           
             formatter: function dateFormat(cell, row) {
@@ -92,7 +92,7 @@ function DeclinedProposal() {
             },
         },
         {
-            text: "Query No",
+            text: "Query no",
             dataField: "assign_no",
            
            
@@ -121,13 +121,13 @@ function DeclinedProposal() {
             
         },
         {
-            text: "Sub Category",
+            text: "Sub category",
             dataField: "cat_name",
             sort: true,
           
         },
         {
-            text: "Date of Proposal",
+            text: "Date of proposal",
             dataField: "DateofProposal",
             sort: true,
           
@@ -141,7 +141,7 @@ function DeclinedProposal() {
             },
         },
         {
-            text: "Date of acceptance / decline of Proposal",
+            text: "Date of acceptance / decline of proposal",
             dataField: "cust_accept_date",
             sort: true,
           
@@ -176,7 +176,7 @@ function DeclinedProposal() {
         },
         {
             dataField: "",
-            text: "Proposed Amount",
+            text: "Proposed amount",
             sort: true,
            
             formatter: function nameFormatter(cell, row){
@@ -190,7 +190,7 @@ function DeclinedProposal() {
         },
         {
             dataField: "accepted_amount",
-            text: "Accepted Amount ",
+            text: "Accepted amount ",
             sort: true,
             
             formatter: function nameFormatter(cell, row){

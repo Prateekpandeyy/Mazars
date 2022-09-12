@@ -95,35 +95,26 @@ setModal(!modal)
     const columns = [
         {
             dataField: "",
-            text: "S.No",
+            text: "S.no",
             formatter: (cellContent, row, rowIndex) => {
                 return rowIndex + 1;
             },
-            style: {
-                fontSize: "11px",
-            },
+           
             headerStyle: () => {
-                return { fontSize: "11px", width: "90px" };
+                return { fontSize: "11px", width: "50px" };
             },
         },
         {
             dataField: "assign_no",
-            text: "Q.No",
-            
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px", width: "120px" };
-            },
+            text: "Q.no",
+           
+           
         },
         {
             dataField: "installment_no",
-            text: "Installment No",
+            text: "Installment no",
            
-            style: {
-                fontSize: "11px",
-            },
+           
             headerStyle: () => {
                 return { fontSize: "11px", width: "80px" };
             },
@@ -132,7 +123,7 @@ setModal(!modal)
         },
         {
             dataField: "billno",
-            text: "Invoice No",
+            text: "Invoice no",
            
             
             headerStyle: () => {
@@ -142,7 +133,7 @@ setModal(!modal)
                 return(
                     <>
                     {row.invoice_generated == "0" ? "" : 
-                    <p style={{fontSize : "11px"}}>{row.billno}</p>}
+                    <p>{row.billno}</p>}
                     </>
                 )
             }
@@ -151,12 +142,7 @@ setModal(!modal)
             dataField: "due_date",
             text: "Due Date",
            sort : true,
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px", width: "120px" };
-            },
+           
             formatter : function(cell, row){
                 let dueDate=row.due_date.split("-").reverse().join("-")
 
@@ -173,22 +159,11 @@ setModal(!modal)
             dataField: "invoice_amount",
             text: "Invoice Amount",
            
-            style: {
-                fontSize: "11px" , textAlign : "right"
-            },
-            headerStyle: () => {
-                return { fontSize: "11px", width: "120px" };
-            },
         },
         {
             dataField : "tds_amount",
             text : "Tds Deducted",
-            style : {
-                fontSize : "11px", textAlign : "right"
-            }, 
-            headerStyle : () => {
-                return { fontSize : "11px", width : "100px"}
-            },
+            
             formatter : function(cell, row){
                 return(
                     <>
@@ -201,12 +176,7 @@ setModal(!modal)
         {
             dataField : "amount",
             text : "Amount Paid",
-            style : {
-                fontSize : "11px", textAlign : "right"
-            }, 
-            headerStyle : () => {
-                return { fontSize : "11px", width : "100px"}
-            },
+            
             formatter: function (cell,row){
                 return(
                     <>
@@ -221,12 +191,7 @@ setModal(!modal)
             dataField: "invoice",
             text: "Invoice",
            
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px", width: "90px" };
-            },
+            
             formatter: function dateFormat(cell, row) {
                 return(
                    <>
@@ -244,13 +209,6 @@ setModal(!modal)
         {
             dataField: "",
             text: "Payment Details",
-           
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px", width: "90px" };
-            },
            
            formatter: function dateFormat(cell, row){
            

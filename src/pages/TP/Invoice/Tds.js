@@ -516,7 +516,7 @@ setServices2(k.service)
          value={billNo}
          disabled 
          className="form-control"
-       //  onChange= {(e) => (setBillNo(e.target.value))}
+    
           />
             </div>
           </div>

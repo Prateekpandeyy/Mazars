@@ -19,6 +19,7 @@ import RecordingFilter from "../../../components/Search-Filter/RecordingFilter";
 import {Link} from "react-router-dom";
 import './recording.css';
 import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
+import CustomHeading from "../../../components/Common/CustomHeading";
 
 // import '../../../../node_modules/react-modal-video/scss/modal-video.scss';
 
@@ -101,7 +102,7 @@ const editRecording = (participants, assign_id, message, id) => {
 }
     const columns = [
         {
-            text: "S.No",
+            text: "S.no",
             dataField: "",
             formatter: (cellContent, row, rowIndex) => {
                 return rowIndex + 1;
@@ -224,7 +225,9 @@ const editRecording = (participants, assign_id, message, id) => {
                 <CardHeader>
                     <Row>
                         <Col md="7">
-                            <CardTitle tag="h4">Recording of Discussion</CardTitle>
+                           <CustomHeading>
+                           Recording of Discussion
+                           </CustomHeading>
                         </Col>
                         <Col md="5"></Col>
                     </Row>

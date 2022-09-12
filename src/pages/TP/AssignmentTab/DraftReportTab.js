@@ -159,7 +159,7 @@ function AssignmentTab() {
     //columns
     const columns = [
         {
-            text: "S.No",
+            text: "S.no",
             dataField: "",
             formatter: (cellContent, row, rowIndex) => {
                 return rowIndex + 1;
@@ -184,7 +184,7 @@ function AssignmentTab() {
             },
         },
         {
-            text: "Query No",
+            text: "Query no",
             dataField: "assign_no",
            
             formatter: function nameFormatter(cell, row) {
@@ -211,7 +211,7 @@ function AssignmentTab() {
            
         },
         {
-            text: "Sub Category",
+            text: "Sub category",
             dataField: "cat_name",
             sort: true,
            
@@ -324,7 +324,7 @@ function AssignmentTab() {
             },
           },
           {
-            text: "Assignment Stage",
+            text: "Assignment stage",
            
             formatter: function (cell, row) {
               return (
@@ -388,10 +388,6 @@ function AssignmentTab() {
                    : null
                  }
      
-                
-      
-                
-                
                </>
                }
        
