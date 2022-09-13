@@ -94,9 +94,9 @@ we would charge professional fees of rupees 600000, payable in monthly installme
 50000 falling due on 16th day of the following month. 
 Halyard book
 large 
-font changes - 
-dark background: white (#ffffff)
-light background: outer space grey (#464646)
+
+
+
 general font size - 14px;
 underline line should not come by default through out product
 everything should be left align
@@ -110,5 +110,43 @@ signin background color  - #5A6A6B
 enquiry page should be like about and contact us page
 heading background should be remove from contact us and about us page
 hover color should be #0071CE through out product 
+sign up should be left align and button color should be smae like get otp 
 media imagge icons should be changed
 Question font size will be increase to difference from Question in FAQ and remove bold from Question
+
+
+
+profile logo should be changed
+
+ -
+	
+	 Date case sentence in schedule
+
+
+done 
+Inbox logo bedge should be changes (done)
+help icon should be color match with brand (suggestion - outer grey)
+upload and message history icon color should be changed (for upload)
+cross button in search bar
+search button should be align with button
+Heading should be large in compare to content
+#BC363D, for message history = #B63C00 for action - #393470)
+font changes - 
+dark background: white (#ffffff)
+light background: outer space grey (#464646)
+in message (read and unread) icon color should be changed(unread = #BC363D, read = #348719)
+
+font color (464646)
+hover(0071ce)
+
+send otp should be left align
+bold in updates details
+spacing in enquiry form and * in placeholder
+About Us formatting
+link from phone number should be remove (contact us)
+. after complete message in sign up
+button should be left align in sign up 
+
+breadcrumb size
+align button left in sign up
+update details remove bold

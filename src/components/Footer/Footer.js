@@ -41,7 +41,7 @@ props.showCook("showCookies")
         <a onClick = {() => myLink("enquiry")}>
               
               
-              Enquiry | &nbsp; 
+              Enquiry &nbsp;| 
             
            </a>
         </CustomTypography>
@@ -50,7 +50,7 @@ props.showCook("showCookies")
         <a onClick = {() => myLink("contactbasic")}>
               
               
-              Contact us | &nbsp; 
+        &nbsp;Contact us &nbsp;|  
             
            </a>
         </CustomTypography>
@@ -62,12 +62,12 @@ props.showCook("showCookies")
              <a onClick = {() => myLink("aboutbasic")}>
         
       
-        About us | &nbsp;
+             &nbsp;About us &nbsp;| 
      
      </a>
               </CustomTypography>
       <CustomTypography>
-      <a onClick = {() => myLink("needhelp")}> Need help?</a>
+      &nbsp;<a onClick = {() => myLink("needhelp")}>Need help?</a>
   
       </CustomTypography>
      

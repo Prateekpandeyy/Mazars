@@ -60,7 +60,6 @@ const useStyle = makeStyles({
   imgResponsive : {
     display : "flex",
     maxWidth: "25%",
-    height : "50px", 
    margin : "10px 0px",
    alignItems : "space-between",
     justifyContent: "center",
@@ -444,7 +443,7 @@ const custLogout = () => {
                     />
                   </div>
 
-                  <div  className="passForm tabHover">
+                  <div  className="passForm">
                     <Link
                    className = "labelColor"
                       to={{

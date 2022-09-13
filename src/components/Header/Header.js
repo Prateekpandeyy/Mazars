@@ -105,23 +105,23 @@ function Header({ id, cust_sign, noAdminSign, noTlSign,
         )}
 
         {admin && (
-          <div>
+          <div className="headerWrapper">
             <Link to="/admin/start">
-              <img src={mazars} className="logo" alt="mazar" />
+              <img src={mazars} className="logomin" alt="mazar" />
             </Link>
           </div>
         )}
 
         {mtl && (
-          <div>
+          <div className="headerWrapper">
             <Link to="/teamleader/start">
-              <img src={mazars} className="logo" alt="mazar" />
+              <img src={mazars} className="logomin" alt="mazar" />
             </Link>
           </div>
         )}
 
         {mtp && (
-          <div style = {{display : "flex", width: "100%", alignItems: "center",  justifyContent: "space-between"}}>
+          <div className="headerWrapper">
             <Link to="/taxprofessional/start">
               <img src={mazars} className="logomin" alt="mazar" />
             </Link>
