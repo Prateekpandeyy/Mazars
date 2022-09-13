@@ -60,7 +60,7 @@ const clName = JSON.parse(localStorage.getItem("clientLoginId"))
                 <CustomHeading>
                 {name == "customer" ? `Client :  ${clName} `  : CommonServices.capitalizeFirstLetter(name)}:  {JSON.parse(email)} 
                 </CustomHeading>
-
+               
               </li>
              
             </ul>

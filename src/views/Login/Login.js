@@ -16,11 +16,11 @@ import { Spinner } from 'reactstrap';
 import ShowError from "../../components/LoadingTime/LoadingTime";
 import LoadingTime from "../../components/LoadingTime/LoadingTime";
 import Cookies from "js-cookie";
-import CloudImg from './images/cloud1.jpeg';
-import PaperLess from './images/ppp.jpeg';
-import whatp from './images/video.jpeg';
-import costEffective from './images/costEffective.jpeg';
-import servicesImg from './images/services.jpeg';
+import CloudImg from './images/video.png';
+import PaperLess from './images/ppp.png';
+import whatp from './images/cloud1.png';
+import costEffective from './images/costEffective.png';
+import servicesImg from './images/service.png';
 import { styled , makeStyles} from "@material-ui/styles";
 import CookieConsent from "react-cookie-consent";
 import MainContainer from "../../components/Common/MainContainer";
@@ -415,7 +415,7 @@ const custLogout = () => {
                     />
                   </div>
                
-                  <div className="form-group passForm ">
+                  <div className="form-group passForm">
                     <label className="labelColor">Password </label>
                     <input
                       type={isPasswordShow ? "text" : "password"}
@@ -444,7 +444,7 @@ const custLogout = () => {
                     />
                   </div>
 
-                  <div style={{ display: "flex", margin: "0 0 30px 0"}} className="tabHover">
+                  <div  className="passForm tabHover">
                     <Link
                    className = "labelColor"
                       to={{
