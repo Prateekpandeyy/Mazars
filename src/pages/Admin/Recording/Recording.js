@@ -89,7 +89,9 @@ function Recording() {
             formatter: (cellContent, row, rowIndex) => {
                 return rowIndex + 1;
             },
-          
+          headerStyle : () => {
+            return {width  : "50px"}
+          }
         },
         {
             text: "Date",
@@ -123,7 +125,7 @@ function Recording() {
         },
        
         {
-            text: "Summary of Discussion",
+            text: "Summary of discussion",
             dataField: "message",
           
         },
@@ -195,7 +197,7 @@ function Recording() {
                 <CardHeader>
                     <Row>
                         <Col md="7">
-                            <CardTitle tag="h4">Recording of Discussion</CardTitle>
+                            <CardTitle tag="h4">Recording of discussion</CardTitle>
                         </Col>
                         <Col md="5"></Col>
                     </Row>
@@ -203,7 +205,7 @@ function Recording() {
                 <CardBody>
                 <RecordingFilter
                        setData={setFeedBackData}
-                    //    getData={getInCompleteAssingment}
+                 
                        SearchQuery="adminQuery"
                       setRecords={setRecords}
                        records={records} 

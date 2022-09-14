@@ -410,7 +410,7 @@ function AddNew() {
                 <div className="row">
                   <div className="col-md-6">
                     <div className="form-group">
-                      <label>Team Leader post name <span className="declined">*</span></label>
+                      <label>Team leader post name <span className="declined">*</span></label>
 
                       <select
                         name="p_teamleader"
@@ -441,7 +441,7 @@ function AddNew() {
 
                   <div className="col-md-6">
                     <div className="form-group">
-                      <label> Team Leader post email <span className="declined">*</span></label>
+                      <label> Team leader post email <span className="declined">*</span></label>
                       <input
                         type="email"
                         name="post_email"
@@ -537,7 +537,7 @@ function AddNew() {
                   </div>
                   <div className="col-md-6">
                     <div className="form-group">
-                      <label>Sub Category <span className="declined">*</span></label>
+                      <label>Sub category <span className="declined">*</span></label>
                       <Select isMulti options={options2}
                         className={error2 ? "customError" : ""}
                         onChange={subCategory}
@@ -568,7 +568,7 @@ function AddNew() {
                 <div className="row">
                   <div className="col-md-6">
                     <div className="form-group">
-                      <label>Phone Number <span className="declined">*</span></label>
+                      <label>Phone number <span className="declined">*</span></label>
                       <input
                         type="text"
                         className={classNames("form-control", {

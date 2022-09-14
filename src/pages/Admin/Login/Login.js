@@ -104,7 +104,7 @@ function Login(props) {
     <>
    <MainContainer>
    <Header admin="admin" noAdminSign = "adminSign"/>
-      <div>
+      <>
 
         {
           show ? <div>
@@ -203,7 +203,7 @@ function Login(props) {
         }
 
 
-      </div>
+      </>
    </MainContainer>
     
     </>

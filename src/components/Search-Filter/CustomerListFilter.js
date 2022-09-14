@@ -82,7 +82,7 @@ const exportToExcel = async () => {
     <>
     <div className="row">
       <div className="col-sm-12 d-flex">
-        <div>
+       
           <form onSubmit={handleSubmit(onSubmit)}>
           <div className="row my-3">
         <div className="col-sm-3">
@@ -147,11 +147,12 @@ const exportToExcel = async () => {
               className="form-control"
               ref={register}/>
           </div>
-          <div className="form-inline">
+       <div className="col-sm-6">
+           <div className="form-inline">
              
 
              <div className="form-group mx-sm-1  mb-2">
-               <label className="form-select form-control">From</label>
+               <label className="form-control">From</label>
              </div>
 
              <div className="form-group mx-sm-1  mb-2">
@@ -179,6 +180,7 @@ const exportToExcel = async () => {
                />
              </div>
 </div>
+       </div>
           </div>
              
               <div className="row my-3">
@@ -211,7 +213,7 @@ const exportToExcel = async () => {
               </div>
               </div>          
           </form>
-        </div>
+      
       </div>
     </div>
   </>

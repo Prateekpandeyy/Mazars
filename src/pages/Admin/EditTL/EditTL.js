@@ -707,7 +707,7 @@ const checktlPost = (e) => {
                   <div className="row">
                     <div className="col-md-6">
                       <div className="form-group">
-                      <label>Team Leader Post Name <span className="declined">*</span></label>
+                      <label>Team leader post name <span className="declined">*</span></label>
                         <input
                           type="text"
                           name="post_name"
@@ -727,7 +727,7 @@ const checktlPost = (e) => {
 
                     <div className="col-md-6">
                       <div className="form-group">
-                      <label>Team Leader Post Email <span className="declined">*</span></label>
+                      <label>Team leader post email <span className="declined">*</span></label>
                         <input
                           type="text"
                           name="post_email"
@@ -833,7 +833,7 @@ const checktlPost = (e) => {
 
                     <div className="col-md-6">
                       <div className="form-group">
-                        <label>Sub Category <span className="declined">*</span></label>
+                        <label>Sub category <span className="declined">*</span></label>
                         <Select isMulti options={options2}
                       onChange={subCategory}
                             value = {subData}
