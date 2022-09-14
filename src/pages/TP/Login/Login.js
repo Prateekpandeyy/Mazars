@@ -192,7 +192,7 @@ function Login(props) {
                   </Link>
                 </div>
 
-                <Mandatory />
+                {/* <Mandatory /> */}
               </form>
             </div>
         }

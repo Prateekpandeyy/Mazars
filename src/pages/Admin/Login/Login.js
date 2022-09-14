@@ -17,6 +17,7 @@ import { Spinner } from "reactstrap";
 import {useHistory} from 'react-router-dom';
 import Cookies from "js-cookie"
 import MainContainer from "../../../components/Common/MainContainer";
+import CustomHeading from "../../../components/Common/CustomHeading";
 const Schema = yup.object().shape({
   p_email: yup.string().email("invalid email").required("required email"),
   password: yup
@@ -114,9 +115,9 @@ function Login(props) {
           </div>
             :
             <div className="form">
-              <div className="heading">
-                <h2>ADMIN LOGIN</h2>
-              </div>
+             <CustomHeading>
+             Admin login
+             </CustomHeading>
               <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="row">
                   <div className="col-md-12">
@@ -185,7 +186,7 @@ function Login(props) {
                     </button>
                 }
 
-                <div style={{ display: "flex", flexDirection: "row-reverse" }}>
+                <div>
                   <Link
                     to={{
                       pathname: "/admin/forget-password",
@@ -196,7 +197,7 @@ function Login(props) {
                   </Link>
                 </div>
 
-                <Mandatory />
+                {/* <Mandatory /> */}
               </form>
             </div>
         }
