@@ -44,12 +44,13 @@ function Sidebar({ adminDashboard, cmsDashboard ,  custDashboard, TLDashboard, T
 const feedNumber = {
   fontSize: "10.5px",
   height: "15px",
-  backgroundColor: "green",
+  backgroundColor: "#464646",
   color: "white",
   display: "inline-block",
   margin: "0px 0px 20px 0px",
   padding: "9px 10px",
-    borderRadius: "50%"
+  borderRadius : "5px",
+   
 }
 useEffect(() => {
   getFeedback4();
