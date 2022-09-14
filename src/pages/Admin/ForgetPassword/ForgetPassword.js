@@ -117,7 +117,7 @@ function ForgetPassword(props) {
         </div>
       </div>
 
-      <Footer />
+     
     </>
   );
 }

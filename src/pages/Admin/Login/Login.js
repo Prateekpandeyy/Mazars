@@ -104,7 +104,7 @@ function Login(props) {
     <>
    <MainContainer>
    <Header admin="admin" noAdminSign = "adminSign"/>
-      <div className="container">
+      <div>
 
         {
           show ? <div>
