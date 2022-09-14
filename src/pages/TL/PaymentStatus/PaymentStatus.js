@@ -83,21 +83,18 @@ function QueriesTab(props) {
       setbgColor("#3e8678")
     }
   }
-    
+ 
   const myStyle1 = {
     margin: "10px auto",
-    fontSize : "14px"
+    fontSize : "18px",
+cursor : "pointer"
   };
   const myStyle2 = {
- margin: "10px auto",
-
- color : "#2b5f55",
- fontWeight : 1000
+ margin: "10px auto",    
+ color : "#42566a",
+ fontSize : "18px",
+cursor : "pointer"
   };
-
-
-
-
 
   return (
     <Layout TLDashboard="TLDashboard" TLuserId={userId}>
@@ -107,7 +104,7 @@ function QueriesTab(props) {
            className="fixedTab"
           >
             <Tab style={tabIndex == 0 ? myStyle2 : myStyle1} className="tabHover">
-              All Payment ({allPayment})
+              All payment ({allPayment})
             </Tab>
             <Tab style={tabIndex == 1 ? myStyle2 : myStyle1} className="tabHover">
               Unpaid ({paid})

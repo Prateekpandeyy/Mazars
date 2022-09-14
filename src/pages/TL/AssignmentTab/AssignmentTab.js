@@ -44,19 +44,17 @@ function QueriesTab(props) {
   }
     
   const myStyle1 = {
-    margin: "10px auto"
+    margin: "10px auto",
+    fontSize : "18px",
+    cursor : "pointer"
   };
   const myStyle2 = {
     margin: "10px auto",
- 
+    fontSize : "18px",
+    cursor : "pointer",
     color : "#5a625a",
-    fontWeight : 1000
      };
-  
-  
-
-
-
+     
   useLayoutEffect(() => {
     setTabIndex(props.location.index || 0);
   }, [props.location.index]);

@@ -25,17 +25,18 @@ const InvoiceTab = () => {
           setbgColor("#5f7b97")
         }
       }
+     
       const myStyle1 = {
         margin: "10px auto",
-        fontSize : "14px"
+        fontSize : "18px",
+    cursor : "pointer"
       };
       const myStyle2 = {
-     margin: "10px auto",
-     
+     margin: "10px auto",    
      color : "#42566a",
-     fontWeight : 1000
+     fontSize : "18px",
+    cursor : "pointer"
       };
-    
       const updateTab = (key) => {
         setTabIndex(key)
       }

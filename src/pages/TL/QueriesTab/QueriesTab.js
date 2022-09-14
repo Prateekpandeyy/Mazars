@@ -46,16 +46,17 @@ function QueriesTab(props) {
       setbgColor("#6e557b")
     }
   }
-    
   const myStyle1 = {
     margin: "10px auto",
-    fontSize : "14px"
+    fontSize : "18px",
+    cursor : "pointer"
   };
   const myStyle2 = {
   margin: "10px auto",
-  
+  fontSize : "18px",
   color : "#55425f",
-  fontWeight : 1000
+  cursor : "pointer"
+  
   };
 
   useLayoutEffect(() => {

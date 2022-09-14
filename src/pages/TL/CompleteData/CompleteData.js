@@ -83,7 +83,7 @@ axios.get(`${baseUrl}/tl/getQueryHistory?q_id=${key}&uid=${JSON.parse(userid)}`,
 
   const columns = [
     {
-      text: "S.No",
+      text: "S.no",
       dataField: "",
       formatter: (cellContent, row, rowIndex) => {
         return rowIndex + 1;
@@ -91,12 +91,10 @@ axios.get(`${baseUrl}/tl/getQueryHistory?q_id=${key}&uid=${JSON.parse(userid)}`,
       headerStyle: () => {
         return { width: "50px" };
       },
-      style: {
-        fontSize: "11px",
-    },
+     
     },
     {
-      text: "Query Date",
+      text: "Query date",
       dataField: "created",
       sort: true,
      
@@ -112,7 +110,7 @@ axios.get(`${baseUrl}/tl/getQueryHistory?q_id=${key}&uid=${JSON.parse(userid)}`,
     }
     },
     {
-      text: "Query No",
+      text: "Query no",
       dataField: "assign_no",
      
       formatter: function nameFormatter(cell, row) {
@@ -139,19 +137,19 @@ axios.get(`${baseUrl}/tl/getQueryHistory?q_id=${key}&uid=${JSON.parse(userid)}`,
      
     },
     {
-      text: "Sub Category",
+      text: "Sub category",
       dataField: "cat_name",
       sort: true,
      
     },
     {
-      text: "Client Name",
+      text: "Client name",
       dataField: "name",
       sort: true,
     
     },
     {
-      text: "Delivery Due Date ",
+      text: "Delivery due date ",
       dataField: "Exp_Delivery_Date",
       sort: true,
     

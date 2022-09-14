@@ -64,7 +64,7 @@ function InprogressProposal() {
 
     const columns = [
         {
-            text: "S.No",
+            text: "S.no",
             dataField: "",
             formatter: (cellContent, row, rowIndex) => {
                 return rowIndex + 1;
@@ -78,7 +78,7 @@ function InprogressProposal() {
         },
         {
             dataField: "query_date",
-            text: "Query Date",
+            text: "Query date",
             sort: true,
           
             formatter: function dateFormat(cell, row) {
@@ -91,7 +91,7 @@ function InprogressProposal() {
             },
         },
         {
-            text: "Query No",
+            text: "Query no",
             dataField: "assign_no",
           
             formatter: function nameFormatter(cell, row) {
@@ -119,13 +119,13 @@ function InprogressProposal() {
            
         },
         {
-            text: "Sub Category",
+            text: "Sub category",
             dataField: "cat_name",
             sort: true,
            
         },
         {
-            text: "Date of Proposal",
+            text: "Date of proposal",
             dataField: "DateofProposal",
             sort: true,
            
@@ -139,7 +139,7 @@ function InprogressProposal() {
             },
         },
         {
-            text: "Date of acceptance / decline of Proposal",
+            text: "Date of acceptance / decline of proposal",
             dataField: "cust_accept_date",
             sort: true,
          
@@ -187,7 +187,7 @@ function InprogressProposal() {
         },
         {
             dataField: "ProposedAmount",
-            text: "Proposed Amount",
+            text: "Proposed amount",
             sort: true,
             
             sortFunc: (a, b, order, dataField) => {
@@ -207,7 +207,7 @@ function InprogressProposal() {
         },
         {
             dataField: "accepted_amount",
-            text: "Accepted Amount ",
+            text: "Accepted amount ",
             sort: true,
            
             formatter: function nameFormatter(cell, row){

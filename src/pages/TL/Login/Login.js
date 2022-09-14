@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import Header from "../../../components/Header/Header";
-import Footer from "../../../components/Footer/Footer";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
@@ -8,7 +7,6 @@ import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import { useAlert } from "react-alert";
 import classNames from "classnames";
-import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 import Alerts from "../../../common/Alerts";
 import Mandatory from "../../../components/Common/Mandatory";
@@ -16,7 +14,7 @@ import VerifyOtpLogin from "./VerifyOtpLogin";
 import { Spinner } from "reactstrap";
 import { useHistory } from "react-router";
 import Cookies from "js-cookie";
-
+import CustomHeading from "../../../components/Common/CustomHeading";
 const Schema = yup.object().shape({
   p_email: yup.string().email("invalid email").required(""),
   password: yup
@@ -105,9 +103,9 @@ function Login(props) {
           </div>
             :
             <div className="form">
-              <div className="heading">
-                <h2>Teamleader Login</h2>
-              </div>
+              <CustomHeading>
+                Team leader
+                </CustomHeading>
               <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
                 <div className="row">
                   <div className="col-md-12">
@@ -176,7 +174,7 @@ function Login(props) {
                 }
 
 
-                <div style={{ display: "flex", flexDirection: "row-reverse" }}>
+                <div>
                   <Link
                     to={{
                       pathname: "/teamleader/forget-password",

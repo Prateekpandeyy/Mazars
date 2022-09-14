@@ -137,7 +137,7 @@ rowStyle2 = (row, index) => {
     const columns = [
         {
             dataField: "",
-            text: "S.No",
+            text: "S.no",
             formatter: (cellContent, row, rowIndex) => {
                 return rowIndex + 1;
             },
@@ -148,7 +148,7 @@ rowStyle2 = (row, index) => {
         },
         {
             dataField: "query_created_date",
-            text: "Query Date",
+            text: "Query date",
             sort: true,
            
             formatter: function dateFormat(cell, row) {
@@ -162,7 +162,7 @@ rowStyle2 = (row, index) => {
         },
         {
             dataField: "assign_no",
-            text: "Query No",
+            text: "Query no",
             
             formatter: function nameFormatter(cell, row) {
                
@@ -189,12 +189,12 @@ rowStyle2 = (row, index) => {
         },
         {
             dataField: "cat_name",
-            text: "Sub Category",
+            text: "Sub category",
             sort: true,
            
         },
         {
-            text: "Date of acceptance of Proposal",
+            text: "Date of acceptance of proposal",
             dataField: "cust_accept_date",
             sort: true,
            
@@ -223,7 +223,7 @@ rowStyle2 = (row, index) => {
         },
         {
             dataField: "accepted_amount",
-            text: "Accepted Amount ",
+            text: "Accepted amount ",
             sort: true,
            
             sortFunc: (a, b, order, dataField) => {
@@ -243,7 +243,7 @@ rowStyle2 = (row, index) => {
                }
         },
         {
-            text: "Amount Paid",
+            text: "Amount paid",
             dataField: "paid_amount",
             sort: true,
            
@@ -265,7 +265,7 @@ rowStyle2 = (row, index) => {
         },
 
         {
-            text : "Outstanding Amount",
+            text : "Outstanding amount",
             dataField: "amount_outstanding",
             sort: true,
            
@@ -286,7 +286,7 @@ rowStyle2 = (row, index) => {
                }
         },
         {
-            text: "Date of Payment",
+            text: "Date of payment",
             dataField: "cust_paid_date",
             sort: true,
            

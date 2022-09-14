@@ -59,7 +59,7 @@ padding : "10px"
 const useStyle = makeStyles({
   imgResponsive : {
     display : "flex",
-    maxWidth: "25%",
+    maxWidth: "50%",
    margin : "10px 0px",
    alignItems : "space-between",
     justifyContent: "center",
