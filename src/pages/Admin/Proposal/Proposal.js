@@ -127,7 +127,7 @@ function Proposal(props) {
 className="fixedTab"
           >
             <Tab style={tabIndex == 0 ? myStyle2 : myStyle1} className="tabHover">
-              All Proposals ({allProposalCount})
+              All proposals ({allProposalCount})
             </Tab>
             <Tab style={tabIndex == 1 ? myStyle2 : myStyle1} className="tabHover">
               Inprogress; Proposals ({pendingProposalCount})

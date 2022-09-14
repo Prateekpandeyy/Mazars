@@ -139,7 +139,7 @@ function FinalReport() {
   };
   const columns = [
     {
-      text: "S.No",
+      text: "S.no",
       dataField: "",
       formatter: (cellContent, row, rowIndex) => {
         return rowIndex + 1;
@@ -164,14 +164,14 @@ function FinalReport() {
       },
     },
     {
-      text: "Query No",
+      text: "Query no",
       dataField: "assign_no",
       
       formatter: function nameFormatter(cell, row) {
       
         return (
           <>
-            {/* <Link to={`/admin/queries/${row.q_id}`}>{row.assign_no}</Link> */}
+      
             <Link
               to={{
                 pathname: `/admin/queries/${row.q_id}`,
@@ -192,7 +192,7 @@ function FinalReport() {
      
     },
     {
-      text: "Sub Category",
+      text: "Sub category",
       dataField: "cat_name",
       sort: true,
      
@@ -201,7 +201,7 @@ function FinalReport() {
       dataField: "status",
       text: "Status",
       headerStyle: () => {
-        return { fontSize: "11px", width: "200px" };
+        return {  width: "200px" };
       },
       formatter: function (cell, row) {
         return (
@@ -213,31 +213,31 @@ function FinalReport() {
                 </p>
               }
               <p>
-                <span style={{ fontWeight: "bold" }}>Client Discussion :</span>
+                <span>Client Discussion :</span>
                <span className={row.client_discussion === "completed" ? "completed" : "inprogress"}>
                                 {row.client_discussion}
                  </span>
               </p>
               <p>
-                <span style={{ fontWeight: "bold" }}>Draft report :</span>
+                <span>Draft report :</span>
                 <span className={row.draft_report === "completed" ? "completed" : "inprogress"}>
                       {row.draft_report}
                  </span>
               </p>
               <p>
-                <span style={{ fontWeight: "bold" }}>Final Discussion :</span>
+                <span>Final Discussion :</span>
                 <span className={row.final_discussion === "completed" ? "completed" : "inprogress"}>
                      {row.final_discussion}
                  </span>
               </p>
               <p>
-                <span style={{ fontWeight: "bold" }}>Delivery of Final Report :</span>
+                <span>Delivery of Final Report :</span>
                 <span className={row.delivery_report === "completed" ? "completed" : "inprogress"}>
                              {row.delivery_report}
                  </span>
               </p>
               <p>
-                <span style={{ fontWeight: "bold" }}>Awaiting Completion:</span>
+                <span>Awaiting Completion:</span>
                 <span className={row.other_stage === "completed" ? "completed" : "inprogress"}>
                             {row.other_stage}
                  </span>

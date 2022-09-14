@@ -76,7 +76,7 @@ function PendingAllocation({ CountPendingForAllocation }) {
 
   const columns = [
     {
-      text: "S.No",
+      text: "S.no",
       dataField: "",
       formatter: (cellContent, row, rowIndex) => {
         return rowIndex + 1;
@@ -100,7 +100,7 @@ function PendingAllocation({ CountPendingForAllocation }) {
       },
     },
     {
-      text: "Query No",
+      text: "Query no",
       dataField: "assign_no",
       
       formatter: function nameFormatter(cell, row) {
@@ -127,13 +127,13 @@ function PendingAllocation({ CountPendingForAllocation }) {
       
     },
     {
-      text: "Sub Category",
+      text: "Sub category",
       dataField: "cat_name",
       sort: true,
       
     },
     {
-      text: "Client Name",
+      text: "Client name",
       dataField: "name",
       sort: true,
      
@@ -206,12 +206,8 @@ function PendingAllocation({ CountPendingForAllocation }) {
     {
       text: "History",
       dataField: "",
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
-      style: {
-        fontSize: "11px",
-    },
+      
+     
       formatter: function (cell, row) {
         return (
           <>

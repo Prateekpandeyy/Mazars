@@ -113,7 +113,7 @@ function QueriesTab(props) {
         <Tabs selectedIndex={tabIndex} onSelect={(index) => setTabIndex(index)}>
           <TabList className="fixedTab">
             <Tab style={tabIndex == 0 ? myStyle2 : myStyle1} className="tabHover">
-              All Queries ({allQueriesCount})
+              All queries ({allQueriesCount})
             </Tab>
             <Tab style={tabIndex == 1 ? myStyle2 : myStyle1} className="tabHover">
               Inprogress; Allocation ({inprogressAllocation})

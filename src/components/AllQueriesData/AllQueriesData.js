@@ -53,7 +53,7 @@ function AllQueriesData({allData}) {
 
   const columns = [
     {
-      text: "S.No",
+      text: "S.no",
       dataField: "",
       headerStyle: () => {
         return { width : "50px"};
@@ -78,7 +78,7 @@ function AllQueriesData({allData}) {
       },
     },
     {
-      text: "Query No",
+      text: "Query no",
       dataField: "assign_no",
       
       formatter: function nameFormatter(cell, row) {
@@ -104,19 +104,19 @@ function AllQueriesData({allData}) {
      
     },
     {
-      text: "Sub Category",
+      text: "Sub category",
       dataField: "cat_name",
       sort: true,
      
     },
     {
-      text: "Client Name",
+      text: "Client name",
       dataField: "name",
       sort: true,
       
     },
     {
-      text: "Delivery Due Date   / Acutal Delivery Date",
+      text: "Delivery due date   / Acutal delivery date",
       dataField: "Exp_Delivery_Date",
       sort: true,
     

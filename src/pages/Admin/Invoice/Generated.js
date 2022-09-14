@@ -86,7 +86,7 @@ const Generated = () => {
 
     const columns = [
         {
-            text: "S.No",
+            text: "S.no",
             dataField: "",
             formatter: (cellContent, row, rowIndex) => {
                 return rowIndex + 1;
@@ -98,7 +98,7 @@ const Generated = () => {
         },
        
         {
-            text: "Query No",
+            text: "Query no",
             dataField: "assign_no",
            
             formatter: function nameFormatter(cell, row) {
@@ -121,7 +121,7 @@ const Generated = () => {
             },
         },
         {
-            text: "Installment No",
+            text: "Installment no",
             dataField: "installment_no",
             sort: true,
             sortFunc: (a, b, order, dataField, rowA, rowB) => {
@@ -133,12 +133,12 @@ const Generated = () => {
               }
         },
         {
-            text: "Invoice No",
+            text: "Invoice no",
             dataField: "billno",
          
         },
         {
-            text: "Due Date",
+            text: "Due date",
             dataField: "due_date",
             sort: true,
             sortFunc: (a, b, order) => {
@@ -148,17 +148,6 @@ const Generated = () => {
                   return Date.parse(b) - Date.parse(a);
                 }
               }
-            
-            // formatter : function(cell, row){
-            //     let dueDate=row.due_date.split("-").reverse().join("-")
-
-            //     return(
-                   
-            //         <>
-            //   {dueDate}
-            //         </>
-            //     )
-            // }
         }, 
         {
             text: "Invoice amount",
@@ -181,7 +170,7 @@ const Generated = () => {
                }
         },
         {
-            text: "Tds Deducted",
+            text: "Tds deducted",
             dataField: "tds_amount",
             sort: true,
            

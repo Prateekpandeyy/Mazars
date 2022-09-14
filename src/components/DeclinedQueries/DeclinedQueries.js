@@ -51,7 +51,7 @@ function DeclinedQueries({ CountPendingForPayment }) {
 
   const columns = [
     {
-      text: "S.No",
+      text: "S.no",
       dataField: "",
       headerStyle: () => {
         return { width: "50px"};
@@ -76,7 +76,7 @@ function DeclinedQueries({ CountPendingForPayment }) {
       },
     },
     {
-      text: "Query No",
+      text: "Query no",
       dataField: "assign_no",
      
       formatter: function nameFormatter(cell, row) {
@@ -102,13 +102,13 @@ function DeclinedQueries({ CountPendingForPayment }) {
      
     },
     {
-      text: "Sub Category",
+      text: "Sub category",
       dataField: "cat_name",
       sort: true,
      
     },
     {
-      text: "Client Name",
+      text: "Client name",
       dataField: "name",
       sort: true,
      

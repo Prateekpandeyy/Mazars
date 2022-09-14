@@ -86,7 +86,7 @@ function Unpaid() {
     const columns = [
         {
             dataField: "",
-            text: "S.No",
+            text: "S.no",
             formatter: (cellContent, row, rowIndex) => {
                 return rowIndex + 1;
             },
@@ -111,7 +111,7 @@ function Unpaid() {
         },
         {
             dataField: "assign_no",
-            text: "Query No",
+            text: "Query no",
            
             formatter: function nameFormatter(cell, row) {
                
@@ -138,12 +138,12 @@ function Unpaid() {
         },
         {
             dataField: "cat_name",
-            text: "Sub Category",
+            text: "Sub category",
             sort: true,
             
         },
         {
-            text: "Date of acceptance of Proposal",
+            text: "Date of acceptance of proposal",
             dataField: "cust_accept_date",
             sort: true,
           
@@ -172,7 +172,7 @@ function Unpaid() {
         },
         {
             dataField: "accepted_amount",
-            text: "Accepted Amount ",
+            text: "Accepted amount ",
             sort: true,
            
             sortFunc: (a, b, order, dataField) => {
@@ -192,7 +192,7 @@ function Unpaid() {
                }
         },
         {
-            text: "Amount Paid",
+            text: "Amount paid",
             dataField: "paid_amount",
             sort: true,
           
@@ -214,7 +214,7 @@ function Unpaid() {
         },
 
         {
-            text : "Outstanding Amount",
+            text : "Outstanding amount",
             dataField: "amount_outstanding",
             sort: true,
            
@@ -235,7 +235,7 @@ function Unpaid() {
                }
         },
         {
-            text: "Date of Payment",
+            text: "Date of payment",
             dataField: "cust_paid_date",
             sort: true,
            

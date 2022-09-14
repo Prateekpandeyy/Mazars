@@ -130,11 +130,11 @@ const viewStyle = {
            
         
            <CustomHeading>
-           View All Report 
+           View all report 
            </CustomHeading>
         <div style={{display : "flex", maxHeight : "2.5rem", height : "100%"}}>
         <button className="autoWidthBtn" onClick={() => ViewDiscussionToggel()}>
-                View Discussion
+                View discussion
               </button>
         </div>
            

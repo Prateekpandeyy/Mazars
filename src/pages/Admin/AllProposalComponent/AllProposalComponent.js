@@ -70,7 +70,7 @@ const retviewProposal = (e) => {
 }
   const columns = [
     {
-      text: "S.No",
+      text: "S.no",
       formatter: (cellContent, row, rowIndex) => {
         return rowIndex + 1;
       },
@@ -95,7 +95,7 @@ const retviewProposal = (e) => {
     },
     {
       dataField: "assign_no",
-      text: "Query No",
+      text: "Query no",
     
       formatter: function nameFormatter(cell, row) {
      
@@ -122,12 +122,12 @@ const retviewProposal = (e) => {
     },
     {
       dataField: "cat_name",
-      text: "Sub Category",
+      text: "Sub category",
       sort: true,
       
     },
     {
-      text: "Date of Proposal",
+      text: "Date of proposal",
       dataField: "DateofProposal",
       sort: true,
       
@@ -141,7 +141,7 @@ const retviewProposal = (e) => {
       },
     },
     {
-      text: "Date of acceptance / decline of Proposal",
+      text: "Date of acceptance / decline of proposal",
       dataField: "cust_accept_date",
       sort: true,
       
@@ -187,7 +187,7 @@ const retviewProposal = (e) => {
     },
     {
       dataField: "ProposedAmount",
-      text: "Proposed Amount",
+      text: "Proposed amount",
       sort: true,
      
       sortFunc: (a, b, order, dataField) => {
@@ -207,7 +207,7 @@ const retviewProposal = (e) => {
     },
     {
       dataField: "accepted_amount",
-      text: "Accepted Amount ",
+      text: "Accepted amount",
       sort: true,
      
       sortFunc: (a, b, order, dataField) => {
@@ -233,9 +233,7 @@ const retviewProposal = (e) => {
     },
     {
       text: "Action",
-      headerStyle: () => {
-        return { fontSize: "11px" };
-      },
+     
       formatter: function (cell, row) {
         return (
           <>

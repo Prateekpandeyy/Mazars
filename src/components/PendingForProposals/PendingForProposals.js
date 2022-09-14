@@ -85,7 +85,7 @@ function PendingForProposals({ CountPendingProposal }) {
   const columns = [
     {
       dataField: "",
-      text: "S.No",
+      text: "S.no",
       formatter: (cellContent, row, rowIndex) => {
         return rowIndex + 1;
       },
@@ -109,7 +109,7 @@ function PendingForProposals({ CountPendingProposal }) {
     },
     {
       dataField: "assign_no",
-      text: "Query No",
+      text: "Query no",
      
       formatter: function nameFormatter(cell, row) {
        
@@ -135,12 +135,12 @@ function PendingForProposals({ CountPendingProposal }) {
     },
     {
       dataField: "cat_name",
-      text: "Sub Category",
+      text: "Sub category",
       sort: true,
      
     },
     {
-      text: "Client Name",
+      text: "Client name",
       dataField: "name",
       sort: true,
      

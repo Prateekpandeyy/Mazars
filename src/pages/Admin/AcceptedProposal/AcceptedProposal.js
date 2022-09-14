@@ -64,7 +64,7 @@ function AcceptedProposal({ acceptedProposal }) {
   const columns = [
     {
       dataField: "",
-      text: "S.No",
+      text: "S.no",
       formatter: (cellContent, row, rowIndex) => {
         return rowIndex + 1;
       },
@@ -89,7 +89,7 @@ function AcceptedProposal({ acceptedProposal }) {
     },
     {
       dataField: "assign_no",
-      text: "Query No",
+      text: "Query no",
      
       formatter: function nameFormatter(cell, row) {
      
@@ -114,12 +114,12 @@ function AcceptedProposal({ acceptedProposal }) {
     },
     {
       dataField: "cat_name",
-      text: "Sub Category",
+      text: "Sub category",
       sort: true,
       
     },
     {
-      text: "Date of Proposal",
+      text: "Date of proposal",
       dataField: "DateofProposal",
       sort: true,
     
@@ -133,7 +133,7 @@ function AcceptedProposal({ acceptedProposal }) {
       },
     },
     {
-      text: "Date of acceptance of Proposal",
+      text: "Date of acceptance of proposal",
       dataField: "cust_accept_date",
       sort: true,
      
@@ -168,7 +168,7 @@ function AcceptedProposal({ acceptedProposal }) {
     },
     {
       dataField: "ProposedAmount",
-      text: "Proposed Amount",
+      text: "Proposed amount",
       sort: true,
      
       sortFunc: (a, b, order, dataField) => {
@@ -188,7 +188,7 @@ function AcceptedProposal({ acceptedProposal }) {
     },
     {
       dataField: "accepted_amount",
-      text: "Accepted Amount ",
+      text: "Accepted amount ",
       sort: true,
 
       sortFunc: (a, b, order, dataField) => {

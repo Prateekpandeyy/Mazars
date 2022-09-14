@@ -69,7 +69,7 @@ function PendingForAcceptence({ pendingProposal }) {
   const columns = [
     {
       dataField: "",
-      text: "S.No",
+      text: "S.no",
       formatter: (cellContent, row, rowIndex) => {
         return rowIndex + 1;
       },
@@ -94,7 +94,7 @@ function PendingForAcceptence({ pendingProposal }) {
     },
     {
       dataField: "assign_no",
-      text: "Query No",
+      text: "Query no",
      
       formatter: function nameFormatter(cell, row) {
       
@@ -121,12 +121,12 @@ function PendingForAcceptence({ pendingProposal }) {
     },
     {
       dataField: "cat_name",
-      text: "Sub Category",
+      text: "Sub category",
       sort: true,
       
     },
     {
-      text: "Date of Proposal",
+      text: "Date of proposal",
       dataField: "DateofProposal",
       sort: true,
      
@@ -140,7 +140,7 @@ function PendingForAcceptence({ pendingProposal }) {
       },
     },
     {
-      text: "Date of acceptance of Proposal",
+      text: "Date of acceptance of proposal",
       dataField: "cust_accept_date",
       sort: true,
       
@@ -176,7 +176,7 @@ function PendingForAcceptence({ pendingProposal }) {
     },
     {
       dataField: "",
-      text: "Proposed Amount",
+      text: "Proposed amount",
       sort: true,
      
       sortFunc: (a, b, order, dataField) => {
@@ -196,7 +196,7 @@ function PendingForAcceptence({ pendingProposal }) {
     },
     {
       dataField: "accepted_amount",
-      text: "Accepted Amount ",
+      text: "Accepted amount ",
       sort: true,
       style: {
         fontSize: "11px",
