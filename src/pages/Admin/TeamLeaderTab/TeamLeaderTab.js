@@ -93,9 +93,7 @@ function TeamLeaderTab() {
       dataField: "name",
       text: "Name of TL",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px"};
-      },
+     
     },
     {
       dataField: "personal_email",
@@ -174,10 +172,10 @@ else{
           <>
            {digit.direct.length > 0 && digit.indirect.length > 0 ?
            <>
-            <div style={{display : "block", height : "80px"}}>
+            <div style={{display : "block"}}>
             <p className="completed">{digit.indirect + pp}</p>
             </div>
-            <div style={{display : "block", height : "70px"}}>
+            <div style={{display : "block"}}>
             <p className = "inprogress">{digit.direct + k} </p> 
             </div>
            </> : <>
@@ -201,7 +199,9 @@ else{
     {
       dataField: "",
       text: "Action",
-      
+      headerStyle: () => {
+        return { width : "70px" };
+      },
       formatter: function (cell, row) {
         return (
           <>
@@ -218,9 +218,7 @@ else{
     {
       text: "History",
       dataField: "",
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
+     
       formatter: function (cell, row) {
         return (
           <>

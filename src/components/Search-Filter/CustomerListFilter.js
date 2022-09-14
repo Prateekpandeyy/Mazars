@@ -32,18 +32,7 @@ function CustomerListFilter(props) {
     reset();
    getCustomer();
   };
-  const columns = [
-    { header: 'S.No', key: 'id' },
-    { header: 'Name', key: 'name' },
-    { header: 'Email', key: 'email' },
-    { header: 'Mobile No', key: 'phone' },
-    { header: 'Occupation', key: 'occupation' },
-    { header: 'Country', key: 'country' },
-    { header: 'State', key: 'state' },
-    { header: 'City', key: 'city' },
-    { header: 'Date', key: 'created' }
-  ];
- 
+
 
   
 
@@ -209,20 +198,18 @@ const exportToExcel = async () => {
                   <label className="form-select form-control"
                   >Total Records : {records}</label>
                 </div>
-                <button
+          
+             </div>
+              <div className="col-sm-6 ml-auto" style={{textAlign : "right"}}>
+              <button
           type="button"
-          class="btn btn-primary mx-sm-1 mb-2"
+          class="autoWidthBtn"
           onClick={() => exportToExcel()}
         >
           Export to Excel
         </button>
-             </div>
-              
               </div>
- 
-           
-
-           
+              </div>          
           </form>
         </div>
       </div>

@@ -10,6 +10,7 @@ import Swal from "sweetalert2";
 import DeleteIcon from '@mui/icons-material/Delete';
 import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
 import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
+import CustomHeading from "../../../components/Common/CustomHeading";
 const ReportList = () => {
     const userid = window.localStorage.getItem("adminkey")
     const [data, setData] = useState()
@@ -131,9 +132,9 @@ const ReportList = () => {
       <Container>
       <div className = "row p-2">
            <div className="col-md-4">
-           <Typography variant = "h4">
-            Report List
-        </Typography>
+           <CustomHeading>
+           Report List
+           </CustomHeading>
        </div>
        <div className="col-md-8" style={{textAlign : "right"}}>
      
@@ -141,12 +142,7 @@ const ReportList = () => {
                                    Generate Report
                                 </Link>
            </div>
-           {/* <div className="col-md-4">
-     
-     <Link to="/admin/consalation" className="autoWidthBtn">
-                              Consolidate Payment
-                           </Link>
-      </div> */}
+           
        </div>
 {data === undefined ? "" : 
     <DataTablepopulated 

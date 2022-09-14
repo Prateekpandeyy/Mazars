@@ -22,9 +22,9 @@ import {
 
 import { Form, Input, Button } from "antd";
 import Select from "react-select";
-
 import { Spinner } from "reactstrap";
 import Swal from "sweetalert2";
+import CustomHeading from "../../../components/Common/CustomHeading";
 const Schema = yup.object().shape({
   p_name: yup.string().required("required name"),
   p_email: yup.string().email("invalid email").required("required email"),
@@ -502,7 +502,7 @@ function EditTP() {
   return (
     <Layout adminDashboard="adminDashboard" adminUserId={userid}>
       <Card>
-        <CardHeader>
+        {/* <CardHeader>
           <div className="col-md-12 d-flex justify-content-between">
             <div>
               <button
@@ -520,8 +520,30 @@ function EditTP() {
              {showDel == "0" ?  <button className="btn btn-danger" onClick={(e) => del(e)}>Delete</button> : ""}
               </div>
           </div>
-        </CardHeader>
+        </CardHeader> */}
 
+<CardHeader>
+          <Row>
+          <Col md="3">
+          <button
+                className="autoWidthBtn" 
+                onClick={() => history.goBack()}
+              >
+               
+                Go Back
+              </button>
+              
+            </Col>
+            <Col md="5">
+            <CustomHeading>
+         Edit tax professional
+            </CustomHeading>
+            </Col>
+            <Col md= "3">
+            {showDel == "0" ?  <button className="btn btn-danger" onClick={(e) => del(e)}>Delete</button> : ""}
+            </Col>
+          </Row>
+        </CardHeader>
         {!data1 ? (
           <CardHeader>loading ...</CardHeader>
         ) : (

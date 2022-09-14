@@ -53,7 +53,7 @@ function FeedbackTab() {
         return rowIndex + 1;
       },
       headerStyle: () => {
-        return { fontSize: "12px", width: "10px" };
+        return {  width: "10px" };
       },
     },
     {
@@ -61,7 +61,7 @@ function FeedbackTab() {
       dataField: "created",
       sort: true,
       headerStyle: () => {
-        return { fontSize: "12px", width: "60px" };
+        return { width: "60px" };
       },
      
     },
@@ -70,7 +70,7 @@ function FeedbackTab() {
       text: "Query No",
       dataField: "assign_no",
       headerStyle: () => {
-        return { fontSize: "12px", width: "40px" };
+        return {  width: "40px" };
       },
       formatter: function nameFormatter(cell, row) {
         
@@ -82,7 +82,7 @@ function FeedbackTab() {
       dataField: "feedback",
    sort : true,
       headerStyle: () => {
-        return { fontSize: "12px", width: "150px" };
+        return {  width: "150px" };
       },
       formatter: function nameFormatter(cell, row) {
         

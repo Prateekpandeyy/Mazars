@@ -8,12 +8,13 @@ import Swal from 'sweetalert2';
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import { useAlert } from "react-alert";
-import { Card, CardHeader } from "reactstrap";
+import { Card, CardHeader, Row, Col } from "reactstrap";
 import { useHistory } from "react-router-dom";
 import classNames from "classnames";
 import Mandatory from "../../../components/Common/Mandatory";
 import { Spinner } from "reactstrap";
 import EmailValidation from "../../../components/Common/EmailValidation";
+import CustomHeading from "../../../components/Common/CustomHeading";
 const Schema = yup.object().shape({
   p_name: yup.string().required("required name"),
   p_email: yup.string().email("invalid email").required("required email"),
@@ -445,7 +446,7 @@ function AddNew() {
   return (
     <Layout adminDashboard="adminDashboard" adminUserId={userid}>
       <Card>
-        <CardHeader>
+        {/* <CardHeader>
           <div className="col-md-12 d-flex">
             <div>
               <button
@@ -457,11 +458,31 @@ function AddNew() {
               </button>
             </div>
             <div className="text-center ml-5">
-              <h4>Add New Team Leader</h4>
+              <CustomHeading>
+              Add new team leader
+              </CustomHeading>
             </div>
           </div>
+        </CardHeader> */}
+  <CardHeader>
+          <Row>
+          <Col md="4">
+          <button
+                className="autoWidthBtn" 
+                onClick={() => history.goBack()}
+              >
+               
+                Go Back
+              </button>
+              
+            </Col>
+            <Col md="8">
+            <CustomHeading>
+            Add new team leader
+            </CustomHeading>
+            </Col>
+          </Row>
         </CardHeader>
-
         <CardHeader>
           <div className="row mt-3">
             <div className="col-lg-2 col-xl-2 col-md-12"></div>
@@ -612,9 +633,7 @@ function AddNew() {
                               ? "green"
                               : "blue"
                           }),
-                        }}
-
-                        value={subData}>
+                        }}>
                       </Select>
                     </div>
                   </div>

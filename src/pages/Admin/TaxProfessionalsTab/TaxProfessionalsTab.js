@@ -132,10 +132,7 @@ function TaxProfessionalsTab() {
       // dataField: "parent_id",
       text: "Category",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "11px" };
-      },
-     
+      
       formatter : function nameFormatter(cell, row) {
        
         digit2 = row.allpcat_id.split(",")
@@ -147,7 +144,7 @@ function TaxProfessionalsTab() {
              digit2.map((e) => {
              return(
                <>
-            <p className= {e.includes("Indirect") === true ? "completed" : "inprogress"}> {e}</p>  
+            <p  className= {e.includes("Indirect") === true ? "completed" : "inprogress"}> {e}</p>  
                </>
              ) 
            })
@@ -183,7 +180,7 @@ function TaxProfessionalsTab() {
             digit.map((e) => {
             return(
               <>
-             <p className= {row.allpcat_id.includes("Indirect") === true ? "completed" : "inprogress"}> {e + kk}</p>  
+             <p style={{margin : "0.5rem"}} className= {row.allpcat_id.includes("Indirect") === true ? "completed" : "inprogress"}> {e + kk}</p>  
               </>
             ) 
           })
@@ -216,9 +213,7 @@ function TaxProfessionalsTab() {
     {
       text: "History",
       dataField: "",
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
+     
       formatter: function (cell, row) {
         return (
           <>

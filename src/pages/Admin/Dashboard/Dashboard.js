@@ -376,7 +376,7 @@ let history = useHistory()
           <table className="table table-striped thirteen main_table mb-1">
             <thead className="payment_thead2">
               <tr>
-                <th className="left_side"><CustomTypography>Paid</CustomTypography></th>
+                <th className="left_side"><CustomTypography color="#ffffff">Paid</CustomTypography></th>
                 <th>{paid}</th>
               </tr>
             </thead>
@@ -385,7 +385,7 @@ let history = useHistory()
           <table className="table table-striped thirteen main_table mb-1">
             <thead className="payment_thead2">
               <tr>
-                <th className="left_side"><CustomTypography>Unpaid</CustomTypography></th>
+                <th className="left_side"><CustomTypography color="#ffffff">Unpaid</CustomTypography></th>
                 <th>{unpaid}</th>
               </tr>
             </thead>
