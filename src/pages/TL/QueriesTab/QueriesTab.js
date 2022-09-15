@@ -138,17 +138,17 @@ function QueriesTab(props) {
       <Tabs selectedIndex={tabIndex} onSelect={(index) => tableIndex(index)}>
           <TabList className="fixedTab">
             <Tab style={tabIndex == 0 ? myStyle2 : myStyle1} className="tabHover">
-              All Queries ({allQuery})
+              All queries ({allQuery})
             </Tab>
            
             <Tab style={tabIndex == 1 ? myStyle2 : myStyle1} className="tabHover">
               Inprogress; Queries ({incomplete})
             </Tab>
             <Tab style={tabIndex == 2 ? myStyle2 : myStyle1} className="tabHover">
-              Pending For Acceptance ({pendindForAccepttence})
+              Pending For acceptance ({pendindForAccepttence})
             </Tab>
             <Tab style={tabIndex == 3 ? myStyle2 : myStyle1} className="tabHover">
-            Inprogress Assignment to TP ({complete})
+            Inprogress assignment to TP ({complete})
             </Tab>
             
           </TabList>

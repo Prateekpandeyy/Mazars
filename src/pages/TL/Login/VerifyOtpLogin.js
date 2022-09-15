@@ -124,7 +124,7 @@ localStorage.setItem("tlloginTime", timeStampInMs)
       <div class="container">
         <div class="otp">
           <div class="heading text-center">
-            <h2>Verify Your OTP</h2>
+            <h2>Verify your OTP</h2>
           </div>
           <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
             {

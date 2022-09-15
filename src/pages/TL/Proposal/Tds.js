@@ -37,6 +37,7 @@ function Tds (props)  {
    const [disabled, setDisabled] = useState(false)
   const [description, setDiscription] = useState("")
 const [loading, setLoading] = useState(false);
+const { handleSubmit, register, errors, getValues, reset } = useForm();
 const token = window.localStorage.getItem("tlToken")
 const myConfig = {
     headers : {
@@ -84,9 +85,7 @@ const percent = {
     setTotal(parseInt(props.paidAmount) + parseInt(props.paidAmount * cgetRate / 100))
     setgrandTotal(parseInt(parseInt(props.paidAmount) + parseInt(props.paidAmount * 0 / 100)) - parseInt(props.paidAmount * tdsRate / 100))
     }
-  }, [props.paidAmount])
-    const { handleSubmit, register, errors, getValues, reset } = useForm();
-
+  }, [props.paidAmount])  
 const getDataild = () => {
   axios
   .get(`${baseUrl}/tl/getPaymentDetail?tl_id=${JSON.parse(userid)}&invoice=1&invoice_id=${props.id}`, myConfig)
@@ -116,8 +115,7 @@ setTds(parseFloat(i.tds_amount))
 }
 
 })
-}
-  // Cgst Tax function
+} // Cgst Tax function
 const cgstFun = (e) => {
  
  
@@ -214,8 +212,6 @@ else{
 }
    
    }
-  
- 
 // Igst tax function
  const igstFun = (e) => {
  
@@ -328,8 +324,6 @@ else{
   }
  }
  }
- 
-
  const pocketExpFun = (e) => {
  if(e.target.value === ""){
    setPocketExp('')
@@ -371,7 +365,6 @@ setGst(total)
  
 }
 }
-
 const basicFun = (e) => {
  
   let a = parseFloat((parseInt(e.target.value)) + parseFloat(pocketExp));
