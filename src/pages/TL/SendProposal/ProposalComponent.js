@@ -28,21 +28,16 @@ function ProposalComponent(props) {
   const { id } = props;
   const history = useHistory();
   const { handleSubmit, register, errors } = useForm();
-  const { RangePicker } = DatePicker;
   const userid = window.localStorage.getItem("tlkey");
   const [loading, setLoading] = useState(false);
-
   const [custId, setCustId] = useState("");
   const [custname, setCustName] = useState("");
   const [assignId, setAssignID] = useState("");
   const [assingNo, setAssingNo] = useState("");
   const [store, setStore] = useState("1");
   const [diserror, setdiserror] = useState("")
-  const [payment, setPayment] = useState([]);
   const [installment, setInstallment] = useState([]);
-  const [error, setError] = useState('');
   const [totalAmount, setTotalAmount] = useState(null);
-  const [paymentError, setpaymentError] = useState();
   const [det, addDet] = useState()
   const [date, setDate] = useState();
   const [amount, setAmount] = useState();
@@ -50,7 +45,6 @@ function ProposalComponent(props) {
   const [dateError, setDateError] = useState(false)
   const [company2, setCompany2] = useState("")
   const [startDate, setStartDate] = useState("")
- 
   const [client, setClient] = useState([])
   const [email, setEmail] = useState("")
   var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
@@ -61,6 +55,7 @@ function ProposalComponent(props) {
   const [invoiceTl, setInvoicetl] = useState("")
   const [invoiceAdmin, setInvoiceAdmin] = useState("")
   const [fromMax, setFromMax] = useState(current_date)
+  const [tlDisable, setTlDisable] = useState(false)
   const token = window.localStorage.getItem("tlToken")
   const myConfig = {
       headers : {
@@ -177,7 +172,7 @@ function ProposalComponent(props) {
     formData.append("end_date", endDate)
     // formData.append("payment_terms", payment.value);
     formData.append("no_of_installment", installment.value);
-    formData.append("company", value.p_company)
+    formData.append("company", company2)
     formData.append("date_month", dateMonth)
     formData.append("tl_iba", invoiceTl)
     formData.append("tp_iba", invoice)
@@ -373,15 +368,23 @@ const myMonthValue = (e) => {
   setDateMonth(e.target.value)
 }
 const getInviceValue = (e) => {
-
+  console.log("eee", e.target.value)
+  if(e.target.value === "0"){
+    setTlDisable(true)
+  }
+  else {
+    setTlDisable(false)
+  }
   setInvice(e.target.value)
 }
 const getInvoiceAdmin  = (e) => {
   setInvoiceAdmin(e.target.value)
 }
 const getInvoicetl  = (e) => {
+  
   setInvoicetl(e.target.value)
 }
+console.log("tlDisable", tlDisable)
   return (
     <>
       <Card>
@@ -476,9 +479,9 @@ const getInvoicetl  = (e) => {
                   <label>Approval of Team Leader for such issue of invoice(s)</label>
                   <div onChange={(e) => getInvoicetl(e)} className="myInvice">
                 <input 
-                type="radio" value="1" name="yestl" />Yes
+                type="radio" disabled = {tlDisable} value="1" name="yestl" />Yes
                    <input 
-                type="radio" value="0" name = "yestl"/>No
+                type="radio" disabled = {tlDisable} value="0" name = "yestl"/>No
                 </div>
                 </div>
                 <div class="form-group">
