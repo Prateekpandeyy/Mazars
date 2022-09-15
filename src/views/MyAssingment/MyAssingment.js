@@ -9,12 +9,12 @@ import {
   Card,
   CardHeader,
   CardBody,
-  CardTitle,
+ 
   Row,
   Col,
-  Table,
-  Spinner
+ 
 } from "reactstrap";
+import CustomHeading from "../../components/Common/CustomHeading";
 import {Container} from '@material-ui/core';
 function MyAssingment(props) {
   const { id } = useParams();
@@ -220,7 +220,9 @@ useEffect(() => {
               
             </Col>
             <Col md="4" align="center">
-              <h4>Query Details</h4>
+            <CustomHeading>
+            Query details
+              </CustomHeading>
             </Col>
             <Col md="4">
             

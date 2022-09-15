@@ -752,7 +752,7 @@ const classes = useStyle()
                   <span className="paymentMenu"></span>
                 </i>
                   <span className="menu-title" data-i18n="">
-                    Payment Status
+                    Payment status
                   </span>
                 </NavLink>
               </li>
@@ -902,7 +902,7 @@ const classes = useStyle()
                   <span className="paymentMenu"></span>
                 </i>
                   <span className="menu-title" data-i18n="">
-                    Payment Status
+                    Payment status
                   </span>
                 </NavLink>
               </li>

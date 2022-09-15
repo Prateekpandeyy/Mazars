@@ -7,15 +7,14 @@ import { useParams, Link, useHistory } from "react-router-dom";
 import QueryDetails from "../../../components/QueryDetails/QueryDetails";
 import moment from 'moment';
 import {
-  Card,
+ 
   CardHeader,
-  CardBody,
-  CardTitle,
+  
   Row,
   Col,
-  Table,
-  Spinner
+ 
 } from "reactstrap";
+import CustomHeading from "../../../components/Common/CustomHeading";
 function QueriesRecevied(props) {
   const { id } = useParams();
   const history = useHistory();
@@ -242,8 +241,10 @@ function QueriesRecevied(props) {
                 </Link>
               
             </Col>
-            <Col md="4" align="center">
-              <h4>Query Details</h4>
+            <Col md="4">
+             <CustomHeading>
+             Query details
+             </CustomHeading>
             </Col>
             <Col md="4" align = "center">
             
