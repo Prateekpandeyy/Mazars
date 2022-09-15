@@ -295,7 +295,7 @@ const classes = useStyle()
                   />
                 </i>
     <span className="menu-title" data-i18n="">
-    Important Links
+    Important links
     </span>
     </NavLink>
                  
@@ -335,7 +335,7 @@ const classes = useStyle()
                   />
                 </i>
     <span className="menu-title" data-i18n="">
-    Flash Updates
+    Flash updates
     </span>
     </NavLink>
                  
@@ -349,7 +349,7 @@ const classes = useStyle()
                   />
                 </i>
     <span className="menu-title" data-i18n="">
-    Photo Gallery
+    Photo gallery
     </span>
     </NavLink>
               </li>
@@ -361,7 +361,7 @@ const classes = useStyle()
                   />
                 </i>
     <span className="menu-title" data-i18n="">
-    Video Gallery
+    Video gallery
     </span>
     </NavLink>
               </li>
@@ -373,7 +373,7 @@ const classes = useStyle()
                 />
               </i>
   <span className="menu-title" data-i18n="">
-  Media News
+  Media news
   </span>
   </NavLink>
             </li>
@@ -385,7 +385,7 @@ const classes = useStyle()
                 />
               </i>
   <span className="menu-title" data-i18n="">
- Upload Document
+ Upload document
   </span>
   </NavLink>
             </li>
@@ -576,7 +576,7 @@ const classes = useStyle()
                   <span className="paymentMenu"></span>
                 </i>
                   <span className="menu-title" data-i18n="">
-                    Payment Status
+                    Payment status
                   </span>
                 </NavLink>
               </li>
@@ -645,7 +645,7 @@ const classes = useStyle()
                   />
                 </i>
                   <span className="menu-title" data-i18n="">
-                    Team Leaders
+                    Team leaders
                   </span>
                 </NavLink>
               </li>
@@ -656,7 +656,7 @@ const classes = useStyle()
                 <GroupAddOutlinedIcon className={classes.myTeamleader} />
                 </i>
                   <span className="menu-title" data-i18n="">
-                    Tax Professionals
+                    Tax professionals
                   </span>
                 </NavLink>
               </li>

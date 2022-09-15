@@ -146,7 +146,7 @@ function TeamLeaderTab() {
     },
     {
       dataField: "allcat_id",
-      text: "Sub Category",
+      text: "Sub category",
       sort: true,
      
       formatter: function nameFormatter(cell, row) {

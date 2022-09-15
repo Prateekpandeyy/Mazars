@@ -208,7 +208,7 @@ const InvoiceFilter = (props) => {
                <div className="col-lg-3 col-md-6 col-sm-12 my-sm-2">
                <span style={{display : "flex"}}>
                  <label className="form-select form-control"
-                  >Total Records : {props.records}</label>
+                  >Total records : {props.records}</label>
                  </span>
                  </div>
          </div>

@@ -498,7 +498,7 @@ const maxDate = moment(new Date().toISOString().slice(0, 10)).add(1, "days")
 
                 <div className="form-group mx-sm-1  mb-2">
                   <label className="form-select form-control"
-                  >Total Records : {records}</label>
+                  >Total records : {records}</label>
                 </div>
               </div>
             </form>

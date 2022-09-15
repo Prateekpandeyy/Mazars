@@ -162,18 +162,6 @@ function Login(props) {
                     </div>
                   </div>
                 </div>
-                {
-                  loading ?
-                    <div class="col-md-12">
-                      <Spinner color="primary" />
-                    </div>
-                    :
-                    <button type="submit" className="customBtn">
-                      Submit
-                    </button>
-                }
-
-
                 <div>
                   <Link
                     to={{
@@ -185,7 +173,20 @@ function Login(props) {
                   </Link>
                 </div>
 
-                {/* <Mandatory /> */}
+                {
+                  loading ?
+                    <div class="col-md-12">
+                      <Spinner color="primary" />
+                    </div>
+                    :
+                    <button type="submit" className="customBtn my-3">
+                      Submit
+                    </button>
+                }
+
+
+              
+              
               </form>
             </div>
         }

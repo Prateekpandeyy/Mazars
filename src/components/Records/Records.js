@@ -7,7 +7,7 @@ function Records({records}) {
             <div className="col-12 ml-auto">
                 <div className="form-group">
                     <label className="form-select form-control w-25 ml-auto"
-                    >Total Records : {records}</label>
+                    >Total records : {records}</label>
                 </div>
             </div>
         </div>
