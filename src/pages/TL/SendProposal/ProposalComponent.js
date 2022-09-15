@@ -22,7 +22,6 @@ import { Spinner } from 'reactstrap';
 import Swal from "sweetalert2";
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import CustomHeading from "../../../components/Common/CustomHeading";
 // import RangePicker from "react-range-picker";
 import { DatePicker, Space } from 'antd';
 function ProposalComponent(props) {
@@ -57,6 +56,10 @@ function ProposalComponent(props) {
   var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
   const [item] = useState(current_date);
   const [endDate , setEndDate] = useState("")
+  const [dateMonth, setDateMonth] = useState("")
+  const [invoice, setInvice] = useState("")
+  const [invoiceTl, setInvoicetl] = useState("")
+  const [invoiceAdmin, setInvoiceAdmin] = useState("")
   const [fromMax, setFromMax] = useState(current_date)
   const token = window.localStorage.getItem("tlToken")
   const myConfig = {
@@ -161,6 +164,7 @@ function ProposalComponent(props) {
     formData.append("assign_no", assingNo);
     formData.append("name", custname);
     formData.append("type", "tl");
+    formData.append("date_month", value.date_month)
     formData.append("id", JSON.parse(userid));
     formData.append("assign_id", assignId);
     formData.append("customer_id", custId);
@@ -174,12 +178,16 @@ function ProposalComponent(props) {
     // formData.append("payment_terms", payment.value);
     formData.append("no_of_installment", installment.value);
     formData.append("company", value.p_company)
+    formData.append("date_month", dateMonth)
+    formData.append("tl_iba", invoiceTl)
+    formData.append("tp_iba", invoice)
+    formData.append("admin_iba", invoiceAdmin)
     store === "1" ?
-      formData.append("due_date", lumsum) :
+      formData.append("due_date", date) :
       store === "2" || store === "3" ?
         formData.append("due_date", date) :
         formData.append("due_date", "")
-console.log("payment", payment)
+
    
       if (store === "2" || store === "3") {
         if (store !== "4" && installment == "") {
@@ -360,6 +368,20 @@ const endFun = (e) => {
   
   setEndDate(e.target.value)
 }
+const myMonthValue = (e) => {
+ 
+  setDateMonth(e.target.value)
+}
+const getInviceValue = (e) => {
+
+  setInvice(e.target.value)
+}
+const getInvoiceAdmin  = (e) => {
+  setInvoiceAdmin(e.target.value)
+}
+const getInvoicetl  = (e) => {
+  setInvoicetl(e.target.value)
+}
   return (
     <>
       <Card>
@@ -375,20 +397,20 @@ const endFun = (e) => {
               </button>
             </Col>
             <Col md="7">
-             <CustomHeading>
-             Prepare Proposal
-             </CustomHeading>
+              <div>
+                <h4>Prepare Proposal</h4>
+              </div>
             </Col>
           </Row>
         </CardHeader>
 
         <CardBody>
           <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
-            <p style={{ color: "red" }}>{error}</p>
+            
             <div style={{ display: "flex" }}>
               <div class="col-md-6">
                 <div class="form-group">
-                  <label>Query no.</label>
+                  <label>Query No.</label>
                   <input
                     type="text"
                     name="p_assingment"
@@ -416,7 +438,7 @@ const endFun = (e) => {
                 </div>
 
                 <div class="form-group">
-                  <label>Payment plan </label>
+                  <label>Payment Plan </label>
                   <select
                     class="form-control"
                     ref={register}
@@ -433,18 +455,45 @@ const endFun = (e) => {
                       }
                     }}
                   >
-                    <option value="1">Fixed amount-Lumpsum payment</option>
-                    <option value="2">Fixed amount-Instalment plan</option>
+                    <option value="1">Fixed Amount-Lumpsum payment</option>
+                    <option value="2">Fixed Amount-Instalment plan</option>
                     <option value="3">Retainership plan-specified period</option>
                     <option value="4">Retainership plan-unspecified period</option>
                   </select>
                 </div>
 
-           
-                
-                <p style={{ "color": "red" }}>{diserror}</p>
+               <div className="myproposaloption">
+               <div class="form-group">
+                  <label>Whether invoice(s) can be issued before acceptance of proposal by client</label>
+                  <div onChange={(e) => getInviceValue(e)} className="myInvice">
+                <input 
+                type="radio" value="1" name="yesclient" />Yes
+                   <input 
+                type="radio" value="0" name = "yesclient"/>No
+                </div>
+                </div>
                 <div class="form-group">
-                  <label>Scope of work<span className="declined">*</span></label>
+                  <label>Approval of Team Leader for such issue of invoice(s)</label>
+                  <div onChange={(e) => getInvoicetl(e)} className="myInvice">
+                <input 
+                type="radio" value="1" name="yestl" />Yes
+                   <input 
+                type="radio" value="0" name = "yestl"/>No
+                </div>
+                </div>
+                <div class="form-group">
+                  <label>Approval of Admin for such issue of invoice(s)</label>
+                  <div onChange={(e) => getInvoiceAdmin(e)} className="myInvice">
+                <input 
+                type="radio" disabled value="1" name="yesadmin" />Yes
+                   <input 
+                type="radio" disabled value="0" name = "yesadmin"/>No
+                </div>
+                </div>
+               </div>
+              
+                <div class="form-group">
+                  <label>Scope of Work<span className="declined">*</span></label>
 
                   <CKEditor
                      editor={ ClassicEditor }
@@ -531,7 +580,7 @@ const endFun = (e) => {
 
               <div class="col-md-6">
                 <div class="form-group">
-                  <label>Client name</label>
+                  <label>Client Name</label>
                   <input
                     type="text"
                     name="p_name"
@@ -542,7 +591,7 @@ const endFun = (e) => {
                   />
                 </div>
                 <div class="form-group">
-                  <label>Copy to</label>
+                  <label>Copy To</label>
                   <Select
                    isMulti={true}
                    onChange={(e) => clientFun(e)}
@@ -565,7 +614,7 @@ const endFun = (e) => {
                 {
                   store === "4" ? (
                     <div class="form-group">
-                    <label>Start date</label>  
+                    <label>Start Date</label>  
                         <input
                             type="date"
                             className="form-control"
@@ -579,13 +628,14 @@ const endFun = (e) => {
              
                 { store === "1" ? (
                   <div class="form-group">
-                    <label>Due dates</label>
+                    <label>Due Dates</label>
                     <input
                       type="date"
                       name="p_inst_date"
                       className={classNames("form-control", {
                         "is-invalid": errors.p_inst_date
                       })}
+                      onChange={(e) => setDate(e.target.value)}
                       ref={register({ required: true })}
                       placeholder="Enter Hourly basis"
                       min={item}
@@ -594,7 +644,7 @@ const endFun = (e) => {
                 ) :
                   store === "2" ? (
                     <div class="form-group">
-                      <label>No of installments</label>
+                      <label>No of Installments</label>
                       <Select
                         onChange={(e => installmentHandler(e))}
                         options={no_installments}
@@ -617,7 +667,7 @@ const endFun = (e) => {
    
      <div className="row">
      <div class="col-md-6 my-2">
-                    <label>Start date</label>  
+                    <label>Start Date</label>  
                         <input
                             type="date"
                             className="form-control"
@@ -628,7 +678,7 @@ const endFun = (e) => {
                         />
                     </div>
                     <div class="col-md-6 my-2">
-                    <label>End date</label>  
+                    <label>End Date</label>  
                         <input
                             type="date"
                             value = {endDate}
@@ -639,7 +689,7 @@ const endFun = (e) => {
                     </div>
      </div>
      <div class="form-group">
-                      <label>No of installments</label>
+                      <label>No of Installments</label>
                       <Select
                         onChange={(e => installmentHandler(e))}
                         options={no_installmentRange}
@@ -658,45 +708,46 @@ const endFun = (e) => {
   store === "4" ? 
  <>
   <div class="form-group">
-  <label>Due date- Date of month
+  <label>Due Date- Date of month
  </label>
   <select
     class="form-control"
     ref={register}
-    name="p_individual"
-    
+    name="date_month"
+    onChange={(e) => myMonthValue(e)}
+    min = {item}
   >
-    <option value="1">1</option>
+     <option value="1">1</option>
     <option value="2">2</option>
     <option value="3">3</option>
     <option value="4">4</option>
-    <option value="1">5</option>
-    <option value="2">6</option>
-    <option value="3">7</option>
-    <option value="4">8</option>
-    <option value="1">9</option>
-    <option value="2">10</option>
-    <option value="3">11</option>
-    <option value="4">12</option>
-    <option value="1">13</option>
-    <option value="2">14</option>
-    <option value="3">15</option>
-    <option value="4">16</option>
-    <option value="1">17</option>
-    <option value="2">18</option>
-    <option value="3">19</option>
-    <option value="4">20</option>
-    <option value="1">21</option>
-    <option value="2">22</option>
-    <option value="3">23</option>
-    <option value="4">24</option>
-    <option value="1">25</option>
-    <option value="2">26</option>
-    <option value="3">27</option>
-    <option value="4">28</option>
-    <option value="1">29</option>
-    <option value="2">30</option>
-    <option value="3">31</option>
+    <option value="5">5</option>
+    <option value="6">6</option>
+    <option value="7">7</option>
+    <option value="8">8</option>
+    <option value="9">9</option>
+    <option value="10">10</option>
+    <option value="11">11</option>
+    <option value="12">12</option>
+    <option value="13">13</option>
+    <option value="14">14</option>
+    <option value="15">15</option>
+    <option value="16">16</option>
+    <option value="17">17</option>
+    <option value="18">18</option>
+    <option value="19">19</option>
+    <option value="20">20</option>
+    <option value="21">21</option>
+    <option value="22">22</option>
+    <option value="23">23</option>
+    <option value="24">24</option>
+    <option value="25">25</option>
+    <option value="26">26</option>
+    <option value="27">27</option>
+    <option value="28">28</option>
+    <option value="29">29</option>
+    <option value="30">30</option>
+    <option value="31">31</option>
    
   </select>
 </div> 
@@ -706,6 +757,7 @@ const endFun = (e) => {
 : " "
 }
 </div>
+
                 {
                  store === "2"
                     ?
@@ -738,10 +790,7 @@ const endFun = (e) => {
                     :
                   ""
                 }
-                <div className="row">
-
-
-</div>
+                
          
      </div>
             </div>
@@ -751,7 +800,7 @@ const endFun = (e) => {
                 loading ?
                   <Spinner color="primary" />
                   :
-                  <button type="submit" class="customBtn mr-auto">
+                  <button type="submit" class="customBtn">
                     Submit
                   </button>
               }
