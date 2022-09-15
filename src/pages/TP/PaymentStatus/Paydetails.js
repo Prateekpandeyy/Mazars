@@ -9,21 +9,15 @@ import {
   Card,
   CardHeader,
   CardBody,
-  CardTitle,
+ 
   Row,
   Col,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  Button,
+ 
 } from "reactstrap";
-import BootstrapTable from "react-bootstrap-table-next";
-import { baseUrl2, baseUrl3 } from "../../../config/config";
 import { useParams, Link, useHistory } from "react-router-dom";
 import styled from "styled-components";
 import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
-
+import CustomHeading from "../../../components/Common/CustomHeading";
 const PayDetails = (props) => {
     let history = useHistory();
     const userId = window.localStorage.getItem("tpkey");
@@ -101,7 +95,7 @@ setModal(!modal)
             },
            
             headerStyle: () => {
-                return { fontSize: "11px", width: "50px" };
+                return {  width: "50px" };
             },
         },
         {
@@ -116,7 +110,7 @@ setModal(!modal)
            
            
             headerStyle: () => {
-                return { fontSize: "11px", width: "80px" };
+                return {  width: "80px" };
             },
            
            
@@ -157,12 +151,12 @@ setModal(!modal)
        
         {
             dataField: "invoice_amount",
-            text: "Invoice Amount",
+            text: "Invoice amount",
            
         },
         {
             dataField : "tds_amount",
-            text : "Tds Deducted",
+            text : "Tds deducted",
             
             formatter : function(cell, row){
                 return(
@@ -175,7 +169,7 @@ setModal(!modal)
         },
         {
             dataField : "amount",
-            text : "Amount Paid",
+            text : "Amount paid",
             
             formatter: function (cell,row){
                 return(
@@ -208,7 +202,7 @@ setModal(!modal)
        
         {
             dataField: "",
-            text: "Payment Details",
+            text: "Payment details",
            
            formatter: function dateFormat(cell, row){
            
@@ -219,7 +213,7 @@ setModal(!modal)
               {row.is_paid == "0" ? 
                 "" :   <>
             {row.is_paid == "1" ?  <a href={row.receipt_url} target="_blank">Payment receipt</a> 
-            : <p style={{fontWieght: "800", fontSize: "14px", padding: "5px", color : "red"}} className = "declined">Declined</p> }
+            : <p style={{ padding: "5px", color : "red"}} className = "declined">Declined</p> }
             </>}
               </>
                : ""}
@@ -262,7 +256,9 @@ return(
                 </Link>
             </Col>
             <Col md="8">
-              <h4>Payment Details</h4>
+            <CustomHeading>
+          Payment details
+          </CustomHeading>
             </Col>
           </Row>
         </CardHeader>

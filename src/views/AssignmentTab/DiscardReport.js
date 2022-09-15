@@ -39,12 +39,12 @@ function DiscardReport({
   return (
     <div>
       <Modal isOpen={ViewDiscussion} toggle={ViewDiscussionToggel} size="lg" scrollable>
-        <ModalHeader toggle={ViewDiscussionToggel}>Discussion History </ModalHeader>
+        <ModalHeader toggle={ViewDiscussionToggel}>Discussion history </ModalHeader>
         <ModalBody>
           <table class="table table-bordered">
             <thead>
               <tr style={{backgroundColor: `${headColor}`,  color: "#fff"}}>
-                <th scope="row" style={{border: `1px solid ${headColor}`}}>S.No</th>
+                <th scope="row" style={{border: `1px solid ${headColor}`}}>S.no</th>
                 <th scope="row" style={{border: `1px solid ${headColor}`}}>Date</th>
                 <th scope="row" style={{border: `1px solid ${headColor}`}}>Name</th>
                 <th scope="row" style={{border: `1px solid ${headColor}`}}>Message</th>

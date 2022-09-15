@@ -171,10 +171,10 @@ console.log("data", data)
         <ModalHeader toggle={ViewReport}>
           
            <Typography variant="h6">
-           View All Report 
+           View all report 
            </Typography>
            <button class="autoWidthBtn" onClick={() => ViewDiscussionToggel()}>
-                View Discussion
+                View discussion
               </button>
            
         </ModalHeader>

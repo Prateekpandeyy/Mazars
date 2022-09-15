@@ -78,7 +78,7 @@ function Customer() {
   const columns = [
     {
       dataField: "",
-      text: "S.No",
+      text: "S.no",
       formatter: (cellContent, row, rowIndex) => {
         return rowIndex + 1;
       },
@@ -107,7 +107,7 @@ function Customer() {
       },
       {
         dataField: "phone",
-        text: "Mobile No",
+        text: "Mobile no",
      
       },
       {
@@ -137,19 +137,19 @@ function Customer() {
     },
     {
       dataField: "gstin_no",
-      text: "GSTIN",
+      text: "Gstin",
       sort: true,
      
     },
     {
       dataField: "secondary_email",
-      text: "Secondary Email",
+      text: "Secondary email",
       sort: true,
      
     },
     {
       dataField: "created",
-      text: "Date of Registration",
+      text: "Date of registration",
       sort: true,
       
     },

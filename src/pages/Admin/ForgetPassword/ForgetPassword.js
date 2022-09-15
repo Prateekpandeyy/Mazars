@@ -13,7 +13,8 @@ import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 import Mandatory from "../../../components/Common/Mandatory";
 import { Spinner } from "reactstrap";
-
+import MainContainer from "../../../components/Common/MainContainer";
+import CustomHeading from "../../../components/Common/CustomHeading";
 
 const Schema = yup.object().shape({
   p_email: yup.string().email("invalid email").required("required email"),
@@ -71,52 +72,50 @@ function ForgetPassword(props) {
 
   return (
     <>
-      <Header admin="admin" />
-      <div className="container">
-        <div className="form">
-          <div className="heading">
-            <h2>Forgot Password</h2>
-          </div>
+   <Header admin="admin" />
+      
+      <div className="form">
+       <CustomHeading>
+       Forgot password
+        </CustomHeading>
 
-          {
-            loading ?
-              <div className="col-md-12">
-                <Spinner color="primary" />
+        {
+          loading ?
+            <div className="col-md-12">
+              <Spinner color="primary" />
+            </div>
+            :
+            <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
+
+              <div className="mb-3">
+                <label className="form-label">Email</label>
+                <input
+                  type="text"
+                  className={classNames("form-control", {
+                    "is-invalid": errors.p_email,
+                  })}
+                  name="p_email"
+                  ref={register}
+                  placeholder="Enter Email"
+                  defaultValue={valueHandler()}
+                />
+                {errors.p_email && (
+                  <div className="invalid-feedback">{errors.p_email.message}</div>
+                )}
               </div>
-              :
-              <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
 
-                <div className="mb-3">
-                  <label className="form-label">Email</label>
-                  <input
-                    type="text"
-                    className={classNames("form-control", {
-                      "is-invalid": errors.p_email,
-                    })}
-                    name="p_email"
-                    ref={register}
-                    placeholder="Enter Email"
-                    defaultValue={valueHandler()}
-                  />
-                  {errors.p_email && (
-                    <div className="invalid-feedback">{errors.p_email.message}</div>
-                  )}
-                </div>
-
-                <button type="submit" className="autoWidthBtn">
-                  Get OTP
+              <button type="submit" className="autoWidthBtn">
+                Get OTP
+              </button>
+              <Link to="/admin/login" style={{ "margin": "10px" }}>
+                <button type="submit" className="customBtn">
+                  Cancel
                 </button>
-                <Link to="/admin/login" style={{ "margin": "10px" }}>
-                  <button type="submit" className="customBtn">
-                    Cancel
-                  </button>
-                </Link>
-                <Mandatory />
-              </form>
-          }
-        </div>
+              </Link>
+              <Mandatory />
+            </form>
+        }
       </div>
-
      
     </>
   );

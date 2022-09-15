@@ -225,7 +225,7 @@ function AssignmentTab(props) {
       text: "Status",
      
       headerStyle: () => {
-        return { fontSize: "11px", width: "200px" };
+        return { width: "200px" };
       },
 
       formatter: function (cell, row) {
@@ -234,11 +234,11 @@ function AssignmentTab(props) {
             <div>
             {row.paid_status == "2" &&
                 <p>
-                  <span className="declined">Payment Declined</span>
+                  <span className="declined">Payment declined</span>
                 </p>
               }
               <p>
-                <span>Client Discussion :</span>
+                <span>Client discussion :</span>
                <span className={row.client_discussion === "completed" ? "completed" : "inprogress"}>
                                 {row.client_discussion}
                  </span>
@@ -250,19 +250,19 @@ function AssignmentTab(props) {
                  </span>
               </p>
               <p>
-                <span>Final Discussion :</span>
+                <span>Final discussion :</span>
                 <span className={row.final_discussion === "completed" ? "completed" : "inprogress"}>
                      {row.final_discussion}
                  </span>
               </p>
               <p>
-                <span>Delivery of Final Report :</span>
+                <span>Delivery of final report :</span>
                 <span className={row.delivery_report === "completed" ? "completed" : "inprogress"}>
                              {row.delivery_report}
                  </span>
               </p>
               <p>
-                <span>Awaiting Completion:</span>
+                <span>Awaiting completion:</span>
                 <span className={row.other_stage === "completed" ? "completed" : "inprogress"}>
                             {row.other_stage}
                  </span>
@@ -334,7 +334,7 @@ function AssignmentTab(props) {
         return (
           <>
             <div
-              title="Add Assignment stages"
+              title="Add assignment stages"
               style={{ cursor: "pointer", textAlign: "center" }}
             >
                 {

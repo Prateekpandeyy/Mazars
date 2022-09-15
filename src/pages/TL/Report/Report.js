@@ -849,7 +849,7 @@ options={qno} onChange={(e) => queryNumber(e)}/>
             <div className="basicFeild">
             
             <span>
-               <input type="checkbox" name="sno" id="sno" ref={register} checked disabled ref={register}></input>
+               <input type="checkbox" name="sno" id="sno" ref={register} checked disabled></input>
                <label htmlFor="sno">S.No</label>
                </span>
                <span>

@@ -144,7 +144,7 @@ des = false;
         <ModalBody>
           <form onSubmit={handleSubmit(onSubmit)}>
           <div class="form-group">
-          <label>Copy To</label>
+          <label>Copy to</label>
                   <Select
                      isMulti={true}
                      onChange={(e) => clientFun(e)}
@@ -154,7 +154,7 @@ des = false;
 
                 </div>
             <div className="mb-3">
-              <label>Upload Multiple Report</label>
+              <label>Upload multiple report</label>
               <input
                 type="file"
                 name="p_draft"

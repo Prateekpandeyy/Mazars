@@ -859,30 +859,30 @@ options={qno} onChange={(e) => queryNumber(e)}/>
    <div className="row">
        <div className="col-md-12">
            <fieldset className="my-fieldset">
-           <legend className="login-legend">Basic Query Details</legend>
+           <legend className="login-legend">Basic query details</legend>
            <div className="basicFeild">
            <span>
                <input type="checkbox" onClick={(i) => selectAllbasic(i)} name="select_all" className="selectall" id="select_all" ref={register}></input>
-               <label htmlFor="select_all">Select All</label>
+               <label htmlFor="select_all">Select all</label>
                </span>
                </div>
             <div className="basicFeild">
             
             <span>
                <input type="checkbox" name="sno" id="sno" ref={register} checked disabled></input>
-               <label htmlFor="sno">S.No</label>
+               <label htmlFor="sno">S.no</label>
                </span>
                <span>
                <input type="checkbox" name="qno" ref={register} id="qno" checked disabled></input>
-               <label htmlFor="qno">Query No</label>
+               <label htmlFor="qno">Query no</label>
                </span>
                <span>
                <input type="checkbox" ref={register} name="dataQuery" id="dataQuery" checked disabled></input>
-               <label htmlFor="dataQuery">Query Date </label>
+               <label htmlFor="dataQuery">Query date </label>
                </span>
                <span>
                <input type="checkbox" ref={register} name="cust_id" id="cust_id" checked disabled></input>
-               <label htmlFor="cust_id">Client Id</label>
+               <label htmlFor="cust_id">Client id</label>
             </span>
             <span>
                <input type="checkbox" ref={register} name="basicCategory" id="basicCategory" checked disabled></input>
@@ -890,21 +890,21 @@ options={qno} onChange={(e) => queryNumber(e)}/>
              </span>
              <span>
                <input type="checkbox" ref={register} name="basic_sub_category" id="basic_sub_category" checked disabled></input>
-               <label htmlFor="basic_sub_category">Sub Category</label>
+               <label htmlFor="basic_sub_category">Sub category</label>
                </span>
                <span> 
 <input type="checkbox" ref={register} name="tl_name" id="tl_name" checked disabled></input>
-<label htmlFor="tl_name">Name of Team Leader</label>
+<label htmlFor="tl_name">Name of team leader</label>
 
 </span>
 <span>
 <input type="checkbox"  ref={register}name="tp_name" id="tp_name" checked disabled></input>
-<label htmlFor="tp_name">Name of Tax Professional</label>
+<label htmlFor="tp_name">Name of tax professional</label>
 </span> 
 
                <span>
 <input type="checkbox" name="assessment" ref={register} checked={checkBox} id="assessment"></input>
-<label htmlFor="assessment">Assessment Year(s)</label>
+<label htmlFor="assessment">Assessment year(s)</label>
 </span>
 
 <span>
@@ -914,24 +914,24 @@ options={qno} onChange={(e) => queryNumber(e)}/>
            
 <span>
 <input type="checkbox" ref={register} name="purpose_p" checked={checkBox} id="purpose_p"></input>
-<label htmlFor="purpose_p">Purpose for Which Opinion is Sought</label>
+<label htmlFor="purpose_p">Purpose for Which opinion is sought</label>
 </span>
 <span>
     <input type="checkbox" ref={register} name="p_format" checked={checkBox} id="p_format"></input>
-<label htmlFor="p_format">Format in Which Opinion is Required</label>
+<label htmlFor="p_format">Format in which opinion is required</label>
 </span>
 <span>
     <input type="checkbox" ref={register} name="t_requested" checked={checkBox} id="t_requested"></input>
-<label htmlFor="t_requested">Timeline Requested</label>
+<label htmlFor="t_requested">Timeline requested</label>
 </span>
 <span>  <input type="checkbox" ref={register} name="spc_que"  checked={checkBox} id="spc_que"></input>
-<label htmlFor="spc_que">Specific Questions</label>
+<label htmlFor="spc_que">Specific questions</label>
 </span>
 <span>  <input type="checkbox" ref={register} name="doa" checked={checkBox} id="doa"></input>
-<label htmlFor="doa">Date of Allocation of Query</label>
+<label htmlFor="doa">Date of allocation of query</label>
 </span>
 <span>  <input type="checkbox" ref={register} checked={checkBox} name="process_status" id="process_status"></input>
-<label htmlFor="process_status">Process Status</label>
+<label htmlFor="process_status">Process status</label>
 </span>
 </div>
 </fieldset>
@@ -947,50 +947,50 @@ options={qno} onChange={(e) => queryNumber(e)}/>
            <div className="basicFeild">
            <span>
                <input type="checkbox" onClick={(i) => selectAllproposal(i)} name="selectallProposal" className="selectall" id="selectallProposal" ref={register}></input>
-               <label htmlFor="selectallProposal">Select All</label>
+               <label htmlFor="selectallProposal">Select all</label>
                </span>
                </div>
             <div className="basicFeild">
 <span>
 <input type="checkbox" ref={register} name="dateProposal" checked={proposalCheckbox} id="dateProposal"></input>
-<label htmlFor="dateProposal">Date of Proposal</label>
+<label htmlFor="dateProposal">Date of proposal</label>
 </span>
 <span>
 <input type="checkbox" ref={register} name="proposedAmount" checked={proposalCheckbox} id="proposedAmount"></input>
-<label htmlFor="proposedAmount">Proposed Amount</label>
+<label htmlFor="proposedAmount">Proposed amount</label>
 </span>
 <span>
 <input type="checkbox"  ref={register} name="paymentTerms" checked={proposalCheckbox} id="paymentTerms"></input>
-<label htmlFor="paymentTerms">Payment Terms</label>
+<label htmlFor="paymentTerms">Payment terms</label>
 </span>
 <span>
 <input type="checkbox" ref={register} name="proposal_status"  checked={proposalCheckbox}id="proposal_status"></input>
-<label htmlFor="proposal_status">Proposal Status</label>
+<label htmlFor="proposal_status">Proposal status</label>
 </span>
 <span>  <input type="checkbox" ref={register} checked={proposalCheckbox} name="acceptedAmount" id="acceptedAmount"></input>
-<label htmlFor="acceptedAmount">Accepted Amount </label>
+<label htmlFor="acceptedAmount">Accepted amount </label>
 </span>
 
 <span>  <input type="checkbox" ref={register} name="date_acceptance" checked={proposalCheckbox} id="date_acceptance"></input>
-<label htmlFor="date_acceptance">Date of Acceptance / Decline</label>
+<label htmlFor="date_acceptance">Date of acceptance / Decline</label>
 </span>
 <span>
 <input type="checkbox" ref={register} checked={proposalCheckbox} name="amount_receipt" id="amount_receipt"></input>
-<label htmlFor="amount_receipt">Total Amount Received</label>
+<label htmlFor="amount_receipt">Total amount received</label>
 </span>
 <span>
     <input type="checkbox" ref={register} name="amountOutstanding" checked={proposalCheckbox} id="amountOutstanding"></input>
-<label htmlFor="amountOutstanding">Total Amount Outstanding</label>
+<label htmlFor="amountOutstanding">Total amount outstanding</label>
 </span>
 <span>
     <input type="checkbox" ref={register} name="amount_overdue" checked={proposalCheckbox} id="amount_overdue"></input>
-<label htmlFor="amount_overdue">Total Amount Overdue</label>
+<label htmlFor="amount_overdue">Total amount overdue</label>
 </span>
 <span>  <input type="checkbox" ref={register} name="declinedDate" checked={proposalCheckbox} id="declinedDate"></input>
-<label htmlFor="declinedDate">Payment Decline Date</label>
+<label htmlFor="declinedDate">Payment decline date</label>
 </span>     
 <span>  <input type="checkbox" ref={register} name="paymentDeclinedReason" checked={proposalCheckbox} id="paymentDeclinedReason"></input>
-<label htmlFor="paymentDeclinedReason">Payment Decline Reason </label>
+<label htmlFor="paymentDeclinedReason">Payment decline reason </label>
 </span>        
             </div>      
            </fieldset>
@@ -1005,26 +1005,26 @@ options={qno} onChange={(e) => queryNumber(e)}/>
            <div className="basicFeild">
            <span>
                <input type="checkbox" onClick={(i) => selectAllAssignment(i)} name="selectAllAssignment" className="selectall" id="selectAllAssignment" ref={register}></input>
-               <label htmlFor="selectAllAssignment">Select All</label>
+               <label htmlFor="selectAllAssignment">Select all</label>
                </span>
                </div>
             <div className="basicFeild">
            
 <span>
 <input type="checkbox" ref={register} checked={assignmentCheckbox} name="assignDate" id="assignDate"></input>
-<label htmlFor="assignDate">Assignment Date</label>
+<label htmlFor="assignDate">Assignment date</label>
 </span>
 <span>
     <input type="checkbox" ref={register} checked={assignmentCheckbox} name="completionDate" id="completionDate"></input>
-<label htmlFor="completionDate"> Expected Date of Delivery</label>
+<label htmlFor="completionDate"> Expected date of delivery</label>
 </span>
 <span>
     <input type="checkbox" ref={register} checked={assignmentCheckbox} name="assignStatus" id="assignStatus"></input>
-<label htmlFor="assignStatus">Assignment Status</label>
+<label htmlFor="assignStatus">Assignment status</label>
 </span>
 
 <span>  <input type="checkbox" ref={register} checked={assignmentCheckbox} name="completionQuery" id="completionQuery"></input>
-<label htmlFor="completionQuery">Date of Completion of Query </label>
+<label htmlFor="completionQuery">Date of completion of query </label>
 </span>
 <span>  <input type="checkbox" ref={register} checked={assignmentCheckbox} name="assignTime" id="assignTime"></input>
 <label htmlFor="assignTime">Time taken to complete the assignment</label>
@@ -1040,15 +1040,15 @@ options={qno} onChange={(e) => queryNumber(e)}/>
    <div className="row">
        <div className="col-md-12">
        <fieldset className="my-fieldset">
-           <legend className="login-legend">Payment Receipt</legend>  
+           <legend className="login-legend">Payment receipt</legend>  
            <div className="basicFeild">
            <span>
                <input type="checkbox" onClick={(i) => selectAllPayment(i)} name="selectAllPayment" className="selectall" id="selectAllPayment" ref={register}></input>
-               <label htmlFor="selectAllPayment">Select All</label>
+               <label htmlFor="selectAllPayment">Select all</label>
                </span>
                <span>
 <input type="checkbox" ref={register}  name="search_pay_amount" id="search_pay_amount"></input>
-<label htmlFor="search_pay_amount">Payment Received Record Only</label>
+<label htmlFor="search_pay_amount">Payment received record only</label>
 </span> 
 
 <span>
@@ -1096,31 +1096,31 @@ onChange={(e) => setCompanyName2(e)}/>
 </span>
             <span>
 <input type="checkbox" ref={register} checked={paymnetCheckbox} name="invoice_number" id="invoice_number"></input>
-<label htmlFor="invoice_number">Invoice Number</label>
+<label htmlFor="invoice_number">Invoice number</label>
 </span> 
 <span>
 <input type="checkbox" ref={register} checked={paymnetCheckbox} name="dos" id="dos"></input>
-<label htmlFor="dos">Description of Services</label>
+<label htmlFor="dos">Description of services</label>
 </span> 
 <span>
 <input type="checkbox" ref={register} checked={paymnetCheckbox} name="basic_amount" id="basic_amount"></input>
-<label htmlFor="basic_amount">Basic Amount</label>
+<label htmlFor="basic_amount">Basic amount</label>
 </span>
 <span>
 <input type="checkbox" ref={register} checked={paymnetCheckbox} name="pocket_expensive" id="pocket_expensive"></input>
-<label htmlFor="pocket_expensive">Out of Pocket Expenses</label>
+<label htmlFor="pocket_expensive">Out of pocket expenses</label>
 </span>
 <span>
 <input type="checkbox" ref={register} checked={paymnetCheckbox} name="cget_tax" id="cget_tax"></input>
-<label htmlFor="cget_tax">CGST Tax</label>
+<label htmlFor="cget_tax">CGST tax</label>
 </span>
 <span>
 <input type="checkbox" ref={register} checked={paymnetCheckbox} name="igst_tax" id="igst_tax"></input>
-<label htmlFor="igst_tax">IGST Tax </label>
+<label htmlFor="igst_tax">IGST tax </label>
 </span>
 <span>
 <input type="checkbox" ref={register} checked={paymnetCheckbox} name="sgst_tax" id="sgst_tax"></input>
-<label htmlFor="sgst_tax">SGST Tax</label>
+<label htmlFor="sgst_tax">SGST tax</label>
 </span>
 <span>
 <input type="checkbox" ref={register} checked={paymnetCheckbox} name="total_gst" id="total_gst"></input>
@@ -1128,11 +1128,11 @@ onChange={(e) => setCompanyName2(e)}/>
 </span>
 <span>
 <input type="checkbox" ref={register} checked={paymnetCheckbox} name="total_invoice" id="total_invoice"></input>
-<label htmlFor="total_invoice">Invoice Amount </label>
+<label htmlFor="total_invoice">Invoice amount </label>
 </span>
 <span>
 <input type="checkbox" ref={register} checked={paymnetCheckbox} name="tds" id="tds"></input>
-<label htmlFor="tds">TDS Deducted</label>
+<label htmlFor="tds">TDS deducted</label>
 </span> 
 {/* <span>
 <input type="checkbox" ref={register} checked={paymnetCheckbox} name="net_amount" id="net_amount"></input>
@@ -1140,22 +1140,22 @@ onChange={(e) => setCompanyName2(e)}/>
 </span> */}
             <span>
 <input type="checkbox" ref={register} checked={paymnetCheckbox} name="receiptDate" id="receiptDate"></input>
-<label htmlFor="receiptDate">Date of Receipt</label>
+<label htmlFor="receiptDate">Date of receipt</label>
 </span>   
 <span>
 <input type="checkbox" ref={register} checked={paymnetCheckbox} name="amountReceived" id="amountReceived"></input>
-<label htmlFor="amountReceived">Amount Received</label>
+<label htmlFor="amountReceived">Amount received</label>
 </span>
 
 <span>
 <input type="checkbox" ref={register} checked={paymnetCheckbox} name="amount_type" id="amount_type"></input>
-<label htmlFor="amount_type">Payment Mode </label>
+<label htmlFor="amount_type">Payment mode </label>
 </span>
  </div>
            </fieldset>
            </div>
    </div>
-   <button type="submit" className="autoWidthBtn my-3">Generate Report</button>
+   <button type="submit" className="autoWidthBtn my-3">Generate report</button>
    <button type="button" className="autoWidthBtn m-3" onClick={() => resetData()}>Reset</button>
   
   </form>

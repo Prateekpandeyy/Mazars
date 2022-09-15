@@ -150,7 +150,7 @@ function Demo() {
   const resources = [
     {
       fieldName: "question_id",
-      title: "Query No",
+      title: "Query no",
       instances: assignmentdata,
     },
     {
@@ -505,7 +505,7 @@ history.push(`/teamleader/meeting/${data.id}`);
         {...restProps}
       >
 
-        <AppointmentForm.Label text="All Participants" type="title" />
+        <AppointmentForm.Label text="All participants" type="title" />
         <AppointmentForm.TextEditor
           value={appointmentData.username}
           readOnly

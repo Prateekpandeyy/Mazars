@@ -130,7 +130,7 @@ function BasicQuery({qstatus, panel, p, diaplaySpecific, queryDocs, year, purpos
             fontSize: "18px",
           }}
         >
-          Basic Query Information
+          Basic query information
         </p>
         <table className="table table-bordered p-2">
           <thead>
@@ -141,15 +141,15 @@ function BasicQuery({qstatus, panel, p, diaplaySpecific, queryDocs, year, purpos
           </thead>
           <tbody>
             <tr>
-              <th scope="row">Query No</th>
+              <th scope="row">Query no</th>
               <td>{p.assign_no}</td>
             </tr>
             <tr>
-              <th scope="row">Query Date</th>
+              <th scope="row">Query date</th>
               <td>{CommonServices.changeFormateDate(p.created)}</td>
             </tr>
             <tr>
-              <th scope="row">Client ID</th>
+              <th scope="row">Client id</th>
               <td>{p.email}</td>
             </tr>
             <tr>
@@ -157,15 +157,15 @@ function BasicQuery({qstatus, panel, p, diaplaySpecific, queryDocs, year, purpos
               <td>{p.cat_name}</td>
             </tr>
             <tr>
-              <th scope="row">Sub- Category</th>
+              <th scope="row">Sub- category</th>
               <td>{p.sub_cat_name}</td>
             </tr>
             <tr>
-              <th scope="row">Name of the Case</th>
+              <th scope="row">Name of the case</th>
               <td>{p.case_name}</td>
             </tr>
             <tr>
-              <th scope="row">Assessment Year(s)</th>
+              <th scope="row">Assessment year(s)</th>
               <td>
                 {year.map((p, i) => (
                   <p key={i}>{p.value}</p>
@@ -177,7 +177,7 @@ function BasicQuery({qstatus, panel, p, diaplaySpecific, queryDocs, year, purpos
            <td className="tableStyle"> <Markup content={p.fact_case} /></td>
             </tr>
             <tr>
-              <th scope="row">Uploaded Documents</th>
+              <th scope="row">Uploaded dcuments</th>
               <td>
                 {queryDocs.map((p, i) => (
                   <p style={{ display: "flex" }}>
@@ -208,7 +208,7 @@ function BasicQuery({qstatus, panel, p, diaplaySpecific, queryDocs, year, purpos
               </td>
             </tr>
             <tr>
-              <th scope="row">Format in which Opinion is required</th>
+              <th scope="row">Format in which opinion is required</th>
               <td colspan="1">
                 <p>{p.softcopy_word === "1" && "Softcopy - Word/ Pdf"}</p>
                 <p>
@@ -223,18 +223,18 @@ function BasicQuery({qstatus, panel, p, diaplaySpecific, queryDocs, year, purpos
               </td>
             </tr>
             <tr>
-              <th scope="row">Timelines within which Opinion is Required</th>
+              <th scope="row">Timelines within which opinion is required</th>
               <td colspan="1">{p.Timelines}</td>
             </tr>
             {qstatus == "-1" || p.is_delete == "1" ? 
             <tr>
-              <th scope="row">Date of Decline</th>
+              <th scope="row">Date of decline</th>
               <td>{qstatus == "-1" || p.is_delete == "1" ? declined2 : ""}</td>
               </tr> : ""}
             {
               p.query_status == "-1" ?
                 <tr>
-                  <th scope="row">Reasons for Admin Decline Query</th>
+                  <th scope="row">Reasons for admin decline query</th>
                   <td colspan="1">
                     {
                       p.decline_notes
@@ -246,7 +246,7 @@ function BasicQuery({qstatus, panel, p, diaplaySpecific, queryDocs, year, purpos
             {
               p.is_delete == "1" ?
                 <tr>
-                  <th scope="row">Reasons for client Decline Query</th>
+                  <th scope="row">Reasons for client decline query</th>
                   <td colspan="1">
                     {
                       p.decline_notes

@@ -23,7 +23,7 @@ import { baseUrl2, baseUrl3 } from "../../../config/config";
 import { useParams, Link, useHistory } from "react-router-dom";
 import styled from "styled-components";
 import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
-
+import CustomHeading from "../../../components/Common/CustomHeading";
 import { Typography } from "antd";
 
 const PayDetails = (props) => {
@@ -97,7 +97,7 @@ setModal(!modal)
     const columns = [
         {
             dataField: "",
-            text: "S.No",
+            text: "S.no",
             formatter: (cellContent, row, rowIndex) => {
                 return rowIndex + 1;
             },
@@ -108,13 +108,13 @@ setModal(!modal)
         },
         {
             dataField: "assign_no",
-            text: "Query.No",
+            text: "Query no",
             
          
         },
         {
             dataField: "installment_no",
-            text: "Installment No",
+            text: "Installment no",
            
             
            
@@ -122,21 +122,21 @@ setModal(!modal)
         },
         {
             dataField: "billno",
-            text: "Invoice No",
+            text: "Invoice no",
            
            
             formatter : function(cell, row){
                 return(
                     <>
                     {row.invoice_generated == "0" ? "" : 
-                    <p style={{fontSize : "11px"}}>{row.billno}</p>}
+                    <p>{row.billno}</p>}
                     </>
                 )
             }
         },
         {
             dataField: "due_date",
-            text: "Due Date",
+            text: "Due date",
            sort : true,
           
             formatter : function(cell, row){
@@ -153,13 +153,13 @@ setModal(!modal)
        
         {
             dataField: "invoice_amount",
-            text: "Invoice Amount",
+            text: "Invoice amount",
            
            
         },
         {
             dataField : "tds_amount",
-            text : "Tds Deducted",
+            text : "Tds deducted",
             
             formatter : function(cell, row){
                 return(
@@ -172,7 +172,7 @@ setModal(!modal)
         },
         {
             dataField : "amount",
-            text : "Amount Paid",
+            text : "Amount paid",
            
             formatter: function (cell,row){
                 return(
@@ -209,7 +209,7 @@ setModal(!modal)
           
         {
             dataField: "",
-            text: "Payment Details",
+            text: "Payment details",
            
            
            
@@ -222,7 +222,7 @@ setModal(!modal)
               {row.is_paid == "0" ? 
                 "" :   <>
             {row.is_paid == "1" ?  <a href={row.receipt_url} target = "_blank">Payment receipt</a> 
-            : <p style={{fontWieght: "800", fontSize: "14px", padding: "5px", color : "red"}} className="declined">Declined</p> }
+            : <p style={{padding: "5px", color : "red"}} className="declined">Declined</p> }
             </>}
               </>
                : ""}
@@ -261,7 +261,9 @@ return(
                 </Link>
             </Col>
             <Col md="8">
-              <h4>Payment Details</h4>
+          <CustomHeading>
+          Payment details
+          </CustomHeading>
             </Col>
           </Row>
         </CardHeader>

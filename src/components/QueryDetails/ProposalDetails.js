@@ -264,7 +264,7 @@ let nd = 0;
             fontSize: "18px",
           }}
         >
-          Proposal and Payment Details
+          Proposal and payment details
         </p>
 
         <table className="table table-bordered">
@@ -276,32 +276,26 @@ let nd = 0;
           </thead>
           <tbody>
             <tr>
-              <th scope="row">Date of Allocation</th>
+              <th scope="row">Date of allocation</th>
               <td>{accept > "1" ? CommonServices.changeFormateDate(date_of_allocation) : ""}</td>
             </tr>
             
             
             <tr>
-              <th scope="row">Name of Team Leader</th>
+              <th scope="row">Name of team leader</th>
               <td>{accept > "1" ? tlName2 : ""}</td>
             </tr>
             <tr>
-              <th scope="row">Name of Tax Professional(s)</th>
+              <th scope="row">Name of tax professional(s)</th>
               <td>{tpStatus == "2" ? tp22 : ""}</td>
             </tr>
             <tr>
-              <th scope="row">Date of Proposal</th>
+              <th scope="row">Date of proposal</th>
               <td>
                 <div style={{ display: "flex", justifyContent: "space-between" }}>
                   {CommonServices.removeTime(proposal_date)}
                   {proposal_date && (
-                    // <a
-                    //   className="customBtn"
-                    //   href={`${baseUrl}/customers/dounloadpdf?id=${p.id}`}
-                    //   role="button"
-                    // >
-                    //   Download
-                    // </a>
+                   
                     <button className="customBtn" onClick={() => downloadpdf()}>
                       Download
                       </button>
@@ -310,7 +304,7 @@ let nd = 0;
               </td>
             </tr>
             <tr>
-              <th scope="row">Scope of Work</th>
+              <th scope="row">Scope of work</th>
               <td className="tableStyle"> <Markup content={description} /></td>
             </tr>
 
@@ -318,7 +312,7 @@ let nd = 0;
               <th scope="row">Amount</th>
               <td>
                 <tr style={{display : "flex", width : "100%"}}>
-                  <th style={{display : "flex", width : "50%"}}>Amount Type</th>
+                  <th style={{display : "flex", width : "50%"}}>Amount type</th>
                   <th style={{display : "flex", width : "50%"}}>Price</th>
                 </tr>
                 <tr style={{display : "flex", width : "100%"}}>
@@ -345,13 +339,13 @@ let nd = 0;
             </tr>
 
             <tr>
-              <th scope="row">Payment Terms</th>
+              <th scope="row">Payment terms</th>
               {
                 payment_terms == "lumpsum" ?
                   <td>
                     <tr>
-                      <th>Payment Type</th>
-                      <th>Due Dates</th>
+                      <th>Payment type</th>
+                      <th>Due dates</th>
                     </tr>
                     <tr>
                       <td>{CommonServices.capitalizeFirstLetter(payment_terms)}</td>
@@ -364,10 +358,10 @@ let nd = 0;
                   payment_terms == "installment" ?
                     <td>
                       <tr style={{display : "flex", width : "100%"}}>
-                        <th style={{display : "flex", width : "25%"}}>Payment Type</th>
-                        <th style={{display : "flex", width : "25%"}}>No of Installments</th>
-                        <th style={{display : "flex", width : "25%"}}>Installment Amount</th>
-                        <th style={{display : "flex", width : "25%"}}>Due Dates</th>
+                        <th style={{display : "flex", width : "25%"}}>Payment type</th>
+                        <th style={{display : "flex", width : "25%"}}>No of installments</th>
+                        <th style={{display : "flex", width : "25%"}}>Installment amount</th>
+                        <th style={{display : "flex", width : "25%"}}>Due dates</th>
                       
                       </tr>
                       <tr style={{display : "flex", width : "100%"}}>
@@ -385,11 +379,11 @@ let nd = 0;
 
             </tr>
             <tr>
-              <th scope="row">Proposed Amount</th>
+              <th scope="row">Proposed amount</th>
               <td>{nfObject.format(amount)}</td>
             </tr>
             <tr>
-              <th scope="row">Proposal Status</th>
+              <th scope="row">Proposal status</th>
               <td>
                 {p.query_status == "4" && "Inprogress"}
                 {p.query_status == "6" && "Declined"}
@@ -397,23 +391,23 @@ let nd = 0;
               </td>
             </tr>
             <tr>
-              <th scope="row">Amount Accepted</th>
+              <th scope="row">Amount accepted</th>
               <td>{nfObject.format(accepted_amount)}</td>
             </tr>
             <tr>
-              <th scope="row">Date of Acceptance / Decline</th>
+              <th scope="row">Date of acceptance / Decline</th>
               <td>{CommonServices.removeTime(cust_accept_date)}</td>
             </tr>
             <tr>
-              <th scope="row">Payment History</th>
+              <th scope="row">Payment history</th>
               <td>
                 <tr style={{display : "flex", width : "100%"}}>
                   <th style={{display : "flex", width :"20%"}}>Date</th>
                  
-                    <th style={{display : "flex", width : "20%"}}>Invoice Amount</th>
-                    <th style={{display : "flex", width : "20%"}}>Tds Deducted</th>
-                    <th style={{display : "flex", width : "20%"}}>Amount Paid </th>
-                    <th style={{display : "flex", width : "20%"}}>Payment Receipt</th>
+                    <th style={{display : "flex", width : "20%"}}>Invoice amount</th>
+                    <th style={{display : "flex", width : "20%"}}>Tds deducted</th>
+                    <th style={{display : "flex", width : "20%"}}>Amount paid </th>
+                    <th style={{display : "flex", width : "20%"}}>Payment receipt</th>
                 </tr>
                 {paymentDetails.map((pay, i) => (
                   <tr style={{display : "flex", width : "100%"}}>
@@ -444,15 +438,15 @@ let nd = 0;
               </td>
             </tr>
             <tr>
-              <th scope="row">Payment Received</th>
+              <th scope="row">Payment received</th>
               <td>{nfObject.format(payment_received)}</td>
             </tr>
             <tr>
-              <th scope="row">Payment Overdue</th>
+              <th scope="row">Payment overdue</th>
               <td>{overDue}</td>
             </tr>
             <tr>
-              <th scope="row">Payment Outstanding</th>
+              <th scope="row">Payment outstanding</th>
               <td>{nfObject.format(accepted_amount - payment_received)}</td>
             </tr>
          
@@ -465,7 +459,7 @@ let nd = 0;
               <td>{p.notes}</td>
             </tr>
             <tr>
-                <th scope="row">Payment Decline Date</th>
+                <th scope="row">Payment decline date</th>
                 <td>{CommonServices.removeTime(p.payment_declined_date)}</td>
               </tr>
               </>
@@ -474,7 +468,7 @@ let nd = 0;
              {
              p.decline_notes !== null && p.decline_notes.length > 0 ?
                 <tr>
-                  <th scope="row">Reasons for proposal Decline</th>
+                  <th scope="row">Reasons for proposal decline</th>
                   <td colspan="1">
                     {
                       p.decline_notes

@@ -77,13 +77,13 @@ const canBtn = {
    
     const columns = [
         {
-            text: "S.No",
+            text: "S.no",
             dataField: "",
             formatter: (cellContent, row, rowIndex) => {
                 return rowIndex + 1;
             },
             headerStyle: () => {
-                return { fontSize: "12px", width: "8px", padding : "9px 5px" };
+                return {  width: "8px", padding : "9px 5px" };
             },
         },
         {
@@ -91,14 +91,14 @@ const canBtn = {
             sort: true,
             dataField: "created_date",
             headerStyle: () => {
-                return { fontSize: "12px", width: "30px" };
+                return { width: "30px" };
             },
         },
         {
-            text: "Query No",
+            text: "Query no",
             dataField: "assign_id",
             headerStyle: () => {
-                return { fontSize: "12px", width: "20px" };
+                return { width: "20px" };
             },
         },
         
@@ -106,15 +106,15 @@ const canBtn = {
             text: "Participants",
             dataField: "participants",
             headerStyle: () => {
-                return { fontSize: "12px", width: "40px" };
+                return {width: "40px" };
             },
         },
        
         {
-            text: "Summary of Discussion",
+            text: "Summary of discussion",
             dataField: "message",
             headerStyle: () => {
-                return { fontSize: "12px", width: "80px" };
+                return {  width: "80px" };
             },
         },
         {
@@ -133,7 +133,8 @@ const canBtn = {
                                    return(
                                 <>
                                 <p style={videoIcon}>
-                                <span>{a++}</span>   <i
+                                <span>{a++}</span>
+                                   <i
                                     className="material-icons"
                                     style={{
                                         cursor: "pointer",

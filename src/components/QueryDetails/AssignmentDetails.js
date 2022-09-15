@@ -142,7 +142,7 @@ function AssignmentDetails({ p, panel, finalDate, submitData, customerQuery , di
             fontSize: "18px",
           }}
         >
-          Assignment Details
+          Assignment details
         </p>
         <table className="table table-bordered">
           <thead>
@@ -153,15 +153,15 @@ function AssignmentDetails({ p, panel, finalDate, submitData, customerQuery , di
           </thead>
           <tbody>
             <tr>
-              <th scope="row">Assignment Number</th>
+              <th scope="row">Assignment number</th>
               <td>{assignment_number}</td>
             </tr>
             <tr>
-              <th scope="row">Assignment Date</th>
+              <th scope="row">Assignment date</th>
               <td>{CommonServices.removeTime(assignment_date)}</td>
             </tr>
             <tr>
-              <th scope="row">Proposed Date of Completion</th>
+              <th scope="row">Proposed date of completion</th>
               <td>
                 {p.query_status >= 9 ? (
                   <p>{CommonServices.removeTime(p.Exp_Delivery_Date)}</p>
@@ -170,30 +170,30 @@ function AssignmentDetails({ p, panel, finalDate, submitData, customerQuery , di
             </tr>
             {/* {p.query_status >= 9 ? ( */}
             <tr>
-              <th scope="row">Assignment Status</th>
+              <th scope="row">Assignment status</th>
               <td>
                 <tr style={{display : "flex"}}>
-                  <th  style={{display : "flex", width : "200px"}}>Assignment Stage</th>
+                  <th  style={{display : "flex", width : "200px"}}>Assignment stage</th>
                   <th  style={{display : "flex", width : "200px"}}>Status</th>
                 </tr>
                <tr style={{display : "flex"}}>
-                  <td  style={{display : "flex", width : "200px"}}>Client Discussion</td>
+                  <td  style={{display : "flex", width : "200px"}}>Client discussion</td>
                   <td  style={{display : "flex", width : "200px"}}>{CommonServices.capitalizeFirstLetter(p.client_discussion)}</td>
                 </tr>
                <tr style={{display : "flex"}}>
-                  <td  style={{display : "flex", width : "200px"}}>Draft Reports</td>
+                  <td  style={{display : "flex", width : "200px"}}>Draft reports</td>
                   <td  style={{display : "flex", width : "200px"}}>{CommonServices.capitalizeFirstLetter(p.draft_report)}</td>
                 </tr>
                <tr style={{display : "flex"}}>
-                  <td  style={{display : "flex", width : "200px"}}>Final Discussion</td>
+                  <td  style={{display : "flex", width : "200px"}}>Final discussion</td>
                   <td  style={{display : "flex", width : "200px"}}>{CommonServices.capitalizeFirstLetter(p.final_discussion)}</td>
                 </tr>
                <tr style={{display : "flex"}}>
-                  <td  style={{display : "flex", width : "200px"}}>Delivery of Final Reports</td>
+                  <td  style={{display : "flex", width : "200px"}}>Delivery of final reports</td>
                   <td  style={{display : "flex", width : "200px"}}>{CommonServices.capitalizeFirstLetter(p.delivery_report)}</td>
                 </tr>
                <tr style={{display : "flex"}}>
-                  <td  style={{display : "flex", width : "200px"}}>Awaiting Completion</td>
+                  <td  style={{display : "flex", width : "200px"}}>Awaiting completion</td>
                   <td  style={{display : "flex", width : "200px"}}>{CommonServices.capitalizeFirstLetter(p.other_stage)}</td>
                 </tr>
               </td>

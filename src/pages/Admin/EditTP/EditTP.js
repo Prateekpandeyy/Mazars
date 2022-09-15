@@ -502,27 +502,8 @@ function EditTP() {
   return (
     <Layout adminDashboard="adminDashboard" adminUserId={userid}>
       <Card>
-        {/* <CardHeader>
-          <div className="col-md-12 d-flex justify-content-between">
-            <div>
-              <button
-                className="autoWidthBtn ml-3"
-                onClick={() => history.goBack()}
-              >
-                <i className="fas fa-arrow-left mr-2"></i>
-                Go Back
-              </button>
-            </div>
-            <div className="text-center ml-5">
-              <h4>Edit Tax Professional</h4>
-            </div>
-            <div>
-             {showDel == "0" ?  <button className="btn btn-danger" onClick={(e) => del(e)}>Delete</button> : ""}
-              </div>
-          </div>
-        </CardHeader> */}
-
-<CardHeader>
+     
+{/* <CardHeader>
           <Row>
           <Col md="3">
           <button
@@ -537,6 +518,28 @@ function EditTP() {
             <Col md="5">
             <CustomHeading>
          Edit tax professional
+            </CustomHeading>
+            </Col>
+            <Col md= "3">
+            {showDel == "0" ?  <button className="btn btn-danger" onClick={(e) => del(e)}>Delete</button> : ""}
+            </Col>
+          </Row>
+        </CardHeader> */}
+       <CardHeader>
+          <Row>
+          <Col md="4">
+          <button
+                className="autoWidthBtn" 
+                onClick={() => history.goBack()}
+              >
+               
+                Go Back
+              </button>
+              
+            </Col>
+            <Col md="5">
+            <CustomHeading>
+            Edit tax professional
             </CustomHeading>
             </Col>
             <Col md= "3">
@@ -566,7 +569,7 @@ function EditTP() {
                    <div className="row">
                   <div className="col-md-6">
                   <div className="form-group">
-                  <label>Team Leader post name <span className="declined">*</span></label>
+                  <label>Team leader post name <span className="declined">*</span></label>
                   <input type="text" className = "form-control" 
                   defaultValue = {data11} 
               disabled />   
@@ -574,7 +577,7 @@ function EditTP() {
                   </div>
                     <div className="col-md-6">
                       <div className="form-group">
-                      <label> Team Leader post email <span className="declined">*</span></label>
+                      <label> Team leader post email <span className="declined">*</span></label>
                         <input
                           type="text"
                           name="post_email"

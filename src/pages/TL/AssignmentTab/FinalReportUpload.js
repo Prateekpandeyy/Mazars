@@ -146,7 +146,7 @@ const selectedUser = () => {
         <ModalBody>
           <form onSubmit={handleSubmit(onSubmit)}>
           <div class="form-group">
-          <label>Copy To</label>
+          <label>Copy to</label>
           <Select
                      isMulti={true}
                      onChange={(e) => clientFun(e)}
@@ -156,7 +156,7 @@ const selectedUser = () => {
 
                 </div>
             <div className="mb-3">
-              <label>Upload Multiple Report</label>
+              <label>Upload multiple report</label>
               <input
                 type="file"
                 name="p_final"

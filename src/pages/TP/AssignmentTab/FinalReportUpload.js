@@ -142,11 +142,11 @@ function DraftReport({ des,  qno, loading, setLoading, fianlModal, uploadFinalRe
   return (
     <div>
       <Modal isOpen={fianlModal} toggle={uploadFinalReport} size="md">
-        <ModalHeader toggle={uploadFinalReport}>Final Report</ModalHeader>
+        <ModalHeader toggle={uploadFinalReport}>Final report</ModalHeader>
         <ModalBody>
           <form onSubmit={handleSubmit(onSubmit)}>
             <div class="form-group">
-          <label>Copy To</label>
+          <label>Copy to</label>
           <Select
                      isMulti={true}
                      onChange={(e) => clientFun(e)}
@@ -156,7 +156,7 @@ function DraftReport({ des,  qno, loading, setLoading, fianlModal, uploadFinalRe
 
                 </div>
             <div className="mb-3">
-              <label>Upload Multiple Report</label>
+              <label>Upload multiple report</label>
               <input
                 type="file"
                 name="p_final"

@@ -478,7 +478,7 @@ Cookies.set("channel_2", data.question_id);
         {...restProps}
       >
 
-        <AppointmentForm.Label text="All Participants" type="title" />
+        <AppointmentForm.Label text="All participants" type="title" />
         <AppointmentForm.TextEditor
           value={appointmentData.username}
           readOnly

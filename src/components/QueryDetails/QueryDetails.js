@@ -61,7 +61,7 @@ function QueryDetails({
               className={classnames({ active: activeTab === '1' })}
               onClick={() => { toggle('1'); }}
             >
-              Basic Query Information
+              Basic query information
             </NavLink>
           </NavItem>
           <NavItem>

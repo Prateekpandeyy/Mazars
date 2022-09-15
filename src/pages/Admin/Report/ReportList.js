@@ -67,7 +67,7 @@ const ReportList = () => {
     const columns = [
         {
         dataFeild : "",
-        text : "S.No",
+        text : "S.no",
         formatter : (cellContent, row, rowIndex) =>{
           return rowIndex + 1
         },
@@ -77,7 +77,7 @@ const ReportList = () => {
     },
     {
         dataField: "created_date",
-        text: "Created Date",
+        text: "Created date",
         sort: true,
        
         formatter : function formatter(cell, row) {
@@ -133,13 +133,13 @@ const ReportList = () => {
       <div className = "row p-2">
            <div className="col-md-4">
            <CustomHeading>
-           Report List
+           Report list
            </CustomHeading>
        </div>
        <div className="col-md-8" style={{textAlign : "right"}}>
      
           <Link to="/admin/reports" className="autoWidthBtn">
-                                   Generate Report
+                                   Generate report
                                 </Link>
            </div>
            

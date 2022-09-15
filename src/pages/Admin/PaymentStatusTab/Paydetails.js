@@ -9,21 +9,14 @@ import {
   Card,
   CardHeader,
   CardBody,
-  CardTitle,
   Row,
   Col,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  Button,
 } from "reactstrap";
 import BootstrapTable from "react-bootstrap-table-next";
 import { baseUrl2, baseUrl3 } from "../../../config/config";
 import { useParams, Link, useHistory } from "react-router-dom";
 import styled from "styled-components";
-
-import { Typography } from "antd";
+import CustomHeading from "../../../components/Common/CustomHeading";
 
 const PayDetails = (props) => {
     let history = useHistory();
@@ -98,67 +91,57 @@ setModal(!modal)
     const columns = [
         {
             dataField: "",
-            text: "S.No",
+            text: "S.no",
             formatter: (cellContent, row, rowIndex) => {
                 return rowIndex + 1;
             },
-            style: {
-                fontSize: "11px",
-            },
+           
             headerStyle: () => {
-                return { fontSize: "11px", width: "90px" };
+                return { width: "90px" };
             },
         },
         {
             dataField: "assign_no",
-            text: "Q.No",
-            
-            style: {
-                fontSize: "11px",
-            },
+            text: "Q.no",
             headerStyle: () => {
-                return { fontSize: "11px", width: "120px" };
+                return {  width: "120px" };
             },
         },
         {
             dataField: "installment_no",
-            text: "Installment No",
+            text: "Installment no",
            
-            style: {
-                fontSize: "11px",
-            },
+            
             headerStyle: () => {
-                return { fontSize: "11px", width: "80px" };
+                return {  width: "80px" };
             },
            
            
         },
         {
             dataField: "billno",
-            text: "Invoice No",
+            text: "Invoice no",
            
             
             headerStyle: () => {
-                return { fontSize: "11px", width: "150px" };
+                return {  width: "150px" };
             },
             formatter : function(cell, row){
                 return(
                     <>
                     {row.invoice_generated == "0" ? "" : 
-                    <p style={{fontSize : "11px"}}>{row.billno}</p>}
+                    <p>{row.billno}</p>}
                     </>
                 )
             }
         },
         {
             dataField: "due_date",
-            text: "Due Date",
+            text: "Due date",
            sort : true,
-            style: {
-                fontSize: "11px",
-            },
+            
             headerStyle: () => {
-                return { fontSize: "11px", width: "120px" };
+                return {  width: "120px" };
             },
             formatter : function(cell, row){
                 let dueDate=row.due_date.split("-").reverse().join("-")
@@ -174,23 +157,23 @@ setModal(!modal)
        
         {
             dataField: "invoice_amount",
-            text: "Invoice Amount",
+            text: "Invoice amount",
            
             style: {
-                fontSize: "11px", textAlign : "right"
+                 textAlign : "right"
             },
             headerStyle: () => {
-                return { fontSize: "11px", width: "120px" };
+                return {  width: "120px" };
             },
         },
         {
             dataField : "tds_amount",
-            text : "Tds Deducted",
+            text : "Tds deducted",
             style : {
-                fontSize : "11px", textAlign : "right"
+             textAlign : "right"
             }, 
             headerStyle : () => {
-                return { fontSize : "11px", width : "100px"}
+                return { width : "100px"}
             },
             formatter : function(cell, row){
                 return(
@@ -203,12 +186,12 @@ setModal(!modal)
         },
         {
             dataField : "amount",
-            text : "Amount Paid",
+            text : "Amount paid",
             style : {
-                fontSize : "11px", textAlign : "right"
+                 textAlign : "right"
             }, 
             headerStyle : () => {
-                return { fontSize : "11px", width : "100px"}
+                return {  width : "100px"}
             },
             formatter: function (cell,row){
                 return(
@@ -224,11 +207,9 @@ setModal(!modal)
             dataField: "invoice",
             text: "Invoice",
            
-            style: {
-                fontSize: "11px",
-            },
+            
             headerStyle: () => {
-                return { fontSize: "11px", width: "90px" };
+                return {  width: "90px" };
             },
             formatter: function dateFormat(cell, row) {
                 return(
@@ -247,13 +228,11 @@ setModal(!modal)
        
         {
             dataField: "",
-            text: "Payment Receipt",
+            text: "Payment receipt",
            
-            style: {
-                fontSize: "11px",
-            },
+            
             headerStyle: () => {
-                return { fontSize: "11px", width: "90px" };
+                return {  width: "90px" };
             },
            
            formatter: function dateFormat(cell, row){
@@ -265,7 +244,7 @@ setModal(!modal)
               {row.is_paid == "0" ? 
                "":   <>
             {row.is_paid == "1" ?  <a href={row.receipt_url} target="blank">Payment receipt</a> 
-            : <p style={{fontWieght: "800", fontSize: "14px", padding: "5px"}} className="declined">Declined</p> }
+            : <p style={{ padding: "5px"}} className="declined">Declined</p> }
             </>}
               </>
                : ""}
@@ -306,7 +285,9 @@ return(
                 </Link>
             </Col>
             <Col md="8">
-              <h4>Payment Details</h4>
+         <CustomHeading>
+         Payment details
+         </CustomHeading>
             </Col>
           </Row>
         </CardHeader>

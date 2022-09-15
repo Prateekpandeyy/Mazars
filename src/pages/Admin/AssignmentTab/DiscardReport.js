@@ -44,7 +44,7 @@ function DiscardReport({
       <Modal isOpen={ViewDiscussion} toggle={ViewDiscussionToggel} size="lg" scrollable = {true}>
         <ModalHeader toggle={ViewDiscussionToggel}>
           <CustomHeading>
-          Discussion History 
+          Discussion history 
           </CustomHeading>
         </ModalHeader>
         <ModalBody>
@@ -76,17 +76,18 @@ function DiscardReport({
                       {p.sender}
                       </CustomTypography>
                     </td>
-                    <td style={{ width : "460px", overflow : "wrap"}}>
-                      {
-                        p.type == "sent" ?
-                          <i className="fa fa-mail-forward" style={{ color: "red", marginLeft: "10px", marginRight: "10px" }}></i>
-                          :
-                          <i className="fa fa-mail-reply" style={{ color: "green", marginLeft: "10px", marginRight: "10px" }}></i>
-                      }
-                      <CustomTypography>
-                      {p.message}
-                      </CustomTypography>
-                    </td>
+                    <td style={{width : "460px", overflow : "wrap"}}>
+                     
+                     <CustomTypography>
+                     {
+                     p.type == "sent" ?
+                       <i class="fa fa-mail-forward" style={{ color: "red", marginLeft: "10px", marginRight: "10px" }}></i>
+                       :
+                       <i class="fa fa-mail-reply" style={{ color: "green", marginLeft: "10px", marginRight: "10px" }}></i>
+                   }
+                   {p.message}
+                   </CustomTypography>
+                 </td>
                   </tr>
                 </tbody>
               ))

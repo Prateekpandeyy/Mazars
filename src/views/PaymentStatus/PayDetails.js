@@ -25,7 +25,7 @@ import styled from "styled-components";
 import PayModal from "./PayModal";
 import DataTablepopulated from "../../components/DataTablepopulated/DataTabel";
 import  { DiscussProposal} from "../../components/Common/MessageIcon";
-
+import CustomHeading from "../../components/Common/CustomHeading";
 import './index.css';
 const PayDetails = (props) => {
     let history = useHistory();
@@ -99,7 +99,7 @@ setModal(!modal)
     const columns = [
         {
             dataField: "",
-            text: "S.No",
+            text: "S.no",
             formatter: (cellContent, row, rowIndex) => {
                 return rowIndex + 1;
             },
@@ -107,7 +107,7 @@ setModal(!modal)
         },
         {
             dataField: "assign_no",
-            text: "Q.No",
+            text: "Q.no",
             
             formatter: function nameFormatter(cell, row) {
          
@@ -128,25 +128,25 @@ setModal(!modal)
         },
         {
             dataField: "installment_no",
-            text: "Installment No",
+            text: "Installment no",
            
             style: {
-                fontSize: "11px",
+                
                 textAlign : "center"
             },
             headerStyle: () => {
-                return { fontSize: "11px", width: "80px" };
+                return {  width: "80px" };
             },
            
            
         },
         {
             dataField: "billno",
-            text: "Invoice No",
+            text: "Invoice no",
            
             
             headerStyle: () => {
-                return { fontSize: "11px", width: "150px" };
+                return { width: "150px" };
             },
             formatter : function(cell, row){
                 return(
@@ -159,13 +159,11 @@ setModal(!modal)
         },
         {
             dataField: "due_date",
-            text: "Due Date",
+            text: "Due date",
            sort : true,
-            style: {
-                fontSize: "11px",
-            },
+           
             headerStyle: () => {
-                return { fontSize: "11px", width: "120px" };
+                return {  width: "120px" };
             },
             formatter : function(cell, row){
                 let dueDate=row.due_date.split("-").reverse().join("-")
@@ -181,14 +179,14 @@ setModal(!modal)
        
         {
             dataField: "invoice_amount",
-            text: "Invoice Amount",
+            text: "Invoice amount",
            
             style: {
-                fontSize: "11px",
+              
                 textAlign : "right"
             },
             headerStyle: () => {
-                return { fontSize: "11px", width: "120px" };
+                return {  width: "120px" };
             },
             formatter: function nameFormatter(cell, row){
                 var nfObject = new Intl.NumberFormat('hi-IN')
@@ -201,13 +199,13 @@ setModal(!modal)
         },
         {
             dataField : "tds_amount",
-            text : "Tds Deducted",
+            text : "Tds deducted",
             style: {
-                fontSize: "11px",
+              
                 textAlign : "right"
             }, 
             headerStyle : () => {
-                return { fontSize : "11px", width : "100px"}
+                return {  width : "100px"}
             },
            
             formatter: function nameFormatter(cell, row){
@@ -224,13 +222,13 @@ setModal(!modal)
         },
         {
             dataField : "amount",
-            text : "Amount Paid",
+            text : "Amount paid",
             style: {
-                fontSize: "11px",
+              
                 textAlign : "right"
             }, 
             headerStyle : () => {
-                return { fontSize : "11px", width : "100px"}
+                return {  width : "100px"}
             },
             formatter: function nameFormatter(cell, row){
                 var nfObject = new Intl.NumberFormat('hi-IN')
@@ -248,12 +246,8 @@ setModal(!modal)
         {
             dataField: "invoice",
             text: "Invoice / Pay",
-           
-            style: {
-                fontSize: "11px",
-            },
             headerStyle: () => {
-                return { fontSize: "11px", width: "90px" };
+                return { width: "90px" };
             },
             formatter: function dateFormat(cell, row) {
                 return(
@@ -281,11 +275,9 @@ setModal(!modal)
        
         {
             dataField: "",
-            text: "Payment Receipt",
+            text: "Payment receipt",
            
-            style: {
-                fontSize: "11px",
-            },
+           
             headerStyle: () => {
                 return { fontSize: "11px", width: "90px" };
             },
@@ -299,7 +291,7 @@ setModal(!modal)
             {row.is_paid == "1" ?  <a href={row.receipt_url} target="_blank">Payment receipt</a> 
             : ""}
            {row.is_paid == "2" ? 
-           <p style={{ fontSize: "14px", padding: "5px", color : "red"}}>Declined</p>  : ""}
+           <p style={{padding: "5px", color : "red"}}>Declined</p>  : ""}
                 </>
                   
                    
@@ -335,7 +327,9 @@ return(
               
             </Col>
             <Col md="4" style={{ display: "flex", justifyContent: "center" }}>
-              <p style={{ fontSize: "20px" }}>Payment Details</p>
+            <CustomHeading>
+          Payment details
+          </CustomHeading>
             </Col>
             <Col
               md="4"
