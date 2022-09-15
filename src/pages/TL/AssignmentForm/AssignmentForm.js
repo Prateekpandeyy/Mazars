@@ -15,7 +15,7 @@ import {
   Tooltip,
 } from "reactstrap";
 import { useForm } from "react-hook-form";
-
+import CustomHeading from "../../../components/Common/CustomHeading";
 function AssignmentForm(props) {
 
 
@@ -127,20 +127,25 @@ function AssignmentForm(props) {
   return (
     <Layout TLDashboard="TLDashboard" TLuserId={userid}>
       <Card>
+   
         <CardHeader>
           <Row>
-            <Col md="4">
-              <button
-                class="btn btn-success ml-3"
+          <Col md="4">
+          <button
+                className="autoWidthBtn" 
                 onClick={() => history.goBack()}
               >
-              
+               
                 Go Back
               </button>
+              
             </Col>
             <Col md="8">
-              <h4>Client Discussion Information</h4>
+            <CustomHeading>
+            Client discussion information
+            </CustomHeading>
             </Col>
+        
           </Row>
         </CardHeader>
         <CardHeader>

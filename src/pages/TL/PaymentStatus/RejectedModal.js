@@ -84,7 +84,7 @@ function RejectedModal({
                 loading ?
                   <Spinner color="primary" />
                   :
-                  <button type="submit" className="customBtn">
+                  <button type="submit" className="customBtn mr-auto">
                     Submit
                   </button>
               }

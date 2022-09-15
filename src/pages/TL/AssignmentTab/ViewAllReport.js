@@ -193,7 +193,7 @@ function ViewReport({
                 <th style={{border: `1px solid ${headColor}`, color: "#fff", backgroundColor: `${headColor}` }}>S.No</th>
                 <th style={{border: `1px solid ${headColor}`, color: "#fff", backgroundColor: `${headColor}` , width: "120px"}}>Date</th>
                 <th style={{border: `1px solid ${headColor}`, color: "#fff", backgroundColor: `${headColor}`}}>Document</th>
-                <th style={{border: `1px solid ${headColor}`, color: "#fff", backgroundColor: `${headColor}` , width: "150px"}}>Report Type</th>
+                <th style={{border: `1px solid ${headColor}`, color: "#fff", backgroundColor: `${headColor}` , width: "150px"}}>Report type</th>
                 <th style={{border: `1px solid ${headColor}`, color: "#fff", backgroundColor: `${headColor}` , width: "100px"}}>Action</th>
               </tr>
             </thead>

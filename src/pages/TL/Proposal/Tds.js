@@ -503,7 +503,7 @@ setServices2(k.service)
           <div className="col-md-6">
           <div className="row">
           <div className="col-md-12">
-          <label>Invoice No</label>
+          <label>Invoice no</label>
             </div>
             <div className="col-md-12">
          <input 
@@ -541,7 +541,7 @@ setServices2(k.service)
             </select>
               </div>}
                   <div className="col-md-6">
-                  <label>Basic Amount</label>
+                  <label>Basic amount</label>
                     <input 
                     type="number"
 
@@ -556,7 +556,7 @@ setServices2(k.service)
             </div>
            <div className="row my-2">
              <div className="col-md-6 headCenter">
-               <label>Out of Pocket Expenses</label>
+               <label>Out of pocket expenses</label>
                </div>
                <div className="col-md-6">
                <input 
@@ -678,7 +678,7 @@ setServices2(k.service)
                 <hr/>
                 <div className="row my-2">
                 <div className="col-md-8 headCenter">
-                  <label>Total Invoice Amount</label>
+                  <label>Total invoice amount</label>
                     </div>
                    
                         <div className="col-md-4">
@@ -732,7 +732,7 @@ setServices2(k.service)
             </div>
             <div className="row my-2">
               <div className="col-md-6 my-1 headCenter">
-              <label>Net Payable Amount</label>
+              <label>Net payable amount</label>
                   </div>
                   <div className="col-md-2 my-1"></div>
                    
@@ -748,7 +748,7 @@ setServices2(k.service)
                     </div>
                    
             </div>
-        <ModalFooter>
+        
        
              <>
              {
@@ -756,14 +756,14 @@ setServices2(k.service)
                   <Spinner color="primary" />
                   :
                  <>
-                  <button  type="submit" className="customBtn">submit</button>
+                  <button  type="submit" className="customBtn mr-auto">submit</button>
           
-             <button  type="button" className="customBtn mx-3" onClick={props.addTdsToggle}>Cancel</button>
+             <button  type="button" className="customBtn mr-auto ml-3" onClick={props.addTdsToggle}>Cancel</button>
                  </>
               }
              
              </>
-        </ModalFooter>
+        
           </div>
         </form>
        

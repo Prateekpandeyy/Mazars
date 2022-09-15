@@ -185,7 +185,7 @@ function CustomerNotification({ tokenKey, name , panel}) {
         
           
     };
-
+console.log("nameeee", name)
     return (
         <>
             <div style={{display : "flex", justifyContent : "center", alignItems : "flex-end", padding: "10px"}}>

@@ -14,7 +14,7 @@ import {
   Table,
 } from "reactstrap";
 import { useAlert } from "react-alert";
-import BootstrapTable from "react-bootstrap-table-next";
+import CustomHeading from "../../../components/Common/CustomHeading";
 import DataTablepopulated from '../../../components/DataTablepopulated/DataTabel'
 function AddTeamProf() {
   const alert = useAlert();
@@ -46,7 +46,7 @@ function AddTeamProf() {
   const columns = [
     {
       dataField: "",
-      text: "S.No",
+      text: "S.no",
       formatter: (cellContent, row, rowIndex) => {
         return rowIndex + 1;
       },
@@ -90,7 +90,7 @@ function AddTeamProf() {
     },
     {
       dataField: "phone",
-      text: "Mobile No",
+      text: "Mobile no",
       sort: true,
       headerStyle: () => {
         return { fontSize: "12px" };
@@ -128,7 +128,7 @@ function AddTeamProf() {
     {
       
      
-      text: "Sub Category",
+      text: "Sub category",
       sort: true,
       headerStyle: () => {
         return { fontSize: "12px" };
@@ -177,7 +177,11 @@ function AddTeamProf() {
         <CardHeader>
           <Row>
             <Col md="10">
-              <CardTitle tag="h4">Tax Professionals ({count})</CardTitle>
+             
+<CustomHeading>
+Tax professionals ({count})
+</CustomHeading>
+          
             </Col>
             <Col md="2"></Col>
           </Row>

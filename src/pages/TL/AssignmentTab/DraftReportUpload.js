@@ -163,14 +163,14 @@ des = false;
                 multiple
               />
             </div>
-            <div class="modal-footer">
+            <div>
               {
                 loading ?
                   <Spinner color="primary" />
                   :
                   <button
                     type="submit"
-                    className="customBtn"
+                    className="customBtn mr-auto"
                   >
                     Upload
                   </button>

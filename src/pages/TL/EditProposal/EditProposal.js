@@ -24,7 +24,7 @@ import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { Markup } from 'interweave';
 import {Link} from "react-router-dom";
-
+import CustomHeading from "../../../components/Common/CustomHeading";
 function EditComponent(props) {
 
   const alert = useAlert();
@@ -394,9 +394,9 @@ const endFun = (e) => {
                 </Link>
             </Col>
             <Col md="7">
-              <div class="btn ml-3">
-                <h4>Edit Proposal</h4>
-              </div>
+            <CustomHeading>
+            Edit proposal
+              </CustomHeading>
             </Col>
           </Row>
         </CardHeader>
@@ -408,7 +408,7 @@ const endFun = (e) => {
               <div class="col-md-6">
 
                 <div class="form-group">
-                  <label>Query No.</label>
+                  <label>Query no</label>
                   <input
                     type="text"
                     name="p_assingment"
@@ -435,7 +435,7 @@ const endFun = (e) => {
                   </select>
                 </div>
                 <div class="form-group">
-                  <label>Payment Plan </label>
+                  <label>Payment plan </label>
                   <select
                     class="form-control"
                     ref={register}
@@ -445,8 +445,8 @@ const endFun = (e) => {
                       setStore(e.target.value)
                     }}
                   >
-                    <option value="1">Fixed Amount-Lumpsum payment</option>
-                    <option value="2">Fixed Amount-Instalment plan</option>
+                    <option value="1">Fixed amount-Lumpsum payment</option>
+                    <option value="2">Fixed amount-Instalment plan</option>
                     <option value="3">Retainership plan-specified period</option>
                     <option value="4">Retainership plan-unspecified period</option>
                   </select>
@@ -481,7 +481,7 @@ const endFun = (e) => {
                 <p style={{ "color": "red" }}>{diserror}</p> */}
 
                 <div class="form-group">
-                  <label>Scope of Work<span className="declined">*</span></label>
+                  <label>Scope of work<span className="declined">*</span></label>
                   <CKEditor
                      editor={ ClassicEditor }
                      height = "400px"
@@ -560,7 +560,7 @@ const endFun = (e) => {
 
               <div class="col-md-6">
                 <div class="form-group">
-                  <label>Client Name</label>
+                  <label>Client name</label>
                   <input
                     type="text"
                     name="p_name"
@@ -604,7 +604,7 @@ const endFun = (e) => {
                 </div>
                 {store === "1" ? (
                   <div class="form-group">
-                    <label>Due Dates</label>
+                    <label>Due dates</label>
                     <input
                       type="date"
                       name="p_inst_date"
@@ -619,7 +619,7 @@ const endFun = (e) => {
                 ) :
                 store === "2"  ? (
                     <div class="form-group">
-                      <label>No of Installments</label>
+                      <label>No of installments</label>
                       <Select
                         closeMenuOnSelect={true}
                         onChange={(e => installmentHandler(e))}
@@ -644,7 +644,7 @@ const endFun = (e) => {
    
      <div className="row">
      <div class="col-md-6 my-2">
-                    <label>Start Date</label>  
+                    <label>Start date</label>  
                         <input
                             type="date"
                             className="form-control"
@@ -653,7 +653,7 @@ const endFun = (e) => {
                         />
                     </div>
                     <div class="col-md-6 my-2">
-                    <label>End Date</label>  
+                    <label>End date</label>  
                         <input
                             type="date"
                             className="form-control"
@@ -663,7 +663,7 @@ const endFun = (e) => {
                     </div>
      </div>
      <div class="form-group">
-                      <label>No of Installments</label>
+                      <label>No of installments</label>
                       <Select
                         onChange={(e => installmentHandler(e))}
                         options={no_installmentRange}
@@ -682,7 +682,7 @@ const endFun = (e) => {
   store === "4" ? 
  <>
   <div class="form-group">
-  <label>Due Date- Date of month
+  <label>Due date- Date of month
  </label>
   <select
     class="form-control"
@@ -725,7 +725,7 @@ const endFun = (e) => {
   </select>
 </div> 
 <div class="form-group">
-                    <label>Due Dates</label>
+                    <label>Due dates</label>
                     <input
                       type="date"
                       name="p_inst_date"

@@ -77,9 +77,9 @@ function DiscardReport({
           </table>
         </ModalBody>
         <ModalFooter>
-          <div>
-            <button className="customBtn" onClick={ViewDiscussionToggel}>Cancel</button>
-          </div>
+        
+            <button className="customBtn mr-auto" onClick={ViewDiscussionToggel}>Cancel</button>
+         
         </ModalFooter>
       </Modal >
 

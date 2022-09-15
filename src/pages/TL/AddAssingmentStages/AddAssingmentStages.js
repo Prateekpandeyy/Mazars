@@ -16,8 +16,7 @@ import {
 } from "reactstrap";
 import Alerts from "../../../common/Alerts";
 import { Spinner } from 'reactstrap';
-import { result } from "lodash";
-
+import CustomHeading from "../../../components/Common/CustomHeading";
 function AddAssingmentStages() {
 
   const { register, handleSubmit, errors, reset } = useForm();
@@ -162,17 +161,19 @@ function AddAssingmentStages() {
                 className="autoWidthBtn ml-3"
                 onClick={() => history.goBack()}
               >
-                <i className="fas fa-arrow-left mr-2"></i>
+           
                 Go Back
               </button>
             </Col>
             <Col md="8">
-              <h4>Assignment Stages</h4>
+             <CustomHeading>
+             Assignment stages
+              </CustomHeading>
             </Col>
           </Row>
         </CardHeader>
         <CardHeader>
-          <div className="row mt-3">
+          <div className="row mt-3 mx-2">
             {assignmentStages.map((p, i) => (
               <>
                 {p.client_discussion == "completed" &&
@@ -188,13 +189,9 @@ function AddAssingmentStages() {
                           <div className="col-md-6">
                             <div className="form-group">
                               <label
-                                style={{
-                                  fontSize: "20px",
-                                  fontWeight: "500",
-                                 
-                                }}
+                               
                               >
-                                Client Discussion
+                                Client discussion
                               </label>
                             </div>
                           </div>
@@ -214,14 +211,8 @@ function AddAssingmentStages() {
                         <div className="row">
                           <div className="col-md-6">
                             <div className="form-group">
-                              <label
-                                style={{
-                                  fontSize: "20px",
-                                  fontWeight: "500",
-                                 
-                                }}
-                              >
-                                Draft Report
+                              <label>
+                                Draft report
                               </label>
                             </div>
                           </div>
@@ -241,14 +232,8 @@ function AddAssingmentStages() {
                         <div className="row">
                           <div className="col-md-6">
                             <div className="form-group">
-                              <label
-                                style={{
-                                  fontSize: "20px",
-                                  fontWeight: "500",
-                                 
-                                }}
-                              >
-                                Final Discussion
+                              <label>
+                                Final discussion
                               </label>
                             </div>
                           </div>
@@ -268,13 +253,7 @@ function AddAssingmentStages() {
                         <div className="row">
                           <div className="col-md-6">
                             <div className="form-group">
-                              <label
-                                style={{
-                                  fontSize: "20px",
-                                  fontWeight: "500",
-                                 
-                                }}
-                              >
+                              <label>
                                 Delivery of final report
                               </label>
                             </div>
@@ -295,14 +274,8 @@ function AddAssingmentStages() {
                         <div className="row">
                           <div className="col-md-6">
                             <div className="form-group">
-                              <label
-                                style={{
-                                  fontSize: "20px",
-                                  fontWeight: "500",
-                                 
-                                }}
-                              >
-                                Awaiting Completion
+                              <label>
+                                Awaiting completion
                               </label>
                             </div>
                           </div>
@@ -338,14 +311,8 @@ function AddAssingmentStages() {
                       <div className="row">
                         <div className="col-md-4">
                           <div className="form-group">
-                            <label
-                              style={{
-                                fontSize: "20px",
-                                fontWeight: "500",
-                               
-                              }}
-                            >
-                              Client Discussion
+                            <label>
+                              Client discussion
                             </label>
                           </div>
                         </div>
@@ -385,14 +352,8 @@ function AddAssingmentStages() {
                       <div className="row">
                         <div className="col-md-4">
                           <div className="form-group">
-                            <label
-                              style={{
-                                fontSize: "20px",
-                                fontWeight: "500",
-                               
-                              }}
-                            >
-                              Draft Report
+                            <label>
+                              Draft report
                             </label>
                           </div>
                         </div>
@@ -434,14 +395,8 @@ function AddAssingmentStages() {
                       <div className="row">
                         <div className="col-md-4">
                           <div className="form-group">
-                            <label
-                              style={{
-                                fontSize: "20px",
-                                fontWeight: "500",
-                               
-                              }}
-                            >
-                              Final Discussion
+                            <label>
+                              Final discussion
                             </label>
                           </div>
                         </div>
@@ -483,13 +438,7 @@ function AddAssingmentStages() {
                       <div className="row">
                         <div className="col-md-4">
                           <div className="form-group">
-                            <label
-                              style={{
-                                fontSize: "20px",
-                                fontWeight: "500",
-                               
-                              }}
-                            >
+                            <label>
                               Delivery of final report
                             </label>
                           </div>
@@ -533,14 +482,8 @@ function AddAssingmentStages() {
                       <div className="row">
                         <div className="col-md-4">
                           <div className="form-group">
-                            <label
-                              style={{
-                                fontSize: "20px",
-                                fontWeight: "500",
-                               
-                              }}
-                            >
-                              Awaiting Completion
+                            <label>
+                              Awaiting completion
                             </label>
                           </div>
                         </div>
