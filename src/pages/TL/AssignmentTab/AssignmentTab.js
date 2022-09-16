@@ -3,8 +3,6 @@ import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import Layout from "../../../components/Layout/Layout";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
-
-
 import AllAssignment from "./AllAssignment";
 import DraftReportTab from "./DraftReportTab";
 import DeliveryFinalTab from "./DeliveryFinalTab";
@@ -14,8 +12,6 @@ import DeliveryFinalTab from "./DeliveryFinalTab";
 function QueriesTab(props) {
   const userid = window.localStorage.getItem("tlkey");
   const [tabIndex, setTabIndex] = useState(0);
-
-
   const [allAssignmentCount, setAllAssignmentCount] = useState("");
   const [draft, setDraft] = useState("");
   const [final, setFinal] = useState();
@@ -134,10 +130,8 @@ function QueriesTab(props) {
             <DeliveryFinalTab />
           </TabPanel>
         </Tabs>
-     
     </Layout>
   );
 }
 
 export default QueriesTab;
-
