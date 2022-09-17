@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import CommonServices from "../../common/common";
 import { baseUrl, baseUrl3 } from "../../config/config";
 import DescriptionOutlinedIcon from "@material-ui/icons/DescriptionOutlined";
-
+import Swal from "sweetalert2";
 import axios from "axios";
 import { Markup } from 'interweave';
 function ProposalDetails({
@@ -15,7 +15,8 @@ function ProposalDetails({
   tpStatus,
   tp22, 
   panel,
-  overDue
+  overDue,
+  admininvoice
 }) {
 
   const {
@@ -42,7 +43,8 @@ function ProposalDetails({
   const { tlname, date_of_allocation } = diaplayHistory;
   
   var nfObject = new Intl.NumberFormat('hi-IN')
-
+  
+  // checkDevice
  const checkDevice = () => {
   return [
     'iPad Simulator',
@@ -156,7 +158,7 @@ const downloadpdf = () => {
       document.body.appendChild(a);
       a.style = "display: none";
       a.href = url;
-      a.download = `invoice_1.pdf`
+      a.download = `proposal.pdf`
       a.target = '_blank';
       a.click();
      }
@@ -254,6 +256,33 @@ let nd = 0;
       }
     }
   }
+  const getInviceValue = (e) => {
+    const token = window.localStorage.getItem("adminToken")
+    let val = e.target.value
+   let formData = new FormData()
+   formData.append("admin_iba", val);
+   formData.append("assign_no", p.id)
+   axios({
+    method : "POST",
+    url :  `${baseUrl}/admin/setiba`,
+    headers : {
+      uit : token
+  },
+    data : formData
+   })
+   .then((res) => {
+    if(res.data.code === 1){
+      Swal.fire({
+        title : "success",
+        html : "Success",
+        icon : "success"
+      })
+      
+    }
+    console.log(res)
+   })
+  }
+  console.log("pppp", admininvoice)
   return (
     <>
       <div className="queryBox">
@@ -264,7 +293,7 @@ let nd = 0;
             fontSize: "18px",
           }}
         >
-          Proposal and payment details
+          Proposal and Payment Details
         </p>
 
         <table className="table table-bordered">
@@ -276,26 +305,26 @@ let nd = 0;
           </thead>
           <tbody>
             <tr>
-              <th scope="row">Date of allocation</th>
+              <th scope="row">Date of Allocation</th>
               <td>{accept > "1" ? CommonServices.changeFormateDate(date_of_allocation) : ""}</td>
             </tr>
             
             
             <tr>
-              <th scope="row">Name of team leader</th>
+              <th scope="row">Name of Team Leader</th>
               <td>{accept > "1" ? tlName2 : ""}</td>
             </tr>
             <tr>
-              <th scope="row">Name of tax professional(s)</th>
+              <th scope="row">Name of Tax Professional(s)</th>
               <td>{tpStatus == "2" ? tp22 : ""}</td>
             </tr>
             <tr>
-              <th scope="row">Date of proposal</th>
+              <th scope="row">Date of Proposal</th>
               <td>
                 <div style={{ display: "flex", justifyContent: "space-between" }}>
                   {CommonServices.removeTime(proposal_date)}
                   {proposal_date && (
-                   
+                  
                     <button className="customBtn" onClick={() => downloadpdf()}>
                       Download
                       </button>
@@ -304,15 +333,102 @@ let nd = 0;
               </td>
             </tr>
             <tr>
-              <th scope="row">Scope of work</th>
+              <th scope="row">Scope of Work</th>
               <td className="tableStyle"> <Markup content={description} /></td>
             </tr>
 
+          {
+            panel === "admin" ?
+            <tr>
+            <th scope="row">Approval of Admin for such issue of invoice(s)</th>
+            <td className="tableStyle"> 
+            <div class="form-group">
+                <label>Approval of Team Leader for such issue of invoice(s)</label>
+               
+                  <div className="myInvice">
+                   
+                  {
+                    admininvoice === "1" ?
+                    <label> 
+                    <input 
+              type="radio"
+               defaultChecked
+               onChange={(e) => getInviceValue(e)}
+                
+                value="1" 
+                name = "yestl" />Yes
+               
+          </label> :
+            <label> 
+            <input 
+      type="radio"
+      
+       onChange={(e) => getInviceValue(e)}
+        
+        value="1" 
+        name = "yestl" />Yes
+       
+  </label>
+                  }
+        {
+          admininvoice === "0" ?
+          <label> 
+          <input 
+              type="radio" 
+              onChange={(e) => getInviceValue(e)}
+              defaultChecked
+            
+               value="0" 
+               name = "yestl"/>No
+             
+          </label> :
+            <label> 
+            <input 
+                type="radio" 
+                onChange={(e) => getInviceValue(e)}
+              
+                 value="0" 
+                 name = "yestl"/>No
+               
+            </label>
+        }
+                </div> 
+               
+              </div>
+              </td>
+          </tr> : ""
+          }
+            <tr>
+              <th scope="row">Whether invoice(s) can be issued before acceptance of proposal by client</th>
+              <td className="tableStyle"> 
+              <div class="form-group">
+                
+                  <div className="myInvice">
+                 {
+                  p.tp_iba === "1" ?
+                  "Yes" : "No"
+                 }
+                </div>
+                </div></td>
+            </tr>
+            <tr>
+              <th scope="row">Approval of Team Leader for such issue of invoice(s)</th>
+              <td className="tableStyle"> 
+              <div class="form-group">
+                
+                  <div className="myInvice">
+                 {
+                  p.tl_iba === "1" ?
+                  "Yes" : "No"
+                 }
+                </div>
+                </div></td>
+            </tr>
             <tr>
               <th scope="row">Amount</th>
               <td>
                 <tr style={{display : "flex", width : "100%"}}>
-                  <th style={{display : "flex", width : "50%"}}>Amount type</th>
+                  <th style={{display : "flex", width : "50%"}}>Amount Type</th>
                   <th style={{display : "flex", width : "50%"}}>Price</th>
                 </tr>
                 <tr style={{display : "flex", width : "100%"}}>
@@ -337,31 +453,37 @@ let nd = 0;
                 </tr>
               </td>
             </tr>
-
+           
             <tr>
-              <th scope="row">Payment terms</th>
+              <th scope="row">Payment Terms</th>
               {
                 payment_terms == "lumpsum" ?
                   <td>
-                    <tr>
-                      <th>Payment type</th>
-                      <th>Due dates</th>
-                    </tr>
-                    <tr>
+                    <tr style={{display : "flex", width : "100%"}}>
+                  <th style={{display : "flex", width : "50%"}}>Payment Plan</th>
+                  <th style={{display : "flex", width : "50%"}}>Due Dates</th>
+                </tr>
+                <tr style={{display : "flex", width : "100%"}}>
+                  <td style={{display : "flex", width : "50%"}}>{CommonServices.capitalizeFirstLetter(payment_terms)}</td>
+                  <td style={{display : "flex", width : "50%", justifyContent : "flex-start"}}>
+                  {CommonServices.removeTime(due_date)}
+                  </td>
+                </tr>
+                    {/* <tr>
                       <td>{CommonServices.capitalizeFirstLetter(payment_terms)}</td>
                       <td>
                         {CommonServices.removeTime(due_date)}
                       </td>
-                    </tr>
+                    </tr> */}
                   </td>
                   :
                   payment_terms == "installment" ?
                     <td>
                       <tr style={{display : "flex", width : "100%"}}>
-                        <th style={{display : "flex", width : "25%"}}>Payment type</th>
-                        <th style={{display : "flex", width : "25%"}}>No of installments</th>
-                        <th style={{display : "flex", width : "25%"}}>Installment amount</th>
-                        <th style={{display : "flex", width : "25%"}}>Due dates</th>
+                        <th style={{display : "flex", width : "25%"}}>Payment Plan</th>
+                        <th style={{display : "flex", width : "25%"}}>No of Installments</th>
+                        <th style={{display : "flex", width : "25%"}}>Installment Amount</th>
+                        <th style={{display : "flex", width : "25%"}}>Due Dates</th>
                       
                       </tr>
                       <tr style={{display : "flex", width : "100%"}}>
@@ -379,11 +501,11 @@ let nd = 0;
 
             </tr>
             <tr>
-              <th scope="row">Proposed amount</th>
+              <th scope="row">Proposed Amount</th>
               <td>{nfObject.format(amount)}</td>
             </tr>
             <tr>
-              <th scope="row">Proposal status</th>
+              <th scope="row">Proposal Status</th>
               <td>
                 {p.query_status == "4" && "Inprogress"}
                 {p.query_status == "6" && "Declined"}
@@ -391,23 +513,23 @@ let nd = 0;
               </td>
             </tr>
             <tr>
-              <th scope="row">Amount accepted</th>
+              <th scope="row">Amount Accepted</th>
               <td>{nfObject.format(accepted_amount)}</td>
             </tr>
             <tr>
-              <th scope="row">Date of acceptance / Decline</th>
+              <th scope="row">Date of Acceptance / Decline</th>
               <td>{CommonServices.removeTime(cust_accept_date)}</td>
             </tr>
             <tr>
-              <th scope="row">Payment history</th>
+              <th scope="row">Payment History</th>
               <td>
                 <tr style={{display : "flex", width : "100%"}}>
                   <th style={{display : "flex", width :"20%"}}>Date</th>
                  
-                    <th style={{display : "flex", width : "20%"}}>Invoice amount</th>
-                    <th style={{display : "flex", width : "20%"}}>Tds deducted</th>
-                    <th style={{display : "flex", width : "20%"}}>Amount paid </th>
-                    <th style={{display : "flex", width : "20%"}}>Payment receipt</th>
+                    <th style={{display : "flex", width : "20%"}}>Invoice Amount</th>
+                    <th style={{display : "flex", width : "20%"}}>Tds Deducted</th>
+                    <th style={{display : "flex", width : "20%"}}>Amount Paid </th>
+                    <th style={{display : "flex", width : "20%"}}>Payment Receipt</th>
                 </tr>
                 {paymentDetails.map((pay, i) => (
                   <tr style={{display : "flex", width : "100%"}}>
@@ -438,15 +560,15 @@ let nd = 0;
               </td>
             </tr>
             <tr>
-              <th scope="row">Payment received</th>
+              <th scope="row">Payment Received</th>
               <td>{nfObject.format(payment_received)}</td>
             </tr>
             <tr>
-              <th scope="row">Payment overdue</th>
+              <th scope="row">Payment Overdue</th>
               <td>{overDue}</td>
             </tr>
             <tr>
-              <th scope="row">Payment outstanding</th>
+              <th scope="row">Payment Outstanding</th>
               <td>{nfObject.format(accepted_amount - payment_received)}</td>
             </tr>
          
@@ -459,7 +581,7 @@ let nd = 0;
               <td>{p.notes}</td>
             </tr>
             <tr>
-                <th scope="row">Payment decline date</th>
+                <th scope="row">Payment Decline Date</th>
                 <td>{CommonServices.removeTime(p.payment_declined_date)}</td>
               </tr>
               </>
@@ -468,7 +590,7 @@ let nd = 0;
              {
              p.decline_notes !== null && p.decline_notes.length > 0 ?
                 <tr>
-                  <th scope="row">Reasons for proposal decline</th>
+                  <th scope="row">Reasons for proposal Decline</th>
                   <td colspan="1">
                     {
                       p.decline_notes
