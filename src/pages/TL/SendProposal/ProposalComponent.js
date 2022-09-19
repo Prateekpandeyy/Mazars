@@ -98,9 +98,9 @@ function ProposalComponent(props) {
     )
     .then((res) => {
       let email = {}
-      console.log("response", res)
+
       res.data.result.map((i) => {
-        console.log("iii", i)
+      
         email = {
           label : i.email,
           value : i.email
@@ -108,7 +108,7 @@ function ProposalComponent(props) {
         collectData.push(email)
         
       })
-      console.log("data", collectData)
+    
       setClient(collectData)
     })
   }
@@ -185,74 +185,76 @@ function ProposalComponent(props) {
         formData.append("due_date", date) :
         formData.append("due_date", "")
 
-   
-      if (store === "2" || store === "3") {
-        if (store !== "4" && installment == "") {
-          Alerts.ErrorNormal(`Please select no of installment .`)
-        
-        } 
+   if(subPlan !== "2") {
+    if (store === "2" || store === "3") {
+      if (installment == "") {
+        Alerts.ErrorNormal(`Please select no of installment .`)
+      
+      } 
 
-        else if (store !== "4" && !amount || !date) {
-            Alerts.ErrorNormal(`Please enter all fields.`)
-            
-          }
+      else if (!amount || !date) {
+          Alerts.ErrorNormal(`Please enter all fields.`)
+          
+        }
 
-          else if (store !== "4" && amount && date) {
-            
-            if (installment.value > 0) {
-              var a = Number(installment.value)
-              for (let i = 0; i < a; i++) {
-                // arrAmount.push(amount[i])
-                // arrDate.push(date[i])
-                if (amount[i] == "" || amount[i] == undefined || amount[i] <= 0) {
-                  Alerts.ErrorNormal(`Please enter amount`)
-               
-                  return false
-                }
-                if (date[i] == "" || date[i] == undefined) {
-                  Alerts.ErrorNormal(`Please enter date`)
-                
-                  return false
-                }
+        else if (amount && date) {
+          
+          if (installment.value > 0) {
+            var a = Number(installment.value)
+            for (let i = 0; i < a; i++) {
+              // arrAmount.push(amount[i])
+              // arrDate.push(date[i])
+              if (amount[i] == "" || amount[i] == undefined || amount[i] <= 0) {
+                Alerts.ErrorNormal(`Please enter amount`)
+             
+                return false
               }
-              var sum = amount.reduce(myFunction)
-              function myFunction(total, value) {
-                return Number(total) + Number(value);
-              }
-              if (value.p_fixed != sum) {
-                Alerts.ErrorNormal(`Sum of all installments should be equal to ${value.p_fixed}.`)
+              if (date[i] == "" || date[i] == undefined) {
+                Alerts.ErrorNormal(`Please enter date`)
               
-              } else {
-               
-                setLoading(true)
-                axios({
-                  method: "POST",
-                  url: `${baseUrl}/tl/uploadProposal`,
-                  headers : {
-                    uit : token
-                  },
-                  data: formData,
-                })
-                  .then(function (response) {
-               
-                    if (response.data.code === 1) {
-                      setLoading(false)
-                      Alerts.SuccessNormal("Proposal created successfully")
-                      history.push("/teamleader/proposal");
-                    } else if (response.data.code === 0) {
-                      setLoading(false)
-                      Alerts.ErrorNormal(`${response.data.result}`)
-                    }
-                  })
-                  .catch((error) => {
-                   
-                  });
+                return false
               }
             }
+            var sum = amount.reduce(myFunction)
+            function myFunction(total, value) {
+              return Number(total) + Number(value);
+            }
+            if (value.p_fixed != sum) {
+              Alerts.ErrorNormal(`Sum of all installments should be equal to ${value.p_fixed}.`)
+            
+            } else {
+             
+              setLoading(true)
+              axios({
+                method: "POST",
+                url: `${baseUrl}/tl/uploadProposal`,
+                headers : {
+                  uit : token
+                },
+                data: formData,
+              })
+                .then(function (response) {
+             
+                  if (response.data.code === 1) {
+                    setLoading(false)
+                    Alerts.SuccessNormal("Proposal created successfully")
+                    history.push("/teamleader/proposal");
+                  } else if (response.data.code === 0) {
+                    setLoading(false)
+                    Alerts.ErrorNormal(`${response.data.result}`)
+                  }
+                })
+                .catch((error) => {
+                 
+                });
+            }
           }
-      }
+        }
+    }
+   }
+     
 
-       else if (store === "1" || store === "4") {
+       else if (store === "1" || store === "4" || subPlan === "2") {
      
         setLoading(true)
         axios({
@@ -297,7 +299,7 @@ function ProposalComponent(props) {
   };
 
   const paymentDate = (data) => {
-  console.log("Data", data)
+
    
     var array2 = []
     Object.entries(data).map(([key, value]) => {
@@ -339,23 +341,11 @@ const clientFun = (e) => {
   e.map((i) => {
     a.push(i.value)
   })
-  console.log("eee", e)
+
   setEmail(a)
  
 }
-const placeholder = ({ startDate, endDate }) => {
-  if (!startDate) {
-    return <div className="placeholder"> Select date and time range </div>;
-  }
-  return (
-    <div className="placeholderWrap">
-      <div className="placeholder">From - {startDate.toLocaleString()}</div>
-      {endDate && (
-        <div className="placeholder">To - {endDate.toLocaleString()}</div>
-      )}
-    </div>
-  );
-};
+
 const startFun = (e) => {
  
  setFromMax(e.target.value)
@@ -370,7 +360,7 @@ const myMonthValue = (e) => {
   setDateMonth(e.target.value)
 }
 const getInviceValue = (e) => {
-  console.log("eee", e.target.value)
+ 
   if(e.target.value === "0"){
     setTlDisable(true)
   }
@@ -390,7 +380,7 @@ const getSubPlan  = (e) => {
   
   setSubplan(e.target.value)
 }
-console.log("tlDisable", tlDisable)
+
   return (
     <>
       <Card>
@@ -698,14 +688,18 @@ console.log("tlDisable", tlDisable)
      <div class="form-group">
                  
                   <div onChange={(e) => getSubPlan(e)} className="subPaymentPlan">
-               <span>
+             <div className="col-md-6">
+             <span>
                <input 
                 type="radio"  value="1" name="paymentPlan" />Installment paymnet
                </span>
-                  <span>
+             </div>
+               <div className="col-md-6">
+               <span>
                   <input 
                 type="radio"  value="2" name = "paymentPlan"/>Monthly paymnet
                   </span>
+               </div>
                 </div>
                 </div>
                 {
@@ -759,9 +753,7 @@ console.log("tlDisable", tlDisable)
       <option value="26">26</option>
       <option value="27">27</option>
       <option value="28">28</option>
-      <option value="29">29</option>
-      <option value="30">30</option>
-      <option value="31">31</option>
+      
      
     </select>
   </div> : ""
