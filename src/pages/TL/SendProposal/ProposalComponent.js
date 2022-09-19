@@ -700,11 +700,11 @@ console.log("tlDisable", tlDisable)
                   <div onChange={(e) => getSubPlan(e)} className="subPaymentPlan">
                <span>
                <input 
-                type="radio"  value="1" name="paymentPlan" />Monthly paymnet
+                type="radio"  value="1" name="paymentPlan" />Installment paymnet
                </span>
                   <span>
                   <input 
-                type="radio"  value="2" name = "paymentPlan"/>Installment paymnet
+                type="radio"  value="2" name = "paymentPlan"/>Monthly paymnet
                   </span>
                 </div>
                 </div>
