@@ -221,3 +221,8 @@
   align-items: center;
     justify-content: space-between;
 }
+.subPaymentPlan{
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}

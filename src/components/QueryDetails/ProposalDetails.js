@@ -631,9 +631,4 @@ let nd = 0;
   );
 }
 
-export default ProposalDetails;
-
-
-
-
- 
+export default ProposalDetails; 

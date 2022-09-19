@@ -56,6 +56,7 @@ function ProposalComponent(props) {
   const [invoiceAdmin, setInvoiceAdmin] = useState("")
   const [fromMax, setFromMax] = useState(current_date)
   const [tlDisable, setTlDisable] = useState(false)
+  const [subPlan, setSubplan] = useState("0");
   const token = window.localStorage.getItem("tlToken")
   const myConfig = {
       headers : {
@@ -176,6 +177,7 @@ function ProposalComponent(props) {
     formData.append("date_month", dateMonth)
     formData.append("tl_iba", invoiceTl)
     formData.append("tp_iba", invoice)
+    formData.append("sub_payment_plane", subPlan)
     formData.append("admin_iba", invoiceAdmin)
     store === "1" ?
       formData.append("due_date", date) :
@@ -383,6 +385,10 @@ const getInvoiceAdmin  = (e) => {
 const getInvoicetl  = (e) => {
   
   setInvoicetl(e.target.value)
+}
+const getSubPlan  = (e) => {
+  
+  setSubplan(e.target.value)
 }
 console.log("tlDisable", tlDisable)
   return (
@@ -657,11 +663,9 @@ console.log("tlDisable", tlDisable)
                     : ""
                 }
 <div>
-{
-  store === "3" ? (
-   
+  
 
-    <>
+ 
     {
       store === "3" ? (
      
@@ -692,21 +696,83 @@ console.log("tlDisable", tlDisable)
                     </div>
      </div>
      <div class="form-group">
-                      <label>No of Installments</label>
-                      <Select
-                        onChange={(e => installmentHandler(e))}
-                        options={no_installmentRange}
-                      />
-                    </div>
+                 
+                  <div onChange={(e) => getSubPlan(e)} className="subPaymentPlan">
+               <span>
+               <input 
+                type="radio"  value="1" name="paymentPlan" />Monthly paymnet
+               </span>
+                  <span>
+                  <input 
+                type="radio"  value="2" name = "paymentPlan"/>Installment paymnet
+                  </span>
+                </div>
+                </div>
+                {
+                  subPlan === "1" ?
+                  <div class="form-group">
+                  <label>No of Installments</label>
+                  <Select
+                    onChange={(e => installmentHandler(e))}
+                    options={no_installmentRange}
+                  />
+                </div>  :
+               ""
+                }
+   {
+    subPlan === "2" ?
+    <div class="form-group">
+    <label>Due Date- Date of month
+   </label>
+    <select
+      class="form-control"
+      ref={register}
+      name="date_month"
+      onChange={(e) => myMonthValue(e)}
+      min = {item}
+    >
+       <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+      <option value="6">6</option>
+      <option value="7">7</option>
+      <option value="8">8</option>
+      <option value="9">9</option>
+      <option value="10">10</option>
+      <option value="11">11</option>
+      <option value="12">12</option>
+      <option value="13">13</option>
+      <option value="14">14</option>
+      <option value="15">15</option>
+      <option value="16">16</option>
+      <option value="17">17</option>
+      <option value="18">18</option>
+      <option value="19">19</option>
+      <option value="20">20</option>
+      <option value="21">21</option>
+      <option value="22">22</option>
+      <option value="23">23</option>
+      <option value="24">24</option>
+      <option value="25">25</option>
+      <option value="26">26</option>
+      <option value="27">27</option>
+      <option value="28">28</option>
+      <option value="29">29</option>
+      <option value="30">30</option>
+      <option value="31">31</option>
+     
+    </select>
+  </div> : ""
+   }
      </>
       ) : " "
     }
 
-    </>
     
-             
-  ) : " "
-}
+    
+ 
 {
   store === "4" ? 
  <>
