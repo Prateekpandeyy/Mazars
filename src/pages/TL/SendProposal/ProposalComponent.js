@@ -55,9 +55,10 @@ function ProposalComponent(props) {
   const [invoiceTl, setInvoicetl] = useState("")
   const [invoiceAdmin, setInvoiceAdmin] = useState("")
   const [fromMax, setFromMax] = useState(current_date)
-  const [tlDisable, setTlDisable] = useState(false)
+  const [tlDisable, setTlDisable] = useState(true)
   const [subPlan, setSubplan] = useState("0");
   const [allAmount, setAllAmount] = useState([])
+  const [clientDisable, setClientDisable] = useState(true)
   const token = window.localStorage.getItem("tlToken")
   const myConfig = {
       headers : {
@@ -461,7 +462,14 @@ const getSubPlan  = (e) => {
                         setFromMax(current_date)
                        
                       }
+                      if(e.target.value === "1"){
+                        setClientDisable(true)
+                      }
+                      else {
+                        setClientDisable(false)
+                      }
                     }}
+
                   >
                     <option value="1">Fixed Amount-Lumpsum payment</option>
                     <option value="2">Fixed Amount-Instalment plan</option>
@@ -477,13 +485,16 @@ const getSubPlan  = (e) => {
               <span className="d-flex mr-3">
              <label>
              <input 
-                type="radio" className="spaceRadio" value="1" name="yesclient" />Yes
+                type="radio" 
+                disabled = {clientDisable}
+                 className="spaceRadio"
+                  value="1" name="yesclient" />Yes
              </label>
               </span>
                 <span className="d-flex mr-3">
                 <label>
                 <input 
-                type="radio" className="spaceRadio" value="0" name = "yesclient"/>No
+                type="radio"    disabled = {clientDisable} defaultChecked className="spaceRadio" value="0" name = "yesclient"/>No
                   </label>
                 </span>
                 </div>
@@ -494,13 +505,13 @@ const getSubPlan  = (e) => {
                <span className="d-flex mr-3">
                 <label>
                 <input 
-                type="radio" className="spaceRadio" disabled = {tlDisable} value="1" name="yestl" />Yes
+                type="radio"  className="spaceRadio" disabled = {tlDisable} value="1" name="yestl" />Yes
                 </label>
                </span>
                <span className="d-flex mr-3">
                     <label>
                     <input 
-                type="radio" className="spaceRadio" disabled = {tlDisable} value="0" name = "yestl"/>No
+                type="radio" className="spaceRadio" defaultChecked disabled = {tlDisable} value="0" name = "yestl"/>No
                       </label>
                     </span>
                 </div>
