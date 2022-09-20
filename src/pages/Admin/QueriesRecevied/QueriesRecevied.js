@@ -125,7 +125,7 @@ function QueriesRecevied(props) {
             setDisplaySpecific(res.data.additional_queries);
           }
           if (res.data.payment_detail) {
-            console.log("payDetails", res.data.payment_detail)
+           
             setPaymentDetails(res.data.payment_detail);
           }
           if (res.data.feedback_detail) {
@@ -171,7 +171,8 @@ function QueriesRecevied(props) {
               cust_accept_date: res.data.proposal_queries[0].cust_accept_date,
               proposal_date: res.data.proposal_queries[0].created,
               description: res.data.proposal_queries[0].description,
-
+              tp_iba : res.data.proposal_queries[0].tp_iba,
+              tl_iba : res.data.proposal_queries[0].tl_iba,
               amount_type: res.data.proposal_queries[0].amount_type,
               amount_fixed: res.data.proposal_queries[0].amount,
               amount_hourly: res.data.proposal_queries[0].amount_hourly,

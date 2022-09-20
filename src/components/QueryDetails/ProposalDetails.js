@@ -30,7 +30,8 @@ function ProposalDetails({
     amount_type,
     amount_fixed,
     amount_hourly,
-
+    tp_iba,
+    tl_iba,
     payment_terms,
     no_of_installment,
     installment_amount,
@@ -70,7 +71,7 @@ const downloadpdf = () => {
  if(panel === "admin"){
   axios.get(`${baseUrl}/admin/dounloadpdf?id=${p.id}` , myConfig)
   .then((res) => {
-    console.log("res", res)
+   
     if(res.status === 200){
       window.URL = window.URL || window.webkitURL;
    var url = window.URL.createObjectURL(res.data);
@@ -96,7 +97,7 @@ const downloadpdf = () => {
     }
   axios.get(`${baseUrl}/tl/dounloadpdf?id=${p.id}` , myConfig)
   .then((res) => {
-    console.log("res", res)
+    
     if(res.status === 200){
       window.URL = window.URL || window.webkitURL;
    var url = window.URL.createObjectURL(res.data);
@@ -279,10 +280,10 @@ let nd = 0;
       })
       
     }
-    console.log(res)
+  
    })
   }
-  console.log("pppp", admininvoice)
+ 
   return (
     <>
       <div className="queryBox">
@@ -399,27 +400,121 @@ let nd = 0;
           </tr> : ""
           }
             <tr>
-              <th scope="row">Whether invoice(s) can be issued before acceptance of proposal by client</th>
+              <th scope="row"></th>
               <td className="tableStyle"> 
               <div class="form-group">
                 
                   <div className="myInvice">
+                  Whether invoice(s) can be issued before acceptance of proposal by client
+                 
                  {
-                  p.tp_iba === "1" ?
-                  "Yes" : "No"
+                  tp_iba === "1" ?
+                 <div>
+                  <label>
+                  <input 
+              type="radio" 
+              
+              defaultChecked
+            disabled
+               value="0" 
+               name = "yestl"/>Yes
+             
+          </label>
+          <label>
+                  <input 
+              type="radio" 
+             disabled 
+             
+            
+               value="0" 
+               name = "yestl"/>No
+             
+          </label>
+          </div> : ""
+                 }
+                  {
+                  tp_iba == "0" ?
+                 <div>
+                    <label>
+                  <input 
+              type="radio" 
+              
+             disabled
+            
+               value="0" 
+               name = "yestl"/>Yes
+             
+          </label>
+          <label>
+                  <input 
+              type="radio" 
+             
+              defaultChecked
+            disabled
+               value="0" 
+               name = "yestl"/>No
+             
+          </label>
+                </div> : ""
                  }
                 </div>
                 </div></td>
             </tr>
             <tr>
-              <th scope="row">Approval of Team Leader for such issue of invoice(s)</th>
+              <th scope="row"></th>
               <td className="tableStyle"> 
               <div class="form-group">
                 
                   <div className="myInvice">
-                 {
-                  p.tl_iba === "1" ?
-                  "Yes" : "No"
+                  Approval of Team Leader for such issue of invoice(s)
+                  {
+                  tl_iba === "1" ?
+                 <div>
+                  <label>
+                  <input 
+              type="radio" 
+              
+              defaultChecked
+            disabled
+               value="0" 
+               name = "yestl"/>Yes
+             
+          </label>
+          <label>
+                  <input 
+              type="radio" 
+             disabled 
+             
+            
+               value="0" 
+               name = "yestl"/>No
+             
+          </label>
+          </div> : ""
+                 }
+                  {
+                  tl_iba == "0" ?
+                 <div>
+                  <label>
+                  <input 
+              type="radio" 
+              
+             disabled
+            
+               value="0" 
+               name = "yestl"/>Yes
+             
+          </label>
+          <label>
+                  <input 
+              type="radio" 
+             
+              defaultChecked
+            disabled
+               value="0" 
+               name = "yestl"/>No
+             
+          </label></div> : ""
                  }
                 </div>
                 </div></td>
