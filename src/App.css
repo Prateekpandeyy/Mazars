@@ -226,3 +226,11 @@
   width: 100%;
   justify-content: space-between;
 }
+.spaceRadio{
+  margin: 0px 5px 0px 0px;
+}
+.myporposalCheckBox{
+  display: flex;
+  max-width: 90px;
+  width: 100%;
+}

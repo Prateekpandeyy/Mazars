@@ -464,7 +464,7 @@ const getInvoicetl  = (e) => {
   setInvoicetl(e.target.value)
 }
 const getSubPlan  = (e) => {
-  
+  setInstallment([])
   setSubplan(e.target.value)
 }
   return (
@@ -550,76 +550,28 @@ const getSubPlan  = (e) => {
                 </div>
           <div className="myproposaloption">
              
-          {/* <div class="form-group">
-              <label>Whether invoice(s) can be issued before acceptance of proposal by client</label>
-              <div className="myInvice">
-             {
-              invoice === "1" ?
-              <label> 
-              <input 
-              type="radio"
-               defaultChecked 
-               onChange={(e) => getInviceValue(e)}
-               disabled = {tpDisable} 
-               value="1" name="yesclient" />Yes
-               
-    </label>  : 
-         <label> 
-         <input 
-          type="radio"
-            disabled = {tpDisable}
-            onChange={(e) => getInviceValue(e)}
-            value="1" 
-            name = "yesclient"/>Yes
-          
-    
-</label> 
-             }
-              {
-              invoice === "0" ?
-              <label> 
-              <input 
-              type="radio"
-              
-               onChange={(e) => getInviceValue(e)}
-               disabled = {tpDisable} 
-               value="0" name="yesclient" />No
-               
-    </label>  : 
-         <label> 
-         <input 
-          type="radio"
-          defaultChecked 
-            disabled = {tpDisable}
-            onChange={(e) => getInviceValue(e)}
-            value="0" 
-            name = "yesclient"/>No
-          
-    
-</label> 
-             }
-         </div>
-            </div> */}
+        
                <div class="form-group">
                <label>Whether invoice(s) can be issued before acceptance of proposal by client</label>
                   <div className="myInvice">
                    
                   {
                     invoice === "1" ?
-                    <label> 
+                    <label className="mr-3"> 
                     <input 
               type="radio"
                defaultChecked
+               className="spaceRadio"
                onChange={(e) => getInviceValue(e)}
                disabled = {tpDisable} 
                 value="1" 
                 name="yesclient" />Yes
                
           </label> :
-            <label> 
+            <label className="mr-3"> 
             <input 
       type="radio"
-      
+      className="spaceRadio"
        onChange={(e) => getInviceValue(e)}
        disabled = {tpDisable} 
         value="1" 
@@ -629,7 +581,7 @@ const getSubPlan  = (e) => {
                   }
         {
           invoice === "0" ?
-          <label> 
+          <label className="mr-3"> 
           <input 
               type="radio" 
               onChange={(e) => getInviceValue(e)}
@@ -639,7 +591,7 @@ const getSubPlan  = (e) => {
                 name="yesclient"/>No
              
           </label> :
-            <label> 
+            <label className="mr-3"> 
             <input 
                 type="radio" 
                 onChange={(e) => getInviceValue(e)}
@@ -660,9 +612,10 @@ const getSubPlan  = (e) => {
                    
                   {
                     invoiceTl === "1" ?
-                    <label> 
+                    <label className="mr-3"> 
                     <input 
               type="radio"
+              className="spaceRadio"
                defaultChecked
                onChange={(e) => getInvoicetl(e)}
                 disabled = {tlDisable} 
@@ -670,8 +623,9 @@ const getSubPlan  = (e) => {
                 name = "yestl" />Yes
                
           </label> :
-            <label> 
+            <label className="mr-3"> 
             <input 
+            className="spaceRadio"
       type="radio"
       
        onChange={(e) => getInvoicetl(e)}
@@ -683,19 +637,21 @@ const getSubPlan  = (e) => {
                   }
         {
           invoiceTl === "0" ?
-          <label> 
+          <label className="mr-3"> 
           <input 
               type="radio" 
               onChange={(e) => getInvoicetl(e)}
               defaultChecked
               disabled = {tlDisable}
+              className="spaceRadio"
                value="0" 
                name = "yestl"/>No
              
           </label> :
-            <label> 
+            <label className="mr-3"> 
             <input 
                 type="radio" 
+                className="spaceRadio"
                 onChange={(e) => getInvoicetl(e)}
                 disabled = {tlDisable}
                  value="0" 
@@ -709,10 +665,14 @@ const getSubPlan  = (e) => {
                 <div class="form-group">
                   <label>Approval of Admin for such issue of invoice(s)</label>
                   <div onChange={(e) => getInvoiceAdmin(e)} className="myInvice">
-                <input 
-                type="radio" value="0" disabled name="yesadmin" />Yes
-                   <input 
-                type="radio" value="1" disabled name = "yesadmin"/>No
+               <label className="mr-3">
+               <input 
+                type="radio" className="spaceRadio" value="0" disabled name="yesadmin" />Yes
+                </label>
+                 <label className="mr-3">
+                 <input 
+                type="radio" className="spaceRadio" value="1" disabled name = "yesadmin"/>No
+                  </label>
                 </div>
                 </div>
           </div>
@@ -900,33 +860,30 @@ const getSubPlan  = (e) => {
                            onChange = {(e) => endFun(e)}
                         />
                     </div>
-     </div>
-   
-     {/* <div class="form-group">
-                      <label>No of Installments</label>
-                      <Select
-                        onChange={(e => installmentHandler(e))}
-                        value = {installment}
-                        options={no_installmentRange}
-                      />
-                    </div> */}
-                     <div class="form-group">
-                 
-                 <div onChange={(e) => getSubPlan(e)} className="subPaymentPlan">
+                    <div onChange={(e) => getSubPlan(e)} className="subPaymentPlan">
             <div className="col-md-6">
-            <span>
+            <span className="d-flex">
+              <label>
               <input 
-               type="radio"  value="1" name="paymentPlan" />Installment paymnet
+               type="radio"  className="spaceRadio" value="1" name="paymentPlan" />Installment paymnet
+              </label>
               </span>
             </div>
               <div className="col-md-6">
-              <span>
-                 <input 
-               type="radio"  value="2" name = "paymentPlan"/>Monthly paymnet
+              <span className="d-flex">
+               <label>
+               <input 
+               type="radio"  className="spaceRadio"  value="2" name = "paymentPlan"/>Monthly paymnet
+               </label>
                  </span>
               </div>
                </div>
-               </div>
+     </div>
+   
+                  
+                 
+                
+              
                {
                  subPlan === "1" ?
                  <div class="form-group">

@@ -464,29 +464,54 @@ const getSubPlan  = (e) => {
                <div className="myproposaloption">
                <div class="form-group">
                   <label>Whether invoice(s) can be issued before acceptance of proposal by client</label>
-                  <div onChange={(e) => getInviceValue(e)} className="myInvice">
+                  <div onChange={(e) => getInviceValue(e)} className="myporposalCheckBox">
+              <span className="d-flex mr-3">
+             <label>
+             <input 
+                type="radio" className="spaceRadio" value="1" name="yesclient" />Yes
+             </label>
+              </span>
+                <span className="d-flex mr-3">
+                <label>
                 <input 
-                type="radio" value="1" name="yesclient" />Yes
-                   <input 
-                type="radio" value="0" name = "yesclient"/>No
+                type="radio" className="spaceRadio" value="0" name = "yesclient"/>No
+                  </label>
+                </span>
                 </div>
                 </div>
                 <div class="form-group">
                   <label>Approval of Team Leader for such issue of invoice(s)</label>
-                  <div onChange={(e) => getInvoicetl(e)} className="myInvice">
+                  <div onChange={(e) => getInvoicetl(e)} className="myporposalCheckBox">
+               <span className="d-flex mr-3">
+                <label>
                 <input 
-                type="radio" disabled = {tlDisable} value="1" name="yestl" />Yes
-                   <input 
-                type="radio" disabled = {tlDisable} value="0" name = "yestl"/>No
+                type="radio" className="spaceRadio" disabled = {tlDisable} value="1" name="yestl" />Yes
+                </label>
+               </span>
+               <span className="d-flex mr-3">
+                    <label>
+                    <input 
+                type="radio" className="spaceRadio" disabled = {tlDisable} value="0" name = "yestl"/>No
+                      </label>
+                    </span>
                 </div>
                 </div>
                 <div class="form-group">
                   <label>Approval of Admin for such issue of invoice(s)</label>
-                  <div onChange={(e) => getInvoiceAdmin(e)} className="myInvice">
+                  <div onChange={(e) => getInvoiceAdmin(e)} className="myporposalCheckBox">
+               <span className="d-flex mr-3">
+                <label>
                 <input 
-                type="radio" disabled value="1" name="yesadmin" />Yes
-                   <input 
-                type="radio" disabled value="0" name = "yesadmin"/>No
+                type="radio" className="spaceRadio" disabled value="1" name="yesadmin" />Yes
+                </label>
+                </span>
+                  <span className="d-flex mr-3">
+                    <label>
+                    <input 
+                type="radio" className="spaceRadio" disabled value="0" name = "yesadmin"/>No
+                    </label>
+                  </span>
+
                 </div>
                 </div>
                </div>
@@ -684,24 +709,28 @@ const getSubPlan  = (e) => {
                            onChange = {(e) => endFun(e)}
                         />
                     </div>
-     </div>
-     <div class="form-group">
-                 
-                  <div onChange={(e) => getSubPlan(e)} className="subPaymentPlan">
+                    <div onChange={(e) => getSubPlan(e)} className="subPaymentPlan">
              <div className="col-md-6">
-             <span>
+             <span className="d-flex">
                <input 
-                type="radio"  value="1" name="paymentPlan" />Installment paymnet
+                type="radio" 
+                className="spaceRadio" value="1" name="paymentPlan" />Installment paymnet
                </span>
              </div>
                <div className="col-md-6">
-               <span>
+               <span className="d-flex">
                   <input 
-                type="radio"  value="2" name = "paymentPlan"/>Monthly paymnet
+                type="radio"
+                className="spaceRadio"
+                value="2" name = "paymentPlan"/>Monthly paymnet
                   </span>
                </div>
+                
                 </div>
-                </div>
+     </div>
+    
+                 
+
                 {
                   subPlan === "1" ?
                   <div class="form-group">
