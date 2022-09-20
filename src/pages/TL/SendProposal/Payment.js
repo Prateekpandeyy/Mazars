@@ -48,7 +48,7 @@ export default class Payment extends React.Component {
                             className="form-control"
                             name={this.state.values[i]}
                             onChange={this.handleChange1.bind(this, i)}
-                            defaultValue = {this.props.allAmount[i]}
+                            value = {this.props.allAmount[i]}
                         />
                         <p style={{ "display": "block", "color": "red" }}>{this.state.error}</p>
                     </div>

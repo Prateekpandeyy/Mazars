@@ -332,17 +332,38 @@ function ProposalComponent(props) {
       setdiserror("");
     }
     setTotalAmount(e.target.value);
+    // totalValue(e.target.value)
+    setAllAmount(totalValue(e.target.value))
   };
+  const totalValue = (e) => {
+
+    let amount = e;
+    let a = Math.round(Number(e) / Number(installment.value))
+    console.log("eee", e, installment.value, a)
+    var dd = []
+    while (amount > a) {
+      amount = amount - a;
+      dd.push(a)
+   }
+   dd.push(amount)
+   return dd;
+  }
+const claculate = (e) => {
+  console.log('valueConsole', e)
+  let amount = totalAmount;
+  let a = Math.round(totalAmount / e)
+  var dd = []
+  while (amount > a) {
+     amount = amount - a;
+     dd.push(a)
+  }
+  dd.push(amount)
+  return dd;
+}
 
   const installmentHandler = (key) => {
-    let amount = totalAmount;
-    let a = Math.round(totalAmount / key.value)
-    let dd = []
-    while (amount > a) {
-       amount = amount - a;
-       dd.push(a)
-    }
-    dd.push(amount)
+   
+   let dd =  claculate(key.value)
     setAllAmount(dd)
     setInstallment(key)
   }
