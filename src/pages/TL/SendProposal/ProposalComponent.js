@@ -57,6 +57,7 @@ function ProposalComponent(props) {
   const [fromMax, setFromMax] = useState(current_date)
   const [tlDisable, setTlDisable] = useState(false)
   const [subPlan, setSubplan] = useState("0");
+  const [allAmount, setAllAmount] = useState([])
   const token = window.localStorage.getItem("tlToken")
   const myConfig = {
       headers : {
@@ -333,7 +334,15 @@ function ProposalComponent(props) {
   };
 
   const installmentHandler = (key) => {
-   
+    let amount = totalAmount;
+    let a = Math.round(totalAmount / key.value)
+    let dd = []
+    while (amount > a) {
+       amount = amount - a;
+       dd.push(a)
+    }
+    dd.push(amount)
+    setAllAmount(dd)
     setInstallment(key)
   }
 const clientFun = (e) => {
@@ -835,9 +844,7 @@ const getSubPlan  = (e) => {
     <option value="26">26</option>
     <option value="27">27</option>
     <option value="28">28</option>
-    <option value="29">29</option>
-    <option value="30">30</option>
-    <option value="31">31</option>
+   
    
   </select>
 </div> 
@@ -859,6 +866,7 @@ const getSubPlan  = (e) => {
                     min={item}
                     item={item}
                     dateError = {dateError}
+                    allAmount = {allAmount}
                   />
                     :
                   ""
@@ -876,6 +884,7 @@ const getSubPlan  = (e) => {
                     max={endDate}
                     item={startDate}
                     dateError = {dateError}
+                    allAmount = {allAmount}
                   />
                     :
                   ""

@@ -408,7 +408,9 @@ else{
     }
   };
 
+
   const installmentHandler = (key) => {
+    console.log("key", key)
 let amount = totalAmount;
 let a = Math.round(totalAmount / key.value)
 let dd = []
@@ -992,9 +994,7 @@ const getSubPlan  = (e) => {
     <option value="26">26</option>
     <option value="27">27</option>
     <option value="28">28</option>
-    <option value="29">29</option>
-    <option value="30">30</option>
-    <option value="31">31</option>
+   
    
   </select>
 </div> 

@@ -337,70 +337,9 @@ let nd = 0;
               <th scope="row">Scope of Work</th>
               <td className="tableStyle"> <Markup content={description} /></td>
             </tr>
-
-          {
-            panel === "admin" ?
-            <tr>
-            <th scope="row">Approval of Admin for such issue of invoice(s)</th>
-            <td className="tableStyle"> 
-            <div class="form-group">
-                <label>Approval of Team Leader for such issue of invoice(s)</label>
-               
-                  <div className="myInvice">
-                   
-                  {
-                    admininvoice === "1" ?
-                    <label> 
-                    <input 
-              type="radio"
-               defaultChecked
-               onChange={(e) => getInviceValue(e)}
-                
-                value="1" 
-                name = "yestl" />Yes
-               
-          </label> :
-            <label> 
-            <input 
-      type="radio"
-      
-       onChange={(e) => getInviceValue(e)}
-        
-        value="1" 
-        name = "yestl" />Yes
-       
-  </label>
-                  }
-        {
-          admininvoice === "0" ?
-          <label> 
-          <input 
-              type="radio" 
-              onChange={(e) => getInviceValue(e)}
-              defaultChecked
-            
-               value="0" 
-               name = "yestl"/>No
-             
-          </label> :
-            <label> 
-            <input 
-                type="radio" 
-                onChange={(e) => getInviceValue(e)}
-              
-                 value="0" 
-                 name = "yestl"/>No
-               
-            </label>
-        }
-                </div> 
-               
-              </div>
-              </td>
-          </tr> : ""
-          }
             <tr>
               <th scope="row"></th>
+              <tr>
               <td className="tableStyle"> 
               <div class="form-group">
                 
@@ -409,7 +348,7 @@ let nd = 0;
                  
                  {
                   tp_iba === "1" ?
-                 <div>
+                  <div>
                   <label>
                   <input 
               type="radio" 
@@ -417,7 +356,7 @@ let nd = 0;
               defaultChecked
             disabled
                value="0" 
-               name = "yestl"/>Yes
+               name = "yestp"/>Yes
              
           </label>
           <label>
@@ -427,22 +366,22 @@ let nd = 0;
              
             
                value="0" 
-               name = "yestl"/>No
+               name = "yestp"/>No
              
           </label>
           </div> : ""
                  }
                   {
                   tp_iba == "0" ?
-                 <div>
-                    <label>
+                  <div>
+                  <label>
                   <input 
               type="radio" 
               
              disabled
             
                value="0" 
-               name = "yestl"/>Yes
+               name = "yestp"/>Yes
              
           </label>
           <label>
@@ -452,17 +391,13 @@ let nd = 0;
               defaultChecked
             disabled
                value="0" 
-               name = "yestl"/>No
+               name = "yestp"/>No
              
-          </label>
-                </div> : ""
+          </label></div> : ""
                  }
                 </div>
                 </div></td>
-            </tr>
-            <tr>
-              <th scope="row"></th>
-              <td className="tableStyle"> 
+                <td className="tableStyle"> 
               <div class="form-group">
                 
                   <div className="myInvice">
@@ -518,7 +453,74 @@ let nd = 0;
                  }
                 </div>
                 </div></td>
+                {
+            panel === "admin" ?
+            
+           
+            <td className="tableStyle"> 
+            <div class="form-group">
+                <label>Approval of Team Leader for such issue of invoice(s)</label>
+               
+                  <div className="myInvice">
+                   
+                  {
+                    admininvoice === "1" ?
+                    <label> 
+                    <input 
+              type="radio"
+               defaultChecked
+               onChange={(e) => getInviceValue(e)}
+                
+                value="1" 
+                name = "yestl" />Yes
+               
+          </label> :
+            <label> 
+            <input 
+      type="radio"
+      
+       onChange={(e) => getInviceValue(e)}
+        
+        value="1" 
+        name = "yestl" />Yes
+       
+  </label>
+                  }
+        {
+          admininvoice === "0" ?
+          <label> 
+          <input 
+              type="radio" 
+              onChange={(e) => getInviceValue(e)}
+              defaultChecked
+            
+               value="0" 
+               name = "yestl"/>No
+             
+          </label> :
+            <label> 
+            <input 
+                type="radio" 
+                onChange={(e) => getInviceValue(e)}
+              
+                 value="0" 
+                 name = "yestl"/>No
+               
+            </label>
+        }
+                </div> 
+               
+              </div>
+              </td>
+          : ""
+          }
+       
+         
+              </tr>
+             
             </tr>
+           
+         
             <tr>
               <th scope="row">Amount</th>
               <td>
