@@ -260,79 +260,81 @@ else{
         formData.append("due_date", date)
          :
         formData.append("due_date", "")
-
-
-    if (payment.length < 1) {
+        if(subPlan !== "2") {
+          if (payment.length < 1) {
      
-    }
-     else if (store === "2" || store === "3") {
-        if (installment == "") {
-          Alerts.ErrorNormal(`Please select no of installment .`)
-        } else
-          if (!amount || !date) {
-            Alerts.ErrorNormal(`Please enter all fields.`)
-          } else if (amount && date) {
-
-            if (installment.value > 0) {
-              var a = Number(installment.value)
-             
-              for (let i = 0; i < a; i++) {
-
-                if (amount[i] == "" || amount[i] == undefined || amount[i] <= 0) {
-                 if(allAmount.length < 0){
-                  Alerts.ErrorNormal(`Please enter amount`)
-                  return false
-                 }
-                  
-                }
-                if (date[i] == "" || date[i] == undefined) {
-                  Alerts.ErrorNormal(`Please enter date`)
-                  return false
-                }
-              }
-              var sum  = 0;
-              if(amount.length > 0){
-                sum = allAmount.reduce(myFunction)
-              }
-              else {
-                sum = allAmount.reduce(myFunction)
-              }
-              function myFunction(total, value) {
-                return Number(total) + Number(value);
-              }
-              if (value.p_fixed != sum) {
-                Alerts.ErrorNormal(`Sum of all installments should be equal to ${value.p_fixed}.`)
-
-              } else {
-               
-                setLoading(true)
-                axios({
-                  method: "POST",
-                  url: `${baseUrl}/tl/updateProposal`,
-                  headers: {
-                    uit : token
-                  },
-                  data: formData,
-                })
-                  .then(function (response) {
-
-                    if (response.data.code === 1) {
-                      setLoading(false)
-                      var variable = "Proposal updated successfully"
-                      Alerts.SuccessNormal(variable)
-                      history.push("/teamleader/proposal");
-                    } else if (response.data.code === 0) {
-                      setLoading(false)
-                    }
-                  })
-                  .catch((error) => {
-                  
-                  });
-              }
-            }
           }
-      } 
-      else if (store === "1" || store === "4") {
+           else if (store === "2" || store === "3") {
+              if (installment == "") {
+                Alerts.ErrorNormal(`Please select no of installment .`)
+              } else
+                if (!amount || !date) {
+                  Alerts.ErrorNormal(`Please enter all fields.`)
+                } else if (amount && date) {
+      
+                  if (installment.value > 0) {
+                    var a = Number(installment.value)
+                   
+                    for (let i = 0; i < a; i++) {
+      
+                      if (amount[i] == "" || amount[i] == undefined || amount[i] <= 0) {
+                       if(allAmount.length < 0){
+                        Alerts.ErrorNormal(`Please enter amount`)
+                        return false
+                       }
+                        
+                      }
+                      if (date[i] == "" || date[i] == undefined) {
+                        Alerts.ErrorNormal(`Please enter date`)
+                        return false
+                      }
+                    }
+                    var sum  = 0;
+                    if(amount.length > 0){
+                      sum = allAmount.reduce(myFunction)
+                    }
+                    else {
+                      sum = allAmount.reduce(myFunction)
+                    }
+                    function myFunction(total, value) {
+                      return Number(total) + Number(value);
+                    }
+                    if (value.p_fixed != sum) {
+                      Alerts.ErrorNormal(`Sum of all installments should be equal to ${value.p_fixed}.`)
+      
+                    } else {
+                     
+                      setLoading(true)
+                      axios({
+                        method: "POST",
+                        url: `${baseUrl}/tl/updateProposal`,
+                        headers: {
+                          uit : token
+                        },
+                        data: formData,
+                      })
+                        .then(function (response) {
+      
+                          if (response.data.code === 1) {
+                            setLoading(false)
+                            var variable = "Proposal updated successfully"
+                            Alerts.SuccessNormal(variable)
+                            history.push("/teamleader/proposal");
+                          } else if (response.data.code === 0) {
+                            setLoading(false)
+                          }
+                        })
+                        .catch((error) => {
+                        
+                        });
+                    }
+                  }
+                }
+            } 
+        }
+
+  
+      else if (store === "1" || store === "4" || subPlan === "2") {
 
         setLoading(true)
         axios({

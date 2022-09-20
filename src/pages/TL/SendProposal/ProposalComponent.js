@@ -322,6 +322,7 @@ function ProposalComponent(props) {
 
   const handleChange = (e) => {
    
+  
     if (isNaN(e.target.value)) {
       setdiserror("Please enter number only");
     }
@@ -333,8 +334,19 @@ function ProposalComponent(props) {
     }
     setTotalAmount(e.target.value);
     // totalValue(e.target.value)
-    setAllAmount(totalValue(e.target.value))
+    let amount = e.target.value;
+    let a = Math.round(Number(e.target.value) / Number(installment.value))
+     console.log("eee", installment.value, a)
+    var dd = []
+    while (amount > a) {
+      amount = amount - a;
+      dd.push(a)
+   }
+   dd.push(amount)
+    setAllAmount(dd)
+   
   };
+  console.log("totalAmount", totalAmount)
   const totalValue = (e) => {
 
     let amount = e;
@@ -674,6 +686,7 @@ const getSubPlan  = (e) => {
                     ref={register({ required: true })}
                     placeholder="Enter Amount"
                     onChange={(e) => handleChange(e)}
+                    value = {totalAmount}
                   />
                 </div>
                 {
