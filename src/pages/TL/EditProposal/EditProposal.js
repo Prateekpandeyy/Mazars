@@ -474,6 +474,7 @@ const getSubPlan  = (e) => {
   setInstallment([])
   setSubplan(e.target.value)
 }
+console.log("subPlan", subPlan)
   return (
     <Layout TLDashboard="TLDashboard" TLuserId={userid}>
       <Card>
@@ -917,7 +918,7 @@ const getSubPlan  = (e) => {
                   <span className="d-flex">
                    <label>
                    <input 
-                   type="radio"  className="spaceRadio"  value="2" name = "paymentPlan"/>Monthly paymnet
+                   type="radio"  className="spaceRadio"  value="2" name = "paymentPlan"/>Monthly paymenet
                    </label>
                      </span>
                   </div>
@@ -938,7 +939,7 @@ const getSubPlan  = (e) => {
                   <span className="d-flex">
                    <label>
                    <input 
-                   type="radio"  className="spaceRadio" defaultChecked value="2" name = "paymentPlan"/>Monthly paymnet
+                   type="radio"  className="spaceRadio" defaultChecked value="2" name = "paymentPlan"/>Monthly paymenet
                    </label>
                      </span>
                   </div>
@@ -1092,7 +1093,7 @@ const getSubPlan  = (e) => {
                     : ""
                 }
                                 {
-                   store === "3"
+                   store === "3" 
                    ?
                    <Payment
                    installment={installment.label}

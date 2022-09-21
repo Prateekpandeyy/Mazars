@@ -301,7 +301,7 @@ let nd = 0;
             fontSize: "18px",
           }}
         >
-          Proposal and Payment Details
+          Proposal and payment details
         </p>
 
         <table className="table table-bordered">
@@ -313,21 +313,21 @@ let nd = 0;
           </thead>
           <tbody>
             <tr>
-              <th scope="row">Date of Allocation</th>
+              <th scope="row">Date of allocation</th>
               <td>{accept > "1" ? CommonServices.changeFormateDate(date_of_allocation) : ""}</td>
             </tr>
             
             
             <tr>
-              <th scope="row">Name of Team Leader</th>
+              <th scope="row">Name of team leader</th>
               <td>{accept > "1" ? tlName2 : ""}</td>
             </tr>
             <tr>
-              <th scope="row">Name of Tax Professional(s)</th>
+              <th scope="row">Name of tax professional(s)</th>
               <td>{tpStatus == "2" ? tp22 : ""}</td>
             </tr>
             <tr>
-              <th scope="row">Date of Proposal</th>
+              <th scope="row">Date of proposal</th>
               <td>
                 <div style={{ display: "flex", justifyContent: "space-between" }}>
                   {CommonServices.removeTime(proposal_date)}
@@ -341,97 +341,101 @@ let nd = 0;
               </td>
             </tr>
             <tr>
-              <th scope="row">Scope of Work</th>
+              <th scope="row">Scope of work</th>
               <td className="tableStyle"> <Markup content={description} /></td>
             </tr>
             <tr>
               <th scope="row"></th>
               <tr>
               <td className="tableStyle"> 
-              <div class="form-group">
-                
-                  <div className="myInvice">
-                
-                 
+            
                  {
                   tp_iba === "1" ?
-                  
-                  <div>
-                      Whether invoice(s) can be issued before acceptance of proposal by client
-                  <label>
+                  <>
+                    <span className="d-block mr-2">
+                    Whether invoice(s) can be issued before acceptance of proposal by client
+                 
+                    </span>
+                  <label className="mr-2">
                   <input 
               type="radio" 
-              
+              className="spaceRadio"
               defaultChecked
             disabled
                value="0" 
                name = "yestp"/>Yes
              
           </label>
-          <label>
+          <label className="mr-2">
                   <input 
               type="radio" 
              disabled 
              
-            
+             className="spaceRadio"
                value="0" 
                name = "yestp"/>No
              
           </label>
-          </div> : ""
+          </> : ""
                  }
                   {
                   tp_iba == "0" ?
-                  <div>
-                      Whether invoice(s) can be issued before acceptance of proposal by client
-                  <label>
+                  <>
+                <span className="d-block mr-2">
+                  Whether invoice(s) can be issued before acceptance of proposal by client
+                 
+                  </span>
+                  <label className="mr-2">
                   <input 
               type="radio" 
-              
+              className="spaceRadio"
              disabled
             
                value="0" 
                name = "yestp"/>Yes
              
           </label>
-          <label>
+          <label className="mr-2">
                   <input 
               type="radio" 
-             
+              className="spaceRadio"
               defaultChecked
             disabled
                value="0" 
                name = "yestp"/>No
              
-          </label></div> : ""
+          </label></> : ""
                  }
-                </div>
-                </div></td>
+              
+               
+                </td>
                 <td className="tableStyle"> 
-              <div class="form-group">
+           
                 
-                  <div className="myInvice">
-                
+              
+                 
                   {
                   tl_iba === "1" ?
                  <div>
-                    Approval of Team Leader for such issue of invoice(s)
-                  <label>
+                  <span className="mr-2">
+                  Approval of team leader for such issue of invoice(s)
+                  </span>
+                  <label className="mr-2">
                   <input 
               type="radio" 
-              
+              className="spaceRadio"
               defaultChecked
             disabled
                value="0" 
                name = "yestl"/>Yes
              
           </label>
-          <label>
+          <label className="mr-2">
                   <input 
               type="radio" 
              disabled 
              
-            
+             className="spaceRadio"
                value="0" 
                name = "yestl"/>No
              
@@ -441,21 +445,23 @@ let nd = 0;
                   {
                   tl_iba == "0" ?
                  <div>
-                    Approval of Team Leader for such issue of invoice(s)
-                  <label>
+                  <span className="mr-2">
+                  Approval of team leader for such issue of invoice(s)
+                  </span>
+                  <label className="mr-2">
                   <input 
               type="radio" 
-              
+              className="spaceRadio"
              disabled
             
                value="0" 
                name = "yestl"/>Yes
              
           </label>
-          <label>
+          <label className="mr-2">
                   <input 
               type="radio" 
-             
+              className="spaceRadio"
               defaultChecked
             disabled
                value="0" 
@@ -463,24 +469,29 @@ let nd = 0;
              
           </label></div> : ""
                  }
-                </div>
-                </div></td>
+               </td>
                 {
             panel === "admin" ?
             
            
             <td className="tableStyle"> 
-            <div class="form-group">
-            
+          
+                <label className="mr-2">Approval of admin for such issue of invoice(s)</label>
                
                   <div className="myInvice">
                    
                   {
                     admininvoice === "1" ?
-                    <>
-                        <label>Approval of Admin for such issue of invoice(s)</label>
-                    </>
-                   :
+                    <label className="mr-2">  
+                    <input 
+              type="radio"
+               defaultChecked
+               onChange={(e) => getInviceValue(e)}
+               className="spaceRadio"
+                value="1" 
+                name = "yestl" />Yes
+               
+          </label> :
           <label className="mr-2">
             <input 
       type="radio"
@@ -516,7 +527,7 @@ let nd = 0;
         }
                 </div> 
                
-              </div>
+             
               </td>
           : ""
           }
@@ -531,7 +542,7 @@ let nd = 0;
               <th scope="row">Amount</th>
               <td>
                 <tr style={{display : "flex", width : "100%"}}>
-                  <td style={{display : "flex", width : "50%"}}>Amount Type</td>
+                  <td style={{display : "flex", width : "50%"}}>Amount type</td>
                   <td style={{display : "flex", width : "50%"}}>Price</td>
                 </tr>
                 <tr style={{display : "flex", width : "100%"}}>
@@ -558,13 +569,13 @@ let nd = 0;
             </tr>
            
             <tr>
-              <th scope="row">Payment Terms</th>
+              <th scope="row">Payment terms</th>
               {
                 payment_terms == "lumpsum" ?
                   <td>
                     <tr style={{display : "flex", width : "100%"}}>
-                  <td style={{display : "flex", width : "50%"}}>Payment Plan</td>
-                  <td style={{display : "flex", width : "50%"}}>Due Dates</td>
+                  <td style={{display : "flex", width : "50%"}}>Payment plan</td>
+                  <td style={{display : "flex", width : "50%"}}>Due dates</td>
                 </tr>
                 <tr style={{display : "flex", width : "100%"}}>
                   <td style={{display : "flex", width : "50%"}}>{CommonServices.capitalizeFirstLetter(payment_terms)}</td>
@@ -583,10 +594,10 @@ let nd = 0;
                   payment_terms == "installment" ?
                     <td>
                       <tr style={{display : "flex", width : "100%"}}>
-                        <td  style={{display : "flex", width : "25%"}}>Payment Plan</td>
-                        <td  style={{display : "flex", width : "25%"}}>No of Installments</td>
-                        <td  style={{display : "flex", width : "25%"}}>Installment Amount</td>
-                        <td  style={{display : "flex", width : "25%"}}>Due Dates</td>
+                        <td  style={{display : "flex", width : "25%"}}>Payment plan</td>
+                        <td  style={{display : "flex", width : "25%"}}>No of installments</td>
+                        <td  style={{display : "flex", width : "25%"}}>Installment amount</td>
+                        <td  style={{display : "flex", width : "25%"}}>Due dates</td>
                       
                       </tr>
                       <tr style={{display : "flex", width : "100%"}}>
@@ -604,11 +615,11 @@ let nd = 0;
 
             </tr>
             <tr>
-              <th scope="row">Proposed Amount</th>
+              <th scope="row">Proposed amount</th>
               <td>{nfObject.format(amount)}</td>
             </tr>
             <tr>
-              <th scope="row">Proposal Status</th>
+              <th scope="row">Proposal status</th>
               <td>
                 {p.query_status == "4" && "Inprogress"}
                 {p.query_status == "6" && "Declined"}
@@ -616,23 +627,23 @@ let nd = 0;
               </td>
             </tr>
             <tr>
-              <th scope="row">Amount Accepted</th>
+              <th scope="row">Amount accepted</th>
               <td>{nfObject.format(accepted_amount)}</td>
             </tr>
             <tr>
-              <th scope="row">Date of Acceptance / Decline</th>
+              <th scope="row">Date of acceptance / decline</th>
               <td>{CommonServices.removeTime(cust_accept_date)}</td>
             </tr>
             <tr>
-              <th scope="row">Payment History</th>
+              <th scope="row">Payment history</th>
               <td>
                 <tr style={{display : "flex", width : "100%"}}>
                   <td style={{display : "flex", width :"20%"}}>Date</td>
                  
-                   <td style={{display : "flex", width : "20%"}}>Invoice Amount</td>
-                   <td style={{display : "flex", width : "20%"}}>Tds Deducted</td>
-                   <td style={{display : "flex", width : "20%"}}>Amount Paid </td>
-                   <td style={{display : "flex", width : "20%"}}>Payment Receipt</td>
+                   <td style={{display : "flex", width : "20%"}}>Invoice amount</td>
+                   <td style={{display : "flex", width : "20%"}}>TDS deducted</td>
+                   <td style={{display : "flex", width : "20%"}}>Amount paid </td>
+                   <td style={{display : "flex", width : "20%"}}>Payment receipt</td>
                 </tr>
                 {paymentDetails.map((pay, i) => (
                   <tr style={{display : "flex", width : "100%"}}>
@@ -663,15 +674,15 @@ let nd = 0;
               </td>
             </tr>
             <tr>
-              <th scope="row">Payment Received</th>
+              <th scope="row">Payment received</th>
               <td>{nfObject.format(payment_received)}</td>
             </tr>
             <tr>
-              <th scope="row">Payment Overdue</th>
+              <th scope="row">Payment overdue</th>
               <td>{overDue}</td>
             </tr>
             <tr>
-              <th scope="row">Payment Outstanding</th>
+              <th scope="row">Payment outstanding</th>
               <td>{nfObject.format(accepted_amount - payment_received)}</td>
             </tr>
          
@@ -684,7 +695,7 @@ let nd = 0;
               <td>{p.notes}</td>
             </tr>
             <tr>
-                <th scope="row">Payment Decline Date</th>
+                <th scope="row">Payment decline date</th>
                 <td>{CommonServices.removeTime(p.payment_declined_date)}</td>
               </tr>
               </>
@@ -693,7 +704,7 @@ let nd = 0;
              {
              p.decline_notes !== null && p.decline_notes.length > 0 ?
                 <tr>
-                  <th scope="row">Reasons for proposal Decline</th>
+                  <th scope="row">Reasons for proposal decline</th>
                   <td colspan="1">
                     {
                       p.decline_notes

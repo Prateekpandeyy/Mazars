@@ -168,7 +168,7 @@ function ProposalComponent(props) {
     formData.append("description", det);
     formData.append("amount_type", "fixed");
     formData.append("amount", value.p_fixed);
-    formData.append("installment_amount", amount);
+    formData.append("installment_amount", allAmount);
     formData.append("payment_plan", store);
     formData.append("start_date", startDate);
     formData.append("end_date", endDate)
@@ -298,6 +298,7 @@ function ProposalComponent(props) {
       array1.push(value)
     });
     setAmount(array1);
+    
   };
 
   const paymentDate = (data) => {
@@ -444,12 +445,12 @@ const getSubPlan  = (e) => {
                 onClick={() => history.goBack()}
               >
              
-                Go Back
+                Go back
               </button>
             </Col>
             <Col md="7">
               <div>
-                <h4>Prepare Proposal</h4>
+                <h4>Prepare proposal</h4>
               </div>
             </Col>
           </Row>
@@ -461,7 +462,7 @@ const getSubPlan  = (e) => {
             <div style={{ display: "flex" }}>
               <div class="col-md-6">
                 <div class="form-group">
-                  <label>Query No.</label>
+                  <label>Query no.</label>
                   <input
                     type="text"
                     name="p_assingment"
@@ -489,7 +490,7 @@ const getSubPlan  = (e) => {
                 </div>
 
                 <div class="form-group">
-                  <label>Payment Plan </label>
+                  <label>Payment plan </label>
                   <select
                     class="form-control"
                     ref={register}
@@ -579,7 +580,7 @@ const getSubPlan  = (e) => {
                </div>
               
                 <div class="form-group">
-                  <label>Scope of Work<span className="declined">*</span></label>
+                  <label>Scope of work<span className="declined">*</span></label>
 
                   <CKEditor
                      editor={ ClassicEditor }
@@ -666,7 +667,7 @@ const getSubPlan  = (e) => {
 
               <div class="col-md-6">
                 <div class="form-group">
-                  <label>Client Name</label>
+                  <label>Client name</label>
                   <input
                     type="text"
                     name="p_name"
@@ -677,7 +678,7 @@ const getSubPlan  = (e) => {
                   />
                 </div>
                 <div class="form-group">
-                  <label>Copy To</label>
+                  <label>Copy to</label>
                   <Select
                    isMulti={true}
                    onChange={(e) => clientFun(e)}
@@ -701,7 +702,7 @@ const getSubPlan  = (e) => {
                 {
                   store === "4" ? (
                     <div class="form-group">
-                    <label>Start Date</label>  
+                    <label>Start date</label>  
                         <input
                             type="date"
                             className="form-control"
@@ -715,7 +716,7 @@ const getSubPlan  = (e) => {
              
                 { store === "1" ? (
                   <div class="form-group">
-                    <label>Due Dates</label>
+                    <label>Due dates</label>
                     <input
                       type="date"
                       name="p_inst_date"
@@ -731,7 +732,7 @@ const getSubPlan  = (e) => {
                 ) :
                   store === "2" ? (
                     <div class="form-group">
-                      <label>No of Installments</label>
+                      <label>No of installments</label>
                       <Select
                         onChange={(e => installmentHandler(e))}
                         options={no_installments}
@@ -752,7 +753,7 @@ const getSubPlan  = (e) => {
    
      <div className="row">
      <div class="col-md-6 my-2">
-                    <label>Start Date</label>  
+                    <label>Start date</label>  
                         <input
                             type="date"
                             className="form-control"
@@ -763,7 +764,7 @@ const getSubPlan  = (e) => {
                         />
                     </div>
                     <div class="col-md-6 my-2">
-                    <label>End Date</label>  
+                    <label>End date</label>  
                         <input
                             type="date"
                             value = {endDate}
@@ -797,7 +798,7 @@ const getSubPlan  = (e) => {
                 {
                   subPlan === "1" ?
                   <div class="form-group">
-                  <label>No of Installments</label>
+                  <label>No of installments</label>
                   <Select
                     onChange={(e => installmentHandler(e))}
                     options={no_installmentRange}
@@ -808,7 +809,7 @@ const getSubPlan  = (e) => {
    {
     subPlan === "2" ?
     <div class="form-group">
-    <label>Due Date- Date of month
+    <label>Due date- date of month
    </label>
     <select
       class="form-control"
@@ -861,7 +862,7 @@ const getSubPlan  = (e) => {
   store === "4" ? 
  <>
   <div class="form-group">
-  <label>Due Date- Date of month
+  <label>Due Date- date of month
  </label>
   <select
     class="form-control"
@@ -916,6 +917,7 @@ const getSubPlan  = (e) => {
                     installment={installment.label}
                     paymentAmount={paymentAmount}
                     paymentDate={paymentDate}
+                    installment_amount = {allAmount}
                     totalAmount={totalAmount}
                     min={item}
                     item={item}
@@ -927,10 +929,11 @@ const getSubPlan  = (e) => {
                 }
 
 {
-                 store === "3"
+                 store === "3" 
                     ?
                     <Payment
                     installment={installment.label}
+                    installment_amount = {allAmount}
                     paymentAmount={paymentAmount}
                     paymentDate={paymentDate}
                     totalAmount={totalAmount}
