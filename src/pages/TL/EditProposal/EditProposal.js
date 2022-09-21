@@ -76,6 +76,7 @@ const [scopeError, setScopeError] = useState(false)
     payment : ""
   });
   const [subPlan, setSubplan] = useState("0");
+  const [optionDisable, setOptionDisable] = useState(false)
 const token = window.localStorage.getItem("tlToken")
   const myConfig = {
       headers : {
@@ -160,6 +161,7 @@ setInvice(res.data.result.tp_iba)
 setInvoicetl(res.data.result.tl_iba);
 
 if(res.data.result.admin_iba !== null){
+  setOptionDisable(true)
   setTlDisable(true)
   setTpDisable(true)
   setAdminValue(res.data.result.admin_iba)
@@ -498,7 +500,7 @@ console.log("subPlan", subPlan)
             </Col>
             <Col md="7">
               <div class="btn ml-3">
-                <h4>Edit Proposal</h4>
+                <h4>Edit proposal</h4>
               </div>
             </Col>
           </Row>
@@ -511,7 +513,7 @@ console.log("subPlan", subPlan)
               <div class="col-md-6">
 
                 <div class="form-group">
-                  <label>Query No.</label>
+                  <label>Query no.</label>
                   <input
                     type="text"
                     name="p_assingment"
@@ -538,7 +540,7 @@ console.log("subPlan", subPlan)
                   </select>
                 </div>
                 <div class="form-group">
-                  <label>Payment Plan </label>
+                  <label>Payment plan </label>
                   <select
                     class="form-control"
                     ref={register}
@@ -556,8 +558,8 @@ console.log("subPlan", subPlan)
                       }
                     }}
                   >
-                    <option value="1">Fixed Amount-Lumpsum payment</option>
-                    <option value="2">Fixed Amount-Instalment plan</option>
+                    <option value="1">Fixed amount-lumpsum payment</option>
+                    <option value="2">Fixed amount-instalment plan</option>
                     <option value="3">Retainership plan-specified period</option>
                     <option value="4">Retainership plan-unspecified period</option>
                   </select>
@@ -676,7 +678,7 @@ console.log("subPlan", subPlan)
                 </div> 
                
               </div> 
-           {
+           {/* {
             adminValue === "1" ?
             <div class="form-group">
             <label>Approval of Admin for such issue of invoice(s)</label>
@@ -691,8 +693,8 @@ console.log("subPlan", subPlan)
             </label>
           </div>
           </div> : ""
-           }
-           {
+           } */}
+           {/* {
             adminValue === "2" ?
             <div class="form-group">
             <label>Approval of Admin for such issue of invoice(s)</label>
@@ -707,7 +709,7 @@ console.log("subPlan", subPlan)
             </label>
           </div>
           </div> : ""
-           } 
+           }  */}
            {
             adminValue === null ?
             <div class="form-group">
@@ -722,12 +724,43 @@ console.log("subPlan", subPlan)
           type="radio" className="spaceRadio" value="1" disabled name = "yesadmin"/>No
             </label>
           </div>
-          </div> : ""
+          </div> : 
+          <>
+          {
+            adminValue === "0" ?
+            <div class="form-group">
+            <label>Approval of Admin for such issue of invoice(s)</label>
+            <div className="myInvice">
+         <label className="mr-3">
+         <input 
+          type="radio" className="spaceRadio" value="0" disabled name="yesadmin" />Yes
+          </label>
+           <label className="mr-3">
+           <input 
+          type="radio" defaultChecked className="spaceRadio" value="1" disabled name = "yesadmin"/>No
+            </label>
+          </div>
+          </div>  :
+          <div class="form-group">
+          <label>Approval of Admin for such issue of invoice(s)</label>
+          <div className="myInvice">
+       <label className="mr-3">
+       <input 
+        type="radio" defaultChecked className="spaceRadio" value="0" disabled name="yesadmin" />Yes
+        </label>
+         <label className="mr-3">
+         <input 
+        type="radio" className="spaceRadio" value="1" disabled name = "yesadmin"/>No
+          </label>
+        </div>
+        </div> 
+          }
+          </>
            }
           </div>
              
                 <div class="form-group">
-                  <label>Scope of Work<span className="declined">*</span></label>
+                  <label>Scope of work<span className="declined">*</span></label>
                   <CKEditor
                      editor={ ClassicEditor }
                      height = "400px"
@@ -797,7 +830,7 @@ console.log("subPlan", subPlan)
 
               <div class="col-md-6">
                 <div class="form-group">
-                  <label>Client Name</label>
+                  <label>Client name</label>
                   <input
                     type="text"
                     name="p_name"
@@ -835,7 +868,7 @@ console.log("subPlan", subPlan)
                 {
                   store === "4" ? (
                     <div class="form-group">
-                    <label>Start Date</label>  
+                    <label>Start date</label>  
                         <input
                             type="date"
                             className="form-control"
@@ -849,7 +882,7 @@ console.log("subPlan", subPlan)
              
                 { store === "1" ? (
                   <div class="form-group">
-                    <label>Due Dates</label>
+                    <label>Due dates</label>
                     <input
                       type="date"
                       name="p_inst_date"
@@ -866,7 +899,7 @@ console.log("subPlan", subPlan)
                 ) :
                   store === "2" ? (
                     <div class="form-group">
-                      <label>No of Installments</label>
+                      <label>No of installments</label>
                       <Select
                         onChange={(e => installmentHandler(e))}
                         value = {installment}
@@ -889,7 +922,7 @@ console.log("subPlan", subPlan)
    
      <div className="row">
      <div class="col-md-6 my-2">
-                    <label>Start Date</label>  
+                    <label>Start date</label>  
                         <input
                             type="date"
                             className="form-control"
@@ -900,7 +933,7 @@ console.log("subPlan", subPlan)
                         />
                     </div>
                     <div class="col-md-6 my-2">
-                    <label>End Date</label>  
+                    <label>End date</label>  
                         <input
                             type="date"
                             value = {endDate}
@@ -960,7 +993,7 @@ console.log("subPlan", subPlan)
                {
                  subPlan === "1" ?
                  <div class="form-group">
-                      <label>No of Installments</label>
+                      <label>No of installments</label>
                       <Select
                         onChange={(e => installmentHandler(e))}
                         value = {installment}
@@ -972,7 +1005,7 @@ console.log("subPlan", subPlan)
   {
    subPlan === "2" ?
    <div class="form-group">
-   <label>Due Date- Date of month
+   <label>Due date- date of month
   </label>
    <select
      class="form-control"
@@ -1028,7 +1061,7 @@ console.log("subPlan", subPlan)
   store === "4" ? 
  <>
   <div class="form-group">
-  <label>Due Date- Date of month
+  <label>Due date- date of month
  </label>
   <select
     class="form-control"
@@ -1099,7 +1132,7 @@ console.log("subPlan", subPlan)
                     : ""
                 }
                                 {
-                   store === "3" 
+                   store === "3" && subPlan === "1"
                    ?
                    <Payment
                    installment={installment.label}

@@ -273,33 +273,35 @@ let nd = 0;
     cancelButtonColor: "#d33",
     confirmButtonText: "Yes",
   }).then((result) => {
-    if (result.value === true) { }})
-   axios({
-    method : "POST",
-    url :  `${baseUrl}/admin/setiba`,
-    headers : {
-      uit : token
-  },
-    data : formData
-   })
-   .then((res) => {
-    if(res.data.code === 1){
-      Swal.fire({
-        title : "success",
-        html : res.data.message,
-        icon : "success"
-      })
+    if (result.value === true) { 
+      axios({
+        method : "POST",
+        url :  `${baseUrl}/admin/setiba`,
+        headers : {
+          uit : token
+      },
+        data : formData
+       })
+       .then((res) => {
+        if(res.data.code === 1){
+          Swal.fire({
+            title : "success",
+            html : res.data.message,
+            icon : "success"
+          })
+          
+        }
+        else if (res.data.code === 0){
+          Swal.fire({
+            title : "error",
+            html : res.data.message,
+            icon : "error"
+          })
+        }
       
-    }
-    else if (res.data.code === 0){
-      Swal.fire({
-        title : "error",
-        html : res.data.message,
-        icon : "error"
-      })
-    }
+       })
+    }})
   
-   })
   }
  console.log("admininvoice", admininvoice)
   return (
