@@ -471,22 +471,16 @@ let nd = 0;
            
             <td className="tableStyle"> 
             <div class="form-group">
-                <label>Approval of Admin for such issue of invoice(s)</label>
+            
                
                   <div className="myInvice">
                    
                   {
                     admininvoice === "1" ?
-                    <label className="mr-2">  
-                    <input 
-              type="radio"
-               defaultChecked
-               onChange={(e) => getInviceValue(e)}
-               className="spaceRadio"
-                value="1" 
-                name = "yestl" />Yes
-               
-          </label> :
+                    <>
+                        <label>Approval of Admin for such issue of invoice(s)</label>
+                    </>
+                   :
           <label className="mr-2">
             <input 
       type="radio"
