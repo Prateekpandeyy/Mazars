@@ -628,7 +628,7 @@ let nd = 0;
               <th scope="row">Payment History</th>
               <td>
                 <tr style={{display : "flex", width : "100%"}}>
-                  <th style={{display : "flex", width :"20%"}}>Date</th>
+                  <td style={{display : "flex", width :"20%"}}>Date</td>
                  
                    <td style={{display : "flex", width : "20%"}}>Invoice Amount</td>
                    <td style={{display : "flex", width : "20%"}}>Tds Deducted</td>
