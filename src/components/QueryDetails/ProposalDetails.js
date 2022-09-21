@@ -275,10 +275,17 @@ let nd = 0;
     if(res.data.code === 1){
       Swal.fire({
         title : "success",
-        html : "Success",
+        html : res.data.message,
         icon : "success"
       })
       
+    }
+    else if (res.data.code === 0){
+      Swal.fire({
+        title : "error",
+        html : res.data.message,
+        icon : "error"
+      })
     }
   
    })
@@ -459,7 +466,7 @@ let nd = 0;
            
             <td className="tableStyle"> 
             <div class="form-group">
-                <label>Approval of Team Leader for such issue of invoice(s)</label>
+                <label>Approval of Admin for such issue of invoice(s)</label>
                
                   <div className="myInvice">
                    

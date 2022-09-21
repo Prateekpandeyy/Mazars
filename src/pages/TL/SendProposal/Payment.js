@@ -17,7 +17,8 @@ export default class Payment extends React.Component {
             this.setState({ error: "" })
         }
         this.setState({
-            values: { ...this.state.values, [i]: e.target.value }
+            values: { ...this.state.values, [i]: e.target.value },
+            allAmount: { ...this.props.allAmount, [i]: e.target.value }
         },
             () => {
                 this.props.paymentAmount(this.state.values)
@@ -33,9 +34,25 @@ export default class Payment extends React.Component {
                 this.props.paymentDate(this.state.dates)
             })
     }
-
+// componentDidMount(){
+//     console.log("propsAmount", this.props.allAmount)
+//     // this.setState({
+//     //     values : this.props
+//     // })
+// }
+componentDidUpdate(prevProps, prevState){
+    
+    console.log("shold",this.props.installment, prevProps)
+    if(prevProps.installment !== this.props.installment){
+        this.setState({
+            values : this.props.allAmount
+        })
+    }
+   
+    
+}
     render() {
-        console.log("props", this.props)
+        // console.log("props", this.props)
         var fieldsArray = [];
 
         for (var i = 0; i < this.props.installment; i++) {
@@ -48,7 +65,7 @@ export default class Payment extends React.Component {
                             className="form-control"
                             name={this.state.values[i]}
                             onChange={this.handleChange1.bind(this, i)}
-                            value = {this.props.allAmount[i]}
+                            value = {this.state.values[i]}
                         />
                         <p style={{ "display": "block", "color": "red" }}>{this.state.error}</p>
                     </div>
@@ -73,8 +90,8 @@ export default class Payment extends React.Component {
             <div className="inputs">
                 {this.props.installment > 0 ?
             <tr style={{display : "flex", width : "100%", justifyContent : "space-around"}}>
-              <td>Payment</td>
-              <td>Due Dates</td>
+              <td>Installment amount</td>
+              <td>Due date</td>
           </tr> : ""}
           {fieldsArray}
       </div>

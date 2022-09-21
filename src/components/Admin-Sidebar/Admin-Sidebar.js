@@ -203,7 +203,7 @@ const handleClick = () => {
 const handleClickCms = () => {
   setOpen2(!open2)
 }
-console.log("cmsDashboard", cmsDashboard)
+
 const classes = useStyle()
   return (
    

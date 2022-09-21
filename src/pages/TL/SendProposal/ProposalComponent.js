@@ -22,8 +22,7 @@ import { Spinner } from 'reactstrap';
 import Swal from "sweetalert2";
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-// import RangePicker from "react-range-picker";
-import { DatePicker, Space } from 'antd';
+
 function ProposalComponent(props) {
   const { id } = props;
   const history = useHistory();
@@ -194,19 +193,20 @@ function ProposalComponent(props) {
       
       } 
 
-      else if (!amount || !date) {
+      else if (!allAmount || !date) {
+        console.log("amounts", allAmount , date)
           Alerts.ErrorNormal(`Please enter all fields.`)
           
         }
 
-        else if (amount && date) {
+        else if (allAmount && date) {
           
           if (installment.value > 0) {
             var a = Number(installment.value)
             for (let i = 0; i < a; i++) {
               // arrAmount.push(amount[i])
               // arrDate.push(date[i])
-              if (amount[i] == "" || amount[i] == undefined || amount[i] <= 0) {
+              if (allAmount[i] == "" || allAmount[i] == undefined || allAmount[i] <= 0) {
                 Alerts.ErrorNormal(`Please enter amount`)
              
                 return false
@@ -217,7 +217,7 @@ function ProposalComponent(props) {
                 return false
               }
             }
-            var sum = amount.reduce(myFunction)
+            var sum = allAmount.reduce(myFunction)
             function myFunction(total, value) {
               return Number(total) + Number(value);
             }
@@ -342,16 +342,17 @@ function ProposalComponent(props) {
       amount = amount - a;
       dd.push(a)
    }
+   
    dd.push(amount)
     setAllAmount(dd)
    
   };
-  console.log("totalAmount", totalAmount)
+ 
   const totalValue = (e) => {
 
     let amount = e;
     let a = Math.round(Number(e) / Number(installment.value))
-    console.log("eee", e, installment.value, a)
+   
     var dd = []
     while (amount > a) {
       amount = amount - a;
@@ -361,7 +362,7 @@ function ProposalComponent(props) {
    return dd;
   }
 const claculate = (e) => {
-  console.log('valueConsole', e)
+
   let amount = totalAmount;
   let a = Math.round(totalAmount / e)
   var dd = []
@@ -375,7 +376,15 @@ const claculate = (e) => {
 
   const installmentHandler = (key) => {
    
-   let dd =  claculate(key.value)
+    let amount = totalAmount;
+    let a = Math.round(totalAmount / key.value)
+    let dd = []
+    while (amount > a) {
+       amount = amount - a;
+       dd.push(a)
+    }
+    dd.push(amount)
+    
     setAllAmount(dd)
     setInstallment(key)
   }
@@ -516,19 +525,19 @@ const getSubPlan  = (e) => {
                   <label>Whether invoice(s) can be issued before acceptance of proposal by client</label>
                   <div onChange={(e) => getInviceValue(e)} className="myporposalCheckBox">
               <span className="d-flex mr-3">
-             <label>
+           
              <input 
                 type="radio" 
                 disabled = {clientDisable}
                  className="spaceRadio"
                   value="1" name="yesclient" />Yes
-             </label>
+           
               </span>
                 <span className="d-flex mr-3">
-                <label>
+                
                 <input 
                 type="radio"    disabled = {clientDisable} defaultChecked className="spaceRadio" value="0" name = "yesclient"/>No
-                  </label>
+                
                 </span>
                 </div>
                 </div>
@@ -536,16 +545,16 @@ const getSubPlan  = (e) => {
                   <label>Approval of Team Leader for such issue of invoice(s)</label>
                   <div onChange={(e) => getInvoicetl(e)} className="myporposalCheckBox">
                <span className="d-flex mr-3">
-                <label>
+              
                 <input 
                 type="radio"  className="spaceRadio" disabled = {tlDisable} value="1" name="yestl" />Yes
-                </label>
+               
                </span>
                <span className="d-flex mr-3">
-                    <label>
+                  
                     <input 
                 type="radio" className="spaceRadio" defaultChecked disabled = {tlDisable} value="0" name = "yestl"/>No
-                      </label>
+                     
                     </span>
                 </div>
                 </div>
@@ -553,16 +562,16 @@ const getSubPlan  = (e) => {
                   <label>Approval of Admin for such issue of invoice(s)</label>
                   <div onChange={(e) => getInvoiceAdmin(e)} className="myporposalCheckBox">
                <span className="d-flex mr-3">
-                <label>
+             
                 <input 
                 type="radio" className="spaceRadio" disabled value="1" name="yesadmin" />Yes
-                </label>
+              
                 </span>
                   <span className="d-flex mr-3">
-                    <label>
+                 
                     <input 
                 type="radio" className="spaceRadio" disabled value="0" name = "yesadmin"/>No
-                    </label>
+                  
                   </span>
 
                 </div>

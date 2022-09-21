@@ -61,8 +61,9 @@ const [scopeError, setScopeError] = useState(false)
   const [invoice, setInvice] = useState("")
   const [invoiceTl, setInvoicetl] = useState("")
   const [invoiceAdmin, setInvoiceAdmin] = useState("")
-  const [tlDisable, setTlDisable] = useState("");
+  const [tlDisable, setTlDisable] = useState(true);
   const [tpDisable, setTpDisable] = useState("")
+  const [adminValue, setAdminValue] = useState(null)
   const [allAmount, setAllAmount] = useState([])
   const [proposal, setProposal] = useState({
     query: "",
@@ -114,6 +115,8 @@ const token = window.localStorage.getItem("tlToken")
     axios.get(`${baseUrl}/tl/getProposalDetail?id=${id}`, myConfig).then((res) => {
 
       if (res.data.code === 1) {
+        setDateMonth(res.data.result.date_month)
+        setSubplan(res.data.result.sub_payment_plane)
         setCompany2(res.data.result.company)
         setEmail(res.data.result.email)
         var  collectData = []
@@ -156,14 +159,15 @@ setDate(res.data.result.due_date)
 setInvice(res.data.result.tp_iba)
 setInvoicetl(res.data.result.tl_iba);
 if(res.data.result.tp_iba === "0"){
+  console.log("truetp")
   setTlDisable(true)
 }
-if(res.data.result.admin_iba === null){
-  setTlDisable(false)
-}
-else {
+if(res.data.result.admin_iba !== null){
   setTlDisable(true)
+  setTpDisable(true)
+  setAdminValue(res.data.result.admin_iba)
 }
+
 if(res.data.result.admin_iba === null){
   setTpDisable(false)
 }
@@ -241,10 +245,7 @@ else{
     formData.append("description", value2);
     formData.append("amount_type", "fixed");
     formData.append("amount", totalAmount);
-   
-   
-      formData.append("installment_amount", allAmount);
-   
+    formData.append("installment_amount", allAmount); 
     formData.append("company", company2)
     formData.append("payment_plan", store);
     formData.append("start_date", startDate);
@@ -254,6 +255,7 @@ else{
     formData.append("tl_iba", invoiceTl)
     formData.append("tp_iba", invoice)
     formData.append("admin_iba", invoiceAdmin)
+    formData.append("sub_payment_plane", subPlan)
     store === "1" ?
       formData.append("due_date", lumsum) :
       store === "2" || store === "3" ?
@@ -269,6 +271,7 @@ else{
                 Alerts.ErrorNormal(`Please select no of installment .`)
               } else
                 if (!amount || !date) {
+                  
                   Alerts.ErrorNormal(`Please enter all fields.`)
                 } else if (amount && date) {
       
@@ -666,19 +669,54 @@ const getSubPlan  = (e) => {
                 </div> 
                
               </div> 
-                <div class="form-group">
-                  <label>Approval of Admin for such issue of invoice(s)</label>
-                  <div onChange={(e) => getInvoiceAdmin(e)} className="myInvice">
-               <label className="mr-3">
-               <input 
-                type="radio" className="spaceRadio" value="0" disabled name="yesadmin" />Yes
-                </label>
-                 <label className="mr-3">
-                 <input 
-                type="radio" className="spaceRadio" value="1" disabled name = "yesadmin"/>No
-                  </label>
-                </div>
-                </div>
+           {
+            adminValue === "1" ?
+            <div class="form-group">
+            <label>Approval of Admin for such issue of invoice(s)</label>
+            <div onChange={(e) => getInvoiceAdmin(e)} className="myInvice">
+         <label className="mr-3">
+         <input 
+          type="radio" className="spaceRadio" value="0" disabled name="yesadmin" />Yes
+          </label>
+           <label className="mr-3">
+           <input 
+          type="radio" className="spaceRadio" value="1" disabled name = "yesadmin"/>No
+            </label>
+          </div>
+          </div> : ""
+           }
+           {
+            adminValue === "2" ?
+            <div class="form-group">
+            <label>Approval of Admin for such issue of invoice(s)</label>
+            <div onChange={(e) => getInvoiceAdmin(e)} className="myInvice">
+         <label className="mr-3">
+         <input 
+          type="radio" defaultChecked className="spaceRadio" value="0" disabled name="yesadmin" />Yes
+          </label>
+           <label className="mr-3">
+           <input 
+          type="radio" defaultChecked className="spaceRadio" value="1" disabled name = "yesadmin"/>No
+            </label>
+          </div>
+          </div> : ""
+           } 
+           {
+            adminValue === null ?
+            <div class="form-group">
+            <label>Approval of Admin for such issue of invoice(s)</label>
+            <div onChange={(e) => getInvoiceAdmin(e)} className="myInvice">
+         <label className="mr-3">
+         <input 
+          type="radio" className="spaceRadio" value="0" disabled name="yesadmin" />Yes
+          </label>
+           <label className="mr-3">
+           <input 
+          type="radio" className="spaceRadio" value="1" disabled name = "yesadmin"/>No
+            </label>
+          </div>
+          </div> : ""
+           }
           </div>
              
                 <div class="form-group">
@@ -864,24 +902,48 @@ const getSubPlan  = (e) => {
                            onChange = {(e) => endFun(e)}
                         />
                     </div>
-                    <div onChange={(e) => getSubPlan(e)} className="subPaymentPlan">
-            <div className="col-md-6">
-            <span className="d-flex">
-              <label>
-              <input 
-               type="radio"  className="spaceRadio" value="1" name="paymentPlan" />Installment paymnet
-              </label>
-              </span>
-            </div>
-              <div className="col-md-6">
-              <span className="d-flex">
-               <label>
-               <input 
-               type="radio"  className="spaceRadio"  value="2" name = "paymentPlan"/>Monthly paymnet
-               </label>
-                 </span>
-              </div>
-               </div>
+               {
+                subPlan === "1" ?
+                <div onChange={(e) => getSubPlan(e)} className="subPaymentPlan">
+                <div className="col-md-6">
+                <span className="d-flex">
+                  <label>
+                  <input 
+                   type="radio"  className="spaceRadio" defaultChecked value="1" name="paymentPlan" />Installment paymnet
+                  </label>
+                  </span>
+                </div>
+                  <div className="col-md-6">
+                  <span className="d-flex">
+                   <label>
+                   <input 
+                   type="radio"  className="spaceRadio"  value="2" name = "paymentPlan"/>Monthly paymnet
+                   </label>
+                     </span>
+                  </div>
+                   </div> : ""
+               }
+               {
+                subPlan === "2" ?
+                <div onChange={(e) => getSubPlan(e)} className="subPaymentPlan">
+                <div className="col-md-6">
+                <span className="d-flex">
+                  <label>
+                  <input 
+                   type="radio"  className="spaceRadio" value="1" name="paymentPlan" />Installment paymnet
+                  </label>
+                  </span>
+                </div>
+                  <div className="col-md-6">
+                  <span className="d-flex">
+                   <label>
+                   <input 
+                   type="radio"  className="spaceRadio" defaultChecked value="2" name = "paymentPlan"/>Monthly paymnet
+                   </label>
+                     </span>
+                  </div>
+                   </div> : ""
+               }
      </div>
    
                   
@@ -911,6 +973,7 @@ const getSubPlan  = (e) => {
      name="date_month"
      onChange={(e) => myMonthValue(e)}
      min = {item}
+     value = {dateMonth}
    >
       <option value="1">1</option>
      <option value="2">2</option>
