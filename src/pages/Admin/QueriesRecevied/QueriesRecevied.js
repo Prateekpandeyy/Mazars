@@ -42,6 +42,7 @@ function QueriesRecevied(props) {
   const [declinedStatus, setDeclinedStatus] = useState(false)
   const [finalDate, setFinalDate] = useState()
   const [qstatus, setqStatus] = useState();
+  const [adminVoice, setAdminVoice] = useState(null);
   const [overDue, setOverDue] = useState("")
   const [diaplayProposal, setDisplayProposal] = useState({
     amount: "",
@@ -173,6 +174,7 @@ function QueriesRecevied(props) {
               description: res.data.proposal_queries[0].description,
               tp_iba : res.data.proposal_queries[0].tp_iba,
               tl_iba : res.data.proposal_queries[0].tl_iba,
+              admin_iba : res.data.proposal_queries[0].admin_iba, 
               amount_type: res.data.proposal_queries[0].amount_type,
               amount_fixed: res.data.proposal_queries[0].amount,
               amount_hourly: res.data.proposal_queries[0].amount_hourly,
@@ -181,7 +183,8 @@ function QueriesRecevied(props) {
               installment_amount: res.data.proposal_queries[0].installment_amount,
               due_date: res.data.proposal_queries[0].due_date,
               proposal_reactive_dates : res.data.proposal_queries[0].re_active_date.split(" ")[0].split("-").reverse().join("-"),
-              proposal_reactive_notes : res.data.proposal_queries[0].notes
+              proposal_reactive_notes : res.data.proposal_queries[0].notes,
+              
             });
             let a = moment(res.data.result[0].final_date);
             let b = moment(res.data.proposal_queries[0].cust_accept_date)

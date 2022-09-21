@@ -50,8 +50,8 @@ function ProposalComponent(props) {
   const [item] = useState(current_date);
   const [endDate , setEndDate] = useState("")
   const [dateMonth, setDateMonth] = useState("")
-  const [invoice, setInvice] = useState("")
-  const [invoiceTl, setInvoicetl] = useState("")
+  const [invoice, setInvice] = useState("0")
+  const [invoiceTl, setInvoicetl] = useState("0")
   const [invoiceAdmin, setInvoiceAdmin] = useState("")
   const [fromMax, setFromMax] = useState(current_date)
   const [tlDisable, setTlDisable] = useState(true)

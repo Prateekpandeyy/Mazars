@@ -158,22 +158,28 @@ setEndDate(res.data.result.end_date)
 setDate(res.data.result.due_date)
 setInvice(res.data.result.tp_iba)
 setInvoicetl(res.data.result.tl_iba);
-if(res.data.result.tp_iba === "0"){
-  console.log("truetp")
-  setTlDisable(true)
-}
+
 if(res.data.result.admin_iba !== null){
   setTlDisable(true)
   setTpDisable(true)
   setAdminValue(res.data.result.admin_iba)
 }
-
-if(res.data.result.admin_iba === null){
-  setTpDisable(false)
-}
 else{
-  setTpDisable(true)
+  setTpDisable(false)
+  if(res.data.result.tp_iba === "0"){
+    console.log("truetp")
+    setTlDisable(true)
+  }
+  else {
+    setTlDisable(false)
+  }
 }
+// if(res.data.result.admin_iba === null){
+//   setTpDisable(false)
+// }
+// else{
+//   setTpDisable(true)
+// }
         var payment_terms = res.data.result.payment_terms
         var no_of_installment = res.data.result.no_of_installment
 

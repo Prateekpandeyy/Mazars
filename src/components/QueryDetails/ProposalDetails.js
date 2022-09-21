@@ -32,6 +32,7 @@ function ProposalDetails({
     amount_hourly,
     tp_iba,
     tl_iba,
+    admin_iba,
     payment_terms,
     no_of_installment,
     installment_amount,
@@ -263,6 +264,16 @@ let nd = 0;
    let formData = new FormData()
    formData.append("admin_iba", val);
    formData.append("assign_no", p.id)
+   Swal.fire({
+    title: "Are you sure?",
+    text: "Query no-  payment is outstanding , Do you still want to proceed to complete this query?",
+    type: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes",
+  }).then((result) => {
+    if (result.value === true) { }})
    axios({
     method : "POST",
     url :  `${baseUrl}/admin/setiba`,
@@ -290,7 +301,7 @@ let nd = 0;
   
    })
   }
- 
+ console.log("admininvoice", admininvoice)
   return (
     <>
       <div className="queryBox">
@@ -344,199 +355,281 @@ let nd = 0;
               <th scope="row">Scope of work</th>
               <td className="tableStyle"> <Markup content={description} /></td>
             </tr>
+          {
+            tl_iba === null && tp_iba === null ? "" :
             <tr>
-              <th scope="row"></th>
-              <tr>
-              <td className="tableStyle"> 
-            
-                 {
-                  tp_iba === "1" ?
-                  <>
-                    <span className="d-block mr-2">
-                    Whether invoice(s) can be issued before acceptance of proposal by client
-                 
-                    </span>
-                  <label className="mr-2">
-                  <input 
-              type="radio" 
-              className="spaceRadio"
-              defaultChecked
-            disabled
-               value="0" 
-               name = "yestp"/>Yes
-             
-          </label>
-          <label className="mr-2">
-                  <input 
-              type="radio" 
-             disabled 
-             
-             className="spaceRadio"
-               value="0" 
-               name = "yestp"/>No
-             
-          </label>
-          </> : ""
-                 }
-                  {
-                  tp_iba == "0" ?
-                  <>
-                <span className="d-block mr-2">
-                  Whether invoice(s) can be issued before acceptance of proposal by client
-                 
-                  </span>
-                  <label className="mr-2">
-                  <input 
-              type="radio" 
-              className="spaceRadio"
-             disabled
-            
-               value="0" 
-               name = "yestp"/>Yes
-             
-          </label>
-          <label className="mr-2">
-                  <input 
-              type="radio" 
-              className="spaceRadio"
-              defaultChecked
-            disabled
-               value="0" 
-               name = "yestp"/>No
-             
-          </label></> : ""
-                 }
-              
-               
-                </td>
-                <td className="tableStyle"> 
-           
-                
-              
-                 
-                  {
-                  tl_iba === "1" ?
-                 <div>
-                  <span className="mr-2">
-                  Approval of team leader for such issue of invoice(s)
-                  </span>
-                  <label className="mr-2">
-                  <input 
-              type="radio" 
-              className="spaceRadio"
-              defaultChecked
-            disabled
-               value="0" 
-               name = "yestl"/>Yes
-             
-          </label>
-          <label className="mr-2">
-                  <input 
-              type="radio" 
-             disabled 
-             
-             className="spaceRadio"
-               value="0" 
-               name = "yestl"/>No
-             
-          </label>
-          </div> : ""
-                 }
-                  {
-                  tl_iba == "0" ?
-                 <div>
-                  <span className="mr-2">
-                  Approval of team leader for such issue of invoice(s)
-                  </span>
-                  <label className="mr-2">
-                  <input 
-              type="radio" 
-              className="spaceRadio"
-             disabled
-            
-               value="0" 
-               name = "yestl"/>Yes
-             
-          </label>
-          <label className="mr-2">
-                  <input 
-              type="radio" 
-              className="spaceRadio"
-              defaultChecked
-            disabled
-               value="0" 
-               name = "yestl"/>No
-             
-          </label></div> : ""
-                 }
-               </td>
-                {
-            panel === "admin" ?
-            
-           
+            <th scope="row"></th>
+            <tr>
             <td className="tableStyle"> 
           
-                <label className="mr-2">Approval of admin for such issue of invoice(s)</label>
+               {
+                tp_iba === "1" ?
+                <>
+                  <span className="d-block mr-2">
+                  Whether invoice(s) can be issued before acceptance of proposal by client
                
-                  <div className="myInvice">
-                   
-                  {
-                    admininvoice === "1" ?
-                    <label className="mr-2">  
-                    <input 
-              type="radio"
-               defaultChecked
-               onChange={(e) => getInviceValue(e)}
-               className="spaceRadio"
-                value="1" 
-                name = "yestl" />Yes
+                  </span>
+                <label className="mr-2">
+                <input 
+            type="radio" 
+            className="spaceRadio"
+            defaultChecked
+          disabled
+             value="0" 
+             name = "yestp"/>Yes
+           
+        </label>
+        <label className="mr-2">
+                <input 
+            type="radio" 
+           disabled 
+           
+           className="spaceRadio"
+             value="0" 
+             name = "yestp"/>No
+           
+        </label>
+        </> : ""
+               }
+                {
+                tp_iba == "0" ?
+                <>
+              <span className="d-block mr-2">
+                Whether invoice(s) can be issued before acceptance of proposal by client
                
-          </label> :
-          <label className="mr-2">
-            <input 
-      type="radio"
-      className="spaceRadio"
-       onChange={(e) => getInviceValue(e)}
+                </span>
+                <label className="mr-2">
+                <input 
+            type="radio" 
+            className="spaceRadio"
+           disabled
+          
+             value="0" 
+             name = "yestp"/>Yes
+           
+        </label>
+        <label className="mr-2">
+                <input 
+            type="radio" 
+            className="spaceRadio"
+            defaultChecked
+          disabled
+             value="0" 
+             name = "yestp"/>No
+           
+        </label></> : ""
+               }
+            
+             
+              </td>
+              <td className="tableStyle"> 
+         
+              
+            
+               
+                {
+                tl_iba === "1" ?
+               <div>
+                <span className="mr-2">
+                Approval of team leader for such issue of invoice(s)
+                </span>
+                <label className="mr-2">
+                <input 
+            type="radio" 
+            className="spaceRadio"
+            defaultChecked
+          disabled
+             value="0" 
+             name = "yestl"/>Yes
+           
+        </label>
+        <label className="mr-2">
+                <input 
+            type="radio" 
+           disabled 
+           
+           className="spaceRadio"
+             value="0" 
+             name = "yestl"/>No
+           
+        </label>
+        </div> : ""
+               }
+                {
+                tl_iba == "0" ?
+               <div>
+                <span className="mr-2">
+                Approval of team leader for such issue of invoice(s)
+                </span>
+                <label className="mr-2">
+                <input 
+            type="radio" 
+            className="spaceRadio"
+           disabled
+          
+             value="0" 
+             name = "yestl"/>Yes
+           
+        </label>
+        <label className="mr-2">
+                <input 
+            type="radio" 
+            className="spaceRadio"
+            defaultChecked
+          disabled
+             value="0" 
+             name = "yestl"/>No
+           
+        </label></div> : ""
+               }
+             </td>
+              {
+          panel === "admin" ?
+          
+         
+          <td className="tableStyle"> 
         
-        value="1" 
-        name = "yestl" />Yes
-       
-  </label>
-                  }
-        {
-          admininvoice === "0" ?
-          <label className="mr-2"> 
+              <label className="mr-2">Approval of admin for such issue of invoice(s)</label>
+             
+                <div className="myInvice">
+                 
+            {
+              tl_iba === "1" && tp_iba === "1" && admin_iba === null ?
+              <>
+                  {
+                  admininvoice === "1" ?
+                  <label className="mr-2">  
+                  <input 
+            type="radio"
+             defaultChecked
+             onChange={(e) => getInviceValue(e)}
+             className="spaceRadio"
+              value="1" 
+              name = "yestl" />Yes
+             
+        </label> :
+        <label className="mr-2">
+          <input 
+    type="radio"
+    className="spaceRadio"
+     onChange={(e) => getInviceValue(e)}
+      
+      value="1" 
+      name = "yestl" />Yes
+     
+</label>
+                }
+      {
+        admininvoice === "0" ?
+        <label className="mr-2"> 
+        <input 
+            type="radio" 
+            onChange={(e) => getInviceValue(e)}
+            defaultChecked
+            className="spaceRadio"
+             value="0" 
+             name = "yestl"/>No
+           
+        </label> :
+          <label className="mr-2">
           <input 
               type="radio" 
               onChange={(e) => getInviceValue(e)}
-              defaultChecked
               className="spaceRadio"
                value="0" 
                name = "yestl"/>No
              
-          </label> :
-            <label className="mr-2">
-            <input 
-                type="radio" 
-                onChange={(e) => getInviceValue(e)}
-                className="spaceRadio"
-                 value="0" 
-                 name = "yestl"/>No
-               
-            </label>
+          </label>
+      }
+              </> : 
+              <>
+           {
+            admin_iba === "1" ?
+            <>
+                <label className="mr-2">  
+                  <input 
+            type="radio"
+            disabled
+           defaultChecked
+             className="spaceRadio"
+              value="1" 
+              name = "yestl" />Yes
+             
+        </label>
+        <label className="mr-2">  
+                  <input 
+            type="radio"
+            disabled
+             className="spaceRadio"
+              value="1" 
+              name = "yestl" />No
+             
+        </label>
+            </> :
+            <>
+              {
+                admin_iba === "0" ?
+                <>
+                  <label className="mr-2">  
+                  <input 
+            type="radio"
+            disabled
+          
+             className="spaceRadio"
+              value="1" 
+              name = "yesAdmin" />Yes
+             
+        </label>
+        <label className="mr-2">  
+                  <input 
+            type="radio"
+            defaultChecked
+            disabled
+             className="spaceRadio"
+              value="1" 
+              name = "yesAdmin" />No
+             
+        </label>
+                </> : 
+                <>
+                  <label className="mr-2">  
+                  <input 
+            type="radio"
+            disabled
+           
+             className="spaceRadio"
+              value="1" 
+              name = "yesAdmin" />Yes
+             
+        </label>
+        <label className="mr-2">  
+                  <input 
+            type="radio"
+            disabled
+             className="spaceRadio"
+              value="1" 
+              name = "yesAdmin" />No
+             
+        </label>
+                </>
+              }
+            </>
+           }
+           </>
+            }
+              </div> 
+             
+           
+            </td>
+        : ""
         }
-                </div> 
-               
-             
-              </td>
-          : ""
-          }
+     
        
-         
-              </tr>
-             
             </tr>
            
+          </tr>
+         
+          }
          
             <tr>
               <th scope="row">Amount</th>
