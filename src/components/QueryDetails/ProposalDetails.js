@@ -351,11 +351,13 @@ let nd = 0;
               <div class="form-group">
                 
                   <div className="myInvice">
-                  Whether invoice(s) can be issued before acceptance of proposal by client
+                
                  
                  {
                   tp_iba === "1" ?
+                  
                   <div>
+                      Whether invoice(s) can be issued before acceptance of proposal by client
                   <label>
                   <input 
               type="radio" 
@@ -381,6 +383,7 @@ let nd = 0;
                   {
                   tp_iba == "0" ?
                   <div>
+                      Whether invoice(s) can be issued before acceptance of proposal by client
                   <label>
                   <input 
               type="radio" 
@@ -408,10 +411,11 @@ let nd = 0;
               <div class="form-group">
                 
                   <div className="myInvice">
-                  Approval of Team Leader for such issue of invoice(s)
+                
                   {
                   tl_iba === "1" ?
                  <div>
+                    Approval of Team Leader for such issue of invoice(s)
                   <label>
                   <input 
               type="radio" 
@@ -437,6 +441,7 @@ let nd = 0;
                   {
                   tl_iba == "0" ?
                  <div>
+                    Approval of Team Leader for such issue of invoice(s)
                   <label>
                   <input 
               type="radio" 
