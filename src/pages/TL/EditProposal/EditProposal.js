@@ -528,6 +528,7 @@ console.log("subPlan", subPlan)
                   <select
                     class="form-control"
                     ref={register}
+                    disabled = {optionDisable}
                     name="p_company"
                   value={company2}
                    onChange= {(e) => setCompany2(e.target.value)}
@@ -544,6 +545,7 @@ console.log("subPlan", subPlan)
                   <select
                     class="form-control"
                     ref={register}
+                    disabled = {optionDisable}
                     value = {store}
                     name="p_type"
                     onChange={(e) => {
@@ -873,6 +875,7 @@ console.log("subPlan", subPlan)
                             type="date"
                             className="form-control"
                            value = {startDate}
+                           disabled = {optionDisable}
                            min = {item}
                            onChange={(e) => startFun(e)}
                         />
@@ -927,6 +930,7 @@ console.log("subPlan", subPlan)
                             type="date"
                             className="form-control"
                             max={endDate}
+                            disabled = {optionDisable}
                             value = {startDate}
                             min = {item}
                            onChange={(e) => startFun(e)}

@@ -266,7 +266,7 @@ let nd = 0;
    formData.append("assign_no", p.id)
    Swal.fire({
     title: "Are you sure?",
-    text: "Query no-  payment is outstanding , Do you still want to proceed to complete this query?",
+    text: "Do you want to allow",
     type: "warning",
     showCancelButton: true,
     confirmButtonColor: "#3085d6",
