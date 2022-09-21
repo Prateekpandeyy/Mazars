@@ -47,6 +47,8 @@
   flex-basis: 30%;
   border-bottom: 0px;
   color: #464646;
+  font-weight: 300;
+  font-size: 16px;
 }
 .queryBox > .table > tbody > tr > td {
   display: flex;

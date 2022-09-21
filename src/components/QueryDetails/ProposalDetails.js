@@ -472,20 +472,20 @@ let nd = 0;
                    
                   {
                     admininvoice === "1" ?
-                    <label> 
+                    <label className="mr-2">  
                     <input 
               type="radio"
                defaultChecked
                onChange={(e) => getInviceValue(e)}
-                
+               className="spaceRadio"
                 value="1" 
                 name = "yestl" />Yes
                
           </label> :
-            <label> 
+          <label className="mr-2">
             <input 
       type="radio"
-      
+      className="spaceRadio"
        onChange={(e) => getInviceValue(e)}
         
         value="1" 
@@ -495,21 +495,21 @@ let nd = 0;
                   }
         {
           admininvoice === "0" ?
-          <label> 
+          <label className="mr-2"> 
           <input 
               type="radio" 
               onChange={(e) => getInviceValue(e)}
               defaultChecked
-            
+              className="spaceRadio"
                value="0" 
                name = "yestl"/>No
              
           </label> :
-            <label> 
+            <label className="mr-2">
             <input 
                 type="radio" 
                 onChange={(e) => getInviceValue(e)}
-              
+                className="spaceRadio"
                  value="0" 
                  name = "yestl"/>No
                
@@ -532,8 +532,8 @@ let nd = 0;
               <th scope="row">Amount</th>
               <td>
                 <tr style={{display : "flex", width : "100%"}}>
-                  <th style={{display : "flex", width : "50%"}}>Amount Type</th>
-                  <th style={{display : "flex", width : "50%"}}>Price</th>
+                  <td style={{display : "flex", width : "50%"}}>Amount Type</td>
+                  <td style={{display : "flex", width : "50%"}}>Price</td>
                 </tr>
                 <tr style={{display : "flex", width : "100%"}}>
                   <td style={{display : "flex", width : "50%"}}>{CommonServices.capitalizeFirstLetter(amount_type)}</td>
@@ -564,8 +564,8 @@ let nd = 0;
                 payment_terms == "lumpsum" ?
                   <td>
                     <tr style={{display : "flex", width : "100%"}}>
-                  <th style={{display : "flex", width : "50%"}}>Payment Plan</th>
-                  <th style={{display : "flex", width : "50%"}}>Due Dates</th>
+                  <td style={{display : "flex", width : "50%"}}>Payment Plan</td>
+                  <td style={{display : "flex", width : "50%"}}>Due Dates</td>
                 </tr>
                 <tr style={{display : "flex", width : "100%"}}>
                   <td style={{display : "flex", width : "50%"}}>{CommonServices.capitalizeFirstLetter(payment_terms)}</td>
@@ -584,10 +584,10 @@ let nd = 0;
                   payment_terms == "installment" ?
                     <td>
                       <tr style={{display : "flex", width : "100%"}}>
-                        <th style={{display : "flex", width : "25%"}}>Payment Plan</th>
-                        <th style={{display : "flex", width : "25%"}}>No of Installments</th>
-                        <th style={{display : "flex", width : "25%"}}>Installment Amount</th>
-                        <th style={{display : "flex", width : "25%"}}>Due Dates</th>
+                        <td  style={{display : "flex", width : "25%"}}>Payment Plan</td>
+                        <td  style={{display : "flex", width : "25%"}}>No of Installments</td>
+                        <td  style={{display : "flex", width : "25%"}}>Installment Amount</td>
+                        <td  style={{display : "flex", width : "25%"}}>Due Dates</td>
                       
                       </tr>
                       <tr style={{display : "flex", width : "100%"}}>
@@ -630,10 +630,10 @@ let nd = 0;
                 <tr style={{display : "flex", width : "100%"}}>
                   <th style={{display : "flex", width :"20%"}}>Date</th>
                  
-                    <th style={{display : "flex", width : "20%"}}>Invoice Amount</th>
-                    <th style={{display : "flex", width : "20%"}}>Tds Deducted</th>
-                    <th style={{display : "flex", width : "20%"}}>Amount Paid </th>
-                    <th style={{display : "flex", width : "20%"}}>Payment Receipt</th>
+                   <td style={{display : "flex", width : "20%"}}>Invoice Amount</td>
+                   <td style={{display : "flex", width : "20%"}}>Tds Deducted</td>
+                   <td style={{display : "flex", width : "20%"}}>Amount Paid </td>
+                   <td style={{display : "flex", width : "20%"}}>Payment Receipt</td>
                 </tr>
                 {paymentDetails.map((pay, i) => (
                   <tr style={{display : "flex", width : "100%"}}>

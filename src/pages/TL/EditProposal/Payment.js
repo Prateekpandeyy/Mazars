@@ -310,8 +310,8 @@ export default class YourComponent extends React.Component {
             <div className="inputs">
                 {this.props.installment > 0 ?
             <tr style={{display : "flex", width : "100%", justifyContent : "space-around"}}>
-              <td>Payment</td>
-              <td>Due Dates</td>
+              <td>Installment amount</td>
+              <td>Due date</td>
           </tr> : ""}
           {fieldsArray}
       </div>
