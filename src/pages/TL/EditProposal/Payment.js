@@ -231,7 +231,7 @@ export default class YourComponent extends React.Component {
 
 
     render() {
-console.log("installlment amount", this.props.installment_amount)
+console.log("installlment done amount", this.props.installment_amount)
         var amount = this.props.installment_amount
         var date = this.props.due_date
      
