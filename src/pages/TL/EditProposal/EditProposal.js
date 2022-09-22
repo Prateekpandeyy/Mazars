@@ -270,7 +270,7 @@ else{
         formData.append("due_date", date)
          :
         formData.append("due_date", "")
-        if(subPlan !== "2") {
+        if((subPlan !== "2" && store === "2") || (subPlan !== "2" && store === "3")) {
           if (payment.length < 1) {
      
           }
@@ -650,7 +650,7 @@ console.log("subPlan", subPlan)
         disabled = {tlDisable} 
         value="1" 
         name = "yestl" />Yes
-       
+        
   </label>
                   }
         {
@@ -961,7 +961,7 @@ console.log("subPlan", subPlan)
                   <span className="d-flex">
                    <label>
                    <input 
-                   type="radio"  className="spaceRadio"  value="2" name = "paymentPlan"/>Monthly paymenet
+                   type="radio"  className="spaceRadio"  value="2" name = "paymentPlan"/>Monthly payment
                    </label>
                      </span>
                   </div>
@@ -982,7 +982,7 @@ console.log("subPlan", subPlan)
                   <span className="d-flex">
                    <label>
                    <input 
-                   type="radio"  className="spaceRadio" defaultChecked value="2" name = "paymentPlan"/>Monthly paymenet
+                   type="radio"  className="spaceRadio" defaultChecked value="2" name = "paymentPlan"/>Monthly payment
                    </label>
                      </span>
                   </div>

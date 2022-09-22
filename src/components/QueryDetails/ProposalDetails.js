@@ -266,7 +266,7 @@ let nd = 0;
    formData.append("assign_no", p.id)
    Swal.fire({
     title: "Are you sure?",
-    text: "Do you want to allow",
+    text: "Do you want to refuse",
     type: "warning",
     showCancelButton: true,
     confirmButtonColor: "#3085d6",
