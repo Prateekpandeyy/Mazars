@@ -186,7 +186,7 @@ function ProposalComponent(props) {
         formData.append("due_date", date) :
         formData.append("due_date", "")
 
-   if(subPlan !== "2") {
+        if((subPlan !== "2" && store === "2") || (subPlan !== "2" && store === "3")) {
     if (store === "2" || store === "3") {
       if (installment == "") {
         Alerts.ErrorNormal(`Please select no of installment .`)
@@ -778,7 +778,7 @@ const getSubPlan  = (e) => {
              <span className="d-flex">
                <input 
                 type="radio" 
-                className="spaceRadio" value="1" name="paymentPlan" />Installment paymnet
+                className="spaceRadio" value="1" name="paymentPlan" />Installment payment
                </span>
              </div>
                <div className="col-md-6">
@@ -786,7 +786,7 @@ const getSubPlan  = (e) => {
                   <input 
                 type="radio"
                 className="spaceRadio"
-                value="2" name = "paymentPlan"/>Monthly paymnet
+                value="2" name = "paymentPlan"/>Monthly payment
                   </span>
                </div>
                 

@@ -953,7 +953,7 @@ console.log("subPlan", subPlan)
                 <span className="d-flex">
                   <label>
                   <input 
-                   type="radio"  className="spaceRadio" defaultChecked value="1" name="paymentPlan" />Installment paymnet
+                   type="radio"  className="spaceRadio" defaultChecked value="1" name="paymentPlan" />Installment payment
                   </label>
                   </span>
                 </div>
