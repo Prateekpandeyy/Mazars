@@ -231,7 +231,7 @@ export default class YourComponent extends React.Component {
 
 
     render() {
-console.log("installlment done amount", this.props.installment_amount)
+console.log("installlment done amount", this.props.installment_amount[0])
         var amount = this.props.installment_amount
         var date = this.props.due_date
      
@@ -252,7 +252,7 @@ console.log("installlment done amount", this.props.installment_amount)
                        className="form-control"
                        name={this.state.values[i]}
                        onChange={this.handleChange1.bind(this, i)}
-                      defaultValue={amount[i]}
+                      value={this.props.installment_amount[i]}
                    />
                </div> :   ""
 }
@@ -264,7 +264,7 @@ console.log("installlment done amount", this.props.installment_amount)
                            className="form-control"
                            name={this.state.values[i]}
                            onChange={this.handleChange1.bind(this, i)}
-                           defaultValue={amount[i]}
+                           value={this.props.installment_amount[i]}
                        />
                    </div> : ""}
           {this.props.clearValue == true ? 

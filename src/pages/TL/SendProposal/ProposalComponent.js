@@ -705,7 +705,9 @@ const getSubPlan  = (e) => {
                     <label>Start date</label>  
                         <input
                             type="date"
+                            name = "start_date"
                             className="form-control"
+                            ref={register({ required: true })}
                            value = {startDate}
                              min = {item}
                            onChange={(e) => startFun(e)}
@@ -757,6 +759,8 @@ const getSubPlan  = (e) => {
                         <input
                             type="date"
                             className="form-control"
+                            name = "start_todate"
+                            ref={register({ required: true })}
                              max={endDate}
                              value = {startDate}
                              min = {item}
@@ -768,6 +772,8 @@ const getSubPlan  = (e) => {
                         <input
                             type="date"
                             value = {endDate}
+                            name = "end_toDate"
+                            ref={register({ required: true })}
                             className="form-control"
                            min={fromMax}
                            onChange = {(e) => endFun(e)}
@@ -813,8 +819,9 @@ const getSubPlan  = (e) => {
    </label>
     <select
       class="form-control"
-      ref={register}
+    
       name="date_month"
+      ref={register({ required: true })}
       onChange={(e) => myMonthValue(e)}
       min = {item}
     >
@@ -866,7 +873,8 @@ const getSubPlan  = (e) => {
  </label>
   <select
     class="form-control"
-    ref={register}
+    ref={register({ required: true })}
+   
     name="date_month"
     onChange={(e) => myMonthValue(e)}
     min = {item}
@@ -919,10 +927,11 @@ const getSubPlan  = (e) => {
                     paymentDate={paymentDate}
                     installment_amount = {allAmount}
                     totalAmount={totalAmount}
-                    min={item}
                     item={item}
                     dateError = {dateError}
                     allAmount = {allAmount}
+                    min = {item}
+                    max={endDate}
                   />
                     :
                   ""
@@ -937,7 +946,7 @@ const getSubPlan  = (e) => {
                     paymentAmount={paymentAmount}
                     paymentDate={paymentDate}
                     totalAmount={totalAmount}
-                    min={startDate}
+                    min = {item}
                     max={endDate}
                     item={startDate}
                     dateError = {dateError}

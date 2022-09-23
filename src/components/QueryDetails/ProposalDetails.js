@@ -332,11 +332,11 @@ let nd = 0;
             
             
             <tr>
-              <th scope="row">Name of team leader</th>
+              <th scope="row">Name of Team leader</th>
               <td>{accept > "1" ? tlName2 : ""}</td>
             </tr>
             <tr>
-              <th scope="row">Name of tax professional(s)</th>
+              <th scope="row">Name of Tax Professional(s)</th>
               <td>{tpStatus == "2" ? tp22 : ""}</td>
             </tr>
             <tr>
@@ -433,7 +433,7 @@ let nd = 0;
                 tl_iba === "1" ?
                <div>
                 <span className="mr-2">
-                Approval of team leader for such issue of invoice(s)
+                Approval of Team Leader for such issue of invoice(s)
                 </span>
                 <label className="mr-2">
                 <input 
@@ -461,7 +461,7 @@ let nd = 0;
                 tl_iba == "0" ?
                <div>
                 <span className="mr-2">
-                Approval of team leader for such issue of invoice(s)
+                Approval of Team Leader for such issue of invoice(s)
                 </span>
                 <label className="mr-2">
                 <input 
@@ -491,7 +491,7 @@ let nd = 0;
          
           <td className="tableStyle"> 
         
-              <label className="mr-2">Approval of admin for such issue of invoice(s)</label>
+              <label className="mr-2">Approval of Admin for such issue of invoice(s)</label>
              
                 <div className="myInvice">
                  

@@ -65,7 +65,7 @@ componentDidUpdate(prevProps, prevState){
                             className="form-control"
                             name={this.state.values[i]}
                             onChange={this.handleChange1.bind(this, i)}
-                            value = {this.state.values[i]}
+                            value = {this.props.allAmount[i]}
                         />
                         <p style={{ "display": "block", "color": "red" }}>{this.state.error}</p>
                     </div>
@@ -78,6 +78,7 @@ componentDidUpdate(prevProps, prevState){
                             name={this.state.dates[i]}
                             onChange={this.handleChange2.bind(this, i)}
                             min={this.props.item}
+               max={this.props.max}
                         />
                     </div>
                 </div >

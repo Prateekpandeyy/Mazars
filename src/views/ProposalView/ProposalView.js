@@ -297,26 +297,26 @@ const amountStyle  = {
                 <td>{name}</td>
               </tr>
               <tr>
-                <th scope="row">Date of Allocation</th>
+                <th scope="row">Date of allocation</th>
                 <td>{CommonServices.removeTime(proposal_date)}</td>
               </tr>
               <tr>
-                <th scope="row">Proposed Amount</th>
+                <th scope="row">Proposed amount</th>
                 <td>{nfObject.format(amount)}</td>
               </tr>
               <tr>
-                <th scope="row">Scope of Work</th>
+                <th scope="row">Scope of work</th>
                 <td><Markup content={description} /></td>
               </tr>
               <tr>
                 <th scope="row">Amount</th>
                 <td>
                   <tr style={{display : "flex", width : "100%"}}>
-                    <th style={{display : "flex", width : "50%"}}>Payment Plan</th>
+                    <td style={{display : "flex", width : "50%"}}>Payment plan</td>
                     {
                       payment_plan === "4" ?
-                      <th style={{display : "flex", width : "50%"}}>Amount of monthly fee </th> :
-                      <th style={{display : "flex", width : "50%"}}>Amount of  fee </th>
+                      <td style={{display : "flex", width : "50%"}}>Amount of monthly fee </td> :
+                      <td style={{display : "flex", width : "50%"}}>Amount of  fee </td>
                     }
                    
                   </tr>
@@ -338,14 +338,14 @@ const amountStyle  = {
               </tr>
 
               <tr>
-                <th scope="row">Payment Terms</th>
+                <th scope="row">Payment terms</th>
                 {
                   payment_plan == "1"  ?
                     <td>
                      
                       <tr style={{display : "flex", width : "100%"}}>
-                    <th style={{display : "flex", width : "50%"}}>Payment Plan</th>
-                    <th style={{display : "flex", width : "50%"}}>Due Dates </th>
+                    <td style={{display : "flex", width : "50%"}}>Payment plan</td>
+                    <td style={{display : "flex", width : "50%"}}>Due dates </td>
                   </tr>
                   <tr style={{display : "flex", width : "100%"}}>
                     <td style={{display : "flex", width : "50%"}}>
@@ -359,10 +359,10 @@ const amountStyle  = {
                    payment_plan == "2" || payment_plan == "3" ?
                       <td>
                         <tr style={{display : "flex", width : "100%"}}>
-                          <th style={{display : "flex", width : "25%"}}>Payment Plan</th>
-                          <th style={{display : "flex", width : "25%"}}>No of Installments</th>
-                          <th style={{display : "flex", width : "25%"}}>Installment Amount</th>
-                          <th style={{display : "flex", width : "25%"}}>Due Dates</th>
+                          <td style={{display : "flex", width : "25%"}}>Payment plan</td>
+                          <td style={{display : "flex", width : "25%"}}>No of installments</td>
+                          <td style={{display : "flex", width : "25%"}}>Installment amount</td>
+                          <td style={{display : "flex", width : "25%"}}>Due dates</td>
                         </tr>
                         <tr style={{display : "flex", width : "100%"}}>
                           <td style={{display : "flex", width : "25%", wordBreak : "break-all"}}>{CommonServices.capitalizeFirstLetter(amount_type)}</td>
@@ -378,7 +378,7 @@ const amountStyle  = {
 
               </tr>
               <tr>
-                <th scope="row">Proposal Status</th>
+                <th scope="row">Proposal status</th>
                 <td>
                   {queryStatus == "4" && "Inprogress"}
                   {queryStatus == "6" && "Declined"}

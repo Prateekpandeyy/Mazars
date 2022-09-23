@@ -102,11 +102,11 @@ function Login(props) {
   
   return (
     <>
-   <MainContainer>
+ 
    <Header admin="admin" noAdminSign = "adminSign"/>
       <>
-
-        {
+      <div className="container">
+      {
           show ? <div>
             <VerifyOtpLogin email={email} uid={uid}
               loading={loading}
@@ -203,9 +203,9 @@ function Login(props) {
         }
 
 
-      </>
-   </MainContainer>
-    
+      
+       </div>
+       </>
     </>
   );
 }

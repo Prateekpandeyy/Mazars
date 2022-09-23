@@ -159,12 +159,12 @@ setEndDate(res.data.result.end_date)
 setDate(res.data.result.due_date)
 setInvice(res.data.result.tp_iba)
 setInvoicetl(res.data.result.tl_iba);
-
-if(res.data.result.admin_iba !== null){
+setAdminValue(res.data.result.admin_iba)
+if(res.data.result.admin_iba === "1"){
   setOptionDisable(true)
   setTlDisable(true)
   setTpDisable(true)
-  setAdminValue(res.data.result.admin_iba)
+ 
 }
 else{
   setTpDisable(false)
@@ -389,6 +389,18 @@ else{
     else {
       setTotalAmount(e.target.value)
       setdiserror("");
+      let amount = e.target.value;
+      let a = Math.round(Number(e.target.value) / Number(installment.value))
+       console.log("eee", installment.value, a)
+      var dd = []
+      while (amount > a) {
+        amount = amount - a;
+        dd.push(a)
+     }
+     
+     dd.push(amount)
+      setAllAmount(dd)
+     
     }
   };
 
@@ -482,7 +494,7 @@ const getSubPlan  = (e) => {
   setInstallment([])
   setSubplan(e.target.value)
 }
-console.log("subPlan", subPlan)
+console.log("subPlan", adminValue)
   return (
     <Layout TLDashboard="TLDashboard" TLuserId={userid}>
       <Card>
@@ -566,200 +578,335 @@ console.log("subPlan", subPlan)
                     <option value="4">Retainership plan-unspecified period</option>
                   </select>
                 </div>
+        {
+          store === "1" ?
           <div className="myproposaloption">
              
         
-               <div class="form-group">
-               <label>Whether invoice(s) can be issued before acceptance of proposal by client</label>
-                  <div className="myInvice">
-                   
-                  {
-                    invoice === "1" ?
-                    <label className="mr-3"> 
-                    <input 
-              type="radio"
-               defaultChecked
-               className="spaceRadio"
-               onChange={(e) => getInviceValue(e)}
-               disabled = {tpDisable} 
-                value="1" 
-                name="yesclient" />Yes
-               
-          </label> :
+          <div class="form-group">
+          <label>Whether invoice(s) can be issued before acceptance of proposal by client</label>
+             <div className="myInvice">
+              
+             {
+               invoice === "1" ?
+               <label className="mr-3"> 
+               <input 
+         type="radio"
+          defaultChecked
+          className="spaceRadio"
+          
+          disabled  
+           value="1" 
+           name="yesclient" />Yes
+          
+     </label> :
+       <label className="mr-3"> 
+       <input 
+ type="radio"
+ className="spaceRadio"
+ 
+  disabled 
+   value="1" 
+   name="yesclient" />Yes
+  
+</label>
+             }
+   {
+     invoice === "0" ?
+     <label className="mr-3"> 
+     <input 
+         type="radio" 
+     
+         defaultChecked
+         disabled 
+          value="0" 
+           name="yesclient"/>No
+        
+     </label> :
+       <label className="mr-3"> 
+       <input 
+           type="radio" 
+           
+           disabled 
+            value="0" 
+             name="yesclient"/>No
+          
+       </label>
+   }
+           </div> 
+          
+         </div> 
+        
+           <div class="form-group">
+           <label>Approval of Team Leader for such issue of invoice(s)</label>
+          
+             <div className="myInvice">
+              
+             {
+               invoiceTl === "1" ?
+               <label className="mr-3"> 
+               <input 
+         type="radio"
+         className="spaceRadio"
+          defaultChecked
+          
+           disabled
+           value="1" 
+           name = "yestl" />Yes
+          
+     </label> :
+       <label className="mr-3"> 
+       <input 
+       className="spaceRadio"
+ type="radio"
+ 
+
+   disabled  
+   value="1" 
+   name = "yestl" />Yes
+   
+</label>
+             }
+   {
+     invoiceTl === "0" ?
+     <label className="mr-3"> 
+     <input 
+         type="radio" 
+         
+         defaultChecked
+         disabled
+         className="spaceRadio"
+          value="0" 
+          name = "yestl"/>No
+        
+     </label> :
+       <label className="mr-3"> 
+       <input 
+           type="radio" 
+           className="spaceRadio"
+         
+           disabled 
+            value="0" 
+            name = "yestl"/>No
+          
+       </label>
+   }
+           </div> 
+          
+         </div> 
+    
+      {
+       adminValue === null ?
+       <div class="form-group">
+       <label>Approval of Admin for such issue of invoice(s)</label>
+       <div onChange={(e) => getInvoiceAdmin(e)} className="myInvice">
+    <label className="mr-3">
+    <input 
+     type="radio" className="spaceRadio" value="0" disabled name="yesadmin" />Yes
+     </label>
+      <label className="mr-3">
+      <input 
+     type="radio" className="spaceRadio" value="1" disabled name = "yesadmin"/>No
+       </label>
+     </div>
+     </div> : 
+     <>
+     {
+       adminValue === "0" ?
+       <div class="form-group">
+       <label>Approval of Admin for such issue of invoice(s)</label>
+       <div className="myInvice">
+    <label className="mr-3">
+    <input 
+     type="radio" className="spaceRadio" value="0" disabled name="yesadmin" />Yes
+     </label>
+      <label className="mr-3">
+      <input 
+     type="radio" defaultChecked className="spaceRadio" value="1" disabled name = "yesadmin"/>No
+       </label>
+     </div>
+     </div>  :
+     <div class="form-group">
+     <label>Approval of Admin for such issue of invoice(s)</label>
+     <div className="myInvice">
+  <label className="mr-3">
+  <input 
+   type="radio" defaultChecked className="spaceRadio" value="0" disabled name="yesadmin" />Yes
+   </label>
+    <label className="mr-3">
+    <input 
+   type="radio" className="spaceRadio" value="1" disabled name = "yesadmin"/>No
+     </label>
+   </div>
+   </div> 
+     }
+     </>
+      }
+     </div> :
+       <div className="myproposaloption">
+             
+        
+       <div class="form-group">
+       <label>Whether invoice(s) can be issued before acceptance of proposal by client</label>
+          <div className="myInvice">
+           
+          {
+            invoice === "1" ?
             <label className="mr-3"> 
             <input 
       type="radio"
-      className="spaceRadio"
+       defaultChecked
+       className="spaceRadio"
        onChange={(e) => getInviceValue(e)}
        disabled = {tpDisable} 
         value="1" 
         name="yesclient" />Yes
        
-  </label>
-                  }
-        {
-          invoice === "0" ?
-          <label className="mr-3"> 
-          <input 
-              type="radio" 
-              onChange={(e) => getInviceValue(e)}
-              defaultChecked
-              disabled = {tpDisable} 
-               value="0" 
-                name="yesclient"/>No
-             
-          </label> :
+  </label> :
+    <label className="mr-3"> 
+    <input 
+type="radio"
+className="spaceRadio"
+onChange={(e) => getInviceValue(e)}
+disabled = {tpDisable} 
+value="1" 
+name="yesclient" />Yes
+
+</label>
+          }
+{
+  invoice === "0" ?
+  <label className="mr-3"> 
+  <input 
+      type="radio" 
+      onChange={(e) => getInviceValue(e)}
+      defaultChecked
+      disabled = {tpDisable} 
+       value="0" 
+        name="yesclient"/>No
+     
+  </label> :
+    <label className="mr-3"> 
+    <input 
+        type="radio" 
+        onChange={(e) => getInviceValue(e)}
+        disabled = {tpDisable} 
+         value="0" 
+          name="yesclient"/>No
+       
+    </label>
+}
+        </div> 
+       
+      </div> 
+     
+        <div class="form-group">
+        <label>Approval of Team Leader for such issue of invoice(s)</label>
+       
+          <div className="myInvice">
+           
+          {
+            invoiceTl === "1" ?
             <label className="mr-3"> 
             <input 
-                type="radio" 
-                onChange={(e) => getInviceValue(e)}
-                disabled = {tpDisable} 
-                 value="0" 
-                  name="yesclient"/>No
-               
-            </label>
-        }
-                </div> 
-               
-              </div> 
-             
-                <div class="form-group">
-                <label>Approval of Team Leader for such issue of invoice(s)</label>
-               
-                  <div className="myInvice">
-                   
-                  {
-                    invoiceTl === "1" ?
-                    <label className="mr-3"> 
-                    <input 
-              type="radio"
-              className="spaceRadio"
-               defaultChecked
-               onChange={(e) => getInvoicetl(e)}
-                disabled = {tlDisable} 
-                value="1" 
-                name = "yestl" />Yes
-               
-          </label> :
-            <label className="mr-3"> 
-            <input 
-            className="spaceRadio"
       type="radio"
-      
+      className="spaceRadio"
+       defaultChecked
        onChange={(e) => getInvoicetl(e)}
         disabled = {tlDisable} 
         value="1" 
         name = "yestl" />Yes
-        
-  </label>
-                  }
-        {
-          invoiceTl === "0" ?
-          <label className="mr-3"> 
-          <input 
-              type="radio" 
-              onChange={(e) => getInvoicetl(e)}
-              defaultChecked
-              disabled = {tlDisable}
-              className="spaceRadio"
-               value="0" 
-               name = "yestl"/>No
-             
-          </label> :
-            <label className="mr-3"> 
-            <input 
-                type="radio" 
-                className="spaceRadio"
-                onChange={(e) => getInvoicetl(e)}
-                disabled = {tlDisable}
-                 value="0" 
-                 name = "yestl"/>No
-               
-            </label>
-        }
-                </div> 
-               
-              </div> 
-           {/* {
-            adminValue === "1" ?
-            <div class="form-group">
-            <label>Approval of Admin for such issue of invoice(s)</label>
-            <div onChange={(e) => getInvoiceAdmin(e)} className="myInvice">
-         <label className="mr-3">
-         <input 
-          type="radio" className="spaceRadio" value="0" disabled name="yesadmin" />Yes
-          </label>
-           <label className="mr-3">
-           <input 
-          type="radio" className="spaceRadio" value="1" disabled name = "yesadmin"/>No
-            </label>
-          </div>
-          </div> : ""
-           } */}
-           {/* {
-            adminValue === "2" ?
-            <div class="form-group">
-            <label>Approval of Admin for such issue of invoice(s)</label>
-            <div onChange={(e) => getInvoiceAdmin(e)} className="myInvice">
-         <label className="mr-3">
-         <input 
-          type="radio" defaultChecked className="spaceRadio" value="0" disabled name="yesadmin" />Yes
-          </label>
-           <label className="mr-3">
-           <input 
-          type="radio" defaultChecked className="spaceRadio" value="1" disabled name = "yesadmin"/>No
-            </label>
-          </div>
-          </div> : ""
-           }  */}
-           {
-            adminValue === null ?
-            <div class="form-group">
-            <label>Approval of Admin for such issue of invoice(s)</label>
-            <div onChange={(e) => getInvoiceAdmin(e)} className="myInvice">
-         <label className="mr-3">
-         <input 
-          type="radio" className="spaceRadio" value="0" disabled name="yesadmin" />Yes
-          </label>
-           <label className="mr-3">
-           <input 
-          type="radio" className="spaceRadio" value="1" disabled name = "yesadmin"/>No
-            </label>
-          </div>
-          </div> : 
-          <>
-          {
-            adminValue === "0" ?
-            <div class="form-group">
-            <label>Approval of Admin for such issue of invoice(s)</label>
-            <div className="myInvice">
-         <label className="mr-3">
-         <input 
-          type="radio" className="spaceRadio" value="0" disabled name="yesadmin" />Yes
-          </label>
-           <label className="mr-3">
-           <input 
-          type="radio" defaultChecked className="spaceRadio" value="1" disabled name = "yesadmin"/>No
-            </label>
-          </div>
-          </div>  :
-          <div class="form-group">
-          <label>Approval of Admin for such issue of invoice(s)</label>
-          <div className="myInvice">
-       <label className="mr-3">
-       <input 
-        type="radio" defaultChecked className="spaceRadio" value="0" disabled name="yesadmin" />Yes
-        </label>
-         <label className="mr-3">
-         <input 
-        type="radio" className="spaceRadio" value="1" disabled name = "yesadmin"/>No
-          </label>
-        </div>
-        </div> 
+       
+  </label> :
+    <label className="mr-3"> 
+    <input 
+    className="spaceRadio"
+type="radio"
+
+onChange={(e) => getInvoicetl(e)}
+disabled = {tlDisable} 
+value="1" 
+name = "yestl" />Yes
+
+</label>
           }
-          </>
-           }
-          </div>
+{
+  invoiceTl === "0" ?
+  <label className="mr-3"> 
+  <input 
+      type="radio" 
+      onChange={(e) => getInvoicetl(e)}
+      defaultChecked
+      disabled = {tlDisable}
+      className="spaceRadio"
+       value="0" 
+       name = "yestl"/>No
+     
+  </label> :
+    <label className="mr-3"> 
+    <input 
+        type="radio" 
+        className="spaceRadio"
+        onChange={(e) => getInvoicetl(e)}
+        disabled = {tlDisable}
+         value="0" 
+         name = "yestl"/>No
+       
+    </label>
+}
+        </div> 
+       
+      </div> 
+  
+   {
+    adminValue === null ?
+    <div class="form-group">
+    <label>Approval of Admin for such issue of invoice(s)</label>
+    <div onChange={(e) => getInvoiceAdmin(e)} className="myInvice">
+ <label className="mr-3">
+ <input 
+  type="radio" className="spaceRadio" value="0" disabled name="yesadmin" />Yes
+  </label>
+   <label className="mr-3">
+   <input 
+  type="radio" className="spaceRadio" value="1" disabled name = "yesadmin"/>No
+    </label>
+  </div>
+  </div> : 
+  <>
+  {
+    adminValue === "0" ?
+    <div class="form-group">
+    <label>Approval of Admin for such issue of invoice(s)</label>
+    <div className="myInvice">
+ <label className="mr-3">
+ <input 
+  type="radio" className="spaceRadio" value="0" disabled name="yesadmin" />Yes
+  </label>
+   <label className="mr-3">
+   <input 
+  type="radio" defaultChecked className="spaceRadio" value="1" disabled name = "yesadmin"/>No
+    </label>
+  </div>
+  </div>  :
+  <div class="form-group">
+  <label>Approval of Admin for such issue of invoice(s)</label>
+  <div className="myInvice">
+<label className="mr-3">
+<input 
+type="radio" defaultChecked className="spaceRadio" value="0" disabled name="yesadmin" />Yes
+</label>
+ <label className="mr-3">
+ <input 
+type="radio" className="spaceRadio" value="1" disabled name = "yesadmin"/>No
+  </label>
+</div>
+</div> 
+  }
+  </>
+   }
+  </div>
+        }
              
                 <div class="form-group">
                   <label>Scope of work<span className="declined">*</span></label>
@@ -873,6 +1020,8 @@ console.log("subPlan", subPlan)
                     <label>Start date</label>  
                         <input
                             type="date"
+                            ref={register({ required: true })}
+                            name = "start_date"
                             className="form-control"
                            value = {startDate}
                            disabled = {optionDisable}
@@ -929,24 +1078,30 @@ console.log("subPlan", subPlan)
                         <input
                             type="date"
                             className="form-control"
-                            max={endDate}
                             disabled = {optionDisable}
+                            ref={register({ required: true })}
+                           name = 'startTo_date'
                             value = {startDate}
                             min = {item}
+                            max={endDate}
                            onChange={(e) => startFun(e)}
                         />
                     </div>
                     <div class="col-md-6 my-2">
                     <label>End date</label>  
                         <input
+                      
+                      
                             type="date"
                             value = {endDate}
+                            ref={register({ required: true })}
+                            name = 'endTo_date'
                             className="form-control"
                             min={fromMax}
                            onChange = {(e) => endFun(e)}
                         />
                     </div>
-               {
+               {/* {
                 subPlan === "1" ?
                 <div onChange={(e) => getSubPlan(e)} className="subPaymentPlan">
                 <div className="col-md-6">
@@ -966,28 +1121,40 @@ console.log("subPlan", subPlan)
                      </span>
                   </div>
                    </div> : ""
-               }
-               {
-                subPlan === "2" ?
+               } */}
+              
                 <div onChange={(e) => getSubPlan(e)} className="subPaymentPlan">
                 <div className="col-md-6">
                 <span className="d-flex">
+                  {
+                    subPlan === "1" ?
+                    <label>
+                  <input 
+                   type="radio" defaultChecked className="spaceRadio" value="1" name="paymentPlan" />Installment payment
+                  </label> :
                   <label>
                   <input 
-                   type="radio"  className="spaceRadio" value="1" name="paymentPlan" />Installment paymnet
+                   type="radio"  className="spaceRadio" value="1" name="paymentPlan" />Installment payment
                   </label>
+                  }
                   </span>
                 </div>
                   <div className="col-md-6">
                   <span className="d-flex">
-                   <label>
-                   <input 
-                   type="radio"  className="spaceRadio" defaultChecked value="2" name = "paymentPlan"/>Monthly payment
-                   </label>
+                 {
+                  subPlan === "2" ?
+                  <label>
+                  <input 
+                  type="radio" defaultChecked  className="spaceRadio"  value="2" name = "paymentPlan"/>Monthly payment
+                  </label> : 
+                    <label>
+                    <input 
+                    type="radio"  className="spaceRadio" Wvalue="2" name = "paymentPlan"/>Monthly payment
+                    </label>
+                 }
                      </span>
                   </div>
-                   </div> : ""
-               }
+                   </div> 
      </div>
    
                   
@@ -1013,7 +1180,7 @@ console.log("subPlan", subPlan)
   </label>
    <select
      class="form-control"
-     ref={register}
+     ref={register({ required: true })}
      name="date_month"
      onChange={(e) => myMonthValue(e)}
      min = {item}
@@ -1069,8 +1236,8 @@ console.log("subPlan", subPlan)
  </label>
   <select
     class="form-control"
-    ref={register}
-    name="date_month"
+    ref={register({ required: true })}
+    name="date_month2"
     onChange={(e) => myMonthValue(e)}
     value = {dateMonth}
     
@@ -1136,7 +1303,7 @@ console.log("subPlan", subPlan)
                     : ""
                 }
                                 {
-                   store === "3" && subPlan === "1"
+                   store === "3"
                    ?
                    <Payment
                    installment={installment.label}
