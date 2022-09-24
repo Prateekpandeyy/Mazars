@@ -1337,7 +1337,7 @@ type="radio" className="spaceRadio" value="1" disabled name = "yesadmin"/>No
                     : ""
                 }
                                 {
-                   store === "3" 
+                   store === "3" && subPlan === "1"
                    ?
                    <Payment
                    installment={installment.label}
