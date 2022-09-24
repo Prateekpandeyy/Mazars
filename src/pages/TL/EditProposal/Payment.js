@@ -231,12 +231,9 @@ export default class YourComponent extends React.Component {
 
 
     render() {
-console.log("installlment done amount", this.props.installment_amount[0])
-        var amount = this.props.installment_amount
-        var date = this.props.due_date
-     
-         let installment_amount;
-       
+
+console.log(this.props.installment_amount.remainAmount)      
+        var date = this.props.due_date  
         const due_date = date.split(',')
         var fieldsArray = [];
 
@@ -250,9 +247,11 @@ console.log("installlment done amount", this.props.installment_amount[0])
                    <input
                        type="text"
                        className="form-control"
+                       disabled = {this.props.invoiceValue.installment_number.length > i ? true : false}
                        name={this.state.values[i]}
                        onChange={this.handleChange1.bind(this, i)}
-                      value={this.props.installment_amount[i]}
+                      value={this.props.invoiceValue.installment_number.length > i ? this.props.installment_amount.freezeAmount[i] :
+                        this.props.installment_amount.remainAmount[i]}
                    />
                </div> :   ""
 }
@@ -262,9 +261,11 @@ console.log("installlment done amount", this.props.installment_amount[0])
                        <input
                            type="text"
                            className="form-control"
+                           disabled = {this.props.invoiceValue.installment_number.length > i ? true : false}
                            name={this.state.values[i]}
                            onChange={this.handleChange1.bind(this, i)}
-                           value={this.props.installment_amount[i]}
+                           value={this.props.invoiceValue.installment_number.length > i ? this.props.installment_amount.freezeAmount[i] :
+                            this.props.installment_amount.freezeAmount[i]}
                        />
                    </div> : ""}
           {this.props.clearValue == true ? 
@@ -274,6 +275,7 @@ console.log("installlment done amount", this.props.installment_amount[0])
                type="date"
                className="form-control"
                required
+               disabled = {this.props.invoiceValue.installment_number.length > i ? true : false}
                name={this.state.dates[i]}
                onChange={this.handleChange2.bind(this, i)}
                defaultValue={due_date[i]}
@@ -289,6 +291,7 @@ console.log("installlment done amount", this.props.installment_amount[0])
                type="date"
                className="form-control"
                required
+               disabled = {this.props.invoiceValue.installment_number.length > i ? true : false}
                name={this.state.dates[i]}
                onChange={this.handleChange2.bind(this, i)}
                defaultValue= ""

@@ -467,7 +467,7 @@ setServices2(k.service)
     return(
       
         <Modal isOpen={props.tdsForm} toggle={props.addTdsToggle} size="sm" style={{display : "flxe", maxWidth : "600px"}}>
-        <ModalHeader toggle={props.addTdsToggle}> Generate Invoice - 
+        <ModalHeader toggle={props.addTdsToggle}> Generate invoice - 
         
         </ModalHeader>
         <ModalBody>
@@ -750,7 +750,7 @@ setServices2(k.service)
                   <Spinner color="primary" />
                   :
                  <>
-                  <button  type="submit" className="customBtn mr-auto">submit</button>
+                  <button  type="submit" className="customBtn mr-auto">Submit</button>
           
              <button  type="button" className="customBtn mr-auto ml-3" onClick={props.addTdsToggle}>Cancel</button>
                  </>

@@ -64,7 +64,10 @@ const [scopeError, setScopeError] = useState(false)
   const [tlDisable, setTlDisable] = useState(true);
   const [tpDisable, setTpDisable] = useState("")
   const [adminValue, setAdminValue] = useState(null)
-  const [allAmount, setAllAmount] = useState([])
+  const [allAmount, setAllAmount] = useState({
+    remainAmount : [],
+    freezeAmount : []
+  })
   const [proposal, setProposal] = useState({
     query: "",
     name: "",
@@ -77,6 +80,13 @@ const [scopeError, setScopeError] = useState(false)
   });
   const [subPlan, setSubplan] = useState("0");
   const [optionDisable, setOptionDisable] = useState(false)
+  const [invoiceValue, setInviceValue] = useState({
+    installment_number : "",
+    due_dates : "",
+    amount : "",
+    invoiceAmount : 0,
+    remainAmount : 0
+  })
 const token = window.localStorage.getItem("tlToken")
   const myConfig = {
       headers : {
@@ -114,15 +124,34 @@ const token = window.localStorage.getItem("tlToken")
 
   const getQuery = () => {
     axios.get(`${baseUrl}/tl/getProposalDetail?id=${id}`, myConfig).then((res) => {
-
+let amount = []
+let due_date = [];
+let installment_number = []
+let freezeAmount = []
+let allam = 0;
+let invoiceAmount = 0;
       if (res.data.code === 1) {
+        setTotalAmount(res.data.result.amount)
         setDateMonth(res.data.result.date_month)
         setSubplan(res.data.result.sub_payment_plane)
         setCompany2(res.data.result.company)
         setEmail(res.data.result.email)
         var  collectData = []
         let a = res.data.result.email.split(",")
-       
+     
+       res.data.result.invoice.map((i) => {
+        amount.push(i.basic_amount)
+        due_date.push(i.due_date);
+        installment_number.push(i.installment_no)
+        invoiceAmount = invoiceAmount + Number(i.basic_amount)
+       })
+       setInviceValue({
+        installment_number : installment_number,
+        due_dates : due_date,
+        amount : amount,
+        invoiceAmount : invoiceAmount,
+        remainAmount : Number(res.data.result.amount) - Number(invoiceAmount)
+       })
         let email = {}
     if(res.data.result.email.length > 0){
    
@@ -136,7 +165,6 @@ const token = window.localStorage.getItem("tlToken")
         setClient(collectData)
       })
     }
-        
     
     
         setProposal({
@@ -148,9 +176,12 @@ const token = window.localStorage.getItem("tlToken")
           due_date: res.data.result.due_date,
           payment : res.data.result.installment_amount
         });
- setAllAmount(res.data.result.installment_amount.split(","))       
+ setAllAmount({
+  remainAmount : res.data.result.installment_amount.split(","),
+  freezeAmount : amount
+ })       
 setValue2(res.data.result.description)
-setTotalAmount(res.data.result.amount)
+
 setStore(res.data.result.payment_plan)
 setInstallment(res.data.result.no_of_installment)
 setDateMonth(res.data.result.due_date)
@@ -169,19 +200,14 @@ if(res.data.result.admin_iba === "1"){
 else{
   setTpDisable(false)
   if(res.data.result.tp_iba === "0"){
-    console.log("truetp")
+   
     setTlDisable(true)
   }
   else {
     setTlDisable(false)
   }
 }
-// if(res.data.result.admin_iba === null){
-//   setTpDisable(false)
-// }
-// else{
-//   setTpDisable(true)
-// }
+
         var payment_terms = res.data.result.payment_terms
         var no_of_installment = res.data.result.no_of_installment
 
@@ -197,10 +223,14 @@ else{
 
         setPayment(data1);
         setInstallment(data2);
+      
+       
       }
     });
+   
   };
 
+ 
 
 const getClient = () => {
     let collectData = []
@@ -391,7 +421,7 @@ else{
       setdiserror("");
       let amount = e.target.value;
       let a = Math.round(Number(e.target.value) / Number(installment.value))
-       console.log("eee", installment.value, a)
+      
       var dd = []
       while (amount > a) {
         amount = amount - a;
@@ -399,14 +429,16 @@ else{
      }
      
      dd.push(amount)
-      setAllAmount(dd)
+      setAllAmount({
+        remainAmount : dd
+      })
      
     }
   };
 
 
   const paymentAmount = (data) => {
-   console.log("data", data)
+
 
     var array1 = []
     Object.entries(data).map(([key, value]) => {
@@ -435,10 +467,12 @@ else{
 
 
   const installmentHandler = (key) => {
-    console.log("key", key)
-let amount = totalAmount;
-let a = Math.round(totalAmount / key.value)
+    console.log("amount", Number(key.value) - Number(invoiceValue.installment_number.length))
+let amount = invoiceValue.remainAmount;
+let remaininvoiceno = 0;
+let a = Math.round(amount / (Number(key.value) - Number(invoiceValue.installment_number.length)))
 let dd = []
+
 while (amount > a) {
    amount = amount - a;
    dd.push(a)
@@ -448,7 +482,9 @@ dd.push(amount)
     setInstallment(key)
     setClearValue(false)
    
-    setAllAmount(dd)
+    setAllAmount({
+      remainAmount : dd
+    })
   }
 
  
@@ -494,7 +530,7 @@ const getSubPlan  = (e) => {
   setInstallment([])
   setSubplan(e.target.value)
 }
-console.log("subPlan", adminValue)
+
   return (
     <Layout TLDashboard="TLDashboard" TLuserId={userid}>
       <Card>
@@ -1101,27 +1137,7 @@ type="radio" className="spaceRadio" value="1" disabled name = "yesadmin"/>No
                            onChange = {(e) => endFun(e)}
                         />
                     </div>
-               {/* {
-                subPlan === "1" ?
-                <div onChange={(e) => getSubPlan(e)} className="subPaymentPlan">
-                <div className="col-md-6">
-                <span className="d-flex">
-                  <label>
-                  <input 
-                   type="radio"  className="spaceRadio" defaultChecked value="1" name="paymentPlan" />Installment payment
-                  </label>
-                  </span>
-                </div>
-                  <div className="col-md-6">
-                  <span className="d-flex">
-                   <label>
-                   <input 
-                   type="radio"  className="spaceRadio"  value="2" name = "paymentPlan"/>Monthly payment
-                   </label>
-                     </span>
-                  </div>
-                   </div> : ""
-               } */}
+              
               
                 <div onChange={(e) => getSubPlan(e)} className="subPaymentPlan">
                 <div className="col-md-6">
@@ -1149,7 +1165,7 @@ type="radio" className="spaceRadio" value="1" disabled name = "yesadmin"/>No
                   </label> : 
                     <label>
                     <input 
-                    type="radio"  className="spaceRadio" Wvalue="2" name = "paymentPlan"/>Monthly payment
+                    type="radio"  className="spaceRadio" value="2" name = "paymentPlan"/>Monthly payment
                     </label>
                  }
                      </span>
@@ -1173,9 +1189,9 @@ type="radio" className="spaceRadio" value="1" disabled name = "yesadmin"/>No
                     </div> :
               ""
                }
-  {
-   subPlan === "2" ?
-   <div class="form-group">
+ {
+  subPlan === "2" ?
+  <div class="form-group">
    <label>Due date- date of month
   </label>
    <select
@@ -1218,8 +1234,7 @@ type="radio" className="spaceRadio" value="1" disabled name = "yesadmin"/>No
     
    </select>
  </div> : ""
-  }
-                    
+ }             
      </>
       ) : " "
     }
@@ -1298,12 +1313,13 @@ type="radio" className="spaceRadio" value="1" disabled name = "yesadmin"/>No
                       totalAmount={totalAmount}
                       min={item}
                       dateError = {dateError}
+                      invoiceValue = {invoiceValue}
                       allAmount = {allAmount}
                     /> 
                     : ""
                 }
                                 {
-                   store === "3"
+                   store === "3" 
                    ?
                    <Payment
                    installment={installment.label}
@@ -1312,7 +1328,7 @@ type="radio" className="spaceRadio" value="1" disabled name = "yesadmin"/>No
                    installment_amount={allAmount}
                    due_date={due_date}
                    getQuery={getQuery}
-                  
+                   invoiceValue = {invoiceValue}
                    clearValue={clearValue}
                    totalAmount={totalAmount}
                    min={startDate}
