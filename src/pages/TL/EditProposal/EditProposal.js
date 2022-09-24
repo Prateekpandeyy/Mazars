@@ -64,6 +64,7 @@ const [scopeError, setScopeError] = useState(false)
   const [tlDisable, setTlDisable] = useState(true);
   const [tpDisable, setTpDisable] = useState("")
   const [adminValue, setAdminValue] = useState(null)
+  const [freeze2, setFreeze] = useState([])
   const [allAmount, setAllAmount] = useState({
     remainAmount : [],
     freezeAmount : []
@@ -176,6 +177,7 @@ let invoiceAmount = 0;
           due_date: res.data.result.due_date,
           payment : res.data.result.installment_amount
         });
+        setFreeze(amount)
  setAllAmount({
   remainAmount : res.data.result.installment_amount.split(","),
   freezeAmount : amount
@@ -430,7 +432,8 @@ else{
      
      dd.push(amount)
       setAllAmount({
-        remainAmount : dd
+        remainAmount : dd,
+        freezeAmount : freeze2
       })
      
     }
@@ -467,10 +470,10 @@ else{
 
 
   const installmentHandler = (key) => {
-    console.log("amount", Number(key.value) - Number(invoiceValue.installment_number.length))
+   
 let amount = invoiceValue.remainAmount;
-let remaininvoiceno = 0;
-let a = Math.round(amount / (Number(key.value) - Number(invoiceValue.installment_number.length)))
+let remaininvoiceno = Number(key.value) - Number(invoiceValue.installment_number.length);
+let a = Math.round(amount / remaininvoiceno)
 let dd = []
 
 while (amount > a) {
@@ -483,7 +486,8 @@ dd.push(amount)
     setClearValue(false)
    
     setAllAmount({
-      remainAmount : dd
+      remainAmount : dd,
+      freezeAmount : freeze2
     })
   }
 

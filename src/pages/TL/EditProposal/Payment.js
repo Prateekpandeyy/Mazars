@@ -232,7 +232,7 @@ export default class YourComponent extends React.Component {
 
     render() {
 
-console.log(this.props.installment_amount.remainAmount)      
+console.log(this.props.installment_amount)      
         var date = this.props.due_date  
         const due_date = date.split(',')
         var fieldsArray = [];
@@ -251,7 +251,7 @@ console.log(this.props.installment_amount.remainAmount)
                        name={this.state.values[i]}
                        onChange={this.handleChange1.bind(this, i)}
                       value={this.props.invoiceValue.installment_number.length > i ? this.props.installment_amount.freezeAmount[i] :
-                        this.props.installment_amount.remainAmount[i]}
+                        this.props.installment_amount.remainAmount[i - this.props.invoiceValue.installment_number.length]}
                    />
                </div> :   ""
 }
@@ -265,7 +265,7 @@ console.log(this.props.installment_amount.remainAmount)
                            name={this.state.values[i]}
                            onChange={this.handleChange1.bind(this, i)}
                            value={this.props.invoiceValue.installment_number.length > i ? this.props.installment_amount.freezeAmount[i] :
-                            this.props.installment_amount.freezeAmount[i]}
+                            this.props.installment_amount.remainAmount[i - this.props.invoiceValue.installment_number.length]}
                        />
                    </div> : ""}
           {this.props.clearValue == true ? 
