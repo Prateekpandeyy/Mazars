@@ -67,7 +67,8 @@ const [scopeError, setScopeError] = useState(false)
   const [freeze2, setFreeze] = useState([])
   const [allAmount, setAllAmount] = useState({
     remainAmount : [],
-    freezeAmount : []
+    freezeAmount : [],
+    completeAmount : []
   })
   const [proposal, setProposal] = useState({
     query: "",
@@ -152,7 +153,16 @@ var  collectData = []
            })
            setFreeze(amount)
         }
-            
+         else{
+          console.log("done1234", res.data.result.due_date)
+          setInviceValue({
+            installment_number : installment_number,
+            due_dates : res.data.result.due_date.split(","),
+            amount : amount,
+            invoiceAmount : invoiceAmount,
+            remainAmount : Number(res.data.result.amount) - Number(invoiceAmount)
+          })
+         }   
         if(res.data.result.email.length > 0){
        
           a.map((i) => {
@@ -228,7 +238,8 @@ var  collectData = []
     
  setAllAmount({
   remainAmount : res.data.result.installment_amount.split(","),
-  freezeAmount : amount
+  freezeAmount : amount,
+  completeAmount : amount.concat(res.data.result.installment_amount.split(","))
  })              
       }
     });
@@ -261,7 +272,7 @@ const getClient = () => {
 
 
   const onSubmit = (value) => {
- 
+   
 if(diserror && diserror.length > 0){
   return false
 }
@@ -288,7 +299,7 @@ else{
     formData.append("description", value2);
     formData.append("amount_type", "fixed");
     formData.append("amount", totalAmount);
-    formData.append("installment_amount", allAmount); 
+    formData.append("installment_amount", allAmount.completeAmount); 
     formData.append("company", company2)
     formData.append("payment_plan", store);
     formData.append("start_date", startDate);
@@ -305,7 +316,9 @@ else{
         formData.append("due_date", date)
          :
         formData.append("due_date", "")
+       
         if((subPlan !== "2" && store === "2") || (subPlan !== "2" && store === "3")) {
+       
           if (payment.length < 1) {
      
           }
@@ -313,18 +326,18 @@ else{
               if (installment == "") {
                 Alerts.ErrorNormal(`Please select no of installment .`)
               } else
-                if (!amount || !date) {
-                  
+                if (!allAmount.completeAmount || !date) {
+                  console.log("date", date, allAmount.completeAmount)
                   Alerts.ErrorNormal(`Please enter all fields.`)
-                } else if (amount && date) {
+                } else if (allAmount.completeAmount && date) {
       
                   if (installment.value > 0) {
                     var a = Number(installment.value)
-                   
+                
                     for (let i = 0; i < a; i++) {
       
-                      if (amount[i] == "" || amount[i] == undefined || amount[i] <= 0) {
-                       if(allAmount.length < 0){
+                      if (allAmount.completeAmount[i] == "" || allAmount.completeAmount[i] == undefined || allAmount.completeAmount[i] <= 0) {
+                       if(allAmount.completeAmount.length < 0){
                         Alerts.ErrorNormal(`Please enter amount`)
                         return false
                        }
@@ -336,11 +349,11 @@ else{
                       }
                     }
                     var sum  = 0;
-                    if(amount.length > 0){
-                      sum = allAmount.reduce(myFunction)
+                    if(allAmount.completeAmount.length > 0){
+                      sum = allAmount.completeAmount.reduce(myFunction)
                     }
                     else {
-                      sum = allAmount.reduce(myFunction)
+                      sum = allAmount.completeAmount.reduce(myFunction)
                     }
                     function myFunction(total, value) {
                       return Number(total) + Number(value);
@@ -440,7 +453,8 @@ else{
      dd.push(amount)
      setAllAmount({
         remainAmount : dd,
-        freezeAmount : freeze2
+        freezeAmount : freeze2,
+        completeAmount : dd.concat(freeze2)
       })
     }
   };
@@ -493,7 +507,8 @@ dd.push(amount)
    
     setAllAmount({
       remainAmount : dd,
-      freezeAmount : freeze2
+      freezeAmount : freeze2,
+      completeAmount : dd.concat(freeze2)
     })
   }
 
@@ -540,7 +555,7 @@ const getSubPlan  = (e) => {
   setInstallment([])
   setSubplan(e.target.value)
 }
-
+console.log("allAmount", allAmount)
   return (
     <Layout TLDashboard="TLDashboard" TLuserId={userid}>
       <Card>

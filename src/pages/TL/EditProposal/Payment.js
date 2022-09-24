@@ -71,7 +71,7 @@ export default class YourComponent extends React.Component {
 
     render() {
 
-console.log(this.props.invoiceValue.due_dates)      
+console.log(this.props.invoiceValue, this.props.clearValue)      
         var date = this.props.due_date  
         const due_date = date.split(',')
         var fieldsArray = [];
@@ -117,7 +117,7 @@ console.log(this.props.invoiceValue.due_dates)
                disabled = {this.props.invoiceValue.installment_number.length > i ? true : false}
                name={this.state.dates[i]}
                onChange={this.handleChange2.bind(this, i)}
-               defaultValue={this.props.invoiceValue.due_dates.length > i ? this.props.invoiceValue.due_dates[i] :
+        defaultValue={this.props.invoiceValue.installment_number.length > i ? this.props.invoiceValue.due_dates[i] :
                 this.props.invoiceValue.due_dates[i - this.props.invoiceValue.due_dates.length]}
             
                min={this.props.item}
@@ -134,7 +134,9 @@ console.log(this.props.invoiceValue.due_dates)
                disabled = {this.props.invoiceValue.installment_number.length > i ? true : false}
                name={this.state.dates[i]}
                onChange={this.handleChange2.bind(this, i)}
-               defaultValue= ""
+               defaultValue={this.props.invoiceValue.installment_number.length > i ? this.props.invoiceValue.due_dates[i] :
+               this.props.invoiceValue.due_dates[i]}
+            
                min={this.props.item}
                max={this.props.max}
            />
