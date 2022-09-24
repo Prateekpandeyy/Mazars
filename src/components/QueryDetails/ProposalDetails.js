@@ -259,6 +259,14 @@ let nd = 0;
     }
   }
   const getInviceValue = (e) => {
+    let messsage = ""
+    if(e.target.value === "0"){
+      messsage = "Do you want to refuse"
+    }
+    else{
+      messsage = "Do you want to allow"
+    }
+    console.log("eee", e.target.value)
     const token = window.localStorage.getItem("adminToken")
     let val = e.target.value
    let formData = new FormData()
@@ -266,7 +274,7 @@ let nd = 0;
    formData.append("assign_no", p.id)
    Swal.fire({
     title: "Are you sure?",
-    text: "Do you want to refuse",
+    text: messsage,
     type: "warning",
     showCancelButton: true,
     confirmButtonColor: "#3085d6",
