@@ -140,12 +140,14 @@ let invoiceAmount = 0;
         var  collectData = []
         let a = res.data.result.email.split(",")
      
-       res.data.result.invoice.map((i) => {
+    if(res.data.result.invoice){
+      res.data.result.invoice.map((i) => {
         amount.push(i.basic_amount)
         due_date.push(i.due_date);
         installment_number.push(i.installment_no)
         invoiceAmount = invoiceAmount + Number(i.basic_amount)
        })
+    }
        setInviceValue({
         installment_number : installment_number,
         due_dates : due_date,
