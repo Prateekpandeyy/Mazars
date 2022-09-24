@@ -124,52 +124,79 @@ const token = window.localStorage.getItem("tlToken")
   }, [id]);
 
   const getQuery = () => {
-    axios.get(`${baseUrl}/tl/getProposalDetail?id=${id}`, myConfig).then((res) => {
-let amount = []
+    let amount = []
 let due_date = [];
 let installment_number = []
 let freezeAmount = []
 let allam = 0;
 let invoiceAmount = 0;
+let email = {}
+var  collectData = []
+    axios.get(`${baseUrl}/tl/getProposalDetail?id=${id}`, myConfig).then((res) => {
+
       if (res.data.code === 1) {
+        let a = res.data.result.email.split(",")
+        if(res.data.result.invoice){
+          res.data.result.invoice.map((i) => {
+            amount.push(i.basic_amount)
+            due_date.push(i.due_date);
+            installment_number.push(i.installment_no)
+            invoiceAmount = invoiceAmount + Number(i.basic_amount)
+           })
+           setInviceValue({
+            installment_number : installment_number,
+            due_dates : due_date,
+            amount : amount,
+            invoiceAmount : invoiceAmount,
+            remainAmount : Number(res.data.result.amount) - Number(invoiceAmount)
+           })
+           setFreeze(amount)
+        }
+            
+        if(res.data.result.email.length > 0){
+       
+          a.map((i) => {
+          
+            email = {
+              label : i,
+              value : i
+            }
+            collectData.push(email)
+            setClient(collectData)
+          })
+        }
+    
+        if(res.data.result.admin_iba === "1"){
+          setOptionDisable(true)
+          setTlDisable(true)
+          setTpDisable(true)
+         
+        }
+        else{
+          setTpDisable(false)
+          if(res.data.result.tp_iba === "0"){
+           
+            setTlDisable(true)
+          }
+          else {
+            setTlDisable(false)
+          }
+        }
         setTotalAmount(res.data.result.amount)
         setDateMonth(res.data.result.date_month)
         setSubplan(res.data.result.sub_payment_plane)
         setCompany2(res.data.result.company)
         setEmail(res.data.result.email)
-        var  collectData = []
-        let a = res.data.result.email.split(",")
-     
-    if(res.data.result.invoice){
-      res.data.result.invoice.map((i) => {
-        amount.push(i.basic_amount)
-        due_date.push(i.due_date);
-        installment_number.push(i.installment_no)
-        invoiceAmount = invoiceAmount + Number(i.basic_amount)
-       })
-    }
-       setInviceValue({
-        installment_number : installment_number,
-        due_dates : due_date,
-        amount : amount,
-        invoiceAmount : invoiceAmount,
-        remainAmount : Number(res.data.result.amount) - Number(invoiceAmount)
-       })
-        let email = {}
-    if(res.data.result.email.length > 0){
-   
-      a.map((i) => {
-      
-        email = {
-          label : i,
-          value : i
-        }
-        collectData.push(email)
-        setClient(collectData)
-      })
-    }
-    
-    
+        setValue2(res.data.result.description)
+        setStore(res.data.result.payment_plan)
+        setInstallment(res.data.result.no_of_installment)
+        setDateMonth(res.data.result.due_date)
+        setStartDate(res.data.result.start_date)
+        setEndDate(res.data.result.end_date)
+        setDate(res.data.result.due_date)
+        setInvice(res.data.result.tp_iba)
+        setInvoicetl(res.data.result.tl_iba);
+        setAdminValue(res.data.result.admin_iba)
         setProposal({
           name: res.data.result.name,
           query: res.data.result.assign_no,
@@ -179,39 +206,6 @@ let invoiceAmount = 0;
           due_date: res.data.result.due_date,
           payment : res.data.result.installment_amount
         });
-        setFreeze(amount)
- setAllAmount({
-  remainAmount : res.data.result.installment_amount.split(","),
-  freezeAmount : amount
- })       
-setValue2(res.data.result.description)
-
-setStore(res.data.result.payment_plan)
-setInstallment(res.data.result.no_of_installment)
-setDateMonth(res.data.result.due_date)
-setStartDate(res.data.result.start_date)
-setEndDate(res.data.result.end_date)
-setDate(res.data.result.due_date)
-setInvice(res.data.result.tp_iba)
-setInvoicetl(res.data.result.tl_iba);
-setAdminValue(res.data.result.admin_iba)
-if(res.data.result.admin_iba === "1"){
-  setOptionDisable(true)
-  setTlDisable(true)
-  setTpDisable(true)
- 
-}
-else{
-  setTpDisable(false)
-  if(res.data.result.tp_iba === "0"){
-   
-    setTlDisable(true)
-  }
-  else {
-    setTlDisable(false)
-  }
-}
-
         var payment_terms = res.data.result.payment_terms
         var no_of_installment = res.data.result.no_of_installment
 
@@ -227,8 +221,15 @@ else{
 
         setPayment(data1);
         setInstallment(data2);
+
       
-       
+     
+   
+    
+ setAllAmount({
+  remainAmount : res.data.result.installment_amount.split(","),
+  freezeAmount : amount
+ })              
       }
     });
    
@@ -424,8 +425,12 @@ else{
       setTotalAmount(e.target.value)
       setdiserror("");
       let amount = e.target.value;
-      let a = Math.round(Number(e.target.value) / Number(installment.value))
-      
+      let divAmount =  Number(e.target.value) - Number(invoiceValue.amount)
+      // setInviceValue({
+      //   remainAmount : divAmount
+      // })
+      let remainInstallment = Number(installment.label) - Number(invoiceValue.installment_number.length)
+      let a = Math.round(divAmount / remainInstallment)
       var dd = []
       while (amount > a) {
         amount = amount - a;
@@ -433,23 +438,10 @@ else{
      }
      
      dd.push(amount)
-//     let amount = invoiceValue.remainAmount;
-// let remaininvoiceno = Number(key.value) - Number(invoiceValue.installment_number.length);
-// let a = Math.round(amount / remaininvoiceno)
-// let dd = []
-
-// while (amount > a) {
-//    amount = amount - a;
-//    dd.push(a)
-// }
-// dd.push(amount)
-
-
-      setAllAmount({
+     setAllAmount({
         remainAmount : dd,
         freezeAmount : freeze2
       })
-     
     }
   };
 
@@ -484,8 +476,8 @@ else{
 
 
   const installmentHandler = (key) => {
-   
-let amount = invoiceValue.remainAmount;
+   console.log(invoiceValue)
+let amount = Number(totalAmount) -  Number(invoiceValue.invoiceAmount);
 let remaininvoiceno = Number(key.value) - Number(invoiceValue.installment_number.length);
 let a = Math.round(amount / remaininvoiceno)
 let dd = []
