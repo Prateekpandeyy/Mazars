@@ -431,6 +431,18 @@ else{
      }
      
      dd.push(amount)
+//     let amount = invoiceValue.remainAmount;
+// let remaininvoiceno = Number(key.value) - Number(invoiceValue.installment_number.length);
+// let a = Math.round(amount / remaininvoiceno)
+// let dd = []
+
+// while (amount > a) {
+//    amount = amount - a;
+//    dd.push(a)
+// }
+// dd.push(amount)
+
+
       setAllAmount({
         remainAmount : dd,
         freezeAmount : freeze2
