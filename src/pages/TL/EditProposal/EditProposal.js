@@ -89,6 +89,13 @@ const [scopeError, setScopeError] = useState(false)
     invoiceAmount : 0,
     remainAmount : 0
   })
+  const [formInstallmentInfo, setFormInstallmentInfo] = useState({
+    dueDate :[],
+    amount : [],
+  boxDisable : [0]
+  })
+  const [invoiceAmount, setinvoiceAmount] = useState(0);
+  const [installmentAmount, sentInstallmentAmount] = useState(0);
 const token = window.localStorage.getItem("tlToken")
   const myConfig = {
       headers : {
@@ -128,31 +135,81 @@ const token = window.localStorage.getItem("tlToken")
     let amount = []
 let due_date = [];
 let installment_number = []
-let freezeAmount = []
-let allam = 0;
 let invoiceAmount = 0;
 let email = {}
 var  collectData = []
+let dis = []
+let mainAmount = []
+let mainDueDate = []
+var installmentAmount = 0;
+var actualInstallmentNumber = 0;
     axios.get(`${baseUrl}/tl/getProposalDetail?id=${id}`, myConfig).then((res) => {
 
       if (res.data.code === 1) {
+        mainAmount = res.data.result.installment_amount.split(",")
+        mainDueDate = res.data.result.due_date.split(",");
         let a = res.data.result.email.split(",")
+        for(let i = 0; i < res.data.result.installment_amount.split(",").length; i++){
+          dis.push(1)
+        }
+        setFormInstallmentInfo({
+          dueDate : mainDueDate,
+          amount : mainAmount,
+          boxEnable : dis
+        })
         if(res.data.result.invoice){
         
-          res.data.result.invoice.map((i) => {
+          res.data.result.invoice.map((i, e) => {
+            dis[e] = 0
             amount.push(i.basic_amount)
+          
             due_date.push(i.due_date);
             installment_number.push(i.installment_no)
             invoiceAmount = invoiceAmount + Number(i.basic_amount)
            })
+          
            setInviceValue({
             installment_number : installment_number,
             due_dates : due_date,
             amount : amount,
             invoiceAmount : invoiceAmount,
-            remainAmount : Number(res.data.result.amount) - Number(invoiceAmount)
+            // remainAmount : Number(res.data.result.amount) - Number(invoiceAmount)
            })
-           setFreeze(amount)
+        
+        due_date.map((i, e) =>{
+       
+          mainDueDate[e] = i;
+        })
+      
+        amount.map((i, e) =>{
+          console.log("iiii", i)
+          mainAmount[e] = i;
+        })
+       
+      installmentAmount = Number(res.data.result.amount) - Number(invoiceAmount)
+      actualInstallmentNumber = Number(res.data.result.no_of_installment) - Number(installment_number.length)
+      console.log("installmentAmount", actualInstallmentNumber, invoiceValue.installment_number.length)
+    
+          if(installmentAmount < 1 || actualInstallmentNumber < 1){
+            installmentAmount = 0
+          }
+          else{
+          
+            installmentAmount = installmentAmount / actualInstallmentNumber
+          }
+         
+          dis.map((i, e) => {
+            if(i === 1){
+              mainAmount[e] = installmentAmount 
+            }
+          })
+          setFormInstallmentInfo({
+            dueDate : mainDueDate,
+            amount : mainAmount,
+            boxEnable : dis
+          })
+          
+          //  setFreeze(amount)
         }
          else{
         
@@ -161,9 +218,10 @@ var  collectData = []
             due_dates : res.data.result.due_date.split(","),
             amount : amount,
             invoiceAmount : invoiceAmount,
-            remainAmount : Number(res.data.result.amount) - Number(invoiceAmount)
+            // remainAmount : Number(res.data.result.amount) - Number(invoiceAmount)
           })
          }   
+         console.log("installmentAmount", installmentAmount)
         if(res.data.result.email.length > 0){
        
           a.map((i) => {
@@ -208,6 +266,7 @@ var  collectData = []
         setInvice(res.data.result.tp_iba)
         setInvoicetl(res.data.result.tl_iba);
         setAdminValue(res.data.result.admin_iba)
+        setinvoiceAmount(invoiceAmount)
         setProposal({
           name: res.data.result.name,
           query: res.data.result.assign_no,
@@ -233,11 +292,11 @@ var  collectData = []
         setPayment(data1);
         setInstallment(data2);
         setAmount(res.data.result.installment_amount.split(","))
- setAllAmount({
-  remainAmount : res.data.result.installment_amount.split(","),
-  freezeAmount : amount,
-  completeAmount : amount.concat(res.data.result.installment_amount.split(","))
- })              
+        setAllAmount({
+        remainAmount : res.data.result.installment_amount.split(","),
+        freezeAmount : amount,
+        completeAmount : res.data.result.installment_amount
+      })              
       }
     });
    
@@ -297,7 +356,7 @@ else{
     formData.append("description", value2);
     formData.append("amount_type", "fixed");
     formData.append("amount", totalAmount);
-    formData.append("installment_amount", amount); 
+    formData.append("installment_amount", formInstallmentInfo.amount); 
     formData.append("company", company2)
     formData.append("payment_plan", store);
     formData.append("start_date", startDate);
@@ -434,57 +493,29 @@ else{
       setdiserror("Amount should be greater than zero")
     }
     else {
-      let amount = e.target.value;
-      let divAmount =  Number(e.target.value) - Number(invoiceValue.amount)
-
-       let remainInstallment = Number(installment.label) - Number(invoiceValue.installment_number.length)
-       let a = Math.round(divAmount / remainInstallment)
-       var dd = []
-       if(a > 0){
-        setTotalAmount(e.target.value)
-        setdiserror("");
-        while (amount > a) {
-          amount = amount - a;
-          dd.push(a)
-       }
-        dd.push(amount)
-        setAllAmount({
-           remainAmount : dd,
-           freezeAmount : freeze2,
-           completeAmount : dd.concat(freeze2)
-         })
-        setAmount(dd)
-       }
-    else{
-      Swal.fire({
-        title : "error",
-        html : "Amount could not be less than created invoice",
-        icon : "error"
-      })
-    }
-      
-      
-   
-     
     
+      
+      
+        calculateAmount(e.target.value, installment.value)
+        setTotalAmount(e.target.value)
+     
+        setdiserror("");
     }
   };
 
 
   const paymentAmount = (data) => {
+    console.log("dataa", data)
     var array1 = []
     Object.entries(data).map(([key, value]) => {
       array1[key] = value
     });
-    // setAllAmount(array1)
-    setAmount(array1);
-
-    // var array1 = []
-    // Object.entries(data).map(([key, value]) => {
-    //   array1.push(value)
-    // });
-    // setAmount(array1.slice(0, installment.value));
-    // console.log("dataSlice", array1)
+   
+    setFormInstallmentInfo({
+      dueDate : formInstallmentInfo.dueDate,
+      amount : array1,
+      boxEnable : formInstallmentInfo.boxEnable
+    })
   };
 
   const paymentDate = (data) => {
@@ -504,10 +535,41 @@ else{
     //   setDateError(false)
     // }
   };
+const calculateAmount = (totalAmount, installment) => {
+let totalInstallAmount = totalAmount - invoiceAmount;
+let actualInstallmentNumber = installment - invoiceValue.installment_number.length;
+let installmentAmount = 0;
+let boxAmount = []
+let boxDisable = []
+let due_date = []
+console.log("totalAmount", totalInstallAmount, actualInstallmentNumber)
+if(totalInstallAmount < 1 || actualInstallmentNumber < 1){
+  installmentAmount = 0
+}
+else{
+  installmentAmount = totalInstallAmount / actualInstallmentNumber
+}
+console.log("formInstallmentInfo", formInstallmentInfo)
+for (let i = 0; i < installment; i++){
+  boxAmount.push(installmentAmount);
+  boxDisable.push(1)
+}
+for (let i = 0; i < invoiceValue.installment_number.length; i++){
+console.log("Iiii", invoiceValue.installment_number)
+boxDisable[i] = 0;
+boxAmount[i] = Number(invoiceValue.amount[i])
+due_date[i] = Number(invoiceValue.due_dates[i])
+}
+setFormInstallmentInfo({
+  boxEnable : boxDisable,
+  amount : boxAmount,
+  due_dates : due_date
+})
 
+}
 
   const installmentHandler = (key) => {
-  
+  calculateAmount(totalAmount, key.value)
 let amount = Number(totalAmount) -  Number(invoiceValue.invoiceAmount);
 let remaininvoiceno = Number(key.value) - Number(invoiceValue.installment_number.length);
 let a = Math.round(amount / remaininvoiceno)
@@ -572,7 +634,7 @@ const getSubPlan  = (e) => {
   setInstallment([])
   setSubplan(e.target.value)
 }
-console.log("allAmount", allAmount)
+
   return (
     <Layout TLDashboard="TLDashboard" TLuserId={userid}>
       <Card>
@@ -1087,6 +1149,16 @@ type="radio" className="spaceRadio" value="1" disabled name = "yesadmin"/>No
                     })}
                     ref={register({ required: true })}
                     placeholder="Enter Amount"
+                    onBlur={(e) => {
+                      if(invoiceValue.invoiceAmount > e.target.value){
+                       Swal.fire({
+                        
+                        title : "error",
+                        html : "Total Amount could not be less than created invoice",
+                        icon : "error"
+                       })
+                       }
+                    }}
                     onChange={(e) => handleChange(e)}
                     value = {totalAmount}
                   />
@@ -1357,6 +1429,7 @@ type="radio" className="spaceRadio" value="1" disabled name = "yesadmin"/>No
                       dateError = {dateError}
                       invoiceValue = {invoiceValue}
                       allAmount = {allAmount}
+                      boxFormData = {formInstallmentInfo}
                     /> 
                     : ""
                 }
@@ -1377,6 +1450,7 @@ type="radio" className="spaceRadio" value="1" disabled name = "yesadmin"/>No
                    max={endDate}
                    item={startDate}
                    dateError = {dateError}
+                   boxFormData = {formInstallmentInfo}
                  /> : ""
                 }
               </div>
