@@ -17,10 +17,11 @@ export default class YourComponent extends React.Component {
     temp = this.installment_amount
     tamp2;
     handleChange1(i, e) {
+        console.log("cal", e.target.value)
         let calVal = []
-        calVal = this.props.installment_amount.remainAmount;
+        calVal = this.props.formInstallmentInfo.amountVal;
         calVal[i] = e.target.value;
-        console.log("cal", calVal)
+        
     const { values } = this.state;
     values.splice(i, 1, e.target.value)
     this.setState({ values: [...values] }, () => {
@@ -69,7 +70,7 @@ export default class YourComponent extends React.Component {
 
 
     render() {
-console.log("InvoiceValue", this.props.invoiceValue, this.props.boxFormData)
+console.log("InvoiceValue", this.props.formInstallmentInfo)
         var date = this.props.due_date  
         const due_date = date.split(',')
         var fieldsArray = [];
@@ -84,10 +85,10 @@ console.log("InvoiceValue", this.props.invoiceValue, this.props.boxFormData)
                    <input
                        type="text"
                        className="form-control"
-                       disabled = {this.props.boxFormData.boxEnable[i] === 0 ? true : false}
+                       disabled = {this.props.formInstallmentInfo.boxEnable[i] === 0 ? true : false}
                        name={this.state.values[i]}
                        onChange={this.handleChange1.bind(this, i)}
-                      value={this.props.boxFormData.amount[i]}
+                      value={this.props.formInstallmentInfo.amountVal[i]}
                    />
                </div> :   ""
 }
@@ -97,10 +98,10 @@ console.log("InvoiceValue", this.props.invoiceValue, this.props.boxFormData)
                        <input
                            type="text"
                            className="form-control"
-                           disabled = {this.props.boxFormData.boxEnable[i] === 0 ? true : false}
+                           disabled = {this.props.formInstallmentInfo.boxEnable[i] === 0 ? true : false}
                            name={this.state.values[i]}
                            onChange={this.handleChange1.bind(this, i)}
-                           value={this.props.boxFormData.amount[i]} />
+                           value={this.props.formInstallmentInfo.amountVal[i]} />
                    </div> : ""}
           {this.props.clearValue == true ? 
            <div class="col-md-6 my-2">
@@ -109,12 +110,10 @@ console.log("InvoiceValue", this.props.invoiceValue, this.props.boxFormData)
                type="date"
                className="form-control"
                required
-               disabled = {this.props.boxFormData.boxEnable[i] === 0 ? true : false}
+               disabled = {this.props.formInstallmentInfo.boxEnable[i] === 0 ? true : false}
                name={this.state.dates[i]}
                onChange={this.handleChange2.bind(this, i)}
-        defaultValue={this.props.invoiceValue.installment_number.length > i ? this.props.invoiceValue.due_dates[i] :
-                this.props.invoiceValue.due_dates[i - this.props.invoiceValue.installment_number.length]}
-            
+               value={this.props.formInstallmentInfo.dueDate[i]}
                min={this.props.item}
                max={this.props.max}
            />
@@ -126,12 +125,10 @@ console.log("InvoiceValue", this.props.invoiceValue, this.props.boxFormData)
                type="date"
                className="form-control"
                required
-               disabled = {this.props.boxFormData.boxEnable[i] === 0 ? true : false}
+               disabled = {this.props.formInstallmentInfo.boxEnable[i] === 0 ? true : false}
                name={this.state.dates[i]}
                onChange={this.handleChange2.bind(this, i)}
-               defaultValue={this.props.invoiceValue.installment_number.length > i ? this.props.invoiceValue.due_dates[i] :
-               this.props.invoiceValue.due_dates[i]}
-            
+               value={this.props.formInstallmentInfo.dueDate[i]}
                min={this.props.item}
                max={this.props.max}
            />

@@ -64,12 +64,7 @@ const [scopeError, setScopeError] = useState(false)
   const [tlDisable, setTlDisable] = useState(true);
   const [tpDisable, setTpDisable] = useState("")
   const [adminValue, setAdminValue] = useState(null)
-  const [freeze2, setFreeze] = useState([])
-  const [allAmount, setAllAmount] = useState({
-    remainAmount : [],
-    freezeAmount : [],
-    completeAmount : []
-  })
+  
   const [proposal, setProposal] = useState({
     query: "",
     name: "",
@@ -91,7 +86,7 @@ const [scopeError, setScopeError] = useState(false)
   })
   const [formInstallmentInfo, setFormInstallmentInfo] = useState({
     dueDate :[],
-    amount : [],
+    amountVal : [],
   boxDisable : [0]
   })
   const [invoiceAmount, setinvoiceAmount] = useState(0);
@@ -149,12 +144,13 @@ var actualInstallmentNumber = 0;
         mainAmount = res.data.result.installment_amount.split(",")
         mainDueDate = res.data.result.due_date.split(",");
         let a = res.data.result.email.split(",")
+
         for(let i = 0; i < res.data.result.installment_amount.split(",").length; i++){
           dis.push(1)
         }
         setFormInstallmentInfo({
           dueDate : mainDueDate,
-          amount : mainAmount,
+          amountVal : mainAmount,
           boxEnable : dis
         })
         if(res.data.result.invoice){
@@ -182,14 +178,13 @@ var actualInstallmentNumber = 0;
         })
       
         amount.map((i, e) =>{
-          console.log("iiii", i)
+       
           mainAmount[e] = i;
         })
        
       installmentAmount = Number(res.data.result.amount) - Number(invoiceAmount)
       actualInstallmentNumber = Number(res.data.result.no_of_installment) - Number(installment_number.length)
-      console.log("installmentAmount", actualInstallmentNumber, invoiceValue.installment_number.length)
-    
+      
           if(installmentAmount < 1 || actualInstallmentNumber < 1){
             installmentAmount = 0
           }
@@ -205,7 +200,7 @@ var actualInstallmentNumber = 0;
           })
           setFormInstallmentInfo({
             dueDate : mainDueDate,
-            amount : mainAmount,
+            amountVal : mainAmount,
             boxEnable : dis
           })
           
@@ -221,7 +216,7 @@ var actualInstallmentNumber = 0;
             // remainAmount : Number(res.data.result.amount) - Number(invoiceAmount)
           })
          }   
-         console.log("installmentAmount", installmentAmount)
+     
         if(res.data.result.email.length > 0){
        
           a.map((i) => {
@@ -292,18 +287,18 @@ var actualInstallmentNumber = 0;
         setPayment(data1);
         setInstallment(data2);
         setAmount(res.data.result.installment_amount.split(","))
-        setAllAmount({
-        remainAmount : res.data.result.installment_amount.split(","),
-        freezeAmount : amount,
-        completeAmount : res.data.result.installment_amount
-      })              
+      //   setAllAmount({
+      //   remainAmount : res.data.result.installment_amount.split(","),
+      //   freezeAmount : amount,
+      //   completeAmount : res.data.result.installment_amount
+      // })              
       }
     });
    
   };
 
  
-
+console.log("Iiiiiii", formInstallmentInfo)
 const getClient = () => {
     let collectData = []
     axios.get(
@@ -356,7 +351,7 @@ else{
     formData.append("description", value2);
     formData.append("amount_type", "fixed");
     formData.append("amount", totalAmount);
-    formData.append("installment_amount", formInstallmentInfo.amount); 
+    formData.append("installment_amount", formInstallmentInfo.amountVal); 
     formData.append("company", company2)
     formData.append("payment_plan", store);
     formData.append("start_date", startDate);
@@ -383,18 +378,18 @@ else{
               if (installment == "") {
                 Alerts.ErrorNormal(`Please select no of installment .`)
               } else
-                if (!allAmount.completeAmount || !date) {
-                  console.log("date",allAmount.completeAmount)
+                if (!formInstallmentInfo.amountVal || !date) {
+                
                   Alerts.ErrorNormal(`Please enter all fields.`)
-                } else if (allAmount.completeAmount && date) {
+                } else if (formInstallmentInfo.amountVal && date) {
       
                   if (installment.value > 0) {
                     var a = Number(installment.value)
                 
                     for (let i = 0; i < a; i++) {
       
-                      if (allAmount.completeAmount[i] == "" || allAmount.completeAmount[i] == undefined || allAmount.completeAmount[i] <= 0) {
-                       if(allAmount.completeAmount.length < 0){
+                      if (formInstallmentInfo.amountVal[i] == "" || formInstallmentInfo.amountVal[i] == undefined || formInstallmentInfo.amountVal[i] <= 0) {
+                       if(formInstallmentInfo.length < 0){
                         Alerts.ErrorNormal(`Please enter amount`)
                         return false
                        }
@@ -407,11 +402,11 @@ else{
                     }
                     var sum  = 0;
                     console.log("allAmount", amount)
-                    if(amount.length > 0){
-                      sum = amount.reduce(myFunction)
+                    if(formInstallmentInfo.amountVal.length > 0){
+                      sum = formInstallmentInfo.amountVal.reduce(myFunction)
                     }
                     else {
-                      sum = amount.reduce(myFunction)
+                      sum = formInstallmentInfo.amountVal.reduce(myFunction)
                     }
                     function myFunction(total, value) {
                       return Number(total) + Number(value);
@@ -507,15 +502,17 @@ else{
   const paymentAmount = (data) => {
     console.log("dataa", data)
     var array1 = []
-    Object.entries(data).map(([key, value]) => {
-      array1[key] = value
-    });
-   
-    setFormInstallmentInfo({
-      dueDate : formInstallmentInfo.dueDate,
-      amount : array1,
-      boxEnable : formInstallmentInfo.boxEnable
-    })
+    if(data){
+      Object.entries(data).map(([key, value]) => {
+        array1[key] = value
+      });
+     
+      setFormInstallmentInfo({
+        dueDate : formInstallmentInfo.dueDate,
+        amountVal : array1,
+        boxEnable : formInstallmentInfo.boxEnable
+      })
+    }
   };
 
   const paymentDate = (data) => {
@@ -570,25 +567,9 @@ setFormInstallmentInfo({
 
   const installmentHandler = (key) => {
   calculateAmount(totalAmount, key.value)
-let amount = Number(totalAmount) -  Number(invoiceValue.invoiceAmount);
-let remaininvoiceno = Number(key.value) - Number(invoiceValue.installment_number.length);
-let a = Math.round(amount / remaininvoiceno)
-let dd = []
-
-while (amount > a) {
-   amount = amount - a;
-   dd.push(a)
-}
-dd.push(amount)
-
     setInstallment(key)
     setClearValue(false)
-   
-    setAllAmount({
-      remainAmount : dd,
-      freezeAmount : freeze2,
-      completeAmount : dd.concat(freeze2)
-    })
+  
   }
 
  
@@ -1419,7 +1400,7 @@ type="radio" className="spaceRadio" value="1" disabled name = "yesadmin"/>No
                       installment={installment.label}
                       paymentAmount={paymentAmount}
                       paymentDate={paymentDate}
-                      installment_amount={allAmount}
+                    
                       due_date={due_date}
                       getQuery={getQuery}
                       item={item}
@@ -1428,8 +1409,8 @@ type="radio" className="spaceRadio" value="1" disabled name = "yesadmin"/>No
                       min={item}
                       dateError = {dateError}
                       invoiceValue = {invoiceValue}
-                      allAmount = {allAmount}
-                      boxFormData = {formInstallmentInfo}
+                     
+                      formInstallmentInfo = {formInstallmentInfo}
                     /> 
                     : ""
                 }
@@ -1440,7 +1421,7 @@ type="radio" className="spaceRadio" value="1" disabled name = "yesadmin"/>No
                    installment={installment.label}
                    paymentAmount={paymentAmount}
                    paymentDate={paymentDate}
-                   installment_amount={allAmount}
+                 
                    due_date={due_date}
                    getQuery={getQuery}
                    invoiceValue = {invoiceValue}
@@ -1450,7 +1431,7 @@ type="radio" className="spaceRadio" value="1" disabled name = "yesadmin"/>No
                    max={endDate}
                    item={startDate}
                    dateError = {dateError}
-                   boxFormData = {formInstallmentInfo}
+                   formInstallmentInfo = {formInstallmentInfo}
                  /> : ""
                 }
               </div>
