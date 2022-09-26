@@ -10,12 +10,14 @@ export default class Payment extends React.Component {
     }
 
     handleChange1(i, e) {
+        console.log("iiii", i, e.target.value)
         if (isNaN(e.target.value)) {
             this.setState({ error: "Please insert only digit" })
         }
         else {
             this.setState({ error: "" })
         }
+      
         this.setState({
             values: { ...this.state.values, [i]: e.target.value },
             allAmount: { ...this.props.allAmount, [i]: e.target.value }
@@ -42,7 +44,7 @@ export default class Payment extends React.Component {
 // }
 componentDidUpdate(prevProps, prevState){
     
-    console.log("shold",this.props.installment, prevProps)
+ 
     if(prevProps.installment !== this.props.installment){
         this.setState({
             values : this.props.allAmount
@@ -52,7 +54,7 @@ componentDidUpdate(prevProps, prevState){
     
 }
     render() {
-        // console.log("props", this.props)
+  console.log("props", this.props.allAmount[2])
         var fieldsArray = [];
 
         for (var i = 0; i < this.props.installment; i++) {

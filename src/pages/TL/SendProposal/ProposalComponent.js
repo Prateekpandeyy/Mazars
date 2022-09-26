@@ -292,11 +292,11 @@ function ProposalComponent(props) {
 
   const paymentAmount = (data) => {
    
-
     var array1 = []
     Object.entries(data).map(([key, value]) => {
-      array1.push(value)
+      array1[key] = value
     });
+    setAllAmount(array1)
     setAmount(array1);
     
   };
