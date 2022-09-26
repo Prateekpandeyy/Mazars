@@ -89,7 +89,7 @@ console.log(this.props.invoiceValue, this.props.clearValue)
                        disabled = {this.props.invoiceValue.installment_number.length > i ? true : false}
                        name={this.state.values[i]}
                        onChange={this.handleChange1.bind(this, i)}
-                      defaultValue={this.props.invoiceValue.installment_number.length > i ? this.props.installment_amount.freezeAmount[i] :
+                      value={this.props.invoiceValue.installment_number.length > i ? this.props.installment_amount.freezeAmount[i] :
                         this.props.installment_amount.remainAmount[i - this.props.invoiceValue.installment_number.length]}
                    />
                </div> :   ""
@@ -103,7 +103,7 @@ console.log(this.props.invoiceValue, this.props.clearValue)
                            disabled = {this.props.invoiceValue.installment_number.length > i ? true : false}
                            name={this.state.values[i]}
                            onChange={this.handleChange1.bind(this, i)}
-                           defaultValue={this.props.invoiceValue.installment_number.length > i ? this.props.installment_amount.freezeAmount[i] :
+                           value={this.props.invoiceValue.installment_number.length > i ? this.props.installment_amount.freezeAmount[i] :
                             this.props.installment_amount.remainAmount[i - this.props.invoiceValue.installment_number.length]}
                        />
                    </div> : ""}
