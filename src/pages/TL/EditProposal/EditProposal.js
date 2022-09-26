@@ -138,6 +138,7 @@ var  collectData = []
       if (res.data.code === 1) {
         let a = res.data.result.email.split(",")
         if(res.data.result.invoice){
+        
           res.data.result.invoice.map((i) => {
             amount.push(i.basic_amount)
             due_date.push(i.due_date);
@@ -231,11 +232,7 @@ var  collectData = []
 
         setPayment(data1);
         setInstallment(data2);
-
-      
-     
-   
-    
+        setAmount(res.data.result.installment_amount.split(","))
  setAllAmount({
   remainAmount : res.data.result.installment_amount.split(","),
   freezeAmount : amount,
@@ -287,6 +284,7 @@ else{
     if (store === "1") {
       setDate(lumsum)
     }
+    console.log("amount", amount)
 
     let formData = new FormData();
     formData.append("emails", email)
@@ -299,7 +297,7 @@ else{
     formData.append("description", value2);
     formData.append("amount_type", "fixed");
     formData.append("amount", totalAmount);
-    formData.append("installment_amount", allAmount.completeAmount); 
+    formData.append("installment_amount", amount); 
     formData.append("company", company2)
     formData.append("payment_plan", store);
     formData.append("start_date", startDate);
@@ -343,18 +341,18 @@ else{
                        }
                         
                       }
-                      if (!date) {
-                        Alerts.ErrorNormal(`Please enter date`)
-                        return false
-                      }
+                      // if (!date) {
+                      //   Alerts.ErrorNormal(`Please enter date`)
+                      //   return false
+                      // }
                     }
                     var sum  = 0;
-                    console.log("allAmount", allAmount.completeAmount)
-                    if(allAmount.completeAmount.length > 0){
-                      sum = allAmount.completeAmount.reduce(myFunction)
+                    console.log("allAmount", amount)
+                    if(amount.length > 0){
+                      sum = amount.reduce(myFunction)
                     }
                     else {
-                      sum = allAmount.completeAmount.reduce(myFunction)
+                      sum = amount.reduce(myFunction)
                     }
                     function myFunction(total, value) {
                       return Number(total) + Number(value);
@@ -455,6 +453,7 @@ else{
            freezeAmount : freeze2,
            completeAmount : dd.concat(freeze2)
          })
+        setAmount(dd)
        }
     else{
       Swal.fire({
@@ -473,13 +472,19 @@ else{
 
 
   const paymentAmount = (data) => {
-
-
     var array1 = []
     Object.entries(data).map(([key, value]) => {
-      array1.push(value)
+      array1[key] = value
     });
-    setAmount(array1.slice(0, installment.value));
+    // setAllAmount(array1)
+    setAmount(array1);
+
+    // var array1 = []
+    // Object.entries(data).map(([key, value]) => {
+    //   array1.push(value)
+    // });
+    // setAmount(array1.slice(0, installment.value));
+    // console.log("dataSlice", array1)
   };
 
   const paymentDate = (data) => {
@@ -491,13 +496,13 @@ else{
     });
 
     setDate(array2.slice(0, installment.value));
-    if(new Set(array2).size !== array2.length){
-      setDateError(true)
-     Alerts.ErrorNormal("Date must be unique")
-    }
-    else{
-      setDateError(false)
-    }
+    // if(new Set(array2).size !== array2.length){
+    //   setDateError(true)
+    //  Alerts.ErrorNormal("Date must be unique")
+    // }
+    // else{
+    //   setDateError(false)
+    // }
   };
 
 

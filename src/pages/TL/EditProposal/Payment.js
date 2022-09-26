@@ -17,18 +17,30 @@ export default class YourComponent extends React.Component {
     temp = this.installment_amount
     tamp2;
     handleChange1(i, e) {
-        const { value } = e.target
-        this.temp[i] = value
+        let calVal = []
+        calVal = this.props.installment_amount.remainAmount;
+        calVal[i] = e.target.value
+        console.log("cal", calVal)
+       
+    //     const { value } = e.target
+    //     this.temp[i] = value
 
-    
-        this.setState({
-            values: {
-              ...this.temp.slice(0, this.props.installment)
-            }
-        },
-            () => {
-                this.props.paymentAmount(this.state.values)
-            })
+    // console.log("slices", this.temp.slice(0, this.props.installment))
+    //     this.setState({
+    //         values: {
+    //           ...this.temp.slice(0, this.props.installment)
+    //         }
+    //     },
+    //         () => {
+    //             this.props.paymentAmount(this.state.values)
+    //         })
+    const { values } = this.state;
+    values.splice(i, 1, e.target.value)
+    this.setState({ values: [...values] }, () => {
+      //call back function of set state
+    //   console.log(this.state.rocket)
+      this.props.paymentAmount(calVal)
+    });
     }
 
 
@@ -37,17 +49,17 @@ export default class YourComponent extends React.Component {
     installmentDueDate = this.installment_due_dates;
 
     handleChange2(i, e) {
-        const { value } = e.target
-        this.installmentDueDate[i] = value
-
-        this.setState({
-            dates: {
-              ...this.installmentDueDate.slice(0, this.props.installment)
-            }
-        },
-            () => {
-                this.props.paymentDate(this.state.dates)
-            })
+        console.log("eee", e.target.value)
+        let calVal = []
+        calVal = this.props.invoiceValue.due_dates
+        calVal[i] = e.target.value
+        const { dates } = this.state;
+        dates.splice(i, 1, e.target.value)
+        this.setState({ dates: [...dates] }, () => {
+            //call back function of set state
+            console.log(this.state.rocket)
+            this.props.paymentDate(calVal)
+          });
     }
 
     componentDidMount() {
@@ -71,7 +83,6 @@ export default class YourComponent extends React.Component {
 
     render() {
 
-console.log(this.props.invoiceValue, this.props.clearValue)      
         var date = this.props.due_date  
         const due_date = date.split(',')
         var fieldsArray = [];
