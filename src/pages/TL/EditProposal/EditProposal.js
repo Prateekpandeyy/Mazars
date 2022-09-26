@@ -24,7 +24,7 @@ import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { Markup } from 'interweave';
 import {Link} from "react-router-dom";
-
+import Swal from 'sweetalert2'
 function EditComponent(props) {
 
   const alert = useAlert();
@@ -154,7 +154,7 @@ var  collectData = []
            setFreeze(amount)
         }
          else{
-          console.log("done1234", res.data.result.due_date)
+        
           setInviceValue({
             installment_number : installment_number,
             due_dates : res.data.result.due_date.split(","),
@@ -327,7 +327,7 @@ else{
                 Alerts.ErrorNormal(`Please select no of installment .`)
               } else
                 if (!allAmount.completeAmount || !date) {
-                  console.log("date", date, allAmount.completeAmount)
+                  console.log("date",allAmount.completeAmount)
                   Alerts.ErrorNormal(`Please enter all fields.`)
                 } else if (allAmount.completeAmount && date) {
       
@@ -343,12 +343,13 @@ else{
                        }
                         
                       }
-                      if (date[i] == "" || date[i] == undefined) {
+                      if (!date) {
                         Alerts.ErrorNormal(`Please enter date`)
                         return false
                       }
                     }
                     var sum  = 0;
+                    console.log("allAmount", allAmount.completeAmount)
                     if(allAmount.completeAmount.length > 0){
                       sum = allAmount.completeAmount.reduce(myFunction)
                     }
@@ -435,27 +436,38 @@ else{
       setdiserror("Amount should be greater than zero")
     }
     else {
-      setTotalAmount(e.target.value)
-      setdiserror("");
       let amount = e.target.value;
       let divAmount =  Number(e.target.value) - Number(invoiceValue.amount)
-      // setInviceValue({
-      //   remainAmount : divAmount
-      // })
-      let remainInstallment = Number(installment.label) - Number(invoiceValue.installment_number.length)
-      let a = Math.round(divAmount / remainInstallment)
-      var dd = []
-      while (amount > a) {
-        amount = amount - a;
-        dd.push(a)
-     }
-     
-     dd.push(amount)
-     setAllAmount({
-        remainAmount : dd,
-        freezeAmount : freeze2,
-        completeAmount : dd.concat(freeze2)
+
+       let remainInstallment = Number(installment.label) - Number(invoiceValue.installment_number.length)
+       let a = Math.round(divAmount / remainInstallment)
+       var dd = []
+       if(a > 0){
+        setTotalAmount(e.target.value)
+        setdiserror("");
+        while (amount > a) {
+          amount = amount - a;
+          dd.push(a)
+       }
+        dd.push(amount)
+        setAllAmount({
+           remainAmount : dd,
+           freezeAmount : freeze2,
+           completeAmount : dd.concat(freeze2)
+         })
+       }
+    else{
+      Swal.fire({
+        title : "error",
+        html : "Amount could not be less than created invoice",
+        icon : "error"
       })
+    }
+      
+      
+   
+     
+    
     }
   };
 
@@ -490,7 +502,7 @@ else{
 
 
   const installmentHandler = (key) => {
-   console.log(invoiceValue)
+  
 let amount = Number(totalAmount) -  Number(invoiceValue.invoiceAmount);
 let remaininvoiceno = Number(key.value) - Number(invoiceValue.installment_number.length);
 let a = Math.round(amount / remaininvoiceno)

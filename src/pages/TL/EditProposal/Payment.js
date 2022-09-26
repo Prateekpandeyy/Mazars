@@ -89,7 +89,7 @@ console.log(this.props.invoiceValue, this.props.clearValue)
                        disabled = {this.props.invoiceValue.installment_number.length > i ? true : false}
                        name={this.state.values[i]}
                        onChange={this.handleChange1.bind(this, i)}
-                      value={this.props.invoiceValue.installment_number.length > i ? this.props.installment_amount.freezeAmount[i] :
+                      defaultValue={this.props.invoiceValue.installment_number.length > i ? this.props.installment_amount.freezeAmount[i] :
                         this.props.installment_amount.remainAmount[i - this.props.invoiceValue.installment_number.length]}
                    />
                </div> :   ""
@@ -103,7 +103,7 @@ console.log(this.props.invoiceValue, this.props.clearValue)
                            disabled = {this.props.invoiceValue.installment_number.length > i ? true : false}
                            name={this.state.values[i]}
                            onChange={this.handleChange1.bind(this, i)}
-                           value={this.props.invoiceValue.installment_number.length > i ? this.props.installment_amount.freezeAmount[i] :
+                           defaultValue={this.props.invoiceValue.installment_number.length > i ? this.props.installment_amount.freezeAmount[i] :
                             this.props.installment_amount.remainAmount[i - this.props.invoiceValue.installment_number.length]}
                        />
                    </div> : ""}
@@ -117,8 +117,8 @@ console.log(this.props.invoiceValue, this.props.clearValue)
                disabled = {this.props.invoiceValue.installment_number.length > i ? true : false}
                name={this.state.dates[i]}
                onChange={this.handleChange2.bind(this, i)}
-        defaultValue={this.props.invoiceValue.installment_number.length > i ? this.props.invoiceValue.due_dates[i] :
-                this.props.invoiceValue.due_dates[i - this.props.invoiceValue.due_dates.length]}
+        defaultValue={this.props.invoiceValue.installment_number.length > i ? this.props.invoiceValue.due_dates.split(",")[i] :
+                this.props.invoiceValue.due_dates.split(",")[i - this.props.invoiceValue.installment_number.length]}
             
                min={this.props.item}
                max={this.props.max}
