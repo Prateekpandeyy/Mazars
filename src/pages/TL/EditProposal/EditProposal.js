@@ -566,7 +566,7 @@ console.log("due_date", due_date)
 setFormInstallmentInfo({
   boxEnable : boxDisable,
   amount : boxAmount,
-  due_dates1 : due_date
+  dueDate1 : due_date
 })
 
 }

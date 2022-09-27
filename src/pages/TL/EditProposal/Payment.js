@@ -112,7 +112,7 @@ export default class YourComponent extends React.Component {
                disabled = {this.props.boxFormData.boxEnable[i] === 0 ? true : false}
                name={this.state.dates[i]}
                onChange={this.handleChange2.bind(this, i)}
-       value = {this.props.boxFormData.dueDate1[i]}
+         value = {this.props.boxFormData.dueDate1[i]}
                min={this.props.item}
                max={this.props.max}
            />
@@ -127,7 +127,7 @@ export default class YourComponent extends React.Component {
                disabled = {this.props.boxFormData.boxEnable[i] === 0 ? true : false}
                name={this.state.dates[i]}
                onChange={this.handleChange2.bind(this, i)}
-               value = {this.props.boxFormData.dueDate1[i]}
+                 value = {this.props.boxFormData.dueDate1[i]}
                min={this.props.item}
                max={this.props.max}
            />
