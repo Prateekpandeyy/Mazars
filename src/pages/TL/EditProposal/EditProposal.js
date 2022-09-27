@@ -504,28 +504,32 @@ else{
     Object.entries(data).map(([key, value]) => {
       array1[key] = value
     });
-   
-    // setFormInstallmentInfo({
-    //   dueDate1 : formInstallmentInfo.dueDate1,
-    //   amount : array1,
-    //   boxEnable : formInstallmentInfo.boxEnable
-    // })
+    console.log("data", data.length)
+   if(data.length !== undefined){
+     setFormInstallmentInfo({
+      dueDate1 : formInstallmentInfo.dueDate1,
+      amount : array1,
+      boxEnable : formInstallmentInfo.boxEnable
+    })
+   }
   };
 
   const paymentDate = (data) => {
    
- console.log("data", data.length)
+ 
  var array1 = []
  Object.entries(data).map(([key, value]) => {
    array1[key] = value
  });
-   console.log("dataaaa", data)
-      // setFormInstallmentInfo({
-      //   dueDate1 : array1,
-      //   amount : formInstallmentInfo.amount,
-      //   boxEnable : formInstallmentInfo.boxEnable
-      // })
-    
+   console.log("dataaaa",data)
+     
+    if(data.length > 1){
+     setFormInstallmentInfo({
+    dueDate1 : array1,
+    amount : formInstallmentInfo.amount,
+    boxEnable : formInstallmentInfo.boxEnable
+  })
+    }
 
     // setDate(array2.slice(0, installment.value));
     // if(new Set(array2).size !== array2.length){
