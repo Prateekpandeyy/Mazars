@@ -199,7 +199,7 @@ export default class YourComponent extends React.Component {
     handleChange2(i, e) {
         console.log("eee", e.target.value)
         let calVal = []
-        calVal = this.props.invoiceValue.due_dates
+        calVal = this.props.boxFormData.dueDate
         calVal[i] = e.target.value
         const { dates } = this.state;
         dates.splice(i, 1, e.target.value)
@@ -230,7 +230,7 @@ export default class YourComponent extends React.Component {
 
 
     render() {
-console.log("InvoiceValue", this.props.invoiceValue, this.props.boxFormData)
+console.log("InvoiceValue",  this.props.boxFormData)
         var date = this.props.due_date  
         const due_date = date.split(',')
         var fieldsArray = [];
@@ -273,9 +273,7 @@ console.log("InvoiceValue", this.props.invoiceValue, this.props.boxFormData)
                disabled = {this.props.boxFormData.boxEnable[i] === 0 ? true : false}
                name={this.state.dates[i]}
                onChange={this.handleChange2.bind(this, i)}
-        defaultValue={this.props.invoiceValue.installment_number.length > i ? this.props.invoiceValue.due_dates[i] :
-                this.props.invoiceValue.due_dates[i - this.props.invoiceValue.installment_number.length]}
-            
+       value = {this.props.boxFormData.dueDate[i]}
                min={this.props.item}
                max={this.props.max}
            />
@@ -290,9 +288,7 @@ console.log("InvoiceValue", this.props.invoiceValue, this.props.boxFormData)
                disabled = {this.props.boxFormData.boxEnable[i] === 0 ? true : false}
                name={this.state.dates[i]}
                onChange={this.handleChange2.bind(this, i)}
-               defaultValue={this.props.invoiceValue.installment_number.length > i ? this.props.invoiceValue.due_dates[i] :
-               this.props.invoiceValue.due_dates[i]}
-            
+               value = {this.props.boxFormData.dueDate[i]}
                min={this.props.item}
                max={this.props.max}
            />
