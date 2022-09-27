@@ -2156,8 +2156,13 @@ else{
     Object.entries(data).map(([key, value]) => {
       array2.push(value)
     });
+    setFormInstallmentInfo({
+      dueDate : array2,
+      amount : formInstallmentInfo.amount,
+      boxEnable : formInstallmentInfo.boxEnable
+    })
 
-    setDate(array2.slice(0, installment.value));
+    // setDate(array2.slice(0, installment.value));
     // if(new Set(array2).size !== array2.length){
     //   setDateError(true)
     //  Alerts.ErrorNormal("Date must be unique")
