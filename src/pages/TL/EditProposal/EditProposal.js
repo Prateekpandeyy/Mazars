@@ -548,15 +548,24 @@ let installmentAmount = 0;
 let boxAmount = []
 let boxDisable = []
 let due_date = []
+let roundNum = 0;
+let adjustAmount =0
 // console.log("totalAmount", totalInstallAmount, actualInstallmentNumber)
 if(totalInstallAmount < 1 || actualInstallmentNumber < 1){
   installmentAmount = 0
 }
 else{
-  installmentAmount = totalInstallAmount / actualInstallmentNumber
+  
+  installmentAmount = Math.round(totalInstallAmount / actualInstallmentNumber)
+  roundNum = actualInstallmentNumber * installmentAmount
+  adjustAmount = totalInstallAmount - roundNum
+  console.log("adjust", adjustAmount)
 }
 // console.log("formInstallmentInfo", formInstallmentInfo)
 for (let i = 0; i < installment; i++){
+ if(i === installment -1){
+  installmentAmount = installmentAmount + adjustAmount
+ }
   boxAmount.push(installmentAmount);
   boxDisable.push(1);
   due_date.push("")
