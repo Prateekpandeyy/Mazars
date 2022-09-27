@@ -18,7 +18,7 @@ export default class YourComponent extends React.Component {
     tamp2;
     handleChange1(i, e) {
         let calVal = []
-        calVal = this.props.this.props.boxFormData.amount;
+        calVal = this.props.boxFormData.amount;
         calVal[i] = e.target.value;
      
     const { values } = this.state;

@@ -553,18 +553,20 @@ else{
 // console.log("formInstallmentInfo", formInstallmentInfo)
 for (let i = 0; i < installment; i++){
   boxAmount.push(installmentAmount);
-  boxDisable.push(1)
+  boxDisable.push(1);
+  due_date.push("")
 }
 for (let i = 0; i < invoiceValue.installment_number.length; i++){
 // console.log("Iiii", invoiceValue.installment_number)
 boxDisable[i] = 0;
 boxAmount[i] = Number(invoiceValue.amount[i])
-due_date[i] = Number(invoiceValue.due_dates[i])
+due_date[i] = invoiceValue.due_dates[i]
 }
+console.log("due_date", due_date)
 setFormInstallmentInfo({
   boxEnable : boxDisable,
   amount : boxAmount,
-  due_dates : due_date
+  due_dates1 : due_date
 })
 
 }
