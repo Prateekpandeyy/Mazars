@@ -364,7 +364,7 @@ else{
     store === "1" ?
       formData.append("due_date", lumsum) :
       store === "2" || store === "3" ?
-        formData.append("due_date", formInstallmentInfo.dueDate)
+        formData.append("due_date", formInstallmentInfo.dueDate1)
          :
         formData.append("due_date", "")
        

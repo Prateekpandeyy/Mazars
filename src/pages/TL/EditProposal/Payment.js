@@ -36,7 +36,7 @@ export default class YourComponent extends React.Component {
     installmentDueDate = this.installment_due_dates;
 
     handleChange2(i, e) {
-        // console.log("eee", e.target.value)
+         console.log("eee", e.target.value)
         let calVal = []
         calVal = this.props.boxFormData.dueDate1;
         calVal[i] = e.target.value
