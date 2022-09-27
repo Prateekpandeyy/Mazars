@@ -157,6 +157,7 @@ var actualInstallmentNumber = 0;
           amount : mainAmount,
           boxEnable : dis
         })
+       
         if(res.data.result.invoice){
         
           res.data.result.invoice.map((i, e) => {
@@ -180,16 +181,15 @@ var actualInstallmentNumber = 0;
        
           mainDueDate[e] = i;
         })
-      
+      // console.log("mainDueDate", mainDueDate)
         amount.map((i, e) =>{
-          console.log("iiii", i)
+        
           mainAmount[e] = i;
         })
-       
+      //  console.log("mainDueDate", mainDueDate)
       installmentAmount = Number(res.data.result.amount) - Number(invoiceAmount)
       actualInstallmentNumber = Number(res.data.result.no_of_installment) - Number(installment_number.length)
-      console.log("installmentAmount", actualInstallmentNumber, invoiceValue.installment_number.length)
-    
+     
           if(installmentAmount < 1 || actualInstallmentNumber < 1){
             installmentAmount = 0
           }
@@ -202,12 +202,14 @@ var actualInstallmentNumber = 0;
             if(i === 1){
               mainAmount[e] = installmentAmount 
             }
-          })
-          setFormInstallmentInfo({
-            dueDate : mainDueDate,
-            amount : mainAmount,
-            boxEnable : dis
-          })
+          })  
+          // console.log("mainDueDate", mainDueDate)
+
+          // setFormInstallmentInfo({
+          //   dueDate : mainDueDate,
+          //   amount : mainAmount,
+          //   boxEnable : dis
+          // })
           
           //  setFreeze(amount)
         }
@@ -221,7 +223,7 @@ var actualInstallmentNumber = 0;
             // remainAmount : Number(res.data.result.amount) - Number(invoiceAmount)
           })
          }   
-         console.log("installmentAmount", installmentAmount)
+      
         if(res.data.result.email.length > 0){
        
           a.map((i) => {
@@ -343,7 +345,7 @@ else{
     if (store === "1") {
       setDate(lumsum)
     }
-    console.log("amount", amount)
+    // console.log("amount", amount)
 
     let formData = new FormData();
     formData.append("emails", email)
@@ -384,7 +386,7 @@ else{
                 Alerts.ErrorNormal(`Please select no of installment .`)
               } else
                 if (!formInstallmentInfo.amount || !date) {
-                  console.log("date",formInstallmentInfo.amount)
+                  // console.log("date",formInstallmentInfo.amount)
                   Alerts.ErrorNormal(`Please enter all fields.`)
                 } else if (formInstallmentInfo.amount && date) {
       
@@ -406,7 +408,7 @@ else{
                       // }
                     }
                     var sum  = 0;
-                    console.log("allAmount", amount)
+                    // console.log("allAmount", amount)
                     if(formInstallmentInfo.amount.length > 0){
                       sum = formInstallmentInfo.amount.reduce(myFunction)
                     }
@@ -505,7 +507,7 @@ else{
 
 
   const paymentAmount = (data) => {
-    console.log("dataa", data)
+    // console.log("dataa", data)
     var array1 = []
     Object.entries(data).map(([key, value]) => {
       array1[key] = value
@@ -520,7 +522,7 @@ else{
 
   const paymentDate = (data) => {
    
-console.log("data", data)
+// console.log("data", data)
     var array2 = []
     Object.entries(data).map(([key, value]) => {
       array2.push(value)
@@ -547,20 +549,20 @@ let installmentAmount = 0;
 let boxAmount = []
 let boxDisable = []
 let due_date = []
-console.log("totalAmount", totalInstallAmount, actualInstallmentNumber)
+// console.log("totalAmount", totalInstallAmount, actualInstallmentNumber)
 if(totalInstallAmount < 1 || actualInstallmentNumber < 1){
   installmentAmount = 0
 }
 else{
   installmentAmount = totalInstallAmount / actualInstallmentNumber
 }
-console.log("formInstallmentInfo", formInstallmentInfo)
+// console.log("formInstallmentInfo", formInstallmentInfo)
 for (let i = 0; i < installment; i++){
   boxAmount.push(installmentAmount);
   boxDisable.push(1)
 }
 for (let i = 0; i < invoiceValue.installment_number.length; i++){
-console.log("Iiii", invoiceValue.installment_number)
+// console.log("Iiii", invoiceValue.installment_number)
 boxDisable[i] = 0;
 boxAmount[i] = Number(invoiceValue.amount[i])
 due_date[i] = Number(invoiceValue.due_dates[i])

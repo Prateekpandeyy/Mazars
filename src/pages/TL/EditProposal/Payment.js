@@ -181,7 +181,7 @@ export default class YourComponent extends React.Component {
         let calVal = []
         calVal = this.props.installment_amount.remainAmount;
         calVal[i] = e.target.value;
-        console.log("cal", calVal)
+     
     const { values } = this.state;
     values.splice(i, 1, e.target.value)
     this.setState({ values: [...values] }, () => {
@@ -197,7 +197,7 @@ export default class YourComponent extends React.Component {
     installmentDueDate = this.installment_due_dates;
 
     handleChange2(i, e) {
-        console.log("eee", e.target.value)
+        // console.log("eee", e.target.value)
         let calVal = []
         calVal = this.props.boxFormData.dueDate
         calVal[i] = e.target.value
@@ -205,7 +205,7 @@ export default class YourComponent extends React.Component {
         dates.splice(i, 1, e.target.value)
         this.setState({ dates: [...dates] }, () => {
             //call back function of set state
-            console.log(this.state.rocket)
+            // console.log(this.state.rocket)
             this.props.paymentDate(calVal)
           });
     }
@@ -230,7 +230,7 @@ export default class YourComponent extends React.Component {
 
 
     render() {
-console.log("InvoiceValue",  this.props.boxFormData)
+ console.log("boxFormInfo",  this.props.boxFormData)
         var date = this.props.due_date  
         const due_date = date.split(',')
         var fieldsArray = [];
