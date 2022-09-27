@@ -90,7 +90,7 @@ const [scopeError, setScopeError] = useState(false)
     remainAmount : 0
   })
   const [formInstallmentInfo, setFormInstallmentInfo] = useState({
-    dueDate :[],
+    dueDate1 :[],
     amount : [],
   boxDisable : [0]
   })
@@ -152,12 +152,13 @@ var actualInstallmentNumber = 0;
         for(let i = 0; i < res.data.result.installment_amount.split(",").length; i++){
           dis.push(1)
         }
+      
         setFormInstallmentInfo({
-          dueDate : mainDueDate,
+          dueDate1 :res.data.result.due_date.split(","),
           amount : mainAmount,
           boxEnable : dis
         })
-       
+      
         if(res.data.result.invoice){
         
           res.data.result.invoice.map((i, e) => {
@@ -181,7 +182,7 @@ var actualInstallmentNumber = 0;
        
           mainDueDate[e] = i;
         })
-      // console.log("mainDueDate", mainDueDate)
+      // console.log("mainDueDate", mainDueDate, due_date)
         amount.map((i, e) =>{
         
           mainAmount[e] = i;
@@ -203,26 +204,17 @@ var actualInstallmentNumber = 0;
               mainAmount[e] = installmentAmount 
             }
           })  
-          // console.log("mainDueDate", mainDueDate)
+           console.log("mainDueDate", mainDueDate, due_date)
 
-          // setFormInstallmentInfo({
-          //   dueDate : mainDueDate,
-          //   amount : mainAmount,
-          //   boxEnable : dis
-          // })
-          
-          //  setFreeze(amount)
-        }
-         else{
-        
-          setInviceValue({
-            installment_number : installment_number,
-            due_dates : res.data.result.due_date.split(","),
-            amount : amount,
-            invoiceAmount : invoiceAmount,
-            // remainAmount : Number(res.data.result.amount) - Number(invoiceAmount)
+          setFormInstallmentInfo({
+            dueDate1 : due_date,
+            amount : mainAmount,
+            boxEnable : dis
           })
-         }   
+          
+      
+        }
+         
       
         if(res.data.result.email.length > 0){
        
@@ -294,17 +286,17 @@ var actualInstallmentNumber = 0;
         setPayment(data1);
         setInstallment(data2);
         setAmount(res.data.result.installment_amount.split(","))
-        setAllAmount({
-        remainAmount : res.data.result.installment_amount.split(","),
-        freezeAmount : amount,
-        completeAmount : res.data.result.installment_amount
-      })              
+      //   setAllAmount({
+      //   remainAmount : res.data.result.installment_amount.split(","),
+      //   freezeAmount : amount,
+      //   completeAmount : res.data.result.installment_amount
+      // })              
       }
     });
    
   };
 
- 
+//  console.log("formInfoBox", formInstallmentInfo)
 
 const getClient = () => {
     let collectData = []
@@ -513,25 +505,27 @@ else{
       array1[key] = value
     });
    
-    setFormInstallmentInfo({
-      dueDate : formInstallmentInfo.dueDate,
-      amount : array1,
-      boxEnable : formInstallmentInfo.boxEnable
-    })
+    // setFormInstallmentInfo({
+    //   dueDate1 : formInstallmentInfo.dueDate1,
+    //   amount : array1,
+    //   boxEnable : formInstallmentInfo.boxEnable
+    // })
   };
 
   const paymentDate = (data) => {
    
-// console.log("data", data)
-    var array2 = []
-    Object.entries(data).map(([key, value]) => {
-      array2.push(value)
-    });
-    setFormInstallmentInfo({
-      dueDate : array2,
-      amount : formInstallmentInfo.amount,
-      boxEnable : formInstallmentInfo.boxEnable
-    })
+ console.log("data", data.length)
+ var array1 = []
+ Object.entries(data).map(([key, value]) => {
+   array1[key] = value
+ });
+   console.log("dataaaa", data)
+      // setFormInstallmentInfo({
+      //   dueDate1 : array1,
+      //   amount : formInstallmentInfo.amount,
+      //   boxEnable : formInstallmentInfo.boxEnable
+      // })
+    
 
     // setDate(array2.slice(0, installment.value));
     // if(new Set(array2).size !== array2.length){
