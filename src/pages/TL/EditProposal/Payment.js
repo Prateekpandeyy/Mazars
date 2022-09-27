@@ -18,7 +18,7 @@ export default class YourComponent extends React.Component {
     tamp2;
     handleChange1(i, e) {
         let calVal = []
-        calVal = this.props.installment_amount.remainAmount;
+        calVal = this.props.this.props.boxFormData.amount;
         calVal[i] = e.target.value;
      
     const { values } = this.state;
@@ -38,7 +38,7 @@ export default class YourComponent extends React.Component {
     handleChange2(i, e) {
         // console.log("eee", e.target.value)
         let calVal = []
-        calVal = this.props.boxFormData.dueDate
+        calVal = this.props.boxFormData.dueDate1;
         calVal[i] = e.target.value
         const { dates } = this.state;
         dates.splice(i, 1, e.target.value)
@@ -155,6 +155,5 @@ export default class YourComponent extends React.Component {
         );
     }
 }
-
 
 

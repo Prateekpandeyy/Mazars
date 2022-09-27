@@ -571,25 +571,9 @@ setFormInstallmentInfo({
 
   const installmentHandler = (key) => {
   calculateAmount(totalAmount, key.value)
-let amount = Number(totalAmount) -  Number(invoiceValue.invoiceAmount);
-let remaininvoiceno = Number(key.value) - Number(invoiceValue.installment_number.length);
-let a = Math.round(amount / remaininvoiceno)
-let dd = []
-
-while (amount > a) {
-   amount = amount - a;
-   dd.push(a)
-}
-dd.push(amount)
-
-    setInstallment(key)
-    setClearValue(false)
-   
-    setAllAmount({
-      remainAmount : dd,
-      freezeAmount : freeze2,
-      completeAmount : dd.concat(freeze2)
-    })
+  setInstallment(key)
+  setClearValue(false)
+ 
   }
 
  
