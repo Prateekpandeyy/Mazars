@@ -148,6 +148,7 @@ var actualInstallmentNumber = 0;
       if (res.data.code === 1) {
         mainAmount = res.data.result.installment_amount.split(",")
         mainDueDate = res.data.result.due_date.split(",");
+        console.log("mainDueDate", mainDueDate)
         let a = res.data.result.email.split(",")
         for(let i = 0; i < res.data.result.installment_amount.split(",").length; i++){
           dis.push(1)
@@ -207,7 +208,7 @@ var actualInstallmentNumber = 0;
            console.log("mainDueDate", mainDueDate, due_date)
 
           setFormInstallmentInfo({
-            dueDate1 : due_date,
+            dueDate1 : mainDueDate,
             amount : mainAmount,
             boxEnable : dis
           })
