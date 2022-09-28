@@ -320,7 +320,7 @@ const getClient = () => {
       setClient2(collectData)
     })
   }
-
+console.log("edit propsal issue fixed")
 
   const onSubmit = (value) => {
    
