@@ -297,8 +297,6 @@ var actualInstallmentNumber = 0;
    
   };
 
-//  console.log("formInfoBox", formInstallmentInfo)
-
 const getClient = () => {
     let collectData = []
     axios.get(
@@ -320,7 +318,6 @@ const getClient = () => {
       setClient2(collectData)
     })
   }
-console.log("edit propsal issue fixed")
 
   const onSubmit = (value) => {
    
@@ -520,10 +517,20 @@ else{
  
  var array1 = []
  Object.entries(data).map(([key, value]) => {
-   array1[key] = value
+ 
+ if(value){
+  array1[key] = value
+ }
  });
-   console.log("dataaaa",data)
-     
+  console.log("array1", array1, new Set(array1).size, invoiceValue.due_dates)
+      
+     if(new Set(array1).size !== array1.length){
+       setDateError(true)
+      Alerts.ErrorNormal("Date must be unique")
+     }
+     else{
+       setDateError(false)
+     }
     if(data.length > 1){
      setFormInstallmentInfo({
     dueDate1 : array1,
@@ -532,14 +539,7 @@ else{
   })
     }
 
-    // setDate(array2.slice(0, installment.value));
-    // if(new Set(array2).size !== array2.length){
-    //   setDateError(true)
-    //  Alerts.ErrorNormal("Date must be unique")
-    // }
-    // else{
-    //   setDateError(false)
-    // }
+  
   };
 const calculateAmount = (totalAmount, installment) => {
 let totalInstallAmount = totalAmount - invoiceAmount;
@@ -550,23 +550,28 @@ let boxDisable = []
 let due_date = []
 let roundNum = 0;
 let adjustAmount =0
+let reduceInstallment = 0;
 // console.log("totalAmount", totalInstallAmount, actualInstallmentNumber)
 if(totalInstallAmount < 1 || actualInstallmentNumber < 1){
   installmentAmount = 0
 }
 else{
   
-  installmentAmount = Math.round(totalInstallAmount / actualInstallmentNumber)
+  installmentAmount = parseInt(totalInstallAmount / actualInstallmentNumber)
   roundNum = actualInstallmentNumber * installmentAmount
   adjustAmount = totalInstallAmount - roundNum
-  console.log("adjust", adjustAmount)
+ 
 }
 // console.log("formInstallmentInfo", formInstallmentInfo)
 for (let i = 0; i < installment; i++){
- if(i === installment -1){
-  installmentAmount = installmentAmount + adjustAmount
+  
+ if(i === invoiceValue.installment_number.length){
+ 
+  boxAmount.push(installmentAmount + adjustAmount);
  }
-  boxAmount.push(installmentAmount);
+ else{
+  boxAmount.push(installmentAmount)
+ }
   boxDisable.push(1);
   due_date.push("")
 }
@@ -576,7 +581,7 @@ boxDisable[i] = 0;
 boxAmount[i] = Number(invoiceValue.amount[i])
 due_date[i] = invoiceValue.due_dates[i]
 }
-console.log("due_date", due_date)
+
 setFormInstallmentInfo({
   boxEnable : boxDisable,
   amount : boxAmount,
@@ -632,6 +637,7 @@ const getInvoicetl  = (e) => {
   setInvoicetl(e.target.value)
 }
 const getSubPlan  = (e) => {
+  setDateError(false)
   setInstallment([])
   setSubplan(e.target.value)
 }
@@ -1050,7 +1056,7 @@ type="radio" className="spaceRadio" value="1" disabled name = "yesadmin"/>No
         }
              
                 <div class="form-group">
-                  <label>Scope of work<span className="declined">*</span></label>
+                  <label>Scope of work</label>
                   <CKEditor
                      editor={ ClassicEditor }
                      height = "400px"
@@ -1151,13 +1157,34 @@ type="radio" className="spaceRadio" value="1" disabled name = "yesadmin"/>No
                     ref={register({ required: true })}
                     placeholder="Enter Amount"
                     onBlur={(e) => {
-                      if(invoiceValue.invoiceAmount > e.target.value){
-                       Swal.fire({
+                      let reduceInstallment = []
+                   
+reduceInstallment = formInstallmentInfo.amount.filter((i) => {
+  return i > 0
+})
+console.log()
+setInstallment({
+  label  : reduceInstallment.length,
+  value : reduceInstallment.length
+})
+                      if(subPlan === "1" && invoiceValue.invoiceAmount > e.target.value){
+                      
+                        Swal.fire({
                         
                         title : "error",
-                        html : "Total Amount could not be less than created invoice",
+                        html : "Amount can not be less than sum of  all installments for which invoices have been issued",
                         icon : "error"
                        })
+                       setTotalAmount(Number(invoiceValue.invoiceAmount))
+                       }
+                       else if (store === "2" && invoiceValue.invoiceAmount > e.target.value){
+                        Swal.fire({
+                        
+                          title : "error",
+                          html : "Amount can not be less than sum of  all installments for which invoices have been issued",
+                          icon : "error"
+                         })
+                         setTotalAmount(Number(invoiceValue.invoiceAmount))
                        }
                     }}
                     onChange={(e) => handleChange(e)}

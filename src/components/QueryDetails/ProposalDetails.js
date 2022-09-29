@@ -41,7 +41,7 @@ function ProposalDetails({
     proposal_reactive_notes
     
   } = diaplayProposal;
-
+const [successDisabled, setSucessDisabled] = useState(false)
   const { tlname, date_of_allocation } = diaplayHistory;
   
   var nfObject = new Intl.NumberFormat('hi-IN')
@@ -282,6 +282,7 @@ let nd = 0;
     confirmButtonText: "Yes",
   }).then((result) => {
     if (result.value === true) { 
+      setSucessDisabled(true)
       axios({
         method : "POST",
         url :  `${baseUrl}/admin/setiba`,
@@ -515,6 +516,7 @@ let nd = 0;
              onChange={(e) => getInviceValue(e)}
              className="spaceRadio"
               value="1" 
+              disabled = {successDisabled}
               name = "yestl" />Yes
              
         </label> :
@@ -523,7 +525,7 @@ let nd = 0;
     type="radio"
     className="spaceRadio"
      onChange={(e) => getInviceValue(e)}
-      
+     disabled = {successDisabled}
       value="1" 
       name = "yestl" />Yes
      
@@ -536,6 +538,7 @@ let nd = 0;
             type="radio" 
             onChange={(e) => getInviceValue(e)}
             defaultChecked
+            disabled = {successDisabled}
             className="spaceRadio"
              value="0" 
              name = "yestl"/>No
@@ -547,6 +550,7 @@ let nd = 0;
               onChange={(e) => getInviceValue(e)}
               className="spaceRadio"
                value="0" 
+               disabled = {successDisabled}
                name = "yestl"/>No
              
           </label>

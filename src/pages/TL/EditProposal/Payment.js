@@ -69,7 +69,7 @@ export default class YourComponent extends React.Component {
 
 
     render() {
-  console.log("boxFormInfo",  this.props.boxFormData)
+  
         var date = this.props.due_date  
         const due_date = date.split(',')
         var fieldsArray = [];

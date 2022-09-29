@@ -211,7 +211,7 @@ function AddFreshAssingment(props) {
               </Col>
               <Col md="4" style={{ display: "flex", justifyContent: "center" }}>
                <CustomHeading>
-               Add fresh auery
+               Add fresh query
                 </CustomHeading>
               </Col>
             </Row>

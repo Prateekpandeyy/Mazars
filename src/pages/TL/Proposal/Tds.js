@@ -85,7 +85,7 @@ const percent = {
     setTotal(parseInt(props.paidAmount) + parseInt(props.paidAmount * cgetRate / 100))
     setgrandTotal(parseInt(parseInt(props.paidAmount) + parseInt(props.paidAmount * 0 / 100)) - parseInt(props.paidAmount * tdsRate / 100))
     }
-  }, [props.paidAmount])  
+  }, [props])  
 const getDataild = () => {
   axios
   .get(`${baseUrl}/tl/getPaymentDetail?tl_id=${JSON.parse(userid)}&invoice=1&invoice_id=${props.id}`, myConfig)
@@ -428,6 +428,7 @@ const basicFun = (e) => {
         })
         .then((res) => {
             setLoading(false);
+            props.addTdsToggle()
             if(res.data.code === 1){
               props.addTdsToggle()
               Swal.fire({
