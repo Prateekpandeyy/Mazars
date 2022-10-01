@@ -13,7 +13,7 @@ import {Spinner} from "reactstrap";
 import "./porposalStyle.css";
 
 function Tds (props)  {
-  const history = useHistory();
+    const history = useHistory();
     const userid = window.localStorage.getItem("tlkey")
     const f2 = useRef(null);
     const [sac33, setSac] = useState([])
@@ -429,6 +429,7 @@ const basicFun = (e) => {
         .then((res) => {
             setLoading(false);
             props.addTdsToggle()
+            setDiscription("")
             if(res.data.code === 1){
               props.addTdsToggle()
               Swal.fire({
@@ -464,9 +465,7 @@ setServices2(k.service)
      
   }
 
-  
-    return(
-      
+    return(     
         <Modal isOpen={props.tdsForm} toggle={props.addTdsToggle} size="sm" style={{display : "flxe", maxWidth : "600px"}}>
         <ModalHeader toggle={props.addTdsToggle}> Generate invoice - 
         

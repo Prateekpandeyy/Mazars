@@ -143,6 +143,9 @@ let mainAmount = []
 let mainDueDate = []
 var installmentAmount = 0;
 var actualInstallmentNumber = 0;
+let roundNum = 0;
+let actualInstallmentAmount = 0;
+let adjustAmount = 0;
     axios.get(`${baseUrl}/tl/getProposalDetail?id=${id}`, myConfig).then((res) => {
 
       if (res.data.code === 1) {
@@ -197,12 +200,23 @@ var actualInstallmentNumber = 0;
           }
           else{
           
-            installmentAmount = installmentAmount / actualInstallmentNumber
+            // installmentAmount = installmentAmount / actualInstallmentNumber
+            actualInstallmentAmount = parseInt(installmentAmount / actualInstallmentNumber)
+            roundNum = actualInstallmentNumber * actualInstallmentAmount
+            adjustAmount = installmentAmount - roundNum
           }
          
           dis.map((i, e) => {
+            console.log("done2", actualInstallmentAmount, adjustAmount)
             if(i === 1){
-              mainAmount[e] = installmentAmount 
+              if(e === res.data.result.invoice.length){
+               
+                mainAmount[e] = actualInstallmentAmount  + adjustAmount
+              }
+              else{
+                mainAmount[e] = actualInstallmentAmount 
+              }
+             
             }
           })  
            console.log("mainDueDate", mainDueDate, due_date)
@@ -550,7 +564,7 @@ let boxDisable = []
 let due_date = []
 let roundNum = 0;
 let adjustAmount =0
-let reduceInstallment = 0;
+
 // console.log("totalAmount", totalInstallAmount, actualInstallmentNumber)
 if(totalInstallAmount < 1 || actualInstallmentNumber < 1){
   installmentAmount = 0

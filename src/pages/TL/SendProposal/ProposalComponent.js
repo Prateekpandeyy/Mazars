@@ -334,18 +334,7 @@ function ProposalComponent(props) {
       setdiserror("");
     }
     setTotalAmount(e.target.value);
-    // totalValue(e.target.value)
-    let amount = e.target.value;
-    let a = Math.round(Number(e.target.value) / Number(installment.value))
-     console.log("eee", installment.value, a)
-    var dd = []
-    while (amount > a) {
-      amount = amount - a;
-      dd.push(a)
-   }
-   
-   dd.push(amount)
-    setAllAmount(dd)
+    calculateAmount(e.target.value, installment.value)
    
   };
  
@@ -362,31 +351,52 @@ function ProposalComponent(props) {
    dd.push(amount)
    return dd;
   }
-const claculate = (e) => {
-
-  let amount = totalAmount;
-  let a = Math.round(totalAmount / e)
-  var dd = []
-  while (amount > a) {
-     amount = amount - a;
-     dd.push(a)
-  }
-  dd.push(amount)
-  return dd;
-}
-
-  const installmentHandler = (key) => {
+  const calculateAmount = (totalAmount, installment) => {
+    let totalInstallAmount = totalAmount
+    let actualInstallmentNumber = installment;
+    let installmentAmount = 0;
+    let boxAmount = []
    
-    let amount = totalAmount;
-    let a = Math.round(totalAmount / key.value)
-    let dd = []
-    while (amount > a) {
-       amount = amount - a;
-       dd.push(a)
+    let roundNum = 0;
+    let adjustAmount =0
+ 
+    if(totalInstallAmount < 1 || actualInstallmentNumber < 1){
+      installmentAmount = 0
     }
-    dd.push(amount)
+    else{
+      installmentAmount = parseInt(totalInstallAmount / actualInstallmentNumber)
+      roundNum = actualInstallmentNumber * installmentAmount
+      adjustAmount = totalInstallAmount - roundNum
+     console.log("InstallmentAmount", installmentAmount)
+    }
+   
+    for (let i = 0; i < installment; i++){
+      
+     if(i === 0){
+     
+      boxAmount.push(installmentAmount + adjustAmount);
+     }
+     else{
+      boxAmount.push(installmentAmount)
+     }
+    }
+  
+   setAllAmount(boxAmount)
     
-    setAllAmount(dd)
+    }
+    
+  const installmentHandler = (key) => {
+    calculateAmount(totalAmount, key.value)
+    // let amount = totalAmount;
+    // let a = Math.round(totalAmount / key.value)
+    // let dd = []
+    // while (amount > a) {
+    //    amount = amount - a;
+    //    dd.push(a)
+    // }
+    // dd.push(amount)
+    
+    // setAllAmount(dd)
     setInstallment(key)
   }
 const clientFun = (e) => {
