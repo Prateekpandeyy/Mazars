@@ -233,9 +233,17 @@ let adjustAmount = 0;
         }
         for(let i = installment_number.length; i < 37; i++){
          
-          let install = {
-            value : String(i),
-            label : String(i)
+          if(i === 0){
+            let install = {
+              value : String(i),
+              label : String(++i)
+            }
+          }
+          else{
+            let install = {
+              value : String(i),
+              label : String(i)
+            }
           }
           setno_installment((oldData) => {
           return  [...oldData, install]
