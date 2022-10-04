@@ -163,6 +163,7 @@ function QueriesRecevied(props) {
               description: res.data.proposal_queries[0].description,
               tp_iba : res.data.proposal_queries[0].tp_iba,
               tl_iba : res.data.proposal_queries[0].tl_iba,
+              admin_iba : res.data.proposal_queries[0].admin_iba, 
               amount_type: res.data.proposal_queries[0].amount_type,
               amount_fixed: res.data.proposal_queries[0].amount,
               amount_hourly: res.data.proposal_queries[0].amount_hourly,

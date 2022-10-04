@@ -135,17 +135,23 @@ function AllProposal() {
             
            
         },
-        // {
-        //     text: "Payment  plan",
-        //     dataField: "paymnet_plan_code",
-        //     sort: true,
-        //     formatter : function paymentPlan (cell, row) {
-        //         let subplan ;
-        //         if (row.subplan)
-        //     }
+        {
+            text: "Payment  plan",
+            dataField: "paymnet_plan_code",
+            
+            formatter : function paymentPlan (cell, row) {
+               var subplan = "" ;
+                if (row.paymnet_plan_code === "3" && row.sub_payment_plane === "2"){
+                 subplan = "B"
+                }
+                else   if (row.paymnet_plan_code === "3" && row.sub_payment_plane === "1"){
+                    subplan = "A"
+                   }
+            return `${row.paymnet_plan_code} ${subplan}`
+            }
             
            
-        // },
+        },
        
         {
             text: "Date of proposal",

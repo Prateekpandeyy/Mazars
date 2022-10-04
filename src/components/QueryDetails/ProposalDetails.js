@@ -505,7 +505,7 @@ let nd = 0;
                 <div className="myInvice">
                  
             {
-              tl_iba === "1" && tp_iba === "1" && admin_iba === null ?
+              tl_iba === "1" && tp_iba === "1" && admin_iba === null  &&   panel === "admin" ?
               <>
                   {
                   admininvoice === "1" ?
