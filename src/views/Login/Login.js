@@ -271,7 +271,7 @@ const custLogout = () => {
   <span style={{padding: "0px 20px", fontSize: "16px", color: "#464646"}}> 
 
 <Link className="tabHoverflash" to = {{
- pathname : "/customer/latestupdates",
+ pathname : `/customer/latestupdates/${i.id}`,
  index : i.id
                        }}>
 {i.heading} 

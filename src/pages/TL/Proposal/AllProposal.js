@@ -135,6 +135,18 @@ function AllProposal() {
             
            
         },
+        // {
+        //     text: "Payment  plan",
+        //     dataField: "paymnet_plan_code",
+        //     sort: true,
+        //     formatter : function paymentPlan (cell, row) {
+        //         let subplan ;
+        //         if (row.subplan)
+        //     }
+            
+           
+        // },
+       
         {
             text: "Date of proposal",
             dataField: "DateofProposal",

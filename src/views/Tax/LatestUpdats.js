@@ -88,7 +88,7 @@ const LatestUpdates = () => {
   <span style={{padding: "0px 20px", fontSize: "16px", color: "464b4b"}}> 
 
 <Link className="tabHoverflash" to = {{
- pathname : "/customer/latestupdates",
+  pathname : `/customer/latestupdates/${i.id}`,
  index : i.id
                        }}>
 {i.heading} 

@@ -247,7 +247,7 @@ function WebRoutes() {
          <PublicRouteUser exact path = "/customer/details" component={Details} />
          <PublicRouteUser exact path = "/customer/groupvideo" component = {GroupVideo} />
      <PublicRouteUser exact path = "/customer/customerquery" component={QueryContact} />
-     <PublicRouteUser exact path = "/customer/latestupdates" component={LatestUpdates} />
+     <PublicRouteUser exact path = "/customer/latestupdates/:id" component={LatestUpdates} />
      <PublicRouteUser exact path = "/customer/updates" component={Updates} />
         <PublicRouteUser exact path = "/customer/contactbasic" component = {ContactOuter} />
        <PublicRouteUser exact path = "/customer/faq-question" component={FaqQuestion} />

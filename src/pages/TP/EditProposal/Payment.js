@@ -13,22 +13,21 @@ export default class YourComponent extends React.Component {
 
 
     amount = this.props.installment_amount
-    installment_amount = this.amount.split(',');
+    installment_amount = this.amount
     temp = this.installment_amount
     tamp2;
     handleChange1(i, e) {
-        const { value } = e.target
-        this.temp[i] = value
-
-    
-        this.setState({
-            values: {
-              ...this.temp.slice(0, this.props.installment)
-            }
-        },
-            () => {
-                this.props.paymentAmount(this.state.values)
-            })
+        let calVal = []
+        calVal = this.props.boxFormData.amount;
+        calVal[i] = e.target.value;
+     
+    const { values } = this.state;
+    values.splice(i, 1, e.target.value)
+    this.setState({ values: [...values] }, () => {
+  
+    console.log("done", calVal)
+      this.props.paymentAmount(calVal)
+    });
     }
 
 
@@ -37,26 +36,29 @@ export default class YourComponent extends React.Component {
     installmentDueDate = this.installment_due_dates;
 
     handleChange2(i, e) {
-        const { value } = e.target
-        this.installmentDueDate[i] = value
-
-        this.setState({
-            dates: {
-              ...this.installmentDueDate.slice(0, this.props.installment)
-            }
-        },
-            () => {
-                this.props.paymentDate(this.state.dates)
-            })
+         console.log("eee", e.target.value)
+        let calVal = []
+        calVal = this.props.boxFormData.dueDate1;
+        calVal[i] = e.target.value
+        const { dates } = this.state;
+        dates.splice(i, 1, e.target.value)
+        this.setState({ dates: [...dates] }, () => {
+            //call back function of set state
+            // console.log(this.state.rocket)
+            this.props.paymentDate(calVal)
+          });
     }
 
     componentDidMount() {
         this.setState({ isLoading: false });
-        
+       
         var amount = this.props.installment_amount
+        
         var date = this.props.due_date
-
-        const installment_amount = amount.split(',');
+        this.props.paymentAmount(amount)
+       var installment_amount = amount
+      
+       
         const due_date = date.split(',');
 
 
@@ -67,13 +69,9 @@ export default class YourComponent extends React.Component {
 
 
     render() {
-
-        var amount = this.props.installment_amount
-        var date = this.props.due_date
-
-        const installment_amount = amount.split(',');
-        const due_date = date.split(',');
-
+  
+        var date = this.props.due_date  
+        const due_date = date.split(',')
         var fieldsArray = [];
 
 
@@ -86,9 +84,10 @@ export default class YourComponent extends React.Component {
                    <input
                        type="text"
                        className="form-control"
+                       disabled = {this.props.boxFormData.boxEnable[i] === 0 ? true : false}
                        name={this.state.values[i]}
                        onChange={this.handleChange1.bind(this, i)}
-                      defaultValue={installment_amount[i]}
+                      value={this.props.boxFormData.amount[i]}
                    />
                </div> :   ""
 }
@@ -98,10 +97,10 @@ export default class YourComponent extends React.Component {
                        <input
                            type="text"
                            className="form-control"
+                           disabled = {this.props.boxFormData.boxEnable[i] === 0 ? true : false}
                            name={this.state.values[i]}
                            onChange={this.handleChange1.bind(this, i)}
-                           defaultValue=""
-                       />
+                           value={this.props.boxFormData.amount[i]} />
                    </div> : ""}
           {this.props.clearValue == true ? 
            <div class="col-md-6 my-2">
@@ -110,10 +109,12 @@ export default class YourComponent extends React.Component {
                type="date"
                className="form-control"
                required
+               disabled = {this.props.boxFormData.boxEnable[i] === 0 ? true : false}
                name={this.state.dates[i]}
                onChange={this.handleChange2.bind(this, i)}
-               defaultValue={due_date[i]}
+         value = {this.props.boxFormData.dueDate1[i]}
                min={this.props.item}
+               max={this.props.max}
            />
        </div> : ""}  
        {this.props.clearValue == false ? 
@@ -123,10 +124,12 @@ export default class YourComponent extends React.Component {
                type="date"
                className="form-control"
                required
+               disabled = {this.props.boxFormData.boxEnable[i] === 0 ? true : false}
                name={this.state.dates[i]}
                onChange={this.handleChange2.bind(this, i)}
-               defaultValue= ""
+                 value = {this.props.boxFormData.dueDate1[i]}
                min={this.props.item}
+               max={this.props.max}
            />
        </div> : ""}         
                    
@@ -143,8 +146,8 @@ export default class YourComponent extends React.Component {
             <div className="inputs">
                 {this.props.installment > 0 ?
             <tr style={{display : "flex", width : "100%", justifyContent : "space-around"}}>
-              <td>Payment</td>
-              <td>Due Dates</td>
+              <td>Installment amount</td>
+              <td>Due date</td>
           </tr> : ""}
           {fieldsArray}
       </div>
@@ -152,6 +155,5 @@ export default class YourComponent extends React.Component {
         );
     }
 }
-
 
 
