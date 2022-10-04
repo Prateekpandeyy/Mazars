@@ -167,6 +167,7 @@ const downloadpdf = () => {
   })
  }
 }
+console.log("newMaz")
   //installment
   const installAmount = (data) => {
     var item = data.split(',')
