@@ -807,11 +807,11 @@ function ProposalComponent(props) {
     }
   const getQuery = () => {
     axios
-      .get(
-        `${baseUrl}/tl/pendingTlProposal?tp_id=${JSON.parse(
-                     userid
-                   )}&assign_id=${id}`, myConfig
-                 )
+        .get(
+          `${baseUrl}/tl/pendingTlProposal?tp_id=${JSON.parse(
+            userid
+          )}&assign_id=${id}`, myConfig
+        )
       .then((res) => {
         if (res.data.code === 1) {
           if (res.data.result.length > 0) {
@@ -824,8 +824,8 @@ function ProposalComponent(props) {
   const getCompany = () => {
    
     axios.get(
-      `${baseUrl}/tl/getcompany`, myConfig
-    )
+            `${baseUrl}/tl/getcompany`, myConfig
+          )
     .then((res) => {
       
     
@@ -901,7 +901,7 @@ function ProposalComponent(props) {
     formData.append("emails", email)
     formData.append("assign_no", assingNo);
     formData.append("name", custname);
-    formData.append("type", "tl");
+    formData.append("type", "tp");
     formData.append("date_month", value.date_month)
     formData.append("id", JSON.parse(userid));
     formData.append("assign_id", assignId);
@@ -1012,7 +1012,7 @@ function ProposalComponent(props) {
           
             if (response.data.code === 1) {
               setLoading(false)
-              var variable = "Proposal sent successfully"
+              var variable = "Proposal sent successfully. "
               Alerts.SuccessNormal(variable)
               history.push("/taxprofessional/proposal");
             } else if (response.data.code === 0) {
@@ -1093,6 +1093,7 @@ function ProposalComponent(props) {
    return dd;
   }
   const calculateAmount = (totalAmount, installment) => {
+    console.log("totalAmount", totalAmount, installment)
     let totalInstallAmount = totalAmount
     let actualInstallmentNumber = installment;
     let installmentAmount = 0;
@@ -1128,16 +1129,8 @@ function ProposalComponent(props) {
     
   const installmentHandler = (key) => {
     calculateAmount(totalAmount, key.value)
-    // let amount = totalAmount;
-    // let a = Math.round(totalAmount / key.value)
-    // let dd = []
-    // while (amount > a) {
-    //    amount = amount - a;
-    //    dd.push(a)
-    // }
-    // dd.push(amount)
+  
     
-    // setAllAmount(dd)
     setInstallment(key)
   }
 const clientFun = (e) => {
@@ -1165,12 +1158,7 @@ const myMonthValue = (e) => {
 }
 const getInviceValue = (e) => {
  
-  if(e.target.value === "0"){
-    setTlDisable(true)
-  }
-  else {
-    setTlDisable(false)
-  }
+ 
   setInvice(e.target.value)
 }
 const getInvoiceAdmin  = (e) => {

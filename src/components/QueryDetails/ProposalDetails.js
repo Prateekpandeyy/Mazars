@@ -167,7 +167,6 @@ const downloadpdf = () => {
   })
  }
 }
-console.log("newMaz")
   //installment
   const installAmount = (data) => {
     var item = data.split(',')
@@ -506,7 +505,7 @@ let nd = 0;
                 <div className="myInvice">
                  
             {
-              tl_iba === "1" && tp_iba === "1" && admin_iba === null  &&   panel === "admin" ?
+              tl_iba === "1" && tp_iba === "1" && admin_iba === null ?
               <>
                   {
                   admininvoice === "1" ?
@@ -636,7 +635,93 @@ let nd = 0;
              
            
             </td>
-        : ""
+        : 
+        <td className="tableStyle"> 
+        
+        <label className="mr-2">Approval of Admin for such issue of invoice(s)</label>
+       
+          <div className="myInvice">
+           
+     
+        
+     {
+      admin_iba === "1" ?
+      <>
+          <label className="mr-2">  
+            <input 
+      type="radio"
+      disabled
+     defaultChecked
+       className="spaceRadio"
+        value="1" 
+       />Yes
+       
+  </label>
+  <label className="mr-2">  
+            <input 
+      type="radio"
+      disabled
+       className="spaceRadio"
+        value="1" 
+       />No
+       
+  </label>
+      </> :
+      <>
+        {
+          admin_iba === "0" ?
+          <>
+            <label className="mr-2">  
+            <input 
+      type="radio"
+      disabled
+    
+       className="spaceRadio"
+        value="1" 
+       />Yes
+       
+  </label>
+  <label className="mr-2">  
+            <input 
+      type="radio"
+      defaultChecked
+      disabled
+       className="spaceRadio"
+        value="1" 
+       />No
+       
+  </label>
+          </> : 
+          <>
+            <label className="mr-2">  
+            <input 
+      type="radio"
+      disabled
+     
+       className="spaceRadio"
+        value="1" 
+       />Yes
+       
+  </label>
+  <label className="mr-2">  
+            <input 
+      type="radio"
+      disabled
+       className="spaceRadio"
+        value="1" 
+       />No
+       
+  </label>
+          </>
+        }
+      </>
+     }
+     
+   
+        </div> 
+       
+     
+      </td>
         }
      
        

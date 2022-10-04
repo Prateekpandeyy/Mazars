@@ -153,7 +153,7 @@ let adjustAmount = 0;
        
         mainAmount = res.data.result.installment_amount.split(",")
         mainDueDate = res.data.result.due_date.split(",");
-        console.log("mainDueDate", mainDueDate)
+      
         let a = res.data.result.email.split(",")
         for(let i = 0; i < res.data.result.installment_amount.split(",").length; i++){
           dis.push(1)
@@ -188,12 +188,12 @@ let adjustAmount = 0;
        
           mainDueDate[e] = i;
         })
-      // console.log("mainDueDate", mainDueDate, due_date)
+     
         amount.map((i, e) =>{
         
           mainAmount[e] = i;
         })
-      //  console.log("mainDueDate", mainDueDate)
+ 
       installmentAmount = Number(res.data.result.amount) - Number(invoiceAmount)
       actualInstallmentNumber = Number(res.data.result.no_of_installment) - Number(installment_number.length)
      
@@ -209,7 +209,7 @@ let adjustAmount = 0;
           }
          
           dis.map((i, e) => {
-            console.log("done2", actualInstallmentAmount, adjustAmount)
+      
             if(i === 1){
               if(e === res.data.result.invoice.length){
                
@@ -221,7 +221,7 @@ let adjustAmount = 0;
              
             }
           })  
-           console.log("mainDueDate", mainDueDate, due_date)
+        
 
           setFormInstallmentInfo({
             dueDate1 : mainDueDate,
@@ -253,20 +253,29 @@ let adjustAmount = 0;
         for(let i = Number(installment_number.length + 1); i < 5; i++){
           let install;
           
-          console.log("dataaa", i)
-            if(i === 1){
-              install = {
-                value : String(++i),
-                label : String(++i)
+       
+            if(installment_number.length > 0){
+              if(i === 1){
+                install = {
+                  value : String(++i),
+                  label : String(++i)
+                }
               }
+              else{
+                install = {
+                  value : String(i),
+                  label : String(i)
+                }
+              }
+            
             }
             else{
+              let install;
               install = {
-                value : String(i),
-                label : String(i)
+                value : String(i + 2),
+                label : String(i + 2)
               }
             }
-          
           setNoInstall((oldData) => {
           return  [...oldData, install]
           })
@@ -389,7 +398,7 @@ else{
     if (store === "1") {
       setDate(lumsum)
     }
-    // console.log("amount", amount)
+   
 
     let formData = new FormData();
     formData.append("emails", email)
@@ -430,7 +439,7 @@ else{
                 Alerts.ErrorNormal(`Please select no of installment .`)
               } else
                 if (!formInstallmentInfo.amount || !date) {
-                  // console.log("date",formInstallmentInfo.amount)
+                
                   Alerts.ErrorNormal(`Please enter all fields.`)
                 } else if (formInstallmentInfo.amount && date) {
       
@@ -452,7 +461,7 @@ else{
                       // }
                     }
                     var sum  = 0;
-                    // console.log("allAmount", amount)
+                  
                     if(formInstallmentInfo.amount.length > 0){
                       sum = formInstallmentInfo.amount.reduce(myFunction)
                     }
@@ -551,12 +560,12 @@ else{
 
 
   const paymentAmount = (data) => {
-    // console.log("dataa", data)
+  
     var array1 = []
     Object.entries(data).map(([key, value]) => {
       array1[key] = value
     });
-    console.log("data", data.length)
+  
    if(data.length !== undefined){
      setFormInstallmentInfo({
       dueDate1 : formInstallmentInfo.dueDate1,
@@ -576,7 +585,7 @@ else{
   array1[key] = value
  }
  });
-  console.log("array1", array1, new Set(array1).size, invoiceValue.due_dates)
+ 
       
      if(new Set(array1).size !== array1.length){
        setDateError(true)
@@ -605,7 +614,7 @@ let due_date = []
 let roundNum = 0;
 let adjustAmount =0
 
-// console.log("totalAmount", totalInstallAmount, actualInstallmentNumber)
+
 if(totalInstallAmount < 1 || actualInstallmentNumber < 1){
   installmentAmount = 0
 }
@@ -616,7 +625,7 @@ else{
   adjustAmount = totalInstallAmount - roundNum
  
 }
-// console.log("formInstallmentInfo", formInstallmentInfo)
+
 for (let i = 0; i < installment; i++){
   
  if(i === invoiceValue.installment_number.length){
@@ -630,7 +639,7 @@ for (let i = 0; i < installment; i++){
   due_date.push("")
 }
 for (let i = 0; i < invoiceValue.installment_number.length; i++){
-// console.log("Iiii", invoiceValue.installment_number)
+
 boxDisable[i] = 0;
 boxAmount[i] = Number(invoiceValue.amount[i])
 due_date[i] = invoiceValue.due_dates[i]
@@ -695,7 +704,7 @@ const getSubPlan  = (e) => {
   setInstallment([])
   setSubplan(e.target.value)
 }
-console.log("no_installmentRange", no_installmentRange)
+
   return (
     <Layout TLDashboard="TLDashboard" TLuserId={userid}>
       <Card>
@@ -1216,7 +1225,7 @@ type="radio" className="spaceRadio" value="1" disabled name = "yesadmin"/>No
 reduceInstallment = formInstallmentInfo.amount.filter((i) => {
   return i > 0
 })
-console.log()
+
 setInstallment({
   label  : reduceInstallment.length,
   value : reduceInstallment.length
