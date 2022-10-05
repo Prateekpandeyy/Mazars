@@ -375,10 +375,10 @@ setGst(total)
  
 }
 }
-
 const basicFun = (e) => {
  
-  let a = parseFloat((e.target.value) + (pocketExp));
+  let a = parseFloat((parseInt(e.target.value)) + parseFloat(pocketExp));
+  console.log("etargetValue", parseInt(e.target.value) + pocketExp)
   let tdsamount = parseInt(Math.round(a * tdsR / 100))
   setBasicAmount(e.target.value);
   if(e.target.value > 0){
@@ -552,7 +552,7 @@ setServices2(k.service)
                     ref={register({required : true})}
                     className="form-control"
                     placeholder="Amount" 
-                    disabled
+                  
                     onChange= {(e) => basicFun(e)}
                   value={basicAmount}/>
                     </div> 
