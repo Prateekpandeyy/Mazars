@@ -837,6 +837,7 @@ var actualInstallmentNumber = 0;
 let roundNum = 0;
 let actualInstallmentAmount = 0;
 let adjustAmount = 0;
+let il = 0;
 axios.get(`${baseUrl}/tl/getProposalDetail?id=${id}`, myConfig).then((res) => {
 
       if (res.data.code === 1) {
@@ -920,47 +921,41 @@ axios.get(`${baseUrl}/tl/getProposalDetail?id=${id}`, myConfig).then((res) => {
           })
           
       
-        }
-        for(let i = installment_number.length; i < 37; i++){
+        } 
+        il = installment_number.length;
+        // for payment plan 2
+        for(let i = il; i < 37; i++){
           let install;
           
-          if(i === 0){
-             install = {
-              value : String(++i),
-              label : String(++i)
-            }
-          }
-          else{
+          if(i > 1){
              install = {
               value : String(i),
               label : String(i)
             }
+            setno_installment((oldData) => {
+              return  [...oldData, install]
+              })
           }
-          setno_installment((oldData) => {
-          return  [...oldData, install]
-          })
+         
+         
         }
-        for(let i = Number(installment_number.length + 1); i < 5; i++){
-          let install;
-          
-       
-            if(i === 1){
-              install = {
-                value : String(++i),
-                label : String(++i)
-              }
-            }
-            else{
-              install = {
-                value : String(i),
-                label : String(i)
-              }
-            }
-          
+        // for payment plan 3
+      for(let i = il; i < 5; i++){
+        let install;
+        
+        if(i > 1){
+           install = {
+            value : String(i),
+            label : String(i)
+          }
           setNoInstall((oldData) => {
-          return  [...oldData, install]
-          })
+            return  [...oldData, install]
+            })
         }
+       
+       
+      }
+      
         if(res.data.result.email.length > 0){
        
           a.map((i) => {

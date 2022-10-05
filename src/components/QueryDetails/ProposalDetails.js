@@ -27,9 +27,7 @@ function ProposalDetails({
     proposal_date,
     description,
 
-    amount_type,
-    amount_fixed,
-    amount_hourly,
+    
     tp_iba,
     tl_iba,
     admin_iba,
@@ -38,10 +36,16 @@ function ProposalDetails({
     installment_amount,
     due_date,
     proposal_reactive_dates,
-    proposal_reactive_notes
+    proposal_reactive_notes,
+    payment_plan,
+    amount_type,
+    start_date,
+    end_date,
+    sub_payment_plane
     
   } = diaplayProposal;
 const [successDisabled, setSucessDisabled] = useState(false)
+
   const { tlname, date_of_allocation } = diaplayHistory;
   
   var nfObject = new Intl.NumberFormat('hi-IN')
@@ -60,6 +64,7 @@ const [successDisabled, setSucessDisabled] = useState(false)
   || (navigator.userAgent.includes("Mac") && "ontouchend" in document)
 
  }
+
 const downloadpdf = () => {
   const token = window.localStorage.getItem("adminToken")
     
@@ -312,7 +317,7 @@ let nd = 0;
     }})
   
   }
- console.log("admininvoice", admininvoice)
+ console.log("admininvoice", diaplayProposal)
   return (
     <>
       <div className="queryBox">
@@ -366,284 +371,127 @@ let nd = 0;
               <th scope="row">Scope of work</th>
               <td className="tableStyle"> <Markup content={description} /></td>
             </tr>
-          {
-            tl_iba === null && tp_iba === null ? "" :
-            <tr>
-            <th scope="row"></th>
-            <tr>
-            <td className="tableStyle"> 
-          
-               {
-                tp_iba === "1" ?
-                <>
-                  <span className="d-block mr-2">
-                  Whether invoice(s) can be issued before acceptance of proposal by client
-               
-                  </span>
-                <label className="mr-2">
+       
+
+{
+  panel === "client" ? "" :
+  <tr>
+  <th>&nbsp;</th>
+  <td>
+    <table>
+      <tr>
+        <td>
+        Whether invoice(s) can be issued before acceptance of proposal by client. &nbsp;
+        <label className="mr-2">
                 <input 
             type="radio" 
             className="spaceRadio"
-            defaultChecked
+            checked = {tp_iba === "1" ? true : false}
           disabled
-             value="0" 
-             name = "yestp"/>Yes
+           
+            />Yes
            
         </label>
         <label className="mr-2">
                 <input 
             type="radio" 
            disabled 
-           
+           checked = {tp_iba === "0" ? true : false}
            className="spaceRadio"
-             value="0" 
-             name = "yestp"/>No
-           
-        </label>
-        </> : ""
-               }
-                {
-                tp_iba == "0" ?
-                <>
-              <span className="d-block mr-2">
-                Whether invoice(s) can be issued before acceptance of proposal by client
-               
-                </span>
-                <label className="mr-2">
-                <input 
-            type="radio" 
-            className="spaceRadio"
-           disabled
-          
-             value="0" 
-             name = "yestp"/>Yes
-           
-        </label>
-        <label className="mr-2">
-                <input 
-            type="radio" 
-            className="spaceRadio"
-            defaultChecked
-          disabled
-             value="0" 
-             name = "yestp"/>No
-           
-        </label></> : ""
-               }
-            
              
-              </td>
-              <td className="tableStyle"> 
-         
-              
-            
-               
-                {
-                tl_iba === "1" ?
-               <div>
-                <span className="mr-2">
-                Approval of Team Leader for such issue of invoice(s)
-                </span>
-                <label className="mr-2">
+             />No
+           
+        </label>
+        </td>
+      </tr>
+    <tr>
+      <td>
+      Approval of Team Leader for such issue of invoice(s). &nbsp;
+      <label className="mr-2">
                 <input 
             type="radio" 
             className="spaceRadio"
-            defaultChecked
+          checked = {tl_iba === "1" ? true : false}
           disabled
-             value="0" 
-             name = "yestl"/>Yes
+             
+            />Yes
            
         </label>
         <label className="mr-2">
                 <input 
             type="radio" 
            disabled 
-           
+           checked = {tl_iba === "0" ? true : false}
            className="spaceRadio"
-             value="0" 
-             name = "yestl"/>No
+             
+             />No
            
         </label>
-        </div> : ""
-               }
-                {
-                tl_iba == "0" ?
-               <div>
-                <span className="mr-2">
-                Approval of Team Leader for such issue of invoice(s)
-                </span>
-                <label className="mr-2">
-                <input 
-            type="radio" 
-            className="spaceRadio"
-           disabled
-          
-             value="0" 
-             name = "yestl"/>Yes
-           
-        </label>
-        <label className="mr-2">
-                <input 
-            type="radio" 
-            className="spaceRadio"
-            defaultChecked
-          disabled
-             value="0" 
-             name = "yestl"/>No
-           
-        </label></div> : ""
-               }
-             </td>
-              {
-          panel === "admin" ?
-          
-         
-          <td className="tableStyle"> 
-        
-              <label className="mr-2">Approval of Admin for such issue of invoice(s)</label>
-             
-                <div className="myInvice">
-                 
-            {
-              tl_iba === "1" && tp_iba === "1" && admin_iba === null ?
-              <>
-                  {
-                  admininvoice === "1" ?
-                  <label className="mr-2">  
-                  <input 
-            type="radio"
-             defaultChecked
-             onChange={(e) => getInviceValue(e)}
-             className="spaceRadio"
-              value="1" 
-              disabled = {successDisabled}
-              name = "yestl" />Yes
-             
-        </label> :
-        <label className="mr-2">
-          <input 
-    type="radio"
-    className="spaceRadio"
-     onChange={(e) => getInviceValue(e)}
-     disabled = {successDisabled}
-      value="1" 
-      name = "yestl" />Yes
-     
-</label>
-                }
+      </td>
+
+    </tr>
+    <tr>
       {
-        admininvoice === "0" ?
-        <label className="mr-2"> 
-        <input 
-            type="radio" 
-            onChange={(e) => getInviceValue(e)}
-            defaultChecked
-            disabled = {successDisabled}
-            className="spaceRadio"
-             value="0" 
-             name = "yestl"/>No
-           
-        </label> :
-          <label className="mr-2">
-          <input 
-              type="radio" 
-              onChange={(e) => getInviceValue(e)}
-              className="spaceRadio"
-               value="0" 
-               disabled = {successDisabled}
-               name = "yestl"/>No
-             
-          </label>
-      }
-              </> : 
-              <>
-           {
-            admin_iba === "1" ?
-            <>
-                <label className="mr-2">  
-                  <input 
-            type="radio"
-            disabled
-           defaultChecked
-             className="spaceRadio"
-              value="1" 
-              name = "yestl" />Yes
-             
-        </label>
-        <label className="mr-2">  
-                  <input 
-            type="radio"
-            disabled
-             className="spaceRadio"
-              value="1" 
-              name = "yestl" />No
-             
-        </label>
-            </> :
-            <>
-              {
-                admin_iba === "0" ?
-                <>
-                  <label className="mr-2">  
-                  <input 
-            type="radio"
-            disabled
-          
-             className="spaceRadio"
-              value="1" 
-              name = "yesAdmin" />Yes
-             
-        </label>
-        <label className="mr-2">  
-                  <input 
-            type="radio"
-            defaultChecked
-            disabled
-             className="spaceRadio"
-              value="1" 
-              name = "yesAdmin" />No
-             
-        </label>
-                </> : 
-                <>
-                  <label className="mr-2">  
-                  <input 
-            type="radio"
-            disabled
-           
-             className="spaceRadio"
-              value="1" 
-              name = "yesAdmin" />Yes
-             
-        </label>
-        <label className="mr-2">  
-                  <input 
-            type="radio"
-            disabled
-             className="spaceRadio"
-              value="1" 
-              name = "yesAdmin" />No
-             
-        </label>
-                </>
-              }
-            </>
-           }
-           </>
-            }
-              </div> 
-             
-           
-            </td>
-        : 
+        panel === "admin" ?  
         <td className="tableStyle"> 
         
         <label className="mr-2">Approval of Admin for such issue of invoice(s)</label>
        
           <div className="myInvice">
            
+      {
+        tl_iba === "1" && tp_iba === "1" && admin_iba === null ?
+        <>
+            {
+            admininvoice === "1" ?
+            <label className="mr-2">  
+            <input 
+      type="radio"
+       defaultChecked
+       onChange={(e) => getInviceValue(e)}
+       className="spaceRadio"
+        value="1" 
+        disabled = {successDisabled}
+        name = "yestl" />Yes
+       
+  </label> :
+  <label className="mr-2">
+    <input 
+type="radio"
+className="spaceRadio"
+onChange={(e) => getInviceValue(e)}
+disabled = {successDisabled}
+value="1" 
+name = "yestl" />Yes
+
+</label>
+          }
+{
+  admininvoice === "0" ?
+  <label className="mr-2"> 
+  <input 
+      type="radio" 
+      onChange={(e) => getInviceValue(e)}
+      defaultChecked
+      disabled = {successDisabled}
+      className="spaceRadio"
+       value="0" 
+       name = "yestl"/>No
      
-        
+  </label> :
+    <label className="mr-2">
+    <input 
+        type="radio" 
+        onChange={(e) => getInviceValue(e)}
+        className="spaceRadio"
+         value="0" 
+         disabled = {successDisabled}
+         name = "yestl"/>No
+       
+    </label>
+}
+        </> : 
+        <>
      {
       admin_iba === "1" ?
       <>
@@ -654,7 +502,7 @@ let nd = 0;
      defaultChecked
        className="spaceRadio"
         value="1" 
-       />Yes
+        name = "yestl" />Yes
        
   </label>
   <label className="mr-2">  
@@ -663,7 +511,7 @@ let nd = 0;
       disabled
        className="spaceRadio"
         value="1" 
-       />No
+        name = "yestl" />No
        
   </label>
       </> :
@@ -678,7 +526,7 @@ let nd = 0;
     
        className="spaceRadio"
         value="1" 
-       />Yes
+        name = "yesAdmin" />Yes
        
   </label>
   <label className="mr-2">  
@@ -688,7 +536,7 @@ let nd = 0;
       disabled
        className="spaceRadio"
         value="1" 
-       />No
+        name = "yesAdmin" />No
        
   </label>
           </> : 
@@ -700,7 +548,7 @@ let nd = 0;
      
        className="spaceRadio"
         value="1" 
-       />Yes
+        name = "yesAdmin" />Yes
        
   </label>
   <label className="mr-2">  
@@ -709,104 +557,185 @@ let nd = 0;
       disabled
        className="spaceRadio"
         value="1" 
-       />No
+        name = "yesAdmin" />No
        
   </label>
           </>
         }
       </>
      }
-     
-   
+     </>
+      }
         </div> 
        
      
-      </td>
-        }
-     
-       
-            </tr>
+      </td> : 
+        <td>
+          Approval of Admin for such issue of invoice(s). &nbsp;
+          <label className="mr-2">
+                <input 
+            type="radio" 
+            className="spaceRadio"
+            checked = {admin_iba === "1" ? true : false}
+          disabled
            
-          </tr>
-         
-          }
-         
-            <tr>
-              <th scope="row">Amount</th>
-              <td>
-                <tr style={{display : "flex", width : "100%"}}>
-                  <td style={{display : "flex", width : "50%"}}>Amount type</td>
-                  <td style={{display : "flex", width : "50%"}}>Price</td>
-                </tr>
-                <tr style={{display : "flex", width : "100%"}}>
-                  <td style={{display : "flex", width : "50%"}}>{CommonServices.capitalizeFirstLetter(amount_type)}</td>
-                  <td style={{display : "flex", width : "50%", justifyContent : "flex-start"}}>
-                    {
-                      amount_type == "fixed" ?
-                       nfObject.format(amount_fixed)
-                        :
-                        amount_type == "hourly" ?
-                        nfObject.format(amount_hourly) 
-                          :
-                          amount_type == "mixed" ?
-                            <div>
-                              <p>Fixed : {nfObject.format(amount_fixed)}</p>
-                              <p>Hourly : {nfObject.format(amount_hourly)}</p>
-                            </div>
-                            :
-                            ""
-                    }
-                  </td>
-                </tr>
-              </td>
-            </tr>
+            />Yes
            
-            <tr>
-              <th scope="row">Payment terms</th>
-              {
-                payment_terms == "lumpsum" ?
-                  <td>
-                    <tr style={{display : "flex", width : "100%"}}>
-                  <td style={{display : "flex", width : "50%"}}>Payment plan</td>
-                  <td style={{display : "flex", width : "50%"}}>Due dates</td>
-                </tr>
-                <tr style={{display : "flex", width : "100%"}}>
-                  <td style={{display : "flex", width : "50%"}}>{CommonServices.capitalizeFirstLetter(payment_terms)}</td>
-                  <td style={{display : "flex", width : "50%", justifyContent : "flex-start"}}>
-                  {CommonServices.removeTime(due_date)}
-                  </td>
-                </tr>
-                    {/* <tr>
-                      <td>{CommonServices.capitalizeFirstLetter(payment_terms)}</td>
-                      <td>
-                        {CommonServices.removeTime(due_date)}
-                      </td>
-                    </tr> */}
-                  </td>
-                  :
-                  payment_terms == "installment" ?
-                    <td>
-                      <tr style={{display : "flex", width : "100%"}}>
-                        <td  style={{display : "flex", width : "25%"}}>Payment plan</td>
-                        <td  style={{display : "flex", width : "25%"}}>No of installments</td>
-                        <td  style={{display : "flex", width : "25%"}}>Installment amount</td>
-                        <td  style={{display : "flex", width : "25%"}}>Due dates</td>
-                      
-                      </tr>
-                      <tr style={{display : "flex", width : "100%"}}>
-                       
-                        <td style={{display : "flex", width : "25%"}}>{CommonServices.capitalizeFirstLetter(payment_terms)}</td>
-                        <td style={{display : "flex", width : "25%", justifyContent : "center"}}>{no_of_installment}</td>
-                        <td style={{display : "flex", width : "25%", flexDirection : "column", textAlign : "right"}}>{installAmount2(installment_amount)}</td>
-                        <td style={{display : "flex", width : "25%", flexDirection : "column"}}>{installAmount(due_date)}</td>
-                        
-                      </tr>
-                    </td>
-                    :
-                    ""
-              }
+        </label>
+        <label className="mr-2">
+                <input 
+            type="radio" 
+           disabled 
+           checked = {admin_iba === "0" ? true : false}
+           className="spaceRadio"
+             
+             />No
+           
+        </label>
+          </td>
+      }
+    </tr>
+      </table>
+    </td>
+</tr>
 
-            </tr>
+}
+
+
+
+
+
+
+
+
+
+            {/* payment plan for start date and end date */}
+
+          {
+            payment_plan === "3" || payment_plan === "4" ?
+            <tr>
+
+            <th>Start date</th>
+            <td>{start_date.split("-").reverse().join("-")}</td>
+            </tr> : ""
+          }
+
+  {
+    payment_plan === "3" ?
+    <>
+    
+    <tr>
+  <th>End date</th>
+  <td>{end_date.split("-").reverse().join("-")}</td>
+  </tr>
+    </> : ""
+  }
+  
+    <tr>
+          
+          <th>Payment terms</th>
+
+          <td>
+     {
+      payment_plan === "1" ?
+      <table>
+        <tr>
+          <th>
+Payment plan
+          </th>
+          <th>
+          Amount of fee
+          </th>
+          <th>
+          Due date
+          </th>
+        </tr>
+        <tr>
+          <td>
+{amount_type}
+          </td>
+          <td>
+{amount}
+          </td>
+          <td>
+{due_date.split("-").reverse().join("-")}
+          </td>
+        </tr>
+        </table> : ""
+     }      
+
+{
+  (payment_plan === "3"  && sub_payment_plane === "1" ) || payment_plan === "2" ? 
+  <table>
+    <tr>
+      <th>
+      Payment plan  
+      </th>
+      <th>
+        Amount of fee
+      </th>
+      </tr>
+      <tr>
+      <td>
+        {amount_type}
+      </td>
+      <td>
+      {amount}
+      </td>
+    </tr>
+    <tr>
+      <td colSpan={2}>
+&nbsp;
+      </td>
+    </tr>
+    <tr>
+      <td colSpan= "2">
+       <table style={{width : "100%", border : "0px"}}>
+        <tr>
+          <th>
+            No of installment
+            </th>
+            <th style={{textAlign : "right"}}>Installment amount</th>
+            <th>Due dates</th>
+        </tr>
+        <tr>
+        <td>{no_of_installment}</td>
+        <td style={{textAlign : "right"}}>{installAmount2(installment_amount)}</td>
+        <td>{installAmount(due_date)}</td>
+        
+        </tr>
+       </table>
+      </td>
+      
+    </tr>
+  </table> : ""
+}
+
+
+{
+  payment_plan === "4" || (payment_plan === "3" && sub_payment_plane === "2") ?
+  <table>
+<tr>
+<th>
+Amount of monthly fee
+</th>
+<th> Amount of  fee </th>
+</tr>
+<tr>
+  <td>
+  {CommonServices.capitalizeFirstLetter(amount_type)}
+  </td>
+  <td>
+  {`Rs. ${nfObject.format(amount)} per month payable before ${CommonServices.removeTime(due_date)} day of following month`}
+                     
+    </td>
+</tr>
+  </table> : ""
+}
+          </td>
+         </tr>
+         
+         
             <tr>
               <th scope="row">Proposed amount</th>
               <td>{nfObject.format(amount)}</td>

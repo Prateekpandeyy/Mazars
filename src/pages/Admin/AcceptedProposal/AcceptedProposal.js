@@ -130,7 +130,14 @@ function AcceptedProposal({ acceptedProposal }) {
           else   if (row.paymnet_plan_code === "3" && row.sub_payment_plane === "1"){
               subplan = "A"
              }
-      return `${row.paymnet_plan_code} ${subplan}`
+             return (
+              <>
+                {
+                    row.paymnet_plan_code === null ? "" :
+                    `${row.paymnet_plan_code} ${subplan}`
+                }
+              </>
+            )
       }
       
      

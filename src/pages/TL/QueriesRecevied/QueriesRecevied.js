@@ -55,7 +55,8 @@ function QueriesRecevied(props) {
     installment_amount: "",
     due_date: "",
     proposal_reactive_dates: "",
-    proposal_reactive_notes: ""
+    proposal_reactive_notes: "",
+    payment_plan : ""
   });
 
   const [diaplayAssignment, setDisplayAssignment] = useState([
@@ -172,7 +173,11 @@ function QueriesRecevied(props) {
               installment_amount: res.data.proposal_queries[0].installment_amount,
               due_date: res.data.proposal_queries[0].due_date,
               proposal_reactive_dates : res.data.proposal_queries[0].re_active_date.split(" ")[0].split("-").reverse().join("-"),
-              proposal_reactive_notes : res.data.proposal_queries[0].notes
+              proposal_reactive_notes : res.data.proposal_queries[0].notes,
+              payment_plan : res.data.proposal_queries[0].payment_plan,
+              start_date : res.data.proposal_queries[0].start_date,
+              end_date : res.data.proposal_queries[0].end_date,
+              sub_payment_plane : res.data.proposal_queries[0].sub_payment_plane
             });
             let a = moment(res.data.result[0].final_date);
             let b = moment(res.data.proposal_queries[0].cust_accept_date)

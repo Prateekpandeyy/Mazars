@@ -59,7 +59,9 @@ function MyAssingment(props) {
     installment_amount: "",
     due_date: "",
     proposal_reactive_dates: "",
-    proposal_reactive_notes: ""
+    proposal_reactive_notes: "",
+    payment_plan : "",
+    
   });
 
   const [diaplayAssignment, setDisplayAssignment] = useState([
@@ -152,6 +154,7 @@ function MyAssingment(props) {
               description: res.data.proposal_queries[0].description,
               tp_iba : res.data.proposal_queries[0].tp_iba,
               tl_iba : res.data.proposal_queries[0].tl_iba,
+              admin_iba : res.data.proposal_queries[0].admin_iba,
               amount_type: res.data.proposal_queries[0].amount_type,
               amount_fixed: res.data.proposal_queries[0].amount,
               amount_hourly: res.data.proposal_queries[0].amount_hourly,
@@ -161,7 +164,11 @@ function MyAssingment(props) {
               due_date: res.data.proposal_queries[0].due_date,
               accept : res.data.result[0].accept,
               proposal_reactive_dates : res.data.proposal_queries[0].re_active_date.split(" ")[0].split("-").reverse().join("-"),
-              proposal_reactive_notes : res.data.proposal_queries[0].notes
+              proposal_reactive_notes : res.data.proposal_queries[0].notes,
+              payment_plan : res.data.proposal_queries[0].payment_plan,
+              start_date : res.data.proposal_queries[0].start_date,
+              end_date : res.data.proposal_queries[0].end_date,
+              sub_payment_plane : res.data.proposal_queries[0].sub_payment_plane
             
             });
             let a = moment(res.data.result[0].final_date);

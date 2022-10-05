@@ -230,56 +230,40 @@ let adjustAmount = 0;
           })
           
       
-        }
-        for(let i = installment_number.length; i < 37; i++){
-          let install;
-          
-          if(i === 0){
-             install = {
-              value : String(++i),
-              label : String(++i)
-            }
-          }
-          else{
-             install = {
-              value : String(i),
-              label : String(i)
-            }
+        } 
+      // for payment plan 2
+     let il = installment_number.length;
+      for(let i = il; i < 37; i++){
+        let install;
+        
+        if(i > 1){
+           install = {
+            value : String(i),
+            label : String(i)
           }
           setno_installment((oldData) => {
-          return  [...oldData, install]
-          })
+            return  [...oldData, install]
+            })
         }
-        for(let i = Number(installment_number.length + 1); i < 5; i++){
-          let install;
-          
        
-            if(installment_number.length > 0){
-              if(i === 1){
-                install = {
-                  value : String(++i),
-                  label : String(++i)
-                }
-              }
-              else{
-                install = {
-                  value : String(i),
-                  label : String(i)
-                }
-              }
-            
-            }
-            else{
-              let install;
-              install = {
-                value : String(i + 2),
-                label : String(i + 2)
-              }
-            }
-          setNoInstall((oldData) => {
+       
+      }
+      // for payment plan 3
+    for(let i = il; i < 5; i++){
+      let install;
+      
+      if(i > 1){
+         install = {
+          value : String(i),
+          label : String(i)
+        }
+        setNoInstall((oldData) => {
           return  [...oldData, install]
           })
-        }
+      }
+     
+     
+    }
         if(res.data.result.email.length > 0){
        
           a.map((i) => {

@@ -56,16 +56,21 @@ function ProposalView(props) {
     no_of_installment: "",
     installment_amount: "",
     due_date: "",
+    
   });
 
   const { amount, proposal_date,
     name, description,
-    amount_type, amount_fixed, amount_hourly,
+    amount_fixed, amount_hourly,
     payment_terms,
     payment_plan,
     no_of_installment,
     installment_amount,
     due_date,
+    amount_type,
+    start_date,
+    end_date,
+    sub_payment_plane
   } = diaplayProposal
 
 
@@ -103,6 +108,10 @@ function ProposalView(props) {
               no_of_installment: res.data.proposal_queries[0].no_of_installment,
               installment_amount: res.data.proposal_queries[0].installment_amount,
               due_date: res.data.proposal_queries[0].due_date,
+              payment_plan : res.data.proposal_queries[0].payment_plan,
+              start_date : res.data.proposal_queries[0].start_date,
+              end_date : res.data.proposal_queries[0].end_date,
+              sub_payment_plane : res.data.proposal_queries[0].sub_payment_plane
             });
           }
 
@@ -308,75 +317,130 @@ const amountStyle  = {
                 <th scope="row">Scope of work</th>
                 <td><Markup content={description} /></td>
               </tr>
-              <tr>
-                <th scope="row">Amount</th>
-                <td>
-                  <tr style={{display : "flex", width : "100%"}}>
-                    <td style={{display : "flex", width : "50%"}}>Payment plan</td>
-                    {
-                      payment_plan === "4" ?
-                      <td style={{display : "flex", width : "50%"}}>Amount of monthly fee </td> :
-                      <td style={{display : "flex", width : "50%"}}>Amount of  fee </td>
-                    }
-                   
-                  </tr>
-                  <tr style={{display : "flex", width : "100%"}}>
-                    <td style={{display : "flex", width : "50%"}}>{CommonServices.capitalizeFirstLetter(amount_type)}</td>
-                    <td style={{display : "flex", width : "50%"}}>
-                     {
-                      payment_plan === "4" ?
-                      <>
-                      {`Rs. ${nfObject.format(amount)} per month payable before ${CommonServices.removeTime(due_date)} day of following month`}
-                      </>
-                       :
-                      nfObject.format(amount)
-                     }
-                      
-                    </td>
-                  </tr>
-                </td>
-              </tr>
+              {
+            payment_plan === "3" || payment_plan === "4" ?
+            <tr>
 
-              <tr>
-                <th scope="row">Payment terms</th>
-                {
-                  payment_plan == "1"  ?
-                    <td>
+            <th>Start date</th>
+            <td>{start_date.split("-").reverse().join("-")}</td>
+            </tr> : ""
+          }
+
+  {
+    payment_plan === "3" ?
+    <>
+    
+    <tr>
+  <th>End date</th>
+  <td>{end_date.split("-").reverse().join("-")}</td>
+  </tr>
+    </> : ""
+  }
+  
+    <tr>
+          
+          <th>Payment terms</th>
+
+          <td>
+     {
+      payment_plan === "1" ?
+      <table>
+        <tr>
+          <th>
+Payment plan
+          </th>
+          <th>
+          Amount of fee
+          </th>
+          <th>
+          Due date
+          </th>
+        </tr>
+        <tr>
+          <td>
+{amount_type}
+          </td>
+          <td>
+{amount}
+          </td>
+          <td>
+{due_date.split("-").reverse().join("-")}
+          </td>
+        </tr>
+        </table> : ""
+     }      
+
+{
+  (payment_plan === "3"  && sub_payment_plane === "1" ) || payment_plan === "2" ? 
+  <table>
+    <tr>
+      <th>
+      Payment plan  
+      </th>
+      <th>
+        Amount of fee
+      </th>
+      </tr>
+      <tr>
+      <td>
+        {amount_type}
+      </td>
+      <td>
+      {amount}
+      </td>
+    </tr>
+    <tr>
+      <td colSpan={2}>
+&nbsp;
+      </td>
+    </tr>
+    <tr>
+      <td colSpan= "2">
+       <table style={{width : "100%", border : "0px"}}>
+        <tr>
+          <th>
+            No of installment
+            </th>
+            <th style={{textAlign : "right"}}>Installment amount</th>
+            <th>Due dates</th>
+        </tr>
+        <tr>
+        <td>{no_of_installment}</td>
+        <td style={{textAlign : "right"}}>{installAmount2(installment_amount)}</td>
+        <td>{installAmount(due_date)}</td>
+        
+        </tr>
+       </table>
+      </td>
+      
+    </tr>
+  </table> : ""
+}
+
+
+{
+  payment_plan === "4" || (payment_plan === "3" && sub_payment_plane === "2") ?
+  <table>
+<tr>
+<th>
+Amount of monthly fee
+</th>
+<th> Amount of  fee </th>
+</tr>
+<tr>
+  <td>
+  {CommonServices.capitalizeFirstLetter(amount_type)}
+  </td>
+  <td>
+  {`Rs. ${nfObject.format(amount)} per month payable before ${CommonServices.removeTime(due_date)} day of following month`}
                      
-                      <tr style={{display : "flex", width : "100%"}}>
-                    <td style={{display : "flex", width : "50%"}}>Payment plan</td>
-                    <td style={{display : "flex", width : "50%"}}>Due dates </td>
-                  </tr>
-                  <tr style={{display : "flex", width : "100%"}}>
-                    <td style={{display : "flex", width : "50%"}}>
-                      {CommonServices.capitalizeFirstLetter(amount_type)}</td>
-                    <td style={{display : "flex", width : "50%"}}>
-                    {CommonServices.removeTime(due_date)}
-                      </td>
-                      </tr>
-                    </td>
-                    :
-                   payment_plan == "2" || payment_plan == "3" ?
-                      <td>
-                        <tr style={{display : "flex", width : "100%"}}>
-                          <td style={{display : "flex", width : "25%"}}>Payment plan</td>
-                          <td style={{display : "flex", width : "25%"}}>No of installments</td>
-                          <td style={{display : "flex", width : "25%"}}>Installment amount</td>
-                          <td style={{display : "flex", width : "25%"}}>Due dates</td>
-                        </tr>
-                        <tr style={{display : "flex", width : "100%"}}>
-                          <td style={{display : "flex", width : "25%", wordBreak : "break-all"}}>{CommonServices.capitalizeFirstLetter(amount_type)}</td>
-                          <td style={{display : "flex", width : "25%", justifyContent : "center"}}>{no_of_installment}</td>
-                          <td style={{display : "flex", width : "25%", flexDirection : "column", textAlign : "right"}}>{installAmount2(installment_amount)}</td>
-                        <td style={{display : "flex", width : "25%", flexDirection : "column"}}>{installAmount(due_date)}</td>
-                        </tr>
-                      </td>
-                      :
-                      ""
-                }
-
-
-              </tr>
+    </td>
+</tr>
+  </table> : ""
+}
+          </td>
+         </tr>
+         
               <tr>
                 <th scope="row">Proposal status</th>
                 <td>
