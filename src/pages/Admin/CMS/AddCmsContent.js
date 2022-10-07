@@ -21,6 +21,7 @@ import 'react-quill/dist/quill.snow.css';
 import { Spinner } from 'reactstrap';
 import AddEditor from './AddEditor';
 import { Markup } from 'interweave';
+import CustomHeading from '../../../components/Common/CustomHeading';
 const MyContainer = styled(Container)({
 
 })
@@ -105,7 +106,7 @@ const AddCmsContent = () => {
 
   setLoading(true)
  
-   console.log("eee" , e)
+ 
       let formData = new FormData();
      
       formData.append("type", pageto)
@@ -210,7 +211,9 @@ const getEditValue= (e) => {
               
             </Col>
             <Col md="4">
-              <h4>Articles</h4>
+          <CustomHeading>
+          Articles
+          </CustomHeading>
             </Col>
             </Row>
         </div>

@@ -15,6 +15,7 @@ import Layout from "../../../components/Layout/Layout";
 import CommonServices from "../../../common/common";
 import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+import CustomHeading from '../../../components/Common/CustomHeading';
 const MyContainer = styled(Container)({
 
 })
@@ -48,7 +49,7 @@ const FlashMessage = () => {
    history.push("/cms/flashcontent")
   }
   const editQuery = (e) => {
-   console.log("eee", e)
+   
       setEditData(e)
       setMessageBox(!messageBox)
       isEdit(true)
@@ -86,7 +87,7 @@ const FlashMessage = () => {
 })
   }
   const myShowValue = (e, row) => {
-      console.log("etarget", e.target.checked)
+
         if(e.target.checked === true){
 
             
@@ -135,7 +136,7 @@ const FlashMessage = () => {
         return {width: "150px"}
       },
       formatter : function dateFormatter(cell, row) {
-        console.log("row", row.created_date.split(" "))
+       
         let a = row.created_date.split(" ")
         return(
          
@@ -164,7 +165,7 @@ const FlashMessage = () => {
              <div style={{display : "flex", justifyContent : "space-evenly"}}>
              <Link to={`/cms/flashcontent/${row.id}`}>
 
-         <EditQuery titleName="Edit Flash Update"/>
+         <EditQuery titleName="Edit flash update"/>
         
          </Link>
                 <div onClick = {(e) => delQuery(row)}> 
@@ -207,9 +208,12 @@ const FlashMessage = () => {
         <Container maxWidth = "xl">
      
       <div className="headingContent">
-        <h4>Flash Updates </h4>
+        <CustomHeading>
+          Flash updates
+        </CustomHeading>
+       
       <button className="autoWidthBtn rightAlign my-2"  onClick = {showMessage}>
-       New Flash Update </button>
+       New flash update </button>
         </div>
        
       <Card>

@@ -3,23 +3,17 @@ import { Container , Box, Paper} from '@material-ui/core';
 import {  styled } from '@mui/material';
 import axios from 'axios';
 import { baseUrl } from '../../../config/config';
-import { CKEditor } from '@ckeditor/ckeditor5-react';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import './map.css';
-import Swal from 'sweetalert2';
 import Layout from "../../../components/Layout/Layout";
 import { useForm } from "react-hook-form";
 import classNames from "classnames";
 import { useHistory, useParams } from 'react-router';
 import {
-    Card,
-    CardHeader,
-    CardBody,
-    CardTitle,
     Row,
     Col,
-    Table,
   } from "reactstrap";
+  import CustomHeading from '../../../components/Common/CustomHeading';
+  import Swal from 'sweetalert2';
 const MyContainer = styled(Container)({
 
 })
@@ -63,7 +57,7 @@ const Links = () => {
         getData()
       }, [])
       const getData = (e) => {
-        console.log("getId", getId.id)
+      
        if(getId.id !== undefined){
         axios.get(`${baseUrl}/cms/getalllinks?uid=${JSON.parse(userId)}&id=${getId.id}`, myConfig)
         .then((res) => {
@@ -124,7 +118,7 @@ if(getId.id){
      setStats(!stats)
  }
  function ValidURL(link) {
-   console.log("links", link)
+ 
   var regex = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/;
   if(!regex.test(link)) {
     
@@ -160,8 +154,12 @@ const myOrder = (e) => {
               </button>
               
             </Col>
-            <Col md="4">
-              <h4>Important Link</h4>
+            <Col md="4" align = "center">
+              <CustomHeading>
+                Important link
+              </CustomHeading>
+
+             
             </Col>
             </Row>
         </div>

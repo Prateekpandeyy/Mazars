@@ -14,9 +14,7 @@ import {
   Card,
   CardBody,
 } from "reactstrap";
-const MyContainer = styled(Container)({
-
-})
+import CustomHeading from '../../../components/Common/CustomHeading';
 const MyBox = styled(Box)({
     display: "flex",
     width: "100%", 
@@ -50,9 +48,9 @@ const MediaContent = () => {
     
       axios.get(`${baseUrl}/cms/getgallarylist?uid=${JSON.parse(userId)}&type=image`, myConfig)
       .then((res) => {
-        console.log("res", res.data.result)
+     
         setGalleryData(res.data.result)
-        console.log("resMedia", res.data.result)
+      
       })
     }
     let history = useHistory()
@@ -72,7 +70,7 @@ const MediaContent = () => {
         if (result.value) {
           axios.get(`${baseUrl}/cms/removegallery?uid=${JSON.parse(userId)}&id=${e.id}`, myConfig)
           .then((res) => {
-console.log("response", res)
+
 if(res.data.code === 1){
 Swal.fire({
   title : "success",
@@ -109,7 +107,7 @@ Swal.fire({
     },
     {
       dataField: "",
-      text: "Album Name",
+      text: "Album name",
     
      
       formatter: function dateFormat(cell, row) {
@@ -174,12 +172,15 @@ return(
            
           
       <div className="headingContent">
-               <h4>Photo Gallery </h4>
+        <CustomHeading>
+          Photo gallery
+          </CustomHeading>
+            
                <button 
             
            className="autoWidthBtn rightAlign my-2" onClick={(e) => {
              history.push("/cms/mediagallery")
-           }}>New Photo Gallery</button> 
+           }}>New photo gallery</button> 
                </div>
           <Card>
               <CardBody>

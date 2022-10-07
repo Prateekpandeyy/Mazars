@@ -15,6 +15,7 @@ import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { Markup } from 'interweave';
 import GridExample from './GridExaxple';
+import CustomHeading from '../../../components/Common/CustomHeading';
 const MyContainer = styled(Container)({
 
 })
@@ -98,7 +99,7 @@ const Updates = () =>{
           if (result.value) {
             axios.get(`${baseUrl}/cms/removelinks?uid=${JSON.parse(userId)}&id=${id}`, myConfig)
             .then((res) => {
-console.log("response", res)
+
 if(res.data.code === 1){
   Swal.fire({
     title : "success",
@@ -126,12 +127,15 @@ return (
   <Layout cmsDashboard="cmsDashboard">
 <MyContainer>
 <div className="headingContent">
-        <h4>Important Links </h4>
+  <CustomHeading>
+  Important links
+  </CustomHeading>
+     
         <button 
     
       className="autoWidthBtn rightAlign my-2" onClick={(e) => {
         history.push("/cms/links")
-      }}>New Links</button>
+      }}>New links</button>
         </div>
     
     <Card>

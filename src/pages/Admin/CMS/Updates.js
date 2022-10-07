@@ -13,7 +13,7 @@ import DataTablepopulated from '../../../components/DataTablepopulated/DataTabel
 import  {DeleteIcon, EditQuery,} from "../../../components/Common/MessageIcon";
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
-import { Markup } from 'interweave';
+import CustomHeading from '../../../components/Common/CustomHeading';
 const MyContainer = styled(Container)({
 
 })
@@ -35,7 +35,7 @@ const Updates = () =>{
     const getList = () => {
       axios.get(`${baseUrl}/cms/getallupdate?uid=${JSON.parse(userId)}`, myConfig)
       .then((res) => {
-      console.log("ress", res)
+   
        if(res.data.code === 1){
         setList(res.data.result)
         
@@ -133,7 +133,7 @@ const Updates = () =>{
         
         axios.get(`${baseUrl}/cms/setupdatestatus?uid=${JSON.parse(userId)}&id=${row.id}&status=0`, myConfig)
    .then((res) => {
-       console.log("res", res)
+     
        if(res.data.result === 1){
          setCheck(true)
        }
@@ -143,7 +143,7 @@ const Updates = () =>{
        
         axios.get(`${baseUrl}/cms/setupdatestatus?uid=${JSON.parse(userId)}&id=${row.id}&status=1`, myConfig)
         .then((res) => {
-            console.log("res", res)
+         
             setCheck(false)
         })
     }
@@ -194,12 +194,15 @@ return (
      
    
         <div className="headingContent">
-        <h4> Updates </h4>
+          <CustomHeading>
+            Updates
+          </CustomHeading>
+     
         <button 
     
     className="autoWidthBtn rightAlign my-2" onClick={(e) => {
       history.push("/cms/updatecontent")
-    }}>New Updates</button>  
+    }}>New updates</button>  
         </div>
     <Card>
         <CardBody>

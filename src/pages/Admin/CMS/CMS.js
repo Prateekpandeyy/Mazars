@@ -12,11 +12,8 @@ import { baseUrl } from '../../../config/config';
 import DataTablepopulated from '../../../components/DataTablepopulated/DataTabel';
 import  {DeleteIcon, EditQuery,} from "../../../components/Common/MessageIcon";
 import { Link } from 'react-router-dom';
-import myImg from './companyImg.jpeg';
 import Swal from 'sweetalert2';
-const MyContainer = styled(Container)({
-
-})
+import CustomHeading from '../../../components/Common/CustomHeading';
 const Cms = () =>{ 
   const [list, setList] = useState([])
   const [check, setCheck] = useState(false)
@@ -186,7 +183,7 @@ return(
           if (result.value) {
             axios.get(`${baseUrl}/cms/removearticle?uid=${JSON.parse(userId)}&id=${id}`, myConfig)
             .then((res) => {
-console.log("response", res)
+
 if(res.data.code === 1){
   Swal.fire({
     title : "success",
@@ -206,7 +203,7 @@ else{
           }
       });
   };
-  console.log("cmsToken", localStorage.getItem("token"))
+
 return (
     <Layout cmsDashboard= "cmsDashboard">
 
@@ -214,12 +211,15 @@ return (
    
   
         <div className="headingContent">
-        <h4>Articles </h4>
+          <CustomHeading>
+          Articles
+          </CustomHeading>
+   
         <button 
     
     className="autoWidthBtn rightAlign my-2" onClick={(e) => {
       history.push("/cms/addarticles")
-    }}>New Article</button> 
+    }}>New article</button> 
         </div>
     <Card>
         <CardBody>

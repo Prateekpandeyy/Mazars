@@ -15,6 +15,7 @@ import {
   Col,
  
 } from "reactstrap";
+import CustomHeading from '../../../components/Common/CustomHeading';
 const MyContainer = styled(Container)({
 
 })
@@ -99,7 +100,9 @@ const UploadLinkContent = () => {
               
             </Col>
             <Col md="4" align="center">
-              <h4>Upload Document</h4>
+            <CustomHeading>
+            Upload document
+            </CustomHeading>
             </Col>
             </Row>  
   

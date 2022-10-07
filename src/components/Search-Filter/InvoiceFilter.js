@@ -131,6 +131,79 @@ const InvoiceFilter = (props) => {
        <>
         
         <form onSubmit={handleSubmit(onSubmit)}> 
+        <div className="row">
+          <div className="col-md-3">
+          <input   
+            type = "text"
+            name="query_no"
+            ref={register}
+            placeholder="Enter Query Number" 
+            className="form-control"/>
+          </div>
+          <div className="col-md-2">
+          <select
+                   ref={register}
+                    className="form-select form-control"
+                    style={{ height: "33px" }}
+                    name="installment_no">
+                      <option value="">Please select installment</option>
+                      <option value="0">Lumpsum</option>
+                     <option value="1">1st installment</option>
+                     <option value="2">2nd installment</option>
+                     <option value="3">3rd installment</option>
+                     <option value="4">4th installment</option>
+                    
+                  </select>
+          </div>
+          <div className="col-md-2">
+          <label className="form-select form-control">From</label>
+          </div>
+          <div className="col-md-2">
+          <input
+                 type="date"
+                 name="p_dateFrom"
+                 className="form-select form-control"
+                 ref={register}
+               
+               />
+            </div>
+            <div className="col-md-1">
+            <label className="form-select form-control">To</label>
+              </div>
+              <div className="col-md-2">
+              <input
+                 type="date"
+                 name="p_dateTo"
+                 className="form-select form-control"
+                 ref={register}
+               
+               />
+              </div>
+        </div>
+        <div className="row">
+          <div className="col-md-3">
+          {props.invoice =="tpcreate" || props.invoice == "admincreate" || props.invoice == "create" ? "" :
+       
+       <select name="opt" className="form-select form-control" ref={register}  style={{ height: "33px" }}>
+       <option value="">Select </option>
+          <option value="0">Unpaid</option>
+          <option value="1">Paid</option>
+          <option value="2">Declined</option>
+          </select>
+          }
+          </div>
+          <div className="col-md-6">
+          <button className="customBtn" type="submit"  style={{ height: "33px" }}>Search</button>
+          <button className="customBtn mx-2" onClick={() => resetData()}  style={{ height: "33px" }}>Reset</button>
+           
+          </div>
+          <div className="col-md-3">
+          <label className="form-select form-control">Total records : {props.records}</label>
+                 
+          </div>
+        </div>
+        </form>
+        {/* <form onSubmit={handleSubmit(onSubmit)}> 
            <div className="row">
              <div className="col-sm-6 col-md-4 col-lg-4 my-sm-2">
              <input   
@@ -212,7 +285,7 @@ const InvoiceFilter = (props) => {
                  </span>
                  </div>
          </div>
-         </form>
+         </form> */}
        </>
     )
 

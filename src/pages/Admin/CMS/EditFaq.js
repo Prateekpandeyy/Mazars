@@ -23,6 +23,7 @@ import {
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import CustomQuillEditor from './CustomQuillEditor';
+import CustomHeading from '../../../components/Common/CustomHeading';
 const MyContainer = styled(Container)({
 
 })
@@ -119,7 +120,10 @@ const EditFaq = () => {
               
             </Col>
             <Col md="4" align="center">
-              <h4>FAQs</h4>
+              <CustomHeading>
+                FAQs
+              </CustomHeading>
+             
             </Col>
             </Row>
         </div>

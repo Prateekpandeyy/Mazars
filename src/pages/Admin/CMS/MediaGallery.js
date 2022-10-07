@@ -15,6 +15,7 @@ import {
   Col,
  
 } from "reactstrap";
+import CustomHeading from '../../../components/Common/CustomHeading';
 const MyContainer = styled(Container)({
 
 })
@@ -105,7 +106,10 @@ const MediaGallery = () => {
               
             </Col>
             <Col md="4" align="center">
-              <h4>Photo Gallery</h4>
+              <CustomHeading>
+                Photo gallery
+              </CustomHeading>
+          
             </Col>
             </Row>
         <MyBox>

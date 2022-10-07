@@ -14,6 +14,7 @@ import  {DeleteIcon, EditQuery,} from "../../../components/Common/MessageIcon";
 import { Link } from 'react-router-dom';
 import myImg from './companyImg.jpeg';
 import Swal from 'sweetalert2';
+import CustomHeading from '../../../components/Common/CustomHeading';
 const UploadLink = () => {
     const [list, setList] = useState([])
     const [check, setCheck] = useState(false)
@@ -138,12 +139,14 @@ const UploadLink = () => {
    
   
         <div className="headingContent">
-        <h4>Documents List </h4>
+       <CustomHeading>
+       Documents list
+       </CustomHeading>
         <button 
     
     className="autoWidthBtn rightAlign my-2" onClick={(e) => {
       history.push("/cms/uploadlinkcontent")
-    }}>New Document</button> 
+    }}>New document</button> 
         </div>
     <Card>
         <CardBody>

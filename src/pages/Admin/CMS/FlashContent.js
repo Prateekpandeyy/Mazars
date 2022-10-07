@@ -6,24 +6,16 @@ import classNames from "classnames";
 import { useForm } from "react-hook-form";
 import Layout from "../../../components/Layout/Layout";
 import { Container } from '@material-ui/core';
-import {  styled } from '@mui/material';
 import { useHistory, useParams } from 'react-router';
 import {
-  Card,
-  CardHeader,
-  CardBody,
-  CardTitle,
+  
   Row,
   Col,
-  Table,
+ 
 } from "reactstrap";
-import { CKEditor } from '@ckeditor/ckeditor5-react';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import AddEditor from './AddEditor';
 import CustomQuillEditor from './CustomQuillEditor';
-const MyContainer = styled(Container)({
-
-})
+import CustomHeading from '../../../components/Common/CustomHeading';
 const FlashContent = () => {
     const { handleSubmit, register, errors, getValues, reset } = useForm();
     const [news , setNews] = useState("")
@@ -87,7 +79,7 @@ const FlashContent = () => {
          data : formData
      })
      .then((res) => {
-         console.log("response", res)
+       
          if(res.data.code === 1){
           
              Swal.fire({
@@ -112,7 +104,7 @@ const FlashContent = () => {
      })
     }
     const myLabel = (e) => {
-        console.log("eee", e.target.value)
+      
         setStats(!stats)
     }
    
@@ -131,8 +123,10 @@ const FlashContent = () => {
               </button>
               
             </Col>
-            <Col md="4">
-              <h4>Flash Updates</h4>
+            <Col md="4" align = "center">
+                <CustomHeading>
+                    Flash updates
+                </CustomHeading>
             </Col>
             </Row>
         </div>

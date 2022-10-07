@@ -18,9 +18,11 @@ import {
   Col,
 
 } from "reactstrap";
+import CustomHeading from '../../../components/Common/CustomHeading';
 const MyContainer = styled(Container)({
 
 })
+
 const MyBox = styled(Box)({
   display: "flex",
   width: "100%",
@@ -67,7 +69,7 @@ const EditVideo = () => {
           res.data.result.map((i) => {
             setImgResult(res.data.result)
             setHeading(i.title)
-            console.log(i.created_date.split(" ")[0].split("-").reverse().join("-"))
+
             setDate(i.created_date.split(" ")[0].split("-").join("-"))
           })
         })
@@ -100,7 +102,7 @@ const EditVideo = () => {
     })
       .then((res) => {
         let a = res.data
-        console.log("res", a)
+    
         if (res.data.code === 1) {
           Swal.fire({
             title: "success",
@@ -114,7 +116,7 @@ const EditVideo = () => {
   }
 
   const del = (e) => {
-    console.log("iii", e.name.split(".")[1] === "mp4")
+    
 let message = ""
 let confirmationMessage = ""
 if(e.name.split(".")[1] === "mp4"){
@@ -137,7 +139,7 @@ else{
       if (result.value) {
         axios.get(`${baseUrl}/cms/deletevideo?uid=${JSON.parse(userId)}&id=${imgResult[0].id}&videooid=${e.imageid}`, myConfig)
           .then((res) => {
-            console.log("response", res)
+          
             if (res.data.code === 1) {
               Swal.fire({
                 title: "success",
@@ -176,7 +178,10 @@ else{
 
           </Col>
           <Col md="4" alig="center">
-            <h4>Video Gallery</h4>
+            <CustomHeading>
+              Video gallery
+            </CustomHeading>
+        
           </Col>
         </Row>
         <MyBox>

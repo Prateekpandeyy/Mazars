@@ -3,8 +3,6 @@ import { Container } from '@material-ui/core';
 import {  styled } from '@mui/material';
 import axios from 'axios';
 import { baseUrl , baseUrl3} from '../../../config/config';
-import { CKEditor } from '@ckeditor/ckeditor5-react';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import './map.css';
 import Swal from 'sweetalert2';
 import Layout from "../../../components/Layout/Layout";
@@ -12,15 +10,14 @@ import { useForm } from "react-hook-form";
 import classNames from "classnames";
 import { useHistory, useParams } from 'react-router';
 import {
-  
   Row,
   Col,
-
 } from "reactstrap";
 import 'react-quill/dist/quill.snow.css';
 import { Spinner } from 'reactstrap';
 import CustomQuillEditor from './CustomQuillEditor';
 import { Markup } from 'interweave';
+import CustomHeading from '../../../components/Common/CustomHeading';
 const MyContainer = styled(Container)({
 
 })
@@ -71,7 +68,7 @@ const CmsContent = () => {
          setWriter(i.writer)
          setDate(i.publish_date);
          let a = myFun(i.content)
-         console.log("aaaa", i)
+     
         
         setEmail(i.email)
         setFile(i.file)
@@ -93,7 +90,7 @@ const CmsContent = () => {
          
          }
          else if(i.content_type === "1"){
-           console.log("done")
+     
            setContentType("Pdf_upload")
          }
          else if(i.content_type === "3"){
@@ -154,7 +151,7 @@ const CmsContent = () => {
     var myEditor = document.querySelector('#snow-container')
     var html = myEditor.children[0].innerHTML;
     addDet(html)
-    console.log("html", html)
+    
     if(html.length > 0){
       formData.append("content", html);
     formData.append("content_type", 2)
@@ -249,7 +246,9 @@ const editorShow = (e) => {
               
             </Col>
             <Col md="4">
-              <h4>Articles</h4>
+          <CustomHeading>
+          Edit articles
+          </CustomHeading>
             </Col>
             </Row>
         </div>
@@ -302,7 +301,7 @@ const editorShow = (e) => {
                       name="p_content"
                       >
                       <option value = "Editor">Editor</option>
-                      <option value = "Doc_upload">Word Document</option>
+                      <option value = "Doc_upload">Word document</option>
                       <option value = "Pdf_upload">PDF</option>
                       <option value = "Ppt_upload">PPT</option>
                           </select>
@@ -327,7 +326,7 @@ const editorShow = (e) => {
                  </div>
                  <div className="col-md-4 col-sm-4">
                  
-                 <label className="form-label">Date of Publishing</label>
+                 <label className="form-label">Date of publishing</label>
                    <input 
                    type="date"
                    className={classNames("form-control", {
@@ -357,23 +356,13 @@ const editorShow = (e) => {
                    />
                  </div>
          </div>
-         {/* <div className="row">
-          <div className="col-md-3 my-4">
-          <input type="radio" value="Male" checked={showDoc} name="gender" onChange={() => setShowDoc(true)}/> Upload Content
-       </div>
-       <div className="col-md-3 my-4">
-         <input type="radio" value="Female" checked={!showDoc} name="gender" onChange= {() => {
-           setShowEditor(true)
-           setShowDoc(false)
-         }} /> Editor
-            </div>
-            </div> */}
+       
           { 
           contentType !== "Editor" ?
               <>
               <form onSubmit={handleSubmit(onSubmit)}>
           <div className="mb-3">
-            <label className="form-label">Upload Your Document</label>
+            <label className="form-label">Upload your document</label>
             <input
                 type="file"
                 name="p_draft"
@@ -386,7 +375,7 @@ const editorShow = (e) => {
           <span style={{display : "flex", cursor : "pointer"}}>
                    <a href={`${baseUrl3}/${file}`} target="_blank">
                    <i className="fa fa-photo"></i>
-                     <span style={{ marginLeft: "10px" }}>View Document</span>
+                     <span style={{ marginLeft: "10px" }}>View document</span>
                    </a>
                        </span>
         </form>
@@ -405,65 +394,7 @@ showEditor={showEditor} />
      </div>
               </>
             }
-        {/* {
-          showDoc === true ? 
-          <div className="row">
-          <div className="col-md-3 my-4">
-          <input type="radio" value="Male" defaultChecked name="gender" onChange={() => setShowDoc(true)}/> Upload Content
-       </div>
-       <div className="col-md-3 my-4">
-         <input type="radio" value="Female"  name="gender" onChange= {() => {
-           setShowEditor(true)
-           setShowDoc(false)
-         }} /> Editor
-            </div>
-          </div> : ""
-        }
-        {
-          showDoc === false ?
-          <div className="row">
-          <div className="col-md-3 my-4">
-          <input type="radio" value="Male" name="gender" onChange={() => setShowDoc(true)}/> Upload Content
-       </div>
-       <div className="col-md-3 my-4">
-         <input type="radio" value="Female" defaultChecked name="gender" onChange={() => setShowDoc(false)} /> Editor
-            </div>
-          </div> : ""
-        }
-         {showDoc === true ?
-          <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="mb-3">
-            <label className="form-label">Upload Your Document</label>
-            <input
-                type="file"
-                name="p_draft"
-                ref={register}
-                className="form-control-file manage_file"
-              
-              />
-          </div>
-
-          <span style={{display : "flex", cursor : "pointer"}}>
-                   <a href={`${baseUrl3}/${file}`} target="_blank">
-                   <i className="fa fa-photo"></i>
-                     <span style={{ marginLeft: "10px" }}>Document</span>
-                   </a>
-                       </span>
-        </form>
-         : ""}
-       {
-         showDoc === false ?
-         <div className="row">
-         <div className="col-md-12">
-         <label className="form-label">Content</label> </div>
-         
-         <div className="col-md-12" style={{display : "flex", flexDirection :"column"}}>
-       <CustomQuillEditor 
-content={det}
-showEditor={showEditor} />
-             </div>
-     </div> : ""
-       } */}
+       
          <div className="row">
          <div className="col-md-3">
  

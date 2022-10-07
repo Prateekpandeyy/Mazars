@@ -17,6 +17,7 @@ import {
   Col,
  
 } from "reactstrap";
+import CustomHeading from '../../../components/Common/CustomHeading';
 const MyContainer = styled(Container)({
 
 })
@@ -69,7 +70,7 @@ const EditImage = () => {
      res.data.result.map((i) => {
         
          setHeading(i.title)
-         console.log(i.created_date.split(" ")[0].split("-").reverse().join("-"))
+      
          setDate(i.created_date.split(" ")[0].split("-").join("-"))
          setImages(i.name)
      })
@@ -77,8 +78,7 @@ const EditImage = () => {
      }
     }
     const del = (e) => {
- console.log("eeee", e)
-
+ 
       Swal.fire({
           title: "Are you sure?",
           text: "Want to delete image? Yes, delete it!",
@@ -91,7 +91,7 @@ const EditImage = () => {
           if (result.value) {
             axios.get(`${baseUrl}/cms/deleteimage?uid=${JSON.parse(userId)}&id=${imgResult[0].id}&imageid=${e.imageid}`, myConfig)
             .then((res) => {
-  console.log("response", res)
+ 
   if(res.data.code === 1){
   Swal.fire({
     title : "success",
@@ -112,7 +112,7 @@ const EditImage = () => {
       });
   };
     const onSubmit = (value) => {
-      console.log("uploadImg", value.uploadImg)
+    
       let formData = new FormData();
       let file ; 
       formData.append("title", heading);
@@ -137,7 +137,7 @@ const EditImage = () => {
       })
       .then((res) => {
         let a = res.data
-        console.log("res", a)
+    
         if(res.data.code === 1){
           Swal.fire({
             title :"success",
@@ -167,7 +167,10 @@ const EditImage = () => {
               
             </Col>
             <Col md="4" align="center">
-              <h4>Photo Gallery</h4>
+              <CustomHeading>
+                Photo gallery
+              </CustomHeading>
+          
             </Col>
             </Row>
         <MyBox>

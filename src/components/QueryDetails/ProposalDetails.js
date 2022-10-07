@@ -45,7 +45,7 @@ function ProposalDetails({
     
   } = diaplayProposal;
 const [successDisabled, setSucessDisabled] = useState(false)
-
+const [currentDate] = useState(convert(date));
   const { tlname, date_of_allocation } = diaplayHistory;
   
   var nfObject = new Intl.NumberFormat('hi-IN')
@@ -204,8 +204,23 @@ const downloadpdf = () => {
     return [date.getFullYear(), mnth, day].join("-");
   }
 
-  const [currentDate] = useState(convert(date));
  
+  
+  // sufix date formation
+  function ordinal_suffix_of(i) {
+    var j = i % 10,
+        k = i % 100;
+    if (j == 1 && k != 11) {
+        return i + "st";
+    }
+    if (j == 2 && k != 12) {
+        return i + "nd";
+    }
+    if (j == 3 && k != 13) {
+        return i + "rd";
+    }
+    return i + "th";
+}
 
   const dataCheck = (dateArr) => {
     let duedd = 0
@@ -726,7 +741,7 @@ Amount of monthly fee
   {CommonServices.capitalizeFirstLetter(amount_type)}
   </td>
   <td>
-  {`Rs. ${nfObject.format(amount)} per month payable before ${CommonServices.removeTime(due_date)} day of following month`}
+  {`Rs. ${nfObject.format(amount)} per month payable before ${ordinal_suffix_of(due_date)} day of following month`}
                      
     </td>
 </tr>

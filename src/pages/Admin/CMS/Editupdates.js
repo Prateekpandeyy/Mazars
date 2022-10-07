@@ -12,15 +12,13 @@ import { useForm } from "react-hook-form";
 import { useHistory, useParams } from 'react-router';
 import classNames from "classnames";
 import {
-    Card,
-    CardHeader,
-    CardBody,
-    CardTitle,
+   
     Row,
     Col,
-    Table,
+  
   } from "reactstrap";
   import CustomQuillEditor from './CustomQuillEditor';
+  import CustomHeading from '../../../components/Common/CustomHeading';
   // import { baseUrl } from '../../../config/config';
 const MyContainer = styled(Container)({
 
@@ -53,10 +51,10 @@ const Editupdates = () => {
     const getPageValue = () => {
         axios.get(`${baseUrl}/cms/getallupdate?uid=${JSON.parse(userId)}&id=${getId.id}`, myConfig)
         .then((res) =>{
-            console.log("ress", res)
+         
           if(res.data.code === 1) {
             res.data.result.map((i) => {
-              console.log(i.content)
+           
               setHeading(i.heading)
               addDet(i.content)
               setDate(i.publish_date)
@@ -79,7 +77,7 @@ const Editupdates = () => {
            
               }
               else if(i.content_type === "1"){
-                console.log("done")
+             
                 setContentType("Pdf_upload")
               }
               else if(i.content_type === "3"){
@@ -129,7 +127,7 @@ const Editupdates = () => {
      
     }
     else {
-      console.log("myValue")
+    
     var myEditor = document.querySelector('#snow-container')
     var html = myEditor.children[0].innerHTML;
     addDet(html)
@@ -180,7 +178,7 @@ const editorShow = (e) => {
   setShowEditor(true)
  }
 }
-console.log("heading", heading)
+
     return(
       <Layout cmsDashboard="cmsDashboard">
       <Container maxWidth="xl">
@@ -197,7 +195,10 @@ console.log("heading", heading)
               
             </Col>
             <Col md="4">
-              <h4>Updates</h4>
+              <CustomHeading>
+Edit updates
+              </CustomHeading>
+          
             </Col>
             </Row>
         </div>
@@ -219,8 +220,8 @@ console.log("heading", heading)
                       ref={register({ required: true })}
                       name="p_category"
                       >
-                      <option value = "direct">Direct Tax</option>
-                      <option value = "indirect">Indirect Tax</option>
+                      <option value = "direct">Direct tax</option>
+                      <option value = "indirect">Indirect tax</option>
                       <option value = "miscellaneous">Miscellenous</option>
                           </select>
                  </div>
@@ -241,7 +242,7 @@ console.log("heading", heading)
                  </div>
                  <div className="col-md-4 col-sm-12">
                  
-                 <label className="form-label">Date of Publishing</label>
+                 <label className="form-label">Date of publishing</label>
                    <input 
                    type="date"
                    className={classNames("form-control", {
@@ -268,7 +269,7 @@ console.log("heading", heading)
                       name="p_content"
                       >
                       <option value = "Editor">Editor</option>
-                      <option value = "Doc_upload">Word Document</option>
+                      <option value = "Doc_upload">Word document</option>
                       <option value = "Pdf_upload">PDF</option>
                       <option value = "Ppt_upload">PPT</option>
                           </select>
@@ -280,7 +281,7 @@ console.log("heading", heading)
          <div className = "col-md-6">
             <form onSubmit={handleSubmit(onSubmit)}>
           <div className="mb-3">
-            <label className="form-label">Upload Your Document</label>
+            <label className="form-label">Upload your document</label>
             <input
                 type="file"
                 name="p_draft"

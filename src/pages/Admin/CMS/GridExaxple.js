@@ -186,7 +186,7 @@ const [columnDefs] = useState([
             columnDefs={columnDefs}>
         </AgGridReact>
     </div>
-    <button className="autoWidthBtn my-5" onClick={() => allLinkOrder()}>Set Order</button>
+    <button className="autoWidthBtn my-5" onClick={() => allLinkOrder()}>Set order</button>
    </>
 );
 };

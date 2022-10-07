@@ -142,13 +142,17 @@ export default class YourComponent extends React.Component {
         }
         return (
             <>
-           
-            <div className="inputs">
+                      <div className="inputs">
                 {this.props.installment > 0 ?
-            <tr style={{display : "flex", width : "100%", justifyContent : "space-around"}}>
-              <td>Installment amount</td>
-              <td>Due date</td>
-          </tr> : ""}
+                <div className="row">
+                    <div className="col-md-6">
+                        <p>Installment</p>
+                        </div>
+                        <div className="col-md-6">
+                            <p>Due date</p>
+                        </div>
+                    </div>
+           : ""}
           {fieldsArray}
       </div>
       </>

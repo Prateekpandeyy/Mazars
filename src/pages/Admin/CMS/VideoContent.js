@@ -15,6 +15,7 @@ import {
   Col,
  
 } from "reactstrap";
+import CustomHeading from '../../../components/Common/CustomHeading';
 const MyContainer = styled(Container)({
 
 })
@@ -46,10 +47,10 @@ const VideoContent = () => {
        "uit" : token
       }
     }
-    const { handleSubmit, register, errors, getValues } = useForm();
+    const { handleSubmit, register, errors } = useForm();
     const onSubmit = (value) => {
       let formData = new FormData();
-      console.log("sss", value.p_upload.length)
+   
       let file ; 
       formData.append("title", heading);
       formData.append("type", "video");
@@ -100,7 +101,10 @@ const VideoContent = () => {
               
             </Col>
             <Col md="4" align="center">
-              <h4>Video Gallery</h4>
+              <CustomHeading>
+                Video gallery
+              </CustomHeading>
+           
             </Col>
             </Row>  
   

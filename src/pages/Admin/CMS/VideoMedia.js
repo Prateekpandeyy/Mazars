@@ -16,7 +16,7 @@ import {
   Card,
   CardBody,
 } from "reactstrap";
-
+import CustomHeading from '../../../components/Common/CustomHeading';
 const MyContainer = styled(Container)({
 
 })
@@ -74,7 +74,7 @@ const VideoMedia = () => {
       },
       {
         dataField: "",
-        text: "Album Name",
+        text: "Album name",
      
     
         formatter: function dateFormat(cell, row) {
@@ -181,13 +181,14 @@ else{
          
         
     <div className="headingContent">
-     <h4> Video Gallery
-     </h4>
+     <CustomHeading>
+     Video gallery
+     </CustomHeading>
      <button 
     
      className="autoWidthBtn rightAlign my-2" onClick={(e) => {
    history.push("/cms/videocontent")
-     }}>New Video Gallery</button> 
+     }}>New video vallery</button> 
      </div>
         <Card>
             <CardBody>

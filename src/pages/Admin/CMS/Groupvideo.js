@@ -17,11 +17,15 @@ import {
 import { AiOutlinePlaySquare } from 'react-icons/ai';
 import ReactPlayer from "react-player";
 import CloseIcon from '@material-ui/icons/Close';
+import CustomHeading from "../../../components/Common/CustomHeading";
 const MyContainer = styled(Container)({
 
 })
 const Groupvideo = () => {
-  const [galleryData, setGalleryData] = useState([])
+  const [galleryData, setGalleryData] = useState({
+    files : [],
+    result : []
+  })
   const [videoId, setVideoId] = useState()
   const [play, isPlay] = useState(false)
   const userId = window.localStorage.getItem("adminkey");
@@ -38,20 +42,24 @@ const Groupvideo = () => {
     }, [])
  
     const getImages = () => {
+     
    if(history.location.index){
      
    
     axios.get(`${baseUrl}/cms/getgallarylist?uid=${JSON.parse(userId)}&type=video&id=${history.location.index.id}`, myConfig)
     .then((res) => {
-     
-      setGalleryData(res.data.result)
+   
+      setGalleryData({
+        files : res.data.files,
+        result : res.data.result
+      })
       
     })
     }
     
   }
   const del = (e) => {
- 
+ console.log("galleryData", e)
 
     Swal.fire({
         title: "Are you sure?",
@@ -63,7 +71,7 @@ const Groupvideo = () => {
         confirmButtonText: "Yes, delete it!",
     }).then((result) => {
         if (result.value) {
-          axios.get(`${baseUrl}/cms/deleteimage?uid=${JSON.parse(userId)}&id=${e.imageid}&imageid=${e.id}`, myConfig)
+          axios.get(`${baseUrl}/cms/deleteimage?uid=${JSON.parse(userId)}&id=${galleryData.result[0].id}&imageid=${e.imageid}`, myConfig)
           .then((res) => {
 console.log("response", res)
 if(res.data.code === 1){
@@ -89,6 +97,7 @@ Swal.fire({
   isPlay(true)
   setVideoId(`${baseUrl3}/assets/gallery/${e}`)
 }
+
     return(
         <>
     <Layout cmsDashboard="cmsDashboard">
@@ -106,14 +115,16 @@ Swal.fire({
               
             </Col>
             <Col md="4" align="center">
-              <h4>Video Gallery</h4>
+            <CustomHeading>
+            Video gallery
+            </CustomHeading>
             </Col>
             </Row>
         </div>
  <div className="galleryContainer">
                  
  {
-                   galleryData.map((i) => (
+                   galleryData.files.map((i) => (
                     <div className="galleryBox" key={i.id}> 
                     {
                       i.name.split(".")[1] === "mp4" === true ?
@@ -152,21 +163,6 @@ Swal.fire({
 </>
 
                      }
-                
-{/*                     
-                  <video id={i.id} src={`${baseUrl3}/assets/gallery/${i.name}`}
-                   onClick={() => playVideo2(i.id)}></video>
-                  <h4 style={{margin: "5px 10px"}}>{i.title}</h4>
-                  
-                   
-                  
-                  <div className="delIcon">
-                  <span title="Delete Media" onClick={() => del(i)}>
-                   <DeleteIcon />
-                   </span>
-                  
-                    </div> */}
-                 
                    </div>
                   
                   ))
@@ -179,7 +175,7 @@ Swal.fire({
           <div className="modalBox">
           <div className="boxContainer">
           <div className="canBtn"  title="cancel">
-              <h4>Recording Player</h4>
+              <h4>Recording player</h4>
               <CloseIcon  onClick= {() => isPlay(false)} id="myBtn"/> </div>
          
 

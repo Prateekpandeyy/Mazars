@@ -684,11 +684,18 @@ const getInvoicetl  = (e) => {
   setInvoicetl(e.target.value)
 }
 const getSubPlan  = (e) => {
-  setDateError(false)
-  setInstallment([])
-  setSubplan(e.target.value)
-}
 
+  setDateError(false)
+ 
+  setSubplan(e.target.value)
+  if(e.target.value === "1"){
+    let installment = {
+      label : String(invoiceValue.amount.length),
+      value : String(invoiceValue.amount.length)
+    }
+   installmentHandler(installment)
+  }
+}
   return (
     <Layout TLDashboard="TLDashboard" TLuserId={userid}>
       <Card>

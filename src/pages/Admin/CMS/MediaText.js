@@ -14,6 +14,7 @@ import  {DeleteIcon, EditQuery,} from "../../../components/Common/MessageIcon";
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { Markup } from 'interweave';
+import CustomHeading from '../../../components/Common/CustomHeading';
 const MyContainer = styled(Container)({
 
 })
@@ -188,12 +189,14 @@ return (
      
     
         <div className="headingContent">
-        <h4> Media News </h4>
+  <CustomHeading>
+  Media news
+  </CustomHeading>
         <button 
     
     className="autoWidthBtn rightAlign my-2" onClick={(e) => {
       history.push("/cms/mediatext")
-    }}>New Media News</button>  
+    }}>New media news</button>  
         </div>
     <Card>
         <CardBody>

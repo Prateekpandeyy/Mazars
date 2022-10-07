@@ -1,10 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import { Container } from '@material-ui/core';
-import {  styled } from '@mui/material';
 import axios from 'axios';
 import { baseUrl } from '../../../config/config';
-import { CKEditor } from '@ckeditor/ckeditor5-react';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import './map.css';
 import Swal from 'sweetalert2';
 import Layout from "../../../components/Layout/Layout";
@@ -12,17 +9,14 @@ import { useForm } from "react-hook-form";
 import { useHistory, useParams } from 'react-router';
 import classNames from "classnames";
 import {
-    Card,
-    CardHeader,
-    CardBody,
-    CardTitle,
+  
     Row,
     Col,
-    Table,
+  
   } from "reactstrap";
   import AddEditor from './AddEditor';
 import CustomQuillEditor from './CustomQuillEditor';
-
+import CustomHeading from '../../../components/Common/CustomHeading';
 const Mediatextshow = () => {
     const userId = localStorage.getItem("adminkey")
     const { handleSubmit, register, errors, getValues } = useForm();
@@ -124,7 +118,9 @@ const Mediatextshow = () => {
               
             </Col>
             <Col md="4">
-              <h4>Media Content</h4>
+          <CustomHeading>
+          Media content
+          </CustomHeading>
             </Col>
             </Row>
         </div>
@@ -150,7 +146,7 @@ const Mediatextshow = () => {
                  </div>
                  <div className="col-md-4 col-sm-12">
                  
-                 <label className="form-label">Date of Publishing</label>
+                 <label className="form-label">Date of publishing</label>
                    <input 
                    type="date"
                    className={classNames("form-control", {
