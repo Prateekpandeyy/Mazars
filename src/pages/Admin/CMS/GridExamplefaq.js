@@ -8,10 +8,6 @@ import Swal from 'sweetalert2';
 import {Link} from 'react-router-dom';
 import  {DeleteIcon, EditQuery,} from "../../../components/Common/MessageIcon";
 import { Markup } from 'interweave';
-import {
-  Card,
-  CardBody,
-} from "reactstrap";
 const GirdExamplefaq = () => {
   const [check, setCheck] = useState(false)
    const [rowData, setRowData] = useState([])
@@ -26,7 +22,7 @@ const GirdExamplefaq = () => {
   if(myConfig){
     axios.get(`${baseUrl}/cms/getallfaq?uid=${JSON.parse(userId)}`, myConfig)
     .then((res) => {
-    console.log("ress", res)
+   
      if(res.data.code === 1){
       setRowData(res.data.result)
       let linkOrder = []
@@ -136,27 +132,7 @@ const [columnDefs] = useState([
                   </div> : ""
                 }
                   
-{/* {
-              params.data.status == "1" ?
-              <div style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
-              <label className="switch" onChange= {(e) => myShowValue(e, params.data)}>
-<input type="checkbox"  defaultChecked/>
-<span className="slider round"></span>
-</label>
 
-              </div> :
-              ""
-            }
-            {
-              params.data == "0" ?
-              <div>
-              <label className="switch" onChange= {(e) => myShowValue(e, params.data)}>
-<input type="checkbox"  />
-<span className="slider round"></span>
-</label>
-
-              </div> : ""
-            } */}
          </div>
      
      </>
@@ -173,7 +149,7 @@ const [columnDefs] = useState([
           
           axios.get(`${baseUrl}/cms/setfaqstatus?uid=${JSON.parse(userId)}&id=${row.id}&status=0`, myConfig)
       .then((res) => {
-         console.log("res", res)
+      
          if(res.data.result === 1){
            setCheck(true)
          }
@@ -183,7 +159,7 @@ const [columnDefs] = useState([
          
           axios.get(`${baseUrl}/cms/setfaqstatus?uid=${JSON.parse(userId)}&id=${row.id}&status=1`, myConfig)
           .then((res) => {
-              console.log("res", res)
+           
               setCheck(false)
           })
       }
@@ -205,7 +181,7 @@ const [columnDefs] = useState([
             if (result.value) {
               axios.get(`${baseUrl}/cms/removefaq?uid=${JSON.parse(userId)}&id=${id.id}`, myConfig)
               .then((res) => {
-      console.log("response", res)
+   
       if(res.data.code === 1){
       Swal.fire({
       title : "success",
@@ -238,7 +214,7 @@ const [columnDefs] = useState([
      
       setOrder(linkOrder)
     }
-  console.log("order", order)
+
    return (
    <>
     <div className="ag-theme-alpine" style={{height: 400, overflow: "auto"}}>
@@ -250,7 +226,7 @@ const [columnDefs] = useState([
             columnDefs={columnDefs}>
         </AgGridReact>
     </div>
-    <button className="autoWidthBtn my-5" onClick={() => allLinkOrder()}>Set Order</button>
+    <button className="autoWidthBtn my-5" onClick={() => allLinkOrder()}>Set order</button>
    </>
 );
 };

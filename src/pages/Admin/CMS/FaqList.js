@@ -22,14 +22,20 @@ const MyContainer = styled(Container)({
 const Updates = () =>{ 
     const userId = window.localStorage.getItem("adminkey");
     const [list, setList] = useState([])
-  
+    const token = localStorage.getItem("token")
+    
+    const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
     let history = useHistory()
     useEffect(() => {
       getList()
     }, [])
   
     const getList = () => {
-      axios.get(`${baseUrl}/cms/getallfaq?uid=${JSON.parse(userId)}`)
+      axios.get(`${baseUrl}/cms/getallfaq?uid=${JSON.parse(userId)}`, myConfig)
       .then((res) => {
       console.log("ress", res)
        if(res.data.code === 1){
@@ -50,11 +56,10 @@ return (
 <div className="headingContent">
         <h4>FAQs </h4>
         <Link to={`/cms/faq`}>
-<button 
-    
-    className="autoWidthBtn rightAlign my-2">Add FAQ</button>
+<button className="autoWidthBtn rightAlign my-2">Add FAQ</button>
       </Link> 
         </div>
+    
 
         <Card>
           <CardBody>

@@ -47,6 +47,7 @@
   left: 50px;
 }
 .logo {
+  transition: 0.6s all;
   display: block;
     height: 100%;
     max-width: 16rem;
@@ -54,9 +55,9 @@
     object-fit: contain;
     -o-object-position: bottom left;
     object-position: bottom left;
-   
+    margin : 0px 22px;
     width: 100%;
-    
+ 
 }
 .logomin {
   display: block;
@@ -66,9 +67,9 @@
     object-fit: contain;
     -o-object-position: bottom left;
     object-position: bottom left;
-  transition: 0.3s all;
+  transition: 0.6s all;
     width: 100%;
-    margin : 22px;
+    margin : 22px 32px;
 
 }
 
