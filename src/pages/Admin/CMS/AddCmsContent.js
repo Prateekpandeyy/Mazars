@@ -321,14 +321,7 @@ const getEditValue= (e) => {
                    />
                  </div>
          </div>
-       {/* <div className="row">
-         <div className="col-md-3 my-4">
-         <input type="radio" value="Male" name="gender" onChange={() => setShowDoc(true)}/> Upload Content
-      </div>
-      <div className="col-md-3 my-4">
-        <input type="radio" value="Female" defaultChecked name="gender" onChange={() => setShowDoc(false)} /> Editor
-           </div>
-         </div> */}
+     
          {contentType !== "Editor" ?
           <form onSubmit={handleSubmit(onSubmit)}>
           <div className="mb-3">

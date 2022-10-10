@@ -22,6 +22,7 @@ const FlashContent = () => {
     const [heading, setHeading] = useState("")
     const [det, addDet] = useState();
     const [stats, setStats] = useState(false)
+    const [contentType, setContentType] = useState("Editor")
     const userId = localStorage.getItem("adminkey")
     let history  = useHistory()
     let getId = useParams()
@@ -51,6 +52,36 @@ const FlashContent = () => {
     })
    }
     const onSubmit = (value) => {
+        let message = ""
+        let formData = new FormData()
+        if(contentType !== "Editor") {
+            var uploadImg = value.p_draft;
+         
+      
+            if (uploadImg) {
+              if(contentType === "Doc_upload"){
+                formData.append("content_type", 0)
+              }
+              else if(contentType === "Pdf_upload"){
+                formData.append("content_type", 1)
+              }
+              else if(contentType === "Ppt_upload"){
+                formData.append("content_type", 3)
+              }
+              for (var i = 0; i < uploadImg.length; i++) {
+                let file = uploadImg[i];
+                formData.append("content", file);
+               
+              }
+            }
+            formData.append("heading", value.p_heading)
+            {
+           stats === true ?
+           formData.append("status", 1):
+           formData.append("status", 0)
+         }
+          }
+          else {
         var myEditor = document.querySelector('#snow-container')
         var html = myEditor.children[0].innerHTML;
         addDet(html)
@@ -64,7 +95,7 @@ const FlashContent = () => {
       formData.append("status", 1):
       formData.append("status", 0)
     }
-   
+}
     if(getId.id){
         formData.append("id", getId.id)
         message = "Flash updated successfully"
@@ -144,34 +175,103 @@ const FlashContent = () => {
     })}
      ref={register({required : true})} />
     </div>
+    <div className="col-md-4 col-sm-12">
+                 
+                 <label className="form-label">Type</label>
+                      <select
+                      multiple = {false}
+                      onChange = {(e) => setContentType(e.target.value)}
+                      className={classNames("form-control", {
+                        "is-invalid": errors.p_content,
+                      })}
+                      value = {contentType}
+                      ref={register({ required: true })}
+                      name="p_content"
+                      >
+                      <option value = "Editor">Editor</option>
+                      <option value = "Doc_upload">Word Document</option>
+                      <option value = "Pdf_upload">PDF</option>
+                      <option value = "Ppt_upload">PPT</option>
+                          </select>
+                 </div>
 <div className="col-md-12">
     <label>Content</label>
-    {/* <CKEditor
-             id="test"
-                     editor={ ClassicEditor }
-                    
-                    data={det}
-                    rows="10"
-                    name="p_fact"
-                
-                    onChange={ ( event, editor ) => {
-                      addDet(editor.getData());
-                     
-
-                    
-                  } }
-           
-                ></CKEditor> */}
                {
                    getId.id ? 
-                   <CustomQuillEditor 
- content={det} />   :  <AddEditor />
+                   <>
+                     {contentType !== "Editor" ?
+          <form onSubmit={handleSubmit(onSubmit)}>
+          <div className="mb-3">
+            <label className="form-label">Upload Your Document</label>
+            <input
+                type="file"
+                name="p_draft"
+                ref={register}
+                className="form-control-file manage_file"
+              
+              />
+          </div>
+
+          
+        </form>
+         : ""}
+       {
+         contentType === "Editor" ?
+         <div className="row">
+         <div className="col-md-12">
+         <label className="form-label">Content</label> </div>
+         
+         <div className="col-md-12" style={{display : "flex", flexDirection :"column"}}>
+         <CustomQuillEditor 
+ content={det} />
+             </div>
+           
+     </div>
+ : ""
+       }         
+                   
+ </>   :
+ <>
+     {contentType !== "Editor" ?
+          <form onSubmit={handleSubmit(onSubmit)}>
+          <div className="mb-3">
+            <label className="form-label">Upload Your Document</label>
+            <input
+                type="file"
+                name="p_draft"
+                ref={register}
+                className="form-control-file manage_file"
+              
+              />
+          </div>
+
+          
+        </form>
+         : ""}
+       {
+         contentType === "Editor" ?
+         <div className="row">
+         <div className="col-md-12">
+         <label className="form-label">Content</label> </div>
+         
+         <div className="col-md-12" style={{display : "flex", flexDirection :"column"}}>
+       <AddEditor
+     />
+             </div>
+           
+     </div>
+ : ""
+       }         
+ </>  
                }
     </div>
     <div className="col-md-3">
  
 <span style={{margin : "10px 0"}}>
-<input type="checkbox" style={{margin : "10px 0px"}} name="hide" checked = {stats} id="hide" onChange= {(e) => myLabel(e)}></input>
+<input type="checkbox" 
+style={{margin : "10px 0px"}} 
+name="hide" checked = {stats} 
+id="hide" onChange= {(e) => myLabel(e)}></input>
 <label htmlFor="hide" style={{margin : "10px"}}> Publish</label>
 </span>
          </div>
