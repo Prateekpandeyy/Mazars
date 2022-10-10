@@ -64,7 +64,6 @@ const [scopeError, setScopeError] = useState(false)
   const [tlDisable, setTlDisable] = useState(true);
   const [tpDisable, setTpDisable] = useState("")
   const [adminValue, setAdminValue] = useState(null)
- 
   const [allAmount, setAllAmount] = useState({
     remainAmount : [],
     freezeAmount : [],
@@ -97,6 +96,7 @@ const [scopeError, setScopeError] = useState(false)
   const [invoiceAmount, setinvoiceAmount] = useState(0);
   const [noInstallments, setNoInstall] = useState([]);
   const [no_installmentRange, setno_installment] = useState([])
+  const [minDate, setminDate] = useState("")
 const token = window.localStorage.getItem("tlToken")
   const myConfig = {
       headers : {
@@ -293,6 +293,27 @@ let adjustAmount = 0;
             setTlDisable(false)
           }
         }
+        const arrDates = due_date.map(str => new Date(str));
+       
+      if(arrDates.length > 0){
+        let rightNow = new Date(Math.max(...arrDates));
+        let dk = []
+         let rr = rightNow.toISOString().slice(0,10).replace(/-/g,"")
+         let year = rr.slice(0, 4);
+         let month = rr.slice(4, 6)
+         let day = rr.slice(6, 8)
+         dk.push(year);
+         dk.push(month);
+         dk.push(day);
+        
+         setminDate(dk.join("-"))
+      }
+      else if (res.data.result.payment_plan === "3"){
+setEndDate(res.data.result.start_date)
+      }
+      else if (res.data.result.payment_plan === "2"){
+        setEndDate(current_date)
+      }
         setTotalAmount(res.data.result.amount)
         setDateMonth(res.data.result.date_month)
         setSubplan(res.data.result.sub_payment_plane)
@@ -302,6 +323,7 @@ let adjustAmount = 0;
         setStore(res.data.result.payment_plan)
         setInstallment(res.data.result.no_of_installment)
         setDateMonth(res.data.result.due_date)
+        
         setStartDate(res.data.result.start_date)
         setEndDate(res.data.result.end_date)
         setDate(res.data.result.due_date)
@@ -1505,7 +1527,7 @@ setInstallment({
                       installment_amount={allAmount}
                       due_date={due_date}
                       getQuery={getQuery}
-                      item={item}
+                      item={minDate}
                       clearValue={clearValue}
                       totalAmount={totalAmount}
                       min={item}
@@ -1529,9 +1551,9 @@ setInstallment({
                    invoiceValue = {invoiceValue}
                    clearValue={clearValue}
                    totalAmount={totalAmount}
-                   min={startDate}
+                   min={minDate}
                    max={endDate}
-                   item={startDate}
+                   item={minDate}
                    dateError = {dateError}
                    boxFormData = {formInstallmentInfo}
                  /> : ""

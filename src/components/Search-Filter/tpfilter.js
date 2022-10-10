@@ -130,7 +130,7 @@ function TaxProfessionalFilter(props) {
         .get(
           `${baseUrl}/tl/pendingQues?tp_id=${JSON.parse(
             userid
-          )}&cat_id=${store2}&from=${fromDate}&to=${toDate}&pcat_id=${selectedData}`
+          )}&cat_id=${store2}&from=${fromDate}&to=${toDate}&pcat_id=${selectedData}`, myConfig
         )
         .then((res) => {
 
@@ -150,6 +150,7 @@ function TaxProfessionalFilter(props) {
       axios
         .get(
           `${baseUrl}/tl/getIncompleteQues?tp_id=${JSON.parse(userid)}&status=${status1}&cat_id=${store2}&from=${fromDate}&to=${toDate}&pcat_id=${selectedData}`
+          , myConfig
         )
         .then((res) => {
         
@@ -166,7 +167,7 @@ function TaxProfessionalFilter(props) {
       axios
         .get(
           `${baseUrl}/tl/declinedQueries?tp_id=${JSON.parse(userid)}&status=${data.p_status}&cat_id=${store2}&from=${fromDate}&to=${toDate}&pcat_id=${selectedData}`
-        )
+        , myConfig)
         .then((res) => {
 
           if (res.data.code === 1) {
@@ -184,7 +185,7 @@ function TaxProfessionalFilter(props) {
           `${baseUrl}/tl/getCompleteQues?tp_id=${JSON.parse(
             userid
           )}&cat_id=${store2}&from=${fromDate}&to=${toDate}&pcat_id=${selectedData}`
-        )
+, myConfig)
         .then((res) => {
         
           if (res.data.code === 1) {
@@ -203,7 +204,7 @@ function TaxProfessionalFilter(props) {
           `${baseUrl}/tl/getProposalTl?tp_id=${JSON.parse(
             userid
           )}&cat_id=${store2}&from=${fromDate}&to=${toDate
-          }&status=${data.p_status}&pcat_id=${selectedData}`
+          }&status=${data.p_status}&pcat_id=${selectedData}`, myConfig
         )
         .then((res) => {
 
@@ -222,7 +223,7 @@ function TaxProfessionalFilter(props) {
           `${baseUrl}/tl/getProposalTl?tp_id=${JSON.parse(
             userid
           )}&cat_id=${store2}&from=${fromDate}&to=${toDate
-          }&status=${data.p_status}&pcat_id=${selectedData}`
+          }&status=${data.p_status}&pcat_id=${selectedData}`, myConfig
         )
         .then((res) => {
        
@@ -241,7 +242,7 @@ function TaxProfessionalFilter(props) {
         `${baseUrl}/tl/getProposalTl?tp_id=${JSON.parse(
           userid
         )}&cat_id=${store2}&from=${fromDate}&to=${toDate
-        }&status=2&pcat_id=${selectedData}`
+        }&status=2&pcat_id=${selectedData}`, myConfig
       )
       .then((res) => {
 
@@ -257,7 +258,7 @@ function TaxProfessionalFilter(props) {
       axios
         .get(
           `${baseUrl}/tl/getUploadedProposals?tp_id=${JSON.parse(userid)}&cat_id=${store2}&from=${fromDate}&to=${toDate}&status=${data.p_status}&pcat_id=${selectedData}`
-        )
+        ,myConfig)
         .then((res) => {
         
           if (res.data.code === 1) {
@@ -273,7 +274,7 @@ function TaxProfessionalFilter(props) {
       axios
         .get(
           `${baseUrl}/tl/getUploadedProposals?&tp_id=${JSON.parse(userid)}&cat_id=${store2}&from=${fromDate}&to=${toDate}&status=1&pcat_id=${selectedData}`
-        )
+        , myConfig)
         .then((res) => {
         
           if (res.data.code === 1) {
@@ -289,7 +290,7 @@ function TaxProfessionalFilter(props) {
       axios
         .get(
           `${baseUrl}/tl/getUploadedProposals?tp_id=${JSON.parse(userid)}&cat_id=${store2}&from=${fromDate}&to=${toDate}&status=2&pcat_id=${selectedData}`
-        )
+        , myConfig)
         .then((res) => {
        
           if (res.data.code === 1) {
