@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
-import { baseUrl } from '../../../config/config';
+import { baseUrl, baseUrl3 } from '../../../config/config';
 import Swal from 'sweetalert2';
 import classNames from "classnames";
 import { useForm } from "react-hook-form";
@@ -22,8 +22,9 @@ const FlashContent = () => {
     const [heading, setHeading] = useState("")
     const [det, addDet] = useState();
     const [stats, setStats] = useState(false)
+    const [file, setFile] = useState("")
     const [contentType, setContentType] = useState("Editor")
-    const userId = localStorage.getItem("adminkey")
+    const userId = localStorage.getItem("cmsId")
     let history  = useHistory()
     let getId = useParams()
     const token = window.localStorage.getItem("token")
@@ -42,12 +43,30 @@ const FlashContent = () => {
        res.data.result.map((i) => {
            setHeading(i.heading)
            addDet(i.news)
+           setFile(i.file)
            if(i.status == "1"){
                setStats(true)
            }
            else{
                setStats(false)
            }
+           if(i.content_type === "0"){
+            
+            setContentType("Doc_upload")
+          }
+          else if(i.content_type === "2"){
+           addDet(i.content)
+          
+             setContentType("Editor")
+          
+          }
+          else if(i.content_type === "1"){
+      
+            setContentType("Pdf_upload")
+          }
+          else if(i.content_type === "3"){
+           setContentType("Ppt_upload")
+         }
        })
     })
    }
@@ -82,14 +101,14 @@ const FlashContent = () => {
          }
           }
           else {
+            console.log("done2")
         var myEditor = document.querySelector('#snow-container')
         var html = myEditor.children[0].innerHTML;
         addDet(html)
-        let message = "Flash added successfully"
-        let formData = new FormData()
-       
+        let message = "Flash added successfully";
         formData.append("news", html);
         formData.append("heading", value.p_heading)
+        formData.append("content_type", 2)
        {
       stats === true ?
       formData.append("status", 1):
@@ -195,7 +214,7 @@ const FlashContent = () => {
                           </select>
                  </div>
 <div className="col-md-12">
-    <label>Content</label>
+   
                {
                    getId.id ? 
                    <>
@@ -211,7 +230,12 @@ const FlashContent = () => {
               
               />
           </div>
-
+          <span style={{display : "flex", cursor : "pointer"}}>
+                   <a href={`${baseUrl3}/${file}`} target="_blank">
+                   <i className="fa fa-photo"></i>
+                     <span style={{ marginLeft: "10px" }}>View document</span>
+                   </a>
+                       </span>
           
         </form>
          : ""}

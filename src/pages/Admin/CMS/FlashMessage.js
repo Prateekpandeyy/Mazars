@@ -27,7 +27,7 @@ const FlashMessage = () => {
     const [myVal222, setMyVal22] = useState(false)
     const [editData, setEditData] = useState()
     const [check, setCheck] = useState(false)
-    const userId = localStorage.getItem("adminkey")
+    const userId = localStorage.getItem("cmsId")
     let history = useHistory()
     useEffect(() => {
         getList()

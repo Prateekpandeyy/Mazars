@@ -3,7 +3,7 @@ import Header from "../../components/Header/Header";
 import { styled , makeStyles} from "@material-ui/styles";
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { baseUrl } from '../../config/config';
+import { baseUrl , baseUrl3} from '../../config/config';
 import { Box } from "@material-ui/core";
 import { useHistory } from 'react-router';
 import { Markup } from 'interweave';
@@ -13,7 +13,19 @@ import FlashSection from "../../components/Common/FlashSection";
 import { OuterloginContainer } from '../../components/Common/OuterloginContainer';
 import MyContainer from "../../components/Common/MyContainer";
 import SubHeading from "../../components/Common/SubHeading";
-import CustomTypography from "../../components/Common/CustomTypography"
+import CustomTypography from "../../components/Common/CustomTypography";
+import { Viewer } from '@react-pdf-viewer/core'; // install this library
+// Plugins
+// import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout'; // install this library
+// Import the styles
+import '@react-pdf-viewer/core/lib/styles/index.css';
+// import '@react-pdf-viewer/default-layout/lib/styles/index.css';
+// Worker
+import { Worker } from '@react-pdf-viewer/core'; // install this library
+import {
+  Presentation, Slide, Text,
+  Shape, Image, render
+} from "react-pptx";
 const LatestUpdates = () => {
     const [news, getNews] = useState([])
     const [pos,setPos] = useState(1920);   
@@ -110,8 +122,37 @@ const LatestUpdates = () => {
         <CustomTypography>
         {description.heading}
         </CustomTypography>
-   <Markup content={description.news} />
+  {
+    description.content_type === "2" ?
+    <Markup content={description.news} /> : ""
+  }
 
+   {
+      description.content_type === "0" || description.content_type === "1" ?
+      <div>
+      <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.6.347/build/pdf.worker.min.js">
+    <Viewer fileUrl={`${baseUrl3}/${description.file}`}>
+      </Viewer>
+      </Worker>
+  
+    </div>
+ : ""
+    }
+        
+        {
+       description.content_type === "3" ?
+       <div id="artContent">
+      <iframe
+        src={`https://view.officeapps.live.com/op/embed.aspx?src=${baseUrl3}/${description.file}`}
+        width="100%"
+        height="600px"
+        frameBorder="0"
+        title="slides"
+      ></iframe>
+  
+    </div>
+ : ""
+    }
           </div>
       
         </div>
