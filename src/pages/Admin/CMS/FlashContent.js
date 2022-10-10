@@ -70,7 +70,7 @@ const FlashContent = () => {
               }
               for (var i = 0; i < uploadImg.length; i++) {
                 let file = uploadImg[i];
-                formData.append("content", file);
+                formData.append("news", file);
                
               }
             }
