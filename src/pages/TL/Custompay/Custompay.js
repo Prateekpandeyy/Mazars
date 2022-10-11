@@ -18,31 +18,26 @@ import {
 import { useHistory } from "react-router-dom";
 import Alerts from "../../../common/Alerts";
 import classNames from "classnames";
-import Mandatory from "../../../components/Common/Mandatory";
 import Loader from "../../../components/Loader/Loader";
 import { Link } from "react-router-dom";
 import CustomHeading from "../../../components/Common/CustomHeading";
 import { Container } from "@material-ui/core";
-const Schema = yup.object().shape({
-  msg_type: yup.string().required(""),
-  p_message: yup.string().required(""),
-});
+
+
 
 
 
 function Custompay(props) {
   const alert = useAlert();
   const history = useHistory();
-  const { handleSubmit, register, errors, reset } = useForm({
-    resolver: yupResolver(Schema),
-  });
+  const { handleSubmit, register, errors, reset } = useForm();
 
   const userId = window.localStorage.getItem("tlkey");
 
   const [loading, setLoading] = useState(false);
   const [item, setItem] = useState("");
-  const [data, setData] = useState({})
-  const { message_type, query_id, query_No, routes } = data
+  const [data, setData] = useState("")
+ 
 const [showTl, setShowTl] = useState(false)
 const token = window.localStorage.getItem("tlToken")
     const myConfig = {
@@ -51,16 +46,23 @@ const token = window.localStorage.getItem("tlToken")
         }
       }
 useEffect(() => {
-    setData(props.location.data)
-   console.log("data", props.location.data)
+  
+  axios.get(`${baseUrl}/tl/getPaymentDetail?tl_id=${JSON.parse(userId)}&invoice=1&invoice_id=${props.location.data.id}`, myConfig)
+  .then((res) => {
+if(res.data.code === 1){
+  setData(res.data.payment_detail[0])
+  console.log(res.data.payment_detail[0])
+}
+  })
+  
 }, [props])
  
   const onSubmit = (value) => {
-    
+    console.log()
     setLoading(true)
     let formData = new FormData();
     formData.append("uid", JSON.parse(userId));
-    formData.append("assign_id", query_id);
+    formData.append("assign_id", "");
     formData.append("message_type", value.msg_type);
     formData.append("message", value.p_message);
 
@@ -84,7 +86,7 @@ useEffect(() => {
           setLoading(false)
           var variable = "Message sent successfully."
           Alerts.SuccessNormal(variable)
-          props.history.push(routes);
+          // props.history.push(routes);
         }
       })
       .catch((error) => {
@@ -98,14 +100,7 @@ useEffect(() => {
         <CardHeader>
           <Row>
           <Col md="4">
-            <Link
-                  to={{
-                    pathname: `/teamleader/${props.location.routes}`,
-                    index: props.location.index,
-                  }}
-                >
-                  <button class="customBtn ml-3">Go Back</button>
-                </Link>
+          <button class="customBtn ml-3" onClick={() =>history.goBack()}>Go Back</button>
               
             </Col>
             <Col md="4" align="center">
@@ -131,8 +126,8 @@ useEffect(() => {
                           type="text"
                           name="p_query"
                           className="form-control"
-                          ref={register}
-                          value={data.assign_no}
+                     
+                           value={data.assign_no}
                           disabled
                         />
                       </div>
@@ -144,8 +139,8 @@ useEffect(() => {
                           type="text"
                           name="p_query"
                           className="form-control"
-                          ref={register}
-                          value={data.installment_no}
+                         
+                           value={data.billno}
                           disabled
                         />
                       </div>
@@ -158,33 +153,35 @@ useEffect(() => {
                           type="text"
                           name="p_query"
                           className="form-control"
-                          ref={register}
-                          value={data.invoice_amount}
+                        
+                           value={data.invoice_amount}
                           disabled
                         />
                       </div>
                   </div>
                   <div className="col-md-6">
                    <div class="form-group">
-                        <label> Received in Bank / Account </label>
+                        <label> Received in Bank / Account <span className="declined">*</span></label>
                         <input
                           type="text"
-                          name="p_query"
-                          className="form-control"
-                          ref={register}
-                         
+                          name="p_account"
+                        
+                          ref={register({required : true})}
+                          className = "form-control"
                         />
                       </div>
                   
                    </div>
                    <div className="col-md-6">
                    <div class="form-group">
-                        <label> Payment Received date </label>
+                        <label> Payment Received date <span className="declined">*</span></label>
                         <input
                           type="date"
-                          name="p_query"
-                          className="form-control"
-                          ref={register}
+                          name="p_date"
+                          className={classNames("form-control", {
+                            "is-invalid": errors.p_date,
+                          })}
+                          ref={register({required : true})}
                          
                         />
                       </div>
@@ -192,8 +189,13 @@ useEffect(() => {
                    </div>
                    <div className="col-md-6">
                    <div class="form-group">
-                        <label> Payment type </label>
-                     <select className="form-control">
+                        <label> Payment type <span className="declined">*</span></label>
+                     <select
+                     ref={register({required : true})}
+                     name = "payment_mode"
+                     className={classNames("form-control", {
+                      "is-invalid": errors.payment_mode,
+                    })}>
                       <option>UPI</option>
                       <option>Paytm</option>
                      </select>
@@ -208,7 +210,7 @@ useEffect(() => {
                           })}
                           placeholder="Message text here"
                           rows="5"
-                          ref={register}
+                          ref={register({required : true})}
                           name="p_message"
                         ></textarea>
                         {errors.p_message && (
@@ -220,21 +222,15 @@ useEffect(() => {
                    </div>
                    <div className="col-md-6">
                    <div class="form-group">
-                        <label>Notes<span className="declined">*</span></label>
+                        <label>Notes</label>
                         <textarea
-                          className={classNames("form-control", {
-                            "is-invalid": errors.p_message,
-                          })}
+                          className= "form-control"
                           placeholder="Message text here"
                           rows="5"
                           ref={register}
-                          name="p_message"
+                          name="p_notes"
                         ></textarea>
-                        {errors.p_message && (
-                          <div className="invalid-feedback">
-                            {errors.p_message.message}
-                          </div>
-                        )}
+                      
                       </div>
                    </div>
                    </div>

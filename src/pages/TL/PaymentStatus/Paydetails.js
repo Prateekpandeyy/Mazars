@@ -239,7 +239,9 @@ setModal(!modal)
                  to = {{
                     pathname : "/teamleader/custompay",
                     routes : "teamleader",
-                    data : row
+                   data : {
+                    id : row.id
+                   }
                  }}
                  >
                    <SiApplepay style={{fontSize : "20px"}} />
