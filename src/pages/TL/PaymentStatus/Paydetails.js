@@ -13,7 +13,7 @@ import {
   Col,
  
 } from "reactstrap";
-
+import CreditCardIcon from '@mui/icons-material/CreditCard';
 import { useParams, Link, useHistory } from "react-router-dom";
 import styled from "styled-components";
 import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
@@ -228,14 +228,15 @@ setModal(!modal)
         },
         {
             dataField: "",
-            text: "Invoice pay",
+            text: "Manual creadited",
            
             
             formatter: function dateFormat(cell, row) {
                 return(
                    <>
                    {row.invoice_generated == "1" ? 
-                  <Link
+                    <span title = "Manual creadited">
+ <Link
                  to = {{
                     pathname : "/teamleader/custompay",
                     routes : "teamleader",
@@ -244,8 +245,12 @@ setModal(!modal)
                    }
                  }}
                  >
-                   <SiApplepay style={{fontSize : "20px"}} />
+                 
+                  {/* <SiApplepay style={{fontSize : "30px"}} /> */}
+                  <CreditCardIcon color="secondary" />
                    </Link>
+                    </span>
+                 
                          : ""}
                    </>
                 )

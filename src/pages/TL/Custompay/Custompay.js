@@ -35,7 +35,7 @@ function Custompay(props) {
   const userId = window.localStorage.getItem("tlkey");
 
   const [loading, setLoading] = useState(false);
-  const [item, setItem] = useState("");
+
   const [data, setData] = useState("")
   const [paymentType, setPaymentType] = useState("")
   const [paymentMode, setPaymentMode] = useState("")
@@ -43,6 +43,9 @@ function Custompay(props) {
   const [notes, setNotes] = useState("")
   const [bank, setBank] = useState("")
   const [paymentDate, setPaymentDate] = useState("")
+  const [receiveAmount, setReceiveAmount] = useState("")
+  var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
+  const [item] = useState(current_date);
 const [showTl, setShowTl] = useState(false)
 const token = window.localStorage.getItem("tlToken")
     const myConfig = {
@@ -66,13 +69,14 @@ if(res.data.code === 1){
     console.log()
     setLoading(true)
     let formData = new FormData();
-    formData.append("invoice_id", data.assign_id);
+    formData.append("invoice_id", data.id);
     formData.append("assign_no", data.assign_no);
     formData.append("invoice_no", data.billno);
     formData.append("bank_name", bank);
-    formData.append("receive_amount", data.invoice_amount);
+    formData.append("invoice_amount", data.invoice_amount);
     formData.append("payment_recived_date", paymentDate);
-    formData.append("payment_by", data.invoice_by);
+    formData.append("payment_by", paymentType);
+    formData.append("receive_amount", receiveAmount)
     formData.append("payment_information", paymentDis);
     formData.append("note", notes);
   
@@ -91,6 +95,7 @@ if(res.data.code === 1){
           setLoading(false)
           var variable = "Message sent successfully."
           Alerts.SuccessNormal(variable)
+          history.push("/teamleader/paymentstatus")
           // props.history.push(routes);
         }
       })
@@ -164,6 +169,19 @@ if(res.data.code === 1){
                         />
                       </div>
                   </div>
+                  <div class="col-md-6">
+                      <div class="form-group">
+                        <label>Receive amount</label>
+                        <input
+                          type="number"
+                          name="p_receive"
+                          className="form-control"
+                        onChange={(e) => setReceiveAmount(e.target.value)}
+                           value={receiveAmount}
+                         
+                        />
+                      </div>
+                  </div>
                   <div className="col-md-6">
                    <div class="form-group">
                         <label> Received in Bank / Account <span className="declined">*</span></label>
@@ -173,7 +191,9 @@ if(res.data.code === 1){
                         value = {bank}
                         onChange = {(e) => setBank(e.target.value)}
                           ref={register({required : true})}
-                          className = "form-control"
+                          className={classNames("form-control", {
+                            "is-invalid": errors.p_account,
+                          })}
                         />
                       </div>
                   
@@ -190,6 +210,7 @@ if(res.data.code === 1){
                           value = {paymentDate}
                           onChange = {(e) => setPaymentDate(e.target.value)}
                           ref={register({required : true})}
+                          max= {item}
                          
                         />
                       </div>
@@ -198,17 +219,15 @@ if(res.data.code === 1){
                    <div className="col-md-6">
                    <div class="form-group">
                         <label> Payment type <span className="declined">*</span></label>
-                     <select
-                     ref={register({required : true})}
-                     value = {paymentType}
-                     onChange = {(e) => setPaymentType(e.target.value)}
-                     name = "payment_mode"
-                     className={classNames("form-control", {
-                      "is-invalid": errors.payment_mode,
-                    })}>
-                      <option>UPI</option>
-                      <option>Paytm</option>
-                     </select>
+                    <input 
+                    type = "text"
+                    ref={register({required : true})}
+                    value = {paymentType}
+                    onChange = {(e) => setPaymentType(e.target.value)}
+                    name = "payment_mode"
+                    className={classNames("form-control", {
+                     "is-invalid": errors.payment_mode,
+                   })} />
                       </div>
                    </div>
                    <div className="col-md-6">
@@ -221,7 +240,7 @@ if(res.data.code === 1){
                           value = {paymentDis}
                           onChange = {(e) => setPaymentDis(e.target.value)}
                           placeholder="Message text here"
-                          rows="5"
+                          rows="3"
                           ref={register({required : true})}
                           name="p_message"
                         ></textarea>
