@@ -227,6 +227,10 @@ setModal(!modal)
            }
         },
         {
+            dataField: "payment_mode",
+            text: "Collection type",
+        },
+        {
             dataField: "",
             text: "Manual creadited",
            
@@ -234,8 +238,8 @@ setModal(!modal)
             formatter: function dateFormat(cell, row) {
                 return(
                    <>
-                   {row.invoice_generated == "1" ? 
-                    <span title = "Manual creadited">
+                   {row.pyment_gateway_type == "1" ? 
+                    <span title = "Manual collection">
  <Link
                  to = {{
                     pathname : "/teamleader/custompay",
@@ -246,7 +250,7 @@ setModal(!modal)
                  }}
                  >
                  
-                  {/* <SiApplepay style={{fontSize : "30px"}} /> */}
+              
                   <CreditCardIcon color="secondary" />
                    </Link>
                     </span>

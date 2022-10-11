@@ -93,10 +93,15 @@ if(res.data.code === 1){
         if (response.data.code === 1) {
           reset();
           setLoading(false)
-          var variable = "Message sent successfully."
+          var variable = "Payment captured successully"
           Alerts.SuccessNormal(variable)
           history.push("/teamleader/paymentstatus")
           // props.history.push(routes);
+        }
+        else{
+          setLoading(false)
+          var variable = "Something went wrong, please try again"
+          Alerts.ErrorNormal(variable) 
         }
       })
       .catch((error) => {
