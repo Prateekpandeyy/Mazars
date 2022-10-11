@@ -37,7 +37,12 @@ function Custompay(props) {
   const [loading, setLoading] = useState(false);
   const [item, setItem] = useState("");
   const [data, setData] = useState("")
- 
+  const [paymentType, setPaymentType] = useState("")
+  const [paymentMode, setPaymentMode] = useState("")
+  const [paymentDis, setPaymentDis] = useState("");
+  const [notes, setNotes] = useState("")
+  const [bank, setBank] = useState("")
+  const [paymentDate, setPaymentDate] = useState("")
 const [showTl, setShowTl] = useState(false)
 const token = window.localStorage.getItem("tlToken")
     const myConfig = {
@@ -61,19 +66,19 @@ if(res.data.code === 1){
     console.log()
     setLoading(true)
     let formData = new FormData();
-    formData.append("uid", JSON.parse(userId));
-    formData.append("assign_id", "");
-    formData.append("message_type", value.msg_type);
-    formData.append("message", value.p_message);
-
-    {
-      value.p_to != undefined ?
-    
-    formData.append("to", value.p_to)
-  : formData.append("to", "customer") }
+    formData.append("invoice_id", data.assign_id);
+    formData.append("assign_no", data.assign_no);
+    formData.append("invoice_no", data.billno);
+    formData.append("bank_name", bank);
+    formData.append("receive_amount", data.invoice_amount);
+    formData.append("payment_recived_date", paymentDate);
+    formData.append("payment_by", data.invoice_by);
+    formData.append("payment_information", paymentDis);
+    formData.append("note", notes);
+  
     axios({
       method: "POST",
-      url: `${baseUrl}/tl/messageSent`,
+      url: `${baseUrl}/tl/manualpayment`,
       headers : {
         uit : token
       },
@@ -105,7 +110,7 @@ if(res.data.code === 1){
             </Col>
             <Col md="4" align="center">
              <CustomHeading>
-                Custom pay
+             Manual payment process
              </CustomHeading>
             </Col>
           </Row>
@@ -165,7 +170,8 @@ if(res.data.code === 1){
                         <input
                           type="text"
                           name="p_account"
-                        
+                        value = {bank}
+                        onChange = {(e) => setBank(e.target.value)}
                           ref={register({required : true})}
                           className = "form-control"
                         />
@@ -181,6 +187,8 @@ if(res.data.code === 1){
                           className={classNames("form-control", {
                             "is-invalid": errors.p_date,
                           })}
+                          value = {paymentDate}
+                          onChange = {(e) => setPaymentDate(e.target.value)}
                           ref={register({required : true})}
                          
                         />
@@ -192,6 +200,8 @@ if(res.data.code === 1){
                         <label> Payment type <span className="declined">*</span></label>
                      <select
                      ref={register({required : true})}
+                     value = {paymentType}
+                     onChange = {(e) => setPaymentType(e.target.value)}
                      name = "payment_mode"
                      className={classNames("form-control", {
                       "is-invalid": errors.payment_mode,
@@ -208,6 +218,8 @@ if(res.data.code === 1){
                           className={classNames("form-control", {
                             "is-invalid": errors.p_message,
                           })}
+                          value = {paymentDis}
+                          onChange = {(e) => setPaymentDis(e.target.value)}
                           placeholder="Message text here"
                           rows="5"
                           ref={register({required : true})}
@@ -228,6 +240,8 @@ if(res.data.code === 1){
                           placeholder="Message text here"
                           rows="5"
                           ref={register}
+                          value = {notes}
+                          onChange = {(e) => setNotes(e.target.value)}
                           name="p_notes"
                         ></textarea>
                       

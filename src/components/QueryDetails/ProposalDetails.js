@@ -737,7 +737,7 @@ Amount of monthly fee
 <th> Amount of  fee </th>
 </tr>
 <tr>
-  <td>
+  <td style={{whiteSpace : "nowrap"}}>
   {CommonServices.capitalizeFirstLetter(amount_type)}
   </td>
   <td>
