@@ -302,6 +302,7 @@ let adjustAmount = 0;
          let year = rr.slice(0, 4);
          let month = rr.slice(4, 6)
          let day = rr.slice(6, 8)
+         day = Number(day) + 1
          dk.push(year);
          dk.push(month);
          dk.push(day);

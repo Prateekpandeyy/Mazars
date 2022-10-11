@@ -3,28 +3,22 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import Layout from "../../../components/Layout/Layout";
-import PaymentIcon from '@mui/icons-material/Payment';
 import DescriptionOutlinedIcon from "@material-ui/icons/DescriptionOutlined";
 import {
   Card,
   CardHeader,
   CardBody,
-  CardTitle,
+ 
   Row,
   Col,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  Button,
+ 
 } from "reactstrap";
-import BootstrapTable from "react-bootstrap-table-next";
-import { baseUrl2, baseUrl3 } from "../../../config/config";
+
 import { useParams, Link, useHistory } from "react-router-dom";
 import styled from "styled-components";
 import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
 import CustomHeading from "../../../components/Common/CustomHeading";
-import { Typography } from "antd";
+import {SiApplepay} from "react-icons/si";
 
 const PayDetails = (props) => {
     let history = useHistory();
@@ -232,7 +226,30 @@ setModal(!modal)
                )
            }
         },
+        {
+            dataField: "",
+            text: "Invoice pay",
            
+            
+            formatter: function dateFormat(cell, row) {
+                return(
+                   <>
+                   {row.invoice_generated == "1" ? 
+                  <Link
+                 to = {{
+                    pathname : "/teamleader/custompay",
+                    routes : "teamleader",
+                    data : row
+                 }}
+                 >
+                   <SiApplepay style={{fontSize : "20px"}} />
+                   </Link>
+                         : ""}
+                   </>
+                )
+            },
+           
+        },
       ];
     
     
