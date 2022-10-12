@@ -287,6 +287,9 @@ axios.get(`${baseUrl}/tl/getProposalDetail?id=${id}`, myConfig).then((res) => {
           setTpDisable(true)
          
         }
+        else if (res.data.result.tl_iba === "1"){
+          setTpDisable(true)
+        }
         else{
           setTpDisable(false)
           

@@ -215,7 +215,15 @@ setModal(!modal)
               <>
               {row.is_paid == "0" ? 
                 "" :   <>
-            {row.is_paid == "1" ?  <a href={row.receipt_url} target = "_blank">Payment receipt</a> 
+            {row.is_paid == "1" ?  
+            <>
+            {
+                row.pyment_gateway_type == "1" ?
+                <a href={row.receipt_url} target = "_blank">Payment receipt</a>  : 
+                <p>Manual collection</p>
+            }
+           
+            </>
             : <p style={{padding: "5px", color : "red"}} className="declined">Declined</p> }
             </>}
               </>
@@ -226,19 +234,35 @@ setModal(!modal)
                )
            }
         },
-        {
-            dataField: "payment_mode",
-            text: "Collection type",
-        },
+        // {
+        //     dataField: "payment_mode",
+        //     text: "Collection type",
+              
+        //     formatter: function dateFormat(cell, row) {
+        //         return(
+        //            <>
+        //            {row.is_paid === "1" && row.pyment_gateway_type == "1" ? 
+        //          <p>Pay u mode</p>
+        //                  : ""}
+                       
+        //            {row.is_paid === "1" && row.pyment_gateway_type == "2" ? 
+        //          <p>Manual collection</p>
+        //                  : ""}
+                         
+        //            </>
+        //         )
+        //     },
+           
+        // },
         {
             dataField: "",
-            text: "Manual creadited",
+            text: "Action",
            
             
             formatter: function dateFormat(cell, row) {
                 return(
                    <>
-                   {row.pyment_gateway_type == "1" ? 
+                   {row.is_paid !== "1" && row.invoice_generated == "1" ? 
                     <span title = "Manual collection">
  <Link
                  to = {{
@@ -250,7 +274,7 @@ setModal(!modal)
                  }}
                  >
                  
-              
+                  {/* <SiApplepay style={{fontSize : "30px"}} /> */}
                   <CreditCardIcon color="secondary" />
                    </Link>
                     </span>

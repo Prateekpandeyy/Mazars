@@ -73,7 +73,7 @@ if(res.data.code === 1){
     formData.append("assign_no", data.assign_no);
     formData.append("invoice_no", data.billno);
     formData.append("bank_name", bank);
-    formData.append("invoice_amount", data.invoice_amount);
+    formData.append("invoice_amount", data.payable_amount);
     formData.append("payment_recived_date", paymentDate);
     formData.append("payment_by", paymentType);
     formData.append("receive_amount", receiveAmount)
@@ -169,7 +169,7 @@ if(res.data.code === 1){
                           name="p_query"
                           className="form-control"
                         
-                           value={data.invoice_amount}
+                           value={data.payable_amount}
                           disabled
                         />
                       </div>
@@ -258,7 +258,7 @@ if(res.data.code === 1){
                    </div>
                    <div className="col-md-6">
                    <div class="form-group">
-                        <label>Notes</label>
+                        <label>Other information</label>
                         <textarea
                           className= "form-control"
                           placeholder="Message text here"
