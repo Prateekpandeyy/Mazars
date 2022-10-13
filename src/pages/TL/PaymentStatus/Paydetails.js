@@ -247,7 +247,10 @@ setModal(!modal)
             {
                 row.payment_gateway_type == "1" ?
                 <a href={row.receipt_url} target = "_blank">Payment receipt</a>  : 
-                <p>Manual collection</p>
+               
+                <span style = {{cursor : "pointer"}} onClick = {(e) => paymentFun(row)} title = "View payment">
+              Manual credit
+                </span> 
             }
            
             </>
@@ -307,9 +310,7 @@ setModal(!modal)
                     </span>
                  
                          : 
-                         <span onClick = {(e) => paymentFun(row)} title = "View payment">
-                  <CreditCardIcon color="secondary" />
-                  </span>}
+                         ""}
                    </>
                 )
             },
@@ -357,10 +358,13 @@ return(
                    data={paymentDetail}
                    columns={columns}>
                     </DataTablepopulated>
+                   {
+                    showPayment === true ?
                     <ViewPayment
                     paymentFun = {paymentFun}
                     showPayment = {showPayment}
-                    data = {invoiceData} />
+                    data = {invoiceData} /> : ""
+                   }
 
 </CardBody>
 </Card>}

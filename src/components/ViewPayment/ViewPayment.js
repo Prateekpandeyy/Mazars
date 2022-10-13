@@ -121,73 +121,72 @@ console.log("eeeeData", data)
   return (
     
      <>
-      <Modal isOpen={showPayment} toggle={paymentFun} size="lg">
-        <ModalHeader toggle={paymentFun}> 
-        Details of client
-        </ModalHeader>
-        <ModalBody>
-     
-        <div className="row">
+   {
+    data && (   <Modal isOpen={showPayment} toggle={paymentFun} size="lg">
+    <ModalHeader toggle={paymentFun}> 
+    Details of client
+    </ModalHeader>
+    <ModalBody>
+ 
+    <div className="row">
+        <div className="col-md-6">
+            <table>
+                <tr>
+                    <td>Name</td>
+                    <td>{data.name}</td>
+                </tr>
+               
+               
+               
+                <tr>
+                    <td>User ID</td>
+                    <td>{data.user_id}</td>
+                </tr>
+                <tr>
+                    <td>Payment information</td>
+                    <td>{data.payment_information}</td>
+                </tr>
+                <tr>
+                    <td>Amount</td>
+                    <td>{data.receive_amount}</td>
+                </tr>
+                <tr>
+                    <td>Received mode</td>
+                    <td>{data.payment_received_by}</td>
+                </tr>
+            </table>
+            </div>
             <div className="col-md-6">
-                <table>
-                    <tr>
-                        <td>Name</td>
-                        <td>Prateek</td>
-                    </tr>
-                   
-                   
-                    <tr>
-                        <td>Client ID</td>
-                        <td>Prateek</td>
+            <table>
+                <tr>
+                    <td>Query no</td>
+                    <td>{data.assign_no}</td>
+                </tr>
+                <tr>
+                    <td>Invoice no</td>
+                    <td>{data.billno}</td>
                     </tr>
                     <tr>
-                        <td>User ID</td>
-                        <td>TEST1234</td>
+                    <td>Note</td>
+                    <td>{data.note}</td>
                     </tr>
                     <tr>
-                        <td>Payment information</td>
-                        <td>{data.payment_information}</td>
+                        <td>Bank name</td>
+                        <td>{data.bank_name}</td>
                     </tr>
                     <tr>
-                        <td>Amount</td>
-                        <td>{data.receive_amount}</td>
+                        <td>Date of invoice</td>
+                        <td>{data.created_date}</td>
                     </tr>
-                    <tr>
-                        <td>Received mode</td>
-                        <td>{data.payment_received_by}</td>
-                    </tr>
-                </table>
-                </div>
-                <div className="col-md-6">
-                <table>
-                    <tr>
-                        <td>Query no</td>
-                        <td>{data.assign_no}</td>
-                    </tr>
-                    <tr>
-                        <td>Invoice no</td>
-                        <td>{data.billno}</td>
-                        </tr>
-                        <tr>
-                        <td>Note</td>
-                        <td>{data.note}</td>
-                        </tr>
-                        <tr>
-                            <td>Bank name</td>
-                            <td>{data.bank_name}</td>
-                        </tr>
-                        <tr>
-                            <td>Date of invoice</td>
-                            <td>{data.created_date}</td>
-                        </tr>
-                        <td>Received date</td>
-                        <td>{data.payment_recived_date}</td>
-                </table>
-                </div>
-        </div>
-        <button className="customBtn d-flex mx-auto my-4">Close</button>
-        </ModalBody>
-        </Modal>
+                    <td>Received date</td>
+                    <td>{data.payment_recived_date}</td>
+            </table>
+            </div>
+    </div>
+    <button className="customBtn d-flex mx-auto my-4">Close</button>
+    </ModalBody>
+    </Modal>)
+   }
      </>
    
   );
