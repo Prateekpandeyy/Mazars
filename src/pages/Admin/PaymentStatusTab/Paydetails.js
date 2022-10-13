@@ -17,7 +17,9 @@ import { baseUrl2, baseUrl3 } from "../../../config/config";
 import { useParams, Link, useHistory } from "react-router-dom";
 import styled from "styled-components";
 import CustomHeading from "../../../components/Common/CustomHeading";
-
+import ViewPayment from "../../../components/ViewPayment/ViewPayment";
+import Swal from 'sweetalert2';
+import CreditCardIcon from '@mui/icons-material/CreditCard';
 const PayDetails = (props) => {
     let history = useHistory();
     const userId = window.localStorage.getItem("adminkey");
@@ -26,7 +28,8 @@ const PayDetails = (props) => {
     const [modal, setModal] = useState(false);
     const [modalData, setModalData] = useState(false)
     const [showTable, setShowTable] = useState(null);
-    const [paymentUrlcopy, setPaymentUrlCopy] = useState(false)
+    const [invoiceData, setInvoiceData] = useState(null)
+    const [showPayment, setShowPayment] = useState(false)
     const token = window.localStorage.getItem("adminToken")
     const myConfig = {
         headers : {
@@ -87,6 +90,32 @@ setModal(!modal)
            a.click();
         }
       })
+      }
+      const paymentFun = (e) => {
+    
+        setShowPayment(!showPayment)
+       
+        if(e.id) {
+         
+            axios.get(`${baseUrl}/admin/creditpaymentview?id=${e.id}`, myConfig)
+            .then((res) => {
+               
+                if(res.data.code === 1){
+                    setInvoiceData(res.data.result[0])
+                }
+                else{
+                    Swal.fire({
+                        title : "error",
+                        html : "Something went wrong, please try again",
+                        icon : "error"
+                    })
+                    setInvoiceData(null)
+                }
+            })
+        }
+        else{
+            setInvoiceData([])
+        }
       }
     const columns = [
         {
@@ -254,7 +283,23 @@ setModal(!modal)
                )
            }
         },
+        {
+            dataField: "",
+            text: "Manual Credit",
            
+            
+            formatter: function dateFormat(cell, row) {
+                return(
+                   <>
+                 
+                         <span onClick = {(e) => paymentFun(row)} title = "View payment">
+                  <CreditCardIcon color="secondary" />
+                  </span>
+                   </>
+                )
+            },
+           
+        },    
       ];
       
       
@@ -301,7 +346,10 @@ return(
   columns={columns}
   classes="table-responsive"
 /> 
-
+<ViewPayment
+                    paymentFun = {paymentFun}
+                    showPayment = {showPayment}
+                    data = {invoiceData} />
 </CardBody>
 </Card>}
 </Layout>                  

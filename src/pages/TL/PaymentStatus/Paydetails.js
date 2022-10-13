@@ -18,8 +18,8 @@ import { useParams, Link, useHistory } from "react-router-dom";
 import styled from "styled-components";
 import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
 import CustomHeading from "../../../components/Common/CustomHeading";
-import {SiApplepay} from "react-icons/si";
-
+import ViewPayment from "../../../components/ViewPayment/ViewPayment";
+import Swal from 'sweetalert2';
 const PayDetails = (props) => {
     let history = useHistory();
     const userId = window.localStorage.getItem("tlkey");
@@ -27,8 +27,10 @@ const PayDetails = (props) => {
     const [paymentDetail, setPaymentDetail] = useState();
     const [modal, setModal] = useState(false);
     const [modalData, setModalData] = useState()
-    const [paymentUrlcopy, setPaymentUrlCopy] = useState(false)
+  
     const [showTable, setShowTable] = useState(null);
+    const [showPayment, setShowPayment] = useState(false)
+    const [invoiceData, setInvoiceData] = useState(null)
     const token = window.localStorage.getItem("tlToken")
     const myConfig = {
         headers : {
@@ -72,10 +74,9 @@ setModal(!modal)
           }
         axios.get(`${baseUrl}/tl/viewinvoicepdf?assign_no=${qno}&invoice_id=${id}` , myConfig2)
       .then((res) => {
-        console.log("res", res)
+       
         if(res.status === 200){
-        //    window.open(URL.createObjectURL(res.data));
-           console.log(URL.createObjectURL(res.data))
+      
            window.URL = window.URL || window.webkitURL;
            var url = window.URL.createObjectURL(res.data);
            var a = document.createElement("a");
@@ -87,6 +88,32 @@ setModal(!modal)
            a.click();
         }
       })
+      }
+      const paymentFun = (e) => {
+    
+        setShowPayment(!showPayment)
+       
+        if(e.id) {
+         
+            axios.get(`${baseUrl}/tl/creditpaymentview?id=${e.id}`, myConfig)
+            .then((res) => {
+               
+                if(res.data.code === 1){
+                    setInvoiceData(res.data.result[0])
+                }
+                else{
+                    Swal.fire({
+                        title : "error",
+                        html : "Something went wrong, please try again",
+                        icon : "error"
+                    })
+                    setInvoiceData(null)
+                }
+            })
+        }
+        else{
+            setInvoiceData([])
+        }
       }
     const columns = [
         {
@@ -218,7 +245,7 @@ setModal(!modal)
             {row.is_paid == "1" ?  
             <>
             {
-                row.pyment_gateway_type == "1" ?
+                row.payment_gateway_type == "1" ?
                 <a href={row.receipt_url} target = "_blank">Payment receipt</a>  : 
                 <p>Manual collection</p>
             }
@@ -241,11 +268,11 @@ setModal(!modal)
         //     formatter: function dateFormat(cell, row) {
         //         return(
         //            <>
-        //            {row.is_paid === "1" && row.pyment_gateway_type == "1" ? 
+        //            {row.is_paid === "1" && row.payment_gateway_type == "1" ? 
         //          <p>Pay u mode</p>
         //                  : ""}
                        
-        //            {row.is_paid === "1" && row.pyment_gateway_type == "2" ? 
+        //            {row.is_paid === "1" && row.payment_gateway_type == "2" ? 
         //          <p>Manual collection</p>
         //                  : ""}
                          
@@ -256,14 +283,14 @@ setModal(!modal)
         // },
         {
             dataField: "",
-            text: "Action",
+            text: "Manual Credit",
            
             
             formatter: function dateFormat(cell, row) {
                 return(
                    <>
                    {row.is_paid !== "1" && row.invoice_generated == "1" ? 
-                    <span title = "Manual collection">
+                    <span title = "Manual credit of payment">
  <Link
                  to = {{
                     pathname : "/teamleader/custompay",
@@ -279,12 +306,16 @@ setModal(!modal)
                    </Link>
                     </span>
                  
-                         : ""}
+                         : 
+                         <span onClick = {(e) => paymentFun(row)} title = "View payment">
+                  <CreditCardIcon color="secondary" />
+                  </span>}
                    </>
                 )
             },
            
         },
+       
       ];
     
     
@@ -326,6 +357,10 @@ return(
                    data={paymentDetail}
                    columns={columns}>
                     </DataTablepopulated>
+                    <ViewPayment
+                    paymentFun = {paymentFun}
+                    showPayment = {showPayment}
+                    data = {invoiceData} />
 
 </CardBody>
 </Card>}

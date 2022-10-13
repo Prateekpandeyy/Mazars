@@ -19,10 +19,9 @@ import { useHistory } from "react-router-dom";
 import Alerts from "../../../common/Alerts";
 import classNames from "classnames";
 import Loader from "../../../components/Loader/Loader";
-import { Link } from "react-router-dom";
 import CustomHeading from "../../../components/Common/CustomHeading";
 import { Container } from "@material-ui/core";
-
+import Swal from "sweetalert2";
 
 
 
@@ -108,6 +107,25 @@ if(res.data.code === 1){
       
       });
   };
+  const amountCredit = (e) => {
+   
+    if(e.target.value > data.payable_amount){
+      Swal.fire({
+        title : "warning",
+        html : `Value could not be greater than ${data.payable_amount}`,
+        icon : "warning"
+      })
+      setReceiveAmount(data.payable_amount)
+    }
+    else  if(e.target.value < data.payable_amount){
+      Swal.fire({
+        title : "warning",
+        html : `Value could not be less than ${data.payable_amount}`,
+        icon : "warning"
+      })
+      setReceiveAmount(data.payable_amount)
+    }
+  }
 
   return (
     <Layout TLDashboard="TLDashboard" TLuserId={userId}>
@@ -176,20 +194,21 @@ if(res.data.code === 1){
                   </div>
                   <div class="col-md-6">
                       <div class="form-group">
-                        <label>Receive amount</label>
+                        <label>Amount credited</label>
                         <input
                           type="number"
                           name="p_receive"
                           className="form-control"
                         onChange={(e) => setReceiveAmount(e.target.value)}
                            value={receiveAmount}
+                           onBlur = {(e) => amountCredit(e)}
                          
                         />
                       </div>
                   </div>
                   <div className="col-md-6">
                    <div class="form-group">
-                        <label> Received in Bank / Account <span className="declined">*</span></label>
+                        <label> Paid in bank account number <span className="declined">*</span></label>
                         <input
                           type="text"
                           name="p_account"
@@ -205,7 +224,7 @@ if(res.data.code === 1){
                    </div>
                    <div className="col-md-6">
                    <div class="form-group">
-                        <label> Payment Received date <span className="declined">*</span></label>
+                        <label> Payment receipt date <span className="declined">*</span></label>
                         <input
                           type="date"
                           name="p_date"
