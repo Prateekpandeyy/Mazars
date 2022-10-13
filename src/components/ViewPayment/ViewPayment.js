@@ -117,73 +117,90 @@ function ViewPayment({showPayment, paymentFun, data}) {
 //   }
   
 // }, [proposalId])
-console.log("eeeeData", data)
+
   return (
     
      <>
    {
-    data && (   <Modal isOpen={showPayment} toggle={paymentFun} size="lg">
+    data && (  
+         <Modal isOpen={showPayment} toggle={paymentFun} size="lg">
     <ModalHeader toggle={paymentFun}> 
-    Details of client
+    Manual credit of payment 
     </ModalHeader>
     <ModalBody>
  
-    <div className="row">
+    <div className="row" id = "payDetails" style={{border : "1px solid #ccc", padding : "10px 0px", borderRadius : "6px", margin : "10px 5px"}}>
         <div className="col-md-6">
             <table>
                 <tr>
-                    <td>Name</td>
+                    <td>Client name</td>
                     <td>{data.name}</td>
                 </tr>
-               
-               
-               
+                <td>Query no</td>
+                    <td>{data.assign_no}</td>
+                    <tr>
+                    <td>Invoice amount</td>
+                    <td>{data.payable_amount}</td>
+                </tr>
                 <tr>
+                    <td>Paid in bank account number</td>
+                    <td>{data.bank_name}</td>
+                </tr>
+                <tr>
+                    <td>Payment receipt date</td>
+                    <td>{data.payment_recived_date && data.payment_recived_date.split("-").reverse().join("-")}</td>
+                </tr>
+                {/* <tr>
+                    <td>Received mode</td>
+                    <td>{data.payment_received_by}</td>
+                </tr> */}
+                {/* <tr>
                     <td>User ID</td>
                     <td>{data.user_id}</td>
-                </tr>
+                </tr> */}
                 <tr>
                     <td>Payment information</td>
                     <td>{data.payment_information}</td>
                 </tr>
-                <tr>
-                    <td>Amount</td>
-                    <td>{data.receive_amount}</td>
-                </tr>
-                <tr>
-                    <td>Received mode</td>
-                    <td>{data.payment_received_by}</td>
-                </tr>
+              
             </table>
             </div>
             <div className="col-md-6">
             <table>
-                <tr>
-                    <td>Query no</td>
-                    <td>{data.assign_no}</td>
-                </tr>
-                <tr>
+                
+        
+                <tr colSpan = {2}>
                     <td>Invoice no</td>
                     <td>{data.billno}</td>
                     </tr>
                     <tr>
-                    <td>Note</td>
+                        <td> &nbsp;</td>
+                        <td> &nbsp; </td>
+
+                    </tr>
+                   
+                    <tr>
+                    <td>Amount credited</td>
+                    <td>{data.receive_amount}</td>
+                </tr>
+                <tr>
+                    <td>Payment type</td>
+                    <td>{data.bpayment_by}</td>
+                </tr>
+                <tr>
+                <td>Credited date</td>
+                    <td>{data.created_date && data.created_date.split(" ")[0].split("-").reverse().join("-")}</td>
+                </tr>
+                    <tr>
+                    <td>Other information</td>
                     <td>{data.note}</td>
                     </tr>
-                    <tr>
-                        <td>Bank name</td>
-                        <td>{data.bank_name}</td>
-                    </tr>
-                    <tr>
-                        <td>Date of invoice</td>
-                        <td>{data.created_date}</td>
-                    </tr>
-                    <td>Received date</td>
-                    <td>{data.payment_recived_date}</td>
+                   
+                    
             </table>
             </div>
     </div>
-    <button className="customBtn d-flex mx-auto my-4">Close</button>
+    <button className="customBtn d-flex  my-4">Close</button>
     </ModalBody>
     </Modal>)
    }

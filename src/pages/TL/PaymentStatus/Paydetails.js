@@ -264,27 +264,7 @@ setModal(!modal)
                )
            }
         },
-        // {
-        //     dataField: "payment_mode",
-        //     text: "Collection type",
-              
-        //     formatter: function dateFormat(cell, row) {
-        //         return(
-        //            <>
-        //            {row.is_paid === "1" && row.payment_gateway_type == "1" ? 
-        //          <p>Pay u mode</p>
-        //                  : ""}
-                       
-        //            {row.is_paid === "1" && row.payment_gateway_type == "2" ? 
-        //          <p>Manual collection</p>
-        //                  : ""}
-                         
-        //            </>
-        //         )
-        //     },
-           
-        // },
-        {
+         {
             dataField: "",
             text: "Manual Credit",
            

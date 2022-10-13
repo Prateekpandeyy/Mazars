@@ -787,7 +787,7 @@ Amount of monthly fee
                     {pay.is_paid == "1" ?
                   
                     <>
-                     <td style={{display : "flex", width : "20%"}}>{CommonServices.removeTime(pay.payment_date)}</td> 
+                     <td style={{display : "flex", width : "20%"}}>{CommonServices.removeTime(pay.payment_receive_date)}</td> 
                     <td style={{display : "flex", width : "20%", justifyContent : "flex-end"}}>{pay.invoice_amount}</td>
                     <td style={{display : "flex", width : "20%", justifyContent : "flex-end"}}>{pay.tds_amount}</td>
                     <td style={{display : "flex", width : "20%", justifyContent : "flex-end"}}>{pay.amount}</td>

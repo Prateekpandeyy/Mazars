@@ -108,16 +108,9 @@ if(res.data.code === 1){
       });
   };
   const amountCredit = (e) => {
-   
-    if(e.target.value > data.payable_amount){
-      Swal.fire({
-        title : "warning",
-        html : `Value could not be greater than ${data.payable_amount}`,
-        icon : "warning"
-      })
-      setReceiveAmount(data.payable_amount)
-    }
-    else  if(e.target.value < data.payable_amount){
+   console.log("eeee", e.target.value , data.payable_amount)
+    
+     if(Number(e.target.value) < Number(data.payable_amount)){
       Swal.fire({
         title : "warning",
         html : `Value could not be less than ${data.payable_amount}`,
@@ -194,11 +187,13 @@ if(res.data.code === 1){
                   </div>
                   <div class="col-md-6">
                       <div class="form-group">
-                        <label>Amount credited</label>
+                        <label>Amount credited  <span className="declined">*</span></label>
                         <input
                           type="number"
                           name="p_receive"
-                          className="form-control"
+                          className={classNames("form-control", {
+                            "is-invalid": errors.p_receive,
+                          })}
                         onChange={(e) => setReceiveAmount(e.target.value)}
                            value={receiveAmount}
                            onBlur = {(e) => amountCredit(e)}
@@ -243,7 +238,7 @@ if(res.data.code === 1){
                    <div className="col-md-6">
                    <div class="form-group">
                         <label> Payment type <span className="declined">*</span></label>
-                    <input 
+                    {/* <input 
                     type = "text"
                     ref={register({required : true})}
                     value = {paymentType}
@@ -251,7 +246,47 @@ if(res.data.code === 1){
                     name = "payment_mode"
                     className={classNames("form-control", {
                      "is-invalid": errors.payment_mode,
-                   })} />
+                   })} /> */}
+                   <select
+                   ref={register({required : true})}
+                   value = {paymentType}
+                   onChange = {(e) => setPaymentType(e.target.value)}
+                   name = "payment_mode"
+                   className={classNames("form-control", {
+                    "is-invalid": errors.payment_mode,
+                  })}>
+                      <option 
+                    value = "check">
+                      Checks
+                    </option>
+                    <option
+                    value = "bank transer">
+                      Bank transer
+                      </option>
+                    <option
+                    value = "credit card">
+                      Credit card
+                    </option>
+                    <option
+                    value = "debit card">
+                      Debit card
+                    </option>
+                    <option
+                    value = "mobile wallet">
+                     Mobile wallet
+                    </option>
+                    <option
+                    value = "upi">
+                    UPI
+                    </option>
+                    <option>
+                     Electronic bank transfer
+                    </option>
+                   <option
+                   value = "other">
+                    Other
+                    </option>
+                   </select>
                       </div>
                    </div>
                    <div className="col-md-6">
@@ -292,9 +327,9 @@ if(res.data.code === 1){
                    </div>
                    </div>
                       <button type="submit" className="customBtn">
-                        Send
+                        Submit
                       </button>
-                   
+                      <button class="customBtn ml-3" onClick={() =>history.goBack()}>Cancel</button>
                 </form>
             </Container>
                
