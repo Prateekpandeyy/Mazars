@@ -234,6 +234,8 @@ setModal(!modal)
             dataField: "",
             text: "Payment details",
            
+           
+           
            formatter: function dateFormat(cell, row){
            
                return(
@@ -242,8 +244,19 @@ setModal(!modal)
               <>
               {row.is_paid == "0" ? 
                 "" :   <>
-            {row.is_paid == "1" ?  <a href={row.receipt_url} target="_blank">Payment receipt</a> 
-            : <p style={{ padding: "5px", color : "red"}} className = "declined">Declined</p> }
+            {row.is_paid == "1" ?  
+            <>
+            {
+                row.payment_gateway_type == "1" ?
+                <a href={row.receipt_url} target = "_blank">Payment receipt</a>  : 
+               
+                <span style = {{cursor : "pointer"}} onClick = {(e) => paymentFun(row)} title = "View payment">
+              Manual credit
+                </span> 
+            }
+           
+            </>
+            : <p style={{padding: "5px", color : "red"}} className="declined">Declined</p> }
             </>}
               </>
                : ""}
@@ -253,24 +266,7 @@ setModal(!modal)
                )
            }
         },
-        {
-            dataField: "",
-            text: "Manual Credit",
-           
-            
-            formatter: function dateFormat(cell, row) {
-                return(
-                   <>
-                 
-                         <span onClick = {(e) => paymentFun(row)} title = "View payment">
-                  <CreditCardIcon color="secondary" />
-                  </span>
-                   </>
-                )
-            },
-           
-        },
-       
+          
       ];
     
       const copyFun = (e)  =>{

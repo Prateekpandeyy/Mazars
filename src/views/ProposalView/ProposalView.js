@@ -439,9 +439,9 @@ Payment plan
   <table>
 <tr>
 <th>
-Amount of monthly fee
+Payment plan
 </th>
-<th> Amount of  fee </th>
+<th> Amount of fee and due date </th>
 </tr>
 <tr>
   <td>

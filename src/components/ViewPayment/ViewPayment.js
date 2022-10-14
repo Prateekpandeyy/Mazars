@@ -204,7 +204,7 @@ function ViewPayment({showPayment, paymentFun, data, panel}) {
             </table>
             </div>
     </div>
-    <button className="customBtn d-flex  my-4">Close</button>
+    <button className="customBtn d-flex  my-4" onClick={(e) => paymentFun()}>Close</button>
     </ModalBody>
     </Modal>)
    }

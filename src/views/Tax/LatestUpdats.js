@@ -26,13 +26,15 @@ import {
   Presentation, Slide, Text,
   Shape, Image, render
 } from "react-pptx";
+import { useParams } from 'react-router';
 const LatestUpdates = () => {
     const [news, getNews] = useState([])
     const [pos,setPos] = useState(1920);   
     const [run, setRun] = useState(true);
     const [description, setDescription] = useState({})
     let history = useHistory()
-    let getId = history.location.index;
+    let getId = useParams()
+  
     let  width = 1920
     useEffect(() => {
         latestNews()
@@ -41,11 +43,11 @@ const LatestUpdates = () => {
         axios.get(`${baseUrl}/customers/getnews`)
         .then((res) =>{
         let pp = []
-        console.log("getId", getId, history)
+        console.log("getId", getId.id)
           if(res.data.code === 1){
             res.data.result.map((i) => {
              pp.push(i)
-             if(i.id === getId){
+             if(i.id == getId.id){
               
                setDescription(i)
              }
@@ -81,6 +83,7 @@ const LatestUpdates = () => {
         right: pos + "px",
        
       };
+      console.log()
     return(
        <>
        <OuterloginContainer>

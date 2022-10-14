@@ -131,7 +131,7 @@ if(res.data.code === 1){
             </Col>
             <Col md="4" align="center">
              <CustomHeading>
-             Manual payment process
+             Manual credit of payment
              </CustomHeading>
             </Col>
           </Row>
