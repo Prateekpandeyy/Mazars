@@ -3,7 +3,7 @@ import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from "reactstrap";
 import { baseUrl } from "../../config/config";
 import axios from "axios";
 
-function ViewPayment({showPayment, paymentFun, data}) {
+function ViewPayment({showPayment, paymentFun, data, panel}) {
   const [url, setUrl] = useState("")
  
 // useEffect(() => {
@@ -123,7 +123,7 @@ function ViewPayment({showPayment, paymentFun, data}) {
      <>
    {
     data && (  
-         <Modal isOpen={showPayment} toggle={paymentFun} size="lg">
+         <Modal isOpen={showPayment} toggle={paymentFun} size="lg" scrollable>
     <ModalHeader toggle={paymentFun}> 
     Manual credit of payment 
     </ModalHeader>
@@ -191,10 +191,14 @@ function ViewPayment({showPayment, paymentFun, data}) {
                 <td>Credited date</td>
                     <td>{data.created_date && data.created_date.split(" ")[0].split("-").reverse().join("-")}</td>
                 </tr>
+                   {
+                    panel === "client" ?
+                    "" :
                     <tr>
                     <td>Other information</td>
                     <td>{data.note}</td>
                     </tr>
+                   }
                    
                     
             </table>

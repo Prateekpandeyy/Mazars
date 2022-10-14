@@ -5,6 +5,7 @@ import DescriptionOutlinedIcon from "@material-ui/icons/DescriptionOutlined";
 import Swal from "sweetalert2";
 import axios from "axios";
 import { Markup } from 'interweave';
+import ViewPayment from "../ViewPayment/ViewPayment";
 function ProposalDetails({
   diaplayProposal,
   diaplayHistory,
@@ -46,6 +47,8 @@ function ProposalDetails({
   } = diaplayProposal;
 const [successDisabled, setSucessDisabled] = useState(false)
 const [currentDate] = useState(convert(date));
+const [invoiceData, setInvoiceData] = useState(null)
+const [showPayment, setShowPayment] = useState(false)
   const { tlname, date_of_allocation } = diaplayHistory;
   
   var nfObject = new Intl.NumberFormat('hi-IN')
@@ -332,7 +335,135 @@ let nd = 0;
     }})
   
   }
- console.log("admininvoice", diaplayProposal)
+  const paymentFun = (e) => {
+    
+    setShowPayment(!showPayment)
+  
+    if(panel === "admin"){
+      const token = window.localStorage.getItem("adminToken")
+      const myConfig = {
+        
+        headers : {
+         "uit" : token
+        },
+      
+      }
+      if(e.id) {
+     
+        axios.get(`${baseUrl}/admin/creditpaymentview?id=${e.id}`, myConfig)
+        .then((res) => {
+           
+            if(res.data.code === 1){
+                setInvoiceData(res.data.result[0])
+            }
+            else{
+                Swal.fire({
+                    title : "error",
+                    html : "Something went wrong, please try again",
+                    icon : "error"
+                })
+                setInvoiceData(null)
+            }
+        })
+    }
+    else{
+        setInvoiceData([])
+    }
+    }
+   else if(panel === "teamleader"){
+    const token = window.localStorage.getItem("tlToken")
+    const myConfig = {
+      
+      headers : {
+       "uit" : token
+      },
+    
+    }
+      if(e.id) {
+     
+        axios.get(`${baseUrl}/tl/creditpaymentview?id=${e.id}`, myConfig)
+        .then((res) => {
+           console.log("rescode", res)
+            if(res.data.code === 1){
+                setInvoiceData(res.data.result[0])
+            }
+            else{
+                Swal.fire({
+                    title : "error",
+                    html : "Something went wrong, please try again",
+                    icon : "error"
+                })
+                setInvoiceData(null)
+            }
+        })
+    }
+    else{
+        setInvoiceData([])
+    }
+    }
+    else if(panel === "taxprofessional"){
+      const token = window.localStorage.getItem("tpoken")
+      const myConfig = {
+        
+        headers : {
+         "uit" : token
+        },
+       
+      }
+      if(e.id) {
+     
+        axios.get(`${baseUrl}/tp/creditpaymentview?id=${e.id}`, myConfig)
+        .then((res) => {
+           
+            if(res.data.code === 1){
+                setInvoiceData(res.data.result[0])
+            }
+            else{
+                Swal.fire({
+                    title : "error",
+                    html : "Something went wrong, please try again",
+                    icon : "error"
+                })
+                setInvoiceData(null)
+            }
+        })
+    }
+    else{
+        setInvoiceData([])
+    }
+    }
+    else if(panel === "client"){
+      const token = window.localStorage.getItem("clientToken")
+      const myConfig = {
+        
+        headers : {
+         "uit" : token
+        },
+       
+      }
+      if(e.id) {
+     
+        axios.get(`${baseUrl}/customers/creditpaymentview?id=${e.id}`, myConfig)
+        .then((res) => {
+           
+            if(res.data.code === 1){
+                setInvoiceData(res.data.result[0])
+            }
+            else{
+                Swal.fire({
+                    title : "error",
+                    html : "Something went wrong, please try again",
+                    icon : "error"
+                })
+                setInvoiceData(null)
+            }
+        })
+    }
+    else{
+        setInvoiceData([])
+    }
+    }
+  }
   return (
     <>
       <div className="queryBox">
@@ -793,6 +924,8 @@ Amount of monthly fee
                     <td style={{display : "flex", width : "20%", justifyContent : "flex-end"}}>{pay.amount}</td>
                     <td style={{display : "flex", width : "20%"}}>
 
+                  {
+                    pay.receipt_url.length > 0 ?
                     <a href={pay.receipt_url} target="_blank">
                     <span title="view receipt" style={{margin: "0 2px"}}>
                     <i 
@@ -800,7 +933,11 @@ Amount of monthly fee
                    style={{color : "green", 
                    fontSize : "16px", 
                    pointer : "cursor"}}>
-                     </i></span></a>
+                     </i></span></a> : 
+                      <span style = {{cursor : "pointer"}} onClick = {(e) => paymentFun(pay)} title = "View payment">
+                      Manual credit
+                        </span> 
+                  }
                     </td>
                     </> :
                       "" 
@@ -878,6 +1015,11 @@ Amount of monthly fee
           </tbody>
         </table>
       </div>
+      <ViewPayment
+                    paymentFun = {paymentFun}
+                    showPayment = {showPayment}
+                    data = {invoiceData} 
+                    panel = {panel}/>
     </>
   );
 }

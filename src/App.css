@@ -234,6 +234,13 @@
   max-width: 90px;
   width: 100%;
 }
+#payDetails table tr{
+line-height: 35px;
+  margin : 10px 0px;
+}
+#payDetails table tr td:nth-child(1){
+  white-space: nowrap;
+}
 #payDetails table tr td:nth-child(2){
   padding : 0px 5px;
 }

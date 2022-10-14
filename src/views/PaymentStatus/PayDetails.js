@@ -26,7 +26,9 @@ import PayModal from "./PayModal";
 import DataTablepopulated from "../../components/DataTablepopulated/DataTabel";
 import  { DiscussProposal} from "../../components/Common/MessageIcon";
 import CustomHeading from "../../components/Common/CustomHeading";
+import ViewPayment from "../../components/ViewPayment/ViewPayment";
 import './index.css';
+import Swal from 'sweetalert2';
 const PayDetails = (props) => {
     let history = useHistory();
     const userId = window.localStorage.getItem("userid");
@@ -35,6 +37,8 @@ const PayDetails = (props) => {
     const [modal, setModal] = useState(false);
     const [modalData, setModalData] = useState()
     const [showTable, setShowTable] = useState(null);
+    const [showPayment, setShowPayment] = useState(false)
+    const [invoiceData, setInvoiceData] = useState(null)
     const token = window.localStorage.getItem("clientToken")
     const myConfig = {
         headers : {
@@ -95,7 +99,32 @@ setModal(!modal)
         }
       })
       }
-
+      const paymentFun = (e) => {
+    
+        setShowPayment(!showPayment)
+       
+        if(e.id) {
+         
+            axios.get(`${baseUrl}/customers/creditpaymentview?id=${e.id}`, myConfig)
+            .then((res) => {
+               
+                if(res.data.code === 1){
+                    setInvoiceData(res.data.result[0])
+                }
+                else{
+                    Swal.fire({
+                        title : "error",
+                        html : "Something went wrong, please try again",
+                        icon : "error"
+                    })
+                    setInvoiceData(null)
+                }
+            })
+        }
+        else{
+            setInvoiceData([])
+        }
+      }
     const columns = [
         {
             dataField: "",
@@ -275,23 +304,34 @@ setModal(!modal)
        
         {
             dataField: "",
-            text: "Payment receipt",
+            text: "Payment details",
            
            
-            headerStyle: () => {
-                return { fontSize: "11px", width: "90px" };
-            },
            
            formatter: function dateFormat(cell, row){
            
                return(
                 <>
-                
-             
-            {row.is_paid == "1" ?  <a href={row.receipt_url} target="_blank">Payment receipt</a> 
-            : ""}
-           {row.is_paid == "2" ? 
-           <p style={{padding: "5px", color : "red"}}>Declined</p>  : ""}
+                {row.invoice_generated == "1" ? 
+              <>
+              {row.is_paid == "0" ? 
+                "" :   <>
+            {row.is_paid == "1" ?  
+            <>
+            {
+                row.payment_gateway_type == "1" ?
+                <a href={row.receipt_url} target = "_blank">Payment receipt</a>  : 
+               
+                <span style = {{cursor : "pointer"}} onClick = {(e) => paymentFun(row)} title = "View payment">
+              Manual credit
+                </span> 
+            }
+           
+            </>
+            : <p style={{padding: "5px", color : "red"}} className="declined">Declined</p> }
+            </>}
+              </>
+               : ""}
                 </>
                   
                    
@@ -353,6 +393,14 @@ return(
 showModal = {modal}
 modalToggle = {openModal}
 modalData = {modalData}/>
+  {
+                    showPayment === true ?
+                    <ViewPayment
+                    paymentFun = {paymentFun}
+                    showPayment = {showPayment}
+                    panel = "client"
+                    data = {invoiceData} /> : ""
+                   }
 </CardBody>
 </Card>}
 </Layout>                  

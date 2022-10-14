@@ -83,7 +83,7 @@ function LoginForm() {
   const [linkData, setLinkData] = useState("myData")
   const [showData, setShowData] = useState(false)
   const [news, getNews] = useState([])
-  const [pos,setPos] = useState(1920);   
+  const [pos,setPos] = useState(window.innerWidth);   
   const [run, setRun] = useState(true);
   const [showCookie, setShowCookie] = useState(false)
   const [user, setUser] = useState("")
@@ -91,7 +91,7 @@ function LoginForm() {
   const token = localStorage.getItem("clientToken")
   const userEmail = JSON.parse(localStorage.getItem("custEmail"))
   let history = useHistory()
-  var width = 1920
+  var width = window.innerWidth;
   const myData = localStorage.getItem("myArticles")
   const cookieEnable = Cookies.get("accept")
   const clientLogin = JSON.parse(localStorage.getItem("clientLoginId"))
@@ -196,12 +196,11 @@ const onMouseLeave = (e) => {
   setPos(pos+1); // to trigger useEffect 
 }
 const styles = {
-  position: "relative", 
+ 
  display: "flex",
   fontSize: "1em",
   justifyContent : "center",
-  right: pos + "px",
- 
+ width : width
 };
 
 const showCook = () => {
@@ -258,44 +257,60 @@ const custLogout = () => {
     
  {news.length > 0 ?
   <FlashSection>
-  <h1 style={styles} 
-            onMouseEnter={onMouseEnter} 
-            onMouseLeave={onMouseLeave} 
-        >
-  {
-     news.map((i, e) => (
-<>
+ 
+ 
+
 {
-  cookieEnable ? <>
-  <span style={{display : "flex"}}>
+  cookieEnable ? 
+ 
   <span style={{padding: "0px 20px", fontSize: "16px", color: "#464646"}}> 
-
-<Link className="tabHoverflash" to = {{
- pathname : `/customer/latestupdates/${i.id}`,
- index : i.id
-                       }}>
-{i.heading} 
-</Link> </span>
-
-{e < news.length - 1 === true ? <span> | </span> : ""}
- </span>
-  </> : 
-  <>
- <span style={{display : "flex"}}>
-<span style={{padding: "0px 20px", fontSize: "16px", color: "#464646"}}> 
-
-<span onClick = {() => myCookie2("contactbasic")} className="tabHoverflash">
-{i.heading} 
-</span> </span>
-
-{e < news.length - 1 === true ? <span> | </span> : ""}
- </span>
- </>
-}
-</>
+  <marquee id = "scroll_news" onMouseOver={(e) => {
+    document.getElementById('scroll_news').stop()
+  }} 
+  onMouseOut={(e) => {
+    document.getElementById('scroll_news').start()
+  }}>
+  <span style={styles}>
+   {
+     news.map((k) => (
+  
+  <Link className="tabHoverflash" to = {{
+  pathname : `/customer/latestupdates/${k.id}`,
+  index : k.id
+                        }}>
+  {k.heading} 
+  </Link>
      ))
    }
-  </h1>
+  </span>
+  </marquee>
+  </span>
+   : 
+
+  <span style={{padding: "0px 20px", fontSize: "16px", color: "#464646"}}> 
+<marquee id = "scroll_news_disale" onMouseOver={(e) => {
+  document.getElementById('scroll_news_disale').stop()
+}} 
+onMouseOut={(e) => {
+  document.getElementById('scroll_news_disale').start()
+}}>
+<span style={styles}>
+ {
+   news.map((k) => (
+
+<p className="tabHoverflash m-0" onClick = {() => myCookie2("contactbasic")}>
+{k.heading} 
+</p>
+   ))
+ }
+</span>
+</marquee>
+</span>
+
+}
+
+  
+ 
     </FlashSection> : ""}
     <span className="loginHeading">
     <MainHeading>
