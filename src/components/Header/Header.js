@@ -38,14 +38,7 @@ function Header({ id, cust_sign, noAdminSign, noTlSign,
     }
     const handleScroll = event => {
 
-      // if(window.pageYOffset > 150){
-      //   console.log("windowPage1", window.pageYOffset)
-      //   setLogimin(true)
-      // }
-      // else if (window.pageYOffset < 80) {
-      //   console.log("windowPage2", window.pageYOffset)
-      //   setLogimin(false)
-      // }
+     
      
     if(window.pageYOffset > 0){
       setLogimin(true)

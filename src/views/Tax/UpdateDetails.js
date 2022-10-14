@@ -35,13 +35,13 @@ const UpdateDetails = () => {
   const [data, setData] = useState([])
  let id = useParams()
  let history = useHistory()
- console.log(history)
+
  const getData = (e) => {
    
   
   axios.get(`${baseUrl}/customers/getupdated?id=${id.id}`)
   .then((res) => {
-   console.log("result", res.data.result)
+   
     setData(res.data.result)
     
   })
