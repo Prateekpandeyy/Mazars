@@ -91,7 +91,7 @@ function Header({ id, cust_sign, noAdminSign, noTlSign,
           <div  id = "myP" style = {{display : "flex", width: "100%", alignItems: "center",  justifyContent: "space-between"}}>
              <div className={logomin === true ? "logomin" : "logo"}>
               <Link to="/">
-              <img src={mazars}  alt="mazar"/>
+              <img src={mazars}  alt="mazar" style={{display : "flex", maxWidth : "100%"}}/>
             </Link>
             </div>
          
