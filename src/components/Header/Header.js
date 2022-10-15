@@ -38,7 +38,14 @@ function Header({ id, cust_sign, noAdminSign, noTlSign,
     }
     const handleScroll = event => {
 
-     
+      // if(window.pageYOffset > 150){
+      //   console.log("windowPage1", window.pageYOffset)
+      //   setLogimin(true)
+      // }
+      // else if (window.pageYOffset < 80) {
+      //   console.log("windowPage2", window.pageYOffset)
+      //   setLogimin(false)
+      // }
      
     if(window.pageYOffset > 0){
       setLogimin(true)
@@ -60,29 +67,33 @@ function Header({ id, cust_sign, noAdminSign, noTlSign,
 
   return (
     <>
-      <div className={logomin === true ? "headerMin" : "header"}>
+      <div className="header">
         {id && (
-         
+         <div className={logomin === true ? "logomin" : "logo"}>
             <Link to="/customer/questionnaire-page">
-              <img src={mazars} className={logomin === true ? "logomin" : "logo"} alt="mazar" />
+              <img src={mazars}  alt="mazar" />
             </Link>
-         
+         </div>
         )}
 
         {cust_sign && (
           <div className="noSignINBox">
+            <div className={logomin === true ? "logomin" : "logo"}>
             <Link to="/">
-              <img className={logomin === true ? "logomin" : "logo"} src="https://www.mazars.co.in/extension/ezmazars_rwdesign/design/mazars2020/images/mazars-logo.png" 
+              <img  src="https://www.mazars.co.in/extension/ezmazars_rwdesign/design/mazars2020/images/mazars-logo.png" 
               alt="mazar" />
             </Link>
+            </div>
           </div>
         )}
 
         {noSign && (
           <div  id = "myP" style = {{display : "flex", width: "100%", alignItems: "center",  justifyContent: "space-between"}}>
+             <div className={logomin === true ? "logomin" : "logo"}>
               <Link to="/">
-              <img src={mazars} className={logomin === true ? "logomin" : "logo"} alt="mazar"/>
+              <img src={mazars}  alt="mazar"/>
             </Link>
+            </div>
          
         <CmsCont getData= {getData} showCook = {showCook}/>
            
