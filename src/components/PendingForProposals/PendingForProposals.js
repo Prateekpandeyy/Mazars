@@ -226,9 +226,9 @@ function PendingForProposals({ CountPendingProposal }) {
               <table className="table table-bordered">
                 <thead>
                   <tr>
-                    <th scope="row">S.No</th>
+                    <th scope="row">S.no</th>
                     <th scope="row">Name</th>
-                    <th scope="row">Query No</th>
+                    <th scope="row">Query no</th>
                     <th scope="row">Status</th>
                     <th scope="row">Date of Allocation</th>
                   </tr>

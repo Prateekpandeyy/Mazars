@@ -21,7 +21,7 @@ const GalleryVideo = () => {
     const getImages = () => {
    console.log("history", history)
       let obj = []
-      if(history.location.hash === "#images"){
+      if(history.location.pathname === "#images"){
         axios.get(`${baseUrl}/customers/getgallery?id=${history.location.index.id}`)
         .then((res) => {
          
@@ -65,7 +65,7 @@ const GalleryVideo = () => {
      }
      else{
      
-       setTitle(history.location.hash.substring(1))
+       setTitle(history.location.pathname.substring(1))
        
       let  a = {
         original : `${baseUrl3}assets/gallery/${history.location.index}`,

@@ -135,6 +135,23 @@ setModal(!modal)
             headerStyle: () => {
                 return {  width: "120px" };
             },
+              
+      formatter: function nameFormatter(cell, row) {
+      
+        return (
+          <>
+            <Link
+              to={{
+                pathname: `/admin/queries/${row.id}`,
+                index: 1,
+                routes: "paymentstatus",
+              }}
+            >
+              {row.assign_no}
+            </Link>
+          </>
+        );
+      },
         },
         {
             dataField: "installment_no",

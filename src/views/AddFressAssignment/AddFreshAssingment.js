@@ -529,7 +529,7 @@ const ImageUploads = ({ register, control }) => {
   return (
     <>
       <div className="question_query mb-2">
-        <label className="form-label">Upload Your Document</label>
+        <label className="form-label">Upload your document</label>
         <div className="btn" onClick={() => append({ pics: "" })}>
         <PublishIcon color="secondary" />
         </div>

@@ -493,12 +493,12 @@ this.localStream.init(
       let stream = evt.stream;
      
       rt.client.subscribe(stream, function (err) {
-        console.log("one")
+       
       });
     });
 
     rt.client.on("peer-leave", function (evt) {
-      console.log("onee")
+  
   
       rt.removeStream(evt.uid);
      
@@ -515,13 +515,13 @@ this.localStream.init(
 
     rt.client.on("stream-removed", function (evt) {
       let stream = evt.stream;
-      console.log("oneeee")
+     
       rt.removeStream(stream.getId());
     });
   };
 
   removeStream = (uid) => {
-    console.log("remote", this.remoteShare2)
+    
     this.state.streamList.map((item, index) => {
       if (item.getId() === uid) {
         item.close();
@@ -536,20 +536,20 @@ this.localStream.init(
         });
       }
     });
-    // console.log("showButton", this.state.showButton)
+    
  
       axios.get(`${baseUrl}/tl/setgetschedular?id=${this.props.id}&uid=${this.state.showButton}&chname=${this.channelName}`, this.myConfig)
       .then((res) => {
-        console.log("evt id", uid)
+       
         if(res.data.result.rtc_id == uid){
-          console.log("evt id", res.data.result.rtc_id)
+         
           Swal.fire({
             title: "success",
             html : "Thank you for attending this meeting, this meeting is going to be ended by host",
             icon : "success"
           })
             setTimeout((e) => {
-              window.location.hash = "/admin/schedule";
+              window.location.pathname = "/admin/schedule";
             }, 500)
            
            }
@@ -567,7 +567,7 @@ this.localStream.init(
    
     this.hostId = stream.getId()
  
-    console.log("two", push)
+   
     let repeatition = this.state.streamList.some((item) => {
       return item.getId() === stream.getId();
     });
@@ -646,8 +646,6 @@ this.localStream.init(
       this.setState({ displayMode: "pip" });
     } else if (this.state.displayMode === "share") {
       // do nothing or alert, tbd
-    } else {
-      console.error("Display Mode can only be tile/pip/share");
     }
   };
 
@@ -901,7 +899,7 @@ async startRecording(key){
 this.del();
   }
   else if(this.state.showButton == JSON.parse(this.teamKey)){
-    console.log("done222")
+    
     if(resourceId === undefined){
       var resourceId = localStorage.getItem("resourceId");
     var sid = localStorage.getItem("sid");
@@ -932,7 +930,7 @@ this.del(),
 }
 else{
   this.localStream.disableVideo()
-  window.location.hash = "/admin/schedule";
+  window.location.pathname = "/admin/schedule";
 }
 };
 
@@ -1003,7 +1001,7 @@ else{
       },
       data: formData,
    })
-    window.location.hash = "/admin/schedule";
+    window.location.pathname = "/admin/schedule";
    }
  });
  }

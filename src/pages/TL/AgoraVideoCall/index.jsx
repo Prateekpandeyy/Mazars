@@ -149,41 +149,7 @@ myConfig = {
 prevFile;
 
   componentWillMount() {
-//  let a = localStorage.getItem("chNametp");
-//  let bb = localStorage.getItem("tpid")
-//  let b = JSON.parse(bb)
-//  console.log("bbb", b)
-//  let c = localStorage.getItem("resourceIdtp")
-//  let d = localStorage.getItem("sidtp");
-//  this.prevFile = localStorage.getItem("prevFiletp")
-//  console.log("ddd", b, c)
-//  if(a && b && c && d){
-//   var data = JSON.stringify({
-//     "cname":a,
-//     "uid" : JSON.stringify(b),
-//     "clientRequest":{ }});
-//   axios({
-//     method: "POST",
-//     headers: {
-//       "content-type": "application/json;charset=utf-8",
-//       "authorization": "Basic "+this.encodedString,
-//       "cache-control": "no-cache",
-//     },
-//     url: `https://api.agora.io/v1/apps/${this.props.appId}/cloud_recording/resourceid/${c}/sid/${d}/mode/mix/stop`,
-//     data: data,
-//   })
-//   .then(json => 
-//     this.setState({vedOffer : json}),
-//   localStorage.removeItem("resourceIdtp"),
-//   localStorage.removeItem("sidtp"),
-//   localStorage.removeItem("chNametp"),
-//   localStorage.removeItem("tpid")
-    
-//     ) 
-//     .catch((error) => {
-      
-//     });
-//  }
+
     let $ = this.props;
     // init AgoraRTC local client
     this.client = AgoraRTC.createClient({ mode: $.transcode });
@@ -537,7 +503,7 @@ if(item.player === undefined){
     });
 
     rt.client.on("peer-leave", function (evt) {
-     console.log("two")
+   
       rt.removeStream(evt.uid);
       
     });
@@ -553,7 +519,7 @@ if(item.player === undefined){
 
     rt.client.on("stream-removed", function (evt) {
       let stream = evt.stream;
-     console.log("evt id", evt.uid)
+   
       rt.removeStream(stream.getId());
     });
   };
@@ -573,20 +539,19 @@ if(item.player === undefined){
         });
       }
     });
-    // console.log("showButton", this.state.showButton)
-  
+    
       axios.get(`${baseUrl}/tl/setgetschedular?id=${this.props.id}&uid=${this.state.showButton}&chname=${this.channelName}`, this.myConfig)
       .then((res) => {
-        console.log("evt id", uid)
+      
         if(res.data.result.rtc_id == uid){
-          console.log("evt id", res.data.result.rtc_id)
+          
           Swal.fire({
             title: "success",
             html : "Thank you for attending this meeting, this meeting is going to be ended by host",
             icon : "success"
           })
             setTimeout((e) => {
-              window.location.hash = "/teamleader/schedule";
+              window.location.pathname = "/teamleader/schedule";
             }, 500)
            
            }
@@ -959,13 +924,13 @@ async startRecording(key){
  stopRecording = () => {
   if(this.state.showRecBtn === true){
    
-    console.log("done3")
+   
 this.del()
 
   }
   
   else if(this.state.showButton == JSON.parse(this.teamKey)){
- console.log("done33")
+ 
     if(resourceId === undefined){
       var resourceId = localStorage.getItem("resourceId");
     var sid = localStorage.getItem("sid");
@@ -998,8 +963,8 @@ this.del(),
     });
 }
 else{
-  console.log("done333")
-  window.location.hash = "/teamleader/schedule";
+ 
+  window.location.pathname = "/teamleader/schedule";
 }
   
 };
@@ -1084,7 +1049,7 @@ del = (e) => {
         },
         data: formData,
      })
-      window.location.hash = "/teamleader/schedule";
+      window.location.pathname = "/teamleader/schedule";
      }
      
    });

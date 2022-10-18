@@ -28,8 +28,8 @@ function Header({ id, cust_sign, noAdminSign, noTlSign,
     history.push("/customer/signin");
   }
   useEffect(() => {
-    console.log("mainWindow", window.location.hash.split("/")[1].length)
-   if (window.location.hash.split("/")[1] === "customer" || window.location.hash.split("/")[1].length === 0) {
+   
+   if (window.location.pathname.split("/")[1] === "customer" || window.location.pathname.split("/")[1].length === 0) {
      
       setLogimin(false)
     }
@@ -38,19 +38,12 @@ function Header({ id, cust_sign, noAdminSign, noTlSign,
     }
     const handleScroll = event => {
 
-      // if(window.pageYOffset > 150){
-      //   console.log("windowPage1", window.pageYOffset)
-      //   setLogimin(true)
-      // }
-      // else if (window.pageYOffset < 80) {
-      //   console.log("windowPage2", window.pageYOffset)
-      //   setLogimin(false)
-      // }
+    
      
     if(window.pageYOffset > 0){
       setLogimin(true)
     }
-    else if (window.location.hash.split("/")[1] === "customer" || window.location.hash.split("/")[1].length === 0) {
+    else if (window.location.pathname.split("/")[1] === "customer" || window.location.pathname.split("/")[1].length === 0) {
      
       setLogimin(false)
     }
@@ -204,7 +197,7 @@ function Header({ id, cust_sign, noAdminSign, noTlSign,
 export default Header;
 
 const CmsCont = (props) => {
-  const [open, setOpen] = useState(false)
+ 
   const [open2, setOpen2] = useState(false)
   const [open3, setOpen3] = useState(false)
   const [updateOpen, setUpdateOpen] = useState(false)
@@ -213,7 +206,7 @@ const CmsCont = (props) => {
 
   let history = useHistory()
   useEffect(() => {
-   console.log("history", history)
+  
     if(history.location.pathname === "/"){
 
     }

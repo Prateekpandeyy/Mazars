@@ -48,13 +48,13 @@ function ViewPayment({showPayment, paymentFun, data, panel}) {
             </div>
             <div className="col-md-6">
             <table>              
-                <tr colSpan = {2}>
+                <tr>
                     <td>Invoice no</td>
                     <td>{data.billno}</td>
                     </tr>
                     <tr>
-                        <td> &nbsp;</td>
-                        <td> &nbsp; </td>
+                    <td>Installment no</td>
+                    <td>{data.installment_no}</td>
 
                     </tr>
                    
@@ -70,10 +70,7 @@ function ViewPayment({showPayment, paymentFun, data, panel}) {
                 <td>Credited date</td>
                     <td>{data.created_date && data.created_date.split(" ")[0].split("-").reverse().join("-")}</td>
                 </tr>
-               <tr>
-               <td>Installment no</td>
-                    <td>{data.installment_no}</td>
-                </tr>
+             
               
                    {
                     panel === "client" ?

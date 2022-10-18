@@ -3,6 +3,7 @@ import CommonServices from "../../common/common";
 import { ReportUrl } from "../../config/config";
 import { baseUrl } from "../../config/config";
 import axios from "axios";
+import MainText from "../Common/MainText";
 function AssignmentDetails({ p, panel, finalDate, submitData, customerQuery , diaplayAssignment, diaplayProposal, reports, assingNo }) {
 
   const {
@@ -135,15 +136,9 @@ function AssignmentDetails({ p, panel, finalDate, submitData, customerQuery , di
   return (
     <>
       <div className="queryBox">
-        <p
-          style={{
-            textAlign: "center",
-            color: "black",
-            fontSize: "18px",
-          }}
-        >
+      <MainText align="center">
           Assignment details
-        </p>
+       </MainText>
         <table className="table table-bordered">
           <thead>
             <tr>
