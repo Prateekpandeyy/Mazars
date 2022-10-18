@@ -3,9 +3,8 @@ import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
-import { useAlert } from "react-alert";
 import { useHistory, useParams } from "react-router-dom";
-
+import Swal from 'sweetalert2';
 function PaymentModal({
   addPaymentModal,
   paymentHandler,
@@ -13,7 +12,7 @@ function PaymentModal({
   // getProposalData,
 }) {
   const { handleSubmit, register, reset } = useForm();
-  const alert = useAlert();
+ 
   const history = useHistory();
   const { id } = useParams();
 
@@ -38,7 +37,12 @@ function PaymentModal({
       
         if (response.data.code === 1) {
           reset();
-          alert.success(" message successfully send!");
+          Swal.fire({
+            tilte : "success",
+            html : "message successfully send!",
+            icon : "success"
+          })
+         
           paymentHandler()
         }
       })

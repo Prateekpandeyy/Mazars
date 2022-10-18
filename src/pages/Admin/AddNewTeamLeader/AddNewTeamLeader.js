@@ -7,7 +7,6 @@ import Select from "react-select";
 import Swal from 'sweetalert2';
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
-import { useAlert } from "react-alert";
 import { Card, CardHeader, Row, Col } from "reactstrap";
 import { useHistory } from "react-router-dom";
 import classNames from "classnames";
@@ -29,7 +28,7 @@ const Schema = yup.object().shape({
 
 
 function AddNew() {
-  const alert = useAlert();
+ 
   const history = useHistory();
   const { handleSubmit, register, reset, errors } = useForm({
     resolver: yupResolver(Schema),

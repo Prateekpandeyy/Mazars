@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import { useParams, useHistory, Link } from "react-router-dom";
-import { useAlert } from "react-alert";
+
 import {
   Card,
   CardHeader,
@@ -30,7 +30,7 @@ const Schema = yup.object().shape({
 
 
 function QueryAssingment() {
-  const alert = useAlert();
+ 
   const { handleSubmit, register, errors, reset } = useForm({
     resolver: yupResolver(Schema),
   });

@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 // import "../../assets/css/media.css";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
-import { useAlert } from "react-alert";
+
 import Layout from "../../../components/Layout/Layout";
 import classNames from "classnames";
 import Swal from "sweetalert2";
@@ -18,10 +18,6 @@ import Swal from "sweetalert2";
 function ChangePassword(props) {
   const userid = window.localStorage.getItem("tpkey");
 
-  const alert = useAlert();
-  // const { handleSubmit, register, reset, errors } = useForm({
-  //   resolver: yupResolver(Schema),
-  // });
 
   const { register, handleSubmit, errors, getValues, reset } = useForm();
 

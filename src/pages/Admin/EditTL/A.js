@@ -5,7 +5,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
-import { useAlert } from "react-alert";
+
 import { useParams, useHistory } from "react-router-dom";
 import {
   Card,
@@ -22,7 +22,7 @@ import TaxProffesionalService from "../../../config/services/TaxProffesional";
 function EditTP() {
   const { id } = useParams();
   const history = useHistory();
-  const alert = useAlert();
+  
   const { handleSubmit, register, errors, reset } = useForm();
   const userid = window.localStorage.getItem("adminkey");
   const [teamleader, setTeamLeader] = useState([]);

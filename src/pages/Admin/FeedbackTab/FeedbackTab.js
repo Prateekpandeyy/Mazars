@@ -12,12 +12,11 @@ import {
   Table,
 } from "reactstrap";
 import BootstrapTable from "react-bootstrap-table-next";
-import { useAlert } from "react-alert";
 import { useHistory } from "react-router";
 import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
 import CustomHeading from "../../../components/Common/CustomHeading";
 function FeedbackTab() {
-  const alert = useAlert();
+ 
   const history = useHistory();
   const userid = window.localStorage.getItem("adminkey");
   const [feedbackData, setFeedBackData] = useState([]);

@@ -5,7 +5,7 @@ import * as yup from "yup";
 import Layout from "../../../components/Layout/Layout";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
-import { useAlert } from "react-alert";
+
 import { useHistory } from "react-router-dom";
 import {
   Card,
@@ -17,13 +17,12 @@ import {
   Table,
   Tooltip,
 } from "reactstrap";
-import Alerts from "../../../common/Alerts";
 import classNames from "classnames";
 import Mandatory from "../../../components/Common/Mandatory";
 import Loader from "../../../components/Loader/Loader";
 import { Link } from "react-router-dom";
 import CustomHeading from "../../../components/Common/CustomHeading";
-
+import Swal from 'sweetalert2';
 
 
 const Schema = yup.object().shape({
@@ -38,7 +37,7 @@ function Chatting(props) {
 
  
 
-  const alert = useAlert();
+  
   const history = useHistory();
   const { handleSubmit, register, errors, reset } = useForm({
     resolver: yupResolver(Schema),
@@ -97,10 +96,19 @@ function Chatting(props) {
         if (response.data.code === 1) {
           reset();
           setLoading(false)
-          var variable = "Message sent successfully. "
-          Alerts.SuccessNormal(variable)
+          Swal.fire({
+            title : "success",
+            html : "Message sent successfully",
+            icon : "success"
+          })
+         
           props.history.push(routes);
         } else if (response.data.code === 0) {
+          Swal.fire({
+            title : "error",
+            html : "Something went wrong, please try again",
+            icon : "error"
+          })
           setLoading(false)
         }
       })

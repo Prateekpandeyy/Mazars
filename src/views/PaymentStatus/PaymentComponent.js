@@ -3,9 +3,9 @@ import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
-import { useAlert } from "react-alert";
+
 import { useHistory } from "react-router-dom";
-import Alerts from "../../common/Alerts";
+
 import CommonServices from "../../common/common";
 import Loader from "../../components/Loader/Loader";
 
@@ -18,7 +18,7 @@ function PaymentModal({
   pay3
 }) {
   const { handleSubmit, register } = useForm();
-  const alert = useAlert();
+
   const history = useHistory();
 
   const { assign_id, amount, accepted_amount, paid_amount,

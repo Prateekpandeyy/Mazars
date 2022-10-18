@@ -4,7 +4,6 @@ import Header from "../../../components/Header/Header";
 import Footer from "../../../components/Footer/Footer";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
-import { useAlert } from "react-alert";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import classNames from "classnames";
@@ -12,14 +11,14 @@ import Alerts from "../../../common/Alerts";
 import { Link } from "react-router-dom";
 import Mandatory from "../../../components/Common/Mandatory";
 import { Spinner } from "reactstrap";
-
+import Swal from 'sweetalert2';
 
 const Schema = yup.object().shape({
   p_email: yup.string().email("invalid email").required(""),
 });
 
 function ForgetPassword(props) {
-  const alert = useAlert();
+ 
 
   const { handleSubmit, register, reset, errors } = useForm({
     resolver: yupResolver(Schema),
@@ -43,10 +42,20 @@ function ForgetPassword(props) {
       
         if (response.data.code === 1) {
           setLoading(false)
-          Alerts.SuccessNormal("As per your request , OTP has been sent to your mobile number / email address.")
+          Swal.fire({
+            title : "success",
+            html : "As per your request , OTP has been sent to your mobile number / email address.",
+            icon : "success"
+          })
+         
           props.history.push(`/teamleader/new-password/${value.p_email}`)
         } else if (response.data.code === 0) {
-          Alerts.ErrorNormal("Please enter correct email address.")
+          Swal.fire({
+            title : "error",
+            html : "Please enter correct email address.",
+            icon : "error"
+          })
+          
           setLoading(false)
         }
       })

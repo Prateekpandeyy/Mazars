@@ -2,28 +2,11 @@ import React from "react";
 import Layout from "../../../components/Layout/Layout";
 // import './index.css'
 import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup"; 
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
-import { useAlert } from "react-alert";
-
-
-// const Schema = yup.object().shape({
-//   p_name: yup.string().required("required name"),
-//   p_email: yup.string().email("invalid email").required("required email"),
-//   p_phone: yup
-//   .string()
-//   .required("required phone no")
-//   .matches(/^[0-9]+$/, "Must be only digits")
-//   .min(10, "Must be exactly 10 digits")
-//   .max(20, "max 20 digits"),
-// });
-
-
-
+import Swal from 'sweetalert2';
 function AddNew() {
-  const alert = useAlert();
+ 
   const { handleSubmit, register, errors, reset } = useForm();
 
   const userid = window.localStorage.getItem("tlkey");
@@ -45,7 +28,13 @@ function AddNew() {
       .then(function (response) {
            
         if (response.data.code === 1) {
-          alert.success("TP created  !");
+          Swal.fire({
+            title : "success",
+            html : "TP created  !",
+            icon : "success"
+          })
+        
+          
           reset();
         }
       })

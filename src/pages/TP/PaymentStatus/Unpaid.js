@@ -15,7 +15,7 @@ import {
     ModalFooter,
     Button,
 } from "reactstrap";
-import { useAlert } from "react-alert";
+
 import { Link, useParams } from "react-router-dom";
 import CommonServices from "../../../common/common";
 import BootstrapTable from "react-bootstrap-table-next";
@@ -32,7 +32,7 @@ import MessageIcon, {PaymentDecline, Payment, ViewDiscussionIcon, DiscussProposa
 
 
 function AllPayment() {
-    const alert = useAlert();
+    
     const { id } = useParams();
     const userid = window.localStorage.getItem("tpkey");
     const cust_id = window.localStorage.getItem("userid");

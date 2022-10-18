@@ -4,7 +4,6 @@ import "./index.css";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
-import { useAlert } from "react-alert";
 import {
   Card,
   CardHeader,
@@ -18,7 +17,7 @@ import BootstrapTable from "react-bootstrap-table-next";
 import Swal from "sweetalert2";
 import { TurnedIn } from "@material-ui/icons";
 function TeamLeaderTab() {
-  const alert = useAlert();
+  
   const [data, setData] = useState([]);
   const [tlCount, setTlCount] = useState("");
   const [subCat, setsubCat] = useState([])

@@ -3,7 +3,6 @@ import Layout from "../../../components/Layout/Layout";
 import { useHistory, useParams } from "react-router-dom";
 import axios from "axios";
 import { baseUrl,ReportUrl } from "../../../config/config";
-import { useAlert } from "react-alert";
 import {
   Card,
   CardHeader,
@@ -16,10 +15,11 @@ import {
 } from "reactstrap";
 import { useForm } from "react-hook-form";
 import CustomHeading from "../../../components/Common/CustomHeading";
+import Swal from 'sweetalert2';
 function AssignmentForm(props) {
 
 
-  const alert = useAlert();
+  
   const { handleSubmit, register, errors, reset, setValue } = useForm();
   const history = useHistory();
   const { id } = useParams();
@@ -104,7 +104,12 @@ function AssignmentForm(props) {
       .then(function (response) {
        
         if (response.data.code === 1) {
-          alert.success(<Msg />);
+          Swal.fire({
+            title : "success",
+            html : "success",
+            icon : "success"
+          })
+         
           getDetails();
           reset();
         }

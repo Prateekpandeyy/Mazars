@@ -7,7 +7,7 @@ import Select from "react-select";
 import Swal from 'sweetalert2';
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
-import { useAlert } from "react-alert";
+
 import { Card, CardHeader, Row, Col } from "reactstrap";
 import { useHistory } from "react-router-dom";
 import classNames from "classnames";
@@ -15,6 +15,7 @@ import Mandatory from "../../../components/Common/Mandatory";
 import { Spinner } from "reactstrap";
 import EmailValidation from "../../../components/Common/EmailValidation";
 import CustomHeading from "../../../components/Common/CustomHeading";
+
 const Schema = yup.object().shape({
   p_name: yup.string().required("required name"),
   // p_email: yup.string().email("invalid email").required("required email"),
@@ -29,7 +30,7 @@ const Schema = yup.object().shape({
 
 
 function AddNew() {
-  const alert = useAlert();
+  
   const history = useHistory();
   const { handleSubmit, register, reset, errors } = useForm({
     resolver: yupResolver(Schema),

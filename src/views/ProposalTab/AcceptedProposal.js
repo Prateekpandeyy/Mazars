@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
-import { useAlert } from "react-alert";
 import {
     Card,
     CardHeader,
@@ -21,7 +20,6 @@ import DataTablepopulated from "../../components/DataTablepopulated/DataTabel";
 import CommonServices from "../../common/common"
 
 function AcceptedProposal() {
-    const alert = useAlert();
 let history = useHistory()
     const userId = window.localStorage.getItem("userid");
     const [proposalDisplay, setProposalDisplay] = useState([]);

@@ -5,7 +5,7 @@ import * as yup from "yup";
 import Layout from "../../../components/Layout/Layout";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
-import { useAlert } from "react-alert";
+
 import {
   Card,
   CardHeader,
@@ -22,7 +22,7 @@ import classNames from "classnames";
 import Mandatory from "../../../components/Common/Mandatory";
 import Loader from "../../../components/Loader/Loader";
 import { Link } from "react-router-dom";
-
+import Swal from 'sweetalert2';
 const Schema = yup.object().shape({
   msg_type: yup.string().required(""),
   p_message: yup.string().required(""),
@@ -31,7 +31,7 @@ const Schema = yup.object().shape({
 
 
 function Chatting(props) {
-  const alert = useAlert();
+  
   const history = useHistory();
   const { handleSubmit, register, errors, reset } = useForm({
     resolver: yupResolver(Schema),
@@ -113,8 +113,12 @@ const token = window.localStorage.getItem("tlToken")
         if (response.data.code === 1) {
           reset();
           setLoading(false)
-          var variable = "Message sent successfully."
-          Alerts.SuccessNormal(variable)
+          Swal.fire({
+            title : "success",
+            html : "Message sent successfully.",
+            icon : "success"
+          })
+         
           props.history.push(routes);
         }
       })

@@ -5,7 +5,7 @@ import * as yup from "yup";
 import Layout from "../../../components/Layout/Layout";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
-import { useAlert } from "react-alert";
+
 import {
   Card,
   CardHeader,
@@ -16,7 +16,7 @@ import {
 
 } from "reactstrap";
 import { useHistory } from "react-router-dom";
-import Alerts from "../../../common/Alerts";
+
 import classNames from "classnames";
 import Loader from "../../../components/Loader/Loader";
 import CustomHeading from "../../../components/Common/CustomHeading";
@@ -27,7 +27,7 @@ import Swal from "sweetalert2";
 
 
 function Custompay(props) {
-  const alert = useAlert();
+ 
   const history = useHistory();
   const { handleSubmit, register, errors, reset } = useForm();
 
@@ -92,15 +92,24 @@ if(res.data.code === 1){
         if (response.data.code === 1) {
           reset();
           setLoading(false)
-          var variable = "Payment captured successully"
-          Alerts.SuccessNormal(variable)
+       
+          Swal.fire({
+            title : "success",
+            html : "Payment captured successully",
+            icon : "success"
+          })
+         
           history.push("/teamleader/paymentstatus")
           // props.history.push(routes);
         }
         else{
           setLoading(false)
           var variable = "Something went wrong, please try again"
-          Alerts.ErrorNormal(variable) 
+          Swal.fire({
+            title : "success",
+            html : "Something went wrong, please try again",
+            icon : "success"
+          })
         }
       })
       .catch((error) => {
