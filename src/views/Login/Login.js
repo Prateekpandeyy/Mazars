@@ -199,8 +199,7 @@ const styles = {
  
  display: "flex",
   fontSize: "1em",
-  justifyContent : "center",
- width : width
+ 
 };
 
 const showCook = () => {
@@ -263,7 +262,7 @@ const custLogout = () => {
 {
   cookieEnable ? 
  
-  <span style={{padding: "0px 20px", fontSize: "16px", color: "#464646"}}> 
+  
   <marquee id = "scroll_news" onMouseOver={(e) => {
     document.getElementById('scroll_news').stop()
   }} 
@@ -272,22 +271,24 @@ const custLogout = () => {
   }}>
   <span style={styles}>
    {
-     news.map((k) => (
+     news.map((k, e) => (
   
   <Link className="tabHoverflash mx-2 my-0" to = {{
   pathname : `/customer/latestupdates/${k.id}`,
   index : k.id
                         }}>
-  {`${k.heading}  |     `}
+  {`${k.heading}`}
+  {news.length - 1 == e ? "":  <>
+    <span>&nbsp; &nbsp; | &nbsp; &nbsp;</span> </>}
   </Link>
      ))
    }
   </span>
   </marquee>
-  </span>
+ 
    : 
 
-  <span style={{padding: "0px 20px", fontSize: "16px", color: "#464646"}}> 
+  
 <marquee id = "scroll_news_disale" onMouseOver={(e) => {
   document.getElementById('scroll_news_disale').stop()
 }} 
@@ -296,16 +297,19 @@ onMouseOut={(e) => {
 }}>
 <span style={styles}>
  {
-   news.map((k) => (
+   news.map((k, e) => (
 
 <p className="tabHoverflash mx-2 my-0" onClick = {() => myCookie2("contactbasic")}>
-{`${k.heading}  |      `}
+{`${k.heading}`}
+  {news.length - 1 == e ? "":  <>
+    <span>&nbsp; &nbsp; | &nbsp; &nbsp;</span> </>}
+
 </p>
    ))
  }
 </span>
 </marquee>
-</span>
+
 
 }
 

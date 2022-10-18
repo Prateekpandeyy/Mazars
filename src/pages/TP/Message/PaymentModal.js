@@ -3,7 +3,7 @@ import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
-import { useAlert } from "react-alert";
+
 import { useHistory, useParams } from "react-router-dom";
 
 function PaymentModal({
@@ -13,7 +13,7 @@ function PaymentModal({
   // getProposalData,
 }) {
   const { handleSubmit, register, reset } = useForm();
-  const alert = useAlert();
+  
   const history = useHistory();
   const { id } = useParams();
 

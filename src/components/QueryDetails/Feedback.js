@@ -1,21 +1,16 @@
 import React, { useState } from "react";
 import CommonServices from "../../common/common";
-
+import MainText from "../Common/MainText";
 
 function Feedback({ feedback }) {
   
 
     return (
         <div>
-            <p
-                style={{
-                    textAlign: "center",
-                    color: "black",
-                    fontSize: "18px",
-                }}
-            >
+            
+             <MainText align="center">
                 Feedback
-            </p>
+            </MainText>
             <table className="table table-bordered">
                 <thead>
                     <tr>

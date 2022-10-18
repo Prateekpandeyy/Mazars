@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import CommonServices from "../../common/common";
 import { baseUrl, baseUrl3 } from "../../config/config";
-import DescriptionOutlinedIcon from "@material-ui/icons/DescriptionOutlined";
 import Swal from "sweetalert2";
 import axios from "axios";
 import { Markup } from 'interweave';
 import ViewPayment from "../ViewPayment/ViewPayment";
+import MainText from "../Common/MainText";
 function ProposalDetails({
   diaplayProposal,
   diaplayHistory,
@@ -42,7 +42,8 @@ function ProposalDetails({
     amount_type,
     start_date,
     end_date,
-    sub_payment_plane
+    sub_payment_plane,
+    amount_outstanding
     
   } = diaplayProposal;
 const [successDisabled, setSucessDisabled] = useState(false)
@@ -467,15 +468,9 @@ let nd = 0;
   return (
     <>
       <div className="queryBox">
-        <p
-          style={{
-            textAlign: "center",
-            color: "black",
-            fontSize: "18px",
-          }}
-        >
+      <MainText align="center">
           Proposal and payment details
-        </p>
+        </MainText>
 
         <table className="table table-bordered">
           <thead>
@@ -579,11 +574,10 @@ let nd = 0;
     <tr>
       {
         panel === "admin" ?  
-        <td className="tableStyle"> 
+        <td> 
         
         <label className="mr-2">Approval of Admin for such issue of invoice(s)</label>
        
-          <div className="myInvice">
            
       {
         tl_iba === "1" && tp_iba === "1" && admin_iba === null ?
@@ -712,8 +706,7 @@ name = "yestl" />Yes
      }
      </>
       }
-        </div> 
-       
+           
      
       </td> : 
         <td>
@@ -957,7 +950,7 @@ Payment plan
             </tr>
             <tr>
               <th scope="row">Payment outstanding</th>
-              <td>{nfObject.format(accepted_amount - payment_received)}</td>
+              <td>{amount_outstanding}</td>
             </tr>
          
             

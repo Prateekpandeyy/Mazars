@@ -1,49 +1,38 @@
 import React, { useState, useEffect } from "react";
 import Layout from "../../../components/Layout/Layout";
-import { useForm } from "react-hook-form";
-import axios from "axios";
-import { baseUrl } from "../../../config/config";
-import { useParams, useHistory, Link } from "react-router-dom";
-import { useAlert } from "react-alert";
 import {
   Card,
   CardHeader,
-  CardBody,
-  CardTitle,
   Row,
   Col,
-  Table,
-  Tooltip,
+  
 } from "reactstrap";
-import Alerts from "../../../common/Alerts";
+import { useParams, useHistory, Link } from "react-router-dom";
+import Loader from "../../../components/Loader/Loader";
+import CommonServices from "../../../common/common";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { useForm } from "react-hook-form";
+import Swal from 'sweetalert2';
+import axios from "axios";
+import { baseUrl } from "../../../config/config";
 import classNames from "classnames";
 import Mandatory from "../../../components/Common/Mandatory";
-import Loader from "../../../components/Loader/Loader";
-import CommonServices from "../../../common/common"
-
-
+import CustomHeading from "../../../components/Common/CustomHeading";
 const Schema = yup.object().shape({
   p_taxprof: yup.string().required(""),
   p_expdeldate: yup.string().required(""),
 });
-
-
-function QueryAssingment() {
-  const alert = useAlert();
-  const { handleSubmit, register, errors, reset } = useForm({
-    resolver: yupResolver(Schema),
-  });
-
-  const { id } = useParams();
-  const history = useHistory();
-
-  const [taxProfessionDisplay, setTaxProfessionDisplay] = useState([]);
+const QueryAssingment = (props) => {
+  const [loading, setLoading] = useState(false);
   const [taxID, setTaxID] = useState(null);
   const [teamName, setTeamName] = useState('');
-  const [loading, setLoading] = useState(false);
-
+  const [queryData, setQuerData] = useState({
+    queryNo: "",
+    timelines: "",
+    custId: "",
+    expect_dd: "",
+  });
   const [hideQuery, setHideQuery] = useState({
     name: "",
     timeline: "",
@@ -52,32 +41,53 @@ function QueryAssingment() {
   });
 
   const [query, setQuery] = useState(true);
-  const userId = window.localStorage.getItem("tlkey");
-  const tpkey = window.localStorage.getItem("tpkey");
-
-  const [queryData, setQuerData] = useState({
-    queryNo: "",
-    timelines: "",
-    custId: "",
-    expect_dd: "",
-  });
-
-  const { queryNo, timelines, custId, expect_dd } = queryData;
-
+  const [taxProfessionDisplay, setTaxProfessionDisplay] = useState([]);
   var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
  
   const [item] = useState(current_date);
+  const userId = window.localStorage.getItem("tlkey");
   const token = window.localStorage.getItem("tlToken")
+  const { id } = useParams();
+  const { queryNo, timelines, custId, expect_dd } = queryData;
+  const { handleSubmit, register, errors, reset } = useForm({
+    resolver: yupResolver(Schema),
+  });
   const myConfig = {
-      headers : {
-       "uit" : token
-      }
+    headers : {
+     "uit" : token
     }
-
+  }
   useEffect(() => {
     getTaxProfession();
     getQueryData();
+    getQuery();
   }, []);
+  const handleChange = (e) => {
+   
+    setTaxID(e.target.value)
+    var value = taxProfessionDisplay.filter(function (item) {
+      return item.id == e.target.value
+    })
+  
+    setTeamName(value[0].name)
+  }
+  const getQuery = () => {
+    axios
+      .get(`${baseUrl}/tl/TlCheckIfAssigned?assignno=${queryNo}`, myConfig)
+      .then((res) => {
+        
+        if (res.data.code === 1) {
+          setQuery(false);
+          // setHideQuery(res.data.meta);
+          setHideQuery({
+            name: res.data.meta[0].name,
+            timeline: res.data.meta[0].timeline,
+            date_allocation: res.data.meta[0].date_allocation,
+            expdeliverydate: res.data.meta[0].expdeliverydate,
+          });
+        }
+      });
+  };
 
   const getTaxProfession = () => {
     axios
@@ -103,38 +113,6 @@ function QueryAssingment() {
       }
     });
   };
-
-  useEffect(() => {
-    getQuery();
-  }, [queryNo]);
-
-  const getQuery = () => {
-    axios
-      .get(`${baseUrl}/tl/TlCheckIfAssigned?assignno=${queryNo}`, myConfig)
-      .then((res) => {
-        
-        if (res.data.code === 1) {
-          setQuery(false);
-          // setHideQuery(res.data.meta);
-          setHideQuery({
-            name: res.data.meta[0].name,
-            timeline: res.data.meta[0].timeline,
-            date_allocation: res.data.meta[0].date_allocation,
-            expdeliverydate: res.data.meta[0].expdeliverydate,
-          });
-        }
-      });
-  };
-
-  const handleChange = (e) => {
-   
-    setTaxID(e.target.value)
-    var value = taxProfessionDisplay.filter(function (item) {
-      return item.id == e.target.value
-    })
-  
-    setTeamName(value[0].name)
-  }
 
 
   const onSubmit = (value) => {
@@ -170,21 +148,32 @@ function QueryAssingment() {
       
         if (response.data.code === 1) {
           setLoading(false)
-          var variable = "Query assigned successfully."
-          Alerts.SuccessNormal(variable)
          
+          Swal.fire({
+            title : 'success',
+            html : "Query assigned successfully.",
+            icon : "success"
+          })
+          props.history.push({
+            pathname: `/teamleader/queriestab`,
+            index: 3,
+          });
           getQuery();
           reset();
-          history.push('/teamleader/queriestab')
+         
         } if (response.data.code === 0) {
           setLoading(false)
+          Swal.fire({
+            title : 'error',
+            html : "Something went wrong, please try again",
+            icon : "error"
+          })
         }
       })
       .catch((error) => {
      
       });
   };
-
   return (
     <Layout TLDashboard="TLDashboard" TLuserId={userId}>
       <Card>
@@ -205,10 +194,10 @@ function QueryAssingment() {
                 </button>
               </Link>
             </Col>
-            <Col md="4">
-              <div style={{ textAlign: "center" }}>
-                <h4>Query Allocation</h4>
-              </div>
+            <Col md="4" align="center">
+             <CustomHeading>
+             Query allocation
+             </CustomHeading>
             </Col>
           </Row>
         </CardHeader>
@@ -226,10 +215,10 @@ function QueryAssingment() {
                         <table class="table">
                           <thead>
                             <tr>
-                              <th scope="col">Query No.</th>
-                              <th scope="col">Tax Professional<span className="declined">*</span></th>
-                              <th scope="col">Expected Timeline</th>
-                              <th scope="col">Exp. Delivery Date<span className="declined">*</span></th>
+                              <th scope="col">Query no.</th>
+                              <th scope="col">Tax professional<span className="declined">*</span></th>
+                              <th scope="col">Expected timeline</th>
+                              <th scope="col">Exp. delivery date<span className="declined">*</span></th>
                               <th scope="col">Action</th>
                             </tr>
                           </thead>

@@ -15,7 +15,7 @@ import {
     ModalFooter,
     Button,
 } from "reactstrap";
-import { useAlert } from "react-alert";
+
 import { Link, useParams } from "react-router-dom";
 import CommonServices from "../../../common/common";
 import BootstrapTable from "react-bootstrap-table-next";
@@ -27,11 +27,11 @@ import DiscardReport from "../AssignmentTab/DiscardReport";
 import moment from "moment";
 import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
 import MessageIcon, {PaymentDecline, Payment, ViewDiscussionIcon, DiscussProposal, HelpIcon} from "../../../components/Common/MessageIcon";
-
+import Swal from "sweetalert2";
 
 
 function AllPayment() {
-    const alert = useAlert();
+   
     const { id } = useParams();
     const userid = window.localStorage.getItem("tlkey");
     const cust_id = window.localStorage.getItem("userid");

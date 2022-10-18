@@ -19,6 +19,7 @@ import styled from "styled-components";
 import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
 import CustomHeading from "../../../components/Common/CustomHeading";
 import ViewPayment from "../../../components/ViewPayment/ViewPayment";
+import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
 import Swal from 'sweetalert2';
 const PayDetails = (props) => {
     let history = useHistory();
@@ -130,7 +131,22 @@ setModal(!modal)
         {
             dataField: "assign_no",
             text: "Query no",
-            
+            formatter: function nameFormatter(cell, row) {
+      
+                return (
+                  <>
+                    <Link
+                      to={{
+                        pathname: `/teamleader/queries/${row.assign_id}`,
+                        index: 1,
+                        routes: "paymentstatus",
+                      }}
+                    >
+                      {row.assign_no}
+                    </Link>
+                  </>
+                );
+              },
          
         },
         {
@@ -285,7 +301,7 @@ setModal(!modal)
                  >
                  
                   {/* <SiApplepay style={{fontSize : "30px"}} /> */}
-                  <CreditCardIcon color="secondary" />
+                  <CurrencyRupeeIcon color="secondary" />
                    </Link>
                     </span>
                  

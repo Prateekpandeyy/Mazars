@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import Layout from "../../components/Layout/Layout";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
-import { useAlert } from "react-alert";
 import {
   Card,
   CardHeader,
@@ -20,7 +19,7 @@ import CustomerFilter from "../../components/Search-Filter/CustomerFilter";
 import BootstrapTable from "react-bootstrap-table-next";
 
 function ProposalTab() {
-  const alert = useAlert();
+ 
 
   const userId = window.localStorage.getItem("userid");
   const [proposalDisplay, setProposalDisplay] = useState([]);
@@ -364,7 +363,12 @@ function ProposalTab() {
         console.log("res-", response);
         if (response.data.code === 1) {
           getProposalData();
-          alert.success("proposal accepted !");
+          Swal.fire({
+            title : "success",
+            html : "roposal accepted !",
+            icon : "success"
+           })
+         
         }
       })
       .catch((error) => {
@@ -390,7 +394,12 @@ function ProposalTab() {
         if (response.data.code === 1) {
           setRejected(false);
           getProposalData();
-          alert.success("proposal rejected !");
+          Swal.fire({
+            title : "success",
+            html : "Proposal rejected !",
+            icon : "success"
+           })
+         
         }
       })
       .catch((error) => {

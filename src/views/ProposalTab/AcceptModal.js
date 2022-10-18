@@ -3,12 +3,10 @@ import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
-import { useAlert } from "react-alert";
 
 function AcceptModal({ acceptedModal, acceptedHandler, id,getProposalData}) {
     const { handleSubmit, register, reset } = useForm();
-    const alert = useAlert();
-
+    
 
     const onSubmit = (value) => {
      

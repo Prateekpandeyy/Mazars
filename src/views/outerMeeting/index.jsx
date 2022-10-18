@@ -26,7 +26,7 @@ class OuterMeeting extends React.Component {
   meetdetails = JSON.parse(localStorage.getItem("meetdetails"))
   
   render() {
-  console.log("thisDetails", window.location.hash.split("/")[3]) 
+ 
     return (
       
       <div className="wrapper meeting" style={{ display : "flex", flexDirection: "column" , height: "100vh" }}>
@@ -55,7 +55,7 @@ class OuterMeeting extends React.Component {
               baseMode={this.baseMode}
               appId={this.appId}
               uid={this.uid}
-              id={window.location.hash.split("/")[3]}
+              id={window.location.pathname.split("/")[3]}
             />
           </div>
         </div>

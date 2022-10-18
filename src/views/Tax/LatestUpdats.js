@@ -31,6 +31,7 @@ import { useParams } from 'react-router';
 import CookieConsent from "react-cookie-consent";
 import CloseIcon from '@material-ui/icons/Close';
 import CustomHeading from "../../components/Common/CustomHeading";
+import MainText from '../../components/Common/MainText';
 const LatestUpdates = () => {
     const [news, getNews] = useState([])
     const [pos,setPos] = useState(1920);   
@@ -95,11 +96,10 @@ const LatestUpdates = () => {
         setPos(pos+1); // to trigger useEffect 
       }
       const styles = {
-        position: "relative", 
+        
        display: "flex",
         fontSize: "1em",
-        justifyContent : "center",
-        right: pos + "px",
+      
        
       };
       console.log()
@@ -179,32 +179,33 @@ onAccept={(e) => {
 
 {
 cookieEnable ? 
-
-<span style={{padding: "0px 20px", fontSize: "16px", color: "#464646"}}> 
+ 
 <marquee id = "scroll_news" onMouseOver={(e) => {
-document.getElementById('scroll_news').stop()
+  document.getElementById('scroll_news').stop()
 }} 
 onMouseOut={(e) => {
-document.getElementById('scroll_news').start()
+  document.getElementById('scroll_news').start()
 }}>
 <span style={styles}>
-{
-news.map((k) => (
+ {
+   news.map((k, e) => (
 
 <Link className="tabHoverflash mx-2 my-0" to = {{
 pathname : `/customer/latestupdates/${k.id}`,
 index : k.id
-                }}>
-{`${k.heading}  |     `}
+                      }}>
+{`${k.heading}`}
+{news.length - 1 == e ? "":  <>
+  <span>&nbsp; &nbsp; | &nbsp; &nbsp;</span> </>}
 </Link>
-))
-}
+   ))
+ }
 </span>
 </marquee>
-</span>
-: 
 
-<span style={{padding: "0px 20px", fontSize: "16px", color: "#464646"}}> 
+ : 
+
+
 <marquee id = "scroll_news_disale" onMouseOver={(e) => {
 document.getElementById('scroll_news_disale').stop()
 }} 
@@ -213,16 +214,20 @@ document.getElementById('scroll_news_disale').start()
 }}>
 <span style={styles}>
 {
-news.map((k) => (
+ news.map((k, e) => (
 
 <p className="tabHoverflash mx-2 my-0" onClick = {() => myCookie2("contactbasic")}>
-{`${k.heading}  |      `}
+{`${k.heading}`}
+{news.length - 1 == e ? "":  <>
+  <span>&nbsp; &nbsp; | &nbsp; &nbsp;</span> </>}
+
 </p>
-))
+ ))
 }
 </span>
 </marquee>
-</span>
+
+
 
 }
 
@@ -231,9 +236,9 @@ news.map((k) => (
 </FlashSection> : ""}
 <div className={classes.articleContent}>
 <div className={classes.articlesDetails}>
-<CustomTypography>
+<MainText>
 {description.heading}
-</CustomTypography>
+</MainText>
 {
 description.content_type === "2" ?
 <Markup content={description.news} /> : ""

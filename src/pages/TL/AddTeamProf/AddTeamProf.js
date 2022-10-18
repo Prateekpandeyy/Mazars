@@ -13,11 +13,11 @@ import {
   Col,
   Table,
 } from "reactstrap";
-import { useAlert } from "react-alert";
 import CustomHeading from "../../../components/Common/CustomHeading";
-import DataTablepopulated from '../../../components/DataTablepopulated/DataTabel'
+import DataTablepopulated from '../../../components/DataTablepopulated/DataTabel';
+import Swal from 'sweetalert2';
 function AddTeamProf() {
-  const alert = useAlert();
+
   const [data, setData] = useState([]);
   const [count, setCount] = useState("");
   const userid = window.localStorage.getItem("tlkey");
@@ -164,7 +164,13 @@ function AddTeamProf() {
     axios
       .get(`${baseUrl}/delete/TaxLead/${id}`)
       .then(function (response) {
-                alert.success("successfully deleted ");
+        Swal.fire({
+          title : "success",
+          html : "Successfully deleted",
+          icon : "success"
+        })
+      
+               
         getTaxProf();
       })
       .catch((error) => {

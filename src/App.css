@@ -250,3 +250,6 @@ line-height: 35px;
 #payDetails table tr td{
   padding-right: 10px;
 }
+::-webkit-scrollbar-track {
+  scroll-behavior: smooth;
+}

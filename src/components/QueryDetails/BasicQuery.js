@@ -6,6 +6,7 @@ import axios from "axios";
 import { baseUrl } from "../../config/config";
 import './queryStyle.css';
 
+import MainText from "../Common/MainText";
 function BasicQuery({qstatus, panel, p, diaplaySpecific, queryDocs, year, purpose, declined2,
   declinedStatus }) {
 
@@ -23,7 +24,7 @@ function BasicQuery({qstatus, panel, p, diaplaySpecific, queryDocs, year, purpos
         }
         axios.get(`${baseUrl}/admin/viewdocument?assign_no=${qno}&id=${qid}` , myConfig2)
         .then((res) => {
-          console.log("res", res)
+
           if(res.status === 200){
             window.URL = window.URL || window.webkitURL;
                var url = window.URL.createObjectURL(res.data);
@@ -31,7 +32,7 @@ function BasicQuery({qstatus, panel, p, diaplaySpecific, queryDocs, year, purpos
                document.body.appendChild(a);
                a.style = "display: none";
                a.href = url;
-               console.log(res.headers)
+            
                a.download = name;
                a.target = '_blank';
                a.click();
@@ -49,7 +50,7 @@ function BasicQuery({qstatus, panel, p, diaplaySpecific, queryDocs, year, purpos
       }
       axios.get(`${baseUrl}/tl/viewdocument?assign_no=${qno}&id=${qid}` , myConfig2)
       .then((res) => {
-        console.log("res", res)
+       
         if(res.status === 200){
           window.URL = window.URL || window.webkitURL;
              var url = window.URL.createObjectURL(res.data);
@@ -57,7 +58,7 @@ function BasicQuery({qstatus, panel, p, diaplaySpecific, queryDocs, year, purpos
              document.body.appendChild(a);
              a.style = "display: none";
              a.href = url;
-             console.log(res.headers)
+          
              a.download = name;
              a.target = '_blank';
              a.click();
@@ -75,7 +76,7 @@ function BasicQuery({qstatus, panel, p, diaplaySpecific, queryDocs, year, purpos
       }
       axios.get(`${baseUrl}/tl/viewdocument?assign_no=${qno}&id=${qid}` , myConfig2)
       .then((res) => {
-        console.log("res", res)
+       
         if(res.status === 200){
           window.URL = window.URL || window.webkitURL;
              var url = window.URL.createObjectURL(res.data);
@@ -83,7 +84,7 @@ function BasicQuery({qstatus, panel, p, diaplaySpecific, queryDocs, year, purpos
              document.body.appendChild(a);
              a.style = "display: none";
              a.href = url;
-             console.log(res.headers)
+          
              a.download = name;
              a.target = '_blank';
              a.click();
@@ -101,7 +102,7 @@ function BasicQuery({qstatus, panel, p, diaplaySpecific, queryDocs, year, purpos
       }
       axios.get(`${baseUrl}/customers/viewdocument?assign_no=${qno}&id=${qid}` , myConfig2)
       .then((res) => {
-        console.log("res", res)
+      
         if(res.status === 200){
           window.URL = window.URL || window.webkitURL;
              var url = window.URL.createObjectURL(res.data);
@@ -109,7 +110,7 @@ function BasicQuery({qstatus, panel, p, diaplaySpecific, queryDocs, year, purpos
              document.body.appendChild(a);
              a.style = "display: none";
              a.href = url;
-             console.log(res.headers)
+          
              a.download = name;
              a.target = '_blank';
              a.click();
@@ -123,15 +124,9 @@ function BasicQuery({qstatus, panel, p, diaplaySpecific, queryDocs, year, purpos
   return (
     <>
       <div className="queryBox">
-        <p
-          style={{
-            textAlign: "center",
-            color: "black",
-            fontSize: "18px",
-          }}
-        >
-          Basic query information
-        </p>
+        <MainText align="center">
+        Basic query information
+        </MainText>
         <table className="table table-bordered p-2">
           <thead>
             <tr>

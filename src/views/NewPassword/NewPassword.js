@@ -6,7 +6,7 @@ import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
-import { useAlert } from "react-alert";
+
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import classNames from "classnames";
@@ -27,7 +27,7 @@ const MyContainer = styled(Box)({
   flexDirection : "column"
 })
 function NewPassword(props) {
-  const alert = useAlert();
+  
   const { register, handleSubmit, errors, getValues, reset } = useForm();
   const { id } = useParams();
 

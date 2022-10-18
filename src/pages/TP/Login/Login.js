@@ -6,7 +6,7 @@ import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
-import { useAlert } from "react-alert";
+
 import classNames from "classnames";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
@@ -27,7 +27,7 @@ const Schema = yup.object().shape({
 });
 
 function Login(props) {
-  const alert = useAlert();
+ 
   let history = useHistory()
   const { handleSubmit, register, reset, errors } = useForm({
     resolver: yupResolver(Schema),

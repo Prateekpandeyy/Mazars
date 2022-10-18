@@ -4,7 +4,7 @@ import Header from "../../../components/Header/Header";
 import Footer from "../../../components/Footer/Footer";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
-import { useAlert } from "react-alert";
+
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import classNames from "classnames";
@@ -17,7 +17,7 @@ import { Spinner } from "reactstrap";
 
 
 function NewPassword(props) {
-  const alert = useAlert();
+ 
   const { register, handleSubmit, errors, getValues, reset } = useForm();
   const { id } = useParams();
 
@@ -80,13 +80,22 @@ function NewPassword(props) {
       
         if (response.data.code === 1) {
           setLoading(false)
-          var variable = "Password changed successfully."
-          Alerts.SuccessNormal(variable)
+          Swal.fire({
+            title : 'success',
+            html : "Password changed successfully.",
+            icon : "success"
+          })
+          
           reset();
           props.history.push("/teamleader/login");
         } else if (response.data.code === 0) {
           setLoading(false)
-          Alerts.ErrorNormal("Please enter correct details")
+          Swal.fire({
+            title : 'error',
+            html : "Please enter correct details",
+            icon : "error"
+          })
+         
         }
       })
       .catch((error) => {

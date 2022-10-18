@@ -13,11 +13,11 @@ import {
 } from "reactstrap";
 import CommonServices from "../../../common/common";
 import BootstrapTable from "react-bootstrap-table-next";
-import { useAlert } from "react-alert";
+
 import { useHistory } from "react-router";
 import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
 function FeedbackTab() {
-  const alert = useAlert();
+  
 const history = useHistory();
   const userid = window.localStorage.getItem("tlkey");
   const [feedbackData, setFeedBackData] = useState([]);

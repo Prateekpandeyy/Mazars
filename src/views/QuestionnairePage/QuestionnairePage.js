@@ -7,7 +7,7 @@ import Footer from "../../components/Footer/Footer";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
-import { useAlert } from "react-alert";
+
 import Select from "react-select";
 import { Spinner } from "reactstrap";
 import Alerts from "../../common/Alerts";
@@ -17,7 +17,7 @@ import Swal from "sweetalert2";
 
 
 function Questionnaire(props) {
-  const alert = useAlert();
+ 
   const { handleSubmit, register, errors, reset, control } = useForm({
     defaultValues: {
       users: [{ query: "" }],

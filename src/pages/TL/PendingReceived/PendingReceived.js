@@ -13,14 +13,13 @@ import {
   Col,
   Table,
 } from "reactstrap";
-import { useAlert } from "react-alert";
 
 function PendingRecevied() {
   const [submitData, setSubmitData] = useState([]);
   const [assingNo, setAssingmentNo] = useState();
   const [displayQuery, setDisplayQuery] = useState([]);
   const [diaplaySpecific, setDisplaySpecific] = useState([]);
-  const alert = useAlert();
+  
   const { id } = useParams();
   const history = useHistory();
 

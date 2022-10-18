@@ -144,12 +144,12 @@ function MyAssingment(props) {
 
           if (res.data.proposal_queries.length > 0) {
             setOverDue(res.data.result[0].overdueamount)
-            console.log("overDue", res.data.result[0].overdueamount)
+            console.log("overDue1", res.data.proposal_queries[0].cust_accept_date)
             setDisplayProposal({
               accepted_amount: res.data.proposal_queries[0].accepted_amount,
               payment_received: res.data.proposal_queries[0].paid_amount,
               amount: res.data.proposal_queries[0].amount,
-              cust_accept_date: res.data.result[0].declined_date,
+              cust_accept_date: res.data.proposal_queries[0].cust_accept_date,
               proposal_date: res.data.proposal_queries[0].created,
               description: res.data.proposal_queries[0].description,
               tp_iba : res.data.proposal_queries[0].tp_iba,
@@ -168,7 +168,8 @@ function MyAssingment(props) {
               payment_plan : res.data.proposal_queries[0].payment_plan,
               start_date : res.data.proposal_queries[0].start_date,
               end_date : res.data.proposal_queries[0].end_date,
-              sub_payment_plane : res.data.proposal_queries[0].sub_payment_plane
+              sub_payment_plane : res.data.proposal_queries[0].sub_payment_plane,
+              amount_outstanding : res.data.proposal_queries[0].amount_outstanding
             
             });
             let a = moment(res.data.result[0].final_date);

@@ -5,7 +5,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
-import { useAlert } from "react-alert";
 import { useParams, useHistory } from "react-router-dom";
 import classNames from "classnames";
 import TaxProffesionalService from "../../../config/services/TaxProffesional";
@@ -41,7 +40,7 @@ function EditTP() {
   const { Option } = Select;
   const { id } = useParams();
   const history = useHistory();
-  const alert = useAlert();
+ 
 
   const userid = window.localStorage.getItem("adminkey");
 

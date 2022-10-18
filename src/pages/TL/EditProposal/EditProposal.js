@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
-import { useAlert } from "react-alert";
 import { useHistory, useParams } from "react-router-dom";
 import Layout from "../../../components/Layout/Layout";
 import {
@@ -27,7 +26,7 @@ import {Link} from "react-router-dom";
 import Swal from 'sweetalert2'
 function EditComponent(props) {
 
-  const alert = useAlert();
+ 
   const { register, handleSubmit, reset, errors } = useForm();
   const userid = window.localStorage.getItem("tlkey");
   const [loading, setLoading] = useState(false);

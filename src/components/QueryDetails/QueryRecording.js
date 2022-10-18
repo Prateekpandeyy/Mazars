@@ -18,6 +18,7 @@ import "react-modal-video/scss/modal-video.scss";
 import ReactHlsPlayer from 'react-hls-player'
 import ReactPlayer from 'react-player';
 import CloseIcon from '@material-ui/icons/Close';
+import MainText from "../Common/MainText";
 // import '../../../../node_modules/react-modal-video/scss/modal-video.scss';
 
 
@@ -167,14 +168,17 @@ const canBtn = {
      
            <div className="queryBox">
                 <Card>
-                <CardHeader>
+              
                     <Row>
-                        <Col md="7">
-                            <CardTitle tag="h4">Recording of Discussion</CardTitle>
+                        <Col md="12">
+                        <MainText align="center">
+                        Recording of discussion
+                            </MainText>
+                          
                         </Col>
-                        <Col md="5"></Col>
+                       
                     </Row>
-                </CardHeader>
+              
                 <CardBody>
                     <BootstrapTable
                         bootstrap4

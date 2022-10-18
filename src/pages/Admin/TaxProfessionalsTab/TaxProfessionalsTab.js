@@ -13,14 +13,13 @@ import {
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import { Link } from "react-router-dom";
-import { useAlert } from "react-alert";
 import Swal from "sweetalert2";
 import History from './History.js';
 import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
 import {EditQuery} from "../../../components/Common/MessageIcon";
 import CustomHeading from "../../../components/Common/CustomHeading";
 function TaxProfessionalsTab() {
-  const alert = useAlert();
+  
   const [data, setData] = useState([]);
   const [tpCount, setTpCount] = useState("");
   const [history, setHistory] = useState([]);

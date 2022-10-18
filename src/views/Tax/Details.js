@@ -84,15 +84,15 @@ const Details = () => {
    if(history.location.index !== undefined){
     axios.get(`${baseUrl}/customers/getarticles?id=${history.location.index}`)
     .then((res) => {
-     console.log("result", res.data.result)
+  
       setData(res.data.result)
-      if(history.location.hash == "#DT"){
+      if(history.location.pathname == "#DT"){
         setLinkData("Direct Tax")
       }
-      else if(history.location.hash == "#IDT"){
+      else if(history.location.pathname == "#IDT"){
         setLinkData("Indirect Tax")
       }
-      else if (history.location.hash === "#DT&IDT"){
+      else if (history.location.pathname === "#DT&IDT"){
         setLinkData("Direct & Indirect Tax")
       }
     })

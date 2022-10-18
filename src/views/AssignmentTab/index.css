@@ -39,7 +39,7 @@ h5.modal-title {
   text-transform: none;
   display: flex;
   flex-direction: row;
-  width: 100%;
+ 
 }
 .tabHover:hover {
   text-decoration: underline;

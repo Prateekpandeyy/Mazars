@@ -208,27 +208,13 @@ const options = {
 };
 
 function WebRoutes() {
-//  const [cms, showCms] = useState(false)
-//  let history = useHistory()
-// useEffect(() => {
-//   getRole()
-// }, [])
-// const getRole = () => {
-//   let a = localStorage.getItem("role")
-//  if(a === "cms"){
-//    console.log("window.location.href", windo)
-//   if(window.location.hash[0] === "admin"){
-//    history.push('/*')
-//   }
-//  }
-
-// }
 
   return (
    <>
-  
-      <Provider template={AlertTemplate} {...options}>
-        <Router>
+   <Provider template={AlertTemplate} {...options}>
+    
+<Router>
+
           <Switch>
 
             <PublicRouteUser exact path="/customer/coming-soon" component={CommingSoon} />
@@ -424,8 +410,8 @@ function WebRoutes() {
             <Route exact path="/*" component={PageNotFound} />
 
           </Switch>
-        </Router>
-      </Provider>
+          </Router>
+     </Provider>
   
    </>
   );

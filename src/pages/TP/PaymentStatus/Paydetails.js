@@ -131,7 +131,22 @@ setModal(!modal)
         {
             dataField: "assign_no",
             text: "Q.no",
-           
+            formatter: function nameFormatter(cell, row) {
+      
+                return (
+                  <>
+                    <Link
+                      to={{
+                        pathname: `/taxprofessional/queries/${row.assign_id}`,
+                        index: 1,
+                        routes: "paymentstatus",
+                      }}
+                    >
+                      {row.assign_no}
+                    </Link>
+                  </>
+                );
+              },
            
         },
         {

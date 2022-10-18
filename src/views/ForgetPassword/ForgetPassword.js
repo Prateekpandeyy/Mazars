@@ -6,7 +6,7 @@ import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
-import { useAlert } from "react-alert";
+import Swal from 'sweetalert2';
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { Spinner } from "reactstrap";
@@ -35,7 +35,7 @@ const MyContainer = styled(Box)({
 function ForgetPassword(props) {
 
 
-  const alert = useAlert();
+  
   const { handleSubmit, register, reset, errors } = useForm({
     resolver: yupResolver(Schema),
   });
@@ -61,8 +61,13 @@ useEffect(() => {
        
         if (response.data.code === 1) {
           setLoading(false)
-          Alerts.SuccessNormal("As per your request, OTP has been sent to your regsitered email address.")
-          // props.history.push(`/customer/new-password/${value.p_email}`)
+          Swal.fire({
+            title : "success",
+            html : "As per your request, OTP has been sent to your regsitered email address.",
+            icon : "success"
+           })
+         
+        
           props.history.push({
             pathname: `/customer/new-password/${value.p_email}`,
             index : user
@@ -70,8 +75,13 @@ useEffect(() => {
           })
         } else if (response.data.code === 0) {
           setLoading(false)
+          Swal.fire({
+            title : "error",
+            html : "Invalid email.",
+            icon : "error"
+           })
+         
        
-          Alerts.ErrorNormal("Invalid email.")
         }
       })
       .catch((error) => {

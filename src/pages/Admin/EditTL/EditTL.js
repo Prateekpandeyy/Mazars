@@ -5,7 +5,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
-import { useAlert } from "react-alert";
+
 import Swal from 'sweetalert2'
 import { useParams, useHistory } from "react-router-dom";
 import classNames from "classnames";
@@ -34,7 +34,7 @@ function EditTL() {
   const { Option } = Select;
   const { id } = useParams();
   
-  const alert = useAlert();
+  
   let history = useHistory();
   const userid = window.localStorage.getItem("adminkey");
 

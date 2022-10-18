@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useMemo } from "react";
-import Layout from "../../components/Layout/Layout";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
-import { useAlert } from "react-alert";
 import {
   Card,
   CardHeader,
@@ -11,7 +9,6 @@ import {
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import CustomerFilter from "../../components/Search-Filter/CustomerFilter";
-import BootstrapTable from "react-bootstrap-table-next";
 import Records from "../../components/Records/Records";
 import CommonServices from "../../common/common";
 import DiscardReport from "../AssignmentTab/DiscardReport";
@@ -26,7 +23,7 @@ import DataTablepopulated from "../../components/DataTablepopulated/DataTabel";
 import {useHistory} from 'react-router-dom';
 
 function DeclinedQueries() {
-  const alert = useAlert();
+ 
   const userId = window.localStorage.getItem("userid");
   const [query, setQuery] = useState([]);
   const [queriesCount, setCountQueries] = useState(null);

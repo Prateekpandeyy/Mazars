@@ -11,14 +11,14 @@ import {
 } from "reactstrap";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
-import { useAlert } from "react-alert";
+
 import Swal from "sweetalert2";
 import CustomerListFilter from "../../../components/Search-Filter/CustomerListFilter";
 import History from "./CustHistory";
 import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
 import CustomHeading from "../../../components/Common/CustomHeading";
 function Customer() {
-  const alert = useAlert();
+ 
   const [data, setData] = useState([]);
   const [tpCount, setTpCount] = useState("");
   const userid = window.localStorage.getItem("adminkey");

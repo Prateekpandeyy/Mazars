@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import Layout from "../../../components/Layout/Layout";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
-import { useAlert } from "react-alert";
 import {
     Card,
     CardHeader,
@@ -20,7 +19,7 @@ import { useHistory } from "react-router";
 import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
 function Message(props) {
   
-    const alert = useAlert();
+    
 const history = useHistory();
     const userId = window.localStorage.getItem("tlkey");
     const [query, setQuery] = useState([]);

@@ -13,7 +13,6 @@ import {
   ModalFooter,
   Button,
 } from "reactstrap";
-import { useAlert } from "react-alert";
 import { Link, useParams } from "react-router-dom";
 import CommonServices from "../../common/common";
 import CustomerFilter from "../../components/Search-Filter/CustomerFilter";
@@ -27,7 +26,7 @@ import MessageIcon, { ViewDiscussionIcon, HelpIcon,
 import DataTablepopulated from "../../components/DataTablepopulated/DataTabel";
 import {useHistory} from 'react-router-dom';
 function Paid() {
-  const alert = useAlert();
+
   const { id } = useParams();
   let history = useHistory()
   const userId = window.localStorage.getItem("userid");

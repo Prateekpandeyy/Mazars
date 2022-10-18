@@ -16,7 +16,7 @@ import {
     Button,
 } from "reactstrap";
 import DiscardReport from "../AssignmentTab/DiscardReport";
-import { useAlert } from "react-alert";
+
 import { Link, useParams } from "react-router-dom";
 import CommonServices from "../../../common/common";
 import BootstrapTable from "react-bootstrap-table-next";
@@ -30,7 +30,7 @@ import MessageIcon, {PaymentDecline, Payment, ViewDiscussionIcon, DiscussProposa
 
 
 function AllPayment() {
-    const alert = useAlert();
+ 
     const { id } = useParams();
     const userid = window.localStorage.getItem("tlkey");
     const cust_id = window.localStorage.getItem("userid");

@@ -130,7 +130,7 @@ const getFeedback2 = () => {
               }
     });
   }
-  if(window.location.hash.split("/").slice(-1) == "recording" || window.location.hash.split("/").slice(-1) == "schedule"){
+  if(window.location.pathname.split("/").slice(-1) == "recording" || window.location.pathname.split("/").slice(-1) == "schedule"){
     setOpen(true)
   }
 
@@ -159,7 +159,7 @@ const getFeedbacktl = () => {
             }
   });
  }
- if(window.location.hash.split("/").slice(-1) == "recording" || window.location.hash.split("/").slice(-1) == "schedule"){
+ if(window.location.pathname.split("/").slice(-1) == "recording" || window.location.pathname.split("/").slice(-1) == "schedule"){
   setOpen(true)
 }
 };
@@ -188,7 +188,7 @@ history.push("/taxprofessional/login")
       }
     });
   }
-  if(window.location.hash.split("/").slice(-1) == "recording" || window.location.hash.split("/").slice(-1) == "schedule"){
+  if(window.location.pathname.split("/").slice(-1) == "recording" || window.location.pathname.split("/").slice(-1) == "schedule"){
     setOpen(true)
   }
 };

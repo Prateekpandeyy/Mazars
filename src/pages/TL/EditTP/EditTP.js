@@ -3,13 +3,13 @@ import Layout from "../../../components/Layout/Layout";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
-import { useAlert } from "react-alert";
+import Swal from 'sweetalert2';
 import { useParams } from "react-router-dom";
 
 
 function EditTP() {
   const { id } = useParams();
-  const alert = useAlert();
+ 
   const { handleSubmit, register, errors, reset } = useForm();
   const userid = window.localStorage.getItem("adminkey");
 
@@ -54,7 +54,12 @@ function EditTP() {
       .then(function (response) {
        
         if (response.data.code === 1) {
-          alert.success("TL updated  !");
+          Swal.fire({
+            title : "success",
+            html : "TL updated  !",
+            icon : "success"
+          })
+        
         }
       })
       .catch((error) => {

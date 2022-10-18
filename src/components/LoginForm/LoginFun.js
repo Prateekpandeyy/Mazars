@@ -3,13 +3,13 @@ import { useState, createContext } from 'react';
 import axios from 'axios';
 import { baseUrl } from '../../config/config';
 import { useHistory } from 'react-router';
-import { useAlert } from "react-alert";
 import Login from '../../pages/Admin/Login/Login';
 import Alerts from '../../common/Alerts';
 import LoginForm from './LoginForm';
+import Swal from 'sweetalert2';
 const LoginData = createContext();
 const LoginFun = () => {
-  const alert = useAlert();
+ 
   let history = useHistory();
     const [email, setEmail] = useState(null);
     const [show, setShow] = useState(false);
@@ -39,12 +39,21 @@ const LoginFun = () => {
           if (response.data.code === 1) {
             setLoading(false)
             setShow(true)
-            Alerts.SuccessNormal("As per your request, OTP has been sent to your registered email address.")
+            Swal.fire({
+              title : "success",
+              html : "As per your request, OTP has been sent to your registered email address.",
+              icon : "success"
+            })
             setUid(response.data["user id"])
             logout();
           } else if (response.data.code === 0) {
             setLoading(false)
-            Alerts.ErrorNormal("Invalid email or password.")
+            Swal.fire({
+              title : "success",
+              html : "Invalid email or password.",
+              icon : "success"
+            })
+            
           }
         })
         .catch((error) => {

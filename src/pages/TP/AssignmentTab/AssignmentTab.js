@@ -120,10 +120,10 @@ function QueriesTab(props) {
               All Assignments ({allAssignmentCount})
             </Tab>
             <Tab style={tabIndex == 1 ? myStyle2 : myStyle1} className="tabHover">
-              Inprogress; Draft Reports ({draft})
+              Inprogress; Draft reports ({draft})
             </Tab>
             <Tab style={tabIndex == 2 ? myStyle2 : myStyle1} className="tabHover">
-              Inprogress; Delivery of Final Report ({final})
+              Inprogress; Delivery of final report ({final})
             </Tab>
           </TabList>
 

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo } from "react";
 import Layout from "../../components/Layout/Layout";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
-import { useAlert } from "react-alert";
+
 import {
   Card,
   CardHeader,
@@ -26,9 +26,10 @@ import MessageIcon, {DeleteIcon, EditQuery, ViewDiscussionIcon, HelpIcon,
   UploadDocument, FeedBackICon} from "../../components/Common/MessageIcon";
   import DataTablepopulated from "../../components/DataTablepopulated/DataTabel";
 import { useHistory } from "react-router";
+
 function InprogressAllocation() {
 
-  const alert = useAlert();
+  
   const userId = window.localStorage.getItem("userid");
   const [query, setQuery] = useState([]);
   const [queriesCount, setCountQueries] = useState(null);

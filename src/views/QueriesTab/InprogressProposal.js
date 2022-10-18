@@ -2,7 +2,6 @@ import React, { useState, useEffect, useMemo } from "react";
 
 import axios from "axios";
 import { baseUrl } from "../../config/config";
-import { useAlert } from "react-alert";
 import {
   Card,
   CardHeader,
@@ -24,7 +23,7 @@ import MessageIcon, { ViewDiscussionIcon, HelpIcon,
 import DataTablepopulated from "../../components/DataTablepopulated/DataTabel";
 import {useHistory} from 'react-router-dom';
 function InprogressProposal() {
-  const alert = useAlert();
+ 
   const userId = window.localStorage.getItem("userid");
   const [query, setQuery] = useState([]);
   const [queriesCount, setCountQueries] = useState(null);

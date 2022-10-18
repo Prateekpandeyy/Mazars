@@ -3,7 +3,7 @@ import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
-import { useAlert } from "react-alert";
+
 import Swal from "sweetalert2";
 import { Spinner } from 'reactstrap';
 import Select from 'react-select'
@@ -11,7 +11,7 @@ import Select from 'react-select'
 
 
 function DraftReport({ loading,  qno, setDraftModal, setLoading, draftModal, uploadDraftReport, id, getAssignmentList , des}) {
-  const alert = useAlert();
+ 
   const { handleSubmit, register, reset } = useForm();
   const [client, setClient] = useState([])
   const [email, setEmail] = useState("")

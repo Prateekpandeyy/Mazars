@@ -28,7 +28,7 @@ function Header({ id, cust_sign, noAdminSign, noTlSign,
     history.push("/customer/signin");
   }
   useEffect(() => {
-    console.log("mainWindow", window.location.hash.split("/")[1].length)
+   console.log(window.location)
    if (window.location.hash.split("/")[1] === "customer" || window.location.hash.split("/")[1].length === 0) {
      
       setLogimin(false)
@@ -38,7 +38,7 @@ function Header({ id, cust_sign, noAdminSign, noTlSign,
     }
     const handleScroll = event => {
 
-     
+    
      
     if(window.pageYOffset > 0){
       setLogimin(true)
@@ -62,27 +62,31 @@ function Header({ id, cust_sign, noAdminSign, noTlSign,
     <>
       <div className={logomin === true ? "headerMin" : "header"}>
         {id && (
-         
+         <div className={logomin === true ? "logomin" : "logo"}>
             <Link to="/customer/questionnaire-page">
-              <img src={mazars} className={logomin === true ? "logomin" : "logo"} alt="mazar" />
+              <img src={mazars}  alt="mazar" />
             </Link>
-         
+         </div>
         )}
 
         {cust_sign && (
           <div className="noSignINBox">
+            <div className={logomin === true ? "logomin" : "logo"}>
             <Link to="/">
-              <img className={logomin === true ? "logomin" : "logo"} src="https://www.mazars.co.in/extension/ezmazars_rwdesign/design/mazars2020/images/mazars-logo.png" 
+              <img  src="https://www.mazars.co.in/extension/ezmazars_rwdesign/design/mazars2020/images/mazars-logo.png" 
               alt="mazar" />
             </Link>
+            </div>
           </div>
         )}
 
         {noSign && (
           <div  id = "myP" style = {{display : "flex", width: "100%", alignItems: "center",  justifyContent: "space-between"}}>
+             <div className={logomin === true ? "logomin" : "logo"}>
               <Link to="/">
-              <img src={mazars} className={logomin === true ? "logomin" : "logo"} alt="mazar"/>
+              <img src={mazars}  alt="mazar" style={{display : "flex", maxWidth : "100%"}}/>
             </Link>
+            </div>
          
         <CmsCont getData= {getData} showCook = {showCook}/>
            
@@ -193,7 +197,7 @@ function Header({ id, cust_sign, noAdminSign, noTlSign,
 export default Header;
 
 const CmsCont = (props) => {
-  const [open, setOpen] = useState(false)
+ 
   const [open2, setOpen2] = useState(false)
   const [open3, setOpen3] = useState(false)
   const [updateOpen, setUpdateOpen] = useState(false)
@@ -202,7 +206,7 @@ const CmsCont = (props) => {
 
   let history = useHistory()
   useEffect(() => {
-   console.log("history", history)
+  
     if(history.location.pathname === "/"){
 
     }

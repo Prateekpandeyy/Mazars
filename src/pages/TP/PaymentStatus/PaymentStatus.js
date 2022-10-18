@@ -103,7 +103,7 @@ function QueriesTab(props) {
            className="fixedTab"
           >
             <Tab style={tabIndex == 0 ? myStyle2 : myStyle1} className="tabHover">
-              All Payment ({allPayment})
+              All payment ({allPayment})
             </Tab>
             <Tab style={tabIndex == 1 ? myStyle2 : myStyle1} className="tabHover">
               Unpaid ({paid})
