@@ -174,6 +174,7 @@ const Login = () =>  {
                       Submit
                     </button>
                 }
+ <div className="d-flex justify-content-end">
  <Link
                     to={{
                       pathname: "/admin/forget-password",
@@ -182,6 +183,7 @@ const Login = () =>  {
                   >
                     Forgot Password
                   </Link>
+ </div>
         </div>
         </div>
         </form>

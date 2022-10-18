@@ -60,7 +60,7 @@ function Header({ id, cust_sign, noAdminSign, noTlSign,
 
   return (
     <>
-      <div className="header">
+      <div className={logomin === true ? "headerMin" : "header"}>
         {id && (
          <div className={logomin === true ? "logomin" : "logo"}>
             <Link to="/customer/questionnaire-page">
