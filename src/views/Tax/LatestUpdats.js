@@ -31,6 +31,7 @@ import { useParams } from 'react-router';
 import CookieConsent from "react-cookie-consent";
 import CloseIcon from '@material-ui/icons/Close';
 import CustomHeading from "../../components/Common/CustomHeading";
+import MainText from '../../components/Common/MainText';
 const LatestUpdates = () => {
     const [news, getNews] = useState([])
     const [pos,setPos] = useState(1920);   
@@ -235,9 +236,9 @@ document.getElementById('scroll_news_disale').start()
 </FlashSection> : ""}
 <div className={classes.articleContent}>
 <div className={classes.articlesDetails}>
-<CustomTypography>
+<MainText>
 {description.heading}
-</CustomTypography>
+</MainText>
 {
 description.content_type === "2" ?
 <Markup content={description.news} /> : ""

@@ -145,7 +145,8 @@ function QueriesRecevied(props) {
               payment_plan : res.data.proposal_queries[0].payment_plan,
               start_date : res.data.proposal_queries[0].start_date,
               end_date : res.data.proposal_queries[0].end_date,
-              sub_payment_plane : res.data.proposal_queries[0].sub_payment_plane
+              sub_payment_plane : res.data.proposal_queries[0].sub_payment_plane,
+              amount_outstanding : res.data.proposal_queries[0].amount_outstanding
             });
             let a = moment(res.data.result[0].final_date);
             let b = moment(res.data.proposal_queries[0].cust_accept_date)

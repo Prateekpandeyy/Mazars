@@ -42,7 +42,8 @@ function ProposalDetails({
     amount_type,
     start_date,
     end_date,
-    sub_payment_plane
+    sub_payment_plane,
+    amount_outstanding
     
   } = diaplayProposal;
 const [successDisabled, setSucessDisabled] = useState(false)
@@ -949,7 +950,7 @@ Payment plan
             </tr>
             <tr>
               <th scope="row">Payment outstanding</th>
-              <td>{nfObject.format(accepted_amount - payment_received)}</td>
+              <td>{amount_outstanding}</td>
             </tr>
          
             
