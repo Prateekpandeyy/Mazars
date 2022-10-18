@@ -290,7 +290,7 @@ let nd = 0;
     else{
       messsage = "Do you want to allow"
     }
-    console.log("eee", e.target.value)
+   
     const token = window.localStorage.getItem("adminToken")
     let val = e.target.value
    let formData = new FormData()
@@ -403,7 +403,7 @@ let nd = 0;
     }
     }
     else if(panel === "taxprofessional"){
-      const token = window.localStorage.getItem("tpoken")
+      const token = window.localStorage.getItem("tptoken")
       const myConfig = {
         
         headers : {
