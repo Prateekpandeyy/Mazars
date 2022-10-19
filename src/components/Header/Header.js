@@ -28,7 +28,7 @@ function Header({ id, cust_sign, noAdminSign, noTlSign,
     history.push("/customer/signin");
   }
   useEffect(() => {
-   console.log(window.location)
+   
    if (window.location.hash.split("/")[1] === "customer" || window.location.hash.split("/")[1].length === 0) {
      
       setLogimin(false)

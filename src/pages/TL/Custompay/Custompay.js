@@ -65,56 +65,74 @@ if(res.data.code === 1){
 }, [props])
  
   const onSubmit = (value) => {
-    console.log()
-    setLoading(true)
-    let formData = new FormData();
-    formData.append("invoice_id", data.id);
-    formData.append("assign_no", data.assign_no);
-    formData.append("invoice_no", data.billno);
-    formData.append("bank_name", bank);
-    formData.append("invoice_amount", data.payable_amount);
-    formData.append("payment_recived_date", paymentDate);
-    formData.append("payment_by", paymentType);
-    formData.append("receive_amount", receiveAmount)
-    formData.append("payment_information", paymentDis);
-    formData.append("note", notes);
-  
-    axios({
-      method: "POST",
-      url: `${baseUrl}/tl/manualpayment`,
-      headers : {
-        uit : token
-      },
-      data: formData,
-    })
-      .then(function (response) {
-
-        if (response.data.code === 1) {
-          reset();
-          setLoading(false)
-       
-          Swal.fire({
-            title : "success",
-            html : "Payment captured successully",
-            icon : "success"
-          })
-         
-          history.push("/teamleader/paymentstatus")
-          // props.history.push(routes);
-        }
-        else{
-          setLoading(false)
-          var variable = "Something went wrong, please try again"
-          Swal.fire({
-            title : "success",
-            html : "Something went wrong, please try again",
-            icon : "success"
-          })
-        }
-      })
-      .catch((error) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "Do you want to submit",
+      type: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes",
+    }).then((result) => {
+      if (result.value === true) {
+        setLoading(true)
+        let formData = new FormData();
+        formData.append("invoice_id", data.id);
+        formData.append("assign_no", data.assign_no);
+        formData.append("invoice_no", data.billno);
+        formData.append("bank_name", bank);
+        formData.append("invoice_amount", data.payable_amount);
+        formData.append("payment_recived_date", paymentDate);
+        formData.append("payment_by", paymentType);
+        formData.append("receive_amount", receiveAmount)
+        formData.append("payment_information", paymentDis);
+        formData.append("note", notes);
       
-      });
+        axios({
+          method: "POST",
+          url: `${baseUrl}/tl/manualpayment`,
+          headers : {
+            uit : token
+          },
+          data: formData,
+        })
+          .then(function (response) {
+    
+            if (response.data.code === 1) {
+              reset();
+              setLoading(false)
+           
+              Swal.fire({
+                title : "success",
+                html : "Payment captured successully",
+                icon : "success"
+              })
+             
+              history.push("/teamleader/paymentstatus")
+              // props.history.push(routes);
+            }
+            else{
+              setLoading(false)
+              var variable = "Something went wrong, please try again"
+              Swal.fire({
+                title : "success",
+                html : "Something went wrong, please try again",
+                icon : "success"
+              })
+            }
+          })
+          .catch((error) => {
+          
+          });
+      }
+      else{
+
+        
+       return false;
+      }
+    });
+
+    
   };
   const amountCredit = (e) => {
    console.log("eeee", e.target.value , data.payable_amount)
@@ -265,10 +283,7 @@ if(res.data.code === 1){
                     "is-invalid": errors.payment_mode,
                   })}>
                      <option value="">please select value</option>
-                      <option 
-                    value = "check">
-                      Check
-                    </option>
+                     
                     <option
                     value = "bank transfer">
                       Bank transfer

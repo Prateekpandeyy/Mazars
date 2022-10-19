@@ -9,12 +9,20 @@ const IdleTimeOutHandler = (props)=>{
     const[isLogout,setLogout]=useState(false)
     let history = useHistory()
    
-    
-   
-  
-    let timer=undefined;
+    let timer = undefined;
     const events= ['click','load','keydown']
-    const role = localStorage.getItem("role")
+     
+    useEffect(()=>{
+        addEvents();
+        
+        return (()=>{
+            
+            removeEvents();
+            clearTimeout(timer);
+        })
+    },[])
+    
+  console.log("props", props)
     const eventHandler =(eventType)=>{
         
         
@@ -27,37 +35,23 @@ const IdleTimeOutHandler = (props)=>{
         }
         
     };
-    
-    useEffect(()=>{
-        addEvents();
-        
-        return (()=>{
-            
-            removeEvents();
-            clearTimeout(timer);
-        })
-    },[])
-    
+   
     const startTimer=()=>{
         
         if(timer){
             clearTimeout(timer)
         }
-        timer=setTimeout(()=>{
+        timer = setTimeout(()=>{
             
             let lastInteractionTime=localStorage.getItem('lastInteractionTime')
             const diff = moment.duration(moment().diff(moment(lastInteractionTime)));
-            let timeOutInterval=props.timeOutInterval?props.timeOutInterval:1800000;
+            let timeOutInterval=props.timeOutInterval? props.timeOutInterval:3600;
           
-            // var ms = timeStampInMs;
-            // var d = new Date(1000*Math.round(ms/1000)); // round to nearest second
-            // function pad(i) { return ('0'+i).slice(-2); }
-            // var str = d.getUTCHours() + ':' + pad(d.getUTCMinutes()) + ':' + pad(d.getUTCSeconds());
-            // console.log(str); // 0:04:59
+           
             if(isLogout){
                 clearTimeout(timer)
             }else{
-                if(diff._milliseconds<timeOutInterval){
+                if(diff.milliseconds<timeOutInterval){
                     startTimer();
                     props.onActive();
                 }else{
@@ -105,62 +99,11 @@ const IdleTimeOutHandler = (props)=>{
                 console.log("done")
             })
         }
-       else if(props.adminUserId && role === "admin") {
-        const adminkey = localStorage.getItem("adminkey")
-        const token = window.localStorage.getItem("adminToken")
-        const myConfig = {
-            headers : {
-             "uit" : token
-            }
-          }
-            axios.get(`${baseUrl}/admin/getNotification?id=${JSON.parse(adminkey)}&type_list=uread`, myConfig)
-            .then((res) => {
-                console.log("done")
-            })
-        }
-        else if(props.adminUserId && role === "cms") {
-            const adminkey = localStorage.getItem("adminkey")
-            const token = window.localStorage.getItem("token")
-            const myConfig = {
-                headers : {
-                 "uit" : token
-                }
-              }
-                axios.get(`${baseUrl}/cms/repeatcheck`, myConfig)
-                .then((res) => {
-                    console.log("done")
-                })
-            }
-       else if(props.TLuserId) {
-        const tlkey = localStorage.getItem("tlkey")
-        const token = window.localStorage.getItem("tlToken")
-        const myConfig = {
-            headers : {
-             "uit" : token
-            }
-          }
-            axios.get(`${baseUrl}/tl/getNotification?id=${JSON.parse(tlkey)}&type_list=uread`, myConfig)
-            .then((res) => {
-                console.log("done")
-            })
-        }
-       else if(props.TPuserId) {
-        const tpKey = localStorage.getItem("tpkey")
-        const token = window.localStorage.getItem("tptoken")
-        const myConfig = {
-            headers : {
-             "uit" : token
-            }
-          }
-            axios.get(`${baseUrl}/tl/getNotification?id=${JSON.parse(tpKey)}&type_list=uread`, myConfig)
-            .then((res) => {
-                console.log("done")
-            })
-        }
+      
     }
 
     const handleLogout = ()=>{
-        const role = localStorage.getItem("role")
+       
         if(showModal === true){
             removeEvents();
         clearTimeout(timer);

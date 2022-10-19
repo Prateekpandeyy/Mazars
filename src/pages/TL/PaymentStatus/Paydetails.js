@@ -288,7 +288,7 @@ setModal(!modal)
             formatter: function dateFormat(cell, row) {
                 return(
                    <>
-                   {row.is_paid !== "1" && row.invoice_generated == "1" ? 
+                   {row.is_paid !== "1" && row.is_paid !== "2" && row.invoice_generated == "1" ? 
                     <span title = "Manual credit of payment">
  <Link
                  to = {{

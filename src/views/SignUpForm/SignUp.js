@@ -1140,7 +1140,7 @@ and number
                   >
                     <input
                     name={`p_email[${index}].query`}
-                    maxlength = "100"
+                    maxLength = "100"
                    className={classNames("form-control", {
                      "is-invalid": errors.p_email || props.emailErrorMulti === true || props.wEmailmulti || props.invalid,
                    })}

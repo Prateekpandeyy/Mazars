@@ -6,8 +6,7 @@ import $ from 'jquery';
 import IdleTimeOutHandler from "../IdleTimeOutHandler";
 
 function Layout(props) {
-  const[isActive,setIsActive]=useState(true)
-  const[isLogout,setLogout]=useState(false)
+ 
   const {
     custDashboard, cmsDashboard, adminDashboard, TLDashboard,
     TPDashboard,
@@ -30,20 +29,7 @@ $sortable.on('click', function(){
   return (
    
     <>
-{
-  custDashboard && (
-      
-  <IdleTimeOutHandler 
-  onActive={()=>{setIsActive(true)}} 
-  onIdle={()=>{setIsActive(false)}}
-  onLogout={()=>{setLogout(true)}}
-  custDashboard = {custDashboard}
-  adminUserId = {adminDashboard}
-  TLuserId = {TLDashboard}
-  TPuserId = {TPDashboard}
-  />
-  )
-}
+
 
    
       <Header
