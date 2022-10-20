@@ -282,7 +282,7 @@ if(res.data.code === 1){
                    className={classNames("form-control", {
                     "is-invalid": errors.payment_mode,
                   })}>
-                     <option value="">please select value</option>
+                     <option value="">please select payment type</option>
                      
                     <option
                     value = "bank transfer">
