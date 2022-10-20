@@ -20,6 +20,7 @@ import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel
 import CustomHeading from "../../../components/Common/CustomHeading";
 import ViewPayment from "../../../components/ViewPayment/ViewPayment";
 import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
+import CopyrightIcon from '@mui/icons-material/Copyright';
 import Swal from 'sweetalert2';
 const PayDetails = (props) => {
     let history = useHistory();
@@ -301,7 +302,7 @@ setModal(!modal)
                  >
                  
                   {/* <SiApplepay style={{fontSize : "30px"}} /> */}
-                  <CurrencyRupeeIcon color="secondary" />
+                  <CopyrightIcon style={{fontSize : "23px"}} />
                    </Link>
                     </span>
                  

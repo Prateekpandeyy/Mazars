@@ -67,7 +67,7 @@ if(res.data.code === 1){
   const onSubmit = (value) => {
     Swal.fire({
       title: "Are you sure?",
-      text: "Do you want to submit",
+      text: "Do you want to process manual credit of payment",
       type: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
@@ -115,9 +115,9 @@ if(res.data.code === 1){
               setLoading(false)
               var variable = "Something went wrong, please try again"
               Swal.fire({
-                title : "success",
+                title : "error",
                 html : "Something went wrong, please try again",
-                icon : "success"
+                icon : "error"
               })
             }
           })
@@ -221,6 +221,7 @@ if(res.data.code === 1){
                           className={classNames("form-control", {
                             "is-invalid": errors.p_receive,
                           })}
+                          ref={register({required : true})}
                         onChange={(e) => setReceiveAmount(e.target.value)}
                            value={receiveAmount}
                            onBlur = {(e) => amountCredit(e)}
@@ -282,7 +283,7 @@ if(res.data.code === 1){
                    className={classNames("form-control", {
                     "is-invalid": errors.payment_mode,
                   })}>
-                     <option value="">please select payment type</option>
+                     <option value="">Please select payment type</option>
                      
                     <option
                     value = "bank transfer">
@@ -296,6 +297,9 @@ if(res.data.code === 1){
                     value = "debit card">
                       Debit card
                     </option>
+                    <option>
+                     Electronic bank transfer
+                    </option>
                     <option
                     value = "mobile wallet">
                      Mobile wallet
@@ -304,9 +308,7 @@ if(res.data.code === 1){
                     value = "upi">
                     UPI
                     </option>
-                    <option>
-                     Electronic bank transfer
-                    </option>
+                   
                    <option
                    value = "other">
                     Other
