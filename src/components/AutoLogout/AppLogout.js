@@ -18,7 +18,7 @@ const events = [
   const [lTime, setlTime] = useState(30)
     let history = useHistory()
     let timer;
-  
+    var timerOn = true;
   // this function sets the timer that logs out the user after 10 secs
   const handleLogoutTimer = () => {
     timer = setTimeout(() => {
@@ -30,7 +30,7 @@ const events = [
       });
       // logs out user
       logoutAction();
-    }, 10000); // 10000ms = 10secs. You can change the time.
+    }, 600000); // 10000ms = 10secs. You can change the time.
   };
   
   // this resets the timer if it exists.
@@ -51,7 +51,6 @@ const events = [
   }, []);
   // logout functionality 
   const handleLogout = () => {
-    console.log("logout triggered", cont)
     setCont(false)
     const token = window.localStorage.getItem("clientToken")
             const myConfig = {
@@ -75,30 +74,39 @@ const events = [
   }
   useEffect(() => {
   
-    var timerOn = true;
+  
    
     function timer(remaining) {
+      let kd
       var s = remaining % 60;
       s = s < 10 ? '0' + s : s;
       setlTime(remaining)
       remaining -= 1;
       if (remaining > 0 && timerOn) {
-        setTimeout(function () {
-          timer(remaining);
-        }, 1000);
-        return;
+        console.log("done")
+        kd = setTimeout(timer, 1000, remaining)
+      }
+      else if (timerOn === true && remaining === 0){
+        handleLogout()
+      }
+      else if (timerOn === false){
+        console.log("done", 'continue')
+       
+      
+        return false
       }
      
-   
     }
+   if(cont === true){
     timer(10);
+   }
     return () => {
-      console.log("done logout")
       timerOn = false
     }
-  }, [cont === true]);
+  }, [cont]);
   const handleContinue = () => {
     setCont(false)
+    timerOn = false;
   }
   // logs out user by clearing out auth token in localStorage and redirecting url to /signin page.
   const logoutAction = () => {
