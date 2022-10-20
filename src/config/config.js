@@ -11,7 +11,7 @@
 export const baseUrl = "https://stagingapi.masindia.live/v1";
 export const ImageUrl = "https://stagingapi.masindia.live/assets/image";
 export const ReportUrl = "https://stagingapi.masindia.live/assets/upload/report";
-// // //forD local
+// // //for local
  export const baseUrl2 = "https://stagingapi.masindia.live";
 export const baseUrl3 = "https://stagingapi.masindia.live"
 

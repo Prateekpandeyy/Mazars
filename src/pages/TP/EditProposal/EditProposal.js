@@ -724,7 +724,7 @@ const getSubPlan  = (e) => {
             <Col md="5">
             <Link
                   to={{
-                    pathname: `/teamleader/${props.location.routes}`,
+                    pathname: `/taxprofessional/${props.location.routes}`,
                     index: props.location.index,
                   }}
                 >

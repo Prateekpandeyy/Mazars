@@ -273,14 +273,19 @@ const custLogout = () => {
    {
      news.map((k, e) => (
   
+  <>
   <Link className="tabHoverflash mx-2 my-0" to = {{
   pathname : `/customer/latestupdates/${k.id}`,
   index : k.id
                         }}>
   {`${k.heading}`}
-  {news.length - 1 == e ? "":  <>
-    <span>&nbsp; &nbsp; | &nbsp; &nbsp;</span> </>}
+  
   </Link>
+  <>
+  {news.length - 1 == e ? "":  <>
+  <span>|</span>  </>}
+  </>
+  </>
      ))
    }
   </span>
@@ -298,13 +303,17 @@ onMouseOut={(e) => {
 <span style={styles}>
  {
    news.map((k, e) => (
+<>
 
 <p className="tabHoverflash mx-2 my-0" onClick = {() => myCookie2("contactbasic")}>
 {`${k.heading}`}
-  {news.length - 1 == e ? "":  <>
-    <span>&nbsp; &nbsp; | &nbsp; &nbsp;</span> </>}
+ 
 
 </p>
+ <>
+ {news.length - 1 == e ? "":  <>
+ <span>|</span> </>}
+ </></>
    ))
  }
 </span>
