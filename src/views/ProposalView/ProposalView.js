@@ -411,7 +411,7 @@ Payment plan
       </td>
     </tr>
     <tr>
-      <td colSpan= "2">
+      <td colSpan= "2" style={{padding : "0px"}}>
        <table style={{width : "100%", border : "0px"}}>
         <tr>
           <th>

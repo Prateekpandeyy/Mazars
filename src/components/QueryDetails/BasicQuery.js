@@ -172,7 +172,7 @@ function BasicQuery({qstatus, panel, p, diaplaySpecific, queryDocs, year, purpos
            <td className="tableStyle"> <Markup content={p.fact_case} /></td>
             </tr>
             <tr>
-              <th scope="row">Uploaded dcuments</th>
+              <th scope="row">Uploaded documents</th>
               <td>
                 {queryDocs.map((p, i) => (
                   <p style={{ display: "flex" }}>

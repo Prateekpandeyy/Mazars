@@ -828,7 +828,7 @@ Payment plan
       </td>
     </tr>
     <tr>
-      <td colSpan= "2">
+      <td colSpan= "2" style={{padding : "0px"}}>
        <table style={{width : "100%", border : "0px"}}>
         <tr>
           <th>
@@ -946,7 +946,12 @@ Payment plan
             </tr>
             <tr>
               <th scope="row">Payment overdue</th>
-              <td>{overDue}</td>
+              <td>
+                {
+                  overDue === null ? 0 :
+                  overDue
+                }
+              </td>
             </tr>
             <tr>
               <th scope="row">Payment outstanding</th>
