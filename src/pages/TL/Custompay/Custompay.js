@@ -67,7 +67,7 @@ if(res.data.code === 1){
   const onSubmit = (value) => {
     Swal.fire({
       title: "Are you sure?",
-      text: "Do you want to proceed with",
+      text: "Do you want to proceed this",
       type: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
@@ -237,7 +237,10 @@ if(res.data.code === 1){
                           name="p_account"
                         value = {bank}
                         onChange = {(e) => setBank(e.target.value)}
-                          ref={register({required : true})}
+                        ref={register({required : true,
+                          pattern : {
+                            message : "dkdkdkdkdkdkdkljldksjlsdkjdsidoduoiuoiuoi"
+                          }})}
                           className={classNames("form-control", {
                             "is-invalid": errors.p_account,
                           })}

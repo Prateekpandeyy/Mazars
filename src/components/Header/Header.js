@@ -29,7 +29,7 @@ function Header({ id, cust_sign, noAdminSign, noTlSign,
   }
   useEffect(() => {
    
-   if (window.location.hash.split("/")[1] === "customer" || window.location.hash.split("/")[1].length === 0) {
+   if (window.location.pathname.split("/")[1] === "customer" || window.location.pathname.split("/")[1].length === 0) {
      
       setLogimin(false)
     }
@@ -43,7 +43,7 @@ function Header({ id, cust_sign, noAdminSign, noTlSign,
     if(window.pageYOffset > 0){
       setLogimin(true)
     }
-    else if (window.location.hash.split("/")[1] === "customer" || window.location.hash.split("/")[1].length === 0) {
+    else if (window.location.pathname.split("/")[1] === "customer" || window.location.pathname.split("/")[1].length === 0) {
      
       setLogimin(false)
     }

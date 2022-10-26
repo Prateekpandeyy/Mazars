@@ -2,10 +2,18 @@ import React, { useState, useEffect } from 'react'
 import WebRoutes from './WebRoutes';
 import IdleTimeOutHandler from './components/IdleTimeOutHandler';
 export default function App () {
-  const[isActive,setIsActive]=useState(true)
-  const[isLogout,setLogout]=useState(false)
-
-
+ 
+  const clearCacheData = () => {
+    caches.keys().then((names) => {
+      names.forEach((name) => {
+        caches.delete(name);
+      });
+    });
+  
+  };
+  useEffect(() => {
+    clearCacheData()
+  },[])
   return (
    <>
    
