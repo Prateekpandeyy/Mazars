@@ -58,7 +58,7 @@ useEffect(() => {
   .then((res) => {
 if(res.data.code === 1){
   setData(res.data.payment_detail[0])
-  console.log(res.data.payment_detail[0])
+ 
 }
   })
   
@@ -67,7 +67,7 @@ if(res.data.code === 1){
   const onSubmit = (value) => {
     Swal.fire({
       title: "Are you sure?",
-      text: "Do you want to process manual credit of payment",
+      text: "Do you want to proceed with",
       type: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
@@ -135,7 +135,7 @@ if(res.data.code === 1){
     
   };
   const amountCredit = (e) => {
-   console.log("eeee", e.target.value , data.payable_amount)
+   
     
      if(Number(e.target.value) < Number(data.payable_amount)){
       Swal.fire({

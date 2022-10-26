@@ -17,7 +17,7 @@ function ViewPayment({showPayment, paymentFun, data, panel}) {
     </ModalHeader>
     <ModalBody>
  
-    <div className="row" id = "payDetails" style={{border : "1px solid #ccc", padding : "10px 0px", borderRadius : "6px", margin : "10px 5px"}}>
+    <div className="row" id = "payDetails" style={{border : "1px solid #ccc", padding : "10px 0px", borderRadius : "6px", margin : "10px 0px"}}>
         <div className="col-md-6">
             <table>
                 <tr>

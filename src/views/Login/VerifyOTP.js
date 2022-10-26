@@ -120,7 +120,7 @@ localStorage.setItem("loginTime", timeStampInMs)
                         <div className="form-group passForm">
                             <label className="labelColor">Enter Your OTP <span className="declined">*</span></label>
                             <input
-                                type="text"
+                                type="number"
                                 className={classNames("form-control", {
                                     "is-invalid": errors.p_otp,
                                 })}

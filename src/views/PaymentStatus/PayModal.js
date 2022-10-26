@@ -46,7 +46,7 @@ const PayModal = (props) => {
         })
         .then((res) => {
             if(res.data.code === 1){
-             
+           
                 if(res.data.result.length > 1){
                     window.open(res.data.result, "_blank")
                 }
@@ -60,7 +60,7 @@ const PayModal = (props) => {
             }
         })
        
-    window.location.pathname="customer/paymentstatus"
+    window.location.hash="customer/paymentstatus"
     }
     const inVal = (e) => {
        if(e.target.value.length > 5){
