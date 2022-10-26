@@ -1,6 +1,7 @@
 {
   "name": "webapp",
   "version": "0.1.0",
+  "homepage": "https://staging.masindia.live/",
   "private": true,
   "dependencies": {
     "@ckeditor/ckeditor5-build-classic": "^30.0.0",
