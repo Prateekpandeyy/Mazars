@@ -53,7 +53,7 @@
     "lodash": "^4.17.21",
     "moment": "^2.29.4",
     "namor": "^2.0.3",
-    "node-sass": "^7.0.1",
+    "node-sass": "^7.0.3",
     "pdfjs-dist": "^2.6.347",
     "quill-better-table": "^1.2.10",
     "quill-image-compress": "^1.2.22",
@@ -75,7 +75,7 @@
     "react-datepicker": "^4.8.0",
     "react-dnd": "^16.0.0",
     "react-dnd-html5-backend": "^16.0.0",
-    "react-dom": "^17.0.1",
+    "react-dom": "^17.0.2",
     "react-download-link": "^2.3.0",
     "react-draft-wysiwyg": "^1.14.7",
     "react-draggable": "^4.4.5",
@@ -116,10 +116,9 @@
     "yup": "^0.32.8"
   },
   "scripts": {
+    "dev": "webpack --mode development",
     "build": "webpack --mode production",
-    "start": "webpack-dev-server --open --mode development",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "start": "webpack serve --mode development --open"
   },
   "eslintConfig": {
     "extends": [
@@ -140,6 +139,8 @@
     ]
   },
   "devDependencies": {
+    "css-loader": "^6.7.1",
+    "ts-loader": "^9.4.1",
     "webpack-cli": "^4.10.0"
   }
 }

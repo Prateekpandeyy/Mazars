@@ -16,7 +16,6 @@ import successPaymentReceipt from '../ManualImg/successPaymentReceipt.png';
 import successPaymentReceipt2 from '../ManualImg/payReceipt2.png';
 import successPayment from '../ManualImg/successPayment.png';
 import { Link } from '@mui/material';
-import WhatsappRoundedIcon from '@mui/icons-material/WhatsappRounded';
 import paymentDashboard from '../ManualImg/paymentDashboard.png';
 import inboxDesign from '../ManualImg/inboxDesign.png';
 import inboxDetails from '../ManualImg/inboxDetails.png';
@@ -274,7 +273,7 @@ In case, client desires to make the payment later on, he may close the “Mobilp
                  </Typography>
                  <Link to = "" style={{ color: "skyblue", display : "block", weight: "1000" }}>
                      SendToSelf
-                     <WhatsappRoundedIcon />
+                  
                  </Link>
                    </CardContent>
                </Card>
