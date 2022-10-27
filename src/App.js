@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import WebRoutes from './WebRoutes';
+import { hot } from "react-hot-loader";
 import IdleTimeOutHandler from './components/IdleTimeOutHandler';
-export default function App () {
+ function App () {
  
   const clearCacheData = () => {
     caches.keys().then((names) => {
@@ -27,3 +28,4 @@ export default function App () {
    </>
   )
 }
+export default  hot(module)(App)

@@ -1,43 +1,41 @@
-const webpack = require('webpack');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const path = require("path")
-const port =  3000;
 
-module.exports = {
-  mode: 'development',  
-  entry: './src/index.js',
-  output: {
-    path : path.resolve(__dirname, "dist"),
-    filename: 'bundle.js'
-  },
-  module: {
-    rules: [
-      {
-       test: /\.js$|jsx/,
-        exclude: /node_modules/,
-        use: {
-          loader : "babel-loader"
-        }, 
-        
-      },
-      {
-        test: /\.(pdf|png|jpg|gif)$/,
-    use: [
-      {
-        loader: "file-loader",
-        options: {},
-      },
-    ],
+const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 
+module.exports = ({ mode } = { mode: "production" }) => {
+    console.log(`mode is: ${mode}`);
 
-      }
-    ]
-  },
-  plugins: [
-    new HtmlWebpackPlugin({
-      template: 'public/index.html',
-   
-    })
-  ],
+    return {
+            mode,
+            entry: "./src/index.js",
+            devServer: {
+               
+                open: true
+            },
 
+            output: {
+                publicPath: "/",
+                path: path.resolve(__dirname, "build"),
+                filename: "bundle.js"
+            },
+            module: {
+                rules: [
+                 {
+                    test: /\.jpe?g|png$/,
+                    exclude: /node_modules/,
+                    use: ["url-loader", "file-loader"]
+                },
+                    {
+                        test: /\.(js|jsx)$/,
+                        exclude: /node_modules/,
+                        loader: "babel-loader"
+                    }
+                ]
+            },
+            plugins: [
+                new HtmlWebpackPlugin({
+                    template: "./public/index.html"
+                }),
+            ]
+        }
 };
