@@ -236,7 +236,7 @@ document.getElementById('scroll_news_disale').start()
 </FlashSection> : ""}
 <div className={classes.articleContent}>
 <div className={classes.articlesDetails}>
-<MainText>
+<MainText className='my-3'>
 {description.heading}
 </MainText>
 {

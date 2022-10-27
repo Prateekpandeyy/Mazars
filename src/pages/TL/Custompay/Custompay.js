@@ -67,7 +67,7 @@ if(res.data.code === 1){
   const onSubmit = (value) => {
     Swal.fire({
       title: "Are you sure?",
-      text: "Do you want to proceed with",
+      text: "Do you want to proceed this",
       type: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
