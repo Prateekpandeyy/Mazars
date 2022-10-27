@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 import "./App.css";
 import { positions, Provider, transitions } from "react-alert";
 import AlertTemplate from "react-alert-template-basic";
@@ -200,6 +200,12 @@ import PublicCms from "./Service/PublicCms";
 // import PayDetails from "./views/PaymentStatus/PayDetails";
 
 
+const options = {
+  timeout: 4000,
+  position: positions.TOP_CENTER,
+  offset: "80px",
+  transition: transitions.SCALE,
+};
 
 function WebRoutes() {
 
@@ -207,210 +213,205 @@ function WebRoutes() {
    <>
   
     
-<Router>
+<BrowserRouter>
 
           <Switch>
-
-            <Route exact path="/customer/coming-soon">
-              <CommingSoon />
-              </Route>
-            <Route exact path="/">
-              <Login />
-              </Route>
-            <Route exact path="/customer/signup">
-              <SignUp />
-              </Route>
-            <Route exact path="/customer/outerLinks" component={LinklistUser} />
-            <Route exact path="/customer/forget-password" component={ForgetPassword} />
-            <Route exact path="/customer/new-password/:id" component={NewPassword} />
-             <Route exact path = "/customer/aboutbasic" component={AboutOuter} />
-             <Route exact path = "/customer/direct" component={Direct} />
-             <Route exact path = "/customer/indirect" component={Indirect} />
-             <Route exact path = "/customer/mediacontent" component={MediaContentCustomer} />
-             <Route exact path = "/customer/media" component = {Media} />
-             <Route exact path = "/customer/imagegallery" component = {GalleryVideo} />
-             <Route exact path = "/customer/videolist" component = {VideoList} />
-             <Route exact path = "/customer/videogallery" component = {Videogallery} />
-         <Route exact path = "/customer/details" component={Details} />
-         <Route exact path = "/customer/groupvideo" component = {GroupVideo} />
-     <Route exact path = "/customer/customerquery" component={QueryContact} />
-     <Route exact path = "/customer/latestupdates/:id" component={LatestUpdates} />
-     <Route exact path = "/customer/updates" component={Updates} />
-        <Route exact path = "/customer/contactbasic" component = {ContactOuter} />
-       <Route exact path = "/customer/faq-question" component={FaqQuestion} />
-       <Route exact path = "/customer/updatedirect" component={UpdateDirect} />
-       <Route exact path = "/customer/drag" component = {Drag} />
-       <Route exact path = "/customer/updateindirect" component={UpdateIndirect} />
-       <Route exact path="/customer/meetingouter/:id" component={OuterMeetingJoin} />
-       <Route exact path = "/customer/miscellaneous" component={UpdateMiscellenous} />
-          <PublicRouteUser exact path = "/customer/videocall" component = {OuterLinkVideo} />
-           <PublicRouteUser exact path ="/customer/update-details/:id" component={UpdateDetails} />
-           <PublicRouteAdmin exact path = "/customer/questinlinklist" component = {LinklistUser} />
-            <PrivateRouteUser exact path="/customer/select-category" component={SelectCategoryPage} />
-            <PrivateRouteUser exact path="/customer/dashboard" component={Dashboard} />
-            <PrivateRouteUser exact path="/customer/my-assingment/:id" component={MyAssingment} />
-            <PrivateRouteUser exact path="/customer/addfresh" component={AddFreshAssingment} />
-            <PrivateRouteUser exact path="/customer/queries" component={QueriesTab} />
-            <PrivateRouteUser exact path="/customer/proposal" component={ProposalTab} />
-            <PrivateRouteUser exact path="/customer/assignment" component={AssignmentTab} />
-            <PrivateRouteUser exact path="/customer/proposal-received/:id" component={ProposalReceived} />
-            <PrivateRouteUser exact path="/customer/change-password" component={ChangePassword} />
-            <PrivateRouteUser exact path="/customer/edit-query/:id" component={EditQuery} />
-            <PrivateRouteUser exact path="/customer/video-call" component={VideoCall} />
-            <PrivateRouteUser exact path="/customer/meeting/:id" component={MeetingComponent} />
-            <PrivateRouteUser exact path="/customer/schedule" component={schedule} />
-            <PrivateRouteUser exact path="/customer/view-notification/:id" component={ViewNotification} />
-            <PrivateRouteUser exact path="/customer/proposal_view/:id" component={ProposalView} />
-            <PrivateRouteUser exact path="/customer/message" component={Message} />
-            <PrivateRouteUser exact path="/customer/chatting/:id" component={Chatting} />
-            <PrivateRouteUser exact path="/customer/feedback/:id" component={Feedback} />
-            <PrivateRouteUser exact path="/customer/feedback-data" component={FeedbackData} />
-            <PrivateRouteUser exact path="/customer/paymentstatus" component={PaymentStatus} />
-            <PrivateRouteUser exact path="/customer/payment" component={PaymentGateway} />
-            <PrivateRouteUser exact path="/customer/thankyou" component={ThankYou} />  
-            <PrivateRouteUser exact path="/customer/paydetails/:id" component={payDetails} />
-             <PrivateRouteUser exact path = "/customer/modalmanual" component = {ModalMaual} />
-             <PrivateRouteUser exact path = "/customer/contact" component = {Contact} />
-             <PrivateRouteUser exact path = "/customer/mediacontent" component = {Contact} />
-            <PrivateRouteUser exact path = "/customer/about" component = {About} />
-            <PrivateRouteUser exact path = "/customer/profile" component = {Profile} />
-            
-           <PrivateRouteUser exact path = "/customer/editprofile" component = {EditProfile} />
-            
-            <PublicRouteAdmin exact path="/admin/start" component={AdminStart} />
-            <PublicRouteAdmin exact path="/admin/login" component={AdminLogin} />
-            <PublicRouteAdmin exact path="/admin/forget-password" component={AdminForgetPassword} />
-            <PublicRouteAdmin exact path="/admin/new-password/:id" component={AdminNewPassword} />
+        
+          <PublicRouteUser exact path="/" component={Login} />
+            <PublicRouteUser  path="/customer/coming-soon" component={CommingSoon} />
            
-            <PrivateRouteAdmin exact path="/admin/dashboard" component={AdminDashboard} />
-            <PrivateRouteAdmin exact path="/admin/addnewtl" component={AdminNewTeamLeader} />
-            <PrivateRouteAdmin exact path="/admin/addnewtp" component={AdminNewTaxProf} />
-            <PrivateRouteAdmin exact path="/admin/teamleaders" component={AdminTeamLeaderTab} />
-            <PrivateRouteAdmin exact path="/admin/taxprofessionals" component={AdminTaxProfessionalsTab} />
-            <PrivateRouteAdmin exact path="/admin/proposal" component={AdminProposal} />
-            <PrivateRouteAdmin exact path="/admin/queries/:id" component={AdminQueriesRecevied} />
-            <PrivateRouteAdmin exact path="/admin/queryassing/:id" component={AdminQueryAssingment} />
-            <PrivateRouteAdmin exact path="/admin/queriestab" component={AdminQueriesTab} />
-            <PrivateRouteAdmin exact path="/admin/feedback" component={AdminFeedbackTab} />
-            <PrivateRouteAdmin exact path="/admin/paymentstatus" component={AdminPaymentStatusTab} />
-            <PrivateRouteAdmin exact path="/admin/assignment" component={AdminAssignmentTab} />
-            <PrivateRouteAdmin exact path="/admin/edittl/:id" component={AdminEditTL} />
-            <PrivateRouteAdmin exact path="/admin/edittp/:id" component={AdminEditTP} />
-            <PrivateRouteAdmin exact path="/admin/pending/:id" component={AdminPendingRecevived} />
-            <PrivateRouteAdmin exact path="/admin/query_rejection/:id" component={AdminQueryRejection} />
-            <PrivateRouteAdmin exact path="/admin/schedule" component={AdminSchedule} />
-            <PrivateRouteAdmin exact path="/admin/meeting" component={AdminMeetingComponent} />
-            <PrivateRouteAdmin exact path="/admin/chatting/:id" component={AdminChatting} />
-            <PrivateRouteAdmin exact path="/admin/message" component={AdminMessage} />
-            <PrivateRouteAdmin exact path="/admin/view-notification/:id" component={AdminViewNotification} />
-            <PrivateRouteAdmin exact path="/admin/recording" component={AdminRecording} />
-            <PrivateRouteAdmin exact path="/admin/meeting/:id" component={adMeetingComponent} />
-            <PrivateRouteAdmin exact path="/admin/customers" component={Customer} />
-            <PrivateRouteAdmin exact path="/admin/reports" component={adminReport} />
-            <PrivateRouteAdmin exact path= "/admin/adinvoice" component={AdminInvoice}/>
-            <PrivateRouteAdmin exact path="/admin/paydetails/:id" component={AdpayDetails} />
-            <PrivateRouteAdmin exact path = "/admin/reportlist" component = {ReportList} />
-            <PrivateRouteAdmin exact path = "/admin/consalation" component = {Consalation} />
+            <PublicRouteUser  path="/customer/signup" component={SignUp} />
+            <PublicRouteUser  path="/customer/outerLinks" component={LinklistUser} />
+            <PublicRouteUser  path="/customer/forget-password" component={ForgetPassword} />
+            <PublicRouteUser  path="/customer/new-password/:id" component={NewPassword} />
+             <PublicRouteUser  path = "/customer/aboutbasic" component={AboutOuter} />
+             <PublicRouteUser  path = "/customer/direct" component={Direct} />
+             <PublicRouteUser  path = "/customer/indirect" component={Indirect} />
+             <PublicRouteUser  path = "/customer/mediacontent" component={MediaContentCustomer} />
+             <PublicRouteUser  path = "/customer/media" component = {Media} />
+             <PublicRouteUser  path = "/customer/imagegallery" component = {GalleryVideo} />
+             <PublicRouteUser  path = "/customer/videolist" component = {VideoList} />
+             <PublicRouteUser  path = "/customer/videogallery" component = {Videogallery} />
+         <PublicRouteUser  path = "/customer/details" component={Details} />
+         <PublicRouteUser  path = "/customer/groupvideo" component = {GroupVideo} />
+     <PublicRouteUser  path = "/customer/customerquery" component={QueryContact} />
+     <PublicRouteUser  path = "/customer/latestupdates/:id" component={LatestUpdates} />
+     <PublicRouteUser  path = "/customer/updates" component={Updates} />
+        <PublicRouteUser  path = "/customer/contactbasic" component = {ContactOuter} />
+       <PublicRouteUser  path = "/customer/faq-question" component={FaqQuestion} />
+       <PublicRouteUser  path = "/customer/updatedirect" component={UpdateDirect} />
+       <PublicRouteUser  path = "/customer/drag" component = {Drag} />
+       <PublicRouteUser  path = "/customer/updateindirect" component={UpdateIndirect} />
+       <PublicRouteUser  path="/customer/meetingouter/:id" component={OuterMeetingJoin} />
+       <PublicRouteUser  path = "/customer/miscellaneous" component={UpdateMiscellenous} />
+          <PublicRouteUser  path = "/customer/videocall" component = {OuterLinkVideo} />
+           <PublicRouteUser  path ="/customer/update-details/:id" component={UpdateDetails} />
+           <PublicRouteAdmin  path = "/customer/questinlinklist" component = {LinklistUser} />
+            <PrivateRouteUser  path="/customer/select-category" component={SelectCategoryPage} />
+            <PrivateRouteUser  path="/customer/dashboard" component={Dashboard} />
+            <PrivateRouteUser  path="/customer/my-assingment/:id" component={MyAssingment} />
+            <PrivateRouteUser  path="/customer/addfresh" component={AddFreshAssingment} />
+            <PrivateRouteUser  path="/customer/queries" component={QueriesTab} />
+            <PrivateRouteUser  path="/customer/proposal" component={ProposalTab} />
+            <PrivateRouteUser  path="/customer/assignment" component={AssignmentTab} />
+            <PrivateRouteUser  path="/customer/proposal-received/:id" component={ProposalReceived} />
+            <PrivateRouteUser  path="/customer/change-password" component={ChangePassword} />
+            <PrivateRouteUser  path="/customer/edit-query/:id" component={EditQuery} />
+            <PrivateRouteUser  path="/customer/video-call" component={VideoCall} />
+            <PrivateRouteUser  path="/customer/meeting/:id" component={MeetingComponent} />
+            <PrivateRouteUser  path="/customer/schedule" component={schedule} />
+            <PrivateRouteUser  path="/customer/view-notification/:id" component={ViewNotification} />
+            <PrivateRouteUser  path="/customer/proposal_view/:id" component={ProposalView} />
+            <PrivateRouteUser  path="/customer/message" component={Message} />
+            <PrivateRouteUser  path="/customer/chatting/:id" component={Chatting} />
+            <PrivateRouteUser  path="/customer/feedback/:id" component={Feedback} />
+            <PrivateRouteUser  path="/customer/feedback-data" component={FeedbackData} />
+            <PrivateRouteUser  path="/customer/paymentstatus" component={PaymentStatus} />
+            <PrivateRouteUser  path="/customer/payment" component={PaymentGateway} />
+            <PrivateRouteUser  path="/customer/thankyou" component={ThankYou} />  
+            <PrivateRouteUser  path="/customer/paydetails/:id" component={payDetails} />
+             <PrivateRouteUser  path = "/customer/modalmanual" component = {ModalMaual} />
+             <PrivateRouteUser  path = "/customer/contact" component = {Contact} />
+             <PrivateRouteUser  path = "/customer/mediacontent" component = {Contact} />
+            <PrivateRouteUser  path = "/customer/about" component = {About} />
+            <PrivateRouteUser  path = "/customer/profile" component = {Profile} />
+            
+           <PrivateRouteUser  path = "/customer/editprofile" component = {EditProfile} />
+            
+            <PublicRouteAdmin  path="/admin/start" component={AdminStart} />
+            <PublicRouteAdmin  path="/admin/login" component={AdminLogin} />
+            <PublicRouteAdmin  path="/admin/forget-password" component={AdminForgetPassword} />
+            <PublicRouteAdmin  path="/admin/new-password/:id" component={AdminNewPassword} />
+           
+            <PrivateRouteAdmin  path="/admin/dashboard" component={AdminDashboard} />
+            <PrivateRouteAdmin  path="/admin/addnewtl" component={AdminNewTeamLeader} />
+            <PrivateRouteAdmin  path="/admin/addnewtp" component={AdminNewTaxProf} />
+            <PrivateRouteAdmin  path="/admin/teamleaders" component={AdminTeamLeaderTab} />
+            <PrivateRouteAdmin  path="/admin/taxprofessionals" component={AdminTaxProfessionalsTab} />
+            <PrivateRouteAdmin  path="/admin/proposal" component={AdminProposal} />
+            <PrivateRouteAdmin  path="/admin/queries/:id" component={AdminQueriesRecevied} />
+            <PrivateRouteAdmin  path="/admin/queryassing/:id" component={AdminQueryAssingment} />
+            <PrivateRouteAdmin  path="/admin/queriestab" component={AdminQueriesTab} />
+            <PrivateRouteAdmin  path="/admin/feedback" component={AdminFeedbackTab} />
+            <PrivateRouteAdmin  path="/admin/paymentstatus" component={AdminPaymentStatusTab} />
+            <PrivateRouteAdmin  path="/admin/assignment" component={AdminAssignmentTab} />
+            <PrivateRouteAdmin  path="/admin/edittl/:id" component={AdminEditTL} />
+            <PrivateRouteAdmin  path="/admin/edittp/:id" component={AdminEditTP} />
+            <PrivateRouteAdmin  path="/admin/pending/:id" component={AdminPendingRecevived} />
+            <PrivateRouteAdmin  path="/admin/query_rejection/:id" component={AdminQueryRejection} />
+            <PrivateRouteAdmin  path="/admin/schedule" component={AdminSchedule} />
+            <PrivateRouteAdmin  path="/admin/meeting" component={AdminMeetingComponent} />
+            <PrivateRouteAdmin  path="/admin/chatting/:id" component={AdminChatting} />
+            <PrivateRouteAdmin  path="/admin/message" component={AdminMessage} />
+            <PrivateRouteAdmin  path="/admin/view-notification/:id" component={AdminViewNotification} />
+            <PrivateRouteAdmin  path="/admin/recording" component={AdminRecording} />
+            <PrivateRouteAdmin  path="/admin/meeting/:id" component={adMeetingComponent} />
+            <PrivateRouteAdmin  path="/admin/customers" component={Customer} />
+            <PrivateRouteAdmin  path="/admin/reports" component={adminReport} />
+            <PrivateRouteAdmin  path= "/admin/adinvoice" component={AdminInvoice}/>
+            <PrivateRouteAdmin  path="/admin/paydetails/:id" component={AdpayDetails} />
+            <PrivateRouteAdmin  path = "/admin/reportlist" component = {ReportList} />
+            <PrivateRouteAdmin  path = "/admin/consalation" component = {Consalation} />
           
-            <PublicRouteTL exact path="/teamleader/start" component={TlStart} />
-            <PublicRouteTL exact path="/teamleader/login" component={TlLogin} />
-            <PublicRouteTL exact path="/teamleader/forget-password" component={TlForgetPassword} />
-            <PublicRouteTL exact path="/teamleader/new-password/:id" component={TlNewPassword} />
+            <PublicRouteTL  path="/teamleader/start" component={TlStart} />
+            <PublicRouteTL  path="/teamleader/login" component={TlLogin} />
+            <PublicRouteTL  path="/teamleader/forget-password" component={TlForgetPassword} />
+            <PublicRouteTL  path="/teamleader/new-password/:id" component={TlNewPassword} />
           
                   
-            <PrivateRouteTL exact path="/teamleader/dashboard" component={TlDashboard} />
-            <PrivateRouteTL exact path="/teamleader/addnew" component={TlAddNew} />
-            <PrivateRouteTL exact path="/teamleader/addteamprof" component={TlAddTeamProf} />
-            <PrivateRouteTL exact path="/teamleader/proposal" component={TlProposalTab} />
-            <PrivateRouteTL exact path="/teamleader/addassingment/:id" component={TlAddAssingmentStages} />
-            <PrivateRouteTL exact path="/teamleader/queries/:id" component={TlQueriesRecevied} />
-            <PrivateRouteTL exact path="/teamleader/queryassing/:id" component={TlQueryAssingment} />
-            <PrivateRouteTL exact path="/teamleader/edittp/:id" component={TlEditTP} />
-            <PrivateRouteTL exact path="/teamleader/feedback" component={TlFeedbackTab} />
-            <PrivateRouteTL exact path="/teamleader/paymentstatus" component={TlPaymentStatus} />
-            <PrivateRouteTL exact path="/teamleader/assignment" component={TlAssignmentTab} />
-            <PrivateRouteTL exact path="/teamleader/sendproposal/:id" component={TlSendProposal} />
-            <PrivateRouteTL exact path="/teamleader/queriestab" component={TlQueriesTab} />
-            <PrivateRouteTL exact path="/teamleader/edit-proposal/:id" component={TlEditProposal} />
-            <PrivateRouteTL exact path="/teamleader/pending/:id" component={TlPendingReceived} />
-            <PrivateRouteTL exact path="/teamleader/assignment-form/:id" component={TlAssignmentForm} />
-            <PrivateRouteTL exact path="/teamleader/meeting/:id" component={TlMeetingComponent} />
-            <PrivateRouteTL exact path="/teamleader/view-report/:id" component={TlViewReport} />
-            <PrivateRouteTL exact path="/teamleader/schedule" component={TlSchedule} />
-            <PrivateRouteTL exact path="/teamleader/view-notification/:id" component={TlViewNotification} />
-            <PrivateRouteTL exact path="/teamleader/chatting/:id" component={TlChatting} />
-            <PrivateRouteTL exact path="/teamleader/message" component={TlMessage} />
-            <PrivateRouteTL exact path="/teamleader/recording" component={TlRecording} />
-            <PrivateRouteTL exact path="/teamleader/reports" component={TlReport}/>
-            <PrivateRouteTL exact path="/teamleader/invoice" component={TlInvoice}/>
-            <PrivateRouteTL exact path="/teamleader/tlinvoice" component={TlInvoiceTab}/>
-            <PrivateRouteTL exact path="/teamleader/paydetails/:id" component={TlpayDetails} />
-             <PrivateRouteTL exact path = "/teamleader/custompay" component={Custompay} />
-            <PublicRouteTP exact path="/taxprofessional/start" component={TpStart} />
-            <PublicRouteTP exact path="/taxprofessional/login" component={TpLogin} />
-            <PublicRouteTP exact path="/taxprofessional/new-password/:id" component={TpNewPassword} />
-            <PublicRouteTP exact path="/taxprofessional/forget-password" component={TpForgetPassword} />
+            <PrivateRouteTL  path="/teamleader/dashboard" component={TlDashboard} />
+            <PrivateRouteTL  path="/teamleader/addnew" component={TlAddNew} />
+            <PrivateRouteTL  path="/teamleader/addteamprof" component={TlAddTeamProf} />
+            <PrivateRouteTL  path="/teamleader/proposal" component={TlProposalTab} />
+            <PrivateRouteTL  path="/teamleader/addassingment/:id" component={TlAddAssingmentStages} />
+            <PrivateRouteTL  path="/teamleader/queries/:id" component={TlQueriesRecevied} />
+            <PrivateRouteTL  path="/teamleader/queryassing/:id" component={TlQueryAssingment} />
+            <PrivateRouteTL  path="/teamleader/edittp/:id" component={TlEditTP} />
+            <PrivateRouteTL  path="/teamleader/feedback" component={TlFeedbackTab} />
+            <PrivateRouteTL  path="/teamleader/paymentstatus" component={TlPaymentStatus} />
+            <PrivateRouteTL  path="/teamleader/assignment" component={TlAssignmentTab} />
+            <PrivateRouteTL  path="/teamleader/sendproposal/:id" component={TlSendProposal} />
+            <PrivateRouteTL  path="/teamleader/queriestab" component={TlQueriesTab} />
+            <PrivateRouteTL  path="/teamleader/edit-proposal/:id" component={TlEditProposal} />
+            <PrivateRouteTL  path="/teamleader/pending/:id" component={TlPendingReceived} />
+            <PrivateRouteTL  path="/teamleader/assignment-form/:id" component={TlAssignmentForm} />
+            <PrivateRouteTL  path="/teamleader/meeting/:id" component={TlMeetingComponent} />
+            <PrivateRouteTL  path="/teamleader/view-report/:id" component={TlViewReport} />
+            <PrivateRouteTL  path="/teamleader/schedule" component={TlSchedule} />
+            <PrivateRouteTL  path="/teamleader/view-notification/:id" component={TlViewNotification} />
+            <PrivateRouteTL  path="/teamleader/chatting/:id" component={TlChatting} />
+            <PrivateRouteTL  path="/teamleader/message" component={TlMessage} />
+            <PrivateRouteTL  path="/teamleader/recording" component={TlRecording} />
+            <PrivateRouteTL  path="/teamleader/reports" component={TlReport}/>
+            <PrivateRouteTL  path="/teamleader/invoice" component={TlInvoice}/>
+            <PrivateRouteTL  path="/teamleader/tlinvoice" component={TlInvoiceTab}/>
+            <PrivateRouteTL  path="/teamleader/paydetails/:id" component={TlpayDetails} />
+             <PrivateRouteTL  path = "/teamleader/custompay" component={Custompay} />
+            <PublicRouteTP  path="/taxprofessional/start" component={TpStart} />
+            <PublicRouteTP  path="/taxprofessional/login" component={TpLogin} />
+            <PublicRouteTP  path="/taxprofessional/new-password/:id" component={TpNewPassword} />
+            <PublicRouteTP  path="/taxprofessional/forget-password" component={TpForgetPassword} />
             
-            <PrivateRouteTP exact path="/taxprofessional/queries/:id" component={TpQueriesRecevied} />
-            <PrivateRouteTP exact path="/taxprofessional/queriestab" component={TpQueriesTab} />
-            <PrivateRouteTP exact path="/taxprofessional/proposal" component={TpProposalTab} />
-            <PrivateRouteTP exact path="/taxprofessional/sendproposal/:id" component={TpSendProposal} />
-            <PrivateRouteTP exact path="/taxprofessional/edit-proposal/:id" component={TpEditProposal} />
-            <PrivateRouteTP exact path="/taxprofessional/change-password" component={TpChangePassword} />
-            <PrivateRouteTP exact path="/taxprofessional/dashboard" component={TpDashboard} />
-            <PrivateRouteTP exact path ="/taxprofessional/chatting/:id" component = {TpChatting} />
-            <PrivateRouteTP exact path="/taxprofessional/addassingment/:id" component={TpAddAssingmentStages} />
-            <PrivateRouteTP exact path="/taxprofessional/paymentstatus" component={TpPaymentStatus} />
-            <PrivateRouteTP exact path="/taxprofessional/assignment" component={TpAssignmentTab} />
-            <PrivateRouteTP exact path="/taxprofessional/schedule" component={TpSchedule} />
-            <PrivateRouteTP exact path="/taxprofessional/message" component={TpMessage} />
-            <PrivateRouteTP exact path="/taxprofessional/feedback" component={TpFeedbackTab} />
-            <PrivateRouteTP exact path="/taxprofessional/meeting/:id" component={TpMeetingComponent} />
-            <PrivateRouteTP exact path="/taxprofessional/view-notification/:id" component={TpViewNotification} />
-            <PrivateRouteTP exact path="/taxprofessional/recording" component={TpRecording} />
-            <PrivateRouteTP exact path="/taxprofessional/reports" component={TpReport}/>
-            <PrivateRouteTP exact path="/taxprofessional/tpinvoice" component={TpInvoice}/>
-            <PrivateRouteTP exact path="/taxprofessional/paydetails/:id" component={TppayDetails} />
+            <PrivateRouteTP  path="/taxprofessional/queries/:id" component={TpQueriesRecevied} />
+            <PrivateRouteTP  path="/taxprofessional/queriestab" component={TpQueriesTab} />
+            <PrivateRouteTP  path="/taxprofessional/proposal" component={TpProposalTab} />
+            <PrivateRouteTP  path="/taxprofessional/sendproposal/:id" component={TpSendProposal} />
+            <PrivateRouteTP  path="/taxprofessional/edit-proposal/:id" component={TpEditProposal} />
+            <PrivateRouteTP  path="/taxprofessional/change-password" component={TpChangePassword} />
+            <PrivateRouteTP  path="/taxprofessional/dashboard" component={TpDashboard} />
+            <PrivateRouteTP  path ="/taxprofessional/chatting/:id" component = {TpChatting} />
+            <PrivateRouteTP  path="/taxprofessional/addassingment/:id" component={TpAddAssingmentStages} />
+            <PrivateRouteTP  path="/taxprofessional/paymentstatus" component={TpPaymentStatus} />
+            <PrivateRouteTP  path="/taxprofessional/assignment" component={TpAssignmentTab} />
+            <PrivateRouteTP  path="/taxprofessional/schedule" component={TpSchedule} />
+            <PrivateRouteTP  path="/taxprofessional/message" component={TpMessage} />
+            <PrivateRouteTP  path="/taxprofessional/feedback" component={TpFeedbackTab} />
+            <PrivateRouteTP  path="/taxprofessional/meeting/:id" component={TpMeetingComponent} />
+            <PrivateRouteTP  path="/taxprofessional/view-notification/:id" component={TpViewNotification} />
+            <PrivateRouteTP  path="/taxprofessional/recording" component={TpRecording} />
+            <PrivateRouteTP  path="/taxprofessional/reports" component={TpReport}/>
+            <PrivateRouteTP  path="/taxprofessional/tpinvoice" component={TpInvoice}/>
+            <PrivateRouteTP  path="/taxprofessional/paydetails/:id" component={TppayDetails} />
            
            
-            <PublicCms exact path = "/cms/login" component = {CmsLogin} />
-            <PrivateRouteCms exact path="/cms/cms" component={Cms} />
-            <PrivateRouteCms exact path = "/cms/flash" component = {FlashMessage} />
-            <PrivateRouteCms exact path = "/cms/articles" component = {CmsContent} />
-            <PrivateRouteCms exact path = "/cms/updates" component = {AdminUpdates} />
-            <PrivateRouteCms exact path = "/cms/articlesedit/:id" component = {CmsContent} />
-            <PrivateRouteCms exact path = "/cms/updatecontent" component = {UpdatesContent} />
-            <PrivateRouteCms exact path = "/cms/editupdates/:id" component = {Editupdates} />
-            <PrivateRouteCms exact path = "/cms/links" component = {Links} />
-            <PrivateRouteCms exact path = "/cms/linksedit/:id" component = {Links} />
-            <PrivateRouteCms exact path = "/cms/linklist" component = {Linklist} />
-            <PrivateRouteCms exact path = "/cms/faqlist" component = {FaqList} />
-            <PrivateRouteCms exact path = "/cms/mediagallery" component = {MediaGallery} />
-            <PrivateRouteCms exact path = "/cms/mediacontent" component = {MediaContent} />
-            <PrivateRouteCms exact path = "/cms/flashcontent" component = {FlashContent} />
-            <PrivateRouteCms exact path = "/cms/flashcontent/:id" component = {FlashContent} />
-            <PrivateRouteCms exact path = "/cms/faqedit/:id" component = {Faq} />
-            <PrivateRouteCms exact path = "/cms/faq" component = {Faq} />
-            <PrivateRouteCms exact path = "/cms/mediatab" component = {MediaTab} />
-            <PrivateRouteCms exact path = "/cms/videocontent" component = {VideoContent} />
-            <PrivateRouteCms exact path = "/cms/mediatext" component = {Mediatextshow} />
-            <PrivateRouteCms exact path = "/cms/mediatext/:id" component = {Mediatextshow} />
-            <PrivateRouteCms exact path = "/cms/imagegallery" component = {GroupImage} />
-            <PrivateRouteCms exact path = "/cms/videogallery" component = {Groupvideo} />
-            <PrivateRouteCms exact path = "/cms/editimage/:id" component = {EditImage} />
-            <PrivateRouteCms exact path = "/cms/editvideo/:id" component = {EditVideo} />
-             <PrivateRouteCms exact path = "/cms/editfaq/:id" component = {EditFaq} />
-             <PrivateRouteCms exact path = "/cms/videolist" component = {VideoMedia} />
-             <PrivateRouteCms exact path = "/cms/addarticles" component = {AddCmsContent} />
-             <PrivateRouteCms exact path = "/cms/contentlist" component = {MediaText} />
+            <PublicCms  path = "/cms/login" component = {CmsLogin} />
+            <PrivateRouteCms  path="/cms/cms" component={Cms} />
+            <PrivateRouteCms  path = "/cms/flash" component = {FlashMessage} />
+            <PrivateRouteCms  path = "/cms/articles" component = {CmsContent} />
+            <PrivateRouteCms  path = "/cms/updates" component = {AdminUpdates} />
+            <PrivateRouteCms  path = "/cms/articlesedit/:id" component = {CmsContent} />
+            <PrivateRouteCms  path = "/cms/updatecontent" component = {UpdatesContent} />
+            <PrivateRouteCms  path = "/cms/editupdates/:id" component = {Editupdates} />
+            <PrivateRouteCms  path = "/cms/links" component = {Links} />
+            <PrivateRouteCms  path = "/cms/linksedit/:id" component = {Links} />
+            <PrivateRouteCms  path = "/cms/linklist" component = {Linklist} />
+            <PrivateRouteCms  path = "/cms/faqlist" component = {FaqList} />
+            <PrivateRouteCms  path = "/cms/mediagallery" component = {MediaGallery} />
+            <PrivateRouteCms  path = "/cms/mediacontent" component = {MediaContent} />
+            <PrivateRouteCms  path = "/cms/flashcontent" component = {FlashContent} />
+            <PrivateRouteCms  path = "/cms/flashcontent/:id" component = {FlashContent} />
+            <PrivateRouteCms  path = "/cms/faqedit/:id" component = {Faq} />
+            <PrivateRouteCms  path = "/cms/faq" component = {Faq} />
+            <PrivateRouteCms  path = "/cms/mediatab" component = {MediaTab} />
+            <PrivateRouteCms  path = "/cms/videocontent" component = {VideoContent} />
+            <PrivateRouteCms  path = "/cms/mediatext" component = {Mediatextshow} />
+            <PrivateRouteCms  path = "/cms/mediatext/:id" component = {Mediatextshow} />
+            <PrivateRouteCms  path = "/cms/imagegallery" component = {GroupImage} />
+            <PrivateRouteCms  path = "/cms/videogallery" component = {Groupvideo} />
+            <PrivateRouteCms  path = "/cms/editimage/:id" component = {EditImage} />
+            <PrivateRouteCms  path = "/cms/editvideo/:id" component = {EditVideo} />
+             <PrivateRouteCms  path = "/cms/editfaq/:id" component = {EditFaq} />
+             <PrivateRouteCms  path = "/cms/videolist" component = {VideoMedia} />
+             <PrivateRouteCms  path = "/cms/addarticles" component = {AddCmsContent} />
+             <PrivateRouteCms  path = "/cms/contentlist" component = {MediaText} />
              <PrivateRouteCms exaxt path = "/cms/imagelist" component = {MediaContent} />
              <PrivateRouteCms exaxt path = "/cms/uploadlink" component = {UploadLink} />
              <PrivateRouteCms exaxt path = "/cms/uploadlinkcontent" component = {UploadLinkContent} />
+             <Route path="/*" component={PageNotFound} />
           
-            <Route exact path="/*" component={PageNotFound} />
 
           </Switch>
-          </Router>
+          </BrowserRouter>
      
   
    </>
