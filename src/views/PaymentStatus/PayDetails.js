@@ -287,7 +287,7 @@ setModal(!modal)
                        <DescriptionOutlinedIcon color="secondary" />
                        </span> : ""}
                           
-                          {row.is_paid == "0" ? 
+                          {row.is_paid == "0" && row.paymenturl !== null ? 
 
            <div onClick={() => openModal(row)}>
                 <DiscussProposal titleName ="Pay"/>
@@ -322,7 +322,7 @@ setModal(!modal)
                 row.payment_gateway_type == "1" ?
                 <a href={row.receipt_url} target = "_blank">Payment receipt</a>  : 
                
-                <span style = {{cursor : "pointer"}} onClick = {(e) => paymentFun(row)} title = "View payment">
+                <span style = {{cursor : "pointer",  color : "#3D4775"}} onClick = {(e) => paymentFun(row)} title = "View payment">
               Manual credit
                 </span> 
             }

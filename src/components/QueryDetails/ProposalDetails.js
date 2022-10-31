@@ -927,7 +927,7 @@ Payment plan
                    fontSize : "16px", 
                    pointer : "cursor"}}>
                      </i></span></a> : 
-                      <span style = {{cursor : "pointer"}} onClick = {(e) => paymentFun(pay)} title = "View payment">
+                      <span style = {{cursor : "pointer" , color : "#3D4775"}} onClick = {(e) => paymentFun(pay)} title = "View payment">
                       Manual credit
                         </span> 
                   }

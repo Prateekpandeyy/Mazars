@@ -18,7 +18,7 @@ import CustomQuillEditor from './CustomQuillEditor';
 import CustomHeading from '../../../components/Common/CustomHeading';
 const FlashContent = () => {
     const { handleSubmit, register, errors, getValues, reset } = useForm();
-    const [news , setNews] = useState("")
+    const [showEditor, setShowEditor] = useState(false)
     const [heading, setHeading] = useState("")
     const [det, addDet] = useState();
     const [stats, setStats] = useState(false)
@@ -101,11 +101,11 @@ const FlashContent = () => {
          }
           }
           else {
-            console.log("done2")
+          
         var myEditor = document.querySelector('#snow-container')
         var html = myEditor.children[0].innerHTML;
         addDet(html)
-        let message = "Flash added successfully";
+      
         formData.append("news", html);
         formData.append("heading", value.p_heading)
         formData.append("content_type", 2)
@@ -157,7 +157,12 @@ const FlashContent = () => {
       
         setStats(!stats)
     }
-   
+    const editorShow = (e) => {
+      setContentType(e.target.value)
+     if(e.target.value === "Editor"){
+      setShowEditor(true)
+     }
+    }
     return (
         <Layout cmsDashboard="cmsDashboard"> 
           <Container maxWidth = "xl">
@@ -199,7 +204,7 @@ const FlashContent = () => {
                  <label className="form-label">Type</label>
                       <select
                       multiple = {false}
-                      onChange = {(e) => setContentType(e.target.value)}
+                      onChange = {(e) => editorShow(e)}
                       className={classNames("form-control", {
                         "is-invalid": errors.p_content,
                       })}
@@ -247,6 +252,7 @@ const FlashContent = () => {
          
          <div className="col-md-12" style={{display : "flex", flexDirection :"column"}}>
          <CustomQuillEditor 
+         showEditor={showEditor}
  content={det} />
              </div>
            

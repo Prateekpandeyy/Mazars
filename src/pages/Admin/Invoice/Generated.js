@@ -147,7 +147,17 @@ const Generated = () => {
                 } else if (order === "desc") {
                   return Date.parse(b) - Date.parse(a);
                 }
-              }
+              },
+              formatter : function(cell, row){
+                let dueDate=row.due_date.split("-").reverse().join("-")
+
+                return(
+                   
+                    <>
+              {dueDate}
+                    </>
+                )
+            }
         }, 
         {
             text: "Invoice amount",
@@ -229,7 +239,7 @@ const Generated = () => {
                          </span>
                             
                           
-                              {row.is_paid == "0" 
+                              {row.is_paid == "0" && row.paymenturl !== null
                 ?   
                
                   

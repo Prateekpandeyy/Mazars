@@ -58,9 +58,10 @@ const PayModal = (props) => {
                     })
                 }
             }
+            window.location.hash="customer/paymentstatus"
         })
        
-    window.location.hash="customer/paymentstatus"
+  
     }
     const inVal = (e) => {
        if(e.target.value.length > 5){

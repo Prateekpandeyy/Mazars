@@ -34,6 +34,7 @@ function Customer() {
   var digit2 = [];
   useEffect(() => {
     getCustomer();
+   
   }, []);
 
   const getCustomer = () => {
@@ -42,6 +43,29 @@ function Customer() {
       if (res.data.code === 1) {
         setData(res.data.result);
         setTpCount(res.data.result.length);
+      }
+    });
+  };
+  const clientEnable = (value) => {
+    console.log("value", value)
+    let formData = new FormData()
+    formData.append("id", value.id);
+    formData.append("status", value.status)
+    axios({
+      method : "POST",
+      url : `${baseUrl}/admin/clientstatus`,
+      headers : {
+        uit : token
+      },
+      data : formData
+    })
+    .then((res) => {
+      console.log("response", res)
+    })
+    axios.get(`${baseUrl}/admin/getAllList`, myConfig).then((res) => {
+     
+      if (res.data.code === 1) {
+        console.log("done")
       }
     });
   };
@@ -164,10 +188,15 @@ function Customer() {
         return (
           <>
            
-            <i
+           <i
               className="fa fa-eye"
               style={{ fontSize: 20, cursor: "pointer", marginLeft: "8px" , color : "green"}}
               onClick={() => show(row.id)}
+            ></i>
+             <i
+              className="fa fa-ban"
+              style={{ fontSize: 20, cursor: "pointer", marginLeft: "8px"}}
+              onClick={() => clientEnable(row)}
             ></i>
           </>
         );

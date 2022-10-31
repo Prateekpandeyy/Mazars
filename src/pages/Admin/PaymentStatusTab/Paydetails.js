@@ -214,7 +214,7 @@ setModal(!modal)
         },
         {
             dataField : "tds_amount",
-            text : "Tds deducted",
+            text : "TDS deducted",
             style : {
              textAlign : "right"
             }, 
@@ -291,7 +291,7 @@ setModal(!modal)
                 row.payment_gateway_type == "1" ?
                 <a href={row.receipt_url} target = "_blank">Payment receipt</a>  : 
                
-                <span style = {{cursor : "pointer"}} onClick = {(e) => paymentFun(row)} title = "View payment">
+                <span style = {{cursor : "pointer",  color : "#3D4775"}} onClick = {(e) => paymentFun(row)} title = "View payment">
               Manual credit
                 </span> 
             }

@@ -11,7 +11,7 @@ function ViewPayment({showPayment, paymentFun, data, panel}) {
      <>
    {
     data && (  
-         <Modal isOpen={showPayment} toggle={paymentFun} size="lg" scrollable>
+         <Modal isOpen={showPayment} toggle={paymentFun} size="xl" scrollable>
     <ModalHeader toggle={paymentFun}> 
     Manual credit of payment 
     </ModalHeader>
@@ -24,8 +24,10 @@ function ViewPayment({showPayment, paymentFun, data, panel}) {
                     <td>Client name</td>
                     <td>{data.name}</td>
                 </tr>
-                <td>Query no</td>
+               <tr>
+               <td>Query no</td>
                     <td>{data.assign_no}</td>
+               </tr>
                     <tr>
                     <td>Invoice amount</td>
                     <td>{data.payable_amount}</td>

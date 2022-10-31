@@ -124,7 +124,7 @@ function NewPassword(props) {
   return (
     <>
     <OuterloginContainer>
-    <Header cust_sign="cust_sign" />
+    <Header noSign="noSign" />
      <MyContainer>
      <div className="container">
         <div className="form">

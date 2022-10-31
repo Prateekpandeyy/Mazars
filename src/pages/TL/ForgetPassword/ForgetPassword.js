@@ -1,7 +1,6 @@
 import { useForm } from "react-hook-form";
 import React, { useState, useEffect } from "react";
 import Header from "../../../components/Header/Header";
-import Footer from "../../../components/Footer/Footer";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -123,7 +122,7 @@ function ForgetPassword(props) {
         </div>
       </div>
 
-      <Footer />
+    
     </>
   );
 }

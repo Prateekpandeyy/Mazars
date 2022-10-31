@@ -247,7 +247,7 @@ const Generated = () => {
                        onClick = {() => addTdsToggle(row)} 
                     ></i> : ""
                         }
-                         {row.is_paid == "0" 
+                         {row.is_paid == "0" && row.paymenturl !== null
                 ?   
                 <span title={row.paymenturl}>
                     {

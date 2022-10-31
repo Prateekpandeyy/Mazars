@@ -250,7 +250,7 @@ const Generated = ({updateTab}) => {
                   <EditQuery title="Edit Invoice"/> 
                   </div> : ""
                         }
-                          {row.is_paid == "0" 
+                          {row.is_paid == "0" && row.paymenturl !== null
                 ?   
                 <span title={row.paymenturl}>
                     {

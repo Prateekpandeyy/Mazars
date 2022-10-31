@@ -301,8 +301,20 @@ if(res.data.code === 1){
                      Electronic bank transfer
                     </option>
                     <option
+                    value = "imps">
+                  IMPS
+                    </option>
+                    <option
                     value = "mobile wallet">
                      Mobile wallet
+                    </option>
+                    <option
+                    value = "neft">
+                     NEFT
+                    </option>
+                    <option
+                    value = "rgts">
+                    RGTS
                     </option>
                     <option
                     value = "upi">
