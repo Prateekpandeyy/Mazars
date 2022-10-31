@@ -46,11 +46,19 @@ function Customer() {
       }
     });
   };
-  const clientEnable = (value) => {
-    console.log("value", value)
+  const clientEnable = (e, value) => {
     let formData = new FormData()
-    formData.append("id", value.id);
-    formData.append("status", value.status)
+    if(e.target.checked === true){
+      formData.append("status", "1")
+    }
+    else{
+     
+        formData.append("status", "0")
+      
+    }
+  
+    formData.append("id", value);
+    
     axios({
       method : "POST",
       url : `${baseUrl}/admin/clientstatus`,
@@ -60,14 +68,19 @@ function Customer() {
       data : formData
     })
     .then((res) => {
-      console.log("response", res)
+    if(res.data.code === 1){
+      getCustomer();
+    }
+    else {
+      getCustomer();
+      Swal.fire({
+        title : "error",
+        html : "Something went wrong, please try again",
+        icon : "error"
+      })
+    }
     })
-    axios.get(`${baseUrl}/admin/getAllList`, myConfig).then((res) => {
-     
-      if (res.data.code === 1) {
-        console.log("done")
-      }
-    });
+   
   };
 
  
@@ -183,22 +196,40 @@ function Customer() {
     {
       dataField: "",
       text: "Action",
-      
+      headerStyle: () => {
+        return {  width: "100px" };
+      },
       formatter: function (cell, row) {
         return (
-          <>
-           
-           <i
+     <div className="d-flex">
+       <i
               className="fa fa-eye"
-              style={{ fontSize: 20, cursor: "pointer", marginLeft: "8px" , color : "green"}}
+              style={{ fontSize: 20, cursor: "pointer", margin: "0px 8px 0px 8px" , color : "green"}}
               onClick={() => show(row.id)}
             ></i>
-             <i
-              className="fa fa-ban"
-              style={{ fontSize: 20, cursor: "pointer", marginLeft: "8px"}}
-              onClick={() => clientEnable(row)}
-            ></i>
-          </>
+             {
+                  row.status == "1" ?
+                  <span>
+                  <label className="switch" onChange= {(e) => clientEnable(e, row.id)}>
+    <input type="checkbox"  defaultChecked/>
+    <span className="slider round"></span>
+  </label>
+  
+                  </span> :
+                  ""
+                }
+                {
+                  row.status == "0" ?
+                  <span>
+                  <label className="switch" onChange= {(e) => clientEnable(e, row.id)}>
+    <input type="checkbox"  />
+    <span className="slider round"></span>
+  </label>
+  
+                  </span> : ""
+                }
+             
+     </div>
         );
       },
     },
