@@ -7,9 +7,15 @@ import { baseUrl } from "../../config/config";
 import './queryStyle.css';
 
 import MainText from "../Common/MainText";
+import ShowFolder from "./Folder/ShowFolder";
 function BasicQuery({qstatus, panel, p, diaplaySpecific, queryDocs, year, purpose, declined2,
   declinedStatus }) {
-
+    const [isOpen, setIsOpen] = useState(false)
+    const [id, setId] = useState("")
+const openFolder = (e) => {
+  setId(e)
+  setIsOpen(!isOpen)
+}
 
     const downloadpdf = (qno, qid, name) => {
       let userId, token;
@@ -251,10 +257,22 @@ function BasicQuery({qstatus, panel, p, diaplaySpecific, queryDocs, year, purpos
                 : null
             }
              
-            
+           {
+            panel === "teamleader" ?
+            <tr>
+            <th scope="row">Folder</th>
+            <td>
+              <span style={{cursor : "pointer"}} onClick = {(e) => openFolder(p.id)}>Click to show</span>
+            </td>
+          </tr> : ""
+           }
           </tbody>
         </table>
       </div>
+      <ShowFolder 
+      rejectHandler={openFolder}
+      id = {id}
+      addPaymentModal={isOpen} />
     </>
   );
 }

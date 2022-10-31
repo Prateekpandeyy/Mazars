@@ -273,3 +273,11 @@ line-height: 35px;
     width: 100%;
 
 }
+.folderCreated{
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+    flex-direction: column;
+    flex-wrap: wrap;
+    width : calc(100% / 8 - 15px)
+}
