@@ -11,7 +11,8 @@ import ImageIcon from '@mui/icons-material/Image';
 import ArticleIcon from '@mui/icons-material/Article';
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
-import Draggable from 'react-draggable';
+import Select from 'react-select'
+import 'reactjs-popup/dist/index.css';
 
 const FolderWrapper = styled(Box)({
     display : "flex",
@@ -39,19 +40,31 @@ function ShowFolder({
     const [folder , setFolder] = useState([])
     const [showDetail , setShowDetail] = useState(false)
     const [color, setColor] = useState(0)
+    const [move, setMove] = useState(true)
     const uid = localStorage.getItem("tlkey")
     const token = window.localStorage.getItem("tlToken")
+    const [movedFolder, setMovedFolder] = useState([])
     const myConfig = {
         headers : {
             uit : token
         }
     }
     const getList = () => {
+      let kk = []
+      let movedFold = {}
         axios.get(`${baseUrl}/tl/queryfolderlist?q_id=${id}&uid=${JSON.parse(uid)}`, myConfig)
 .then((res) => {
   
     if(res.data.code === 1){
         setFolder(res.data.result)
+        res.data.result.map((i) => {
+          movedFold = {
+            label : i.folder,
+            value : i.folder
+          }
+          kk.push(movedFold)
+        })
+        setMovedFolder(kk)
     }
 })
     }
@@ -68,16 +81,14 @@ getList()
   // get file with in folder
   const getFile = (e) => {
     setColor(e.id)
-    console.log("eee", e)
+    
     axios.get(`${baseUrl}/tl/documentlistbyfolder?q_id=${id}&folder_id=${e.id}`, myConfig)
     .then((res) => {
       console.log("response", res)
     })
     setShowDetail(true)
   }
-  const onStop = (e) => {
-    console.log("onStop", e)
-  }
+  
     return (
       <div>
         <Modal isOpen={addPaymentModal} toggle={rejectHandler} size="xl">
@@ -114,7 +125,7 @@ getList()
     <FolderDetails>
   
   <div className="folderDetails">
-           <ArticleIcon style={{fontSize : "50px", color : "#fccc77", cursor : "pointer"}} /> <span>Test</span>
+           <ArticleIcon onDblClick = {(e) => setMove(true)} style={{fontSize : "50px", color : "#fccc77", cursor : "pointer"}} /> <span>Test</span>
            </div>
  
            <div className="folderDetails">
@@ -129,13 +140,28 @@ getList()
            </div>
     </FolderDetails> : ""
   }
+  
           </ModalBody>
+          
         </Modal>
         <CreateFolder 
         addPaymentModal = {createFoldernew}
         id = {id}
         getList = {getList}
         rejectHandler = {getFolder} />
+        {
+          move === true ?
+          <Modal isOpen = {move}>
+            <ModalHeader>
+              Select
+            </ModalHeader>
+            <ModalBody>
+            <Select options = {movedFolder}>
+
+            </Select>
+            </ModalBody>
+          </Modal> : " "
+        }
       </div>
     );
   }
