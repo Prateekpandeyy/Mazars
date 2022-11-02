@@ -9,7 +9,8 @@ import Swal from 'sweetalert2';
 function CreateFolder({
     addPaymentModal,
     rejectHandler,
-    id
+    id,
+    getList
    
   }) {
     const {handleSubmit, getValue, register, errors} = useForm()
@@ -19,7 +20,7 @@ function CreateFolder({
         formData.append("q_id", id)
 axios({
     method : "POST",
-    url : `${baseUrl}/tl/createFolder`,
+    url : `${baseUrl}/tl/createqfolder`,
     headers : {
         uit : localStorage.getItem("tlToken")
     },
@@ -27,6 +28,8 @@ axios({
 })
 .then((res) => {
     if (res.data.code === 1){
+        rejectHandler()
+        getList()
         Swal.fire({
             title : "success",
             html : "Folder created successfullly",

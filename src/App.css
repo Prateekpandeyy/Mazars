@@ -279,5 +279,15 @@ line-height: 35px;
   justify-content: flex-start;
     flex-direction: column;
     flex-wrap: wrap;
-    width : calc(100% / 8 - 15px)
+    width : calc(100% / 4 - 15px);
+    margin : 15px;
+}
+.folderCreate2{
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+    flex-direction: column;
+    flex-wrap: wrap;
+    width : calc(100% / 9 - 15px);
+    margin : 15px;
 }
