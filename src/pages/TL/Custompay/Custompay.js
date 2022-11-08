@@ -6,15 +6,7 @@ import Layout from "../../../components/Layout/Layout";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
 
-import {
-  Card,
-  CardHeader,
-  CardBody,
- 
-  Row,
-  Col,
-
-} from "reactstrap";
+import { Card, CardHeader, CardBody, Row, Col } from "reactstrap";
 import { useHistory } from "react-router-dom";
 
 import classNames from "classnames";
@@ -23,11 +15,7 @@ import CustomHeading from "../../../components/Common/CustomHeading";
 import { Container } from "@material-ui/core";
 import Swal from "sweetalert2";
 
-
-
-
 function Custompay(props) {
- 
   const history = useHistory();
   const { handleSubmit, register, errors, reset } = useForm();
 
@@ -35,35 +23,43 @@ function Custompay(props) {
 
   const [loading, setLoading] = useState(false);
 
-  const [data, setData] = useState("")
-  const [paymentType, setPaymentType] = useState("")
-  const [paymentMode, setPaymentMode] = useState("")
+  const [data, setData] = useState("");
+  const [paymentType, setPaymentType] = useState("");
+  const [paymentMode, setPaymentMode] = useState("");
   const [paymentDis, setPaymentDis] = useState("");
-  const [notes, setNotes] = useState("")
-  const [bank, setBank] = useState("")
-  const [paymentDate, setPaymentDate] = useState("")
-  const [receiveAmount, setReceiveAmount] = useState("")
-  var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
+  const [notes, setNotes] = useState("");
+  const [bank, setBank] = useState("");
+  const [paymentDate, setPaymentDate] = useState("");
+  const [receiveAmount, setReceiveAmount] = useState("");
+  var current_date =
+    new Date().getFullYear() +
+    "-" +
+    ("0" + (new Date().getMonth() + 1)).slice(-2) +
+    "-" +
+    ("0" + new Date().getDate()).slice(-2);
   const [item] = useState(current_date);
-const [showTl, setShowTl] = useState(false)
-const token = window.localStorage.getItem("tlToken")
-    const myConfig = {
-        headers : {
-         "uit" : token
+  const [showTl, setShowTl] = useState(false);
+  const token = window.localStorage.getItem("tlToken");
+  const myConfig = {
+    headers: {
+      uit: token,
+    },
+  };
+  useEffect(() => {
+    axios
+      .get(
+        `${baseUrl}/tl/getPaymentDetail?tl_id=${JSON.parse(
+          userId
+        )}&invoice=1&invoice_id=${props.location.data.id}`,
+        myConfig
+      )
+      .then((res) => {
+        if (res.data.code === 1) {
+          setData(res.data.payment_detail[0]);
         }
-      }
-useEffect(() => {
-  
-  axios.get(`${baseUrl}/tl/getPaymentDetail?tl_id=${JSON.parse(userId)}&invoice=1&invoice_id=${props.location.data.id}`, myConfig)
-  .then((res) => {
-if(res.data.code === 1){
-  setData(res.data.payment_detail[0])
- 
-}
-  })
-  
-}, [props])
- 
+      });
+  }, [props]);
+
   const onSubmit = (value) => {
     Swal.fire({
       title: "Are you sure?",
@@ -75,7 +71,7 @@ if(res.data.code === 1){
       confirmButtonText: "Yes",
     }).then((result) => {
       if (result.value === true) {
-        setLoading(true)
+        setLoading(true);
         let formData = new FormData();
         formData.append("invoice_id", data.id);
         formData.append("assign_no", data.assign_no);
@@ -84,93 +80,80 @@ if(res.data.code === 1){
         formData.append("invoice_amount", data.payable_amount);
         formData.append("payment_recived_date", paymentDate);
         formData.append("payment_by", paymentType);
-        formData.append("receive_amount", receiveAmount)
+        formData.append("receive_amount", receiveAmount);
         formData.append("payment_information", paymentDis);
         formData.append("note", notes);
-      
+
         axios({
           method: "POST",
           url: `${baseUrl}/tl/manualpayment`,
-          headers : {
-            uit : token
+          headers: {
+            uit: token,
           },
           data: formData,
         })
           .then(function (response) {
-    
             if (response.data.code === 1) {
               reset();
-              setLoading(false)
-           
+              setLoading(false);
+
               Swal.fire({
-                title : "success",
-                html : "Payment captured successully",
-                icon : "success"
-              })
-             
-              history.push("/teamleader/paymentstatus")
+                title: "success",
+                html: "Payment captured successully",
+                icon: "success",
+              });
+
+              history.push("/teamleader/paymentstatus");
               // props.history.push(routes);
-            }
-            else{
-              setLoading(false)
-              var variable = "Something went wrong, please try again"
+            } else {
+              setLoading(false);
+              var variable = "Something went wrong, please try again";
               Swal.fire({
-                title : "error",
-                html : "Something went wrong, please try again",
-                icon : "error"
-              })
+                title: "error",
+                html: "Something went wrong, please try again",
+                icon: "error",
+              });
             }
           })
-          .catch((error) => {
-          
-          });
-      }
-      else{
-
-        
-       return false;
+          .catch((error) => {});
+      } else {
+        return false;
       }
     });
-
-    
   };
   const amountCredit = (e) => {
-   
-    
-     if(Number(e.target.value) < Number(data.payable_amount)){
+    if (Number(e.target.value) < Number(data.payable_amount)) {
       Swal.fire({
-        title : "warning",
-        html : `Value could not be less than ${data.payable_amount}`,
-        icon : "warning"
-      })
-      setReceiveAmount(data.payable_amount)
+        title: "warning",
+        html: `Value could not be less than ${data.payable_amount}`,
+        icon: "warning",
+      });
+      setReceiveAmount(data.payable_amount);
     }
-  }
+  };
 
   return (
     <Layout TLDashboard="TLDashboard" TLuserId={userId}>
       <Card>
         <CardHeader>
           <Row>
-          <Col md="4">
-          <button class="customBtn ml-3" onClick={() =>history.goBack()}>Go Back</button>
-              
+            <Col md="4">
+              <button class="customBtn ml-3" onClick={() => history.goBack()}>
+                Go Back
+              </button>
             </Col>
             <Col md="4" align="center">
-             <CustomHeading>
-             Manual credit of payment
-             </CustomHeading>
+              <CustomHeading>Manual credit of payment</CustomHeading>
             </Col>
           </Row>
         </CardHeader>
         <CardBody>
-          {
-            loading ?
-              <Loader />
-              :
-              <>
-        <Container>
-        <form onSubmit={handleSubmit(onSubmit)}>
+          {loading ? (
+            <Loader />
+          ) : (
+            <>
+              <Container>
+                <form onSubmit={handleSubmit(onSubmit)}>
                   <div class="row">
                     <div class="col-md-6">
                       <div class="form-group">
@@ -179,94 +162,101 @@ if(res.data.code === 1){
                           type="text"
                           name="p_query"
                           className="form-control"
-                     
-                           value={data.assign_no}
+                          value={data.assign_no}
                           disabled
                         />
                       </div>
-                  </div>
-                  <div className="col-md-6">
-                   <div class="form-group">
+                    </div>
+                    <div className="col-md-6">
+                      <div class="form-group">
                         <label>Invoice no.</label>
                         <input
                           type="text"
                           name="p_query"
                           className="form-control"
-                         
-                           value={data.billno}
+                          value={data.billno}
                           disabled
                         />
                       </div>
-                  
-                   </div>
-                   <div class="col-md-6">
+                    </div>
+                    <div class="col-md-6">
                       <div class="form-group">
                         <label>Invoice amount</label>
                         <input
                           type="text"
                           name="p_query"
                           className="form-control"
-                        
-                           value={data.payable_amount}
+                          value={data.payable_amount}
                           disabled
                         />
                       </div>
-                  </div>
-                  <div class="col-md-6">
+                    </div>
+                    <div class="col-md-6">
                       <div class="form-group">
-                        <label>Amount credited  <span className="declined">*</span></label>
+                        <label>
+                          Amount credited <span className="declined">*</span>
+                        </label>
                         <input
                           type="number"
                           name="p_receive"
                           className={classNames("form-control", {
                             "is-invalid": errors.p_receive,
                           })}
-                          ref={register({required : true})}
-                        onChange={(e) => setReceiveAmount(e.target.value)}
-                           value={receiveAmount}
-                           onBlur = {(e) => amountCredit(e)}
-                         
+                          ref={register({ required: true })}
+                          onChange={(e) => setReceiveAmount(e.target.value)}
+                          value={receiveAmount}
+                          onBlur={(e) => amountCredit(e)}
                         />
                       </div>
-                  </div>
-                  <div className="col-md-6">
-                   <div class="form-group">
-                        <label> Paid in bank account number <span className="declined">*</span></label>
+                    </div>
+                    <div className="col-md-6">
+                      <div class="form-group">
+                        <label>
+                          {" "}
+                          Paid in bank account number{" "}
+                          <span className="declined">*</span>
+                        </label>
                         <input
                           type="text"
                           name="p_account"
-                        value = {bank}
-                        onChange = {(e) => setBank(e.target.value)}
-                          ref={register({required : true})}
+                          value={bank}
+                          onChange={(e) => setBank(e.target.value)}
+                          ref={register({ required: true })}
                           className={classNames("form-control", {
                             "is-invalid": errors.p_account,
                           })}
                         />
                       </div>
-                  
-                   </div>
-                   <div className="col-md-6">
-                   <div class="form-group">
-                        <label> Payment receipt date <span className="declined">*</span></label>
+                    </div>
+                    <div className="col-md-6">
+                      <div class="form-group">
+                        <label>
+                          {" "}
+                          Payment receipt date{" "}
+                          <span className="declined">*</span>
+                        </label>
                         <input
                           type="date"
                           name="p_date"
                           className={classNames("form-control", {
                             "is-invalid": errors.p_date,
                           })}
-                          value = {paymentDate}
-                          onChange = {(e) => setPaymentDate(e.target.value)}
-                          ref={register({required : true})}
-                          max= {item}
-                         
+                          value={paymentDate}
+                          onChange={(e) => setPaymentDate(e.target.value)}
+                          ref={register({
+                            required: true,
+                          })}
+                          max={item}
                         />
                       </div>
-                     
-                   </div>
-                   <div className="col-md-6">
-                   <div class="form-group">
-                        <label> Payment type <span className="declined">*</span></label>
-                    {/* <input 
+                    </div>
+                    <div className="col-md-6">
+                      <div class="form-group">
+                        <label>
+                          {" "}
+                          Payment type <span className="declined">*</span>
+                        </label>
+                        {/* <input 
                     type = "text"
                     ref={register({required : true})}
                     value = {paymentType}
@@ -275,71 +265,47 @@ if(res.data.code === 1){
                     className={classNames("form-control", {
                      "is-invalid": errors.payment_mode,
                    })} /> */}
-                   <select
-                   ref={register({required : true})}
-                   value = {paymentType}
-                   onChange = {(e) => setPaymentType(e.target.value)}
-                   name = "payment_mode"
-                   className={classNames("form-control", {
-                    "is-invalid": errors.payment_mode,
-                  })}>
-                     <option value="">Please select payment type</option>
-                     
-                    <option
-                    value = "bank transfer">
-                      Bank transfer
-                      </option>
-                    <option
-                    value = "credit card">
-                      Credit card
-                    </option>
-                    <option
-                    value = "debit card">
-                      Debit card
-                    </option>
-                    <option>
-                     Electronic bank transfer
-                    </option>
-                    <option
-                    value = "imps">
-                  IMPS
-                    </option>
-                    <option
-                    value = "mobile wallet">
-                     Mobile wallet
-                    </option>
-                    <option
-                    value = "neft">
-                     NEFT
-                    </option>
-                    <option
-                    value = "rgts">
-                    RGTS
-                    </option>
-                    <option
-                    value = "upi">
-                    UPI
-                    </option>
-                   
-                   <option
-                   value = "other">
-                    Other
-                    </option>
-                   </select>
+                        <select
+                          ref={register({ required: true })}
+                          value={paymentType}
+                          onChange={(e) => setPaymentType(e.target.value)}
+                          name="payment_mode"
+                          className={classNames("form-control", {
+                            "is-invalid": errors.payment_mode,
+                          })}
+                        >
+                          <option value="">Please select payment type</option>
+
+                          <option value="bank transfer">Bank transfer</option>
+                          <option value="credit card">Credit card</option>
+                          <option value="debit card">Debit card</option>
+                          <option>Electronic bank transfer</option>
+                          <option value="imps">IMPS</option>
+                          <option value="mobile wallet">Mobile wallet</option>
+                          <option value="neft">NEFT</option>
+                          <option value="rgts">RGTS</option>
+                          <option value="upi">UPI</option>
+
+                          <option value="other">Other</option>
+                        </select>
                       </div>
-                   </div>
-                   <div className="col-md-6">
-                   <div class="form-group">
-                        <label>Payment information<span className="declined">*</span></label>
+                    </div>
+                    <div className="col-md-6">
+                      <div class="form-group">
+                        <label>
+                          Payment information<span className="declined">*</span>
+                        </label>
                         <textarea
                           className={classNames("form-control", {
                             "is-invalid": errors.p_message,
                           })}
-                          value = {paymentDis}
-                          onChange = {(e) => setPaymentDis(e.target.value)}
+                          value={paymentDis}
+                          onChange={(e) => setPaymentDis(e.target.value)}
                           placeholder="Message text here"
                           rows="3"
-                          ref={register({required : true})}
+                          ref={register({
+                            required: true,
+                          })}
                           name="p_message"
                         ></textarea>
                         {errors.p_message && (
@@ -348,34 +314,36 @@ if(res.data.code === 1){
                           </div>
                         )}
                       </div>
-                   </div>
-                   <div className="col-md-6">
-                   <div class="form-group">
+                    </div>
+                    <div className="col-md-6">
+                      <div class="form-group">
                         <label>Other information</label>
                         <textarea
-                          className= "form-control"
+                          className="form-control"
                           placeholder="Message text here"
                           rows="5"
                           ref={register}
-                          value = {notes}
-                          onChange = {(e) => setNotes(e.target.value)}
+                          value={notes}
+                          onChange={(e) => setNotes(e.target.value)}
                           name="p_notes"
                         ></textarea>
-                      
                       </div>
-                   </div>
-                   </div>
-                      <button type="submit" className="customBtn">
-                        Submit
-                      </button>
-                      <button class="customBtn ml-3" onClick={() =>history.goBack()}>Cancel</button>
+                    </div>
+                  </div>
+                  <button type="submit" className="customBtn">
+                    Submit
+                  </button>
+                  <button
+                    class="customBtn ml-3"
+                    onClick={() => history.goBack()}
+                  >
+                    Cancel
+                  </button>
                 </form>
-            </Container>
-               
-              </>
-          }
+              </Container>
+            </>
+          )}
         </CardBody>
-
       </Card>
     </Layout>
   );
