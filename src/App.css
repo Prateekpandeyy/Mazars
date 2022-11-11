@@ -410,3 +410,7 @@ h5 {
   font-size: 40px;
   border-radius: 50%;
 }
+.folderDetails{
+  display: flex;
+  width: 100%;
+}

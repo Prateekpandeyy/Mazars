@@ -16,8 +16,7 @@ import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import Select from "react-select";
 const FolderWrapper = styled(Box)({
   display: "flex",
-  width: "50%",
-  borderRight: "1px solid #ccc",
+
   alignItems: "flex-start",
   flexWrap: "wrap",
   margin: "0px 20px 0px 0px",
@@ -331,73 +330,84 @@ function BasicQuery({
                 <Markup content={p.fact_case} />
               </td>
             </tr>
-            <tr>
-              <th scope="row">Uploaded documents</th>
-              {panel === "teamleader" ? (
-                <td>
-                  <div className="d-flex">
-                    <FolderWrapper>
-                      {folder.map((i) => (
-                        <div className="folderCreated">
-                          {color === i.id ? (
-                            <FolderIcon
-                              onClick={(e) => getInnerFileFile(i)}
+
+            {panel === "teamleader" ? (
+              <tr>
+                <th
+                  scope="row"
+                  style={{ display: "flex", flexDirection: "column" }}
+                >
+                  Uploaded documents
+                  <FolderWrapper>
+                    {folder.map((i) => (
+                      <div className="folderCreated">
+                        {color === i.id ? (
+                          <FolderIcon
+                            onClick={(e) => getInnerFileFile(i)}
+                            style={{
+                              fontSize: "50px",
+                              color: "#0000ff",
+                              cursor: "pointer",
+                            }}
+                          />
+                        ) : (
+                          <FolderIcon
+                            onClick={(e) => getInnerFileFile(i)}
+                            style={{
+                              fontSize: "50px",
+                              color: "#fccc77",
+                              cursor: "pointer",
+                            }}
+                          />
+                        )}
+                        <span
+                          style={{
+                            textAlign: "center",
+                            whiteSpace: "break-spaces",
+                            display: "flex",
+                            maxHeight: "60px",
+                            overflow: "hidden",
+                          }}
+                        >
+                          {i.folder}{" "}
+                        </span>
+                      </div>
+                    ))}
+                    {files.map((i) => (
+                      <>
+                        {i.folder_id === "0" ? (
+                          <div className="folderCreated">
+                            <ArticleIcon
+                              onClick={(e) => handleFile(i)}
                               style={{
                                 fontSize: "50px",
                                 color: "#0000ff",
                                 cursor: "pointer",
                               }}
                             />
-                          ) : (
-                            <FolderIcon
-                              onClick={(e) => getInnerFileFile(i)}
+                            <span
                               style={{
-                                fontSize: "50px",
-                                color: "#fccc77",
-                                cursor: "pointer",
+                                textAlign: "center",
+                                whiteSpace: "break-spaces",
+                                display: "flex",
+                                maxHeight: "60px",
+                                overflow: "hidden",
                               }}
-                            />
-                          )}
-                          <span
-                            style={{
-                              textAlign: "center",
-                              whiteSpace: "break-spaces",
-                            }}
-                          >
-                            {i.folder}{" "}
-                          </span>
-                        </div>
-                      ))}
-                      {files.map((i) => (
-                        <>
-                          {i.folder_id === "0" ? (
-                            <div className="folderCreated">
-                              <ArticleIcon
-                                onClick={(e) => handleFile(i)}
-                                style={{
-                                  fontSize: "50px",
-                                  color: "#0000ff",
-                                  cursor: "pointer",
-                                }}
-                              />
-                              <span
-                                style={{
-                                  textAlign: "center",
-                                  whiteSpace: "break-spaces",
-                                }}
-                              >
-                                {i.name}
-                              </span>
-                            </div>
-                          ) : (
-                            ""
-                          )}
-                        </>
-                      ))}
-                    </FolderWrapper>
-
+                            >
+                              {i.name}
+                            </span>
+                          </div>
+                        ) : (
+                          ""
+                        )}
+                      </>
+                    ))}
+                  </FolderWrapper>
+                </th>
+                <td>
+                  <div className="d-flex">
                     <FolderDetails>
-                      <div className="folderDetails d-flex">
+                      <div className="folderDetails">
                         {innerFiles.map((i) => (
                           <>
                             <div className="folderCreated">
@@ -413,6 +423,9 @@ function BasicQuery({
                                 style={{
                                   textAlign: "center",
                                   whiteSpace: "break-spaces",
+                                  display: "flex",
+                                  maxHeight: "60px",
+                                  overflow: "hidden",
                                 }}
                               >
                                 {i.name}
@@ -425,11 +438,12 @@ function BasicQuery({
                   </div>
                   {move === true ? (
                     <Modal isOpen={move} toggle={handleFile} size="xs">
-                      <ModalHeader toggle={handleFile}>Select</ModalHeader>
+                      <ModalHeader toggle={handleFile}>Move to</ModalHeader>
                       <ModalBody>
                         <Select
                           onChange={(e) => setFolderId(e)}
                           options={movedFolder}
+                          placeholder="Please select folder"
                         ></Select>
                         <button
                           type="button"
@@ -444,7 +458,10 @@ function BasicQuery({
                     " "
                   )}
                 </td>
-              ) : (
+              </tr>
+            ) : (
+              <tr>
+                <th scope="row">Uploaded documents</th>
                 <td>
                   {queryDocs.map((p, i) => (
                     <p style={{ display: "flex" }}>
@@ -459,8 +476,9 @@ function BasicQuery({
                     </p>
                   ))}
                 </td>
-              )}
-            </tr>
+              </tr>
+            )}
+
             <tr>
               <th scope="row">Specific questions</th>
               <td>
