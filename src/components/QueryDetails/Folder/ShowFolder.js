@@ -260,11 +260,12 @@ function ShowFolder({ addPaymentModal, rejectHandler, id }) {
       />
       {move === true ? (
         <Modal isOpen={move} toggle={handleFile} size="xs">
-          <ModalHeader toggle={handleFile}>Select</ModalHeader>
+          <ModalHeader toggle={handleFile}>Move to</ModalHeader>
           <ModalBody>
             <Select
               onChange={(e) => setFolderId(e)}
               options={movedFolder}
+              placeholder="Please select folder"
             ></Select>
             <button
               type="button"
