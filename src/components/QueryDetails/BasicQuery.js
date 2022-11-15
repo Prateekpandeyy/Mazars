@@ -54,15 +54,39 @@ function BasicQuery({
   const [folderId, setFolderId] = useState([]);
   const [fileId, setFileId] = useState("");
   const [innerFiles, setInnerFiles] = useState([]);
-
+  const [adminFolder, setAdminFolder] = useState([]);
+  const [adminFile, setadminFile] = useState([]);
   const token = window.localStorage.getItem("tlToken");
   const uid = localStorage.getItem("tlkey");
+  const adminToken = window.localStorage.getItem("adminToken");
   const qid = useParams();
+  const myConfigAdmin = {
+    headers: {
+      uit: adminToken,
+    },
+  };
   useEffect(() => {
     getFile();
     showFolder();
   }, [panel === "teamleader"]);
-
+  useEffect(() => {
+    getAdminFile();
+  }, [panel === "admin"]);
+  const getAdminFile = (e) => {
+    let kk = [];
+    let movedFold = {};
+    axios
+      .get(
+        `${baseUrl}/admin/documentlistbyfolder?q_id=${qid.id}`,
+        myConfigAdmin
+      )
+      .then((res) => {
+        if (res.data.code === 1) {
+          console.log("responseAdmin", res.data.result);
+          setAdminFolder(res.data.result);
+        }
+      });
+  };
   const myConfig = {
     headers: {
       uit: token,
@@ -281,7 +305,10 @@ function BasicQuery({
         });
     }
   };
-
+  const rightClick = (e, a, b, c) => {
+    e.preventDefault();
+    downloadpdf(a, b, c);
+  };
   return (
     <>
       <div className="queryBox">
@@ -340,7 +367,22 @@ function BasicQuery({
                   scope="row"
                   style={{ display: "flex", flexDirection: "column" }}
                 >
-                  <span style={{ padding: "10px" }}>Uploaded documents</span>
+                  <div
+                    style={{
+                      display: "flex",
+                      width: "100%",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <span style={{ padding: "10px" }}>Uploaded documents</span>
+                    <button
+                      className="autoWidthBtn ml-auto"
+                      onClick={(e) => getFolder()}
+                    >
+                      <CreateNewFolderIcon style={{ margin: "0px 5px" }} />{" "}
+                      Create folder
+                    </button>
+                  </div>
                   <FolderWrapper>
                     {folder.map((i) => (
                       <div className="folderCreated">
@@ -382,6 +424,9 @@ function BasicQuery({
                           <div className="folderCreated">
                             <ArticleIcon
                               onClick={(e) => handleFile(i)}
+                              onContextMenu={(e) =>
+                                rightClick(e, i.assign_no, i.id, i.name)
+                              }
                               style={{
                                 fontSize: "50px",
                                 color: "#0000ff",
@@ -411,86 +456,18 @@ function BasicQuery({
                   <div className="d-flex">
                     <FolderDetails>
                       <div className="folderDetails">
-                        <button
-                          className="autoWidthBtn ml-auto"
-                          onClick={(e) => getFolder()}
-                        >
-                          <CreateNewFolderIcon style={{ margin: "0px 5px" }} />{" "}
-                          Create folder
-                        </button>
-                        {color === 0 ? (
-                          <FolderWrapper>
-                            {folder.map((i) => (
-                              <div className="folderCreated">
-                                {color === i.id ? (
-                                  <FolderIcon
-                                    style={{
-                                      fontSize: "50px",
-                                      color: "#0000ff",
-                                      cursor: "pointer",
-                                    }}
-                                  />
-                                ) : (
-                                  <FolderIcon
-                                    style={{
-                                      fontSize: "50px",
-                                      color: "#fccc77",
-                                      cursor: "pointer",
-                                    }}
-                                  />
-                                )}
-                                <span
-                                  style={{
-                                    textAlign: "center",
-                                    whiteSpace: "break-spaces",
-                                    display: "flex",
-                                    maxHeight: "60px",
-                                    overflow: "hidden",
-                                  }}
-                                >
-                                  {i.folder}{" "}
-                                </span>
-                              </div>
-                            ))}
-                            {files.map((i) => (
-                              <>
-                                {i.folder_id === "0" ? (
-                                  <div className="folderCreated">
-                                    <ArticleIcon
-                                      onClick={(e) => handleFile(i)}
-                                      style={{
-                                        fontSize: "50px",
-                                        color: "#0000ff",
-                                        cursor: "pointer",
-                                      }}
-                                    />
-                                    <span
-                                      style={{
-                                        textAlign: "center",
-                                        whiteSpace: "break-spaces",
-                                        display: "flex",
-                                        maxHeight: "60px",
-                                        overflow: "hidden",
-                                      }}
-                                    >
-                                      {i.name}
-                                    </span>
-                                  </div>
-                                ) : (
-                                  ""
-                                )}
-                              </>
-                            ))}
-                          </FolderWrapper>
-                        ) : (
-                          ""
-                        )}
+                        <span style={{ padding: "10px", textAlign: "center" }}>
+                          Folder content
+                        </span>
                         <div className="d-flex">
                           {innerFiles.map((i) => (
                             <>
                               <div className="folderCreated">
                                 <ArticleIcon
                                   onClick={(e) => handleFile(i)}
+                                  onContextMenu={(e) =>
+                                    rightClick(e, i.assign_no, i.id, i.name)
+                                  }
                                   style={{
                                     fontSize: "50px",
                                     color: "#0000ff",
@@ -545,25 +522,159 @@ function BasicQuery({
                 </td>
               </tr>
             ) : (
+              ""
+            )}
+            {panel === "admin" ? (
               <tr>
-                <th scope="row">Uploaded documents</th>
-                <td>
-                  {queryDocs.map((p, i) => (
-                    <p style={{ display: "flex" }}>
-                      <span
-                        onClick={() => downloadpdf(p.assign_no, p.id, p.name)}
-                        style={{ display: "flex", cursor: "pointer" }}
-                      >
-                        <i className="fa fa-photo"></i>
+                <td
+                  scope="row"
+                  style={{ display: "flex", flexDirection: "column" }}
+                >
+                  <div
+                    style={{
+                      display: "flex",
+                      width: "100%",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <span style={{ padding: "10px" }}>Uploaded documents</span>
+                  </div>
+                  <FolderWrapper>
+                    {adminFolder.map((i) => (
+                      <div className="folderCreated">
+                        <>
+                          {color === i.id ? (
+                            <FolderIcon
+                              onClick={(e) => getInnerFileFile(i)}
+                              style={{
+                                fontSize: "50px",
+                                color: "#0000ff",
+                                cursor: "pointer",
+                              }}
+                            />
+                          ) : (
+                            <FolderIcon
+                              onClick={(e) => getInnerFileFile(i)}
+                              style={{
+                                fontSize: "50px",
+                                color: "#fccc77",
+                                cursor: "pointer",
+                              }}
+                            />
+                          )}
+                        </>
 
-                        <p style={{ marginLeft: "15px" }}>{p.name}</p>
-                      </span>
-                    </p>
-                  ))}
+                        <span
+                          style={{
+                            textAlign: "center",
+                            whiteSpace: "break-spaces",
+                            display: "flex",
+                            maxHeight: "60px",
+                            overflow: "hidden",
+                          }}
+                        >
+                          {i.folder}{" "}
+                        </span>
+                      </div>
+                    ))}
+                    {adminFile.map((i) => (
+                      <>
+                        {i.folder_id === "0" ? (
+                          <div className="folderCreated">
+                            <ArticleIcon
+                              style={{
+                                fontSize: "50px",
+                                color: "#0000ff",
+                                cursor: "pointer",
+                              }}
+                            />
+                            <span
+                              style={{
+                                textAlign: "center",
+                                whiteSpace: "break-spaces",
+                                display: "flex",
+                                maxHeight: "60px",
+                                overflow: "hidden",
+                              }}
+                            >
+                              {i.name}
+                            </span>
+                          </div>
+                        ) : (
+                          ""
+                        )}
+                      </>
+                    ))}
+                  </FolderWrapper>
+                </td>
+                <td>
+                  <div className="d-flex">
+                    <FolderDetails>
+                      <div className="folderDetails">
+                        <span style={{ padding: "10px", textAlign: "center" }}>
+                          Folder content
+                        </span>
+                        <div className="d-flex">
+                          {innerFiles.map((i) => (
+                            <>
+                              <div className="folderCreated">
+                                <ArticleIcon
+                                  style={{
+                                    fontSize: "50px",
+                                    color: "#0000ff",
+                                    cursor: "pointer",
+                                  }}
+                                />
+                                <span
+                                  style={{
+                                    textAlign: "center",
+                                    whiteSpace: "break-spaces",
+                                    display: "flex",
+                                    maxHeight: "60px",
+                                    overflow: "hidden",
+                                  }}
+                                >
+                                  {i.name}
+                                </span>
+                              </div>
+                            </>
+                          ))}
+                        </div>
+                      </div>
+                    </FolderDetails>
+                  </div>
+                  {move === true ? (
+                    <Modal isOpen={move} toggle={handleFile} size="xs">
+                      <ModalHeader toggle={handleFile}>Move to</ModalHeader>
+                      <ModalBody>
+                        <Select
+                          onChange={(e) => setFolderId(e)}
+                          options={movedFolder}
+                          placeholder="Please select folder"
+                        ></Select>
+                        <button
+                          type="button"
+                          onClick={(e) => mapIcon(e)}
+                          className="autoWidthBtn my-2"
+                        >
+                          Submit
+                        </button>
+                      </ModalBody>
+                    </Modal>
+                  ) : (
+                    " "
+                  )}
+                  <CreateFolder
+                    addPaymentModal={createFoldernew}
+                    id={qid.id}
+                    getList={showFolder}
+                    rejectHandler={getFolder}
+                  />
                 </td>
               </tr>
+            ) : (
+              ""
             )}
-
             <tr>
               <th scope="row">Specific questions</th>
               <td>
@@ -623,22 +734,6 @@ function BasicQuery({
                 <td colspan="1">{p.decline_notes}</td>
               </tr>
             ) : null}
-
-            {panel === "teamleader" ? (
-              <tr>
-                <th scope="row">Folder</th>
-                <td>
-                  <span
-                    style={{ cursor: "pointer" }}
-                    onClick={(e) => openFolder(p.id)}
-                  >
-                    Click to show
-                  </span>
-                </td>
-              </tr>
-            ) : (
-              ""
-            )}
           </tbody>
         </table>
       </div>

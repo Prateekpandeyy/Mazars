@@ -41,8 +41,8 @@ function Header({
   };
   useEffect(() => {
     if (
-      window.location.pathname.split("/")[1] === "customer" ||
-      window.location.pathname.split("/")[1].length === 0
+      window.location.hash.split("/")[1] === "customer" ||
+      window.location.hash.split("/")[1].length === 0
     ) {
       setLogimin(false);
     } else {
@@ -52,8 +52,8 @@ function Header({
       if (window.pageYOffset > 0) {
         setLogimin(true);
       } else if (
-        window.location.pathname.split("/")[1] === "customer" ||
-        window.location.pathname.split("/")[1].length === 0
+        window.location.hash.split("/")[1] === "customer" ||
+        window.location.hash.split("/")[1].length === 0
       ) {
         setLogimin(false);
       }
