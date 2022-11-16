@@ -46,7 +46,6 @@ function BasicQuery({
   const [id, setId] = useState("");
   const [createFoldernew, setCreateFolder] = useState(false);
   const [folder, setFolder] = useState([]);
-  const [showDetail, setShowDetail] = useState(false);
   const [color, setColor] = useState(0);
   const [move, setMove] = useState(false);
   const [movedFolder, setMovedFolder] = useState([]);
@@ -84,6 +83,7 @@ function BasicQuery({
     getClientFile();
   }, [panel === "client"]);
   const getClientFile = (e) => {
+    let id = [];
     axios
       .get(
         `${baseUrl}/customers/documentlistbyfolder?q_id=${qid.id}`,
@@ -91,11 +91,24 @@ function BasicQuery({
       )
       .then((res) => {
         if (res.data.code === 1) {
-          setclientFolder(res.data.result);
+          res.data.result.map((i) => {
+            if (id.includes(i.folder_id)) {
+              console.log("trie", id);
+            } else {
+              if (i.folder_id !== "0") {
+                id.push(i.folder_id);
+              }
+              setclientFolder((oldData) => {
+                return [...oldData, i];
+              });
+            }
+          });
         }
       });
   };
   const getAdminFile = (e) => {
+    let id = [];
+    let data = [];
     axios
       .get(
         `${baseUrl}/admin/documentlistbyfolder?q_id=${qid.id}`,
@@ -103,7 +116,19 @@ function BasicQuery({
       )
       .then((res) => {
         if (res.data.code === 1) {
-          setAdminFolder(res.data.result);
+          res.data.result.map((i) => {
+            if (id.includes(i.folder_id)) {
+              console.log("trie", id);
+            } else {
+              if (i.folder_id !== "0") {
+                id.push(i.folder_id);
+              }
+              setAdminFolder((oldData) => {
+                return [...oldData, i];
+              });
+            }
+            console.log("iii", i);
+          });
         }
       });
   };
