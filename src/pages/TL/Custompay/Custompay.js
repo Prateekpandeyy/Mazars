@@ -181,7 +181,7 @@ function Custompay(props) {
                     </div>
                     <div class="col-md-6">
                       <div class="form-group">
-                        <label>Invoice amount</label>
+                        <label>Payable amount</label>
                         <input
                           type="text"
                           name="p_query"
