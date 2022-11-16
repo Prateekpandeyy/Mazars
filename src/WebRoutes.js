@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { HashRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 import "./App.css";
 import { positions, Provider, transitions } from "react-alert";
 import AlertTemplate from "react-alert-template-basic";
@@ -208,7 +208,7 @@ const options = {
 function WebRoutes() {
   return (
     <>
-      <Router>
+      <BrowserRouter>
         <Switch>
           <PublicRouteUser exact path="/" component={Login} />
           <PublicRouteUser
@@ -736,7 +736,7 @@ function WebRoutes() {
           />
           <Route path="/*" component={PageNotFound} />
         </Switch>
-      </Router>
+      </BrowserRouter>
     </>
   );
 }

@@ -70,16 +70,16 @@ const Login = (props) => {
         } else if (response.data.code === 0) {
           setLoading(false);
           Swal.fire({
-            title: "success",
+            title: "error",
             html: "Invalid email or password.",
-            icon: "success",
+            icon: "error",
           });
         } else if (response.data.code === 2) {
           setLoading(false);
           Swal.fire({
-            title: "success",
+            title: "error",
             html: response.data.message,
-            icon: "success",
+            icon: "error",
           });
         }
       })
