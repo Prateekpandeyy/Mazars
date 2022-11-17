@@ -12,7 +12,7 @@ import FolderIcon from "@mui/icons-material/Folder";
 import ArticleIcon from "@mui/icons-material/Article";
 import Swal from "sweetalert2";
 import { Box } from "@mui/material";
-import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+import { Modal, ModalHeader, ModalBody } from "reactstrap";
 import CreateFolder from "./Folder/CreateFolder";
 import Select from "react-select";
 import CreateNewFolderIcon from "@mui/icons-material/CreateNewFolder";

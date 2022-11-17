@@ -1105,7 +1105,7 @@ else{
       </span>
     );
 
-
+console.log("show recording button ", this.state.showButton , JSON.parse(this.teamKey))
 //recording btn off
 const recordingBtnOff = (
   <span
@@ -1119,7 +1119,7 @@ const recordingBtnOff = (
   >
      {
       this.state.showButton == JSON.parse(this.teamKey) ?
-      // <FiberManualRecordIcon style={{ color: red[500] }}/> : ""
+     
      <img src = {recImg} style = {{width : "20px"}} /> : ""
     }
             

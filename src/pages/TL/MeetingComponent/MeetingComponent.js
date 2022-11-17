@@ -6,12 +6,7 @@ function MeetingComponent(props) {
   const userid = window.localStorage.getItem("tlkey");
   const tlEmail = window.localStorage.getItem("tlkey");
 
-  return (
-   
-      <Meeting id={props.match.params.id} 
-      tlEmail = {tlEmail}/>
- 
-  );
+  return <Meeting id={props.match.params.id} tlEmail={tlEmail} />;
 }
 
 export default MeetingComponent;

@@ -1,9 +1,35 @@
-import React from "react";
+import React, { useState } from "react";
 import CommonServices from "../../common/common";
 import { ReportUrl } from "../../config/config";
 import { baseUrl } from "../../config/config";
 import axios from "axios";
 import MainText from "../Common/MainText";
+import CreateFolder from "./Folder/CreateFolder";
+import Select from "react-select";
+import styled from "styled-components";
+import FolderIcon from "@mui/icons-material/Folder";
+import ArticleIcon from "@mui/icons-material/Article";
+import { Box } from "@mui/material";
+import { useParams } from "react-router-dom";
+import ShowFolder from "./Folder/ShowFolder";
+import Swal from "sweetalert2";
+import { Modal, ModalHeader, ModalBody } from "reactstrap";
+
+const FolderWrapper = styled(Box)({
+  display: "flex",
+
+  alignItems: "flex-start",
+  flexWrap: "wrap",
+  margin: "0px 20px 0px 0px",
+});
+
+const FolderDetails = styled(Box)({
+  display: "flex",
+  width: "100%",
+  alignItems: "flex-start",
+  flexWrap: "wrap",
+});
+
 function AssignmentDetails({
   p,
   panel,
@@ -19,12 +45,123 @@ function AssignmentDetails({
     diaplayAssignment;
 
   const { cust_accept_date } = diaplayProposal;
-
+  const [createFoldernew, setCreateFolder] = useState(false);
+  const [folder, setFolder] = useState([]);
+  const [color, setColor] = useState(0);
+  const [innerFiles, setInnerFiles] = useState([]);
+  const [files, setFiles] = useState([]);
+  const [fileId, setFileId] = useState("");
+  const [move, setMove] = useState(false);
+  const [movedFolder, setMovedFolder] = useState([]);
+  const [folderId, setFolderId] = useState([]);
+  const qid = useParams();
+  const uid = localStorage.getItem("tlkey");
+  const token = window.localStorage.getItem("tlToken");
+  const myConfig = {
+    headers: {
+      uit: token,
+    },
+  };
   const timeTaken = (a, b) => {
     var date2 = CommonServices.removeTime(a);
     var date1 = CommonServices.removeTime(b);
 
     var difference = Math.round((date2 - date1) / (1000 * 60 * 60 * 24));
+  };
+  const showFolder = () => {
+    let kk = [];
+
+    let movedFold = {};
+    movedFold = {
+      label: "...(root)",
+      value: "0",
+    };
+    kk.push(movedFold);
+    axios
+      .get(
+        `${baseUrl}/tl/queryfolderlist?q_id=${qid.id}&uid=${JSON.parse(uid)}`,
+        myConfig
+      )
+      .then((res) => {
+        if (res.data.code === 1) {
+          setFolder(res.data.result);
+          res.data.result.map((i) => {
+            movedFold = {
+              label: i.folder,
+              value: i.id,
+            };
+            kk.push(movedFold);
+          });
+          setMovedFolder(kk);
+        }
+      });
+  };
+  const getFile = () => {
+    axios
+      .get(
+        `${baseUrl}/tl/documentlistbyfolder?q_id=${qid.id}&uid=${JSON.parse(
+          uid
+        )}`,
+        myConfig
+      )
+      .then((res) => {
+        if (res.data.code === 1) {
+          setFiles(res.data.result);
+        }
+      });
+  };
+  const mapIcon = (e) => {
+    axios
+      .get(
+        `${baseUrl}/tl/folderfile?q_id=${qid.id}&folder_id=${folderId.value}&file_id=${fileId}`,
+        myConfig
+      )
+      .then((res) => {
+        if (res.data.code === 1) {
+          handleFile();
+          showFolder();
+          getFile();
+          setInnerFiles([]);
+          setColor(0);
+          Swal.fire({
+            title: "success",
+            html: "File transfered successfully",
+            icons: "success",
+          });
+        } else if (res.data.code === 0) {
+          Swal.fire({
+            title: "error",
+            html: "Something went wrong, please try again",
+            icons: "error",
+          });
+        }
+      })
+      .catch((error) => {
+        Swal.fire({
+          title: "error",
+          html: error,
+          icons: "error",
+        });
+      });
+  };
+  const rightClick = (e, a, b, c) => {
+    e.preventDefault();
+    downloadpdf(a, b, c);
+  };
+  const getInnerFileFile = (e) => {
+    axios
+      .get(
+        `${baseUrl}/tl/documentlistbyfolder?q_id=${qid.id}&folder_id=${
+          e.id
+        }&uid=${JSON.parse(uid)}`,
+        myConfig
+      )
+      .then((res) => {
+        if (res.data.code === 1) {
+          setColor(e.id);
+          setInnerFiles(res.data.result);
+        }
+      });
   };
   const downloadpdf = (qno, qid, name) => {
     let userId, token;
@@ -142,7 +279,17 @@ function AssignmentDetails({
         });
     }
   };
-
+  const getFolder = (e) => {
+    setCreateFolder(!createFoldernew);
+  };
+  const handleFile = (e) => {
+    if (e) {
+      setFileId(e.id);
+      setMove(!move);
+    } else {
+      setMove(!move);
+    }
+  };
   return (
     <>
       <div className="queryBox">
@@ -235,8 +382,167 @@ function AssignmentDetails({
                   : null}
               </td>
             </tr>
-
             <tr>
+              <td
+                scope="row"
+                style={{ display: "flex", flexDirection: "column" }}
+              >
+                <div
+                  style={{
+                    display: "flex",
+                    width: "100%",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <span style={{ fontSize: "16px", fontWeight: "300" }}>
+                    Uploaded documents
+                  </span>
+                  <button
+                    className="autoWidthBtn ml-auto"
+                    onClick={(e) => getFolder()}
+                  >
+                    Create folder
+                  </button>
+                </div>
+                <FolderWrapper>
+                  {folder.map((i) => (
+                    <div className="folderCreated">
+                      {color === i.id ? (
+                        <FolderIcon
+                          onClick={(e) => getInnerFileFile(i)}
+                          style={{
+                            fontSize: "50px",
+                            color: "#0000ff",
+                            cursor: "pointer",
+                          }}
+                        />
+                      ) : (
+                        <FolderIcon
+                          onClick={(e) => getInnerFileFile(i)}
+                          style={{
+                            fontSize: "50px",
+                            color: "#fccc77",
+                            cursor: "pointer",
+                          }}
+                        />
+                      )}
+                      <span
+                        style={{
+                          textAlign: "center",
+                          whiteSpace: "break-spaces",
+                          display: "flex",
+                          maxHeight: "60px",
+                          overflow: "hidden",
+                        }}
+                      >
+                        {i.folder}{" "}
+                      </span>
+                    </div>
+                  ))}
+                  {files.map((i) => (
+                    <>
+                      {i.folder_id === "0" ? (
+                        <div className="folderCreated">
+                          <ArticleIcon
+                            onClick={(e) => handleFile(i)}
+                            onContextMenu={(e) =>
+                              rightClick(e, i.assign_no, i.id, i.name)
+                            }
+                            style={{
+                              fontSize: "50px",
+                              color: "#0000ff",
+                              cursor: "pointer",
+                            }}
+                          />
+                          <span
+                            style={{
+                              textAlign: "center",
+                              whiteSpace: "break-spaces",
+                              display: "flex",
+                              maxHeight: "60px",
+                              overflow: "hidden",
+                            }}
+                          >
+                            {i.name}
+                          </span>
+                        </div>
+                      ) : (
+                        ""
+                      )}
+                    </>
+                  ))}
+                </FolderWrapper>
+              </td>
+              <td>
+                <div className="d-flex">
+                  <FolderDetails>
+                    <div className="folderDetails">
+                      <span style={{ fontSize: "16px", fontWeight: "300" }}>
+                        Folder content
+                      </span>
+                      <div className="d-flex">
+                        {innerFiles.map((i) => (
+                          <>
+                            <div className="folderCreated">
+                              <ArticleIcon
+                                onContextMenu={(e) => handleFile(i)}
+                                onClick={(e) =>
+                                  rightClick(e, i.assign_no, i.id, i.name)
+                                }
+                                style={{
+                                  fontSize: "50px",
+                                  color: "#0000ff",
+                                  cursor: "pointer",
+                                }}
+                              />
+                              <span
+                                style={{
+                                  textAlign: "center",
+                                  whiteSpace: "break-spaces",
+                                  display: "flex",
+                                  maxHeight: "60px",
+                                  overflow: "hidden",
+                                }}
+                              >
+                                {i.name}
+                              </span>
+                            </div>
+                          </>
+                        ))}
+                      </div>
+                    </div>
+                  </FolderDetails>
+                </div>
+                {move === true ? (
+                  <Modal isOpen={move} toggle={handleFile} size="xs">
+                    <ModalHeader toggle={handleFile}>Move to</ModalHeader>
+                    <ModalBody>
+                      <Select
+                        onChange={(e) => setFolderId(e)}
+                        options={movedFolder}
+                        placeholder="Please select folder"
+                      ></Select>
+                      <button
+                        type="button"
+                        onClick={(e) => mapIcon(e)}
+                        className="autoWidthBtn my-2"
+                      >
+                        Submit
+                      </button>
+                    </ModalBody>
+                  </Modal>
+                ) : (
+                  " "
+                )}
+                <CreateFolder
+                  addPaymentModal={createFoldernew}
+                  id={qid.id}
+                  getList={showFolder}
+                  rejectHandler={getFolder}
+                />
+              </td>
+            </tr>
+            {/* <tr>
               <th scope="row">Reports</th>
               <td>
                 {reports.map((p, i) => (
@@ -248,12 +554,6 @@ function AssignmentDetails({
                           {i + 1}
                         </td>
                         <td style={{ display: "flex", width: "200px" }}>
-                          {/* <a
-                            href={`${ReportUrl}/${assingNo}/${p.document}`}
-                            target="_blank"
-                          >
-                            <i className="fa fa-photo"></i> {p.document}
-                          </a> */}
                           <span
                             onClick={() =>
                               downloadpdf(assingNo, p.docid, p.document)
@@ -289,7 +589,7 @@ function AssignmentDetails({
                   </>
                 ))}
               </td>
-            </tr>
+            </tr> */}
           </tbody>
         </table>
       </div>
