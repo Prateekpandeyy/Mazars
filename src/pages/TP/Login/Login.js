@@ -108,7 +108,7 @@ function Login(props) {
           </div>
         ) : (
           <div class="form">
-            <CustomHeading>Tax professional login</CustomHeading>
+            <CustomHeading>Tax Professional login</CustomHeading>
             <form onSubmit={handleSubmit(onSubmit)} autocomplete="off">
               <div className="row">
                 <div className="col-md-12">

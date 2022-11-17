@@ -107,7 +107,7 @@ const Login = (props) => {
           </div>
         ) : (
           <div className="form">
-            <CustomHeading>Team leader</CustomHeading>
+            <CustomHeading>Team Leader</CustomHeading>
             <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
               <div className="row">
                 <div className="col-md-12">
