@@ -479,7 +479,7 @@ if(item.player === undefined){
       })
       setTimeout((e) =>{
       this.handleExit("exit");
-        window.location.assign("/#/customer/schedule")
+        window.location.assign("/")
       }, 3000)
    
      }
@@ -612,7 +612,7 @@ if(item.player === undefined){
       this.setState({ readyState: false });
       this.client = null;
       this.localStream = null;
-      window.location.assign("/#/customer/schedule")
+      window.location.assign("/")
     }
   }
   };

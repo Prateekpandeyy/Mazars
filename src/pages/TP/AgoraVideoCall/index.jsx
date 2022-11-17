@@ -552,7 +552,7 @@ if(item.player === undefined){
             icon : "success"
           })
             setTimeout((e) => {
-              window.location.pathname = "/taxprofessional/schedule";
+              window.location.assign("/taxprofessional/schedule");
             }, 500)
            
            }
@@ -963,7 +963,7 @@ this.del(),
 }
 else{
  
-  window.location.pathname = "/taxprofessional/schedule";
+  window.location.assign("/taxprofessional/schedule");
 }
   
 };
@@ -1048,7 +1048,7 @@ del = (e) => {
         },
         data: formData,
      })
-      window.location.pathname = "/taxprofessional/schedule";
+      window.location.assign("/taxprofessional/schedule");
      }
      
    });

@@ -613,7 +613,7 @@ if(item.player === undefined){
         this.setState({ readyState: false });
         this.client = null;
         this.localStream = null;
-        window.location.assign("/#/customer/schedule")
+        window.location.assign("/customer/schedule")
       }
     
     };

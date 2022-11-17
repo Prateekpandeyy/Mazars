@@ -450,7 +450,9 @@ function BasicQuery({
                       justifyContent: "space-between",
                     }}
                   >
-                    <span style={{ padding: "10px" }}>Uploaded documents</span>
+                    <span style={{ fontSize: "16px", fontWeight: "300" }}>
+                      Uploaded documents
+                    </span>
                     <button
                       className="autoWidthBtn ml-auto"
                       onClick={(e) => getFolder()}
@@ -531,7 +533,7 @@ function BasicQuery({
                   <div className="d-flex">
                     <FolderDetails>
                       <div className="folderDetails">
-                        <span style={{ padding: "10px", textAlign: "left" }}>
+                        <span style={{ fontSize: "16px", fontWeight: "300" }}>
                           Folder content
                         </span>
                         <div className="d-flex">
@@ -612,7 +614,14 @@ function BasicQuery({
                       justifyContent: "space-between",
                     }}
                   >
-                    <span style={{ padding: "10px" }}>Uploaded documents</span>
+                    <span
+                      style={{
+                        fontSize: "16px",
+                        fontWeight: "300",
+                      }}
+                    >
+                      Uploaded documents
+                    </span>
                   </div>
                   <FolderWrapper>
                     {adminFolder.map((i) => (
@@ -681,7 +690,13 @@ function BasicQuery({
                   <div className="d-flex">
                     <FolderDetails>
                       <div className="folderDetails">
-                        <span style={{ padding: "10px", textAlign: "left" }}>
+                        <span
+                          style={{
+                            fontSize: "16px",
+                            fontWeight: "300",
+                            textAlign: "left",
+                          }}
+                        >
                           Folder content
                         </span>
                         <div className="d-flex">
@@ -758,7 +773,9 @@ function BasicQuery({
                       justifyContent: "space-between",
                     }}
                   >
-                    <span style={{ padding: "10px" }}>Uploaded documents</span>
+                    <span style={{ fontSize: "16px", fontWeight: "300" }}>
+                      Uploaded documents
+                    </span>
                   </div>
                   <FolderWrapper>
                     {clientFolder.map((i) => (
@@ -827,7 +844,7 @@ function BasicQuery({
                   <div className="d-flex">
                     <FolderDetails>
                       <div className="folderDetails">
-                        <span style={{ padding: "10px", textAlign: "left" }}>
+                        <span style={{ fontSize: "16px", fontWeight: "300" }}>
                           Folder content
                         </span>
                         <div className="d-flex">

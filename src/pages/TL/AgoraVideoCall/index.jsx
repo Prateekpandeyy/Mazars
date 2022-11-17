@@ -551,7 +551,7 @@ if(item.player === undefined){
             icon : "success"
           })
             setTimeout((e) => {
-              window.location.pathname = "/teamleader/schedule";
+              window.location.assign("/teamleader/schedule");
             }, 500)
            
            }
@@ -964,7 +964,7 @@ this.del(),
 }
 else{
  
-  window.location.pathname = "/teamleader/schedule";
+  window.location.assign("/teamleader/schedule");
 }
   
 };
@@ -1049,7 +1049,7 @@ del = (e) => {
         },
         data: formData,
      })
-      window.location.pathname = "/teamleader/schedule";
+      window.location.assign("/teamleader/schedule");
      }
      
    });

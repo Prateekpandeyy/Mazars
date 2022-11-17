@@ -549,7 +549,7 @@ this.localStream.init(
             icon : "success"
           })
             setTimeout((e) => {
-              window.location.pathname = "/admin/schedule";
+              window.location.assign("/admin/schedule");
             }, 500)
            
            }
@@ -930,7 +930,7 @@ this.del(),
 }
 else{
   this.localStream.disableVideo()
-  window.location.pathname = "/admin/schedule";
+  window.location.assign("/admin/schedule");
 }
 };
 
@@ -1001,7 +1001,7 @@ else{
       },
       data: formData,
    })
-    window.location.pathname = "/admin/schedule";
+   window.location.assign("/admin/schedule");
    }
  });
  }
