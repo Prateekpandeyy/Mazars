@@ -6,15 +6,21 @@ import classNames from "classnames";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import Swal from "sweetalert2";
-function CreateFolder({ addPaymentModal, rejectHandler, id, getList }) {
+function CreateFolder({ addPaymentModal, rejectHandler, id, getList, tab }) {
   const { handleSubmit, getValue, register, errors } = useForm();
   const onSumbit = (value) => {
+    let suburl = "createqfolder";
+    if (tab === "assignment") {
+      suburl = "createqfolderreport";
+    } else {
+      suburl = "createqfolder";
+    }
     let formData = new FormData();
     formData.append("folder", value.p_name);
     formData.append("q_id", id);
     axios({
       method: "POST",
-      url: `${baseUrl}/tl/createqfolder`,
+      url: `${baseUrl}/tl/${suburl}`,
       headers: {
         uit: localStorage.getItem("tlToken"),
       },

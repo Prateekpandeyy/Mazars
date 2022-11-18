@@ -546,6 +546,7 @@ function AssignmentDetails({
                     id={qid.id}
                     getList={showFolder}
                     rejectHandler={getFolder}
+                    tab="assignment"
                   />
                 </td>
               </tr>
