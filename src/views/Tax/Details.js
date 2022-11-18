@@ -65,42 +65,16 @@ const Details = () => {
           <div className={classes.articleContent}>
             {data.map((i) => (
               <div className={classes.articlesDetails}>
-                {history.location.index && (
-                  <Breadcrumbs
-                    separator=">"
-                    maxItems={3}
-                    aria-label="breadcrumb"
-                    style={{ fontSize: "18px" }}
-                  >
-                    <Link
-                      underline="hover"
-                      color="inherit"
-                      to="/customer/updatedirect"
-                    >
-                      Update
-                    </Link>
-
-                    {history.location.index === "miscellaneous" ? (
-                      <Link
-                        underline="hover"
-                        color="inherit"
-                        to={`/customer/${history.location.index}`}
-                      >
-                        Miscellaneous
-                      </Link>
-                    ) : (
-                      <Link
-                        underline="hover"
-                        color="inherit"
-                        to={`/customer/update${history.location.index}`}
-                      >
-                        {CommonServices.capitalizeFirstLetter(
-                          history.location.index
-                        ) + " tax"}
-                      </Link>
-                    )}
-                  </Breadcrumbs>
-                )}
+                <Breadcrumbs
+                  separator=">"
+                  maxItems={3}
+                  aria-label="breadcrumb"
+                  style={{ fontSize: "18px" }}
+                >
+                  <Link underline="hover" color="inherit" to="/customer/direct">
+                    Articles
+                  </Link>
+                </Breadcrumbs>
                 <ArticleWrapper>
                   <MainText>
                     {CommonServices.capitalizeFirstLetter(i.heading)}

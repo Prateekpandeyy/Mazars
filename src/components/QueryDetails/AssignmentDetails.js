@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import CommonServices from "../../common/common";
 import { ReportUrl } from "../../config/config";
 import { baseUrl } from "../../config/config";
@@ -79,7 +79,9 @@ function AssignmentDetails({
     kk.push(movedFold);
     axios
       .get(
-        `${baseUrl}/tl/queryfolderlist?q_id=${qid.id}&uid=${JSON.parse(uid)}`,
+        `${baseUrl}/tl/queryfolderlistreport?q_id=${qid.id}&uid=${JSON.parse(
+          uid
+        )}`,
         myConfig
       )
       .then((res) => {
@@ -99,9 +101,9 @@ function AssignmentDetails({
   const getFile = () => {
     axios
       .get(
-        `${baseUrl}/tl/documentlistbyfolder?q_id=${qid.id}&uid=${JSON.parse(
-          uid
-        )}`,
+        `${baseUrl}/tl/documentlistbyfolderreport?q_id=${
+          qid.id
+        }&uid=${JSON.parse(uid)}`,
         myConfig
       )
       .then((res) => {
@@ -113,7 +115,7 @@ function AssignmentDetails({
   const mapIcon = (e) => {
     axios
       .get(
-        `${baseUrl}/tl/folderfile?q_id=${qid.id}&folder_id=${folderId.value}&file_id=${fileId}`,
+        `${baseUrl}/tl/folderfileReport?q_id=${qid.id}&folder_id=${folderId.value}&file_id=${fileId}`,
         myConfig
       )
       .then((res) => {
@@ -151,7 +153,7 @@ function AssignmentDetails({
   const getInnerFileFile = (e) => {
     axios
       .get(
-        `${baseUrl}/tl/documentlistbyfolder?q_id=${qid.id}&folder_id=${
+        `${baseUrl}/tl/documentlistbyfolderreport?q_id=${qid.id}&folder_id=${
           e.id
         }&uid=${JSON.parse(uid)}`,
         myConfig
@@ -290,6 +292,10 @@ function AssignmentDetails({
       setMove(!move);
     }
   };
+  useEffect(() => {
+    getFile();
+    showFolder();
+  }, [panel === "teamleader"]);
   return (
     <>
       <div className="queryBox">
@@ -382,214 +388,219 @@ function AssignmentDetails({
                   : null}
               </td>
             </tr>
-            <tr>
-              <td
-                scope="row"
-                style={{ display: "flex", flexDirection: "column" }}
-              >
-                <div
-                  style={{
-                    display: "flex",
-                    width: "100%",
-                    justifyContent: "space-between",
-                  }}
+            {panel == "teamleader" ? (
+              <tr>
+                <td
+                  scope="row"
+                  style={{ display: "flex", flexDirection: "column" }}
                 >
-                  <span style={{ fontSize: "16px", fontWeight: "300" }}>
-                    Uploaded documents
-                  </span>
-                  <button
-                    className="autoWidthBtn ml-auto"
-                    onClick={(e) => getFolder()}
+                  <div
+                    style={{
+                      display: "flex",
+                      width: "100%",
+                      justifyContent: "space-between",
+                    }}
                   >
-                    Create folder
-                  </button>
-                </div>
-                <FolderWrapper>
-                  {folder.map((i) => (
-                    <div className="folderCreated">
-                      {color === i.id ? (
-                        <FolderIcon
-                          onClick={(e) => getInnerFileFile(i)}
-                          style={{
-                            fontSize: "50px",
-                            color: "#0000ff",
-                            cursor: "pointer",
-                          }}
-                        />
-                      ) : (
-                        <FolderIcon
-                          onClick={(e) => getInnerFileFile(i)}
-                          style={{
-                            fontSize: "50px",
-                            color: "#fccc77",
-                            cursor: "pointer",
-                          }}
-                        />
-                      )}
-                      <span
-                        style={{
-                          textAlign: "center",
-                          whiteSpace: "break-spaces",
-                          display: "flex",
-                          maxHeight: "60px",
-                          overflow: "hidden",
-                        }}
-                      >
-                        {i.folder}{" "}
-                      </span>
-                    </div>
-                  ))}
-                  {files.map((i) => (
-                    <>
-                      {i.folder_id === "0" ? (
-                        <div className="folderCreated">
-                          <ArticleIcon
-                            onClick={(e) => handleFile(i)}
-                            onContextMenu={(e) =>
-                              rightClick(e, i.assign_no, i.id, i.name)
-                            }
+                    <span style={{ fontSize: "16px", fontWeight: "300" }}>
+                      Uploaded documents
+                    </span>
+                    <button
+                      className="autoWidthBtn ml-auto"
+                      onClick={(e) => getFolder()}
+                    >
+                      Create folder
+                    </button>
+                  </div>
+                  <FolderWrapper>
+                    {folder.map((i) => (
+                      <div className="folderCreated">
+                        {color === i.id ? (
+                          <FolderIcon
+                            onClick={(e) => getInnerFileFile(i)}
                             style={{
                               fontSize: "50px",
                               color: "#0000ff",
                               cursor: "pointer",
                             }}
                           />
-                          <span
+                        ) : (
+                          <FolderIcon
+                            onClick={(e) => getInnerFileFile(i)}
                             style={{
-                              textAlign: "center",
-                              whiteSpace: "break-spaces",
+                              fontSize: "50px",
+                              color: "#fccc77",
+                              cursor: "pointer",
+                            }}
+                          />
+                        )}
+                        <span
+                          style={{
+                            textAlign: "center",
+                            whiteSpace: "break-spaces",
+                            display: "flex",
+                            maxHeight: "60px",
+                            overflow: "hidden",
+                          }}
+                        >
+                          {i.folder}{" "}
+                        </span>
+                      </div>
+                    ))}
+                    {files.map((i) => (
+                      <>
+                        {i.folder_id === "0" ? (
+                          <div className="folderCreated">
+                            <ArticleIcon
+                              onClick={(e) => handleFile(i)}
+                              onContextMenu={(e) =>
+                                rightClick(e, i.assign_no, i.id, i.name)
+                              }
+                              style={{
+                                fontSize: "50px",
+                                color: "#0000ff",
+                                cursor: "pointer",
+                              }}
+                            />
+                            <span
+                              style={{
+                                textAlign: "center",
+                                whiteSpace: "break-spaces",
+                                display: "flex",
+                                maxHeight: "60px",
+                                overflow: "hidden",
+                              }}
+                            >
+                              {i.name}
+                            </span>
+                          </div>
+                        ) : (
+                          ""
+                        )}
+                      </>
+                    ))}
+                  </FolderWrapper>
+                </td>
+                <td>
+                  <div className="d-flex">
+                    <FolderDetails>
+                      <div className="folderDetails">
+                        <span style={{ fontSize: "16px", fontWeight: "300" }}>
+                          Folder content
+                        </span>
+                        <div className="d-flex">
+                          {innerFiles.map((i) => (
+                            <>
+                              <div className="folderCreated">
+                                <ArticleIcon
+                                  onContextMenu={(e) => handleFile(i)}
+                                  onClick={(e) =>
+                                    rightClick(e, i.assign_no, i.id, i.name)
+                                  }
+                                  style={{
+                                    fontSize: "50px",
+                                    color: "#0000ff",
+                                    cursor: "pointer",
+                                  }}
+                                />
+                                <span
+                                  style={{
+                                    textAlign: "center",
+                                    whiteSpace: "break-spaces",
+                                    display: "flex",
+                                    maxHeight: "60px",
+                                    overflow: "hidden",
+                                  }}
+                                >
+                                  {i.name}
+                                </span>
+                              </div>
+                            </>
+                          ))}
+                        </div>
+                      </div>
+                    </FolderDetails>
+                  </div>
+                  {move === true ? (
+                    <Modal isOpen={move} toggle={handleFile} size="xs">
+                      <ModalHeader toggle={handleFile}>Move to</ModalHeader>
+                      <ModalBody>
+                        <Select
+                          onChange={(e) => setFolderId(e)}
+                          options={movedFolder}
+                          placeholder="Please select folder"
+                        ></Select>
+                        <button
+                          type="button"
+                          onClick={(e) => mapIcon(e)}
+                          className="autoWidthBtn my-2"
+                        >
+                          Submit
+                        </button>
+                      </ModalBody>
+                    </Modal>
+                  ) : (
+                    " "
+                  )}
+                  <CreateFolder
+                    addPaymentModal={createFoldernew}
+                    id={qid.id}
+                    getList={showFolder}
+                    rejectHandler={getFolder}
+                  />
+                </td>
+              </tr>
+            ) : (
+              <tr>
+                <th scope="row">Reports</th>
+                <td>
+                  {reports.map((p, i) => (
+                    <>
+                      {customerQuery == "customerQuery" &&
+                      submitData[0].paid_status == "2" ? null : (
+                        <tr style={{ display: "flex", width: "500px" }}>
+                          <td style={{ display: "flex", width: "50px" }}>
+                            {i + 1}
+                          </td>
+                          <td style={{ display: "flex", width: "200px" }}>
+                            <span
+                              onClick={() =>
+                                downloadpdf(assingNo, p.docid, p.document)
+                              }
+                            >
+                              <i className="fa fa-photo"></i> {p.document}
+                            </span>
+                          </td>
+                          <td
+                            style={{
                               display: "flex",
-                              maxHeight: "60px",
-                              overflow: "hidden",
+                              width: "150px",
+                              color: "green",
                             }}
                           >
-                            {i.name}
-                          </span>
-                        </div>
-                      ) : (
-                        ""
+                            {(p.stages_type == 2 &&
+                              p.revise_report == null &&
+                              "Draft Report") ||
+                              (p.stages_type == 3 &&
+                                p.revise_report == null &&
+                                "Final Report") ||
+                              (p.revise_report != null && "Draft Report")}
+                          </td>
+                          {p.status == "3" ? (
+                            <td style={{ display: "flex", width: "100px" }}>
+                              <p className="declined">Discarded</p>
+                            </td>
+                          ) : (
+                            <td
+                              style={{ display: "flex", width: "200px" }}
+                            ></td>
+                          )}
+                        </tr>
                       )}
                     </>
                   ))}
-                </FolderWrapper>
-              </td>
-              <td>
-                <div className="d-flex">
-                  <FolderDetails>
-                    <div className="folderDetails">
-                      <span style={{ fontSize: "16px", fontWeight: "300" }}>
-                        Folder content
-                      </span>
-                      <div className="d-flex">
-                        {innerFiles.map((i) => (
-                          <>
-                            <div className="folderCreated">
-                              <ArticleIcon
-                                onContextMenu={(e) => handleFile(i)}
-                                onClick={(e) =>
-                                  rightClick(e, i.assign_no, i.id, i.name)
-                                }
-                                style={{
-                                  fontSize: "50px",
-                                  color: "#0000ff",
-                                  cursor: "pointer",
-                                }}
-                              />
-                              <span
-                                style={{
-                                  textAlign: "center",
-                                  whiteSpace: "break-spaces",
-                                  display: "flex",
-                                  maxHeight: "60px",
-                                  overflow: "hidden",
-                                }}
-                              >
-                                {i.name}
-                              </span>
-                            </div>
-                          </>
-                        ))}
-                      </div>
-                    </div>
-                  </FolderDetails>
-                </div>
-                {move === true ? (
-                  <Modal isOpen={move} toggle={handleFile} size="xs">
-                    <ModalHeader toggle={handleFile}>Move to</ModalHeader>
-                    <ModalBody>
-                      <Select
-                        onChange={(e) => setFolderId(e)}
-                        options={movedFolder}
-                        placeholder="Please select folder"
-                      ></Select>
-                      <button
-                        type="button"
-                        onClick={(e) => mapIcon(e)}
-                        className="autoWidthBtn my-2"
-                      >
-                        Submit
-                      </button>
-                    </ModalBody>
-                  </Modal>
-                ) : (
-                  " "
-                )}
-                <CreateFolder
-                  addPaymentModal={createFoldernew}
-                  id={qid.id}
-                  getList={showFolder}
-                  rejectHandler={getFolder}
-                />
-              </td>
-            </tr>
-            {/* <tr>
-              <th scope="row">Reports</th>
-              <td>
-                {reports.map((p, i) => (
-                  <>
-                    {customerQuery == "customerQuery" &&
-                    submitData[0].paid_status == "2" ? null : (
-                      <tr style={{ display: "flex", width: "500px" }}>
-                        <td style={{ display: "flex", width: "50px" }}>
-                          {i + 1}
-                        </td>
-                        <td style={{ display: "flex", width: "200px" }}>
-                          <span
-                            onClick={() =>
-                              downloadpdf(assingNo, p.docid, p.document)
-                            }
-                          >
-                            <i className="fa fa-photo"></i> {p.document}
-                          </span>
-                        </td>
-                        <td
-                          style={{
-                            display: "flex",
-                            width: "150px",
-                            color: "green",
-                          }}
-                        >
-                          {(p.stages_type == 2 &&
-                            p.revise_report == null &&
-                            "Draft Report") ||
-                            (p.stages_type == 3 &&
-                              p.revise_report == null &&
-                              "Final Report") ||
-                            (p.revise_report != null && "Draft Report")}
-                        </td>
-                        {p.status == "3" ? (
-                          <td style={{ display: "flex", width: "100px" }}>
-                            <p className="declined">Discarded</p>
-                          </td>
-                        ) : (
-                          <td style={{ display: "flex", width: "200px" }}></td>
-                        )}
-                      </tr>
-                    )}
-                  </>
-                ))}
-              </td>
-            </tr> */}
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>
