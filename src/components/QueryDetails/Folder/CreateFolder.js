@@ -18,6 +18,7 @@ function CreateFolder({
   const { handleSubmit, getValue, register, errors } = useForm();
   const [folderid, setFolderId] = useState("");
   const onSumbit = (value) => {
+    console.log("folderId", folderid);
     let suburl = "createqfolder";
     if (tab === "assignment") {
       suburl = "createqfolderreport";
@@ -27,7 +28,7 @@ function CreateFolder({
     let formData = new FormData();
     formData.append("folder", value.p_name);
     formData.append("q_id", id);
-    formData.append("parent_id", folderid.id);
+    formData.append("folder_id", folderid.value);
     axios({
       method: "POST",
       url: `${baseUrl}/tl/${suburl}`,
