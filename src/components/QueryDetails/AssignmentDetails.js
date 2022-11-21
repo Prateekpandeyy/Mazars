@@ -55,6 +55,8 @@ function AssignmentDetails({
   const [movedFolder, setMovedFolder] = useState([]);
   const [folderId, setFolderId] = useState([]);
   const [clientAssign, setClientAssign] = useState(null);
+  const [leftFolder, setLeftFolder] = useState([]);
+  const [isLeft, setIsLeft] = useState(true);
   const qid = useParams();
   const uid = localStorage.getItem("tlkey");
   const token = window.localStorage.getItem("tlToken");
@@ -72,7 +74,7 @@ function AssignmentDetails({
   const showFolder = () => {
     if (window.location.pathname.split("/")[1] === "teamleader") {
       let kk = [];
-
+      let leftFold = [];
       let movedFold = {};
       movedFold = {
         label: "...(root)",
@@ -95,8 +97,10 @@ function AssignmentDetails({
                 value: i.id,
               };
               kk.push(movedFold);
+              leftFold.push(movedFold);
             });
             setMovedFolder(kk);
+            setLeftFolder(leftFold);
           }
         });
     }
@@ -295,9 +299,11 @@ function AssignmentDetails({
   const getFolder = (e) => {
     setCreateFolder(!createFoldernew);
   };
-  const handleFile = (e, b) => {
-    if (e) {
-      setFileId(e.id);
+  const handleFile = (e, i, isLeft, b) => {
+    e.preventDefault();
+    setIsLeft(isLeft);
+    if (i) {
+      setFileId(i.id);
       setMove(!move);
     } else {
       setMove(!move);
@@ -310,6 +316,7 @@ function AssignmentDetails({
     getFile();
     showFolder();
   }, []);
+  console.log("leftFolder", leftFolder, movedFolder);
   return (
     <>
       <div className="queryBox">
@@ -467,9 +474,9 @@ function AssignmentDetails({
                             {i.customer_files === null ? (
                               <div className="folderCreated">
                                 <ArticleIcon
-                                  onClick={(e) => handleFile(i)}
-                                  onContextMenu={(e) =>
-                                    rightClick(e, i.assign_no, i.id, i.name)
+                                  onContextMenu={(e) => handleFile(e, i, true)}
+                                  onClick={(e) =>
+                                    rightClick(e, i.assign_no, i.id, i.document)
                                   }
                                   style={{
                                     fontSize: "50px",
@@ -494,11 +501,16 @@ function AssignmentDetails({
                                 {i.customer_files_folder === "0" ? (
                                   <div className="folderCreated">
                                     <ArticleIcon
-                                      onClick={(e) =>
-                                        handleFile(i, "clientFolder")
-                                      }
                                       onContextMenu={(e) =>
-                                        rightClick(e, i.assign_no, i.id, i.name)
+                                        handleFile(e, i, true, "clientFolder")
+                                      }
+                                      onClick={(e) =>
+                                        rightClick(
+                                          e,
+                                          i.assign_no,
+                                          i.id,
+                                          i.customer_files
+                                        )
                                       }
                                       style={{
                                         fontSize: "50px",
@@ -543,9 +555,9 @@ function AssignmentDetails({
                             <>
                               <div className="folderCreated">
                                 <ArticleIcon
-                                  onContextMenu={(e) => handleFile(i)}
+                                  onContextMenu={(e) => handleFile(e, i, false)}
                                   onClick={(e) =>
-                                    rightClick(e, i.assign_no, i.id, i.name)
+                                    rightClick(e, i.assign_no, i.id, i.document)
                                   }
                                   style={{
                                     fontSize: "50px",
@@ -575,11 +587,19 @@ function AssignmentDetails({
                     <Modal isOpen={move} toggle={handleFile} size="xs">
                       <ModalHeader toggle={handleFile}>Move to</ModalHeader>
                       <ModalBody>
-                        <Select
-                          onChange={(e) => setFolderId(e)}
-                          options={movedFolder}
-                          placeholder="Please select folder"
-                        ></Select>
+                        {isLeft === true ? (
+                          <Select
+                            onChange={(e) => setFolderId(e)}
+                            options={leftFolder}
+                            placeholder="Please select folder"
+                          ></Select>
+                        ) : (
+                          <Select
+                            onChange={(e) => setFolderId(e)}
+                            options={movedFolder}
+                            placeholder="Please select folder"
+                          ></Select>
+                        )}
                         <button
                           type="button"
                           onClick={(e) => mapIcon(e)}

@@ -57,6 +57,8 @@ function BasicQuery({
   const [adminFile, setadminFile] = useState([]);
   const [clientFolder, setclientFolder] = useState([]);
   const [clientFile, setclientFile] = useState([]);
+  const [leftFolder, setLeftFolder] = useState([]);
+  const [isLeft, setIsLeft] = useState(true);
   const token = window.localStorage.getItem("tlToken");
   const uid = localStorage.getItem("tlkey");
   const adminToken = window.localStorage.getItem("adminToken");
@@ -194,6 +196,7 @@ function BasicQuery({
     let kk = [];
     let pd = qid.id;
     let movedFold = {};
+    let leftFold = [];
     movedFold = {
       label: "...(root)",
       value: "0",
@@ -217,8 +220,10 @@ function BasicQuery({
                 value: i.id,
               };
               kk.push(movedFold);
+              leftFold.push(movedFold);
             });
             setMovedFolder(kk);
+            setLeftFolder(leftFold);
           }
         });
     }
@@ -227,9 +232,11 @@ function BasicQuery({
   const getFolder = (e) => {
     setCreateFolder(!createFoldernew);
   };
-  const handleFile = (e) => {
-    if (e) {
-      setFileId(e.id);
+  const handleFile = (e, i, isLeft) => {
+    e.preventDefault();
+    setIsLeft(isLeft);
+    if (i) {
+      setFileId(i.id);
       setMove(!move);
     } else {
       setMove(!move);
@@ -402,7 +409,6 @@ function BasicQuery({
     }
   };
   const rightClick = (e, a, b, c) => {
-    e.preventDefault();
     downloadpdf(a, b, c);
   };
   return (
@@ -520,7 +526,7 @@ function BasicQuery({
                         {i.folder_id === "0" ? (
                           <div className="folderCreated">
                             <ArticleIcon
-                              onContextMenu={(e) => handleFile(i)}
+                              onContextMenu={(e) => handleFile(e, i, true)}
                               onClick={(e) =>
                                 rightClick(e, i.assign_no, i.id, i.name)
                               }
@@ -561,7 +567,7 @@ function BasicQuery({
                             <>
                               <div className="folderCreated">
                                 <ArticleIcon
-                                  onContextMenu={(e) => handleFile(i)}
+                                  onContextMenu={(e) => handleFile(e, i, false)}
                                   onClick={(e) =>
                                     rightClick(e, i.assign_no, i.id, i.name)
                                   }
@@ -593,11 +599,19 @@ function BasicQuery({
                     <Modal isOpen={move} toggle={handleFile} size="xs">
                       <ModalHeader toggle={handleFile}>Move to</ModalHeader>
                       <ModalBody>
-                        <Select
-                          onChange={(e) => setFolderId(e)}
-                          options={movedFolder}
-                          placeholder="Please select folder"
-                        ></Select>
+                        {isLeft === true ? (
+                          <Select
+                            onChange={(e) => setFolderId(e)}
+                            options={leftFolder}
+                            placeholder="Please select folder"
+                          ></Select>
+                        ) : (
+                          <Select
+                            onChange={(e) => setFolderId(e)}
+                            options={movedFolder}
+                            placeholder="Please select folder"
+                          ></Select>
+                        )}
                         <button
                           type="button"
                           onClick={(e) => mapIcon(e)}
@@ -752,11 +766,19 @@ function BasicQuery({
                     <Modal isOpen={move} toggle={handleFile} size="xs">
                       <ModalHeader toggle={handleFile}>Move to</ModalHeader>
                       <ModalBody>
-                        <Select
-                          onChange={(e) => setFolderId(e)}
-                          options={movedFolder}
-                          placeholder="Please select folder"
-                        ></Select>
+                        {isLeft === true ? (
+                          <Select
+                            onChange={(e) => setFolderId(e)}
+                            options={leftFolder}
+                            placeholder="Please select folder"
+                          ></Select>
+                        ) : (
+                          <Select
+                            onChange={(e) => setFolderId(e)}
+                            options={movedFolder}
+                            placeholder="Please select folder"
+                          ></Select>
+                        )}
                         <button
                           type="button"
                           onClick={(e) => mapIcon(e)}
