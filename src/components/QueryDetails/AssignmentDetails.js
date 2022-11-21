@@ -118,9 +118,15 @@ function AssignmentDetails({
     }
   };
   const mapIcon = (e) => {
+    let fold = "folder_id";
+    if (clientAssign === "clientFolder") {
+      fold = "customer_files_folder";
+    } else {
+      fold = "folder_id";
+    }
     axios
       .get(
-        `${baseUrl}/tl/folderfileReport?q_id=${qid.id}&folder_id=${folderId.value}&file_id=${fileId}`,
+        `${baseUrl}/tl/folderfileReport?q_id=${qid.id}&${fold}=${folderId.value}&file_id=${fileId}`,
         myConfig
       )
       .then((res) => {
@@ -489,7 +495,7 @@ function AssignmentDetails({
                                   <div className="folderCreated">
                                     <ArticleIcon
                                       onClick={(e) =>
-                                        handleFile(i, "clientfiles")
+                                        handleFile(i, "clientFolder")
                                       }
                                       onContextMenu={(e) =>
                                         rightClick(e, i.assign_no, i.id, i.name)
