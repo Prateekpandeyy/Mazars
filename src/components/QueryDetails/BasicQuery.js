@@ -280,9 +280,16 @@ function BasicQuery({
   };
   const getInnerFileFile = (e) => {
     if (window.location.pathname.split("/")[1] === "teamleader") {
+      // axios
+      //   .get(
+      //     `${baseUrl}/tl/documentlistbyfolder?q_id=${qid.id}&folder_id=${
+      //       e.id
+      //     }&uid=${JSON.parse(uid)}`,
+      //     myConfig
+      //   )
       axios
         .get(
-          `${baseUrl}/tl/documentlistbyfolder?q_id=${qid.id}&folder_id=${
+          `${baseUrl}/tl/queryfolderlist?q_id=${qid.id}&folder_id=${
             e.id
           }&uid=${JSON.parse(uid)}`,
           myConfig

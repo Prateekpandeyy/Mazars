@@ -16,9 +16,8 @@ function CreateFolder({
   movedFolder,
 }) {
   const { handleSubmit, getValue, register, errors } = useForm();
-  const [folderid, setFolderId] = useState("");
+  const [folderid, setFolderId] = useState("0");
   const onSumbit = (value) => {
-    console.log("folderId", folderid);
     let suburl = "createqfolder";
     if (tab === "assignment") {
       suburl = "createqfolderreport";
@@ -68,6 +67,7 @@ function CreateFolder({
                 <label>Please select folder</label>
                 <Select
                   onChange={(e) => setFolderId(e)}
+                  value={folderid}
                   options={movedFolder}
                 ></Select>
               </div>
