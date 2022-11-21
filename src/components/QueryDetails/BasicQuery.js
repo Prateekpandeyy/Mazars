@@ -58,6 +58,7 @@ function BasicQuery({
   const [clientFolder, setclientFolder] = useState([]);
   const [clientFile, setclientFile] = useState([]);
   const [leftFolder, setLeftFolder] = useState([]);
+  const [sub_folder, set_sub_folder] = useState([]);
   const [isLeft, setIsLeft] = useState(true);
   const token = window.localStorage.getItem("tlToken");
   const uid = localStorage.getItem("tlkey");
@@ -278,15 +279,24 @@ function BasicQuery({
         });
       });
   };
+  const getSubFile = (e) => {
+    axios
+      .get(
+        `${baseUrl}/tl/documentlistbyfolder?q_id=${qid.id}&folder_id=${
+          e.id
+        }&uid=${JSON.parse(uid)}`,
+        myConfig
+      )
+      .then((res) => {
+        if (res.data.code === 1) {
+          setColor(e.id);
+
+          setInnerFiles(res.data.result);
+        }
+      });
+  };
   const getInnerFileFile = (e) => {
     if (window.location.pathname.split("/")[1] === "teamleader") {
-      // axios
-      //   .get(
-      //     `${baseUrl}/tl/documentlistbyfolder?q_id=${qid.id}&folder_id=${
-      //       e.id
-      //     }&uid=${JSON.parse(uid)}`,
-      //     myConfig
-      //   )
       axios
         .get(
           `${baseUrl}/tl/queryfolderlist?q_id=${qid.id}&folder_id=${
@@ -297,8 +307,12 @@ function BasicQuery({
         .then((res) => {
           if (res.data.code === 1) {
             setColor(e.id);
-            setInnerFiles(res.data.result);
+            set_sub_folder(res.data.result);
+            // setInnerFiles(res.data.result);
           }
+        })
+        .then((res) => {
+          getSubFile(e);
         });
     }
   };
@@ -573,6 +587,28 @@ function BasicQuery({
                           Folder content
                         </span>
                         <div className="d-flex">
+                          {sub_folder.map((i) => (
+                            <div className="folderCreated" key={i.id}>
+                              <FolderIcon
+                                style={{
+                                  fontSize: "50px",
+                                  color: "#fccc77",
+                                  cursor: "pointer",
+                                }}
+                              />
+                              <span
+                                style={{
+                                  textAlign: "center",
+                                  whiteSpace: "break-spaces",
+                                  display: "flex",
+                                  maxHeight: "60px",
+                                  overflow: "hidden",
+                                }}
+                              >
+                                {i.folder}
+                              </span>
+                            </div>
+                          ))}
                           {innerFiles.map((i) => (
                             <>
                               <div className="folderCreated">
