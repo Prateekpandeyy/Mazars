@@ -300,7 +300,6 @@ function AssignmentDetails({
     setCreateFolder(!createFoldernew);
   };
   const handleFile = (e, i, isLeft, b) => {
-    e.preventDefault();
     setIsLeft(isLeft);
     if (i) {
       setFileId(i.id);
@@ -310,6 +309,10 @@ function AssignmentDetails({
     }
     if (b === "clientFiles") {
       setClientAssign(b);
+    }
+
+    if (e) {
+      e.preventDefault();
     }
   };
   useEffect(() => {
