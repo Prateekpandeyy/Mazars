@@ -520,8 +520,8 @@ function BasicQuery({
                         {i.folder_id === "0" ? (
                           <div className="folderCreated">
                             <ArticleIcon
-                              onClick={(e) => handleFile(i)}
-                              onContextMenu={(e) =>
+                              onContextMenu={(e) => handleFile(i)}
+                              onClick={(e) =>
                                 rightClick(e, i.assign_no, i.id, i.name)
                               }
                               style={{
