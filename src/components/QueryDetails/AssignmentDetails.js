@@ -319,7 +319,7 @@ function AssignmentDetails({
     getFile();
     showFolder();
   }, []);
-  console.log("leftFolder", leftFolder, movedFolder);
+
   return (
     <>
       <div className="queryBox">

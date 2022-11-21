@@ -233,7 +233,9 @@ function BasicQuery({
     setCreateFolder(!createFoldernew);
   };
   const handleFile = (e, i, isLeft) => {
-    e.preventDefault();
+    if (e) {
+      e.preventDefault();
+    }
     setIsLeft(isLeft);
     if (i) {
       setFileId(i.id);
@@ -411,6 +413,7 @@ function BasicQuery({
   const rightClick = (e, a, b, c) => {
     downloadpdf(a, b, c);
   };
+  console.log("movedFolder", movedFolder);
   return (
     <>
       <div className="queryBox">
@@ -628,6 +631,7 @@ function BasicQuery({
                     addPaymentModal={createFoldernew}
                     id={qid.id}
                     getList={showFolder}
+                    movedFolder={movedFolder}
                     rejectHandler={getFolder}
                   />
                 </td>
@@ -944,6 +948,7 @@ function BasicQuery({
                     id={qid.id}
                     getList={showFolder}
                     rejectHandler={getFolder}
+                    folderList={movedFolder}
                   />
                 </td>
               </tr>

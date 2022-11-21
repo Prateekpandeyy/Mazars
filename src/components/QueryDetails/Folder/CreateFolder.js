@@ -6,8 +6,17 @@ import classNames from "classnames";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import Swal from "sweetalert2";
-function CreateFolder({ addPaymentModal, rejectHandler, id, getList, tab }) {
+import Select from "react-select";
+function CreateFolder({
+  addPaymentModal,
+  rejectHandler,
+  id,
+  getList,
+  tab,
+  movedFolder,
+}) {
   const { handleSubmit, getValue, register, errors } = useForm();
+  const [folderid, setFolderId] = useState("");
   const onSumbit = (value) => {
     let suburl = "createqfolder";
     if (tab === "assignment") {
@@ -18,6 +27,7 @@ function CreateFolder({ addPaymentModal, rejectHandler, id, getList, tab }) {
     let formData = new FormData();
     formData.append("folder", value.p_name);
     formData.append("q_id", id);
+    formData.append("parent_id", folderid.id);
     axios({
       method: "POST",
       url: `${baseUrl}/tl/${suburl}`,
@@ -43,7 +53,7 @@ function CreateFolder({ addPaymentModal, rejectHandler, id, getList, tab }) {
       }
     });
   };
-
+  console.log("showFolder", movedFolder);
   return (
     <div>
       <Modal isOpen={addPaymentModal} toggle={rejectHandler} size="md">
@@ -53,6 +63,13 @@ function CreateFolder({ addPaymentModal, rejectHandler, id, getList, tab }) {
         <ModalBody>
           <form onSubmit={handleSubmit(onSumbit)}>
             <div className="row">
+              <div className="col-md-12">
+                <label>Please select folder</label>
+                <Select
+                  onChange={(e) => setFolderId(e)}
+                  options={movedFolder}
+                ></Select>
+              </div>
               <div className="col-md-12">
                 <label>Folder name</label>
                 <input
