@@ -54,6 +54,7 @@ function AssignmentDetails({
   const [move, setMove] = useState(false);
   const [movedFolder, setMovedFolder] = useState([]);
   const [folderId, setFolderId] = useState([]);
+  const [clientAssign, setClientAssign] = useState(null);
   const qid = useParams();
   const uid = localStorage.getItem("tlkey");
   const token = window.localStorage.getItem("tlToken");
@@ -69,48 +70,52 @@ function AssignmentDetails({
     var difference = Math.round((date2 - date1) / (1000 * 60 * 60 * 24));
   };
   const showFolder = () => {
-    let kk = [];
+    if (window.location.pathname.split("/")[1] === "teamleader") {
+      let kk = [];
 
-    let movedFold = {};
-    movedFold = {
-      label: "...(root)",
-      value: "0",
-    };
-    kk.push(movedFold);
-    axios
-      .get(
-        `${baseUrl}/tl/queryfolderlistreport?q_id=${qid.id}&uid=${JSON.parse(
-          uid
-        )}`,
-        myConfig
-      )
-      .then((res) => {
-        if (res.data.code === 1) {
-          setFolder(res.data.result);
-          res.data.result.map((i) => {
-            movedFold = {
-              label: i.folder,
-              value: i.id,
-            };
-            kk.push(movedFold);
-          });
-          setMovedFolder(kk);
-        }
-      });
+      let movedFold = {};
+      movedFold = {
+        label: "...(root)",
+        value: "0",
+      };
+      kk.push(movedFold);
+      axios
+        .get(
+          `${baseUrl}/tl/queryfolderlistreport?q_id=${qid.id}&uid=${JSON.parse(
+            uid
+          )}`,
+          myConfig
+        )
+        .then((res) => {
+          if (res.data.code === 1) {
+            setFolder(res.data.result);
+            res.data.result.map((i) => {
+              movedFold = {
+                label: i.folder,
+                value: i.id,
+              };
+              kk.push(movedFold);
+            });
+            setMovedFolder(kk);
+          }
+        });
+    }
   };
   const getFile = () => {
-    axios
-      .get(
-        `${baseUrl}/tl/documentlistbyfolderreport?q_id=${
-          qid.id
-        }&uid=${JSON.parse(uid)}`,
-        myConfig
-      )
-      .then((res) => {
-        if (res.data.code === 1) {
-          setFiles(res.data.result);
-        }
-      });
+    if (window.location.pathname.split("/")[1] === "teamleader") {
+      axios
+        .get(
+          `${baseUrl}/tl/documentlistbyfolderreport?q_id=${
+            qid.id
+          }&uid=${JSON.parse(uid)}`,
+          myConfig
+        )
+        .then((res) => {
+          if (res.data.code === 1) {
+            setFiles(res.data.result);
+          }
+        });
+    }
   };
   const mapIcon = (e) => {
     axios
@@ -284,18 +289,21 @@ function AssignmentDetails({
   const getFolder = (e) => {
     setCreateFolder(!createFoldernew);
   };
-  const handleFile = (e) => {
+  const handleFile = (e, b) => {
     if (e) {
       setFileId(e.id);
       setMove(!move);
     } else {
       setMove(!move);
     }
+    if (b === "clientFiles") {
+      setClientAssign(b);
+    }
   };
   useEffect(() => {
     getFile();
     showFolder();
-  }, [panel === "teamleader"]);
+  }, []);
   return (
     <>
       <div className="queryBox">
@@ -449,30 +457,67 @@ function AssignmentDetails({
                     {files.map((i) => (
                       <>
                         {i.folder_id === "0" ? (
-                          <div className="folderCreated">
-                            <ArticleIcon
-                              onClick={(e) => handleFile(i)}
-                              onContextMenu={(e) =>
-                                rightClick(e, i.assign_no, i.id, i.name)
-                              }
-                              style={{
-                                fontSize: "50px",
-                                color: "#0000ff",
-                                cursor: "pointer",
-                              }}
-                            />
-                            <span
-                              style={{
-                                textAlign: "center",
-                                whiteSpace: "break-spaces",
-                                display: "flex",
-                                maxHeight: "60px",
-                                overflow: "hidden",
-                              }}
-                            >
-                              {i.name}
-                            </span>
-                          </div>
+                          <>
+                            {i.customer_files === null ? (
+                              <div className="folderCreated">
+                                <ArticleIcon
+                                  onClick={(e) => handleFile(i)}
+                                  onContextMenu={(e) =>
+                                    rightClick(e, i.assign_no, i.id, i.name)
+                                  }
+                                  style={{
+                                    fontSize: "50px",
+                                    color: "#0000ff",
+                                    cursor: "pointer",
+                                  }}
+                                />
+                                <span
+                                  style={{
+                                    textAlign: "center",
+                                    whiteSpace: "break-spaces",
+                                    display: "flex",
+                                    maxHeight: "60px",
+                                    overflow: "hidden",
+                                  }}
+                                >
+                                  {i.document}
+                                </span>
+                              </div>
+                            ) : (
+                              <>
+                                {i.customer_files_folder === "0" ? (
+                                  <div className="folderCreated">
+                                    <ArticleIcon
+                                      onClick={(e) =>
+                                        handleFile(i, "clientfiles")
+                                      }
+                                      onContextMenu={(e) =>
+                                        rightClick(e, i.assign_no, i.id, i.name)
+                                      }
+                                      style={{
+                                        fontSize: "50px",
+                                        color: "#0000ff",
+                                        cursor: "pointer",
+                                      }}
+                                    />
+                                    <span
+                                      style={{
+                                        textAlign: "center",
+                                        whiteSpace: "break-spaces",
+                                        display: "flex",
+                                        maxHeight: "60px",
+                                        overflow: "hidden",
+                                      }}
+                                    >
+                                      {i.customer_files}
+                                    </span>
+                                  </div>
+                                ) : (
+                                  " "
+                                )}
+                              </>
+                            )}
+                          </>
                         ) : (
                           ""
                         )}
@@ -511,7 +556,7 @@ function AssignmentDetails({
                                     overflow: "hidden",
                                   }}
                                 >
-                                  {i.name}
+                                  {i.document}
                                 </span>
                               </div>
                             </>

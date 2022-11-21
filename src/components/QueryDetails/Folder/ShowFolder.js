@@ -50,38 +50,44 @@ function ShowFolder({ addPaymentModal, rejectHandler, id }) {
     },
   };
   const getFile = () => {
-    axios
-      .get(
-        `${baseUrl}/tl/documentlistbyfolder?q_id=${id}&uid=${JSON.parse(uid)}`,
-        myConfig
-      )
-      .then((res) => {
-        if (res.data.code === 1) {
-          setFiles(res.data.result);
-        }
-      });
+    if (id.length > 0) {
+      axios
+        .get(
+          `${baseUrl}/tl/documentlistbyfolder?q_id=${id}&uid=${JSON.parse(
+            uid
+          )}`,
+          myConfig
+        )
+        .then((res) => {
+          if (res.data.code === 1) {
+            setFiles(res.data.result);
+          }
+        });
+    }
   };
   const showFolder = () => {
     let kk = [];
     let movedFold = {};
-    axios
-      .get(
-        `${baseUrl}/tl/queryfolderlist?q_id=${id}&uid=${JSON.parse(uid)}`,
-        myConfig
-      )
-      .then((res) => {
-        if (res.data.code === 1) {
-          setFolder(res.data.result);
-          res.data.result.map((i) => {
-            movedFold = {
-              label: i.folder,
-              value: i.id,
-            };
-            kk.push(movedFold);
-          });
-          setMovedFolder(kk);
-        }
-      });
+    if (id.length > 0) {
+      axios
+        .get(
+          `${baseUrl}/tl/queryfolderlist?q_id=${id}&uid=${JSON.parse(uid)}`,
+          myConfig
+        )
+        .then((res) => {
+          if (res.data.code === 1) {
+            setFolder(res.data.result);
+            res.data.result.map((i) => {
+              movedFold = {
+                label: i.folder,
+                value: i.id,
+              };
+              kk.push(movedFold);
+            });
+            setMovedFolder(kk);
+          }
+        });
+    }
   };
   useEffect(() => {
     showFolder();

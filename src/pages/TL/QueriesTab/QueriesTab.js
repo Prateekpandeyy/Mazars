@@ -150,24 +150,18 @@ function QueriesTab(props) {
           <AllQuery />
         </TabPanel>
 
-        {/* <TabPanel>
-            <InCompleteData
-            />
-          </TabPanel>
-          <TabPanel>
-            <PendingForAcceptence
-              updateTab={updateTab}
-            />
-          </TabPanel>
-          <TabPanel>
-            <CompleteData
-            updateTab={updateTab}
-            />
-          </TabPanel>
-          */}
+        <TabPanel>
+          <InCompleteData />
+        </TabPanel>
+        <TabPanel>
+          <PendingForAcceptence updateTab={updateTab} />
+        </TabPanel>
+        <TabPanel>
+          <CompleteData updateTab={updateTab} />
+        </TabPanel>
       </Tabs>
     </Layout>
   );
 }
 
-export default QueriesTab;
+export default React.memo(QueriesTab);

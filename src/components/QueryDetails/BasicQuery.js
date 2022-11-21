@@ -75,62 +75,67 @@ function BasicQuery({
   useEffect(() => {
     getFile();
     showFolder();
-  }, [panel === "teamleader"]);
+  }, [qid.id.length]);
   useEffect(() => {
     getAdminFile();
-  }, [panel === "admin"]);
+  }, []);
   useEffect(() => {
     getClientFile();
-  }, [panel === "client"]);
+  }, []);
   const getClientFile = (e) => {
-    let id = [];
-    axios
-      .get(
-        `${baseUrl}/customers/documentlistbyfolder?q_id=${qid.id}`,
-        myConfigClient
-      )
-      .then((res) => {
-        if (res.data.code === 1) {
-          res.data.result.map((i) => {
-            if (id.includes(i.folder_id)) {
-              console.log("trie", id);
-            } else {
-              if (i.folder_id !== "0") {
-                id.push(i.folder_id);
+    if (window.location.pathname.split("/")[1] === "customer") {
+      let id = [];
+
+      axios
+        .get(
+          `${baseUrl}/customers/documentlistbyfolder?q_id=${qid.id}`,
+          myConfigClient
+        )
+        .then((res) => {
+          if (res.data.code === 1) {
+            res.data.result.map((i) => {
+              if (id.includes(i.folder_id)) {
+                console.log("trie", id);
+              } else {
+                if (i.folder_id !== "0") {
+                  id.push(i.folder_id);
+                }
+                setclientFolder((oldData) => {
+                  return [...oldData, i];
+                });
               }
-              setclientFolder((oldData) => {
-                return [...oldData, i];
-              });
-            }
-          });
-        }
-      });
+            });
+          }
+        });
+    }
   };
   const getAdminFile = (e) => {
-    let id = [];
-    let data = [];
-    axios
-      .get(
-        `${baseUrl}/admin/documentlistbyfolder?q_id=${qid.id}`,
-        myConfigAdmin
-      )
-      .then((res) => {
-        if (res.data.code === 1) {
-          res.data.result.map((i) => {
-            if (id.includes(i.folder_id)) {
-              console.log("trie", id);
-            } else {
-              if (i.folder_id !== "0") {
-                id.push(i.folder_id);
+    if (window.location.pathname.split("/")[1] === "admin") {
+      let id = [];
+      let data = [];
+      axios
+        .get(
+          `${baseUrl}/admin/documentlistbyfolder?q_id=${qid.id}`,
+          myConfigAdmin
+        )
+        .then((res) => {
+          if (res.data.code === 1) {
+            res.data.result.map((i) => {
+              if (id.includes(i.folder_id)) {
+                console.log("trie", id);
+              } else {
+                if (i.folder_id !== "0") {
+                  id.push(i.folder_id);
+                }
+                setAdminFolder((oldData) => {
+                  return [...oldData, i];
+                });
               }
-              setAdminFolder((oldData) => {
-                return [...oldData, i];
-              });
-            }
-            console.log("iii", i);
-          });
-        }
-      });
+              console.log("iii", i);
+            });
+          }
+        });
+    }
   };
   const getInnerFileFileclient = (e) => {
     axios
@@ -164,46 +169,59 @@ function BasicQuery({
     },
   };
   const getFile = () => {
-    axios
-      .get(
-        `${baseUrl}/tl/documentlistbyfolder?q_id=${qid.id}&uid=${JSON.parse(
-          uid
-        )}`,
-        myConfig
-      )
-      .then((res) => {
-        if (res.data.code === 1) {
-          setFiles(res.data.result);
-        }
-      });
+    let pd = qid.id;
+
+    if (
+      window.location.pathname.split("/")[1] === "teamleader" &&
+      pd &&
+      JSON.parse(uid)
+    ) {
+      axios
+        .get(
+          `${baseUrl}/tl/documentlistbyfolder?q_id=${pd}&uid=${JSON.parse(
+            uid
+          )}`,
+          myConfig
+        )
+        .then((res) => {
+          if (res.data.code === 1) {
+            setFiles(res.data.result);
+          }
+        });
+    }
   };
   const showFolder = () => {
     let kk = [];
-
+    let pd = qid.id;
     let movedFold = {};
     movedFold = {
       label: "...(root)",
       value: "0",
     };
     kk.push(movedFold);
-    axios
-      .get(
-        `${baseUrl}/tl/queryfolderlist?q_id=${qid.id}&uid=${JSON.parse(uid)}`,
-        myConfig
-      )
-      .then((res) => {
-        if (res.data.code === 1) {
-          setFolder(res.data.result);
-          res.data.result.map((i) => {
-            movedFold = {
-              label: i.folder,
-              value: i.id,
-            };
-            kk.push(movedFold);
-          });
-          setMovedFolder(kk);
-        }
-      });
+    if (
+      window.location.pathname.split("/")[1] === "teamleader" &&
+      pd.length > 0
+    ) {
+      axios
+        .get(
+          `${baseUrl}/tl/queryfolderlist?q_id=${pd}&uid=${JSON.parse(uid)}`,
+          myConfig
+        )
+        .then((res) => {
+          if (res.data.code === 1) {
+            setFolder(res.data.result);
+            res.data.result.map((i) => {
+              movedFold = {
+                label: i.folder,
+                value: i.id,
+              };
+              kk.push(movedFold);
+            });
+            setMovedFolder(kk);
+          }
+        });
+    }
   };
 
   const getFolder = (e) => {
@@ -252,19 +270,21 @@ function BasicQuery({
       });
   };
   const getInnerFileFile = (e) => {
-    axios
-      .get(
-        `${baseUrl}/tl/documentlistbyfolder?q_id=${qid.id}&folder_id=${
-          e.id
-        }&uid=${JSON.parse(uid)}`,
-        myConfig
-      )
-      .then((res) => {
-        if (res.data.code === 1) {
-          setColor(e.id);
-          setInnerFiles(res.data.result);
-        }
-      });
+    if (window.location.pathname.split("/")[1] === "teamleader") {
+      axios
+        .get(
+          `${baseUrl}/tl/documentlistbyfolder?q_id=${qid.id}&folder_id=${
+            e.id
+          }&uid=${JSON.parse(uid)}`,
+          myConfig
+        )
+        .then((res) => {
+          if (res.data.code === 1) {
+            setColor(e.id);
+            setInnerFiles(res.data.result);
+          }
+        });
+    }
   };
   const openFolder = (e) => {
     setId(e);

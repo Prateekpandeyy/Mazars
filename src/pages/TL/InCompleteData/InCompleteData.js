@@ -14,8 +14,14 @@ import { Link } from "react-router-dom";
 import TeamFilter from "../../../components/Search-Filter/tlFilter";
 import DiscardReport from "../AssignmentTab/DiscardReport";
 import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
-import MessageIcon, {DeleteIcon, EditQuery, ViewDiscussionIcon, HelpIcon, 
-  UploadDocument, FeedBackICon} from "../../../components/Common/MessageIcon";
+import MessageIcon, {
+  DeleteIcon,
+  EditQuery,
+  ViewDiscussionIcon,
+  HelpIcon,
+  UploadDocument,
+  FeedBackICon,
+} from "../../../components/Common/MessageIcon";
 
 function InCompleteData({ CountIncomplete }) {
   const userid = window.localStorage.getItem("tlkey");
@@ -23,18 +29,18 @@ function InCompleteData({ CountIncomplete }) {
   const [incompleteData, setInCompleteData] = useState([]);
   const [records, setRecords] = useState([]);
 
-  const [assignNo, setAssignNo] = useState('');
+  const [assignNo, setAssignNo] = useState("");
   const [ViewDiscussion, setViewDiscussion] = useState(false);
-  const token = window.localStorage.getItem("tlToken")
+  const token = window.localStorage.getItem("tlToken");
   const myConfig = {
-      headers : {
-       "uit" : token
-      }
-    }
+    headers: {
+      uit: token,
+    },
+  };
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
-    setAssignNo(key)
-  }
+    setAssignNo(key);
+  };
 
   useEffect(() => {
     getInCompleteAssingment();
@@ -42,13 +48,14 @@ function InCompleteData({ CountIncomplete }) {
 
   const getInCompleteAssingment = () => {
     axios
-      .get(`${baseUrl}/tl/getIncompleteQues?id=${JSON.parse(userid)}&status=1`, myConfig)
+      .get(
+        `${baseUrl}/tl/getIncompleteQues?id=${JSON.parse(userid)}&status=1`,
+        myConfig
+      )
       .then((res) => {
-       
         if (res.data.code === 1) {
           setInCompleteData(res.data.result);
           setRecords(res.data.result.length);
-
         }
       });
   };
@@ -61,32 +68,25 @@ function InCompleteData({ CountIncomplete }) {
         return rowIndex + 1;
       },
       headerStyle: () => {
-        return {width: "50px" };
+        return { width: "50px" };
       },
-    
     },
     {
       text: "Query date",
       dataField: "created",
       sort: true,
-    
-      formatter : function(cell, row){
-        let dueDate=row.created.split("-").reverse().join("-")
-      
-        return(
-           
-            <>
-      {dueDate}
-            </>
-        )
-    }
+
+      formatter: function (cell, row) {
+        let dueDate = row.created.split("-").reverse().join("-");
+
+        return <>{dueDate}</>;
+      },
     },
     {
       text: "Query no",
       dataField: "assign_no",
-     
+
       formatter: function nameFormatter(cell, row) {
-       
         return (
           <>
             <Link
@@ -106,27 +106,23 @@ function InCompleteData({ CountIncomplete }) {
       text: "Category",
       dataField: "parent_id",
       sort: true,
-    
     },
     {
       text: "Sub category",
       dataField: "cat_name",
       sort: true,
-    
     },
     {
       text: "Client name",
       dataField: "name",
       sort: true,
-  
     },
     {
       text: "Delivery due date   / Acutal delivery date",
       dataField: "Exp_Delivery_Date",
       sort: true,
-    
-      formatter: function dateFormat(cell, row) {
 
+      formatter: function dateFormat(cell, row) {
         var oldDate = row.Exp_Delivery_Date;
         if (oldDate == null) {
           return null;
@@ -136,30 +132,20 @@ function InCompleteData({ CountIncomplete }) {
     },
     {
       text: "Status",
-      
+
       formatter: function nameFormatter(cell, row) {
         return (
           <>
             <div>
-              {row.status}{row.statusdescription && "/"}
-              {
-                row.status == "Inprogress Query" ?
-                  <p className="inprogress">
-                    {row.statusdescription}
-                  </p>
-                  :
-                  row.status == "Declined Query" ?
-                    <p className="declined">
-
-                      {row.statusdescription}
-                    </p> :
-                    row.status == "Completed Query" ?
-                      <p className="completed">
-
-                        {row.statusdescription}
-                      </p> :
-                      null
-              }
+              {row.status}
+              {row.statusdescription && "/"}
+              {row.status == "Inprogress Query" ? (
+                <p className="inprogress">{row.statusdescription}</p>
+              ) : row.status == "Declined Query" ? (
+                <p className="declined">{row.statusdescription}</p>
+              ) : row.status == "Completed Query" ? (
+                <p className="completed">{row.statusdescription}</p>
+              ) : null}
             </div>
           </>
         );
@@ -167,55 +153,52 @@ function InCompleteData({ CountIncomplete }) {
     },
     {
       text: "Action",
-      dataField: "",
+
       headerStyle: () => {
-          return { fontSize: "12px" , width : "100px"};
+        return { fontSize: "12px", width: "100px" };
       },
-   
+
       formatter: function (cell, row) {
-        
-         
         return (
           <>
-            {row.status_code == "1" ? null :
-            
-            <div
-            style={{
-                display: "flex",
-                
-            }}
-        >
-           
-
-            {row.status == "Declined Query" ? null :
-         
-            <Link
-                   to={{
+            {row.status_code == "1" ? null : (
+              <div
+                style={{
+                  display: "flex",
+                }}
+              >
+                {row.status == "Declined Query" ? null : (
+                  <Link
+                    to={{
                       pathname: `/teamleader/chatting/${row.id}`,
                       index: 1,
                       routes: "queriestab",
-              
-                    obj: {
+
+                      obj: {
                         message_type: "4",
                         query_No: row.assign_no,
                         query_id: row.id,
-                        routes: `/teamleader/queriestab`
-                    }
-                }}
-            >
-                <MessageIcon />
-            </Link>
-       }
+                        routes: `/teamleader/queriestab`,
+                      },
+                    }}
+                  >
+                    <MessageIcon />
+                  </Link>
+                )}
 
-<span onClick={() => ViewDiscussionToggel(row.assign_no)}  className="ml-2">
-                        <ViewDiscussionIcon />
-                      </span>
-        </div>
-}                    </>
-      );
-  },
-},
-];
+                <span
+                  onClick={() => ViewDiscussionToggel(row.assign_no)}
+                  className="ml-2"
+                >
+                  <ViewDiscussionIcon />
+                </span>
+              </div>
+            )}{" "}
+          </>
+        );
+      },
+    },
+  ];
 
   return (
     <>
@@ -230,13 +213,12 @@ function InCompleteData({ CountIncomplete }) {
           />
         </CardHeader>
         <CardBody>
-        <DataTablepopulated 
-                                bgColor="#6e557b"
-          keyField= {"assign_no"}
-          data={incompleteData}
-          
-          columns={columns}>
-           </DataTablepopulated> 
+          <DataTablepopulated
+            bgColor="#6e557b"
+            keyField={"assign_no"}
+            data={incompleteData}
+            columns={columns}
+          ></DataTablepopulated>
           <DiscardReport
             ViewDiscussionToggel={ViewDiscussionToggel}
             ViewDiscussion={ViewDiscussion}
