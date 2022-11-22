@@ -64,6 +64,10 @@ function BasicQuery({
   const [isLeft, setIsLeft] = useState(true);
   const [mFold, setMfold] = useState([]);
   const [subFolder, setSubFolder] = useState([]);
+  const [subFile, setSubFile] = useState([]);
+  const [showSubfolderData, setShowSubFolderData] = useState(false);
+  const [mainFoldName, setMainFoldName] = useState("");
+  const [folderName, setFolderName] = useState("");
   const token = window.localStorage.getItem("tlToken");
   const uid = localStorage.getItem("tlkey");
   const adminToken = window.localStorage.getItem("adminToken");
@@ -319,13 +323,18 @@ function BasicQuery({
     if (window.location.pathname.split("/")[1] === "teamleader") {
       axios
         .get(
-          `${baseUrl}/tl/queryfolderlist?q_id=${qid.id}&folder_id=${
+          `${baseUrl}/tl/documentlistbyfolder?q_id=${qid.id}&folder_id=${
             e.id
           }&uid=${JSON.parse(uid)}`,
           myConfig
         )
         .then((res) => {
           if (res.data.code === 1) {
+            setFolderName(e.folder);
+            setSubFile(res.data.result);
+            setShowSubFolderData(true);
+          } else {
+            setShowSubFolderData(false);
           }
         });
     }
@@ -343,6 +352,8 @@ function BasicQuery({
           if (res.data.code === 1) {
             setColor(e.id);
             set_sub_folder(res.data.result);
+            setSubFile([]);
+            setMainFoldName(e.folder);
             // setInnerFiles(res.data.result);
           }
         })
@@ -626,44 +637,31 @@ function BasicQuery({
                   <div className="d-flex">
                     <FolderDetails>
                       <div className="folderDetails">
-                        <span style={{ fontSize: "16px", fontWeight: "300" }}>
-                          Folder content
-                        </span>
-                        <div className="d-flex">
-                          {sub_folder.map((i) => (
-                            <div className="folderCreated" key={i.id}>
-                              <FolderIcon
-                                onClick={(e) => get_sub_innerFile(i)}
-                                style={{
-                                  fontSize: "50px",
-                                  color: "#fccc77",
-                                  cursor: "pointer",
-                                }}
-                              />
-                              <span
-                                style={{
-                                  textAlign: "center",
-                                  whiteSpace: "break-spaces",
-                                  display: "flex",
-                                  maxHeight: "60px",
-                                  overflow: "hidden",
-                                }}
-                              >
-                                {i.folder}
-                              </span>
-                            </div>
-                          ))}
-                          {innerFiles.map((i) => (
-                            <>
-                              <div className="folderCreated">
-                                <ArticleIcon
-                                  onContextMenu={(e) => handleFile(e, i, false)}
-                                  onClick={(e) =>
-                                    rightClick(e, i.assign_no, i.id, i.name)
-                                  }
+                        {mainFoldName.length > 0 || folderName.length > 0 ? (
+                          <span style={{ fontSize: "16px", fontWeight: "300" }}>
+                            {`${mainFoldName} ${
+                              folderName.length > 0 ? ">" : ""
+                            } ${folderName}`}
+                          </span>
+                        ) : (
+                          <span style={{ fontSize: "16px", fontWeight: "300" }}>
+                            Folder content
+                          </span>
+                        )}
+
+                        {showSubfolderData === true ? (
+                          <>
+                            <div className="d-flex">
+                              <span className="folderCreated">
+                                <FolderIcon
+                                  onClick={(e) => {
+                                    setSubFile([]);
+                                    setShowSubFolderData(false);
+                                    setFolderName("");
+                                  }}
                                   style={{
                                     fontSize: "50px",
-                                    color: "#0000ff",
+                                    color: "#fccc77",
                                     cursor: "pointer",
                                   }}
                                 />
@@ -676,12 +674,96 @@ function BasicQuery({
                                     overflow: "hidden",
                                   }}
                                 >
-                                  {i.name}
+                                  ...
+                                </span>
+                              </span>
+                              {subFile.map((i) => (
+                                <div className="folderCreated">
+                                  <ArticleIcon
+                                    onContextMenu={(e) =>
+                                      handleFile(e, i, false)
+                                    }
+                                    onClick={(e) =>
+                                      rightClick(e, i.assign_no, i.id, i.name)
+                                    }
+                                    style={{
+                                      fontSize: "50px",
+                                      color: "#0000ff",
+                                      cursor: "pointer",
+                                    }}
+                                  />
+                                  <span
+                                    style={{
+                                      textAlign: "center",
+                                      whiteSpace: "break-spaces",
+                                      display: "flex",
+                                      maxHeight: "60px",
+                                      overflow: "hidden",
+                                    }}
+                                  >
+                                    {i.name}
+                                  </span>
+                                </div>
+                              ))}
+                            </div>
+                          </>
+                        ) : (
+                          <div className="d-flex">
+                            {sub_folder.map((i) => (
+                              <div className="folderCreated" key={i.id}>
+                                <FolderIcon
+                                  onClick={(e) => get_sub_innerFile(i)}
+                                  style={{
+                                    fontSize: "50px",
+                                    color: "#fccc77",
+                                    cursor: "pointer",
+                                  }}
+                                />
+                                <span
+                                  style={{
+                                    textAlign: "center",
+                                    whiteSpace: "break-spaces",
+                                    display: "flex",
+                                    maxHeight: "60px",
+                                    overflow: "hidden",
+                                  }}
+                                >
+                                  {i.folder}
                                 </span>
                               </div>
-                            </>
-                          ))}
-                        </div>
+                            ))}
+                            {innerFiles.map((i) => (
+                              <>
+                                <div className="folderCreated">
+                                  <ArticleIcon
+                                    onContextMenu={(e) =>
+                                      handleFile(e, i, false)
+                                    }
+                                    onClick={(e) =>
+                                      rightClick(e, i.assign_no, i.id, i.name)
+                                    }
+                                    style={{
+                                      fontSize: "50px",
+                                      color: "#0000ff",
+                                      cursor: "pointer",
+                                    }}
+                                  />
+                                  <span
+                                    style={{
+                                      textAlign: "center",
+                                      whiteSpace: "break-spaces",
+                                      display: "flex",
+                                      maxHeight: "60px",
+                                      overflow: "hidden",
+                                    }}
+                                  >
+                                    {i.name}
+                                  </span>
+                                </div>
+                              </>
+                            ))}
+                          </div>
+                        )}
                       </div>
                     </FolderDetails>
                   </div>
@@ -696,6 +778,7 @@ function BasicQuery({
                               className="form-control"
                               onChange={(e) => gSub(e.target.value)}
                             >
+                              <option value="">Please select value</option>
                               {mFold.map((i) => (
                                 <option value={i}>{i.folder}</option>
                               ))}
@@ -707,7 +790,7 @@ function BasicQuery({
                                   className="form-control"
                                   onChange={(e) => setFolderId(e.target.value)}
                                 >
-                                  <option value={0}>Root</option>
+                                  <option value="">Please select value</option>
                                   {subFolder.map((i) => (
                                     <option value={i.id}>{i.folder}</option>
                                   ))}
@@ -724,6 +807,7 @@ function BasicQuery({
                               className="form-control"
                               onChange={(e) => gSub(e.target.value)}
                             >
+                              <option value="">Please select value</option>
                               {mFold.map((i) => (
                                 <option value={i.id}>{i.folder}</option>
                               ))}
@@ -735,6 +819,7 @@ function BasicQuery({
                                   className="form-control"
                                   onChange={(e) => setFolderId(e.target.value)}
                                 >
+                                  <option value="">Please select value</option>
                                   {subFolder.map((i) => (
                                     <option value={i.id}>{i.folder}</option>
                                   ))}
