@@ -62,6 +62,8 @@ function BasicQuery({
   const [leftFolder, setLeftFolder] = useState([]);
   const [sub_folder, set_sub_folder] = useState([]);
   const [isLeft, setIsLeft] = useState(true);
+  const [mFold, setMfold] = useState([]);
+  const [subFolder, setSubFolder] = useState([]);
   const token = window.localStorage.getItem("tlToken");
   const uid = localStorage.getItem("tlkey");
   const adminToken = window.localStorage.getItem("adminToken");
@@ -88,47 +90,6 @@ function BasicQuery({
     getClientFile();
   }, []);
 
-  const options123 = [
-    {
-      value: "fruits",
-      label: "Fruits",
-      options: [
-        {
-          value: "citrus",
-          label: "Citrus",
-          options: [
-            { value: "orange", label: "Orange" },
-            { value: "grapefruits", label: "GrapeFruits" },
-          ],
-        },
-        {
-          value: "tropical",
-          label: "Tropical",
-          options: [
-            { value: "mango", label: "Mango" },
-            { value: "papaya", label: "Papaya" },
-          ],
-        },
-        {
-          value: "berries",
-          label: "Berries",
-          options: [
-            { value: "strawberry", label: "Strawberry" },
-            { value: "raspberries", label: "Raspberries" },
-          ],
-        },
-      ],
-    },
-    {
-      value: "city",
-      label: "City",
-      options: [
-        { value: "dublin", label: "Dublin" },
-        { value: "new york", label: "New York" },
-        { value: "san fransis", label: "San Fransis" },
-      ],
-    },
-  ];
   const getClientFile = (e) => {
     if (window.location.pathname.split("/")[1] === "customer") {
       let id = [];
@@ -251,7 +212,10 @@ function BasicQuery({
       .get(`${baseUrl}/tl/foldersubfolder?q_id=${pd}`, myConfig)
       .then((res) => {
         if (res.data.code === 1) {
-          res.data.result.map((i) => {
+          let ad = res.data.result;
+          setMfold(ad);
+          ad.map((i) => {
+            console.log("i", i);
             movedFold = {
               label: i.folder,
               value: i.id,
@@ -259,6 +223,7 @@ function BasicQuery({
             kk.push(movedFold);
             leftFold.push(movedFold);
           });
+
           setMovedFolder(kk);
           setLeftFolder(leftFold);
         }
@@ -303,7 +268,7 @@ function BasicQuery({
   const mapIcon = (e) => {
     axios
       .get(
-        `${baseUrl}/tl/folderfile?q_id=${qid.id}&folder_id=${folderId.value}&file_id=${fileId}`,
+        `${baseUrl}/tl/folderfile?q_id=${qid.id}&folder_id=${folderId}&file_id=${fileId}`,
         myConfig
       )
       .then((res) => {
@@ -504,7 +469,15 @@ function BasicQuery({
   const rightClick = (e, a, b, c) => {
     downloadpdf(a, b, c);
   };
-
+  const gSub = (e) => {
+    console.log("eee", e);
+    setFolderId(e);
+    mFold.map((i) => {
+      if (i.id === e) {
+        setSubFolder(i.child);
+      }
+    });
+  };
   return (
     <>
       <div className="queryBox">
@@ -717,27 +690,60 @@ function BasicQuery({
                       <ModalHeader toggle={handleFile}>Move to</ModalHeader>
                       <ModalBody>
                         {isLeft === true ? (
-                          <select
-                            className="form-control"
-                            onChange={(e) => setFolderId(e)}
-                          >
-                            {leftFolder.map((i) => (
-                              <optgroup label={i.value}>
-                                <option value={i.value}>{i.label}</option>
-                              </optgroup>
-                            ))}
-                          </select>
+                          <>
+                            <label>Select parent folder</label>
+                            <select
+                              className="form-control"
+                              onChange={(e) => gSub(e.target.value)}
+                            >
+                              {mFold.map((i) => (
+                                <option value={i}>{i.folder}</option>
+                              ))}
+                            </select>
+                            {subFolder.length > 0 ? (
+                              <>
+                                <label>Sub folder</label>
+                                <select
+                                  className="form-control"
+                                  onChange={(e) => setFolderId(e.target.value)}
+                                >
+                                  <option value={0}>Root</option>
+                                  {subFolder.map((i) => (
+                                    <option value={i.id}>{i.folder}</option>
+                                  ))}
+                                </select>
+                              </>
+                            ) : (
+                              ""
+                            )}
+                          </>
                         ) : (
-                          <select
-                            className="form-control"
-                            onChange={(e) => setFolderId(e)}
-                          >
-                            {movedFolder.map((i) => (
-                              <optgroup label={i.value}>
-                                <option value={i.value}>{i.label}</option>
-                              </optgroup>
-                            ))}
-                          </select>
+                          <>
+                            <label>Parent folder</label>
+                            <select
+                              className="form-control"
+                              onChange={(e) => gSub(e.target.value)}
+                            >
+                              {mFold.map((i) => (
+                                <option value={i.id}>{i.folder}</option>
+                              ))}
+                            </select>
+                            {subFolder.length > 0 ? (
+                              <>
+                                <label>Sub folder</label>
+                                <select
+                                  className="form-control"
+                                  onChange={(e) => setFolderId(e.target.value)}
+                                >
+                                  {subFolder.map((i) => (
+                                    <option value={i.id}>{i.folder}</option>
+                                  ))}
+                                </select>
+                              </>
+                            ) : (
+                              ""
+                            )}
+                          </>
                         )}
                         <button
                           type="button"
