@@ -38,6 +38,7 @@ function CreateFolder({
     }).then((res) => {
       if (res.data.code === 1) {
         rejectHandler();
+        setFolderId("");
         getList();
         Swal.fire({
           title: "success",
@@ -45,6 +46,7 @@ function CreateFolder({
           icon: "success",
         });
       } else if (res.data.code === 0) {
+        setFolderId("");
         Swal.fire({
           title: "error",
           html: "Something went wrong, please try again",
@@ -53,7 +55,7 @@ function CreateFolder({
       }
     });
   };
-  console.log("showFolder", movedFolder);
+
   return (
     <div>
       <Modal isOpen={addPaymentModal} toggle={rejectHandler} size="md">

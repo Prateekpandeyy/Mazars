@@ -65,6 +65,7 @@ function AssignmentDetails({
       uit: token,
     },
   };
+
   const timeTaken = (a, b) => {
     var date2 = CommonServices.removeTime(a);
     var date1 = CommonServices.removeTime(b);

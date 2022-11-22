@@ -1,8 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { Card, CardHeader, CardBody } from "reactstrap";
+import {
+  Card,
+  CardHeader,
+  CardBody,
+  CardTitle,
+  Row,
+  Col,
+  Table,
+} from "reactstrap";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import { Link } from "react-router-dom";
+import BootstrapTable from "react-bootstrap-table-next";
 import TeamFilter from "../../../components/Search-Filter/tlFilter";
 import DiscardReport from "../AssignmentTab/DiscardReport";
 import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
@@ -15,7 +24,7 @@ function AllQuery() {
 
   const [incompleteData, setInCompleteData] = useState([]);
   const [records, setRecords] = useState([]);
-  const [display, setDisplay] = useState(false);
+
   const [assignNo, setAssignNo] = useState("");
   const [ViewDiscussion, setViewDiscussion] = useState(false);
   const token = window.localStorage.getItem("tlToken");
@@ -40,7 +49,6 @@ function AllQuery() {
         if (res.data.code === 1) {
           setInCompleteData(res.data.result);
           setRecords(res.data.result.length);
-          setDisplay(true);
         }
       });
   };
@@ -186,42 +194,36 @@ function AllQuery() {
 
   return (
     <>
-      {display === true ? (
-        <>
-          <Card>
-            <CardHeader>
-              <TeamFilter
-                setData={setInCompleteData}
-                getData={getInCompleteAssingment}
-                AllQuery="AllQuery"
-                setRecords={setRecords}
-                records={records}
-              />
-            </CardHeader>
-            <CardBody>
-              {incompleteData.length > 0 && columns ? (
-                <DataTablepopulated
-                  bgColor="#55425f"
-                  keyField={"assign_no"}
-                  data={incompleteData}
-                  columns={columns}
-                ></DataTablepopulated>
-              ) : (
-                ""
-              )}
-            </CardBody>
-          </Card>
-          <DiscardReport
-            ViewDiscussionToggel={ViewDiscussionToggel}
-            ViewDiscussion={ViewDiscussion}
-            report={assignNo}
+      <Card>
+        <CardHeader>
+          <TeamFilter
+            setData={setInCompleteData}
             getData={getInCompleteAssingment}
-            headColor="#55425f"
+            AllQuery="AllQuery"
+            setRecords={setRecords}
+            records={records}
           />
-        </>
-      ) : (
-        ""
-      )}
+        </CardHeader>
+        <CardBody>
+          {incompleteData.length > 0 && columns ? (
+            <DataTablepopulated
+              bgColor="#55425f"
+              keyField="id"
+              data={incompleteData}
+              columns={columns}
+            ></DataTablepopulated>
+          ) : (
+            ""
+          )}
+        </CardBody>
+      </Card>
+      <DiscardReport
+        ViewDiscussionToggel={ViewDiscussionToggel}
+        ViewDiscussion={ViewDiscussion}
+        report={assignNo}
+        getData={getInCompleteAssingment}
+        headColor="#55425f"
+      />
     </>
   );
 }

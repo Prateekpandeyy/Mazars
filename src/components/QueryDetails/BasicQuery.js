@@ -16,6 +16,8 @@ import { Modal, ModalHeader, ModalBody } from "reactstrap";
 import CreateFolder from "./Folder/CreateFolder";
 import Select from "react-select";
 import CreateNewFolderIcon from "@mui/icons-material/CreateNewFolder";
+import MultiLevelSelect from "react-multi-level-selector";
+import Form from "./MultiSelectCust";
 const FolderWrapper = styled(Box)({
   display: "flex",
 
@@ -85,6 +87,48 @@ function BasicQuery({
   useEffect(() => {
     getClientFile();
   }, []);
+
+  const options123 = [
+    {
+      value: "fruits",
+      label: "Fruits",
+      options: [
+        {
+          value: "citrus",
+          label: "Citrus",
+          options: [
+            { value: "orange", label: "Orange" },
+            { value: "grapefruits", label: "GrapeFruits" },
+          ],
+        },
+        {
+          value: "tropical",
+          label: "Tropical",
+          options: [
+            { value: "mango", label: "Mango" },
+            { value: "papaya", label: "Papaya" },
+          ],
+        },
+        {
+          value: "berries",
+          label: "Berries",
+          options: [
+            { value: "strawberry", label: "Strawberry" },
+            { value: "raspberries", label: "Raspberries" },
+          ],
+        },
+      ],
+    },
+    {
+      value: "city",
+      label: "City",
+      options: [
+        { value: "dublin", label: "Dublin" },
+        { value: "new york", label: "New York" },
+        { value: "san fransis", label: "San Fransis" },
+      ],
+    },
+  ];
   const getClientFile = (e) => {
     if (window.location.pathname.split("/")[1] === "customer") {
       let id = [];
@@ -193,7 +237,7 @@ function BasicQuery({
         });
     }
   };
-  const showFolder = () => {
+  const getMoveToList = () => {
     let kk = [];
     let pd = qid.id;
     let movedFold = {};
@@ -203,6 +247,26 @@ function BasicQuery({
       value: "0",
     };
     kk.push(movedFold);
+    axios
+      .get(`${baseUrl}/tl/foldersubfolder?q_id=${pd}`, myConfig)
+      .then((res) => {
+        if (res.data.code === 1) {
+          res.data.result.map((i) => {
+            movedFold = {
+              label: i.folder,
+              value: i.id,
+            };
+            kk.push(movedFold);
+            leftFold.push(movedFold);
+          });
+          setMovedFolder(kk);
+          setLeftFolder(leftFold);
+        }
+      });
+  };
+
+  const showFolder = () => {
+    let pd = qid.id;
     if (
       window.location.pathname.split("/")[1] === "teamleader" &&
       pd.length > 0
@@ -215,16 +279,7 @@ function BasicQuery({
         .then((res) => {
           if (res.data.code === 1) {
             setFolder(res.data.result);
-            res.data.result.map((i) => {
-              movedFold = {
-                label: i.folder,
-                value: i.id,
-              };
-              kk.push(movedFold);
-              leftFold.push(movedFold);
-            });
-            setMovedFolder(kk);
-            setLeftFolder(leftFold);
+            getMoveToList();
           }
         });
     }
@@ -294,6 +349,21 @@ function BasicQuery({
           setInnerFiles(res.data.result);
         }
       });
+  };
+  const get_sub_innerFile = (e) => {
+    if (window.location.pathname.split("/")[1] === "teamleader") {
+      axios
+        .get(
+          `${baseUrl}/tl/queryfolderlist?q_id=${qid.id}&folder_id=${
+            e.id
+          }&uid=${JSON.parse(uid)}`,
+          myConfig
+        )
+        .then((res) => {
+          if (res.data.code === 1) {
+          }
+        });
+    }
   };
   const getInnerFileFile = (e) => {
     if (window.location.pathname.split("/")[1] === "teamleader") {
@@ -434,7 +504,7 @@ function BasicQuery({
   const rightClick = (e, a, b, c) => {
     downloadpdf(a, b, c);
   };
-  console.log("movedFolder", movedFolder);
+
   return (
     <>
       <div className="queryBox">
@@ -590,6 +660,7 @@ function BasicQuery({
                           {sub_folder.map((i) => (
                             <div className="folderCreated" key={i.id}>
                               <FolderIcon
+                                onClick={(e) => get_sub_innerFile(i)}
                                 style={{
                                   fontSize: "50px",
                                   color: "#fccc77",
@@ -646,17 +717,27 @@ function BasicQuery({
                       <ModalHeader toggle={handleFile}>Move to</ModalHeader>
                       <ModalBody>
                         {isLeft === true ? (
-                          <Select
+                          <select
+                            className="form-control"
                             onChange={(e) => setFolderId(e)}
-                            options={leftFolder}
-                            placeholder="Please select folder"
-                          ></Select>
+                          >
+                            {leftFolder.map((i) => (
+                              <optgroup label={i.value}>
+                                <option value={i.value}>{i.label}</option>
+                              </optgroup>
+                            ))}
+                          </select>
                         ) : (
-                          <Select
+                          <select
+                            className="form-control"
                             onChange={(e) => setFolderId(e)}
-                            options={movedFolder}
-                            placeholder="Please select folder"
-                          ></Select>
+                          >
+                            {movedFolder.map((i) => (
+                              <optgroup label={i.value}>
+                                <option value={i.value}>{i.label}</option>
+                              </optgroup>
+                            ))}
+                          </select>
                         )}
                         <button
                           type="button"
