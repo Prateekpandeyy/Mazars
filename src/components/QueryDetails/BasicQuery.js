@@ -66,6 +66,7 @@ function BasicQuery({
   const [subFolder, setSubFolder] = useState([]);
   const [subFile, setSubFile] = useState([]);
   const [showSubfolderData, setShowSubFolderData] = useState(false);
+  const [showclientSubFolder, setClientSubFolder] = useState([]);
   const [mainFoldName, setMainFoldName] = useState("");
   const [folderName, setFolderName] = useState("");
   const token = window.localStorage.getItem("tlToken");
@@ -172,6 +173,9 @@ function BasicQuery({
           setColor(e.id);
           setclientFile(res.data.result);
         }
+      })
+      .then((res) => {
+        clientSubFolder();
       });
   };
   const getInnerFileFileadmin = (e) => {
@@ -213,6 +217,17 @@ function BasicQuery({
           }
         });
     }
+  };
+  const clientSubFolder = () => {
+    axios
+      .get(`${baseUrl}/customers/foldersubfolder?qid=${qid.id}`, myConfigClient)
+      .then((res) => {
+        if (res.data.code === 1) {
+          setClientSubFolder(res.data.result);
+        } else if (res.data.code === 0) {
+          setClientSubFolder([]);
+        }
+      });
   };
   const getMoveToList = () => {
     let kk = [];
@@ -501,6 +516,7 @@ function BasicQuery({
       }
     });
   };
+  console.log("clientFiles", clientFile);
   return (
     <>
       <div className="queryBox">
@@ -792,7 +808,7 @@ function BasicQuery({
                             >
                               <option value="">Please select value</option>
                               {mFold.map((i) => (
-                                <option value={i}>{i.folder}</option>
+                                <option value={i.id}>{i.folder}</option>
                               ))}
                             </select>
                             {subFolder.length > 0 ? (
@@ -1053,62 +1069,92 @@ function BasicQuery({
                   <FolderWrapper>
                     {clientFolder.map((i) => (
                       <div className="folderCreated">
-                        {i.folder_id === "0" ? (
-                          <>
-                            <ArticleIcon
-                              style={{
-                                fontSize: "50px",
-                                color: "#0000ff",
-                                cursor: "pointer",
-                              }}
-                            />
-                            <span
-                              style={{
-                                textAlign: "center",
-                                whiteSpace: "break-spaces",
-                                display: "flex",
-                                maxHeight: "60px",
-                                overflow: "hidden",
-                              }}
-                            >
-                              {i.name}
-                            </span>
-                          </>
-                        ) : (
-                          <>
-                            {color === i.id ? (
-                              <FolderIcon
-                                onClick={(e) => getInnerFileFileclient(i)}
+                        {
+                          i.parent_id === "0" ? (
+                            <>
+                              {color === i.id ? (
+                                <FolderIcon
+                                  onClick={(e) => getInnerFileFileclient(i)}
+                                  style={{
+                                    fontSize: "50px",
+                                    color: "#0000ff",
+                                    cursor: "pointer",
+                                  }}
+                                />
+                              ) : (
+                                <FolderIcon
+                                  onClick={(e) => getInnerFileFileclient(i)}
+                                  style={{
+                                    fontSize: "50px",
+                                    color: "#fccc77",
+                                    cursor: "pointer",
+                                  }}
+                                />
+                              )}
+                              <span
                                 style={{
-                                  fontSize: "50px",
-                                  color: "#0000ff",
-                                  cursor: "pointer",
+                                  textAlign: "center",
+                                  whiteSpace: "break-spaces",
+                                  display: "flex",
+                                  maxHeight: "60px",
+                                  overflow: "hidden",
                                 }}
-                              />
-                            ) : (
-                              <FolderIcon
-                                onClick={(e) => getInnerFileFileclient(i)}
-                                style={{
-                                  fontSize: "50px",
-                                  color: "#fccc77",
-                                  cursor: "pointer",
-                                }}
-                              />
-                            )}
-                          </>
-                        )}
-
-                        <span
-                          style={{
-                            textAlign: "center",
-                            whiteSpace: "break-spaces",
-                            display: "flex",
-                            maxHeight: "60px",
-                            overflow: "hidden",
-                          }}
-                        >
-                          {i.folder}{" "}
-                        </span>
+                              >
+                                {i.folder}{" "}
+                              </span>
+                            </>
+                          ) : (
+                            <>
+                              {i.parent_id === null && i.folder_id === "0" ? (
+                                <>
+                                  <ArticleIcon
+                                    style={{
+                                      fontSize: "50px",
+                                      color: "#0000ff",
+                                      cursor: "pointer",
+                                    }}
+                                  />
+                                  <span
+                                    style={{
+                                      textAlign: "center",
+                                      whiteSpace: "break-spaces",
+                                      display: "flex",
+                                      maxHeight: "60px",
+                                      overflow: "hidden",
+                                    }}
+                                  >
+                                    {i.name}
+                                  </span>
+                                </>
+                              ) : (
+                                " "
+                              )}
+                            </>
+                          )
+                          // (
+                          //   <>
+                          //     {color === i.id ? (
+                          //       <FolderIcon
+                          //         onClick={(e) => getInnerFileFileclient(i)}
+                          //         style={{
+                          //           fontSize: "50px",
+                          //           color: "#0000ff",
+                          //           cursor: "pointer",
+                          //         }}
+                          //       />
+                          //     ) : (
+                          //       <FolderIcon
+                          //         onClick={(e) => getInnerFileFileclient(i)}
+                          //         style={{
+                          //           fontSize: "50px",
+                          //           color: "#fccc77",
+                          //           cursor: "pointer",
+                          //         }}
+                          //       />
+                          //     )}
+                          //   </>
+                          // )
+                        }
                       </div>
                     ))}
                   </FolderWrapper>
@@ -1143,6 +1189,28 @@ function BasicQuery({
                                   {i.name}
                                 </span>
                               </div>
+                            </>
+                          ))}
+                          {showclientSubFolder.map((i) => (
+                            <>
+                              <FolderIcon
+                                style={{
+                                  fontSize: "50px",
+                                  color: "#fccc77",
+                                  cursor: "pointer",
+                                }}
+                              />
+                              <span
+                                style={{
+                                  textAlign: "center",
+                                  whiteSpace: "break-spaces",
+                                  display: "flex",
+                                  maxHeight: "60px",
+                                  overflow: "hidden",
+                                }}
+                              >
+                                {i.folder}{" "}
+                              </span>
                             </>
                           ))}
                         </div>

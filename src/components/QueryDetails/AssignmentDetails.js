@@ -57,6 +57,11 @@ function AssignmentDetails({
   const [clientAssign, setClientAssign] = useState(null);
   const [leftFolder, setLeftFolder] = useState([]);
   const [isLeft, setIsLeft] = useState(true);
+  const [sub_folder, set_sub_folder] = useState([]);
+  const [subFile, setSubFile] = useState([]);
+  const [showSubfolderData, setShowSubFolderData] = useState(false);
+  const [mainFoldName, setMainFoldName] = useState("");
+  const [folderName, setFolderName] = useState("");
   const qid = useParams();
   const uid = localStorage.getItem("tlkey");
   const token = window.localStorage.getItem("tlToken");
@@ -166,6 +171,22 @@ function AssignmentDetails({
     e.preventDefault();
     downloadpdf(a, b, c);
   };
+  const getSubFile = (e) => {
+    axios
+      .get(
+        `${baseUrl}/tl/documentlistbyfolderreport?q_id=${qid.id}&folder_id=${
+          e.id
+        }&uid=${JSON.parse(uid)}`,
+        myConfig
+      )
+      .then((res) => {
+        if (res.data.code === 1) {
+          setColor(e.id);
+
+          setInnerFiles(res.data.result);
+        }
+      });
+  };
   const getInnerFileFile = (e) => {
     axios
       .get(
@@ -177,8 +198,13 @@ function AssignmentDetails({
       .then((res) => {
         if (res.data.code === 1) {
           setColor(e.id);
-          setInnerFiles(res.data.result);
+          set_sub_folder(res.data.result);
+          setSubFile([]);
+          setMainFoldName(e.folder);
         }
+      })
+      .then((res) => {
+        getSubFile(e);
       });
   };
   const downloadpdf = (qno, qid, name) => {
@@ -314,6 +340,26 @@ function AssignmentDetails({
 
     if (e) {
       e.preventDefault();
+    }
+  };
+  const get_sub_innerFile = (e) => {
+    if (window.location.pathname.split("/")[1] === "teamleader") {
+      axios
+        .get(
+          `${baseUrl}/tl/documentlistbyfolder?q_id=${qid.id}&folder_id=${
+            e.id
+          }&uid=${JSON.parse(uid)}`,
+          myConfig
+        )
+        .then((res) => {
+          if (res.data.code === 1) {
+            setFolderName(e.folder);
+            setSubFile(res.data.result);
+            setShowSubFolderData(true);
+          } else {
+            setShowSubFolderData(false);
+          }
+        });
     }
   };
   useEffect(() => {
@@ -551,10 +597,133 @@ function AssignmentDetails({
                   <div className="d-flex">
                     <FolderDetails>
                       <div className="folderDetails">
-                        <span style={{ fontSize: "16px", fontWeight: "300" }}>
-                          Folder content
-                        </span>
-                        <div className="d-flex">
+                        {mainFoldName.length > 0 || folderName.length > 0 ? (
+                          <span style={{ fontSize: "16px", fontWeight: "300" }}>
+                            {`${mainFoldName} ${
+                              folderName.length > 0 ? ">" : ""
+                            } ${folderName}`}
+                          </span>
+                        ) : (
+                          <span style={{ fontSize: "16px", fontWeight: "300" }}>
+                            Folder content
+                          </span>
+                        )}
+                        {showSubfolderData === true ? (
+                          <>
+                            <div className="d-flex">
+                              <span className="folderCreated">
+                                <FolderIcon
+                                  onClick={(e) => {
+                                    setSubFile([]);
+                                    setShowSubFolderData(false);
+                                    setFolderName("");
+                                  }}
+                                  style={{
+                                    fontSize: "50px",
+                                    color: "#fccc77",
+                                    cursor: "pointer",
+                                  }}
+                                />
+                                <span
+                                  style={{
+                                    textAlign: "center",
+                                    whiteSpace: "break-spaces",
+                                    display: "flex",
+                                    maxHeight: "60px",
+                                    overflow: "hidden",
+                                  }}
+                                >
+                                  ...
+                                </span>
+                              </span>
+                              {subFile.map((i) => (
+                                <div className="folderCreated">
+                                  <ArticleIcon
+                                    onContextMenu={(e) =>
+                                      handleFile(e, i, false)
+                                    }
+                                    onClick={(e) =>
+                                      rightClick(e, i.assign_no, i.id, i.name)
+                                    }
+                                    style={{
+                                      fontSize: "50px",
+                                      color: "#0000ff",
+                                      cursor: "pointer",
+                                    }}
+                                  />
+                                  <span
+                                    style={{
+                                      textAlign: "center",
+                                      whiteSpace: "break-spaces",
+                                      display: "flex",
+                                      maxHeight: "60px",
+                                      overflow: "hidden",
+                                    }}
+                                  >
+                                    {i.name}
+                                  </span>
+                                </div>
+                              ))}
+                            </div>
+                          </>
+                        ) : (
+                          <div className="d-flex">
+                            {sub_folder.map((i) => (
+                              <div className="folderCreated" key={i.id}>
+                                <FolderIcon
+                                  onClick={(e) => get_sub_innerFile(i)}
+                                  style={{
+                                    fontSize: "50px",
+                                    color: "#fccc77",
+                                    cursor: "pointer",
+                                  }}
+                                />
+                                <span
+                                  style={{
+                                    textAlign: "center",
+                                    whiteSpace: "break-spaces",
+                                    display: "flex",
+                                    maxHeight: "60px",
+                                    overflow: "hidden",
+                                  }}
+                                >
+                                  {i.folder}
+                                </span>
+                              </div>
+                            ))}
+                            {innerFiles.map((i) => (
+                              <>
+                                <div className="folderCreated">
+                                  <ArticleIcon
+                                    onContextMenu={(e) =>
+                                      handleFile(e, i, false)
+                                    }
+                                    onClick={(e) =>
+                                      rightClick(e, i.assign_no, i.id, i.name)
+                                    }
+                                    style={{
+                                      fontSize: "50px",
+                                      color: "#0000ff",
+                                      cursor: "pointer",
+                                    }}
+                                  />
+                                  <span
+                                    style={{
+                                      textAlign: "center",
+                                      whiteSpace: "break-spaces",
+                                      display: "flex",
+                                      maxHeight: "60px",
+                                      overflow: "hidden",
+                                    }}
+                                  >
+                                    {i.name}
+                                  </span>
+                                </div>
+                              </>
+                            ))}
+                          </div>
+                        )}
+                        {/* <div className="d-flex">
                           {innerFiles.map((i) => (
                             <>
                               <div className="folderCreated">
@@ -583,7 +752,7 @@ function AssignmentDetails({
                               </div>
                             </>
                           ))}
-                        </div>
+                        </div> */}
                       </div>
                     </FolderDetails>
                   </div>
@@ -622,6 +791,7 @@ function AssignmentDetails({
                     getList={showFolder}
                     rejectHandler={getFolder}
                     tab="assignment"
+                    movedFolder={movedFolder}
                   />
                 </td>
               </tr>
