@@ -89,6 +89,7 @@ function BasicQuery({
   }, [qid.id.length]);
   useEffect(() => {
     getAdminFile();
+    showFolderAdmin();
   }, []);
   useEffect(() => {
     getClientFile();
@@ -117,6 +118,17 @@ function BasicQuery({
                 });
               }
             });
+          }
+        });
+    }
+  };
+  const showFolderAdmin = () => {
+    let pd = qid.id;
+    if (window.location.pathname.split("/")[1] === "admin" && pd.length > 0) {
+      axios
+        .get(`${baseUrl}/admin/queryfolderlist?q_id=${pd}`, myConfig)
+        .then((res) => {
+          if (res.data.code === 1) {
           }
         });
     }

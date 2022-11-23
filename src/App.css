@@ -150,6 +150,7 @@
   display: flex;
   width: 100%;
   justify-content: space-between;
+  margin: 10px 0px;
 }
 .spaceRadio{
   margin: 0px 5px 0px 0px;
