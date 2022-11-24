@@ -13,11 +13,13 @@ import ArticleIcon from "@mui/icons-material/Article";
 import Swal from "sweetalert2";
 import { Box } from "@mui/material";
 import { Modal, ModalHeader, ModalBody } from "reactstrap";
+import classNames from "classnames";
 import CreateFolder from "./Folder/CreateFolder";
 import Select from "react-select";
 import CreateNewFolderIcon from "@mui/icons-material/CreateNewFolder";
 import MultiLevelSelect from "react-multi-level-selector";
 import Form from "./MultiSelectCust";
+import { useForm } from "react-hook-form";
 const FolderWrapper = styled(Box)({
   display: "flex",
 
@@ -44,15 +46,21 @@ function BasicQuery({
   declined2,
   declinedStatus,
 }) {
+  const { handleSubmit, getValue, register, errors } = useForm();
   const [isOpen, setIsOpen] = useState(false);
   const [id, setId] = useState("");
   const [createFoldernew, setCreateFolder] = useState(false);
   const [folder, setFolder] = useState([]);
   const [color, setColor] = useState(0);
   const [move, setMove] = useState(false);
-  const [movedFolder, setMovedFolder] = useState([]);
+  const [movedFolder, setMovedFolder] = useState([
+    {
+      label: "...(root)",
+      value: "0",
+    },
+  ]);
   const [files, setFiles] = useState([]);
-  const [folderId, setFolderId] = useState([]);
+  const [folderId, setFolderId] = useState("0");
   const [fileId, setFileId] = useState("");
   const [innerFiles, setInnerFiles] = useState([]);
   const [clientFolder, setclientFolder] = useState([]);
@@ -74,6 +82,7 @@ function BasicQuery({
   const [clientFolder2, setClientFolder2] = useState([]);
   const [adminFolder2, setadminFolder2] = useState([]);
   const [showadminSubFolder, setadminSubFolder] = useState([]);
+  const [foldError, setFoldError] = useState(false);
   const token = window.localStorage.getItem("tlToken");
   const uid = localStorage.getItem("tlkey");
   const adminToken = window.localStorage.getItem("adminToken");
@@ -180,7 +189,6 @@ function BasicQuery({
     }
   };
   const adminSubFolder = (e) => {
-    console.log(e);
     axios
       .get(`${baseUrl}/admin/foldersubfolder?q_id=${qid.id}`, myConfigAdmin)
       .then((res) => {
@@ -259,7 +267,6 @@ function BasicQuery({
     }
   };
   const clientSubFolder = (e) => {
-    console.log(e);
     axios
       .get(
         `${baseUrl}/customers/foldersubfolder?q_id=${qid.id}`,
@@ -294,7 +301,6 @@ function BasicQuery({
           let ad = res.data.result;
           setMfold(ad);
           ad.map((i) => {
-            console.log("i", i);
             movedFold = {
               label: i.folder,
               value: i.id,
@@ -345,38 +351,44 @@ function BasicQuery({
     }
   };
   const mapIcon = (e) => {
-    axios
-      .get(
-        `${baseUrl}/tl/folderfile?q_id=${qid.id}&folder_id=${folderId}&file_id=${fileId}`,
-        myConfig
-      )
-      .then((res) => {
-        if (res.data.code === 1) {
-          handleFile();
-          showFolder();
-          getFile();
-          setInnerFiles([]);
-          setColor(0);
-          Swal.fire({
-            title: "success",
-            html: "File transfered successfully",
-            icons: "success",
-          });
-        } else if (res.data.code === 0) {
+    if (folderId.length > 0) {
+      setFoldError(false);
+      setSubFolder([]);
+      axios
+        .get(
+          `${baseUrl}/tl/folderfile?q_id=${qid.id}&folder_id=${folderId}&file_id=${fileId}`,
+          myConfig
+        )
+        .then((res) => {
+          if (res.data.code === 1) {
+            handleFile();
+            showFolder();
+            getFile();
+            setInnerFiles([]);
+            setColor(0);
+            Swal.fire({
+              title: "success",
+              html: "File transfered successfully",
+              icons: "success",
+            });
+          } else if (res.data.code === 0) {
+            Swal.fire({
+              title: "error",
+              html: "Something went wrong, please try again",
+              icons: "error",
+            });
+          }
+        })
+        .catch((error) => {
           Swal.fire({
             title: "error",
-            html: "Something went wrong, please try again",
+            html: error,
             icons: "error",
           });
-        }
-      })
-      .catch((error) => {
-        Swal.fire({
-          title: "error",
-          html: error,
-          icons: "error",
         });
-      });
+    } else {
+      setFoldError(true);
+    }
   };
   const getSubFile = (e) => {
     axios
@@ -556,7 +568,6 @@ function BasicQuery({
     downloadpdf(a, b, c);
   };
   const gSub = (e) => {
-    console.log("eee", e);
     setFolderId(e);
     mFold.map((i) => {
       if (i.id === e) {
@@ -565,8 +576,6 @@ function BasicQuery({
     });
   };
   const get_sub_innerFileClient = (e) => {
-    console.log("eee", e);
-
     axios
       .get(
         `${baseUrl}/customers/documentlistbyfolder?q_id=${qid.id}&folder_id=${
@@ -582,8 +591,6 @@ function BasicQuery({
       });
   };
   const get_sub_innerFileAdmin = (e) => {
-    console.log("eee", e);
-
     axios
       .get(
         `${baseUrl}/admin/documentlistbyfolder?q_id=${qid.id}&folder_id=${
@@ -598,7 +605,7 @@ function BasicQuery({
         }
       });
   };
-  console.log("adminFiles", clientFolder);
+
   return (
     <>
       <div className="queryBox">
@@ -883,12 +890,15 @@ function BasicQuery({
                       <ModalBody>
                         {isLeft === true ? (
                           <>
-                            <label>Select parent folder</label>
+                            <label>Folder</label>
+
                             <select
-                              className="form-control"
+                              className={`${
+                                foldError === true ? "validationError" : ""
+                              } form-control`}
                               onChange={(e) => gSub(e.target.value)}
                             >
-                              <option value="">Please select value</option>
+                              <option value="">Please select folder</option>
                               {mFold.map((i) => (
                                 <option value={i.id}>{i.folder}</option>
                               ))}
@@ -912,12 +922,14 @@ function BasicQuery({
                           </>
                         ) : (
                           <>
-                            <label>Parent folder</label>
+                            <label>Folder</label>
                             <select
-                              className="form-control"
+                              className={`${
+                                foldError === true ? "validationError" : ""
+                              } form-control`}
                               onChange={(e) => gSub(e.target.value)}
                             >
-                              <option value="">Please select value</option>
+                              <option value="0">Root</option>
                               {mFold.map((i) => (
                                 <option value={i.id}>{i.folder}</option>
                               ))}
@@ -952,13 +964,17 @@ function BasicQuery({
                   ) : (
                     " "
                   )}
-                  <CreateFolder
-                    addPaymentModal={createFoldernew}
-                    id={qid.id}
-                    getList={showFolder}
-                    movedFolder={movedFolder}
-                    rejectHandler={getFolder}
-                  />
+                  {createFoldernew === true ? (
+                    <CreateFolder
+                      addPaymentModal={createFoldernew}
+                      id={qid.id}
+                      getList={showFolder}
+                      movedFolder={movedFolder}
+                      rejectHandler={getFolder}
+                    />
+                  ) : (
+                    ""
+                  )}
                 </td>
               </tr>
             ) : (

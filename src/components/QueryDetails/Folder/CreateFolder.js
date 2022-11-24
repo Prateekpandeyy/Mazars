@@ -16,7 +16,19 @@ function CreateFolder({
   movedFolder,
 }) {
   const { handleSubmit, getValue, register, errors } = useForm();
-  const [folderid, setFolderId] = useState("0");
+  const [root2, setRoot2] = useState([
+    {
+      label: "...root",
+      value: "0",
+    },
+  ]);
+  const [folderid, setFolderId] = useState({
+    label: "...root",
+    value: "0",
+  });
+  useEffect(() => {
+    console.log("movedFolder", movedFolder);
+  }, [movedFolder]);
   const onSumbit = (value) => {
     let suburl = "createqfolder";
     if (tab === "assignment") {
