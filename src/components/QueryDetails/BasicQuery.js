@@ -71,6 +71,8 @@ function BasicQuery({
   const [adminFolder, setadminFolder] = useState([]);
   const [adminFile, setadminFile] = useState([]);
   const [adminInnerFile, setAdminInnerFiles] = useState([]);
+  const [clientFolder2, setClientFolder2] = useState([]);
+  const [adminFolder2, setadminFolder2] = useState([]);
   const [showadminSubFolder, setadminSubFolder] = useState([]);
   const token = window.localStorage.getItem("tlToken");
   const uid = localStorage.getItem("tlkey");
@@ -97,7 +99,29 @@ function BasicQuery({
   useEffect(() => {
     getClientFile();
   }, []);
-
+  const getClientFiles2 = (e) => {
+    let id = [];
+    axios
+      .get(
+        `${baseUrl}/customers/documentlistbyfolder?q_id=${qid.id}`,
+        myConfigClient
+      )
+      .then((res) => {
+        if (res.data.code === 1) {
+          res.data.result.map((i) => {
+            if (id.includes(i.folder_id)) {
+            } else {
+              if (i.folder_id !== "0") {
+                id.push(i.folder_id);
+              }
+              setclientFolder((oldData) => {
+                return [...oldData, i];
+              });
+            }
+          });
+        }
+      });
+  };
   const getClientFile = (e) => {
     if (window.location.pathname.split("/")[1] === "customer") {
       let id = [];
@@ -109,56 +133,49 @@ function BasicQuery({
         )
         .then((res) => {
           if (res.data.code === 1) {
-            res.data.result.map((i) => {
-              console.log("trie", i);
-              if (id.includes(i.folder_id)) {
-              } else {
-                if (i.folder_id !== "0") {
-                  id.push(i.folder_id);
-                }
-                setclientFolder((oldData) => {
-                  return [...oldData, i];
-                });
-              }
-            });
+            setClientFolder2(res.data.result);
           }
+        })
+        .then((res) => {
+          getClientFiles2();
         });
     }
   };
-  // const showFolderAdmin = () => {
-  //   let pd = qid.id;
-  //   if (window.location.pathname.split("/")[1] === "admin" && pd.length > 0) {
-  //     axios
-  //       .get(`${baseUrl}/admin/queryfolderlist?q_id=${pd}`, myConfig)
-  //       .then((res) => {
-  //         if (res.data.code === 1) {
-  //         }
-  //       });
-  //   }
-  // };
+  const getadminFiles2 = (e) => {
+    let id = [];
+    axios
+      .get(
+        `${baseUrl}/admin/documentlistbyfolder?q_id=${qid.id}`,
+        myConfigAdmin
+      )
+      .then((res) => {
+        if (res.data.code === 1) {
+          res.data.result.map((i) => {
+            if (id.includes(i.folder_id)) {
+            } else {
+              if (i.folder_id !== "0") {
+                id.push(i.folder_id);
+              }
+              setadminFolder((oldData) => {
+                return [...oldData, i];
+              });
+            }
+          });
+        }
+      });
+  };
   const getAdminFile = (e) => {
     if (window.location.pathname.split("/")[1] === "admin") {
       let id = [];
       axios
-        .get(
-          `${baseUrl}/admin/documentlistbyfolder?q_id=${qid.id}`,
-          myConfigAdmin
-        )
+        .get(`${baseUrl}/admin/foldersubfolder?q_id=${qid.id}`, myConfigAdmin)
         .then((res) => {
           if (res.data.code === 1) {
-            res.data.result.map((i) => {
-              if (id.includes(i.folder_id)) {
-                console.log("trie", id);
-              } else {
-                if (i.folder_id !== "0") {
-                  id.push(i.folder_id);
-                }
-                setadminFolder((oldData) => {
-                  return [...oldData, i];
-                });
-              }
-            });
+            setadminFolder2(res.data.result);
           }
+        })
+        .then((res) => {
+          getadminFiles2();
         });
     }
   };
@@ -179,36 +196,40 @@ function BasicQuery({
       });
   };
   const getInnerFileFileclient = (e) => {
-    axios
-      .get(
-        `${baseUrl}/customers/documentlistbyfolder?q_id=${qid.id}&folder_id=${e.folder_id}`,
-        myConfigClient
-      )
-      .then((res) => {
-        if (res.data.code === 1) {
-          setColor(e.id);
-          setclientFile(res.data.result);
-        }
-      })
-      .then((res) => {
-        clientSubFolder(e);
-      });
+    setClientSubFolder(e.child);
+    setColor(e.id);
+    let kk = [];
+    clientFolder.map((i) => {
+      if (e.id === i.folder_id) {
+        kk.push(i);
+      }
+    });
+    setclientFile(kk);
   };
   const getInnerFileFileadmin = (e) => {
-    axios
-      .get(
-        `${baseUrl}/admin/documentlistbyfolder?q_id=${qid.id}&folder_id=${e.folder_id}`,
-        myConfigAdmin
-      )
-      .then((res) => {
-        if (res.data.code === 1) {
-          setColor(e.id);
-          setadminFile(res.data.result);
-        }
-      })
-      .then((res) => {
-        adminSubFolder(e);
-      });
+    setadminSubFolder(e.child);
+    setColor(e.id);
+    let kk = [];
+    adminFolder.map((i) => {
+      if (e.id === i.folder_id) {
+        kk.push(i);
+      }
+    });
+    setadminFile(kk);
+    // axios
+    //   .get(
+    //     `${baseUrl}/admin/documentlistbyfolder?q_id=${qid.id}&folder_id=${e.folder_id}`,
+    //     myConfigAdmin
+    //   )
+    //   .then((res) => {
+    //     if (res.data.code === 1) {
+    //       setColor(e.id);
+    //       setadminFile(res.data.result);
+    //     }
+    //   })
+    //   .then((res) => {
+    //     adminSubFolder(e);
+    //   });
   };
   const myConfig = {
     headers: {
@@ -577,7 +598,7 @@ function BasicQuery({
         }
       });
   };
-  console.log("adminFiles", adminFolder);
+  console.log("adminFiles", clientFolder);
   return (
     <>
       <div className="queryBox">
@@ -944,169 +965,6 @@ function BasicQuery({
               ""
             )}
             {panel === "admin" ? (
-              // <tr>
-              //   <td
-              //     scope="row"
-              //     style={{ display: "flex", flexDirection: "column" }}
-              //   >
-              //     <div
-              //       style={{
-              //         display: "flex",
-              //         width: "100%",
-              //         justifyContent: "space-between",
-              //       }}
-              //     >
-              //       <span
-              //         style={{
-              //           fontSize: "16px",
-              //           fontWeight: "300",
-              //         }}
-              //       >
-              //         Uploaded documents
-              //       </span>
-              //     </div>
-              //     <FolderWrapper>
-              //       {adminFolder.map((i) => (
-              //         <div className="folderCreated">
-              //           {i.folder_id === "0" ? (
-              //             <>
-              //               <ArticleIcon
-              //                 style={{
-              //                   fontSize: "50px",
-              //                   color: "#0000ff",
-              //                   cursor: "pointer",
-              //                 }}
-              //               />
-              //               <span
-              //                 style={{
-              //                   textAlign: "center",
-              //                   whiteSpace: "break-spaces",
-              //                   display: "flex",
-              //                   maxHeight: "60px",
-              //                   overflow: "hidden",
-              //                 }}
-              //               >
-              //                 {i.name}
-              //               </span>
-              //             </>
-              //           ) : (
-              //             <>
-              //               {color === i.id ? (
-              //                 <FolderIcon
-              //                   onClick={(e) => getInnerFileFileadmin(i)}
-              //                   style={{
-              //                     fontSize: "50px",
-              //                     color: "#0000ff",
-              //                     cursor: "pointer",
-              //                   }}
-              //                 />
-              //               ) : (
-              //                 <FolderIcon
-              //                   onClick={(e) => getInnerFileFileadmin(i)}
-              //                   style={{
-              //                     fontSize: "50px",
-              //                     color: "#fccc77",
-              //                     cursor: "pointer",
-              //                   }}
-              //                 />
-              //               )}
-              //             </>
-              //           )}
-
-              //           <span
-              //             style={{
-              //               textAlign: "center",
-              //               whiteSpace: "break-spaces",
-              //               display: "flex",
-              //               maxHeight: "60px",
-              //               overflow: "hidden",
-              //             }}
-              //           >
-              //             {i.folder}{" "}
-              //           </span>
-              //         </div>
-              //       ))}
-              //     </FolderWrapper>
-              //   </td>
-              //   <td>
-              //     <div className="d-flex">
-              //       <FolderDetails>
-              //         <div className="folderDetails">
-              //           <span
-              //             style={{
-              //               fontSize: "16px",
-              //               fontWeight: "300",
-              //               textAlign: "left",
-              //             }}
-              //           >
-              //             Folder content
-              //           </span>
-              //           <div className="d-flex">
-              //             {adminFile.map((i) => (
-              //               <>
-              //                 <div className="folderCreated">
-              //                   <ArticleIcon
-              //                     style={{
-              //                       fontSize: "50px",
-              //                       color: "#0000ff",
-              //                       cursor: "pointer",
-              //                     }}
-              //                   />
-              //                   <span
-              //                     style={{
-              //                       textAlign: "center",
-              //                       whiteSpace: "break-spaces",
-              //                       display: "flex",
-              //                       maxHeight: "60px",
-              //                       overflow: "hidden",
-              //                     }}
-              //                   >
-              //                     {i.name}
-              //                   </span>
-              //                 </div>
-              //               </>
-              //             ))}
-              //           </div>
-              //         </div>
-              //       </FolderDetails>
-              //     </div>
-              //     {move === true ? (
-              //       <Modal isOpen={move} toggle={handleFile} size="xs">
-              //         <ModalHeader toggle={handleFile}>Move to</ModalHeader>
-              //         <ModalBody>
-              //           {isLeft === true ? (
-              //             <Select
-              //               onChange={(e) => setFolderId(e)}
-              //               options={leftFolder}
-              //               placeholder="Please select folder"
-              //             ></Select>
-              //           ) : (
-              //             <Select
-              //               onChange={(e) => setFolderId(e)}
-              //               options={movedFolder}
-              //               placeholder="Please select folder"
-              //             ></Select>
-              //           )}
-              //           <button
-              //             type="button"
-              //             onClick={(e) => mapIcon(e)}
-              //             className="autoWidthBtn my-2"
-              //           >
-              //             Submit
-              //           </button>
-              //         </ModalBody>
-              //       </Modal>
-              //     ) : (
-              //       " "
-              //     )}
-              //     <CreateFolder
-              //       addPaymentModal={createFoldernew}
-              //       id={qid.id}
-              //       getList={showFolder}
-              //       rejectHandler={getFolder}
-              //     />
-              //   </td>
-              // </tr>
               <tr>
                 <td
                   scope="row"
@@ -1124,83 +982,80 @@ function BasicQuery({
                     </span>
                   </div>
                   <FolderWrapper>
+                    {adminFolder2.map((i) => (
+                      <>
+                        {color === i.id ? (
+                          <div className="folderCreated">
+                            <FolderIcon
+                              onClick={(e) => getInnerFileFileadmin(i)}
+                              style={{
+                                fontSize: "50px",
+                                color: "#0000ff",
+                                cursor: "pointer",
+                              }}
+                            />
+                            <span
+                              style={{
+                                textAlign: "center",
+                                whiteSpace: "break-spaces",
+                                display: "flex",
+                                maxHeight: "60px",
+                                overflow: "hidden",
+                              }}
+                            >
+                              {i.folder}{" "}
+                            </span>
+                          </div>
+                        ) : (
+                          <div className="folderCreated">
+                            <FolderIcon
+                              onClick={(e) => getInnerFileFileadmin(i)}
+                              style={{
+                                fontSize: "50px",
+                                color: "#fccc77",
+                                cursor: "pointer",
+                              }}
+                            />
+                            <span
+                              style={{
+                                textAlign: "center",
+                                whiteSpace: "break-spaces",
+                                display: "flex",
+                                maxHeight: "60px",
+                                overflow: "hidden",
+                              }}
+                            >
+                              {i.folder}{" "}
+                            </span>
+                          </div>
+                        )}
+                      </>
+                    ))}
                     {adminFolder.map((i) => (
                       <div className="folderCreated">
-                        {i.parent_id === "0" ? (
+                        {i.folder_id === "0" ? (
                           <>
-                            {color === i.id ? (
-                              <div className="folderCreated">
-                                <FolderIcon
-                                  onClick={(e) => getInnerFileFileadmin(i)}
-                                  style={{
-                                    fontSize: "50px",
-                                    color: "#0000ff",
-                                    cursor: "pointer",
-                                  }}
-                                />
-                                <span
-                                  style={{
-                                    textAlign: "center",
-                                    whiteSpace: "break-spaces",
-                                    display: "flex",
-                                    maxHeight: "60px",
-                                    overflow: "hidden",
-                                  }}
-                                >
-                                  {i.folder}{" "}
-                                </span>
-                              </div>
-                            ) : (
-                              <div className="folderCreated">
-                                <FolderIcon
-                                  onClick={(e) => getInnerFileFileadmin(i)}
-                                  style={{
-                                    fontSize: "50px",
-                                    color: "#fccc77",
-                                    cursor: "pointer",
-                                  }}
-                                />
-                                <span
-                                  style={{
-                                    textAlign: "center",
-                                    whiteSpace: "break-spaces",
-                                    display: "flex",
-                                    maxHeight: "60px",
-                                    overflow: "hidden",
-                                  }}
-                                >
-                                  {i.folder}{" "}
-                                </span>
-                              </div>
-                            )}
+                            <ArticleIcon
+                              style={{
+                                fontSize: "50px",
+                                color: "#0000ff",
+                                cursor: "pointer",
+                              }}
+                            />
+                            <span
+                              style={{
+                                textAlign: "center",
+                                whiteSpace: "break-spaces",
+                                display: "flex",
+                                maxHeight: "60px",
+                                overflow: "hidden",
+                              }}
+                            >
+                              {i.name}
+                            </span>
                           </>
                         ) : (
-                          <>
-                            {i.parent_id === null && i.folder_id === "0" ? (
-                              <>
-                                <ArticleIcon
-                                  style={{
-                                    fontSize: "50px",
-                                    color: "#0000ff",
-                                    cursor: "pointer",
-                                  }}
-                                />
-                                <span
-                                  style={{
-                                    textAlign: "center",
-                                    whiteSpace: "break-spaces",
-                                    display: "flex",
-                                    maxHeight: "60px",
-                                    overflow: "hidden",
-                                  }}
-                                >
-                                  {i.name}
-                                </span>
-                              </>
-                            ) : (
-                              ""
-                            )}
-                          </>
+                          ""
                         )}
                       </div>
                     ))}
@@ -1342,83 +1197,80 @@ function BasicQuery({
                     </span>
                   </div>
                   <FolderWrapper>
+                    {clientFolder2.map((i) => (
+                      <>
+                        {color === i.id ? (
+                          <div className="folderCreated">
+                            <FolderIcon
+                              onClick={(e) => getInnerFileFileclient(i)}
+                              style={{
+                                fontSize: "50px",
+                                color: "#0000ff",
+                                cursor: "pointer",
+                              }}
+                            />
+                            <span
+                              style={{
+                                textAlign: "center",
+                                whiteSpace: "break-spaces",
+                                display: "flex",
+                                maxHeight: "60px",
+                                overflow: "hidden",
+                              }}
+                            >
+                              {i.folder}{" "}
+                            </span>
+                          </div>
+                        ) : (
+                          <div className="folderCreated">
+                            <FolderIcon
+                              onClick={(e) => getInnerFileFileclient(i)}
+                              style={{
+                                fontSize: "50px",
+                                color: "#fccc77",
+                                cursor: "pointer",
+                              }}
+                            />
+                            <span
+                              style={{
+                                textAlign: "center",
+                                whiteSpace: "break-spaces",
+                                display: "flex",
+                                maxHeight: "60px",
+                                overflow: "hidden",
+                              }}
+                            >
+                              {i.folder}{" "}
+                            </span>
+                          </div>
+                        )}
+                      </>
+                    ))}
                     {clientFolder.map((i) => (
                       <div className="folderCreated">
-                        {i.parent_id === "0" ? (
+                        {i.folder_id === "0" ? (
                           <>
-                            {color === i.id ? (
-                              <div className="folderCreated">
-                                <FolderIcon
-                                  onClick={(e) => getInnerFileFileclient(i)}
-                                  style={{
-                                    fontSize: "50px",
-                                    color: "#0000ff",
-                                    cursor: "pointer",
-                                  }}
-                                />
-                                <span
-                                  style={{
-                                    textAlign: "center",
-                                    whiteSpace: "break-spaces",
-                                    display: "flex",
-                                    maxHeight: "60px",
-                                    overflow: "hidden",
-                                  }}
-                                >
-                                  {i.folder}{" "}
-                                </span>
-                              </div>
-                            ) : (
-                              <div className="folderCreated">
-                                <FolderIcon
-                                  onClick={(e) => getInnerFileFileclient(i)}
-                                  style={{
-                                    fontSize: "50px",
-                                    color: "#fccc77",
-                                    cursor: "pointer",
-                                  }}
-                                />
-                                <span
-                                  style={{
-                                    textAlign: "center",
-                                    whiteSpace: "break-spaces",
-                                    display: "flex",
-                                    maxHeight: "60px",
-                                    overflow: "hidden",
-                                  }}
-                                >
-                                  {i.folder}{" "}
-                                </span>
-                              </div>
-                            )}
+                            <ArticleIcon
+                              style={{
+                                fontSize: "50px",
+                                color: "#0000ff",
+                                cursor: "pointer",
+                              }}
+                            />
+                            <span
+                              style={{
+                                textAlign: "center",
+                                whiteSpace: "break-spaces",
+                                display: "flex",
+                                maxHeight: "60px",
+                                overflow: "hidden",
+                              }}
+                            >
+                              {i.name}
+                            </span>
                           </>
                         ) : (
-                          <>
-                            {i.parent_id === null && i.folder_id === "0" ? (
-                              <>
-                                <ArticleIcon
-                                  style={{
-                                    fontSize: "50px",
-                                    color: "#0000ff",
-                                    cursor: "pointer",
-                                  }}
-                                />
-                                <span
-                                  style={{
-                                    textAlign: "center",
-                                    whiteSpace: "break-spaces",
-                                    display: "flex",
-                                    maxHeight: "60px",
-                                    overflow: "hidden",
-                                  }}
-                                >
-                                  {i.name}
-                                </span>
-                              </>
-                            ) : (
-                              ""
-                            )}
-                          </>
+                          ""
                         )}
                       </div>
                     ))}
