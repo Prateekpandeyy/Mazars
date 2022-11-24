@@ -104,14 +104,14 @@ function BasicQuery({
 
       axios
         .get(
-          `${baseUrl}/customers/documentlistbyfolder?q_id=${qid.id}`,
+          `${baseUrl}/customers/foldersubfolder?q_id=${qid.id}`,
           myConfigClient
         )
         .then((res) => {
           if (res.data.code === 1) {
             res.data.result.map((i) => {
+              console.log("trie", i);
               if (id.includes(i.folder_id)) {
-                console.log("trie", id);
               } else {
                 if (i.folder_id !== "0") {
                   id.push(i.folder_id);
