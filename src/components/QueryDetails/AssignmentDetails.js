@@ -987,7 +987,6 @@ function AssignmentDetails({
                               } form-control`}
                               onChange={(e) => gSub(e.target.value, "left")}
                             >
-                              <option value="">None</option>
                               {mFold.map((i) => (
                                 <option value={i.id}>{i.folder}</option>
                               ))}
@@ -999,7 +998,7 @@ function AssignmentDetails({
                                   className="form-control"
                                   onChange={(e) => setFolderId(e.target.value)}
                                 >
-                                  <option value="">Please select value</option>
+                                  <option value="">Please select folder</option>
                                   {subFolder.map((i) => (
                                     <option value={i.id}>{i.folder}</option>
                                   ))}
