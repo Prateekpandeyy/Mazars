@@ -204,9 +204,12 @@ function BasicQuery({
       });
   };
   const getInnerFileFileclient = (e) => {
+    setClientInnerFiles([]);
+    setFolderName("");
     setClientSubFolder(e.child);
     setColor(e.id);
     let kk = [];
+    setMainFoldName(e.folder);
     clientFolder.map((i) => {
       if (e.id === i.folder_id) {
         kk.push(i);
@@ -216,6 +219,7 @@ function BasicQuery({
   };
   const getInnerFileFileadmin = (e) => {
     setadminSubFolder(e.child);
+    setAdminInnerFiles([]);
     setColor(e.id);
     let kk = [];
     adminFolder.map((i) => {
@@ -223,21 +227,9 @@ function BasicQuery({
         kk.push(i);
       }
     });
+    setMainFoldName(e.folder);
+    setFolderName("");
     setadminFile(kk);
-    // axios
-    //   .get(
-    //     `${baseUrl}/admin/documentlistbyfolder?q_id=${qid.id}&folder_id=${e.folder_id}`,
-    //     myConfigAdmin
-    //   )
-    //   .then((res) => {
-    //     if (res.data.code === 1) {
-    //       setColor(e.id);
-    //       setadminFile(res.data.result);
-    //     }
-    //   })
-    //   .then((res) => {
-    //     adminSubFolder(e);
-    //   });
   };
   const myConfig = {
     headers: {
@@ -351,7 +343,10 @@ function BasicQuery({
     }
   };
   const mapIcon = (e) => {
-    if (folderId.length > 0) {
+    console.log("isLeft", isLeft, folderId);
+    if (isLeft === true && folderId === "0") {
+      setFoldError(true);
+    } else if (folderId.length > 0) {
       setFoldError(false);
       setSubFolder([]);
       axios
@@ -361,6 +356,7 @@ function BasicQuery({
         )
         .then((res) => {
           if (res.data.code === 1) {
+            setFolderId("0");
             handleFile();
             showFolder();
             getFile();
@@ -437,6 +433,7 @@ function BasicQuery({
         )
         .then((res) => {
           if (res.data.code === 1) {
+            setShowSubFolderData(false);
             setColor(e.id);
             set_sub_folder(res.data.result);
             setSubFile([]);
@@ -567,7 +564,8 @@ function BasicQuery({
   const rightClick = (e, a, b, c) => {
     downloadpdf(a, b, c);
   };
-  const gSub = (e) => {
+  const gSub = (e, dir) => {
+    console.log("dir", e, dir);
     setFolderId(e);
     mFold.map((i) => {
       if (i.id === e) {
@@ -585,6 +583,7 @@ function BasicQuery({
       )
       .then((res) => {
         if (res.data.code === 1) {
+          setFolderName(e.folder);
           setClientInnerFiles(res.data.result);
         } else {
         }
@@ -600,6 +599,7 @@ function BasicQuery({
       )
       .then((res) => {
         if (res.data.code === 1) {
+          setFolderName(e.folder);
           setAdminInnerFiles(res.data.result);
         } else {
         }
@@ -754,16 +754,41 @@ function BasicQuery({
                   <div className="d-flex">
                     <FolderDetails>
                       <div className="folderDetails">
-                        {mainFoldName.length > 0 || folderName.length > 0 ? (
-                          <span style={{ fontSize: "16px", fontWeight: "300" }}>
+                        {mainFoldName.length > 0 && folderName.length > 0 ? (
+                          <span
+                            style={{ fontSize: "16px", fontWeight: "300" }}
+                            onClick={() => {
+                              setShowSubFolderData(false);
+                              setFolderName("");
+                            }}
+                          >
                             {`${mainFoldName} ${
                               folderName.length > 0 ? ">" : ""
                             } ${folderName}`}
                           </span>
                         ) : (
-                          <span style={{ fontSize: "16px", fontWeight: "300" }}>
-                            Folder content
-                          </span>
+                          <>
+                            {mainFoldName.length > 0 ||
+                            folderName.length > 0 ? (
+                              <span
+                                style={{ fontSize: "16px", fontWeight: "300" }}
+                                onClick={() => {
+                                  setShowSubFolderData(false);
+                                  setFolderName("");
+                                }}
+                              >
+                                {`${mainFoldName} ${
+                                  folderName.length > 0 ? ">" : ""
+                                } ${folderName}`}
+                              </span>
+                            ) : (
+                              <span
+                                style={{ fontSize: "16px", fontWeight: "300" }}
+                              >
+                                Folder content
+                              </span>
+                            )}
+                          </>
                         )}
 
                         {showSubfolderData === true ? (
@@ -896,9 +921,9 @@ function BasicQuery({
                               className={`${
                                 foldError === true ? "validationError" : ""
                               } form-control`}
-                              onChange={(e) => gSub(e.target.value)}
+                              onChange={(e) => gSub(e.target.value, "left")}
                             >
-                              <option value="">Please select folder</option>
+                              <option value="">None</option>
                               {mFold.map((i) => (
                                 <option value={i.id}>{i.folder}</option>
                               ))}
@@ -927,7 +952,7 @@ function BasicQuery({
                               className={`${
                                 foldError === true ? "validationError" : ""
                               } form-control`}
-                              onChange={(e) => gSub(e.target.value)}
+                              onChange={(e) => gSub(e.target.value, "right")}
                             >
                               <option value="0">Root</option>
                               {mFold.map((i) => (
@@ -941,7 +966,7 @@ function BasicQuery({
                                   className="form-control"
                                   onChange={(e) => setFolderId(e.target.value)}
                                 >
-                                  <option value="">Please select value</option>
+                                  <option value="">None</option>
                                   {subFolder.map((i) => (
                                     <option value={i.id}>{i.folder}</option>
                                   ))}
@@ -1081,9 +1106,43 @@ function BasicQuery({
                   <div className="d-flex">
                     <FolderDetails>
                       <div className="folderDetails">
-                        <span style={{ fontSize: "16px", fontWeight: "300" }}>
-                          Folder content
-                        </span>
+                        {mainFoldName.length > 0 && folderName.length > 0 ? (
+                          <span
+                            style={{ fontSize: "16px", fontWeight: "300" }}
+                            onClick={() => {
+                              setShowSubFolderData(false);
+                              setFolderName("");
+                            }}
+                          >
+                            {`${mainFoldName} ${
+                              folderName.length > 0 ? ">" : ""
+                            } ${folderName}`}
+                          </span>
+                        ) : (
+                          <>
+                            {mainFoldName.length > 0 ||
+                            folderName.length > 0 ? (
+                              <span
+                                style={{ fontSize: "16px", fontWeight: "300" }}
+                                onClick={() => {
+                                  setShowSubFolderData(false);
+                                  setFolderName("");
+                                }}
+                              >
+                                {`${mainFoldName} ${
+                                  folderName.length > 0 ? ">" : ""
+                                } ${folderName}`}
+                              </span>
+                            ) : (
+                              <span
+                                style={{ fontSize: "16px", fontWeight: "300" }}
+                              >
+                                Folder content
+                              </span>
+                            )}
+                          </>
+                        )}
+
                         {adminInnerFile.length > 0 ? (
                           <>
                             <div className="d-flex">
@@ -1296,15 +1355,52 @@ function BasicQuery({
                   <div className="d-flex">
                     <FolderDetails>
                       <div className="folderDetails">
-                        <span style={{ fontSize: "16px", fontWeight: "300" }}>
-                          Folder content
-                        </span>
+                        {mainFoldName.length > 0 && folderName.length > 0 ? (
+                          <span
+                            style={{ fontSize: "16px", fontWeight: "300" }}
+                            onClick={() => {
+                              setClientInnerFiles([]);
+                              setFolderName("");
+                            }}
+                          >
+                            {`${mainFoldName} ${
+                              folderName.length > 0 ? ">" : ""
+                            } ${folderName}`}
+                          </span>
+                        ) : (
+                          <>
+                            {mainFoldName.length > 0 ||
+                            folderName.length > 0 ? (
+                              <span
+                                style={{ fontSize: "16px", fontWeight: "300" }}
+                                onClick={() => {
+                                  setClientInnerFiles([]);
+                                  setFolderName("");
+                                }}
+                              >
+                                {`${mainFoldName} ${
+                                  folderName.length > 0 ? ">" : ""
+                                } ${folderName}`}
+                              </span>
+                            ) : (
+                              <span
+                                style={{ fontSize: "16px", fontWeight: "300" }}
+                              >
+                                Folder content
+                              </span>
+                            )}
+                          </>
+                        )}
+
                         {clientInnerFile.length > 0 ? (
                           <>
                             <div className="d-flex">
                               <div className="folderCreated">
                                 <FolderIcon
-                                  onClick={(e) => setClientInnerFiles([])}
+                                  onClick={(e) => {
+                                    setClientInnerFiles([]);
+                                    setFolderName("");
+                                  }}
                                   style={{
                                     fontSize: "50px",
                                     color: "#fccc77",
