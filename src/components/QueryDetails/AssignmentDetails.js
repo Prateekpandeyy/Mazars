@@ -187,7 +187,7 @@ function AssignmentDetails({
     }
     axios
       .get(
-        `${baseUrl}/tl/folderfileReport?q_id=${qid.id}&${fold}=${folderId.value}&file_id=${fileId}`,
+        `${baseUrl}/tl/folderfileReport?q_id=${qid.id}&${fold}=${folderId}&file_id=${fileId}`,
         myConfig
       )
       .then((res) => {
