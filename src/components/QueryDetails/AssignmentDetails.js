@@ -254,6 +254,7 @@ function AssignmentDetails({
             set_sub_folder(res.data.result);
             setSubFile([]);
             setMainFoldName(e.folder);
+
             // setInnerFiles(res.data.result);
           }
         })

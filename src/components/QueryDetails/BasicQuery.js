@@ -325,6 +325,17 @@ function BasicQuery({
         )
         .then((res) => {
           if (res.data.code === 1) {
+            if (showSubfolderData === false) {
+              getSubFile({
+                id: color,
+              });
+            } else {
+              setShowSubFolderData(false);
+            }
+            // if (showSubfolderData === true) {
+            //   get_sub_innerFile();
+            // } else {
+            // }
             setFolderId("0");
             handleFile();
             showFolder();
@@ -407,6 +418,7 @@ function BasicQuery({
             set_sub_folder(res.data.result);
             setSubFile([]);
             setMainFoldName(e.folder);
+            setFolderName("");
             // setInnerFiles(res.data.result);
           }
         })
@@ -534,7 +546,6 @@ function BasicQuery({
     downloadpdf(a, b, c);
   };
   const gSub = (e, dir) => {
-    console.log("dir", e, dir);
     setFolderId(e);
     mFold.map((i) => {
       if (i.id === e) {
@@ -892,7 +903,7 @@ function BasicQuery({
                               } form-control`}
                               onChange={(e) => gSub(e.target.value, "left")}
                             >
-                              <option value="">None</option>
+                              <option value="">Please select folder</option>
                               {mFold.map((i) => (
                                 <option value={i.id}>{i.folder}</option>
                               ))}
@@ -904,7 +915,7 @@ function BasicQuery({
                                   className="form-control"
                                   onChange={(e) => setFolderId(e.target.value)}
                                 >
-                                  <option value="">Please select value</option>
+                                  <option value="">None</option>
                                   {subFolder.map((i) => (
                                     <option value={i.id}>{i.folder}</option>
                                   ))}
