@@ -77,11 +77,11 @@ function BasicQuery({
   const [folderName, setFolderName] = useState("");
   const [clientInnerFile, setClientInnerFiles] = useState([]);
   const [adminFolder, setadminFolder] = useState([]);
+  const [showadminSubFolder, setadminSubFolder] = useState([]);
   const [adminFile, setadminFile] = useState([]);
   const [adminInnerFile, setAdminInnerFiles] = useState([]);
-  const [clientFolder2, setClientFolder2] = useState([]);
   const [adminFolder2, setadminFolder2] = useState([]);
-  const [showadminSubFolder, setadminSubFolder] = useState([]);
+  const [clientFolder2, setClientFolder2] = useState([]);
   const [foldError, setFoldError] = useState(false);
   const token = window.localStorage.getItem("tlToken");
   const uid = localStorage.getItem("tlkey");
