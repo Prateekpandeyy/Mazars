@@ -403,7 +403,7 @@ function AssignmentDetails({
     if (window.location.pathname.split("/")[1] === "teamleader") {
       axios
         .get(
-          `${baseUrl}/tl/documentlistbyfolder?q_id=${qid.id}&folder_id=${
+          `${baseUrl}/tl/documentlistbyfolderreport?q_id=${qid.id}&folder_id=${
             e.id
           }&uid=${JSON.parse(uid)}`,
           myConfig
@@ -506,7 +506,7 @@ function AssignmentDetails({
     let id = [];
     axios
       .get(
-        `${baseUrl}/customers/documentlistbyfolder?q_id=${qid.id}`,
+        `${baseUrl}/customers/documentlistbyfolderreport?q_id=${qid.id}`,
         myConfigClient
       )
       .then((res) => {
@@ -877,7 +877,7 @@ function AssignmentDetails({
                                       overflow: "hidden",
                                     }}
                                   >
-                                    {i.name}
+                                    {i.document}
                                   </span>
                                 </div>
                               ))}
@@ -1203,7 +1203,7 @@ function AssignmentDetails({
                                 overflow: "hidden",
                               }}
                             >
-                              {i.name}
+                              {i.document}
                             </span>
                           </>
                         ) : (
@@ -1297,7 +1297,7 @@ function AssignmentDetails({
                                         overflow: "hidden",
                                       }}
                                     >
-                                      {i.name}
+                                      {i.document}
                                     </span>
                                   </div>
                                 </>
@@ -1350,7 +1350,7 @@ function AssignmentDetails({
                                       overflow: "hidden",
                                     }}
                                   >
-                                    {i.name}
+                                    {i.document}
                                   </span>
                                 </div>
                               </>
