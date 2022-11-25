@@ -98,6 +98,11 @@ function BasicQuery({
       uit: clientToken,
     },
   };
+  const myConfig = {
+    headers: {
+      uit: token,
+    },
+  };
   useEffect(() => {
     getFile();
     showFolder();
@@ -150,6 +155,20 @@ function BasicQuery({
         });
     }
   };
+  const getInnerFileFileclient = (e) => {
+    setClientInnerFiles([]);
+    setFolderName("");
+    setClientSubFolder(e.child);
+    setColor(e.id);
+    let kk = [];
+    setMainFoldName(e.folder);
+    clientFolder.map((i) => {
+      if (e.id === i.folder_id) {
+        kk.push(i);
+      }
+    });
+    setclientFile(kk);
+  };
   const getadminFiles2 = (e) => {
     let id = [];
     axios
@@ -188,35 +207,6 @@ function BasicQuery({
         });
     }
   };
-  const adminSubFolder = (e) => {
-    axios
-      .get(`${baseUrl}/admin/foldersubfolder?q_id=${qid.id}`, myConfigAdmin)
-      .then((res) => {
-        if (res.data.code === 1) {
-          res.data.result.map((i) => {
-            if (i.id === e.folder_id) {
-              setadminSubFolder(i.child);
-            }
-          });
-        } else if (res.data.code === 0) {
-          setadminSubFolder([]);
-        }
-      });
-  };
-  const getInnerFileFileclient = (e) => {
-    setClientInnerFiles([]);
-    setFolderName("");
-    setClientSubFolder(e.child);
-    setColor(e.id);
-    let kk = [];
-    setMainFoldName(e.folder);
-    clientFolder.map((i) => {
-      if (e.id === i.folder_id) {
-        kk.push(i);
-      }
-    });
-    setclientFile(kk);
-  };
   const getInnerFileFileadmin = (e) => {
     setadminSubFolder(e.child);
     setAdminInnerFiles([]);
@@ -231,11 +221,7 @@ function BasicQuery({
     setFolderName("");
     setadminFile(kk);
   };
-  const myConfig = {
-    headers: {
-      uit: token,
-    },
-  };
+
   const getFile = () => {
     let pd = qid.id;
 
@@ -258,24 +244,7 @@ function BasicQuery({
         });
     }
   };
-  const clientSubFolder = (e) => {
-    axios
-      .get(
-        `${baseUrl}/customers/foldersubfolder?q_id=${qid.id}`,
-        myConfigClient
-      )
-      .then((res) => {
-        if (res.data.code === 1) {
-          res.data.result.map((i) => {
-            if (i.id === e.folder_id) {
-              setClientSubFolder(i.child);
-            }
-          });
-        } else if (res.data.code === 0) {
-          setClientSubFolder([]);
-        }
-      });
-  };
+
   const getMoveToList = () => {
     let kk = [];
     let pd = qid.id;
