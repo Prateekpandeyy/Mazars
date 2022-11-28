@@ -82,6 +82,8 @@ function BasicQuery({
   const [adminInnerFile, setAdminInnerFiles] = useState([]);
   const [adminFolder2, setadminFolder2] = useState([]);
   const [clientFolder2, setClientFolder2] = useState([]);
+  const [showClientFolderdata, setShowClientShowFolderData] = useState(false);
+  const [showAdminFolderdata, setShowAdminShowFolderData] = useState(false);
   const [foldError, setFoldError] = useState(false);
   const token = window.localStorage.getItem("tlToken");
   const uid = localStorage.getItem("tlkey");
@@ -160,6 +162,7 @@ function BasicQuery({
     setFolderName("");
     setClientSubFolder(e.child);
     setColor(e.id);
+    setShowClientShowFolderData(false);
     let kk = [];
     setMainFoldName(e.folder);
     clientFolder.map((i) => {
@@ -209,6 +212,7 @@ function BasicQuery({
   };
   const getInnerFileFileadmin = (e) => {
     setadminSubFolder(e.child);
+    setShowAdminShowFolderData(false);
     setAdminInnerFiles([]);
     setColor(e.id);
     let kk = [];
@@ -226,9 +230,8 @@ function BasicQuery({
     let pd = qid.id;
 
     if (
-      window.location.pathname.split("/")[1] === "teamleader" &&
-      pd &&
-      JSON.parse(uid)
+      window.location.pathname.split("/")[1] === "teamleader" ||
+      window.location.pathname.split("/")[1] === "taxprofessional"
     ) {
       axios
         .get(
@@ -279,8 +282,8 @@ function BasicQuery({
   const showFolder = () => {
     let pd = qid.id;
     if (
-      window.location.pathname.split("/")[1] === "teamleader" &&
-      pd.length > 0
+      window.location.pathname.split("/")[1] === "teamleader" ||
+      window.location.pathname.split("/")[1] === "taxprofessional"
     ) {
       axios
         .get(
@@ -383,7 +386,10 @@ function BasicQuery({
       });
   };
   const get_sub_innerFile = (e) => {
-    if (window.location.pathname.split("/")[1] === "teamleader") {
+    if (
+      window.location.pathname.split("/")[1] === "teamleader" ||
+      window.location.pathname.split("/")[1] === "taxprofessional"
+    ) {
       axios
         .get(
           `${baseUrl}/tl/documentlistbyfolder?q_id=${qid.id}&folder_id=${
@@ -403,7 +409,10 @@ function BasicQuery({
     }
   };
   const getInnerFileFile = (e) => {
-    if (window.location.pathname.split("/")[1] === "teamleader") {
+    if (
+      window.location.pathname.split("/")[1] === "teamleader" ||
+      window.location.pathname.split("/")[1] === "taxprofessional"
+    ) {
       axios
         .get(
           `${baseUrl}/tl/queryfolderlist?q_id=${qid.id}&folder_id=${
@@ -564,6 +573,7 @@ function BasicQuery({
       .then((res) => {
         if (res.data.code === 1) {
           setFolderName(e.folder);
+          setShowClientShowFolderData(true);
           setClientInnerFiles(res.data.result);
         } else {
         }
@@ -580,6 +590,7 @@ function BasicQuery({
       .then((res) => {
         if (res.data.code === 1) {
           setFolderName(e.folder);
+          setShowAdminShowFolderData(true);
           setAdminInnerFiles(res.data.result);
         } else {
         }
@@ -638,7 +649,7 @@ function BasicQuery({
               </td>
             </tr>
 
-            {panel === "teamleader" ? (
+            {panel === "teamleader" || panel === "taxprofessional" ? (
               <tr>
                 <td
                   scope="row"
@@ -1053,9 +1064,9 @@ function BasicQuery({
                       </>
                     ))}
                     {adminFolder.map((i) => (
-                      <div className="folderCreated">
+                      <>
                         {i.folder_id === "0" ? (
-                          <>
+                          <div className="folderCreated">
                             <ArticleIcon
                               style={{
                                 fontSize: "50px",
@@ -1074,11 +1085,11 @@ function BasicQuery({
                             >
                               {i.name}
                             </span>
-                          </>
+                          </div>
                         ) : (
                           ""
                         )}
-                      </div>
+                      </>
                     ))}
                   </FolderWrapper>
                 </td>
@@ -1091,6 +1102,7 @@ function BasicQuery({
                             style={{ fontSize: "16px", fontWeight: "300" }}
                             onClick={() => {
                               setShowSubFolderData(false);
+                              setShowAdminShowFolderData(false);
                               setFolderName("");
                             }}
                           >
@@ -1123,12 +1135,16 @@ function BasicQuery({
                           </>
                         )}
 
-                        {adminInnerFile.length > 0 ? (
+                        {showAdminFolderdata === true ? (
                           <>
                             <div className="d-flex">
                               <div className="folderCreated">
                                 <FolderIcon
-                                  onClick={(e) => setAdminInnerFiles([])}
+                                  onClick={(e) => {
+                                    setFolderName("");
+                                    setShowAdminShowFolderData(false);
+                                    setAdminInnerFiles([]);
+                                  }}
                                   style={{
                                     fontSize: "50px",
                                     color: "#fccc77",
@@ -1302,9 +1318,9 @@ function BasicQuery({
                       </>
                     ))}
                     {clientFolder.map((i) => (
-                      <div className="folderCreated">
+                      <>
                         {i.folder_id === "0" ? (
-                          <>
+                          <div className="folderCreated">
                             <ArticleIcon
                               style={{
                                 fontSize: "50px",
@@ -1323,11 +1339,11 @@ function BasicQuery({
                             >
                               {i.name}
                             </span>
-                          </>
+                          </div>
                         ) : (
                           ""
                         )}
-                      </div>
+                      </>
                     ))}
                   </FolderWrapper>
                 </td>
@@ -1341,6 +1357,7 @@ function BasicQuery({
                             onClick={() => {
                               setClientInnerFiles([]);
                               setFolderName("");
+                              setShowClientShowFolderData(false);
                             }}
                           >
                             {`${mainFoldName} ${
@@ -1371,15 +1388,15 @@ function BasicQuery({
                             )}
                           </>
                         )}
-
-                        {clientInnerFile.length > 0 ? (
+                        {showClientFolderdata === true ? (
                           <>
                             <div className="d-flex">
                               <div className="folderCreated">
                                 <FolderIcon
                                   onClick={(e) => {
-                                    setClientInnerFiles([]);
                                     setFolderName("");
+                                    setShowClientShowFolderData(false);
+                                    setClientInnerFiles([]);
                                   }}
                                   style={{
                                     fontSize: "50px",
