@@ -420,7 +420,6 @@ function AssignmentDetails({
     }
   };
   const gSub = (e, dir) => {
-    console.log("dir", e, dir);
     setFolderId(e);
     mFold.map((i) => {
       if (i.id === e) {
@@ -531,7 +530,7 @@ function AssignmentDetails({
 
       axios
         .get(
-          `${baseUrl}/customers/foldersubfolder?q_id=${qid.id}`,
+          `${baseUrl}/customers/foldersubfolderreport?q_id=${qid.id}`,
           myConfigClient
         )
         .then((res) => {
