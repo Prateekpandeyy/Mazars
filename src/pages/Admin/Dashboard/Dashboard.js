@@ -44,7 +44,7 @@ function Dashboard() {
     complete_inprocess: "",
     customer_declined_payment: "",
   });
-
+  const [decliAssignment, setDecliAssignment] = useState("");
   const [payment, setPayment] = useState({
     paid: "",
     unpaid: "",
@@ -100,6 +100,9 @@ function Dashboard() {
             setpermission_to_issue_invoice(
               response.data.result.proposal.permission_to_issue_invoice
             );
+            setDecliAssignment(
+              response.data.result.proposal["customer_declined_proposalsp "]
+            );
             setAllQueries({
               total: response.data.result.total,
               inprogress_queries: response.data.result.inprogress_queries,
@@ -125,7 +128,7 @@ function Dashboard() {
               accepted_proposals:
                 response.data.result.proposal.accepted_proposals,
               declined:
-                response.data.result.proposal["customer_declined_proposals "],
+                response.data.result.proposal["customer_declined_proposalsp "],
             });
           }
         })
@@ -480,7 +483,7 @@ function Dashboard() {
                         Client declined; payment
                       </CustomTypography>
                     </th>
-                    <th>{customer_declined_payment}</th>
+                    <th>{decliAssignment}</th>
                   </tr>
                 </thead>
               </table>
