@@ -85,11 +85,7 @@ function AssignmentDetails({
   const token = window.localStorage.getItem("tlToken");
   const adminToken = window.localStorage.getItem("adminToken");
   const clientToken = window.localStorage.getItem("clientToken");
-  const myConfig = {
-    headers: {
-      uit: token,
-    },
-  };
+
   const myConfigAdmin = {
     headers: {
       uit: adminToken,
@@ -107,7 +103,21 @@ function AssignmentDetails({
     var difference = Math.round((date2 - date1) / (1000 * 60 * 60 * 24));
   };
   const showFolder = () => {
+    var confToken = "";
     if (window.location.pathname.split("/")[1] === "teamleader") {
+      confToken = window.localStorage.getItem("tlToken");
+    } else if (window.location.pathname.split("/")[1] === "taxprofessional") {
+      confToken = window.localStorage.getItem("tptoken");
+    }
+    const myConfig = {
+      headers: {
+        uit: confToken,
+      },
+    };
+    if (
+      window.location.pathname.split("/")[1] === "teamleader" ||
+      window.location.pathname.split("/")[1] === "taxprofessional"
+    ) {
       let kk = [];
       let leftFold = [];
       let movedFold = {};
@@ -132,6 +142,18 @@ function AssignmentDetails({
     }
   };
   const getMoveToList = () => {
+    var confToken = "";
+    if (window.location.pathname.split("/")[1] === "teamleader") {
+      confToken = window.localStorage.getItem("tlToken");
+    } else if (window.location.pathname.split("/")[1] === "taxprofessional") {
+      confToken = window.localStorage.getItem("tptoken");
+    }
+    const myConfig = {
+      headers: {
+        uit: confToken,
+      },
+    };
+
     let kk = [];
     let pd = qid.id;
     let movedFold = {};
@@ -163,7 +185,21 @@ function AssignmentDetails({
   };
 
   const getFile = () => {
+    var confToken = "";
     if (window.location.pathname.split("/")[1] === "teamleader") {
+      confToken = window.localStorage.getItem("tlToken");
+    } else if (window.location.pathname.split("/")[1] === "taxprofessional") {
+      confToken = window.localStorage.getItem("tptoken");
+    }
+    const myConfig = {
+      headers: {
+        uit: confToken,
+      },
+    };
+    if (
+      window.location.pathname.split("/")[1] === "teamleader" ||
+      window.location.pathname.split("/")[1] === "taxprofessional"
+    ) {
       axios
         .get(
           `${baseUrl}/tl/documentlistbyfolderreport?q_id=${
@@ -180,6 +216,18 @@ function AssignmentDetails({
   };
   const mapIcon = (e) => {
     let fold = "folder_id";
+    var confToken = "";
+    if (window.location.pathname.split("/")[1] === "teamleader") {
+      confToken = window.localStorage.getItem("tlToken");
+    } else if (window.location.pathname.split("/")[1] === "taxprofessional") {
+      confToken = window.localStorage.getItem("tptoken");
+    }
+    const myConfig = {
+      headers: {
+        uit: confToken,
+      },
+    };
+
     if (clientAssign === "clientFolder") {
       fold = "customer_files_folder";
     } else {
@@ -223,6 +271,18 @@ function AssignmentDetails({
     downloadpdf(a, b, c);
   };
   const getSubFile = (e) => {
+    var confToken = "";
+    if (window.location.pathname.split("/")[1] === "teamleader") {
+      confToken = window.localStorage.getItem("tlToken");
+    } else if (window.location.pathname.split("/")[1] === "taxprofessional") {
+      confToken = window.localStorage.getItem("tptoken");
+    }
+    const myConfig = {
+      headers: {
+        uit: confToken,
+      },
+    };
+
     axios
       .get(
         `${baseUrl}/tl/documentlistbyfolderreport?q_id=${qid.id}&folder_id=${
@@ -239,7 +299,21 @@ function AssignmentDetails({
       });
   };
   const getInnerFileFile = (e) => {
+    var confToken = "";
     if (window.location.pathname.split("/")[1] === "teamleader") {
+      confToken = window.localStorage.getItem("tlToken");
+    } else if (window.location.pathname.split("/")[1] === "taxprofessional") {
+      confToken = window.localStorage.getItem("tptoken");
+    }
+    const myConfig = {
+      headers: {
+        uit: confToken,
+      },
+    };
+    if (
+      window.location.pathname.split("/")[1] === "teamleader" ||
+      window.location.pathname.split("/")[1] === "taxprofessional"
+    ) {
       axios
         .get(
           `${baseUrl}/tl/queryfolderlistreport?q_id=${qid.id}&folder_id=${
@@ -400,7 +474,21 @@ function AssignmentDetails({
     }
   };
   const get_sub_innerFile = (e) => {
+    var confToken = "";
     if (window.location.pathname.split("/")[1] === "teamleader") {
+      confToken = window.localStorage.getItem("tlToken");
+    } else if (window.location.pathname.split("/")[1] === "taxprofessional") {
+      confToken = window.localStorage.getItem("tptoken");
+    }
+    const myConfig = {
+      headers: {
+        uit: confToken,
+      },
+    };
+    if (
+      window.location.pathname.split("/")[1] === "teamleader" ||
+      window.location.pathname.split("/")[1] === "taxprofessional"
+    ) {
       axios
         .get(
           `${baseUrl}/tl/documentlistbyfolderreport?q_id=${qid.id}&folder_id=${
@@ -675,7 +763,7 @@ function AssignmentDetails({
                   : null}
               </td>
             </tr>
-            {panel == "teamleader" ? (
+            {panel == "teamleader" || panel === "taxprofessional" ? (
               <tr>
                 <td
                   scope="row"

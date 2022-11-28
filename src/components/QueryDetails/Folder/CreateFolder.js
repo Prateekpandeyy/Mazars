@@ -14,6 +14,8 @@ function CreateFolder({
   getList,
   tab,
   movedFolder,
+  set_sub_folder,
+  setColor,
 }) {
   const { handleSubmit, getValue, register, errors } = useForm();
   const [root2, setRoot2] = useState([
@@ -51,6 +53,8 @@ function CreateFolder({
       if (res.data.code === 1) {
         rejectHandler();
         setFolderId("");
+        set_sub_folder([]);
+        setColor(0);
         getList();
         Swal.fire({
           title: "success",
