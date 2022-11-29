@@ -1590,6 +1590,8 @@ import { Modal, ModalHeader, ModalBody } from "reactstrap";
 import CreateFolder from "./Folder/CreateFolder";
 import { useForm } from "react-hook-form";
 import { FileIcon } from "../Common/MessageIcon";
+import Popup from "reactjs-popup";
+import "reactjs-popup/dist/index.css";
 
 const FolderWrapper = styled(Box)({
   display: "flex",
@@ -1683,6 +1685,9 @@ function BasicQuery({
   useEffect(() => {
     getClientFile();
   }, []);
+  const closeModal = () => {
+    setRename("");
+  };
   const getClientFiles2 = (e) => {
     let id = [];
     axios
@@ -2341,12 +2346,23 @@ function BasicQuery({
                             {i.folder}{" "}
                           </span>
                         ) : (
-                          <input
-                            placeholder="Please enter folder name"
-                            defaultValue={i.folder}
-                            style={{ width: "100%" }}
-                            type="text"
-                          />
+                          <div>
+                            <Popup
+                              open={true}
+                              onClose={closeModal}
+                              position="right center"
+                            >
+                              <div className="renameBtn">
+                                <input
+                                  placeholder="Please enter folder name"
+                                  defaultValue={i.folder}
+                                  className="form-control my-2"
+                                  type="text"
+                                />
+                                <button className="customBtn">Rename</button>
+                              </div>
+                            </Popup>
+                          </div>
                         )}
                       </div>
                     ))}
