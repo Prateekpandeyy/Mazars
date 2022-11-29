@@ -386,7 +386,9 @@ function Dashboard() {
                 <tbody className="table_body">
                   <tr>
                     <td className="left_side">
-                      <CustomTypography>Client declined</CustomTypography>
+                      <CustomTypography>
+                        Client declined; proposals
+                      </CustomTypography>
                     </td>
                     <td>
                       <CustomTypography>{clientDeclineda}</CustomTypography>
@@ -395,7 +397,7 @@ function Dashboard() {
                   <tr>
                     <td className="left_side">
                       <CustomTypography>
-                        client declined;payment
+                        client declined; assignments
                       </CustomTypography>
                     </td>
                     <td>
