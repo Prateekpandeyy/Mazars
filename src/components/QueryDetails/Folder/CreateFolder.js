@@ -16,6 +16,8 @@ function CreateFolder({
   movedFolder,
   set_sub_folder,
   setColor,
+  setInnerFiles,
+  setShowSubFolderData,
 }) {
   const { handleSubmit, getValue, register, errors } = useForm();
   const [root2, setRoot2] = useState([
@@ -52,8 +54,10 @@ function CreateFolder({
     }).then((res) => {
       if (res.data.code === 1) {
         rejectHandler();
+        setInnerFiles([]);
         setFolderId("");
         set_sub_folder([]);
+        setShowSubFolderData(false);
         setColor(0);
         getList();
         Swal.fire({

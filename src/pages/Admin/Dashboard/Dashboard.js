@@ -13,6 +13,8 @@ function Dashboard() {
   var timeStampInMs = Date.now();
   localStorage.setItem("adminloginTime", timeStampInMs);
   let history = useHistory();
+  const [clientDeclinedp, setClientDeclinedp] = useState("");
+  const [clientDeclineda, setClientDeclineda] = useState("");
   const [allQueries, setAllQueries] = useState({
     total: "",
     inprogress_queries: "",
@@ -44,7 +46,7 @@ function Dashboard() {
     complete_inprocess: "",
     customer_declined_payment: "",
   });
-  const [decliAssignment, setDecliAssignment] = useState("");
+
   const [payment, setPayment] = useState({
     paid: "",
     unpaid: "",
@@ -100,7 +102,10 @@ function Dashboard() {
             setpermission_to_issue_invoice(
               response.data.result.proposal.permission_to_issue_invoice
             );
-            setDecliAssignment(
+            setClientDeclinedp(
+              response.data.result.proposal["customer_declined_proposalsa "]
+            );
+            setClientDeclineda(
               response.data.result.proposal["customer_declined_proposalsp "]
             );
             setAllQueries({
@@ -128,7 +133,7 @@ function Dashboard() {
               accepted_proposals:
                 response.data.result.proposal.accepted_proposals,
               declined:
-                response.data.result.proposal["customer_declined_proposalsp "],
+                response.data.result.proposal["customer_declined_proposals "],
             });
           }
         })
@@ -378,6 +383,26 @@ function Dashboard() {
                     <th>{declined}</th>
                   </tr>
                 </thead>
+                <tbody className="table_body">
+                  <tr>
+                    <td className="left_side">
+                      <CustomTypography>Client declined</CustomTypography>
+                    </td>
+                    <td>
+                      <CustomTypography>{clientDeclineda}</CustomTypography>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="left_side">
+                      <CustomTypography>
+                        client declined;payment
+                      </CustomTypography>
+                    </td>
+                    <td>
+                      <CustomTypography>{clientDeclinedp}</CustomTypography>
+                    </td>
+                  </tr>
+                </tbody>
               </table>
 
               <table className="table table-striped eight main_table mb-1">
@@ -483,7 +508,7 @@ function Dashboard() {
                         Client declined; payment
                       </CustomTypography>
                     </th>
-                    <th>{decliAssignment}</th>
+                    <th>{customer_declined_payment}</th>
                   </tr>
                 </thead>
               </table>

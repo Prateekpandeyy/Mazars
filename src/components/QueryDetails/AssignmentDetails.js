@@ -1027,36 +1027,6 @@ function AssignmentDetails({
                             ))}
                           </div>
                         )}
-                        {/* <div className="d-flex">
-                          {innerFiles.map((i) => (
-                            <>
-                              <div className="folderCreated">
-                                <ArticleIcon
-                                  onContextMenu={(e) => handleFile(e, i, false)}
-                                  onClick={(e) =>
-                                    rightClick(e, i.assign_no, i.id, i.document)
-                                  }
-                                  style={{
-                                    fontSize: "50px",
-                                    color: "#0000ff",
-                                    cursor: "pointer",
-                                  }}
-                                />
-                                <span
-                                  style={{
-                                    textAlign: "center",
-                                    whiteSpace: "break-spaces",
-                                    display: "flex",
-                                    maxHeight: "60px",
-                                    overflow: "hidden",
-                                  }}
-                                >
-                                  {i.document}
-                                </span>
-                              </div>
-                            </>
-                          ))}
-                        </div> */}
                       </div>
                     </FolderDetails>
                   </div>
@@ -1146,6 +1116,10 @@ function AssignmentDetails({
                     rejectHandler={getFolder}
                     tab="assignment"
                     movedFolder={movedFolder}
+                    set_sub_folder={set_sub_folder}
+                    setColor={setColor}
+                    setInnerFiles={setInnerFiles}
+                    setShowSubFolderData={setShowSubFolderData}
                   />
                 </td>
               </tr>

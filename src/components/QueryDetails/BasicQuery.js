@@ -1587,16 +1587,12 @@ import ArticleIcon from "@mui/icons-material/Article";
 import Swal from "sweetalert2";
 import { Box } from "@mui/material";
 import { Modal, ModalHeader, ModalBody } from "reactstrap";
-import classNames from "classnames";
 import CreateFolder from "./Folder/CreateFolder";
-import Select from "react-select";
-import CreateNewFolderIcon from "@mui/icons-material/CreateNewFolder";
-import MultiLevelSelect from "react-multi-level-selector";
-import Form from "./MultiSelectCust";
 import { useForm } from "react-hook-form";
+import { FileIcon } from "../Common/MessageIcon";
+
 const FolderWrapper = styled(Box)({
   display: "flex",
-
   alignItems: "flex-start",
   flexWrap: "wrap",
   margin: "0px 20px 0px 0px",
@@ -1659,6 +1655,7 @@ function BasicQuery({
   const [showClientFolderdata, setShowClientShowFolderData] = useState(false);
   const [showAdminFolderdata, setShowAdminShowFolderData] = useState(false);
   const [foldError, setFoldError] = useState(false);
+  const [rename, setRename] = useState("");
   const token = window.localStorage.getItem("tlToken");
   const uid = localStorage.getItem("tlkey");
   const adminToken = window.localStorage.getItem("adminToken");
@@ -2330,44 +2327,58 @@ function BasicQuery({
                             }}
                           />
                         )}
-                        <span
-                          style={{
-                            textAlign: "center",
-                            whiteSpace: "break-spaces",
-                            display: "flex",
-                            maxHeight: "60px",
-                            overflow: "hidden",
-                          }}
-                        >
-                          {i.folder}{" "}
-                        </span>
+                        {rename !== i.folder ? (
+                          <span
+                            onDoubleClick={(e) => setRename(i.folder)}
+                            style={{
+                              textAlign: "center",
+                              whiteSpace: "break-spaces",
+                              display: "flex",
+                              maxHeight: "60px",
+                              overflow: "hidden",
+                            }}
+                          >
+                            {i.folder}{" "}
+                          </span>
+                        ) : (
+                          <input
+                            placeholder="Please enter folder name"
+                            defaultValue={i.folder}
+                            style={{ width: "100%" }}
+                            type="text"
+                          />
+                        )}
                       </div>
                     ))}
                     {files.map((i) => (
                       <>
                         {i.folder_id === "0" ? (
                           <div className="folderCreated">
-                            <ArticleIcon
+                            <span
                               onContextMenu={(e) => handleFile(e, i, true)}
                               onClick={(e) =>
                                 rightClick(e, i.assign_no, i.id, i.name)
                               }
-                              style={{
-                                fontSize: "50px",
-                                color: "#0000ff",
-                                cursor: "pointer",
-                              }}
-                            />
-                            <span
-                              style={{
-                                textAlign: "center",
-                                whiteSpace: "break-spaces",
-                                display: "flex",
-                                maxHeight: "60px",
-                                overflow: "hidden",
-                              }}
                             >
-                              {i.name}
+                              <FileIcon
+                                name={i.name}
+                                style={{
+                                  fontSize: "50px",
+                                  color: "#0000ff",
+                                  cursor: "pointer",
+                                }}
+                              />
+                              <span
+                                style={{
+                                  textAlign: "center",
+                                  whiteSpace: "break-spaces",
+                                  display: "flex",
+                                  maxHeight: "60px",
+                                  overflow: "hidden",
+                                }}
+                              >
+                                {i.name}
+                              </span>
                             </span>
                           </div>
                         ) : (
@@ -2461,29 +2472,33 @@ function BasicQuery({
                               </span>
                               {subFile.map((i) => (
                                 <div className="folderCreated">
-                                  <ArticleIcon
+                                  <span
                                     onContextMenu={(e) =>
                                       handleFile(e, i, false)
                                     }
                                     onClick={(e) =>
                                       rightClick(e, i.assign_no, i.id, i.name)
                                     }
-                                    style={{
-                                      fontSize: "50px",
-                                      color: "#0000ff",
-                                      cursor: "pointer",
-                                    }}
-                                  />
-                                  <span
-                                    style={{
-                                      textAlign: "center",
-                                      whiteSpace: "break-spaces",
-                                      display: "flex",
-                                      maxHeight: "60px",
-                                      overflow: "hidden",
-                                    }}
                                   >
-                                    {i.name}
+                                    <FileIcon
+                                      name={i.name}
+                                      style={{
+                                        fontSize: "50px",
+                                        color: "#0000ff",
+                                        cursor: "pointer",
+                                      }}
+                                    />
+                                    <span
+                                      style={{
+                                        textAlign: "center",
+                                        whiteSpace: "break-spaces",
+                                        display: "flex",
+                                        maxHeight: "60px",
+                                        overflow: "hidden",
+                                      }}
+                                    >
+                                      {i.name}
+                                    </span>
                                   </span>
                                 </div>
                               ))}
@@ -2517,29 +2532,33 @@ function BasicQuery({
                             {innerFiles.map((i) => (
                               <>
                                 <div className="folderCreated">
-                                  <ArticleIcon
+                                  <span
                                     onContextMenu={(e) =>
                                       handleFile(e, i, false)
                                     }
                                     onClick={(e) =>
                                       rightClick(e, i.assign_no, i.id, i.name)
                                     }
-                                    style={{
-                                      fontSize: "50px",
-                                      color: "#0000ff",
-                                      cursor: "pointer",
-                                    }}
-                                  />
-                                  <span
-                                    style={{
-                                      textAlign: "center",
-                                      whiteSpace: "break-spaces",
-                                      display: "flex",
-                                      maxHeight: "60px",
-                                      overflow: "hidden",
-                                    }}
                                   >
-                                    {i.name}
+                                    <FileIcon
+                                      name={i.name}
+                                      style={{
+                                        fontSize: "50px",
+                                        color: "#0000ff",
+                                        cursor: "pointer",
+                                      }}
+                                    />
+                                    <span
+                                      style={{
+                                        textAlign: "center",
+                                        whiteSpace: "break-spaces",
+                                        display: "flex",
+                                        maxHeight: "60px",
+                                        overflow: "hidden",
+                                      }}
+                                    >
+                                      {i.name}
+                                    </span>
                                   </span>
                                 </div>
                               </>
@@ -2638,6 +2657,8 @@ function BasicQuery({
                       rejectHandler={getFolder}
                       set_sub_folder={set_sub_folder}
                       setColor={setColor}
+                      setInnerFiles={setInnerFiles}
+                      setShowSubFolderData={setShowSubFolderData}
                     />
                   ) : (
                     ""
