@@ -14,6 +14,8 @@ import { useParams } from "react-router-dom";
 import ShowFolder from "./Folder/ShowFolder";
 import Swal from "sweetalert2";
 import { Modal, ModalHeader, ModalBody } from "reactstrap";
+import Popup from "reactjs-popup";
+import "reactjs-popup/dist/index.css";
 
 const FolderWrapper = styled(Box)({
   display: "flex",
@@ -80,6 +82,8 @@ function AssignmentDetails({
   const [clientFile, setclientFile] = useState([]);
   const [clientInnerFile, setClientInnerFiles] = useState([]);
   const [showclientSubFolder, setClientSubFolder] = useState([]);
+  const [renameValue, setRenameValue] = useState("");
+  const [rename, setRename] = useState("");
   const qid = useParams();
   const uid = localStorage.getItem("tlkey");
   const token = window.localStorage.getItem("tlToken");
@@ -661,6 +665,55 @@ function AssignmentDetails({
         }
       });
   };
+  const renameFolder = (e, fold) => {
+    let foldName;
+    if (renameValue.length > 0) {
+      foldName = renameValue;
+    } else {
+      foldName = e.folder;
+    }
+    let formData = new FormData();
+    formData.append("folder", foldName);
+    formData.append("folder_id", fold);
+    formData.append("q_id", e.q_id);
+    formData.append("id", e.id);
+    axios({
+      method: "POST",
+      url: `${baseUrl}/tl/createqfolder`,
+      headers: {
+        uit: localStorage.getItem("tlToken"),
+      },
+      data: formData,
+    }).then((res) => {
+      if (res.data.code === 1) {
+        closeModal();
+        if (fold === "0") {
+          showFolder();
+        } else {
+          let kk = {
+            id: fold,
+            folder: foldName,
+          };
+          getInnerFileFile(kk);
+        }
+
+        Swal.fire({
+          title: "success",
+          html: "Folder renamed successfullly",
+          icon: "success",
+        });
+      } else if (res.data.code === 0) {
+        Swal.fire({
+          title: "error",
+          html: "Something went wrong, please try again",
+          icon: "error",
+        });
+      }
+    });
+  };
+  const closeModal = () => {
+    setRename("");
+  };
   useEffect(() => {
     getFile();
     showFolder();
@@ -808,17 +861,46 @@ function AssignmentDetails({
                             }}
                           />
                         )}
-                        <span
-                          style={{
-                            textAlign: "center",
-                            whiteSpace: "break-spaces",
-                            display: "flex",
-                            maxHeight: "60px",
-                            overflow: "hidden",
-                          }}
-                        >
-                          {i.folder}{" "}
-                        </span>
+                        {rename !== i.folder ? (
+                          <span
+                            onDoubleClick={(e) => setRename(i.folder)}
+                            style={{
+                              textAlign: "center",
+                              whiteSpace: "break-spaces",
+                              display: "flex",
+                              maxHeight: "60px",
+                              overflow: "hidden",
+                            }}
+                          >
+                            {i.folder}{" "}
+                          </span>
+                        ) : (
+                          <div>
+                            <Popup
+                              open={true}
+                              onClose={closeModal}
+                              position="right center"
+                            >
+                              <div className="renameBtn">
+                                <input
+                                  placeholder="Please enter folder name"
+                                  defaultValue={i.folder}
+                                  onChange={(e) =>
+                                    setRenameValue(e.target.value)
+                                  }
+                                  className="form-control my-2"
+                                  type="text"
+                                />
+                                <button
+                                  onClick={(e) => renameFolder(i, "0")}
+                                  className="customBtn"
+                                >
+                                  Rename
+                                </button>
+                              </div>
+                            </Popup>
+                          </div>
+                        )}
                       </div>
                     ))}
                     {files.map((i) => (
@@ -982,17 +1064,48 @@ function AssignmentDetails({
                                     cursor: "pointer",
                                   }}
                                 />
-                                <span
-                                  style={{
-                                    textAlign: "center",
-                                    whiteSpace: "break-spaces",
-                                    display: "flex",
-                                    maxHeight: "60px",
-                                    overflow: "hidden",
-                                  }}
-                                >
-                                  {i.folder}
-                                </span>
+                                {rename !== i.folder ? (
+                                  <span
+                                    onDoubleClick={(e) => setRename(i.folder)}
+                                    style={{
+                                      textAlign: "center",
+                                      whiteSpace: "break-spaces",
+                                      display: "flex",
+                                      maxHeight: "60px",
+                                      overflow: "hidden",
+                                    }}
+                                  >
+                                    {i.folder}{" "}
+                                  </span>
+                                ) : (
+                                  <div>
+                                    <Popup
+                                      open={true}
+                                      onClose={closeModal}
+                                      position="right center"
+                                    >
+                                      <div className="renameBtn">
+                                        <input
+                                          placeholder="Please enter folder name"
+                                          defaultValue={i.folder}
+                                          onChange={(e) =>
+                                            setRenameValue(e.target.value)
+                                          }
+                                          className="form-control my-2"
+                                          type="text"
+                                        />
+                                        <button
+                                          onClick={(e) =>
+                                            renameFolder(i, i.parent_id)
+                                          }
+                                          className="customBtn"
+                                        >
+                                          Rename
+                                        </button>
+                                      </div>
+                                    </Popup>
+                                  </div>
+                                )}
                               </div>
                             ))}
                             {innerFiles.map((i) => (
