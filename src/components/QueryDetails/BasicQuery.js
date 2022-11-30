@@ -1690,12 +1690,14 @@ function BasicQuery({
     setRename("");
   };
   const renameFolder = (e, fold) => {
-    let formData = new FormData();
-    {
-      renameValue.length > 0
-        ? formData.append("folder", renameValue)
-        : formData.append("folder", e.folder);
+    let foldName;
+    if (renameValue.length > 0) {
+      foldName = renameValue;
+    } else {
+      foldName = e.folder;
     }
+    let formData = new FormData();
+    formData.append("folder", foldName);
     formData.append("folder_id", fold);
     formData.append("q_id", e.q_id);
     formData.append("id", e.id);
@@ -1714,7 +1716,7 @@ function BasicQuery({
         } else {
           let kk = {
             id: fold,
-            folder: renameValue,
+            folder: foldName,
           };
           getInnerFileFile(kk);
         }
