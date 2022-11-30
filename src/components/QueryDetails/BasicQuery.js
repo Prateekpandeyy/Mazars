@@ -1689,16 +1689,16 @@ function BasicQuery({
   const closeModal = () => {
     setRename("");
   };
-  const renameFolder = (e) => {
-    console.log("eee", e);
+  const renameFolder = (e, fold) => {
     let formData = new FormData();
     {
       renameValue.length > 0
         ? formData.append("folder", renameValue)
         : formData.append("folder", e.folder);
     }
+    formData.append("folder_id", fold);
     formData.append("q_id", e.q_id);
-    formData.append("folder_id", e.id);
+    formData.append("id", e.id);
     axios({
       method: "POST",
       url: `${baseUrl}/tl/createqfolder`,
@@ -1709,8 +1709,16 @@ function BasicQuery({
     }).then((res) => {
       if (res.data.code === 1) {
         closeModal();
+        if (fold === "0") {
+          showFolder();
+        } else {
+          let kk = {
+            id: fold,
+            folder: renameValue,
+          };
+          getInnerFileFile(kk);
+        }
 
-        showFolder();
         Swal.fire({
           title: "success",
           html: "Folder renamed successfullly",
@@ -2400,7 +2408,7 @@ function BasicQuery({
                                   type="text"
                                 />
                                 <button
-                                  onClick={(e) => renameFolder(i)}
+                                  onClick={(e) => renameFolder(i, "0")}
                                   className="customBtn"
                                 >
                                   Rename
@@ -2577,17 +2585,48 @@ function BasicQuery({
                                     cursor: "pointer",
                                   }}
                                 />
-                                <span
-                                  style={{
-                                    textAlign: "center",
-                                    whiteSpace: "break-spaces",
-                                    display: "flex",
-                                    maxHeight: "60px",
-                                    overflow: "hidden",
-                                  }}
-                                >
-                                  {i.folder}
-                                </span>
+                                {rename !== i.folder ? (
+                                  <span
+                                    onDoubleClick={(e) => setRename(i.folder)}
+                                    style={{
+                                      textAlign: "center",
+                                      whiteSpace: "break-spaces",
+                                      display: "flex",
+                                      maxHeight: "60px",
+                                      overflow: "hidden",
+                                    }}
+                                  >
+                                    {i.folder}{" "}
+                                  </span>
+                                ) : (
+                                  <div>
+                                    <Popup
+                                      open={true}
+                                      onClose={closeModal}
+                                      position="right center"
+                                    >
+                                      <div className="renameBtn">
+                                        <input
+                                          placeholder="Please enter folder name"
+                                          defaultValue={i.folder}
+                                          onChange={(e) =>
+                                            setRenameValue(e.target.value)
+                                          }
+                                          className="form-control my-2"
+                                          type="text"
+                                        />
+                                        <button
+                                          onClick={(e) =>
+                                            renameFolder(i, i.parent_id)
+                                          }
+                                          className="customBtn"
+                                        >
+                                          Rename
+                                        </button>
+                                      </div>
+                                    </Popup>
+                                  </div>
+                                )}
                               </div>
                             ))}
                             {innerFiles.map((i) => (
