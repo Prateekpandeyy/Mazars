@@ -1692,7 +1692,11 @@ function BasicQuery({
   const renameFolder = (e) => {
     console.log("eee", e);
     let formData = new FormData();
-    formData.append("folder", renameValue);
+    {
+      renameValue.length > 0
+        ? formData.append("folder", renameValue)
+        : formData.append("folder", e.folder);
+    }
     formData.append("q_id", e.q_id);
     formData.append("folder_id", e.id);
     axios({
