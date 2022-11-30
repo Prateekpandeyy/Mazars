@@ -17,7 +17,7 @@ export default axios.create({
 });
 // // // // //for server
 // export default axios.create({
-//   baseURL: "https://api.masindia.live/v1",
+//   baseURL: "https://api-advisorysolutions.mazars.co.in/v1",
 //   headers: {
 //     "Content-type": "application/json",
 //   },

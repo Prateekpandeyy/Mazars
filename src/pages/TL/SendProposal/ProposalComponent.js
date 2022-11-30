@@ -807,11 +807,17 @@ function ProposalComponent(props) {
                         ""
                       )}
                       <div className="row">
-                        <div className="col-md-6"></div>
-                        <div className="col-md-6">
+                        <div className="col-md-12">
                           {subPlan === "2" ? (
-                            <div class="form-group">
-                              <label>Due date- date of month</label>
+                            <div class="form-group d-flex justify-content-center">
+                              <label
+                                style={{
+                                  whiteSpace: "nowrap",
+                                  margin: "auto 5px",
+                                }}
+                              >
+                                Due date- date of month
+                              </label>
                               <select
                                 class="form-control"
                                 name="date_month"
@@ -861,8 +867,15 @@ function ProposalComponent(props) {
 
                   {store === "4" ? (
                     <>
-                      <div class="form-group">
-                        <label>Due Date- date of month</label>
+                      <div class="form-group d-flex justify-content-center">
+                        <label
+                          style={{
+                            whiteSpace: "nowrap",
+                            margin: "auto 5px",
+                          }}
+                        >
+                          Due Date- date of month
+                        </label>
                         <select
                           class="form-control"
                           ref={register({ required: true })}

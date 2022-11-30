@@ -1,11 +1,13 @@
 // // //for server
-// export const baseUrl = "https://api.masindia.live/v1";
-// export const ImageUrl = "https://api.masindia.live/assets/image";
-// export const ReportUrl = "https://api.masindia.live/assets/upload/report";
+// export const baseUrl = "https://api-advisorysolutions.mazars.co.in/v1";
+// export const ImageUrl =
+//   "https://api-advisorysolutions.mazars.co.in/assets/image";
+// export const ReportUrl =
+//   "https://api-advisorysolutions.mazars.co.in/assets/upload/report";
 
 // //for server
-// export const baseUrl2 = "https://api.masindia.live/";
-// export const baseUrl3 = "https://api.masindia.live/";
+// export const baseUrl2 = "https://api-advisorysolutions.mazars.co.in/";
+// export const baseUrl3 = "https://api-advisorysolutions.mazars.co.in/";
 
 // // //   //for development
 export const baseUrl = "https://stagingapi.masindia.live/v1";

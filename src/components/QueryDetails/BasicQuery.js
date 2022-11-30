@@ -1658,6 +1658,7 @@ function BasicQuery({
   const [showAdminFolderdata, setShowAdminShowFolderData] = useState(false);
   const [foldError, setFoldError] = useState(false);
   const [rename, setRename] = useState("");
+  const [renameValue, setRenameValue] = useState("");
   const token = window.localStorage.getItem("tlToken");
   const uid = localStorage.getItem("tlkey");
   const adminToken = window.localStorage.getItem("adminToken");
@@ -1687,6 +1688,38 @@ function BasicQuery({
   }, []);
   const closeModal = () => {
     setRename("");
+  };
+  const renameFolder = (e) => {
+    console.log("eee", e);
+    let formData = new FormData();
+    formData.append("folder", renameValue);
+    formData.append("q_id", e.q_id);
+    formData.append("folder_id", e.id);
+    axios({
+      method: "POST",
+      url: `${baseUrl}/tl/createqfolder`,
+      headers: {
+        uit: localStorage.getItem("tlToken"),
+      },
+      data: formData,
+    }).then((res) => {
+      if (res.data.code === 1) {
+        closeModal();
+
+        showFolder();
+        Swal.fire({
+          title: "success",
+          html: "Folder renamed successfullly",
+          icon: "success",
+        });
+      } else if (res.data.code === 0) {
+        Swal.fire({
+          title: "error",
+          html: "Something went wrong, please try again",
+          icon: "error",
+        });
+      }
+    });
   };
   const getClientFiles2 = (e) => {
     let id = [];
@@ -2356,10 +2389,18 @@ function BasicQuery({
                                 <input
                                   placeholder="Please enter folder name"
                                   defaultValue={i.folder}
+                                  onChange={(e) =>
+                                    setRenameValue(e.target.value)
+                                  }
                                   className="form-control my-2"
                                   type="text"
                                 />
-                                <button className="customBtn">Rename</button>
+                                <button
+                                  onClick={(e) => renameFolder(i)}
+                                  className="customBtn"
+                                >
+                                  Rename
+                                </button>
                               </div>
                             </Popup>
                           </div>
