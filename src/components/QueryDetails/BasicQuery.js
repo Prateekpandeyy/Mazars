@@ -1675,7 +1675,7 @@ function BasicQuery({
       uit: clientToken,
     },
   };
-
+  console.log("done");
   useEffect(() => {
     getFile();
     showFolder();
