@@ -479,7 +479,7 @@ const CmsCont = (props) => {
               <li>
                 <CustomTypography>
                   The user on his own accord wishes to know more about Mazars
-                  Advisory Solutions (MAS) and any of its members for his own
+                  Advisory Solutions and any of its members for his own
                   information and use.
                 </CustomTypography>
               </li>
@@ -510,9 +510,9 @@ const CmsCont = (props) => {
                   URLs contained on this website re-directing users to third
                   party websites be considered as referrals to, endorsements of,
                   or affiliations with any such third-party website operators.
-                  MAS is not responsible for, and makes no representation or
-                  warranty, express or implied, about the content or information
-                  contained on such third-party websites.
+                  Mazars Advisory Solutions is not responsible for, and makes no
+                  representation or warranty, express or implied, about the
+                  content or information contained on such third-party websites.
                 </CustomTypography>
               </li>
             </ul>

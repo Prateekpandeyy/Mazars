@@ -357,7 +357,7 @@ function AdminAssignment() {
             setData={setAssignmentDisplay}
             getData={getAssignmentData}
             id={userId}
-            assignment="assignment"
+            assignment="assignmentpermission"
             records={records}
             setRecords={setRecords}
           />

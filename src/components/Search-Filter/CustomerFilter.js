@@ -427,7 +427,29 @@ function CustomerFilter(props) {
           ShowError.LoadingError(setLoading);
         });
     }
-
+    if (assignment == "assignmentpermission") {
+      axios
+        .get(
+          `${baseUrl}/customers/completeAssignmentspermission?user=${JSON.parse(
+            id
+          )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${
+            data.p_dateTo
+          }&status=${data.p_status}&pcat_id=${selectedData}`,
+          myConfig
+        )
+        .then((res) => {
+          if (res.data.code === 1) {
+            setLoading(false);
+            if (res.data.result) {
+              setData(res.data.result);
+              setRecords(res.data.result.length);
+            }
+          }
+        })
+        .catch((error) => {
+          ShowError.LoadingError(setLoading);
+        });
+    }
     if (allPayment == "allPayment") {
       axios
         .get(
