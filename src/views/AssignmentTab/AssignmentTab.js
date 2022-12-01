@@ -98,9 +98,9 @@ function AssignmentTab(props) {
   const getADminDeclinedPayment = () => {
     axios
       .get(
-        `${baseUrl}/customers/completeAssignments?user=${JSON.parse(
+        `${baseUrl}/customers/completeAssignmentspermission?user=${JSON.parse(
           userId
-        )}&status=3`,
+        )}`,
         myConfig
       )
       .then((response) => {
