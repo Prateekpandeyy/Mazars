@@ -13,6 +13,7 @@ function AssignmentTab(props) {
   const [allAssignmentCount, setAllAssignmentCount] = useState("");
   const [draft, setDraft] = useState("");
   const [final, setFinal] = useState();
+  const [adminPermission, setAdminPermission] = useState(0);
   const [bgColor, setbgColor] = useState("#615339");
   const [tabIndex, setTabIndex] = useState(0);
   const token = window.localStorage.getItem("adminToken");
@@ -25,6 +26,7 @@ function AssignmentTab(props) {
     CountAllAssignment();
     CountDraftReport();
     CountFinalReport();
+    CountAdminPermission();
   }, []);
 
   const CountAllAssignment = (data) => {
@@ -60,7 +62,13 @@ function AssignmentTab(props) {
         }
       });
   };
-
+  const CountAdminPermission = () => {
+    axios.get(`${baseUrl}/admin/getadminpermissiona`, myConfig).then((res) => {
+      if (res.data.code === 1) {
+        setAdminPermission(res.data.result.length);
+      }
+    });
+  };
   useLayoutEffect(() => {
     setTabIndex(props.location.index || 0);
   }, [props.location.index]);
@@ -104,7 +112,7 @@ function AssignmentTab(props) {
           </Tab>
 
           <Tab style={tabIndex == 3 ? myStyle2 : myStyle1} className="tabHover">
-            Admin Permission ({final})
+            Admin Permission ({adminPermission})
           </Tab>
         </TabList>
 
