@@ -6,8 +6,8 @@
 //   "https://api-advisorysolutions.mazars.co.in/assets/upload/report";
 
 // //for server
-// export const baseUrl2 = "https://api-advisorysolutions.mazars.co.in/";
-// export const baseUrl3 = "https://api-advisorysolutions.mazars.co.in/";
+// export const baseUrl2 = "https://api-advisorysolutions.mazars.co.in";
+// export const baseUrl3 = "https://api-advisorysolutions.mazars.co.in";
 
 // // //   //for development
 export const baseUrl = "https://stagingapi.masindia.live/v1";
