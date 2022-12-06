@@ -74,6 +74,7 @@ function AssignmentDetails({
   const [subFolder, setSubFolder] = useState([]);
   const [adminFolder, setadminFolder] = useState([]);
   const [adminFolder2, setadminFolder2] = useState([]);
+  const [adSubFolder, setShowAdSubFolder] = useState(false);
   const [showadminSubFolder, setadminSubFolder] = useState([]);
   const [adminInnerFile, setAdminInnerFiles] = useState([]);
   const [adminFile, setadminFile] = useState([]);
@@ -570,6 +571,7 @@ function AssignmentDetails({
   const getInnerFileFileadmin = (e) => {
     setadminSubFolder(e.child);
     setAdminInnerFiles([]);
+
     setColor(e.id);
     let kk = [];
     adminFolder.map((i) => {
@@ -577,6 +579,7 @@ function AssignmentDetails({
         kk.push(i);
       }
     });
+    setShowAdSubFolder(false);
     setMainFoldName(e.folder);
     setFolderName("");
     setadminFile(kk);
@@ -593,6 +596,7 @@ function AssignmentDetails({
         if (res.data.code === 1) {
           setFolderName(e.folder);
           setAdminInnerFiles(res.data.result);
+          setShowAdSubFolder(true);
         } else {
         }
       });
@@ -1276,56 +1280,6 @@ function AssignmentDetails({
               </tr>
             ) : (
               " "
-              // <tr>
-              //   <th scope="row">Reports</th>
-              //   <td>
-              //     {reports.map((p, i) => (
-              //       <>
-              //         {customerQuery == "customerQuery" &&
-              //         submitData[0].paid_status == "2" ? null : (
-              //           <tr style={{ display: "flex", width: "500px" }}>
-              //             <td style={{ display: "flex", width: "50px" }}>
-              //               {i + 1}
-              //             </td>
-              //             <td style={{ display: "flex", width: "200px" }}>
-              //               <span
-              //                 onClick={() =>
-              //                   downloadpdf(assingNo, p.docid, p.document)
-              //                 }
-              //               >
-              //                 <i className="fa fa-photo"></i> {p.document}
-              //               </span>
-              //             </td>
-              //             <td
-              //               style={{
-              //                 display: "flex",
-              //                 width: "150px",
-              //                 color: "green",
-              //               }}
-              //             >
-              //               {(p.stages_type == 2 &&
-              //                 p.revise_report == null &&
-              //                 "Draft Report") ||
-              //                 (p.stages_type == 3 &&
-              //                   p.revise_report == null &&
-              //                   "Final Report") ||
-              //                 (p.revise_report != null && "Draft Report")}
-              //             </td>
-              //             {p.status == "3" ? (
-              //               <td style={{ display: "flex", width: "100px" }}>
-              //                 <p className="declined">Discarded</p>
-              //               </td>
-              //             ) : (
-              //               <td
-              //                 style={{ display: "flex", width: "200px" }}
-              //               ></td>
-              //             )}
-              //           </tr>
-              //         )}
-              //       </>
-              //     ))}
-              //   </td>
-              // </tr>
             )}
             {panel === "admin" ? (
               <tr>
@@ -1420,6 +1374,31 @@ function AssignmentDetails({
                         ) : (
                           ""
                         )}
+                        {i.customer_files !== null &&
+                        i.customer_files_folder === "0" ? (
+                          <>
+                            <ArticleIcon
+                              style={{
+                                fontSize: "50px",
+                                color: "#0000ff",
+                                cursor: "pointer",
+                              }}
+                            />
+                            <span
+                              style={{
+                                textAlign: "center",
+                                whiteSpace: "break-spaces",
+                                display: "flex",
+                                maxHeight: "60px",
+                                overflow: "hidden",
+                              }}
+                            >
+                              {i.customer_files}
+                            </span>
+                          </>
+                        ) : (
+                          ""
+                        )}
                       </div>
                     ))}
                   </FolderWrapper>
@@ -1431,9 +1410,9 @@ function AssignmentDetails({
                         {mainFoldName.length > 0 && folderName.length > 0 ? (
                           <span
                             style={{ fontSize: "16px", fontWeight: "300" }}
-                            onClick={() => {
-                              setShowSubFolderData(false);
-                              setFolderName("");
+                            onClick={(e) => {
+                              setShowAdSubFolder(false);
+                              setAdminInnerFiles([]);
                             }}
                           >
                             {`${mainFoldName} ${
@@ -1446,9 +1425,9 @@ function AssignmentDetails({
                             folderName.length > 0 ? (
                               <span
                                 style={{ fontSize: "16px", fontWeight: "300" }}
-                                onClick={() => {
-                                  setShowSubFolderData(false);
-                                  setFolderName("");
+                                onClick={(e) => {
+                                  setShowAdSubFolder(false);
+                                  setAdminInnerFiles([]);
                                 }}
                               >
                                 {`${mainFoldName} ${
@@ -1465,12 +1444,15 @@ function AssignmentDetails({
                           </>
                         )}
 
-                        {adminInnerFile.length > 0 ? (
+                        {adSubFolder === true ? (
                           <>
                             <div className="d-flex">
                               <div className="folderCreated">
                                 <FolderIcon
-                                  onClick={(e) => setAdminInnerFiles([])}
+                                  onClick={(e) => {
+                                    setShowAdSubFolder(false);
+                                    setAdminInnerFiles([]);
+                                  }}
                                   style={{
                                     fontSize: "50px",
                                     color: "#fccc77",
@@ -1544,26 +1526,66 @@ function AssignmentDetails({
                             ))}
                             {adminFile.map((i) => (
                               <>
-                                <div className="folderCreated">
-                                  <ArticleIcon
-                                    style={{
-                                      fontSize: "50px",
-                                      color: "#0000ff",
-                                      cursor: "pointer",
-                                    }}
-                                  />
-                                  <span
-                                    style={{
-                                      textAlign: "center",
-                                      whiteSpace: "break-spaces",
-                                      display: "flex",
-                                      maxHeight: "60px",
-                                      overflow: "hidden",
-                                    }}
-                                  >
-                                    {i.document}
-                                  </span>
-                                </div>
+                                {color === i.folder_id ? (
+                                  <div className="folderCreated">
+                                    <ArticleIcon
+                                      onContextMenu={(e) =>
+                                        handleFile(e, i, false)
+                                      }
+                                      onClick={(e) =>
+                                        rightClick(e, i.assign_no, i.id, i.name)
+                                      }
+                                      style={{
+                                        fontSize: "50px",
+                                        color: "#0000ff",
+                                        cursor: "pointer",
+                                      }}
+                                    />
+                                    <span
+                                      style={{
+                                        textAlign: "center",
+                                        whiteSpace: "break-spaces",
+                                        display: "flex",
+                                        maxHeight: "60px",
+                                        overflow: "hidden",
+                                      }}
+                                    >
+                                      {i.document}
+                                    </span>
+                                  </div>
+                                ) : (
+                                  ""
+                                )}
+                                {color === i.customer_files_folder ? (
+                                  <div className="folderCreated">
+                                    <ArticleIcon
+                                      onContextMenu={(e) =>
+                                        handleFile(e, i, false, "clientFiles")
+                                      }
+                                      onClick={(e) =>
+                                        rightClick(e, i.assign_no, i.id, i.name)
+                                      }
+                                      style={{
+                                        fontSize: "50px",
+                                        color: "#0000ff",
+                                        cursor: "pointer",
+                                      }}
+                                    />
+                                    <span
+                                      style={{
+                                        textAlign: "center",
+                                        whiteSpace: "break-spaces",
+                                        display: "flex",
+                                        maxHeight: "60px",
+                                        overflow: "hidden",
+                                      }}
+                                    >
+                                      {i.customer_files}
+                                    </span>
+                                  </div>
+                                ) : (
+                                  ""
+                                )}
                               </>
                             ))}
                           </div>
