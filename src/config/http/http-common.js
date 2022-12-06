@@ -15,7 +15,7 @@ export default axios.create({
     "Content-type": "application/json",
   },
 });
-// // // // //for server
+// // // //for server
 // export default axios.create({
 //   baseURL: "https://api-advisorysolutions.mazars.co.in/v1",
 //   headers: {

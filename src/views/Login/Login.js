@@ -79,8 +79,6 @@ function LoginForm() {
   const [load, setLoad] = useState(false);
   const [disabled, setDisabled] = useState(false);
   const [isPasswordShow, setPasswordShow] = useState(false);
-  const [linkData, setLinkData] = useState("myData");
-  const [showData, setShowData] = useState(false);
   const [news, getNews] = useState([]);
   const [pos, setPos] = useState(window.innerWidth);
   const [run, setRun] = useState(true);
@@ -396,21 +394,19 @@ function LoginForm() {
                       <form
                         onSubmit={handleSubmit(onSubmit)}
                         className="signInForm"
-                        autoComplete="off"
                       >
                         <div className="form-group passForm">
                           <label className="labelColor">User Id</label>
                           <input
                             type="text"
-                            onChange={(e) => getUser(e)}
-                            value={user}
-                            disabled={token !== null ? true : false}
                             name="p_user"
-                            ref={register({ required: true })}
-                            placeholder="Enter user Id"
+                            onChange={(e) => getUser(e)}
                             className={classNames("form-control", {
                               "is-invalid": errors.p_user,
                             })}
+                            value={user}
+                            ref={register({ required: true })}
+                            placeholder="Enter user Id"
                           />
                         </div>
                         <div className="form-group passForm">
@@ -420,10 +416,9 @@ function LoginForm() {
                             className={classNames("form-control", {
                               "is-invalid": errors.p_email,
                             })}
-                            disabled={token !== null ? true : false}
                             name="p_email"
-                            autoComplete="new-password"
-                            ref={register}
+                            value={email}
+                            ref={register({ required: true })}
                             placeholder="Enter email"
                             onChange={(e) => handleChange(e)}
                           />
@@ -437,11 +432,11 @@ function LoginForm() {
                               "is-invalid": errors.p_password,
                             })}
                             onChange={(e) => setPassword(e.target.value)}
-                            disabled={token !== null ? true : false}
                             name="p_password"
-                            autoComplete="new-password"
+                            value={password}
                             placeholder="Enter password"
-                            ref={register}
+                            autoComplete="new-password"
+                            ref={register({ required: true })}
                             onCopy={(e) => {
                               e.preventDefault();
                               return false;

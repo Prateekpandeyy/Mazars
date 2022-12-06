@@ -1,4 +1,4 @@
-// // //for server
+// // // //for server
 // export const baseUrl = "https://api-advisorysolutions.mazars.co.in/v1";
 // export const ImageUrl =
 //   "https://api-advisorysolutions.mazars.co.in/assets/image";
@@ -9,7 +9,7 @@
 // export const baseUrl2 = "https://api-advisorysolutions.mazars.co.in";
 // export const baseUrl3 = "https://api-advisorysolutions.mazars.co.in";
 
-// // //   //for development
+// //   //for development
 export const baseUrl = "https://stagingapi.masindia.live/v1";
 export const ImageUrl = "https://stagingapi.masindia.live/assets/image";
 export const ReportUrl =

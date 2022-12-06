@@ -3,8 +3,8 @@ import React, { useState, useEffect } from "react";
 import "../../assets/css/style.css";
 import "../../assets/css/media.css";
 import axios from "axios";
-import { Link } from 'react-router-dom';
-import { Button } from '@material-ui/core';
+import { Link } from "react-router-dom";
+import { Button } from "@material-ui/core";
 import { baseUrl } from "../../config/config";
 import Layout from "../../components/Layout/Layout";
 import classNames from "classnames";
@@ -22,29 +22,27 @@ function ChangePassword(props) {
   const [loading, setLoading] = useState(false);
   const [isPasswordShow, setPasswordShow] = useState(false);
   const [isPasswordShow2, setPasswordShow2] = useState(false);
-  const [disabled, setDisabled] = useState(false)
+  const [disabled, setDisabled] = useState(false);
   const [show, setShow] = useState(false);
   const [display, setDisplay] = useState(false);
-  const [time, setTime] = useState('')
+  const [time, setTime] = useState("");
   const [load, setLoad] = useState(false);
-  
-  const [user, setUser] = useState("")
-  const token = window.localStorage.getItem("clientToken")
-  const email = JSON.parse(window.localStorage.getItem("custEmail"))
-const clientLoginId = JSON.parse(localStorage.getItem("clientLoginId"))
+
+  const [user, setUser] = useState("");
+  const token = window.localStorage.getItem("clientToken");
+  const email = JSON.parse(window.localStorage.getItem("custEmail"));
+  const clientLoginId = JSON.parse(localStorage.getItem("clientLoginId"));
   useEffect(() => {
-    getTime()
+    getTime();
   }, [load]);
 
   const getTime = () => {
-
-
     if (load) {
       var timerOn = true;
       function timer(remaining) {
         var s = remaining % 60;
-        s = s < 10 ? '0' + s : s;
-        setTime(remaining)
+        s = s < 10 ? "0" + s : s;
+        setTime(remaining);
         remaining -= 1;
         if (remaining >= 0 && timerOn) {
           setTimeout(function () {
@@ -52,24 +50,22 @@ const clientLoginId = JSON.parse(localStorage.getItem("clientLoginId"))
           }, 1000);
           return;
         }
-        setDisabled(true)
+        setDisabled(true);
       }
       timer(180);
     }
-  }
+  };
 
   const togglePasssword = () => {
-    setPasswordShow(!isPasswordShow)
+    setPasswordShow(!isPasswordShow);
   };
 
   const togglePasssword2 = () => {
-    setPasswordShow2(!isPasswordShow2)
+    setPasswordShow2(!isPasswordShow2);
   };
 
   const onSubmit = (value) => {
-   
-    setLoading(true)
-
+    setLoading(true);
 
     let formData = new FormData();
     formData.append("id", JSON.parse(userId));
@@ -78,7 +74,7 @@ const clientLoginId = JSON.parse(localStorage.getItem("clientLoginId"))
     formData.append("rpassword", value.p_confirm_password);
     formData.append("otp", value.p_otp);
 
-   formData.append("user_id", clientLoginId);
+    formData.append("user_id", clientLoginId);
     if (display) {
       let formData = new FormData();
       formData.append("email", email);
@@ -87,77 +83,73 @@ const clientLoginId = JSON.parse(localStorage.getItem("clientLoginId"))
       axios({
         method: "POST",
         url: `${baseUrl}/customers/regenrateotpchange`,
-        headers : {
-          uit : token
+        headers: {
+          uit: token,
         },
         data: formData,
       })
         .then(function (response) {
-         
           if (response.data.code === 1) {
-            setLoading(false)
-            setLoad(true)
-            setShow(true)
-            Alerts.SuccessNormal("As per your request, OTP has been sent to your registered mobile number / email address.")
+            setLoading(false);
+            setLoad(true);
+            setShow(true);
+            Alerts.SuccessNormal(
+              "As per your request, OTP has been sent to your registered mobile number / email address."
+            );
           } else if (response.data.code === 0) {
-            setLoading(false)
-            Alerts.ErrorNormal("Please enter correct details")
+            setLoading(false);
+            Alerts.ErrorNormal("Please enter correct details");
           }
         })
         .catch((error) => {
-        ShowError.LoadingError(setLoading)
+          ShowError.LoadingError(setLoading);
         });
-      return false
+      return false;
     }
     axios({
       method: "POST",
       url: `${baseUrl}/customers/passChange`,
-      headers : {
-        uit : token
+      headers: {
+        uit: token,
       },
       data: formData,
     })
       .then(function (response) {
-     
         if (response.data.code === 1) {
-          setLoading(false)
-          var variable = "Password changed successfully."
-          Alerts.SuccessNormal(variable)
+          setLoading(false);
+          var variable = "Password changed successfully.";
+          Alerts.SuccessNormal(variable);
           props.history.push("/customer/dashboard");
         } else if (response.data.code === 0) {
-          setLoading(false)
-        
-          Alerts.ErrorNormal("Incorrect OTP, please try again.")
+          setLoading(false);
+
+          Alerts.ErrorNormal("Incorrect OTP, please try again.");
         }
       })
       .catch((error) => {
-       ShowError.LoadingError(setLoading)
+        ShowError.LoadingError(setLoading);
       });
   };
 
-
-
   //setotp
   const setOtp = () => {
-    setDisplay(false)
-  }
+    setDisplay(false);
+  };
 
   //get OTP
   const getOtp = () => {
-    setDisplay(true)
-  }
+    setDisplay(true);
+  };
 
   return (
     <Layout custDashboard="custDashboard" custUserId={userId}>
       <div className="container">
         <div className="form">
-          <CustomHeading>
-          Change Password
-          </CustomHeading>
+          <CustomHeading>Change Password</CustomHeading>
 
           <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
             <div className="row">
-            {/* <div className="col-md-12">
+              {/* <div className="col-md-12">
             <div className="mb-3">
 
 
@@ -177,14 +169,16 @@ const clientLoginId = JSON.parse(localStorage.getItem("clientLoginId"))
 </div> */}
               <div className="col-md-12">
                 <div className="mb-3">
-                  <label className="form-label">Email<span className="declined">*</span></label>
+                  <label className="form-label">
+                    Email<span className="declined">*</span>
+                  </label>
                   <input
                     type="text"
                     className={classNames("form-control", {
                       "is-invalid": errors.p_email,
                     })}
-                    disabled = {true}
-                    value = {email}
+                    disabled={true}
+                    value={email}
                     name="p_email"
                     placeholder="Enter email id"
                     ref={register({
@@ -203,26 +197,28 @@ const clientLoginId = JSON.parse(localStorage.getItem("clientLoginId"))
                 </div>
               </div>
 
-
               <div className="col-md-12">
                 <div className="mb-3">
-                  <label className="form-label">New Password<span className="declined">*</span></label>
+                  <label className="form-label">
+                    New Password<span className="declined">*</span>
+                  </label>
                   <input
                     type={isPasswordShow ? "text" : "password"}
                     id="password"
                     className={classNames("form-control", {
                       "is-invalid": errors.p_password,
                     })}
-                    onPaste={((e) => {
+                    onPaste={(e) => {
                       e.preventDefault();
                       return false;
-                    })}
+                    }}
                     placeholder="Enter Your Password"
                     name="p_password"
                     ref={register({
                       required: true,
                       pattern: {
-                        value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,15}$/,
+                        value:
+                          /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,15}$/,
                         message:
                           "Password should be of minimum 8 Characters, including at least 1 upper case, lower case, special character and number.",
                       },
@@ -231,7 +227,9 @@ const clientLoginId = JSON.parse(localStorage.getItem("clientLoginId"))
                   />
 
                   <i
-                    className={`fa ${isPasswordShow ? "fa-eye-slash" : "fa-eye"} password-icon`}
+                    className={`fa ${
+                      isPasswordShow ? "fa-eye-slash" : "fa-eye"
+                    } password-icon`}
                     onClick={togglePasssword}
                   />
                   {errors.p_password && (
@@ -242,15 +240,16 @@ const clientLoginId = JSON.parse(localStorage.getItem("clientLoginId"))
                 </div>
               </div>
 
-
               <div className="col-md-12">
                 <div className="mb-3">
-                  <label className="form-label">Confirm Password<span className="declined">*</span></label>
+                  <label className="form-label">
+                    Confirm Password<span className="declined">*</span>
+                  </label>
                   <input
-                    onPaste={((e) => {
+                    onPaste={(e) => {
                       e.preventDefault();
                       return false;
-                    })}
+                    }}
                     type={isPasswordShow2 ? "text" : "password"}
                     id="password"
                     className={classNames("form-control", {
@@ -267,7 +266,9 @@ const clientLoginId = JSON.parse(localStorage.getItem("clientLoginId"))
                     autocomplete="off"
                   />
                   <i
-                    className={`fa ${isPasswordShow2 ? "fa-eye-slash" : "fa-eye"} password-icon`}
+                    className={`fa ${
+                      isPasswordShow2 ? "fa-eye-slash" : "fa-eye"
+                    } password-icon`}
                     onClick={togglePasssword2}
                   />
                   {errors.p_confirm_password && (
@@ -278,72 +279,81 @@ const clientLoginId = JSON.parse(localStorage.getItem("clientLoginId"))
                 </div>
               </div>
 
-
-              {
-                show ?
-                  <div class="col-md-6">
-                    <div className="mb-3">
-                      <label className="form-label">OTP<span className="declined">*</span></label>
-                      <input
-                        type="text"
-                        className={classNames("form-control", {
-                          "is-invalid": errors.p_otp,
-                        })}
-                        name="p_otp"
-                        ref={register({ required: true })}
-                        placeholder="Enter your OTP"
-                        autocomplete="off"
-                      />
-                      {
-                        disabled ? null
-                          :
-                          <small class="text-center">
-                            Note: OTP is valid for {time} seconds.
-                          </small>
-                      }
-                    </div>
+              {show ? (
+                <div class="col-md-6">
+                  <div className="mb-3">
+                    <label className="form-label">
+                      OTP<span className="declined">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      className={classNames("form-control", {
+                        "is-invalid": errors.p_otp,
+                      })}
+                      name="p_otp"
+                      ref={register({ required: true })}
+                      placeholder="Enter your OTP"
+                      autocomplete="off"
+                    />
+                    {disabled ? null : (
+                      <small class="text-center">
+                        Note: OTP is valid for {time} seconds.
+                      </small>
+                    )}
                   </div>
-                  : null
-              }
+                </div>
+              ) : null}
 
-              {
-                loading ?
-                  <div class="col-md-12">
-                    <Spinner color="primary" />
-                  </div>
-                  :
-                  <div class="col-md-12">
-                    {
-                      show ?
+              {loading ? (
+                <div class="col-md-12">
+                  <Spinner color="primary" />
+                </div>
+              ) : (
+                <div class="col-md-12">
+                  {show ? (
+                    <>
+                      {disabled ? null : (
                         <>
-                          {
-                            disabled ? null
-                              :
-                              <>
-                                <button type="submit" className="customBtn" onClick={() => setOtp()}>Submit</button>
-                                <Cancel />
-                              </>
-                          }
-                        </>
-                        :
-                        <>
-                          <button type="submit" class="customBtn" onClick={() => getOtp("otp")}>Get OTP</button>
+                          <button
+                            type="submit"
+                            className="customBtn"
+                            onClick={() => setOtp()}
+                          >
+                            Submit
+                          </button>
                           <Cancel />
                         </>
-                    }
-                  </div>
-              }
+                      )}
+                    </>
+                  ) : (
+                    <>
+                      <button
+                        type="submit"
+                        class="customBtn"
+                        onClick={() => getOtp("otp")}
+                      >
+                        Get OTP
+                      </button>
+                      <Cancel />
+                    </>
+                  )}
+                </div>
+              )}
             </div>
-
           </form>
 
-          {
-            disabled ?
-              <ResendOtp setDisabled={setDisabled} getTime={getTime} clientId={user} uit={token}
-                email={email} setLoad={setLoad} setLoading={setLoading} loading={loading} />
-              :
-              null
-          }
+          {disabled ? (
+            <ResendOtp
+              setDisabled={setDisabled}
+              getTime={getTime}
+              clientId={clientLoginId}
+              uit={token}
+              email={email}
+              setLoad={setLoad}
+              setLoading={setLoading}
+              loading={loading}
+            />
+          ) : null}
 
           <Mandatory />
         </div>
@@ -354,20 +364,12 @@ const clientLoginId = JSON.parse(localStorage.getItem("clientLoginId"))
 
 export default ChangePassword;
 
-
-
-
-
-
 const Cancel = () => {
   return (
     <>
-      <Link to="/customer/dashboard" style={{ "margin": "10px" }}>
-        <button className="customBtn">
-          Cancel
-        </button>
+      <Link to="/customer/dashboard" style={{ margin: "10px" }}>
+        <button className="customBtn">Cancel</button>
       </Link>
     </>
   );
-}
-
+};

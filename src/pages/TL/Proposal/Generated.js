@@ -46,7 +46,7 @@ const Generated = ({ updateTab }) => {
     setTdsForm(!tdsForm);
     if (key) {
       setGstinNo(key.gstin_no);
-
+      setCopy(0);
       setAssignNo(key.assign_no);
       setPaidAmount(key.paid_amount);
       setId(key.id);
@@ -55,6 +55,7 @@ const Generated = ({ updateTab }) => {
       setId2(key.id);
     }
   };
+
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
   };
@@ -83,6 +84,7 @@ const Generated = ({ updateTab }) => {
   };
 
   const downloadpdf = (qno, id, installmentNumber) => {
+    setCopy(0);
     const myConfig2 = {
       headers: {
         uit: token,

@@ -79,7 +79,8 @@ function Dashboard() {
     complete_inprocess,
     customer_declined_payment,
   } = assignment;
-
+  const [permission_to_issue_invoice, setpermission_to_issue_invoice] =
+    useState("");
   const { paid, unpaid, totalpayment } = payment;
 
   const token = window.localStorage.getItem("tlToken");
@@ -97,6 +98,9 @@ function Dashboard() {
         )
         .then((response) => {
           if (response.data.code === 1) {
+            setpermission_to_issue_invoice(
+              response.data.result.proposal.permission_to_issue_invoice
+            );
             setAllQueries({
               total: response.data.result.total,
               inprogress_queries: response.data.result.inprogress_queries,
@@ -478,7 +482,7 @@ function Dashboard() {
                       </th>
                       <th>
                         <CustomTypography color="#ffffff">
-                          {declined}
+                          {permission_to_issue_invoice}
                         </CustomTypography>
                       </th>
                     </tr>
