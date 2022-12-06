@@ -79,6 +79,8 @@ function Dashboard() {
     complete_inprocess,
     customer_declined_payment,
   } = assignment;
+  const [clientDeclinedp, setClientDeclinedp] = useState("");
+  const [clientDeclineda, setClientDeclineda] = useState("");
   const [permission_to_issue_invoice, setpermission_to_issue_invoice] =
     useState("");
   const { paid, unpaid, totalpayment } = payment;
@@ -100,6 +102,12 @@ function Dashboard() {
           if (response.data.code === 1) {
             setpermission_to_issue_invoice(
               response.data.result.proposal.permission_to_issue_invoice
+            );
+            setClientDeclinedp(
+              response.data.result.proposal["customer_declined_proposalsa "]
+            );
+            setClientDeclineda(
+              response.data.result.proposal["customer_declined_proposalsp "]
             );
             setAllQueries({
               total: response.data.result.total,
@@ -471,6 +479,28 @@ function Dashboard() {
                       </th>
                     </tr>
                   </thead>
+                  <tbody className="table_body">
+                    <tr>
+                      <td className="left_side">
+                        <CustomTypography>
+                          Client declined; proposals
+                        </CustomTypography>
+                      </td>
+                      <td>
+                        <CustomTypography>{clientDeclineda}</CustomTypography>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="left_side">
+                        <CustomTypography>
+                          client declined; assignments
+                        </CustomTypography>
+                      </td>
+                      <td>
+                        <CustomTypography>{clientDeclinedp}</CustomTypography>
+                      </td>
+                    </tr>
+                  </tbody>
                 </table>
                 <table className="table table-striped eight main_table mb-1">
                   <thead className="proposal_thead3">
