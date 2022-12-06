@@ -383,137 +383,145 @@ function EditComponent(props) {
   };
 
   const onSubmit = (value) => {
-    if (diserror && diserror.length > 0) {
-      return false;
-    } else if (dateError === true) {
-      Alerts.ErrorNormal("Date must be unique");
-    } else if (value2 && value2.length == 0) {
-      setScopeError(true);
-    } else {
-      var lumsum = value.p_inst_date;
-      if (store === "1") {
-        setDate(lumsum);
-      }
+    if (value2) {
+      if (diserror && diserror.length > 0) {
+        return false;
+      } else if (dateError === true) {
+        Alerts.ErrorNormal("Date must be unique");
+      } else if (value2 && value2.length == 0) {
+        setScopeError(true);
+      } else {
+        var lumsum = value.p_inst_date;
+        if (store === "1") {
+          setDate(lumsum);
+        }
 
-      let formData = new FormData();
-      formData.append("emails", email);
-      formData.append("assign_no", query);
-      formData.append("name", name);
-      formData.append("type", "tl");
-      formData.append("id", JSON.parse(userid));
-      formData.append("assign_id", id);
-      formData.append("customer_id", custId);
-      formData.append("description", value2);
-      formData.append("amount_type", "fixed");
-      formData.append("amount", totalAmount);
-      formData.append("installment_amount", formInstallmentInfo.amount);
-      formData.append("company", company2);
-      formData.append("payment_plan", store);
-      formData.append("start_date", startDate);
-      formData.append("end_date", endDate);
-      formData.append("no_of_installment", installment.value);
-      formData.append("date_month", dateMonth);
-      formData.append("tl_iba", invoiceTl);
-      formData.append("tp_iba", invoice);
-      formData.append("admin_iba", invoiceAdmin);
-      formData.append("sub_payment_plane", subPlan);
-      store === "1"
-        ? formData.append("due_date", lumsum)
-        : store === "2" || store === "3"
-        ? formData.append("due_date", formInstallmentInfo.dueDate1)
-        : formData.append("due_date", "");
+        let formData = new FormData();
+        formData.append("emails", email);
+        formData.append("assign_no", query);
+        formData.append("name", name);
+        formData.append("type", "tl");
+        formData.append("id", JSON.parse(userid));
+        formData.append("assign_id", id);
+        formData.append("customer_id", custId);
+        formData.append("description", value2);
+        formData.append("amount_type", "fixed");
+        formData.append("amount", totalAmount);
+        formData.append("installment_amount", formInstallmentInfo.amount);
+        formData.append("company", company2);
+        formData.append("payment_plan", store);
+        formData.append("start_date", startDate);
+        formData.append("end_date", endDate);
+        formData.append("no_of_installment", installment.value);
+        formData.append("date_month", dateMonth);
+        formData.append("tl_iba", invoiceTl);
+        formData.append("tp_iba", invoice);
+        formData.append("admin_iba", invoiceAdmin);
+        formData.append("sub_payment_plane", subPlan);
+        store === "1"
+          ? formData.append("due_date", lumsum)
+          : store === "2" || store === "3"
+          ? formData.append("due_date", formInstallmentInfo.dueDate1)
+          : formData.append("due_date", "");
 
-      if (
-        (subPlan !== "2" && store === "2") ||
-        (subPlan !== "2" && store === "3")
-      ) {
-        if (payment.length < 1) {
-        } else if (store === "2" || store === "3") {
-          if (installment == "") {
-            Alerts.ErrorNormal(`Please select no of installment .`);
-          } else if (!formInstallmentInfo.amount || !date) {
-            Alerts.ErrorNormal(`Please enter all fields.`);
-          } else if (formInstallmentInfo.amount && date) {
-            if (installment.value > 0) {
-              var a = Number(installment.value);
+        if (
+          (subPlan !== "2" && store === "2") ||
+          (subPlan !== "2" && store === "3")
+        ) {
+          if (payment.length < 1) {
+          } else if (store === "2" || store === "3") {
+            if (installment == "") {
+              Alerts.ErrorNormal(`Please select no of installment .`);
+            } else if (!formInstallmentInfo.amount || !date) {
+              Alerts.ErrorNormal(`Please enter all fields.`);
+            } else if (formInstallmentInfo.amount && date) {
+              if (installment.value > 0) {
+                var a = Number(installment.value);
 
-              for (let i = 0; i < a; i++) {
-                if (
-                  formInstallmentInfo.amount[i] == "" ||
-                  formInstallmentInfo.amount[i] == undefined ||
-                  formInstallmentInfo.amount[i] <= 0
-                ) {
-                  if (formInstallmentInfo.amount.length < 0) {
-                    Alerts.ErrorNormal(`Please enter amount`);
-                    return false;
-                  }
-                }
-                // if (!date) {
-                //   Alerts.ErrorNormal(`Please enter date`)
-                //   return false
-                // }
-              }
-              var sum = 0;
-
-              if (formInstallmentInfo.amount.length > 0) {
-                sum = formInstallmentInfo.amount.reduce(myFunction);
-              } else {
-                sum = formInstallmentInfo.amount.reduce(myFunction);
-              }
-              function myFunction(total, value) {
-                return Number(total) + Number(value);
-              }
-              if (value.p_fixed != sum) {
-                Alerts.ErrorNormal(
-                  `Sum of all installments should be equal to ${value.p_fixed}.`
-                );
-              } else {
-                setLoading(true);
-                axios({
-                  method: "POST",
-                  url: `${baseUrl}/tl/updateProposal`,
-                  headers: {
-                    uit: token,
-                  },
-                  data: formData,
-                })
-                  .then(function (response) {
-                    if (response.data.code === 1) {
-                      setLoading(false);
-                      var variable = "Proposal updated successfully";
-                      Alerts.SuccessNormal(variable);
-                      history.push("/teamleader/proposal");
-                    } else if (response.data.code === 0) {
-                      setLoading(false);
+                for (let i = 0; i < a; i++) {
+                  if (
+                    formInstallmentInfo.amount[i] == "" ||
+                    formInstallmentInfo.amount[i] == undefined ||
+                    formInstallmentInfo.amount[i] <= 0
+                  ) {
+                    if (formInstallmentInfo.amount.length < 0) {
+                      Alerts.ErrorNormal(`Please enter amount`);
+                      return false;
                     }
+                  }
+                  // if (!date) {
+                  //   Alerts.ErrorNormal(`Please enter date`)
+                  //   return false
+                  // }
+                }
+                var sum = 0;
+
+                if (formInstallmentInfo.amount.length > 0) {
+                  sum = formInstallmentInfo.amount.reduce(myFunction);
+                } else {
+                  sum = formInstallmentInfo.amount.reduce(myFunction);
+                }
+                function myFunction(total, value) {
+                  return Number(total) + Number(value);
+                }
+                if (value.p_fixed != sum) {
+                  Alerts.ErrorNormal(
+                    `Sum of all installments should be equal to ${value.p_fixed}.`
+                  );
+                } else {
+                  setLoading(true);
+                  axios({
+                    method: "POST",
+                    url: `${baseUrl}/tl/updateProposal`,
+                    headers: {
+                      uit: token,
+                    },
+                    data: formData,
                   })
-                  .catch((error) => {});
+                    .then(function (response) {
+                      if (response.data.code === 1) {
+                        setLoading(false);
+                        var variable = "Proposal updated successfully";
+                        Alerts.SuccessNormal(variable);
+                        history.push("/teamleader/proposal");
+                      } else if (response.data.code === 0) {
+                        setLoading(false);
+                      }
+                    })
+                    .catch((error) => {});
+                }
               }
             }
           }
-        }
-      } else if (store === "1" || store === "4" || subPlan === "2") {
-        setLoading(true);
-        axios({
-          method: "POST",
-          url: `${baseUrl}/tl/updateProposal`,
-          headers: {
-            uit: token,
-          },
-          data: formData,
-        })
-          .then(function (response) {
-            if (response.data.code === 1) {
-              setLoading(false);
-              var variable = "Proposal Updated Successfully ";
-              Alerts.SuccessNormal(variable);
-              history.push("/teamleader/proposal");
-            } else if (response.data.code === 0) {
-              setLoading(false);
-            }
+        } else if (store === "1" || store === "4" || subPlan === "2") {
+          setLoading(true);
+          axios({
+            method: "POST",
+            url: `${baseUrl}/tl/updateProposal`,
+            headers: {
+              uit: token,
+            },
+            data: formData,
           })
-          .catch((error) => {});
+            .then(function (response) {
+              if (response.data.code === 1) {
+                setLoading(false);
+                var variable = "Proposal Updated Successfully ";
+                Alerts.SuccessNormal(variable);
+                history.push("/teamleader/proposal");
+              } else if (response.data.code === 0) {
+                setLoading(false);
+              }
+            })
+            .catch((error) => {});
+        }
       }
+    } else {
+      Swal.fire({
+        title: "Error",
+        html: "Scope of work could not be blank",
+        icon: "error",
+      });
     }
   };
 

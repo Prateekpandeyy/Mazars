@@ -854,137 +854,145 @@ function ProposalComponent(props) {
   }, [id]);
 
   const onSubmit = (value) => {
-    if (diserror.length > 0) {
-      return false;
-    } else if (dateError === true) {
-      Alerts.ErrorNormal("Date must be unique");
-    } else if (det && det.length == 0) {
-      return false;
-    } else {
-      var lumsum = value.p_inst_date;
-      if (store === "1") {
-        setDate(lumsum);
-      }
+    if (addDet) {
+      if (diserror.length > 0) {
+        return false;
+      } else if (dateError === true) {
+        Alerts.ErrorNormal("Date must be unique");
+      } else if (det && det.length == 0) {
+        return false;
+      } else {
+        var lumsum = value.p_inst_date;
+        if (store === "1") {
+          setDate(lumsum);
+        }
 
-      // var arrAmount = []
-      // var arrDate = []
+        // var arrAmount = []
+        // var arrDate = []
 
-      let formData = new FormData();
-      formData.append("emails", email);
-      formData.append("assign_no", assingNo);
-      formData.append("name", custname);
-      formData.append("type", "tp");
-      formData.append("date_month", value.date_month);
-      formData.append("id", JSON.parse(userid));
-      formData.append("assign_id", assignId);
-      formData.append("customer_id", custId);
-      formData.append("description", det);
-      formData.append("amount_type", "fixed");
-      formData.append("amount", value.p_fixed);
-      formData.append("installment_amount", allAmount);
-      formData.append("payment_plan", store);
-      formData.append("start_date", startDate);
-      formData.append("end_date", endDate);
-      // formData.append("payment_terms", payment.value);
-      formData.append("no_of_installment", installment.value);
-      formData.append("company", company2);
-      formData.append("date_month", dateMonth);
-      formData.append("tl_iba", invoiceTl);
-      formData.append("tp_iba", invoice);
-      formData.append("sub_payment_plane", subPlan);
-      formData.append("admin_iba", invoiceAdmin);
-      store === "1"
-        ? formData.append("due_date", date)
-        : store === "2" || store === "3"
-        ? formData.append("due_date", date)
-        : formData.append("due_date", "");
+        let formData = new FormData();
+        formData.append("emails", email);
+        formData.append("assign_no", assingNo);
+        formData.append("name", custname);
+        formData.append("type", "tp");
+        formData.append("date_month", value.date_month);
+        formData.append("id", JSON.parse(userid));
+        formData.append("assign_id", assignId);
+        formData.append("customer_id", custId);
+        formData.append("description", det);
+        formData.append("amount_type", "fixed");
+        formData.append("amount", value.p_fixed);
+        formData.append("installment_amount", allAmount);
+        formData.append("payment_plan", store);
+        formData.append("start_date", startDate);
+        formData.append("end_date", endDate);
+        // formData.append("payment_terms", payment.value);
+        formData.append("no_of_installment", installment.value);
+        formData.append("company", company2);
+        formData.append("date_month", dateMonth);
+        formData.append("tl_iba", invoiceTl);
+        formData.append("tp_iba", invoice);
+        formData.append("sub_payment_plane", subPlan);
+        formData.append("admin_iba", invoiceAdmin);
+        store === "1"
+          ? formData.append("due_date", date)
+          : store === "2" || store === "3"
+          ? formData.append("due_date", date)
+          : formData.append("due_date", "");
 
-      if (
-        (subPlan !== "2" && store === "2") ||
-        (subPlan !== "2" && store === "3")
-      ) {
-        if (store === "2" || store === "3") {
-          if (installment == "") {
-            Alerts.ErrorNormal(`Please select no of installment .`);
-          } else if (!allAmount || !date) {
-            console.log("amounts", allAmount, date);
-            Alerts.ErrorNormal(`Please enter all fields.`);
-          } else if (allAmount && date) {
-            if (installment.value > 0) {
-              var a = Number(installment.value);
-              for (let i = 0; i < a; i++) {
-                // arrAmount.push(amount[i])
-                // arrDate.push(date[i])
-                if (
-                  allAmount[i] == "" ||
-                  allAmount[i] == undefined ||
-                  allAmount[i] <= 0
-                ) {
-                  Alerts.ErrorNormal(`Please enter amount`);
+        if (
+          (subPlan !== "2" && store === "2") ||
+          (subPlan !== "2" && store === "3")
+        ) {
+          if (store === "2" || store === "3") {
+            if (installment == "") {
+              Alerts.ErrorNormal(`Please select no of installment .`);
+            } else if (!allAmount || !date) {
+              console.log("amounts", allAmount, date);
+              Alerts.ErrorNormal(`Please enter all fields.`);
+            } else if (allAmount && date) {
+              if (installment.value > 0) {
+                var a = Number(installment.value);
+                for (let i = 0; i < a; i++) {
+                  // arrAmount.push(amount[i])
+                  // arrDate.push(date[i])
+                  if (
+                    allAmount[i] == "" ||
+                    allAmount[i] == undefined ||
+                    allAmount[i] <= 0
+                  ) {
+                    Alerts.ErrorNormal(`Please enter amount`);
 
-                  return false;
+                    return false;
+                  }
+                  if (date[i] == "" || date[i] == undefined) {
+                    Alerts.ErrorNormal(`Please enter date`);
+
+                    return false;
+                  }
                 }
-                if (date[i] == "" || date[i] == undefined) {
-                  Alerts.ErrorNormal(`Please enter date`);
-
-                  return false;
+                var sum = allAmount.reduce(myFunction);
+                function myFunction(total, value) {
+                  return Number(total) + Number(value);
                 }
-              }
-              var sum = allAmount.reduce(myFunction);
-              function myFunction(total, value) {
-                return Number(total) + Number(value);
-              }
-              if (value.p_fixed != sum) {
-                Alerts.ErrorNormal(
-                  `Sum of all installments should be equal to ${value.p_fixed}.`
-                );
-              } else {
-                setLoading(true);
-                axios({
-                  method: "POST",
-                  url: `${baseUrl}/tp/uploadProposal`,
-                  headers: {
-                    uit: token,
-                  },
-                  data: formData,
-                })
-                  .then(function (response) {
-                    if (response.data.code === 1) {
-                      setLoading(false);
-                      Alerts.SuccessNormal("Proposal created successfully");
-                      history.push("/taxprofessional/proposal");
-                    } else if (response.data.code === 0) {
-                      setLoading(false);
-                      Alerts.ErrorNormal(`${response.data.result}`);
-                    }
+                if (value.p_fixed != sum) {
+                  Alerts.ErrorNormal(
+                    `Sum of all installments should be equal to ${value.p_fixed}.`
+                  );
+                } else {
+                  setLoading(true);
+                  axios({
+                    method: "POST",
+                    url: `${baseUrl}/tp/uploadProposal`,
+                    headers: {
+                      uit: token,
+                    },
+                    data: formData,
                   })
-                  .catch((error) => {});
+                    .then(function (response) {
+                      if (response.data.code === 1) {
+                        setLoading(false);
+                        Alerts.SuccessNormal("Proposal created successfully");
+                        history.push("/taxprofessional/proposal");
+                      } else if (response.data.code === 0) {
+                        setLoading(false);
+                        Alerts.ErrorNormal(`${response.data.result}`);
+                      }
+                    })
+                    .catch((error) => {});
+                }
               }
             }
           }
-        }
-      } else if (store === "1" || store === "4" || subPlan === "2") {
-        setLoading(true);
-        axios({
-          method: "POST",
-          url: `${baseUrl}/tp/uploadProposal`,
-          headers: {
-            uit: token,
-          },
-          data: formData,
-        })
-          .then(function (response) {
-            if (response.data.code === 1) {
-              setLoading(false);
-              var variable = "Proposal sent successfully. ";
-              Alerts.SuccessNormal(variable);
-              history.push("/taxprofessional/proposal");
-            } else if (response.data.code === 0) {
-              setLoading(false);
-            }
+        } else if (store === "1" || store === "4" || subPlan === "2") {
+          setLoading(true);
+          axios({
+            method: "POST",
+            url: `${baseUrl}/tp/uploadProposal`,
+            headers: {
+              uit: token,
+            },
+            data: formData,
           })
-          .catch((error) => {});
+            .then(function (response) {
+              if (response.data.code === 1) {
+                setLoading(false);
+                var variable = "Proposal sent successfully. ";
+                Alerts.SuccessNormal(variable);
+                history.push("/taxprofessional/proposal");
+              } else if (response.data.code === 0) {
+                setLoading(false);
+              }
+            })
+            .catch((error) => {});
+        }
       }
+    } else {
+      Swal.fire({
+        title: "Error",
+        html: "Scope of work could not be blank",
+        icon: "error",
+      });
     }
   };
 

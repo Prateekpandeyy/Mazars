@@ -231,15 +231,19 @@ function AssignmentDetails({
         uit: confToken,
       },
     };
-
-    if (clientAssign === "clientFolder") {
+    let foldi = folderId;
+    console.log("clientAssign", clientAssign);
+    if (clientAssign === "clientFiles") {
       fold = "customer_files_folder";
     } else {
       fold = "folder_id";
     }
+    if (isLeft === true && folderId === 0) {
+      foldi = mFold[0].id;
+    }
     axios
       .get(
-        `${baseUrl}/tl/folderfileReport?q_id=${qid.id}&${fold}=${folderId}&file_id=${fileId}`,
+        `${baseUrl}/tl/folderfileReport?q_id=${qid.id}&${fold}=${foldi}&file_id=${fileId}`,
         myConfig
       )
       .then((res) => {
@@ -248,6 +252,7 @@ function AssignmentDetails({
           showFolder();
           getFile();
           setInnerFiles([]);
+          setFolderId(0);
           setColor(0);
           Swal.fire({
             title: "success",
@@ -471,8 +476,9 @@ function AssignmentDetails({
     }
     if (b === "clientFiles") {
       setClientAssign(b);
+    } else {
+      setClientAssign("");
     }
-
     if (e) {
       e.preventDefault();
     }
@@ -724,6 +730,7 @@ function AssignmentDetails({
   useEffect(() => {
     getClientFile();
   }, []);
+  console.log("files", files);
   return (
     <>
       <div className="queryBox">
@@ -907,71 +914,67 @@ function AssignmentDetails({
                       <>
                         {i.folder_id === "0" ? (
                           <>
-                            {i.customer_files === null ? (
-                              <div className="folderCreated">
-                                <ArticleIcon
-                                  onContextMenu={(e) => handleFile(e, i, true)}
-                                  onClick={(e) =>
-                                    rightClick(e, i.assign_no, i.id, i.document)
-                                  }
-                                  style={{
-                                    fontSize: "50px",
-                                    color: "#0000ff",
-                                    cursor: "pointer",
-                                  }}
-                                />
-                                <span
-                                  style={{
-                                    textAlign: "center",
-                                    whiteSpace: "break-spaces",
-                                    display: "flex",
-                                    maxHeight: "60px",
-                                    overflow: "hidden",
-                                  }}
-                                >
-                                  {i.document}
-                                </span>
-                              </div>
-                            ) : (
-                              <>
-                                {i.customer_files_folder === "0" ? (
-                                  <div className="folderCreated">
-                                    <ArticleIcon
-                                      onContextMenu={(e) =>
-                                        handleFile(e, i, true, "clientFolder")
-                                      }
-                                      onClick={(e) =>
-                                        rightClick(
-                                          e,
-                                          i.assign_no,
-                                          i.id,
-                                          i.customer_files
-                                        )
-                                      }
-                                      style={{
-                                        fontSize: "50px",
-                                        color: "#0000ff",
-                                        cursor: "pointer",
-                                      }}
-                                    />
-                                    <span
-                                      style={{
-                                        textAlign: "center",
-                                        whiteSpace: "break-spaces",
-                                        display: "flex",
-                                        maxHeight: "60px",
-                                        overflow: "hidden",
-                                      }}
-                                    >
-                                      {i.customer_files}
-                                    </span>
-                                  </div>
-                                ) : (
-                                  " "
-                                )}
-                              </>
-                            )}
+                            <div className="folderCreated">
+                              <ArticleIcon
+                                onContextMenu={(e) => handleFile(e, i, true)}
+                                onClick={(e) =>
+                                  rightClick(e, i.assign_no, i.id, i.document)
+                                }
+                                style={{
+                                  fontSize: "50px",
+                                  color: "#0000ff",
+                                  cursor: "pointer",
+                                }}
+                              />
+                              <span
+                                style={{
+                                  textAlign: "center",
+                                  whiteSpace: "break-spaces",
+                                  display: "flex",
+                                  maxHeight: "60px",
+                                  overflow: "hidden",
+                                }}
+                              >
+                                {i.document}
+                              </span>
+                            </div>
                           </>
+                        ) : (
+                          ""
+                        )}
+                        {i.customer_files !== null &&
+                        i.customer_files_folder === "0" ? (
+                          <div className="folderCreated">
+                            <ArticleIcon
+                              onContextMenu={(e) =>
+                                handleFile(e, i, true, "clientFiles")
+                              }
+                              onClick={(e) =>
+                                rightClick(
+                                  e,
+                                  i.assign_no,
+                                  i.id,
+                                  i.customer_files
+                                )
+                              }
+                              style={{
+                                fontSize: "50px",
+                                color: "#0000ff",
+                                cursor: "pointer",
+                              }}
+                            />
+                            <span
+                              style={{
+                                textAlign: "center",
+                                whiteSpace: "break-spaces",
+                                display: "flex",
+                                maxHeight: "60px",
+                                overflow: "hidden",
+                              }}
+                            >
+                              {i.customer_files}
+                            </span>
+                          </div>
                         ) : (
                           ""
                         )}
@@ -1108,34 +1111,69 @@ function AssignmentDetails({
                                 )}
                               </div>
                             ))}
+
                             {innerFiles.map((i) => (
                               <>
-                                <div className="folderCreated">
-                                  <ArticleIcon
-                                    onContextMenu={(e) =>
-                                      handleFile(e, i, false)
-                                    }
-                                    onClick={(e) =>
-                                      rightClick(e, i.assign_no, i.id, i.name)
-                                    }
-                                    style={{
-                                      fontSize: "50px",
-                                      color: "#0000ff",
-                                      cursor: "pointer",
-                                    }}
-                                  />
-                                  <span
-                                    style={{
-                                      textAlign: "center",
-                                      whiteSpace: "break-spaces",
-                                      display: "flex",
-                                      maxHeight: "60px",
-                                      overflow: "hidden",
-                                    }}
-                                  >
-                                    {i.document}
-                                  </span>
-                                </div>
+                                {color === i.folder_id ? (
+                                  <div className="folderCreated">
+                                    <ArticleIcon
+                                      onContextMenu={(e) =>
+                                        handleFile(e, i, false)
+                                      }
+                                      onClick={(e) =>
+                                        rightClick(e, i.assign_no, i.id, i.name)
+                                      }
+                                      style={{
+                                        fontSize: "50px",
+                                        color: "#0000ff",
+                                        cursor: "pointer",
+                                      }}
+                                    />
+                                    <span
+                                      style={{
+                                        textAlign: "center",
+                                        whiteSpace: "break-spaces",
+                                        display: "flex",
+                                        maxHeight: "60px",
+                                        overflow: "hidden",
+                                      }}
+                                    >
+                                      {i.document}
+                                    </span>
+                                  </div>
+                                ) : (
+                                  ""
+                                )}
+                                {color === i.customer_files_folder ? (
+                                  <div className="folderCreated">
+                                    <ArticleIcon
+                                      onContextMenu={(e) =>
+                                        handleFile(e, i, false, "clientFiles")
+                                      }
+                                      onClick={(e) =>
+                                        rightClick(e, i.assign_no, i.id, i.name)
+                                      }
+                                      style={{
+                                        fontSize: "50px",
+                                        color: "#0000ff",
+                                        cursor: "pointer",
+                                      }}
+                                    />
+                                    <span
+                                      style={{
+                                        textAlign: "center",
+                                        whiteSpace: "break-spaces",
+                                        display: "flex",
+                                        maxHeight: "60px",
+                                        overflow: "hidden",
+                                      }}
+                                    >
+                                      {i.customer_files}
+                                    </span>
+                                  </div>
+                                ) : (
+                                  ""
+                                )}
                               </>
                             ))}
                           </div>
