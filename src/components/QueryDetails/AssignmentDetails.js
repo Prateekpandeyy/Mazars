@@ -83,6 +83,7 @@ function AssignmentDetails({
   const [clientFile, setclientFile] = useState([]);
   const [clientInnerFile, setClientInnerFiles] = useState([]);
   const [showclientSubFolder, setClientSubFolder] = useState([]);
+  const [clientSubFold, setClientSubFold] = useState(false);
   const [renameValue, setRenameValue] = useState("");
   const [rename, setRename] = useState("");
   const qid = useParams();
@@ -101,12 +102,7 @@ function AssignmentDetails({
       uit: clientToken,
     },
   };
-  const timeTaken = (a, b) => {
-    var date2 = CommonServices.removeTime(a);
-    var date1 = CommonServices.removeTime(b);
 
-    var difference = Math.round((date2 - date1) / (1000 * 60 * 60 * 24));
-  };
   const showFolder = () => {
     var confToken = "";
     if (window.location.pathname.split("/")[1] === "teamleader") {
@@ -233,7 +229,7 @@ function AssignmentDetails({
       },
     };
     let foldi = folderId;
-    console.log("clientAssign", clientAssign);
+
     if (clientAssign === "clientFiles") {
       fold = "customer_files_folder";
     } else {
@@ -648,9 +644,11 @@ function AssignmentDetails({
   const getInnerFileFileclient = (e) => {
     setClientInnerFiles([]);
     setFolderName("");
+    setClientSubFold(false);
     setClientSubFolder(e.child);
     setColor(e.id);
     let kk = [];
+    setClientSubFold(false);
     setMainFoldName(e.folder);
     clientFolder.map((i) => {
       if (e.id === i.folder_id) {
@@ -669,6 +667,7 @@ function AssignmentDetails({
       )
       .then((res) => {
         if (res.data.code === 1) {
+          setClientSubFold(true);
           setFolderName(e.folder);
           setClientInnerFiles(res.data.result);
         } else {
@@ -734,7 +733,7 @@ function AssignmentDetails({
   useEffect(() => {
     getClientFile();
   }, []);
-  console.log("files", files);
+
   return (
     <>
       <div className="queryBox">
@@ -1529,9 +1528,6 @@ function AssignmentDetails({
                                 {color === i.folder_id ? (
                                   <div className="folderCreated">
                                     <ArticleIcon
-                                      onContextMenu={(e) =>
-                                        handleFile(e, i, false)
-                                      }
                                       onClick={(e) =>
                                         rightClick(e, i.assign_no, i.id, i.name)
                                       }
@@ -1559,9 +1555,6 @@ function AssignmentDetails({
                                 {color === i.customer_files_folder ? (
                                   <div className="folderCreated">
                                     <ArticleIcon
-                                      onContextMenu={(e) =>
-                                        handleFile(e, i, false, "clientFiles")
-                                      }
                                       onClick={(e) =>
                                         rightClick(e, i.assign_no, i.id, i.name)
                                       }
@@ -1685,7 +1678,32 @@ function AssignmentDetails({
                                 overflow: "hidden",
                               }}
                             >
-                              {i.name}
+                              {i.document}
+                            </span>
+                          </>
+                        ) : (
+                          ""
+                        )}
+                        {i.customer_files !== null &&
+                        i.customer_files_folder === "0" ? (
+                          <>
+                            <ArticleIcon
+                              style={{
+                                fontSize: "50px",
+                                color: "#0000ff",
+                                cursor: "pointer",
+                              }}
+                            />
+                            <span
+                              style={{
+                                textAlign: "center",
+                                whiteSpace: "break-spaces",
+                                display: "flex",
+                                maxHeight: "60px",
+                                overflow: "hidden",
+                              }}
+                            >
+                              {i.customer_files}
                             </span>
                           </>
                         ) : (
@@ -1705,6 +1723,7 @@ function AssignmentDetails({
                             onClick={() => {
                               setClientInnerFiles([]);
                               setFolderName("");
+                              setClientSubFold(false);
                             }}
                           >
                             {`${mainFoldName} ${
@@ -1720,6 +1739,7 @@ function AssignmentDetails({
                                 onClick={() => {
                                   setClientInnerFiles([]);
                                   setFolderName("");
+                                  setClientSubFold(false);
                                 }}
                               >
                                 {`${mainFoldName} ${
@@ -1736,7 +1756,7 @@ function AssignmentDetails({
                           </>
                         )}
 
-                        {clientInnerFile.length > 0 ? (
+                        {clientSubFold === true ? (
                           <>
                             <div className="d-flex">
                               <div className="folderCreated">
@@ -1744,6 +1764,7 @@ function AssignmentDetails({
                                   onClick={(e) => {
                                     setClientInnerFiles([]);
                                     setFolderName("");
+                                    setClientSubFold(false);
                                   }}
                                   style={{
                                     fontSize: "50px",
@@ -1818,26 +1839,60 @@ function AssignmentDetails({
                             ))}
                             {clientFile.map((i) => (
                               <>
-                                <div className="folderCreated">
-                                  <ArticleIcon
-                                    style={{
-                                      fontSize: "50px",
-                                      color: "#0000ff",
-                                      cursor: "pointer",
-                                    }}
-                                  />
-                                  <span
-                                    style={{
-                                      textAlign: "center",
-                                      whiteSpace: "break-spaces",
-                                      display: "flex",
-                                      maxHeight: "60px",
-                                      overflow: "hidden",
-                                    }}
-                                  >
-                                    {i.name}
-                                  </span>
-                                </div>
+                                {color === i.folder_id ? (
+                                  <div className="folderCreated">
+                                    <ArticleIcon
+                                      onClick={(e) =>
+                                        rightClick(e, i.assign_no, i.id, i.name)
+                                      }
+                                      style={{
+                                        fontSize: "50px",
+                                        color: "#0000ff",
+                                        cursor: "pointer",
+                                      }}
+                                    />
+                                    <span
+                                      style={{
+                                        textAlign: "center",
+                                        whiteSpace: "break-spaces",
+                                        display: "flex",
+                                        maxHeight: "60px",
+                                        overflow: "hidden",
+                                      }}
+                                    >
+                                      {i.document}
+                                    </span>
+                                  </div>
+                                ) : (
+                                  ""
+                                )}
+                                {color === i.customer_files_folder ? (
+                                  <div className="folderCreated">
+                                    <ArticleIcon
+                                      onClick={(e) =>
+                                        rightClick(e, i.assign_no, i.id, i.name)
+                                      }
+                                      style={{
+                                        fontSize: "50px",
+                                        color: "#0000ff",
+                                        cursor: "pointer",
+                                      }}
+                                    />
+                                    <span
+                                      style={{
+                                        textAlign: "center",
+                                        whiteSpace: "break-spaces",
+                                        display: "flex",
+                                        maxHeight: "60px",
+                                        overflow: "hidden",
+                                      }}
+                                    >
+                                      {i.customer_files}
+                                    </span>
+                                  </div>
+                                ) : (
+                                  ""
+                                )}
                               </>
                             ))}
                           </div>

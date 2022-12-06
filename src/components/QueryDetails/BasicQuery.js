@@ -38,11 +38,9 @@ function BasicQuery({
   panel,
   p,
   diaplaySpecific,
-  queryDocs,
   year,
   purpose,
   declined2,
-  declinedStatus,
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const [id, setId] = useState("");
@@ -88,7 +86,6 @@ function BasicQuery({
   const uid = localStorage.getItem("tlkey");
   const adminToken = window.localStorage.getItem("adminToken");
   const clientToken = window.localStorage.getItem("clientToken");
-  const tokentp = window.localStorage.getItem("tptoken");
   const qid = useParams();
   const myConfigAdmin = {
     headers: {
@@ -100,7 +97,7 @@ function BasicQuery({
       uit: clientToken,
     },
   };
-  console.log("done");
+
   useEffect(() => {
     getFile();
     showFolder();
@@ -422,10 +419,7 @@ function BasicQuery({
             } else {
               setShowSubFolderData(false);
             }
-            // if (showSubfolderData === true) {
-            //   get_sub_innerFile();
-            // } else {
-            // }
+
             setFolderId("0");
             handleFile();
             showFolder();
@@ -552,114 +546,50 @@ function BasicQuery({
   };
 
   const downloadpdf = (qno, qid, name) => {
-    let userId, token;
+    let userId, token, apiPath;
     if (panel === "admin") {
       userId = window.localStorage.getItem("adminkey");
       token = window.localStorage.getItem("adminToken");
-      const myConfig2 = {
-        headers: {
-          uit: token,
-        },
-        responseType: "blob",
-      };
-      axios
-        .get(
-          `${baseUrl}/admin/viewdocument?assign_no=${qno}&id=${qid}`,
-          myConfig2
-        )
-        .then((res) => {
-          if (res.status === 200) {
-            window.URL = window.URL || window.webkitURL;
-            var url = window.URL.createObjectURL(res.data);
-            var a = document.createElement("a");
-            document.body.appendChild(a);
-            a.style = "display: none";
-            a.href = url;
-
-            a.download = name;
-            a.target = "_blank";
-            a.click();
-          }
-        });
+      apiPath = "admin";
     } else if (panel === "teamleader") {
       userId = window.localStorage.getItem("tlkey");
       token = window.localStorage.getItem("tlToken");
-      const myConfig2 = {
-        headers: {
-          uit: token,
-        },
-        responseType: "blob",
-      };
-      axios
-        .get(`${baseUrl}/tl/viewdocument?assign_no=${qno}&id=${qid}`, myConfig2)
-        .then((res) => {
-          if (res.status === 200) {
-            window.URL = window.URL || window.webkitURL;
-            var url = window.URL.createObjectURL(res.data);
-            var a = document.createElement("a");
-            document.body.appendChild(a);
-            a.style = "display: none";
-            a.href = url;
-
-            a.download = name;
-            a.target = "_blank";
-            a.click();
-          }
-        });
+      apiPath = "tl";
     } else if (panel === "taxprofessional") {
       userId = window.localStorage.getItem("tpkey");
       token = window.localStorage.getItem("tpToken");
-      const myConfig2 = {
-        headers: {
-          uit: token,
-        },
-        responseType: "blob",
-      };
-      axios
-        .get(`${baseUrl}/tl/viewdocument?assign_no=${qno}&id=${qid}`, myConfig2)
-        .then((res) => {
-          if (res.status === 200) {
-            window.URL = window.URL || window.webkitURL;
-            var url = window.URL.createObjectURL(res.data);
-            var a = document.createElement("a");
-            document.body.appendChild(a);
-            a.style = "display: none";
-            a.href = url;
-
-            a.download = name;
-            a.target = "_blank";
-            a.click();
-          }
-        });
+      apiPath = "tl";
     } else if (panel === "client") {
       userId = window.localStorage.getItem("userid");
       token = window.localStorage.getItem("clientToken");
-      const myConfig2 = {
-        headers: {
-          uit: token,
-        },
-        responseType: "blob",
-      };
-      axios
-        .get(
-          `${baseUrl}/customers/viewdocument?assign_no=${qno}&id=${qid}`,
-          myConfig2
-        )
-        .then((res) => {
-          if (res.status === 200) {
-            window.URL = window.URL || window.webkitURL;
-            var url = window.URL.createObjectURL(res.data);
-            var a = document.createElement("a");
-            document.body.appendChild(a);
-            a.style = "display: none";
-            a.href = url;
-
-            a.download = name;
-            a.target = "_blank";
-            a.click();
-          }
-        });
+      apiPath = "customers";
     }
+    const myConfig2 = {
+      headers: {
+        uit: token,
+      },
+      responseType: "blob",
+    };
+
+    axios
+      .get(
+        `${baseUrl}/${apiPath}/viewdocument?assign_no=${qno}&id=${qid}`,
+        myConfig2
+      )
+      .then((res) => {
+        if (res.status === 200) {
+          window.URL = window.URL || window.webkitURL;
+          var url = window.URL.createObjectURL(res.data);
+          var a = document.createElement("a");
+          document.body.appendChild(a);
+          a.style = "display: none";
+          a.href = url;
+
+          a.download = name;
+          a.target = "_blank";
+          a.click();
+        }
+      });
   };
   const rightClick = (e, a, b, c) => {
     downloadpdf(a, b, c);
