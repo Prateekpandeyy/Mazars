@@ -30,9 +30,7 @@ function CreateFolder({
     label: "...root",
     value: "0",
   });
-  useEffect(() => {
-    console.log("movedFolder", movedFolder);
-  }, [movedFolder]);
+
   const onSumbit = (value) => {
     let suburl = "createqfolder";
     if (tab === "assignment") {

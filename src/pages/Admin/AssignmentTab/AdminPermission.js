@@ -123,8 +123,6 @@ function AdminPermission(props) {
 
   //reset category
   const resetCategory = () => {
-    console.log(error);
-
     setSelectedData([]);
     setStore2([]);
     getAssignmentData();

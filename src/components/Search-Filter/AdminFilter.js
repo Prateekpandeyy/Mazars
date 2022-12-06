@@ -3,11 +3,11 @@ import axios from "axios";
 import { baseUrl } from "../../config/config";
 import { useForm } from "react-hook-form";
 import { Select } from "antd";
-import 'antd/dist/antd.css';
-import { DatePicker, Space } from 'antd';
+import "antd/dist/antd.css";
+import { DatePicker, Space } from "antd";
 import moment from "moment";
-const dateFormat = 'YYYY/MM/DD';
-const dateFormatList = ['DD/MM/YYYY', 'DD/MM/YY'];
+const dateFormat = "YYYY/MM/DD";
+const dateFormatList = ["DD/MM/YYYY", "DD/MM/YY"];
 function AdminFilter(props) {
   const { Option } = Select;
   const { handleSubmit, register, errors, reset } = useForm();
@@ -34,31 +34,35 @@ function AdminFilter(props) {
   const [selectedData, setSelectedData] = useState([]);
   const [tax2, setTax2] = useState([]);
   const [store2, setStore2] = useState([]);
-  const [fromDate, setFromDate] = useState("")
- const [toDate, setToDate] = useState(new Date().toISOString().slice(0, 10))
-const maxDate = moment(new Date().toISOString().slice(0, 10)).add(1, "days")
-  var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
-  const dateValue = useRef()
+  const [fromDate, setFromDate] = useState("");
+  const [toDate, setToDate] = useState(new Date().toISOString().slice(0, 10));
+  const maxDate = moment(new Date().toISOString().slice(0, 10)).add(1, "days");
+  var current_date =
+    new Date().getFullYear() +
+    "-" +
+    ("0" + (new Date().getMonth() + 1)).slice(-2) +
+    "-" +
+    ("0" + new Date().getDate()).slice(-2);
+  const dateValue = useRef();
   const [item] = useState(current_date);
-  const token = window.localStorage.getItem("adminToken")
+  const token = window.localStorage.getItem("adminToken");
   const myConfig = {
-      headers : {
-       "uit" : token
-      }
-    }
+    headers: {
+      uit: token,
+    },
+  };
 
   //get category
   useEffect(() => {
     const getSubCategory = () => {
-      if(selectedData != undefined && selectedData.length > 0){
+      if (selectedData != undefined && selectedData.length > 0) {
         axios
-        .get(`${baseUrl}/admin/getCategory?pid=${selectedData}`, myConfig)
-        .then((res) => {
-       
-          if (res.data.code === 1) {
-            setTax2(res.data.result);
-          }
-        });
+          .get(`${baseUrl}/admin/getCategory?pid=${selectedData}`, myConfig)
+          .then((res) => {
+            if (res.data.code === 1) {
+              setTax2(res.data.result);
+            }
+          });
       }
     };
     getSubCategory();
@@ -66,55 +70,44 @@ const maxDate = moment(new Date().toISOString().slice(0, 10)).add(1, "days")
 
   //handleCategory
   const handleCategory = (value) => {
-   
     setSelectedData(value);
     setStore2([]);
   };
 
   //handleSubCategory
   const handleSubCategory = (value) => {
-   
     setStore2(value);
   };
 
   //reset category
   const resetCategory = () => {
-   
     setSelectedData([]);
-    setTax2([])
+    setTax2([]);
     setStore2([]);
     getData();
   };
 
   //reset date
   const resetData = () => {
-  
     reset();
     setSelectedData([]);
     setStore2([]);
-    setTax2([])
+    setTax2([]);
     getData();
-    dateValue.current.clearValue()
-    console.log("currentValue", dateValue.current)
+    dateValue.current.clearValue();
   };
 
   const fromDateFun = (e) => {
-    setFromDate(e.format("YYYY-MM-DD"))
-  }
+    setFromDate(e.format("YYYY-MM-DD"));
+  };
   const onSubmit = (data) => {
-
-   
-
-
-
     if (acceptedProposal == "acceptedProposal") {
       axios
         .get(
-          `${baseUrl}/admin/getProposals?status1=2&cat_id=${store2}&from=${fromDate}&to=${toDate}&pcat_id=${selectedData}`
-          , myConfig
+          `${baseUrl}/admin/getProposals?status1=2&cat_id=${store2}&from=${fromDate}&to=${toDate}&pcat_id=${selectedData}`,
+          myConfig
         )
         .then((res) => {
-
           if (res.data.code === 1) {
             if (res.data.result) {
               setData(res.data.result);
@@ -125,48 +118,44 @@ const maxDate = moment(new Date().toISOString().slice(0, 10)).add(1, "days")
     }
 
     if (pendingAcceptedProposal == "pendingAcceptedProposal") {
-     if(data.p_status.length > 0){
-      axios
-      .get(
-        `${baseUrl}/admin/getProposals?status1=${data.p_status}&cat_id=${store2}&from=${fromDate}&to=${toDate}&pcat_id=${selectedData}`
-        , myConfig
-      )
-      .then((res) => {
-      
-        if (res.data.code === 1) {
-          if (res.data.result) {
-            setData(res.data.result);
-            setRecords(res.data.result.length);
-          }
-        }
-      });
-     }
-     else {
-      axios
-      .get(
-        `${baseUrl}/admin/getProposals?status1=1&cat_id=${store2}&from=${fromDate}&to=${toDate}&pcat_id=${selectedData}`
-        , myConfig
-      )
-      .then((res) => {
-      
-        if (res.data.code === 1) {
-          if (res.data.result) {
-            setData(res.data.result);
-            setRecords(res.data.result.length);
-          }
-        }
-      });
-     }
+      if (data.p_status.length > 0) {
+        axios
+          .get(
+            `${baseUrl}/admin/getProposals?status1=${data.p_status}&cat_id=${store2}&from=${fromDate}&to=${toDate}&pcat_id=${selectedData}`,
+            myConfig
+          )
+          .then((res) => {
+            if (res.data.code === 1) {
+              if (res.data.result) {
+                setData(res.data.result);
+                setRecords(res.data.result.length);
+              }
+            }
+          });
+      } else {
+        axios
+          .get(
+            `${baseUrl}/admin/getProposals?status1=1&cat_id=${store2}&from=${fromDate}&to=${toDate}&pcat_id=${selectedData}`,
+            myConfig
+          )
+          .then((res) => {
+            if (res.data.code === 1) {
+              if (res.data.result) {
+                setData(res.data.result);
+                setRecords(res.data.result.length);
+              }
+            }
+          });
+      }
     }
 
     if (declinedProposal == "declinedProposal") {
       axios
         .get(
-          `${baseUrl}/admin/getProposals?&status=6&cat_id=${store2}&from=${fromDate}&to=${toDate}&pcat_id=${selectedData}`
-          , myConfig
+          `${baseUrl}/admin/getProposals?&status=6&cat_id=${store2}&from=${fromDate}&to=${toDate}&pcat_id=${selectedData}`,
+          myConfig
         )
         .then((res) => {
-
           if (res.data.code === 1) {
             if (res.data.result) {
               setData(res.data.result);
@@ -179,10 +168,10 @@ const maxDate = moment(new Date().toISOString().slice(0, 10)).add(1, "days")
     if (declinedQueries == "declinedQueries") {
       axios
         .get(
-          `${baseUrl}/admin/declinedQueries?cat_id=${store2}&from=${fromDate}&to=${toDate}&status=${data.p_status}&pcat_id=${selectedData}`
-        , myConfig)
+          `${baseUrl}/admin/declinedQueries?cat_id=${store2}&from=${fromDate}&to=${toDate}&status=${data.p_status}&pcat_id=${selectedData}`,
+          myConfig
+        )
         .then((res) => {
-
           if (res.data.code === 1) {
             if (res.data.result) {
               setData(res.data.result);
@@ -195,10 +184,10 @@ const maxDate = moment(new Date().toISOString().slice(0, 10)).add(1, "days")
     if (pendingForProposal == "pendingForProposal") {
       axios
         .get(
-          `${baseUrl}/admin/pendingProposal?category=${store2}&from=${fromDate}&to=${toDate}&status=${data.p_status}&pcat_id=${selectedData}`
-        , myConfig)
+          `${baseUrl}/admin/pendingProposal?category=${store2}&from=${fromDate}&to=${toDate}&status=${data.p_status}&pcat_id=${selectedData}`,
+          myConfig
+        )
         .then((res) => {
-         
           if (res.data.code === 1) {
             if (res.data.result) {
               setData(res.data.result);
@@ -211,10 +200,10 @@ const maxDate = moment(new Date().toISOString().slice(0, 10)).add(1, "days")
     if (allQueries == "allQueries") {
       axios
         .get(
-          `${baseUrl}/admin/getAllQueries?cat_id=${store2}&from=${fromDate}&to=${toDate}&status=${data.p_status}&pcat_id=${selectedData}`
-       , myConfig )
+          `${baseUrl}/admin/getAllQueries?cat_id=${store2}&from=${fromDate}&to=${toDate}&status=${data.p_status}&pcat_id=${selectedData}`,
+          myConfig
+        )
         .then((res) => {
-         
           if (res.data.code === 1) {
             if (res.data.result) {
               setData(res.data.result);
@@ -227,10 +216,10 @@ const maxDate = moment(new Date().toISOString().slice(0, 10)).add(1, "days")
     if (pendingAlloation == "pendingAlloation") {
       axios
         .get(
-          `${baseUrl}/admin/pendingAllocation?category=${store2}&date1=${fromDate}&date2=${toDate}&pcat_id=${selectedData}`
-        , myConfig)
+          `${baseUrl}/admin/pendingAllocation?category=${store2}&date1=${fromDate}&date2=${toDate}&pcat_id=${selectedData}`,
+          myConfig
+        )
         .then((res) => {
-        
           if (res.data.code === 1) {
             if (res.data.result) {
               setData(res.data.result);
@@ -243,10 +232,10 @@ const maxDate = moment(new Date().toISOString().slice(0, 10)).add(1, "days")
     if (AllPayment == "AllPayment") {
       axios
         .get(
-          `${baseUrl}/admin/getUploadedProposals?cat_id=${store2}&from=${fromDate}&to=${toDate}&status=${data.p_status}&pcat_id=${selectedData}`
-        , myConfig) 
+          `${baseUrl}/admin/getUploadedProposals?cat_id=${store2}&from=${fromDate}&to=${toDate}&status=${data.p_status}&pcat_id=${selectedData}`,
+          myConfig
+        )
         .then((res) => {
-         
           if (res.data.code === 1) {
             if (res.data.result) {
               setData(res.data.result);
@@ -259,10 +248,10 @@ const maxDate = moment(new Date().toISOString().slice(0, 10)).add(1, "days")
     if (unpaid == "unpaid") {
       axios
         .get(
-          `${baseUrl}/admin/getUploadedProposals?cat_id=${store2}&from=${fromDate}&to=${toDate}&status=1&pcat_id=${selectedData}`
-       , myConfig )
+          `${baseUrl}/admin/getUploadedProposals?cat_id=${store2}&from=${fromDate}&to=${toDate}&status=1&pcat_id=${selectedData}`,
+          myConfig
+        )
         .then((res) => {
-         
           if (res.data.code === 1) {
             if (res.data.result) {
               setData(res.data.result);
@@ -275,10 +264,10 @@ const maxDate = moment(new Date().toISOString().slice(0, 10)).add(1, "days")
     if (paid == "paid") {
       axios
         .get(
-          `${baseUrl}/admin/getUploadedProposals?cat_id=${store2}&from=${fromDate}&to=${toDate}&status=2&pcat_id=${selectedData}`
-       , myConfig)
+          `${baseUrl}/admin/getUploadedProposals?cat_id=${store2}&from=${fromDate}&to=${toDate}&status=2&pcat_id=${selectedData}`,
+          myConfig
+        )
         .then((res) => {
-        
           if (res.data.code === 1) {
             if (res.data.result) {
               setData(res.data.result);
@@ -291,10 +280,10 @@ const maxDate = moment(new Date().toISOString().slice(0, 10)).add(1, "days")
     if (allProposal == "allProposal") {
       axios
         .get(
-          `${baseUrl}/admin/getProposals?cat_id=${store2}&from=${fromDate}&to=${toDate}&status1=${data.p_status}&pcat_id=${selectedData}`
-        , myConfig)
+          `${baseUrl}/admin/getProposals?cat_id=${store2}&from=${fromDate}&to=${toDate}&status1=${data.p_status}&pcat_id=${selectedData}`,
+          myConfig
+        )
         .then((res) => {
-        
           if (res.data.code === 1) {
             if (res.data.result) {
               setData(res.data.result);
@@ -304,7 +293,6 @@ const maxDate = moment(new Date().toISOString().slice(0, 10)).add(1, "days")
         });
     }
   };
-
 
   const Reset = () => {
     return (
@@ -376,12 +364,12 @@ const maxDate = moment(new Date().toISOString().slice(0, 10)).add(1, "days")
                 </div>
 
                 <div className="form-group mx-sm-1  mb-2">
-                <DatePicker 
-                 ref = {dateValue}
-                 onChange={(e) =>fromDateFun(e)}
-                 disabledDate={d => !d || d.isAfter(maxDate) }
-                  format={dateFormatList} />
-                 
+                  <DatePicker
+                    ref={dateValue}
+                    onChange={(e) => fromDateFun(e)}
+                    disabledDate={(d) => !d || d.isAfter(maxDate)}
+                    format={dateFormatList}
+                  />
                 </div>
 
                 <div className="form-group mx-sm-1  mb-2">
@@ -389,12 +377,12 @@ const maxDate = moment(new Date().toISOString().slice(0, 10)).add(1, "days")
                 </div>
 
                 <div className="form-group mx-sm-1  mb-2">
-                  
-                <DatePicker 
-                 onChange={(e) =>setToDate(e.format("YYYY-MM-DD"))}
-                 disabledDate={d => !d || d.isAfter(maxDate) }
-                 defaultValue={moment(new Date(), "DD MM, YYYY")}
-                    format={dateFormatList} />
+                  <DatePicker
+                    onChange={(e) => setToDate(e.format("YYYY-MM-DD"))}
+                    disabledDate={(d) => !d || d.isAfter(maxDate)}
+                    defaultValue={moment(new Date(), "DD MM, YYYY")}
+                    format={dateFormatList}
+                  />
                   {/* <input
                     type="date"
                     name="p_dateTo"
@@ -417,7 +405,6 @@ const maxDate = moment(new Date().toISOString().slice(0, 10)).add(1, "days")
                       <option value="1">Inprogress Queries</option>
                       <option value="2">Completed Queries</option>
                       <option value="3">Declined Queries</option>
-
                     </select>
                   )}
 
@@ -492,13 +479,14 @@ const maxDate = moment(new Date().toISOString().slice(0, 10)).add(1, "days")
                 </div>
 
                 <button type="submit" className="searchBtn mx-sm-1 mb-2">
-                        Search
-                      </button>
+                  Search
+                </button>
                 <Reset />
 
                 <div className="form-group mx-sm-1  mb-2">
-                  <label className="form-select form-control"
-                  >Total records : {records}</label>
+                  <label className="form-select form-control">
+                    Total records : {records}
+                  </label>
                 </div>
               </div>
             </form>
@@ -510,6 +498,3 @@ const maxDate = moment(new Date().toISOString().slice(0, 10)).add(1, "days")
 }
 
 export default AdminFilter;
-
-
-   

@@ -2,24 +2,23 @@ import React, { useState, useEffect } from "react";
 import Layout from "../../../components/Layout/Layout";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
-import { getErrorMessage } from '../../../constants';
+import { getErrorMessage } from "../../../constants";
 import Loader from "../../../components/Loader/Loader";
-import {
-  Card,
-  CardHeader,
-  CardBody,
-} from "reactstrap";
+import { Card, CardHeader, CardBody } from "reactstrap";
 import { useForm } from "react-hook-form";
 import "antd/dist/antd.css";
 import { Select } from "antd";
 import { Link } from "react-router-dom";
 import Records from "../../../components/Records/Records";
 import ViewAllReportModal from "./ViewAllReport";
-import DescriptionOutlinedIcon from '@material-ui/icons/DescriptionOutlined';
+import DescriptionOutlinedIcon from "@material-ui/icons/DescriptionOutlined";
 import DiscardReport from "../AssignmentTab/DiscardReport";
 import moment from "moment";
 import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
-import MessageIcon, {ViewDiscussionIcon, Payment} from "../../../components/Common/MessageIcon";
+import MessageIcon, {
+  ViewDiscussionIcon,
+  Payment,
+} from "../../../components/Common/MessageIcon";
 import { Spinner } from "reactstrap";
 
 function AssignmentComponent(props) {
@@ -38,19 +37,23 @@ function AssignmentComponent(props) {
   const [hide, setHide] = useState();
   const [report, setReport] = useState();
   const [error, setError] = useState(false);
-  var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
-  
+  var current_date =
+    new Date().getFullYear() +
+    "-" +
+    ("0" + (new Date().getMonth() + 1)).slice(-2) +
+    "-" +
+    ("0" + new Date().getDate()).slice(-2);
+
   const [item] = useState(current_date);
-   var rowStyle2 = {}
-   var clcomp= {
-    color: "green"
-  }
+  var rowStyle2 = {};
+  var clcomp = {
+    color: "green",
+  };
   var clinpro = {
-    color : "blue"
-  }
+    color: "blue",
+  };
   const [reportModal, setReportModal] = useState(false);
   const ViewReport = (key) => {
-  
     setReportModal(!reportModal);
     setReport(key);
   };
@@ -58,34 +61,29 @@ function AssignmentComponent(props) {
   const [assignNo, setAssignNo] = useState(null);
   const [ViewDiscussion, setViewDiscussion] = useState(false);
   const ViewDiscussionToggel = (key) => {
-  
-  
     setViewDiscussion(!ViewDiscussion);
-   
-    setAssignNo(key)
 
-  }
+    setAssignNo(key);
+  };
 
   const [viewData, setViewData] = useState({});
   const [viewModal, setViewModal] = useState(false);
   const ViewHandler = (key) => {
-  
     setViewModal(!viewModal);
     setViewData(key);
   };
-  
+
   useEffect(() => {
     getAssignmentData();
   }, []);
-  const token = window.localStorage.getItem("adminToken")
+  const token = window.localStorage.getItem("adminToken");
   const myConfig = {
-      headers : {
-       "uit" : token
-      }
-    }
+    headers: {
+      uit: token,
+    },
+  };
   const getAssignmentData = () => {
     axios.get(`${baseUrl}/admin/getAssignments`, myConfig).then((res) => {
-    
       if (res.data.code === 1) {
         setAssignmentDisplay(res.data.result);
         setCountAssignment(res.data.result.length);
@@ -97,51 +95,47 @@ function AssignmentComponent(props) {
   //get category
   useEffect(() => {
     const getSubCategory = () => {
-    if(selectedData.length > 0){
-      axios
-      .get(`${baseUrl}/admin/getCategory?pid=${selectedData}`, myConfig)
-      .then((res) => {
-       
-        if (res.data.code === 1) {
-          setTax2(res.data.result);
-        }
-      });
-    }
+      if (selectedData.length > 0) {
+        axios
+          .get(`${baseUrl}/admin/getCategory?pid=${selectedData}`, myConfig)
+          .then((res) => {
+            if (res.data.code === 1) {
+              setTax2(res.data.result);
+            }
+          });
+      }
     };
     getSubCategory();
   }, [selectedData]);
 
   //handleCategory
   const handleCategory = (value) => {
-  setError(false)
+    setError(false);
     setSelectedData(value);
     setStore2([]);
   };
 
   //handleSubCategory
   const handleSubCategory = (value) => {
-  setError(false)
+    setError(false);
     setStore2(value);
   };
 
   //reset category
   const resetCategory = () => {
-    console.log(error)
-  
     setSelectedData([]);
     setStore2([]);
     getAssignmentData();
-    setError(false)
-    setTax2([])
+    setError(false);
+    setTax2([]);
   };
 
   //reset date
   const resetData = () => {
-  
     reset();
-     setTax2([])
-    setError(false)
-    setHide("")
+    setTax2([]);
+    setError(false);
+    setHide("");
     setStatus([]);
     setSelectedData([]);
     setStore2([]);
@@ -150,8 +144,8 @@ function AssignmentComponent(props) {
 
   //assingmentStatus
   const assingmentStatus = (value) => {
-  setError(false)
- 
+    setError(false);
+
     setStatus(value);
   };
 
@@ -170,9 +164,8 @@ function AssignmentComponent(props) {
       text: "Date",
       dataField: "date_of_query",
       sort: true,
-      
+
       formatter: function dateFormat(cell, row) {
-     
         var oldDate = row.date_of_query;
         if (oldDate == null) {
           return null;
@@ -183,16 +176,14 @@ function AssignmentComponent(props) {
     {
       text: "Query no",
       dataField: "assign_no",
-      
+
       formatter: function nameFormatter(cell, row) {
-     
         return (
           <>
-        
             <Link
               to={{
                 pathname: `/admin/queries/${row.q_id}`,
-                index : 0,
+                index: 0,
                 routes: "assignment",
               }}
             >
@@ -206,18 +197,16 @@ function AssignmentComponent(props) {
       text: "Category",
       dataField: "parent_id",
       sort: true,
-      
     },
     {
       text: "Sub category",
       dataField: "cat_name",
       sort: true,
-     
     },
     {
       dataField: "status",
       text: "Status",
-     
+
       headerStyle: () => {
         return { width: "200px" };
       },
@@ -226,40 +215,68 @@ function AssignmentComponent(props) {
         return (
           <>
             <div>
-            {row.paid_status == "2" &&
+              {row.paid_status == "2" && (
                 <p>
                   <span className="declined">Payment declined</span>
                 </p>
-              }
+              )}
               <p>
                 <span>Client discussion :</span>
-               <span className={row.client_discussion === "completed" ? "completed" : "inprogress"}>
-                                {row.client_discussion}
-                 </span>
+                <span
+                  className={
+                    row.client_discussion === "completed"
+                      ? "completed"
+                      : "inprogress"
+                  }
+                >
+                  {row.client_discussion}
+                </span>
               </p>
               <p>
                 <span>Draft report :</span>
-                <span className={row.draft_report === "completed" ? "completed" : "inprogress"}>
-                      {row.draft_report}
-                 </span>
+                <span
+                  className={
+                    row.draft_report === "completed"
+                      ? "completed"
+                      : "inprogress"
+                  }
+                >
+                  {row.draft_report}
+                </span>
               </p>
               <p>
                 <span>Final discussion :</span>
-                <span className={row.final_discussion === "completed" ? "completed" : "inprogress"}>
-                     {row.final_discussion}
-                 </span>
+                <span
+                  className={
+                    row.final_discussion === "completed"
+                      ? "completed"
+                      : "inprogress"
+                  }
+                >
+                  {row.final_discussion}
+                </span>
               </p>
               <p>
                 <span>Delivery of final report :</span>
-                <span className={row.delivery_report === "completed" ? "completed" : "inprogress"}>
-                             {row.delivery_report}
-                 </span>
+                <span
+                  className={
+                    row.delivery_report === "completed"
+                      ? "completed"
+                      : "inprogress"
+                  }
+                >
+                  {row.delivery_report}
+                </span>
               </p>
               <p>
                 <span>Awaiting completion:</span>
-                <span className={row.other_stage === "completed" ? "completed" : "inprogress"}>
-                            {row.other_stage}
-                 </span>
+                <span
+                  className={
+                    row.other_stage === "completed" ? "completed" : "inprogress"
+                  }
+                >
+                  {row.other_stage}
+                </span>
               </p>
             </div>
           </>
@@ -270,10 +287,8 @@ function AssignmentComponent(props) {
       dataField: "Exp_Delivery_Date",
       text: "Expected date of delivery",
       sort: true,
-     
+
       formatter: function dateFormat(cell, row) {
-        
-      
         var oldDate = row.Exp_Delivery_Date;
         if (oldDate == null) {
           return null;
@@ -285,9 +300,8 @@ function AssignmentComponent(props) {
       dataField: "final_date",
       text: "Actual date of delivery",
       sort: true,
-     
+
       formatter: function dateFormat(cell, row) {
-       
         var oldDate = row.final_date;
         if (oldDate == null || oldDate == "0000-00-00 00:00:00") {
           return null;
@@ -299,25 +313,22 @@ function AssignmentComponent(props) {
       text: "Deliverable",
       dataField: "",
 
-     
       formatter: function (cell, row) {
         return (
           <>
-            {
-              row.paid_status == "2" ? null :
-                <div>
-                  {row.assignement_draft_report || row.final_report ?
-                    <div title="View All Report"
-                      style={{ cursor: "pointer" }}
-                      onClick={() => ViewReport(row.assign_no)}
-                    >
-                      <DescriptionOutlinedIcon color="secondary" />
-                    </div>
-                    :
-                    null
-                  }
-                </div>
-            }
+            {row.paid_status == "2" ? null : (
+              <div>
+                {row.assignement_draft_report || row.final_report ? (
+                  <div
+                    title="View All Report"
+                    style={{ cursor: "pointer" }}
+                    onClick={() => ViewReport(row.assign_no)}
+                  >
+                    <DescriptionOutlinedIcon color="secondary" />
+                  </div>
+                ) : null}
+              </div>
+            )}
           </>
         );
       },
@@ -326,38 +337,36 @@ function AssignmentComponent(props) {
       text: "TL name",
       dataField: "tl_name",
       sort: true,
-     
     },
     {
       text: "Action",
-     
+
       formatter: function (cell, row) {
         return (
           <>
             <div style={{ display: "flex" }}>
+              <Link
+                to={{
+                  pathname: `/admin/chatting/${row.q_id}`,
+                  index: 0,
+                  routes: "assignment",
+                  obj: {
+                    message_type: "3",
+                    query_No: row.assign_no,
+                    query_id: row.q_id,
+                    routes: `/admin/assignment`,
+                  },
+                }}
+              >
+                <MessageIcon />
+              </Link>
 
-            
-                <Link
-                
-                    to={{
-                      pathname: `/admin/chatting/${row.q_id}`,
-                      index : 0,
-                      routes: "assignment",
-                    obj: {
-                      message_type: "3",
-                      query_No: row.assign_no,
-                      query_id: row.q_id,
-                      routes: `/admin/assignment`
-                    }
-                  }}
-                >
-                 <MessageIcon />
-                </Link>
-            
-                <div  onClick={() => ViewDiscussionToggel(row.assign_no)} className="ml-1">
-                                  
-                                  <ViewDiscussionIcon />
-                          </div>
+              <div
+                onClick={() => ViewDiscussionToggel(row.assign_no)}
+                className="ml-1"
+              >
+                <ViewDiscussionIcon />
+              </div>
             </div>
           </>
         );
@@ -366,56 +375,53 @@ function AssignmentComponent(props) {
   ];
 
   rowStyle2 = (row, index) => {
-    const style = {}
-    var warningDate = moment(row.Exp_Delivery_Date).subtract(2, 'day').toDate();
+    const style = {};
+    var warningDate = moment(row.Exp_Delivery_Date).subtract(2, "day").toDate();
     // var warnformat = warningDate.format("YYYY-MM-DD");
     var aa = moment().toDate();
- 
-    if(row.paid_status != "2" && row.status != "Complete" && warningDate < aa)  {
+
+    if (
+      row.paid_status != "2" &&
+      row.status != "Complete" &&
+      warningDate < aa
+    ) {
       style.backgroundColor = "#c1d8f2";
-      style.color = "#000111"
+      style.color = "#000111";
     }
-  
+
     return style;
-  }
-  const onSubmit = (data) => {
-   
-  
-if(status.length > 0){
-  axios
-  .get(
-    `${baseUrl}/admin/getAssignments?cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&assignment_status=${status}&stages_status=${data.p_status}&pcat_id=${selectedData}`
-    , myConfig
-  )
-  .then((res) => {
-   
-    if (res.data.code === 1) {
-      if (res.data.result) {
-        setAssignmentDisplay(res.data.result);
-        setRecords(res.data.result.length);
-      }
-    }
-  });
-
-   }
-   else{
-    axios
-    .get(
-      `${baseUrl}/admin/getAssignments?cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&assignment_status=${status}&stages_status=${data.p_status}&pcat_id=${selectedData}`
-      , myConfig
-    )
-    .then((res) => {
-     
-      if (res.data.code === 1) {
-        if (res.data.result) {
-          setAssignmentDisplay(res.data.result);
-          setRecords(res.data.result.length);
-        }
-      }
-    });
-   }
   };
-
+  const onSubmit = (data) => {
+    if (status.length > 0) {
+      axios
+        .get(
+          `${baseUrl}/admin/getAssignments?cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&assignment_status=${status}&stages_status=${data.p_status}&pcat_id=${selectedData}`,
+          myConfig
+        )
+        .then((res) => {
+          if (res.data.code === 1) {
+            if (res.data.result) {
+              setAssignmentDisplay(res.data.result);
+              setRecords(res.data.result.length);
+            }
+          }
+        });
+    } else {
+      axios
+        .get(
+          `${baseUrl}/admin/getAssignments?cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&assignment_status=${status}&stages_status=${data.p_status}&pcat_id=${selectedData}`,
+          myConfig
+        )
+        .then((res) => {
+          if (res.data.code === 1) {
+            if (res.data.result) {
+              setAssignmentDisplay(res.data.result);
+              setRecords(res.data.result.length);
+            }
+          }
+        });
+    }
+  };
 
   const Reset = () => {
     return (
@@ -432,11 +438,10 @@ if(status.length > 0){
   };
 
   const disabledHandler = (e) => {
-    setStatus([])
+    setStatus([]);
     setHide(e.target.value);
-    setError(false)
+    setError(false);
   };
-
 
   return (
     <div>
@@ -532,59 +537,58 @@ if(status.length > 0){
                 </select>
               </div>
 
-           
-                 
-                 {
-                   hide !== "3" ?
-                   <div className="form-group mx-sm-1  mb-2">
-                   <Select
-                     mode="single"
-                     style={{ width: 210 }}
-                     placeholder="Select stages"
-                     defaultValue={[]}
-                     onChange={assingmentStatus}
-                     value={status}
-                     allowClear
-                     className={error ? "customError" : ""}
-                   >
-                     <Option value="Client_Discussion" label="Compilance">
-                       <div className="demo-option-label-item">
-                         Client Discussion
-                       </div>
-                     </Option>
-                     <Option value="Draft_Report" label="Compilance">
-                       <div className="demo-option-label-item">
-                         Draft reports
-                       </div>
-                     </Option>
-                     <Option value="Final_Discussion" label="Compilance">
-                       <div className="demo-option-label-item">
-                         Final Discussion
-                       </div>
-                     </Option>
-                     <Option value="Delivery_of_report" label="Compilance">
-                       <div className="demo-option-label-item">
-                         Delivery of Final Reports
-                       </div>
-                     </Option>
-                     <Option value="Completed" label="Compilance">
-                       <div className="demo-option-label-item">Awaiting Completion</div>
-                     </Option>
-                   </Select>
-                 </div>  : ""
-                 }
-                {
-            loading ?
-              // <Loader />
-              <div class="col-md-12">
-                    <Spinner color="primary" />
-                  </div>
-              :
-
-              <button type="submit" className="customBtn">
-                Search
-              </button>
-}
+              {hide !== "3" ? (
+                <div className="form-group mx-sm-1  mb-2">
+                  <Select
+                    mode="single"
+                    style={{ width: 210 }}
+                    placeholder="Select stages"
+                    defaultValue={[]}
+                    onChange={assingmentStatus}
+                    value={status}
+                    allowClear
+                    className={error ? "customError" : ""}
+                  >
+                    <Option value="Client_Discussion" label="Compilance">
+                      <div className="demo-option-label-item">
+                        Client Discussion
+                      </div>
+                    </Option>
+                    <Option value="Draft_Report" label="Compilance">
+                      <div className="demo-option-label-item">
+                        Draft reports
+                      </div>
+                    </Option>
+                    <Option value="Final_Discussion" label="Compilance">
+                      <div className="demo-option-label-item">
+                        Final Discussion
+                      </div>
+                    </Option>
+                    <Option value="Delivery_of_report" label="Compilance">
+                      <div className="demo-option-label-item">
+                        Delivery of Final Reports
+                      </div>
+                    </Option>
+                    <Option value="Completed" label="Compilance">
+                      <div className="demo-option-label-item">
+                        Awaiting Completion
+                      </div>
+                    </Option>
+                  </Select>
+                </div>
+              ) : (
+                ""
+              )}
+              {loading ? (
+                // <Loader />
+                <div class="col-md-12">
+                  <Spinner color="primary" />
+                </div>
+              ) : (
+                <button type="submit" className="customBtn">
+                  Search
+                </button>
+              )}
 
               <Reset />
             </div>
@@ -593,24 +597,25 @@ if(status.length > 0){
 
         <CardBody className="card-body">
           <Records records={records} />
-          <DataTablepopulated 
-                  bgColor = "#5a625a"
-                   keyField= {"assign_no"}
-                   data={assignmentDisplay}
-                   rowStyle2= {rowStyle2}
-                   columns={columns}>
-                    </DataTablepopulated>
-                   
-{
-  reportModal === true ?
-  <ViewAllReportModal
-  ViewReport={ViewReport}
-  reportModal={reportModal}
-  report={report}
-  getPendingforAcceptance={getAssignmentData}
-  deleiverAble = "#5a625a"
-/> : ""
-}
+          <DataTablepopulated
+            bgColor="#5a625a"
+            keyField={"assign_no"}
+            data={assignmentDisplay}
+            rowStyle2={rowStyle2}
+            columns={columns}
+          ></DataTablepopulated>
+
+          {reportModal === true ? (
+            <ViewAllReportModal
+              ViewReport={ViewReport}
+              reportModal={reportModal}
+              report={report}
+              getPendingforAcceptance={getAssignmentData}
+              deleiverAble="#5a625a"
+            />
+          ) : (
+            ""
+          )}
 
           <DiscardReport
             ViewDiscussionToggel={ViewDiscussionToggel}
@@ -619,7 +624,6 @@ if(status.length > 0){
             getData={getAssignmentData}
             headColor="#5a625a"
           />
-
         </CardBody>
       </Card>
     </div>

@@ -18,48 +18,51 @@ import BootstrapTable from "react-bootstrap-table-next";
 import AdminFilter from "../../../components/Search-Filter/AdminFilter";
 import Records from "../../../components/Records/Records";
 import DiscardReport from "../AssignmentTab/DiscardReport";
-import CommonShowProposal from '../../../components/commonShowProposal/CommonShowProposal';
+import CommonShowProposal from "../../../components/commonShowProposal/CommonShowProposal";
 import ShowProposal from "../AllProposalComponent/ShowProposal";
 import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
-import MessageIcon, {EyeIcon, ViewDiscussionIcon, DiscussProposal, HelpIcon} from "../../../components/Common/MessageIcon";
+import MessageIcon, {
+  EyeIcon,
+  ViewDiscussionIcon,
+  DiscussProposal,
+  HelpIcon,
+} from "../../../components/Common/MessageIcon";
 function AcceptedProposal({ acceptedProposal }) {
   const [proposalDisplay, setProposalDisplay] = useState([]);
   const [records, setRecords] = useState([]);
 
-  const [assignNo, setAssignNo] = useState('');
+  const [assignNo, setAssignNo] = useState("");
   const [ViewDiscussion, setViewDiscussion] = useState(false);
-  const [viewProposalModal, setViewProposalModal] = useState(false)
-  const [proposalId, setProposalId] = useState()
-  const token = window.localStorage.getItem("adminToken")
+  const [viewProposalModal, setViewProposalModal] = useState(false);
+  const [proposalId, setProposalId] = useState();
+  const token = window.localStorage.getItem("adminToken");
   const myConfig = {
-      headers : {
-       "uit" : token
-      }
-    }
+    headers: {
+      uit: token,
+    },
+  };
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
-    setAssignNo(key)
-  }
+    setAssignNo(key);
+  };
   const showProposalModal2 = (e) => {
-    console.log("eeee")
     setViewProposalModal(!viewProposalModal);
-    setProposalId(e)
-  }
+    setProposalId(e);
+  };
 
   useEffect(() => {
     getAcceptedProposal();
   }, []);
   const getAcceptedProposal = () => {
-    axios.get(`${baseUrl}/admin/getProposals?status1=2`, myConfig).then((res) => {
-   
-      if (res.data.code === 1) {
-        setProposalDisplay(res.data.result);
-        setRecords(res.data.result.length);
-      }
-    });
+    axios
+      .get(`${baseUrl}/admin/getProposals?status1=2`, myConfig)
+      .then((res) => {
+        if (res.data.code === 1) {
+          setProposalDisplay(res.data.result);
+          setRecords(res.data.result.length);
+        }
+      });
   };
-
-
 
   const columns = [
     {
@@ -68,18 +71,17 @@ function AcceptedProposal({ acceptedProposal }) {
       formatter: (cellContent, row, rowIndex) => {
         return rowIndex + 1;
       },
-    
+
       headerStyle: () => {
-        return { width : "50px" };
+        return { width: "50px" };
       },
     },
     {
       dataField: "created",
       text: "Date",
       sort: true,
-     
-      formatter: function dateFormat(cell, row) {
 
+      formatter: function dateFormat(cell, row) {
         var oldDate = row.created;
         if (oldDate == null) {
           return null;
@@ -90,18 +92,19 @@ function AcceptedProposal({ acceptedProposal }) {
     {
       dataField: "assign_no",
       text: "Query no",
-     
+
       formatter: function nameFormatter(cell, row) {
-     
         return (
           <>
-           <Link
+            <Link
               to={{
                 pathname: `/admin/queries/${row.q_id}`,
                 index: 2,
                 routes: "proposal",
               }}
-            >{row.assign_no}</Link>
+            >
+              {row.assign_no}
+            </Link>
           </>
         );
       },
@@ -110,45 +113,41 @@ function AcceptedProposal({ acceptedProposal }) {
       dataField: "parent_id",
       text: "Category",
       sort: true,
-      
     },
     {
       dataField: "cat_name",
       text: "Sub category",
       sort: true,
-      
     },
     {
       text: "Payment  plan",
       dataField: "paymnet_plan_code",
-      
-      formatter : function paymentPlan (cell, row) {
-         var subplan = "" ;
-          if (row.paymnet_plan_code === "3" && row.sub_payment_plane === "2"){
-           subplan = "B"
-          }
-          else   if (row.paymnet_plan_code === "3" && row.sub_payment_plane === "1"){
-              subplan = "A"
-             }
-             return (
-              <>
-                {
-                    row.paymnet_plan_code === null ? "" :
-                    `${row.paymnet_plan_code} ${subplan}`
-                }
-              </>
-            )
-      }
-      
-     
-  },
+
+      formatter: function paymentPlan(cell, row) {
+        var subplan = "";
+        if (row.paymnet_plan_code === "3" && row.sub_payment_plane === "2") {
+          subplan = "B";
+        } else if (
+          row.paymnet_plan_code === "3" &&
+          row.sub_payment_plane === "1"
+        ) {
+          subplan = "A";
+        }
+        return (
+          <>
+            {row.paymnet_plan_code === null
+              ? ""
+              : `${row.paymnet_plan_code} ${subplan}`}
+          </>
+        );
+      },
+    },
     {
       text: "Date of proposal",
       dataField: "DateofProposal",
       sort: true,
-    
-      formatter: function dateFormat(cell, row) {
 
+      formatter: function dateFormat(cell, row) {
         var oldDate = row.DateofProposal;
         if (oldDate == null) {
           return null;
@@ -160,9 +159,8 @@ function AcceptedProposal({ acceptedProposal }) {
       text: "Date of acceptance of proposal",
       dataField: "cust_accept_date",
       sort: true,
-     
+
       formatter: function dateFormat(cell, row) {
-      
         var oldDate = row.cust_accept_date;
         if (oldDate == null) {
           return null;
@@ -172,19 +170,14 @@ function AcceptedProposal({ acceptedProposal }) {
     },
     {
       text: "Status",
-     
+
       formatter: function nameFormatter(cell, row) {
         return (
           <>
             <div>
-
-              {
-                row.status == "Accepted; Proposal" ?
-                  <p className="completed">
-                    {row.status}
-                  </p> :
-                  null
-              }
+              {row.status == "Accepted; Proposal" ? (
+                <p className="completed">{row.status}</p>
+              ) : null}
             </div>
           </>
         );
@@ -194,21 +187,19 @@ function AcceptedProposal({ acceptedProposal }) {
       dataField: "ProposedAmount",
       text: "Proposed amount",
       sort: true,
-     
+
       sortFunc: (a, b, order, dataField) => {
-        if (order === 'asc') {
+        if (order === "asc") {
           return b - a;
         }
         return a - b; // desc
       },
-      formatter: function nameFormatter(cell, row){
-        var nfObject = new Intl.NumberFormat('hi-IN')
-         var x = row.ProposedAmount;
-         
-         return(
-           <p className="rightAli">{nfObject.format(x)}</p>
-         )
-       }
+      formatter: function nameFormatter(cell, row) {
+        var nfObject = new Intl.NumberFormat("hi-IN");
+        var x = row.ProposedAmount;
+
+        return <p className="rightAli">{nfObject.format(x)}</p>;
+      },
     },
     {
       dataField: "accepted_amount",
@@ -216,76 +207,66 @@ function AcceptedProposal({ acceptedProposal }) {
       sort: true,
 
       sortFunc: (a, b, order, dataField) => {
-        if (order === 'asc') {
+        if (order === "asc") {
           return b - a;
         }
         return a - b; // desc
       },
-      formatter: function nameFormatter(cell, row){
-        var nfObject = new Intl.NumberFormat('hi-IN')
-         var x = row.accepted_amount;
-         
-         return(
-           <p className="rightAli">{nfObject.format(x)}</p>
-         )
-       }
+      formatter: function nameFormatter(cell, row) {
+        var nfObject = new Intl.NumberFormat("hi-IN");
+        var x = row.accepted_amount;
+
+        return <p className="rightAli">{nfObject.format(x)}</p>;
+      },
     },
     {
       dataField: "tl_name",
       text: "TL name",
       sort: true,
-      
     },
     {
       text: "Action",
-     
+
       formatter: function (cell, row) {
         return (
           <>
             <div style={{ display: "flex" }}>
-            <Link
-  to={{
-    pathname: `/admin/chatting/${row.q_id}`,
-    index: 2,
-    routes: "proposal",
-                    obj: {
-                      message_type: "2",
-                      query_No: row.assign_no,
-                      query_id: row.q_id,
-                      routes: `/admin/proposal`
-                    }
-                  }}
+              <Link
+                to={{
+                  pathname: `/admin/chatting/${row.q_id}`,
+                  index: 2,
+                  routes: "proposal",
+                  obj: {
+                    message_type: "2",
+                    query_No: row.assign_no,
+                    query_id: row.q_id,
+                    routes: `/admin/proposal`,
+                  },
+                }}
+              >
+                <MessageIcon />
+              </Link>
+
+              <div
+                onClick={() => ViewDiscussionToggel(row.assign_no)}
+                className="ml-1"
+              >
+                <ViewDiscussionIcon />
+              </div>
+              {row.statuscode > "3" || row.statuscode == "10" ? (
+                <div
+                  onClick={(e) => showProposalModal2(row.q_id)}
+                  className="ml-1"
                 >
-                  <MessageIcon />
-                </Link>
-       
-            <div  onClick={() => ViewDiscussionToggel(row.assign_no)} className="ml-1">
-                                  
-                                  <ViewDiscussionIcon />
-                          </div>
-              {row.statuscode > "3" || row.statuscode == "10" ?
-                <div  onClick={(e) => showProposalModal2(row.q_id)} className="ml-1">
-                <EyeIcon  />
-               </div>
-                :
-                null
-              }
-
-
-             
-                     
-
-               
-
-
+                  <EyeIcon />
+                </div>
+              ) : null}
             </div>
           </>
         );
       },
     },
   ];
-
-
 
   return (
     <>
@@ -298,16 +279,15 @@ function AcceptedProposal({ acceptedProposal }) {
             setRecords={setRecords}
             records={records}
           />
-
         </CardHeader>
         <CardBody>
           {/* <Records records={records} /> */}
-          <DataTablepopulated 
-                   bgColor="#42566a"
-                   keyField= {"assign_no"}
-                   data={proposalDisplay}
-                   columns={columns}>
-                    </DataTablepopulated>
+          <DataTablepopulated
+            bgColor="#42566a"
+            keyField={"assign_no"}
+            data={proposalDisplay}
+            columns={columns}
+          ></DataTablepopulated>
           <DiscardReport
             ViewDiscussionToggel={ViewDiscussionToggel}
             ViewDiscussion={ViewDiscussion}
@@ -315,15 +295,17 @@ function AcceptedProposal({ acceptedProposal }) {
             getData={getAcceptedProposal}
             headColor="#42566a"
           />
-          {
-         viewProposalModal === true ?
-         <CommonShowProposal 
-         setViewProposalModal = {setViewProposalModal}
-         viewProposalModal = {viewProposalModal}
-         showProposalModal2 = {showProposalModal2}
-         panel = "admin"
-         proposalId = {proposalId} /> : ""
-       }
+          {viewProposalModal === true ? (
+            <CommonShowProposal
+              setViewProposalModal={setViewProposalModal}
+              viewProposalModal={viewProposalModal}
+              showProposalModal2={showProposalModal2}
+              panel="admin"
+              proposalId={proposalId}
+            />
+          ) : (
+            ""
+          )}
         </CardBody>
       </Card>
     </>

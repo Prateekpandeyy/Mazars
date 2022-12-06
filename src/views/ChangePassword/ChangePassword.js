@@ -149,24 +149,6 @@ function ChangePassword(props) {
 
           <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
             <div className="row">
-              {/* <div className="col-md-12">
-            <div className="mb-3">
-
-
-<label className="form-label">User Id<span className="declined">*</span></label>
-<input
-  type="text"
-  onChange={(e) => setUser(e.target.value)}
- 
-  name="p_user"
-  ref={register({ required: true })}
-  placeholder="Enter User Id"
-  className={classNames("form-control", {
-    "is-invalid": errors.p_user 
-  })}
-/>
-</div>
-</div> */}
               <div className="col-md-12">
                 <div className="mb-3">
                   <label className="form-label">
@@ -280,7 +262,7 @@ function ChangePassword(props) {
               </div>
 
               {show ? (
-                <div class="col-md-6">
+                <div className="col-md-6">
                   <div className="mb-3">
                     <label className="form-label">
                       OTP<span className="declined">*</span>
@@ -296,7 +278,7 @@ function ChangePassword(props) {
                       autocomplete="off"
                     />
                     {disabled ? null : (
-                      <small class="text-center">
+                      <small className="text-center">
                         Note: OTP is valid for {time} seconds.
                       </small>
                     )}
@@ -305,11 +287,11 @@ function ChangePassword(props) {
               ) : null}
 
               {loading ? (
-                <div class="col-md-12">
+                <div className="col-md-12">
                   <Spinner color="primary" />
                 </div>
               ) : (
-                <div class="col-md-12">
+                <div className="col-md-12">
                   {show ? (
                     <>
                       {disabled ? null : (
@@ -329,7 +311,7 @@ function ChangePassword(props) {
                     <>
                       <button
                         type="submit"
-                        class="customBtn"
+                        className="customBtn"
                         onClick={() => getOtp("otp")}
                       >
                         Get OTP

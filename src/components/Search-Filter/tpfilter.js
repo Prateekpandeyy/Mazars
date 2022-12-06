@@ -1,14 +1,13 @@
-
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
 import { useForm } from "react-hook-form";
 import { Select } from "antd";
-import 'antd/dist/antd.css';
-import { DatePicker, Space } from 'antd';
+import "antd/dist/antd.css";
+import { DatePicker, Space } from "antd";
 import moment from "moment";
-const dateFormat = 'YYYY/MM/DD';
-const dateFormatList = ['DD/MM/YYYY', 'DD/MM/YY'];
+const dateFormat = "YYYY/MM/DD";
+const dateFormatList = ["DD/MM/YYYY", "DD/MM/YY"];
 function TaxProfessionalFilter(props) {
   const { Option } = Select;
   const { handleSubmit, register, errors, reset } = useForm();
@@ -30,7 +29,7 @@ function TaxProfessionalFilter(props) {
     assignment,
     AllPayment,
     Unpaid,
-    Paid
+    Paid,
   } = props;
   const userid = window.localStorage.getItem("tpkey");
 
@@ -38,33 +37,37 @@ function TaxProfessionalFilter(props) {
   const [tax2, setTax2] = useState([]);
   const [store2, setStore2] = useState([]);
   const [status1, setStatus1] = useState(1);
-  const [fromDate, setFromDate] = useState("")
-  const [toDate, setToDate] = useState(new Date().toISOString().slice(0, 10))
-  const maxDate = moment(new Date().toISOString().slice(0, 10)).add(1, "days")
+  const [fromDate, setFromDate] = useState("");
+  const [toDate, setToDate] = useState(new Date().toISOString().slice(0, 10));
+  const maxDate = moment(new Date().toISOString().slice(0, 10)).add(1, "days");
 
-  var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
-  
+  var current_date =
+    new Date().getFullYear() +
+    "-" +
+    ("0" + (new Date().getMonth() + 1)).slice(-2) +
+    "-" +
+    ("0" + new Date().getDate()).slice(-2);
+
   const [item] = useState(current_date);
-  const token = window.localStorage.getItem("tptoken")
+  const token = window.localStorage.getItem("tptoken");
   const myConfig = {
-      headers : {
-       "uit" : token
-      }
-    }
-    const fromDateFun = (e) => {
-      setFromDate(e.format("YYYY-MM-DD"))
-    }
+    headers: {
+      uit: token,
+    },
+  };
+  const fromDateFun = (e) => {
+    setFromDate(e.format("YYYY-MM-DD"));
+  };
   useEffect(() => {
     const getSubCategory = () => {
-      if(selectedData.length > 0){
+      if (selectedData.length > 0) {
         axios
-        .get(`${baseUrl}/customers/getCategory?pid=${selectedData}`)
-        .then((res) => {
-         
-          if (res.data.code === 1) {
-            setTax2(res.data.result);
-          }
-        });
+          .get(`${baseUrl}/customers/getCategory?pid=${selectedData}`)
+          .then((res) => {
+            if (res.data.code === 1) {
+              setTax2(res.data.result);
+            }
+          });
       }
     };
     getSubCategory();
@@ -72,88 +75,79 @@ function TaxProfessionalFilter(props) {
 
   //handleCategory
   const handleCategory = (value) => {
-  
     setSelectedData(value);
     setStore2([]);
   };
 
   //handleSubCategory
   const handleSubCategory = (value) => {
-
     setStore2(value);
   };
 
   //reset category
   const resetCategory = () => {
-  
     setSelectedData([]);
     setStore2([]);
-    setTax2([])
+    setTax2([]);
     getData();
   };
 
   //reset date
   const resetData = () => {
-  
     reset();
     setSelectedData([]);
     setStore2([]);
-    setStatus1(1)
-    setTax2([])
+    setStatus1(1);
+    setTax2([]);
     getData();
   };
 
   const onSubmit = (data) => {
-  
     if (AllQuery == "AllQuery") {
       axios
         .get(
-          `${baseUrl}/tl/getIncompleteQues?tp_id=${JSON.parse(userid)}&status=${data.p_status}&cat_id=${store2}&from=${fromDate}&to=${toDate}&pcat_id=${selectedData}`
-          , myConfig
+          `${baseUrl}/tl/getIncompleteQues?tp_id=${JSON.parse(userid)}&status=${
+            data.p_status
+          }&cat_id=${store2}&from=${fromDate}&to=${toDate}&pcat_id=${selectedData}`,
+          myConfig
         )
         .then((res) => {
-       
           if (res.data.code === 1) {
             if (res.data.result) {
-              console.log("done")
               setData(res.data.result);
               setRecords(res.data.result.length);
-
             }
           }
         });
     }
-
 
     if (pendingForAcceptence == "pendingForAcceptence") {
       axios
         .get(
           `${baseUrl}/tl/pendingQues?tp_id=${JSON.parse(
             userid
-          )}&cat_id=${store2}&from=${fromDate}&to=${toDate}&pcat_id=${selectedData}`, myConfig
+          )}&cat_id=${store2}&from=${fromDate}&to=${toDate}&pcat_id=${selectedData}`,
+          myConfig
         )
         .then((res) => {
-
           if (res.data.code === 1) {
             if (res.data.result) {
               setData(res.data.result);
               setRecords(res.data.result.length);
-
             }
           }
         });
     }
 
     if (InprogressQuery == "InprogressQuery") {
-
-  
       axios
         .get(
-          `${baseUrl}/tl/getIncompleteQues?tp_id=${JSON.parse(userid)}&status=${status1}&cat_id=${store2}&from=${fromDate}&to=${toDate}&pcat_id=${selectedData}`
-          , myConfig
+          `${baseUrl}/tl/getIncompleteQues?tp_id=${JSON.parse(
+            userid
+          )}&status=${status1}&cat_id=${store2}&from=${fromDate}&to=${toDate}&pcat_id=${selectedData}`,
+          myConfig
         )
         .then((res) => {
-        
           if (res.data.code === 1) {
             if (res.data.result) {
               setData(res.data.result);
@@ -166,10 +160,12 @@ function TaxProfessionalFilter(props) {
     if (DeclinedQuery == "DeclinedQuery") {
       axios
         .get(
-          `${baseUrl}/tl/declinedQueries?tp_id=${JSON.parse(userid)}&status=${data.p_status}&cat_id=${store2}&from=${fromDate}&to=${toDate}&pcat_id=${selectedData}`
-        , myConfig)
+          `${baseUrl}/tl/declinedQueries?tp_id=${JSON.parse(userid)}&status=${
+            data.p_status
+          }&cat_id=${store2}&from=${fromDate}&to=${toDate}&pcat_id=${selectedData}`,
+          myConfig
+        )
         .then((res) => {
-
           if (res.data.code === 1) {
             if (res.data.result) {
               setData(res.data.result);
@@ -184,15 +180,14 @@ function TaxProfessionalFilter(props) {
         .get(
           `${baseUrl}/tl/getCompleteQues?tp_id=${JSON.parse(
             userid
-          )}&cat_id=${store2}&from=${fromDate}&to=${toDate}&pcat_id=${selectedData}`
-, myConfig)
+          )}&cat_id=${store2}&from=${fromDate}&to=${toDate}&pcat_id=${selectedData}`,
+          myConfig
+        )
         .then((res) => {
-        
           if (res.data.code === 1) {
             if (res.data.result) {
               setData(res.data.result);
               setRecords(res.data.result.length);
-
             }
           }
         });
@@ -203,11 +198,12 @@ function TaxProfessionalFilter(props) {
         .get(
           `${baseUrl}/tl/getProposalTl?tp_id=${JSON.parse(
             userid
-          )}&cat_id=${store2}&from=${fromDate}&to=${toDate
-          }&status=${data.p_status}&pcat_id=${selectedData}`, myConfig
+          )}&cat_id=${store2}&from=${fromDate}&to=${toDate}&status=${
+            data.p_status
+          }&pcat_id=${selectedData}`,
+          myConfig
         )
         .then((res) => {
-
           if (res.data.code === 1) {
             if (res.data.result) {
               setData(res.data.result);
@@ -222,11 +218,12 @@ function TaxProfessionalFilter(props) {
         .get(
           `${baseUrl}/tl/getProposalTl?tp_id=${JSON.parse(
             userid
-          )}&cat_id=${store2}&from=${fromDate}&to=${toDate
-          }&status=${data.p_status}&pcat_id=${selectedData}`, myConfig
+          )}&cat_id=${store2}&from=${fromDate}&to=${toDate}&status=${
+            data.p_status
+          }&pcat_id=${selectedData}`,
+          myConfig
         )
         .then((res) => {
-       
           if (res.data.code === 1) {
             if (res.data.result) {
               setData(res.data.result);
@@ -236,31 +233,34 @@ function TaxProfessionalFilter(props) {
         });
     }
 
-    if(proposal == "proposal"){
+    if (proposal == "proposal") {
       axios
-      .get(
-        `${baseUrl}/tl/getProposalTl?tp_id=${JSON.parse(
-          userid
-        )}&cat_id=${store2}&from=${fromDate}&to=${toDate
-        }&status=2&pcat_id=${selectedData}`, myConfig
-      )
-      .then((res) => {
-
-        if (res.data.code === 1) {
-          if (res.data.result) {
-            setData(res.data.result);
-            setRecords(res.data.result.length);
+        .get(
+          `${baseUrl}/tl/getProposalTl?tp_id=${JSON.parse(
+            userid
+          )}&cat_id=${store2}&from=${fromDate}&to=${toDate}&status=2&pcat_id=${selectedData}`,
+          myConfig
+        )
+        .then((res) => {
+          if (res.data.code === 1) {
+            if (res.data.result) {
+              setData(res.data.result);
+              setRecords(res.data.result.length);
+            }
           }
-        }
-      });
+        });
     }
     if (AllPayment == "AllPayment") {
       axios
         .get(
-          `${baseUrl}/tl/getUploadedProposals?tp_id=${JSON.parse(userid)}&cat_id=${store2}&from=${fromDate}&to=${toDate}&status=${data.p_status}&pcat_id=${selectedData}`
-        ,myConfig)
+          `${baseUrl}/tl/getUploadedProposals?tp_id=${JSON.parse(
+            userid
+          )}&cat_id=${store2}&from=${fromDate}&to=${toDate}&status=${
+            data.p_status
+          }&pcat_id=${selectedData}`,
+          myConfig
+        )
         .then((res) => {
-        
           if (res.data.code === 1) {
             if (res.data.result) {
               setData(res.data.result);
@@ -273,10 +273,12 @@ function TaxProfessionalFilter(props) {
     if (Unpaid == "Unpaid") {
       axios
         .get(
-          `${baseUrl}/tl/getUploadedProposals?&tp_id=${JSON.parse(userid)}&cat_id=${store2}&from=${fromDate}&to=${toDate}&status=1&pcat_id=${selectedData}`
-        , myConfig)
+          `${baseUrl}/tl/getUploadedProposals?&tp_id=${JSON.parse(
+            userid
+          )}&cat_id=${store2}&from=${fromDate}&to=${toDate}&status=1&pcat_id=${selectedData}`,
+          myConfig
+        )
         .then((res) => {
-        
           if (res.data.code === 1) {
             if (res.data.result) {
               setData(res.data.result);
@@ -289,10 +291,12 @@ function TaxProfessionalFilter(props) {
     if (Paid == "Paid") {
       axios
         .get(
-          `${baseUrl}/tl/getUploadedProposals?tp_id=${JSON.parse(userid)}&cat_id=${store2}&from=${fromDate}&to=${toDate}&status=2&pcat_id=${selectedData}`
-        , myConfig)
+          `${baseUrl}/tl/getUploadedProposals?tp_id=${JSON.parse(
+            userid
+          )}&cat_id=${store2}&from=${fromDate}&to=${toDate}&status=2&pcat_id=${selectedData}`,
+          myConfig
+        )
         .then((res) => {
-       
           if (res.data.code === 1) {
             if (res.data.result) {
               setData(res.data.result);
@@ -302,7 +306,6 @@ function TaxProfessionalFilter(props) {
         });
     }
   };
-
 
   const Reset = () => {
     return (
@@ -317,9 +320,6 @@ function TaxProfessionalFilter(props) {
       </>
     );
   };
-
-
-
 
   return (
     <>
@@ -355,16 +355,17 @@ function TaxProfessionalFilter(props) {
                     value={store2}
                     allowClear
                   >
-                   {
-                     tax2.length > 0 ?
-                     <>
-                      {tax2?.map((p, index) => (
-                      <Option value={p.id} key={index}>
-                        {p.details}
-                      </Option>
-                    ))}
-                     </> : ""
-                   }
+                    {tax2.length > 0 ? (
+                      <>
+                        {tax2?.map((p, index) => (
+                          <Option value={p.id} key={index}>
+                            {p.details}
+                          </Option>
+                        ))}
+                      </>
+                    ) : (
+                      ""
+                    )}
                   </Select>
                 </div>
 
@@ -390,11 +391,11 @@ function TaxProfessionalFilter(props) {
                     ref={register}
                     max={item}
                   /> */}
-                    <DatePicker 
-                 
-                 onChange={(e) =>fromDateFun(e)}
-                 disabledDate={d => !d || d.isAfter(maxDate) }
-                  format={dateFormatList} />
+                  <DatePicker
+                    onChange={(e) => fromDateFun(e)}
+                    disabledDate={(d) => !d || d.isAfter(maxDate)}
+                    format={dateFormatList}
+                  />
                 </div>
 
                 <div className="form-group mx-sm-1  mb-2">
@@ -410,15 +411,15 @@ function TaxProfessionalFilter(props) {
                     defaultValue={item}
                     max={item}
                   /> */}
-                    <DatePicker 
-                 onChange={(e) =>setToDate(e.format("YYYY-MM-DD"))}
-                 defaultValue={moment(new Date(), "DD MM, YYYY")}
-                 disabledDate={d => !d || d.isAfter(maxDate) }
-                    format={dateFormatList} />
+                  <DatePicker
+                    onChange={(e) => setToDate(e.format("YYYY-MM-DD"))}
+                    defaultValue={moment(new Date(), "DD MM, YYYY")}
+                    disabledDate={(d) => !d || d.isAfter(maxDate)}
+                    format={dateFormatList}
+                  />
                 </div>
 
                 <div className="form-group mx-sm-1  mb-2">
-
                   {AllQuery == "AllQuery" && (
                     <select
                       className="form-select form-control"
@@ -447,7 +448,6 @@ function TaxProfessionalFilter(props) {
                       <option value="6">Inprogress; Assignments</option>
                     </select>
                   )}
-
 
                   {DeclinedQuery == "DeclinedQuery" && (
                     <select
@@ -509,8 +509,9 @@ function TaxProfessionalFilter(props) {
                 </button>
                 <Reset />
                 <div className="form-group mx-sm-1  mb-2">
-                  <label className="form-select form-control"
-                  >Total Records : {records}</label>
+                  <label className="form-select form-control">
+                    Total Records : {records}
+                  </label>
                 </div>
               </div>
             </form>
@@ -522,4 +523,3 @@ function TaxProfessionalFilter(props) {
 }
 
 export default TaxProfessionalFilter;
-

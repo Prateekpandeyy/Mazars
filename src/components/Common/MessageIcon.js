@@ -114,7 +114,6 @@ const ActionIcon = (props) => {
   );
 };
 const FileIcon = (props) => {
-  console.log(props.name.split(".")[1]);
   if (props.name.split(".")[1] === "pdf") {
     return <PictureAsPdfIcon style={{ fontSize: "50px" }} />;
   } else if (

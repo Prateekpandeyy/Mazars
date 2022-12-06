@@ -1105,7 +1105,6 @@ else{
       </span>
     );
 
-console.log("show recording button ", this.state.showButton , JSON.parse(this.teamKey))
 //recording btn off
 const recordingBtnOff = (
   <span

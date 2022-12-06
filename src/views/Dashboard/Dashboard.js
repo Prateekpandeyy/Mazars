@@ -1,18 +1,12 @@
 import React, { useState, useEffect } from "react";
 import Layout from "../../components/Layout/Layout";
 import "./index.css";
-import { Link } from "react-router-dom";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
-import { useHistory } from "react-router";
+
 import { Container, Grid, Paper, Box } from "@material-ui/core";
-import CommonServices from "../../common/common";
 function Dashboard() {
   const userId = window.localStorage.getItem("userid");
-
-  const sessionId = window.sessionStorage.getItem("userIdsession");
-  let history = useHistory();
-
   const [allQueries, setAllQueries] = useState({
     total: "",
     inprogress_queries: "",
@@ -70,7 +64,6 @@ function Dashboard() {
     totalpayment,
   } = allQueries;
 
-  console.log("sessionStorage", window.sessionStorage);
   useEffect(() => {
     const getAllQueries = () => {
       const token = window.localStorage.getItem("clientToken");
@@ -130,30 +123,8 @@ function Dashboard() {
     };
 
     getAllQueries();
-  }, []);
+  }, [userId]);
 
-  const logout = () => {
-    const token = window.localStorage.getItem("clientToken");
-    const myConfig = {
-      headers: {
-        uit: token,
-      },
-    };
-    axios.get(`${baseUrl}/customers/logout`, myConfig).then((res) => {
-      if (res.data.code === 1) {
-        localStorage.removeItem("userid");
-        localStorage.removeItem("custEmail");
-        localStorage.removeItem("category");
-        localStorage.removeItem("clientToken");
-        history.push("/");
-      }
-    });
-
-    localStorage.removeItem("userid");
-    localStorage.removeItem("custEmail");
-    history.push("/");
-  };
-  console.log("dddd");
   return (
     <>
       <Layout custDashboard="custDashboard" custUserId={userId}>
@@ -194,7 +165,7 @@ function Dashboard() {
                     </tbody>
                   </table>
 
-                  {inprogress_queries != 0 || declined_queries != 0 ? (
+                  {inprogress_queries !== 0 || declined_queries !== 0 ? (
                     <>
                       <table className="table table-striped  third main_table">
                         <thead className="query_thead query_thead1">
@@ -212,7 +183,7 @@ function Dashboard() {
                           </tr>
                         </tbody>
                       </table>
-                      {complete_query != 0 || declined_queries != 0 ? (
+                      {complete_query !== 0 || declined_queries !== 0 ? (
                         <>
                           <table className="table table-striped  forth main_table">
                             <thead className="query_thead query_thead1">
@@ -260,7 +231,7 @@ function Dashboard() {
                 </Paper>
               </Box>
             </Grid>
-            {allproposal != 0 ? (
+            {allproposal !== 0 ? (
               <>
                 <Grid item sm={3}>
                   <Box m={1}>
@@ -319,7 +290,7 @@ function Dashboard() {
                     </Paper>
                   </Box>
                 </Grid>
-                {allassignment != 0 ? (
+                {allassignment !== 0 ? (
                   <>
                     <Grid item sm={3}>
                       <Box m={1}>
@@ -368,7 +339,7 @@ function Dashboard() {
                         </Paper>
                       </Box>
                     </Grid>
-                    {totalpayment != 0 ? (
+                    {totalpayment !== 0 ? (
                       <>
                         <Grid item sm={3}>
                           <Box m={1}>

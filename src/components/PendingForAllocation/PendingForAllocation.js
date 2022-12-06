@@ -1,61 +1,56 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import './Allocation.css';
+import "./Allocation.css";
 import { baseUrl } from "../../config/config";
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  
-} from "reactstrap";
+import { Card, CardHeader, CardBody } from "reactstrap";
 import { Link } from "react-router-dom";
 import History from "./History";
-import Records from "../../components/Records/Records";
+import Swal from "sweetalert2";
 import AdminFilter from "../../components/Search-Filter/AdminFilter";
 import DataTablepopulated from "../DataTablepopulated/DataTabel";
-import {DeleteIcon, DiscussProposal} from "../../components/Common/MessageIcon";
+import {
+  DeleteIcon,
+  DiscussProposal,
+} from "../../components/Common/MessageIcon";
 
 function PendingAllocation({ CountPendingForAllocation }) {
-
-  const [pendingData, setPendingData] = useState([])
+  const [pendingData, setPendingData] = useState([]);
   const [history, setHistory] = useState([]);
   const [records, setRecords] = useState([]);
 
   const [modal, setModal] = useState(false);
-  const token = window.localStorage.getItem("adminToken")
+  const token = window.localStorage.getItem("adminToken");
   const myConfig = {
-    headers : {
-     "uit" : token
-    }
-  }
-  const toggle = (key) => {
-  
-
-  if(key.length > 0){
-    setModal(!modal);
-
-    fetch(`${baseUrl}/admin/getQueryHistory?q_id=${key}`, {
-      method: "GET",
-      headers: new Headers({
-        Accept: "application/vnd.github.cloak-preview",
-        uit : token
-      }),
-    })
-      .then((res) => res.json())
-      .then((response) => {
-       
-        setHistory(response.result);
-      })
-      .catch((error) => console.log(error));
-  }
- else{
-  console.log("done22")
-  setModal(!modal);
- }
+    headers: {
+      uit: token,
+    },
   };
+  const toggle = (key) => {
+    if (key.length > 0) {
+      setModal(!modal);
 
-
-
+      fetch(`${baseUrl}/admin/getQueryHistory?q_id=${key}`, {
+        method: "GET",
+        headers: new Headers({
+          Accept: "application/vnd.github.cloak-preview",
+          uit: token,
+        }),
+      })
+        .then((res) => res.json())
+        .then((response) => {
+          setHistory(response.result);
+        })
+        .catch((error) =>
+          Swal.fire({
+            tilte: "error",
+            html: error,
+            icon: "error",
+          })
+        );
+    } else {
+      setModal(!modal);
+    }
+  };
 
   useEffect(() => {
     getPendingForAllocation();
@@ -63,7 +58,6 @@ function PendingAllocation({ CountPendingForAllocation }) {
 
   const getPendingForAllocation = () => {
     axios.get(`${baseUrl}/admin/pendingAllocation`, myConfig).then((res) => {
-    
       if (res.data.code === 1) {
         // CountPendingForAllocation(res.data.result.length);
         setPendingData(res.data.result);
@@ -71,8 +65,6 @@ function PendingAllocation({ CountPendingForAllocation }) {
       }
     });
   };
-
-
 
   const columns = [
     {
@@ -89,9 +81,8 @@ function PendingAllocation({ CountPendingForAllocation }) {
       text: "Date",
       dataField: "created",
       sort: true,
-     
+
       formatter: function dateFormat(cell, row) {
-     
         var oldDate = row.created;
         if (oldDate == null) {
           return null;
@@ -102,9 +93,8 @@ function PendingAllocation({ CountPendingForAllocation }) {
     {
       text: "Query no",
       dataField: "assign_no",
-      
+
       formatter: function nameFormatter(cell, row) {
-      
         return (
           <>
             <Link
@@ -124,38 +114,29 @@ function PendingAllocation({ CountPendingForAllocation }) {
       text: "Category",
       dataField: "parent_id",
       sort: true,
-      
     },
     {
       text: "Sub category",
       dataField: "cat_name",
       sort: true,
-      
     },
     {
       text: "Client name",
       dataField: "name",
       sort: true,
-     
     },
     {
       text: "Status",
       dataField: "status",
-      
+
       formatter: function nameFormatter(cell, row) {
         return (
           <>
             <div>
-
               {row.status} /
-              {
-                row.status == "Inprogress Query" ?
-                  <p className="inprogress">
-                    {row.statusdescription}
-                  </p>
-                  :
-                  null
-              }
+              {row.status == "Inprogress Query" ? (
+                <p className="inprogress">{row.statusdescription}</p>
+              ) : null}
             </div>
           </>
         );
@@ -164,10 +145,9 @@ function PendingAllocation({ CountPendingForAllocation }) {
     {
       text: "Action",
       dataField: "",
-      
+
       formatter: function (cell, row) {
         return (
-         
           <>
             {row.is_assigned === "1" ? (
               <p className="inprogress">
@@ -176,28 +156,14 @@ function PendingAllocation({ CountPendingForAllocation }) {
               </p>
             ) : (
               <div style={{ display: "flex", justifyContent: "space-around" }}>
-               
-                  <Link
-                    to={`/admin/queryassing/${row.id}`}
-                  >
-                   <DiscussProposal titleName="Assign to" />
-                  </Link>
+                <Link to={`/admin/queryassing/${row.id}`}>
+                  <DiscussProposal titleName="Assign to" />
+                </Link>
 
-                
-                
-                  <Link
-                    to={`/admin/query_rejection/${row.id}`}
-                  >
-                   <DeleteIcon titleName="Decline Query"/>
-                  </Link>
-                
-
-
-
+                <Link to={`/admin/query_rejection/${row.id}`}>
+                  <DeleteIcon titleName="Decline Query" />
+                </Link>
               </div>
-
-
-
             )}
           </>
         );
@@ -206,8 +172,7 @@ function PendingAllocation({ CountPendingForAllocation }) {
     {
       text: "History",
       dataField: "",
-      
-     
+
       formatter: function (cell, row) {
         return (
           <>
@@ -224,8 +189,6 @@ function PendingAllocation({ CountPendingForAllocation }) {
     },
   ];
 
-
-
   return (
     <>
       <Card>
@@ -238,14 +201,14 @@ function PendingAllocation({ CountPendingForAllocation }) {
             records={records}
           />
         </CardHeader>
-        <CardBody className = "card-body">
+        <CardBody className="card-body">
           {/* <Records records={records} /> */}
-          <DataTablepopulated 
-          bgColor="#55425f"
-          keyField= {"assign_no"}
-          data={pendingData} 
-          columns={columns}>
-           </DataTablepopulated>
+          <DataTablepopulated
+            bgColor="#55425f"
+            keyField={"assign_no"}
+            data={pendingData}
+            columns={columns}
+          ></DataTablepopulated>
           <History history={history} toggle={toggle} modal={modal} />
         </CardBody>
       </Card>

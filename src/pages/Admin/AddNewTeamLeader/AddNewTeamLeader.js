@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import Select from "react-select";
-import Swal from 'sweetalert2';
+import Swal from "sweetalert2";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import { Card, CardHeader, Row, Col } from "reactstrap";
@@ -23,103 +23,95 @@ const Schema = yup.object().shape({
     .matches(/^[0-9]+$/, "Must be only digits")
     .min(10, "Must be exactly 10 digits")
     .max(20, "max 20 digits"),
-
 });
 
-
 function AddNew() {
- 
   const history = useHistory();
   const { handleSubmit, register, reset, errors } = useForm({
     resolver: yupResolver(Schema),
   });
 
   const userid = window.localStorage.getItem("adminkey");
-  const [error, setError] = useState()
+  const [error, setError] = useState();
   const [error2, setError2] = useState();
   const [tax, setTax] = useState([]);
   const [tax2, setTax2] = useState([]);
-  const [nn, setNn] = useState([])
+  const [nn, setNn] = useState([]);
   const [mcatname, setmcatname] = useState([]);
   const [mcategory, setmcategory] = useState([]);
   const [store, setStore] = useState([]);
-  const [subData, subCategeryData] = useState([])
-  const [custCate, setCustcate] = useState([])
-  const [custCate2, setCustcate2] = useState([])
-  const [numExist, setNumExist] = useState(null)
-  const [phone, setPhone] = useState('');
-  const [numAvail, setNumAvail] = useState(null)
-  const [categoryData, setCategoryData] = useState([])
-  const [indNumError, setIndNumError] = useState(null)
+  const [subData, subCategeryData] = useState([]);
+  const [custCate, setCustcate] = useState([]);
+  const [custCate2, setCustcate2] = useState([]);
+  const [numExist, setNumExist] = useState(null);
+  const [phone, setPhone] = useState("");
+  const [numAvail, setNumAvail] = useState(null);
+  const [categoryData, setCategoryData] = useState([]);
+  const [indNumError, setIndNumError] = useState(null);
   const [postValue, setPostName] = useState([]);
   const [email, setEmail] = useState([]);
-  const [emailPost, setEmailPost] = useState('');
-  const [valiEmail, setValiemail] = useState(null)
-  const [valiEmailPost, setValiemailPost] = useState(null)
-  const [invalid, setInvalid] = useState(null)
-  const [invalidPost, setInvalidPost] = useState(null)
+  const [emailPost, setEmailPost] = useState("");
+  const [valiEmail, setValiemail] = useState(null);
+  const [valiEmailPost, setValiemailPost] = useState(null);
+  const [invalid, setInvalid] = useState(null);
+  const [invalidPost, setInvalidPost] = useState(null);
   const [wEmail, setWemail] = useState();
   const [wEmailPost, setWemailPost] = useState();
   const [loading, setLoading] = useState(false);
   const [emailError, setEmailError] = useState(null);
   const [display, setDisplay] = useState(false);
   const [posError, setposError] = useState({
-    available : '',
-    exits : ''
+    available: "",
+    exits: "",
   });
   const [dd, setDd] = useState({
     direct: [],
     indirect: [],
   });
 
-  var kk = []
-  var vv = []
+  var kk = [];
+  var vv = [];
 
-  const token = window.localStorage.getItem("adminToken")
+  const token = window.localStorage.getItem("adminToken");
   const myConfig = {
-      headers : {
-       "uit" : token
-      }
-    }
+    headers: {
+      uit: token,
+    },
+  };
 
-  const options = tax.map(d => (
-    {
-      "value": d.id,
-      "label": d.details
-    }))
+  const options = tax.map((d) => ({
+    value: d.id,
+    label: d.details,
+  }));
 
-  const options2 = tax2.map(v => ({
-    "value": v.id,
-    "label": v.details
-  }))
-
-
-
+  const options2 = tax2.map((v) => ({
+    value: v.id,
+    label: v.details,
+  }));
 
   useEffect(() => {
     const getCategory = async () => {
-      await axios.get(`${baseUrl}/admin/getCategory?pid=0`, myConfig).then((res) => {
-        if (res.data.code === 1) {
-          
-          setTax(res.data.result);
-        }
-      });
+      await axios
+        .get(`${baseUrl}/admin/getCategory?pid=0`, myConfig)
+        .then((res) => {
+          if (res.data.code === 1) {
+            setTax(res.data.result);
+          }
+        });
     };
 
     getCategory();
   }, []);
 
-
-
   useEffect(() => {
     const getSubCategory = async () => {
-
-      await axios.get(`${baseUrl}/admin/getCategory?pid=${store}`, myConfig).then((res) => {
-
-        if (res.data.code === 1) {
-          setTax2(res.data.result)
-        }
-      });
+      await axios
+        .get(`${baseUrl}/admin/getCategory?pid=${store}`, myConfig)
+        .then((res) => {
+          if (res.data.code === 1) {
+            setTax2(res.data.result);
+          }
+        });
     };
     getSubCategory();
   }, [store]);
@@ -127,260 +119,220 @@ function AddNew() {
   // OnSubmit Function
 
   const onSubmit = (value) => {
-   
-   
-    var categeryList = []
-    var categeryName = []
-    var categeryName = []
-    var kk = []
-    var parentCategoryName = []
-  
-    subData.map((i) => {
-   
-      categeryList.push(i.value)
-      categeryName.push(i.label)
-    })
-    categoryData.map((i) => {
-      kk.push(i.value)
-      parentCategoryName.push(i.label)
-    })
-   
-    if (custCate.length < 1) {
-      setError("Please select at least one value")
-    }
-    else if (subData.length < 1) {
+    var categeryList = [];
+    var categeryName = [];
+    var categeryName = [];
+    var kk = [];
+    var parentCategoryName = [];
 
-      setError2("Please select at least one value")
-    }
-    else if (invalid || wEmail || indNumError || posError.exits) {
-      setDisplay(false)
-    }
-    else if(parentCategoryName.includes("Direct tax") && dd.direct.length === 0){
-    
-    }
-    else if(parentCategoryName.includes("Indirect tax") && dd.indirect.length === 0){
-     
-    }
-    else {
-      setDisplay(true)
-      setLoading(true)
-    
+    subData.map((i) => {
+      categeryList.push(i.value);
+      categeryName.push(i.label);
+    });
+    categoryData.map((i) => {
+      kk.push(i.value);
+      parentCategoryName.push(i.label);
+    });
+
+    if (custCate.length < 1) {
+      setError("Please select at least one value");
+    } else if (subData.length < 1) {
+      setError2("Please select at least one value");
+    } else if (invalid || wEmail || indNumError || posError.exits) {
+      setDisplay(false);
+    } else if (
+      parentCategoryName.includes("Direct tax") &&
+      dd.direct.length === 0
+    ) {
+    } else if (
+      parentCategoryName.includes("Indirect tax") &&
+      dd.indirect.length === 0
+    ) {
+    } else {
+      setDisplay(true);
+      setLoading(true);
+
       let formData = new FormData();
 
       formData.append("personal_email", value.p_email);
       formData.append("name", value.p_name);
       formData.append("phone", value.p_phone);
       formData.append("type", "tl");
-      formData.append("cat_id", categeryList)
-      formData.append("post_name", value.post_name)
-      formData.append("email", email)
-      formData.append("pcat_id", kk)
-      formData.append("allpcat_id", parentCategoryName)
-      formData.append("allcat_id", JSON.stringify(dd))
-
-
+      formData.append("cat_id", categeryList);
+      formData.append("post_name", value.post_name);
+      formData.append("email", email);
+      formData.append("pcat_id", kk);
+      formData.append("allpcat_id", parentCategoryName);
+      formData.append("allcat_id", JSON.stringify(dd));
 
       axios({
         method: "POST",
         url: `${baseUrl}/admin/AddTeamLead`,
-        headers : {
-          uit : token
+        headers: {
+          uit: token,
         },
         data: formData,
       })
-
         .then(function (response) {
-
           if (response.data.code === 1) {
-            setLoading(false)
+            setLoading(false);
             Swal.fire({
-              "title": "Success",
-              "html": "Team Leader created successfully.",
-              "icon": "success"
-            })
+              title: "Success",
+              html: "Team Leader created successfully.",
+              icon: "success",
+            });
 
             history.goBack();
           }
           if (response.data.code === 0) {
-            setLoading(false)
+            setLoading(false);
             response.data.message.map((i) => {
               Swal.fire({
-                "title": "Error",
-                "html": "Something went wrong, please try again.",
-                "icon": "error"
-              })
-            })
+                title: "Error",
+                html: "Something went wrong, please try again.",
+                icon: "error",
+              });
+            });
             history.goBack();
           }
-
         })
-        .catch((error) => {
-
-        });
+        .catch((error) => {});
     }
-
   };
-  var allData1 = {}
-  var dir = []
-  var indir = []
+  var allData1 = {};
+  var dir = [];
+  var indir = [];
   // Sub Category Function
   const subCategory = (e) => {
-  
-    subCategeryData(e)
-    setCustcate2(e)
-    setError2("")
-  
-    e.map((i) => {
+    subCategeryData(e);
+    setCustcate2(e);
+    setError2("");
 
-      i.value < 8 ? dir.push(i.label) : indir.push(i.label)
-    })
-   
+    e.map((i) => {
+      i.value < 8 ? dir.push(i.label) : indir.push(i.label);
+    });
+
     setDd({
       direct: dir,
-      indirect: indir
-    })
-    let pk = []
-    if(indir.length === 0 && dir.length === 0){
-      setCategoryData("")
-    }
-   else if(dir.length === 0){
+      indirect: indir,
+    });
+    let pk = [];
+    if (indir.length === 0 && dir.length === 0) {
+      setCategoryData("");
+    } else if (dir.length === 0) {
       let bb = {
-        value : "2",
-        label : "Indirect tax"
-      }
-      pk.push(bb)
-      setCategoryData(pk)
-    }
-    else if(indir.length === 0){
+        value: "2",
+        label: "Indirect tax",
+      };
+      pk.push(bb);
+      setCategoryData(pk);
+    } else if (indir.length === 0) {
       let bb = {
-        value : "1",
-        label : "Direct tax"
-      }
-      pk.push(bb)
-      setCategoryData(pk)
+        value: "1",
+        label: "Direct tax",
+      };
+      pk.push(bb);
+      setCategoryData(pk);
     }
-  
-  }
-
+  };
 
   // Category Function
   const category = (v) => {
-
-    setCategoryData(v)
+    setCategoryData(v);
     setNn((oldData) => {
-      return [...oldData, mcategory]
-    })
-    setError("")
-    setCustcate(v)
+      return [...oldData, mcategory];
+    });
+    setError("");
+    setCustcate(v);
     v.map((val) => {
-      vv.push(val.value)
+      vv.push(val.value);
       setmcategory(val.value);
       setmcatname((oldData) => {
-        return [...oldData, val.label]
-      })
-      setStore(val.value)
-    })
-
+        return [...oldData, val.label];
+      });
+      setStore(val.value);
+    });
 
     if (vv.length > 0) {
       if (vv.includes("1") && vv.includes("2")) {
-        let dkkk = []
-        let pkk = []
-                for (let i = 0; i < subData.length; i++) {
-                                     kk.push(subData[i])
-                    dkkk.push(subData[i].label)
-                  
-                }
-                console.log(subData)
-                setDd({
-                  "direct" : dkkk,
-                  "indirect" : pkk
-                })
-                subCategeryData(kk)
-      }
-      else if (vv.includes("1")) {
+        let dkkk = [];
+        let pkk = [];
+        for (let i = 0; i < subData.length; i++) {
+          kk.push(subData[i]);
+          dkkk.push(subData[i].label);
+        }
 
+        setDd({
+          direct: dkkk,
+          indirect: pkk,
+        });
+        subCategeryData(kk);
+      } else if (vv.includes("1")) {
         for (let i = 0; i < subData.length; i++) {
           if (subData[i].value < 9) {
-            kk.push(subData[i])
+            kk.push(subData[i]);
           }
         }
-        subCategeryData(kk)
-      }
-      else if (vv.includes("2")) {
-
+        subCategeryData(kk);
+      } else if (vv.includes("2")) {
         for (let i = 0; i < subData.length; i++) {
           if (subData[i].value > 8) {
-            kk.push(subData[i])
+            kk.push(subData[i]);
           }
         }
-        subCategeryData(kk)
+        subCategeryData(kk);
       }
+    } else if (vv.length === 0) {
+      subCategeryData("");
     }
-
-    else if (vv.length === 0) {
-      subCategeryData("")
-    }
-
-  }
-  // Phone onChange 
+  };
+  // Phone onChange
   const phoneHandler = (e) => {
-
     if (isNaN(e.target.value)) {
-      setIndNumError("")
+      setIndNumError("");
       setNumAvail("");
-      setNumExist('Please enter number only')
-      e.target.value = ""
-      setPhone("")
-    }
-    else {
+      setNumExist("Please enter number only");
+      e.target.value = "";
+      setPhone("");
+    } else {
       setNumAvail("");
       setNumExist("");
-      setPhone(e.target.value)
+      setPhone(e.target.value);
     }
   };
 
-  // Phone Validation function 
+  // Phone Validation function
   const phoneValidation = () => {
-   
     if (phone.length > 10) {
-     
-      setNumAvail("")
-      setNumExist("")
-      setIndNumError("Maximum 10 digit should be enter")
+      setNumAvail("");
+      setNumExist("");
+      setIndNumError("Maximum 10 digit should be enter");
+    } else if (phone.length < 10) {
+      setNumAvail("");
+      setNumExist("");
+      setIndNumError("Minimum 10 digit should be enter");
+    } else if (phone.length > 15) {
+      setNumAvail("");
+      setNumExist("");
+      setIndNumError("Maximum 15 digit should be enter");
+    } else {
+      setIndNumError("");
     }
-    else if (phone.length < 10) {
-     
-      setNumAvail("")
-      setNumExist("")
-      setIndNumError("Minimum 10 digit should be enter")
-    }
-    else if (phone.length > 15) {
-      setNumAvail("")
-      setNumExist("")
-      setIndNumError("Maximum 15 digit should be enter")
-    }
-
-    else {
-      setIndNumError("")
-
-    }
-  }
+  };
 
   //eamil onchange
   const emailHandler = (e) => {
     setEmail(e.target.value);
-  
+
     if (e.target.value.length < 1) {
-      setWemail("")
+      setWemail("");
     }
   };
 
-
   //email validaation with api
   const emailValidation = (key) => {
-
-    var validRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    var validRegex =
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     if (email.match(validRegex)) {
       setWemail("");
       let formData = new FormData();
@@ -390,58 +342,51 @@ function AddNew() {
       axios({
         method: "POST",
         url: `${baseUrl}/admin/validateregistration`,
-        headers : {
-          uit : token
+        headers: {
+          uit: token,
         },
         data: formData,
       })
         .then(function (response) {
-
           if (response.data.code === 1) {
-            setValiemail(response.data.result)
-            setInvalid('')
+            setValiemail(response.data.result);
+            setInvalid("");
           } else if (response.data.code === 0) {
-            setInvalid(response.data.result)
-            setValiemail('')
+            setInvalid(response.data.result);
+            setValiemail("");
           }
         })
-        .catch((error) => {
-
-        });
+        .catch((error) => {});
+    } else {
+      setWemail("invalid email");
     }
-    else {
-      setWemail("invalid email")
-    }
+  };
 
-  }
- 
   const checktlPost = (e) => {
-  setPostName(e.target.value)
-  let a = e.target.value;
-  let formData = new FormData();
-  formData.append("tlpost", a)
+    setPostName(e.target.value);
+    let a = e.target.value;
+    let formData = new FormData();
+    formData.append("tlpost", a);
 
-  axios({
-    method: "POST",
-    url : `${baseUrl}/admin/validateTLPost`,
-    headers : {
-      uit : token
-    },
-    data: formData,
-  })
-  .then(function (res) {
-    if(res.data.code === 1){
-      setposError({
-        available : "Post Available"
-      })
-    }
-    else{
-      setposError({
-        exits : "Post already exits"
-      })
-    }
-  })
-  }
+    axios({
+      method: "POST",
+      url: `${baseUrl}/admin/validateTLPost`,
+      headers: {
+        uit: token,
+      },
+      data: formData,
+    }).then(function (res) {
+      if (res.data.code === 1) {
+        setposError({
+          available: "Post Available",
+        });
+      } else {
+        setposError({
+          exits: "Post already exits",
+        });
+      }
+    });
+  };
   return (
     <Layout adminDashboard="adminDashboard" adminUserId={userid}>
       <Card>
@@ -463,22 +408,15 @@ function AddNew() {
             </div>
           </div>
         </CardHeader> */}
-  <CardHeader>
+        <CardHeader>
           <Row>
-          <Col md="4">
-          <button
-                className="autoWidthBtn" 
-                onClick={() => history.goBack()}
-              >
-               
+            <Col md="4">
+              <button className="autoWidthBtn" onClick={() => history.goBack()}>
                 Go Back
               </button>
-              
             </Col>
             <Col md="8">
-            <CustomHeading>
-            Add new team leader
-            </CustomHeading>
+              <CustomHeading>Add new team leader</CustomHeading>
             </Col>
           </Row>
         </CardHeader>
@@ -488,10 +426,13 @@ function AddNew() {
             <div className="col-lg-8 col-xl-8 col-md-12">
               <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
                 <div className="row">
-                                    <div className="col-md-6">
+                  <div className="col-md-6">
                     <div className="form-group">
-                    <label>Team leader post name <span className="declined">*</span></label>
-                      
+                      <label>
+                        Team leader post name{" "}
+                        <span className="declined">*</span>
+                      </label>
+
                       <input
                         type="text"
                         className={classNames("form-control", {
@@ -501,39 +442,43 @@ function AddNew() {
                         name="post_name"
                         ref={register}
                       />
-                    {posError.available ? 
-                    <p className="completed"> {posError.available}</p> : 
-                    <p className="declined">{posError.exits}</p>}
-
+                      {posError.available ? (
+                        <p className="completed"> {posError.available}</p>
+                      ) : (
+                        <p className="declined">{posError.exits}</p>
+                      )}
                     </div>
                   </div>
                   <div className="col-md-6">
                     <div className="form-group">
-                    <label>Team leader post email <span className="declined">*</span></label>
-                    
-                   
-                    <EmailValidation
-                     setWemail = {setWemail}
-                      wEmail = {wEmail} 
-                      invalid = {invalid}
-                       setEmailError = {setEmailError}
-                        setValiemail = {setValiemail} 
-                        emailError = {emailError} 
-                        setInvalid = {setInvalid}  
-                        setEmail2 = {setEmail} 
-                        name="teamleader"/>
-                        
-                      {
-                        wEmail ? <p className="declined">{wEmail}</p> : <>
-                          {valiEmail ?
-                            <p className="completed">
-                              {valiEmail}
-                            </p>
-                            :
-                            <p className="declined">{invalid}</p>}
+                      <label>
+                        Team leader post email{" "}
+                        <span className="declined">*</span>
+                      </label>
+
+                      <EmailValidation
+                        setWemail={setWemail}
+                        wEmail={wEmail}
+                        invalid={invalid}
+                        setEmailError={setEmailError}
+                        setValiemail={setValiemail}
+                        emailError={emailError}
+                        setInvalid={setInvalid}
+                        setEmail2={setEmail}
+                        name="teamleader"
+                      />
+
+                      {wEmail ? (
+                        <p className="declined">{wEmail}</p>
+                      ) : (
+                        <>
+                          {valiEmail ? (
+                            <p className="completed">{valiEmail}</p>
+                          ) : (
+                            <p className="declined">{invalid}</p>
+                          )}
                         </>
-                      } 
-                     
+                      )}
                     </div>
                   </div>
                 </div>
@@ -541,7 +486,9 @@ function AddNew() {
                 <div className="row">
                   <div className="col-md-6">
                     <div className="form-group">
-                      <label>Name <span className="declined">*</span></label>
+                      <label>
+                        Name <span className="declined">*</span>
+                      </label>
                       <input
                         type="text"
                         className={classNames("form-control", {
@@ -550,97 +497,99 @@ function AddNew() {
                         name="p_name"
                         ref={register}
                       />
-
                     </div>
                   </div>
 
                   <div className="col-md-6">
                     <div className="form-group">
-                      <label>Phone number <span className="declined">*</span></label>
+                      <label>
+                        Phone number <span className="declined">*</span>
+                      </label>
                       <input
                         type="text"
                         className={classNames("form-control", {
-                          "is-invalid": errors.p_phone ,
+                          "is-invalid": errors.p_phone,
                         })}
                         name="p_phone"
                         ref={register}
                         onChange={(e) => phoneHandler(e)}
-                         onBlur={phoneValidation}
+                        onBlur={phoneValidation}
                       />
-                      {indNumError ? <p className="declined">{indNumError}</p> : <>
-                        {
-                          numAvail ?
-                            <p className="completed"> {numAvail}
-                            </p>
-                            :
+                      {indNumError ? (
+                        <p className="declined">{indNumError}</p>
+                      ) : (
+                        <>
+                          {numAvail ? (
+                            <p className="completed"> {numAvail}</p>
+                          ) : (
                             <p className="declined">{numExist}</p>
-                        }
-                      </>}
+                          )}
+                        </>
+                      )}
                     </div>
                   </div>
                 </div>
-              
+
                 <div className="row">
                   <div className="col-md-6">
                     <div className="form-group">
-                      <label>Category <span className="declined">*</span></label>
-                      <Select isMulti options={options}
-                        value = {categoryData}
+                      <label>
+                        Category <span className="declined">*</span>
+                      </label>
+                      <Select
+                        isMulti
+                        options={options}
+                        value={categoryData}
                         className={error ? "customError" : ""}
                         styles={{
                           option: (styles, { data }) => {
                             return {
                               ...styles,
-                              color: data.value == 2
-                                ? "green"
-                                : "blue"
+                              color: data.value == 2 ? "green" : "blue",
                             };
                           },
                           multiValueLabel: (styles, { data }) => ({
                             ...styles,
-                            color: data.value == 2
-                              ? "green"
-                              : "blue"
+                            color: data.value == 2 ? "green" : "blue",
                           }),
                         }}
-
-                        onChange={category}>
-                      </Select>
-
-
+                        onChange={category}
+                      ></Select>
                     </div>
                   </div>
                   <div className="col-md-6">
                     <div className="form-group">
-                      <label>Sub category <span className="declined">*</span></label>
-                      <Select isMulti options={options2}
+                      <label>
+                        Sub category <span className="declined">*</span>
+                      </label>
+                      <Select
+                        isMulti
+                        options={options2}
                         className={error2 ? "customError" : ""}
                         onChange={subCategory}
-                        value = {subData}
+                        value={subData}
                         styles={{
                           option: (styles, { data }) => {
                             return {
                               ...styles,
-                              color: data.value > 8
-                                ? "green"
-                                : "blue"
+                              color: data.value > 8 ? "green" : "blue",
                             };
                           },
                           multiValueLabel: (styles, { data }) => ({
                             ...styles,
-                            color: data.value > 8
-                              ? "green"
-                              : "blue"
+                            color: data.value > 8 ? "green" : "blue",
                           }),
-                        }}>
-                      </Select>
+                        }}
+                      ></Select>
                     </div>
                   </div>
                 </div>
                 <div className="row">
                   <div className="col-md-12">
                     <div className="form-group">
-                      <label>Email <span className="declined">*</span></label>
+                      <label>
+                        Email <span className="declined">*</span>
+                      </label>
                       <input
                         type="email"
                         className={classNames("form-control", {
@@ -648,24 +597,20 @@ function AddNew() {
                         })}
                         name="p_email"
                         ref={register}
-                       
                       />
-                     
                     </div>
                   </div>
                 </div>
-                {
-                loading ?
+                {loading ? (
                   <Spinner color="primary" />
-                  :
-                <button type="submit" className="customBtn">
-                  Submit
-                </button> }
+                ) : (
+                  <button type="submit" className="customBtn">
+                    Submit
+                  </button>
+                )}
               </form>
             </div>
-            <div className="col-lg-2 col-xl-2 col-md-12">
-
-            </div>
+            <div className="col-lg-2 col-xl-2 col-md-12"></div>
 
             <Mandatory />
           </div>
@@ -676,7 +621,3 @@ function AddNew() {
 }
 
 export default AddNew;
-
-
-
-

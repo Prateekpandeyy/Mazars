@@ -74,13 +74,10 @@ const AppLogout = ({ children }) => {
       setlTime(remaining);
       remaining -= 1;
       if (remaining > 0 && timerOn) {
-        console.log("done");
         kd = setTimeout(timer, 1000, remaining);
       } else if (timerOn === true && remaining === 0) {
         handleLogout();
       } else if (timerOn === false) {
-        console.log("done", "continue");
-
         return false;
       }
     }
@@ -98,7 +95,7 @@ const AppLogout = ({ children }) => {
   // logs out user by clearing out auth token in localStorage and redirecting url to /signin page.
   const logoutAction = () => {
     const token = window.localStorage.getItem("clientToken");
-    console.log(window.location.hash.split("/")[1] === "customer", token);
+
     if (window.location.pathname.split("/")[1] === "customer" && token) {
       setCont(true);
     }

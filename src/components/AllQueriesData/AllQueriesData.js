@@ -2,35 +2,31 @@ import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
 import { Link } from "react-router-dom";
-import {
-  Card,
-  CardHeader,
-  CardBody,
-} from "reactstrap";
+import { Card, CardHeader, CardBody } from "reactstrap";
 import AdminFilter from "../../components/Search-Filter/AdminFilter";
 import Records from "../../components/Records/Records";
 import DiscardReport from "../../pages/Admin/AssignmentTab/DiscardReport";
 import DataTablepopulated from "../DataTablepopulated/DataTabel";
-import MessageIcon, { ViewDiscussionIcon} from "../../components/Common/MessageIcon";
+import MessageIcon, {
+  ViewDiscussionIcon,
+} from "../../components/Common/MessageIcon";
 
-function AllQueriesData({allData}) {
-
-  const [allQueriesData, setAllQueriesData] = useState([])
+function AllQueriesData({ allData }) {
+  const [allQueriesData, setAllQueriesData] = useState([]);
   const [records, setRecords] = useState([]);
-  const [assignNo, setAssignNo] = useState('');
+  const [assignNo, setAssignNo] = useState("");
 
   const [ViewDiscussion, setViewDiscussion] = useState(false);
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
-    setAssignNo(key)
-  }
-  const token = window.localStorage.getItem("adminToken")
+    setAssignNo(key);
+  };
+  const token = window.localStorage.getItem("adminToken");
   const myConfig = {
-      headers : {
-       "uit" : token
-      }
-    }
-
+    headers: {
+      uit: token,
+    },
+  };
 
   useEffect(() => {
     getAllQueriesData();
@@ -38,29 +34,21 @@ function AllQueriesData({allData}) {
 
   const getAllQueriesData = () => {
     axios.get(`${baseUrl}/admin/getAllQueries`, myConfig).then((res) => {
-     
       if (res.data.code === 1) {
-        console.log("querydata")
-       // setAllQueriesData(res.data.result);
         setRecords(res.data.result.length);
       }
     });
-   
   };
-
-
-
 
   const columns = [
     {
       text: "S.no",
       dataField: "",
       headerStyle: () => {
-        return { width : "50px"};
+        return { width: "50px" };
       },
- 
-      formatter: (cellContent, row, rowIndex, index) => {
 
+      formatter: (cellContent, row, rowIndex, index) => {
         return <div>{rowIndex + 1}</div>;
       },
     },
@@ -68,7 +56,7 @@ function AllQueriesData({allData}) {
       text: "Date",
       dataField: "created",
       sort: true,
-      
+
       formatter: function dateFormat(cell, row) {
         var oldDate = row.created;
         if (oldDate == null) {
@@ -80,7 +68,7 @@ function AllQueriesData({allData}) {
     {
       text: "Query no",
       dataField: "assign_no",
-      
+
       formatter: function nameFormatter(cell, row) {
         return (
           <>
@@ -101,64 +89,47 @@ function AllQueriesData({allData}) {
       text: "Category",
       dataField: "parent_id",
       sort: true,
-     
     },
     {
       text: "Sub category",
       dataField: "cat_name",
       sort: true,
-     
     },
     {
       text: "Client name",
       dataField: "name",
       sort: true,
-      
     },
     {
       text: "Delivery due date   / Acutal delivery date",
       dataField: "Exp_Delivery_Date",
       sort: true,
-    
+
       formatter: function dateFormat(cell, row) {
-          
-          var oldDate = row.Exp_Delivery_Date;
-        
-          if (oldDate == "0000-00-00") {
-              return null;
-          }
-         else{
+        var oldDate = row.Exp_Delivery_Date;
+
+        if (oldDate == "0000-00-00") {
+          return null;
+        } else {
           return oldDate.toString().split("-").reverse().join("-");
-         }
+        }
       },
-  },
+    },
     {
       text: "Status",
-      
+
       formatter: function nameFormatter(cell, row) {
         return (
           <>
             <div>
               {row.status}/
-              {
-                row.status == "Inprogress Query" ?
-                  <p className="inprogress">
-
-                    {row.statusdescription}
-                  </p>
-                  :
-                  row.status == "Declined Query" ?
-                    <p className="declined">
-
-                      {row.statusdescription}
-                    </p> :
-                    row.status == "Completed Query" ?
-                      <p className="completed">
-
-                        {row.statusdescription}
-                      </p> :
-                      null
-              }
+              {row.status == "Inprogress Query" ? (
+                <p className="inprogress">{row.statusdescription}</p>
+              ) : row.status == "Declined Query" ? (
+                <p className="declined">{row.statusdescription}</p>
+              ) : row.status == "Completed Query" ? (
+                <p className="completed">{row.statusdescription}</p>
+              ) : null}
             </div>
           </>
         );
@@ -166,39 +137,44 @@ function AllQueriesData({allData}) {
     },
     {
       text: "Action",
-     
+
       formatter: function (cell, row) {
         return (
           <>
-           {row.status == "Declined Query"  ? 
-          <span onClick={() => ViewDiscussionToggel(row.assign_no)}  className="ml-1">
-          <ViewDiscussionIcon />
-        </span>: 
-         
-            <>
-              <Link
-               to={{
-                pathname: `/admin/chatting/${row.id}`,
-                index: 0,
-                routes: "queriestab",
-              
-                  obj: {
-                    message_type: "4",
-                    query_No: row.assign_no,
-                    query_id: row.id,
-                    routes: `/admin/queriestab`
-                  }
-                }}
+            {row.status == "Declined Query" ? (
+              <span
+                onClick={() => ViewDiscussionToggel(row.assign_no)}
+                className="ml-1"
               >
-                <MessageIcon />
-              </Link>
-            
+                <ViewDiscussionIcon />
+              </span>
+            ) : (
+              <>
+                <Link
+                  to={{
+                    pathname: `/admin/chatting/${row.id}`,
+                    index: 0,
+                    routes: "queriestab",
 
-            <span onClick={() => ViewDiscussionToggel(row.assign_no)}  className="ml-1">
-          <ViewDiscussionIcon />
-        </span>
-          </>
-}
+                    obj: {
+                      message_type: "4",
+                      query_No: row.assign_no,
+                      query_id: row.id,
+                      routes: `/admin/queriestab`,
+                    },
+                  }}
+                >
+                  <MessageIcon />
+                </Link>
+
+                <span
+                  onClick={() => ViewDiscussionToggel(row.assign_no)}
+                  className="ml-1"
+                >
+                  <ViewDiscussionIcon />
+                </span>
+              </>
+            )}
           </>
         );
       },
@@ -207,7 +183,6 @@ function AllQueriesData({allData}) {
 
   return (
     <>
-   
       <Card>
         <CardHeader>
           <AdminFilter
@@ -217,19 +192,16 @@ function AllQueriesData({allData}) {
             setRecords={setRecords}
             records={records}
           />
-
         </CardHeader>
         <CardBody>
           {/* <Records records={records} /> */}
-        
-          <DataTablepopulated 
-          bgColor="#55425f"
-          keyField= "assign_no"
-          data={allData}
-          
-          columns={columns}>
-           </DataTablepopulated> 
 
+          <DataTablepopulated
+            bgColor="#55425f"
+            keyField="assign_no"
+            data={allData}
+            columns={columns}
+          ></DataTablepopulated>
 
           <DiscardReport
             ViewDiscussionToggel={ViewDiscussionToggel}
@@ -238,7 +210,6 @@ function AllQueriesData({allData}) {
             getData={getAllQueriesData}
             headColor="#55425f"
           />
-
         </CardBody>
       </Card>
     </>

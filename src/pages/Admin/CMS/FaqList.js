@@ -1,79 +1,64 @@
-import React , {useState, useEffect} from 'react';
+import React, { useState, useEffect } from "react";
 import Layout from "../../../components/Layout/Layout";
-import {Container} from '@material-ui/core';
-import {
-  Card,
-  CardBody,
-} from "reactstrap";
-import axios from 'axios';
+import { Container } from "@material-ui/core";
+import { Card, CardBody } from "reactstrap";
+import axios from "axios";
 import { styled } from "@material-ui/styles";
-import { useHistory } from 'react-router';
-import { baseUrl } from '../../../config/config';
-import DataTablepopulated from '../../../components/DataTablepopulated/DataTabel';
-import  {DeleteIcon, EditQuery,} from "../../../components/Common/MessageIcon";
-import { Link } from 'react-router-dom';
-import Swal from 'sweetalert2';
-import { Markup } from 'interweave';
+import { useHistory } from "react-router";
+import { baseUrl } from "../../../config/config";
+import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
+import { DeleteIcon, EditQuery } from "../../../components/Common/MessageIcon";
+import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
+import { Markup } from "interweave";
 import CommonServices from "../../../common/common";
-import GirdExamplefaq from './GridExamplefaq';
-const MyContainer = styled(Container)({
+import GirdExamplefaq from "./GridExamplefaq";
+const MyContainer = styled(Container)({});
+const Updates = () => {
+  const userId = window.localStorage.getItem("adminkey");
+  const [list, setList] = useState([]);
+  const token = localStorage.getItem("token");
 
-})
-const Updates = () =>{ 
-    const userId = window.localStorage.getItem("adminkey");
-    const [list, setList] = useState([])
-    const token = localStorage.getItem("token")
-    
-    const myConfig = {
-      headers : {
-       "uit" : token
-      }
-    }
-    let history = useHistory()
-    useEffect(() => {
-      getList()
-    }, [])
-  
-    const getList = () => {
-      axios.get(`${baseUrl}/cms/getallfaq?uid=${JSON.parse(userId)}`, myConfig)
+  const myConfig = {
+    headers: {
+      uit: token,
+    },
+  };
+  let history = useHistory();
+  useEffect(() => {
+    getList();
+  }, []);
+
+  const getList = () => {
+    axios
+      .get(`${baseUrl}/cms/getallfaq?uid=${JSON.parse(userId)}`, myConfig)
       .then((res) => {
-      console.log("ress", res)
-       if(res.data.code === 1){
-        setList(res.data.result)
-        
-       }
-       else if (res.data.code === 102){
-        history.push("/cms/login")
-      }
-      })
-    }
-   
- 
+        if (res.data.code === 1) {
+          setList(res.data.result);
+        } else if (res.data.code === 102) {
+          history.push("/cms/login");
+        }
+      });
+  };
 
-return (
-  <Layout cmsDashboard="cmsDashboard">
-<Container maxWidth="xl">
-<div className="headingContent">
-        <h4>FAQs </h4>
-        <Link to={`/cms/faq`}>
-<button className="autoWidthBtn rightAlign my-2">Add FAQ</button>
-      </Link> 
+  return (
+    <Layout cmsDashboard="cmsDashboard">
+      <Container maxWidth="xl">
+        <div className="headingContent">
+          <h4>FAQs </h4>
+          <Link to={`/cms/faq`}>
+            <button className="autoWidthBtn rightAlign my-2">Add FAQ</button>
+          </Link>
         </div>
-    
 
         <Card>
           <CardBody>
-        
-                    <GirdExamplefaq />
+            <GirdExamplefaq />
           </CardBody>
-          </Card>
-    </Container>
-</Layout>
+        </Card>
+      </Container>
+    </Layout>
   );
-}
+};
 
 export default Updates;
-
-
-
-
