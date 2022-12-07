@@ -199,15 +199,7 @@ line-height: 35px;
     width: 100%;
 
 }
-.folderCreated{
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-    flex-direction: column;
-    flex-wrap: wrap;
-    width : calc(100% / 4 - 15px);
-    margin : 15px;
-}
+
 .folderCreate2{
   display: flex;
   align-items: center;
@@ -356,4 +348,28 @@ h5 {
   
   padding: 5px;
   border: 1px solid #d7d7d7;
+}
+/* Folder css */
+.myFolderWrapper{
+  display: flex;
+  align-items: flex-start;
+  margin: 0px 20px 0px 0px;
+  flex-wrap: wrap;
+}
+.folderCreated{
+  display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    width : calc(100% / 5);
+   margin : 0px 10px;
+}
+.folderColor {
+  font-size: 50px;
+  color : #fccc77;
+  cursor: pointer;
+}
+.folderActive{
+  font-size: 50px;
+  color : #0000ff;
+  cursor: pointer;
 }

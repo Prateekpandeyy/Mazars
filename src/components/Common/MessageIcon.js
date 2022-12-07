@@ -116,16 +116,16 @@ const ActionIcon = (props) => {
 const FileIcon = (props) => {
   if (props.name.split(".")[1] === "pdf") {
     return (
-      <DescriptionOutlined color="secondary" style={{ fontSize: "50px" }} />
+      <DescriptionOutlined color="secondary" style={{ fontSize: "2.5rem" }} />
     );
   } else if (
     props.name.split(".")[1] === "png" ||
     props.name.split(".")[1] === "jpg" ||
     props.name.split(".")[1] === "jpeg"
   ) {
-    return <ImageIcon color="primary" style={{ fontSize: "50px" }} />;
+    return <ImageIcon color="primary" style={{ fontSize: "2.5rem" }} />;
   } else {
-    return <TextSnippetIcon color="primary" style={{ fontSize: "50px" }} />;
+    return <TextSnippetIcon color="primary" style={{ fontSize: "2.5rem" }} />;
   }
 };
 export default MessageIcon;

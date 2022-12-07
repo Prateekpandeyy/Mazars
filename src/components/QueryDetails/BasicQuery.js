@@ -9,22 +9,14 @@ import MainText from "../Common/MainText";
 import ShowFolder from "./Folder/ShowFolder";
 import styled from "styled-components";
 import FolderIcon from "@mui/icons-material/Folder";
-import ArticleIcon from "@mui/icons-material/Article";
 import Swal from "sweetalert2";
 import { Box } from "@mui/material";
 import { Modal, ModalHeader, ModalBody } from "reactstrap";
 import CreateFolder from "./Folder/CreateFolder";
-import { useForm } from "react-hook-form";
 import { FileIcon } from "../Common/MessageIcon";
 import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
-// import FolderWrapper from "../FolderWrapper/FolderWrapper";
-const FolderWrapper = styled(Box)({
-  display: "flex",
-  alignItems: "flex-start",
-  flexWrap: "wrap",
-  margin: "0px 20px 0px 0px",
-});
+import FolderWrapper from "../FolderWrapper/FolderWrapper";
 
 const FolderDetails = styled(Box)({
   display: "flex",
@@ -636,7 +628,11 @@ function BasicQuery({
         }
       });
   };
-
+  const goBackFun = () => {
+    setSubFile([]);
+    setShowSubFolderData(false);
+    setFolderName("");
+  };
   return (
     <>
       <div className="queryBox">
@@ -712,111 +708,41 @@ function BasicQuery({
                       Create folder
                     </button>
                   </div>
-                  <FolderWrapper>
-                    {folder.map((i) => (
-                      <div className="folderCreated">
-                        {color === i.id ? (
-                          <FolderIcon
-                            onClick={(e) => getInnerFileFile(i)}
-                            style={{
-                              fontSize: "50px",
-                              color: "#0000ff",
-                              cursor: "pointer",
-                            }}
-                          />
-                        ) : (
-                          <FolderIcon
-                            onClick={(e) => getInnerFileFile(i)}
-                            style={{
-                              fontSize: "50px",
-                              color: "#fccc77",
-                              cursor: "pointer",
-                            }}
-                          />
-                        )}
-                        {rename !== i.folder ? (
-                          <span
-                            onDoubleClick={(e) => setRename(i.folder)}
-                            style={{
-                              textAlign: "center",
-                              whiteSpace: "break-spaces",
-                              display: "flex",
-                              maxHeight: "60px",
-                              overflow: "hidden",
-                            }}
-                          >
-                            {i.folder}{" "}
-                          </span>
-                        ) : (
-                          <div>
-                            <Popup
-                              open={true}
-                              onClose={closeModal}
-                              position="right center"
-                            >
-                              <div className="renameBtn">
-                                <input
-                                  placeholder="Please enter folder name"
-                                  defaultValue={i.folder}
-                                  onChange={(e) =>
-                                    setRenameValue(e.target.value)
-                                  }
-                                  className="form-control my-2"
-                                  type="text"
-                                />
-                                <button
-                                  onClick={(e) => renameFolder(i, "0")}
-                                  className="customBtn"
-                                >
-                                  Rename
-                                </button>
-                              </div>
-                            </Popup>
-                          </div>
-                        )}
-                      </div>
-                    ))}
-                    {files.map((i) => (
-                      <>
-                        {i.folder_id === "0" ? (
-                          <div className="folderCreated">
-                            <span
-                              onContextMenu={(e) => handleFile(e, i, true)}
-                              onClick={(e) =>
-                                rightClick(e, i.assign_no, i.id, i.name)
-                              }
-                            >
-                              <FileIcon
-                                name={i.name}
-                                style={{
-                                  fontSize: "50px",
-                                  color: "#0000ff",
-                                  cursor: "pointer",
-                                }}
-                              />
-                              <span
-                                style={{
-                                  textAlign: "center",
-                                  whiteSpace: "break-spaces",
-                                  display: "flex",
-                                  maxHeight: "60px",
-                                  overflow: "hidden",
-                                }}
-                              >
-                                {i.name}
-                              </span>
-                            </span>
-                          </div>
-                        ) : (
-                          ""
-                        )}
-                      </>
-                    ))}
-                  </FolderWrapper>
+                  <FolderWrapper
+                    folder={folder}
+                    color={color}
+                    getFolerSubFile={getInnerFileFile}
+                    file={files}
+                    downloadFile={rightClick}
+                    moveTo={handleFile}
+                    basePath={true}
+                    isSubFolder={false}
+                  />
                 </td>
                 <td>
                   <div className="d-flex">
-                    <FolderDetails>
+                    {showSubfolderData === true ? (
+                      <FolderWrapper
+                        getFolerSubFile={goBackFun}
+                        file={subFile}
+                        downloadFile={rightClick}
+                        moveTo={handleFile}
+                        basePath={false}
+                        isSubFolder={true}
+                      />
+                    ) : (
+                      <FolderWrapper
+                        folder={sub_folder}
+                        getFolerSubFile={get_sub_innerFile}
+                        file={innerFiles}
+                        downloadFile={rightClick}
+                        moveTo={handleFile}
+                        basePath={false}
+                        isSubFolder={false}
+                      />
+                    )}
+
+                    {/* <FolderDetails>
                       <div className="folderDetails">
                         {mainFoldName.length > 0 && folderName.length > 0 ? (
                           <div>
@@ -868,162 +794,8 @@ function BasicQuery({
                           </>
                         )}
 
-                        {showSubfolderData === true ? (
-                          <>
-                            <div className="d-flex flex-wrap">
-                              <span className="folderCreated">
-                                <FolderIcon
-                                  onClick={(e) => {
-                                    setSubFile([]);
-                                    setShowSubFolderData(false);
-                                    setFolderName("");
-                                  }}
-                                  style={{
-                                    fontSize: "50px",
-                                    color: "#fccc77",
-                                    cursor: "pointer",
-                                  }}
-                                />
-                                <span
-                                  style={{
-                                    textAlign: "center",
-                                    whiteSpace: "break-spaces",
-                                    display: "flex",
-                                    maxHeight: "60px",
-                                    overflow: "hidden",
-                                  }}
-                                >
-                                  ...
-                                </span>
-                              </span>
-                              {subFile.map((i) => (
-                                <div className="folderCreated">
-                                  <span
-                                    onContextMenu={(e) =>
-                                      handleFile(e, i, false)
-                                    }
-                                    onClick={(e) =>
-                                      rightClick(e, i.assign_no, i.id, i.name)
-                                    }
-                                  >
-                                    <FileIcon
-                                      name={i.name}
-                                      style={{
-                                        fontSize: "50px",
-                                        color: "#0000ff",
-                                        cursor: "pointer",
-                                      }}
-                                    />
-                                    <span
-                                      style={{
-                                        textAlign: "center",
-                                        whiteSpace: "break-spaces",
-                                        display: "flex",
-                                        maxHeight: "60px",
-                                        overflow: "hidden",
-                                      }}
-                                    >
-                                      {i.name}
-                                    </span>
-                                  </span>
-                                </div>
-                              ))}
-                            </div>
-                          </>
-                        ) : (
-                          <div className="d-flex flex-wrap">
-                            {sub_folder.map((i) => (
-                              <div className="folderCreated" key={i.id}>
-                                <FolderIcon
-                                  onClick={(e) => get_sub_innerFile(i)}
-                                  style={{
-                                    fontSize: "50px",
-                                    color: "#fccc77",
-                                    cursor: "pointer",
-                                  }}
-                                />
-                                {rename !== i.folder ? (
-                                  <span
-                                    onDoubleClick={(e) => setRename(i.folder)}
-                                    style={{
-                                      textAlign: "center",
-                                      whiteSpace: "break-spaces",
-                                      display: "flex",
-                                      maxHeight: "60px",
-                                      overflow: "hidden",
-                                    }}
-                                  >
-                                    {i.folder}{" "}
-                                  </span>
-                                ) : (
-                                  <div>
-                                    <Popup
-                                      open={true}
-                                      onClose={closeModal}
-                                      position="right center"
-                                    >
-                                      <div className="renameBtn">
-                                        <input
-                                          placeholder="Please enter folder name"
-                                          defaultValue={i.folder}
-                                          onChange={(e) =>
-                                            setRenameValue(e.target.value)
-                                          }
-                                          className="form-control my-2"
-                                          type="text"
-                                        />
-                                        <button
-                                          onClick={(e) =>
-                                            renameFolder(i, i.parent_id)
-                                          }
-                                          className="customBtn"
-                                        >
-                                          Rename
-                                        </button>
-                                      </div>
-                                    </Popup>
-                                  </div>
-                                )}
-                              </div>
-                            ))}
-                            {innerFiles.map((i) => (
-                              <>
-                                <div className="folderCreated">
-                                  <span
-                                    onContextMenu={(e) =>
-                                      handleFile(e, i, false)
-                                    }
-                                    onClick={(e) =>
-                                      rightClick(e, i.assign_no, i.id, i.name)
-                                    }
-                                  >
-                                    <FileIcon
-                                      name={i.name}
-                                      style={{
-                                        fontSize: "50px",
-                                        color: "#0000ff",
-                                        cursor: "pointer",
-                                      }}
-                                    />
-                                    <span
-                                      style={{
-                                        textAlign: "center",
-                                        whiteSpace: "break-spaces",
-                                        display: "flex",
-                                        maxHeight: "60px",
-                                        overflow: "hidden",
-                                      }}
-                                    >
-                                      {i.name}
-                                    </span>
-                                  </span>
-                                </div>
-                              </>
-                            ))}
-                          </div>
-                        )}
-                      </div>
-                    </FolderDetails>
+                       
+                    </FolderDetails> */}
                   </div>
                   {move === true ? (
                     <Modal isOpen={move} toggle={handleFile} size="xs">
