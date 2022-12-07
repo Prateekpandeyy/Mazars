@@ -1196,7 +1196,8 @@ function BasicQuery({
                       <>
                         {i.folder_id === "0" ? (
                           <div className="folderCreated">
-                            <ArticleIcon
+                            <FileIcon
+                              name={i.name}
                               style={{
                                 fontSize: "50px",
                                 color: "#0000ff",
@@ -1307,7 +1308,8 @@ function BasicQuery({
                               {adminInnerFile.map((i) => (
                                 <>
                                   <div className="folderCreated">
-                                    <ArticleIcon
+                                    <FileIcon
+                                      name={i.name}
                                       style={{
                                         fontSize: "50px",
                                         color: "#0000ff",
@@ -1360,7 +1362,8 @@ function BasicQuery({
                             {adminFile.map((i) => (
                               <>
                                 <div className="folderCreated">
-                                  <ArticleIcon
+                                  <FileIcon
+                                    name={i.name}
                                     style={{
                                       fontSize: "50px",
                                       color: "#0000ff",
@@ -1462,7 +1465,8 @@ function BasicQuery({
                       <>
                         {i.folder_id === "0" ? (
                           <div className="folderCreated">
-                            <ArticleIcon
+                            <FileIcon
+                              name={i.name}
                               style={{
                                 fontSize: "50px",
                                 color: "#0000ff",
@@ -1573,7 +1577,8 @@ function BasicQuery({
                               {clientInnerFile.map((i) => (
                                 <>
                                   <div className="folderCreated">
-                                    <ArticleIcon
+                                    <FileIcon
+                                      name={i.name}
                                       style={{
                                         fontSize: "50px",
                                         color: "#0000ff",
@@ -1626,7 +1631,8 @@ function BasicQuery({
                             {clientFile.map((i) => (
                               <>
                                 <div className="folderCreated">
-                                  <ArticleIcon
+                                  <FileIcon
+                                    name={i.name}
                                     style={{
                                       fontSize: "50px",
                                       color: "#0000ff",

@@ -16,6 +16,7 @@ import Swal from "sweetalert2";
 import { Modal, ModalHeader, ModalBody } from "reactstrap";
 import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
+import { FileIcon } from "../Common/MessageIcon";
 
 const FolderWrapper = styled(Box)({
   display: "flex",
@@ -918,7 +919,8 @@ function AssignmentDetails({
                         {i.folder_id === "0" ? (
                           <>
                             <div className="folderCreated">
-                              <ArticleIcon
+                              <FileIcon
+                                name={i.document}
                                 onContextMenu={(e) => handleFile(e, i, true)}
                                 onClick={(e) =>
                                   rightClick(e, i.assign_no, i.id, i.document)
@@ -948,7 +950,8 @@ function AssignmentDetails({
                         {i.customer_files !== null &&
                         i.customer_files_folder === "0" ? (
                           <div className="folderCreated">
-                            <ArticleIcon
+                            <FileIcon
+                              name={i.customer_files}
                               onContextMenu={(e) =>
                                 handleFile(e, i, true, "clientFiles")
                               }
@@ -1069,7 +1072,8 @@ function AssignmentDetails({
                               </span>
                               {subFile.map((i) => (
                                 <div className="folderCreated">
-                                  <ArticleIcon
+                                  <FileIcon
+                                    name={i.document}
                                     onContextMenu={(e) =>
                                       handleFile(e, i, false)
                                     }
@@ -1158,7 +1162,7 @@ function AssignmentDetails({
                               <>
                                 {color === i.folder_id ? (
                                   <div className="folderCreated">
-                                    <ArticleIcon
+                                    <FileIcon
                                       onContextMenu={(e) =>
                                         handleFile(e, i, false)
                                       }
@@ -1170,6 +1174,7 @@ function AssignmentDetails({
                                         color: "#0000ff",
                                         cursor: "pointer",
                                       }}
+                                      name={i.document}
                                     />
                                     <span
                                       style={{
@@ -1188,7 +1193,8 @@ function AssignmentDetails({
                                 )}
                                 {color === i.customer_files_folder ? (
                                   <div className="folderCreated">
-                                    <ArticleIcon
+                                    <FileIcon
+                                      name={i.customer_files}
                                       onContextMenu={(e) =>
                                         handleFile(e, i, false, "clientFiles")
                                       }
@@ -1390,7 +1396,8 @@ function AssignmentDetails({
                       <div className="folderCreated">
                         {i.folder_id === "0" ? (
                           <>
-                            <ArticleIcon
+                            <FileIcon
+                              name={i.document}
                               style={{
                                 fontSize: "50px",
                                 color: "#0000ff",
@@ -1415,7 +1422,8 @@ function AssignmentDetails({
                         {i.customer_files !== null &&
                         i.customer_files_folder === "0" ? (
                           <>
-                            <ArticleIcon
+                            <FileIcon
+                              name={i.customer_files}
                               style={{
                                 fontSize: "50px",
                                 color: "#0000ff",
@@ -1445,42 +1453,6 @@ function AssignmentDetails({
                   <div className="d-flex">
                     <FolderDetails>
                       <div className="folderDetails">
-                        {/* {mainFoldName.length > 0 && folderName.length > 0 ? (
-                          <span
-                            className="tabHover"
-                            onClick={(e) => {
-                              setShowAdSubFolder(false);
-                              setAdminInnerFiles([]);
-                            }}
-                          >
-                            {`${mainFoldName} ${
-                              folderName.length > 0 ? ">" : ""
-                            } ${folderName}`}
-                          </span>
-                        ) : (
-                          <>
-                            {mainFoldName.length > 0 ||
-                            folderName.length > 0 ? (
-                              <span
-                                className="tabHover"
-                                onClick={(e) => {
-                                  setShowAdSubFolder(false);
-                                  setAdminInnerFiles([]);
-                                }}
-                              >
-                                {`${mainFoldName} ${
-                                  folderName.length > 0 ? ">" : ""
-                                } ${folderName}`}
-                              </span>
-                            ) : (
-                              <span
-                                style={{ fontSize: "16px", fontWeight: "300" }}
-                              >
-                                Folder content
-                              </span>
-                            )}
-                          </>
-                        )} */}
                         {mainFoldName.length > 0 && folderName.length > 0 ? (
                           <div>
                             <span
@@ -1563,7 +1535,8 @@ function AssignmentDetails({
                               {adminInnerFile.map((i) => (
                                 <>
                                   <div className="folderCreated">
-                                    <ArticleIcon
+                                    <FileIcon
+                                      name={i.document}
                                       style={{
                                         fontSize: "50px",
                                         color: "#0000ff",
@@ -1617,7 +1590,8 @@ function AssignmentDetails({
                               <>
                                 {color === i.folder_id ? (
                                   <div className="folderCreated">
-                                    <ArticleIcon
+                                    <FileIcon
+                                      name={i.document}
                                       onClick={(e) =>
                                         rightClick(e, i.assign_no, i.id, i.name)
                                       }
@@ -1644,7 +1618,8 @@ function AssignmentDetails({
                                 )}
                                 {color === i.customer_files_folder ? (
                                   <div className="folderCreated">
-                                    <ArticleIcon
+                                    <FileIcon
+                                      name={i.customer_files}
                                       onClick={(e) =>
                                         rightClick(e, i.assign_no, i.id, i.name)
                                       }
@@ -1752,7 +1727,8 @@ function AssignmentDetails({
                       <div className="folderCreated">
                         {i.folder_id === "0" ? (
                           <>
-                            <ArticleIcon
+                            <FileIcon
+                              name={i.document}
                               style={{
                                 fontSize: "50px",
                                 color: "#0000ff",
@@ -1777,7 +1753,8 @@ function AssignmentDetails({
                         {i.customer_files !== null &&
                         i.customer_files_folder === "0" ? (
                           <>
-                            <ArticleIcon
+                            <FileIcon
+                              name={i.customer_files}
                               style={{
                                 fontSize: "50px",
                                 color: "#0000ff",
@@ -1807,44 +1784,6 @@ function AssignmentDetails({
                   <div className="d-flex">
                     <FolderDetails>
                       <div className="folderDetails">
-                        {/* {mainFoldName.length > 0 && folderName.length > 0 ? (
-                          <span
-                            className="tabHover"
-                            onClick={() => {
-                              setClientInnerFiles([]);
-                              setFolderName("");
-                              setClientSubFold(false);
-                            }}
-                          >
-                            {`${mainFoldName} ${
-                              folderName.length > 0 ? ">" : ""
-                            } ${folderName}`}
-                          </span>
-                        ) : (
-                          <>
-                            {mainFoldName.length > 0 ||
-                            folderName.length > 0 ? (
-                              <span
-                                className="tabHover"
-                                onClick={() => {
-                                  setClientInnerFiles([]);
-                                  setFolderName("");
-                                  setClientSubFold(false);
-                                }}
-                              >
-                                {`${mainFoldName} ${
-                                  folderName.length > 0 ? ">" : ""
-                                } ${folderName}`}
-                              </span>
-                            ) : (
-                              <span
-                                style={{ fontSize: "16px", fontWeight: "300" }}
-                              >
-                                Folder content
-                              </span>
-                            )}
-                          </>
-                        )} */}
                         {mainFoldName.length > 0 && folderName.length > 0 ? (
                           <div>
                             <span
@@ -1928,7 +1867,8 @@ function AssignmentDetails({
                               {clientInnerFile.map((i) => (
                                 <>
                                   <div className="folderCreated">
-                                    <ArticleIcon
+                                    <FileIcon
+                                      name={i.name}
                                       style={{
                                         fontSize: "50px",
                                         color: "#0000ff",
@@ -1982,7 +1922,8 @@ function AssignmentDetails({
                               <>
                                 {color === i.folder_id ? (
                                   <div className="folderCreated">
-                                    <ArticleIcon
+                                    <FileIcon
+                                      name={i.document}
                                       onClick={(e) =>
                                         rightClick(e, i.assign_no, i.id, i.name)
                                       }
@@ -2009,7 +1950,8 @@ function AssignmentDetails({
                                 )}
                                 {color === i.customer_files_folder ? (
                                   <div className="folderCreated">
-                                    <ArticleIcon
+                                    <FileIcon
+                                      name={i.customer_files}
                                       onClick={(e) =>
                                         rightClick(e, i.assign_no, i.id, i.name)
                                       }
