@@ -2,9 +2,9 @@ import React from "react";
 import FeedbackIcon from "@material-ui/icons/Feedback";
 import PublishIcon from "@material-ui/icons/Publish";
 import PaymentIcon from "@material-ui/icons/Payment";
-import ArticleIcon from "@mui/icons-material/Article";
-import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
-import PhotoSizeSelectActualIcon from "@mui/icons-material/PhotoSizeSelectActual";
+import ImageIcon from "@mui/icons-material/Image";
+import DescriptionOutlined from "@material-ui/icons/DescriptionOutlined";
+import TextSnippetIcon from "@mui/icons-material/TextSnippet";
 const ViewDiscussionIcon = () => {
   return (
     <i
@@ -115,15 +115,17 @@ const ActionIcon = (props) => {
 };
 const FileIcon = (props) => {
   if (props.name.split(".")[1] === "pdf") {
-    return <PictureAsPdfIcon style={{ fontSize: "35px" }} />;
+    return (
+      <DescriptionOutlined color="secondary" style={{ fontSize: "50px" }} />
+    );
   } else if (
     props.name.split(".")[1] === "png" ||
     props.name.split(".")[1] === "jpg" ||
     props.name.split(".")[1] === "jpeg"
   ) {
-    return <PhotoSizeSelectActualIcon style={{ fontSize: "50px" }} />;
+    return <ImageIcon color="primary" style={{ fontSize: "50px" }} />;
   } else {
-    return <ArticleIcon style={{ fontSize: "50px" }} />;
+    return <TextSnippetIcon color="primary" style={{ fontSize: "50px" }} />;
   }
 };
 export default MessageIcon;

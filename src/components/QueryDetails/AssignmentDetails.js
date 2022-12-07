@@ -715,7 +715,7 @@ function AssignmentDetails({
       } else if (res.data.code === 0) {
         Swal.fire({
           title: "error",
-          html: "Something went wrong, please try again",
+          html: res.data.message,
           icon: "error",
         });
       }
@@ -919,12 +919,55 @@ function AssignmentDetails({
                         {i.folder_id === "0" ? (
                           <>
                             <div className="folderCreated">
-                              <FileIcon
-                                name={i.document}
+                              <span
                                 onContextMenu={(e) => handleFile(e, i, true)}
                                 onClick={(e) =>
                                   rightClick(e, i.assign_no, i.id, i.document)
                                 }
+                              >
+                                <FileIcon
+                                  name={i.document}
+                                  style={{
+                                    fontSize: "50px",
+                                    color: "#0000ff",
+                                    cursor: "pointer",
+                                  }}
+                                />
+                                <span
+                                  style={{
+                                    textAlign: "center",
+                                    whiteSpace: "break-spaces",
+                                    display: "flex",
+                                    maxHeight: "60px",
+                                    overflow: "hidden",
+                                  }}
+                                >
+                                  {i.document}
+                                </span>
+                              </span>
+                            </div>
+                          </>
+                        ) : (
+                          ""
+                        )}
+                        {i.customer_files !== null &&
+                        i.customer_files_folder === "0" ? (
+                          <div className="folderCreated">
+                            <span
+                              onContextMenu={(e) =>
+                                handleFile(e, i, true, "clientFiles")
+                              }
+                              onClick={(e) =>
+                                rightClick(
+                                  e,
+                                  i.assign_no,
+                                  i.id,
+                                  i.customer_files
+                                )
+                              }
+                            >
+                              <FileIcon
+                                name={i.customer_files}
                                 style={{
                                   fontSize: "50px",
                                   color: "#0000ff",
@@ -940,45 +983,8 @@ function AssignmentDetails({
                                   overflow: "hidden",
                                 }}
                               >
-                                {i.document}
+                                {i.customer_files}
                               </span>
-                            </div>
-                          </>
-                        ) : (
-                          ""
-                        )}
-                        {i.customer_files !== null &&
-                        i.customer_files_folder === "0" ? (
-                          <div className="folderCreated">
-                            <FileIcon
-                              name={i.customer_files}
-                              onContextMenu={(e) =>
-                                handleFile(e, i, true, "clientFiles")
-                              }
-                              onClick={(e) =>
-                                rightClick(
-                                  e,
-                                  i.assign_no,
-                                  i.id,
-                                  i.customer_files
-                                )
-                              }
-                              style={{
-                                fontSize: "50px",
-                                color: "#0000ff",
-                                cursor: "pointer",
-                              }}
-                            />
-                            <span
-                              style={{
-                                textAlign: "center",
-                                whiteSpace: "break-spaces",
-                                display: "flex",
-                                maxHeight: "60px",
-                                overflow: "hidden",
-                              }}
-                            >
-                              {i.customer_files}
                             </span>
                           </div>
                         ) : (
@@ -1072,30 +1078,33 @@ function AssignmentDetails({
                               </span>
                               {subFile.map((i) => (
                                 <div className="folderCreated">
-                                  <FileIcon
-                                    name={i.document}
+                                  <span
                                     onContextMenu={(e) =>
                                       handleFile(e, i, false)
                                     }
                                     onClick={(e) =>
                                       rightClick(e, i.assign_no, i.id, i.name)
                                     }
-                                    style={{
-                                      fontSize: "50px",
-                                      color: "#0000ff",
-                                      cursor: "pointer",
-                                    }}
-                                  />
-                                  <span
-                                    style={{
-                                      textAlign: "center",
-                                      whiteSpace: "break-spaces",
-                                      display: "flex",
-                                      maxHeight: "60px",
-                                      overflow: "hidden",
-                                    }}
                                   >
-                                    {i.document}
+                                    <FileIcon
+                                      name={i.document}
+                                      style={{
+                                        fontSize: "50px",
+                                        color: "#0000ff",
+                                        cursor: "pointer",
+                                      }}
+                                    />
+                                    <span
+                                      style={{
+                                        textAlign: "center",
+                                        whiteSpace: "break-spaces",
+                                        display: "flex",
+                                        maxHeight: "60px",
+                                        overflow: "hidden",
+                                      }}
+                                    >
+                                      {i.document}
+                                    </span>
                                   </span>
                                 </div>
                               ))}
@@ -1162,30 +1171,33 @@ function AssignmentDetails({
                               <>
                                 {color === i.folder_id ? (
                                   <div className="folderCreated">
-                                    <FileIcon
+                                    <span
                                       onContextMenu={(e) =>
                                         handleFile(e, i, false)
                                       }
                                       onClick={(e) =>
                                         rightClick(e, i.assign_no, i.id, i.name)
                                       }
-                                      style={{
-                                        fontSize: "50px",
-                                        color: "#0000ff",
-                                        cursor: "pointer",
-                                      }}
-                                      name={i.document}
-                                    />
-                                    <span
-                                      style={{
-                                        textAlign: "center",
-                                        whiteSpace: "break-spaces",
-                                        display: "flex",
-                                        maxHeight: "60px",
-                                        overflow: "hidden",
-                                      }}
                                     >
-                                      {i.document}
+                                      <FileIcon
+                                        style={{
+                                          fontSize: "50px",
+                                          color: "#0000ff",
+                                          cursor: "pointer",
+                                        }}
+                                        name={i.document}
+                                      />
+                                      <span
+                                        style={{
+                                          textAlign: "center",
+                                          whiteSpace: "break-spaces",
+                                          display: "flex",
+                                          maxHeight: "60px",
+                                          overflow: "hidden",
+                                        }}
+                                      >
+                                        {i.document}
+                                      </span>
                                     </span>
                                   </div>
                                 ) : (
@@ -1193,30 +1205,33 @@ function AssignmentDetails({
                                 )}
                                 {color === i.customer_files_folder ? (
                                   <div className="folderCreated">
-                                    <FileIcon
-                                      name={i.customer_files}
+                                    <span
                                       onContextMenu={(e) =>
                                         handleFile(e, i, false, "clientFiles")
                                       }
                                       onClick={(e) =>
                                         rightClick(e, i.assign_no, i.id, i.name)
                                       }
-                                      style={{
-                                        fontSize: "50px",
-                                        color: "#0000ff",
-                                        cursor: "pointer",
-                                      }}
-                                    />
-                                    <span
-                                      style={{
-                                        textAlign: "center",
-                                        whiteSpace: "break-spaces",
-                                        display: "flex",
-                                        maxHeight: "60px",
-                                        overflow: "hidden",
-                                      }}
                                     >
-                                      {i.customer_files}
+                                      <FileIcon
+                                        name={i.customer_files}
+                                        style={{
+                                          fontSize: "50px",
+                                          color: "#0000ff",
+                                          cursor: "pointer",
+                                        }}
+                                      />
+                                      <span
+                                        style={{
+                                          textAlign: "center",
+                                          whiteSpace: "break-spaces",
+                                          display: "flex",
+                                          maxHeight: "60px",
+                                          overflow: "hidden",
+                                        }}
+                                      >
+                                        {i.customer_files}
+                                      </span>
                                     </span>
                                   </div>
                                 ) : (
@@ -1396,24 +1411,30 @@ function AssignmentDetails({
                       <div className="folderCreated">
                         {i.folder_id === "0" ? (
                           <>
-                            <FileIcon
-                              name={i.document}
-                              style={{
-                                fontSize: "50px",
-                                color: "#0000ff",
-                                cursor: "pointer",
-                              }}
-                            />
                             <span
-                              style={{
-                                textAlign: "center",
-                                whiteSpace: "break-spaces",
-                                display: "flex",
-                                maxHeight: "60px",
-                                overflow: "hidden",
-                              }}
+                              onClick={(e) =>
+                                rightClick(e, i.assign_no, i.id, i.name)
+                              }
                             >
-                              {i.document}
+                              <FileIcon
+                                name={i.document}
+                                style={{
+                                  fontSize: "50px",
+                                  color: "#0000ff",
+                                  cursor: "pointer",
+                                }}
+                              />
+                              <span
+                                style={{
+                                  textAlign: "center",
+                                  whiteSpace: "break-spaces",
+                                  display: "flex",
+                                  maxHeight: "60px",
+                                  overflow: "hidden",
+                                }}
+                              >
+                                {i.document}
+                              </span>
                             </span>
                           </>
                         ) : (
@@ -1422,24 +1443,30 @@ function AssignmentDetails({
                         {i.customer_files !== null &&
                         i.customer_files_folder === "0" ? (
                           <>
-                            <FileIcon
-                              name={i.customer_files}
-                              style={{
-                                fontSize: "50px",
-                                color: "#0000ff",
-                                cursor: "pointer",
-                              }}
-                            />
                             <span
-                              style={{
-                                textAlign: "center",
-                                whiteSpace: "break-spaces",
-                                display: "flex",
-                                maxHeight: "60px",
-                                overflow: "hidden",
-                              }}
+                              onClick={(e) =>
+                                rightClick(e, i.assign_no, i.id, i.name)
+                              }
                             >
-                              {i.customer_files}
+                              <FileIcon
+                                name={i.customer_files}
+                                style={{
+                                  fontSize: "50px",
+                                  color: "#0000ff",
+                                  cursor: "pointer",
+                                }}
+                              />
+                              <span
+                                style={{
+                                  textAlign: "center",
+                                  whiteSpace: "break-spaces",
+                                  display: "flex",
+                                  maxHeight: "60px",
+                                  overflow: "hidden",
+                                }}
+                              >
+                                {i.customer_files}
+                              </span>
                             </span>
                           </>
                         ) : (
@@ -1535,24 +1562,30 @@ function AssignmentDetails({
                               {adminInnerFile.map((i) => (
                                 <>
                                   <div className="folderCreated">
-                                    <FileIcon
-                                      name={i.document}
-                                      style={{
-                                        fontSize: "50px",
-                                        color: "#0000ff",
-                                        cursor: "pointer",
-                                      }}
-                                    />
                                     <span
-                                      style={{
-                                        textAlign: "center",
-                                        whiteSpace: "break-spaces",
-                                        display: "flex",
-                                        maxHeight: "60px",
-                                        overflow: "hidden",
-                                      }}
+                                      onClick={(e) =>
+                                        rightClick(e, i.assign_no, i.id, i.name)
+                                      }
                                     >
-                                      {i.document}
+                                      <FileIcon
+                                        name={i.document}
+                                        style={{
+                                          fontSize: "50px",
+                                          color: "#0000ff",
+                                          cursor: "pointer",
+                                        }}
+                                      />
+                                      <span
+                                        style={{
+                                          textAlign: "center",
+                                          whiteSpace: "break-spaces",
+                                          display: "flex",
+                                          maxHeight: "60px",
+                                          overflow: "hidden",
+                                        }}
+                                      >
+                                        {i.document}
+                                      </span>
                                     </span>
                                   </div>
                                 </>
@@ -1590,27 +1623,30 @@ function AssignmentDetails({
                               <>
                                 {color === i.folder_id ? (
                                   <div className="folderCreated">
-                                    <FileIcon
-                                      name={i.document}
+                                    <span
                                       onClick={(e) =>
                                         rightClick(e, i.assign_no, i.id, i.name)
                                       }
-                                      style={{
-                                        fontSize: "50px",
-                                        color: "#0000ff",
-                                        cursor: "pointer",
-                                      }}
-                                    />
-                                    <span
-                                      style={{
-                                        textAlign: "center",
-                                        whiteSpace: "break-spaces",
-                                        display: "flex",
-                                        maxHeight: "60px",
-                                        overflow: "hidden",
-                                      }}
                                     >
-                                      {i.document}
+                                      <FileIcon
+                                        name={i.document}
+                                        style={{
+                                          fontSize: "50px",
+                                          color: "#0000ff",
+                                          cursor: "pointer",
+                                        }}
+                                      />
+                                      <span
+                                        style={{
+                                          textAlign: "center",
+                                          whiteSpace: "break-spaces",
+                                          display: "flex",
+                                          maxHeight: "60px",
+                                          overflow: "hidden",
+                                        }}
+                                      >
+                                        {i.document}
+                                      </span>
                                     </span>
                                   </div>
                                 ) : (
@@ -1618,27 +1654,30 @@ function AssignmentDetails({
                                 )}
                                 {color === i.customer_files_folder ? (
                                   <div className="folderCreated">
-                                    <FileIcon
-                                      name={i.customer_files}
+                                    <span
                                       onClick={(e) =>
                                         rightClick(e, i.assign_no, i.id, i.name)
                                       }
-                                      style={{
-                                        fontSize: "50px",
-                                        color: "#0000ff",
-                                        cursor: "pointer",
-                                      }}
-                                    />
-                                    <span
-                                      style={{
-                                        textAlign: "center",
-                                        whiteSpace: "break-spaces",
-                                        display: "flex",
-                                        maxHeight: "60px",
-                                        overflow: "hidden",
-                                      }}
                                     >
-                                      {i.customer_files}
+                                      <FileIcon
+                                        name={i.customer_files}
+                                        style={{
+                                          fontSize: "50px",
+                                          color: "#0000ff",
+                                          cursor: "pointer",
+                                        }}
+                                      />
+                                      <span
+                                        style={{
+                                          textAlign: "center",
+                                          whiteSpace: "break-spaces",
+                                          display: "flex",
+                                          maxHeight: "60px",
+                                          overflow: "hidden",
+                                        }}
+                                      >
+                                        {i.customer_files}
+                                      </span>
                                     </span>
                                   </div>
                                 ) : (
@@ -1727,24 +1766,30 @@ function AssignmentDetails({
                       <div className="folderCreated">
                         {i.folder_id === "0" ? (
                           <>
-                            <FileIcon
-                              name={i.document}
-                              style={{
-                                fontSize: "50px",
-                                color: "#0000ff",
-                                cursor: "pointer",
-                              }}
-                            />
                             <span
-                              style={{
-                                textAlign: "center",
-                                whiteSpace: "break-spaces",
-                                display: "flex",
-                                maxHeight: "60px",
-                                overflow: "hidden",
-                              }}
+                              onClick={(e) =>
+                                rightClick(e, i.assign_no, i.id, i.name)
+                              }
                             >
-                              {i.document}
+                              <FileIcon
+                                name={i.document}
+                                style={{
+                                  fontSize: "50px",
+                                  color: "#0000ff",
+                                  cursor: "pointer",
+                                }}
+                              />
+                              <span
+                                style={{
+                                  textAlign: "center",
+                                  whiteSpace: "break-spaces",
+                                  display: "flex",
+                                  maxHeight: "60px",
+                                  overflow: "hidden",
+                                }}
+                              >
+                                {i.document}
+                              </span>
                             </span>
                           </>
                         ) : (
@@ -1753,24 +1798,30 @@ function AssignmentDetails({
                         {i.customer_files !== null &&
                         i.customer_files_folder === "0" ? (
                           <>
-                            <FileIcon
-                              name={i.customer_files}
-                              style={{
-                                fontSize: "50px",
-                                color: "#0000ff",
-                                cursor: "pointer",
-                              }}
-                            />
                             <span
-                              style={{
-                                textAlign: "center",
-                                whiteSpace: "break-spaces",
-                                display: "flex",
-                                maxHeight: "60px",
-                                overflow: "hidden",
-                              }}
+                              onClick={(e) =>
+                                rightClick(e, i.assign_no, i.id, i.name)
+                              }
                             >
-                              {i.customer_files}
+                              <FileIcon
+                                name={i.customer_files}
+                                style={{
+                                  fontSize: "50px",
+                                  color: "#0000ff",
+                                  cursor: "pointer",
+                                }}
+                              />
+                              <span
+                                style={{
+                                  textAlign: "center",
+                                  whiteSpace: "break-spaces",
+                                  display: "flex",
+                                  maxHeight: "60px",
+                                  overflow: "hidden",
+                                }}
+                              >
+                                {i.customer_files}
+                              </span>
                             </span>
                           </>
                         ) : (
@@ -1867,24 +1918,30 @@ function AssignmentDetails({
                               {clientInnerFile.map((i) => (
                                 <>
                                   <div className="folderCreated">
-                                    <FileIcon
-                                      name={i.name}
-                                      style={{
-                                        fontSize: "50px",
-                                        color: "#0000ff",
-                                        cursor: "pointer",
-                                      }}
-                                    />
                                     <span
-                                      style={{
-                                        textAlign: "center",
-                                        whiteSpace: "break-spaces",
-                                        display: "flex",
-                                        maxHeight: "60px",
-                                        overflow: "hidden",
-                                      }}
+                                      onClick={(e) =>
+                                        rightClick(e, i.assign_no, i.id, i.name)
+                                      }
                                     >
-                                      {i.name}
+                                      <FileIcon
+                                        name={i.name}
+                                        style={{
+                                          fontSize: "50px",
+                                          color: "#0000ff",
+                                          cursor: "pointer",
+                                        }}
+                                      />
+                                      <span
+                                        style={{
+                                          textAlign: "center",
+                                          whiteSpace: "break-spaces",
+                                          display: "flex",
+                                          maxHeight: "60px",
+                                          overflow: "hidden",
+                                        }}
+                                      >
+                                        {i.name}
+                                      </span>
                                     </span>
                                   </div>
                                 </>
@@ -1922,27 +1979,30 @@ function AssignmentDetails({
                               <>
                                 {color === i.folder_id ? (
                                   <div className="folderCreated">
-                                    <FileIcon
-                                      name={i.document}
+                                    <span
                                       onClick={(e) =>
                                         rightClick(e, i.assign_no, i.id, i.name)
                                       }
-                                      style={{
-                                        fontSize: "50px",
-                                        color: "#0000ff",
-                                        cursor: "pointer",
-                                      }}
-                                    />
-                                    <span
-                                      style={{
-                                        textAlign: "center",
-                                        whiteSpace: "break-spaces",
-                                        display: "flex",
-                                        maxHeight: "60px",
-                                        overflow: "hidden",
-                                      }}
                                     >
-                                      {i.document}
+                                      <FileIcon
+                                        name={i.document}
+                                        style={{
+                                          fontSize: "50px",
+                                          color: "#0000ff",
+                                          cursor: "pointer",
+                                        }}
+                                      />
+                                      <span
+                                        style={{
+                                          textAlign: "center",
+                                          whiteSpace: "break-spaces",
+                                          display: "flex",
+                                          maxHeight: "60px",
+                                          overflow: "hidden",
+                                        }}
+                                      >
+                                        {i.document}
+                                      </span>
                                     </span>
                                   </div>
                                 ) : (
@@ -1950,27 +2010,30 @@ function AssignmentDetails({
                                 )}
                                 {color === i.customer_files_folder ? (
                                   <div className="folderCreated">
-                                    <FileIcon
-                                      name={i.customer_files}
+                                    <span
                                       onClick={(e) =>
                                         rightClick(e, i.assign_no, i.id, i.name)
                                       }
-                                      style={{
-                                        fontSize: "50px",
-                                        color: "#0000ff",
-                                        cursor: "pointer",
-                                      }}
-                                    />
-                                    <span
-                                      style={{
-                                        textAlign: "center",
-                                        whiteSpace: "break-spaces",
-                                        display: "flex",
-                                        maxHeight: "60px",
-                                        overflow: "hidden",
-                                      }}
                                     >
-                                      {i.customer_files}
+                                      <FileIcon
+                                        name={i.customer_files}
+                                        style={{
+                                          fontSize: "50px",
+                                          color: "#0000ff",
+                                          cursor: "pointer",
+                                        }}
+                                      />
+                                      <span
+                                        style={{
+                                          textAlign: "center",
+                                          whiteSpace: "break-spaces",
+                                          display: "flex",
+                                          maxHeight: "60px",
+                                          overflow: "hidden",
+                                        }}
+                                      >
+                                        {i.customer_files}
+                                      </span>
                                     </span>
                                   </div>
                                 ) : (
