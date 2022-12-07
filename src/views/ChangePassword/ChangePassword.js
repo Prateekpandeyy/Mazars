@@ -4,7 +4,6 @@ import "../../assets/css/style.css";
 import "../../assets/css/media.css";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { Button } from "@material-ui/core";
 import { baseUrl } from "../../config/config";
 import Layout from "../../components/Layout/Layout";
 import classNames from "classnames";
@@ -17,7 +16,7 @@ import CustomHeading from "../../components/Common/CustomHeading";
 
 function ChangePassword(props) {
   const userId = window.localStorage.getItem("userid");
-  const { register, handleSubmit, errors, getValues, reset } = useForm();
+  const { register, handleSubmit, errors, getValues } = useForm();
 
   const [loading, setLoading] = useState(false);
   const [isPasswordShow, setPasswordShow] = useState(false);
@@ -27,15 +26,9 @@ function ChangePassword(props) {
   const [display, setDisplay] = useState(false);
   const [time, setTime] = useState("");
   const [load, setLoad] = useState(false);
-
-  const [user, setUser] = useState("");
   const token = window.localStorage.getItem("clientToken");
   const email = JSON.parse(window.localStorage.getItem("custEmail"));
   const clientLoginId = JSON.parse(localStorage.getItem("clientLoginId"));
-  useEffect(() => {
-    getTime();
-  }, [load]);
-
   const getTime = () => {
     if (load) {
       var timerOn = true;
@@ -55,6 +48,10 @@ function ChangePassword(props) {
       timer(180);
     }
   };
+
+  useEffect(() => {
+    getTime();
+  }, [load]);
 
   const togglePasssword = () => {
     setPasswordShow(!isPasswordShow);

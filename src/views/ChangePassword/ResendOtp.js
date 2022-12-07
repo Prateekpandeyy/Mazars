@@ -17,7 +17,7 @@ function ResendOtp({
 }) {
   const userId = window.localStorage.getItem("userid");
 
-  const { handleSubmit, errors, reset } = useForm();
+  const { handleSubmit } = useForm();
 
   const onSubmit = (value) => {
     setLoading(true);

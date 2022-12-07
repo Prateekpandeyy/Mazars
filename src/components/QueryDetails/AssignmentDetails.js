@@ -989,20 +989,59 @@ function AssignmentDetails({
                   <div className="d-flex">
                     <FolderDetails>
                       <div className="folderDetails">
-                        {mainFoldName.length > 0 || folderName.length > 0 ? (
-                          <span style={{ fontSize: "16px", fontWeight: "300" }}>
-                            {`${mainFoldName} ${
-                              folderName.length > 0 ? ">" : ""
-                            } ${folderName}`}
-                          </span>
+                        {mainFoldName.length > 0 && folderName.length > 0 ? (
+                          <div>
+                            <span
+                              className="tabHover"
+                              style={{ fontSize: "16px", fontWeight: "300" }}
+                              onClick={(e) => {
+                                setShowSubFolderData(false);
+                                setFolderName("");
+                              }}
+                            >
+                              {`${mainFoldName}`}
+                            </span>
+                            <span>
+                              {`${
+                                folderName.length > 0 ? " > " : ""
+                              } ${folderName}`}
+                            </span>
+                          </div>
                         ) : (
-                          <span style={{ fontSize: "16px", fontWeight: "300" }}>
-                            Folder content
-                          </span>
+                          <>
+                            {mainFoldName.length > 0 ||
+                            folderName.length > 0 ? (
+                              <div>
+                                <span
+                                  style={{
+                                    fontSize: "16px",
+                                    fontWeight: "300",
+                                  }}
+                                  onClick={(e) => {
+                                    setShowSubFolderData(false);
+                                    setFolderName("");
+                                  }}
+                                >
+                                  {`${mainFoldName}`}
+                                </span>
+                                <span>
+                                  {folderName.length > 0 ? " > " : ""}
+                                  {folderName}
+                                </span>
+                              </div>
+                            ) : (
+                              <span
+                                style={{ fontSize: "16px", fontWeight: "300" }}
+                              >
+                                Folder content
+                              </span>
+                            )}
+                          </>
                         )}
+
                         {showSubfolderData === true ? (
                           <>
-                            <div className="d-flex">
+                            <div className="d-flex flex-wrap">
                               <span className="folderCreated">
                                 <FolderIcon
                                   onClick={(e) => {
@@ -1059,7 +1098,7 @@ function AssignmentDetails({
                             </div>
                           </>
                         ) : (
-                          <div className="d-flex">
+                          <div className="d-flex flex-wrap">
                             {sub_folder.map((i) => (
                               <div className="folderCreated" key={i.id}>
                                 <FolderIcon
@@ -1406,9 +1445,9 @@ function AssignmentDetails({
                   <div className="d-flex">
                     <FolderDetails>
                       <div className="folderDetails">
-                        {mainFoldName.length > 0 && folderName.length > 0 ? (
+                        {/* {mainFoldName.length > 0 && folderName.length > 0 ? (
                           <span
-                            style={{ fontSize: "16px", fontWeight: "300" }}
+                            className="tabHover"
                             onClick={(e) => {
                               setShowAdSubFolder(false);
                               setAdminInnerFiles([]);
@@ -1423,7 +1462,7 @@ function AssignmentDetails({
                             {mainFoldName.length > 0 ||
                             folderName.length > 0 ? (
                               <span
-                                style={{ fontSize: "16px", fontWeight: "300" }}
+                                className="tabHover"
                                 onClick={(e) => {
                                   setShowAdSubFolder(false);
                                   setAdminInnerFiles([]);
@@ -1441,11 +1480,62 @@ function AssignmentDetails({
                               </span>
                             )}
                           </>
+                        )} */}
+                        {mainFoldName.length > 0 && folderName.length > 0 ? (
+                          <div>
+                            <span
+                              className="tabHover"
+                              style={{ fontSize: "16px", fontWeight: "300" }}
+                              onClick={(e) => {
+                                setShowAdSubFolder(false);
+                                setAdminInnerFiles([]);
+                                setFolderName("");
+                              }}
+                            >
+                              {`${mainFoldName}`}
+                            </span>
+                            <span>
+                              {`${
+                                folderName.length > 0 ? " > " : ""
+                              } ${folderName}`}
+                            </span>
+                          </div>
+                        ) : (
+                          <>
+                            {mainFoldName.length > 0 ||
+                            folderName.length > 0 ? (
+                              <div>
+                                <span
+                                  style={{
+                                    fontSize: "16px",
+                                    fontWeight: "300",
+                                  }}
+                                  onClick={(e) => {
+                                    setShowAdSubFolder(false);
+                                    setAdminInnerFiles([]);
+                                    setFolderName("");
+                                  }}
+                                >
+                                  {`${mainFoldName}`}
+                                </span>
+                                <span>
+                                  {folderName.length > 0 ? " > " : ""}
+                                  {folderName}
+                                </span>
+                              </div>
+                            ) : (
+                              <span
+                                style={{ fontSize: "16px", fontWeight: "300" }}
+                              >
+                                Folder content
+                              </span>
+                            )}
+                          </>
                         )}
 
                         {adSubFolder === true ? (
                           <>
-                            <div className="d-flex">
+                            <div className="d-flex flex-wrap">
                               <div className="folderCreated">
                                 <FolderIcon
                                   onClick={(e) => {
@@ -1497,7 +1587,7 @@ function AssignmentDetails({
                             </div>
                           </>
                         ) : (
-                          <div className="d-flex">
+                          <div className="d-flex flex-wrap">
                             {showadminSubFolder.map((i) => (
                               <>
                                 <div className="folderCreated">
@@ -1717,9 +1807,9 @@ function AssignmentDetails({
                   <div className="d-flex">
                     <FolderDetails>
                       <div className="folderDetails">
-                        {mainFoldName.length > 0 && folderName.length > 0 ? (
+                        {/* {mainFoldName.length > 0 && folderName.length > 0 ? (
                           <span
-                            style={{ fontSize: "16px", fontWeight: "300" }}
+                            className="tabHover"
                             onClick={() => {
                               setClientInnerFiles([]);
                               setFolderName("");
@@ -1735,7 +1825,7 @@ function AssignmentDetails({
                             {mainFoldName.length > 0 ||
                             folderName.length > 0 ? (
                               <span
-                                style={{ fontSize: "16px", fontWeight: "300" }}
+                                className="tabHover"
                                 onClick={() => {
                                   setClientInnerFiles([]);
                                   setFolderName("");
@@ -1754,11 +1844,62 @@ function AssignmentDetails({
                               </span>
                             )}
                           </>
+                        )} */}
+                        {mainFoldName.length > 0 && folderName.length > 0 ? (
+                          <div>
+                            <span
+                              className="tabHover"
+                              style={{ fontSize: "16px", fontWeight: "300" }}
+                              onClick={() => {
+                                setClientInnerFiles([]);
+                                setFolderName("");
+                                setClientSubFold(false);
+                              }}
+                            >
+                              {`${mainFoldName}`}
+                            </span>
+                            <span>
+                              {`${
+                                folderName.length > 0 ? " > " : ""
+                              } ${folderName}`}
+                            </span>
+                          </div>
+                        ) : (
+                          <>
+                            {mainFoldName.length > 0 ||
+                            folderName.length > 0 ? (
+                              <div>
+                                <span
+                                  style={{
+                                    fontSize: "16px",
+                                    fontWeight: "300",
+                                  }}
+                                  onClick={() => {
+                                    setClientInnerFiles([]);
+                                    setFolderName("");
+                                    setClientSubFold(false);
+                                  }}
+                                >
+                                  {`${mainFoldName}`}
+                                </span>
+                                <span>
+                                  {folderName.length > 0 ? " > " : ""}
+                                  {folderName}
+                                </span>
+                              </div>
+                            ) : (
+                              <span
+                                style={{ fontSize: "16px", fontWeight: "300" }}
+                              >
+                                Folder content
+                              </span>
+                            )}
+                          </>
                         )}
 
                         {clientSubFold === true ? (
                           <>
-                            <div className="d-flex">
+                            <div className="d-flex flex-wrap">
                               <div className="folderCreated">
                                 <FolderIcon
                                   onClick={(e) => {
@@ -1811,7 +1952,7 @@ function AssignmentDetails({
                             </div>
                           </>
                         ) : (
-                          <div className="d-flex">
+                          <div className="d-flex flex-wrap">
                             {showclientSubFolder.map((i) => (
                               <>
                                 <div className="folderCreated">
