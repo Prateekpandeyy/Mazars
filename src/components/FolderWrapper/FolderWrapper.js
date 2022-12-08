@@ -2,6 +2,7 @@ import React from "react";
 import FolderIcon from "@mui/icons-material/Folder";
 import CustomTypography from "../Common/CustomTypography";
 import { FileIcon } from "../Common/MessageIcon";
+import FolderRename from "./FolderRename";
 const FolderWrapper = (props) => {
   console.log("innerFiles", props.file, props.isSubFolder);
   return (
@@ -14,7 +15,10 @@ const FolderWrapper = (props) => {
               sx={{ fontSize: "2.5rem" }}
               className="folderColor"
             />
-            <CustomTypography>...</CustomTypography>
+
+            <span className="folderLabel">
+              <CustomTypography>...</CustomTypography>
+            </span>
           </div>
         ) : (
           <>
@@ -27,7 +31,24 @@ const FolderWrapper = (props) => {
                     props.color === i.id ? "folderActive" : "folderColor"
                   }
                 />
-                <CustomTypography>{i.folder}</CustomTypography>
+                {props.panel === "tl" ? (
+                  <span className="folderLabel">
+                    <FolderRename
+                      rename={props.rename}
+                      setRename={props.setRename}
+                      folderName={i.folder}
+                      folderData={i}
+                      setRenameValue={props.setRenameValue}
+                      renameValue={props.renameValue}
+                      closeModal={props.closeModal}
+                      renameFolder={props.renameFolder}
+                    />
+                  </span>
+                ) : (
+                  <span className="folderLabel">
+                    <CustomTypography>{i.folder}</CustomTypography>
+                  </span>
+                )}
               </div>
             ))}
           </>
@@ -48,7 +69,9 @@ const FolderWrapper = (props) => {
                         name={i.name}
                         sx={{ fontSize: "2.5rem", pointer: "cursor" }}
                       />
-                      <CustomTypography> {i.name}</CustomTypography>
+                      <span className="folderLabel">
+                        <CustomTypography> {i.name}</CustomTypography>
+                      </span>
                     </span>
                   </div>
                 ) : (
@@ -67,7 +90,9 @@ const FolderWrapper = (props) => {
                     name={i.name}
                     sx={{ fontSize: "2.5rem", pointer: "cursor" }}
                   />
-                  <CustomTypography> {i.name}</CustomTypography>
+                  <span className="folderLabel">
+                    <CustomTypography> {i.name}</CustomTypography>
+                  </span>
                 </span>
               </div>
             )}

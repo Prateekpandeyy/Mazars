@@ -328,11 +328,7 @@ h5 {
   font-size: 40px;
   border-radius: 50%;
 }
-.folderDetails{
-  display: flex;
-  width: 100%;
-  flex-direction: column;
-}
+
 .validationError{
   
   border-color: #dc3545 !important;
@@ -372,4 +368,21 @@ h5 {
   font-size: 50px;
   color : #0000ff;
   cursor: pointer;
+}
+.folderLabel{
+  display: flex;
+  max-height: 50px;
+  overflow: hidden;;
+}
+.folderDetailsWrapper {
+  display: flex;
+  width: 100%;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  margin-bottom: 0.5rem;
+}
+.folderDetails{
+  display: flex;
+  width: 100%;
+  flex-direction: column;
 }

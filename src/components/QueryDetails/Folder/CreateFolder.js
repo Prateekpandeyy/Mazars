@@ -67,7 +67,7 @@ function CreateFolder({
         setFolderId("");
         Swal.fire({
           title: "error",
-          html: "Something went wrong, please try again",
+          html: res.data.result,
           icon: "error",
         });
       }

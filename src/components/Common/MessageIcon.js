@@ -2,7 +2,7 @@ import React from "react";
 import FeedbackIcon from "@material-ui/icons/Feedback";
 import PublishIcon from "@material-ui/icons/Publish";
 import PaymentIcon from "@material-ui/icons/Payment";
-import ImageIcon from "@mui/icons-material/Image";
+import ImageOutlinedIcon from "@mui/icons-material/ImageOutlined";
 import DescriptionOutlined from "@material-ui/icons/DescriptionOutlined";
 import TextSnippetIcon from "@mui/icons-material/TextSnippet";
 const ViewDiscussionIcon = () => {
@@ -114,16 +114,18 @@ const ActionIcon = (props) => {
   );
 };
 const FileIcon = (props) => {
-  if (props.name.split(".")[1] === "pdf") {
+  if (props?.name?.split(".")[1] === "pdf") {
     return (
       <DescriptionOutlined color="secondary" style={{ fontSize: "2.5rem" }} />
     );
   } else if (
-    props.name.split(".")[1] === "png" ||
-    props.name.split(".")[1] === "jpg" ||
-    props.name.split(".")[1] === "jpeg"
+    props?.name?.split(".")[1] === "png" ||
+    props?.name?.split(".")[1] === "jpg" ||
+    props?.name?.split(".")[1] === "jpeg"
   ) {
-    return <ImageIcon color="primary" style={{ fontSize: "2.5rem" }} />;
+    return (
+      <ImageOutlinedIcon style={{ fontSize: "2.5rem", color: "#464646" }} />
+    );
   } else {
     return <TextSnippetIcon color="primary" style={{ fontSize: "2.5rem" }} />;
   }
