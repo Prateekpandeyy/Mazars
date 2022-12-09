@@ -876,7 +876,7 @@ async startRecording(key){
 // Start recording button
   recStart = () => {
    
-    this.localStream.enableVideo();
+    // this.localStream.enableVideo();
     this.accuire();
    
     this.setState({ showRecBtn: false  });

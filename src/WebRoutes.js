@@ -211,170 +211,245 @@ function WebRoutes() {
       <BrowserRouter>
         <Switch>
           <PublicRouteUser exact path="/" component={Login} />
-          <PublicRouteUser
-            path="/customer/coming-soon"
-            component={CommingSoon}
-          />
 
-          <PublicRouteUser path="/customer/signup" component={SignUp} />
+          <PublicRouteUser exact path="/customer/signup" component={SignUp} />
           <PublicRouteUser
+            exact
             path="/customer/outerLinks"
             component={LinklistUser}
           />
           <PublicRouteUser
+            exact
             path="/customer/forget-password"
             component={ForgetPassword}
           />
           <PublicRouteUser
+            exact
             path="/customer/new-password/:id"
             component={NewPassword}
           />
-          <PublicRouteUser path="/customer/aboutbasic" component={AboutOuter} />
-          <PublicRouteUser path="/customer/direct" component={Direct} />
-          <PublicRouteUser path="/customer/indirect" component={Indirect} />
           <PublicRouteUser
+            exact
+            path="/customer/aboutbasic"
+            component={AboutOuter}
+          />
+          <PublicRouteUser exact path="/customer/direct" component={Direct} />
+          <PublicRouteUser
+            exact
+            path="/customer/indirect"
+            component={Indirect}
+          />
+          <PublicRouteUser
+            exact
             path="/customer/mediacontent"
             component={MediaContentCustomer}
           />
-          <PublicRouteUser path="/customer/media" component={Media} />
+          <PublicRouteUser exact path="/customer/media" component={Media} />
           <PublicRouteUser
+            exact
             path="/customer/imagegallery"
             component={GalleryVideo}
           />
           <PublicRouteUser path="/customer/videolist" component={VideoList} />
           <PublicRouteUser
+            exact
             path="/customer/videogallery"
             component={Videogallery}
           />
-          <PublicRouteUser path="/customer/details" component={Details} />
-          <PublicRouteUser path="/customer/groupvideo" component={GroupVideo} />
+          <PublicRouteUser exact path="/customer/details" component={Details} />
           <PublicRouteUser
+            exact
+            path="/customer/groupvideo"
+            component={GroupVideo}
+          />
+          <PublicRouteUser
+            exact
             path="/customer/customerquery"
             component={QueryContact}
           />
           <PublicRouteUser
+            exact
             path="/customer/latestupdates/:id"
             component={LatestUpdates}
           />
-          <PublicRouteUser path="/customer/updates" component={Updates} />
+          <PublicRouteUser exact path="/customer/updates" component={Updates} />
           <PublicRouteUser
+            exact
             path="/customer/contactbasic"
             component={ContactOuter}
           />
           <PublicRouteUser
+            exact
             path="/customer/faq-question"
             component={FaqQuestion}
           />
           <PublicRouteUser
+            exact
             path="/customer/updatedirect"
             component={UpdateDirect}
           />
-          <PublicRouteUser path="/customer/drag" component={Drag} />
+          <PublicRouteUser exact path="/customer/drag" component={Drag} />
           <PublicRouteUser
+            exact
             path="/customer/updateindirect"
             component={UpdateIndirect}
           />
           <PublicRouteUser
+            exact
             path="/customer/meetingouter/:id"
             component={OuterMeetingJoin}
           />
           <PublicRouteUser
+            exact
             path="/customer/miscellaneous"
             component={UpdateMiscellenous}
           />
           <PublicRouteUser
+            exact
             path="/customer/videocall"
             component={OuterLinkVideo}
           />
           <PublicRouteUser
+            exact
             path="/customer/update-details/:id"
             component={UpdateDetails}
           />
           <PublicRouteAdmin
+            exact
             path="/customer/questinlinklist"
             component={LinklistUser}
           />
           <PrivateRouteUser
+            exact
             path="/customer/select-category"
             component={SelectCategoryPage}
           />
           <PrivateRouteUser path="/customer/dashboard" component={Dashboard} />
           <PrivateRouteUser
+            exact
             path="/customer/my-assingment/:id"
             component={MyAssingment}
           />
           <PrivateRouteUser
+            exact
             path="/customer/addfresh"
             component={AddFreshAssingment}
           />
-          <PrivateRouteUser path="/customer/queries" component={QueriesTab} />
-          <PrivateRouteUser path="/customer/proposal" component={ProposalTab} />
           <PrivateRouteUser
+            exact
+            path="/customer/queries"
+            component={QueriesTab}
+          />
+          <PrivateRouteUser
+            exact
+            path="/customer/proposal"
+            component={ProposalTab}
+          />
+          <PrivateRouteUser
+            exact
             path="/customer/assignment"
             component={AssignmentTab}
           />
           <PrivateRouteUser
+            exact
             path="/customer/proposal-received/:id"
             component={ProposalReceived}
           />
           <PrivateRouteUser
+            exact
             path="/customer/change-password"
             component={ChangePassword}
           />
           <PrivateRouteUser
+            exact
             path="/customer/edit-query/:id"
             component={EditQuery}
           />
-          <PrivateRouteUser path="/customer/video-call" component={VideoCall} />
           <PrivateRouteUser
+            exact
+            path="/customer/video-call"
+            component={VideoCall}
+          />
+          <PrivateRouteUser
+            exact
             path="/customer/meeting/:id"
             component={MeetingComponent}
           />
           <PrivateRouteUser path="/customer/schedule" component={schedule} />
           <PrivateRouteUser
+            exact
             path="/customer/view-notification/:id"
             component={ViewNotification}
           />
           <PrivateRouteUser
+            exact
             path="/customer/proposal_view/:id"
             component={ProposalView}
           />
-          <PrivateRouteUser path="/customer/message" component={Message} />
           <PrivateRouteUser
+            exact
+            path="/customer/message"
+            component={Message}
+          />
+          <PrivateRouteUser
+            exact
             path="/customer/chatting/:id"
             component={Chatting}
           />
           <PrivateRouteUser
+            exact
             path="/customer/feedback/:id"
             component={Feedback}
           />
           <PrivateRouteUser
+            exact
             path="/customer/feedback-data"
             component={FeedbackData}
           />
           <PrivateRouteUser
+            exact
             path="/customer/paymentstatus"
             component={PaymentStatus}
           />
           <PrivateRouteUser
+            exact
             path="/customer/payment"
             component={PaymentGateway}
           />
-          <PrivateRouteUser path="/customer/thankyou" component={ThankYou} />
           <PrivateRouteUser
+            exact
+            path="/customer/thankyou"
+            component={ThankYou}
+          />
+          <PrivateRouteUser
+            exact
             path="/customer/paydetails/:id"
             component={payDetails}
           />
           <PrivateRouteUser
+            exact
             path="/customer/modalmanual"
             component={ModalMaual}
           />
-          <PrivateRouteUser path="/customer/contact" component={Contact} />
-          <PrivateRouteUser path="/customer/mediacontent" component={Contact} />
-          <PrivateRouteUser path="/customer/about" component={About} />
-          <PrivateRouteUser path="/customer/profile" component={Profile} />
+          <PrivateRouteUser
+            exact
+            path="/customer/contact"
+            component={Contact}
+          />
+          <PrivateRouteUser
+            exact
+            path="/customer/mediacontent"
+            component={Contact}
+          />
+          <PrivateRouteUser exact path="/customer/about" component={About} />
+          <PrivateRouteUser
+            exact
+            path="/customer/profile"
+            component={Profile}
+          />
 
           <PrivateRouteUser
+            exact
             path="/customer/editprofile"
             component={EditProfile}
           />

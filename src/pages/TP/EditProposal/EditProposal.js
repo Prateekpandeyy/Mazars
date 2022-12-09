@@ -1172,7 +1172,9 @@ function EditComponent(props) {
                 )}
 
                 <div class="form-group">
-                  <label>Scope of work</label>
+                  <label>
+                    Scope of work <span className="declined">*</span>
+                  </label>
                   <CKEditor
                     editor={ClassicEditor}
                     height="400px"

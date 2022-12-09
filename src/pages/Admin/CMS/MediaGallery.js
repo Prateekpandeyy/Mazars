@@ -11,6 +11,7 @@ import { baseUrl } from "../../../config/config";
 import Swal from "sweetalert2";
 import { Row, Col } from "reactstrap";
 import CustomHeading from "../../../components/Common/CustomHeading";
+import ErrorMessage from "../../../components/ErrorMessage/ErrorMessage";
 const MyContainer = styled(Container)({});
 const MyBox = styled(Box)({
   display: "flex",
@@ -32,6 +33,8 @@ const MediaGallery = () => {
   const userId = window.localStorage.getItem("adminkey");
   let history = useHistory();
   const [heading, setHeading] = useState("");
+  const [isFile, setIsFile] = useState(true);
+  const [file, setFile] = useState("");
   const { handleSubmit, register, errors, getValues } = useForm();
   var current_date =
     new Date().getFullYear() +
@@ -43,48 +46,44 @@ const MediaGallery = () => {
   const token = localStorage.getItem("token");
 
   const onSubmit = (value) => {
-    let formData = new FormData();
-    let file;
-    formData.append("title", heading);
-    formData.append("type", "image");
-    formData.append("date_event", value.date_event);
-    var uploadImg = value.uploadImg;
-    if (uploadImg) {
-      for (var i = 0; i < uploadImg.length; i++) {
-        file = uploadImg[i];
-        formData.append("upload[]", file);
+    if (file?.name?.length > 0) {
+      setIsFile(true);
+      let formData = new FormData();
+      let file;
+      formData.append("title", heading);
+      formData.append("type", "image");
+      formData.append("date_event", value.date_event);
+      var uploadImg = value.uploadImg;
+      if (uploadImg) {
+        for (var i = 0; i < uploadImg.length; i++) {
+          file = uploadImg[i];
+          formData.append("upload[]", file);
+        }
       }
+      axios({
+        method: "POST",
+        url: `${baseUrl}/cms/uploadphoto`,
+        headers: {
+          uit: token,
+        },
+        data: formData,
+      }).then((res) => {
+        let a = res.data;
+
+        if (res.data.code === 1) {
+          Swal.fire({
+            title: "success",
+            html: "Image uploaded successfully",
+            icon: "success",
+          });
+          history.push("/cms/imagelist");
+        } else if (res.data.code === 102) {
+          history.push("/cms/login");
+        }
+      });
+    } else {
+      setIsFile(false);
     }
-
-    // if (uploadImg) {
-    //   for (var i = 0; i < uploadImg.length; i++) {
-    //     let file = uploadImg[i];
-    //     formData.append("upload", file);
-    //     formData.append("type", "image")
-
-    //   }
-    // }
-    axios({
-      method: "POST",
-      url: `${baseUrl}/cms/uploadphoto`,
-      headers: {
-        uit: token,
-      },
-      data: formData,
-    }).then((res) => {
-      let a = res.data;
-
-      if (res.data.code === 1) {
-        Swal.fire({
-          title: "success",
-          html: "Image uploaded successfully",
-          icon: "success",
-        });
-        history.push("/cms/imagelist");
-      } else if (res.data.code === 102) {
-        history.push("/cms/login");
-      }
-    });
   };
   return (
     <Layout cmsDashboard="cmsDashboard">
@@ -139,9 +138,18 @@ const MediaGallery = () => {
                     type="file"
                     name="uploadImg"
                     ref={register}
+                    onChange={(e) => {
+                      setFile(e.target.files[0]);
+                      setIsFile(true);
+                    }}
                     className="form-control-file manage_file"
                     multiple
                   />
+                  {isFile === false ? (
+                    <ErrorMessage>Please upload file</ErrorMessage>
+                  ) : (
+                    ""
+                  )}
                 </div>
               </div>
               <div
