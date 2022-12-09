@@ -690,7 +690,7 @@ function AssignmentDetails({
     formData.append("id", e.id);
     axios({
       method: "POST",
-      url: `${baseUrl}/tl/createqfolder`,
+      url: `${baseUrl}/tl/createqfolderreport`,
       headers: {
         uit: localStorage.getItem("tlToken"),
       },

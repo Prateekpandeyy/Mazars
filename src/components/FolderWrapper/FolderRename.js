@@ -22,12 +22,26 @@ const FolderRename = (props) => {
                 className="form-control my-2"
                 type="text"
               />
-              <button
-                onClick={(e) => props.renameFolder(props.folderData, "0")}
-                className="customBtn"
-              >
-                Rename
-              </button>
+              {props.basePath === true ? (
+                <button
+                  onClick={(e) => props.renameFolder(props.folderData, "0")}
+                  className="customBtn"
+                >
+                  Rename
+                </button>
+              ) : (
+                <button
+                  onClick={(e) =>
+                    props.renameFolder(
+                      props.folderData,
+                      props.folderData.parent_id
+                    )
+                  }
+                  className="customBtn"
+                >
+                  Rename
+                </button>
+              )}
             </div>
           </Popup>
         </div>

@@ -42,6 +42,7 @@ const FolderWrapper = (props) => {
                       renameValue={props.renameValue}
                       closeModal={props.closeModal}
                       renameFolder={props.renameFolder}
+                      basePath={props.basePath}
                     />
                   </span>
                 ) : (
