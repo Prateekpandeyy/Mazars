@@ -13,6 +13,11 @@ import classNames from "classnames";
 import { useHistory, useParams } from "react-router";
 import * as Cookies from "js-cookie";
 import Swal from "sweetalert2";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
 const Schema = yup.object().shape({
   p_email: yup.string().email("invalid email").required(""),
   p_password: yup.string().required(""),
@@ -24,52 +29,57 @@ const OuterLinkVideo = () => {
   });
   const [open, isOpen] = useState(true);
   const [user, setUser] = useState("");
-  const [baseMode, SetbaseMode] = useState("avc");
-  const [transcode, SetTranscode] = useState("interop");
-  const [attendeeMode, SetAttendeeMode] = useState("video");
-  const [videoProfile, SetVideoProfile] = useState("240p_4");
+  const [isName, setIsName] = useState(false);
+  const [baseMode] = useState("avc");
+  const [transcode] = useState("interop");
+  const [attendeeMode] = useState("video");
+  const [videoProfile] = useState("240p_4");
   let history = useHistory();
   let id = useParams();
   console.log("id", id);
 
   let key2 = history.location.search.split("=")[1];
-  const closeFun = () => {
+  const handleClose = () => {
     isOpen(!open);
   };
   const getUser = (e) => {
     var regEx = /^[0-9a-zA-Z]+$/;
+    setIsName(false);
     setUser(e.target.value);
   };
   const enterVideo = () => {
-    axios
-      .get(`${baseUrl}/customers/getcalloauth?t=${key2}&name=${user}`)
-      .then((res) => {
-        if (res.data.code === 1) {
+    if (user.length > 0) {
+      setIsName(false);
+      axios
+        .get(`${baseUrl}/customers/getcalloauth?t=${key2}&name=${user}`)
+        .then((res) => {
           if (res.data.code === 1) {
-            Cookies.set("channel", res.data.result.scheduleid);
-            Cookies.set("baseMode", baseMode);
-            Cookies.set("transcode", transcode);
-            Cookies.set("attendeeMode", attendeeMode);
-            Cookies.set("videoProfile", videoProfile);
-            localStorage.setItem(
-              "meetdetails",
-              JSON.stringify(res.data.result)
+            isOpen(!open);
+            if (res.data.code === 1) {
+              Cookies.set("channel", res.data.result.scheduleid);
+              Cookies.set("baseMode", baseMode);
+              Cookies.set("transcode", transcode);
+              Cookies.set("attendeeMode", attendeeMode);
+              Cookies.set("videoProfile", videoProfile);
+              localStorage.setItem(
+                "meetdetails",
+                JSON.stringify(res.data.result)
+              );
+            }
+            history.push(
+              `/customer/meetingouter/${res.data.result.scheduleid}`
             );
+          } else {
+            Swal.fire({
+              title: "error",
+              html: "invalid link",
+              icon: "error",
+            });
           }
-          history.push(`/customer/meetingouter/${res.data.result.scheduleid}`);
-        } else {
-          Swal.fire({
-            title: "error",
-            html: "invalid link",
-            icon: "error",
-          });
-        }
-      });
-    // localStorage.setItem("tlName", "Test")
-    // localStorage.setItem("tlToken", "DJRAwniN")
-    // localStorage.setItem("tlkey", "71")
-    // localStorage.setItem("tlloginTime", "1655174600563")
-    // localStorage.setItem("tlEmail", "test@gmail.com")
+        });
+    } else {
+      setIsName(true);
+    }
   };
   return (
     <>
@@ -77,10 +87,17 @@ const OuterLinkVideo = () => {
         <Header noSign="noSign" />
 
         <MyContainer>
-          <Modal isOpen={open} toggle={closeFun} size="md" scrollable>
-            <ModalHeader toggle={closeFun}>Join call</ModalHeader>
-            <ModalBody>
-              <form>
+          <Dialog
+            style={{ zIndex: 900 }}
+            hideBackdrop={true}
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            <DialogTitle id="alert-dialog-title">{"Join call"}</DialogTitle>
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description">
                 <div className="form-group passForm ">
                   <label className="form-label">
                     Name<span className="declined">*</span>
@@ -90,20 +107,25 @@ const OuterLinkVideo = () => {
                     onChange={(e) => getUser(e)}
                     name="p_user"
                     placeholder="Enter Name"
-                    className="form-control"
+                    className={`${
+                      isName === true
+                        ? "form-control customError"
+                        : "form-control"
+                    }`}
                   />
                 </div>
-
-                <button
-                  type="button"
-                  onClick={() => enterVideo()}
-                  className="customBtn my-2"
-                >
-                  Submit
-                </button>
-              </form>
-            </ModalBody>
-          </Modal>
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <button
+                type="button"
+                onClick={() => enterVideo()}
+                className="customBtn my-2"
+              >
+                Submit
+              </button>
+            </DialogActions>
+          </Dialog>
         </MyContainer>
         <Footer />
       </MainContainer>
