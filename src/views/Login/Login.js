@@ -80,18 +80,15 @@ function LoginForm() {
   const [disabled, setDisabled] = useState(false);
   const [isPasswordShow, setPasswordShow] = useState(false);
   const [news, getNews] = useState([]);
-  const [pos, setPos] = useState(window.innerWidth);
-  const [run, setRun] = useState(true);
   const [showCookie, setShowCookie] = useState(false);
   const [user, setUser] = useState("");
   const [password, setPassword] = useState("");
   const token = localStorage.getItem("clientToken");
   const userEmail = JSON.parse(localStorage.getItem("custEmail"));
   let history = useHistory();
-  var width = window.innerWidth;
-  const myData = localStorage.getItem("myArticles");
+  const classes = useStyle();
   const cookieEnable = Cookies.get("accept");
-  const clientLogin = JSON.parse(localStorage.getItem("clientLoginId"));
+
   const togglePasssword = () => {
     setPasswordShow(!isPasswordShow);
   };
@@ -145,7 +142,7 @@ function LoginForm() {
             "As per your request, OTP has been sent to your registered mobile number / email address."
           );
           setShow(true);
-          console.log(response.data.display_name);
+
           setLoad(true);
           localStorage.setItem("custName", response.data.display_name);
           setUid(response.data.user_id);
@@ -165,26 +162,7 @@ function LoginForm() {
   const handleChange = (e) => {
     setEmail(e.target.value);
   };
-  const classes = useStyle();
-  const scrollEff = () => {
-    if (run) setPos((p) => (p < width ? p + 1 : -width));
-  };
 
-  useEffect(() => {
-    const tm = setTimeout(scrollEff, 10);
-    return () => clearTimeout(tm);
-  }, [pos]);
-
-  const onMouseEnter = (e) => {
-    // console.log("mouse enter");
-    setRun(false);
-  };
-
-  const onMouseLeave = (e) => {
-    // console.log("mouse leave");
-    setRun(true);
-    setPos(pos + 1); // to trigger useEffect
-  };
   const styles = {
     display: "flex",
     fontSize: "1em",

@@ -63,7 +63,10 @@ function Dashboard() {
     unpaid,
     totalpayment,
   } = allQueries;
-
+  const [clientDeclinedp, setClientDeclinedp] = useState("0");
+  const [clientDeclineda, setClientDeclineda] = useState("0");
+  const [permission_to_issue_invoice, setpermission_to_issue_invoice] =
+    useState("0");
   useEffect(() => {
     const getAllQueries = () => {
       const token = window.localStorage.getItem("clientToken");
@@ -80,6 +83,15 @@ function Dashboard() {
         )
         .then((response) => {
           if (response.data.code === 1) {
+            setpermission_to_issue_invoice(
+              response.data.result.proposal.permission_to_issue_invoice
+            );
+            setClientDeclinedp(
+              response.data.result.proposal["customer_declined_proposalsa "]
+            );
+            setClientDeclineda(
+              response.data.result.proposal["customer_declined_proposalsp "]
+            );
             setAllQueries({
               total: response.data.result.total,
               inprogress_queries: response.data.result.inprogress_queries,
@@ -277,13 +289,53 @@ function Dashboard() {
                         </thead>
                       </table>
 
-                      <table className="table table-striped eight main_table">
+                      <table className="table table-striped  sixth main_table">
                         <thead className="proposal_thead3">
                           <tr>
                             <th className="left_side">
                               Client declined; proposals
                             </th>
                             <th>{declined}</th>
+                          </tr>
+                        </thead>
+                        {/* <tbody className="table_body">
+                          <tr>
+                            <td className="left_side">
+                              {" "}
+                              Client declined; proposals
+                            </td>
+                            <td>{clientDeclineda}</td>
+                          </tr>
+                          <tr>
+                            <td className="left_side">
+                              {" "}
+                              client declined; assignments
+                            </td>
+                            <td>{clientDeclinedp}</td>
+                          </tr>
+                        </tbody> */}
+                        <tbody classNameName="table_body">
+                          <tr>
+                            <td className="left_side">
+                              Client declined; proposals
+                            </td>
+                            <td>{clientDeclineda}</td>
+                          </tr>
+                          <tr>
+                            <td className="left_side">
+                              client declined; assignments
+                            </td>
+                            <td>{clientDeclinedp}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      <table className="table table-striped eight main_table">
+                        <thead className="proposal_thead3">
+                          <tr>
+                            <th className="left_side">
+                              Permission to issue invoice
+                            </th>
+                            <th>{permission_to_issue_invoice}</th>
                           </tr>
                         </thead>
                       </table>
