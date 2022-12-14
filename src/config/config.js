@@ -17,11 +17,3 @@ export const ReportUrl =
 // // //for local
 export const baseUrl2 = "https://stagingapi.masindia.live";
 export const baseUrl3 = "https://stagingapi.masindia.live";
-
-// // //for local
-// export const baseUrl = "http://43.204.16.182/mazarapi/v1";
-// export const ImageUrl = "http://43.204.16.182/mazarapi/assets/image";
-// export const ReportUrl = "http://43.204.16.182/mazarapi/assets/upload/report";
-// // //for local
-// export const baseUrl2 = "http://43.204.16.182/";
-// export const baseUrl3 = "http://43.204.16.182/mazarapi/";

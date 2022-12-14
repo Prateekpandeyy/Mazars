@@ -8,7 +8,7 @@ const FolderBredcrumb = (props) => {
         {props.mainFoldName.length > 0 && props.folderName.length > 0 ? (
           <div className="d-flex w-100 align-items-center">
             <span
-              className="tabHover"
+              className="tabHover mx-1"
               onClick={() => {
                 props.goBack();
               }}
@@ -26,7 +26,7 @@ const FolderBredcrumb = (props) => {
             {props.mainFoldName.length > 0 || props.folderName.length > 0 ? (
               <div className="d-flex w-100 align-items-center">
                 <span onClick={() => props.goBack()}>
-                  <MainText>{props.mainFoldName}</MainText>
+                  <MainText>{`${props.mainFoldName}   `}</MainText>
                 </span>
                 <CustomTypography>
                   {props.folderName.length > 0 ? " > " : ""}

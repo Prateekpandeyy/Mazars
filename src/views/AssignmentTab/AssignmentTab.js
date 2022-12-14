@@ -168,7 +168,7 @@ function AssignmentTab(props) {
             style={tabIndex === 4 ? myStyle2 : myStyle1}
             className="tabHover"
           >
-            Admin permission({adminDeclined})
+            Permission; issue to invoice ({adminDeclined})
           </Tab>
         </TabList>
 

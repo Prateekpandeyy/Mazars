@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
-import { Box, Typography } from "@material-ui/core";
-import "./style.css";
+import { Box } from "@material-ui/core";
 import { Link, useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";

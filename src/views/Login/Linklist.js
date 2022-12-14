@@ -1,25 +1,16 @@
 import { useState, useEffect } from "react";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
-import "./style.css";
-import { Box } from "@material-ui/core";
-import { styled, makeStyles } from "@material-ui/styles";
-import { Markup } from "interweave";
 import { useHistory, useParams, Link } from "react-router-dom";
 import axios from "axios";
 import { baseUrl, baseUrl3 } from "../../config/config";
-import ima from "../../mazars_logo.png";
 import classesCustom from "./design.module.css";
-import CommonServices from "../../common/common.js";
-import { VscFilePdf } from "react-icons/vsc";
 import { OuterloginContainer } from "../../components/Common/OuterloginContainer";
 import {
-  Typography,
   Breadcrumbs,
   Table,
   TableContainer,
   TableHead,
-  TablePagination,
   TableBody,
   TableRow,
   TableCell,
@@ -28,17 +19,9 @@ import MyContainer from "../../components/Common/MyContainer";
 import CustomTypography from "../../components/Common/CustomTypography";
 import SubHeading from "../../components/Common/SubHeading";
 function Linklist() {
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
   const [linkData, setLinkData] = useState([]);
-  const [showData, setShowData] = useState(false);
-  const [updates, isUpdates] = useState(false);
-  const [myData, setMyData] = useState();
-  const [description, setDescription] = useState(false);
   const [linkData22, showLinkData22] = useState(false);
-  let history = useHistory();
-  let id = useParams();
-  const getId = history.location.index;
+
   useEffect(() => {
     showLinkData();
   }, []);
@@ -48,15 +31,14 @@ function Linklist() {
       if (res.data.code === 1) {
         setLinkData(res.data.result);
         showLinkData22(true);
-        isUpdates(false);
       }
     });
   };
-  console.log("linkData", linkData.length);
+
   return (
     <>
       <OuterloginContainer>
-        <Header noSign="noSign" getData={setShowData} />
+        <Header noSign="noSign" />
         <MyContainer>
           <div className={classesCustom.articleContent}>
             <div className={classesCustom.articlesDetails}>

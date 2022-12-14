@@ -143,7 +143,7 @@ function BasicQuery({
       } else if (res.data.code === 0) {
         Swal.fire({
           title: "error",
-          html: "Something went wrong, please try again",
+          html: "Folder name already exits, please change folder name",
           icon: "error",
         });
       }
@@ -865,9 +865,11 @@ function BasicQuery({
                       movedFolder={movedFolder}
                       rejectHandler={getFolder}
                       set_sub_folder={set_sub_folder}
+                      getInnerFileFile={getInnerFileFile}
                       setColor={setColor}
                       setInnerFiles={setInnerFiles}
                       setShowSubFolderData={setShowSubFolderData}
+                      color={color}
                     />
                   ) : (
                     ""

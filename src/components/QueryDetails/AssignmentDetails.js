@@ -716,7 +716,7 @@ function AssignmentDetails({
       } else if (res.data.code === 0) {
         Swal.fire({
           title: "error",
-          html: res.data.message,
+          html: "Folder name already exits, please change folder name",
           icon: "error",
         });
       }
@@ -885,48 +885,46 @@ function AssignmentDetails({
                 </td>
                 <td>
                   <div className="d-flex flex-column">
-                    <FolderDetails>
-                      <FolderBredcrumb
-                        mainFoldName={mainFoldName}
-                        folderName={folderName}
-                        goBack={goBackFun}
-                      />
+                    <FolderBredcrumb
+                      mainFoldName={mainFoldName}
+                      folderName={folderName}
+                      goBack={goBackFun}
+                    />
 
-                      {showSubfolderData === true ? (
-                        <AssignmentFolderWrapper
-                          getFolerSubFile={goBackFun}
-                          file={subFile}
-                          downloadFile={rightClick}
-                          moveTo={handleFile}
-                          basePath={false}
-                          isSubFolder={true}
-                          rename={rename}
-                          setRename={setRename}
-                          setRenameValue={setRenameValue}
-                          renameValue={renameValue}
-                          closeModal={closeModal}
-                          renameFolder={renameFolder}
-                          panel="tl"
-                        />
-                      ) : (
-                        <AssignmentFolderWrapper
-                          folder={sub_folder}
-                          getFolerSubFile={get_sub_innerFile}
-                          file={innerFiles}
-                          downloadFile={rightClick}
-                          moveTo={handleFile}
-                          basePath={false}
-                          isSubFolder={false}
-                          rename={rename}
-                          setRename={setRename}
-                          setRenameValue={setRenameValue}
-                          renameValue={renameValue}
-                          closeModal={closeModal}
-                          renameFolder={renameFolder}
-                          panel="tl"
-                        />
-                      )}
-                    </FolderDetails>
+                    {showSubfolderData === true ? (
+                      <AssignmentFolderWrapper
+                        getFolerSubFile={goBackFun}
+                        file={subFile}
+                        downloadFile={rightClick}
+                        moveTo={handleFile}
+                        basePath={false}
+                        isSubFolder={true}
+                        rename={rename}
+                        setRename={setRename}
+                        setRenameValue={setRenameValue}
+                        renameValue={renameValue}
+                        closeModal={closeModal}
+                        renameFolder={renameFolder}
+                        panel="tl"
+                      />
+                    ) : (
+                      <AssignmentFolderWrapper
+                        folder={sub_folder}
+                        getFolerSubFile={get_sub_innerFile}
+                        file={innerFiles}
+                        downloadFile={rightClick}
+                        moveTo={handleFile}
+                        basePath={false}
+                        isSubFolder={false}
+                        rename={rename}
+                        setRename={setRename}
+                        setRenameValue={setRenameValue}
+                        renameValue={renameValue}
+                        closeModal={closeModal}
+                        renameFolder={renameFolder}
+                        panel="tl"
+                      />
+                    )}
                   </div>
 
                   {move === true ? (
@@ -974,7 +972,7 @@ function AssignmentDetails({
                               } form-control`}
                               onChange={(e) => gSub(e.target.value, "right")}
                             >
-                              <option value="0">Root</option>
+                              <option value="0">...root</option>
                               {mFold.map((i) => (
                                 <option value={i.id}>{i.folder}</option>
                               ))}
@@ -1020,6 +1018,7 @@ function AssignmentDetails({
                     setColor={setColor}
                     setInnerFiles={setInnerFiles}
                     setShowSubFolderData={setShowSubFolderData}
+                    getInnerFileFile={getInnerFileFile}
                   />
                 </td>
               </tr>
@@ -1062,7 +1061,7 @@ function AssignmentDetails({
                     />
 
                     {adSubFolder === true ? (
-                      <FolderWrapper
+                      <AssignmentFolderWrapper
                         getFolerSubFile={goBackFunAdmin}
                         file={adminInnerFile}
                         downloadFile={rightClick}
@@ -1070,7 +1069,7 @@ function AssignmentDetails({
                         isSubFolder={true}
                       />
                     ) : (
-                      <FolderWrapper
+                      <AssignmentFolderWrapper
                         folder={showadminSubFolder}
                         getFolerSubFile={get_sub_innerFileAdmin}
                         file={adminFile}

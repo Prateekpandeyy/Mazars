@@ -18,14 +18,11 @@ function CreateFolder({
   setColor,
   setInnerFiles,
   setShowSubFolderData,
+  getInnerFileFile,
+  color,
 }) {
   const { handleSubmit, getValue, register, errors } = useForm();
-  const [root2, setRoot2] = useState([
-    {
-      label: "...root",
-      value: "0",
-    },
-  ]);
+
   const [folderid, setFolderId] = useState({
     label: "...root",
     value: "0",
@@ -55,9 +52,23 @@ function CreateFolder({
         setInnerFiles([]);
         setFolderId("");
         set_sub_folder([]);
+        setFolderId({
+          label: "...root",
+          value: "0",
+        });
         setShowSubFolderData(false);
-        setColor(0);
-        getList();
+        console.log("folderId", folderid);
+        if (folderid.value === "0") {
+          setColor(0);
+          getList();
+        } else {
+          let kk = {
+            id: folderid.value,
+            folder: folderid.label,
+          };
+          getInnerFileFile(kk);
+        }
+
         Swal.fire({
           title: "success",
           html: "Folder created successfullly",
@@ -67,7 +78,7 @@ function CreateFolder({
         setFolderId("");
         Swal.fire({
           title: "error",
-          html: res.data.result,
+          html: "folder already exist",
           icon: "error",
         });
       }
