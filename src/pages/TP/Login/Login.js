@@ -1,12 +1,10 @@
 import React, { useState } from "react";
 import Header from "../../../components/Header/Header";
-import Footer from "../../../components/Footer/Footer";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
-
 import classNames from "classnames";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
@@ -17,6 +15,7 @@ import { Spinner } from "reactstrap";
 import { useHistory } from "react-router-dom";
 import Cookies from "js-cookie";
 import CustomHeading from "../../../components/Common/CustomHeading";
+import CustomFlex from "../../../components/Common/CustomFlex";
 const Schema = yup.object().shape({
   p_email: yup.string().email("invalid email").required("required email"),
   password: yup
@@ -26,7 +25,7 @@ const Schema = yup.object().shape({
     .max(20, "max 20 digits"),
 });
 
-function Login(props) {
+function Login() {
   let history = useHistory();
   const { handleSubmit, register, reset, errors } = useForm({
     resolver: yupResolver(Schema),
@@ -95,21 +94,19 @@ function Login(props) {
   return (
     <>
       <Header mtp="mtp" noTpSign="noTpSign" />
-      <div class="container">
+      <div className="container">
         {show ? (
-          <div>
-            <VerifyOtpLogin
-              email={email}
-              uid={uid}
-              loading={loading}
-              password={password}
-              setLoading={setLoading}
-            />
-          </div>
+          <VerifyOtpLogin
+            email={email}
+            uid={uid}
+            loading={loading}
+            password={password}
+            setLoading={setLoading}
+          />
         ) : (
-          <div class="form">
+          <div className="form">
             <CustomHeading>Tax Professional login</CustomHeading>
-            <form onSubmit={handleSubmit(onSubmit)} autocomplete="off">
+            <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
               <div className="row">
                 <div className="col-md-12">
                   <div className="mb-3">
@@ -172,7 +169,7 @@ function Login(props) {
               </div>
 
               {loading ? (
-                <div class="col-md-12">
+                <div className="col-md-12">
                   <Spinner color="primary" />
                 </div>
               ) : (
@@ -181,7 +178,7 @@ function Login(props) {
                 </button>
               )}
 
-              <div style={{ display: "flex", flexDirection: "row-reverse" }}>
+              <CustomFlex>
                 <Link
                   to={{
                     pathname: "/taxprofessional/forget-password",
@@ -190,9 +187,8 @@ function Login(props) {
                 >
                   Forgot Password
                 </Link>
-              </div>
-
-              {/* <Mandatory /> */}
+                <Mandatory />
+              </CustomFlex>
             </form>
           </div>
         )}

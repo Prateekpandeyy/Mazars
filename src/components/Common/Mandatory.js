@@ -1,13 +1,11 @@
-import React from 'react';
+import React from "react";
 
 function Mandatory(props) {
-    return (
-        <>
-            <div style={{ display: "flex",  width: "100%" }}>
-                <span className="declined mr-4">*Mandatory</span>
-            </div>
-        </>
-    );
+  return (
+    <>
+      <span className="declined mr-4">*Mandatory</span>
+    </>
+  );
 }
 
 export default Mandatory;

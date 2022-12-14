@@ -269,7 +269,7 @@ function AllProposalComponent({ allProposal }) {
                   <EyeIcon />
                 </div>
               ) : null}
-              {row.statuscode === "6" ? (
+              {row.statuscode === "6" && row.paid_status !== "2" ? (
                 <>
                   <div onClick={(e) => retviewProposal(row.q_id)}>
                     <DiscussProposal titleName="Restore Proposal" />

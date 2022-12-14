@@ -677,6 +677,12 @@ function AssignmentDetails({
       });
   };
   const renameFolder = (e, fold) => {
+    var confToken = "";
+    if (window.location.pathname.split("/")[1] === "teamleader") {
+      confToken = window.localStorage.getItem("tlToken");
+    } else if (window.location.pathname.split("/")[1] === "taxprofessional") {
+      confToken = window.localStorage.getItem("tptoken");
+    }
     let foldName;
     if (renameValue.length > 0) {
       foldName = renameValue;
@@ -692,13 +698,14 @@ function AssignmentDetails({
       method: "POST",
       url: `${baseUrl}/tl/createqfolderreport`,
       headers: {
-        uit: localStorage.getItem("tlToken"),
+        uit: confToken,
       },
       data: formData,
     }).then((res) => {
       if (res.data.code === 1) {
         closeModal();
         if (fold === "0") {
+          setMainFoldName(foldName);
           showFolder();
         } else {
           let kk = {
@@ -716,7 +723,7 @@ function AssignmentDetails({
       } else if (res.data.code === 0) {
         Swal.fire({
           title: "error",
-          html: "Folder name already exits, please change folder name",
+          html: "Folder name already exits",
           icon: "error",
         });
       }

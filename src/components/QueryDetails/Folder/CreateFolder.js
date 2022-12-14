@@ -78,7 +78,7 @@ function CreateFolder({
         setFolderId("");
         Swal.fire({
           title: "error",
-          html: "folder already exist",
+          html: "Folder name already exits",
           icon: "error",
         });
       }

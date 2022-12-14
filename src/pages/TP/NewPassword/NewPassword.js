@@ -15,10 +15,7 @@ import ResendOtp from "./ResendOtp";
 import { Spinner } from "reactstrap";
 import { localeData } from "moment";
 
-
-
 function NewPassword(props) {
-
   const { register, handleSubmit, errors, getValues, reset } = useForm();
   const { id } = useParams();
 
@@ -26,29 +23,27 @@ function NewPassword(props) {
   const [isPasswordShow, setPasswordShow] = useState(false);
   const [isPasswordShow2, setPasswordShow2] = useState(false);
 
-  const [time, setTime] = useState('')
-  const [disabled, setDisabled] = useState(false)
+  const [time, setTime] = useState("");
+  const [disabled, setDisabled] = useState(false);
   const [load, setLoad] = useState(true);
   const togglePasssword = () => {
-    setPasswordShow(!isPasswordShow)
+    setPasswordShow(!isPasswordShow);
   };
 
   const togglePasssword2 = () => {
-    setPasswordShow2(!isPasswordShow2)
+    setPasswordShow2(!isPasswordShow2);
   };
 
-
   useEffect(() => {
-    getTime()
+    getTime();
   }, [load]);
-
 
   const getTime = () => {
     var timerOn = true;
     function timer(remaining) {
       var s = remaining % 60;
-      s = s < 10 ? '0' + s : s;
-      setTime(remaining)
+      s = s < 10 ? "0" + s : s;
+      setTime(remaining);
       remaining -= 1;
       if (remaining >= 0 && timerOn) {
         setTimeout(function () {
@@ -56,16 +51,14 @@ function NewPassword(props) {
         }, 1000);
         return;
       }
-      setDisabled(true)
+      setDisabled(true);
     }
-    setLoad(false)
+    setLoad(false);
     timer(180);
-  }
-
+  };
 
   const onSubmit = (value) => {
-   
-    setLoading(true)
+    setLoading(true);
 
     let formData = new FormData();
     formData.append("email", value.p_email);
@@ -79,38 +72,35 @@ function NewPassword(props) {
       data: formData,
     })
       .then(function (response) {
-       
         if (response.data.code === 1) {
-          setLoading(false)
-          var variable = "Password changed successfully."
-          Alerts.SuccessNormal(variable)
+          setLoading(false);
+          var variable = "Password changed successfully.";
+          Alerts.SuccessNormal(variable);
           reset();
           props.history.push("/taxprofessional/login");
         } else if (response.data.code === 0) {
-          setLoading(false)
-          Alerts.ErrorNormal("Please enter correct details")
+          setLoading(false);
+          Alerts.ErrorNormal("Please enter correct details");
         }
       })
-      .catch((error) => {
-       
-      });
+      .catch((error) => {});
   };
 
   return (
     <>
-      <Header mtl="mtl" />
+      <Header mtp="mtp" />
       <div className="container">
         <div className="form">
-
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="heading">
               <h2>Reset Password</h2>
             </div>
             <div className="row">
-
               <div className="col-md-12">
                 <div className="mb-3">
-                  <label className="form-label">Email<span className="declined">*</span></label>
+                  <label className="form-label">
+                    Email<span className="declined">*</span>
+                  </label>
                   <input
                     type="text"
                     className={classNames("form-control", {
@@ -137,7 +127,9 @@ function NewPassword(props) {
 
               <div className="col-md-12">
                 <div className="mb-3">
-                  <label className="form-label">New Password<span className="declined">*</span></label>
+                  <label className="form-label">
+                    New Password<span className="declined">*</span>
+                  </label>
                   <input
                     type={isPasswordShow ? "text" : "password"}
                     name="p_password"
@@ -150,18 +142,21 @@ function NewPassword(props) {
                     ref={register({
                       required: true,
                       pattern: {
-                        value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,15}$/,
+                        value:
+                          /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,15}$/,
                         message:
                           "Password should be of minimum 8 Characters, including at least 1 upper case, lower case, special character and number.",
                       },
                     })}
-                    onPaste={((e) => {
+                    onPaste={(e) => {
                       e.preventDefault();
                       return false;
-                    })}
+                    }}
                   />
                   <i
-                    className={`fa ${isPasswordShow ? "fa-eye-slash" : "fa-eye"} password-icon`}
+                    className={`fa ${
+                      isPasswordShow ? "fa-eye-slash" : "fa-eye"
+                    } password-icon`}
                     onClick={togglePasssword}
                   />
                   {errors.p_password && (
@@ -174,7 +169,9 @@ function NewPassword(props) {
 
               <div className="col-md-12">
                 <div className="mb-3">
-                  <label className="form-label">Confirm Password<span className="declined">*</span></label>
+                  <label className="form-label">
+                    Confirm Password<span className="declined">*</span>
+                  </label>
                   <input
                     type={isPasswordShow2 ? "text" : "password"}
                     id="password"
@@ -190,13 +187,15 @@ function NewPassword(props) {
                         value === getValues("p_password") ||
                         "Password doesn't match.",
                     })}
-                    onPaste={((e) => {
+                    onPaste={(e) => {
                       e.preventDefault();
                       return false;
-                    })}
+                    }}
                   />
                   <i
-                    className={`fa ${isPasswordShow2 ? "fa-eye-slash" : "fa-eye"} password-icon`}
+                    className={`fa ${
+                      isPasswordShow2 ? "fa-eye-slash" : "fa-eye"
+                    } password-icon`}
                     onClick={togglePasssword2}
                   />
                   {errors.p_confirm_password && (
@@ -209,7 +208,9 @@ function NewPassword(props) {
 
               <div className="col-md-12">
                 <div className="mb-3">
-                  <label className="form-label">OTP<span className="declined">*</span></label>
+                  <label className="form-label">
+                    OTP<span className="declined">*</span>
+                  </label>
                   <input
                     type="text"
                     className={classNames("form-control", {
@@ -232,58 +233,54 @@ function NewPassword(props) {
               </div>
             </div>
 
-            {
-              loading ?
-                <div class="col-md-12">
-                  <Spinner color="primary" />
-                </div>
-                :
-                <div>
-                  {
-                    disabled ?
-                      ""
-                      :
-                      <div>
-                        <button type="submit" className="customBtn" >
-                          Submit
-                        </button>
-                        <Cancel />
-                      </div>
-                  }
-                </div>
-            }
-
+            {loading ? (
+              <div class="col-md-12">
+                <Spinner color="primary" />
+              </div>
+            ) : (
+              <div>
+                {disabled ? (
+                  ""
+                ) : (
+                  <div>
+                    <button type="submit" className="customBtn">
+                      Submit
+                    </button>
+                    <Cancel />
+                  </div>
+                )}
+              </div>
+            )}
           </form>
 
-          {
-            disabled ?
-              <ResendOtp id={id}  setLoad={setLoad} setDisabled={setDisabled} getTime={getTime} setLoading={setLoading} />
-              :
-              null
-          }
+          {disabled ? (
+            <ResendOtp
+              id={id}
+              setLoad={setLoad}
+              setDisabled={setDisabled}
+              getTime={getTime}
+              setLoading={setLoading}
+            />
+          ) : null}
 
           <span className="declined">*Mandatory</span>
-
         </div>
       </div>
       <Footer />
     </>
-  )
+  );
 }
 
 export default NewPassword;
 
-
-
-
 const Cancel = () => {
   return (
     <>
-      <Link to="/teamleader/forget-password" style={{ "margin": "10px" }}>
+      <Link to="/teamleader/forget-password" style={{ margin: "10px" }}>
         <button type="submit" className="customBtn">
           Cancel
         </button>
       </Link>
     </>
   );
-}
+};

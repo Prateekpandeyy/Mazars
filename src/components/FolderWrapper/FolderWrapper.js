@@ -4,7 +4,6 @@ import CustomTypography from "../Common/CustomTypography";
 import { FileIcon } from "../Common/MessageIcon";
 import FolderRename from "./FolderRename";
 const FolderWrapper = (props) => {
-  console.log("innerFiles", props.file, props.isSubFolder);
   return (
     <>
       <div className="myFolderWrapper">
