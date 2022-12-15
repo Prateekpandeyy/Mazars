@@ -28,7 +28,9 @@ const AssignmentFolderWrapper = (props) => {
                   sx={{ fontSize: "2.5rem" }}
                   onClick={(e) => props.getFolerSubFile(i)}
                   className={
-                    props.color === i.id ? "folderActive" : "folderColor"
+                    props.color === Number(i.id)
+                      ? "folderActive"
+                      : "folderColor"
                   }
                 />
                 {props.panel === "tl" ? (

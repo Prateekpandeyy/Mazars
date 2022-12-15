@@ -56,6 +56,7 @@ function AssignmentDetails({
   const [files, setFiles] = useState([]);
   const [fileId, setFileId] = useState("");
   const [move, setMove] = useState(false);
+  const [subFolderId, setSubFolderId] = useState(null);
   const [movedFolder, setMovedFolder] = useState([
     {
       label: "...(root)",
@@ -247,12 +248,23 @@ function AssignmentDetails({
       )
       .then((res) => {
         if (res.data.code === 1) {
-          handleFile();
-          showFolder();
-          getFile();
-          setInnerFiles([]);
-          setFolderId(0);
-          setColor(0);
+          if (color === 0) {
+            setFolderId("0");
+            handleFile();
+            showFolder();
+            getFile();
+          } else if (showSubfolderData === false) {
+            handleFile();
+            getFile();
+            setFolderId("0");
+            getSubFile({
+              id: color,
+            });
+          } else if (showSubfolderData === true) {
+            handleFile();
+            getFile();
+            get_sub_innerFile(subFolderId);
+          }
           Swal.fire({
             title: "success",
             html: "File transfered successfully",
@@ -300,7 +312,7 @@ function AssignmentDetails({
       )
       .then((res) => {
         if (res.data.code === 1) {
-          setColor(e.id);
+          setColor(Number(e.id));
 
           setInnerFiles(res.data.result);
         }
@@ -332,7 +344,7 @@ function AssignmentDetails({
         .then((res) => {
           if (res.data.code === 1) {
             setShowSubFolderData(false);
-            setColor(e.id);
+            setColor(Number(e.id));
             set_sub_folder(res.data.result);
             setSubFile([]);
             setMainFoldName(e.folder);
@@ -484,6 +496,7 @@ function AssignmentDetails({
   };
   const get_sub_innerFile = (e) => {
     var confToken = "";
+    setSubFolderId(e);
     if (window.location.pathname.split("/")[1] === "teamleader") {
       confToken = window.localStorage.getItem("tlToken");
     } else if (window.location.pathname.split("/")[1] === "taxprofessional") {
@@ -570,7 +583,7 @@ function AssignmentDetails({
     setadminSubFolder(e.child);
     setAdminInnerFiles([]);
 
-    setColor(e.id);
+    setColor(Number(e.id));
     let kk = [];
     adminFolder.map((i) => {
       if (e.id === i.folder_id) {
@@ -648,7 +661,7 @@ function AssignmentDetails({
     setFolderName("");
     setClientSubFold(false);
     setClientSubFolder(e.child);
-    setColor(e.id);
+    setColor(Number(e.id));
     let kk = [];
     setClientSubFold(false);
     setMainFoldName(e.folder);
@@ -1026,6 +1039,7 @@ function AssignmentDetails({
                     setInnerFiles={setInnerFiles}
                     setShowSubFolderData={setShowSubFolderData}
                     getInnerFileFile={getInnerFileFile}
+                    getMoveToList={getMoveToList}
                   />
                 </td>
               </tr>

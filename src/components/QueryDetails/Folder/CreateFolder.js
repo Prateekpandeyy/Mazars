@@ -20,6 +20,7 @@ function CreateFolder({
   setShowSubFolderData,
   getInnerFileFile,
   color,
+  getMoveToList,
 }) {
   const { handleSubmit, getValue, register, errors } = useForm();
 
@@ -48,6 +49,7 @@ function CreateFolder({
       data: formData,
     }).then((res) => {
       if (res.data.code === 1) {
+        getMoveToList();
         rejectHandler();
         setInnerFiles([]);
         setFolderId("");

@@ -72,6 +72,7 @@ function BasicQuery({
   const [showClientFolderdata, setShowClientShowFolderData] = useState(false);
   const [showAdminFolderdata, setShowAdminShowFolderData] = useState(false);
   const [foldError, setFoldError] = useState(false);
+  const [subFolderId, setSubFolderId] = useState(null);
   const [rename, setRename] = useState("");
   const [renameValue, setRenameValue] = useState("");
   const token = window.localStorage.getItem("tlToken");
@@ -202,7 +203,7 @@ function BasicQuery({
     setClientInnerFiles([]);
     setFolderName("");
     setClientSubFolder(e.child);
-    setColor(e.id);
+    setColor(Number(e.id));
     setShowClientShowFolderData(false);
     let kk = [];
     setMainFoldName(e.folder);
@@ -255,7 +256,7 @@ function BasicQuery({
     setadminSubFolder(e.child);
     setShowAdminShowFolderData(false);
     setAdminInnerFiles([]);
-    setColor(e.id);
+    setColor(Number(e.id));
     let kk = [];
     adminFolder.map((i) => {
       if (e.id === i.folder_id) {
@@ -411,20 +412,26 @@ function BasicQuery({
         )
         .then((res) => {
           if (res.data.code === 1) {
-            if (showSubfolderData === false) {
+            if (color === 0) {
+              setFolderId("0");
+              handleFile();
+              showFolder();
+              getFile();
+            } else if (showSubfolderData === false) {
+              handleFile();
+              getFile();
+              setFolderId("0");
               getSubFile({
                 id: color,
               });
-            } else {
-              setShowSubFolderData(false);
+            } else if (showSubfolderData === true) {
+              handleFile();
+              getFile();
+              get_sub_innerFile(subFolderId);
             }
 
-            setFolderId("0");
-            handleFile();
-            showFolder();
-            getFile();
-            setInnerFiles([]);
-            setColor(0);
+            // // setInnerFiles([]);
+            // setColor(0);
             Swal.fire({
               title: "success",
               html: "File transfered successfully",
@@ -470,13 +477,15 @@ function BasicQuery({
       )
       .then((res) => {
         if (res.data.code === 1) {
-          setColor(e.id);
+          setColor(Number(e.id));
 
           setInnerFiles(res.data.result);
         }
       });
   };
   const get_sub_innerFile = (e) => {
+    setSubFolderId(e);
+
     var confToken = "";
     if (window.location.pathname.split("/")[1] === "teamleader") {
       confToken = window.localStorage.getItem("tlToken");
@@ -527,7 +536,7 @@ function BasicQuery({
       .then((res) => {
         if (res.data.code === 1) {
           setShowSubFolderData(false);
-          setColor(e.id);
+          setColor(Number(e.id));
           set_sub_folder(res.data.result);
           setSubFile([]);
           setMainFoldName(e.folder);
@@ -876,6 +885,7 @@ function BasicQuery({
                       setColor={setColor}
                       setInnerFiles={setInnerFiles}
                       setShowSubFolderData={setShowSubFolderData}
+                      getMoveToList={getMoveToList}
                       color={color}
                     />
                   ) : (
