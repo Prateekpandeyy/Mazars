@@ -123,7 +123,7 @@ function VerifyOtp({ email, uid, loading, setLoading, password }) {
                   placeholder="Enter Your OTP Here"
                   ref={register}
                   name="p_otp"
-                  autocomplete="off"
+                  autoComplete="off"
                   onChange={(e) => validOtp(e)}
                 />
                 {errors.p_otp && (

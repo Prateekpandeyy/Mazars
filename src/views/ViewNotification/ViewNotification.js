@@ -15,11 +15,6 @@ function ViewNotification() {
   const [data, setData] = useState({});
   const token = window.localStorage.getItem("clientToken");
 
-  const myConfig = {
-    headers: {
-      uit: token,
-    },
-  };
   useEffect(() => {
     getChatting();
   }, [id]);

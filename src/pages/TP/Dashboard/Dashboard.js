@@ -419,7 +419,7 @@ function Dashboard() {
                       </th>
                     </tr>
                   </thead>
-                  <tbody classNameName="table_body">
+                  <tbody className="table_body">
                     <tr>
                       <td className="left_side">
                         <CustomTypography>
@@ -554,7 +554,7 @@ function Dashboard() {
                     </tr>
                   </thead>
 
-                  <tbody classNameName="table_body">
+                  <tbody className="table_body">
                     <tr>
                       <td className="left_side">
                         <CustomTypography>Client discussion</CustomTypography>

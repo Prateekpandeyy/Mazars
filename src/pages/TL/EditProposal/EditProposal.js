@@ -4,15 +4,7 @@ import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import { useHistory, useParams } from "react-router-dom";
 import Layout from "../../../components/Layout/Layout";
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  CardTitle,
-  Row,
-  Col,
-  Table,
-} from "reactstrap";
+import { Card, CardHeader, CardBody, Row, Col } from "reactstrap";
 import Payment from "./Payment";
 import Select from "react-select";
 import Alerts from "../../../common/Alerts";
@@ -21,17 +13,16 @@ import Mandatory from "../../../components/Common/Mandatory";
 import { Spinner } from "reactstrap";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import { Markup } from "interweave";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 function EditComponent(props) {
-  const { register, handleSubmit, reset, errors } = useForm();
+  const { register, handleSubmit, errors } = useForm();
   const userid = window.localStorage.getItem("tlkey");
   const [loading, setLoading] = useState(false);
 
   const [custId, setCustId] = useState("");
   const [store, setStore] = useState("1");
-  const [amount, setAmount] = useState("");
+
   const [date, setDate] = useState("");
 
   const [companyName, setCompanyName] = useState([]);
@@ -42,7 +33,7 @@ function EditComponent(props) {
   const [diserror, setdiserror] = useState("");
   const history = useHistory();
   const { id } = useParams();
-  const [scopeError, setScopeError] = useState(false);
+
   const [dateError, setDateError] = useState(false);
   const [company2, setCompany2] = useState("");
   const [client, setClient] = useState([]);
@@ -110,9 +101,8 @@ function EditComponent(props) {
     query,
     name,
     description,
-    fixed_amount,
+
     due_date,
-    installment_amount,
   } = proposal;
   const getCompany = () => {
     axios.get(`${baseUrl}/tl/getcompany`, myConfig).then((res) => {
@@ -311,6 +301,7 @@ function EditComponent(props) {
             setminDate(res.data.result.start_date);
           } else if (res.data.result.payment_plan === "2") {
             setEndDate(current_date);
+            setminDate(current_date);
           }
           setTotalAmount(res.data.result.amount);
           setDateMonth(res.data.result.date_month);
@@ -353,16 +344,10 @@ function EditComponent(props) {
 
           setPayment(data1);
           setInstallment(data2);
-          setAmount(res.data.result.installment_amount.split(","));
-          //   setAllAmount({
-          //   remainAmount : res.data.result.installment_amount.split(","),
-          //   freezeAmount : amount,
-          //   completeAmount : res.data.result.installment_amount
-          // })
         }
       });
   };
-  console.log("minDATe", minDate);
+
   const getClient = () => {
     let collectData = [];
     axios
@@ -388,8 +373,6 @@ function EditComponent(props) {
         return false;
       } else if (dateError === true) {
         Alerts.ErrorNormal("Date must be unique");
-      } else if (value2 && value2.length == 0) {
-        setScopeError(true);
       } else {
         var lumsum = value.p_inst_date;
         if (store === "1") {
@@ -683,11 +666,11 @@ function EditComponent(props) {
                   index: props.location.index,
                 }}
               >
-                <button class="autoWidthBtn ml-3">Go Back</button>
+                <button className="autoWidthBtn ml-3">Go Back</button>
               </Link>
             </Col>
             <Col md="7">
-              <div class="btn ml-3">
+              <div className="btn ml-3">
                 <h4>Edit proposal</h4>
               </div>
             </Col>
@@ -697,22 +680,22 @@ function EditComponent(props) {
         <CardBody>
           <form onSubmit={handleSubmit(onSubmit)}>
             <div style={{ display: "flex" }}>
-              <div class="col-md-6">
-                <div class="form-group">
+              <div className="col-md-6">
+                <div className="form-group">
                   <label>Query no.</label>
                   <input
                     type="text"
                     name="p_assingment"
-                    class="form-control"
+                    className="form-control"
                     value={query}
                     ref={register}
                     disabled
                   />
                 </div>
-                <div class="form-group">
+                <div className="form-group">
                   <label>Company</label>
                   <select
-                    class="form-control"
+                    className="form-control"
                     ref={register}
                     disabled={optionDisable}
                     name="p_company"
@@ -724,10 +707,10 @@ function EditComponent(props) {
                     ))}
                   </select>
                 </div>
-                <div class="form-group">
+                <div className="form-group">
                   <label>Payment plan </label>
                   <select
-                    class="form-control"
+                    className="form-control"
                     ref={register}
                     disabled={optionDisable}
                     value={store}
@@ -755,7 +738,7 @@ function EditComponent(props) {
                 </div>
                 {store === "1" ? (
                   <div className="myproposaloption">
-                    <div class="form-group">
+                    <div className="form-group">
                       <label>
                         Whether invoice(s) can be issued before acceptance of
                         proposal by client
@@ -810,7 +793,7 @@ function EditComponent(props) {
                       </div>
                     </div>
 
-                    <div class="form-group">
+                    <div className="form-group">
                       <label>
                         Approval of Team Leader for such issue of invoice(s)
                       </label>
@@ -868,7 +851,7 @@ function EditComponent(props) {
                     </div>
 
                     {adminValue === null ? (
-                      <div class="form-group">
+                      <div className="form-group">
                         <label>
                           Approval of Admin for such issue of invoice(s)
                         </label>
@@ -901,7 +884,7 @@ function EditComponent(props) {
                     ) : (
                       <>
                         {adminValue === "0" ? (
-                          <div class="form-group">
+                          <div className="form-group">
                             <label>
                               Approval of Admin for such issue of invoice(s)
                             </label>
@@ -930,7 +913,7 @@ function EditComponent(props) {
                             </div>
                           </div>
                         ) : (
-                          <div class="form-group">
+                          <div className="form-group">
                             <label>
                               Approval of Admin for such issue of invoice(s)
                             </label>
@@ -964,7 +947,7 @@ function EditComponent(props) {
                   </div>
                 ) : (
                   <div className="myproposaloption">
-                    <div class="form-group">
+                    <div className="form-group">
                       <label>
                         Whether invoice(s) can be issued before acceptance of
                         proposal by client
@@ -1023,7 +1006,7 @@ function EditComponent(props) {
                       </div>
                     </div>
 
-                    <div class="form-group">
+                    <div className="form-group">
                       <label>
                         Approval of Team Leader for such issue of invoice(s)
                       </label>
@@ -1085,7 +1068,7 @@ function EditComponent(props) {
                     </div>
 
                     {adminValue === null ? (
-                      <div class="form-group">
+                      <div className="form-group">
                         <label>
                           Approval of Admin for such issue of invoice(s)
                         </label>
@@ -1118,7 +1101,7 @@ function EditComponent(props) {
                     ) : (
                       <>
                         {adminValue === "0" ? (
-                          <div class="form-group">
+                          <div className="form-group">
                             <label>
                               Approval of Admin for such issue of invoice(s)
                             </label>
@@ -1147,7 +1130,7 @@ function EditComponent(props) {
                             </div>
                           </div>
                         ) : (
-                          <div class="form-group">
+                          <div className="form-group">
                             <label>
                               Approval of Admin for such issue of invoice(s)
                             </label>
@@ -1181,7 +1164,7 @@ function EditComponent(props) {
                   </div>
                 )}
 
-                <div class="form-group">
+                <div className="form-group">
                   <label>
                     Scope of work <span className="declined">*</span>
                   </label>
@@ -1249,19 +1232,19 @@ function EditComponent(props) {
                 </div>
               </div>
 
-              <div class="col-md-6">
-                <div class="form-group">
+              <div className="col-md-6">
+                <div className="form-group">
                   <label>Client name</label>
                   <input
                     type="text"
                     name="p_name"
-                    class="form-control"
+                    className="form-control"
                     value={name}
                     ref={register}
                     disabled
                   />
                 </div>
-                <div class="form-group">
+                <div className="form-group">
                   <label>Copy to</label>
                   <Select
                     isMulti={true}
@@ -1270,7 +1253,7 @@ function EditComponent(props) {
                     options={client2}
                   />
                 </div>
-                <div class="form-group">
+                <div className="form-group">
                   <label>
                     Amount<span className="declined">*</span>
                   </label>
@@ -1323,7 +1306,7 @@ function EditComponent(props) {
                 </div>
 
                 {store === "4" ? (
-                  <div class="form-group">
+                  <div className="form-group">
                     <label>Start date</label>
                     <input
                       type="date"
@@ -1341,7 +1324,7 @@ function EditComponent(props) {
                 )}
 
                 {store === "1" ? (
-                  <div class="form-group">
+                  <div className="form-group">
                     <label>Due dates</label>
                     <input
                       type="date"
@@ -1357,7 +1340,7 @@ function EditComponent(props) {
                     />
                   </div>
                 ) : store === "2" ? (
-                  <div class="form-group">
+                  <div className="form-group">
                     <label>No of installments</label>
                     <Select
                       onChange={(e) => installmentHandler(e)}
@@ -1372,7 +1355,7 @@ function EditComponent(props) {
                   {store === "3" ? (
                     <>
                       <div className="row">
-                        <div class="col-md-6 my-2">
+                        <div className="col-md-6 my-2">
                           <label>Start date</label>
                           <input
                             type="date"
@@ -1386,7 +1369,7 @@ function EditComponent(props) {
                             onChange={(e) => startFun(e)}
                           />
                         </div>
-                        <div class="col-md-6 my-2">
+                        <div className="col-md-6 my-2">
                           <label>End date</label>
                           <input
                             type="date"
@@ -1459,7 +1442,7 @@ function EditComponent(props) {
                       </div>
 
                       {subPlan === "1" ? (
-                        <div class="form-group">
+                        <div className="form-group">
                           <label>No of installments</label>
                           <Select
                             isSearchable={false}
@@ -1474,7 +1457,7 @@ function EditComponent(props) {
                       {subPlan === "2" ? (
                         <div className="row">
                           <div className="col-md-12">
-                            <div class="form-group d-flex justify-content-center">
+                            <div className="form-group d-flex justify-content-center">
                               <label
                                 style={{
                                   whiteSpace: "nowrap",
@@ -1484,7 +1467,7 @@ function EditComponent(props) {
                                 Due date- date of month
                               </label>
                               <select
-                                class="form-control"
+                                className="form-control"
                                 ref={register({ required: true })}
                                 name="date_month"
                                 onChange={(e) => myMonthValue(e)}
@@ -1533,7 +1516,7 @@ function EditComponent(props) {
 
                   {store === "4" ? (
                     <>
-                      <div class="form-group d-flex justify-content-center">
+                      <div className="form-group d-flex justify-content-center">
                         <label
                           style={{
                             whiteSpace: "nowrap",
@@ -1543,7 +1526,7 @@ function EditComponent(props) {
                           Due date- date of month
                         </label>
                         <select
-                          class="form-control"
+                          className="form-control"
                           ref={register({ required: true })}
                           name="date_month2"
                           onChange={(e) => myMonthValue(e)}
@@ -1596,7 +1579,6 @@ function EditComponent(props) {
                     item={minDate}
                     clearValue={clearValue}
                     totalAmount={totalAmount}
-                    min={item}
                     dateError={dateError}
                     invoiceValue={invoiceValue}
                     allAmount={allAmount}
@@ -1616,7 +1598,6 @@ function EditComponent(props) {
                     invoiceValue={invoiceValue}
                     clearValue={clearValue}
                     totalAmount={totalAmount}
-                    min={minDate}
                     max={endDate}
                     item={minDate}
                     dateError={dateError}
@@ -1628,11 +1609,11 @@ function EditComponent(props) {
               </div>
             </div>
 
-            <div class="form-group col-md-6">
+            <div className="form-group col-md-6">
               {loading ? (
                 <Spinner color="primary" />
               ) : (
-                <button type="submit" class="customBtn">
+                <button type="submit" className="customBtn">
                   Submit
                 </button>
               )}

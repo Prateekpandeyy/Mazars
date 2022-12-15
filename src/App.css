@@ -768,3 +768,12 @@ color: #ffffff;
   width: 100%;
   flex-direction: column;
 }
+ /* tp all query css  */
+.nav-pills .nav-item{
+  width: 20%;
+  text-align: center;
+  background: #8c8c8c !important;
+  border-radius: 25px;
+  height: fit-content;
+}
+

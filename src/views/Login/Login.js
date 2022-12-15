@@ -227,21 +227,23 @@ function LoginForm() {
                   <span style={styles}>
                     {news.map((k, e) => (
                       <>
-                        <Link
-                          className="tabHoverflash mx-2 my-0"
-                          to={{
-                            pathname: `/customer/latestupdates/${k.id}`,
-                            index: k.id,
-                          }}
-                        >
-                          {`${k.heading}`}
-                        </Link>
+                        <span key={k.id}>
+                          <Link
+                            className="tabHoverflash mx-2 my-0"
+                            to={{
+                              pathname: `/customer/latestupdates/${k.id}`,
+                              index: k.id,
+                            }}
+                          >
+                            {`${k.heading}`}
+                          </Link>
+                        </span>
                         <>
                           {news.length - 1 == e ? (
                             ""
                           ) : (
                             <>
-                              <span>|</span>{" "}
+                              <span key={e}>|</span>{" "}
                             </>
                           )}
                         </>
@@ -265,6 +267,7 @@ function LoginForm() {
                         <p
                           className="tabHoverflash mx-2 my-0"
                           onClick={() => myCookie2("contactbasic")}
+                          key={k.id}
                         >
                           {`${k.heading}`}
                         </p>
