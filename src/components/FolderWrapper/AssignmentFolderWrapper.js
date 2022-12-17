@@ -111,24 +111,28 @@ const AssignmentFolderWrapper = (props) => {
               </>
             ) : (
               <>
-                <div className="folderCreated">
-                  <span
-                    onContextMenu={(e) => props.moveTo(e, i, props.basePath)}
-                    onDoubleClick={(e) =>
-                      props.downloadFile(e, i.assign_no, i.id, i.name)
-                    }
-                  >
-                    <FileIcon
-                      name={i.document}
-                      sx={{ fontSize: "2.5rem", pointer: "cursor" }}
-                    />
-                    <span className="folderLabel">
-                      <CustomTypography> {i.document}</CustomTypography>
+                {props.mainFolderId == i.folder_id ? (
+                  <div className="folderCreated">
+                    <span
+                      onContextMenu={(e) => props.moveTo(e, i, props.basePath)}
+                      onDoubleClick={(e) =>
+                        props.downloadFile(e, i.assign_no, i.id, i.name)
+                      }
+                    >
+                      <FileIcon
+                        name={i.document}
+                        sx={{ fontSize: "2.5rem", pointer: "cursor" }}
+                      />
+                      <span className="folderLabel">
+                        <CustomTypography> {i.document}</CustomTypography>
+                      </span>
                     </span>
-                  </span>
-                </div>
+                  </div>
+                ) : (
+                  ""
+                )}
                 {i.customer_files !== null &&
-                i.customer_files_folder === "0" ? (
+                props.mainFolderId == i.customer_files_folder ? (
                   <div className="folderCreated">
                     <span
                       onContextMenu={(e) =>

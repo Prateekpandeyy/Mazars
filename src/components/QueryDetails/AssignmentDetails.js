@@ -89,6 +89,7 @@ function AssignmentDetails({
   const [clientSubFold, setClientSubFold] = useState(false);
   const [renameValue, setRenameValue] = useState("");
   const [rename, setRename] = useState("");
+  const [mainFolderId, setMainFolderId] = useState("");
   const qid = useParams();
   const uid = localStorage.getItem("tlkey");
   const token = window.localStorage.getItem("tlToken");
@@ -344,6 +345,7 @@ function AssignmentDetails({
         )
         .then((res) => {
           if (res.data.code === 1) {
+            setMainFolderId(Number(e.id));
             setShowSubFolderData(false);
             setColor(Number(e.id));
             set_sub_folder(res.data.result);
@@ -521,6 +523,7 @@ function AssignmentDetails({
         )
         .then((res) => {
           if (res.data.code === 1) {
+            setMainFolderId(Number(e.id));
             setFolderName(e.folder);
             setSubFile(res.data.result);
             setShowSubFolderData(true);
@@ -558,7 +561,6 @@ function AssignmentDetails({
     }
   };
   const getadminFiles2 = (e) => {
-    let id = [];
     axios
       .get(
         `${baseUrl}/admin/documentlistbyfolderreport?q_id=${qid.id}`,
@@ -567,17 +569,6 @@ function AssignmentDetails({
       .then((res) => {
         if (res.data.code === 1) {
           setadminFolder(res.data.result);
-          // res.data.result.map((i) => {
-          //   if (id.includes(i.folder_id)) {
-          //   } else {
-          //     if (i.folder_id !== "0") {
-          //       id.push(i.folder_id);
-          //     }
-          //     setadminFolder((oldData) => {
-          //       return [...oldData, i];
-          //     });
-          //   }
-          // });
         }
       });
   };
@@ -586,16 +577,20 @@ function AssignmentDetails({
     setAdminInnerFiles([]);
 
     setColor(Number(e.id));
-    let kk = [];
-    adminFolder.map((i) => {
-      if (e.id == i.folder_id) {
-        kk.push(i);
-      }
-    });
-    setShowAdSubFolder(false);
-    setMainFoldName(e.folder);
-    setFolderName("");
-    setadminFile(kk);
+    setMainFolderId(Number(e.id));
+    axios
+      .get(
+        `${baseUrl}/admin/documentlistbyfolderreport?q_id=${qid.id}&folder_id=${
+          e.id
+        }&uid=${JSON.parse(uid)}`,
+        myConfigAdmin
+      )
+      .then((res) => {
+        setShowAdSubFolder(false);
+        setMainFoldName(e.folder);
+        setFolderName("");
+        setadminFile(res.data.result);
+      });
   };
   const get_sub_innerFileAdmin = (e) => {
     axios
@@ -607,8 +602,11 @@ function AssignmentDetails({
       )
       .then((res) => {
         if (res.data.code === 1) {
+          setMainFolderId(Number(e.id));
           setFolderName(e.folder);
-          setAdminInnerFiles(res.data.result);
+          if (res.data.result.length > 0) {
+            setAdminInnerFiles(res.data.result);
+          }
           setShowAdSubFolder(true);
         } else {
         }
@@ -617,7 +615,6 @@ function AssignmentDetails({
   // Client file
 
   const getClientFiles2 = (e) => {
-    let id = [];
     axios
       .get(
         `${baseUrl}/customers/documentlistbyfolderreport?q_id=${qid.id}`,
@@ -654,15 +651,22 @@ function AssignmentDetails({
     setClientSubFold(false);
     setClientSubFolder(e.child);
     setColor(Number(e.id));
+    setMainFolderId(Number(e.id));
     let kk = [];
     setClientSubFold(false);
     setMainFoldName(e.folder);
-    clientFolder.map((i) => {
-      if (e.id == i.folder_id) {
-        kk.push(i);
-      }
-    });
-    setclientFile(kk);
+    axios
+      .get(
+        `${baseUrl}/customers/documentlistbyfolderreport?q_id=${
+          qid.id
+        }&folder_id=${e.id}&uid=${JSON.parse(uid)}`,
+        myConfigClient
+      )
+      .then((res) => {
+        if (res.data.code === 1) {
+          setclientFile(res.data.result);
+        }
+      });
   };
   const get_sub_innerFileClient = (e) => {
     axios
@@ -675,6 +679,7 @@ function AssignmentDetails({
       .then((res) => {
         if (res.data.code === 1) {
           setClientSubFold(true);
+          setMainFolderId(e.id);
           setFolderName(e.folder);
           setClientInnerFiles(res.data.result);
         } else {
@@ -751,16 +756,19 @@ function AssignmentDetails({
     setSubFile([]);
     setShowSubFolderData(false);
     setFolderName("");
+    setMainFolderId(color);
   };
   const goBackFunAdmin = () => {
     setShowAdSubFolder(false);
     setAdminInnerFiles([]);
     setFolderName("");
+    setMainFolderId(color);
   };
   const goBackFunClient = () => {
     setClientInnerFiles([]);
     setFolderName("");
     setClientSubFold(false);
+    setMainFolderId(color);
   };
   return (
     <>
@@ -916,11 +924,13 @@ function AssignmentDetails({
                         setRenameValue={setRenameValue}
                         renameValue={renameValue}
                         closeModal={closeModal}
+                        mainFolderId={mainFolderId}
                         renameFolder={renameFolder}
                         panel="tl"
                       />
                     ) : (
                       <AssignmentFolderWrapper
+                        mainFolderId={mainFolderId}
                         folder={sub_folder}
                         getFolerSubFile={get_sub_innerFile}
                         file={innerFiles}
@@ -1080,6 +1090,7 @@ function AssignmentDetails({
                         downloadFile={rightClick}
                         basePath={false}
                         isSubFolder={true}
+                        mainFolderId={mainFolderId}
                       />
                     ) : (
                       <AssignmentFolderWrapper
@@ -1089,6 +1100,7 @@ function AssignmentDetails({
                         downloadFile={rightClick}
                         basePath={false}
                         isSubFolder={false}
+                        mainFolderId={mainFolderId}
                       />
                     )}
                   </div>
@@ -1138,6 +1150,7 @@ function AssignmentDetails({
                         downloadFile={rightClick}
                         basePath={false}
                         isSubFolder={true}
+                        mainFolderId={mainFolderId}
                       />
                     ) : (
                       <AssignmentFolderWrapper
@@ -1147,6 +1160,7 @@ function AssignmentDetails({
                         downloadFile={rightClick}
                         basePath={false}
                         isSubFolder={false}
+                        mainFolderId={mainFolderId}
                       />
                     )}
                   </div>
