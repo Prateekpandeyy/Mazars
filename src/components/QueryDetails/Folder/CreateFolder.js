@@ -30,6 +30,12 @@ function CreateFolder({
   });
 
   const onSumbit = (value) => {
+    var confToken = "";
+    if (window.location.pathname.split("/")[1] === "teamleader") {
+      confToken = window.localStorage.getItem("tlToken");
+    } else if (window.location.pathname.split("/")[1] === "taxprofessional") {
+      confToken = window.localStorage.getItem("tptoken");
+    }
     let suburl = "createqfolder";
     if (tab === "assignment") {
       suburl = "createqfolderreport";
@@ -44,7 +50,7 @@ function CreateFolder({
       method: "POST",
       url: `${baseUrl}/tl/${suburl}`,
       headers: {
-        uit: localStorage.getItem("tlToken"),
+        uit: confToken,
       },
       data: formData,
     }).then((res) => {

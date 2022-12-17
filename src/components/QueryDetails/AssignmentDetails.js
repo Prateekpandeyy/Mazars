@@ -248,6 +248,7 @@ function AssignmentDetails({
       )
       .then((res) => {
         if (res.data.code === 1) {
+          setSubFolder([]);
           if (color === 0) {
             setFolderId("0");
             handleFile();
@@ -565,17 +566,18 @@ function AssignmentDetails({
       )
       .then((res) => {
         if (res.data.code === 1) {
-          res.data.result.map((i) => {
-            if (id.includes(i.folder_id)) {
-            } else {
-              if (i.folder_id !== "0") {
-                id.push(i.folder_id);
-              }
-              setadminFolder((oldData) => {
-                return [...oldData, i];
-              });
-            }
-          });
+          setadminFolder(res.data.result);
+          // res.data.result.map((i) => {
+          //   if (id.includes(i.folder_id)) {
+          //   } else {
+          //     if (i.folder_id !== "0") {
+          //       id.push(i.folder_id);
+          //     }
+          //     setadminFolder((oldData) => {
+          //       return [...oldData, i];
+          //     });
+          //   }
+          // });
         }
       });
   };
@@ -586,7 +588,7 @@ function AssignmentDetails({
     setColor(Number(e.id));
     let kk = [];
     adminFolder.map((i) => {
-      if (e.id === i.folder_id) {
+      if (e.id == i.folder_id) {
         kk.push(i);
       }
     });
@@ -623,17 +625,7 @@ function AssignmentDetails({
       )
       .then((res) => {
         if (res.data.code === 1) {
-          res.data.result.map((i) => {
-            if (id.includes(i.folder_id)) {
-            } else {
-              if (i.folder_id !== "0") {
-                id.push(i.folder_id);
-              }
-              setclientFolder((oldData) => {
-                return [...oldData, i];
-              });
-            }
-          });
+          setclientFolder(res.data.result);
         }
       });
   };
@@ -666,7 +658,7 @@ function AssignmentDetails({
     setClientSubFold(false);
     setMainFoldName(e.folder);
     clientFolder.map((i) => {
-      if (e.id === i.folder_id) {
+      if (e.id == i.folder_id) {
         kk.push(i);
       }
     });
