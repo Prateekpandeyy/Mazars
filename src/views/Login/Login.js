@@ -171,7 +171,8 @@ function LoginForm() {
     setShowCookie(true);
   };
   const myCookie2 = () => {
-    if (cookieEnable) {
+    let kk = Cookies.get("accept");
+    if (kk) {
       history.push("/customer/signup");
     } else {
       showCook();
