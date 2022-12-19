@@ -488,7 +488,9 @@ function BasicQuery({
         if (res.data.code === 1) {
           setFolderName(e.folder);
           setSubFile(res.data.result);
-          setShowSubFolderData(true);
+          if (showSubfolderData === false) {
+            setShowSubFolderData(true);
+          }
         } else {
           setShowSubFolderData(false);
         }
@@ -627,6 +629,10 @@ function BasicQuery({
     setSubFile([]);
     setShowSubFolderData(false);
     setFolderName("");
+    getInnerFileFile({
+      id: color,
+      folder: mainFoldName,
+    });
   };
   const goBackFunAdmin = () => {
     setFolderName("");

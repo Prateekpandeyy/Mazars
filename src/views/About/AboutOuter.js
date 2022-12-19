@@ -88,7 +88,7 @@ const AboutOuter = () => {
                         href="https://api.masindia.live/assets/image/cms/Mazars_Advisory_Solutions(MAS).pdf"
                         target="_blank"
                       >
-                        Download Mazars Advisory Solutions India brochure
+                        Download brochure
                       </a>
                     </Col>
                   </Row>
