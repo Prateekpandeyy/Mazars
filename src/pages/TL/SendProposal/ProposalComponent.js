@@ -266,7 +266,7 @@ function ProposalComponent(props) {
     } else {
       Swal.fire({
         title: "error",
-        html: "Please enter description",
+        html: "Please enter scope of work",
         icon: "error",
       });
     }

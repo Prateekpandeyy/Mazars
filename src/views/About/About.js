@@ -4,6 +4,7 @@ import { Card, CardBody, CardTitle, CardHeader, Row, Col } from "reactstrap";
 import { Typography } from "@material-ui/core";
 import classes from "./design.module.css";
 import CustomHeading from "../../components/Common/CustomHeading";
+import { ImageUrl } from "../../config/config";
 const About = () => {
   const userId = window.localStorage.getItem("userid");
   return (
@@ -69,12 +70,11 @@ const About = () => {
                       years of thought leadership in transfer pricing.
                     </p>
                     <a
-                      className="autoWidthBtn"
-                      style={{ float: "left" }}
-                      href="https://api.masindia.live/assets/image/cms/Mazars_Advisory_Solutions(MAS).pdf"
+                      className="autoWidthBtn my-4"
+                      href={`${ImageUrl}/cms/Mazars_Advisory_Solutions(MAS).pdf`}
                       target="_blank"
                     >
-                      Download Mazars Advisory Solutions India brochure
+                      Download brochure
                     </a>
                   </Col>
                 </Row>

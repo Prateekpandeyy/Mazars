@@ -420,7 +420,7 @@ function SignUp(props) {
       formData.append("stdcode", countryCode);
       formData.append("gstin_no", value.p_gstIn);
       formData.append("address", address);
-      if (display === true && subm === false) {
+      if (display === true && subm === false && email2?.length > 0) {
         setLoading(true);
         let formData = new FormData();
         formData.append("user_id", user);
@@ -506,6 +506,8 @@ function SignUp(props) {
             }
           })
           .catch((error) => {});
+      } else {
+        setInvalid(true);
       }
     }
   };

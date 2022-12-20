@@ -211,14 +211,6 @@ function ProposalView(props) {
     ));
     return dataItem;
   };
-  // curent date
-  var date = new Date();
-  function convert(str) {
-    var date = new Date(str),
-      mnth = ("0" + (date.getMonth() + 1)).slice(-2),
-      day = ("0" + date.getDate()).slice(-2);
-    return [date.getFullYear(), mnth, day].join("-");
-  }
 
   //rejected
   const rejected = (id) => {
@@ -428,65 +420,45 @@ function ProposalView(props) {
           </div>
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="col-md-6">
-              <div className="mb-3">
-                <div className="form-check">
-                  <input
-                    id="terms_condition"
-                    className="form-check-input"
-                    type="checkbox"
-                    name="p_terms_condition"
-                    ref={register}
-                    onChange={(e) => updateCheckbox(e.target)}
-                  />
-                  <label
-                    htmlFor="terms_condition"
-                    className="form-check-label"
-                    title="Read"
-                    style={{ cursor: "pointer" }}
-                  >
-                    Please read engagement letter
-                  </label>
-                  <p className="declined">{custcheckError}</p>
-                </div>
-                <br />
+              <div className="form-check">
+                <input
+                  id="terms_condition"
+                  className="form-check-input"
+                  type="checkbox"
+                  name="p_terms_condition"
+                  ref={register}
+                  onChange={(e) => updateCheckbox(e.target)}
+                />
+                <label
+                  htmlFor="terms_condition"
+                  className="form-check-label"
+                  title="Read"
+                  style={{ cursor: "pointer" }}
+                >
+                  Please read engagement letter
+                </label>
+                <p className="declined">{custcheckError}</p>
+              </div>
 
+              <div className={valueCheckBox === true ? "proposalBtn" : ""}>
                 {loading ? (
                   <Loader />
                 ) : (
                   <>
-                    <div className="form-check">
-                      {valueCheckBox ? (
-                        <div>
-                          <button type="submit" className="customBtn">
-                            Accept
-                          </button>
-                          <button
-                            type="button"
-                            className="dangerBtn ml-2"
-                            onClick={() => rejected(id)}
-                          >
-                            Reject
-                          </button>
-                        </div>
-                      ) : (
-                        <div className="proposalBtn">
-                          <button
-                            type="submit"
-                            disabled
-                            className="customBtnDisabled"
-                          >
-                            Accept
-                          </button>
-                          <button
-                            type="button"
-                            disabled
-                            className="dangerBtnDisabled ml-2"
-                          >
-                            Reject
-                          </button>
-                        </div>
-                      )}
-                    </div>
+                    <button
+                      type="submit"
+                      disabled={!valueCheckBox}
+                      className="customBtnDisabled"
+                    >
+                      Accept
+                    </button>
+                    <button
+                      type="button"
+                      disabled={!valueCheckBox}
+                      className="dangerBtnDisabled ml-2"
+                    >
+                      Reject
+                    </button>
                   </>
                 )}
               </div>
@@ -494,12 +466,6 @@ function ProposalView(props) {
           </form>
         </CardBody>
 
-        {/* {addPaymentModal === true ?
-        <TermsConditions
-        readTerms={readTerms}
-        addPaymentModal={addPaymentModal}
-        id={id}
-      /> : ""} */}
         {rejectedBox === true ? (
           <RejectedModal22
             showRejectedBox={showRejectedBox}

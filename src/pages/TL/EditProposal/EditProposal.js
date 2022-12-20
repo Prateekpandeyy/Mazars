@@ -502,7 +502,7 @@ function EditComponent(props) {
     } else {
       Swal.fire({
         title: "Error",
-        html: "Scope of work could not be blank",
+        html: "Please enter scope of work",
         icon: "error",
       });
     }

@@ -1,16 +1,14 @@
 import React from "react";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
-import { styled } from "@material-ui/core";
-import { Box } from "@material-ui/core";
 import { Card, CardBody, CardTitle, CardHeader, Row, Col } from "reactstrap";
-import { Button, Typography } from "@material-ui/core";
 import { OuterloginContainer } from "../../components/Common/OuterloginContainer";
 import classes from "./design.module.css";
 import MyContainer from "../../components/Common/MyContainer";
 import CustomHeading from "../../components/Common/CustomHeading";
 import CustomTypography from "../../components/Common/CustomTypography";
 import SubHeading from "../../components/Common/SubHeading";
+import { ImageUrl } from "../../config/config";
 const AboutOuter = () => {
   return (
     <>
@@ -83,9 +81,8 @@ const AboutOuter = () => {
                         thought leadership in transfer pricing.
                       </CustomTypography>
                       <a
-                        className="autoWidthBtn"
-                        style={{ float: "left" }}
-                        href="https://api.masindia.live/assets/image/cms/Mazars_Advisory_Solutions(MAS).pdf"
+                        className="autoWidthBtn my-4"
+                        href={`${ImageUrl}/cms/Mazars_Advisory_Solutions(MAS).pdf`}
                         target="_blank"
                       >
                         Download brochure

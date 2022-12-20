@@ -250,15 +250,15 @@ function AssignmentDetails({
       .then((res) => {
         if (res.data.code === 1) {
           setSubFolder([]);
+          setFolderId("0");
           if (color === 0) {
-            setFolderId("0");
             handleFile();
             showFolder();
             getFile();
           } else if (showSubfolderData === false) {
             handleFile();
             getFile();
-            setFolderId("0");
+
             getSubFile({
               id: color,
             });

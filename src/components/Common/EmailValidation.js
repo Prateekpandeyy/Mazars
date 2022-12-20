@@ -74,7 +74,7 @@ const EmailValidation = (props) => {
       props.setWemail("Please enter valid email");
     }
   };
-
+  console.log("props", props.invalid);
   return (
     <>
       <input
