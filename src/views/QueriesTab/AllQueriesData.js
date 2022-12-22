@@ -1,6 +1,4 @@
-import React, { useState, useEffect, useMemo } from "react";
-import axios from "axios";
-import { baseUrl } from "../../config/config";
+import React, { useState } from "react";
 import { Card, CardHeader, CardBody, Row, Col, Table } from "reactstrap";
 import { Modal, ModalHeader, ModalBody } from "reactstrap";
 import moment from "moment";
@@ -23,16 +21,14 @@ import MessageIcon, {
 } from "../../components/Common/MessageIcon";
 import DataTablepopulated from "../../components/DataTablepopulated/DataTabel";
 
-import { useHistory } from "react-router-dom";
 function AllQueriesData({
   allQueriesCount,
   setAllQueriesCount,
   CountAllQuery,
 }) {
   const userId = window.localStorage.getItem("userid");
-  const [query, setQuery] = useState([]);
+
   const [assignNo2, setAssignNo2] = useState();
-  const [queriesCount, setCountQueries] = useState(null);
   const [records, setRecords] = useState([]);
   const [loading2, setLoading2] = useState(false);
   const [additionalQuery, setAdditionalQuery] = useState(false);
@@ -40,14 +36,7 @@ function AllQueriesData({
   const [assignNo, setAssignNo] = useState("");
   const [ViewDiscussion, setViewDiscussion] = useState(false);
   const [openManual, setManual] = useState(false);
-  let history = useHistory();
-  const token = window.localStorage.getItem("clientToken");
 
-  const myConfig = {
-    headers: {
-      uit: token,
-    },
-  };
   let des = false;
   const additionalHandler = (key) => {
     if (typeof key == "object") {
@@ -346,7 +335,7 @@ function AllQueriesData({
         <Row>
           <Col md="3"></Col>
           <Col md="9">
-            <Records records={records} />
+            <Records records={allQueriesCount.length} />
           </Col>
         </Row>
         <DataTablepopulated

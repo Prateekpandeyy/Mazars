@@ -22,9 +22,13 @@ function QueriesTab(props) {
   const [inprogressAllocation, setInprogressAllocation] = useState("");
   const [inprogressProposal, setInprogressProposal] = useState("");
   const [declined, setDeclined] = useState("");
-  const [bgColor, setbgColor] = useState("#55425F");
   const [loading, setLoading] = useState(false);
-
+  const [allResult, setAllResult] = useState({
+    allQuery: "",
+    inprogressQuery: "",
+    completeQuery: "",
+    declinedQuery: "",
+  });
   const token = window.localStorage.getItem("clientToken");
   const myConfig = {
     headers: {
@@ -47,6 +51,12 @@ function QueriesTab(props) {
       .then((res) => {
         if (res.data.code === 1) {
           setAllQueriesCount(res.data.result);
+          setAllResult({
+            allQuery: res.data.result.length,
+            inprogressQuery: allResult.inprogressQuery,
+            completeQuery: allResult.completeQuery,
+            declinedQuery: allResult.declinedQuery,
+          });
         }
       });
   };
@@ -62,6 +72,12 @@ function QueriesTab(props) {
       .then((res) => {
         if (res.data.code === 1) {
           setInprogressAllocation(res.data.result);
+          setAllResult({
+            allQuery: allResult.allQuery,
+            inprogressQuery: res.data.result.length,
+            completeQuery: allResult.completeQuery,
+            declinedQuery: allResult.declinedQuery,
+          });
         }
       });
   };
@@ -77,6 +93,12 @@ function QueriesTab(props) {
       .then((res) => {
         if (res.data.code === 1) {
           setInprogressProposal(res.data.result);
+          setAllResult({
+            allQuery: allResult.allQuery,
+            inprogressQuery: allResult.inprogressQuery,
+            completeQuery: res.data.result.length,
+            declinedQuery: allResult.declinedQuery,
+          });
         }
       });
   };
@@ -90,22 +112,18 @@ function QueriesTab(props) {
       .then((res) => {
         if (res.data.code === 1) {
           setDeclined(res.data.result);
+          setAllResult({
+            allQuery: allResult.allQuery,
+            inprogressQuery: allResult.inprogressQuery,
+            completeQuery: allResult.completeQuery,
+            declinedQuery: res.data.result.length,
+          });
           setLoading(true);
         }
       });
   };
   const tableIndex = (index) => {
     setTabIndex(index);
-
-    if (index === 0) {
-      setbgColor("#55425F");
-    } else if (index === 1) {
-      setbgColor("#6e557b");
-    } else if (index === 2) {
-      setbgColor("#6e557b");
-    } else if (index === 3) {
-      setbgColor("#6e557b");
-    }
   };
 
   const myStyle1 = {
@@ -132,26 +150,26 @@ function QueriesTab(props) {
                 style={tabIndex == 0 ? myStyle2 : myStyle1}
                 className="tabHover"
               >
-                All queries ({allQueriesCount.length})
+                All queries ({allResult.allQuery})
               </Tab>
               <Tab
                 style={tabIndex == 1 ? myStyle2 : myStyle1}
                 className="tabHover"
               >
-                Inprogress; queries({inprogressAllocation.length})
+                Inprogress; queries({allResult.inprogressQuery})
               </Tab>
               <Tab
                 style={tabIndex == 2 ? myStyle2 : myStyle1}
                 className="tabHover"
               >
-                Completed; queries ({inprogressProposal.length})
+                Completed; queries ({allResult.completeQuery})
               </Tab>
 
               <Tab
                 style={tabIndex == 3 ? myStyle2 : myStyle1}
                 className="tabHover"
               >
-                Declined; queries ({declined.length})
+                Declined; queries ({allResult.declinedQuery})
               </Tab>
             </TabList>
 
@@ -164,7 +182,11 @@ function QueriesTab(props) {
             </TabPanel>
 
             <TabPanel>
-              <InprogressAllocation />
+              <InprogressAllocation
+                setAllQueriesCount={setInprogressAllocation}
+                allQueriesCount={inprogressAllocation}
+                CountAllQuery={CountInprogressAllocation}
+              />
             </TabPanel>
 
             <TabPanel>

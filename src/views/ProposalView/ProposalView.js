@@ -455,6 +455,7 @@ function ProposalView(props) {
                     <button
                       type="button"
                       disabled={!valueCheckBox}
+                      onClick={() => rejected()}
                       className="dangerBtnDisabled ml-2"
                     >
                       Reject

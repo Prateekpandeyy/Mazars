@@ -23,23 +23,20 @@ import MessageIcon, {
 import DataTablepopulated from "../../components/DataTablepopulated/DataTabel";
 import { useHistory } from "react-router";
 
-function InprogressAllocation() {
+function InprogressAllocation(
+  allQueriesCount,
+  setAllQueriesCount,
+  CountAllQuery
+) {
   const userId = window.localStorage.getItem("userid");
   const [query, setQuery] = useState([]);
-  const [queriesCount, setCountQueries] = useState(null);
   const [records, setRecords] = useState([]);
 
   const [assignNo, setAssignNo] = useState("");
   const [additionalQuery, setAdditionalQuery] = useState(false);
   const [ViewDiscussion, setViewDiscussion] = useState(false);
   const [openManual, setManual] = useState(false);
-  const token = window.localStorage.getItem("clientToken");
-  let history = useHistory();
-  const myConfig = {
-    headers: {
-      uit: token,
-    },
-  };
+
   const additionalHandler = (key) => {
     setAdditionalQuery(!additionalQuery);
     setAssignNo(key);
@@ -48,30 +45,6 @@ function InprogressAllocation() {
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key);
-  };
-
-  useEffect(() => {
-    getQueriesData();
-  }, []);
-
-  const getQueriesData = () => {
-    axios
-      .get(
-        `${baseUrl}/customers/incompleteAssignments?user=${JSON.parse(
-          userId
-        )}&status=1`,
-        myConfig
-      )
-
-      .then((res) => {
-        if (res.data.code === 1) {
-          setQuery(res.data.result);
-          setCountQueries(res.data.result.length);
-          setRecords(res.data.result.length);
-        } else if (res.data.code === 0) {
-          CommonServices.clientLogout(history);
-        }
-      });
   };
 
   const needHelp = () => {
@@ -343,7 +316,7 @@ function InprogressAllocation() {
       .then(function (response) {
         if (response.data.code === 1) {
           Swal.fire("", "Query deleted successfully.", "success");
-          getQueriesData();
+          CountAllQuery();
         } else {
           Swal.fire("Oops...", "Errorr ", "error");
         }
@@ -352,62 +325,59 @@ function InprogressAllocation() {
   };
 
   return (
-    <div>
-      <Card>
-        <CardHeader>
-          <span onClick={(e) => needHelp()}>
-            {" "}
-            <HelpIcon />
-          </span>
-          <CustomerFilter
-            setData={setQuery}
-            getData={getQueriesData}
-            id={userId}
-            InprogressAllocation="InprogressAllocation"
-            records={records}
-            setRecords={setRecords}
-          />
-        </CardHeader>
-        <CardBody>
-          <Records records={records} />
+    <Card>
+      <CardHeader>
+        <span onClick={(e) => needHelp()}>
+          {" "}
+          <HelpIcon />
+        </span>
+        <CustomerFilter
+          setData={setAllQueriesCount}
+          getData={CountAllQuery}
+          id={userId}
+          InprogressAllocation="InprogressAllocation"
+          records={allQueriesCount.length}
+        />
+      </CardHeader>
+      <CardBody>
+        <Records records={allQueriesCount.length} />
 
-          <DataTablepopulated
-            bgColor="#6e557b"
-            keyField={"assign_no"}
-            data={query}
-            columns={columns}
-          ></DataTablepopulated>
-          <AdditionalQueryModal
-            additionalHandler={additionalHandler}
-            additionalQuery={additionalQuery}
-            assignNo={assignNo}
-            getQueriesData={getQueriesData}
+        <DataTablepopulated
+          bgColor="#6e557b"
+          keyField={"assign_no"}
+          data={allQueriesCount}
+          columns={columns}
+        ></DataTablepopulated>
+        <AdditionalQueryModal
+          additionalHandler={additionalHandler}
+          additionalQuery={additionalQuery}
+          assignNo={assignNo}
+          getQueriesData={CountAllQuery}
+        />
+        {ViewDiscussion === true ? (
+          <DiscardReport
+            ViewDiscussionToggel={ViewDiscussionToggel}
+            ViewDiscussion={ViewDiscussion}
+            report={assignNo}
+            getData={CountAllQuery}
+            headColor="#6e557b"
           />
-          {ViewDiscussion === true ? (
-            <DiscardReport
-              ViewDiscussionToggel={ViewDiscussionToggel}
-              ViewDiscussion={ViewDiscussion}
-              report={assignNo}
-              getData={getQueriesData}
-              headColor="#6e557b"
-            />
-          ) : (
-            ""
-          )}
-          <Modal
-            isOpen={openManual}
-            toggle={needHelp}
-            style={{ display: "block", position: "absolute", left: "280px" }}
-            size="lg"
-          >
-            <ModalHeader toggle={needHelp}>Mazars</ModalHeader>
-            <ModalBody>
-              <ModalManual tar={"freshQuery"} />
-            </ModalBody>
-          </Modal>
-        </CardBody>
-      </Card>
-    </div>
+        ) : (
+          ""
+        )}
+        <Modal
+          isOpen={openManual}
+          toggle={needHelp}
+          style={{ display: "block", position: "absolute", left: "280px" }}
+          size="lg"
+        >
+          <ModalHeader toggle={needHelp}>Mazars</ModalHeader>
+          <ModalBody>
+            <ModalManual tar={"freshQuery"} />
+          </ModalBody>
+        </Modal>
+      </CardBody>
+    </Card>
   );
 }
 
