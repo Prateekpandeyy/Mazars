@@ -21,17 +21,12 @@ import MessageIcon, {
   FeedBackICon,
 } from "../../components/Common/MessageIcon";
 import DataTablepopulated from "../../components/DataTablepopulated/DataTabel";
-import { useHistory } from "react-router";
-
-function InprogressAllocation(
+function InprogressAllocation({
   allQueriesCount,
   setAllQueriesCount,
-  CountAllQuery
-) {
+  CountAllQuery,
+}) {
   const userId = window.localStorage.getItem("userid");
-  const [query, setQuery] = useState([]);
-  const [records, setRecords] = useState([]);
-
   const [assignNo, setAssignNo] = useState("");
   const [additionalQuery, setAdditionalQuery] = useState(false);
   const [ViewDiscussion, setViewDiscussion] = useState(false);
@@ -55,7 +50,7 @@ function InprogressAllocation(
     {
       text: "S.No",
       dataField: "",
-      formatter: (cellContent, row, rowIndex) => {
+      formatter: (rowIndex) => {
         return rowIndex + 1;
       },
       headerStyle: () => {

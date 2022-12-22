@@ -18,16 +18,16 @@ function QueriesTab(props) {
   }, [props.location.index]);
 
   const [tabIndex, setTabIndex] = useState(0);
-  const [allQueriesCount, setAllQueriesCount] = useState("");
-  const [inprogressAllocation, setInprogressAllocation] = useState("");
-  const [inprogressProposal, setInprogressProposal] = useState("");
-  const [declined, setDeclined] = useState("");
+  const [allQueriesCount, setAllQueriesCount] = useState([]);
+  const [inprogressAllocation, setInprogressAllocation] = useState([]);
+  const [inprogressProposal, setInprogressProposal] = useState([]);
+  const [declined, setDeclined] = useState([]);
   const [loading, setLoading] = useState(false);
   const [allResult, setAllResult] = useState({
-    allQuery: "",
-    inprogressQuery: "",
-    completeQuery: "",
-    declinedQuery: "",
+    allQuery: 0,
+    inprogressQuery: 0,
+    completeQuery: 0,
+    declinedQuery: 0,
   });
   const token = window.localStorage.getItem("clientToken");
   const myConfig = {
@@ -150,7 +150,7 @@ function QueriesTab(props) {
                 style={tabIndex == 0 ? myStyle2 : myStyle1}
                 className="tabHover"
               >
-                All queries ({allResult.allQuery})
+                All queries ({allResult.inprogressQuery})
               </Tab>
               <Tab
                 style={tabIndex == 1 ? myStyle2 : myStyle1}
@@ -162,14 +162,14 @@ function QueriesTab(props) {
                 style={tabIndex == 2 ? myStyle2 : myStyle1}
                 className="tabHover"
               >
-                Completed; queries ({allResult.completeQuery})
+                Completed; queries ({allResult.inprogressQuery})
               </Tab>
 
               <Tab
                 style={tabIndex == 3 ? myStyle2 : myStyle1}
                 className="tabHover"
               >
-                Declined; queries ({allResult.declinedQuery})
+                Declined; queries ({allResult.inprogressQuery})
               </Tab>
             </TabList>
 
@@ -190,11 +190,19 @@ function QueriesTab(props) {
             </TabPanel>
 
             <TabPanel>
-              <InprogressProposal />
+              <InprogressProposal
+                setAllQueriesCount={setInprogressProposal}
+                allQueriesCount={inprogressProposal}
+                CountAllQuery={CountInprogressProposal}
+              />
             </TabPanel>
 
             <TabPanel>
-              <DeclinedQueries />
+              <DeclinedQueries
+                setAllQueriesCount={setDeclined}
+                allQueriesCount={declined}
+                CountAllQuery={CountDeclined}
+              />
             </TabPanel>
           </Tabs>
         )}

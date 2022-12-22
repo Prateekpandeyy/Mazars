@@ -1,6 +1,4 @@
-import React, { useState, useEffect, useMemo } from "react";
-import axios from "axios";
-import { baseUrl } from "../../config/config";
+import React, { useState } from "react";
 import { Card, CardHeader, CardBody } from "reactstrap";
 import { Link } from "react-router-dom";
 import CustomerFilter from "../../components/Search-Filter/CustomerFilter";
@@ -16,24 +14,18 @@ import MessageIcon, {
   FeedBackICon,
 } from "../../components/Common/MessageIcon";
 import DataTablepopulated from "../../components/DataTablepopulated/DataTabel";
-import { useHistory } from "react-router-dom";
 
-function DeclinedQueries() {
+function DeclinedQueries({
+  allQueriesCount,
+  setAllQueriesCount,
+  CountAllQuery,
+}) {
   const userId = window.localStorage.getItem("userid");
-  const [query, setQuery] = useState([]);
-  const [queriesCount, setCountQueries] = useState(null);
-  const [records, setRecords] = useState([]);
 
   const [assignNo, setAssignNo] = useState("");
   const [ViewDiscussion, setViewDiscussion] = useState(false);
   const [openManual, setManual] = useState(false);
-  const token = window.localStorage.getItem("clientToken");
-  let history = useHistory();
-  const myConfig = {
-    headers: {
-      uit: token,
-    },
-  };
+
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key);
@@ -42,33 +34,11 @@ function DeclinedQueries() {
     setManual(!openManual);
   };
 
-  useEffect(() => {
-    getQueriesData();
-  }, []);
-
-  const getQueriesData = () => {
-    axios
-      .get(
-        `${baseUrl}/customers/declinedQueries?uid=${JSON.parse(userId)}`,
-        myConfig
-      )
-
-      .then((res) => {
-        if (res.data.code === 1) {
-          setQuery(res.data.result);
-          setCountQueries(res.data.result.length);
-          setRecords(res.data.result.length);
-        } else if (res.data.code === 0) {
-          CommonServices.clientLogout(history);
-        }
-      });
-  };
-
   const columns = [
     {
       text: "S.No",
-      dataField: "",
-      formatter: (cellContent, row, rowIndex) => {
+
+      formatter: (rowIndex) => {
         return rowIndex + 1;
       },
       headerStyle: () => {
@@ -122,7 +92,6 @@ function DeclinedQueries() {
     },
     {
       text: "Status",
-      dataField: "",
 
       formatter: function nameFormatter(cell, row) {
         return (
@@ -293,27 +262,26 @@ function DeclinedQueries() {
             <HelpIcon />
           </span>
           <CustomerFilter
-            setData={setQuery}
-            getData={getQueriesData}
+            setData={setAllQueriesCount}
+            getData={CountAllQuery}
             id={userId}
             DeclinedQuery="DeclinedQuery"
-            records={records}
-            setRecords={setRecords}
+            records={allQueriesCount.length}
           />
         </CardHeader>
         <CardBody>
-          <Records records={records} />
+          <Records records={allQueriesCount.length} />
           <DataTablepopulated
             bgColor="#6e557b"
             keyField={"assign_no"}
-            data={query}
+            data={allQueriesCount}
             columns={columns}
           ></DataTablepopulated>
           <DiscardReport
             ViewDiscussionToggel={ViewDiscussionToggel}
             ViewDiscussion={ViewDiscussion}
             report={assignNo}
-            getData={getQueriesData}
+            getData={CountAllQuery}
             headColor="#6e557b"
           />
           <Modal

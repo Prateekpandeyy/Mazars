@@ -1,6 +1,4 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { baseUrl } from "../../config/config";
+import React, { useState } from "react";
 import { Card, CardHeader, CardBody } from "reactstrap";
 import { Link } from "react-router-dom";
 import CustomerFilter from "../../components/Search-Filter/CustomerFilter";
@@ -16,24 +14,14 @@ import MessageIcon, {
   FeedBackICon,
 } from "../../components/Common/MessageIcon";
 import DataTablepopulated from "../../components/DataTablepopulated/DataTabel";
-import { useHistory } from "react-router-dom";
-function InprogressProposal() {
+function InprogressProposal({
+  allQueriesCount,
+  setAllQueriesCount,
+  CountAllQuery,
+}) {
   const userId = window.localStorage.getItem("userid");
-  const [query, setQuery] = useState([]);
-  const [records, setRecords] = useState([]);
   const [assignNo, setAssignNo] = useState("");
   const [openManual, setManual] = useState(false);
-
-  const token = window.localStorage.getItem("clientToken");
-  const myConfig = {
-    headers: {
-      uit: token,
-    },
-  };
-  let history = useHistory();
-  useEffect(() => {
-    getQueriesData();
-  }, []);
   const [ViewDiscussion, setViewDiscussion] = useState(false);
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
@@ -41,25 +29,6 @@ function InprogressProposal() {
   };
   const needHelp = () => {
     setManual(!openManual);
-  };
-
-  const getQueriesData = () => {
-    axios
-      .get(
-        `${baseUrl}/customers/incompleteAssignments?user=${JSON.parse(
-          userId
-        )}&status=2`,
-        myConfig
-      )
-
-      .then((res) => {
-        if (res.data.code === 1) {
-          setQuery(res.data.result);
-          setRecords(res.data.result.length);
-        } else if (res.data.code === 0) {
-          CommonServices.clientLogout(history);
-        }
-      });
   };
 
   const columns = [
@@ -277,27 +246,26 @@ function InprogressProposal() {
             <HelpIcon />
           </span>
           <CustomerFilter
-            setData={setQuery}
-            getData={getQueriesData}
+            setData={setAllQueriesCount}
+            getData={CountAllQuery}
             id={userId}
             InprogressQueryProposal="InprogressQueryProposal"
-            records={records}
-            setRecords={setRecords}
+            records={allQueriesCount.length}
           />
         </CardHeader>
         <CardBody>
-          <Records records={records} />
+          <Records records={allQueriesCount.length} />
           <DataTablepopulated
             bgColor="#6e557b"
             keyField={"assign_no"}
-            data={query}
+            data={allQueriesCount}
             columns={columns}
           ></DataTablepopulated>
           <DiscardReport
             ViewDiscussionToggel={ViewDiscussionToggel}
             ViewDiscussion={ViewDiscussion}
             report={assignNo}
-            getData={getQueriesData}
+            getData={CountAllQuery}
             headColor="#6e557b"
           />
 
