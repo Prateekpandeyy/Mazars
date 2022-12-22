@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
 import Header from "../../components/Header/Header";
-import { styled, makeStyles } from "@material-ui/styles";
+import { styled } from "@material-ui/styles";
 import Footer from "../../components/Footer/Footer";
 import axios from "axios";
 import { baseUrl, baseUrl3 } from "../../config/config";
 import { Markup } from "interweave";
-import { Breadcrumbs, Box, Typography } from "@material-ui/core";
+import { Breadcrumbs, Box } from "@material-ui/core";
 import CommonServices from "../../common/common.js";
 import classes from "./design.module.css";
 import { OuterloginContainer } from "../../components/Common/OuterloginContainer";
-import { Link, useParams, useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { VscFilePdf } from "react-icons/vsc";
 import { Viewer } from "@react-pdf-viewer/core"; // install this library
 // Plugins
@@ -20,7 +20,6 @@ import "@react-pdf-viewer/core/lib/styles/index.css";
 // Worker
 import { Worker } from "@react-pdf-viewer/core"; // install this library
 import MyContainer from "../../components/Common/MyContainer";
-import CustomHeading from "../../components/Common/CustomHeading";
 import MainText from "../../components/Common/MainText";
 import $ from "jquery";
 const ArticleWrapper = styled(Box)({
@@ -31,12 +30,9 @@ const ArticleWrapper = styled(Box)({
 });
 
 const Details = () => {
-  let getId = useParams();
   let history = useHistory();
   const [data, setData] = useState([]);
-  const [linkdata, setLinkData] = useState("direct");
-  const [docren, setDocren] = useState("");
-  const [subject, setSubject] = useState("");
+
   const getData = (e) => {
     $("#artContent a[href^='http://']").attr("target", "_blank");
     if (history.location.index !== undefined) {
@@ -44,13 +40,6 @@ const Details = () => {
         .get(`${baseUrl}/customers/getarticles?id=${history.location.index}`)
         .then((res) => {
           setData(res.data.result);
-          if (history.location.pathname == "#DT") {
-            setLinkData("Direct Tax");
-          } else if (history.location.pathname == "#IDT") {
-            setLinkData("Indirect Tax");
-          } else if (history.location.pathname === "#DT&IDT") {
-            setLinkData("Direct & Indirect Tax");
-          }
         });
     }
   };

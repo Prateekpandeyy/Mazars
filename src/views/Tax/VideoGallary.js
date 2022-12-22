@@ -1,23 +1,21 @@
 import React, { useState, useEffect } from "react";
 import Header from "../../components/Header/Header";
-import { styled, makeStyles } from "@material-ui/styles";
 import { Link } from "react-router-dom";
 import Footer from "../../components/Footer/Footer";
-import { useHistory, useParams } from "react-router";
+import { useHistory } from "react-router";
 import axios from "axios";
 import { baseUrl, baseUrl3 } from "../../config/config";
 import ReactPlayer from "react-player";
 import CloseIcon from "@material-ui/icons/Close";
-import { Breadcrumbs, Box, Typography } from "@material-ui/core";
+import { Breadcrumbs, Typography } from "@material-ui/core";
 import { AiOutlinePlaySquare } from "react-icons/ai";
 import classes from "./design.module.css";
 import MyContainer from "../../components/Common/MyContainer";
 import { OuterloginContainer } from "../../components/Common/OuterloginContainer";
 const Videogallery = () => {
   const [galleryData, setGalleryData] = useState([]);
-  const userId = window.localStorage.getItem("adminkey");
+
   const [videoId, setVideoId] = useState();
-  const [video, isVideo] = useState(false);
   const [play, isPlay] = useState(false);
   const [title, setTitle] = useState("");
   var aa = localStorage.getItem("videoId");
@@ -37,9 +35,7 @@ const Videogallery = () => {
           setGalleryData(res.data.result);
           res.data.result.map((i) => {
             setTitle(i.title);
-            if (i.name.split(".")[1] === "mp4") {
-              isVideo(true);
-            }
+            return true;
           });
         });
     } else {
@@ -47,9 +43,7 @@ const Videogallery = () => {
         setGalleryData(res.data.result);
         res.data.result.map((i) => {
           setTitle(i.title);
-          if (i.name.split(".")[1] === "mp4") {
-            isVideo(true);
-          }
+          return true;
         });
       });
     }
@@ -152,6 +146,7 @@ const Videogallery = () => {
                                     height: "100%",
                                     width: "100%",
                                   }}
+                                  alt="Gallery"
                                   id={i.id}
                                   src={`${baseUrl3}/assets/gallery/${i.name}`}
                                 />
@@ -173,6 +168,7 @@ const Videogallery = () => {
                                     height: "100%",
                                     width: "100%",
                                   }}
+                                  alt="Refresh Gallery"
                                   id={i.id}
                                   src={`${baseUrl3}/assets/gallery/${i.name}`}
                                 />

@@ -6,7 +6,6 @@ import { Modal, ModalHeader, ModalBody } from "reactstrap";
 import moment from "moment";
 import { Link } from "react-router-dom";
 import CustomerFilter from "../../components/Search-Filter/CustomerFilter";
-import BootstrapTable from "react-bootstrap-table-next";
 import Swal from "sweetalert2";
 import Records from "../../components/Records/Records";
 import AdditionalQueryModal from "./AdditionalQueryModal";
@@ -25,7 +24,11 @@ import MessageIcon, {
 import DataTablepopulated from "../../components/DataTablepopulated/DataTabel";
 
 import { useHistory } from "react-router-dom";
-function AllQueriesData() {
+function AllQueriesData({
+  allQueriesCount,
+  setAllQueriesCount,
+  CountAllQuery,
+}) {
   const userId = window.localStorage.getItem("userid");
   const [query, setQuery] = useState([]);
   const [assignNo2, setAssignNo2] = useState();
@@ -64,27 +67,6 @@ function AllQueriesData() {
     setAssignNo(key);
   };
 
-  useEffect(() => {
-    getQueriesData();
-  }, []);
-
-  const getQueriesData = () => {
-    axios
-      .get(
-        `${baseUrl}/customers/incompleteAssignments?user=${JSON.parse(userId)}`,
-        myConfig
-      )
-      .then((res) => {
-        if (res.data.code === 1) {
-          setQuery(res.data.result);
-          setCountQueries(res.data.result.length);
-          setRecords(res.data.result.length);
-        } else if (res.data.code === 0) {
-          CommonServices.clientLogout(history);
-        }
-      });
-  };
-
   const needHelp = () => {
     setManual(!openManual);
   };
@@ -93,7 +75,7 @@ function AllQueriesData() {
     {
       text: "S.No",
 
-      formatter: (cellContent, row, rowIndex) => {
+      formatter: (rowIndex) => {
         return rowIndex + 1;
       },
       headerStyle: () => {
@@ -352,11 +334,11 @@ function AllQueriesData() {
           <HelpIcon />
         </span>
         <CustomerFilter
-          setData={setQuery}
-          getData={getQueriesData}
+          setData={setAllQueriesCount}
+          getData={CountAllQuery}
           id={userId}
           query="query"
-          records={records}
+          records={allQueriesCount.length}
           setRecords={setRecords}
         />
       </CardHeader>
@@ -370,7 +352,7 @@ function AllQueriesData() {
         <DataTablepopulated
           bgColor="#55425f"
           keyField={"assign_no"}
-          data={query}
+          data={allQueriesCount}
           columns={columns}
         ></DataTablepopulated>
 
@@ -378,7 +360,7 @@ function AllQueriesData() {
           additionalHandler={additionalHandler}
           additionalQuery={additionalQuery}
           assignNo={assignNo}
-          getQueriesData={getQueriesData}
+          getQueriesData={CountAllQuery}
           setLoading2={setLoading2}
           loading2={loading2}
           des={des}
@@ -388,7 +370,7 @@ function AllQueriesData() {
             ViewDiscussionToggel={ViewDiscussionToggel}
             ViewDiscussion={ViewDiscussion}
             report={assignNo}
-            getData={getQueriesData}
+            getData={CountAllQuery}
             headColor="#55425f"
           />
         ) : (
@@ -398,7 +380,7 @@ function AllQueriesData() {
         <RejectedModal
           showRejectedBox={showRejectedBox}
           rejectedBox={rejectedBox}
-          getQueriesData={getQueriesData}
+          getQueriesData={CountAllQuery}
           assignNo={assignNo2}
           deleteCliente={deleteCliente}
         />

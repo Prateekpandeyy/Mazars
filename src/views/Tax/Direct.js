@@ -1,17 +1,12 @@
 import React, { useState, useEffect } from "react";
 import Header from "../../components/Header/Header";
-import { styled, makeStyles } from "@material-ui/styles";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
 import Footer from "../../components/Footer/Footer";
 import {
-  Button,
-  Box,
   Table,
-  Typography,
   TableContainer,
-  TableFooter,
   TableHead,
   TablePagination,
   TableBody,
@@ -23,27 +18,23 @@ import classesCustom from "./design.module.css";
 import { OuterloginContainer } from "../../components/Common/OuterloginContainer";
 import CommonServices from "../../common/common";
 import MyContainer from "../../components/Common/MyContainer";
-import CustomHeading from "../../components/Common/CustomHeading";
 import CustomTypography from "../../components/Common/CustomTypography";
 import SubHeading from "../../components/Common/SubHeading";
 const Direct = () => {
   const [page, setPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [data, setData] = useState([]);
-  const [count2, setCount] = useState(0);
-  const [dataCount, setDataCount] = useState(0);
   const loadpage = Number(localStorage.getItem("prevPage"));
-  let wirtten = "-";
+
   const onChangePage = (event, nextPage) => {
     setPage(nextPage);
     localStorage.setItem("prevPage", nextPage);
     axios
       .get(`${baseUrl}/customers/getarticles?page=${++nextPage}`)
       .then((res) => {
-        setCount(res.data.result);
         let dataObj = {};
         let dataList = [];
-        setDataCount(res.data.total);
+
         res.data.result.map((i, e) => {
           dataObj = {
             sn: ++e,
@@ -70,8 +61,6 @@ const Direct = () => {
   };
   const getData = () => {
     axios.get(`${baseUrl}/customers/getarticles`).then((res) => {
-      setDataCount(res.data.total);
-      setCount(res.data.result);
       let dataObj = {};
       let dataList = [];
       res.data.result.map((i, e) => {
@@ -198,48 +187,6 @@ const Direct = () => {
                   ) : (
                     ""
                   )}
-                  {/* {
-              dataCount > 9 ?
-              <TableFooter>
-              <TableRow>
-                <TablePagination
-                  rowsPerPageOptions={[10]}
-                 
-                  count = {dataCount}
-                  rowsPerPage = {10}
-                  page = {page}
-                  SelectProps={{
-                    inputProps: {
-                      "aria-label": "rows per page"
-                    }
-                  }}
-                  onChangePage = {onChangePage}
-                  onChangeRowsPerPage = {onChangeRowsPerPage} 
-                  //ActionsComponent={TablePaginationActions}
-                  //component={Box}
-                  labelDisplayedRows={({ page }) => {
-                    return `Page: ${++page}`;
-                  }}
-                  backIconButtonProps={{
-                    color: "secondary"
-                  }}
-                  nextIconButtonProps={{ color: "secondary" }}
-                  showFirstButton={true}
-                  showLastButton={true}
-                  labelRowsPerPage={<span>Rows:</span>}
-                  sx={{
-                    ".MuiTablePagination-toolbar": {
-                      backgroundColor: "rgba(100,100,100,0.5)"
-                    },
-                    ".MuiTablePagination-selectLabel, .MuiTablePagination-input": {
-                      fontWeight: "bold",
-                      color: "blue"
-                    }
-                  }}
-                />
-              </TableRow>
-            </TableFooter> : ""
-            } */}
                 </Table>
               </TableContainer>
             </div>

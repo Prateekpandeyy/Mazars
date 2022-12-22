@@ -118,10 +118,7 @@ function ProposalComponent(props) {
 
   useEffect(() => {
     const getUser = async () => {
-      const res = await axios.get(
-        `${baseUrl}/customers/allname?id=${id}`,
-        myConfig
-      );
+      const res = await axios.get(`${baseUrl}/tl/allname?id=${id}`, myConfig);
       setCustName(res.data.name);
       setCustId(res.data.id);
     };

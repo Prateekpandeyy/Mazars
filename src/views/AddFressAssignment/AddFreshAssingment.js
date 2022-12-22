@@ -70,7 +70,7 @@ function AddFreshAssingment(props) {
     let timer;
     const a = value.p_fact;
 
-    if (det === undefined) {
+    if (det === undefined || det.length === 0) {
       Swal.fire({
         title: "error",
         html: "Please enter Brief facts of the case",

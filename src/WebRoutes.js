@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import "./App.css";
-import { positions, Provider, transitions } from "react-alert";
-import AlertTemplate from "react-alert-template-basic";
 import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
 import PageNotFound from "./components/PageNotFound/PageNotFound";
 import { useHistory } from "react-router";
@@ -34,7 +32,6 @@ import Feedback from "./views/Feedback/Feedback";
 import FeedbackData from "./views/FeedbackData/FeedbackData";
 import PaymentStatus from "./views/PaymentStatus/PaymentStatus";
 import PaymentGateway from "./views/PaymentGateway.js/PaymentGateway";
-import ThankYou from "./views/ThankYou/Thankyou";
 import payDetails from "./views/PaymentStatus/PayDetails";
 import Contact from "./views/Contact/Contact";
 import About from "./views/About/About";
@@ -195,15 +192,6 @@ import Drag from "./components/Drag";
 import UploadLinkContent from "./pages/Admin/CMS/UploadLInkContent";
 import CommingSoon from "./views/ComingSoon/CommingSoon";
 import PublicCms from "./Service/PublicCms";
-
-// import PayDetails from "./views/PaymentStatus/PayDetails";
-
-const options = {
-  timeout: 4000,
-  position: positions.TOP_CENTER,
-  offset: "80px",
-  transition: transitions.SCALE,
-};
 
 function WebRoutes() {
   return (
@@ -416,11 +404,7 @@ function WebRoutes() {
             path="/customer/payment"
             component={PaymentGateway}
           />
-          <PrivateRouteUser
-            exact
-            path="/customer/thankyou"
-            component={ThankYou}
-          />
+
           <PrivateRouteUser
             exact
             path="/customer/paydetails/:id"

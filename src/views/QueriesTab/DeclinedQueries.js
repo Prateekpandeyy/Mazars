@@ -67,8 +67,8 @@ function DeclinedQueries() {
   const columns = [
     {
       text: "S.No",
-
-      formatter: (rowIndex) => {
+      dataField: "",
+      formatter: (cellContent, row, rowIndex) => {
         return rowIndex + 1;
       },
       headerStyle: () => {
@@ -122,6 +122,7 @@ function DeclinedQueries() {
     },
     {
       text: "Status",
+      dataField: "",
 
       formatter: function nameFormatter(cell, row) {
         return (
@@ -284,50 +285,52 @@ function DeclinedQueries() {
   ];
 
   return (
-    <Card>
-      <CardHeader>
-        <span onClick={(e) => needHelp()}>
-          {" "}
-          <HelpIcon />
-        </span>
-        <CustomerFilter
-          setData={setQuery}
-          getData={getQueriesData}
-          id={userId}
-          DeclinedQuery="DeclinedQuery"
-          records={records}
-          setRecords={setRecords}
-        />
-      </CardHeader>
-      <CardBody>
-        <Records records={records} />
-        <DataTablepopulated
-          bgColor="#6e557b"
-          keyField={"assign_no"}
-          data={query}
-          columns={columns}
-        ></DataTablepopulated>
-        <DiscardReport
-          ViewDiscussionToggel={ViewDiscussionToggel}
-          ViewDiscussion={ViewDiscussion}
-          report={assignNo}
-          getData={getQueriesData}
-          headColor="#6e557b"
-        />
-        <Modal
-          isOpen={openManual}
-          toggle={needHelp}
-          style={{ display: "block", position: "absolute", left: "280px" }}
-          size="lg"
-        >
-          <ModalHeader toggle={needHelp}>Mazars</ModalHeader>
-          <ModalBody>
-            <ModalManual tar={"freshQuery"} />
-          </ModalBody>
-        </Modal>
-      </CardBody>
-    </Card>
+    <div>
+      <Card>
+        <CardHeader>
+          <span onClick={(e) => needHelp()}>
+            {" "}
+            <HelpIcon />
+          </span>
+          <CustomerFilter
+            setData={setQuery}
+            getData={getQueriesData}
+            id={userId}
+            DeclinedQuery="DeclinedQuery"
+            records={records}
+            setRecords={setRecords}
+          />
+        </CardHeader>
+        <CardBody>
+          <Records records={records} />
+          <DataTablepopulated
+            bgColor="#6e557b"
+            keyField={"assign_no"}
+            data={query}
+            columns={columns}
+          ></DataTablepopulated>
+          <DiscardReport
+            ViewDiscussionToggel={ViewDiscussionToggel}
+            ViewDiscussion={ViewDiscussion}
+            report={assignNo}
+            getData={getQueriesData}
+            headColor="#6e557b"
+          />
+          <Modal
+            isOpen={openManual}
+            toggle={needHelp}
+            style={{ display: "block", position: "absolute", left: "280px" }}
+            size="lg"
+          >
+            <ModalHeader toggle={needHelp}>Mazars</ModalHeader>
+            <ModalBody>
+              <ModalManual tar={"freshQuery"} />
+            </ModalBody>
+          </Modal>
+        </CardBody>
+      </Card>
+    </div>
   );
 }
 
-export default DeclinedQueries;
+export default React.memo(DeclinedQueries);

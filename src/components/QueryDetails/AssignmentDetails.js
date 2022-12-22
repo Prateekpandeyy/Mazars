@@ -757,6 +757,10 @@ function AssignmentDetails({
     setShowSubFolderData(false);
     setFolderName("");
     setMainFolderId(color);
+    getInnerFileFile({
+      id: color,
+      folder: mainFoldName,
+    });
   };
   const goBackFunAdmin = () => {
     setShowAdSubFolder(false);

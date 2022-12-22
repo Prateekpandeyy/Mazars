@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useMemo } from "react";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
-
 import { Card, CardHeader, CardBody } from "reactstrap";
 import { Link } from "react-router-dom";
 import CustomerFilter from "../../components/Search-Filter/CustomerFilter";
@@ -82,7 +81,7 @@ function InprogressAllocation() {
   const columns = [
     {
       text: "S.No",
-
+      dataField: "",
       formatter: (cellContent, row, rowIndex) => {
         return rowIndex + 1;
       },
@@ -133,6 +132,7 @@ function InprogressAllocation() {
     },
     {
       text: "Status",
+      dataField: "",
 
       formatter: function nameFormatter(cell, row) {
         return (
@@ -411,15 +411,4 @@ function InprogressAllocation() {
   );
 }
 
-export default InprogressAllocation;
-
-const arr = [
-  { name: "nitin", add: "noida" },
-  { name: "nitin", add: "noida" },
-  { name: "nitin", add: "noida" },
-  { name: "nitin", add: "noida" },
-  { name: "nitin", add: "noida" },
-  { name: "nitin", add: "noida" },
-
-  { name: "nitin", add: "noida" },
-];
+export default React.memo(InprogressAllocation);

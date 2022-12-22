@@ -23,6 +23,7 @@ function QueriesTab(props) {
   const [inprogressProposal, setInprogressProposal] = useState("");
   const [declined, setDeclined] = useState("");
   const [bgColor, setbgColor] = useState("#55425F");
+  const [loading, setLoading] = useState(false);
 
   const token = window.localStorage.getItem("clientToken");
   const myConfig = {
@@ -45,7 +46,7 @@ function QueriesTab(props) {
       )
       .then((res) => {
         if (res.data.code === 1) {
-          setAllQueriesCount(res.data.result.length);
+          setAllQueriesCount(res.data.result);
         }
       });
   };
@@ -60,7 +61,7 @@ function QueriesTab(props) {
       )
       .then((res) => {
         if (res.data.code === 1) {
-          setInprogressAllocation(res.data.result.length);
+          setInprogressAllocation(res.data.result);
         }
       });
   };
@@ -75,7 +76,7 @@ function QueriesTab(props) {
       )
       .then((res) => {
         if (res.data.code === 1) {
-          setInprogressProposal(res.data.result.length);
+          setInprogressProposal(res.data.result);
         }
       });
   };
@@ -88,7 +89,8 @@ function QueriesTab(props) {
       )
       .then((res) => {
         if (res.data.code === 1) {
-          setDeclined(res.data.result.length);
+          setDeclined(res.data.result);
+          setLoading(true);
         }
       });
   };
@@ -118,41 +120,64 @@ function QueriesTab(props) {
   };
 
   return (
-    <Layout custDashboard="custDashboard" custUserId={userId}>
-      <Tabs selectedIndex={tabIndex} onSelect={(index) => tableIndex(index)}>
-        <TabList className="fixedTab">
-          <Tab style={tabIndex == 0 ? myStyle2 : myStyle1} className="tabHover">
-            All queries ({allQueriesCount})
-          </Tab>
-          <Tab style={tabIndex == 1 ? myStyle2 : myStyle1} className="tabHover">
-            Inprogress; queries({inprogressAllocation})
-          </Tab>
-          <Tab style={tabIndex == 2 ? myStyle2 : myStyle1} className="tabHover">
-            Completed; queries ({inprogressProposal})
-          </Tab>
+    <>
+      <Layout custDashboard="custDashboard" custUserId={userId}>
+        {loading && (
+          <Tabs
+            selectedIndex={tabIndex}
+            onSelect={(index) => tableIndex(index)}
+          >
+            <TabList className="fixedTab">
+              <Tab
+                style={tabIndex == 0 ? myStyle2 : myStyle1}
+                className="tabHover"
+              >
+                All queries ({allQueriesCount.length})
+              </Tab>
+              <Tab
+                style={tabIndex == 1 ? myStyle2 : myStyle1}
+                className="tabHover"
+              >
+                Inprogress; queries({inprogressAllocation.length})
+              </Tab>
+              <Tab
+                style={tabIndex == 2 ? myStyle2 : myStyle1}
+                className="tabHover"
+              >
+                Completed; queries ({inprogressProposal.length})
+              </Tab>
 
-          <Tab style={tabIndex == 3 ? myStyle2 : myStyle1} className="tabHover">
-            Declined; queries ({declined})
-          </Tab>
-        </TabList>
+              <Tab
+                style={tabIndex == 3 ? myStyle2 : myStyle1}
+                className="tabHover"
+              >
+                Declined; queries ({declined.length})
+              </Tab>
+            </TabList>
 
-        <TabPanel>
-          <AllQueriesData snWidth={50} />
-        </TabPanel>
+            <TabPanel>
+              <AllQueriesData
+                setAllQueriesCount={setAllQueriesCount}
+                allQueriesCount={allQueriesCount}
+                CountAllQuery={CountAllQuery}
+              />
+            </TabPanel>
 
-        <TabPanel>
-          <InprogressAllocation />
-        </TabPanel>
+            <TabPanel>
+              <InprogressAllocation />
+            </TabPanel>
 
-        <TabPanel>
-          <InprogressProposal />
-        </TabPanel>
+            <TabPanel>
+              <InprogressProposal />
+            </TabPanel>
 
-        <TabPanel>
-          <DeclinedQueries />
-        </TabPanel>
-      </Tabs>
-    </Layout>
+            <TabPanel>
+              <DeclinedQueries />
+            </TabPanel>
+          </Tabs>
+        )}
+      </Layout>
+    </>
   );
 }
 

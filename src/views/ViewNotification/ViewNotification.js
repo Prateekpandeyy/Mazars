@@ -3,7 +3,6 @@ import axios from "axios";
 import { baseUrl } from "../../config/config";
 import Layout from "../../components/Layout/Layout";
 import { useHistory, useParams } from "react-router-dom";
-
 import { Card, CardHeader, CardBody, Row, Col } from "reactstrap";
 import CommonServices from "../../common/common";
 
@@ -14,10 +13,6 @@ function ViewNotification() {
 
   const [data, setData] = useState({});
   const token = window.localStorage.getItem("clientToken");
-
-  useEffect(() => {
-    getChatting();
-  }, [id]);
 
   const getChatting = () => {
     let formData = new FormData();
@@ -39,7 +34,9 @@ function ViewNotification() {
       })
       .catch((error) => {});
   };
-
+  useEffect(() => {
+    getChatting();
+  }, [id]);
   return (
     <Layout custDashboard="custDashboard" custUserId={userId}>
       <Card>

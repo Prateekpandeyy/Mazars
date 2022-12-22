@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
 import Header from "../../components/Header/Header";
-import { styled, makeStyles } from "@material-ui/styles";
-import { Breadcrumbs, Box, Typography } from "@material-ui/core";
+import { Breadcrumbs, Typography } from "@material-ui/core";
 import { Link, useHistory } from "react-router-dom";
 import ImageGallery from "react-image-gallery";
 import { baseUrl, baseUrl3 } from "../../config/config";
 import axios from "axios";
-import "./style.css";
 import classes from "./design.module.css";
 import MyContainer from "../../components/Common/MyContainer";
 import { OuterloginContainer } from "../../components/Common/OuterloginContainer";
@@ -61,7 +59,7 @@ const GalleryVideo = () => {
         });
     } else {
       setTitle(history.location.index.split(".")[0]);
-      console.log("myHistory", history.location);
+
       let a = {
         original: `${baseUrl3}/assets/gallery/${history.location.index}`,
         thumbnail: `${baseUrl3}/assets/gallery/${history.location.index}`,

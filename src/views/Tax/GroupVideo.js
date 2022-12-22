@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
 import Header from "../../components/Header/Header";
-import { styled, makeStyles } from "@material-ui/styles";
-import { Breadcrumbs, Box, Typography } from "@material-ui/core";
+import { Breadcrumbs } from "@material-ui/core";
 import { Link, useHistory } from "react-router-dom";
 import ImageGallery from "react-image-gallery";
 import { baseUrl, baseUrl3 } from "../../config/config";
 import axios from "axios";
-import "./style.css";
 import MyContainer from "../../components/Common/MyContainer";
 const GroupVideo = () => {
   const [images, setImages] = useState([]);
@@ -17,7 +15,6 @@ const GroupVideo = () => {
     getImages();
   }, []);
   const getImages = () => {
-    console.log("imagesQuery");
     let obj = [];
     if (history.location.index) {
       axios
@@ -31,12 +28,11 @@ const GroupVideo = () => {
               thumbnail: `${baseUrl3}/assets/gallery/${i.name}`,
             };
             obj.push(a);
-            console.log("aa", a, obj);
+
             setImages(obj);
           });
         });
     }
-    console.log("obj", obj);
   };
 
   return (

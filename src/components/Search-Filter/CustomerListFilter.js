@@ -4,21 +4,10 @@ import { baseUrl, baseUrl3 } from "../../config/config";
 import "antd/dist/antd.css";
 import { Select } from "antd";
 import { useForm } from "react-hook-form";
-import Excel from "exceljs";
-import { saveAs } from "file-saver";
-const workSheetName = "Worksheet-1";
-const workBookName = "MyWorkBook";
-const myInputId = "myInput";
+
 function CustomerListFilter(props) {
-  const workbook = new Excel.Workbook();
-
-  const { handleSubmit, register, errors, reset } = useForm();
-  const { Option, OptGroup } = Select;
-
-  const [selectedData, setSelectedData] = useState([]);
-
-  const { setData, searchQuery, setRecords, records, getCustomer, listData } =
-    props;
+  const { handleSubmit, register, reset } = useForm();
+  const { setData, searchQuery, setRecords, records, getCustomer } = props;
   var current_date =
     new Date().getFullYear() +
     "-" +

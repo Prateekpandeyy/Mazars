@@ -1,26 +1,20 @@
 import React, { useState, useEffect } from "react";
 import Header from "../../components/Header/Header";
-import { styled, makeStyles } from "@material-ui/styles";
+import { styled } from "@material-ui/styles";
 import Footer from "../../components/Footer/Footer";
 import axios from "axios";
 import { baseUrl, baseUrl3 } from "../../config/config";
 import { Markup } from "interweave";
-import { Breadcrumbs, Box, Typography } from "@material-ui/core";
+import { Breadcrumbs, Box } from "@material-ui/core";
 import CommonServices from "../../common/common.js";
 import classes from "./design.module.css";
 import { OuterloginContainer } from "../../components/Common/OuterloginContainer";
 import { Link, useParams, useHistory } from "react-router-dom";
 import { VscFilePdf } from "react-icons/vsc";
 import { Viewer } from "@react-pdf-viewer/core"; // install this library
-// Plugins
-// import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout'; // install this library
-// Import the styles
 import "@react-pdf-viewer/core/lib/styles/index.css";
-// import '@react-pdf-viewer/default-layout/lib/styles/index.css';
-// Worker
 import { Worker } from "@react-pdf-viewer/core"; // install this library
 import MyContainer from "../../components/Common/MyContainer";
-import CustomHeading from "../../components/Common/CustomHeading";
 import MainText from "../../components/Common/MainText";
 const ArticleWrapper = styled(Box)({
   display: "flex",
@@ -130,6 +124,7 @@ const UpdateDetails = () => {
                 <a
                   href={`${baseUrl3}/${i.file}`}
                   target="_blank"
+                  rel="noopener noreferrer"
                   className={classes.myLink}
                 >
                   <button className="downloadBtnPdf">

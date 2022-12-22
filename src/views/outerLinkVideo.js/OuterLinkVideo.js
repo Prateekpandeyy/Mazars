@@ -3,13 +3,8 @@ import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
-import { Modal, ModalHeader, ModalBody, Button } from "reactstrap";
 import MainContainer from "../../components/Common/MainContainer";
 import MyContainer from "../../components/Common/MyContainer";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
-import classNames from "classnames";
 import { useHistory, useParams } from "react-router";
 import * as Cookies from "js-cookie";
 import Swal from "sweetalert2";
@@ -18,15 +13,8 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-const Schema = yup.object().shape({
-  p_email: yup.string().email("invalid email").required(""),
-  p_password: yup.string().required(""),
-});
 
 const OuterLinkVideo = () => {
-  const { handleSubmit, register, errors } = useForm({
-    resolver: yupResolver(Schema),
-  });
   const [open, isOpen] = useState(true);
   const [user, setUser] = useState("");
   const [isName, setIsName] = useState(false);
@@ -43,7 +31,6 @@ const OuterLinkVideo = () => {
     isOpen(!open);
   };
   const getUser = (e) => {
-    var regEx = /^[0-9a-zA-Z]+$/;
     setIsName(false);
     setUser(e.target.value);
   };

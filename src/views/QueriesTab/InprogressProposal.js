@@ -23,6 +23,7 @@ function InprogressProposal() {
   const [records, setRecords] = useState([]);
   const [assignNo, setAssignNo] = useState("");
   const [openManual, setManual] = useState(false);
+
   const token = window.localStorage.getItem("clientToken");
   const myConfig = {
     headers: {
@@ -268,7 +269,7 @@ function InprogressProposal() {
   ];
 
   return (
-    <div>
+    <>
       <Card>
         <CardHeader>
           <span onClick={(e) => needHelp()}>
@@ -313,8 +314,8 @@ function InprogressProposal() {
           </Modal>
         </CardBody>
       </Card>
-    </div>
+    </>
   );
 }
 
-export default InprogressProposal;
+export default React.memo(InprogressProposal);

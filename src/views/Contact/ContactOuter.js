@@ -38,8 +38,8 @@ const ContactOuter = () => {
 
                       <CustomTypography>
                         Email :{" "}
-                        <a href="mailto: support@masindia.live">
-                          support22@masindia.live
+                        <a href="mailto: support22@mazars.co.in">
+                          support22@mazars.co.in
                         </a>
                       </CustomTypography>
 

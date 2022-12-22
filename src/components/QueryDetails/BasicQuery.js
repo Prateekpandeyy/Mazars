@@ -7,23 +7,11 @@ import { baseUrl } from "../../config/config";
 import "./queryStyle.css";
 import MainText from "../Common/MainText";
 import ShowFolder from "./Folder/ShowFolder";
-import styled from "styled-components";
-import FolderIcon from "@mui/icons-material/Folder";
 import Swal from "sweetalert2";
-import { Box } from "@mui/material";
 import { Modal, ModalHeader, ModalBody } from "reactstrap";
 import CreateFolder from "./Folder/CreateFolder";
-import { FileIcon } from "../Common/MessageIcon";
-import Popup from "reactjs-popup";
-import "reactjs-popup/dist/index.css";
 import FolderWrapper from "../FolderWrapper/FolderWrapper";
 import FolderBredcrumb from "../FolderWrapper/FolderBredcrumb";
-const FolderDetails = styled(Box)({
-  display: "flex",
-  width: "100%",
-  alignItems: "flex-start",
-  flexWrap: "wrap",
-});
 
 function BasicQuery({
   qstatus,

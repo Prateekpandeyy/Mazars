@@ -34,6 +34,7 @@ import SubHeading from "../../components/Common/SubHeading";
 const Schema = yup.object().shape({
   p_email: yup.string().email("invalid email").required(""),
   p_password: yup.string().required(""),
+  p_user: yup.string().required(""),
 });
 
 const MyBox = styled(Box)({
@@ -380,11 +381,11 @@ function LoginForm() {
                           <label className="labelColor">User Id</label>
                           <input
                             type="text"
-                            name="p_user"
-                            onChange={(e) => getUser(e)}
                             className={classNames("form-control", {
                               "is-invalid": errors.p_user,
                             })}
+                            name="p_user"
+                            onChange={(e) => getUser(e)}
                             value={user}
                             ref={register({ required: true })}
                             placeholder="Enter user Id"

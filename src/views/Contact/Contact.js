@@ -31,8 +31,8 @@ const Contact = () => {
 
                   <CustomTypography>
                     Email :{" "}
-                    <a href="mailto: support22@masindia.live">
-                      support22@masindia
+                    <a href="mailto: support22@mazars.co.in">
+                      support22@mazars.co.in
                     </a>
                   </CustomTypography>
 
