@@ -1,28 +1,30 @@
 import React from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import CustomerNotification from "./CustomerNotification";
-import LockOpenIcon from '@material-ui/icons/LockOpen';
-import VpnKeyIcon from '@material-ui/icons/VpnKey';
-import './index.css'
-import {CgProfile} from 'react-icons/cg'
+import LockOpenIcon from "@material-ui/icons/LockOpen";
+import VpnKeyIcon from "@material-ui/icons/VpnKey";
+import "./index.css";
+import { CgProfile } from "react-icons/cg";
 import CommonServices from "../../common/common";
 import CustomHeading from "../Common/CustomHeading";
 
 function NavWrapper(props) {
-  const { color, logout, name, email, feedbackNumber} = props;
-const clName = JSON.parse(localStorage.getItem("clientLoginId"))
-  const history = useHistory();
+  const { color, logout, name, email, feedbackNumber } = props;
+  const clName = JSON.parse(localStorage.getItem("clientLoginId"));
+
   const userId = window.localStorage.getItem("userid");
   const adminkey = window.localStorage.getItem("adminkey");
   const tlkey = window.localStorage.getItem("tlkey");
-  const tpkey = window.localStorage.getItem("tpkey")
-  const cmsKey = JSON.stringify(window.localStorage.getItem("token"))
-
+  const tpkey = window.localStorage.getItem("tpkey");
+  const cmsKey = JSON.stringify(window.localStorage.getItem("token"));
 
   return (
     <>
       <div className="navbar-wrapper">
-        <div className="navbar-container" style={{ background: color, borderBottom: "2px solid #787878" }}>
+        <div
+          className="navbar-container"
+          style={{ background: color, borderBottom: "2px solid #787878" }}
+        >
           <div className="collapse navbar-collapse show" id="navbar-mobile">
             <ul className="nav navbar-nav mr-auto float-left">
               <li className="nav-item d-block d-md-none">
@@ -56,35 +58,57 @@ const clName = JSON.parse(localStorage.getItem("clientLoginId"))
                 </ul>
               </li>
 
-              <li style={{zIndex: 99, margin: "auto"}}>
+              <li style={{ zIndex: 99, margin: "auto" }}>
                 <CustomHeading>
-                {name == "customer" ? `Client :  ${clName} `  : CommonServices.capitalizeFirstLetter(name)}:  {JSON.parse(email)} 
+                  {name == "customer"
+                    ? `Client :  ${clName} `
+                    : CommonServices.capitalizeFirstLetter(name)}
+                  : {JSON.parse(email)}
                 </CustomHeading>
-               
               </li>
-             
             </ul>
 
-            <ul className="nav navbar-nav float-right" style={{display: "flex", flexDirection: "row"}}>
-
+            <ul
+              className="nav navbar-nav float-right"
+              style={{ display: "flex", flexDirection: "row" }}
+            >
               {name == "customer" && (
-                <CustomerNotification panel="client" tokenKey={userId} name={name} />
+                <CustomerNotification
+                  panel="client"
+                  tokenKey={userId}
+                  name={name}
+                />
               )}
 
               {name == "admin" && (
-                <CustomerNotification  panel="admin" tokenKey={adminkey} name={name} />
+                <CustomerNotification
+                  panel="admin"
+                  tokenKey={adminkey}
+                  name={name}
+                />
               )}
-               {name == "cms" && (
-                <CustomerNotification  panel="Cms" tokenKey={cmsKey} name={name} />
+              {name == "cms" && (
+                <CustomerNotification
+                  panel="Cms"
+                  tokenKey={cmsKey}
+                  name={name}
+                />
               )}
 
               {name == "Team Leader" && (
-                <CustomerNotification panel="teamleader" tokenKey={tlkey} name={name} />
+                <CustomerNotification
+                  panel="teamleader"
+                  tokenKey={tlkey}
+                  name={name}
+                />
               )}
-               {name == "Tax Professional" && (
-                <CustomerNotification panel="taxprofessional" tokenKey={tpkey} name={name} />
+              {name == "Tax Professional" && (
+                <CustomerNotification
+                  panel="taxprofessional"
+                  tokenKey={tpkey}
+                  name={name}
+                />
               )}
-
 
               <li className="dropdown dropdown-user nav-item">
                 <a
@@ -104,26 +128,30 @@ const clName = JSON.parse(localStorage.getItem("clientLoginId"))
 
                 <div className="dropdown-menu dropdown-menu-right changePassword">
                   <div className="arrow_box_right">
-
                     {name == "customer" && (
-                     <>
-                      
-                      <Link to="/customer/change-password">
-                        <div className="dropdown-item" 
-                          style={{ cursor: "pointer" }}>
-                           <VpnKeyIcon style ={{fontSize : "20px"}}/>
-                          <span style={{ marginLeft: "6px" }}>Change password</span>
-                        </div>
-                      </Link>
-                       <Link to="/customer/profile">
-                       <div className="dropdown-item" 
-                         style={{ cursor: "pointer" }}>
-                            <CgProfile style ={{fontSize : "20px"}} />
-                       
-                         <span style={{ marginLeft: "6px" }}>Profile</span>
-                       </div>
-                     </Link>
-                     </>
+                      <>
+                        <Link to="/customer/change-password">
+                          <div
+                            className="dropdown-item"
+                            style={{ cursor: "pointer" }}
+                          >
+                            <VpnKeyIcon style={{ fontSize: "20px" }} />
+                            <span style={{ marginLeft: "6px" }}>
+                              Change password
+                            </span>
+                          </div>
+                        </Link>
+                        <Link to="/customer/profile">
+                          <div
+                            className="dropdown-item"
+                            style={{ cursor: "pointer" }}
+                          >
+                            <CgProfile style={{ fontSize: "20px" }} />
+
+                            <span style={{ marginLeft: "6px" }}>Profile</span>
+                          </div>
+                        </Link>
+                      </>
                     )}
 
                     <div
@@ -131,10 +159,9 @@ const clName = JSON.parse(localStorage.getItem("clientLoginId"))
                       onClick={logout}
                       style={{ cursor: "pointer" }}
                     >
-                      <LockOpenIcon style ={{fontSize : "20px"}}/>
+                      <LockOpenIcon style={{ fontSize: "20px" }} />
                       <span style={{ marginLeft: "6px" }}>Logout</span>
                     </div>
-
                   </div>
                 </div>
               </li>
@@ -147,5 +174,3 @@ const clName = JSON.parse(localStorage.getItem("clientLoginId"))
 }
 
 export default NavWrapper;
-
-

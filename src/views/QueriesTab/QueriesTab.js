@@ -51,11 +51,11 @@ function QueriesTab(props) {
       .then((res) => {
         if (res.data.code === 1) {
           setAllQueriesCount(res.data.result);
-          setAllResult({
-            allQuery: res.data.result.length,
-            inprogressQuery: allResult.inprogressQuery,
-            completeQuery: allResult.completeQuery,
-            declinedQuery: allResult.declinedQuery,
+          setAllResult((preValue) => {
+            return {
+              ...preValue,
+              allQuery: res.data.result.length,
+            };
           });
         }
       });
@@ -72,11 +72,11 @@ function QueriesTab(props) {
       .then((res) => {
         if (res.data.code === 1) {
           setInprogressAllocation(res.data.result);
-          setAllResult({
-            allQuery: allResult.allQuery,
-            inprogressQuery: res.data.result.length,
-            completeQuery: allResult.completeQuery,
-            declinedQuery: allResult.declinedQuery,
+          setAllResult((preValue) => {
+            return {
+              ...preValue,
+              inprogressQuery: res.data.result.length,
+            };
           });
         }
       });
@@ -93,11 +93,11 @@ function QueriesTab(props) {
       .then((res) => {
         if (res.data.code === 1) {
           setInprogressProposal(res.data.result);
-          setAllResult({
-            allQuery: allResult.allQuery,
-            inprogressQuery: allResult.inprogressQuery,
-            completeQuery: res.data.result.length,
-            declinedQuery: allResult.declinedQuery,
+          setAllResult((preValue) => {
+            return {
+              ...preValue,
+              completeQuery: res.data.result.length,
+            };
           });
         }
       });
@@ -111,13 +111,15 @@ function QueriesTab(props) {
       )
       .then((res) => {
         if (res.data.code === 1) {
+          console.log("api called");
           setDeclined(res.data.result);
-          setAllResult({
-            allQuery: allResult.allQuery,
-            inprogressQuery: allResult.inprogressQuery,
-            completeQuery: allResult.completeQuery,
-            declinedQuery: res.data.result.length,
+          setAllResult((preValue) => {
+            return {
+              ...preValue,
+              declinedQuery: res.data.result.length,
+            };
           });
+
           setLoading(true);
         }
       });
@@ -150,7 +152,7 @@ function QueriesTab(props) {
                 style={tabIndex == 0 ? myStyle2 : myStyle1}
                 className="tabHover"
               >
-                All queries ({allResult.inprogressQuery})
+                All queries ({allResult.allQuery})
               </Tab>
               <Tab
                 style={tabIndex == 1 ? myStyle2 : myStyle1}
@@ -162,14 +164,14 @@ function QueriesTab(props) {
                 style={tabIndex == 2 ? myStyle2 : myStyle1}
                 className="tabHover"
               >
-                Completed; queries ({allResult.inprogressQuery})
+                Completed; queries ({allResult.completeQuery})
               </Tab>
 
               <Tab
                 style={tabIndex == 3 ? myStyle2 : myStyle1}
                 className="tabHover"
               >
-                Declined; queries ({allResult.inprogressQuery})
+                Declined; queries ({allResult.declinedQuery})
               </Tab>
             </TabList>
 
