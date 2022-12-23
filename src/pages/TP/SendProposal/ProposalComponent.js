@@ -29,7 +29,6 @@ function ProposalComponent(props) {
   const { handleSubmit, register, errors } = useForm();
   const userid = window.localStorage.getItem("tpkey");
   const [loading, setLoading] = useState(false);
-  const [custId, setCustId] = useState("");
   const [custname, setCustName] = useState("");
   const [assignId, setAssignID] = useState("");
   const [assingNo, setAssingNo] = useState("");
@@ -82,6 +81,7 @@ function ProposalComponent(props) {
           if (res.data.result.length > 0) {
             setAssingNo(res.data.result[0].assign_no);
             setAssignID(res.data.result[0].id);
+            setCustName(res.data.result[0].name);
           }
         }
       });
@@ -116,16 +116,6 @@ function ProposalComponent(props) {
     getClient();
   }, []);
 
-  useEffect(() => {
-    const getUser = async () => {
-      const res = await axios.get(`${baseUrl}/tl/allname?id=${id}`, myConfig);
-      setCustName(res.data.name);
-      setCustId(res.data.id);
-    };
-
-    getUser();
-  }, [id]);
-
   const onSubmit = (value) => {
     if (det) {
       if (diserror.length > 0) {
@@ -148,7 +138,7 @@ function ProposalComponent(props) {
         formData.append("date_month", value.date_month);
         formData.append("id", JSON.parse(userid));
         formData.append("assign_id", assignId);
-        formData.append("customer_id", custId);
+
         formData.append("description", det);
         formData.append("amount_type", "fixed");
         formData.append("amount", value.p_fixed);

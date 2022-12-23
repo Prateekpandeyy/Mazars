@@ -20,7 +20,6 @@ function EditComponent(props) {
   const userid = window.localStorage.getItem("tlkey");
   const [loading, setLoading] = useState(false);
 
-  const [custId, setCustId] = useState("");
   const [store, setStore] = useState("1");
 
   const [date, setDate] = useState("");
@@ -116,14 +115,6 @@ function EditComponent(props) {
   useEffect(() => {
     getClient();
   }, []);
-
-  useEffect(() => {
-    const getUser = async () => {
-      const res = await axios.get(`${baseUrl}/tl/allname?id=${id}`, myConfig);
-      setCustId(res.data.id);
-    };
-    getUser();
-  }, [id]);
 
   const getQuery = () => {
     let amount = [];
@@ -383,7 +374,6 @@ function EditComponent(props) {
         formData.append("type", "tl");
         formData.append("id", JSON.parse(userid));
         formData.append("assign_id", id);
-        formData.append("customer_id", custId);
         formData.append("description", value2);
         formData.append("amount_type", "fixed");
         formData.append("amount", totalAmount);

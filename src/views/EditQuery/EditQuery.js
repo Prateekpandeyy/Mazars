@@ -11,17 +11,16 @@ import Swal from "sweetalert2";
 import Mandatory from "../../components/Common/Mandatory";
 import classNames from "classnames";
 import ShowError from "../../components/LoadingTime/LoadingTime";
-import { CKEditor } from '@ckeditor/ckeditor5-react';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import PublishIcon from '@material-ui/icons/Publish';
-import Box from '@material-ui/core/Box';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import PublishIcon from "@material-ui/icons/Publish";
+import Box from "@material-ui/core/Box";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import CustomHeading from "../../components/Common/CustomHeading";
 function EditQuery(props) {
-
   const history = useHistory();
   const { id } = useParams();
-  
+
   const { handleSubmit, register, errors, reset, control, setValue } = useForm({
     defaultValues: {
       users: [{ query: "" }],
@@ -38,131 +37,120 @@ function EditQuery(props) {
   const [loading, setLoading] = useState(false);
   const [custcheckError, setCheckerror] = useState(null);
   const [queryDocs, setQueryDocs] = useState([]);
- const [qno, setQno] = useState()
+  const [qno, setQno] = useState();
   const [selectedOption, setSelectedOption] = useState("");
   const [purposeOption, setPurposeOption] = useState([]);
-  const [selectError, setSelectError] = useState()
+  const [selectError, setSelectError] = useState();
   const [assessmentYear, setAssessmentYear] = useState([]);
-    const [value2 , setValue2] = useState();
-    const [val3, setVal3] = useState()
-    const [uploadOrDownloadCount, setUploadOrDownloadCount] = useState(10);
-    const token = window.localStorage.getItem("clientToken")
-    const myConfig = {
-      headers : {
-       "uit" : token
-      }
-    }
+  const [value2, setValue2] = useState();
+  const [val3, setVal3] = useState();
+  const [uploadOrDownloadCount, setUploadOrDownloadCount] = useState(10);
+  const token = window.localStorage.getItem("clientToken");
+  const myConfig = {
+    headers: {
+      uit: token,
+    },
+  };
   const purPoseQuery = (e) => {
-    setSelectError("")
-    setPurposeOption(e)
-
-  }
+    setSelectError("");
+    setPurposeOption(e);
+  };
   const remError = () => {
-    setCheckerror("")
-  }
- 
+    setCheckerror("");
+  };
+
   useEffect(() => {
     getAssementYear();
     getQuery();
-   
   }, []);
 
- 
   const getAssementYear = () => {
-    axios
-      .get(`${baseUrl}/customers/getAssesmentYear`, myConfig)
-      .then((res) => {
-     
-        if (res.data.code === 1) {
-          setAssessmentYear(res.data.result);
-        }
-      });
-  };
-  const getQuery = () => {
-    axios.get(`${baseUrl}/customers/getQueryDetails?id=${id}`, myConfig).then((res) => {
-
-      if (res) {
-        var specific = res.data.result[0].specific_query;
-        if (specific == "undefined") {
-        } else var sepData = JSON.parse(specific);
-        reset({
-          users: sepData,
-        });
-         setQno(res.data.result[0].assign_no)
-        var value = res.data.result[0].assessment_year;
-        var purposeItem = res.data.result[0].purpose_opinion;
-
-
-        try {
-         
-          var myPurpose = JSON.parse(purposeItem);
-
-         
-          setPurposeOption(myPurpose);
-        } catch (e) {
-          
-        }
-        try {
-          var myObj = JSON.parse(value);
-         
-
-          setSelectedOption(myObj);
-        
-        } catch (e) {
-          
-        }
-       
-        setValue2(res.data.result[0].fact_case);
-     
-      //  setValue("fact_case", res.data.result[0].fact_case);
-        setValue("case_name", res.data.result[0].case_name);
-        setValue("p_Softcopy_word", Boolean(+res.data.result[0].softcopy_word));
-        setValue(
-          "p_Softcopy_digital",
-          Boolean(+res.data.result[0].softcopy_digitally_assigned)
-        );
-        setValue(
-          "p_Softcopy_physical",
-          Boolean(+res.data.result[0].printout_physically_assigned)
-        );
-        setValue("p_timelines", res.data.result[0].Timelines);
-        setQueryDocs(res.data.queries_document);
+    axios.get(`${baseUrl}/customers/getAssesmentYear`, myConfig).then((res) => {
+      if (res.data.code === 1) {
+        setAssessmentYear(res.data.result);
       }
     });
   };
+  const getQuery = () => {
+    axios
+      .get(`${baseUrl}/customers/getQueryDetails?id=${id}`, myConfig)
+      .then((res) => {
+        if (res) {
+          var specific = res.data.result[0].specific_query;
+          if (specific == "undefined") {
+          } else var sepData = JSON.parse(specific);
+          reset({
+            users: sepData,
+          });
+          setQno(res.data.result[0].assign_no);
+          var value = res.data.result[0].assessment_year;
+          var purposeItem = res.data.result[0].purpose_opinion;
+
+          try {
+            var myPurpose = JSON.parse(purposeItem);
+
+            setPurposeOption(myPurpose);
+          } catch (e) {}
+          try {
+            var myObj = JSON.parse(value);
+
+            setSelectedOption(myObj);
+          } catch (e) {}
+
+          setValue2(res.data.result[0].fact_case);
+
+          //  setValue("fact_case", res.data.result[0].fact_case);
+          setValue("case_name", res.data.result[0].case_name);
+          setValue(
+            "p_Softcopy_word",
+            Boolean(+res.data.result[0].softcopy_word)
+          );
+          setValue(
+            "p_Softcopy_digital",
+            Boolean(+res.data.result[0].softcopy_digitally_assigned)
+          );
+          setValue(
+            "p_Softcopy_physical",
+            Boolean(+res.data.result[0].printout_physically_assigned)
+          );
+          setValue("p_timelines", res.data.result[0].Timelines);
+          setQueryDocs(res.data.queries_document);
+        }
+      });
+  };
 
   const onSubmit = (value) => {
-console.log("done21")  
-    
+    console.log("done21");
+
     if (purposeOption < 1) {
-      setSelectError("At least one value should be enter")
-    }
-    else if (value.p_Softcopy_word === false && value.p_Softcopy_digital === false && value.p_Softcopy_physical === false) {
-    
-      setCheckerror("Please select at least one.")
-    }
-    else {
+      setSelectError("At least one value should be enter");
+    } else if (
+      value.p_Softcopy_word === false &&
+      value.p_Softcopy_digital === false &&
+      value.p_Softcopy_physical === false
+    ) {
+      setCheckerror("Please select at least one.");
+    } else {
       const timer = setInterval(() => {
-        setUploadOrDownloadCount(
-          (beforeValue) => (beforeValue >= 90 ? 90 
-                            : beforeValue + 10));
+        setUploadOrDownloadCount((beforeValue) =>
+          beforeValue >= 90 ? 90 : beforeValue + 10
+        );
       }, 800);
-      setLoading(true)
-     
+      setLoading(true);
 
       var uploadImg = value.uploadImg;
-      if(uploadImg === undefined){
+      if (uploadImg === undefined) {
         uploadImg = 0;
       }
       let formData = new FormData();
-     
+
       if (uploadImg) {
         for (var i = 0; i < uploadImg.length; i++) {
           let file = uploadImg[i];
           formData.append("upload_1[]", file);
         }
       }
-   
+
       formData.append("fact", value2);
       formData.append("specific", JSON.stringify(value.users));
       formData.append("timelines", value.p_timelines);
@@ -179,82 +167,77 @@ console.log("done21")
         Number(value.p_Softcopy_physical)
       );
       formData.append("case_name", value.case_name);
-      {selectedOption ? 
-        formData.append("assessment_year", JSON.stringify(selectedOption)) :
-        formData.append("assessment_year", selectedOption)}
+      {
+        selectedOption
+          ? formData.append("assessment_year", JSON.stringify(selectedOption))
+          : formData.append("assessment_year", selectedOption);
+      }
       formData.append("purpose", JSON.stringify(purposeOption));
 
       axios
         .post(`${baseUrl}/customers/PostEditQuestion`, formData, {
           headers: {
             "content-type": "multipart/form-data",
-            uit : token
+            uit: token,
           },
         })
         .then(function (response) {
-
           if (response.data.code === 1) {
-            setUploadOrDownloadCount(100)
-            var message = response.data.message
+            setUploadOrDownloadCount(100);
+            var message = response.data.message;
             if (message == "") {
-              Swal.fire(
-                "Success",
-                `Query updated successfully.`,
-                "success"
-              )
+              Swal.fire("Success", `Query updated successfully.`, "success");
             } else if (message.invalid) {
               Swal.fire({
-                title: 'Error !',
+                title: "Error !",
                 html: `<p class="text-danger">${message.invalid}</p>`,
-              })
-            }
-            else if (message.faill) {
+              });
+            } else if (message.faill) {
               Swal.fire({
-                title: 'Success !',
+                title: "Success !",
                 html: `<p>Query Updated Successfully.</p>
                 <br/><p class="text-danger"> ${message.faill}</p>`,
-                icon: 'success',
-              })
+                icon: "success",
+              });
             }
             props.history.push("/customer/queries");
           } else {
-            setLoading(true)
+            setLoading(true);
           }
         })
         .catch((error) => {
-          ShowError.LoadingError(setLoading)
+          ShowError.LoadingError(setLoading);
         });
     }
   };
 
- 
-  
   const downloadpdf = (qno, qid, name) => {
-   
     const myConfig2 = {
-      headers : {
-       "uit" : token
+      headers: {
+        uit: token,
       },
-      responseType: 'blob'
-    }
-    axios.get(`${baseUrl}/customers/viewdocument?assign_no=${qno}&id=${qid}` , myConfig2)
-    .then((res) => {
-     
-      if(res.status === 200){
-        window.URL = window.URL || window.webkitURL;
-           var url = window.URL.createObjectURL(res.data);
-           var a = document.createElement("a");
-           document.body.appendChild(a);
-           a.style = "display: none";
-           a.href = url;
-           console.log(res.headers)
-           a.download = name;
-           a.target = '_blank';
-           a.click();
-      }
-    })
-   }
-
+      responseType: "blob",
+    };
+    axios
+      .get(
+        `${baseUrl}/customers/viewdocument?assign_no=${qno}&id=${qid}`,
+        myConfig2
+      )
+      .then((res) => {
+        if (res.status === 200) {
+          window.URL = window.URL || window.webkitURL;
+          var url = window.URL.createObjectURL(res.data);
+          var a = document.createElement("a");
+          document.body.appendChild(a);
+          a.style = "display: none";
+          a.href = url;
+          console.log(res.headers);
+          a.download = name;
+          a.target = "_blank";
+          a.click();
+        }
+      });
+  };
 
   return (
     <Layout custDashboard="custDashboard" custUserId={userId}>
@@ -263,221 +246,222 @@ console.log("done21")
           <Row>
             <Col md="4">
               <button class="autoWidthBtn" onClick={() => history.goBack()}>
-              
                 Go Back
               </button>
             </Col>
             <Col md="4" style={{ display: "flex", justifyContent: "center" }}>
-            <CustomHeading>
-            Update Query - {qno}
-            </CustomHeading>
+              <CustomHeading>Update Query - {qno}</CustomHeading>
             </Col>
             {/* <Col md="4" style={{ display: "flex", justifyContent: "flex-end" }}>
               <DeleteQuery id={id} setLoading={setLoading}/>
             </Col> */}
           </Row>
-         
         </CardHeader>
 
         <CardHeader>
-         
-            <div className="container-fluid">
-              <div class="col-xl-12 col-lg-12 col-md-12 py-4">
-
-                <form onSubmit={handleSubmit(onSubmit)}>
-                  <div className="row">
-                    <div className="col-md-12">
-                      <div className="mb-3">
-                        <label className="form-label">Brief facts of the case<span className="declined">*</span></label>
-                     
-                        <CKEditor
-                     editor={ ClassicEditor }
-                 
-                    className={classNames("form-control", {
-                      "is-invalid": errors.p_fact,
-                    })}
-                    id="textarea22"
-                    rows="6"
-                    name="p_fact"
-                   data={value2}
-                    onChange={ ( event, editor ) => {
-                      setValue2(editor.getData());
-                      // setcustError("")
-                    
-                  } }
-                    //ref={register({ required: true })}
-                >
-                  
-                  </CKEditor>
-                      </div>
-                    </div>
-</div>
-<div className="row">
-                    <div className="col-md-6">
-                      <div className="question_query mb-2">
-                        <label className="form-label">
-                          Specific questions for advisory <span className="declined">*</span>
-                        </label>
-                        <div
-                          className="btn queryPlusIcon"
-                          onClick={() => append({ query: "" })}
-                        >
-                          +
-                        </div>
-                      </div>
-
-                      {fields.map((item, index) => (
-                        <div className="question_query_field mb-2" key={item.id}>
-                          <input
-                            type="text"
-                            className={classNames("form-control", {
-                              "is-invalid": errors.users,
-                            })}
-                          
-                            name={`users[${index}].query`}
-                            defaultValue={`${item.query}`}
-                            placeholder="Specify your query"
-                            ref={register({ required: true })}
-                          />
-                          <div
-                            className="btn queryPlusIcon ml-2"
-                            onClick={() => remove(index)}
-                          >
-                            -
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-
-                    <div className="col-md-6">
+          <div className="container-fluid">
+            <div class="col-xl-12 col-lg-12 col-md-12 py-4">
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <div className="row">
+                  <div className="col-md-12">
                     <div className="mb-3">
-                        <label className="form-label">
-                          Purpose for which Opinion is sought <span className="declined">*</span>
-                        </label>
-                        <Select
-                          closeMenuOnSelect={false}
-                          className={selectError ? "customError" : ""}
-                          onChange={purPoseQuery}
-                          value={purposeOption}
-                          isMulti
-                          options={purpose}
+                      <label className="form-label">
+                        Brief facts of the case
+                        <span className="declined">*</span>
+                      </label>
+
+                      <CKEditor
+                        editor={ClassicEditor}
+                        className={classNames("form-control", {
+                          "is-invalid": errors.p_fact,
+                        })}
+                        id="textarea22"
+                        rows="6"
+                        name="p_fact"
+                        data={value2}
+                        onChange={(event, editor) => {
+                          setValue2(editor.getData());
+                          // setcustError("")
+                        }}
+                        //ref={register({ required: true })}
+                      ></CKEditor>
+                    </div>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-md-6">
+                    <div className="question_query mb-2">
+                      <label className="form-label">
+                        Specific questions for advisory{" "}
+                        <span className="declined">*</span>
+                      </label>
+                      <div
+                        className="btn queryPlusIcon"
+                        onClick={() => append({ query: "" })}
+                      >
+                        +
+                      </div>
+                    </div>
+
+                    {fields.map((item, index) => (
+                      <div className="question_query_field mb-2" key={item.id}>
+                        <input
+                          type="text"
+                          className={classNames("form-control", {
+                            "is-invalid": errors.users,
+                          })}
+                          name={`users[${index}].query`}
+                          defaultValue={`${item.query}`}
+                          placeholder="Specify your query"
+                          ref={register({ required: true })}
                         />
+                        <div
+                          className="btn queryPlusIcon ml-2"
+                          onClick={() => remove(index)}
+                        >
+                          -
+                        </div>
                       </div>
-                     
-                    </div>
-                    <div className="col-md-6">
-                      <div className="mb-3">
-                        <label className="form-label">Assessment year</label>
+                    ))}
+                  </div>
 
-                        <Select
-                          closeMenuOnSelect={false}
-                          onChange={setSelectedOption}
-                          value={selectedOption}
-                          isMulti
-                          options={assessmentYear}
+                  <div className="col-md-6">
+                    <div className="mb-3">
+                      <label className="form-label">
+                        Purpose for which Opinion is sought{" "}
+                        <span className="declined">*</span>
+                      </label>
+                      <Select
+                        closeMenuOnSelect={false}
+                        className={selectError ? "customError" : ""}
+                        onChange={purPoseQuery}
+                        value={purposeOption}
+                        isMulti
+                        options={purpose}
+                      />
+                    </div>
+                  </div>
+                  <div className="col-md-6">
+                    <div className="mb-3">
+                      <label className="form-label">Assessment year</label>
+
+                      <Select
+                        closeMenuOnSelect={false}
+                        onChange={setSelectedOption}
+                        value={selectedOption}
+                        isMulti
+                        options={assessmentYear}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="col-md-6">
+                    <div className="mb-3">
+                      <ImageUploads register={register} control={control} />
+                    </div>
+                  </div>
+
+                  <div className="col-md-6">
+                    <div className="mb-3">
+                      <label className="form-label">
+                        Format in which Opinion is required
+                      </label>
+                      <br />
+                      <div className="form-check">
+                        <input
+                          id="a1"
+                          className="form-check-input"
+                          type="checkbox"
+                          onChange={remError}
+                          name="p_Softcopy_word"
+                          ref={register}
                         />
-                      </div>
-                    </div>
-
-                    <div className="col-md-6">
-                      <div className="mb-3">
-                        <ImageUploads register={register} control={control} />
-                      </div>
-                    </div>
-
-                    <div className="col-md-6">
-                      <div className="mb-3">
-                        <label className="form-label">
-                          Format in which Opinion is required
+                        <label className="form-check-label" htmlFor="a1">
+                          Softcopy - Word/ Pdf
                         </label>
-                        <br />
-                        <div className="form-check">
-                          <input
-                            id="a1"
-                            className="form-check-input"
-                            type="checkbox"
-                            onChange={remError}
-                            name="p_Softcopy_word"
-                            ref={register}
-                          />
-                          <label className="form-check-label" htmlFor="a1">
-                            Softcopy - Word/ Pdf
-                          </label>
-                        </div>
-                        <div className="form-check">
-                          <input
-                            id="a2"
-                            className="form-check-input"
-                            onChange={remError}
-                            type="checkbox"
-                            name="p_Softcopy_digital"
-                            ref={register}
-                          />
-                          <label className="form-check-label" htmlFor="a2">
-                            SoftCopy- Digitally Signed
-                          </label>
-                        </div>
-                        <div className="form-check">
-                          <input
-                            id="a3"
-                            className="form-check-input"
-                            type="checkbox"
-                            onChange={remError}
-                            name="p_Softcopy_physical"
-                            ref={register}
-                          />
-                          <label className="form-check-label" htmlFor="a3">
-                            Printout- Physically Signed
-                          </label>
-                        </div>
-                        <p className="declined">{custcheckError}</p>  </div>
-                    </div>
-                    <div className="col-md-6">
-                      <div className="mb-3">
-                        <label className="form-label">
-                          Timelines within which Opinion is required
+                      </div>
+                      <div className="form-check">
+                        <input
+                          id="a2"
+                          className="form-check-input"
+                          onChange={remError}
+                          type="checkbox"
+                          name="p_Softcopy_digital"
+                          ref={register}
+                        />
+                        <label className="form-check-label" htmlFor="a2">
+                          SoftCopy- Digitally Signed
                         </label>
-                        <br />
-                        <div className="form-check">
-                          <input
-                            className="form-check-input"
-                            type="radio"
-                            name="p_timelines"
-                            ref={register}
-                            value="Urgent"
+                      </div>
+                      <div className="form-check">
+                        <input
+                          id="a3"
+                          className="form-check-input"
+                          type="checkbox"
+                          onChange={remError}
+                          name="p_Softcopy_physical"
+                          ref={register}
+                        />
+                        <label className="form-check-label" htmlFor="a3">
+                          Printout- Physically Signed
+                        </label>
+                      </div>
+                      <p className="declined">{custcheckError}</p>{" "}
+                    </div>
+                  </div>
+                  <div className="col-md-6">
+                    <div className="mb-3">
+                      <label className="form-label">
+                        Timelines within which Opinion is required
+                      </label>
+                      <br />
+                      <div className="form-check">
+                        <input
+                          className="form-check-input"
+                          type="radio"
+                          name="p_timelines"
+                          ref={register}
+                          value="Urgent"
                           // disabled
-                          />
-                          <label>Urgent</label>
-                        </div>
-                        <div className="form-check">
-                          <input
-                            className="form-check-input"
-                            type="radio"
-                            name="p_timelines"
-                            ref={register}
-                            value="Regular"
+                        />
+                        <label>Urgent</label>
+                      </div>
+                      <div className="form-check">
+                        <input
+                          className="form-check-input"
+                          type="radio"
+                          name="p_timelines"
+                          ref={register}
+                          value="Regular"
                           // disabled
-                          />
-                          <label>Regular </label>
-                        </div>
+                        />
+                        <label>Regular </label>
                       </div>
                     </div>
+                  </div>
 
-                    <div className="col-md-6">
-                      <div className="mb-3">
-                        <label className="form-label">Display documents</label>
-                        <br />
+                  <div className="col-md-6">
+                    <div className="mb-3">
+                      <label className="form-label">Display documents</label>
+                      <br />
 
-                        <>
-                          <div>
-                            {queryDocs.map((p, i) => (
-                              <ul style={{listStyle : "none"}}>
-                                <li>
-                                <span onClick={() => downloadpdf(p.assign_no, p.id, p.name)} style={{display : "flex", cursor : "pointer"}}>
-                     <i className="fa fa-photo"></i>
-                     <span style={{ marginLeft: "10px" }}>{p.name}</span>
-                       </span>
-                                  {/* <a
+                      <>
+                        <div>
+                          {queryDocs.map((p, i) => (
+                            <ul style={{ listStyle: "none" }}>
+                              <li>
+                                <span
+                                  onClick={() =>
+                                    downloadpdf(p.assign_no, p.id, p.name)
+                                  }
+                                  style={{ display: "flex", cursor: "pointer" }}
+                                >
+                                  <i className="fa fa-photo"></i>
+                                  <span style={{ marginLeft: "10px" }}>
+                                    {p.name}
+                                  </span>
+                                </span>
+                                {/* <a
                                     href={`${ImageUrl}/${p.assign_no}/${p.name}`}
                                     target="_blank"
                                   >
@@ -489,59 +473,56 @@ console.log("done21")
                                     ></i>
                                     <span style={{ marginLeft: "10px" }}>{p.name}</span>
                                   </a> */}
-                                </li>
-                              </ul>
-                            ))}
-
-                          </div>
-                        </>
-                      </div>
-                    </div>
-
-                    <div className="col-md-6">
-                    <div className="mb-3">
-                        <label className="form-label">Case name</label>
-                        <input
-                          type="text"
-                          name="case_name"
-                          ref={register}
-                          className="form-control"
-                        />
-                      </div>
+                              </li>
+                            </ul>
+                          ))}
+                        </div>
+                      </>
                     </div>
                   </div>
 
-                  {
-                      loading ?
-                      <Box position="relative" display="inline-flex">
-                      <CircularProgress variant="determinate" 
-                                        value={uploadOrDownloadCount} />
-                      <Box
-                        bottom={0}
-                        right={0}
-                        top={0}
-                        justifyContent="center"
-                        left={0}
-                        display="flex"
-                        alignItems="center"
-                        position="absolute"
-                      >
-                        {`${Math.round(uploadOrDownloadCount)}%`}
-                      </Box>
+                  <div className="col-md-6">
+                    <div className="mb-3">
+                      <label className="form-label">Case name</label>
+                      <input
+                        type="text"
+                        name="case_name"
+                        ref={register}
+                        className="form-control"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                {loading ? (
+                  <Box position="relative" display="inline-flex">
+                    <CircularProgress
+                      variant="determinate"
+                      value={uploadOrDownloadCount}
+                    />
+                    <Box
+                      bottom={0}
+                      right={0}
+                      top={0}
+                      justifyContent="center"
+                      left={0}
+                      display="flex"
+                      alignItems="center"
+                      position="absolute"
+                    >
+                      {`${Math.round(uploadOrDownloadCount)}%`}
                     </Box>
-                            
-                        :
-                        <button className="customBtn" type="submit">
-                          Update
-                        </button>
-                    }
-                </form>
-
-              </div>
-
-              <Mandatory />
+                  </Box>
+                ) : (
+                  <button className="customBtn" type="submit">
+                    Update
+                  </button>
+                )}
+              </form>
             </div>
-       
+
+            <Mandatory />
+          </div>
         </CardHeader>
       </Card>
     </Layout>
@@ -561,32 +542,37 @@ const ImageUploads = ({ register, control }) => {
       <div className="question_query mb-2">
         <label className="form-label">Upload Your Document</label>
         <div className="btn" onClick={() => append({ pics: "" })}>
-        <PublishIcon color="secondary" />
+          <PublishIcon color="secondary" />
         </div>
       </div>
 
       {fields.map((item, index) => (
         <>
-        {index === 0 ? 
-        <div className="question_query_field mb-2" key={index}>
-        <input
-          type="file"
-          name= "uploadImg"
-          multiple={true}
-          ref={register()}
-          className="form-control-file manage_file"
-          defaultValue={item.pics}
-        />
-        <div className="btn btn-primary ml-2" onClick={() => remove(index)}>
-          -
-        </div>
-      </div> : ""}
+          {index === 0 ? (
+            <div className="question_query_field mb-2" key={index}>
+              <input
+                type="file"
+                name="uploadImg"
+                multiple={true}
+                ref={register()}
+                className="form-control-file manage_file"
+                defaultValue={item.pics}
+              />
+              <div
+                className="btn btn-primary ml-2"
+                onClick={() => remove(index)}
+              >
+                -
+              </div>
+            </div>
+          ) : (
+            ""
+          )}
         </>
       ))}
     </>
   );
 };
-
 
 const purpose = [
   { value: "Assessment", label: "Assessment" },
@@ -598,4 +584,3 @@ const purpose = [
   },
   { value: "Others", label: "Others" },
 ];
-
