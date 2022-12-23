@@ -55,7 +55,7 @@ const About = () => {
                     </Typography>
                     <p style={{ textAlign: "left" }}>
                       Industry experts form the backbone of Mazars Advisory
-                      SolutionsS team, collectively possessing:
+                      Solutions team, collectively possessing:
                     </p>
                     <p style={{ textAlign: "left" }}>
                       Mazars Advisory Solutions India is backed by experts

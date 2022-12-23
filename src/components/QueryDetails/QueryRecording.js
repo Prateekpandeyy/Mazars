@@ -29,8 +29,28 @@ function QueryRecording(assingNo) {
   };
 
   const getRecording = () => {
+    var confToken = "";
+    let apipath = "";
+    if (window.location.pathname.split("/")[1] === "teamleader") {
+      apipath = "tl";
+      confToken = window.localStorage.getItem("tlToken");
+    } else if (window.location.pathname.split("/")[1] === "taxprofessional") {
+      confToken = window.localStorage.getItem("tptoken");
+      apipath = "tl";
+    } else if (window.location.pathname.split("/")[1] === "admin") {
+      confToken = window.localStorage.getItem("adminToken");
+      apipath = "admin";
+    }
+    const myConfig = {
+      headers: {
+        uit: confToken,
+      },
+    };
     axios
-      .get(`${baseUrl}/tl/callRecordingPostlist?assign_id=${assingNo.assingNo}`)
+      .get(
+        `${baseUrl}/${apipath}/callRecordingPostlist?assign_id=${assingNo.assingNo}`,
+        myConfig
+      )
       .then((res) => {
         if (res.data.code === 1) {
           setFeedBackData(res.data.result);
