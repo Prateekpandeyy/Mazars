@@ -23,7 +23,7 @@ const UpdateIndirect = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [data, setData] = useState([]);
-
+  const userId = window.localStorage.getItem("userid");
   useEffect(() => {
     getData();
   }, []);
@@ -132,16 +132,22 @@ const UpdateIndirect = () => {
                                       </CustomTypography>
                                     </TableCell>
                                     <TableCell>
-                                      <Link
-                                        to={{
-                                          pathname: `/customer/update-details/${i.id}`,
-                                          index: "indirect",
-                                        }}
-                                      >
+                                      {userId ? (
+                                        <Link
+                                          to={{
+                                            pathname: `/customer/update-details/${i.id}`,
+                                            index: "indirect",
+                                          }}
+                                        >
+                                          <CustomTypography>
+                                            {i.heading}
+                                          </CustomTypography>
+                                        </Link>
+                                      ) : (
                                         <CustomTypography>
                                           {i.heading}
                                         </CustomTypography>
-                                      </Link>
+                                      )}
                                     </TableCell>
                                   </TableRow>
                                 </>

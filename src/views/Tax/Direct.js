@@ -25,7 +25,7 @@ const Direct = () => {
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [data, setData] = useState([]);
   const loadpage = Number(localStorage.getItem("prevPage"));
-
+  const userId = window.localStorage.getItem("userid");
   const onChangePage = (event, nextPage) => {
     setPage(nextPage);
     localStorage.setItem("prevPage", nextPage);
@@ -157,17 +157,23 @@ const Direct = () => {
                               }}
                               className="tableCellStyle"
                             >
-                              <Link
-                                to={{
-                                  pathname: "/customer/details",
-                                  index: i.id,
-                                  hash: i.type,
-                                }}
-                              >
+                              {userId ? (
+                                <Link
+                                  to={{
+                                    pathname: "/customer/details",
+                                    index: i.id,
+                                    hash: i.type,
+                                  }}
+                                >
+                                  <CustomTypography>
+                                    {`${i.heading}`}
+                                  </CustomTypography>
+                                </Link>
+                              ) : (
                                 <CustomTypography>
                                   {`${i.heading}`}
                                 </CustomTypography>
-                              </Link>
+                              )}
                             </TableCell>
                             <TableCell>
                               <CustomTypography>{i.writer}</CustomTypography>

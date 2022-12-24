@@ -1,12 +1,8 @@
 import { Link, NavLink, useHistory } from "react-router-dom";
 import "../../assets/css/style.css";
 import mazars from "../../mazars_logo.png";
-import { baseUrl } from "../../config/config";
-import axios from "axios";
 import { useState, useEffect } from "react";
 import Collapse from "@mui/material/Collapse";
-import ExpandLess from "@mui/icons-material/ExpandLess";
-import ExpandMore from "@mui/icons-material/ExpandMore";
 import ListItemButton from "@mui/material/ListItemButton";
 import List from "@mui/material/List";
 import Cookies from "js-cookie";
@@ -217,7 +213,7 @@ function Header({
 
 export default Header;
 
-const CmsCont = (props) => {
+export const CmsCont = (props) => {
   const [open2, setOpen2] = useState(false);
   const [open3, setOpen3] = useState(false);
   const [updateOpen, setUpdateOpen] = useState(false);
@@ -338,15 +334,18 @@ const CmsCont = (props) => {
             </List>
           </Collapse>
         </li>
-
-        <li
-          className="nav-item tabHoverLinksubMenu"
-          onClick={() => myLink("linklist")}
-        >
-          <ListItemButton style={{ backgroundColor: "#fff" }}>
-            <span className="headerMenu">Important links</span>
-          </ListItemButton>
-        </li>
+        {props.position === "Inner" ? (
+          ""
+        ) : (
+          <li
+            className="nav-item tabHoverLinksubMenu"
+            onClick={() => myLink("linklist")}
+          >
+            <ListItemButton style={{ backgroundColor: "#fff" }}>
+              <span className="headerMenu">Important links</span>
+            </ListItemButton>
+          </li>
+        )}
         <li
           className="nav-item tabHoverLinksubMenu"
           onMouseLeave={() => handleClickOn2()}
@@ -384,53 +383,58 @@ const CmsCont = (props) => {
             </List>
           </Collapse>
         </li>
+        {props.position === "Inner" ? (
+          ""
+        ) : (
+          <>
+            <li
+              className="nav-item tabHoverLinksubMenu"
+              onClick={() => myLink("faqlist")}
+            >
+              <ListItemButton style={{ backgroundColor: "#fff" }}>
+                <span className="headerMenu">FAQs</span>
+              </ListItemButton>
+            </li>
+            <li
+              className="nav-item tabHoverLinksubMenu"
+              onClick={() => myLink("about")}
+            >
+              <ListItemButton style={{ backgroundColor: "#fff" }}>
+                <span className="headerMenu">About us</span>
+              </ListItemButton>
+            </li>
+            <li
+              className="nav-item tabHoverLinksubMenu"
+              onMouseLeave={() => handleClickOn3()}
+            >
+              <ListItemButton
+                style={{ backgroundColor: "#fff" }}
+                onMouseOver={() => handleClickOff3()}
+              >
+                <span className="headerMenu">Contact us</span>
+              </ListItemButton>
+              <Collapse in={open3} unmountOnExit>
+                <List component="div" className="myLink22">
+                  <ul>
+                    <li
+                      className="tabHover subMenuHeader"
+                      onClick={() => myLink("enquiry")}
+                    >
+                      <span className="headerMenu">Enquiry form</span>
+                    </li>
 
-        <li
-          className="nav-item tabHoverLinksubMenu"
-          onClick={() => myLink("faqlist")}
-        >
-          <ListItemButton style={{ backgroundColor: "#fff" }}>
-            <span className="headerMenu">FAQs</span>
-          </ListItemButton>
-        </li>
-        <li
-          className="nav-item tabHoverLinksubMenu"
-          onClick={() => myLink("about")}
-        >
-          <ListItemButton style={{ backgroundColor: "#fff" }}>
-            <span className="headerMenu">About us</span>
-          </ListItemButton>
-        </li>
-        <li
-          className="nav-item tabHoverLinksubMenu"
-          onMouseLeave={() => handleClickOn3()}
-        >
-          <ListItemButton
-            style={{ backgroundColor: "#fff" }}
-            onMouseOver={() => handleClickOff3()}
-          >
-            <span className="headerMenu">Contact us</span>
-          </ListItemButton>
-          <Collapse in={open3} unmountOnExit>
-            <List component="div" className="myLink22">
-              <ul>
-                <li
-                  className="tabHover subMenuHeader"
-                  onClick={() => myLink("enquiry")}
-                >
-                  <span className="headerMenu">Enquiry form</span>
-                </li>
-
-                <li
-                  className="tabHover subMenuHeader"
-                  onClick={() => myLink("contactUs")}
-                >
-                  <span className="headerMenu">Our office</span>
-                </li>
-              </ul>
-            </List>
-          </Collapse>
-        </li>
+                    <li
+                      className="tabHover subMenuHeader"
+                      onClick={() => myLink("contactUs")}
+                    >
+                      <span className="headerMenu">Our office</span>
+                    </li>
+                  </ul>
+                </List>
+              </Collapse>
+            </li>
+          </>
+        )}
       </div>
       {showCookie === true ? (
         <div className="popup">

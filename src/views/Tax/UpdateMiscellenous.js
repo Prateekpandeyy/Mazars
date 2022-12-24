@@ -24,6 +24,7 @@ const UpdateMiscellenous = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [data, setData] = useState([]);
+  const userId = window.localStorage.getItem("userid");
   useEffect(() => {
     getData();
   }, []);
@@ -130,16 +131,22 @@ const UpdateMiscellenous = () => {
                                       </CustomTypography>
                                     </TableCell>
                                     <TableCell>
-                                      <Link
-                                        to={{
-                                          pathname: `/customer/update-details/${i.id}`,
-                                          index: "miscellaneous",
-                                        }}
-                                      >
+                                      {userId ? (
+                                        <Link
+                                          to={{
+                                            pathname: `/customer/update-details/${i.id}`,
+                                            index: "miscellaneous",
+                                          }}
+                                        >
+                                          <CustomTypography>
+                                            {i.heading}
+                                          </CustomTypography>
+                                        </Link>
+                                      ) : (
                                         <CustomTypography>
                                           {i.heading}
                                         </CustomTypography>
-                                      </Link>
+                                      )}
                                     </TableCell>
                                   </TableRow>
                                 </>

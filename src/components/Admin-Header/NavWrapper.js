@@ -7,7 +7,7 @@ import "./index.css";
 import { CgProfile } from "react-icons/cg";
 import CommonServices from "../../common/common";
 import CustomHeading from "../Common/CustomHeading";
-
+import { CmsCont } from "../Header/Header";
 function NavWrapper(props) {
   const { color, logout, name, email, feedbackNumber } = props;
   const clName = JSON.parse(localStorage.getItem("clientLoginId"));
@@ -58,13 +58,27 @@ function NavWrapper(props) {
                 </ul>
               </li>
 
-              <li style={{ zIndex: 99, margin: "auto" }}>
-                <CustomHeading>
-                  {name == "customer"
-                    ? `Client :  ${clName} `
-                    : CommonServices.capitalizeFirstLetter(name)}
-                  : {JSON.parse(email)}
-                </CustomHeading>
+              <li style={{ zIndex: 99, display: "flex" }}>
+                <span
+                  style={{
+                    display: "flex",
+                    width: "100%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <CustomHeading>
+                    {name == "customer"
+                      ? `Client :  ${clName} `
+                      : CommonServices.capitalizeFirstLetter(name)}
+                  </CustomHeading>
+                </span>
+
+                <div
+                  style={{ display: "flex", maxWidth: "500px", width: "100%" }}
+                >
+                  <CmsCont position="Inner" />
+                </div>
               </li>
             </ul>
 
