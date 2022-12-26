@@ -20,14 +20,13 @@ import MyContainer from "../../components/Common/MyContainer";
 import CustomTypography from "../../components/Common/CustomTypography";
 import SubHeading from "../../components/Common/SubHeading";
 import Layout from "../../components/Layout/Layout";
-import { useHistory } from "react-router-dom";
 import Swal from "sweetalert2";
 const UpdateMiscellenous = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [data, setData] = useState([]);
   const userId = window.localStorage.getItem("userid");
-  let history = useHistory();
+
   useEffect(() => {
     getData();
   }, []);
@@ -66,7 +65,6 @@ const UpdateMiscellenous = () => {
       html: "Please login to view login",
       icon: "warning",
     });
-    history.push("/");
   };
   return (
     <>
@@ -186,7 +184,6 @@ const UpdateMiscellenous = () => {
                 </div>
               </div>
             </MyContainer>
-            <Footer />
           </OuterloginContainer>
         </Layout>
       ) : (

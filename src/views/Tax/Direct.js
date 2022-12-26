@@ -21,14 +21,14 @@ import CustomTypography from "../../components/Common/CustomTypography";
 import SubHeading from "../../components/Common/SubHeading";
 import Layout from "../../components/Layout/Layout";
 import Swal from "sweetalert2";
-import { useHistory } from "react-router-dom";
+
 const Direct = () => {
   const [page, setPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [data, setData] = useState([]);
   const loadpage = Number(localStorage.getItem("prevPage"));
   const userId = window.localStorage.getItem("userid");
-  let history = useHistory();
+
   const onChangePage = (event, nextPage) => {
     setPage(nextPage);
     localStorage.setItem("prevPage", nextPage);
@@ -93,7 +93,6 @@ const Direct = () => {
       html: "Please login to view login",
       icon: "warning",
     });
-    history.push("/");
   };
   return (
     <>
@@ -206,7 +205,6 @@ const Direct = () => {
                 </div>
               </div>
             </MyContainer>
-            <Footer />
           </OuterloginContainer>
         </Layout>
       ) : (

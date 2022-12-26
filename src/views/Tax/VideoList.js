@@ -12,7 +12,6 @@ import classes from "./design.module.css";
 import { OuterloginContainer } from "../../components/Common/OuterloginContainer";
 import MyContainer from "../../components/Common/MyContainer";
 import Swal from "sweetalert2";
-import { useHistory } from "react-router-dom";
 import CustomTypography from "../../components/Common/CustomTypography";
 import Layout from "../../components/Layout/Layout";
 const VideoList = () => {
@@ -20,7 +19,7 @@ const VideoList = () => {
   const [videoId] = useState();
   const [play, isPlay] = useState(false);
   const userId = window.localStorage.getItem("userid");
-  let history = useHistory();
+
   useEffect(() => {
     getGalleryData();
   }, []);
@@ -35,7 +34,6 @@ const VideoList = () => {
       html: "Please login to view login",
       icon: "warning",
     });
-    history.push("/");
   };
   return (
     <>
@@ -142,7 +140,6 @@ const VideoList = () => {
                 ""
               )}
             </MyContainer>
-            <Footer />
           </OuterloginContainer>
         </Layout>
       ) : (

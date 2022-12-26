@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { styled } from "@material-ui/styles";
-import Footer from "../../components/Footer/Footer";
 import axios from "axios";
 import { baseUrl, baseUrl3 } from "../../config/config";
 import { Markup } from "interweave";
@@ -153,7 +152,6 @@ const UpdateDetails = () => {
               ))}
             </div>
           </MyContainer>
-          <Footer />
         </OuterloginContainer>
       </>
     </Layout>

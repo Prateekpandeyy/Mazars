@@ -238,7 +238,6 @@ const MediaContentCustomer = () => {
                 ""
               )}
             </MyContainer>
-            <Footer />
           </OuterloginContainer>
         </Layout>
       ) : (

@@ -12,11 +12,11 @@ import MyContainer from "../../components/Common/MyContainer";
 import CustomTypography from "../../components/Common/CustomTypography";
 import Layout from "../../components/Layout/Layout";
 import Swal from "sweetalert2";
-import { useHistory } from "react-router-dom";
+
 const Media = () => {
   const [galleryData, setGalleryData] = useState([]);
   const userId = window.localStorage.getItem("userid");
-  let history = useHistory();
+
   useEffect(() => {
     getGalleryData();
   }, []);
@@ -31,7 +31,6 @@ const Media = () => {
       html: "Please login to view login",
       icon: "warning",
     });
-    history.push("/");
   };
   return (
     <>
@@ -118,7 +117,6 @@ const Media = () => {
                 }
               </div>
             </MyContainer>
-            <Footer />
           </OuterloginContainer>
         </Layout>
       ) : (

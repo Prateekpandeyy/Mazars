@@ -21,13 +21,13 @@ import CustomTypography from "../../components/Common/CustomTypography";
 import SubHeading from "../../components/Common/SubHeading";
 import Layout from "../../components/Layout/Layout";
 import Swal from "sweetalert2";
-import { useHistory } from "react-router-dom";
+
 const UpdateIndirect = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [data, setData] = useState([]);
   const userId = window.localStorage.getItem("userid");
-  let history = useHistory();
+
   useEffect(() => {
     getData();
   }, []);
@@ -68,7 +68,6 @@ const UpdateIndirect = () => {
       html: "Please login to view login",
       icon: "warning",
     });
-    history.push("/");
   };
   return (
     <>
@@ -188,7 +187,6 @@ const UpdateIndirect = () => {
                 </div>
               </div>
             </MyContainer>
-            <Footer />
           </OuterloginContainer>
         </Layout>
       ) : (
