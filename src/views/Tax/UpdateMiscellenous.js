@@ -149,7 +149,10 @@ const UpdateMiscellenous = () => {
                                                 index: "miscellaneous",
                                               }}
                                             >
-                                              <CustomTypography cursor="pointer">
+                                              <CustomTypography
+                                                hover="hover"
+                                                cursor="pointer"
+                                              >
                                                 {i.heading}
                                               </CustomTypography>
                                             </Link>

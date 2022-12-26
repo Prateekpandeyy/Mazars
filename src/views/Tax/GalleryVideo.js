@@ -18,11 +18,20 @@ const GalleryVideo = () => {
   useEffect(() => {
     getImages();
   }, []);
+  const token = window.localStorage.getItem("clientToken");
+  const myConfig = {
+    headers: {
+      uit: token,
+    },
+  };
   const getImages = () => {
     let obj = [];
     if (history.location.hash === "#images") {
       axios
-        .get(`${baseUrl}/customers/getgallery?id=${history.location.index.id}`)
+        .get(
+          `${baseUrl}/customers/getgallerydetail?id=${history.location.index.id}`,
+          myConfig
+        )
         .then((res) => {
           res.data.result.map((i) => {
             setTitle(i.title);

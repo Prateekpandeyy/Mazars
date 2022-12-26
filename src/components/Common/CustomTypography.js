@@ -5,5 +5,8 @@ const CustomTypography = styled.p`
   margin: 0px;
   margin-top: ${(props) => (props.margin ? props.margin : "0px")};
   cursor: ${(props) => (props.cursor ? props.cursor : "auto")};
+  &:hover {
+    color: ${(props) => (props.hover === "hover" ? "#0071ce" : "")};
+  }
 `;
 export default CustomTypography;

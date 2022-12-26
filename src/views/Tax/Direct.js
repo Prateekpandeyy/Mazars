@@ -13,7 +13,6 @@ import {
   TableRow,
   TableCell,
 } from "@material-ui/core";
-import Breadcrumbs from "@mui/material/Breadcrumbs";
 import classesCustom from "./design.module.css";
 import { OuterloginContainer } from "../../components/Common/OuterloginContainer";
 import CommonServices from "../../common/common";
@@ -104,20 +103,6 @@ const Direct = () => {
             <MyContainer>
               <div className={classesCustom.articleContent}>
                 <div className={classesCustom.articlesDetails}>
-                  <Breadcrumbs
-                    separator=">"
-                    maxItems={3}
-                    aria-label="breadcrumb"
-                    style={{ fontSize: "18px" }}
-                  >
-                    <Link
-                      underline="hover"
-                      color="inherit"
-                      to="/customer/direct"
-                    >
-                      Articles
-                    </Link>
-                  </Breadcrumbs>
                   <TableContainer>
                     <Table>
                       <TableHead>
@@ -179,7 +164,7 @@ const Direct = () => {
                                     margin: "0 10px",
                                     wordBreak: "break-all",
                                   }}
-                                  className="tableCellStyle"
+                                  className="btnHover tableCellStyle"
                                 >
                                   <Link
                                     to={{
@@ -188,7 +173,10 @@ const Direct = () => {
                                       hash: i.type,
                                     }}
                                   >
-                                    <CustomTypography>
+                                    <CustomTypography
+                                      cursor="pointer"
+                                      hover="hover"
+                                    >
                                       {`${i.heading}`}
                                     </CustomTypography>
                                   </Link>
@@ -227,16 +215,6 @@ const Direct = () => {
           <MyContainer>
             <div className={classesCustom.articleContent}>
               <div className={classesCustom.articlesDetails}>
-                <Breadcrumbs
-                  separator=">"
-                  maxItems={3}
-                  aria-label="breadcrumb"
-                  style={{ fontSize: "18px" }}
-                >
-                  <Link underline="hover" color="inherit" to="/customer/direct">
-                    Articles
-                  </Link>
-                </Breadcrumbs>
                 <TableContainer>
                   <Table>
                     <TableHead>

@@ -33,11 +33,20 @@ const Details = () => {
   let history = useHistory();
   const [data, setData] = useState([]);
   const userId = window.localStorage.getItem("userid");
+  const token = window.localStorage.getItem("clientToken");
+  const myConfig = {
+    headers: {
+      uit: token,
+    },
+  };
   const getData = (e) => {
-    $("#artContent a[href^='http://']").attr("target", "_blank");
-    if (history.location.index !== undefined) {
+    console.log("history", history.location);
+    if (history.location) {
       axios
-        .get(`${baseUrl}/customers/getarticles?id=${history.location.index}`)
+        .get(
+          `${baseUrl}/customers/getarticledetail?id=${history.location.index}`,
+          myConfig
+        )
         .then((res) => {
           setData(res.data.result);
         });

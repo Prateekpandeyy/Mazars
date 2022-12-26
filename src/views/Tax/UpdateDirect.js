@@ -146,7 +146,10 @@ const UpdateDirect = () => {
                                                 index: "direct",
                                               }}
                                             >
-                                              <CustomTypography cursor="pointer">
+                                              <CustomTypography
+                                                hover="hover"
+                                                cursor="pointer"
+                                              >
                                                 {i.heading}
                                               </CustomTypography>
                                             </Link>

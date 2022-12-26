@@ -151,7 +151,10 @@ const UpdateIndirect = () => {
                                                 index: "indirect",
                                               }}
                                             >
-                                              <CustomTypography cursor="pointer">
+                                              <CustomTypography
+                                                hover="hover"
+                                                cursor="pointer"
+                                              >
                                                 {i.heading}
                                               </CustomTypography>
                                             </Link>

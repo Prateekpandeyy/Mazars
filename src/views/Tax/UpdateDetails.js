@@ -28,11 +28,18 @@ const UpdateDetails = () => {
   let id = useParams();
   const userId = window.localStorage.getItem("userid");
   let history = useHistory();
-
+  const token = window.localStorage.getItem("clientToken");
+  const myConfig = {
+    headers: {
+      uit: token,
+    },
+  };
   const getData = (e) => {
-    axios.get(`${baseUrl}/customers/getupdated?id=${id.id}`).then((res) => {
-      setData(res.data.result);
-    });
+    axios
+      .get(`${baseUrl}//customers/getupdatesdetail?id=${id.id}`, myConfig)
+      .then((res) => {
+        setData(res.data.result);
+      });
   };
   useEffect(() => {
     getData();
