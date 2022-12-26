@@ -23,6 +23,9 @@ import { OuterloginContainer } from "../../components/Common/OuterloginContainer
 import MyContainer from "../../components/Common/MyContainer";
 import CustomTypography from "../../components/Common/CustomTypography";
 import SubHeading from "../../components/Common/SubHeading";
+import Layout from "../../components/Layout/Layout";
+import Swal from "sweetalert2";
+import { useHistory } from "react-router-dom";
 const MyHeading = styled(Box)({
   display: "flex",
   justifyContent: "space-between",
@@ -33,6 +36,8 @@ const MediaContentCustomer = () => {
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [myData, setMyData] = useState();
   const [description, setDescription] = useState(false);
+  const userId = window.localStorage.getItem("userid");
+  let history = useHistory();
   useEffect(() => {
     getMediaData();
   }, []);
@@ -67,151 +72,330 @@ const MediaContentCustomer = () => {
 
     setMyData(e);
   };
+  const goToLogin = (e) => {
+    Swal.fire({
+      title: "warning",
+      html: "Please login to view login",
+      icon: "warning",
+    });
+    history.push("/");
+  };
   return (
     <>
-      <OuterloginContainer>
-        <Header noSign="noSign" />
-        <MyContainer>
-          {description === false ? (
-            <div className={classesCustom.articleContent}>
-              <div className={classesCustom.articlesDetails}>
-                <Breadcrumbs
-                  separator=">"
-                  maxItems={3}
-                  aria-label="breadcrumb"
-                  style={{ fontSize: "18px" }}
-                >
-                  <Link underline="hover" color="inherit" to="/customer/media">
-                    Media gallery
-                  </Link>
-                  <Typography color="text.primary"> Media news</Typography>
-                </Breadcrumbs>
-                <div className={classesCustom.articlesDetails}>
-                  <Table>
-                    <TableHead>
-                      <TableRow>
-                        <TableCell style={{ width: "50px" }}>
-                          <SubHeading>S.No</SubHeading>
-                        </TableCell>
-                        <TableCell style={{ width: "200px" }}>
-                          <SubHeading>Date of publishing</SubHeading>
-                        </TableCell>
-                        <TableCell>
-                          <SubHeading>Heading</SubHeading>{" "}
-                        </TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {data &&
-                        data
-                          .slice(
-                            page * rowsPerPage,
-                            page * rowsPerPage + rowsPerPage
-                          )
-                          .map((i, e) => (
-                            <>
-                              <TableRow>
-                                <TableCell
-                                  style={{ padding: "8px 16px" }}
-                                  className="tableCellStyle"
-                                >
-                                  <CustomTypography>{i.sn}</CustomTypography>
-                                </TableCell>
-                                <TableCell>
-                                  <CustomTypography>
-                                    {i.publish_date
-                                      .split(" ")[0]
-                                      .split("-")
-                                      .reverse()
-                                      .join("-")}
-                                  </CustomTypography>
-                                </TableCell>
-                                <TableCell>
-                                  <span
-                                    onClick={(p) => getData(i)}
-                                    className="primary"
-                                    style={{ cursor: "pointer" }}
-                                  >
-                                    <CustomTypography>
-                                      {i.heading}
-                                    </CustomTypography>
-                                  </span>
-                                </TableCell>
-                              </TableRow>
-                            </>
-                          ))}
-                    </TableBody>
-                    {data.length > 10 ? (
-                      <TablePagination
-                        rowsPerPageOptions={[5, 10, 15, 20, 25]}
-                        count={data.length}
-                        rowsPerPage={rowsPerPage}
-                        page={page}
-                        onChangePage={onChangePage}
-                        onChangeRowsPerPage={onChangeRowsPerPage}
-                      />
-                    ) : (
-                      ""
-                    )}
-                  </Table>
-                </div>
-              </div>
-            </div>
-          ) : (
-            ""
-          )}
-          {description === true ? (
-            <div className={classesCustom.articleContent}>
-              <div className={classesCustom.articlesDetails}>
-                <Breadcrumbs
-                  separator=">"
-                  maxItems={3}
-                  aria-label="breadcrumb"
-                  style={{ fontSize: "18px" }}
-                >
-                  <Link underline="hover" color="inherit" to="/customer/media">
-                    Media Gallery
-                  </Link>
-                  <Link
-                    underline="hover"
-                    color="inherit"
-                    to={{
-                      pathname: "/customer/mediacontent",
-                      index: 2,
-                    }}
-                  >
-                    Media News
-                  </Link>
-                  <Typography color="text.primary">{myData.heading}</Typography>
-                </Breadcrumbs>
-                <div style={{ margin: "20px 0px 10px 0px" }}>
-                  <div>
-                    <MyHeading>
-                      <h5>
-                        {" "}
-                        {CommonServices.capitalizeFirstLetter(myData.heading)}
-                      </h5>
-                    </MyHeading>
-
-                    <h6>
-                      Date -{" "}
-                      {myData.publish_date
-                        .split(" ")[0]
-                        .split("-")
-                        .reverse()
-                        .join("-")}{" "}
-                    </h6>
+      {userId ? (
+        <Layout custDashboard="custDashboard" custUserId={userId}>
+          <OuterloginContainer>
+            <MyContainer>
+              {description === false ? (
+                <div className={classesCustom.articleContent}>
+                  <div className={classesCustom.articlesDetails}>
+                    <Breadcrumbs
+                      separator=">"
+                      maxItems={3}
+                      aria-label="breadcrumb"
+                      style={{ fontSize: "18px" }}
+                    >
+                      <Link
+                        underline="hover"
+                        color="inherit"
+                        to="/customer/media"
+                      >
+                        Media gallery
+                      </Link>
+                      <Typography color="text.primary"> Media news</Typography>
+                    </Breadcrumbs>
+                    <div className={classesCustom.articlesDetails}>
+                      <Table>
+                        <TableHead>
+                          <TableRow>
+                            <TableCell style={{ width: "50px" }}>
+                              <SubHeading>S.No</SubHeading>
+                            </TableCell>
+                            <TableCell style={{ width: "200px" }}>
+                              <SubHeading>Date of publishing</SubHeading>
+                            </TableCell>
+                            <TableCell>
+                              <SubHeading>Heading</SubHeading>{" "}
+                            </TableCell>
+                          </TableRow>
+                        </TableHead>
+                        <TableBody>
+                          {data &&
+                            data
+                              .slice(
+                                page * rowsPerPage,
+                                page * rowsPerPage + rowsPerPage
+                              )
+                              .map((i, e) => (
+                                <>
+                                  <TableRow>
+                                    <TableCell
+                                      style={{ padding: "8px 16px" }}
+                                      className="tableCellStyle"
+                                    >
+                                      <CustomTypography>
+                                        {i.sn}
+                                      </CustomTypography>
+                                    </TableCell>
+                                    <TableCell>
+                                      <CustomTypography>
+                                        {i.publish_date
+                                          .split(" ")[0]
+                                          .split("-")
+                                          .reverse()
+                                          .join("-")}
+                                      </CustomTypography>
+                                    </TableCell>
+                                    <TableCell>
+                                      <span
+                                        onClick={(p) => getData(i)}
+                                        className="primary"
+                                        style={{ cursor: "pointer" }}
+                                      >
+                                        <CustomTypography cursor="pointer">
+                                          {i.heading}
+                                        </CustomTypography>
+                                      </span>
+                                    </TableCell>
+                                  </TableRow>
+                                </>
+                              ))}
+                        </TableBody>
+                        {data.length > 10 ? (
+                          <TablePagination
+                            rowsPerPageOptions={[5, 10, 15, 20, 25]}
+                            count={data.length}
+                            rowsPerPage={rowsPerPage}
+                            page={page}
+                            onChangePage={onChangePage}
+                            onChangeRowsPerPage={onChangeRowsPerPage}
+                          />
+                        ) : (
+                          ""
+                        )}
+                      </Table>
+                    </div>
                   </div>
-                  <Markup content={myData.content} />
+                </div>
+              ) : (
+                ""
+              )}
+              {description === true ? (
+                <div className={classesCustom.articleContent}>
+                  <div className={classesCustom.articlesDetails}>
+                    <Breadcrumbs
+                      separator=">"
+                      maxItems={3}
+                      aria-label="breadcrumb"
+                      style={{ fontSize: "18px" }}
+                    >
+                      <Link
+                        underline="hover"
+                        color="inherit"
+                        to="/customer/media"
+                      >
+                        Media Gallery
+                      </Link>
+                      <Link
+                        underline="hover"
+                        color="inherit"
+                        to={{
+                          pathname: "/customer/mediacontent",
+                          index: 2,
+                        }}
+                      >
+                        Media News
+                      </Link>
+                      <Typography color="text.primary">
+                        {myData.heading}
+                      </Typography>
+                    </Breadcrumbs>
+                    <div style={{ margin: "20px 0px 10px 0px" }}>
+                      <div>
+                        <MyHeading>
+                          <h5>
+                            {" "}
+                            {CommonServices.capitalizeFirstLetter(
+                              myData.heading
+                            )}
+                          </h5>
+                        </MyHeading>
+
+                        <h6>
+                          Date -{" "}
+                          {myData.publish_date
+                            .split(" ")[0]
+                            .split("-")
+                            .reverse()
+                            .join("-")}{" "}
+                        </h6>
+                      </div>
+                      <Markup content={myData.content} />
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                ""
+              )}
+            </MyContainer>
+            <Footer />
+          </OuterloginContainer>
+        </Layout>
+      ) : (
+        <OuterloginContainer>
+          <Header noSign="noSign" />
+          <MyContainer>
+            {description === false ? (
+              <div className={classesCustom.articleContent}>
+                <div className={classesCustom.articlesDetails}>
+                  <Breadcrumbs
+                    separator=">"
+                    maxItems={3}
+                    aria-label="breadcrumb"
+                    style={{ fontSize: "18px" }}
+                  >
+                    <Link
+                      underline="hover"
+                      color="inherit"
+                      to="/customer/media"
+                    >
+                      Media gallery
+                    </Link>
+                    <Typography color="text.primary"> Media news</Typography>
+                  </Breadcrumbs>
+                  <div className={classesCustom.articlesDetails}>
+                    <Table>
+                      <TableHead>
+                        <TableRow>
+                          <TableCell style={{ width: "50px" }}>
+                            <SubHeading>S.No</SubHeading>
+                          </TableCell>
+                          <TableCell style={{ width: "200px" }}>
+                            <SubHeading>Date of publishing</SubHeading>
+                          </TableCell>
+                          <TableCell>
+                            <SubHeading>Heading</SubHeading>{" "}
+                          </TableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        {data &&
+                          data
+                            .slice(
+                              page * rowsPerPage,
+                              page * rowsPerPage + rowsPerPage
+                            )
+                            .map((i, e) => (
+                              <>
+                                <TableRow>
+                                  <TableCell
+                                    style={{ padding: "8px 16px" }}
+                                    className="tableCellStyle"
+                                  >
+                                    <CustomTypography>{i.sn}</CustomTypography>
+                                  </TableCell>
+                                  <TableCell>
+                                    <CustomTypography>
+                                      {i.publish_date
+                                        .split(" ")[0]
+                                        .split("-")
+                                        .reverse()
+                                        .join("-")}
+                                    </CustomTypography>
+                                  </TableCell>
+                                  <TableCell>
+                                    <span
+                                      onClick={(e) => goToLogin(e)}
+                                      className="primary"
+                                      style={{ cursor: "pointer" }}
+                                    >
+                                      <CustomTypography cursor="pointer">
+                                        {i.heading}
+                                      </CustomTypography>
+                                    </span>
+                                  </TableCell>
+                                </TableRow>
+                              </>
+                            ))}
+                      </TableBody>
+                      {data.length > 10 ? (
+                        <TablePagination
+                          rowsPerPageOptions={[5, 10, 15, 20, 25]}
+                          count={data.length}
+                          rowsPerPage={rowsPerPage}
+                          page={page}
+                          onChangePage={onChangePage}
+                          onChangeRowsPerPage={onChangeRowsPerPage}
+                        />
+                      ) : (
+                        ""
+                      )}
+                    </Table>
+                  </div>
                 </div>
               </div>
-            </div>
-          ) : (
-            ""
-          )}
-        </MyContainer>
-        <Footer />
-      </OuterloginContainer>
+            ) : (
+              ""
+            )}
+            {description === true ? (
+              <div className={classesCustom.articleContent}>
+                <div className={classesCustom.articlesDetails}>
+                  <Breadcrumbs
+                    separator=">"
+                    maxItems={3}
+                    aria-label="breadcrumb"
+                    style={{ fontSize: "18px" }}
+                  >
+                    <Link
+                      underline="hover"
+                      color="inherit"
+                      to="/customer/media"
+                    >
+                      Media Gallery
+                    </Link>
+                    <Link
+                      underline="hover"
+                      color="inherit"
+                      to={{
+                        pathname: "/customer/mediacontent",
+                        index: 2,
+                      }}
+                    >
+                      Media News
+                    </Link>
+                    <Typography color="text.primary">
+                      {myData.heading}
+                    </Typography>
+                  </Breadcrumbs>
+                  <div style={{ margin: "20px 0px 10px 0px" }}>
+                    <div>
+                      <MyHeading>
+                        <h5>
+                          {" "}
+                          {CommonServices.capitalizeFirstLetter(myData.heading)}
+                        </h5>
+                      </MyHeading>
+
+                      <h6>
+                        Date -{" "}
+                        {myData.publish_date
+                          .split(" ")[0]
+                          .split("-")
+                          .reverse()
+                          .join("-")}{" "}
+                      </h6>
+                    </div>
+                    <Markup content={myData.content} />
+                  </div>
+                </div>
+              </div>
+            ) : (
+              ""
+            )}
+          </MyContainer>
+          <Footer />
+        </OuterloginContainer>
+      )}
     </>
   );
 };

@@ -20,12 +20,16 @@ import CommonServices from "../../common/common";
 import MyContainer from "../../components/Common/MyContainer";
 import CustomTypography from "../../components/Common/CustomTypography";
 import SubHeading from "../../components/Common/SubHeading";
+import Layout from "../../components/Layout/Layout";
+import Swal from "sweetalert2";
+import { useHistory } from "react-router-dom";
 const Direct = () => {
   const [page, setPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [data, setData] = useState([]);
   const loadpage = Number(localStorage.getItem("prevPage"));
   const userId = window.localStorage.getItem("userid");
+  let history = useHistory();
   const onChangePage = (event, nextPage) => {
     setPage(nextPage);
     localStorage.setItem("prevPage", nextPage);
@@ -84,122 +88,274 @@ const Direct = () => {
     getData();
     getPage();
   }, []);
+  const goToLogin = (e) => {
+    Swal.fire({
+      title: "warning",
+      html: "Please login to view login",
+      icon: "warning",
+    });
+    history.push("/");
+  };
   return (
     <>
-      <OuterloginContainer>
-        <Header noSign="noSign" />
-        <MyContainer>
-          <div className={classesCustom.articleContent}>
-            <div className={classesCustom.articlesDetails}>
-              <Breadcrumbs
-                separator=">"
-                maxItems={3}
-                aria-label="breadcrumb"
-                style={{ fontSize: "18px" }}
-              >
-                <Link underline="hover" color="inherit" to="/customer/direct">
-                  Articles
-                </Link>
-              </Breadcrumbs>
-              <TableContainer>
-                <Table>
-                  <TableHead>
-                    <TableRow>
-                      <TableCell style={{ width: "50px" }}>
-                        <SubHeading>S.No</SubHeading>
-                      </TableCell>
-                      <TableCell style={{ width: "200px" }}>
-                        <SubHeading>Date of publishing</SubHeading>
-                      </TableCell>
-                      <TableCell style={{ width: "150px" }}>
-                        <SubHeading>Subject</SubHeading>
-                      </TableCell>
-                      <TableCell style={{ width: "400px", margin: "0 10px" }}>
-                        <SubHeading>Heading</SubHeading>
-                      </TableCell>
+      {userId ? (
+        <Layout custDashboard="custDashboard" custUserId={userId}>
+          <OuterloginContainer>
+            <MyContainer>
+              <div className={classesCustom.articleContent}>
+                <div className={classesCustom.articlesDetails}>
+                  <Breadcrumbs
+                    separator=">"
+                    maxItems={3}
+                    aria-label="breadcrumb"
+                    style={{ fontSize: "18px" }}
+                  >
+                    <Link
+                      underline="hover"
+                      color="inherit"
+                      to="/customer/direct"
+                    >
+                      Articles
+                    </Link>
+                  </Breadcrumbs>
+                  <TableContainer>
+                    <Table>
+                      <TableHead>
+                        <TableRow>
+                          <TableCell style={{ width: "50px" }}>
+                            <SubHeading>S.No</SubHeading>
+                          </TableCell>
+                          <TableCell style={{ width: "200px" }}>
+                            <SubHeading>Date of publishing</SubHeading>
+                          </TableCell>
+                          <TableCell style={{ width: "150px" }}>
+                            <SubHeading>Subject</SubHeading>
+                          </TableCell>
+                          <TableCell
+                            style={{ width: "400px", margin: "0 10px" }}
+                          >
+                            <SubHeading>Heading</SubHeading>
+                          </TableCell>
 
-                      <TableCell>
-                        <SubHeading>Name of writer</SubHeading>
-                      </TableCell>
-                    </TableRow>
-                  </TableHead>
+                          <TableCell>
+                            <SubHeading>Name of writer</SubHeading>
+                          </TableCell>
+                        </TableRow>
+                      </TableHead>
 
-                  <TableBody>
-                    {data &&
-                      data
-                        .slice(
-                          page * rowsPerPage,
-                          page * rowsPerPage + rowsPerPage
-                        )
-                        .map((i, e) => (
-                          <TableRow>
-                            <TableCell
-                              style={{ padding: "8px 16px" }}
-                              className="tableCellStyle"
-                            >
-                              {page * 10 + ++e}
-                            </TableCell>
-                            <TableCell style={{ width: "150px" }}>
-                              <CustomTypography>
-                                {i.publish_date.split("-").reverse().join("-")}
-                              </CustomTypography>
-                            </TableCell>
-                            <TableCell style={{ width: "150px" }}>
-                              <CustomTypography>
-                                {CommonServices.capitalizeFirstLetter(i.type)}
-                              </CustomTypography>
-                            </TableCell>
-                            <TableCell
-                              style={{
-                                width: "400px",
-                                margin: "0 10px",
-                                wordBreak: "break-all",
-                              }}
-                              className="tableCellStyle"
-                            >
-                              {userId ? (
-                                <Link
-                                  to={{
-                                    pathname: "/customer/details",
-                                    index: i.id,
-                                    hash: i.type,
-                                  }}
+                      <TableBody>
+                        {data &&
+                          data
+                            .slice(
+                              page * rowsPerPage,
+                              page * rowsPerPage + rowsPerPage
+                            )
+                            .map((i, e) => (
+                              <TableRow>
+                                <TableCell
+                                  style={{ padding: "8px 16px" }}
+                                  className="tableCellStyle"
                                 >
+                                  {page * 10 + ++e}
+                                </TableCell>
+                                <TableCell style={{ width: "150px" }}>
+                                  <CustomTypography>
+                                    {i.publish_date
+                                      .split("-")
+                                      .reverse()
+                                      .join("-")}
+                                  </CustomTypography>
+                                </TableCell>
+                                <TableCell style={{ width: "150px" }}>
+                                  <CustomTypography>
+                                    {CommonServices.capitalizeFirstLetter(
+                                      i.type
+                                    )}
+                                  </CustomTypography>
+                                </TableCell>
+                                <TableCell
+                                  style={{
+                                    width: "400px",
+                                    margin: "0 10px",
+                                    wordBreak: "break-all",
+                                  }}
+                                  className="tableCellStyle"
+                                >
+                                  <Link
+                                    to={{
+                                      pathname: "/customer/details",
+                                      index: i.id,
+                                      hash: i.type,
+                                    }}
+                                  >
+                                    <CustomTypography>
+                                      {`${i.heading}`}
+                                    </CustomTypography>
+                                  </Link>
+                                </TableCell>
+                                <TableCell>
+                                  <CustomTypography>
+                                    {i.writer}
+                                  </CustomTypography>
+                                </TableCell>
+                              </TableRow>
+                            ))}
+                      </TableBody>
+                      {data.length > 10 ? (
+                        <TablePagination
+                          rowsPerPageOptions={[5, 10, 15, 20, 25]}
+                          count={data.length}
+                          rowsPerPage={rowsPerPage}
+                          page={page}
+                          onChangePage={onChangePage}
+                          onChangeRowsPerPage={onChangeRowsPerPage}
+                        />
+                      ) : (
+                        ""
+                      )}
+                    </Table>
+                  </TableContainer>
+                </div>
+              </div>
+            </MyContainer>
+            <Footer />
+          </OuterloginContainer>
+        </Layout>
+      ) : (
+        <OuterloginContainer>
+          <Header noSign="noSign" />
+          <MyContainer>
+            <div className={classesCustom.articleContent}>
+              <div className={classesCustom.articlesDetails}>
+                <Breadcrumbs
+                  separator=">"
+                  maxItems={3}
+                  aria-label="breadcrumb"
+                  style={{ fontSize: "18px" }}
+                >
+                  <Link underline="hover" color="inherit" to="/customer/direct">
+                    Articles
+                  </Link>
+                </Breadcrumbs>
+                <TableContainer>
+                  <Table>
+                    <TableHead>
+                      <TableRow>
+                        <TableCell style={{ width: "50px" }}>
+                          <SubHeading>S.No</SubHeading>
+                        </TableCell>
+                        <TableCell style={{ width: "200px" }}>
+                          <SubHeading>Date of publishing</SubHeading>
+                        </TableCell>
+                        <TableCell style={{ width: "150px" }}>
+                          <SubHeading>Subject</SubHeading>
+                        </TableCell>
+                        <TableCell style={{ width: "400px", margin: "0 10px" }}>
+                          <SubHeading>Heading</SubHeading>
+                        </TableCell>
+
+                        <TableCell>
+                          <SubHeading>Name of writer</SubHeading>
+                        </TableCell>
+                      </TableRow>
+                    </TableHead>
+
+                    <TableBody>
+                      {data &&
+                        data
+                          .slice(
+                            page * rowsPerPage,
+                            page * rowsPerPage + rowsPerPage
+                          )
+                          .map((i, e) => (
+                            <TableRow>
+                              <TableCell
+                                style={{ padding: "8px 16px" }}
+                                className="tableCellStyle"
+                              >
+                                {page * 10 + ++e}
+                              </TableCell>
+                              <TableCell style={{ width: "150px" }}>
+                                <CustomTypography>
+                                  {i.publish_date
+                                    .split("-")
+                                    .reverse()
+                                    .join("-")}
+                                </CustomTypography>
+                              </TableCell>
+                              <TableCell style={{ width: "150px" }}>
+                                <CustomTypography>
+                                  {CommonServices.capitalizeFirstLetter(i.type)}
+                                </CustomTypography>
+                              </TableCell>
+                              <TableCell
+                                style={{
+                                  width: "400px",
+                                  margin: "0 10px",
+                                  wordBreak: "break-all",
+                                }}
+                                className="tableCellStyle"
+                              >
+                                {/* {userId ? (
+                                  <Link
+                                    to={{
+                                      pathname: "/customer/details",
+                                      index: i.id,
+                                      hash: i.type,
+                                    }}
+                                  >
+                                    <CustomTypography>
+                                      {`${i.heading}`}
+                                    </CustomTypography>
+                                  </Link>
+                                ) : (
                                   <CustomTypography>
                                     {`${i.heading}`}
                                   </CustomTypography>
-                                </Link>
-                              ) : (
-                                <CustomTypography>
+                                )} */}
+                                <CustomTypography
+                                  cursor="pointer"
+                                  onClick={(e) => {
+                                    goToLogin(e);
+                                  }}
+                                >
                                   {`${i.heading}`}
                                 </CustomTypography>
-                              )}
-                            </TableCell>
-                            <TableCell>
-                              <CustomTypography>{i.writer}</CustomTypography>
-                            </TableCell>
-                          </TableRow>
-                        ))}
-                  </TableBody>
-                  {data.length > 10 ? (
-                    <TablePagination
-                      rowsPerPageOptions={[5, 10, 15, 20, 25]}
-                      count={data.length}
-                      rowsPerPage={rowsPerPage}
-                      page={page}
-                      onChangePage={onChangePage}
-                      onChangeRowsPerPage={onChangeRowsPerPage}
-                    />
-                  ) : (
-                    ""
-                  )}
-                </Table>
-              </TableContainer>
+                                {/* <span
+                                  style={{ cursor: "pointer" }}
+                                  onClick={(e) => {
+                                    goToLogin(e);
+                                  }}
+                                >
+                                  {`${i.heading}`}
+                                </span> */}
+                              </TableCell>
+                              <TableCell>
+                                <CustomTypography>{i.writer}</CustomTypography>
+                              </TableCell>
+                            </TableRow>
+                          ))}
+                    </TableBody>
+                    {data.length > 10 ? (
+                      <TablePagination
+                        rowsPerPageOptions={[5, 10, 15, 20, 25]}
+                        count={data.length}
+                        rowsPerPage={rowsPerPage}
+                        page={page}
+                        onChangePage={onChangePage}
+                        onChangeRowsPerPage={onChangeRowsPerPage}
+                      />
+                    ) : (
+                      ""
+                    )}
+                  </Table>
+                </TableContainer>
+              </div>
             </div>
-          </div>
-        </MyContainer>
-        <Footer />
-      </OuterloginContainer>
+          </MyContainer>
+          <Footer />
+        </OuterloginContainer>
+      )}
     </>
   );
 };

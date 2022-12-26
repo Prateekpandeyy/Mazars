@@ -10,9 +10,13 @@ import { Breadcrumbs, Typography } from "@material-ui/core";
 import { OuterloginContainer } from "../../components/Common/OuterloginContainer";
 import MyContainer from "../../components/Common/MyContainer";
 import CustomTypography from "../../components/Common/CustomTypography";
+import Layout from "../../components/Layout/Layout";
+import Swal from "sweetalert2";
+import { useHistory } from "react-router-dom";
 const Media = () => {
   const [galleryData, setGalleryData] = useState([]);
-
+  const userId = window.localStorage.getItem("userid");
+  let history = useHistory();
   useEffect(() => {
     getGalleryData();
   }, []);
@@ -21,45 +25,135 @@ const Media = () => {
       setGalleryData(res.data.result);
     });
   };
-
+  const goToLogin = (e) => {
+    Swal.fire({
+      title: "warning",
+      html: "Please login to view login",
+      icon: "warning",
+    });
+    history.push("/");
+  };
   return (
     <>
-      <OuterloginContainer>
-        <Header noSign="noSign" />
-        <MyContainer>
-          <div className={classes.articleContent}>
-            {
-              <div className={classes.articlesDetails}>
-                <Breadcrumbs
-                  separator=">"
-                  maxItems={3}
-                  aria-label="breadcrumb"
-                  style={{ fontSize: "18px" }}
-                >
-                  <Link underline="hover" color="inherit" to="/customer/media">
-                    Media gallery
-                  </Link>
-                  <Typography color="text.primary"> Photo gallery</Typography>
-                </Breadcrumbs>
-
-                <div className={classes.articlesDetailsgallery}>
-                  {galleryData.map((i) => (
-                    <div className="galleryBoxvideo">
-                      <div
-                        style={{
-                          display: "flex",
-                          justifyContent: "center",
-                          height: "70%",
-                          width: "100%",
-                          alignItems: "center",
-                        }}
+      {userId ? (
+        <Layout custDashboard="custDashboard" custUserId={userId}>
+          <OuterloginContainer>
+            <MyContainer>
+              <div className={classes.articleContent}>
+                {
+                  <div className={classes.articlesDetails}>
+                    <Breadcrumbs
+                      separator=">"
+                      maxItems={3}
+                      aria-label="breadcrumb"
+                      style={{ fontSize: "18px" }}
+                    >
+                      <Link
+                        underline="hover"
+                        color="inherit"
+                        to="/customer/media"
                       >
-                        <Link
-                          style={{ display: "flex" }}
-                          to={{
-                            pathname: "/customer/imagegallery",
-                            index: i,
-                            hash: "images",
+                        Media gallery
+                      </Link>
+                      <Typography color="text.primary">
+                        {" "}
+                        Photo gallery
+                      </Typography>
+                    </Breadcrumbs>
+
+                    <div className={classes.articlesDetailsgallery}>
+                      {galleryData.map((i) => (
+                        <div className="galleryBoxvideo">
+                          <div
+                            style={{
+                              display: "flex",
+                              justifyContent: "center",
+                              height: "70%",
+                              width: "100%",
+                              alignItems: "center",
+                            }}
+                          >
+                            <Link
+                              style={{ display: "flex" }}
+                              to={{
+                                pathname: "/customer/imagegallery",
+                                index: i,
+                                hash: "images",
+                              }}
+                            >
+                              <img
+                                src={pngAlbum}
+                                style={{
+                                  display: "flex",
+                                  width: "50%",
+                                  height: "50%",
+                                }}
+                                id={i.id}
+                                alt="Png Album"
+                              />
+                            </Link>
+                          </div>
+                          <div
+                            style={{
+                              padding: "5px 10px",
+                              height: "70px",
+                              overflow: "hidden",
+                              width: "100%",
+                              justifyContent: "space-between",
+                            }}
+                          >
+                            <CustomTypography>{i.title}</CustomTypography>
+                            <CustomTypography>
+                              {i.created_date
+                                .split(" ")[0]
+                                .split("-")
+                                .reverse()
+                                .join("-")}
+                            </CustomTypography>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                }
+              </div>
+            </MyContainer>
+            <Footer />
+          </OuterloginContainer>
+        </Layout>
+      ) : (
+        <OuterloginContainer>
+          <Header noSign="noSign" />
+          <MyContainer>
+            <div className={classes.articleContent}>
+              {
+                <div className={classes.articlesDetails}>
+                  <Breadcrumbs
+                    separator=">"
+                    maxItems={3}
+                    aria-label="breadcrumb"
+                    style={{ fontSize: "18px" }}
+                  >
+                    <Link
+                      underline="hover"
+                      color="inherit"
+                      to="/customer/media"
+                    >
+                      Media gallery
+                    </Link>
+                    <Typography color="text.primary"> Photo gallery</Typography>
+                  </Breadcrumbs>
+
+                  <div className={classes.articlesDetailsgallery}>
+                    {galleryData.map((i) => (
+                      <div className="galleryBoxvideo">
+                        <div
+                          style={{
+                            display: "flex",
+
+                            height: "70%",
+                            width: "100%",
+                            alignItems: "center",
                           }}
                         >
                           <img
@@ -69,38 +163,39 @@ const Media = () => {
                               width: "50%",
                               height: "50%",
                             }}
+                            onClick={(e) => goToLogin(e)}
                             id={i.id}
                             alt="Png Album"
                           />
-                        </Link>
+                        </div>
+                        <div
+                          style={{
+                            padding: "5px 10px",
+                            height: "70px",
+                            overflow: "hidden",
+                            width: "100%",
+                            justifyContent: "space-between",
+                          }}
+                        >
+                          <CustomTypography>{i.title}</CustomTypography>
+                          <CustomTypography>
+                            {i.created_date
+                              .split(" ")[0]
+                              .split("-")
+                              .reverse()
+                              .join("-")}
+                          </CustomTypography>
+                        </div>
                       </div>
-                      <div
-                        style={{
-                          padding: "5px 10px",
-                          height: "70px",
-                          overflow: "hidden",
-                          width: "100%",
-                          justifyContent: "space-between",
-                        }}
-                      >
-                        <CustomTypography>{i.title}</CustomTypography>
-                        <CustomTypography>
-                          {i.created_date
-                            .split(" ")[0]
-                            .split("-")
-                            .reverse()
-                            .join("-")}
-                        </CustomTypography>
-                      </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
-              </div>
-            }
-          </div>
-        </MyContainer>
-        <Footer />
-      </OuterloginContainer>
+              }
+            </div>
+          </MyContainer>
+          <Footer />
+        </OuterloginContainer>
+      )}
     </>
   );
 };

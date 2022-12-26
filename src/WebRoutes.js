@@ -422,7 +422,7 @@ function WebRoutes() {
           />
           <PrivateRouteUser
             exact
-            path="/customer/mediacontent"
+            path="/customer/content"
             component={Contact}
           />
           <PrivateRouteUser exact path="/customer/about" component={About} />

@@ -8,11 +8,13 @@ import axios from "axios";
 import classes from "./design.module.css";
 import MyContainer from "../../components/Common/MyContainer";
 import { OuterloginContainer } from "../../components/Common/OuterloginContainer";
+import Layout from "../../components/Layout/Layout";
+import Swal from "sweetalert2";
 const GalleryVideo = () => {
   const [images, setImages] = useState([]);
   const [title, setTitle] = useState("");
   let history = useHistory();
-
+  const userId = window.localStorage.getItem("userid");
   useEffect(() => {
     getImages();
   }, []);
@@ -72,59 +74,116 @@ const GalleryVideo = () => {
 
   return (
     <>
-      <OuterloginContainer>
-        <Header noSign="noSign" />
-        <MyContainer>
-          <div className={classes.articleContent}>
-            <div className={classes.articlesDetails}>
-              <>
-                <Breadcrumbs
-                  separator=">"
-                  maxItems={3}
-                  aria-label="breadcrumb"
-                  style={{ fontSize: "18px" }}
-                >
-                  <Link
-                    underline="hover"
-                    color="inherit"
-                    to={`/customer/media`}
+      {userId ? (
+        <Layout custDashboard="custDashboard" custUserId={userId}>
+          <OuterloginContainer>
+            <MyContainer>
+              <div className={classes.articleContent}>
+                <div className={classes.articlesDetails}>
+                  <>
+                    <Breadcrumbs
+                      separator=">"
+                      maxItems={3}
+                      aria-label="breadcrumb"
+                      style={{ fontSize: "18px" }}
+                    >
+                      <Link
+                        underline="hover"
+                        color="inherit"
+                        to={`/customer/media`}
+                      >
+                        Media gallery
+                      </Link>
+                      {typeof history.location.index === "object" ? (
+                        <Link
+                          underline="hover"
+                          color="inherit"
+                          to={`/customer/media`}
+                        >
+                          Photo gallery
+                        </Link>
+                      ) : (
+                        <Link
+                          underline="hover"
+                          color="inherit"
+                          to={`/customer/videogallery`}
+                        >
+                          Video gallery
+                        </Link>
+                      )}
+
+                      <Typography>{title}</Typography>
+                    </Breadcrumbs>
+                  </>
+
+                  {images.length > 0 ? (
+                    <ImageGallery
+                      items={images}
+                      additionalClass={classes.myVideo}
+                    />
+                  ) : (
+                    ""
+                  )}
+                </div>
+              </div>
+            </MyContainer>
+          </OuterloginContainer>
+        </Layout>
+      ) : (
+        <OuterloginContainer>
+          <Header noSign="noSign" />
+          <MyContainer>
+            <div className={classes.articleContent}>
+              <div className={classes.articlesDetails}>
+                <>
+                  <Breadcrumbs
+                    separator=">"
+                    maxItems={3}
+                    aria-label="breadcrumb"
+                    style={{ fontSize: "18px" }}
                   >
-                    Media gallery
-                  </Link>
-                  {typeof history.location.index === "object" ? (
                     <Link
                       underline="hover"
                       color="inherit"
                       to={`/customer/media`}
                     >
-                      Photo gallery
+                      Media gallery
                     </Link>
-                  ) : (
-                    <Link
-                      underline="hover"
-                      color="inherit"
-                      to={`/customer/videogallery`}
-                    >
-                      Video gallery
-                    </Link>
-                  )}
+                    {typeof history.location.index === "object" ? (
+                      <Link
+                        underline="hover"
+                        color="inherit"
+                        to={`/customer/media`}
+                      >
+                        Photo gallery
+                      </Link>
+                    ) : (
+                      <Link
+                        underline="hover"
+                        color="inherit"
+                        to={`/customer/videogallery`}
+                      >
+                        Video gallery
+                      </Link>
+                    )}
 
-                  <Typography>{title}</Typography>
-                </Breadcrumbs>
-              </>
+                    <Typography>{title}</Typography>
+                  </Breadcrumbs>
+                </>
 
-              {images.length > 0 ? (
-                <ImageGallery
-                  items={images}
-                  additionalClass={classes.myVideo}
-                />
-              ) : (
-                ""
-              )}
+                {images.length > 0 ? (
+                  <ImageGallery
+                    items={images}
+                    additionalClass={classes.myVideo}
+                  />
+                ) : (
+                  ""
+                )}
+              </div>
             </div>
-          </div>
-        </MyContainer>
-      </OuterloginContainer>
+          </MyContainer>
+        </OuterloginContainer>
+      )}
     </>
   );
 };

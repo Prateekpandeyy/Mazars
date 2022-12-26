@@ -19,12 +19,15 @@ import { Link } from "react-router-dom";
 import MyContainer from "../../components/Common/MyContainer";
 import CustomTypography from "../../components/Common/CustomTypography";
 import SubHeading from "../../components/Common/SubHeading";
-
+import Layout from "../../components/Layout/Layout";
+import { useHistory } from "react-router-dom";
+import Swal from "sweetalert2";
 const UpdateMiscellenous = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [data, setData] = useState([]);
   const userId = window.localStorage.getItem("userid");
+  let history = useHistory();
   useEffect(() => {
     getData();
   }, []);
@@ -57,123 +60,250 @@ const UpdateMiscellenous = () => {
         setData(dataList);
       });
   };
-
+  const goToLogin = (e) => {
+    Swal.fire({
+      title: "warning",
+      html: "Please login to view login",
+      icon: "warning",
+    });
+    history.push("/");
+  };
   return (
     <>
-      <OuterloginContainer>
-        <Header noSign="noSign" />
-        <MyContainer>
-          <div className={classes.articleContent}>
-            <div className={classes.articlesDetails}>
-              <TableContainer>
-                <>
-                  <Breadcrumbs
-                    separator=">"
-                    maxItems={3}
-                    aria-label="breadcrumb"
-                    style={{ fontSize: "18px" }}
-                  >
-                    <Link
-                      underline="hover"
-                      color="inherit"
-                      to="/customer/updatedirect"
-                    >
-                      Update
-                    </Link>
-                    <Link
-                      underline="hover"
-                      color="inherit"
-                      to={`/customer/miscellaneous`}
-                    >
-                      Miscellenous
-                    </Link>
-                  </Breadcrumbs>
-                  <div className={classes.articleContent}>
-                    <div className={classes.articlesDetails}>
-                      <Table>
-                        <TableHead>
-                          <TableRow>
-                            <TableCell style={{ width: "50px" }}>
-                              <SubHeading>S.No</SubHeading>
-                            </TableCell>
-                            <TableCell style={{ width: "200px" }}>
-                              <SubHeading>Date of publishing</SubHeading>
-                            </TableCell>
-                            <TableCell>
-                              <SubHeading>Heading</SubHeading>
-                            </TableCell>
-                          </TableRow>
-                        </TableHead>
-                        <TableBody>
-                          {data &&
-                            data
-                              .slice(
-                                page * rowsPerPage,
-                                page * rowsPerPage + rowsPerPage
-                              )
-                              .map((i, e) => (
-                                <>
-                                  <TableRow>
-                                    <TableCell
-                                      style={{ padding: "8px 16px" }}
-                                      className="tableCellStyle"
-                                    >
-                                      <CustomTypography>
-                                        {e + 1}
-                                      </CustomTypography>
-                                    </TableCell>
-                                    <TableCell>
-                                      <CustomTypography>
-                                        {i.publish_date
-                                          .split("-")
-                                          .reverse()
-                                          .join("-")}
-                                      </CustomTypography>
-                                    </TableCell>
-                                    <TableCell>
-                                      {userId ? (
-                                        <Link
-                                          to={{
-                                            pathname: `/customer/update-details/${i.id}`,
-                                            index: "miscellaneous",
-                                          }}
+      {userId ? (
+        <Layout custDashboard="custDashboard" custUserId={userId}>
+          <OuterloginContainer>
+            <MyContainer>
+              <div className={classes.articleContent}>
+                <div className={classes.articlesDetails}>
+                  <TableContainer>
+                    <>
+                      <Breadcrumbs
+                        separator=">"
+                        maxItems={3}
+                        aria-label="breadcrumb"
+                        style={{ fontSize: "18px" }}
+                      >
+                        <Link
+                          underline="hover"
+                          color="inherit"
+                          to="/customer/updatedirect"
+                        >
+                          Update
+                        </Link>
+                        <Link
+                          underline="hover"
+                          color="inherit"
+                          to={`/customer/miscellaneous`}
+                        >
+                          Miscellenous
+                        </Link>
+                      </Breadcrumbs>
+                      <div className={classes.articleContent}>
+                        <div className={classes.articlesDetails}>
+                          <Table>
+                            <TableHead>
+                              <TableRow>
+                                <TableCell style={{ width: "50px" }}>
+                                  <SubHeading>S.No</SubHeading>
+                                </TableCell>
+                                <TableCell style={{ width: "200px" }}>
+                                  <SubHeading>Date of publishing</SubHeading>
+                                </TableCell>
+                                <TableCell>
+                                  <SubHeading>Heading</SubHeading>
+                                </TableCell>
+                              </TableRow>
+                            </TableHead>
+                            <TableBody>
+                              {data &&
+                                data
+                                  .slice(
+                                    page * rowsPerPage,
+                                    page * rowsPerPage + rowsPerPage
+                                  )
+                                  .map((i, e) => (
+                                    <>
+                                      <TableRow>
+                                        <TableCell
+                                          style={{ padding: "8px 16px" }}
+                                          className="tableCellStyle"
                                         >
                                           <CustomTypography>
+                                            {e + 1}
+                                          </CustomTypography>
+                                        </TableCell>
+                                        <TableCell>
+                                          <CustomTypography>
+                                            {i.publish_date
+                                              .split("-")
+                                              .reverse()
+                                              .join("-")}
+                                          </CustomTypography>
+                                        </TableCell>
+                                        <TableCell>
+                                          {userId ? (
+                                            <Link
+                                              to={{
+                                                pathname: `/customer/update-details/${i.id}`,
+                                                index: "miscellaneous",
+                                              }}
+                                            >
+                                              <CustomTypography cursor="pointer">
+                                                {i.heading}
+                                              </CustomTypography>
+                                            </Link>
+                                          ) : (
+                                            <CustomTypography cursor="pointer">
+                                              {i.heading}
+                                            </CustomTypography>
+                                          )}
+                                        </TableCell>
+                                      </TableRow>
+                                    </>
+                                  ))}
+                            </TableBody>
+                            {data.length > 10 ? (
+                              <TablePagination
+                                rowsPerPageOptions={[5, 10, 15, 20, 25]}
+                                count={data.length}
+                                rowsPerPage={rowsPerPage}
+                                page={page}
+                                onChangePage={onChangePage}
+                                onChangeRowsPerPage={onChangeRowsPerPage}
+                              />
+                            ) : (
+                              ""
+                            )}
+                          </Table>
+                        </div>
+                      </div>
+                    </>
+                  </TableContainer>
+                </div>
+              </div>
+            </MyContainer>
+            <Footer />
+          </OuterloginContainer>
+        </Layout>
+      ) : (
+        <OuterloginContainer>
+          <Header noSign="noSign" />
+          <MyContainer>
+            <div className={classes.articleContent}>
+              <div className={classes.articlesDetails}>
+                <TableContainer>
+                  <>
+                    <Breadcrumbs
+                      separator=">"
+                      maxItems={3}
+                      aria-label="breadcrumb"
+                      style={{ fontSize: "18px" }}
+                    >
+                      <Link
+                        underline="hover"
+                        color="inherit"
+                        to="/customer/updatedirect"
+                      >
+                        Update
+                      </Link>
+                      <Link
+                        underline="hover"
+                        color="inherit"
+                        to={`/customer/miscellaneous`}
+                      >
+                        Miscellenous
+                      </Link>
+                    </Breadcrumbs>
+                    <div className={classes.articleContent}>
+                      <div className={classes.articlesDetails}>
+                        <Table>
+                          <TableHead>
+                            <TableRow>
+                              <TableCell style={{ width: "50px" }}>
+                                <SubHeading>S.No</SubHeading>
+                              </TableCell>
+                              <TableCell style={{ width: "200px" }}>
+                                <SubHeading>Date of publishing</SubHeading>
+                              </TableCell>
+                              <TableCell>
+                                <SubHeading>Heading</SubHeading>
+                              </TableCell>
+                            </TableRow>
+                          </TableHead>
+                          <TableBody>
+                            {data &&
+                              data
+                                .slice(
+                                  page * rowsPerPage,
+                                  page * rowsPerPage + rowsPerPage
+                                )
+                                .map((i, e) => (
+                                  <>
+                                    <TableRow>
+                                      <TableCell
+                                        style={{ padding: "8px 16px" }}
+                                        className="tableCellStyle"
+                                      >
+                                        <CustomTypography>
+                                          {e + 1}
+                                        </CustomTypography>
+                                      </TableCell>
+                                      <TableCell>
+                                        <CustomTypography>
+                                          {i.publish_date
+                                            .split("-")
+                                            .reverse()
+                                            .join("-")}
+                                        </CustomTypography>
+                                      </TableCell>
+                                      <TableCell>
+                                        {userId ? (
+                                          <Link
+                                            to={{
+                                              pathname: `/customer/update-details/${i.id}`,
+                                              index: "miscellaneous",
+                                            }}
+                                          >
+                                            <CustomTypography>
+                                              {i.heading}
+                                            </CustomTypography>
+                                          </Link>
+                                        ) : (
+                                          <CustomTypography
+                                            onClick={(e) => goToLogin(e)}
+                                          >
                                             {i.heading}
                                           </CustomTypography>
-                                        </Link>
-                                      ) : (
-                                        <CustomTypography>
-                                          {i.heading}
-                                        </CustomTypography>
-                                      )}
-                                    </TableCell>
-                                  </TableRow>
-                                </>
-                              ))}
-                        </TableBody>
-                        {data.length > 10 ? (
-                          <TablePagination
-                            rowsPerPageOptions={[5, 10, 15, 20, 25]}
-                            count={data.length}
-                            rowsPerPage={rowsPerPage}
-                            page={page}
-                            onChangePage={onChangePage}
-                            onChangeRowsPerPage={onChangeRowsPerPage}
-                          />
-                        ) : (
-                          ""
-                        )}
-                      </Table>
+                                        )}
+                                      </TableCell>
+                                    </TableRow>
+                                  </>
+                                ))}
+                          </TableBody>
+                          {data.length > 10 ? (
+                            <TablePagination
+                              rowsPerPageOptions={[5, 10, 15, 20, 25]}
+                              count={data.length}
+                              rowsPerPage={rowsPerPage}
+                              page={page}
+                              onChangePage={onChangePage}
+                              onChangeRowsPerPage={onChangeRowsPerPage}
+                            />
+                          ) : (
+                            ""
+                          )}
+                        </Table>
+                      </div>
                     </div>
-                  </div>
-                </>
-              </TableContainer>
+                  </>
+                </TableContainer>
+              </div>
             </div>
-          </div>
-        </MyContainer>
-        <Footer />
-      </OuterloginContainer>
+          </MyContainer>
+          <Footer />
+        </OuterloginContainer>
+      )}
     </>
   );
 };
