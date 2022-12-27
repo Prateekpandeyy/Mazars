@@ -810,3 +810,9 @@ color: #ffffff;
   width: 100%;
   object-fit: cover;
 }
+/* dashboard css */
+.query_thead > tr > th, .proposal_thead > tr > th, .proposal_thead3 > tr > th, 
+.assignment_thead > tr > th, .assignment_thead2 > tr > th, .payment_thead > tr > th,
+.payment_thead2 > tr > th{
+  color: #fff;
+}
