@@ -67,18 +67,26 @@ function NavWrapper(props) {
                     alignItems: "center",
                   }}
                 >
-                  <CustomHeading>
-                    {name == "customer"
-                      ? `Client :  ${clName} `
-                      : CommonServices.capitalizeFirstLetter(name)}
-                  </CustomHeading>
+                  {name == "customer" ? (
+                    <>
+                      <CustomHeading>{`Client : ${clName} `}</CustomHeading>
+                      <div
+                        style={{
+                          display: "flex",
+                          maxWidth: "500px",
+                          width: "100%",
+                        }}
+                      >
+                        <CmsCont position="Inner" />
+                      </div>
+                    </>
+                  ) : (
+                    <CustomHeading>
+                      {CommonServices.capitalizeFirstLetter(name)}:{" "}
+                      {JSON.parse(email)}
+                    </CustomHeading>
+                  )}
                 </span>
-
-                <div
-                  style={{ display: "flex", maxWidth: "500px", width: "100%" }}
-                >
-                  <CmsCont position="Inner" />
-                </div>
               </li>
             </ul>
 
