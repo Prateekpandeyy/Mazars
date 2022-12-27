@@ -70,15 +70,6 @@ function NavWrapper(props) {
                   {name == "customer" ? (
                     <>
                       <CustomHeading>{`Client : ${clName} `}</CustomHeading>
-                      <div
-                        style={{
-                          display: "flex",
-                          maxWidth: "500px",
-                          width: "100%",
-                        }}
-                      >
-                        <CmsCont position="Inner" />
-                      </div>
                     </>
                   ) : (
                     <CustomHeading>
@@ -95,11 +86,25 @@ function NavWrapper(props) {
               style={{ display: "flex", flexDirection: "row" }}
             >
               {name == "customer" && (
-                <CustomerNotification
-                  panel="client"
-                  tokenKey={userId}
-                  name={name}
-                />
+                <>
+                  <li>
+                    <div
+                      style={{
+                        display: "flex",
+                        maxWidth: "500px",
+                        width: "100%",
+                        height: "100%",
+                      }}
+                    >
+                      <CmsCont position="Inner" />
+                    </div>
+                  </li>
+                  <CustomerNotification
+                    panel="client"
+                    tokenKey={userId}
+                    name={name}
+                  />
+                </>
               )}
 
               {name == "admin" && (
