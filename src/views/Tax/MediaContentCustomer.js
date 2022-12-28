@@ -38,6 +38,12 @@ const MediaContentCustomer = () => {
   const [description, setDescription] = useState(false);
   const userId = window.localStorage.getItem("userid");
   let history = useHistory();
+  const token = window.localStorage.getItem("clientToken");
+  const myConfig = {
+    headers: {
+      uit: token,
+    },
+  };
   useEffect(() => {
     getMediaData();
   }, []);
@@ -68,17 +74,20 @@ const MediaContentCustomer = () => {
     setRowsPerPage(e.target.value);
   };
   const getData = (e) => {
-    setDescription(true);
-
-    setMyData(e);
+    console.log("eee", e);
+    axios
+      .get(`${baseUrl}/customers/getgalleryupdateddetail?id=${e.id}`, myConfig)
+      .then((res) => {
+        setMyData(res.data.result[0]);
+        setDescription(true);
+      });
   };
   const goToLogin = (e) => {
     Swal.fire({
-      title: "Info",
       html: "Please login to view content",
-      icon: "warning",
     });
   };
+
   return (
     <>
       {userId ? (

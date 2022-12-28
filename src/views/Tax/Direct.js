@@ -89,9 +89,7 @@ const Direct = () => {
   }, []);
   const goToLogin = (e) => {
     Swal.fire({
-      title: "Info",
       html: "Please login to view full article",
-      icon: "warning",
     });
   };
   return (

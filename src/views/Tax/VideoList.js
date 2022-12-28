@@ -30,9 +30,7 @@ const VideoList = () => {
   };
   const goToLogin = (e) => {
     Swal.fire({
-      title: "Info",
       html: "Please login to view content",
-      icon: "warning",
     });
   };
   return (

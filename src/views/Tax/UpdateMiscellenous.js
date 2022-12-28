@@ -61,9 +61,7 @@ const UpdateMiscellenous = () => {
   };
   const goToLogin = (e) => {
     Swal.fire({
-      title: "Info",
       html: "Please login to view full update",
-      icon: "warning",
     });
   };
   return (

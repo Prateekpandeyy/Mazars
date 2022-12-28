@@ -23,12 +23,13 @@ const CoolLightbox = ({ fullData, setFullScreen }) => {
       onNext={gotoNext}
       images={fullData}
       currentIndex={currentImageIndex}
-      renderHeader={() => <CustomHeader setFullScreen={setFullScreen} />}
+      // renderHeader={() => <CustomHeader setFullScreen={setFullScreen} />}
       renderPrevButton={() => (
         <CustomLeftArrowButton gotoPrevious={gotoPrevious} />
       )}
+      className="overlayclass"
       renderNextButton={() => <CustomRightArrowButton gotoNext={gotoNext} />}
-      // onClose={handleClose}
+      onClose={handleClose}
       /* Add your own UI */
 
       // renderFooter={() => (<CustomFooter />)}
@@ -67,20 +68,24 @@ const CustomHeader = ({ setFullScreen }) => {
 const CustomRightArrowButton = ({ gotoNext }) => {
   return (
     <span
-      style={{ zIndex: "1000", margin: "0px 20px" }}
+      style={{ zIndex: "99999", margin: "0px 20px" }}
       onClick={(e) => gotoNext()}
     >
-      <ArrowForwardIosOutlinedIcon sx={{ fontSize: "30px" }} />
+      <ArrowForwardIosOutlinedIcon
+        style={{ zIndex: "99999", fontSize: "50px" }}
+      />
     </span>
   );
 };
 const CustomLeftArrowButton = ({ gotoPrevious }) => {
   return (
     <span
-      style={{ zIndex: "1000", margin: "0px 20px" }}
+      style={{ zIndex: "999999", margin: "0px 20px" }}
       onClick={(e) => gotoPrevious()}
     >
-      <ArrowBackIosNewOutlinedIcon sx={{ fontSize: "30px" }} />
+      <ArrowBackIosNewOutlinedIcon
+        style={{ zIndex: "99999", fontSize: "50px" }}
+      />
     </span>
   );
 };
