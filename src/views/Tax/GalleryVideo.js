@@ -9,23 +9,28 @@ import classes from "./design.module.css";
 import MyContainer from "../../components/Common/MyContainer";
 import { OuterloginContainer } from "../../components/Common/OuterloginContainer";
 import Layout from "../../components/Layout/Layout";
-import Swal from "sweetalert2";
+import CoolLightbox from "./CoolLightbox";
 const GalleryVideo = () => {
   const [images, setImages] = useState([]);
   const [title, setTitle] = useState("");
-  let history = useHistory();
+  const [fullData, setFullData] = useState(null);
+  const [fullScreen, setFullScreen] = useState(false);
   const userId = window.localStorage.getItem("userid");
-  useEffect(() => {
-    getImages();
-  }, []);
+  let history = useHistory();
   const token = window.localStorage.getItem("clientToken");
   const myConfig = {
     headers: {
       uit: token,
     },
   };
+
+  useEffect(() => {
+    getImages();
+  }, []);
+
   const getImages = () => {
     let obj = [];
+    let kd = [];
     if (history.location.hash === "#images") {
       axios
         .get(
@@ -33,23 +38,16 @@ const GalleryVideo = () => {
           myConfig
         )
         .then((res) => {
+          setImages(res.data.result);
           res.data.result.map((i) => {
-            setTitle(i.title);
-
-            let thumb = i.name.split(".")[0] + "_thumb." + i.name.split(".")[1];
-            let poster =
-              i.name.split(".")[0] + "_poster." + i.name.split(".")[1];
-            let fullScreen = i.name;
-
             let a = {
-              original: `${baseUrl3}/assets/gallery/${poster}`,
-              thumbnail: `${baseUrl3}/assets/gallery/${thumb}`,
-              fullscreen: `${baseUrl3}/assets/gallery/${fullScreen}`,
+              src: `${baseUrl3}/assets/gallery/${i.name}`,
+              loading: "lazy",
+              alt: i.name,
             };
-            obj.push(a);
-
-            setImages(obj);
+            kd.push(a);
           });
+          setFullData(kd);
         });
     } else if (typeof history.location.index.id === "string") {
       axios
@@ -80,118 +78,128 @@ const GalleryVideo = () => {
       setImages(obj);
     }
   };
-
+  console.log("Images", fullData);
   return (
     <>
-      {userId ? (
-        <Layout custDashboard="custDashboard" custUserId={userId}>
-          <OuterloginContainer>
-            <MyContainer>
-              <div className={classes.articleContent}>
-                <div className={classes.articlesDetails}>
-                  <>
-                    <Breadcrumbs
-                      separator=">"
-                      maxItems={3}
-                      aria-label="breadcrumb"
-                      style={{ fontSize: "18px" }}
-                    >
-                      <Link
-                        underline="hover"
-                        color="inherit"
-                        to={`/customer/media`}
+      {fullScreen === true ? (
+        <CoolLightbox setFullScreen={setFullScreen} fullData={fullData} />
+      ) : (
+        <>
+          {userId ? (
+            <Layout custDashboard="custDashboard" custUserId={userId}>
+              <OuterloginContainer>
+                <MyContainer>
+                  <div className={classes.articleContent}>
+                    <div className={classes.articlesDetails}>
+                      <>
+                        <Breadcrumbs
+                          separator=">"
+                          maxItems={3}
+                          aria-label="breadcrumb"
+                          style={{ fontSize: "18px" }}
+                        >
+                          <Link
+                            underline="hover"
+                            color="inherit"
+                            to={`/customer/media`}
+                          >
+                            Media gallery
+                          </Link>
+                          {typeof history.location.index === "object" ? (
+                            <Link
+                              underline="hover"
+                              color="inherit"
+                              to={`/customer/media`}
+                            >
+                              Photo gallery
+                            </Link>
+                          ) : (
+                            <Link
+                              underline="hover"
+                              color="inherit"
+                              to={`/customer/videogallery`}
+                            >
+                              Video gallery
+                            </Link>
+                          )}
+
+                          <Typography>{title}</Typography>
+                        </Breadcrumbs>
+                      </>
+
+                      <div className="image-container">
+                        {images.map((i) => (
+                          <div className="imgBox">
+                            <img
+                              src={`${baseUrl3}/assets/gallery/${i.name}`}
+                              alt="Images album"
+                              className="img-responsive"
+                              onClick={(e) => setFullScreen(true)}
+                            />
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </MyContainer>
+              </OuterloginContainer>
+            </Layout>
+          ) : (
+            <OuterloginContainer>
+              <Header noSign="noSign" />
+              <MyContainer>
+                <div className={classes.articleContent}>
+                  <div className={classes.articlesDetails}>
+                    <>
+                      <Breadcrumbs
+                        separator=">"
+                        maxItems={3}
+                        aria-label="breadcrumb"
+                        style={{ fontSize: "18px" }}
                       >
-                        Media gallery
-                      </Link>
-                      {typeof history.location.index === "object" ? (
                         <Link
                           underline="hover"
                           color="inherit"
                           to={`/customer/media`}
                         >
-                          Photo gallery
+                          Media gallery
                         </Link>
-                      ) : (
-                        <Link
-                          underline="hover"
-                          color="inherit"
-                          to={`/customer/videogallery`}
-                        >
-                          Video gallery
-                        </Link>
-                      )}
+                        {typeof history.location.index === "object" ? (
+                          <Link
+                            underline="hover"
+                            color="inherit"
+                            to={`/customer/media`}
+                          >
+                            Photo gallery
+                          </Link>
+                        ) : (
+                          <Link
+                            underline="hover"
+                            color="inherit"
+                            to={`/customer/videogallery`}
+                          >
+                            Video gallery
+                          </Link>
+                        )}
 
-                      <Typography>{title}</Typography>
-                    </Breadcrumbs>
-                  </>
+                        <Typography>{title}</Typography>
+                      </Breadcrumbs>
+                    </>
 
-                  {images.length > 0 ? (
-                    <ImageGallery
-                      items={images}
-                      additionalClass={classes.myVideo}
-                    />
-                  ) : (
-                    ""
-                  )}
-                </div>
-              </div>
-            </MyContainer>
-          </OuterloginContainer>
-        </Layout>
-      ) : (
-        <OuterloginContainer>
-          <Header noSign="noSign" />
-          <MyContainer>
-            <div className={classes.articleContent}>
-              <div className={classes.articlesDetails}>
-                <>
-                  <Breadcrumbs
-                    separator=">"
-                    maxItems={3}
-                    aria-label="breadcrumb"
-                    style={{ fontSize: "18px" }}
-                  >
-                    <Link
-                      underline="hover"
-                      color="inherit"
-                      to={`/customer/media`}
-                    >
-                      Media gallery
-                    </Link>
-                    {typeof history.location.index === "object" ? (
-                      <Link
-                        underline="hover"
-                        color="inherit"
-                        to={`/customer/media`}
-                      >
-                        Photo gallery
-                      </Link>
+                    {images.length > 0 ? (
+                      <ImageGallery
+                        items={images}
+                        additionalClass={classes.myVideo}
+                      />
                     ) : (
-                      <Link
-                        underline="hover"
-                        color="inherit"
-                        to={`/customer/videogallery`}
-                      >
-                        Video gallery
-                      </Link>
+                      ""
                     )}
-
-                    <Typography>{title}</Typography>
-                  </Breadcrumbs>
-                </>
-
-                {images.length > 0 ? (
-                  <ImageGallery
-                    items={images}
-                    additionalClass={classes.myVideo}
-                  />
-                ) : (
-                  ""
-                )}
-              </div>
-            </div>
-          </MyContainer>
-        </OuterloginContainer>
+                  </div>
+                </div>
+              </MyContainer>
+            </OuterloginContainer>
+          )}
+        </>
       )}
     </>
   );

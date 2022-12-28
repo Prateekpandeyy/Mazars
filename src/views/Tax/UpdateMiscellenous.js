@@ -61,8 +61,8 @@ const UpdateMiscellenous = () => {
   };
   const goToLogin = (e) => {
     Swal.fire({
-      title: "warning",
-      html: "Please login to view login",
+      title: "Info",
+      html: "Please login to view full update",
       icon: "warning",
     });
   };
@@ -271,6 +271,7 @@ const UpdateMiscellenous = () => {
                                           </Link>
                                         ) : (
                                           <CustomTypography
+                                            cursor="pointer"
                                             onClick={(e) => goToLogin(e)}
                                           >
                                             {i.heading}

@@ -3,11 +3,11 @@ import { Link } from "react-router-dom";
 import CustomerNotification from "./CustomerNotification";
 import LockOpenIcon from "@material-ui/icons/LockOpen";
 import VpnKeyIcon from "@material-ui/icons/VpnKey";
-import "./index.css";
 import { CgProfile } from "react-icons/cg";
 import CommonServices from "../../common/common";
 import CustomHeading from "../Common/CustomHeading";
 import { CmsCont } from "../Header/Header";
+import CustomTypography from "../Common/CustomTypography";
 function NavWrapper(props) {
   const { color, logout, name, email, feedbackNumber } = props;
   const clName = JSON.parse(localStorage.getItem("clientLoginId"));
@@ -64,12 +64,22 @@ function NavWrapper(props) {
                     display: "flex",
                     width: "100%",
                     justifyContent: "center",
-                    alignItems: "center",
+                    flexDirection: "column",
                   }}
                 >
                   {name == "customer" ? (
                     <>
-                      <CustomHeading>{`Client : ${clName} `}</CustomHeading>
+                      <div className="d-flex">
+                        <CustomTypography
+                          font={18}
+                        >{`Client : `}</CustomTypography>
+                        <div>
+                          <CustomTypography>{clName}</CustomTypography>
+                          <CustomTypography margin="5px">
+                            {JSON.parse(email)}
+                          </CustomTypography>
+                        </div>
+                      </div>
                     </>
                   ) : (
                     <CustomHeading>

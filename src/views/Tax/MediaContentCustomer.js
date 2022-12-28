@@ -74,11 +74,10 @@ const MediaContentCustomer = () => {
   };
   const goToLogin = (e) => {
     Swal.fire({
-      title: "warning",
-      html: "Please login to view login",
+      title: "Info",
+      html: "Please login to view content",
       icon: "warning",
     });
-    history.push("/");
   };
   return (
     <>
@@ -149,7 +148,7 @@ const MediaContentCustomer = () => {
                                     <TableCell>
                                       <span
                                         onClick={(p) => getData(i)}
-                                        className="primary"
+                                        className="btnHover"
                                         style={{ cursor: "pointer" }}
                                       >
                                         <CustomTypography cursor="pointer">

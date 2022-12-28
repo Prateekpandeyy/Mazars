@@ -816,3 +816,96 @@ color: #ffffff;
 .payment_thead2 > tr > th{
   color: #fff;
 }
+.overlayStyleLogin {
+  display: flex;
+  width: 100vw;
+  min-height: 900px;
+  height: 100%;
+  z-index: 999;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+.loginHeading {
+  display: flex;
+  width: 100%;
+  max-width: 1000px;
+  margin: auto;
+  flex-wrap: wrap;
+}
+.CookieConsent {
+  max-width: 600px;
+  border-radius: 5px;
+  padding: 20px 30px;
+  background-color: white;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  right: auto;
+  bottom: auto;
+  transform: translate3d(-50%, -50%, 9999990px);
+  width: 95%;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+  z-index: 99999;
+} 
+/* navbar css */
+
+.notification {
+  color:#4B4646;
+  }
+  
+  
+  .notification .badge {
+    position: absolute;
+    display: flex;
+   bottom: 25px;
+   left: 25px;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 25px;
+   background-color: #464b4b;
+    color: white;
+    padding: 10px;
+  }
+  .changePassword .dropdown-item:active{
+    background-color: rgb(61, 71, 117) !important;
+    color: #fff !important;
+  }
+  .nameHeading, .inboxTitle{
+    color:#4B4646;
+    font-weight: 600;
+    display: block;
+    margin: auto;
+  }
+  
+  
+  .sidebarIcons{
+    display: flex;
+    max-width: 40px;
+    max-height: 40px;
+    padding: 8px;
+  }
+  .main-menu.menu-light .navigation > li.hover > a{
+    color: #0071CE;
+  }
+  /* image gallry boxContainer */
+  .imgBox{
+    display: flex;
+    width: calc(100% / 5 - 10px);
+    max-height: 150px;
+    height: 100%;
+    margin: 10px;
+  }
+  .image-container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  .img-responsive{
+    display: flex;
+    width: 100%;
+  }

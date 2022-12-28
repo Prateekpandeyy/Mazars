@@ -25,6 +25,7 @@ const DataTablepopulated = (props) => {
       padding: "5px",
       fontFamily: "Halyard",
       verticalAlign: "top",
+      color: "#fff",
     },
 
     "& tbody tr td": {

@@ -253,7 +253,8 @@ export const CmsCont = (props) => {
   };
 
   const myLink = (e) => {
-    if (cookieEnable) {
+    console.log("cookEnable", cookieEnable);
+    if (Cookies.get("accept")) {
       if (e === "direct") {
         history.push("/customer/direct");
       } else if (e === "indirect") {
@@ -284,6 +285,7 @@ export const CmsCont = (props) => {
         history.push("/customer/aboutbasic");
       }
     } else {
+      console.log("cookEnable2", cookieEnable);
       props.showCook("showCookies");
     }
   };

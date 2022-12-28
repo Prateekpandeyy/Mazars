@@ -64,8 +64,8 @@ const UpdateIndirect = () => {
   };
   const goToLogin = (e) => {
     Swal.fire({
-      title: "warning",
-      html: "Please login to view login",
+      title: "Info",
+      html: "Please login to view full update",
       icon: "warning",
     });
   };
