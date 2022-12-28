@@ -192,7 +192,7 @@
     margin-top: 3px; 
 }
 .clientMenu{
-    background-image: url("./images/newHov/hover-icon/clinet.png") !important;
+    background-image: url("./images/againImg/clinet.png") !important;
     background-repeat: no-repeat !important;
     background-size: cover !important;
     max-width: 40px !important;
@@ -202,7 +202,7 @@
     margin-top: 3px;
 }
 .nav-item a:hover .clientMenu{
-    background-image: url("./images/newIm/normal-icon/client.png") !important;
+    background-image: url("./images/againImg/client_hover.png") !important;
    
     background-repeat: no-repeat !important;
     background-size: cover !important;
@@ -213,7 +213,7 @@
     margin-top: 3px; 
 }
 .taxprofessionalMenu{
-    background-image: url("./images/newIm/normal-icon/taxprofessional.png") !important;
+    background-image: url("./images/againImg/taxprofessional.png") !important;
     background-repeat: no-repeat !important;
     background-size: cover !important;
     max-width: 40px !important;
@@ -223,7 +223,7 @@
     margin-top: 3px;
 }
 .nav-item a:hover .taxprofessionalMenu{
-    background-image: url("./images/newHov/hover-icon/taxprofessional\ -\ Copy.png") !important;
+    background-image: url("./images/againImg/taxprofessional_hover.png") !important;
     background-repeat: no-repeat !important;
     background-size: cover !important;
     max-width: 40px !important;
@@ -277,7 +277,7 @@
     margin-top: 3px;
 }
 .nav-item a:hover .reportMenu{
-    background-image: url("./images/newHov/hover-icon/report-b.png") !important;
+    background-image: url("./images/againImg/report_hover.png") !important;
     background-repeat: no-repeat !important;
     background-size: cover !important;
     max-width: 30px !important;
@@ -289,7 +289,7 @@
     height: 25px;
 }
 .reportMenu{
-    background-image: url("./images/newIm/normal-icon/reports.png") !important;
+    background-image: url("./images/againImg/reports.png") !important;
     background-repeat: no-repeat !important;
     background-size: cover !important;
     max-width: 40px !important;

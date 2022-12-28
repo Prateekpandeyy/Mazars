@@ -4,7 +4,7 @@ import axios from "axios";
 import { baseUrl } from "../../config/config";
 import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
-import ima from "../../mazars_logo.png";
+import ima from "./../../assets/images/mazars-logo.png";
 import Collapse from "@mui/material/Collapse";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";

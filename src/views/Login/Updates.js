@@ -7,7 +7,7 @@ import { Markup } from "interweave";
 import { useHistory, useParams, Link } from "react-router-dom";
 import axios from "axios";
 import { baseUrl, baseUrl3 } from "../../config/config";
-import ima from "../../mazars_logo.png";
+import ima from "./../../assets/images/mazars-logo.png";
 import classesCustom from "./design.module.css";
 import CommonServices from "../../common/common.js";
 import { VscFilePdf } from "react-icons/vsc";

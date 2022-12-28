@@ -398,7 +398,7 @@ line-height: 35px;
   display: flex;
   width: 50%;
   opacity: 0.9;
-  background-image: url("./views/ManualImg/loginCover.jpeg");
+  background-image: url("./assets/images/loginCover.jpeg");
   background-size: cover;
   background-repeat: no-repeat;
 }

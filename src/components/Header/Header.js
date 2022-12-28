@@ -1,6 +1,6 @@
 import { Link, NavLink, useHistory } from "react-router-dom";
 import "../../assets/css/style.css";
-import mazars from "../../mazars_logo.png";
+import mazars from "./../../assets/images/mazars-logo.png";
 import { useState, useEffect } from "react";
 import Collapse from "@mui/material/Collapse";
 import ListItemButton from "@mui/material/ListItemButton";

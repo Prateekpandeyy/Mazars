@@ -9,7 +9,7 @@ import Swal from "sweetalert2";
 import RecordingModal from "./RecordingModal";
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import { green ,red} from '@material-ui/core/colors';
-import recImg from "../../../loader.gif";
+import recImg from "../../../assets/images/loader.gif";
 import Cookies from "js-cookie";
 import CommonServices from "../../../common/common"
 const tile_canvas = {

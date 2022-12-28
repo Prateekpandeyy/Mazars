@@ -188,7 +188,6 @@ import UpdateMiscellenous from "./views/Tax/UpdateMiscellenous";
 import UpdateDetails from "./views/Tax/UpdateDetails";
 import OuterLinkVideo from "./views/outerLinkVideo.js/OuterLinkVideo";
 import EditProfile from "./views/EditProfile/EditProfile";
-import Drag from "./components/Drag";
 import UploadLinkContent from "./pages/Admin/CMS/UploadLInkContent";
 import CommingSoon from "./views/ComingSoon/CommingSoon";
 import PublicCms from "./Service/PublicCms";
@@ -276,7 +275,7 @@ function WebRoutes() {
             path="/customer/updatedirect"
             component={UpdateDirect}
           />
-          <PublicRouteUser exact path="/customer/drag" component={Drag} />
+
           <PublicRouteUser
             exact
             path="/customer/updateindirect"

@@ -8,7 +8,7 @@ import "../../../assets/fonts/css/icons.css";
 import RecordingModal from "./RecordingModal";
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import { green ,red} from '@material-ui/core/colors';
-import recImg from "../../../loader.gif";
+import recImg from "../../../assets/images/loader.gif";
 import Cookies from "js-cookie"
 import Swal from "sweetalert2";
 import $ from 'jquery';
