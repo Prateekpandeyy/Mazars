@@ -97,7 +97,7 @@ function NavWrapper(props) {
             >
               {name == "customer" && (
                 <>
-                  <li>
+                  <li style={{ zIndex: "400" }}>
                     <div
                       style={{
                         display: "flex",
