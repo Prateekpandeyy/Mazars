@@ -20,6 +20,7 @@ function CustomerNotification({ tokenKey, name, panel }) {
         uit: token,
       },
     };
+    console.log("myConfig", myConfig);
     axios.get(`${baseUrl}/customers/logout`, myConfig).then((res) => {
       localStorage.removeItem("userid");
       localStorage.removeItem("custEmail");
@@ -136,13 +137,16 @@ function CustomerNotification({ tokenKey, name, panel }) {
             if (res.data.result[0] != undefined) {
               setCountNotification(res.data.result[0].total);
             }
-          } else if (res.data.code !== 1) {
+          } else if (res.data.code === 102) {
+            console.log("customer Logout");
             if (redir === "admin") {
               adminLogout();
             } else if (redir === "tl") {
               tlLogout();
             } else if (redir === "tp") {
               tpLogout();
+            } else if (redir === "customers") {
+              custLogout();
             }
           }
         });
