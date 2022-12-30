@@ -21,7 +21,7 @@ import CustomTypography from "../../components/Common/CustomTypography";
 import SubHeading from "../../components/Common/SubHeading";
 import Layout from "../../components/Layout/Layout";
 import Swal from "sweetalert2";
-
+import SearchBtn from "../../components/Common/SearchBtn";
 const Direct = () => {
   const [page, setPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -92,11 +92,45 @@ const Direct = () => {
       html: "Please login to view full article",
     });
   };
+  const searchArticle = () => {
+    axios.get(`${baseUrl}/customers/getarticles`).then((res) => {
+      let dataObj = {};
+      let dataList = [];
+      res.data.result.map((i, e) => {
+        dataObj = {
+          sn: ++e,
+          content: i.content,
+          file: i.file,
+          heading: i.heading,
+          id: i.id,
+          publish_date: i.publish_date,
+          status: i.status,
+          type: i.type,
+          writer: i.writer,
+        };
+        dataList.push(dataObj);
+      });
+      setData(dataList);
+    });
+  };
   return (
     <>
       {userId ? (
         <Layout custDashboard="custDashboard" custUserId={userId}>
           <OuterloginContainer>
+            <SearchBtn>
+              <input
+                placeholder="Please enter text"
+                className="form-control"
+                type="Please enter text"
+              />
+              <button
+                onClick={(e) => searchArticle()}
+                className="customBtn mx-2"
+              >
+                Search
+              </button>
+            </SearchBtn>
             <MyContainer>
               <div className={classesCustom.articleContent}>
                 <div className={classesCustom.articlesDetails}>
@@ -208,6 +242,15 @@ const Direct = () => {
       ) : (
         <OuterloginContainer>
           <Header noSign="noSign" />
+          <SearchBtn>
+            <input
+              placeholder="Please enter text"
+              className="form-control"
+              type="Please enter text"
+              onClick={(e) => searchArticle()}
+            />
+            <button className="customBtn mx-2">Search</button>
+          </SearchBtn>
           <MyContainer>
             <div className={classesCustom.articleContent}>
               <div className={classesCustom.articlesDetails}>

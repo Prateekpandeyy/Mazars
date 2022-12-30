@@ -919,3 +919,12 @@ color: #ffffff;
   .clientSubMenu li:nth-of-type(7) {
     width: 135px;
   }
+  /* Serach button */
+  .cmssearchBtn{
+    display: flex;
+    max-width: 300px;
+    justify-content: center;
+    align-items: flex-end;
+    margin-left: auto;
+    padding: 10px;
+  }
