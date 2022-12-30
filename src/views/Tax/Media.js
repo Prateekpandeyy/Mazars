@@ -12,9 +12,10 @@ import MyContainer from "../../components/Common/MyContainer";
 import CustomTypography from "../../components/Common/CustomTypography";
 import Layout from "../../components/Layout/Layout";
 import Swal from "sweetalert2";
-
+import SearchBtn from "../../components/Common/SearchBtn";
 const Media = () => {
   const [galleryData, setGalleryData] = useState([]);
+  const [searchText, setSearchText] = useState("");
   const userId = window.localStorage.getItem("userid");
 
   useEffect(() => {
@@ -23,6 +24,19 @@ const Media = () => {
   const getGalleryData = () => {
     axios.get(`${baseUrl}/customers/getgallery`).then((res) => {
       setGalleryData(res.data.result);
+    });
+  };
+  const searchArticle = () => {
+    let formData = new FormData();
+    formData.append("content", searchText);
+    axios({
+      method: "POST",
+      url: `${baseUrl}/customers/getgallery`,
+      data: formData,
+    }).then((res) => {
+      if (res.data.code === 1) {
+        setGalleryData(res.data.result);
+      }
     });
   };
   const goToLogin = (e) => {
@@ -35,6 +49,20 @@ const Media = () => {
       {userId ? (
         <Layout custDashboard="custDashboard" custUserId={userId}>
           <OuterloginContainer>
+            <SearchBtn>
+              <input
+                placeholder="Please enter text"
+                className="form-control"
+                type="Please enter text"
+                onChange={(e) => setSearchText(e.target.value)}
+              />
+              <button
+                onClick={(e) => searchArticle()}
+                className="customBtn mx-2"
+              >
+                Search
+              </button>
+            </SearchBtn>
             <MyContainer>
               <div className={classes.articleContent}>
                 {
@@ -120,6 +148,17 @@ const Media = () => {
       ) : (
         <OuterloginContainer>
           <Header noSign="noSign" />
+          <SearchBtn>
+            <input
+              placeholder="Please enter text"
+              className="form-control"
+              type="Please enter text"
+              onChange={(e) => setSearchText(e.target.value)}
+            />
+            <button onClick={(e) => searchArticle()} className="customBtn mx-2">
+              Search
+            </button>
+          </SearchBtn>
           <MyContainer>
             <div className={classes.articleContent}>
               {

@@ -26,6 +26,7 @@ const Direct = () => {
   const [page, setPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [data, setData] = useState([]);
+  const [searchText, setSearchText] = useState("");
   const loadpage = Number(localStorage.getItem("prevPage"));
   const userId = window.localStorage.getItem("userid");
 
@@ -93,24 +94,32 @@ const Direct = () => {
     });
   };
   const searchArticle = () => {
-    axios.get(`${baseUrl}/customers/getarticles`).then((res) => {
-      let dataObj = {};
-      let dataList = [];
-      res.data.result.map((i, e) => {
-        dataObj = {
-          sn: ++e,
-          content: i.content,
-          file: i.file,
-          heading: i.heading,
-          id: i.id,
-          publish_date: i.publish_date,
-          status: i.status,
-          type: i.type,
-          writer: i.writer,
-        };
-        dataList.push(dataObj);
-      });
-      setData(dataList);
+    let formData = new FormData();
+    formData.append("content", searchText);
+    axios({
+      method: "POST",
+      url: `${baseUrl}/customers/getarticles`,
+      data: formData,
+    }).then((res) => {
+      if (res.data.code === 0) {
+        let dataObj = {};
+        let dataList = [];
+        res.data.result.map((i, e) => {
+          dataObj = {
+            sn: ++e,
+            content: i.content,
+            file: i.file,
+            heading: i.heading,
+            id: i.id,
+            publish_date: i.publish_date,
+            status: i.status,
+            type: i.type,
+            writer: i.writer,
+          };
+          dataList.push(dataObj);
+        });
+        setData(dataList);
+      }
     });
   };
   return (
@@ -123,6 +132,7 @@ const Direct = () => {
                 placeholder="Please enter text"
                 className="form-control"
                 type="Please enter text"
+                onChange={(e) => setSearchText(e.target.value)}
               />
               <button
                 onClick={(e) => searchArticle()}
@@ -247,9 +257,11 @@ const Direct = () => {
               placeholder="Please enter text"
               className="form-control"
               type="Please enter text"
-              onClick={(e) => searchArticle()}
+              onChange={(e) => setSearchText(e.target.value)}
             />
-            <button className="customBtn mx-2">Search</button>
+            <button className="customBtn mx-2" onClick={(e) => searchArticle()}>
+              Search
+            </button>
           </SearchBtn>
           <MyContainer>
             <div className={classesCustom.articleContent}>

@@ -14,10 +14,12 @@ import MyContainer from "../../components/Common/MyContainer";
 import Swal from "sweetalert2";
 import CustomTypography from "../../components/Common/CustomTypography";
 import Layout from "../../components/Layout/Layout";
+import SearchBtn from "../../components/Common/SearchBtn";
 const VideoList = () => {
   const [galleryData, setGalleryData] = useState([]);
   const [videoId] = useState();
   const [play, isPlay] = useState(false);
+  const [searchText, setSearchText] = useState("");
   const userId = window.localStorage.getItem("userid");
 
   useEffect(() => {
@@ -25,6 +27,17 @@ const VideoList = () => {
   }, []);
   const getGalleryData = () => {
     axios.get(`${baseUrl}/customers/getvideogallery`).then((res) => {
+      setGalleryData(res.data.result);
+    });
+  };
+  const searchArticle = () => {
+    let formData = new FormData();
+    formData.append("content", searchText);
+    axios({
+      method: "POST",
+      url: `${baseUrl}/customers/getvideogallery`,
+      data: formData,
+    }).then((res) => {
       setGalleryData(res.data.result);
     });
   };
@@ -38,6 +51,21 @@ const VideoList = () => {
       {userId ? (
         <Layout custDashboard="custDashboard" custUserId={userId}>
           <OuterloginContainer>
+            <SearchBtn>
+              <input
+                placeholder="Please enter text"
+                className="form-control"
+                type="Please enter text"
+                onChange={(e) => setSearchText(e.target.value)}
+              />
+
+              <button
+                onClick={(e) => searchArticle()}
+                className="customBtn mx-2"
+              >
+                Search
+              </button>
+            </SearchBtn>
             <MyContainer>
               <div className={classes.articleContent}>
                 {
@@ -143,7 +171,17 @@ const VideoList = () => {
       ) : (
         <OuterloginContainer>
           <Header noSign="noSign" />
-
+          <SearchBtn>
+            <input
+              placeholder="Please enter text"
+              className="form-control"
+              type="Please enter text"
+              onChange={(e) => setSearchText(e.target.value)}
+            />
+            <button onClick={(e) => searchArticle()} className="customBtn mx-2">
+              Search
+            </button>
+          </SearchBtn>
           <MyContainer>
             <div className={classes.articleContent}>
               {
