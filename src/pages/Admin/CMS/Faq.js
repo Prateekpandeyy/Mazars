@@ -46,6 +46,7 @@ const Faq = () => {
     formData.append("answer", html);
     formData.append("status", Number(stats));
 
+    
     axios({
       method: "POST",
       url: `${baseUrl}/cms/setfaq`,

@@ -909,3 +909,13 @@ color: #ffffff;
     display: flex;
     width: 100%;
   }
+   /* header menu css */
+  .clientSubMenu li:nth-of-type(2) {
+    width: 136px;
+  }
+  .clientSubMenu li:nth-of-type(2) div{
+    justify-content: center!important;
+  }
+  .clientSubMenu li:nth-of-type(7) {
+    width: 135px;
+  }

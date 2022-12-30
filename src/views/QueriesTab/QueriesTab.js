@@ -155,20 +155,20 @@ function QueriesTab(props) {
                 All queries ({allResult.allQuery})
               </Tab>
               <Tab
-                style={tabIndex == 1 ? myStyle2 : myStyle1}
+                style={tabIndex === 1 ? myStyle2 : myStyle1}
                 className="tabHover"
               >
                 Inprogress; queries({allResult.inprogressQuery})
               </Tab>
               <Tab
-                style={tabIndex == 2 ? myStyle2 : myStyle1}
+                style={tabIndex === 2 ? myStyle2 : myStyle1}
                 className="tabHover"
               >
                 Completed; queries ({allResult.completeQuery})
               </Tab>
 
               <Tab
-                style={tabIndex == 3 ? myStyle2 : myStyle1}
+                style={tabIndex === 3 ? myStyle2 : myStyle1}
                 className="tabHover"
               >
                 Declined; queries ({allResult.declinedQuery})
