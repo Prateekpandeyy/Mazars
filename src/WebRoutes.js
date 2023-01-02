@@ -191,6 +191,7 @@ import EditProfile from "./views/EditProfile/EditProfile";
 import UploadLinkContent from "./pages/Admin/CMS/UploadLInkContent";
 import CommingSoon from "./views/ComingSoon/CommingSoon";
 import PublicCms from "./Service/PublicCms";
+import AdminEnquiry from "./pages/Admin/AdminEnquiry/AdminEnquiry";
 
 function WebRoutes() {
   return (
@@ -536,6 +537,10 @@ function WebRoutes() {
           <PrivateRouteAdmin
             path="/admin/consalation"
             component={Consalation}
+          />
+          <PrivateRouteAdmin
+            path="/admin/adminenquiry"
+            component={AdminEnquiry}
           />
 
           <PublicRouteTL path="/teamleader/start" component={TlStart} />

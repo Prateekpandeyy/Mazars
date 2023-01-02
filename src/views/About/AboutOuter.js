@@ -36,7 +36,7 @@ const AboutOuter = () => {
                       {/* <Typography variant="h6" py={2} align="left">
     Mazars
     </Typography>     */}
-                      <SubHeading>Mazars</SubHeading>
+                      <SubHeading margin="5px 0px 5px 0px">Mazars</SubHeading>
                       <CustomTypography>
                         Mazars is an internationally integrated partnership,
                         specialising in audit, accountancy, advisory and tax
@@ -47,7 +47,9 @@ const AboutOuter = () => {
                         Alliance to assist clients of all sizes at every stage
                         in their development.
                       </CustomTypography>
-                      <SubHeading>Mazars in India</SubHeading>
+                      <SubHeading margin="5px 0px 5px 0px">
+                        Mazars in India
+                      </SubHeading>
 
                       {/* <Typography variant="h6" py={2} align="left">
          Mazars in India
@@ -62,7 +64,9 @@ const AboutOuter = () => {
                         Real Estate, Shipping, Services, Manufacturing and
                         Retail.
                       </CustomTypography>
-                      <SubHeading>Mazars Advisory Solutions India</SubHeading>
+                      <SubHeading margin="5px 0px 5px 0px">
+                        Mazars Advisory Solutions India
+                      </SubHeading>
                       <CustomTypography>
                         Industry experts form the backbone of Mazars Advisory
                         Solutions team, collectively possessing:
